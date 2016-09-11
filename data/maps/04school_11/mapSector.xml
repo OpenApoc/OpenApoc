@@ -5914,14 +5914,14 @@
       <value>BATTLEMAPPART_04school_RW_42</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_184</value>
+      <value>BATTLEMAPPART_04school_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -5929,7 +5929,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_185</value>
+      <value>BATTLEMAPPART_04school_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -5937,7 +5937,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_186</value>
+      <value>BATTLEMAPPART_04school_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -5945,7 +5945,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_186</value>
+      <value>BATTLEMAPPART_04school_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -5953,7 +5953,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_176</value>
+      <value>BATTLEMAPPART_04school_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -5961,7 +5961,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_174</value>
+      <value>BATTLEMAPPART_04school_FT_174</value>
     </entry>
     <entry>
       <key>
@@ -5969,7 +5969,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_181</value>
+      <value>BATTLEMAPPART_04school_FT_181</value>
     </entry>
     <entry>
       <key>
@@ -5977,7 +5977,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_180</value>
+      <value>BATTLEMAPPART_04school_FT_180</value>
     </entry>
     <entry>
       <key>
@@ -5985,7 +5985,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_187</value>
+      <value>BATTLEMAPPART_04school_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -5993,7 +5993,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_185</value>
+      <value>BATTLEMAPPART_04school_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -6001,7 +6001,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_187</value>
+      <value>BATTLEMAPPART_04school_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -6009,7 +6009,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_184</value>
+      <value>BATTLEMAPPART_04school_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -6017,7 +6017,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_186</value>
+      <value>BATTLEMAPPART_04school_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -6025,7 +6025,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_187</value>
+      <value>BATTLEMAPPART_04school_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -6033,7 +6033,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_176</value>
+      <value>BATTLEMAPPART_04school_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -6041,7 +6041,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_174</value>
+      <value>BATTLEMAPPART_04school_FT_174</value>
     </entry>
     <entry>
       <key>
@@ -6049,7 +6049,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_181</value>
+      <value>BATTLEMAPPART_04school_FT_181</value>
     </entry>
     <entry>
       <key>
@@ -6057,7 +6057,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_180</value>
+      <value>BATTLEMAPPART_04school_FT_180</value>
     </entry>
     <entry>
       <key>
@@ -6065,7 +6065,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_187</value>
+      <value>BATTLEMAPPART_04school_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -6073,7 +6073,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_185</value>
+      <value>BATTLEMAPPART_04school_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -6081,7 +6081,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_187</value>
+      <value>BATTLEMAPPART_04school_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -6089,7 +6089,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_185</value>
+      <value>BATTLEMAPPART_04school_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -6097,7 +6097,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_185</value>
+      <value>BATTLEMAPPART_04school_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -6105,7 +6105,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_186</value>
+      <value>BATTLEMAPPART_04school_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -6113,7 +6113,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_176</value>
+      <value>BATTLEMAPPART_04school_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -6121,7 +6121,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_174</value>
+      <value>BATTLEMAPPART_04school_FT_174</value>
     </entry>
     <entry>
       <key>
@@ -6129,7 +6129,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_181</value>
+      <value>BATTLEMAPPART_04school_FT_181</value>
     </entry>
     <entry>
       <key>
@@ -6137,7 +6137,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_180</value>
+      <value>BATTLEMAPPART_04school_FT_180</value>
     </entry>
     <entry>
       <key>
@@ -6145,7 +6145,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_187</value>
+      <value>BATTLEMAPPART_04school_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -6153,7 +6153,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_185</value>
+      <value>BATTLEMAPPART_04school_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -6161,7 +6161,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_186</value>
+      <value>BATTLEMAPPART_04school_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -6169,7 +6169,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_185</value>
+      <value>BATTLEMAPPART_04school_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -6177,7 +6177,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_186</value>
+      <value>BATTLEMAPPART_04school_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -6185,7 +6185,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_186</value>
+      <value>BATTLEMAPPART_04school_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -6193,7 +6193,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_176</value>
+      <value>BATTLEMAPPART_04school_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -6201,7 +6201,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_174</value>
+      <value>BATTLEMAPPART_04school_FT_174</value>
     </entry>
     <entry>
       <key>
@@ -6209,7 +6209,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_181</value>
+      <value>BATTLEMAPPART_04school_FT_181</value>
     </entry>
     <entry>
       <key>
@@ -6217,7 +6217,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_180</value>
+      <value>BATTLEMAPPART_04school_FT_180</value>
     </entry>
     <entry>
       <key>
@@ -6225,7 +6225,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_187</value>
+      <value>BATTLEMAPPART_04school_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -6233,7 +6233,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_185</value>
+      <value>BATTLEMAPPART_04school_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -6241,7 +6241,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_179</value>
+      <value>BATTLEMAPPART_04school_FT_179</value>
     </entry>
     <entry>
       <key>
@@ -6249,7 +6249,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_179</value>
+      <value>BATTLEMAPPART_04school_FT_179</value>
     </entry>
     <entry>
       <key>
@@ -6257,7 +6257,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_179</value>
+      <value>BATTLEMAPPART_04school_FT_179</value>
     </entry>
     <entry>
       <key>
@@ -6265,7 +6265,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_179</value>
+      <value>BATTLEMAPPART_04school_FT_179</value>
     </entry>
     <entry>
       <key>
@@ -6273,7 +6273,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_13</value>
+      <value>BATTLEMAPPART_04school_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -6281,7 +6281,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_13</value>
+      <value>BATTLEMAPPART_04school_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -6289,7 +6289,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_13</value>
+      <value>BATTLEMAPPART_04school_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -6297,7 +6297,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_13</value>
+      <value>BATTLEMAPPART_04school_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -6305,7 +6305,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_177</value>
+      <value>BATTLEMAPPART_04school_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -6313,7 +6313,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_177</value>
+      <value>BATTLEMAPPART_04school_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -6321,7 +6321,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_177</value>
+      <value>BATTLEMAPPART_04school_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -6329,7 +6329,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_177</value>
+      <value>BATTLEMAPPART_04school_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -6337,7 +6337,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_14</value>
+      <value>BATTLEMAPPART_04school_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -6345,7 +6345,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_12</value>
+      <value>BATTLEMAPPART_04school_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -6353,7 +6353,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_6</value>
+      <value>BATTLEMAPPART_04school_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -6361,7 +6361,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_11</value>
+      <value>BATTLEMAPPART_04school_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -6369,7 +6369,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_5</value>
+      <value>BATTLEMAPPART_04school_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -6377,7 +6377,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_11</value>
+      <value>BATTLEMAPPART_04school_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -6385,7 +6385,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_5</value>
+      <value>BATTLEMAPPART_04school_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -6393,7 +6393,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_11</value>
+      <value>BATTLEMAPPART_04school_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -6401,7 +6401,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_5</value>
+      <value>BATTLEMAPPART_04school_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -6409,7 +6409,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_10</value>
+      <value>BATTLEMAPPART_04school_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -6417,7 +6417,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_4</value>
+      <value>BATTLEMAPPART_04school_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -6425,7 +6425,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_12</value>
+      <value>BATTLEMAPPART_04school_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -6433,7 +6433,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_6</value>
+      <value>BATTLEMAPPART_04school_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -6441,7 +6441,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_11</value>
+      <value>BATTLEMAPPART_04school_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -6449,7 +6449,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_5</value>
+      <value>BATTLEMAPPART_04school_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -6457,7 +6457,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_11</value>
+      <value>BATTLEMAPPART_04school_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -6465,7 +6465,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_5</value>
+      <value>BATTLEMAPPART_04school_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -6473,7 +6473,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_11</value>
+      <value>BATTLEMAPPART_04school_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -6481,7 +6481,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_5</value>
+      <value>BATTLEMAPPART_04school_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -6489,7 +6489,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_10</value>
+      <value>BATTLEMAPPART_04school_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -6497,7 +6497,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_4</value>
+      <value>BATTLEMAPPART_04school_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -6505,7 +6505,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_14</value>
+      <value>BATTLEMAPPART_04school_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -6513,7 +6513,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_9</value>
+      <value>BATTLEMAPPART_04school_FT_9</value>
     </entry>
     <entry>
       <key>
@@ -6521,7 +6521,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_3</value>
+      <value>BATTLEMAPPART_04school_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -6529,7 +6529,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_8</value>
+      <value>BATTLEMAPPART_04school_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -6537,7 +6537,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_2</value>
+      <value>BATTLEMAPPART_04school_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -6545,7 +6545,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_8</value>
+      <value>BATTLEMAPPART_04school_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -6553,7 +6553,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_2</value>
+      <value>BATTLEMAPPART_04school_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -6561,7 +6561,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_8</value>
+      <value>BATTLEMAPPART_04school_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -6569,7 +6569,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_2</value>
+      <value>BATTLEMAPPART_04school_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -6577,7 +6577,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_7</value>
+      <value>BATTLEMAPPART_04school_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -6585,7 +6585,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_1</value>
+      <value>BATTLEMAPPART_04school_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -6593,7 +6593,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_9</value>
+      <value>BATTLEMAPPART_04school_FT_9</value>
     </entry>
     <entry>
       <key>
@@ -6601,7 +6601,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_3</value>
+      <value>BATTLEMAPPART_04school_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -6609,7 +6609,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_8</value>
+      <value>BATTLEMAPPART_04school_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -6617,7 +6617,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_2</value>
+      <value>BATTLEMAPPART_04school_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -6625,7 +6625,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_8</value>
+      <value>BATTLEMAPPART_04school_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -6633,7 +6633,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_2</value>
+      <value>BATTLEMAPPART_04school_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -6641,7 +6641,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_8</value>
+      <value>BATTLEMAPPART_04school_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -6649,7 +6649,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_2</value>
+      <value>BATTLEMAPPART_04school_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -6657,7 +6657,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_7</value>
+      <value>BATTLEMAPPART_04school_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -6665,7 +6665,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_1</value>
+      <value>BATTLEMAPPART_04school_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -6673,7 +6673,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_14</value>
+      <value>BATTLEMAPPART_04school_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -6681,7 +6681,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_12</value>
+      <value>BATTLEMAPPART_04school_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -6689,7 +6689,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_6</value>
+      <value>BATTLEMAPPART_04school_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -6697,7 +6697,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_11</value>
+      <value>BATTLEMAPPART_04school_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -6705,7 +6705,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_5</value>
+      <value>BATTLEMAPPART_04school_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -6713,7 +6713,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_11</value>
+      <value>BATTLEMAPPART_04school_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -6721,7 +6721,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_5</value>
+      <value>BATTLEMAPPART_04school_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -6729,7 +6729,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_11</value>
+      <value>BATTLEMAPPART_04school_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -6737,7 +6737,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_5</value>
+      <value>BATTLEMAPPART_04school_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -6745,7 +6745,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_10</value>
+      <value>BATTLEMAPPART_04school_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -6753,7 +6753,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_4</value>
+      <value>BATTLEMAPPART_04school_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -6761,7 +6761,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_12</value>
+      <value>BATTLEMAPPART_04school_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -6769,7 +6769,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_6</value>
+      <value>BATTLEMAPPART_04school_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -6777,7 +6777,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_11</value>
+      <value>BATTLEMAPPART_04school_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -6785,7 +6785,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_5</value>
+      <value>BATTLEMAPPART_04school_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -6793,7 +6793,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_11</value>
+      <value>BATTLEMAPPART_04school_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -6801,7 +6801,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_5</value>
+      <value>BATTLEMAPPART_04school_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -6809,7 +6809,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_11</value>
+      <value>BATTLEMAPPART_04school_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -6817,7 +6817,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_5</value>
+      <value>BATTLEMAPPART_04school_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -6825,7 +6825,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_10</value>
+      <value>BATTLEMAPPART_04school_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -6833,7 +6833,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_4</value>
+      <value>BATTLEMAPPART_04school_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -6841,7 +6841,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_14</value>
+      <value>BATTLEMAPPART_04school_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -6849,7 +6849,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_9</value>
+      <value>BATTLEMAPPART_04school_FT_9</value>
     </entry>
     <entry>
       <key>
@@ -6857,7 +6857,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_3</value>
+      <value>BATTLEMAPPART_04school_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -6865,7 +6865,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_8</value>
+      <value>BATTLEMAPPART_04school_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -6873,7 +6873,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_2</value>
+      <value>BATTLEMAPPART_04school_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -6881,7 +6881,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_8</value>
+      <value>BATTLEMAPPART_04school_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -6889,7 +6889,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_2</value>
+      <value>BATTLEMAPPART_04school_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -6897,7 +6897,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_8</value>
+      <value>BATTLEMAPPART_04school_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -6905,7 +6905,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_2</value>
+      <value>BATTLEMAPPART_04school_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -6913,7 +6913,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_7</value>
+      <value>BATTLEMAPPART_04school_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -6921,7 +6921,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_1</value>
+      <value>BATTLEMAPPART_04school_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -6929,7 +6929,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_9</value>
+      <value>BATTLEMAPPART_04school_FT_9</value>
     </entry>
     <entry>
       <key>
@@ -6937,7 +6937,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_3</value>
+      <value>BATTLEMAPPART_04school_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -6945,7 +6945,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_8</value>
+      <value>BATTLEMAPPART_04school_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -6953,7 +6953,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_2</value>
+      <value>BATTLEMAPPART_04school_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -6961,7 +6961,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_8</value>
+      <value>BATTLEMAPPART_04school_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -6969,7 +6969,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_2</value>
+      <value>BATTLEMAPPART_04school_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -6977,7 +6977,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_8</value>
+      <value>BATTLEMAPPART_04school_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -6985,7 +6985,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_2</value>
+      <value>BATTLEMAPPART_04school_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -6993,7 +6993,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_7</value>
+      <value>BATTLEMAPPART_04school_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -7001,7 +7001,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_1</value>
+      <value>BATTLEMAPPART_04school_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -7009,7 +7009,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_15</value>
+      <value>BATTLEMAPPART_04school_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -7017,7 +7017,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_14</value>
+      <value>BATTLEMAPPART_04school_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -7025,7 +7025,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_12</value>
+      <value>BATTLEMAPPART_04school_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -7033,7 +7033,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_6</value>
+      <value>BATTLEMAPPART_04school_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -7041,7 +7041,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_11</value>
+      <value>BATTLEMAPPART_04school_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -7049,7 +7049,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_5</value>
+      <value>BATTLEMAPPART_04school_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -7057,7 +7057,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_11</value>
+      <value>BATTLEMAPPART_04school_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -7065,7 +7065,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_5</value>
+      <value>BATTLEMAPPART_04school_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -7073,7 +7073,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_11</value>
+      <value>BATTLEMAPPART_04school_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -7081,7 +7081,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_5</value>
+      <value>BATTLEMAPPART_04school_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -7089,7 +7089,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_10</value>
+      <value>BATTLEMAPPART_04school_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -7097,7 +7097,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_4</value>
+      <value>BATTLEMAPPART_04school_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -7105,7 +7105,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_12</value>
+      <value>BATTLEMAPPART_04school_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -7113,7 +7113,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_6</value>
+      <value>BATTLEMAPPART_04school_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -7121,7 +7121,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_11</value>
+      <value>BATTLEMAPPART_04school_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -7129,7 +7129,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_5</value>
+      <value>BATTLEMAPPART_04school_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -7137,7 +7137,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_11</value>
+      <value>BATTLEMAPPART_04school_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -7145,7 +7145,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_5</value>
+      <value>BATTLEMAPPART_04school_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -7153,7 +7153,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_11</value>
+      <value>BATTLEMAPPART_04school_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -7161,7 +7161,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_5</value>
+      <value>BATTLEMAPPART_04school_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -7169,7 +7169,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_10</value>
+      <value>BATTLEMAPPART_04school_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -7177,7 +7177,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_4</value>
+      <value>BATTLEMAPPART_04school_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -7185,7 +7185,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_14</value>
+      <value>BATTLEMAPPART_04school_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -7193,7 +7193,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_9</value>
+      <value>BATTLEMAPPART_04school_FT_9</value>
     </entry>
     <entry>
       <key>
@@ -7201,7 +7201,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_3</value>
+      <value>BATTLEMAPPART_04school_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -7209,7 +7209,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_8</value>
+      <value>BATTLEMAPPART_04school_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -7217,7 +7217,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_2</value>
+      <value>BATTLEMAPPART_04school_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -7225,7 +7225,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_8</value>
+      <value>BATTLEMAPPART_04school_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -7233,7 +7233,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_2</value>
+      <value>BATTLEMAPPART_04school_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -7241,7 +7241,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_8</value>
+      <value>BATTLEMAPPART_04school_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -7249,7 +7249,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_2</value>
+      <value>BATTLEMAPPART_04school_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -7257,7 +7257,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_7</value>
+      <value>BATTLEMAPPART_04school_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -7265,7 +7265,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_1</value>
+      <value>BATTLEMAPPART_04school_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -7273,7 +7273,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_9</value>
+      <value>BATTLEMAPPART_04school_FT_9</value>
     </entry>
     <entry>
       <key>
@@ -7281,7 +7281,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_3</value>
+      <value>BATTLEMAPPART_04school_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -7289,7 +7289,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_8</value>
+      <value>BATTLEMAPPART_04school_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -7297,7 +7297,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_2</value>
+      <value>BATTLEMAPPART_04school_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -7305,7 +7305,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_8</value>
+      <value>BATTLEMAPPART_04school_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -7313,7 +7313,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_2</value>
+      <value>BATTLEMAPPART_04school_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -7321,7 +7321,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_8</value>
+      <value>BATTLEMAPPART_04school_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -7329,7 +7329,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_2</value>
+      <value>BATTLEMAPPART_04school_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -7337,7 +7337,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_7</value>
+      <value>BATTLEMAPPART_04school_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -7345,7 +7345,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_1</value>
+      <value>BATTLEMAPPART_04school_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -7353,7 +7353,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_183</value>
+      <value>BATTLEMAPPART_04school_FT_183</value>
     </entry>
     <entry>
       <key>
@@ -7361,7 +7361,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_183</value>
+      <value>BATTLEMAPPART_04school_FT_183</value>
     </entry>
     <entry>
       <key>
@@ -7369,7 +7369,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_183</value>
+      <value>BATTLEMAPPART_04school_FT_183</value>
     </entry>
     <entry>
       <key>
@@ -7377,7 +7377,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_183</value>
+      <value>BATTLEMAPPART_04school_FT_183</value>
     </entry>
     <entry>
       <key>
@@ -7385,7 +7385,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_61</value>
+      <value>BATTLEMAPPART_04school_FT_61</value>
     </entry>
     <entry>
       <key>
@@ -7393,7 +7393,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_182</value>
+      <value>BATTLEMAPPART_04school_FT_182</value>
     </entry>
     <entry>
       <key>
@@ -7401,7 +7401,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_182</value>
+      <value>BATTLEMAPPART_04school_FT_182</value>
     </entry>
     <entry>
       <key>
@@ -7409,7 +7409,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_182</value>
+      <value>BATTLEMAPPART_04school_FT_182</value>
     </entry>
     <entry>
       <key>
@@ -7417,7 +7417,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_182</value>
+      <value>BATTLEMAPPART_04school_FT_182</value>
     </entry>
     <entry>
       <key>
@@ -7425,7 +7425,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_61</value>
+      <value>BATTLEMAPPART_04school_FT_61</value>
     </entry>
     <entry>
       <key>
@@ -7433,7 +7433,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_85</value>
+      <value>BATTLEMAPPART_04school_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -7441,7 +7441,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_85</value>
+      <value>BATTLEMAPPART_04school_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -7449,7 +7449,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_85</value>
+      <value>BATTLEMAPPART_04school_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -7457,7 +7457,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_85</value>
+      <value>BATTLEMAPPART_04school_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -7465,7 +7465,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_184</value>
+      <value>BATTLEMAPPART_04school_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -7473,7 +7473,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_186</value>
+      <value>BATTLEMAPPART_04school_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -7481,7 +7481,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_186</value>
+      <value>BATTLEMAPPART_04school_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -7489,7 +7489,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_186</value>
+      <value>BATTLEMAPPART_04school_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -7497,7 +7497,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_61</value>
+      <value>BATTLEMAPPART_04school_FT_61</value>
     </entry>
     <entry>
       <key>
@@ -7505,7 +7505,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_85</value>
+      <value>BATTLEMAPPART_04school_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -7513,7 +7513,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_85</value>
+      <value>BATTLEMAPPART_04school_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -7521,7 +7521,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_85</value>
+      <value>BATTLEMAPPART_04school_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -7529,7 +7529,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_85</value>
+      <value>BATTLEMAPPART_04school_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -7537,7 +7537,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_187</value>
+      <value>BATTLEMAPPART_04school_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -7545,7 +7545,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_185</value>
+      <value>BATTLEMAPPART_04school_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -7553,7 +7553,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_185</value>
+      <value>BATTLEMAPPART_04school_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -7561,7 +7561,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_185</value>
+      <value>BATTLEMAPPART_04school_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -7569,7 +7569,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_04school_SC_61</value>
+      <value>BATTLEMAPPART_04school_FT_61</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

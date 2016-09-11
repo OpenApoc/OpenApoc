@@ -181,13 +181,13 @@
       <entry>BATTLEMAPPART_35tubes_RW_52</entry>
       <entry>BATTLEMAPPART_35tubes_RW_53</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_35tubes_SC_208</entry>
-      <entry>BATTLEMAPPART_35tubes_SC_209</entry>
-      <entry>BATTLEMAPPART_35tubes_SC_210</entry>
-      <entry>BATTLEMAPPART_35tubes_SC_196</entry>
-      <entry>BATTLEMAPPART_35tubes_SC_195</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_35tubes_FT208</entry>
+      <entry>BATTLEMAPPART_35tubes_FT209</entry>
+      <entry>BATTLEMAPPART_35tubes_FT210</entry>
+      <entry>BATTLEMAPPART_35tubes_FT196</entry>
+      <entry>BATTLEMAPPART_35tubes_FT195</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_35tubes>

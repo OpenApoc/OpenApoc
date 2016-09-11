@@ -13093,14 +13093,14 @@
       <value>BATTLEMAPPART_18hydro_RW_18</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>3</x>
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_167</value>
+      <value>BATTLEMAPPART_18hydro_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -13108,7 +13108,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_168</value>
+      <value>BATTLEMAPPART_18hydro_FT_168</value>
     </entry>
     <entry>
       <key>
@@ -13116,7 +13116,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_167</value>
+      <value>BATTLEMAPPART_18hydro_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -13124,7 +13124,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_168</value>
+      <value>BATTLEMAPPART_18hydro_FT_168</value>
     </entry>
     <entry>
       <key>
@@ -13132,7 +13132,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13140,7 +13140,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13148,7 +13148,7 @@
         <y>4</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13156,7 +13156,7 @@
         <y>4</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13164,7 +13164,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13172,7 +13172,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13180,7 +13180,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13188,7 +13188,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13196,7 +13196,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13204,7 +13204,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13212,7 +13212,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13220,7 +13220,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13228,7 +13228,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13236,7 +13236,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13244,7 +13244,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13252,7 +13252,7 @@
         <y>7</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13260,7 +13260,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13268,7 +13268,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13276,7 +13276,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13284,7 +13284,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13292,7 +13292,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_163</value>
+      <value>BATTLEMAPPART_18hydro_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -13300,7 +13300,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_164</value>
+      <value>BATTLEMAPPART_18hydro_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -13308,7 +13308,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13316,7 +13316,7 @@
         <y>9</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13324,7 +13324,7 @@
         <y>10</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13332,7 +13332,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13340,7 +13340,7 @@
         <y>11</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13348,7 +13348,7 @@
         <y>11</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13356,7 +13356,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_167</value>
+      <value>BATTLEMAPPART_18hydro_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -13364,7 +13364,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_168</value>
+      <value>BATTLEMAPPART_18hydro_FT_168</value>
     </entry>
     <entry>
       <key>
@@ -13372,7 +13372,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13380,7 +13380,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13388,7 +13388,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13396,7 +13396,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13404,7 +13404,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13412,7 +13412,7 @@
         <y>13</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13420,7 +13420,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13428,7 +13428,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13436,7 +13436,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13444,7 +13444,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13452,7 +13452,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13460,7 +13460,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13468,7 +13468,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13476,7 +13476,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13484,7 +13484,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13492,7 +13492,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13500,7 +13500,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13508,7 +13508,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13516,7 +13516,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13524,7 +13524,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13532,7 +13532,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -13540,7 +13540,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -13548,7 +13548,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_163</value>
+      <value>BATTLEMAPPART_18hydro_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -13556,7 +13556,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_164</value>
+      <value>BATTLEMAPPART_18hydro_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -13564,7 +13564,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_163</value>
+      <value>BATTLEMAPPART_18hydro_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -13572,7 +13572,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_164</value>
+      <value>BATTLEMAPPART_18hydro_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -13580,7 +13580,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -13588,7 +13588,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -13596,7 +13596,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -13604,7 +13604,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -13612,7 +13612,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_162</value>
+      <value>BATTLEMAPPART_18hydro_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -13620,7 +13620,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_161</value>
+      <value>BATTLEMAPPART_18hydro_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -13628,7 +13628,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_194</value>
+      <value>BATTLEMAPPART_18hydro_FT_194</value>
     </entry>
     <entry>
       <key>
@@ -13636,7 +13636,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_158</value>
+      <value>BATTLEMAPPART_18hydro_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -13644,7 +13644,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_157</value>
+      <value>BATTLEMAPPART_18hydro_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -13652,7 +13652,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_193</value>
+      <value>BATTLEMAPPART_18hydro_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -13660,7 +13660,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -13668,7 +13668,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_192</value>
+      <value>BATTLEMAPPART_18hydro_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -13676,7 +13676,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_162</value>
+      <value>BATTLEMAPPART_18hydro_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -13684,7 +13684,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_161</value>
+      <value>BATTLEMAPPART_18hydro_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -13692,7 +13692,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_191</value>
+      <value>BATTLEMAPPART_18hydro_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -13700,7 +13700,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_158</value>
+      <value>BATTLEMAPPART_18hydro_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -13708,7 +13708,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_157</value>
+      <value>BATTLEMAPPART_18hydro_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -13716,7 +13716,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -13724,7 +13724,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -13732,7 +13732,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -13740,7 +13740,7 @@
         <y>10</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_239</value>
+      <value>BATTLEMAPPART_18hydro_FT_239</value>
     </entry>
     <entry>
       <key>
@@ -13748,7 +13748,7 @@
         <y>11</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_240</value>
+      <value>BATTLEMAPPART_18hydro_FT_240</value>
     </entry>
     <entry>
       <key>
@@ -13756,7 +13756,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -13764,7 +13764,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -13772,7 +13772,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_233</value>
+      <value>BATTLEMAPPART_18hydro_FT_233</value>
     </entry>
     <entry>
       <key>
@@ -13780,7 +13780,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_162</value>
+      <value>BATTLEMAPPART_18hydro_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -13788,7 +13788,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_161</value>
+      <value>BATTLEMAPPART_18hydro_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -13796,7 +13796,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_194</value>
+      <value>BATTLEMAPPART_18hydro_FT_194</value>
     </entry>
     <entry>
       <key>
@@ -13804,7 +13804,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_158</value>
+      <value>BATTLEMAPPART_18hydro_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -13812,7 +13812,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_157</value>
+      <value>BATTLEMAPPART_18hydro_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -13820,7 +13820,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_193</value>
+      <value>BATTLEMAPPART_18hydro_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -13828,7 +13828,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -13836,7 +13836,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_192</value>
+      <value>BATTLEMAPPART_18hydro_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -13844,7 +13844,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_162</value>
+      <value>BATTLEMAPPART_18hydro_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -13852,7 +13852,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_161</value>
+      <value>BATTLEMAPPART_18hydro_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -13860,7 +13860,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_191</value>
+      <value>BATTLEMAPPART_18hydro_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -13868,7 +13868,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_158</value>
+      <value>BATTLEMAPPART_18hydro_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -13876,7 +13876,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_157</value>
+      <value>BATTLEMAPPART_18hydro_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -13884,7 +13884,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -13892,7 +13892,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -13900,7 +13900,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -13908,7 +13908,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -13916,7 +13916,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -13924,7 +13924,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -13932,7 +13932,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -13940,7 +13940,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -13948,7 +13948,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_190</value>
+      <value>BATTLEMAPPART_18hydro_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -13956,7 +13956,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_160</value>
+      <value>BATTLEMAPPART_18hydro_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -13964,7 +13964,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_159</value>
+      <value>BATTLEMAPPART_18hydro_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -13972,7 +13972,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_189</value>
+      <value>BATTLEMAPPART_18hydro_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -13980,7 +13980,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_156</value>
+      <value>BATTLEMAPPART_18hydro_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -13988,7 +13988,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_155</value>
+      <value>BATTLEMAPPART_18hydro_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -13996,7 +13996,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -14004,7 +14004,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_233</value>
+      <value>BATTLEMAPPART_18hydro_FT_233</value>
     </entry>
     <entry>
       <key>
@@ -14012,7 +14012,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_187</value>
+      <value>BATTLEMAPPART_18hydro_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -14020,7 +14020,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_160</value>
+      <value>BATTLEMAPPART_18hydro_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -14028,7 +14028,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_159</value>
+      <value>BATTLEMAPPART_18hydro_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -14036,7 +14036,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_186</value>
+      <value>BATTLEMAPPART_18hydro_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -14044,7 +14044,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_156</value>
+      <value>BATTLEMAPPART_18hydro_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -14052,7 +14052,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_155</value>
+      <value>BATTLEMAPPART_18hydro_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -14060,7 +14060,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -14068,7 +14068,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -14076,7 +14076,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -14084,7 +14084,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -14092,7 +14092,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -14100,7 +14100,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_233</value>
+      <value>BATTLEMAPPART_18hydro_FT_233</value>
     </entry>
     <entry>
       <key>
@@ -14108,7 +14108,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_190</value>
+      <value>BATTLEMAPPART_18hydro_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -14116,7 +14116,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_160</value>
+      <value>BATTLEMAPPART_18hydro_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -14124,7 +14124,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_159</value>
+      <value>BATTLEMAPPART_18hydro_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -14132,7 +14132,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_189</value>
+      <value>BATTLEMAPPART_18hydro_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -14140,7 +14140,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_156</value>
+      <value>BATTLEMAPPART_18hydro_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -14148,7 +14148,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_155</value>
+      <value>BATTLEMAPPART_18hydro_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -14156,7 +14156,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -14164,7 +14164,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -14172,7 +14172,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_187</value>
+      <value>BATTLEMAPPART_18hydro_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -14180,7 +14180,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_160</value>
+      <value>BATTLEMAPPART_18hydro_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -14188,7 +14188,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_159</value>
+      <value>BATTLEMAPPART_18hydro_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -14196,7 +14196,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_186</value>
+      <value>BATTLEMAPPART_18hydro_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -14204,7 +14204,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_156</value>
+      <value>BATTLEMAPPART_18hydro_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -14212,7 +14212,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_155</value>
+      <value>BATTLEMAPPART_18hydro_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -14220,7 +14220,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -14228,7 +14228,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -14236,7 +14236,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -14244,7 +14244,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -14252,7 +14252,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -14260,7 +14260,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -14268,7 +14268,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -14276,7 +14276,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -14284,7 +14284,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_185</value>
+      <value>BATTLEMAPPART_18hydro_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -14292,7 +14292,7 @@
         <y>4</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -14300,7 +14300,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -14308,7 +14308,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14316,7 +14316,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -14324,7 +14324,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_232</value>
+      <value>BATTLEMAPPART_18hydro_FT_232</value>
     </entry>
     <entry>
       <key>
@@ -14332,7 +14332,7 @@
         <y>6</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_167</value>
+      <value>BATTLEMAPPART_18hydro_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -14340,7 +14340,7 @@
         <y>6</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_168</value>
+      <value>BATTLEMAPPART_18hydro_FT_168</value>
     </entry>
     <entry>
       <key>
@@ -14348,7 +14348,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -14356,7 +14356,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14364,7 +14364,7 @@
         <y>7</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -14372,7 +14372,7 @@
         <y>7</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -14380,7 +14380,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_181</value>
+      <value>BATTLEMAPPART_18hydro_FT_181</value>
     </entry>
     <entry>
       <key>
@@ -14388,7 +14388,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -14396,7 +14396,7 @@
         <y>8</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -14404,7 +14404,7 @@
         <y>8</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -14412,7 +14412,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -14420,7 +14420,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -14428,7 +14428,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -14436,7 +14436,7 @@
         <y>9</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -14444,7 +14444,7 @@
         <y>9</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -14452,7 +14452,7 @@
         <y>10</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -14460,7 +14460,7 @@
         <y>10</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -14468,7 +14468,7 @@
         <y>11</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -14476,7 +14476,7 @@
         <y>11</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -14484,7 +14484,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -14492,7 +14492,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -14500,7 +14500,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_233</value>
+      <value>BATTLEMAPPART_18hydro_FT_233</value>
     </entry>
     <entry>
       <key>
@@ -14508,7 +14508,7 @@
         <y>12</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -14516,7 +14516,7 @@
         <y>12</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -14524,7 +14524,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_185</value>
+      <value>BATTLEMAPPART_18hydro_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -14532,7 +14532,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -14540,7 +14540,7 @@
         <y>13</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -14548,7 +14548,7 @@
         <y>13</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -14556,7 +14556,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -14564,7 +14564,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14572,7 +14572,7 @@
         <y>14</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -14580,7 +14580,7 @@
         <y>14</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -14588,7 +14588,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -14596,7 +14596,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_233</value>
+      <value>BATTLEMAPPART_18hydro_FT_233</value>
     </entry>
     <entry>
       <key>
@@ -14604,7 +14604,7 @@
         <y>15</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_163</value>
+      <value>BATTLEMAPPART_18hydro_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -14612,7 +14612,7 @@
         <y>15</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_164</value>
+      <value>BATTLEMAPPART_18hydro_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -14620,7 +14620,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -14628,7 +14628,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14636,7 +14636,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_181</value>
+      <value>BATTLEMAPPART_18hydro_FT_181</value>
     </entry>
     <entry>
       <key>
@@ -14644,7 +14644,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -14652,7 +14652,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -14660,7 +14660,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -14668,7 +14668,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -14676,7 +14676,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -14684,7 +14684,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -14692,7 +14692,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -14700,7 +14700,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -14708,7 +14708,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -14716,7 +14716,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_180</value>
+      <value>BATTLEMAPPART_18hydro_FT_180</value>
     </entry>
     <entry>
       <key>
@@ -14724,7 +14724,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_162</value>
+      <value>BATTLEMAPPART_18hydro_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -14732,7 +14732,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_161</value>
+      <value>BATTLEMAPPART_18hydro_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -14740,7 +14740,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_179</value>
+      <value>BATTLEMAPPART_18hydro_FT_179</value>
     </entry>
     <entry>
       <key>
@@ -14748,7 +14748,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_158</value>
+      <value>BATTLEMAPPART_18hydro_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -14756,7 +14756,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_157</value>
+      <value>BATTLEMAPPART_18hydro_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -14764,7 +14764,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -14772,7 +14772,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -14780,7 +14780,7 @@
         <y>6</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -14788,7 +14788,7 @@
         <y>6</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -14796,7 +14796,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_177</value>
+      <value>BATTLEMAPPART_18hydro_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -14804,7 +14804,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_162</value>
+      <value>BATTLEMAPPART_18hydro_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -14812,7 +14812,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_161</value>
+      <value>BATTLEMAPPART_18hydro_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -14820,7 +14820,7 @@
         <y>7</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_23</value>
+      <value>BATTLEMAPPART_18hydro_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -14828,7 +14828,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_176</value>
+      <value>BATTLEMAPPART_18hydro_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -14836,7 +14836,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_158</value>
+      <value>BATTLEMAPPART_18hydro_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -14844,7 +14844,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_157</value>
+      <value>BATTLEMAPPART_18hydro_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -14852,7 +14852,7 @@
         <y>8</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_85</value>
+      <value>BATTLEMAPPART_18hydro_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -14860,7 +14860,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -14868,7 +14868,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -14876,7 +14876,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -14884,7 +14884,7 @@
         <y>9</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_85</value>
+      <value>BATTLEMAPPART_18hydro_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -14892,7 +14892,7 @@
         <y>10</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_85</value>
+      <value>BATTLEMAPPART_18hydro_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -14900,7 +14900,7 @@
         <y>11</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_85</value>
+      <value>BATTLEMAPPART_18hydro_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -14908,7 +14908,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -14916,7 +14916,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -14924,7 +14924,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_233</value>
+      <value>BATTLEMAPPART_18hydro_FT_233</value>
     </entry>
     <entry>
       <key>
@@ -14932,7 +14932,7 @@
         <y>12</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_85</value>
+      <value>BATTLEMAPPART_18hydro_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -14940,7 +14940,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_180</value>
+      <value>BATTLEMAPPART_18hydro_FT_180</value>
     </entry>
     <entry>
       <key>
@@ -14948,7 +14948,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_162</value>
+      <value>BATTLEMAPPART_18hydro_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -14956,7 +14956,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_161</value>
+      <value>BATTLEMAPPART_18hydro_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -14964,7 +14964,7 @@
         <y>13</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_85</value>
+      <value>BATTLEMAPPART_18hydro_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -14972,7 +14972,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_179</value>
+      <value>BATTLEMAPPART_18hydro_FT_179</value>
     </entry>
     <entry>
       <key>
@@ -14980,7 +14980,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_158</value>
+      <value>BATTLEMAPPART_18hydro_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -14988,7 +14988,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_157</value>
+      <value>BATTLEMAPPART_18hydro_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -14996,7 +14996,7 @@
         <y>14</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_23</value>
+      <value>BATTLEMAPPART_18hydro_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -15004,7 +15004,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -15012,7 +15012,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_232</value>
+      <value>BATTLEMAPPART_18hydro_FT_232</value>
     </entry>
     <entry>
       <key>
@@ -15020,7 +15020,7 @@
         <y>15</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -15028,7 +15028,7 @@
         <y>15</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -15036,7 +15036,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_177</value>
+      <value>BATTLEMAPPART_18hydro_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -15044,7 +15044,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_162</value>
+      <value>BATTLEMAPPART_18hydro_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -15052,7 +15052,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_161</value>
+      <value>BATTLEMAPPART_18hydro_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -15060,7 +15060,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_176</value>
+      <value>BATTLEMAPPART_18hydro_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -15068,7 +15068,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_158</value>
+      <value>BATTLEMAPPART_18hydro_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -15076,7 +15076,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_157</value>
+      <value>BATTLEMAPPART_18hydro_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -15084,7 +15084,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -15092,7 +15092,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -15100,7 +15100,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -15108,7 +15108,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -15116,7 +15116,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -15124,7 +15124,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -15132,7 +15132,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -15140,7 +15140,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -15148,7 +15148,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_175</value>
+      <value>BATTLEMAPPART_18hydro_FT_175</value>
     </entry>
     <entry>
       <key>
@@ -15156,7 +15156,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_160</value>
+      <value>BATTLEMAPPART_18hydro_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -15164,7 +15164,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_159</value>
+      <value>BATTLEMAPPART_18hydro_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -15172,7 +15172,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_174</value>
+      <value>BATTLEMAPPART_18hydro_FT_174</value>
     </entry>
     <entry>
       <key>
@@ -15180,7 +15180,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_156</value>
+      <value>BATTLEMAPPART_18hydro_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -15188,7 +15188,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_155</value>
+      <value>BATTLEMAPPART_18hydro_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -15196,7 +15196,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_173</value>
+      <value>BATTLEMAPPART_18hydro_FT_173</value>
     </entry>
     <entry>
       <key>
@@ -15204,7 +15204,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -15212,7 +15212,7 @@
         <y>6</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -15220,7 +15220,7 @@
         <y>6</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -15228,7 +15228,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_172</value>
+      <value>BATTLEMAPPART_18hydro_FT_172</value>
     </entry>
     <entry>
       <key>
@@ -15236,7 +15236,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_160</value>
+      <value>BATTLEMAPPART_18hydro_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -15244,7 +15244,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_159</value>
+      <value>BATTLEMAPPART_18hydro_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -15252,7 +15252,7 @@
         <y>7</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_77</value>
+      <value>BATTLEMAPPART_18hydro_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -15260,7 +15260,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_171</value>
+      <value>BATTLEMAPPART_18hydro_FT_171</value>
     </entry>
     <entry>
       <key>
@@ -15268,7 +15268,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_156</value>
+      <value>BATTLEMAPPART_18hydro_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -15276,7 +15276,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_155</value>
+      <value>BATTLEMAPPART_18hydro_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -15284,7 +15284,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_160</value>
+      <value>BATTLEMAPPART_18hydro_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -15292,7 +15292,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_159</value>
+      <value>BATTLEMAPPART_18hydro_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -15300,7 +15300,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -15308,7 +15308,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -15316,7 +15316,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -15324,7 +15324,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_156</value>
+      <value>BATTLEMAPPART_18hydro_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -15332,7 +15332,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_155</value>
+      <value>BATTLEMAPPART_18hydro_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -15340,7 +15340,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_233</value>
+      <value>BATTLEMAPPART_18hydro_FT_233</value>
     </entry>
     <entry>
       <key>
@@ -15348,7 +15348,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_175</value>
+      <value>BATTLEMAPPART_18hydro_FT_175</value>
     </entry>
     <entry>
       <key>
@@ -15356,7 +15356,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_160</value>
+      <value>BATTLEMAPPART_18hydro_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -15364,7 +15364,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_159</value>
+      <value>BATTLEMAPPART_18hydro_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -15372,7 +15372,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_174</value>
+      <value>BATTLEMAPPART_18hydro_FT_174</value>
     </entry>
     <entry>
       <key>
@@ -15380,7 +15380,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_156</value>
+      <value>BATTLEMAPPART_18hydro_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -15388,7 +15388,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_155</value>
+      <value>BATTLEMAPPART_18hydro_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -15396,7 +15396,7 @@
         <y>14</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_77</value>
+      <value>BATTLEMAPPART_18hydro_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -15404,7 +15404,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_173</value>
+      <value>BATTLEMAPPART_18hydro_FT_173</value>
     </entry>
     <entry>
       <key>
@@ -15412,7 +15412,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -15420,7 +15420,7 @@
         <y>15</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -15428,7 +15428,7 @@
         <y>15</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -15436,7 +15436,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_172</value>
+      <value>BATTLEMAPPART_18hydro_FT_172</value>
     </entry>
     <entry>
       <key>
@@ -15444,7 +15444,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_160</value>
+      <value>BATTLEMAPPART_18hydro_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -15452,7 +15452,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_159</value>
+      <value>BATTLEMAPPART_18hydro_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -15460,7 +15460,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_171</value>
+      <value>BATTLEMAPPART_18hydro_FT_171</value>
     </entry>
     <entry>
       <key>
@@ -15468,7 +15468,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_156</value>
+      <value>BATTLEMAPPART_18hydro_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -15476,7 +15476,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_155</value>
+      <value>BATTLEMAPPART_18hydro_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -15484,7 +15484,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -15492,7 +15492,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -15500,7 +15500,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -15508,7 +15508,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -15516,7 +15516,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_169</value>
+      <value>BATTLEMAPPART_18hydro_FT_169</value>
     </entry>
     <entry>
       <key>
@@ -15524,7 +15524,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_170</value>
+      <value>BATTLEMAPPART_18hydro_FT_170</value>
     </entry>
     <entry>
       <key>
@@ -15532,7 +15532,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -15540,7 +15540,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -15548,7 +15548,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -15556,7 +15556,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -15564,7 +15564,7 @@
         <y>4</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -15572,7 +15572,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -15580,7 +15580,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -15588,7 +15588,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -15596,7 +15596,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -15604,7 +15604,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -15612,7 +15612,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -15620,7 +15620,7 @@
         <y>6</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -15628,7 +15628,7 @@
         <y>6</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -15636,7 +15636,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -15644,7 +15644,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -15652,7 +15652,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -15660,7 +15660,7 @@
         <y>7</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_77</value>
+      <value>BATTLEMAPPART_18hydro_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -15668,7 +15668,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_158</value>
+      <value>BATTLEMAPPART_18hydro_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -15676,7 +15676,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_157</value>
+      <value>BATTLEMAPPART_18hydro_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -15684,7 +15684,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -15692,7 +15692,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_162</value>
+      <value>BATTLEMAPPART_18hydro_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -15700,7 +15700,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_161</value>
+      <value>BATTLEMAPPART_18hydro_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -15708,7 +15708,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -15716,7 +15716,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -15724,7 +15724,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -15732,7 +15732,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_233</value>
+      <value>BATTLEMAPPART_18hydro_FT_233</value>
     </entry>
     <entry>
       <key>
@@ -15740,7 +15740,7 @@
         <y>14</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_77</value>
+      <value>BATTLEMAPPART_18hydro_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -15748,7 +15748,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -15756,7 +15756,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -15764,7 +15764,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_232</value>
+      <value>BATTLEMAPPART_18hydro_FT_232</value>
     </entry>
     <entry>
       <key>
@@ -15772,7 +15772,7 @@
         <y>15</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -15780,7 +15780,7 @@
         <y>15</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -15788,7 +15788,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -15796,7 +15796,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -15804,7 +15804,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_233</value>
+      <value>BATTLEMAPPART_18hydro_FT_233</value>
     </entry>
     <entry>
       <key>
@@ -15812,7 +15812,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -15820,7 +15820,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -15828,7 +15828,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_233</value>
+      <value>BATTLEMAPPART_18hydro_FT_233</value>
     </entry>
     <entry>
       <key>
@@ -15836,7 +15836,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_165</value>
+      <value>BATTLEMAPPART_18hydro_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -15844,7 +15844,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_166</value>
+      <value>BATTLEMAPPART_18hydro_FT_166</value>
     </entry>
     <entry>
       <key>
@@ -15852,7 +15852,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -15860,7 +15860,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -15868,7 +15868,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -15876,7 +15876,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -15884,7 +15884,7 @@
         <y>4</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_238</value>
+      <value>BATTLEMAPPART_18hydro_FT_238</value>
     </entry>
     <entry>
       <key>
@@ -15892,7 +15892,7 @@
         <y>6</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -15900,7 +15900,7 @@
         <y>6</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -15908,7 +15908,7 @@
         <y>7</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_77</value>
+      <value>BATTLEMAPPART_18hydro_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -15916,7 +15916,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -15924,7 +15924,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_251</value>
+      <value>BATTLEMAPPART_18hydro_FT_251</value>
     </entry>
     <entry>
       <key>
@@ -15932,7 +15932,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -15940,7 +15940,7 @@
         <y>10</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -15948,7 +15948,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -15956,7 +15956,7 @@
         <y>10</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_251</value>
+      <value>BATTLEMAPPART_18hydro_FT_251</value>
     </entry>
     <entry>
       <key>
@@ -15964,7 +15964,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -15972,7 +15972,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -15980,7 +15980,7 @@
         <y>10</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_251</value>
+      <value>BATTLEMAPPART_18hydro_FT_251</value>
     </entry>
     <entry>
       <key>
@@ -15988,7 +15988,7 @@
         <y>10</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -15996,7 +15996,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_252</value>
+      <value>BATTLEMAPPART_18hydro_FT_252</value>
     </entry>
     <entry>
       <key>
@@ -16004,7 +16004,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16012,7 +16012,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16020,7 +16020,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16028,7 +16028,7 @@
         <y>11</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_252</value>
+      <value>BATTLEMAPPART_18hydro_FT_252</value>
     </entry>
     <entry>
       <key>
@@ -16036,7 +16036,7 @@
         <y>11</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16044,7 +16044,7 @@
         <y>11</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16052,7 +16052,7 @@
         <y>11</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_252</value>
+      <value>BATTLEMAPPART_18hydro_FT_252</value>
     </entry>
     <entry>
       <key>
@@ -16060,7 +16060,7 @@
         <y>11</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16068,7 +16068,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -16076,7 +16076,7 @@
         <y>14</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_77</value>
+      <value>BATTLEMAPPART_18hydro_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -16084,7 +16084,7 @@
         <y>15</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -16092,7 +16092,7 @@
         <y>15</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -16100,7 +16100,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_238</value>
+      <value>BATTLEMAPPART_18hydro_FT_238</value>
     </entry>
     <entry>
       <key>
@@ -16108,7 +16108,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -16116,7 +16116,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -16124,7 +16124,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -16132,7 +16132,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -16140,7 +16140,7 @@
         <y>4</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_241</value>
+      <value>BATTLEMAPPART_18hydro_FT_241</value>
     </entry>
     <entry>
       <key>
@@ -16148,7 +16148,7 @@
         <y>6</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -16156,7 +16156,7 @@
         <y>6</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -16164,7 +16164,7 @@
         <y>7</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_77</value>
+      <value>BATTLEMAPPART_18hydro_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -16172,7 +16172,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -16180,7 +16180,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_253</value>
+      <value>BATTLEMAPPART_18hydro_FT_253</value>
     </entry>
     <entry>
       <key>
@@ -16188,7 +16188,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16196,7 +16196,7 @@
         <y>10</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16204,7 +16204,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16212,7 +16212,7 @@
         <y>10</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_253</value>
+      <value>BATTLEMAPPART_18hydro_FT_253</value>
     </entry>
     <entry>
       <key>
@@ -16220,7 +16220,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16228,7 +16228,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16236,7 +16236,7 @@
         <y>10</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_253</value>
+      <value>BATTLEMAPPART_18hydro_FT_253</value>
     </entry>
     <entry>
       <key>
@@ -16244,7 +16244,7 @@
         <y>10</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16252,7 +16252,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16260,7 +16260,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16268,7 +16268,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16276,7 +16276,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16284,7 +16284,7 @@
         <y>11</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16292,7 +16292,7 @@
         <y>11</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16300,7 +16300,7 @@
         <y>11</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16308,7 +16308,7 @@
         <y>11</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16316,7 +16316,7 @@
         <y>11</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_250</value>
+      <value>BATTLEMAPPART_18hydro_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -16324,7 +16324,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -16332,7 +16332,7 @@
         <y>14</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_77</value>
+      <value>BATTLEMAPPART_18hydro_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -16340,7 +16340,7 @@
         <y>15</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -16348,7 +16348,7 @@
         <y>15</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -16356,7 +16356,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_241</value>
+      <value>BATTLEMAPPART_18hydro_FT_241</value>
     </entry>
     <entry>
       <key>
@@ -16364,7 +16364,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -16372,7 +16372,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -16380,7 +16380,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_167</value>
+      <value>BATTLEMAPPART_18hydro_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -16388,7 +16388,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_168</value>
+      <value>BATTLEMAPPART_18hydro_FT_168</value>
     </entry>
     <entry>
       <key>
@@ -16396,7 +16396,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -16404,7 +16404,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -16412,7 +16412,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -16420,7 +16420,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -16428,7 +16428,7 @@
         <y>4</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -16436,7 +16436,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -16444,7 +16444,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -16452,7 +16452,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -16460,7 +16460,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -16468,7 +16468,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -16476,7 +16476,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -16484,7 +16484,7 @@
         <y>6</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -16492,7 +16492,7 @@
         <y>6</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -16500,7 +16500,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -16508,7 +16508,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -16516,7 +16516,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -16524,7 +16524,7 @@
         <y>7</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_77</value>
+      <value>BATTLEMAPPART_18hydro_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -16532,7 +16532,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_156</value>
+      <value>BATTLEMAPPART_18hydro_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -16540,7 +16540,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_155</value>
+      <value>BATTLEMAPPART_18hydro_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -16548,7 +16548,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -16556,7 +16556,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_160</value>
+      <value>BATTLEMAPPART_18hydro_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -16564,7 +16564,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_159</value>
+      <value>BATTLEMAPPART_18hydro_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -16572,7 +16572,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -16580,7 +16580,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -16588,7 +16588,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -16596,7 +16596,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -16604,7 +16604,7 @@
         <y>14</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_77</value>
+      <value>BATTLEMAPPART_18hydro_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -16612,7 +16612,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -16620,7 +16620,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -16628,7 +16628,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_233</value>
+      <value>BATTLEMAPPART_18hydro_FT_233</value>
     </entry>
     <entry>
       <key>
@@ -16636,7 +16636,7 @@
         <y>15</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -16644,7 +16644,7 @@
         <y>15</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -16652,7 +16652,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -16660,7 +16660,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -16668,7 +16668,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_233</value>
+      <value>BATTLEMAPPART_18hydro_FT_233</value>
     </entry>
     <entry>
       <key>
@@ -16676,7 +16676,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_153</value>
+      <value>BATTLEMAPPART_18hydro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -16684,7 +16684,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_154</value>
+      <value>BATTLEMAPPART_18hydro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -16692,7 +16692,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -16700,7 +16700,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_163</value>
+      <value>BATTLEMAPPART_18hydro_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -16708,7 +16708,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_164</value>
+      <value>BATTLEMAPPART_18hydro_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -16716,7 +16716,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -16724,7 +16724,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -16732,7 +16732,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -16740,7 +16740,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -16748,7 +16748,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -16756,7 +16756,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -16764,7 +16764,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_162</value>
+      <value>BATTLEMAPPART_18hydro_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -16772,7 +16772,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_161</value>
+      <value>BATTLEMAPPART_18hydro_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -16780,7 +16780,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_194</value>
+      <value>BATTLEMAPPART_18hydro_FT_194</value>
     </entry>
     <entry>
       <key>
@@ -16788,7 +16788,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_158</value>
+      <value>BATTLEMAPPART_18hydro_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -16796,7 +16796,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_157</value>
+      <value>BATTLEMAPPART_18hydro_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -16804,7 +16804,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_193</value>
+      <value>BATTLEMAPPART_18hydro_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -16812,7 +16812,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_233</value>
+      <value>BATTLEMAPPART_18hydro_FT_233</value>
     </entry>
     <entry>
       <key>
@@ -16820,7 +16820,7 @@
         <y>6</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -16828,7 +16828,7 @@
         <y>6</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -16836,7 +16836,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_192</value>
+      <value>BATTLEMAPPART_18hydro_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -16844,7 +16844,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_162</value>
+      <value>BATTLEMAPPART_18hydro_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -16852,7 +16852,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_161</value>
+      <value>BATTLEMAPPART_18hydro_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -16860,7 +16860,7 @@
         <y>7</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_77</value>
+      <value>BATTLEMAPPART_18hydro_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -16868,7 +16868,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_191</value>
+      <value>BATTLEMAPPART_18hydro_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -16876,7 +16876,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_158</value>
+      <value>BATTLEMAPPART_18hydro_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -16884,7 +16884,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_157</value>
+      <value>BATTLEMAPPART_18hydro_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -16892,7 +16892,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_162</value>
+      <value>BATTLEMAPPART_18hydro_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -16900,7 +16900,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_161</value>
+      <value>BATTLEMAPPART_18hydro_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -16908,7 +16908,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -16916,7 +16916,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -16924,7 +16924,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -16932,7 +16932,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_158</value>
+      <value>BATTLEMAPPART_18hydro_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -16940,7 +16940,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_157</value>
+      <value>BATTLEMAPPART_18hydro_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -16948,7 +16948,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -16956,7 +16956,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_162</value>
+      <value>BATTLEMAPPART_18hydro_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -16964,7 +16964,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_161</value>
+      <value>BATTLEMAPPART_18hydro_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -16972,7 +16972,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_194</value>
+      <value>BATTLEMAPPART_18hydro_FT_194</value>
     </entry>
     <entry>
       <key>
@@ -16980,7 +16980,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_158</value>
+      <value>BATTLEMAPPART_18hydro_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -16988,7 +16988,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_157</value>
+      <value>BATTLEMAPPART_18hydro_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -16996,7 +16996,7 @@
         <y>14</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_77</value>
+      <value>BATTLEMAPPART_18hydro_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -17004,7 +17004,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_193</value>
+      <value>BATTLEMAPPART_18hydro_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -17012,7 +17012,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_233</value>
+      <value>BATTLEMAPPART_18hydro_FT_233</value>
     </entry>
     <entry>
       <key>
@@ -17020,7 +17020,7 @@
         <y>15</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -17028,7 +17028,7 @@
         <y>15</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -17036,7 +17036,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_192</value>
+      <value>BATTLEMAPPART_18hydro_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -17044,7 +17044,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_162</value>
+      <value>BATTLEMAPPART_18hydro_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -17052,7 +17052,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_161</value>
+      <value>BATTLEMAPPART_18hydro_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -17060,7 +17060,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_191</value>
+      <value>BATTLEMAPPART_18hydro_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -17068,7 +17068,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_158</value>
+      <value>BATTLEMAPPART_18hydro_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -17076,7 +17076,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_157</value>
+      <value>BATTLEMAPPART_18hydro_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -17084,7 +17084,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -17092,7 +17092,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -17100,7 +17100,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -17108,7 +17108,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -17116,7 +17116,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -17124,7 +17124,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -17132,7 +17132,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -17140,7 +17140,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -17148,7 +17148,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_190</value>
+      <value>BATTLEMAPPART_18hydro_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -17156,7 +17156,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_160</value>
+      <value>BATTLEMAPPART_18hydro_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -17164,7 +17164,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_159</value>
+      <value>BATTLEMAPPART_18hydro_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -17172,7 +17172,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_189</value>
+      <value>BATTLEMAPPART_18hydro_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -17180,7 +17180,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_156</value>
+      <value>BATTLEMAPPART_18hydro_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -17188,7 +17188,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_155</value>
+      <value>BATTLEMAPPART_18hydro_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -17196,7 +17196,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -17204,7 +17204,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17212,7 +17212,7 @@
         <y>6</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -17220,7 +17220,7 @@
         <y>6</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -17228,7 +17228,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_187</value>
+      <value>BATTLEMAPPART_18hydro_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -17236,7 +17236,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_160</value>
+      <value>BATTLEMAPPART_18hydro_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -17244,7 +17244,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_159</value>
+      <value>BATTLEMAPPART_18hydro_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -17252,7 +17252,7 @@
         <y>7</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_23</value>
+      <value>BATTLEMAPPART_18hydro_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -17260,7 +17260,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_186</value>
+      <value>BATTLEMAPPART_18hydro_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -17268,7 +17268,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_156</value>
+      <value>BATTLEMAPPART_18hydro_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -17276,7 +17276,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_155</value>
+      <value>BATTLEMAPPART_18hydro_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -17284,7 +17284,7 @@
         <y>8</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_85</value>
+      <value>BATTLEMAPPART_18hydro_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -17292,7 +17292,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -17300,7 +17300,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -17308,7 +17308,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17316,7 +17316,7 @@
         <y>9</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_85</value>
+      <value>BATTLEMAPPART_18hydro_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -17324,7 +17324,7 @@
         <y>10</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_85</value>
+      <value>BATTLEMAPPART_18hydro_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -17332,7 +17332,7 @@
         <y>11</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_85</value>
+      <value>BATTLEMAPPART_18hydro_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -17340,7 +17340,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -17348,7 +17348,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -17356,7 +17356,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17364,7 +17364,7 @@
         <y>12</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_85</value>
+      <value>BATTLEMAPPART_18hydro_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -17372,7 +17372,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_190</value>
+      <value>BATTLEMAPPART_18hydro_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -17380,7 +17380,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_160</value>
+      <value>BATTLEMAPPART_18hydro_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -17388,7 +17388,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_159</value>
+      <value>BATTLEMAPPART_18hydro_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -17396,7 +17396,7 @@
         <y>13</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_85</value>
+      <value>BATTLEMAPPART_18hydro_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -17404,7 +17404,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_189</value>
+      <value>BATTLEMAPPART_18hydro_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -17412,7 +17412,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_156</value>
+      <value>BATTLEMAPPART_18hydro_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -17420,7 +17420,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_155</value>
+      <value>BATTLEMAPPART_18hydro_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -17428,7 +17428,7 @@
         <y>14</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_23</value>
+      <value>BATTLEMAPPART_18hydro_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -17436,7 +17436,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -17444,7 +17444,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17452,7 +17452,7 @@
         <y>15</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -17460,7 +17460,7 @@
         <y>15</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -17468,7 +17468,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_187</value>
+      <value>BATTLEMAPPART_18hydro_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -17476,7 +17476,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_160</value>
+      <value>BATTLEMAPPART_18hydro_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -17484,7 +17484,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_159</value>
+      <value>BATTLEMAPPART_18hydro_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -17492,7 +17492,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_186</value>
+      <value>BATTLEMAPPART_18hydro_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -17500,7 +17500,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_156</value>
+      <value>BATTLEMAPPART_18hydro_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -17508,7 +17508,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_155</value>
+      <value>BATTLEMAPPART_18hydro_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -17516,7 +17516,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -17524,7 +17524,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -17532,7 +17532,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -17540,7 +17540,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -17548,7 +17548,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -17556,7 +17556,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -17564,7 +17564,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -17572,7 +17572,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -17580,7 +17580,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_185</value>
+      <value>BATTLEMAPPART_18hydro_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -17588,7 +17588,7 @@
         <y>4</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17596,7 +17596,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -17604,7 +17604,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -17612,7 +17612,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -17620,7 +17620,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_232</value>
+      <value>BATTLEMAPPART_18hydro_FT_232</value>
     </entry>
     <entry>
       <key>
@@ -17628,7 +17628,7 @@
         <y>6</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_169</value>
+      <value>BATTLEMAPPART_18hydro_FT_169</value>
     </entry>
     <entry>
       <key>
@@ -17636,7 +17636,7 @@
         <y>6</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_170</value>
+      <value>BATTLEMAPPART_18hydro_FT_170</value>
     </entry>
     <entry>
       <key>
@@ -17644,7 +17644,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -17652,7 +17652,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -17660,7 +17660,7 @@
         <y>7</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -17668,7 +17668,7 @@
         <y>7</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -17676,7 +17676,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_181</value>
+      <value>BATTLEMAPPART_18hydro_FT_181</value>
     </entry>
     <entry>
       <key>
@@ -17684,7 +17684,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17692,7 +17692,7 @@
         <y>8</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -17700,7 +17700,7 @@
         <y>8</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -17708,7 +17708,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -17716,7 +17716,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -17724,7 +17724,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17732,7 +17732,7 @@
         <y>9</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -17740,7 +17740,7 @@
         <y>9</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -17748,7 +17748,7 @@
         <y>10</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -17756,7 +17756,7 @@
         <y>10</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -17764,7 +17764,7 @@
         <y>11</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -17772,7 +17772,7 @@
         <y>11</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -17780,7 +17780,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -17788,7 +17788,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -17796,7 +17796,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17804,7 +17804,7 @@
         <y>12</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -17812,7 +17812,7 @@
         <y>12</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -17820,7 +17820,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_185</value>
+      <value>BATTLEMAPPART_18hydro_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -17828,7 +17828,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_233</value>
+      <value>BATTLEMAPPART_18hydro_FT_233</value>
     </entry>
     <entry>
       <key>
@@ -17836,7 +17836,7 @@
         <y>13</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -17844,7 +17844,7 @@
         <y>13</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -17852,7 +17852,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -17860,7 +17860,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -17868,7 +17868,7 @@
         <y>14</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -17876,7 +17876,7 @@
         <y>14</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -17884,7 +17884,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -17892,7 +17892,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_232</value>
+      <value>BATTLEMAPPART_18hydro_FT_232</value>
     </entry>
     <entry>
       <key>
@@ -17900,7 +17900,7 @@
         <y>15</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_165</value>
+      <value>BATTLEMAPPART_18hydro_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -17908,7 +17908,7 @@
         <y>15</y>
         <z>8</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_166</value>
+      <value>BATTLEMAPPART_18hydro_FT_166</value>
     </entry>
     <entry>
       <key>
@@ -17916,7 +17916,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -17924,7 +17924,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -17932,7 +17932,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_181</value>
+      <value>BATTLEMAPPART_18hydro_FT_181</value>
     </entry>
     <entry>
       <key>
@@ -17940,7 +17940,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17948,7 +17948,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -17956,7 +17956,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -17964,7 +17964,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -17972,7 +17972,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -17980,7 +17980,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -17988,7 +17988,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -17996,7 +17996,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -18004,7 +18004,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -18012,7 +18012,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_180</value>
+      <value>BATTLEMAPPART_18hydro_FT_180</value>
     </entry>
     <entry>
       <key>
@@ -18020,7 +18020,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_162</value>
+      <value>BATTLEMAPPART_18hydro_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -18028,7 +18028,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_161</value>
+      <value>BATTLEMAPPART_18hydro_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -18036,7 +18036,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_179</value>
+      <value>BATTLEMAPPART_18hydro_FT_179</value>
     </entry>
     <entry>
       <key>
@@ -18044,7 +18044,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_158</value>
+      <value>BATTLEMAPPART_18hydro_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -18052,7 +18052,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_157</value>
+      <value>BATTLEMAPPART_18hydro_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -18060,7 +18060,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -18068,7 +18068,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18076,7 +18076,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_177</value>
+      <value>BATTLEMAPPART_18hydro_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -18084,7 +18084,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_162</value>
+      <value>BATTLEMAPPART_18hydro_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -18092,7 +18092,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_161</value>
+      <value>BATTLEMAPPART_18hydro_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -18100,7 +18100,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_176</value>
+      <value>BATTLEMAPPART_18hydro_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -18108,7 +18108,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_158</value>
+      <value>BATTLEMAPPART_18hydro_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -18116,7 +18116,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_157</value>
+      <value>BATTLEMAPPART_18hydro_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -18124,7 +18124,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -18132,7 +18132,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -18140,7 +18140,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18148,7 +18148,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -18156,7 +18156,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -18164,7 +18164,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18172,7 +18172,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_180</value>
+      <value>BATTLEMAPPART_18hydro_FT_180</value>
     </entry>
     <entry>
       <key>
@@ -18180,7 +18180,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_162</value>
+      <value>BATTLEMAPPART_18hydro_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -18188,7 +18188,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_161</value>
+      <value>BATTLEMAPPART_18hydro_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -18196,7 +18196,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_179</value>
+      <value>BATTLEMAPPART_18hydro_FT_179</value>
     </entry>
     <entry>
       <key>
@@ -18204,7 +18204,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_158</value>
+      <value>BATTLEMAPPART_18hydro_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -18212,7 +18212,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_157</value>
+      <value>BATTLEMAPPART_18hydro_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -18220,7 +18220,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_188</value>
+      <value>BATTLEMAPPART_18hydro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -18228,7 +18228,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_233</value>
+      <value>BATTLEMAPPART_18hydro_FT_233</value>
     </entry>
     <entry>
       <key>
@@ -18236,7 +18236,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_177</value>
+      <value>BATTLEMAPPART_18hydro_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -18244,7 +18244,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_162</value>
+      <value>BATTLEMAPPART_18hydro_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -18252,7 +18252,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_161</value>
+      <value>BATTLEMAPPART_18hydro_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -18260,7 +18260,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_176</value>
+      <value>BATTLEMAPPART_18hydro_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -18268,7 +18268,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_158</value>
+      <value>BATTLEMAPPART_18hydro_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -18276,7 +18276,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_157</value>
+      <value>BATTLEMAPPART_18hydro_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -18284,7 +18284,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -18292,7 +18292,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -18300,7 +18300,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -18308,7 +18308,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -18316,7 +18316,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -18324,7 +18324,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -18332,7 +18332,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -18340,7 +18340,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -18348,7 +18348,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_175</value>
+      <value>BATTLEMAPPART_18hydro_FT_175</value>
     </entry>
     <entry>
       <key>
@@ -18356,7 +18356,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_160</value>
+      <value>BATTLEMAPPART_18hydro_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -18364,7 +18364,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_159</value>
+      <value>BATTLEMAPPART_18hydro_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -18372,7 +18372,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_174</value>
+      <value>BATTLEMAPPART_18hydro_FT_174</value>
     </entry>
     <entry>
       <key>
@@ -18380,7 +18380,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_156</value>
+      <value>BATTLEMAPPART_18hydro_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -18388,7 +18388,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_155</value>
+      <value>BATTLEMAPPART_18hydro_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -18396,7 +18396,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_173</value>
+      <value>BATTLEMAPPART_18hydro_FT_173</value>
     </entry>
     <entry>
       <key>
@@ -18404,7 +18404,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_231</value>
+      <value>BATTLEMAPPART_18hydro_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -18412,7 +18412,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_172</value>
+      <value>BATTLEMAPPART_18hydro_FT_172</value>
     </entry>
     <entry>
       <key>
@@ -18420,7 +18420,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_160</value>
+      <value>BATTLEMAPPART_18hydro_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -18428,7 +18428,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_159</value>
+      <value>BATTLEMAPPART_18hydro_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -18436,7 +18436,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_171</value>
+      <value>BATTLEMAPPART_18hydro_FT_171</value>
     </entry>
     <entry>
       <key>
@@ -18444,7 +18444,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_156</value>
+      <value>BATTLEMAPPART_18hydro_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -18452,7 +18452,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_155</value>
+      <value>BATTLEMAPPART_18hydro_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -18460,7 +18460,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -18468,7 +18468,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -18476,7 +18476,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18484,7 +18484,7 @@
         <y>10</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_239</value>
+      <value>BATTLEMAPPART_18hydro_FT_239</value>
     </entry>
     <entry>
       <key>
@@ -18492,7 +18492,7 @@
         <y>11</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_240</value>
+      <value>BATTLEMAPPART_18hydro_FT_240</value>
     </entry>
     <entry>
       <key>
@@ -18500,7 +18500,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_147</value>
+      <value>BATTLEMAPPART_18hydro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -18508,7 +18508,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_148</value>
+      <value>BATTLEMAPPART_18hydro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -18516,7 +18516,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_230</value>
+      <value>BATTLEMAPPART_18hydro_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18524,7 +18524,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_175</value>
+      <value>BATTLEMAPPART_18hydro_FT_175</value>
     </entry>
     <entry>
       <key>
@@ -18532,7 +18532,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_160</value>
+      <value>BATTLEMAPPART_18hydro_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -18540,7 +18540,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_159</value>
+      <value>BATTLEMAPPART_18hydro_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -18548,7 +18548,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_174</value>
+      <value>BATTLEMAPPART_18hydro_FT_174</value>
     </entry>
     <entry>
       <key>
@@ -18556,7 +18556,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_156</value>
+      <value>BATTLEMAPPART_18hydro_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -18564,7 +18564,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_155</value>
+      <value>BATTLEMAPPART_18hydro_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -18572,7 +18572,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_173</value>
+      <value>BATTLEMAPPART_18hydro_FT_173</value>
     </entry>
     <entry>
       <key>
@@ -18580,7 +18580,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_232</value>
+      <value>BATTLEMAPPART_18hydro_FT_232</value>
     </entry>
     <entry>
       <key>
@@ -18588,7 +18588,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_172</value>
+      <value>BATTLEMAPPART_18hydro_FT_172</value>
     </entry>
     <entry>
       <key>
@@ -18596,7 +18596,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_160</value>
+      <value>BATTLEMAPPART_18hydro_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -18604,7 +18604,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_159</value>
+      <value>BATTLEMAPPART_18hydro_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -18612,7 +18612,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_171</value>
+      <value>BATTLEMAPPART_18hydro_FT_171</value>
     </entry>
     <entry>
       <key>
@@ -18620,7 +18620,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_156</value>
+      <value>BATTLEMAPPART_18hydro_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -18628,7 +18628,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_155</value>
+      <value>BATTLEMAPPART_18hydro_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -18636,7 +18636,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -18644,7 +18644,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -18652,7 +18652,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_144</value>
+      <value>BATTLEMAPPART_18hydro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -18660,7 +18660,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_143</value>
+      <value>BATTLEMAPPART_18hydro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -18668,7 +18668,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_169</value>
+      <value>BATTLEMAPPART_18hydro_FT_169</value>
     </entry>
     <entry>
       <key>
@@ -18676,7 +18676,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_170</value>
+      <value>BATTLEMAPPART_18hydro_FT_170</value>
     </entry>
     <entry>
       <key>
@@ -18684,7 +18684,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_169</value>
+      <value>BATTLEMAPPART_18hydro_FT_169</value>
     </entry>
     <entry>
       <key>
@@ -18692,7 +18692,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_170</value>
+      <value>BATTLEMAPPART_18hydro_FT_170</value>
     </entry>
     <entry>
       <key>
@@ -18700,7 +18700,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -18708,7 +18708,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -18716,7 +18716,7 @@
         <y>4</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -18724,7 +18724,7 @@
         <y>4</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -18732,7 +18732,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -18740,7 +18740,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -18748,7 +18748,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -18756,7 +18756,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -18764,7 +18764,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -18772,7 +18772,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -18780,7 +18780,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -18788,7 +18788,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -18796,7 +18796,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -18804,7 +18804,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -18812,7 +18812,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -18820,7 +18820,7 @@
         <y>7</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -18828,7 +18828,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -18836,7 +18836,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -18844,7 +18844,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -18852,7 +18852,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -18860,7 +18860,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_165</value>
+      <value>BATTLEMAPPART_18hydro_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -18868,7 +18868,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_166</value>
+      <value>BATTLEMAPPART_18hydro_FT_166</value>
     </entry>
     <entry>
       <key>
@@ -18876,7 +18876,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -18884,7 +18884,7 @@
         <y>9</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -18892,7 +18892,7 @@
         <y>10</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -18900,7 +18900,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -18908,7 +18908,7 @@
         <y>11</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -18916,7 +18916,7 @@
         <y>11</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -18924,7 +18924,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_169</value>
+      <value>BATTLEMAPPART_18hydro_FT_169</value>
     </entry>
     <entry>
       <key>
@@ -18932,7 +18932,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_170</value>
+      <value>BATTLEMAPPART_18hydro_FT_170</value>
     </entry>
     <entry>
       <key>
@@ -18940,7 +18940,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -18948,7 +18948,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -18956,7 +18956,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -18964,7 +18964,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -18972,7 +18972,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -18980,7 +18980,7 @@
         <y>13</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -18988,7 +18988,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -18996,7 +18996,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -19004,7 +19004,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -19012,7 +19012,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -19020,7 +19020,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -19028,7 +19028,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -19036,7 +19036,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -19044,7 +19044,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -19052,7 +19052,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -19060,7 +19060,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -19068,7 +19068,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -19076,7 +19076,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -19084,7 +19084,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -19092,7 +19092,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -19100,7 +19100,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_150</value>
+      <value>BATTLEMAPPART_18hydro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -19108,7 +19108,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_149</value>
+      <value>BATTLEMAPPART_18hydro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -19116,7 +19116,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_165</value>
+      <value>BATTLEMAPPART_18hydro_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -19124,7 +19124,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_166</value>
+      <value>BATTLEMAPPART_18hydro_FT_166</value>
     </entry>
     <entry>
       <key>
@@ -19132,7 +19132,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_165</value>
+      <value>BATTLEMAPPART_18hydro_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -19140,7 +19140,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_18hydro_SC_166</value>
+      <value>BATTLEMAPPART_18hydro_FT_166</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

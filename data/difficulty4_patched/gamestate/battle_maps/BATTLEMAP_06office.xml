@@ -96,13 +96,13 @@
       <entry>BATTLEMAPPART_06office_RW_120</entry>
       <entry>BATTLEMAPPART_06office_RW_121</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_06office_SC_195</entry>
-      <entry>BATTLEMAPPART_06office_SC_196</entry>
-      <entry>BATTLEMAPPART_06office_SC_194</entry>
-      <entry>BATTLEMAPPART_06office_SC_193</entry>
-      <entry>BATTLEMAPPART_06office_SC_193</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_06office_FT195</entry>
+      <entry>BATTLEMAPPART_06office_FT196</entry>
+      <entry>BATTLEMAPPART_06office_FT194</entry>
+      <entry>BATTLEMAPPART_06office_FT193</entry>
+      <entry>BATTLEMAPPART_06office_FT193</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_06office>

@@ -27,9 +27,6 @@
     <ClCompile Include="battlemappart.cpp" />
     <ClCompile Include="battlemappart_type.cpp" />
     <ClCompile Include="battlemapsector.cpp" />
-    <ClCompile Include="battletileview\battletile.cpp" />
-    <ClCompile Include="battletileview\battletileobject.cpp" />
-    <ClCompile Include="battletileview\battletileobject_mappart.cpp" />
     <ClCompile Include="battle\aequipment.cpp" />
     <ClCompile Include="battle\battleunit.cpp" />
     <ClCompile Include="battle\battleunitanimation.cpp" />
@@ -63,14 +60,15 @@
     <ClCompile Include="rules\vehicle_type_rules.cpp" />
     <ClCompile Include="rules\vequipment_rules.cpp" />
     <ClCompile Include="savemanager.cpp" />
+    <ClCompile Include="tileview\collision.cpp" />
     <ClCompile Include="tileview\tile.cpp" />
     <ClCompile Include="tileview\tileobject.cpp" />
+    <ClCompile Include="tileview\tileobject_battlemappart.cpp" />
     <ClCompile Include="tileview\tileobject_doodad.cpp" />
     <ClCompile Include="tileview\tileobject_projectile.cpp" />
     <ClCompile Include="tileview\tileobject_scenery.cpp" />
     <ClCompile Include="tileview\tileobject_shadow.cpp" />
     <ClCompile Include="tileview\tileobject_vehicle.cpp" />
-    <ClCompile Include="tileview\voxel.cpp" />
     <ClCompile Include="ufopaedia.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -83,9 +81,6 @@
     <ClInclude Include="battlemapsector.h" />
     <ClInclude Include="battlemaptileset.h" />
     <ClInclude Include="battlemappart_type.h" />
-    <ClInclude Include="battletileview\battletile.h" />
-    <ClInclude Include="battletileview\battletileobject.h" />
-    <ClInclude Include="battletileview\battletileobject_mappart.h" />
     <ClInclude Include="battle\aequipment.h" />
     <ClInclude Include="battle\battleunit.h" />
     <ClInclude Include="battle\battleunitanimation.h" />
@@ -122,14 +117,15 @@
     <ClInclude Include="rules\vequipment_type.h" />
     <ClInclude Include="savemanager.h" />
     <ClInclude Include="stateobject.h" />
+    <ClInclude Include="tileview\collision.h" />
     <ClInclude Include="tileview\tile.h" />
     <ClInclude Include="tileview\tileobject.h" />
+    <ClInclude Include="tileview\tileobject_battlemappart.h" />
     <ClInclude Include="tileview\tileobject_doodad.h" />
     <ClInclude Include="tileview\tileobject_projectile.h" />
     <ClInclude Include="tileview\tileobject_scenery.h" />
     <ClInclude Include="tileview\tileobject_shadow.h" />
     <ClInclude Include="tileview\tileobject_vehicle.h" />
-    <ClInclude Include="tileview\voxel.h" />
     <ClInclude Include="ufopaedia.h" />
   </ItemGroup>
   <ItemGroup>

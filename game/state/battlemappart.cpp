@@ -1,9 +1,9 @@
 #include "game/state/battlemappart.h"
 #include "game/state/battlemappart_type.h"
-#include "game/state/battletileview/battletile.h"
-#include "game/state/battletileview/battletileobject_mappart.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "game/state/tileview/tile.h"
+#include "game/state/tileview/tile.h"
+#include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_scenery.h"
 
 namespace OpenApoc
@@ -73,7 +73,7 @@ void BattleMapPart::update(GameState &, unsigned int ticks)
 	{
 		switch (obj->getType())
 		{
-			case BattleTileObject::Type::Ground:
+			case TileObject::Type::Ground:
 				// FIXME: do something?
 				break;
 			default:

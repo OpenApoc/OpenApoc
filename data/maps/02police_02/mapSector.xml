@@ -6856,14 +6856,14 @@
       <value>BATTLEMAPPART_02police_RW_50</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -6871,7 +6871,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -6879,7 +6879,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_226</value>
+      <value>BATTLEMAPPART_02police_FT_226</value>
     </entry>
     <entry>
       <key>
@@ -6887,7 +6887,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -6895,7 +6895,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -6903,7 +6903,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_226</value>
+      <value>BATTLEMAPPART_02police_FT_226</value>
     </entry>
     <entry>
       <key>
@@ -6911,7 +6911,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -6919,7 +6919,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -6927,7 +6927,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -6935,7 +6935,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_226</value>
+      <value>BATTLEMAPPART_02police_FT_226</value>
     </entry>
     <entry>
       <key>
@@ -6943,7 +6943,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -6951,7 +6951,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -6959,7 +6959,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_226</value>
+      <value>BATTLEMAPPART_02police_FT_226</value>
     </entry>
     <entry>
       <key>
@@ -6967,7 +6967,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -6975,7 +6975,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -6983,7 +6983,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -6991,7 +6991,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -6999,7 +6999,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -7007,7 +7007,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7015,7 +7015,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7023,7 +7023,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7031,7 +7031,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7039,7 +7039,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7047,7 +7047,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7055,7 +7055,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -7063,7 +7063,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -7071,7 +7071,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -7079,7 +7079,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7087,7 +7087,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -7095,7 +7095,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_226</value>
+      <value>BATTLEMAPPART_02police_FT_226</value>
     </entry>
     <entry>
       <key>
@@ -7103,7 +7103,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7111,7 +7111,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7119,7 +7119,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7127,7 +7127,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -7135,7 +7135,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7143,7 +7143,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_93</value>
+      <value>BATTLEMAPPART_02police_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -7151,7 +7151,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_92</value>
+      <value>BATTLEMAPPART_02police_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -7159,7 +7159,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_88</value>
+      <value>BATTLEMAPPART_02police_FT_88</value>
     </entry>
     <entry>
       <key>
@@ -7167,7 +7167,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_110</value>
+      <value>BATTLEMAPPART_02police_FT_110</value>
     </entry>
     <entry>
       <key>
@@ -7175,7 +7175,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_89</value>
+      <value>BATTLEMAPPART_02police_FT_89</value>
     </entry>
     <entry>
       <key>
@@ -7183,7 +7183,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_89</value>
+      <value>BATTLEMAPPART_02police_FT_89</value>
     </entry>
     <entry>
       <key>
@@ -7191,7 +7191,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7199,7 +7199,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7207,7 +7207,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7215,7 +7215,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7223,7 +7223,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7231,7 +7231,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7239,7 +7239,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7247,7 +7247,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7255,7 +7255,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_90</value>
+      <value>BATTLEMAPPART_02police_FT_90</value>
     </entry>
     <entry>
       <key>
@@ -7263,7 +7263,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_110</value>
+      <value>BATTLEMAPPART_02police_FT_110</value>
     </entry>
     <entry>
       <key>
@@ -7271,7 +7271,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_226</value>
+      <value>BATTLEMAPPART_02police_FT_226</value>
     </entry>
     <entry>
       <key>
@@ -7279,7 +7279,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7287,7 +7287,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7295,7 +7295,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7303,7 +7303,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -7311,7 +7311,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_226</value>
+      <value>BATTLEMAPPART_02police_FT_226</value>
     </entry>
     <entry>
       <key>
@@ -7319,7 +7319,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -7327,7 +7327,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7335,7 +7335,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_91</value>
+      <value>BATTLEMAPPART_02police_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -7343,7 +7343,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_112</value>
+      <value>BATTLEMAPPART_02police_FT_112</value>
     </entry>
     <entry>
       <key>
@@ -7351,7 +7351,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_226</value>
+      <value>BATTLEMAPPART_02police_FT_226</value>
     </entry>
     <entry>
       <key>
@@ -7359,7 +7359,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7367,7 +7367,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7375,7 +7375,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7383,7 +7383,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7391,7 +7391,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7399,7 +7399,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_226</value>
+      <value>BATTLEMAPPART_02police_FT_226</value>
     </entry>
     <entry>
       <key>
@@ -7407,7 +7407,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7415,7 +7415,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_112</value>
+      <value>BATTLEMAPPART_02police_FT_112</value>
     </entry>
     <entry>
       <key>
@@ -7423,7 +7423,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7431,7 +7431,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7439,7 +7439,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7447,7 +7447,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7455,7 +7455,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7463,7 +7463,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7471,7 +7471,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7479,7 +7479,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7487,7 +7487,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_217</value>
+      <value>BATTLEMAPPART_02police_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -7495,7 +7495,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7503,7 +7503,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_216</value>
+      <value>BATTLEMAPPART_02police_FT_216</value>
     </entry>
     <entry>
       <key>
@@ -7511,7 +7511,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_114</value>
+      <value>BATTLEMAPPART_02police_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -7519,7 +7519,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_112</value>
+      <value>BATTLEMAPPART_02police_FT_112</value>
     </entry>
     <entry>
       <key>
@@ -7527,7 +7527,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7535,7 +7535,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7543,7 +7543,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -7551,7 +7551,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7559,7 +7559,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7567,7 +7567,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7575,7 +7575,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7583,7 +7583,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_226</value>
+      <value>BATTLEMAPPART_02police_FT_226</value>
     </entry>
     <entry>
       <key>
@@ -7591,7 +7591,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7599,7 +7599,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7607,7 +7607,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_112</value>
+      <value>BATTLEMAPPART_02police_FT_112</value>
     </entry>
     <entry>
       <key>
@@ -7615,7 +7615,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7623,7 +7623,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7631,7 +7631,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7639,7 +7639,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7647,7 +7647,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7655,7 +7655,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -7663,7 +7663,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7671,7 +7671,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7679,7 +7679,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -7687,7 +7687,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7695,7 +7695,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7703,7 +7703,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_226</value>
+      <value>BATTLEMAPPART_02police_FT_226</value>
     </entry>
     <entry>
       <key>
@@ -7711,7 +7711,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7719,7 +7719,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7727,7 +7727,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7735,7 +7735,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -7743,7 +7743,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7751,7 +7751,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7759,7 +7759,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7767,7 +7767,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7775,7 +7775,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7783,7 +7783,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7791,7 +7791,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7799,7 +7799,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -7807,7 +7807,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7815,7 +7815,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7823,7 +7823,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_226</value>
+      <value>BATTLEMAPPART_02police_FT_226</value>
     </entry>
     <entry>
       <key>
@@ -7831,7 +7831,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -7839,7 +7839,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -7847,7 +7847,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_226</value>
+      <value>BATTLEMAPPART_02police_FT_226</value>
     </entry>
     <entry>
       <key>
@@ -7855,7 +7855,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -7863,7 +7863,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7871,7 +7871,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7879,7 +7879,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7887,7 +7887,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7895,7 +7895,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7903,7 +7903,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_39</value>
+      <value>BATTLEMAPPART_02police_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -7911,7 +7911,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7919,7 +7919,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7927,7 +7927,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_14</value>
+      <value>BATTLEMAPPART_02police_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -7935,7 +7935,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7943,7 +7943,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_14</value>
+      <value>BATTLEMAPPART_02police_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -7951,7 +7951,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7959,7 +7959,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_14</value>
+      <value>BATTLEMAPPART_02police_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -7967,7 +7967,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7975,7 +7975,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -7983,7 +7983,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_110</value>
+      <value>BATTLEMAPPART_02police_FT_110</value>
     </entry>
     <entry>
       <key>
@@ -7991,7 +7991,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -7999,7 +7999,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -8007,7 +8007,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -8015,7 +8015,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_217</value>
+      <value>BATTLEMAPPART_02police_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -8023,7 +8023,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -8031,7 +8031,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_216</value>
+      <value>BATTLEMAPPART_02police_FT_216</value>
     </entry>
     <entry>
       <key>
@@ -8039,7 +8039,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8047,7 +8047,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8055,7 +8055,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -8063,7 +8063,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8071,7 +8071,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_37</value>
+      <value>BATTLEMAPPART_02police_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -8079,7 +8079,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -8087,7 +8087,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8095,7 +8095,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_14</value>
+      <value>BATTLEMAPPART_02police_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -8103,7 +8103,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -8111,7 +8111,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_14</value>
+      <value>BATTLEMAPPART_02police_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -8119,7 +8119,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -8127,7 +8127,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_14</value>
+      <value>BATTLEMAPPART_02police_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -8135,7 +8135,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -8143,7 +8143,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_226</value>
+      <value>BATTLEMAPPART_02police_FT_226</value>
     </entry>
     <entry>
       <key>
@@ -8151,7 +8151,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_110</value>
+      <value>BATTLEMAPPART_02police_FT_110</value>
     </entry>
     <entry>
       <key>
@@ -8159,7 +8159,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8167,7 +8167,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8175,7 +8175,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8183,7 +8183,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -8191,7 +8191,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8199,7 +8199,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -8207,7 +8207,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8215,7 +8215,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8223,7 +8223,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_36</value>
+      <value>BATTLEMAPPART_02police_FT_36</value>
     </entry>
     <entry>
       <key>
@@ -8231,7 +8231,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -8239,7 +8239,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -8247,7 +8247,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_14</value>
+      <value>BATTLEMAPPART_02police_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -8255,7 +8255,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -8263,7 +8263,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_14</value>
+      <value>BATTLEMAPPART_02police_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -8271,7 +8271,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8279,7 +8279,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_14</value>
+      <value>BATTLEMAPPART_02police_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -8287,7 +8287,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8295,7 +8295,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8303,7 +8303,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_112</value>
+      <value>BATTLEMAPPART_02police_FT_112</value>
     </entry>
     <entry>
       <key>
@@ -8311,7 +8311,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8319,7 +8319,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_224</value>
+      <value>BATTLEMAPPART_02police_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -8327,7 +8327,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_226</value>
+      <value>BATTLEMAPPART_02police_FT_226</value>
     </entry>
     <entry>
       <key>
@@ -8335,7 +8335,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8343,7 +8343,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8351,7 +8351,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8359,7 +8359,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8367,7 +8367,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -8375,7 +8375,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -8383,7 +8383,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8391,7 +8391,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8399,7 +8399,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8407,7 +8407,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8415,7 +8415,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -8423,7 +8423,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_112</value>
+      <value>BATTLEMAPPART_02police_FT_112</value>
     </entry>
     <entry>
       <key>
@@ -8431,7 +8431,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8439,7 +8439,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_225</value>
+      <value>BATTLEMAPPART_02police_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -8447,7 +8447,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -8455,7 +8455,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_02police_SC_223</value>
+      <value>BATTLEMAPPART_02police_FT_223</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

@@ -150,13 +150,13 @@
       <entry>BATTLEMAPPART_28slums_RW_87</entry>
       <entry>BATTLEMAPPART_28slums_RW_88</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_28slums_SC_229</entry>
-      <entry>BATTLEMAPPART_28slums_SC_230</entry>
-      <entry>BATTLEMAPPART_28slums_SC_231</entry>
-      <entry>BATTLEMAPPART_28slums_SC_232</entry>
-      <entry>BATTLEMAPPART_28slums_SC_223</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_28slums_FT229</entry>
+      <entry>BATTLEMAPPART_28slums_FT230</entry>
+      <entry>BATTLEMAPPART_28slums_FT231</entry>
+      <entry>BATTLEMAPPART_28slums_FT232</entry>
+      <entry>BATTLEMAPPART_28slums_FT223</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_28slums>

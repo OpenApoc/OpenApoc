@@ -28666,14 +28666,14 @@
       <value>BATTLEMAPPART_05rescue_RW_34</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28681,7 +28681,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28689,7 +28689,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28697,7 +28697,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28705,7 +28705,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28713,7 +28713,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28721,7 +28721,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28729,7 +28729,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28737,7 +28737,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28745,7 +28745,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28753,7 +28753,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28761,7 +28761,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28769,7 +28769,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28777,7 +28777,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28785,7 +28785,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28793,7 +28793,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28801,7 +28801,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28809,7 +28809,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28817,7 +28817,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28825,7 +28825,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28833,7 +28833,7 @@
         <y>25</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28841,7 +28841,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28849,7 +28849,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28857,7 +28857,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28865,7 +28865,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28873,7 +28873,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28881,7 +28881,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28889,7 +28889,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28897,7 +28897,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28905,7 +28905,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28913,7 +28913,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28921,7 +28921,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28929,7 +28929,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_12</value>
+      <value>BATTLEMAPPART_05rescue_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -28937,7 +28937,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_12</value>
+      <value>BATTLEMAPPART_05rescue_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -28945,7 +28945,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28953,7 +28953,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28961,7 +28961,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28969,7 +28969,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28977,7 +28977,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28985,7 +28985,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -28993,7 +28993,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29001,7 +29001,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29009,7 +29009,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29017,7 +29017,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29025,7 +29025,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29033,7 +29033,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29041,7 +29041,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_64</value>
+      <value>BATTLEMAPPART_05rescue_FT_64</value>
     </entry>
     <entry>
       <key>
@@ -29049,7 +29049,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_61</value>
+      <value>BATTLEMAPPART_05rescue_FT_61</value>
     </entry>
     <entry>
       <key>
@@ -29057,7 +29057,7 @@
         <y>9</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_58</value>
+      <value>BATTLEMAPPART_05rescue_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -29065,7 +29065,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_49</value>
+      <value>BATTLEMAPPART_05rescue_FT_49</value>
     </entry>
     <entry>
       <key>
@@ -29073,7 +29073,7 @@
         <y>11</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_48</value>
+      <value>BATTLEMAPPART_05rescue_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -29081,7 +29081,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_47</value>
+      <value>BATTLEMAPPART_05rescue_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -29089,7 +29089,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_49</value>
+      <value>BATTLEMAPPART_05rescue_FT_49</value>
     </entry>
     <entry>
       <key>
@@ -29097,7 +29097,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_48</value>
+      <value>BATTLEMAPPART_05rescue_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -29105,7 +29105,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_47</value>
+      <value>BATTLEMAPPART_05rescue_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -29113,7 +29113,7 @@
         <y>20</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_49</value>
+      <value>BATTLEMAPPART_05rescue_FT_49</value>
     </entry>
     <entry>
       <key>
@@ -29121,7 +29121,7 @@
         <y>21</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_48</value>
+      <value>BATTLEMAPPART_05rescue_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -29129,7 +29129,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29137,7 +29137,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29145,7 +29145,7 @@
         <y>22</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29153,7 +29153,7 @@
         <y>22</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_47</value>
+      <value>BATTLEMAPPART_05rescue_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -29161,7 +29161,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29169,7 +29169,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29177,7 +29177,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29185,7 +29185,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_98</value>
+      <value>BATTLEMAPPART_05rescue_FT_98</value>
     </entry>
     <entry>
       <key>
@@ -29193,7 +29193,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_53</value>
+      <value>BATTLEMAPPART_05rescue_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -29201,7 +29201,7 @@
         <y>7</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_52</value>
+      <value>BATTLEMAPPART_05rescue_FT_52</value>
     </entry>
     <entry>
       <key>
@@ -29209,7 +29209,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_61</value>
+      <value>BATTLEMAPPART_05rescue_FT_61</value>
     </entry>
     <entry>
       <key>
@@ -29217,7 +29217,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_60</value>
+      <value>BATTLEMAPPART_05rescue_FT_60</value>
     </entry>
     <entry>
       <key>
@@ -29225,7 +29225,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_98</value>
+      <value>BATTLEMAPPART_05rescue_FT_98</value>
     </entry>
     <entry>
       <key>
@@ -29233,7 +29233,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29241,7 +29241,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_52</value>
+      <value>BATTLEMAPPART_05rescue_FT_52</value>
     </entry>
     <entry>
       <key>
@@ -29249,7 +29249,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29257,7 +29257,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29265,7 +29265,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29273,7 +29273,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_51</value>
+      <value>BATTLEMAPPART_05rescue_FT_51</value>
     </entry>
     <entry>
       <key>
@@ -29281,7 +29281,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29289,7 +29289,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29297,7 +29297,7 @@
         <y>21</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29305,7 +29305,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29313,7 +29313,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29321,7 +29321,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29329,7 +29329,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_98</value>
+      <value>BATTLEMAPPART_05rescue_FT_98</value>
     </entry>
     <entry>
       <key>
@@ -29337,7 +29337,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_98</value>
+      <value>BATTLEMAPPART_05rescue_FT_98</value>
     </entry>
     <entry>
       <key>
@@ -29345,7 +29345,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_53</value>
+      <value>BATTLEMAPPART_05rescue_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -29353,7 +29353,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_98</value>
+      <value>BATTLEMAPPART_05rescue_FT_98</value>
     </entry>
     <entry>
       <key>
@@ -29361,7 +29361,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_60</value>
+      <value>BATTLEMAPPART_05rescue_FT_60</value>
     </entry>
     <entry>
       <key>
@@ -29369,7 +29369,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29377,7 +29377,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29385,7 +29385,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29393,7 +29393,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_73</value>
+      <value>BATTLEMAPPART_05rescue_FT_73</value>
     </entry>
     <entry>
       <key>
@@ -29401,7 +29401,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29409,7 +29409,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29417,7 +29417,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29425,7 +29425,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29433,7 +29433,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29441,7 +29441,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29449,7 +29449,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_98</value>
+      <value>BATTLEMAPPART_05rescue_FT_98</value>
     </entry>
     <entry>
       <key>
@@ -29457,7 +29457,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_63</value>
+      <value>BATTLEMAPPART_05rescue_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -29465,7 +29465,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_52</value>
+      <value>BATTLEMAPPART_05rescue_FT_52</value>
     </entry>
     <entry>
       <key>
@@ -29473,7 +29473,7 @@
         <y>7</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_62</value>
+      <value>BATTLEMAPPART_05rescue_FT_62</value>
     </entry>
     <entry>
       <key>
@@ -29481,7 +29481,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_61</value>
+      <value>BATTLEMAPPART_05rescue_FT_61</value>
     </entry>
     <entry>
       <key>
@@ -29489,7 +29489,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_49</value>
+      <value>BATTLEMAPPART_05rescue_FT_49</value>
     </entry>
     <entry>
       <key>
@@ -29497,7 +29497,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29505,7 +29505,7 @@
         <y>11</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_48</value>
+      <value>BATTLEMAPPART_05rescue_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -29513,7 +29513,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_47</value>
+      <value>BATTLEMAPPART_05rescue_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -29521,7 +29521,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29529,7 +29529,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29537,7 +29537,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_49</value>
+      <value>BATTLEMAPPART_05rescue_FT_49</value>
     </entry>
     <entry>
       <key>
@@ -29545,7 +29545,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_48</value>
+      <value>BATTLEMAPPART_05rescue_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -29553,7 +29553,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29561,7 +29561,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_47</value>
+      <value>BATTLEMAPPART_05rescue_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -29569,7 +29569,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29577,7 +29577,7 @@
         <y>20</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_49</value>
+      <value>BATTLEMAPPART_05rescue_FT_49</value>
     </entry>
     <entry>
       <key>
@@ -29585,7 +29585,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29593,7 +29593,7 @@
         <y>21</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_48</value>
+      <value>BATTLEMAPPART_05rescue_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -29601,7 +29601,7 @@
         <y>22</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_47</value>
+      <value>BATTLEMAPPART_05rescue_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -29609,7 +29609,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_38</value>
+      <value>BATTLEMAPPART_05rescue_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -29617,7 +29617,7 @@
         <y>25</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_38</value>
+      <value>BATTLEMAPPART_05rescue_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -29625,7 +29625,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_38</value>
+      <value>BATTLEMAPPART_05rescue_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -29633,7 +29633,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_38</value>
+      <value>BATTLEMAPPART_05rescue_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -29641,7 +29641,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29649,7 +29649,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29657,7 +29657,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29665,7 +29665,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_98</value>
+      <value>BATTLEMAPPART_05rescue_FT_98</value>
     </entry>
     <entry>
       <key>
@@ -29673,7 +29673,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_98</value>
+      <value>BATTLEMAPPART_05rescue_FT_98</value>
     </entry>
     <entry>
       <key>
@@ -29681,7 +29681,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_60</value>
+      <value>BATTLEMAPPART_05rescue_FT_60</value>
     </entry>
     <entry>
       <key>
@@ -29689,7 +29689,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29697,7 +29697,7 @@
         <y>11</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29705,7 +29705,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29713,7 +29713,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29721,7 +29721,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_53</value>
+      <value>BATTLEMAPPART_05rescue_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -29729,7 +29729,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29737,7 +29737,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29745,7 +29745,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -29753,7 +29753,7 @@
         <y>21</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_52</value>
+      <value>BATTLEMAPPART_05rescue_FT_52</value>
     </entry>
     <entry>
       <key>
@@ -29761,7 +29761,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_38</value>
+      <value>BATTLEMAPPART_05rescue_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -29769,7 +29769,7 @@
         <y>25</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_38</value>
+      <value>BATTLEMAPPART_05rescue_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -29777,7 +29777,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_38</value>
+      <value>BATTLEMAPPART_05rescue_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -29785,7 +29785,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_38</value>
+      <value>BATTLEMAPPART_05rescue_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -29793,7 +29793,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29801,7 +29801,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29809,7 +29809,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29817,7 +29817,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_38</value>
+      <value>BATTLEMAPPART_05rescue_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -29825,7 +29825,7 @@
         <y>25</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_38</value>
+      <value>BATTLEMAPPART_05rescue_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -29833,7 +29833,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_38</value>
+      <value>BATTLEMAPPART_05rescue_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -29841,7 +29841,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_38</value>
+      <value>BATTLEMAPPART_05rescue_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -29849,7 +29849,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29857,7 +29857,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29865,7 +29865,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29873,7 +29873,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_65</value>
+      <value>BATTLEMAPPART_05rescue_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -29881,7 +29881,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_51</value>
+      <value>BATTLEMAPPART_05rescue_FT_51</value>
     </entry>
     <entry>
       <key>
@@ -29889,7 +29889,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_65</value>
+      <value>BATTLEMAPPART_05rescue_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -29897,7 +29897,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_51</value>
+      <value>BATTLEMAPPART_05rescue_FT_51</value>
     </entry>
     <entry>
       <key>
@@ -29905,7 +29905,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29913,7 +29913,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29921,7 +29921,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29929,7 +29929,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29937,7 +29937,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_64</value>
+      <value>BATTLEMAPPART_05rescue_FT_64</value>
     </entry>
     <entry>
       <key>
@@ -29945,7 +29945,7 @@
         <y>20</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_63</value>
+      <value>BATTLEMAPPART_05rescue_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -29953,7 +29953,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_62</value>
+      <value>BATTLEMAPPART_05rescue_FT_62</value>
     </entry>
     <entry>
       <key>
@@ -29961,7 +29961,7 @@
         <y>25</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_38</value>
+      <value>BATTLEMAPPART_05rescue_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -29969,7 +29969,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_38</value>
+      <value>BATTLEMAPPART_05rescue_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -29977,7 +29977,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_38</value>
+      <value>BATTLEMAPPART_05rescue_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -29985,7 +29985,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -29993,7 +29993,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30001,7 +30001,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30009,7 +30009,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30017,7 +30017,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30025,7 +30025,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_107</value>
+      <value>BATTLEMAPPART_05rescue_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -30033,7 +30033,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30041,7 +30041,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30049,7 +30049,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30057,7 +30057,7 @@
         <y>13</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30065,7 +30065,7 @@
         <y>13</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30073,7 +30073,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30081,7 +30081,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_107</value>
+      <value>BATTLEMAPPART_05rescue_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -30089,7 +30089,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30097,7 +30097,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30105,7 +30105,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30113,7 +30113,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30121,7 +30121,7 @@
         <y>14</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30129,7 +30129,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30137,7 +30137,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_79</value>
+      <value>BATTLEMAPPART_05rescue_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -30145,7 +30145,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_40</value>
+      <value>BATTLEMAPPART_05rescue_FT_40</value>
     </entry>
     <entry>
       <key>
@@ -30153,7 +30153,7 @@
         <y>19</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_43</value>
+      <value>BATTLEMAPPART_05rescue_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -30161,7 +30161,7 @@
         <y>20</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_53</value>
+      <value>BATTLEMAPPART_05rescue_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -30169,7 +30169,7 @@
         <y>21</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_43</value>
+      <value>BATTLEMAPPART_05rescue_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -30177,7 +30177,7 @@
         <y>22</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_43</value>
+      <value>BATTLEMAPPART_05rescue_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -30185,7 +30185,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30193,7 +30193,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30201,7 +30201,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30209,7 +30209,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30217,7 +30217,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30225,7 +30225,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_107</value>
+      <value>BATTLEMAPPART_05rescue_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -30233,7 +30233,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30241,7 +30241,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30249,7 +30249,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30257,7 +30257,7 @@
         <y>13</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30265,7 +30265,7 @@
         <y>13</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30273,7 +30273,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30281,7 +30281,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_107</value>
+      <value>BATTLEMAPPART_05rescue_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -30289,7 +30289,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30297,7 +30297,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30305,7 +30305,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30313,7 +30313,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30321,7 +30321,7 @@
         <y>14</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_108</value>
+      <value>BATTLEMAPPART_05rescue_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -30329,7 +30329,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30337,7 +30337,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_79</value>
+      <value>BATTLEMAPPART_05rescue_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -30345,7 +30345,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30353,7 +30353,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30361,7 +30361,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30369,7 +30369,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_65</value>
+      <value>BATTLEMAPPART_05rescue_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -30377,7 +30377,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -30385,7 +30385,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_65</value>
+      <value>BATTLEMAPPART_05rescue_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -30393,7 +30393,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_51</value>
+      <value>BATTLEMAPPART_05rescue_FT_51</value>
     </entry>
     <entry>
       <key>
@@ -30401,7 +30401,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30409,7 +30409,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30417,7 +30417,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30425,7 +30425,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30433,7 +30433,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30441,7 +30441,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30449,7 +30449,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30457,7 +30457,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_78</value>
+      <value>BATTLEMAPPART_05rescue_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -30465,7 +30465,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_78</value>
+      <value>BATTLEMAPPART_05rescue_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -30473,7 +30473,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_42</value>
+      <value>BATTLEMAPPART_05rescue_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -30481,7 +30481,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_64</value>
+      <value>BATTLEMAPPART_05rescue_FT_64</value>
     </entry>
     <entry>
       <key>
@@ -30489,7 +30489,7 @@
         <y>20</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_63</value>
+      <value>BATTLEMAPPART_05rescue_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -30497,7 +30497,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_62</value>
+      <value>BATTLEMAPPART_05rescue_FT_62</value>
     </entry>
     <entry>
       <key>
@@ -30505,7 +30505,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30513,7 +30513,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30521,7 +30521,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30529,7 +30529,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_52</value>
+      <value>BATTLEMAPPART_05rescue_FT_52</value>
     </entry>
     <entry>
       <key>
@@ -30537,7 +30537,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30545,7 +30545,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30553,7 +30553,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30561,7 +30561,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_65</value>
+      <value>BATTLEMAPPART_05rescue_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -30569,7 +30569,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_50</value>
+      <value>BATTLEMAPPART_05rescue_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -30577,7 +30577,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_65</value>
+      <value>BATTLEMAPPART_05rescue_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -30585,7 +30585,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_51</value>
+      <value>BATTLEMAPPART_05rescue_FT_51</value>
     </entry>
     <entry>
       <key>
@@ -30593,7 +30593,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_42</value>
+      <value>BATTLEMAPPART_05rescue_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -30601,7 +30601,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30609,7 +30609,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30617,7 +30617,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_42</value>
+      <value>BATTLEMAPPART_05rescue_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -30625,7 +30625,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_37</value>
+      <value>BATTLEMAPPART_05rescue_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -30633,7 +30633,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_37</value>
+      <value>BATTLEMAPPART_05rescue_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -30641,7 +30641,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_33</value>
+      <value>BATTLEMAPPART_05rescue_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -30649,7 +30649,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_37</value>
+      <value>BATTLEMAPPART_05rescue_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -30657,7 +30657,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_33</value>
+      <value>BATTLEMAPPART_05rescue_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -30665,7 +30665,7 @@
         <y>7</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_37</value>
+      <value>BATTLEMAPPART_05rescue_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -30673,7 +30673,7 @@
         <y>7</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_33</value>
+      <value>BATTLEMAPPART_05rescue_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -30681,7 +30681,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_37</value>
+      <value>BATTLEMAPPART_05rescue_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -30689,7 +30689,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_37</value>
+      <value>BATTLEMAPPART_05rescue_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -30697,7 +30697,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_33</value>
+      <value>BATTLEMAPPART_05rescue_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -30705,7 +30705,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_37</value>
+      <value>BATTLEMAPPART_05rescue_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -30713,7 +30713,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_33</value>
+      <value>BATTLEMAPPART_05rescue_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -30721,7 +30721,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_37</value>
+      <value>BATTLEMAPPART_05rescue_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -30729,7 +30729,7 @@
         <y>8</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_33</value>
+      <value>BATTLEMAPPART_05rescue_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -30737,7 +30737,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_37</value>
+      <value>BATTLEMAPPART_05rescue_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -30745,7 +30745,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_37</value>
+      <value>BATTLEMAPPART_05rescue_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -30753,7 +30753,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_33</value>
+      <value>BATTLEMAPPART_05rescue_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -30761,7 +30761,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_37</value>
+      <value>BATTLEMAPPART_05rescue_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -30769,7 +30769,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_33</value>
+      <value>BATTLEMAPPART_05rescue_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -30777,7 +30777,7 @@
         <y>9</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_37</value>
+      <value>BATTLEMAPPART_05rescue_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -30785,7 +30785,7 @@
         <y>9</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_33</value>
+      <value>BATTLEMAPPART_05rescue_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -30793,7 +30793,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_37</value>
+      <value>BATTLEMAPPART_05rescue_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -30801,7 +30801,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_37</value>
+      <value>BATTLEMAPPART_05rescue_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -30809,7 +30809,7 @@
         <y>10</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_33</value>
+      <value>BATTLEMAPPART_05rescue_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -30817,7 +30817,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_37</value>
+      <value>BATTLEMAPPART_05rescue_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -30825,7 +30825,7 @@
         <y>10</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_33</value>
+      <value>BATTLEMAPPART_05rescue_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -30833,7 +30833,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_37</value>
+      <value>BATTLEMAPPART_05rescue_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -30841,7 +30841,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_33</value>
+      <value>BATTLEMAPPART_05rescue_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -30849,7 +30849,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_75</value>
+      <value>BATTLEMAPPART_05rescue_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -30857,7 +30857,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_40</value>
+      <value>BATTLEMAPPART_05rescue_FT_40</value>
     </entry>
     <entry>
       <key>
@@ -30865,7 +30865,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_64</value>
+      <value>BATTLEMAPPART_05rescue_FT_64</value>
     </entry>
     <entry>
       <key>
@@ -30873,7 +30873,7 @@
         <y>20</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_63</value>
+      <value>BATTLEMAPPART_05rescue_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -30881,7 +30881,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_62</value>
+      <value>BATTLEMAPPART_05rescue_FT_62</value>
     </entry>
     <entry>
       <key>
@@ -30889,7 +30889,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_12</value>
+      <value>BATTLEMAPPART_05rescue_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -30897,7 +30897,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_51</value>
+      <value>BATTLEMAPPART_05rescue_FT_51</value>
     </entry>
     <entry>
       <key>
@@ -30905,7 +30905,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_12</value>
+      <value>BATTLEMAPPART_05rescue_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -30913,7 +30913,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_40</value>
+      <value>BATTLEMAPPART_05rescue_FT_40</value>
     </entry>
     <entry>
       <key>
@@ -30921,7 +30921,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30929,7 +30929,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30937,7 +30937,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30945,7 +30945,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30953,7 +30953,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30961,7 +30961,7 @@
         <y>22</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30969,7 +30969,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30977,7 +30977,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30985,7 +30985,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -30993,7 +30993,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31001,7 +31001,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_12</value>
+      <value>BATTLEMAPPART_05rescue_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -31009,7 +31009,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_12</value>
+      <value>BATTLEMAPPART_05rescue_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -31017,7 +31017,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_12</value>
+      <value>BATTLEMAPPART_05rescue_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -31025,7 +31025,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31033,7 +31033,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31041,7 +31041,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31049,7 +31049,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31057,7 +31057,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31065,7 +31065,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31073,7 +31073,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31081,7 +31081,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31089,7 +31089,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31097,7 +31097,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31105,7 +31105,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31113,7 +31113,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31121,7 +31121,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31129,7 +31129,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31137,7 +31137,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31145,7 +31145,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31153,7 +31153,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31161,7 +31161,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31169,7 +31169,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31177,7 +31177,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31185,7 +31185,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31193,7 +31193,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31201,7 +31201,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31209,7 +31209,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31217,7 +31217,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31225,7 +31225,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31233,7 +31233,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31241,7 +31241,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31249,7 +31249,7 @@
         <y>25</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31257,7 +31257,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31265,7 +31265,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31273,7 +31273,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31281,7 +31281,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31289,7 +31289,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31297,7 +31297,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31305,7 +31305,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31313,7 +31313,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31321,7 +31321,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31329,7 +31329,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31337,7 +31337,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31345,7 +31345,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31353,7 +31353,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31361,7 +31361,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31369,7 +31369,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31377,7 +31377,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31385,7 +31385,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31393,7 +31393,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31401,7 +31401,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31409,7 +31409,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31417,7 +31417,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31425,7 +31425,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31433,7 +31433,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31441,7 +31441,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31449,7 +31449,7 @@
         <y>25</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31457,7 +31457,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31465,7 +31465,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31473,7 +31473,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -31481,7 +31481,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_05rescue_SC_54</value>
+      <value>BATTLEMAPPART_05rescue_FT_54</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

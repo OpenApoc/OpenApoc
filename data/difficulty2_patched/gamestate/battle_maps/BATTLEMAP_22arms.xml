@@ -111,13 +111,13 @@
       <entry>BATTLEMAPPART_22arms_RW_64</entry>
       <entry>BATTLEMAPPART_22arms_RW_65</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_22arms_SC_245</entry>
-      <entry>BATTLEMAPPART_22arms_SC_246</entry>
-      <entry>BATTLEMAPPART_22arms_SC_242</entry>
-      <entry>BATTLEMAPPART_22arms_SC_237</entry>
-      <entry>BATTLEMAPPART_22arms_SC_233</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_22arms_FT245</entry>
+      <entry>BATTLEMAPPART_22arms_FT246</entry>
+      <entry>BATTLEMAPPART_22arms_FT242</entry>
+      <entry>BATTLEMAPPART_22arms_FT237</entry>
+      <entry>BATTLEMAPPART_22arms_FT233</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_22arms>

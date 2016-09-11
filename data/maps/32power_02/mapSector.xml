@@ -13953,14 +13953,14 @@
       <value>BATTLEMAPPART_32power_RW_25</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -13968,7 +13968,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -13976,7 +13976,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -13984,7 +13984,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -13992,7 +13992,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14000,7 +14000,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14008,7 +14008,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14016,7 +14016,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14024,7 +14024,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14032,7 +14032,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14040,7 +14040,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14048,7 +14048,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14056,7 +14056,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14064,7 +14064,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14072,7 +14072,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14080,7 +14080,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14088,7 +14088,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14096,7 +14096,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14104,7 +14104,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14112,7 +14112,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14120,7 +14120,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14128,7 +14128,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14136,7 +14136,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14144,7 +14144,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14152,7 +14152,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14160,7 +14160,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14168,7 +14168,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14176,7 +14176,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14184,7 +14184,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14192,7 +14192,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14200,7 +14200,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14208,7 +14208,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14216,7 +14216,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14224,7 +14224,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14232,7 +14232,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14240,7 +14240,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14248,7 +14248,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14256,7 +14256,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14264,7 +14264,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14272,7 +14272,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14280,7 +14280,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14288,7 +14288,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14296,7 +14296,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14304,7 +14304,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14312,7 +14312,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14320,7 +14320,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14328,7 +14328,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14336,7 +14336,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14344,7 +14344,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14352,7 +14352,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14360,7 +14360,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14368,7 +14368,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14376,7 +14376,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14384,7 +14384,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14392,7 +14392,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14400,7 +14400,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14408,7 +14408,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14416,7 +14416,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14424,7 +14424,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14432,7 +14432,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14440,7 +14440,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14448,7 +14448,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14456,7 +14456,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_100</value>
+      <value>BATTLEMAPPART_32power_FT_100</value>
     </entry>
     <entry>
       <key>
@@ -14464,7 +14464,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_100</value>
+      <value>BATTLEMAPPART_32power_FT_100</value>
     </entry>
     <entry>
       <key>
@@ -14472,7 +14472,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14480,7 +14480,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14488,7 +14488,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14496,7 +14496,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14504,7 +14504,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14512,7 +14512,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14520,7 +14520,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -14528,7 +14528,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -14536,7 +14536,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -14544,7 +14544,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -14552,7 +14552,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -14560,7 +14560,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_210</value>
+      <value>BATTLEMAPPART_32power_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -14568,7 +14568,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -14576,7 +14576,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -14584,7 +14584,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -14592,7 +14592,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -14600,7 +14600,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -14608,7 +14608,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_209</value>
+      <value>BATTLEMAPPART_32power_FT_209</value>
     </entry>
     <entry>
       <key>
@@ -14616,7 +14616,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -14624,7 +14624,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -14632,7 +14632,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -14640,7 +14640,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -14648,7 +14648,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -14656,7 +14656,7 @@
         <y>7</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_208</value>
+      <value>BATTLEMAPPART_32power_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -14664,7 +14664,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -14672,7 +14672,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -14680,7 +14680,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -14688,7 +14688,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -14696,7 +14696,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -14704,7 +14704,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_207</value>
+      <value>BATTLEMAPPART_32power_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -14712,7 +14712,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -14720,7 +14720,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -14728,7 +14728,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -14736,7 +14736,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -14744,7 +14744,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -14752,7 +14752,7 @@
         <y>9</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_206</value>
+      <value>BATTLEMAPPART_32power_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -14760,7 +14760,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -14768,7 +14768,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -14776,7 +14776,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -14784,7 +14784,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -14792,7 +14792,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -14800,7 +14800,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_210</value>
+      <value>BATTLEMAPPART_32power_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -14808,7 +14808,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -14816,7 +14816,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -14824,7 +14824,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -14832,7 +14832,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -14840,7 +14840,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -14848,7 +14848,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_209</value>
+      <value>BATTLEMAPPART_32power_FT_209</value>
     </entry>
     <entry>
       <key>
@@ -14856,7 +14856,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -14864,7 +14864,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -14872,7 +14872,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -14880,7 +14880,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -14888,7 +14888,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -14896,7 +14896,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_208</value>
+      <value>BATTLEMAPPART_32power_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -14904,7 +14904,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -14912,7 +14912,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -14920,7 +14920,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -14928,7 +14928,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -14936,7 +14936,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -14944,7 +14944,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_207</value>
+      <value>BATTLEMAPPART_32power_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -14952,7 +14952,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -14960,7 +14960,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -14968,7 +14968,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -14976,7 +14976,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -14984,7 +14984,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -14992,7 +14992,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_206</value>
+      <value>BATTLEMAPPART_32power_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -15000,7 +15000,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -15008,7 +15008,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -15016,7 +15016,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -15024,7 +15024,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -15032,7 +15032,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -15040,7 +15040,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -15048,7 +15048,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -15056,7 +15056,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -15064,7 +15064,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -15072,7 +15072,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -15080,7 +15080,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -15088,7 +15088,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_205</value>
+      <value>BATTLEMAPPART_32power_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -15096,7 +15096,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15104,7 +15104,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15112,7 +15112,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15120,7 +15120,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15128,7 +15128,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15136,7 +15136,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_204</value>
+      <value>BATTLEMAPPART_32power_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -15144,7 +15144,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -15152,7 +15152,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -15160,7 +15160,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -15168,7 +15168,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -15176,7 +15176,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -15184,7 +15184,7 @@
         <y>7</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_203</value>
+      <value>BATTLEMAPPART_32power_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -15192,7 +15192,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -15200,7 +15200,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -15208,7 +15208,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -15216,7 +15216,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -15224,7 +15224,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -15232,7 +15232,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_202</value>
+      <value>BATTLEMAPPART_32power_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -15240,7 +15240,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -15248,7 +15248,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -15256,7 +15256,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -15264,7 +15264,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -15272,7 +15272,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -15280,7 +15280,7 @@
         <y>9</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_201</value>
+      <value>BATTLEMAPPART_32power_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -15288,7 +15288,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -15296,7 +15296,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -15304,7 +15304,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -15312,7 +15312,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -15320,7 +15320,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -15328,7 +15328,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_205</value>
+      <value>BATTLEMAPPART_32power_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -15336,7 +15336,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15344,7 +15344,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15352,7 +15352,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15360,7 +15360,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15368,7 +15368,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15376,7 +15376,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_204</value>
+      <value>BATTLEMAPPART_32power_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -15384,7 +15384,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -15392,7 +15392,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -15400,7 +15400,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -15408,7 +15408,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -15416,7 +15416,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -15424,7 +15424,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_203</value>
+      <value>BATTLEMAPPART_32power_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -15432,7 +15432,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -15440,7 +15440,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -15448,7 +15448,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -15456,7 +15456,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -15464,7 +15464,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -15472,7 +15472,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_202</value>
+      <value>BATTLEMAPPART_32power_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -15480,7 +15480,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -15488,7 +15488,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -15496,7 +15496,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -15504,7 +15504,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -15512,7 +15512,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -15520,7 +15520,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_201</value>
+      <value>BATTLEMAPPART_32power_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -15528,7 +15528,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -15536,7 +15536,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -15544,7 +15544,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_101</value>
+      <value>BATTLEMAPPART_32power_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -15552,7 +15552,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -15560,7 +15560,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -15568,7 +15568,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -15576,7 +15576,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -15584,7 +15584,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -15592,7 +15592,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_200</value>
+      <value>BATTLEMAPPART_32power_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -15600,7 +15600,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -15608,7 +15608,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -15616,7 +15616,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -15624,7 +15624,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -15632,7 +15632,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -15640,7 +15640,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_199</value>
+      <value>BATTLEMAPPART_32power_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -15648,7 +15648,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -15656,7 +15656,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -15664,7 +15664,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -15672,7 +15672,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -15680,7 +15680,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -15688,7 +15688,7 @@
         <y>7</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_198</value>
+      <value>BATTLEMAPPART_32power_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15696,7 +15696,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -15704,7 +15704,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -15712,7 +15712,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -15720,7 +15720,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -15728,7 +15728,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -15736,7 +15736,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_197</value>
+      <value>BATTLEMAPPART_32power_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -15744,7 +15744,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -15752,7 +15752,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -15760,7 +15760,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -15768,7 +15768,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -15776,7 +15776,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -15784,7 +15784,7 @@
         <y>9</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_196</value>
+      <value>BATTLEMAPPART_32power_FT_196</value>
     </entry>
     <entry>
       <key>
@@ -15792,7 +15792,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -15800,7 +15800,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -15808,7 +15808,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -15816,7 +15816,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -15824,7 +15824,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -15832,7 +15832,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_200</value>
+      <value>BATTLEMAPPART_32power_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -15840,7 +15840,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -15848,7 +15848,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -15856,7 +15856,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -15864,7 +15864,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -15872,7 +15872,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -15880,7 +15880,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_199</value>
+      <value>BATTLEMAPPART_32power_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -15888,7 +15888,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -15896,7 +15896,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -15904,7 +15904,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -15912,7 +15912,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -15920,7 +15920,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -15928,7 +15928,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_198</value>
+      <value>BATTLEMAPPART_32power_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15936,7 +15936,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -15944,7 +15944,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -15952,7 +15952,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -15960,7 +15960,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -15968,7 +15968,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -15976,7 +15976,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_197</value>
+      <value>BATTLEMAPPART_32power_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -15984,7 +15984,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -15992,7 +15992,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -16000,7 +16000,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -16008,7 +16008,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -16016,7 +16016,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -16024,7 +16024,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_196</value>
+      <value>BATTLEMAPPART_32power_FT_196</value>
     </entry>
     <entry>
       <key>
@@ -16032,7 +16032,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_102</value>
+      <value>BATTLEMAPPART_32power_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -16040,7 +16040,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -16048,7 +16048,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -16056,7 +16056,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -16064,7 +16064,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -16072,7 +16072,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -16080,7 +16080,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_195</value>
+      <value>BATTLEMAPPART_32power_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -16088,7 +16088,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -16096,7 +16096,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -16104,7 +16104,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -16112,7 +16112,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -16120,7 +16120,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -16128,7 +16128,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_194</value>
+      <value>BATTLEMAPPART_32power_FT_194</value>
     </entry>
     <entry>
       <key>
@@ -16136,7 +16136,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -16144,7 +16144,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -16152,7 +16152,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -16160,7 +16160,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -16168,7 +16168,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -16176,7 +16176,7 @@
         <y>7</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_193</value>
+      <value>BATTLEMAPPART_32power_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -16184,7 +16184,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -16192,7 +16192,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -16200,7 +16200,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -16208,7 +16208,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -16216,7 +16216,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -16224,7 +16224,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_192</value>
+      <value>BATTLEMAPPART_32power_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -16232,7 +16232,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -16240,7 +16240,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -16248,7 +16248,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -16256,7 +16256,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -16264,7 +16264,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -16272,7 +16272,7 @@
         <y>9</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_191</value>
+      <value>BATTLEMAPPART_32power_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -16280,7 +16280,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_77</value>
+      <value>BATTLEMAPPART_32power_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -16288,7 +16288,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -16296,7 +16296,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -16304,7 +16304,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -16312,7 +16312,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -16320,7 +16320,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -16328,7 +16328,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_195</value>
+      <value>BATTLEMAPPART_32power_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -16336,7 +16336,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -16344,7 +16344,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -16352,7 +16352,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -16360,7 +16360,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -16368,7 +16368,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -16376,7 +16376,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_194</value>
+      <value>BATTLEMAPPART_32power_FT_194</value>
     </entry>
     <entry>
       <key>
@@ -16384,7 +16384,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -16392,7 +16392,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -16400,7 +16400,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -16408,7 +16408,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -16416,7 +16416,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -16424,7 +16424,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_193</value>
+      <value>BATTLEMAPPART_32power_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -16432,7 +16432,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -16440,7 +16440,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -16448,7 +16448,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -16456,7 +16456,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -16464,7 +16464,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -16472,7 +16472,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_192</value>
+      <value>BATTLEMAPPART_32power_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -16480,7 +16480,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -16488,7 +16488,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -16496,7 +16496,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -16504,7 +16504,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -16512,7 +16512,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -16520,7 +16520,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_191</value>
+      <value>BATTLEMAPPART_32power_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -16528,7 +16528,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -16536,7 +16536,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -16544,7 +16544,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -16552,7 +16552,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -16560,7 +16560,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -16568,7 +16568,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_190</value>
+      <value>BATTLEMAPPART_32power_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -16576,7 +16576,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -16584,7 +16584,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -16592,7 +16592,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -16600,7 +16600,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -16608,7 +16608,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -16616,7 +16616,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_189</value>
+      <value>BATTLEMAPPART_32power_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -16624,7 +16624,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -16632,7 +16632,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -16640,7 +16640,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -16648,7 +16648,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -16656,7 +16656,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -16664,7 +16664,7 @@
         <y>7</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_188</value>
+      <value>BATTLEMAPPART_32power_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -16672,7 +16672,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -16680,7 +16680,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -16688,7 +16688,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -16696,7 +16696,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -16704,7 +16704,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -16712,7 +16712,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_187</value>
+      <value>BATTLEMAPPART_32power_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -16720,7 +16720,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -16728,7 +16728,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -16736,7 +16736,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -16744,7 +16744,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -16752,7 +16752,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -16760,7 +16760,7 @@
         <y>9</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_186</value>
+      <value>BATTLEMAPPART_32power_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -16768,7 +16768,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -16776,7 +16776,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -16784,7 +16784,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -16792,7 +16792,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -16800,7 +16800,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -16808,7 +16808,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_190</value>
+      <value>BATTLEMAPPART_32power_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -16816,7 +16816,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -16824,7 +16824,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -16832,7 +16832,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -16840,7 +16840,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -16848,7 +16848,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -16856,7 +16856,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_189</value>
+      <value>BATTLEMAPPART_32power_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -16864,7 +16864,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -16872,7 +16872,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -16880,7 +16880,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -16888,7 +16888,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -16896,7 +16896,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -16904,7 +16904,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_188</value>
+      <value>BATTLEMAPPART_32power_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -16912,7 +16912,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -16920,7 +16920,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -16928,7 +16928,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -16936,7 +16936,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -16944,7 +16944,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -16952,7 +16952,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_187</value>
+      <value>BATTLEMAPPART_32power_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -16960,7 +16960,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -16968,7 +16968,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -16976,7 +16976,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -16984,7 +16984,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -16992,7 +16992,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -17000,7 +17000,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_186</value>
+      <value>BATTLEMAPPART_32power_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -17008,7 +17008,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17016,7 +17016,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17024,7 +17024,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_68</value>
+      <value>BATTLEMAPPART_32power_FT_68</value>
     </entry>
     <entry>
       <key>
@@ -17032,7 +17032,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17040,7 +17040,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17048,7 +17048,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17056,7 +17056,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17064,7 +17064,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_72</value>
+      <value>BATTLEMAPPART_32power_FT_72</value>
     </entry>
     <entry>
       <key>
@@ -17072,7 +17072,7 @@
         <y>11</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_73</value>
+      <value>BATTLEMAPPART_32power_FT_73</value>
     </entry>
     <entry>
       <key>
@@ -17080,7 +17080,7 @@
         <y>12</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_71</value>
+      <value>BATTLEMAPPART_32power_FT_71</value>
     </entry>
     <entry>
       <key>
@@ -17088,7 +17088,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17096,7 +17096,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17104,7 +17104,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17112,7 +17112,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17120,7 +17120,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17128,7 +17128,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17136,7 +17136,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17144,7 +17144,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17152,7 +17152,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17160,7 +17160,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17168,7 +17168,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_76</value>
+      <value>BATTLEMAPPART_32power_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -17176,7 +17176,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_72</value>
+      <value>BATTLEMAPPART_32power_FT_72</value>
     </entry>
     <entry>
       <key>
@@ -17184,7 +17184,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_36</value>
+      <value>BATTLEMAPPART_32power_FT_36</value>
     </entry>
     <entry>
       <key>
@@ -17192,7 +17192,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_37</value>
+      <value>BATTLEMAPPART_32power_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -17200,7 +17200,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_36</value>
+      <value>BATTLEMAPPART_32power_FT_36</value>
     </entry>
     <entry>
       <key>
@@ -17208,7 +17208,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_37</value>
+      <value>BATTLEMAPPART_32power_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -17216,7 +17216,7 @@
         <y>11</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_36</value>
+      <value>BATTLEMAPPART_32power_FT_36</value>
     </entry>
     <entry>
       <key>
@@ -17224,7 +17224,7 @@
         <y>11</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_37</value>
+      <value>BATTLEMAPPART_32power_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -17232,7 +17232,7 @@
         <y>11</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_80</value>
+      <value>BATTLEMAPPART_32power_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -17240,7 +17240,7 @@
         <y>12</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_71</value>
+      <value>BATTLEMAPPART_32power_FT_71</value>
     </entry>
     <entry>
       <key>
@@ -17248,7 +17248,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_29</value>
+      <value>BATTLEMAPPART_32power_FT_29</value>
     </entry>
     <entry>
       <key>
@@ -17256,7 +17256,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_29</value>
+      <value>BATTLEMAPPART_32power_FT_29</value>
     </entry>
     <entry>
       <key>
@@ -17264,7 +17264,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_75</value>
+      <value>BATTLEMAPPART_32power_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -17272,7 +17272,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17280,7 +17280,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17288,7 +17288,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17296,7 +17296,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17304,7 +17304,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17312,7 +17312,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17320,7 +17320,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17328,7 +17328,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17336,7 +17336,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17344,7 +17344,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17352,7 +17352,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_72</value>
+      <value>BATTLEMAPPART_32power_FT_72</value>
     </entry>
     <entry>
       <key>
@@ -17360,7 +17360,7 @@
         <y>11</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_70</value>
+      <value>BATTLEMAPPART_32power_FT_70</value>
     </entry>
     <entry>
       <key>
@@ -17368,7 +17368,7 @@
         <y>12</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_71</value>
+      <value>BATTLEMAPPART_32power_FT_71</value>
     </entry>
     <entry>
       <key>
@@ -17376,7 +17376,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17384,7 +17384,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17392,7 +17392,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17400,7 +17400,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17408,7 +17408,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17416,7 +17416,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17424,7 +17424,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17432,7 +17432,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17440,7 +17440,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17448,7 +17448,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17456,7 +17456,7 @@
         <y>12</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_28</value>
+      <value>BATTLEMAPPART_32power_FT_28</value>
     </entry>
     <entry>
       <key>
@@ -17464,7 +17464,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_28</value>
+      <value>BATTLEMAPPART_32power_FT_28</value>
     </entry>
     <entry>
       <key>
@@ -17472,7 +17472,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17480,7 +17480,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17488,7 +17488,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17496,7 +17496,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17504,7 +17504,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17512,7 +17512,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17520,7 +17520,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17528,7 +17528,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17536,7 +17536,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17544,7 +17544,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17552,7 +17552,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17560,7 +17560,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17568,7 +17568,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17576,7 +17576,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -17584,7 +17584,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -17592,7 +17592,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -17600,7 +17600,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -17608,7 +17608,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -17616,7 +17616,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -17624,7 +17624,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_210</value>
+      <value>BATTLEMAPPART_32power_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -17632,7 +17632,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -17640,7 +17640,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -17648,7 +17648,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -17656,7 +17656,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -17664,7 +17664,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -17672,7 +17672,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_209</value>
+      <value>BATTLEMAPPART_32power_FT_209</value>
     </entry>
     <entry>
       <key>
@@ -17680,7 +17680,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -17688,7 +17688,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -17696,7 +17696,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -17704,7 +17704,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -17712,7 +17712,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -17720,7 +17720,7 @@
         <y>7</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_208</value>
+      <value>BATTLEMAPPART_32power_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -17728,7 +17728,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -17736,7 +17736,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -17744,7 +17744,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -17752,7 +17752,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -17760,7 +17760,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -17768,7 +17768,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_207</value>
+      <value>BATTLEMAPPART_32power_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -17776,7 +17776,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -17784,7 +17784,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -17792,7 +17792,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -17800,7 +17800,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -17808,7 +17808,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -17816,7 +17816,7 @@
         <y>9</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_206</value>
+      <value>BATTLEMAPPART_32power_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -17824,7 +17824,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -17832,7 +17832,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -17840,7 +17840,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -17848,7 +17848,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -17856,7 +17856,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_137</value>
+      <value>BATTLEMAPPART_32power_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -17864,7 +17864,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_210</value>
+      <value>BATTLEMAPPART_32power_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -17872,7 +17872,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -17880,7 +17880,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -17888,7 +17888,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -17896,7 +17896,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -17904,7 +17904,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_136</value>
+      <value>BATTLEMAPPART_32power_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -17912,7 +17912,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_209</value>
+      <value>BATTLEMAPPART_32power_FT_209</value>
     </entry>
     <entry>
       <key>
@@ -17920,7 +17920,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -17928,7 +17928,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -17936,7 +17936,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -17944,7 +17944,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -17952,7 +17952,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_135</value>
+      <value>BATTLEMAPPART_32power_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -17960,7 +17960,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_208</value>
+      <value>BATTLEMAPPART_32power_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -17968,7 +17968,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -17976,7 +17976,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -17984,7 +17984,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -17992,7 +17992,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -18000,7 +18000,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_134</value>
+      <value>BATTLEMAPPART_32power_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -18008,7 +18008,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_207</value>
+      <value>BATTLEMAPPART_32power_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -18016,7 +18016,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -18024,7 +18024,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -18032,7 +18032,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -18040,7 +18040,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -18048,7 +18048,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_133</value>
+      <value>BATTLEMAPPART_32power_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -18056,7 +18056,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_206</value>
+      <value>BATTLEMAPPART_32power_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -18064,7 +18064,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18072,7 +18072,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18080,7 +18080,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18088,7 +18088,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18096,7 +18096,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -18104,7 +18104,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -18112,7 +18112,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -18120,7 +18120,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -18128,7 +18128,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -18136,7 +18136,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_205</value>
+      <value>BATTLEMAPPART_32power_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -18144,7 +18144,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -18152,7 +18152,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -18160,7 +18160,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -18168,7 +18168,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -18176,7 +18176,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -18184,7 +18184,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_204</value>
+      <value>BATTLEMAPPART_32power_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -18192,7 +18192,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -18200,7 +18200,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -18208,7 +18208,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -18216,7 +18216,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -18224,7 +18224,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -18232,7 +18232,7 @@
         <y>7</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_203</value>
+      <value>BATTLEMAPPART_32power_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -18240,7 +18240,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -18248,7 +18248,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -18256,7 +18256,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -18264,7 +18264,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -18272,7 +18272,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -18280,7 +18280,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_202</value>
+      <value>BATTLEMAPPART_32power_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -18288,7 +18288,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -18296,7 +18296,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -18304,7 +18304,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -18312,7 +18312,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -18320,7 +18320,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -18328,7 +18328,7 @@
         <y>9</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_201</value>
+      <value>BATTLEMAPPART_32power_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -18336,7 +18336,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -18344,7 +18344,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -18352,7 +18352,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -18360,7 +18360,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -18368,7 +18368,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_132</value>
+      <value>BATTLEMAPPART_32power_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -18376,7 +18376,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_205</value>
+      <value>BATTLEMAPPART_32power_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -18384,7 +18384,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -18392,7 +18392,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -18400,7 +18400,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -18408,7 +18408,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -18416,7 +18416,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_131</value>
+      <value>BATTLEMAPPART_32power_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -18424,7 +18424,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_204</value>
+      <value>BATTLEMAPPART_32power_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -18432,7 +18432,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -18440,7 +18440,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -18448,7 +18448,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -18456,7 +18456,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -18464,7 +18464,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_130</value>
+      <value>BATTLEMAPPART_32power_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -18472,7 +18472,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_203</value>
+      <value>BATTLEMAPPART_32power_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -18480,7 +18480,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -18488,7 +18488,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -18496,7 +18496,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -18504,7 +18504,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -18512,7 +18512,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_129</value>
+      <value>BATTLEMAPPART_32power_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -18520,7 +18520,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_202</value>
+      <value>BATTLEMAPPART_32power_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -18528,7 +18528,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -18536,7 +18536,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -18544,7 +18544,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -18552,7 +18552,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -18560,7 +18560,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_128</value>
+      <value>BATTLEMAPPART_32power_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -18568,7 +18568,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_201</value>
+      <value>BATTLEMAPPART_32power_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -18576,7 +18576,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18584,7 +18584,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18592,7 +18592,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18600,7 +18600,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18608,7 +18608,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_101</value>
+      <value>BATTLEMAPPART_32power_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -18616,7 +18616,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -18624,7 +18624,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -18632,7 +18632,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -18640,7 +18640,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -18648,7 +18648,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -18656,7 +18656,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_200</value>
+      <value>BATTLEMAPPART_32power_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -18664,7 +18664,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -18672,7 +18672,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -18680,7 +18680,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -18688,7 +18688,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -18696,7 +18696,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -18704,7 +18704,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_199</value>
+      <value>BATTLEMAPPART_32power_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -18712,7 +18712,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -18720,7 +18720,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -18728,7 +18728,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -18736,7 +18736,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -18744,7 +18744,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -18752,7 +18752,7 @@
         <y>7</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_198</value>
+      <value>BATTLEMAPPART_32power_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -18760,7 +18760,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -18768,7 +18768,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -18776,7 +18776,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -18784,7 +18784,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -18792,7 +18792,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -18800,7 +18800,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_197</value>
+      <value>BATTLEMAPPART_32power_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -18808,7 +18808,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -18816,7 +18816,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -18824,7 +18824,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -18832,7 +18832,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -18840,7 +18840,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -18848,7 +18848,7 @@
         <y>9</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_196</value>
+      <value>BATTLEMAPPART_32power_FT_196</value>
     </entry>
     <entry>
       <key>
@@ -18856,7 +18856,7 @@
         <y>10</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_69</value>
+      <value>BATTLEMAPPART_32power_FT_69</value>
     </entry>
     <entry>
       <key>
@@ -18864,7 +18864,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_74</value>
+      <value>BATTLEMAPPART_32power_FT_74</value>
     </entry>
     <entry>
       <key>
@@ -18872,7 +18872,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -18880,7 +18880,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -18888,7 +18888,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -18896,7 +18896,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -18904,7 +18904,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_127</value>
+      <value>BATTLEMAPPART_32power_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -18912,7 +18912,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_200</value>
+      <value>BATTLEMAPPART_32power_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -18920,7 +18920,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -18928,7 +18928,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -18936,7 +18936,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -18944,7 +18944,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -18952,7 +18952,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_126</value>
+      <value>BATTLEMAPPART_32power_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -18960,7 +18960,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_199</value>
+      <value>BATTLEMAPPART_32power_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -18968,7 +18968,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -18976,7 +18976,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -18984,7 +18984,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -18992,7 +18992,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -19000,7 +19000,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_125</value>
+      <value>BATTLEMAPPART_32power_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -19008,7 +19008,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_198</value>
+      <value>BATTLEMAPPART_32power_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -19016,7 +19016,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -19024,7 +19024,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -19032,7 +19032,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -19040,7 +19040,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -19048,7 +19048,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_124</value>
+      <value>BATTLEMAPPART_32power_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -19056,7 +19056,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_197</value>
+      <value>BATTLEMAPPART_32power_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -19064,7 +19064,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -19072,7 +19072,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -19080,7 +19080,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -19088,7 +19088,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -19096,7 +19096,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_123</value>
+      <value>BATTLEMAPPART_32power_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -19104,7 +19104,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_196</value>
+      <value>BATTLEMAPPART_32power_FT_196</value>
     </entry>
     <entry>
       <key>
@@ -19112,7 +19112,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_102</value>
+      <value>BATTLEMAPPART_32power_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -19120,7 +19120,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19128,7 +19128,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19136,7 +19136,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19144,7 +19144,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19152,7 +19152,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -19160,7 +19160,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -19168,7 +19168,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -19176,7 +19176,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -19184,7 +19184,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -19192,7 +19192,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_195</value>
+      <value>BATTLEMAPPART_32power_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -19200,7 +19200,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -19208,7 +19208,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -19216,7 +19216,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -19224,7 +19224,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -19232,7 +19232,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -19240,7 +19240,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_194</value>
+      <value>BATTLEMAPPART_32power_FT_194</value>
     </entry>
     <entry>
       <key>
@@ -19248,7 +19248,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -19256,7 +19256,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -19264,7 +19264,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -19272,7 +19272,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -19280,7 +19280,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -19288,7 +19288,7 @@
         <y>7</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_193</value>
+      <value>BATTLEMAPPART_32power_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -19296,7 +19296,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -19304,7 +19304,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -19312,7 +19312,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -19320,7 +19320,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -19328,7 +19328,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -19336,7 +19336,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_192</value>
+      <value>BATTLEMAPPART_32power_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -19344,7 +19344,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -19352,7 +19352,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -19360,7 +19360,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -19368,7 +19368,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -19376,7 +19376,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -19384,7 +19384,7 @@
         <y>9</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_191</value>
+      <value>BATTLEMAPPART_32power_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -19392,7 +19392,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -19400,7 +19400,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -19408,7 +19408,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -19416,7 +19416,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -19424,7 +19424,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_122</value>
+      <value>BATTLEMAPPART_32power_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -19432,7 +19432,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_195</value>
+      <value>BATTLEMAPPART_32power_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -19440,7 +19440,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -19448,7 +19448,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -19456,7 +19456,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -19464,7 +19464,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -19472,7 +19472,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_121</value>
+      <value>BATTLEMAPPART_32power_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -19480,7 +19480,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_194</value>
+      <value>BATTLEMAPPART_32power_FT_194</value>
     </entry>
     <entry>
       <key>
@@ -19488,7 +19488,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -19496,7 +19496,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -19504,7 +19504,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -19512,7 +19512,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -19520,7 +19520,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_120</value>
+      <value>BATTLEMAPPART_32power_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -19528,7 +19528,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_193</value>
+      <value>BATTLEMAPPART_32power_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -19536,7 +19536,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -19544,7 +19544,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -19552,7 +19552,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -19560,7 +19560,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -19568,7 +19568,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_119</value>
+      <value>BATTLEMAPPART_32power_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -19576,7 +19576,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_192</value>
+      <value>BATTLEMAPPART_32power_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -19584,7 +19584,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -19592,7 +19592,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -19600,7 +19600,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -19608,7 +19608,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -19616,7 +19616,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_118</value>
+      <value>BATTLEMAPPART_32power_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -19624,7 +19624,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_191</value>
+      <value>BATTLEMAPPART_32power_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -19632,7 +19632,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19640,7 +19640,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19648,7 +19648,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19656,7 +19656,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19664,7 +19664,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -19672,7 +19672,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -19680,7 +19680,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -19688,7 +19688,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -19696,7 +19696,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -19704,7 +19704,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_190</value>
+      <value>BATTLEMAPPART_32power_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -19712,7 +19712,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -19720,7 +19720,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -19728,7 +19728,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -19736,7 +19736,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -19744,7 +19744,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -19752,7 +19752,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_189</value>
+      <value>BATTLEMAPPART_32power_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -19760,7 +19760,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -19768,7 +19768,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -19776,7 +19776,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -19784,7 +19784,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -19792,7 +19792,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -19800,7 +19800,7 @@
         <y>7</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_188</value>
+      <value>BATTLEMAPPART_32power_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -19808,7 +19808,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -19816,7 +19816,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -19824,7 +19824,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -19832,7 +19832,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -19840,7 +19840,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -19848,7 +19848,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_187</value>
+      <value>BATTLEMAPPART_32power_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -19856,7 +19856,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -19864,7 +19864,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -19872,7 +19872,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -19880,7 +19880,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -19888,7 +19888,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -19896,7 +19896,7 @@
         <y>9</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_186</value>
+      <value>BATTLEMAPPART_32power_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -19904,7 +19904,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -19912,7 +19912,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -19920,7 +19920,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -19928,7 +19928,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -19936,7 +19936,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_117</value>
+      <value>BATTLEMAPPART_32power_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -19944,7 +19944,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_190</value>
+      <value>BATTLEMAPPART_32power_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -19952,7 +19952,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -19960,7 +19960,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -19968,7 +19968,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -19976,7 +19976,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -19984,7 +19984,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_116</value>
+      <value>BATTLEMAPPART_32power_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -19992,7 +19992,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_189</value>
+      <value>BATTLEMAPPART_32power_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -20000,7 +20000,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -20008,7 +20008,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -20016,7 +20016,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -20024,7 +20024,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -20032,7 +20032,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_115</value>
+      <value>BATTLEMAPPART_32power_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -20040,7 +20040,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_188</value>
+      <value>BATTLEMAPPART_32power_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -20048,7 +20048,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -20056,7 +20056,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -20064,7 +20064,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -20072,7 +20072,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -20080,7 +20080,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_114</value>
+      <value>BATTLEMAPPART_32power_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -20088,7 +20088,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_187</value>
+      <value>BATTLEMAPPART_32power_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -20096,7 +20096,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -20104,7 +20104,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -20112,7 +20112,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -20120,7 +20120,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -20128,7 +20128,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_113</value>
+      <value>BATTLEMAPPART_32power_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -20136,7 +20136,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_186</value>
+      <value>BATTLEMAPPART_32power_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -20144,7 +20144,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -20152,7 +20152,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -20160,7 +20160,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -20168,7 +20168,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -20176,7 +20176,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_99</value>
+      <value>BATTLEMAPPART_32power_FT_99</value>
     </entry>
     <entry>
       <key>
@@ -20184,7 +20184,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_99</value>
+      <value>BATTLEMAPPART_32power_FT_99</value>
     </entry>
     <entry>
       <key>
@@ -20192,7 +20192,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -20200,7 +20200,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -20208,7 +20208,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -20216,7 +20216,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -20224,7 +20224,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -20232,7 +20232,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -20240,7 +20240,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -20248,7 +20248,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -20256,7 +20256,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -20264,7 +20264,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -20272,7 +20272,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -20280,7 +20280,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_32power_SC_230</value>
+      <value>BATTLEMAPPART_32power_FT_230</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

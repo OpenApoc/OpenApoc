@@ -110,13 +110,13 @@
       <entry>BATTLEMAPPART_26lflyer_RW_62</entry>
       <entry>BATTLEMAPPART_26lflyer_RW_63</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_26lflyer_SC_253</entry>
-      <entry>BATTLEMAPPART_26lflyer_SC_254</entry>
-      <entry>BATTLEMAPPART_26lflyer_SC_249</entry>
-      <entry>BATTLEMAPPART_26lflyer_SC_250</entry>
-      <entry>BATTLEMAPPART_26lflyer_SC_251</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_26lflyer_FT253</entry>
+      <entry>BATTLEMAPPART_26lflyer_FT254</entry>
+      <entry>BATTLEMAPPART_26lflyer_FT249</entry>
+      <entry>BATTLEMAPPART_26lflyer_FT250</entry>
+      <entry>BATTLEMAPPART_26lflyer_FT251</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_26lflyer>

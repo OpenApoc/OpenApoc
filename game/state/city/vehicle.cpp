@@ -7,9 +7,9 @@
 #include "game/state/city/vequipment.h"
 #include "game/state/organisation.h"
 #include "game/state/rules/vequipment_type.h"
+#include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_shadow.h"
 #include "game/state/tileview/tileobject_vehicle.h"
-#include "game/state/tileview/voxel.h"
 #include "library/sp.h"
 #include <limits>
 #include <queue>

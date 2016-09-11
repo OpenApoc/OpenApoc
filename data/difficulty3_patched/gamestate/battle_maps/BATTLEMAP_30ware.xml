@@ -96,13 +96,13 @@
       <entry>BATTLEMAPPART_30ware_RW_62</entry>
       <entry>BATTLEMAPPART_30ware_RW_63</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_30ware_SC_249</entry>
-      <entry>BATTLEMAPPART_30ware_SC_247</entry>
-      <entry>BATTLEMAPPART_30ware_SC_251</entry>
-      <entry>BATTLEMAPPART_30ware_SC_252</entry>
-      <entry>BATTLEMAPPART_30ware_SC_255</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_30ware_FT249</entry>
+      <entry>BATTLEMAPPART_30ware_FT247</entry>
+      <entry>BATTLEMAPPART_30ware_FT251</entry>
+      <entry>BATTLEMAPPART_30ware_FT252</entry>
+      <entry>BATTLEMAPPART_30ware_FT255</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_30ware>

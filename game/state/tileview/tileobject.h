@@ -20,6 +20,11 @@ class TileObject : public std::enable_shared_from_this<TileObject>
   public:
 	enum class Type
 	{
+		Ground,
+		LeftWall,
+		RightWall,
+		Feature,
+		Unit,
 		Projectile,
 		Vehicle,
 		Scenery,

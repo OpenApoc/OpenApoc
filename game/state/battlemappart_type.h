@@ -19,7 +19,7 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 		Ground,
 		LeftWall,
 		RightWall,
-		Scenery
+		Feature
 	};
 	enum class SupportedByType
 	{

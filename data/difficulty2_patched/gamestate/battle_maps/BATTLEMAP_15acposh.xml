@@ -160,13 +160,13 @@
       <entry>BATTLEMAPPART_15acposh_RW_69</entry>
       <entry>BATTLEMAPPART_15acposh_RW_70</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_15acposh_SC_234</entry>
-      <entry>BATTLEMAPPART_15acposh_SC_233</entry>
-      <entry>BATTLEMAPPART_15acposh_SC_232</entry>
-      <entry>BATTLEMAPPART_15acposh_SC_231</entry>
-      <entry>BATTLEMAPPART_15acposh_SC_230</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_15acposh_FT234</entry>
+      <entry>BATTLEMAPPART_15acposh_FT233</entry>
+      <entry>BATTLEMAPPART_15acposh_FT232</entry>
+      <entry>BATTLEMAPPART_15acposh_FT231</entry>
+      <entry>BATTLEMAPPART_15acposh_FT230</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_15acposh>

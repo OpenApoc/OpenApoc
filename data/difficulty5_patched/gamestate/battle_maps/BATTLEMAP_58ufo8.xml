@@ -1176,13 +1176,13 @@
       <entry>58ufo8</entry>
     </tilesets>
     <destroyed_ground_tile>BATTLEMAPPART_58ufo8_GD_9</destroyed_ground_tile>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_58ufo8_SC_97</entry>
-      <entry>BATTLEMAPPART_58ufo8_SC_98</entry>
-      <entry>BATTLEMAPPART_58ufo8_SC_96</entry>
-      <entry>BATTLEMAPPART_58ufo8_SC_94</entry>
-      <entry>BATTLEMAPPART_58ufo8_SC_93</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_58ufo8_FT97</entry>
+      <entry>BATTLEMAPPART_58ufo8_FT98</entry>
+      <entry>BATTLEMAPPART_58ufo8_FT96</entry>
+      <entry>BATTLEMAPPART_58ufo8_FT94</entry>
+      <entry>BATTLEMAPPART_58ufo8_FT93</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_58ufo8>

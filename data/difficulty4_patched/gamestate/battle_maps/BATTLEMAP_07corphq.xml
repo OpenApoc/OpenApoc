@@ -90,13 +90,13 @@
       <entry>BATTLEMAPPART_07corphq_RW_83</entry>
       <entry>BATTLEMAPPART_07corphq_RW_84</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_07corphq_SC_229</entry>
-      <entry>BATTLEMAPPART_07corphq_SC_228</entry>
-      <entry>BATTLEMAPPART_07corphq_SC_227</entry>
-      <entry>BATTLEMAPPART_07corphq_SC_226</entry>
-      <entry>BATTLEMAPPART_07corphq_SC_222</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_07corphq_FT229</entry>
+      <entry>BATTLEMAPPART_07corphq_FT228</entry>
+      <entry>BATTLEMAPPART_07corphq_FT227</entry>
+      <entry>BATTLEMAPPART_07corphq_FT226</entry>
+      <entry>BATTLEMAPPART_07corphq_FT222</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_07corphq>

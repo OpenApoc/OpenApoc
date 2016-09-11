@@ -1,10 +1,10 @@
-#include "game/state/battletileview/battletileobject_mappart.h"
+#include "game/state/tileview/tileobject_battlemappart.h"
 #include "framework/renderer.h"
-#include "game/state/battletileview/battletile.h"
+#include "game/state/tileview/tile.h"
 
 namespace OpenApoc
 {
-void BattleTileObjectMapPart::draw(Renderer &r, TileTransform &transform,
+void TileObjectBattleMapPart::draw(Renderer &r, TileTransform &transform,
                                    Vec2<float> screenPosition, TileViewMode mode)
 {
 	std::ignore = transform;
@@ -38,33 +38,32 @@ void BattleTileObjectMapPart::draw(Renderer &r, TileTransform &transform,
 		r.draw(sprite, transformedScreenPos);
 }
 
-BattleTileObject::Type BattleTileObjectMapPart::convertType(BattleMapPartType::Type type)
+TileObject::Type TileObjectBattleMapPart::convertType(BattleMapPartType::Type type)
 {
 	switch (type)
 	{
 		case BattleMapPartType::Type::Ground:
-			return BattleTileObject::Type::Ground;
+			return TileObject::Type::Ground;
 		case BattleMapPartType::Type::LeftWall:
-			return BattleTileObject::Type::LeftWall;
+			return TileObject::Type::LeftWall;
 		case BattleMapPartType::Type::RightWall:
-			return BattleTileObject::Type::RightWall;
-		case BattleMapPartType::Type::Scenery:
-			return BattleTileObject::Type::Scenery;
+			return TileObject::Type::RightWall;
+		case BattleMapPartType::Type::Feature:
+			return TileObject::Type::Feature;
 		default:
 			LogError("Unknown BattleMapPartType::Type %d", (int)type);
-			return BattleTileObject::Type::Ground;
+			return TileObject::Type::Ground;
 	}
 }
 
-BattleTileObjectMapPart::~BattleTileObjectMapPart() = default;
+TileObjectBattleMapPart::~TileObjectBattleMapPart() = default;
 
-BattleTileObjectMapPart::BattleTileObjectMapPart(BattleTileMap &map, sp<BattleMapPart> map_part)
-    : BattleTileObject(map, convertType(map_part->type->type), Vec3<float>{1, 1, 1}),
-      map_part(map_part)
+TileObjectBattleMapPart::TileObjectBattleMapPart(TileMap &map, sp<BattleMapPart> map_part)
+    : TileObject(map, convertType(map_part->type->type), Vec3<float>{1, 1, 1}), map_part(map_part)
 {
 }
 
-sp<BattleMapPart> BattleTileObjectMapPart::getOwner()
+sp<BattleMapPart> TileObjectBattleMapPart::getOwner()
 {
 	auto s = this->map_part.lock();
 	if (!s)
@@ -74,9 +73,9 @@ sp<BattleMapPart> BattleTileObjectMapPart::getOwner()
 	return s;
 }
 
-sp<VoxelMap> BattleTileObjectMapPart::getVoxelMap() { return this->getOwner()->type->voxelMapLOF; }
+sp<VoxelMap> TileObjectBattleMapPart::getVoxelMap() { return this->getOwner()->type->voxelMapLOF; }
 
-Vec3<float> BattleTileObjectMapPart::getPosition() const
+Vec3<float> TileObjectBattleMapPart::getPosition() const
 {
 	auto s = this->map_part.lock();
 	if (!s)

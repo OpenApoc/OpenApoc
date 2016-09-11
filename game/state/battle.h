@@ -1,8 +1,8 @@
 #pragma once
 #include "framework/includes.h"
 #include "game/state/battlemappart_type.h"
-#include "game/state/battletileview/battletile.h"
 #include "game/state/stateobject.h"
+#include "game/state/tileview/tile.h"
 #include "library/sp.h"
 #include "library/vec.h"
 #include "library/voxel.h"
@@ -17,7 +17,7 @@ namespace OpenApoc
 #define BATTLE_STRAT_TILE_Y 8
 
 class GameState;
-class BattleTileMap;
+class TileMap;
 class BattleMapPart;
 class BattleUnit;
 // class BattleProjectile;
@@ -53,7 +53,7 @@ class Battle
 	StateRef<BattleMapPartType> destroyed_ground_tile;
 	std::vector<StateRef<BattleMapPartType>> rubble_left_wall;
 	std::vector<StateRef<BattleMapPartType>> rubble_right_wall;
-	std::vector<StateRef<BattleMapPartType>> rubble_scenery;
+	std::vector<StateRef<BattleMapPartType>> rubble_feature;
 
 	MissionType mission_type = MissionType::AlienExtermination;
 	UString mission_location_id;
@@ -65,7 +65,7 @@ class Battle
 	// std::set<sp<BattleUnit>> units;
 	// std::set<sp<BattleDoodad>> doodads;
 
-	up<BattleTileMap> map;
+	up<TileMap> map;
 
 	void update(GameState &state, unsigned int ticks);
 };

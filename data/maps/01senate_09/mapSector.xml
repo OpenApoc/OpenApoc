@@ -20037,14 +20037,14 @@
       <value>BATTLEMAPPART_01senate_RW_1</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20052,7 +20052,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20060,7 +20060,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20068,7 +20068,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_213</value>
+      <value>BATTLEMAPPART_01senate_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -20076,7 +20076,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_214</value>
+      <value>BATTLEMAPPART_01senate_FT_214</value>
     </entry>
     <entry>
       <key>
@@ -20084,7 +20084,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20092,7 +20092,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20100,7 +20100,7 @@
         <y>1</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20108,7 +20108,7 @@
         <y>1</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_221</value>
+      <value>BATTLEMAPPART_01senate_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20116,7 +20116,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20124,7 +20124,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20132,7 +20132,7 @@
         <y>2</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20140,7 +20140,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_218</value>
+      <value>BATTLEMAPPART_01senate_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -20148,7 +20148,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20156,7 +20156,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20164,7 +20164,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20172,7 +20172,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -20180,7 +20180,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20188,7 +20188,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20196,7 +20196,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20204,7 +20204,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_218</value>
+      <value>BATTLEMAPPART_01senate_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -20212,7 +20212,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20220,7 +20220,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20228,7 +20228,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20236,7 +20236,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_221</value>
+      <value>BATTLEMAPPART_01senate_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20244,7 +20244,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20252,7 +20252,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20260,7 +20260,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20268,7 +20268,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_213</value>
+      <value>BATTLEMAPPART_01senate_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -20276,7 +20276,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_214</value>
+      <value>BATTLEMAPPART_01senate_FT_214</value>
     </entry>
     <entry>
       <key>
@@ -20284,7 +20284,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20292,7 +20292,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20300,7 +20300,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20308,7 +20308,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20316,7 +20316,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20324,7 +20324,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20332,7 +20332,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_77</value>
+      <value>BATTLEMAPPART_01senate_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -20340,7 +20340,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20348,7 +20348,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -20356,7 +20356,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -20364,7 +20364,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_74</value>
+      <value>BATTLEMAPPART_01senate_FT_74</value>
     </entry>
     <entry>
       <key>
@@ -20372,7 +20372,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20380,7 +20380,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20388,7 +20388,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_77</value>
+      <value>BATTLEMAPPART_01senate_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -20396,7 +20396,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20404,7 +20404,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_74</value>
+      <value>BATTLEMAPPART_01senate_FT_74</value>
     </entry>
     <entry>
       <key>
@@ -20412,7 +20412,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20420,7 +20420,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20428,7 +20428,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -20436,7 +20436,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -20444,7 +20444,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20452,7 +20452,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20460,7 +20460,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20468,7 +20468,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20476,7 +20476,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20484,7 +20484,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -20492,7 +20492,7 @@
         <y>23</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -20500,7 +20500,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20508,7 +20508,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20516,7 +20516,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20524,7 +20524,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_221</value>
+      <value>BATTLEMAPPART_01senate_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20532,7 +20532,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20540,7 +20540,7 @@
         <y>1</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_211</value>
+      <value>BATTLEMAPPART_01senate_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -20548,7 +20548,7 @@
         <y>1</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_212</value>
+      <value>BATTLEMAPPART_01senate_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -20556,7 +20556,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20564,7 +20564,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -20572,7 +20572,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20580,7 +20580,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_217</value>
+      <value>BATTLEMAPPART_01senate_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20588,7 +20588,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20596,7 +20596,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -20604,7 +20604,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20612,7 +20612,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_211</value>
+      <value>BATTLEMAPPART_01senate_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -20620,7 +20620,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_212</value>
+      <value>BATTLEMAPPART_01senate_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -20628,7 +20628,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20636,7 +20636,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_221</value>
+      <value>BATTLEMAPPART_01senate_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20644,7 +20644,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20652,7 +20652,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20660,7 +20660,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -20668,7 +20668,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20676,7 +20676,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -20684,7 +20684,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20692,7 +20692,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20700,7 +20700,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -20708,7 +20708,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20716,7 +20716,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -20724,7 +20724,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20732,7 +20732,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20740,7 +20740,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20748,7 +20748,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20756,7 +20756,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -20764,7 +20764,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20772,7 +20772,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -20780,7 +20780,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20788,7 +20788,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20796,7 +20796,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20804,7 +20804,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20812,7 +20812,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20820,7 +20820,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_218</value>
+      <value>BATTLEMAPPART_01senate_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -20828,7 +20828,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20836,7 +20836,7 @@
         <y>1</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -20844,7 +20844,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20852,7 +20852,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_216</value>
+      <value>BATTLEMAPPART_01senate_FT_216</value>
     </entry>
     <entry>
       <key>
@@ -20860,7 +20860,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20868,7 +20868,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_216</value>
+      <value>BATTLEMAPPART_01senate_FT_216</value>
     </entry>
     <entry>
       <key>
@@ -20876,7 +20876,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20884,7 +20884,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_216</value>
+      <value>BATTLEMAPPART_01senate_FT_216</value>
     </entry>
     <entry>
       <key>
@@ -20892,7 +20892,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20900,7 +20900,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -20908,7 +20908,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20916,7 +20916,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_218</value>
+      <value>BATTLEMAPPART_01senate_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -20924,7 +20924,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20932,7 +20932,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20940,7 +20940,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -20948,7 +20948,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20956,7 +20956,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -20964,7 +20964,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20972,7 +20972,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20980,7 +20980,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -20988,7 +20988,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20996,7 +20996,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -21004,7 +21004,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21012,7 +21012,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21020,7 +21020,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_31</value>
+      <value>BATTLEMAPPART_01senate_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -21028,7 +21028,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21036,7 +21036,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -21044,7 +21044,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21052,7 +21052,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_211</value>
+      <value>BATTLEMAPPART_01senate_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -21060,7 +21060,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_212</value>
+      <value>BATTLEMAPPART_01senate_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -21068,7 +21068,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21076,7 +21076,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_211</value>
+      <value>BATTLEMAPPART_01senate_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -21084,7 +21084,7 @@
         <y>21</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_212</value>
+      <value>BATTLEMAPPART_01senate_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -21092,7 +21092,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21100,7 +21100,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -21108,7 +21108,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21116,7 +21116,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21124,7 +21124,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21132,7 +21132,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21140,7 +21140,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_221</value>
+      <value>BATTLEMAPPART_01senate_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21148,7 +21148,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21156,7 +21156,7 @@
         <y>1</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_211</value>
+      <value>BATTLEMAPPART_01senate_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -21164,7 +21164,7 @@
         <y>1</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_212</value>
+      <value>BATTLEMAPPART_01senate_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -21172,7 +21172,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21180,7 +21180,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -21188,7 +21188,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21196,7 +21196,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_217</value>
+      <value>BATTLEMAPPART_01senate_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21204,7 +21204,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21212,7 +21212,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -21220,7 +21220,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21228,7 +21228,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_211</value>
+      <value>BATTLEMAPPART_01senate_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -21236,7 +21236,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_212</value>
+      <value>BATTLEMAPPART_01senate_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -21244,7 +21244,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21252,7 +21252,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_221</value>
+      <value>BATTLEMAPPART_01senate_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21260,7 +21260,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21268,7 +21268,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21276,7 +21276,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -21284,7 +21284,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21292,7 +21292,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -21300,7 +21300,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21308,7 +21308,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21316,7 +21316,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -21324,7 +21324,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21332,7 +21332,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -21340,7 +21340,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21348,7 +21348,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21356,7 +21356,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21364,7 +21364,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21372,7 +21372,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21380,7 +21380,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21388,7 +21388,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21396,7 +21396,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21404,7 +21404,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21412,7 +21412,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21420,7 +21420,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_213</value>
+      <value>BATTLEMAPPART_01senate_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -21428,7 +21428,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_214</value>
+      <value>BATTLEMAPPART_01senate_FT_214</value>
     </entry>
     <entry>
       <key>
@@ -21436,7 +21436,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21444,7 +21444,7 @@
         <y>1</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_221</value>
+      <value>BATTLEMAPPART_01senate_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21452,7 +21452,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21460,7 +21460,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_218</value>
+      <value>BATTLEMAPPART_01senate_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -21468,7 +21468,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21476,7 +21476,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -21484,7 +21484,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21492,7 +21492,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_218</value>
+      <value>BATTLEMAPPART_01senate_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -21500,7 +21500,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21508,7 +21508,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_221</value>
+      <value>BATTLEMAPPART_01senate_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21516,7 +21516,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21524,7 +21524,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_213</value>
+      <value>BATTLEMAPPART_01senate_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -21532,7 +21532,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_214</value>
+      <value>BATTLEMAPPART_01senate_FT_214</value>
     </entry>
     <entry>
       <key>
@@ -21540,7 +21540,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21548,7 +21548,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21556,7 +21556,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_79</value>
+      <value>BATTLEMAPPART_01senate_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -21564,7 +21564,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21572,7 +21572,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_76</value>
+      <value>BATTLEMAPPART_01senate_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -21580,7 +21580,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21588,7 +21588,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21596,7 +21596,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_79</value>
+      <value>BATTLEMAPPART_01senate_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -21604,7 +21604,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21612,7 +21612,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_76</value>
+      <value>BATTLEMAPPART_01senate_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -21620,7 +21620,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21628,7 +21628,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21636,7 +21636,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -21644,7 +21644,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -21652,7 +21652,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21660,7 +21660,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21668,7 +21668,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21676,7 +21676,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_127</value>
+      <value>BATTLEMAPPART_01senate_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -21684,7 +21684,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -21692,7 +21692,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_127</value>
+      <value>BATTLEMAPPART_01senate_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -21700,7 +21700,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -21708,7 +21708,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_128</value>
+      <value>BATTLEMAPPART_01senate_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -21716,7 +21716,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -21724,7 +21724,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_128</value>
+      <value>BATTLEMAPPART_01senate_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -21732,7 +21732,7 @@
         <y>19</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -21740,7 +21740,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21748,7 +21748,7 @@
         <y>22</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_77</value>
+      <value>BATTLEMAPPART_01senate_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -21756,7 +21756,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21764,7 +21764,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21772,7 +21772,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21780,7 +21780,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21788,7 +21788,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21796,7 +21796,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21804,7 +21804,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21812,7 +21812,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21820,7 +21820,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21828,7 +21828,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21836,7 +21836,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21844,7 +21844,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21852,7 +21852,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -21860,7 +21860,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21868,7 +21868,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21876,7 +21876,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21884,7 +21884,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21892,7 +21892,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21900,7 +21900,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21908,7 +21908,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21916,7 +21916,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -21924,7 +21924,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -21932,7 +21932,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21940,7 +21940,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21948,7 +21948,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21956,7 +21956,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21964,7 +21964,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21972,7 +21972,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21980,7 +21980,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21988,7 +21988,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -21996,7 +21996,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_129</value>
+      <value>BATTLEMAPPART_01senate_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -22004,7 +22004,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -22012,7 +22012,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_129</value>
+      <value>BATTLEMAPPART_01senate_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -22020,7 +22020,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -22028,7 +22028,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -22036,7 +22036,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -22044,7 +22044,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -22052,7 +22052,7 @@
         <y>19</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -22060,7 +22060,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22068,7 +22068,7 @@
         <y>22</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -22076,7 +22076,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22084,7 +22084,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22092,7 +22092,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22100,7 +22100,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22108,7 +22108,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_94</value>
+      <value>BATTLEMAPPART_01senate_FT_94</value>
     </entry>
     <entry>
       <key>
@@ -22116,7 +22116,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22124,7 +22124,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22132,7 +22132,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22140,7 +22140,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_94</value>
+      <value>BATTLEMAPPART_01senate_FT_94</value>
     </entry>
     <entry>
       <key>
@@ -22148,7 +22148,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22156,7 +22156,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22164,7 +22164,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_113</value>
+      <value>BATTLEMAPPART_01senate_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -22172,7 +22172,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_112</value>
+      <value>BATTLEMAPPART_01senate_FT_112</value>
     </entry>
     <entry>
       <key>
@@ -22180,7 +22180,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22188,7 +22188,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22196,7 +22196,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_111</value>
+      <value>BATTLEMAPPART_01senate_FT_111</value>
     </entry>
     <entry>
       <key>
@@ -22204,7 +22204,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_110</value>
+      <value>BATTLEMAPPART_01senate_FT_110</value>
     </entry>
     <entry>
       <key>
@@ -22212,7 +22212,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22220,7 +22220,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22228,7 +22228,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22236,7 +22236,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22244,7 +22244,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22252,7 +22252,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_113</value>
+      <value>BATTLEMAPPART_01senate_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -22260,7 +22260,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_112</value>
+      <value>BATTLEMAPPART_01senate_FT_112</value>
     </entry>
     <entry>
       <key>
@@ -22268,7 +22268,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_77</value>
+      <value>BATTLEMAPPART_01senate_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -22276,7 +22276,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22284,7 +22284,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_111</value>
+      <value>BATTLEMAPPART_01senate_FT_111</value>
     </entry>
     <entry>
       <key>
@@ -22292,7 +22292,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_110</value>
+      <value>BATTLEMAPPART_01senate_FT_110</value>
     </entry>
     <entry>
       <key>
@@ -22300,7 +22300,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_74</value>
+      <value>BATTLEMAPPART_01senate_FT_74</value>
     </entry>
     <entry>
       <key>
@@ -22308,7 +22308,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22316,7 +22316,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22324,7 +22324,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_77</value>
+      <value>BATTLEMAPPART_01senate_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -22332,7 +22332,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22340,7 +22340,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_74</value>
+      <value>BATTLEMAPPART_01senate_FT_74</value>
     </entry>
     <entry>
       <key>
@@ -22348,7 +22348,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22356,7 +22356,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22364,7 +22364,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22372,7 +22372,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22380,7 +22380,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22388,7 +22388,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22396,7 +22396,7 @@
         <y>22</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_79</value>
+      <value>BATTLEMAPPART_01senate_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -22404,7 +22404,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22412,7 +22412,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22420,7 +22420,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22428,7 +22428,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22436,7 +22436,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22444,7 +22444,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22452,7 +22452,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22460,7 +22460,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22468,7 +22468,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22476,7 +22476,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_102</value>
+      <value>BATTLEMAPPART_01senate_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -22484,7 +22484,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22492,7 +22492,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22500,7 +22500,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_100</value>
+      <value>BATTLEMAPPART_01senate_FT_100</value>
     </entry>
     <entry>
       <key>
@@ -22508,7 +22508,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22516,7 +22516,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22524,7 +22524,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22532,7 +22532,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22540,7 +22540,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22548,7 +22548,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_102</value>
+      <value>BATTLEMAPPART_01senate_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -22556,7 +22556,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -22564,7 +22564,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22572,7 +22572,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_100</value>
+      <value>BATTLEMAPPART_01senate_FT_100</value>
     </entry>
     <entry>
       <key>
@@ -22580,7 +22580,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -22588,7 +22588,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22596,7 +22596,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22604,7 +22604,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -22612,7 +22612,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22620,7 +22620,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -22628,7 +22628,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22636,7 +22636,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22644,7 +22644,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_31</value>
+      <value>BATTLEMAPPART_01senate_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -22652,7 +22652,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22660,7 +22660,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -22668,7 +22668,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22676,7 +22676,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_211</value>
+      <value>BATTLEMAPPART_01senate_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -22684,7 +22684,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_212</value>
+      <value>BATTLEMAPPART_01senate_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -22692,7 +22692,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22700,7 +22700,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_211</value>
+      <value>BATTLEMAPPART_01senate_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -22708,7 +22708,7 @@
         <y>21</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_212</value>
+      <value>BATTLEMAPPART_01senate_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -22716,7 +22716,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22724,7 +22724,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -22732,7 +22732,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22740,7 +22740,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22748,7 +22748,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22756,7 +22756,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22764,7 +22764,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22772,7 +22772,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22780,7 +22780,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22788,7 +22788,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22796,7 +22796,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22804,7 +22804,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_102</value>
+      <value>BATTLEMAPPART_01senate_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -22812,7 +22812,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22820,7 +22820,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22828,7 +22828,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_100</value>
+      <value>BATTLEMAPPART_01senate_FT_100</value>
     </entry>
     <entry>
       <key>
@@ -22836,7 +22836,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22844,7 +22844,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22852,7 +22852,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22860,7 +22860,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22868,7 +22868,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22876,7 +22876,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_102</value>
+      <value>BATTLEMAPPART_01senate_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -22884,7 +22884,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -22892,7 +22892,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22900,7 +22900,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_100</value>
+      <value>BATTLEMAPPART_01senate_FT_100</value>
     </entry>
     <entry>
       <key>
@@ -22908,7 +22908,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -22916,7 +22916,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22924,7 +22924,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22932,7 +22932,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -22940,7 +22940,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22948,7 +22948,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -22956,7 +22956,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22964,7 +22964,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22972,7 +22972,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_31</value>
+      <value>BATTLEMAPPART_01senate_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -22980,7 +22980,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22988,7 +22988,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -22996,7 +22996,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -23004,7 +23004,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23012,7 +23012,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -23020,7 +23020,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23028,7 +23028,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23036,7 +23036,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23044,7 +23044,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23052,7 +23052,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23060,7 +23060,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23068,7 +23068,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23076,7 +23076,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23084,7 +23084,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_94</value>
+      <value>BATTLEMAPPART_01senate_FT_94</value>
     </entry>
     <entry>
       <key>
@@ -23092,7 +23092,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23100,7 +23100,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23108,7 +23108,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_113</value>
+      <value>BATTLEMAPPART_01senate_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -23116,7 +23116,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_112</value>
+      <value>BATTLEMAPPART_01senate_FT_112</value>
     </entry>
     <entry>
       <key>
@@ -23124,7 +23124,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23132,7 +23132,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23140,7 +23140,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_111</value>
+      <value>BATTLEMAPPART_01senate_FT_111</value>
     </entry>
     <entry>
       <key>
@@ -23148,7 +23148,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_110</value>
+      <value>BATTLEMAPPART_01senate_FT_110</value>
     </entry>
     <entry>
       <key>
@@ -23156,7 +23156,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23164,7 +23164,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23172,7 +23172,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23180,7 +23180,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23188,7 +23188,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23196,7 +23196,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_113</value>
+      <value>BATTLEMAPPART_01senate_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -23204,7 +23204,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_112</value>
+      <value>BATTLEMAPPART_01senate_FT_112</value>
     </entry>
     <entry>
       <key>
@@ -23212,7 +23212,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_79</value>
+      <value>BATTLEMAPPART_01senate_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -23220,7 +23220,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23228,7 +23228,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_111</value>
+      <value>BATTLEMAPPART_01senate_FT_111</value>
     </entry>
     <entry>
       <key>
@@ -23236,7 +23236,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_110</value>
+      <value>BATTLEMAPPART_01senate_FT_110</value>
     </entry>
     <entry>
       <key>
@@ -23244,7 +23244,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_76</value>
+      <value>BATTLEMAPPART_01senate_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -23252,7 +23252,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23260,7 +23260,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23268,7 +23268,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_79</value>
+      <value>BATTLEMAPPART_01senate_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -23276,7 +23276,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23284,7 +23284,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_76</value>
+      <value>BATTLEMAPPART_01senate_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -23292,7 +23292,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23300,7 +23300,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23308,7 +23308,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -23316,7 +23316,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -23324,7 +23324,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23332,7 +23332,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_31</value>
+      <value>BATTLEMAPPART_01senate_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -23340,7 +23340,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23348,7 +23348,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_31</value>
+      <value>BATTLEMAPPART_01senate_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -23356,7 +23356,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23364,7 +23364,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -23372,7 +23372,7 @@
         <y>21</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -23380,7 +23380,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23388,7 +23388,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23396,7 +23396,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -23404,7 +23404,7 @@
         <y>23</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -23412,7 +23412,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23420,7 +23420,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23428,7 +23428,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -23436,7 +23436,7 @@
         <y>1</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -23444,7 +23444,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23452,7 +23452,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23460,7 +23460,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23468,7 +23468,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23476,7 +23476,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23484,7 +23484,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23492,7 +23492,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23500,7 +23500,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -23508,7 +23508,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23516,7 +23516,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23524,7 +23524,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23532,7 +23532,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23540,7 +23540,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23548,7 +23548,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23556,7 +23556,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -23564,7 +23564,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -23572,7 +23572,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23580,7 +23580,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23588,7 +23588,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23596,7 +23596,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23604,7 +23604,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23612,7 +23612,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23620,7 +23620,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23628,7 +23628,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23636,7 +23636,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23644,7 +23644,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23652,7 +23652,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23660,7 +23660,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23668,7 +23668,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23676,7 +23676,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23684,7 +23684,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23692,7 +23692,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23700,7 +23700,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23708,7 +23708,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23716,7 +23716,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23724,7 +23724,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23732,7 +23732,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23740,7 +23740,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23748,7 +23748,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23756,7 +23756,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23764,7 +23764,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23772,7 +23772,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23780,7 +23780,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23788,7 +23788,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_43</value>
+      <value>BATTLEMAPPART_01senate_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -23796,7 +23796,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23804,7 +23804,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_51</value>
+      <value>BATTLEMAPPART_01senate_FT_51</value>
     </entry>
     <entry>
       <key>
@@ -23812,7 +23812,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23820,7 +23820,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23828,7 +23828,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23836,7 +23836,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23844,7 +23844,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23852,7 +23852,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23860,7 +23860,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23868,7 +23868,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23876,7 +23876,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23884,7 +23884,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23892,7 +23892,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23900,7 +23900,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23908,7 +23908,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23916,7 +23916,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23924,7 +23924,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23932,7 +23932,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23940,7 +23940,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23948,7 +23948,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23956,7 +23956,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23964,7 +23964,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23972,7 +23972,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23980,7 +23980,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23988,7 +23988,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -23996,7 +23996,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24004,7 +24004,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_47</value>
+      <value>BATTLEMAPPART_01senate_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -24012,7 +24012,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24020,7 +24020,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_55</value>
+      <value>BATTLEMAPPART_01senate_FT_55</value>
     </entry>
     <entry>
       <key>
@@ -24028,7 +24028,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24036,7 +24036,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24044,7 +24044,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24052,7 +24052,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24060,7 +24060,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24068,7 +24068,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24076,7 +24076,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24084,7 +24084,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24092,7 +24092,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24100,7 +24100,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -24108,7 +24108,7 @@
         <y>1</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -24116,7 +24116,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24124,7 +24124,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24132,7 +24132,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24140,7 +24140,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24148,7 +24148,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24156,7 +24156,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24164,7 +24164,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24172,7 +24172,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -24180,7 +24180,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24188,7 +24188,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24196,7 +24196,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24204,7 +24204,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24212,7 +24212,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24220,7 +24220,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24228,7 +24228,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -24236,7 +24236,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -24244,7 +24244,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24252,7 +24252,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24260,7 +24260,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24268,7 +24268,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24276,7 +24276,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24284,7 +24284,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24292,7 +24292,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24300,7 +24300,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24308,7 +24308,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24316,7 +24316,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24324,7 +24324,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24332,7 +24332,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24340,7 +24340,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24348,7 +24348,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24356,7 +24356,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24364,7 +24364,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24372,7 +24372,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_94</value>
+      <value>BATTLEMAPPART_01senate_FT_94</value>
     </entry>
     <entry>
       <key>
@@ -24380,7 +24380,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24388,7 +24388,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24396,7 +24396,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_113</value>
+      <value>BATTLEMAPPART_01senate_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -24404,7 +24404,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_112</value>
+      <value>BATTLEMAPPART_01senate_FT_112</value>
     </entry>
     <entry>
       <key>
@@ -24412,7 +24412,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24420,7 +24420,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24428,7 +24428,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_111</value>
+      <value>BATTLEMAPPART_01senate_FT_111</value>
     </entry>
     <entry>
       <key>
@@ -24436,7 +24436,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_110</value>
+      <value>BATTLEMAPPART_01senate_FT_110</value>
     </entry>
     <entry>
       <key>
@@ -24444,7 +24444,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24452,7 +24452,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24460,7 +24460,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24468,7 +24468,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24476,7 +24476,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24484,7 +24484,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_113</value>
+      <value>BATTLEMAPPART_01senate_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -24492,7 +24492,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_112</value>
+      <value>BATTLEMAPPART_01senate_FT_112</value>
     </entry>
     <entry>
       <key>
@@ -24500,7 +24500,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_77</value>
+      <value>BATTLEMAPPART_01senate_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -24508,7 +24508,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24516,7 +24516,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_111</value>
+      <value>BATTLEMAPPART_01senate_FT_111</value>
     </entry>
     <entry>
       <key>
@@ -24524,7 +24524,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_110</value>
+      <value>BATTLEMAPPART_01senate_FT_110</value>
     </entry>
     <entry>
       <key>
@@ -24532,7 +24532,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_74</value>
+      <value>BATTLEMAPPART_01senate_FT_74</value>
     </entry>
     <entry>
       <key>
@@ -24540,7 +24540,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24548,7 +24548,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24556,7 +24556,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_77</value>
+      <value>BATTLEMAPPART_01senate_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -24564,7 +24564,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24572,7 +24572,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_74</value>
+      <value>BATTLEMAPPART_01senate_FT_74</value>
     </entry>
     <entry>
       <key>
@@ -24580,7 +24580,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24588,7 +24588,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24596,7 +24596,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -24604,7 +24604,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -24612,7 +24612,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24620,7 +24620,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_31</value>
+      <value>BATTLEMAPPART_01senate_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -24628,7 +24628,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24636,7 +24636,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_31</value>
+      <value>BATTLEMAPPART_01senate_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -24644,7 +24644,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24652,7 +24652,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -24660,7 +24660,7 @@
         <y>21</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -24668,7 +24668,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24676,7 +24676,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24684,7 +24684,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -24692,7 +24692,7 @@
         <y>23</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -24700,7 +24700,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24708,7 +24708,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24716,7 +24716,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24724,7 +24724,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24732,7 +24732,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24740,7 +24740,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24748,7 +24748,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24756,7 +24756,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24764,7 +24764,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_102</value>
+      <value>BATTLEMAPPART_01senate_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -24772,7 +24772,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24780,7 +24780,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24788,7 +24788,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_100</value>
+      <value>BATTLEMAPPART_01senate_FT_100</value>
     </entry>
     <entry>
       <key>
@@ -24796,7 +24796,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24804,7 +24804,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24812,7 +24812,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24820,7 +24820,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24828,7 +24828,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24836,7 +24836,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_102</value>
+      <value>BATTLEMAPPART_01senate_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -24844,7 +24844,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -24852,7 +24852,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24860,7 +24860,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_100</value>
+      <value>BATTLEMAPPART_01senate_FT_100</value>
     </entry>
     <entry>
       <key>
@@ -24868,7 +24868,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -24876,7 +24876,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24884,7 +24884,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24892,7 +24892,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -24900,7 +24900,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24908,7 +24908,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -24916,7 +24916,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24924,7 +24924,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24932,7 +24932,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_31</value>
+      <value>BATTLEMAPPART_01senate_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -24940,7 +24940,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24948,7 +24948,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24956,7 +24956,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -24964,7 +24964,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24972,7 +24972,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -24980,7 +24980,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24988,7 +24988,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -24996,7 +24996,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25004,7 +25004,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25012,7 +25012,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25020,7 +25020,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25028,7 +25028,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25036,7 +25036,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25044,7 +25044,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25052,7 +25052,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25060,7 +25060,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_102</value>
+      <value>BATTLEMAPPART_01senate_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -25068,7 +25068,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25076,7 +25076,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25084,7 +25084,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_100</value>
+      <value>BATTLEMAPPART_01senate_FT_100</value>
     </entry>
     <entry>
       <key>
@@ -25092,7 +25092,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25100,7 +25100,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25108,7 +25108,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25116,7 +25116,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25124,7 +25124,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25132,7 +25132,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_102</value>
+      <value>BATTLEMAPPART_01senate_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -25140,7 +25140,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -25148,7 +25148,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25156,7 +25156,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_100</value>
+      <value>BATTLEMAPPART_01senate_FT_100</value>
     </entry>
     <entry>
       <key>
@@ -25164,7 +25164,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -25172,7 +25172,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25180,7 +25180,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25188,7 +25188,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -25196,7 +25196,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25204,7 +25204,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -25212,7 +25212,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25220,7 +25220,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25228,7 +25228,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_31</value>
+      <value>BATTLEMAPPART_01senate_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -25236,7 +25236,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25244,7 +25244,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -25252,7 +25252,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25260,7 +25260,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_211</value>
+      <value>BATTLEMAPPART_01senate_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -25268,7 +25268,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25276,7 +25276,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_211</value>
+      <value>BATTLEMAPPART_01senate_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -25284,7 +25284,7 @@
         <y>21</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_212</value>
+      <value>BATTLEMAPPART_01senate_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -25292,7 +25292,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25300,7 +25300,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -25308,7 +25308,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25316,7 +25316,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25324,7 +25324,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25332,7 +25332,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25340,7 +25340,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_94</value>
+      <value>BATTLEMAPPART_01senate_FT_94</value>
     </entry>
     <entry>
       <key>
@@ -25348,7 +25348,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25356,7 +25356,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25364,7 +25364,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25372,7 +25372,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_94</value>
+      <value>BATTLEMAPPART_01senate_FT_94</value>
     </entry>
     <entry>
       <key>
@@ -25380,7 +25380,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25388,7 +25388,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25396,7 +25396,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_113</value>
+      <value>BATTLEMAPPART_01senate_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -25404,7 +25404,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_112</value>
+      <value>BATTLEMAPPART_01senate_FT_112</value>
     </entry>
     <entry>
       <key>
@@ -25412,7 +25412,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25420,7 +25420,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25428,7 +25428,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_111</value>
+      <value>BATTLEMAPPART_01senate_FT_111</value>
     </entry>
     <entry>
       <key>
@@ -25436,7 +25436,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_110</value>
+      <value>BATTLEMAPPART_01senate_FT_110</value>
     </entry>
     <entry>
       <key>
@@ -25444,7 +25444,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25452,7 +25452,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25460,7 +25460,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25468,7 +25468,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25476,7 +25476,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25484,7 +25484,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_113</value>
+      <value>BATTLEMAPPART_01senate_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -25492,7 +25492,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_112</value>
+      <value>BATTLEMAPPART_01senate_FT_112</value>
     </entry>
     <entry>
       <key>
@@ -25500,7 +25500,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_79</value>
+      <value>BATTLEMAPPART_01senate_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -25508,7 +25508,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25516,7 +25516,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_111</value>
+      <value>BATTLEMAPPART_01senate_FT_111</value>
     </entry>
     <entry>
       <key>
@@ -25524,7 +25524,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_110</value>
+      <value>BATTLEMAPPART_01senate_FT_110</value>
     </entry>
     <entry>
       <key>
@@ -25532,7 +25532,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_76</value>
+      <value>BATTLEMAPPART_01senate_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -25540,7 +25540,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25548,7 +25548,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25556,7 +25556,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_79</value>
+      <value>BATTLEMAPPART_01senate_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -25564,7 +25564,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25572,7 +25572,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_76</value>
+      <value>BATTLEMAPPART_01senate_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -25580,7 +25580,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25588,7 +25588,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25596,7 +25596,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25604,7 +25604,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25612,7 +25612,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25620,7 +25620,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25628,7 +25628,7 @@
         <y>22</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_77</value>
+      <value>BATTLEMAPPART_01senate_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -25636,7 +25636,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25644,7 +25644,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25652,7 +25652,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25660,7 +25660,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25668,7 +25668,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25676,7 +25676,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25684,7 +25684,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -25692,7 +25692,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25700,7 +25700,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25708,7 +25708,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25716,7 +25716,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -25724,7 +25724,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -25732,7 +25732,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_127</value>
+      <value>BATTLEMAPPART_01senate_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -25740,7 +25740,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -25748,7 +25748,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_127</value>
+      <value>BATTLEMAPPART_01senate_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -25756,7 +25756,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -25764,7 +25764,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_128</value>
+      <value>BATTLEMAPPART_01senate_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -25772,7 +25772,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -25780,7 +25780,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_128</value>
+      <value>BATTLEMAPPART_01senate_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -25788,7 +25788,7 @@
         <y>19</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -25796,7 +25796,7 @@
         <y>22</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -25804,7 +25804,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25812,7 +25812,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -25820,7 +25820,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_213</value>
+      <value>BATTLEMAPPART_01senate_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -25828,7 +25828,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_214</value>
+      <value>BATTLEMAPPART_01senate_FT_214</value>
     </entry>
     <entry>
       <key>
@@ -25836,7 +25836,7 @@
         <y>1</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_221</value>
+      <value>BATTLEMAPPART_01senate_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -25844,7 +25844,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_218</value>
+      <value>BATTLEMAPPART_01senate_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -25852,7 +25852,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -25860,7 +25860,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_218</value>
+      <value>BATTLEMAPPART_01senate_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -25868,7 +25868,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_221</value>
+      <value>BATTLEMAPPART_01senate_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -25876,7 +25876,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_213</value>
+      <value>BATTLEMAPPART_01senate_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -25884,7 +25884,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_214</value>
+      <value>BATTLEMAPPART_01senate_FT_214</value>
     </entry>
     <entry>
       <key>
@@ -25892,7 +25892,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_77</value>
+      <value>BATTLEMAPPART_01senate_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -25900,7 +25900,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_74</value>
+      <value>BATTLEMAPPART_01senate_FT_74</value>
     </entry>
     <entry>
       <key>
@@ -25908,7 +25908,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_77</value>
+      <value>BATTLEMAPPART_01senate_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -25916,7 +25916,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_74</value>
+      <value>BATTLEMAPPART_01senate_FT_74</value>
     </entry>
     <entry>
       <key>
@@ -25924,7 +25924,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -25932,7 +25932,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -25940,7 +25940,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_129</value>
+      <value>BATTLEMAPPART_01senate_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -25948,7 +25948,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -25956,7 +25956,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_129</value>
+      <value>BATTLEMAPPART_01senate_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -25964,7 +25964,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -25972,7 +25972,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -25980,7 +25980,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -25988,7 +25988,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -25996,7 +25996,7 @@
         <y>19</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_126</value>
+      <value>BATTLEMAPPART_01senate_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -26004,7 +26004,7 @@
         <y>22</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_79</value>
+      <value>BATTLEMAPPART_01senate_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -26012,7 +26012,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26020,7 +26020,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26028,7 +26028,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_221</value>
+      <value>BATTLEMAPPART_01senate_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -26036,7 +26036,7 @@
         <y>1</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_211</value>
+      <value>BATTLEMAPPART_01senate_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -26044,7 +26044,7 @@
         <y>1</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_212</value>
+      <value>BATTLEMAPPART_01senate_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -26052,7 +26052,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -26060,7 +26060,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_217</value>
+      <value>BATTLEMAPPART_01senate_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -26068,7 +26068,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -26076,7 +26076,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_211</value>
+      <value>BATTLEMAPPART_01senate_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -26084,7 +26084,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_212</value>
+      <value>BATTLEMAPPART_01senate_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -26092,7 +26092,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_221</value>
+      <value>BATTLEMAPPART_01senate_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -26100,7 +26100,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -26108,7 +26108,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -26116,7 +26116,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -26124,7 +26124,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -26132,7 +26132,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26140,7 +26140,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26148,7 +26148,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_218</value>
+      <value>BATTLEMAPPART_01senate_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -26156,7 +26156,7 @@
         <y>1</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -26164,7 +26164,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_216</value>
+      <value>BATTLEMAPPART_01senate_FT_216</value>
     </entry>
     <entry>
       <key>
@@ -26172,7 +26172,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_216</value>
+      <value>BATTLEMAPPART_01senate_FT_216</value>
     </entry>
     <entry>
       <key>
@@ -26180,7 +26180,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_216</value>
+      <value>BATTLEMAPPART_01senate_FT_216</value>
     </entry>
     <entry>
       <key>
@@ -26188,7 +26188,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -26196,7 +26196,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_218</value>
+      <value>BATTLEMAPPART_01senate_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -26204,7 +26204,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -26212,7 +26212,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -26220,7 +26220,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -26228,7 +26228,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -26236,7 +26236,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_31</value>
+      <value>BATTLEMAPPART_01senate_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -26244,7 +26244,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -26252,7 +26252,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_211</value>
+      <value>BATTLEMAPPART_01senate_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -26260,7 +26260,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_212</value>
+      <value>BATTLEMAPPART_01senate_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -26268,7 +26268,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_211</value>
+      <value>BATTLEMAPPART_01senate_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -26276,7 +26276,7 @@
         <y>21</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_212</value>
+      <value>BATTLEMAPPART_01senate_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -26284,7 +26284,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -26292,7 +26292,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26300,7 +26300,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26308,7 +26308,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26316,7 +26316,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_221</value>
+      <value>BATTLEMAPPART_01senate_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -26324,7 +26324,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26332,7 +26332,7 @@
         <y>1</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_211</value>
+      <value>BATTLEMAPPART_01senate_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -26340,7 +26340,7 @@
         <y>1</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_212</value>
+      <value>BATTLEMAPPART_01senate_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -26348,7 +26348,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26356,7 +26356,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -26364,7 +26364,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26372,7 +26372,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_217</value>
+      <value>BATTLEMAPPART_01senate_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -26380,7 +26380,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26388,7 +26388,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -26396,7 +26396,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26404,7 +26404,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_211</value>
+      <value>BATTLEMAPPART_01senate_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -26412,7 +26412,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_212</value>
+      <value>BATTLEMAPPART_01senate_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -26420,7 +26420,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26428,7 +26428,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_221</value>
+      <value>BATTLEMAPPART_01senate_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -26436,7 +26436,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26444,7 +26444,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26452,7 +26452,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -26460,7 +26460,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26468,7 +26468,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -26476,7 +26476,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26484,7 +26484,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26492,7 +26492,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_78</value>
+      <value>BATTLEMAPPART_01senate_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -26500,7 +26500,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26508,7 +26508,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_75</value>
+      <value>BATTLEMAPPART_01senate_FT_75</value>
     </entry>
     <entry>
       <key>
@@ -26516,7 +26516,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26524,7 +26524,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26532,7 +26532,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26540,7 +26540,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26548,7 +26548,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -26556,7 +26556,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26564,7 +26564,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -26572,7 +26572,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26580,7 +26580,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26588,7 +26588,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26596,7 +26596,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26604,7 +26604,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26612,7 +26612,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_213</value>
+      <value>BATTLEMAPPART_01senate_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -26620,7 +26620,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_214</value>
+      <value>BATTLEMAPPART_01senate_FT_214</value>
     </entry>
     <entry>
       <key>
@@ -26628,7 +26628,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26636,7 +26636,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26644,7 +26644,7 @@
         <y>1</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26652,7 +26652,7 @@
         <y>1</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_221</value>
+      <value>BATTLEMAPPART_01senate_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -26660,7 +26660,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26668,7 +26668,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26676,7 +26676,7 @@
         <y>2</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26684,7 +26684,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_218</value>
+      <value>BATTLEMAPPART_01senate_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -26692,7 +26692,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26700,7 +26700,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26708,7 +26708,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26716,7 +26716,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_219</value>
+      <value>BATTLEMAPPART_01senate_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -26724,7 +26724,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26732,7 +26732,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26740,7 +26740,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26748,7 +26748,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_218</value>
+      <value>BATTLEMAPPART_01senate_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -26756,7 +26756,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26764,7 +26764,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26772,7 +26772,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26780,7 +26780,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_221</value>
+      <value>BATTLEMAPPART_01senate_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -26788,7 +26788,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26796,7 +26796,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26804,7 +26804,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26812,7 +26812,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_213</value>
+      <value>BATTLEMAPPART_01senate_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -26820,7 +26820,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_214</value>
+      <value>BATTLEMAPPART_01senate_FT_214</value>
     </entry>
     <entry>
       <key>
@@ -26828,7 +26828,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26836,7 +26836,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26844,7 +26844,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26852,7 +26852,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26860,7 +26860,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26868,7 +26868,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26876,7 +26876,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_79</value>
+      <value>BATTLEMAPPART_01senate_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -26884,7 +26884,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26892,7 +26892,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -26900,7 +26900,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -26908,7 +26908,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_76</value>
+      <value>BATTLEMAPPART_01senate_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -26916,7 +26916,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26924,7 +26924,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26932,7 +26932,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_79</value>
+      <value>BATTLEMAPPART_01senate_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -26940,7 +26940,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26948,7 +26948,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_76</value>
+      <value>BATTLEMAPPART_01senate_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -26956,7 +26956,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26964,7 +26964,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26972,7 +26972,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -26980,7 +26980,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -26988,7 +26988,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -26996,7 +26996,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -27004,7 +27004,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -27012,7 +27012,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -27020,7 +27020,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_21</value>
+      <value>BATTLEMAPPART_01senate_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -27028,7 +27028,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_92</value>
+      <value>BATTLEMAPPART_01senate_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -27036,7 +27036,7 @@
         <y>23</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_01senate_SC_93</value>
+      <value>BATTLEMAPPART_01senate_FT_93</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

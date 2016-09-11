@@ -15275,14 +15275,14 @@
       <value>BATTLEMAPPART_03hospit_RW_13</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>4</x>
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_166</value>
+      <value>BATTLEMAPPART_03hospit_FT_166</value>
     </entry>
     <entry>
       <key>
@@ -15290,7 +15290,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15298,7 +15298,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15306,7 +15306,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15314,7 +15314,7 @@
         <y>10</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_158</value>
+      <value>BATTLEMAPPART_03hospit_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -15322,7 +15322,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15330,7 +15330,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_158</value>
+      <value>BATTLEMAPPART_03hospit_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -15338,7 +15338,7 @@
         <y>12</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_147</value>
+      <value>BATTLEMAPPART_03hospit_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -15346,7 +15346,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15354,7 +15354,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_147</value>
+      <value>BATTLEMAPPART_03hospit_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -15362,7 +15362,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15370,7 +15370,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15378,7 +15378,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15386,7 +15386,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15394,7 +15394,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_152</value>
+      <value>BATTLEMAPPART_03hospit_FT_152</value>
     </entry>
     <entry>
       <key>
@@ -15402,7 +15402,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_197</value>
+      <value>BATTLEMAPPART_03hospit_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -15410,7 +15410,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_166</value>
+      <value>BATTLEMAPPART_03hospit_FT_166</value>
     </entry>
     <entry>
       <key>
@@ -15418,7 +15418,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15426,7 +15426,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15434,7 +15434,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_197</value>
+      <value>BATTLEMAPPART_03hospit_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -15442,7 +15442,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15450,7 +15450,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15458,7 +15458,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_197</value>
+      <value>BATTLEMAPPART_03hospit_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -15466,7 +15466,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15474,7 +15474,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15482,7 +15482,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_197</value>
+      <value>BATTLEMAPPART_03hospit_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -15490,7 +15490,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15498,7 +15498,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15506,7 +15506,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_197</value>
+      <value>BATTLEMAPPART_03hospit_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -15514,7 +15514,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15522,7 +15522,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_198</value>
+      <value>BATTLEMAPPART_03hospit_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15530,7 +15530,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_146</value>
+      <value>BATTLEMAPPART_03hospit_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -15538,7 +15538,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_198</value>
+      <value>BATTLEMAPPART_03hospit_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15546,7 +15546,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_198</value>
+      <value>BATTLEMAPPART_03hospit_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15554,7 +15554,7 @@
         <y>12</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_150</value>
+      <value>BATTLEMAPPART_03hospit_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -15562,7 +15562,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_198</value>
+      <value>BATTLEMAPPART_03hospit_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15570,7 +15570,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_198</value>
+      <value>BATTLEMAPPART_03hospit_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15578,7 +15578,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_134</value>
+      <value>BATTLEMAPPART_03hospit_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -15586,7 +15586,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_152</value>
+      <value>BATTLEMAPPART_03hospit_FT_152</value>
     </entry>
     <entry>
       <key>
@@ -15594,7 +15594,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_166</value>
+      <value>BATTLEMAPPART_03hospit_FT_166</value>
     </entry>
     <entry>
       <key>
@@ -15602,7 +15602,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15610,7 +15610,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15618,7 +15618,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15626,7 +15626,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15634,7 +15634,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15642,7 +15642,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15650,7 +15650,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15658,7 +15658,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15666,7 +15666,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15674,7 +15674,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_197</value>
+      <value>BATTLEMAPPART_03hospit_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -15682,7 +15682,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_197</value>
+      <value>BATTLEMAPPART_03hospit_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -15690,7 +15690,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_197</value>
+      <value>BATTLEMAPPART_03hospit_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -15698,7 +15698,7 @@
         <y>12</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_145</value>
+      <value>BATTLEMAPPART_03hospit_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -15706,7 +15706,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_197</value>
+      <value>BATTLEMAPPART_03hospit_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -15714,7 +15714,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_197</value>
+      <value>BATTLEMAPPART_03hospit_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -15722,7 +15722,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_198</value>
+      <value>BATTLEMAPPART_03hospit_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15730,7 +15730,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_198</value>
+      <value>BATTLEMAPPART_03hospit_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15738,7 +15738,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_198</value>
+      <value>BATTLEMAPPART_03hospit_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15746,7 +15746,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_198</value>
+      <value>BATTLEMAPPART_03hospit_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15754,7 +15754,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_198</value>
+      <value>BATTLEMAPPART_03hospit_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15762,7 +15762,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_166</value>
+      <value>BATTLEMAPPART_03hospit_FT_166</value>
     </entry>
     <entry>
       <key>
@@ -15770,7 +15770,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15778,7 +15778,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15786,7 +15786,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15794,7 +15794,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15802,7 +15802,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15810,7 +15810,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15818,7 +15818,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15826,7 +15826,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15834,7 +15834,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15842,7 +15842,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_169</value>
+      <value>BATTLEMAPPART_03hospit_FT_169</value>
     </entry>
     <entry>
       <key>
@@ -15850,7 +15850,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_167</value>
+      <value>BATTLEMAPPART_03hospit_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -15858,7 +15858,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_153</value>
+      <value>BATTLEMAPPART_03hospit_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -15866,7 +15866,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_169</value>
+      <value>BATTLEMAPPART_03hospit_FT_169</value>
     </entry>
     <entry>
       <key>
@@ -15874,7 +15874,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_132</value>
+      <value>BATTLEMAPPART_03hospit_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -15882,7 +15882,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_197</value>
+      <value>BATTLEMAPPART_03hospit_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -15890,7 +15890,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_166</value>
+      <value>BATTLEMAPPART_03hospit_FT_166</value>
     </entry>
     <entry>
       <key>
@@ -15898,7 +15898,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15906,7 +15906,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15914,7 +15914,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_197</value>
+      <value>BATTLEMAPPART_03hospit_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -15922,7 +15922,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15930,7 +15930,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15938,7 +15938,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_197</value>
+      <value>BATTLEMAPPART_03hospit_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -15946,7 +15946,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15954,7 +15954,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15962,7 +15962,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_197</value>
+      <value>BATTLEMAPPART_03hospit_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -15970,7 +15970,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15978,7 +15978,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -15986,7 +15986,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_197</value>
+      <value>BATTLEMAPPART_03hospit_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -15994,7 +15994,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_133</value>
+      <value>BATTLEMAPPART_03hospit_FT_133</value>
     </entry>
     <entry>
       <key>
@@ -16002,7 +16002,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_165</value>
+      <value>BATTLEMAPPART_03hospit_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -16010,7 +16010,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_148</value>
+      <value>BATTLEMAPPART_03hospit_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -16018,7 +16018,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_198</value>
+      <value>BATTLEMAPPART_03hospit_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -16026,7 +16026,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_198</value>
+      <value>BATTLEMAPPART_03hospit_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -16034,7 +16034,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_198</value>
+      <value>BATTLEMAPPART_03hospit_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -16042,7 +16042,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_198</value>
+      <value>BATTLEMAPPART_03hospit_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -16050,7 +16050,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_198</value>
+      <value>BATTLEMAPPART_03hospit_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -16058,7 +16058,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_148</value>
+      <value>BATTLEMAPPART_03hospit_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -16066,7 +16066,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_03hospit_SC_212</value>
+      <value>BATTLEMAPPART_03hospit_FT_212</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

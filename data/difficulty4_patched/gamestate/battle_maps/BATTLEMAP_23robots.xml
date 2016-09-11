@@ -121,13 +121,13 @@
       <entry>BATTLEMAPPART_23robots_RW_59</entry>
       <entry>BATTLEMAPPART_23robots_RW_60</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_23robots_SC_242</entry>
-      <entry>BATTLEMAPPART_23robots_SC_243</entry>
-      <entry>BATTLEMAPPART_23robots_SC_244</entry>
-      <entry>BATTLEMAPPART_23robots_SC_245</entry>
-      <entry>BATTLEMAPPART_23robots_SC_246</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_23robots_FT242</entry>
+      <entry>BATTLEMAPPART_23robots_FT243</entry>
+      <entry>BATTLEMAPPART_23robots_FT244</entry>
+      <entry>BATTLEMAPPART_23robots_FT245</entry>
+      <entry>BATTLEMAPPART_23robots_FT246</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_23robots>

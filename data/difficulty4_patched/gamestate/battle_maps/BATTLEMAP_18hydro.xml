@@ -110,13 +110,13 @@
       <entry>BATTLEMAPPART_18hydro_RW_48</entry>
       <entry>BATTLEMAPPART_18hydro_RW_49</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_18hydro_SC_66</entry>
-      <entry>BATTLEMAPPART_18hydro_SC_65</entry>
-      <entry>BATTLEMAPPART_18hydro_SC_64</entry>
-      <entry>BATTLEMAPPART_18hydro_SC_63</entry>
-      <entry>BATTLEMAPPART_18hydro_SC_62</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_18hydro_FT66</entry>
+      <entry>BATTLEMAPPART_18hydro_FT65</entry>
+      <entry>BATTLEMAPPART_18hydro_FT64</entry>
+      <entry>BATTLEMAPPART_18hydro_FT63</entry>
+      <entry>BATTLEMAPPART_18hydro_FT62</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_18hydro>

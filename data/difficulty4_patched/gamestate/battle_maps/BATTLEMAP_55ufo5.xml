@@ -1036,13 +1036,13 @@
       <entry>55ufo5</entry>
     </tilesets>
     <destroyed_ground_tile>BATTLEMAPPART_55ufo5_GD_8</destroyed_ground_tile>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_55ufo5_SC_99</entry>
-      <entry>BATTLEMAPPART_55ufo5_SC_97</entry>
-      <entry>BATTLEMAPPART_55ufo5_SC_96</entry>
-      <entry>BATTLEMAPPART_55ufo5_SC_95</entry>
-      <entry>BATTLEMAPPART_55ufo5_SC_94</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_55ufo5_FT99</entry>
+      <entry>BATTLEMAPPART_55ufo5_FT97</entry>
+      <entry>BATTLEMAPPART_55ufo5_FT96</entry>
+      <entry>BATTLEMAPPART_55ufo5_FT95</entry>
+      <entry>BATTLEMAPPART_55ufo5_FT94</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_55ufo5>

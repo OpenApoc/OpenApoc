@@ -200,13 +200,13 @@
       <entry>BATTLEMAPPART_27constr_RW_70</entry>
       <entry>BATTLEMAPPART_27constr_RW_71</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_27constr_SC_251</entry>
-      <entry>BATTLEMAPPART_27constr_SC_250</entry>
-      <entry>BATTLEMAPPART_27constr_SC_253</entry>
-      <entry>BATTLEMAPPART_27constr_SC_249</entry>
-      <entry>BATTLEMAPPART_27constr_SC_254</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_27constr_FT251</entry>
+      <entry>BATTLEMAPPART_27constr_FT250</entry>
+      <entry>BATTLEMAPPART_27constr_FT253</entry>
+      <entry>BATTLEMAPPART_27constr_FT249</entry>
+      <entry>BATTLEMAPPART_27constr_FT254</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_27constr>

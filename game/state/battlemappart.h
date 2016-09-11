@@ -7,7 +7,7 @@ namespace OpenApoc
 {
 class Battle;
 class CollisionB;
-class BattleTileObjectMapPart;
+class TileObjectBattleMapPart;
 class BattleMapPartType;
 
 class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
@@ -38,7 +38,7 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 
 	bool isAlive() const;
 
-	sp<BattleTileObjectMapPart> tileObject;
+	sp<TileObjectBattleMapPart> tileObject;
 	std::set<sp<BattleMapPart>> supports;
 	std::set<sp<BattleMapPart>> supportedBy;
 	StateRef<Battle> battle;

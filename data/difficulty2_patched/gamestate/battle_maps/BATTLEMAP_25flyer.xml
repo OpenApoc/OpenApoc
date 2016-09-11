@@ -261,13 +261,13 @@
       <entry>BATTLEMAPPART_25flyer_RW_66</entry>
       <entry>BATTLEMAPPART_25flyer_RW_67</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_25flyer_SC_117</entry>
-      <entry>BATTLEMAPPART_25flyer_SC_109</entry>
-      <entry>BATTLEMAPPART_25flyer_SC_110</entry>
-      <entry>BATTLEMAPPART_25flyer_SC_118</entry>
-      <entry>BATTLEMAPPART_25flyer_SC_116</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_25flyer_FT117</entry>
+      <entry>BATTLEMAPPART_25flyer_FT109</entry>
+      <entry>BATTLEMAPPART_25flyer_FT110</entry>
+      <entry>BATTLEMAPPART_25flyer_FT118</entry>
+      <entry>BATTLEMAPPART_25flyer_FT116</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_25flyer>

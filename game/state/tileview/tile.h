@@ -32,6 +32,8 @@ class Scenery;
 class TileObjectScenery;
 class Doodad;
 class TileObjectDoodad;
+class BattleMapPart;
+class TileObjectBattleMapPart;
 
 class TileTransform
 {
@@ -126,6 +128,7 @@ class TileMap
 	void addObjectToMap(sp<Vehicle>);
 	void addObjectToMap(sp<Scenery>);
 	void addObjectToMap(sp<Doodad>);
+	void addObjectToMap(sp<BattleMapPart>);
 
 	int getLayer(TileObject::Type type) const;
 	int getLayerCount() const;

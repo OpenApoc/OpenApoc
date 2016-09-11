@@ -105,13 +105,13 @@
       <entry>BATTLEMAPPART_19sewage_RW_59</entry>
       <entry>BATTLEMAPPART_19sewage_RW_60</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_19sewage_SC_204</entry>
-      <entry>BATTLEMAPPART_19sewage_SC_205</entry>
-      <entry>BATTLEMAPPART_19sewage_SC_201</entry>
-      <entry>BATTLEMAPPART_19sewage_SC_196</entry>
-      <entry>BATTLEMAPPART_19sewage_SC_193</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_19sewage_FT204</entry>
+      <entry>BATTLEMAPPART_19sewage_FT205</entry>
+      <entry>BATTLEMAPPART_19sewage_FT201</entry>
+      <entry>BATTLEMAPPART_19sewage_FT196</entry>
+      <entry>BATTLEMAPPART_19sewage_FT193</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_19sewage>

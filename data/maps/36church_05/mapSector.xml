@@ -14088,14 +14088,14 @@
       <value>BATTLEMAPPART_36church_RW_12</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14103,7 +14103,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14111,7 +14111,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14119,7 +14119,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14127,7 +14127,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14135,7 +14135,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14143,7 +14143,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14151,7 +14151,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14159,7 +14159,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14167,7 +14167,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14175,7 +14175,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14183,7 +14183,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14191,7 +14191,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14199,7 +14199,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14207,7 +14207,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14215,7 +14215,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14223,7 +14223,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14231,7 +14231,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14239,7 +14239,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14247,7 +14247,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14255,7 +14255,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14263,7 +14263,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14271,7 +14271,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14279,7 +14279,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14287,7 +14287,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14295,7 +14295,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14303,7 +14303,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14311,7 +14311,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14319,7 +14319,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14327,7 +14327,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14335,7 +14335,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14343,7 +14343,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14351,7 +14351,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14359,7 +14359,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14367,7 +14367,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14375,7 +14375,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14383,7 +14383,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14391,7 +14391,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14399,7 +14399,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14407,7 +14407,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14415,7 +14415,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14423,7 +14423,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14431,7 +14431,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14439,7 +14439,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14447,7 +14447,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14455,7 +14455,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14463,7 +14463,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14471,7 +14471,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14479,7 +14479,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14487,7 +14487,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14495,7 +14495,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14503,7 +14503,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14511,7 +14511,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14519,7 +14519,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14527,7 +14527,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14535,7 +14535,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14543,7 +14543,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14551,7 +14551,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14559,7 +14559,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14567,7 +14567,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14575,7 +14575,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14583,7 +14583,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14591,7 +14591,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14599,7 +14599,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14607,7 +14607,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14615,7 +14615,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14623,7 +14623,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14631,7 +14631,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14639,7 +14639,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14647,7 +14647,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14655,7 +14655,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14663,7 +14663,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14671,7 +14671,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14679,7 +14679,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14687,7 +14687,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14695,7 +14695,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14703,7 +14703,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14711,7 +14711,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14719,7 +14719,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14727,7 +14727,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14735,7 +14735,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14743,7 +14743,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14751,7 +14751,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14759,7 +14759,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14767,7 +14767,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14775,7 +14775,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14783,7 +14783,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14791,7 +14791,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14799,7 +14799,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14807,7 +14807,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14815,7 +14815,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14823,7 +14823,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14831,7 +14831,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14839,7 +14839,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14847,7 +14847,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14855,7 +14855,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14863,7 +14863,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_110</value>
+      <value>BATTLEMAPPART_36church_FT_110</value>
     </entry>
     <entry>
       <key>
@@ -14871,7 +14871,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_109</value>
+      <value>BATTLEMAPPART_36church_FT_109</value>
     </entry>
     <entry>
       <key>
@@ -14879,7 +14879,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_109</value>
+      <value>BATTLEMAPPART_36church_FT_109</value>
     </entry>
     <entry>
       <key>
@@ -14887,7 +14887,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14895,7 +14895,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_110</value>
+      <value>BATTLEMAPPART_36church_FT_110</value>
     </entry>
     <entry>
       <key>
@@ -14903,7 +14903,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14911,7 +14911,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14919,7 +14919,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14927,7 +14927,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14935,7 +14935,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14943,7 +14943,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14951,7 +14951,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14959,7 +14959,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14967,7 +14967,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14975,7 +14975,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14983,7 +14983,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14991,7 +14991,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -14999,7 +14999,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -15007,7 +15007,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15015,7 +15015,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_7</value>
+      <value>BATTLEMAPPART_36church_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -15023,7 +15023,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15031,7 +15031,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_8</value>
+      <value>BATTLEMAPPART_36church_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -15039,7 +15039,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15047,7 +15047,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -15055,7 +15055,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15063,7 +15063,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15071,7 +15071,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -15079,7 +15079,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -15087,7 +15087,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15095,7 +15095,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15103,7 +15103,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -15111,7 +15111,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_7</value>
+      <value>BATTLEMAPPART_36church_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -15119,7 +15119,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_8</value>
+      <value>BATTLEMAPPART_36church_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -15127,7 +15127,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -15135,7 +15135,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -15143,7 +15143,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -15151,7 +15151,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_7</value>
+      <value>BATTLEMAPPART_36church_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -15159,7 +15159,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -15167,7 +15167,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_8</value>
+      <value>BATTLEMAPPART_36church_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -15175,7 +15175,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -15183,7 +15183,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15191,7 +15191,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15199,7 +15199,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -15207,7 +15207,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15215,7 +15215,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -15223,7 +15223,7 @@
         <y>21</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15231,7 +15231,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15239,7 +15239,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15247,7 +15247,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_7</value>
+      <value>BATTLEMAPPART_36church_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -15255,7 +15255,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15263,7 +15263,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_8</value>
+      <value>BATTLEMAPPART_36church_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -15271,7 +15271,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15279,7 +15279,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -15287,7 +15287,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15295,7 +15295,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15303,7 +15303,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15311,7 +15311,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15319,7 +15319,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15327,7 +15327,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15335,7 +15335,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15343,7 +15343,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15351,7 +15351,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15359,7 +15359,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -15367,7 +15367,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15375,7 +15375,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_7</value>
+      <value>BATTLEMAPPART_36church_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -15383,7 +15383,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15391,7 +15391,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_8</value>
+      <value>BATTLEMAPPART_36church_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -15399,7 +15399,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15407,7 +15407,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -15415,7 +15415,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15423,7 +15423,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15431,7 +15431,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -15439,7 +15439,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15447,7 +15447,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15455,7 +15455,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_7</value>
+      <value>BATTLEMAPPART_36church_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -15463,7 +15463,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_8</value>
+      <value>BATTLEMAPPART_36church_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -15471,7 +15471,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -15479,7 +15479,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -15487,7 +15487,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_7</value>
+      <value>BATTLEMAPPART_36church_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -15495,7 +15495,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_8</value>
+      <value>BATTLEMAPPART_36church_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -15503,7 +15503,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -15511,7 +15511,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15519,7 +15519,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15527,7 +15527,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15535,7 +15535,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -15543,7 +15543,7 @@
         <y>21</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15551,7 +15551,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15559,7 +15559,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15567,7 +15567,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_7</value>
+      <value>BATTLEMAPPART_36church_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -15575,7 +15575,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15583,7 +15583,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_8</value>
+      <value>BATTLEMAPPART_36church_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -15591,7 +15591,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15599,7 +15599,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -15607,7 +15607,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15615,7 +15615,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15623,7 +15623,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15631,7 +15631,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15639,7 +15639,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -15647,7 +15647,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -15655,7 +15655,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -15663,7 +15663,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -15671,7 +15671,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -15679,7 +15679,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15687,7 +15687,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15695,7 +15695,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15703,7 +15703,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15711,7 +15711,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15719,7 +15719,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -15727,7 +15727,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15735,7 +15735,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_7</value>
+      <value>BATTLEMAPPART_36church_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -15743,7 +15743,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15751,7 +15751,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_8</value>
+      <value>BATTLEMAPPART_36church_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -15759,7 +15759,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15767,7 +15767,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -15775,7 +15775,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15783,7 +15783,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15791,7 +15791,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_111</value>
+      <value>BATTLEMAPPART_36church_FT_111</value>
     </entry>
     <entry>
       <key>
@@ -15799,7 +15799,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_111</value>
+      <value>BATTLEMAPPART_36church_FT_111</value>
     </entry>
     <entry>
       <key>
@@ -15807,7 +15807,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15815,7 +15815,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -15823,7 +15823,7 @@
         <y>21</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15831,7 +15831,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -15839,7 +15839,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15847,7 +15847,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_7</value>
+      <value>BATTLEMAPPART_36church_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -15855,7 +15855,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15863,7 +15863,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_8</value>
+      <value>BATTLEMAPPART_36church_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -15871,7 +15871,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15879,7 +15879,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -15887,7 +15887,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15895,7 +15895,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15903,7 +15903,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15911,7 +15911,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15919,7 +15919,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_115</value>
+      <value>BATTLEMAPPART_36church_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -15927,7 +15927,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_117</value>
+      <value>BATTLEMAPPART_36church_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -15935,7 +15935,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15943,7 +15943,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15951,7 +15951,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15959,7 +15959,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15967,7 +15967,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15975,7 +15975,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15983,7 +15983,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15991,7 +15991,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -15999,7 +15999,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16007,7 +16007,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16015,7 +16015,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16023,7 +16023,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_114</value>
+      <value>BATTLEMAPPART_36church_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -16031,7 +16031,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_116</value>
+      <value>BATTLEMAPPART_36church_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -16039,7 +16039,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16047,7 +16047,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16055,7 +16055,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16063,7 +16063,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16071,7 +16071,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16079,7 +16079,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16087,7 +16087,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16095,7 +16095,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16103,7 +16103,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16111,7 +16111,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16119,7 +16119,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_113</value>
+      <value>BATTLEMAPPART_36church_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -16127,7 +16127,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_112</value>
+      <value>BATTLEMAPPART_36church_FT_112</value>
     </entry>
     <entry>
       <key>
@@ -16135,7 +16135,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16143,7 +16143,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16151,7 +16151,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16159,7 +16159,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16167,7 +16167,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16175,7 +16175,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -16183,7 +16183,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16191,7 +16191,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_5</value>
+      <value>BATTLEMAPPART_36church_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -16199,7 +16199,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16207,7 +16207,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_6</value>
+      <value>BATTLEMAPPART_36church_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -16215,7 +16215,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16223,7 +16223,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -16231,7 +16231,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16239,7 +16239,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16247,7 +16247,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_111</value>
+      <value>BATTLEMAPPART_36church_FT_111</value>
     </entry>
     <entry>
       <key>
@@ -16255,7 +16255,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_111</value>
+      <value>BATTLEMAPPART_36church_FT_111</value>
     </entry>
     <entry>
       <key>
@@ -16263,7 +16263,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16271,7 +16271,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -16279,7 +16279,7 @@
         <y>21</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16287,7 +16287,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16295,7 +16295,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16303,7 +16303,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_5</value>
+      <value>BATTLEMAPPART_36church_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -16311,7 +16311,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16319,7 +16319,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_6</value>
+      <value>BATTLEMAPPART_36church_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -16327,7 +16327,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16335,7 +16335,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -16343,7 +16343,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16351,7 +16351,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16359,7 +16359,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16367,7 +16367,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16375,7 +16375,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16383,7 +16383,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -16391,7 +16391,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_5</value>
+      <value>BATTLEMAPPART_36church_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -16399,7 +16399,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_6</value>
+      <value>BATTLEMAPPART_36church_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -16407,7 +16407,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -16415,7 +16415,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16423,7 +16423,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16431,7 +16431,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -16439,7 +16439,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16447,7 +16447,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16455,7 +16455,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_5</value>
+      <value>BATTLEMAPPART_36church_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -16463,7 +16463,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_6</value>
+      <value>BATTLEMAPPART_36church_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -16471,7 +16471,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -16479,7 +16479,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -16487,7 +16487,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_5</value>
+      <value>BATTLEMAPPART_36church_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -16495,7 +16495,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_6</value>
+      <value>BATTLEMAPPART_36church_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -16503,7 +16503,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -16511,7 +16511,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16519,7 +16519,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16527,7 +16527,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -16535,7 +16535,7 @@
         <y>21</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16543,7 +16543,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16551,7 +16551,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_5</value>
+      <value>BATTLEMAPPART_36church_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -16559,7 +16559,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_6</value>
+      <value>BATTLEMAPPART_36church_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -16567,7 +16567,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -16575,7 +16575,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16583,7 +16583,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16591,7 +16591,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16599,7 +16599,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16607,7 +16607,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16615,7 +16615,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16623,7 +16623,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16631,7 +16631,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16639,7 +16639,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16647,7 +16647,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -16655,7 +16655,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16663,7 +16663,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_5</value>
+      <value>BATTLEMAPPART_36church_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -16671,7 +16671,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16679,7 +16679,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_6</value>
+      <value>BATTLEMAPPART_36church_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -16687,7 +16687,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16695,7 +16695,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -16703,7 +16703,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16711,7 +16711,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16719,7 +16719,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16727,7 +16727,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -16735,7 +16735,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16743,7 +16743,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16751,7 +16751,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16759,7 +16759,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_5</value>
+      <value>BATTLEMAPPART_36church_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -16767,7 +16767,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_6</value>
+      <value>BATTLEMAPPART_36church_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -16775,7 +16775,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -16783,7 +16783,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16791,7 +16791,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -16799,7 +16799,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_5</value>
+      <value>BATTLEMAPPART_36church_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -16807,7 +16807,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16815,7 +16815,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_6</value>
+      <value>BATTLEMAPPART_36church_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -16823,7 +16823,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -16831,7 +16831,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16839,7 +16839,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16847,7 +16847,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_23</value>
+      <value>BATTLEMAPPART_36church_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16855,7 +16855,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16863,7 +16863,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_16</value>
+      <value>BATTLEMAPPART_36church_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -16871,7 +16871,7 @@
         <y>21</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16879,7 +16879,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_17</value>
+      <value>BATTLEMAPPART_36church_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -16887,7 +16887,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16895,7 +16895,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_5</value>
+      <value>BATTLEMAPPART_36church_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -16903,7 +16903,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16911,7 +16911,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_6</value>
+      <value>BATTLEMAPPART_36church_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -16919,7 +16919,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16927,7 +16927,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_11</value>
+      <value>BATTLEMAPPART_36church_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -16935,7 +16935,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16943,7 +16943,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16951,7 +16951,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16959,7 +16959,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16967,7 +16967,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16975,7 +16975,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16983,7 +16983,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16991,7 +16991,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -16999,7 +16999,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17007,7 +17007,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17015,7 +17015,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17023,7 +17023,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17031,7 +17031,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_110</value>
+      <value>BATTLEMAPPART_36church_FT_110</value>
     </entry>
     <entry>
       <key>
@@ -17039,7 +17039,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_109</value>
+      <value>BATTLEMAPPART_36church_FT_109</value>
     </entry>
     <entry>
       <key>
@@ -17047,7 +17047,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_109</value>
+      <value>BATTLEMAPPART_36church_FT_109</value>
     </entry>
     <entry>
       <key>
@@ -17055,7 +17055,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17063,7 +17063,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_110</value>
+      <value>BATTLEMAPPART_36church_FT_110</value>
     </entry>
     <entry>
       <key>
@@ -17071,7 +17071,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17079,7 +17079,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17087,7 +17087,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17095,7 +17095,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17103,7 +17103,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17111,7 +17111,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17119,7 +17119,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17127,7 +17127,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17135,7 +17135,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17143,7 +17143,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17151,7 +17151,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17159,7 +17159,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17167,7 +17167,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17175,7 +17175,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17183,7 +17183,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17191,7 +17191,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17199,7 +17199,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17207,7 +17207,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17215,7 +17215,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17223,7 +17223,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17231,7 +17231,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17239,7 +17239,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17247,7 +17247,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17255,7 +17255,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17263,7 +17263,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17271,7 +17271,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17279,7 +17279,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17287,7 +17287,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17295,7 +17295,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17303,7 +17303,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17311,7 +17311,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17319,7 +17319,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17327,7 +17327,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17335,7 +17335,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17343,7 +17343,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17351,7 +17351,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17359,7 +17359,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17367,7 +17367,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17375,7 +17375,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17383,7 +17383,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17391,7 +17391,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17399,7 +17399,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17407,7 +17407,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17415,7 +17415,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17423,7 +17423,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17431,7 +17431,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17439,7 +17439,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17447,7 +17447,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17455,7 +17455,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17463,7 +17463,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17471,7 +17471,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17479,7 +17479,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17487,7 +17487,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17495,7 +17495,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17503,7 +17503,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17511,7 +17511,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17519,7 +17519,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17527,7 +17527,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17535,7 +17535,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17543,7 +17543,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17551,7 +17551,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17559,7 +17559,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17567,7 +17567,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17575,7 +17575,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17583,7 +17583,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17591,7 +17591,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17599,7 +17599,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17607,7 +17607,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17615,7 +17615,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17623,7 +17623,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17631,7 +17631,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17639,7 +17639,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17647,7 +17647,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17655,7 +17655,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17663,7 +17663,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17671,7 +17671,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17679,7 +17679,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17687,7 +17687,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17695,7 +17695,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17703,7 +17703,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17711,7 +17711,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17719,7 +17719,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17727,7 +17727,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17735,7 +17735,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17743,7 +17743,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17751,7 +17751,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17759,7 +17759,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17767,7 +17767,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17775,7 +17775,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17783,7 +17783,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17791,7 +17791,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17799,7 +17799,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17807,7 +17807,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17815,7 +17815,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -17823,7 +17823,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_36church_SC_82</value>
+      <value>BATTLEMAPPART_36church_FT_82</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

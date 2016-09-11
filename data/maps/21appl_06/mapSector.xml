@@ -10064,14 +10064,14 @@
       <value>BATTLEMAPPART_21appl_RW_26</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>3</x>
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_118</value>
+      <value>BATTLEMAPPART_21appl_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -10079,7 +10079,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_105</value>
+      <value>BATTLEMAPPART_21appl_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -10087,7 +10087,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_108</value>
+      <value>BATTLEMAPPART_21appl_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -10095,7 +10095,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_107</value>
+      <value>BATTLEMAPPART_21appl_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -10103,7 +10103,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_7</value>
+      <value>BATTLEMAPPART_21appl_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -10111,7 +10111,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_16</value>
+      <value>BATTLEMAPPART_21appl_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -10119,7 +10119,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_10</value>
+      <value>BATTLEMAPPART_21appl_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -10127,7 +10127,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -10135,7 +10135,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_122</value>
+      <value>BATTLEMAPPART_21appl_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -10143,7 +10143,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_121</value>
+      <value>BATTLEMAPPART_21appl_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -10151,7 +10151,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_121</value>
+      <value>BATTLEMAPPART_21appl_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -10159,7 +10159,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_121</value>
+      <value>BATTLEMAPPART_21appl_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -10167,7 +10167,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_121</value>
+      <value>BATTLEMAPPART_21appl_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -10175,7 +10175,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_120</value>
+      <value>BATTLEMAPPART_21appl_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -10183,7 +10183,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_1</value>
+      <value>BATTLEMAPPART_21appl_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -10191,7 +10191,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_16</value>
+      <value>BATTLEMAPPART_21appl_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -10199,7 +10199,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -10207,7 +10207,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_108</value>
+      <value>BATTLEMAPPART_21appl_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -10215,7 +10215,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_107</value>
+      <value>BATTLEMAPPART_21appl_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -10223,7 +10223,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_105</value>
+      <value>BATTLEMAPPART_21appl_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -10231,7 +10231,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_12</value>
+      <value>BATTLEMAPPART_21appl_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -10239,7 +10239,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_106</value>
+      <value>BATTLEMAPPART_21appl_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -10247,7 +10247,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_116</value>
+      <value>BATTLEMAPPART_21appl_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -10255,7 +10255,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_1</value>
+      <value>BATTLEMAPPART_21appl_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -10263,7 +10263,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_5</value>
+      <value>BATTLEMAPPART_21appl_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -10271,7 +10271,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_125</value>
+      <value>BATTLEMAPPART_21appl_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -10279,7 +10279,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -10287,7 +10287,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -10295,7 +10295,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -10303,7 +10303,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -10311,7 +10311,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_123</value>
+      <value>BATTLEMAPPART_21appl_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -10319,7 +10319,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_7</value>
+      <value>BATTLEMAPPART_21appl_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -10327,7 +10327,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -10335,7 +10335,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -10343,7 +10343,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_118</value>
+      <value>BATTLEMAPPART_21appl_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -10351,7 +10351,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_106</value>
+      <value>BATTLEMAPPART_21appl_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -10359,7 +10359,7 @@
         <y>25</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_119</value>
+      <value>BATTLEMAPPART_21appl_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -10367,7 +10367,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_11</value>
+      <value>BATTLEMAPPART_21appl_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -10375,7 +10375,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_106</value>
+      <value>BATTLEMAPPART_21appl_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -10383,7 +10383,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_176</value>
+      <value>BATTLEMAPPART_21appl_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -10391,7 +10391,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_125</value>
+      <value>BATTLEMAPPART_21appl_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -10399,7 +10399,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -10407,7 +10407,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_178</value>
+      <value>BATTLEMAPPART_21appl_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -10415,7 +10415,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -10423,7 +10423,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -10431,7 +10431,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -10439,7 +10439,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_172</value>
+      <value>BATTLEMAPPART_21appl_FT_172</value>
     </entry>
     <entry>
       <key>
@@ -10447,7 +10447,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_123</value>
+      <value>BATTLEMAPPART_21appl_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -10455,7 +10455,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_10</value>
+      <value>BATTLEMAPPART_21appl_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -10463,7 +10463,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -10471,7 +10471,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_106</value>
+      <value>BATTLEMAPPART_21appl_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -10479,7 +10479,7 @@
         <y>25</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_172</value>
+      <value>BATTLEMAPPART_21appl_FT_172</value>
     </entry>
     <entry>
       <key>
@@ -10487,7 +10487,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_12</value>
+      <value>BATTLEMAPPART_21appl_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -10495,7 +10495,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -10503,7 +10503,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_14</value>
+      <value>BATTLEMAPPART_21appl_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -10511,7 +10511,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_178</value>
+      <value>BATTLEMAPPART_21appl_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -10519,7 +10519,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_177</value>
+      <value>BATTLEMAPPART_21appl_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -10527,7 +10527,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_177</value>
+      <value>BATTLEMAPPART_21appl_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -10535,7 +10535,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_125</value>
+      <value>BATTLEMAPPART_21appl_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -10543,7 +10543,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -10551,7 +10551,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -10559,7 +10559,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_177</value>
+      <value>BATTLEMAPPART_21appl_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -10567,7 +10567,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -10575,7 +10575,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -10583,7 +10583,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_123</value>
+      <value>BATTLEMAPPART_21appl_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -10591,7 +10591,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_117</value>
+      <value>BATTLEMAPPART_21appl_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -10599,7 +10599,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_171</value>
+      <value>BATTLEMAPPART_21appl_FT_171</value>
     </entry>
     <entry>
       <key>
@@ -10607,7 +10607,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_171</value>
+      <value>BATTLEMAPPART_21appl_FT_171</value>
     </entry>
     <entry>
       <key>
@@ -10615,7 +10615,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_14</value>
+      <value>BATTLEMAPPART_21appl_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -10623,7 +10623,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -10631,7 +10631,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -10639,7 +10639,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_12</value>
+      <value>BATTLEMAPPART_21appl_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -10647,7 +10647,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -10655,7 +10655,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_177</value>
+      <value>BATTLEMAPPART_21appl_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -10663,7 +10663,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_178</value>
+      <value>BATTLEMAPPART_21appl_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -10671,7 +10671,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_176</value>
+      <value>BATTLEMAPPART_21appl_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -10679,7 +10679,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_116</value>
+      <value>BATTLEMAPPART_21appl_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -10687,7 +10687,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_125</value>
+      <value>BATTLEMAPPART_21appl_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -10695,7 +10695,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -10703,7 +10703,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -10711,7 +10711,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -10719,7 +10719,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_172</value>
+      <value>BATTLEMAPPART_21appl_FT_172</value>
     </entry>
     <entry>
       <key>
@@ -10727,7 +10727,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -10735,7 +10735,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_123</value>
+      <value>BATTLEMAPPART_21appl_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -10743,7 +10743,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_173</value>
+      <value>BATTLEMAPPART_21appl_FT_173</value>
     </entry>
     <entry>
       <key>
@@ -10751,7 +10751,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_171</value>
+      <value>BATTLEMAPPART_21appl_FT_171</value>
     </entry>
     <entry>
       <key>
@@ -10759,7 +10759,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_172</value>
+      <value>BATTLEMAPPART_21appl_FT_172</value>
     </entry>
     <entry>
       <key>
@@ -10767,7 +10767,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_12</value>
+      <value>BATTLEMAPPART_21appl_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -10775,7 +10775,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -10783,7 +10783,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -10791,7 +10791,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_11</value>
+      <value>BATTLEMAPPART_21appl_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -10799,7 +10799,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -10807,7 +10807,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_12</value>
+      <value>BATTLEMAPPART_21appl_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -10815,7 +10815,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -10823,7 +10823,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_11</value>
+      <value>BATTLEMAPPART_21appl_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -10831,7 +10831,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -10839,7 +10839,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -10847,7 +10847,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -10855,7 +10855,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_176</value>
+      <value>BATTLEMAPPART_21appl_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -10863,7 +10863,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_128</value>
+      <value>BATTLEMAPPART_21appl_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -10871,7 +10871,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_127</value>
+      <value>BATTLEMAPPART_21appl_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -10879,7 +10879,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_127</value>
+      <value>BATTLEMAPPART_21appl_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -10887,7 +10887,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_176</value>
+      <value>BATTLEMAPPART_21appl_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -10895,7 +10895,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_127</value>
+      <value>BATTLEMAPPART_21appl_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -10903,7 +10903,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_127</value>
+      <value>BATTLEMAPPART_21appl_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -10911,7 +10911,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_126</value>
+      <value>BATTLEMAPPART_21appl_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -10919,7 +10919,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_12</value>
+      <value>BATTLEMAPPART_21appl_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -10927,7 +10927,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -10935,7 +10935,7 @@
         <y>25</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -10943,7 +10943,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_11</value>
+      <value>BATTLEMAPPART_21appl_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -10951,7 +10951,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_14</value>
+      <value>BATTLEMAPPART_21appl_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -10959,7 +10959,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -10967,7 +10967,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -10975,7 +10975,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -10983,7 +10983,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -10991,7 +10991,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_117</value>
+      <value>BATTLEMAPPART_21appl_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -10999,7 +10999,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_122</value>
+      <value>BATTLEMAPPART_21appl_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -11007,7 +11007,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_121</value>
+      <value>BATTLEMAPPART_21appl_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -11015,7 +11015,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_121</value>
+      <value>BATTLEMAPPART_21appl_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -11023,7 +11023,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_121</value>
+      <value>BATTLEMAPPART_21appl_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -11031,7 +11031,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_121</value>
+      <value>BATTLEMAPPART_21appl_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -11039,7 +11039,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_174</value>
+      <value>BATTLEMAPPART_21appl_FT_174</value>
     </entry>
     <entry>
       <key>
@@ -11047,7 +11047,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_120</value>
+      <value>BATTLEMAPPART_21appl_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -11055,7 +11055,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_172</value>
+      <value>BATTLEMAPPART_21appl_FT_172</value>
     </entry>
     <entry>
       <key>
@@ -11063,7 +11063,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_174</value>
+      <value>BATTLEMAPPART_21appl_FT_174</value>
     </entry>
     <entry>
       <key>
@@ -11071,7 +11071,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_173</value>
+      <value>BATTLEMAPPART_21appl_FT_173</value>
     </entry>
     <entry>
       <key>
@@ -11079,7 +11079,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -11087,7 +11087,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -11095,7 +11095,7 @@
         <y>25</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_14</value>
+      <value>BATTLEMAPPART_21appl_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -11103,7 +11103,7 @@
         <y>25</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -11111,7 +11111,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_12</value>
+      <value>BATTLEMAPPART_21appl_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -11119,7 +11119,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -11127,7 +11127,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -11135,7 +11135,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_12</value>
+      <value>BATTLEMAPPART_21appl_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -11143,7 +11143,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -11151,7 +11151,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_125</value>
+      <value>BATTLEMAPPART_21appl_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -11159,7 +11159,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11167,7 +11167,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_178</value>
+      <value>BATTLEMAPPART_21appl_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -11175,7 +11175,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11183,7 +11183,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11191,7 +11191,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11199,7 +11199,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_123</value>
+      <value>BATTLEMAPPART_21appl_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -11207,7 +11207,7 @@
         <y>25</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_11</value>
+      <value>BATTLEMAPPART_21appl_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -11215,7 +11215,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -11223,7 +11223,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_117</value>
+      <value>BATTLEMAPPART_21appl_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -11231,7 +11231,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_128</value>
+      <value>BATTLEMAPPART_21appl_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -11239,7 +11239,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_127</value>
+      <value>BATTLEMAPPART_21appl_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -11247,7 +11247,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_127</value>
+      <value>BATTLEMAPPART_21appl_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -11255,7 +11255,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_127</value>
+      <value>BATTLEMAPPART_21appl_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -11263,7 +11263,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_171</value>
+      <value>BATTLEMAPPART_21appl_FT_171</value>
     </entry>
     <entry>
       <key>
@@ -11271,7 +11271,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_127</value>
+      <value>BATTLEMAPPART_21appl_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -11279,7 +11279,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_126</value>
+      <value>BATTLEMAPPART_21appl_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -11287,7 +11287,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_167</value>
+      <value>BATTLEMAPPART_21appl_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -11295,7 +11295,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_105</value>
+      <value>BATTLEMAPPART_21appl_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -11303,7 +11303,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_108</value>
+      <value>BATTLEMAPPART_21appl_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -11311,7 +11311,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_107</value>
+      <value>BATTLEMAPPART_21appl_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -11319,7 +11319,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_9</value>
+      <value>BATTLEMAPPART_21appl_FT_9</value>
     </entry>
     <entry>
       <key>
@@ -11327,7 +11327,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_122</value>
+      <value>BATTLEMAPPART_21appl_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -11335,7 +11335,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_121</value>
+      <value>BATTLEMAPPART_21appl_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -11343,7 +11343,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_121</value>
+      <value>BATTLEMAPPART_21appl_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -11351,7 +11351,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_121</value>
+      <value>BATTLEMAPPART_21appl_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -11359,7 +11359,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_121</value>
+      <value>BATTLEMAPPART_21appl_FT_121</value>
     </entry>
     <entry>
       <key>
@@ -11367,7 +11367,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_120</value>
+      <value>BATTLEMAPPART_21appl_FT_120</value>
     </entry>
     <entry>
       <key>
@@ -11375,7 +11375,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_7</value>
+      <value>BATTLEMAPPART_21appl_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -11383,7 +11383,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -11391,7 +11391,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_8</value>
+      <value>BATTLEMAPPART_21appl_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -11399,7 +11399,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_108</value>
+      <value>BATTLEMAPPART_21appl_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -11407,7 +11407,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_107</value>
+      <value>BATTLEMAPPART_21appl_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -11415,7 +11415,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_105</value>
+      <value>BATTLEMAPPART_21appl_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -11423,7 +11423,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -11431,7 +11431,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_168</value>
+      <value>BATTLEMAPPART_21appl_FT_168</value>
     </entry>
     <entry>
       <key>
@@ -11439,7 +11439,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_106</value>
+      <value>BATTLEMAPPART_21appl_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -11447,7 +11447,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_167</value>
+      <value>BATTLEMAPPART_21appl_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -11455,7 +11455,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_125</value>
+      <value>BATTLEMAPPART_21appl_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -11463,7 +11463,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11471,7 +11471,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11479,7 +11479,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_175</value>
+      <value>BATTLEMAPPART_21appl_FT_175</value>
     </entry>
     <entry>
       <key>
@@ -11487,7 +11487,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11495,7 +11495,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11503,7 +11503,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_123</value>
+      <value>BATTLEMAPPART_21appl_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -11511,7 +11511,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_175</value>
+      <value>BATTLEMAPPART_21appl_FT_175</value>
     </entry>
     <entry>
       <key>
@@ -11519,7 +11519,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_1</value>
+      <value>BATTLEMAPPART_21appl_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -11527,7 +11527,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_106</value>
+      <value>BATTLEMAPPART_21appl_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -11535,7 +11535,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -11543,7 +11543,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_118</value>
+      <value>BATTLEMAPPART_21appl_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -11551,7 +11551,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_106</value>
+      <value>BATTLEMAPPART_21appl_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -11559,7 +11559,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_167</value>
+      <value>BATTLEMAPPART_21appl_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -11567,7 +11567,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_125</value>
+      <value>BATTLEMAPPART_21appl_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -11575,7 +11575,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11583,7 +11583,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11591,7 +11591,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_163</value>
+      <value>BATTLEMAPPART_21appl_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -11599,7 +11599,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11607,7 +11607,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11615,7 +11615,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_123</value>
+      <value>BATTLEMAPPART_21appl_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -11623,7 +11623,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_164</value>
+      <value>BATTLEMAPPART_21appl_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -11631,7 +11631,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_116</value>
+      <value>BATTLEMAPPART_21appl_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -11639,7 +11639,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_164</value>
+      <value>BATTLEMAPPART_21appl_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -11647,7 +11647,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_106</value>
+      <value>BATTLEMAPPART_21appl_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -11655,7 +11655,7 @@
         <y>25</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_119</value>
+      <value>BATTLEMAPPART_21appl_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -11663,7 +11663,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_11</value>
+      <value>BATTLEMAPPART_21appl_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -11671,7 +11671,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_12</value>
+      <value>BATTLEMAPPART_21appl_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -11679,7 +11679,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -11687,7 +11687,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_165</value>
+      <value>BATTLEMAPPART_21appl_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -11695,7 +11695,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_125</value>
+      <value>BATTLEMAPPART_21appl_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -11703,7 +11703,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11711,7 +11711,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_166</value>
+      <value>BATTLEMAPPART_21appl_FT_166</value>
     </entry>
     <entry>
       <key>
@@ -11719,7 +11719,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11727,7 +11727,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11735,7 +11735,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_175</value>
+      <value>BATTLEMAPPART_21appl_FT_175</value>
     </entry>
     <entry>
       <key>
@@ -11743,7 +11743,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11751,7 +11751,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_123</value>
+      <value>BATTLEMAPPART_21appl_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -11759,7 +11759,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_14</value>
+      <value>BATTLEMAPPART_21appl_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -11767,7 +11767,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -11775,7 +11775,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -11783,7 +11783,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -11791,7 +11791,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_116</value>
+      <value>BATTLEMAPPART_21appl_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -11799,7 +11799,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_168</value>
+      <value>BATTLEMAPPART_21appl_FT_168</value>
     </entry>
     <entry>
       <key>
@@ -11807,7 +11807,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_125</value>
+      <value>BATTLEMAPPART_21appl_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -11815,7 +11815,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11823,7 +11823,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_178</value>
+      <value>BATTLEMAPPART_21appl_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -11831,7 +11831,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11839,7 +11839,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_167</value>
+      <value>BATTLEMAPPART_21appl_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -11847,7 +11847,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11855,7 +11855,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_164</value>
+      <value>BATTLEMAPPART_21appl_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -11863,7 +11863,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -11871,7 +11871,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_123</value>
+      <value>BATTLEMAPPART_21appl_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -11879,7 +11879,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_171</value>
+      <value>BATTLEMAPPART_21appl_FT_171</value>
     </entry>
     <entry>
       <key>
@@ -11887,7 +11887,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_170</value>
+      <value>BATTLEMAPPART_21appl_FT_170</value>
     </entry>
     <entry>
       <key>
@@ -11895,7 +11895,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_169</value>
+      <value>BATTLEMAPPART_21appl_FT_169</value>
     </entry>
     <entry>
       <key>
@@ -11903,7 +11903,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -11911,7 +11911,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_12</value>
+      <value>BATTLEMAPPART_21appl_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -11919,7 +11919,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_12</value>
+      <value>BATTLEMAPPART_21appl_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -11927,7 +11927,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_11</value>
+      <value>BATTLEMAPPART_21appl_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -11935,7 +11935,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -11943,7 +11943,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -11951,7 +11951,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_11</value>
+      <value>BATTLEMAPPART_21appl_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -11959,7 +11959,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -11967,7 +11967,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -11975,7 +11975,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_14</value>
+      <value>BATTLEMAPPART_21appl_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -11983,7 +11983,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_14</value>
+      <value>BATTLEMAPPART_21appl_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -11991,7 +11991,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -11999,7 +11999,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -12007,7 +12007,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_167</value>
+      <value>BATTLEMAPPART_21appl_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -12015,7 +12015,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_168</value>
+      <value>BATTLEMAPPART_21appl_FT_168</value>
     </entry>
     <entry>
       <key>
@@ -12023,7 +12023,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_125</value>
+      <value>BATTLEMAPPART_21appl_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -12031,7 +12031,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -12039,7 +12039,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -12047,7 +12047,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_177</value>
+      <value>BATTLEMAPPART_21appl_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -12055,7 +12055,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -12063,7 +12063,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_175</value>
+      <value>BATTLEMAPPART_21appl_FT_175</value>
     </entry>
     <entry>
       <key>
@@ -12071,7 +12071,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_124</value>
+      <value>BATTLEMAPPART_21appl_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -12079,7 +12079,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_123</value>
+      <value>BATTLEMAPPART_21appl_FT_123</value>
     </entry>
     <entry>
       <key>
@@ -12087,7 +12087,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_163</value>
+      <value>BATTLEMAPPART_21appl_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -12095,7 +12095,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_170</value>
+      <value>BATTLEMAPPART_21appl_FT_170</value>
     </entry>
     <entry>
       <key>
@@ -12103,7 +12103,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_12</value>
+      <value>BATTLEMAPPART_21appl_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -12111,7 +12111,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -12119,7 +12119,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -12127,7 +12127,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_14</value>
+      <value>BATTLEMAPPART_21appl_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -12135,7 +12135,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -12143,7 +12143,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -12151,7 +12151,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -12159,7 +12159,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -12167,7 +12167,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_14</value>
+      <value>BATTLEMAPPART_21appl_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -12175,7 +12175,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -12183,7 +12183,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -12191,7 +12191,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -12199,7 +12199,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_128</value>
+      <value>BATTLEMAPPART_21appl_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -12207,7 +12207,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_127</value>
+      <value>BATTLEMAPPART_21appl_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -12215,7 +12215,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_167</value>
+      <value>BATTLEMAPPART_21appl_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -12223,7 +12223,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_127</value>
+      <value>BATTLEMAPPART_21appl_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -12231,7 +12231,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_127</value>
+      <value>BATTLEMAPPART_21appl_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -12239,7 +12239,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_165</value>
+      <value>BATTLEMAPPART_21appl_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -12247,7 +12247,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_127</value>
+      <value>BATTLEMAPPART_21appl_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -12255,7 +12255,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_126</value>
+      <value>BATTLEMAPPART_21appl_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -12263,7 +12263,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_169</value>
+      <value>BATTLEMAPPART_21appl_FT_169</value>
     </entry>
     <entry>
       <key>
@@ -12271,7 +12271,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_170</value>
+      <value>BATTLEMAPPART_21appl_FT_170</value>
     </entry>
     <entry>
       <key>
@@ -12279,7 +12279,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -12287,7 +12287,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_11</value>
+      <value>BATTLEMAPPART_21appl_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -12295,7 +12295,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -12303,7 +12303,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_12</value>
+      <value>BATTLEMAPPART_21appl_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -12311,7 +12311,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_11</value>
+      <value>BATTLEMAPPART_21appl_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -12319,7 +12319,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -12327,7 +12327,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_116</value>
+      <value>BATTLEMAPPART_21appl_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -12335,7 +12335,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_117</value>
+      <value>BATTLEMAPPART_21appl_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -12343,7 +12343,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_164</value>
+      <value>BATTLEMAPPART_21appl_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -12351,7 +12351,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_14</value>
+      <value>BATTLEMAPPART_21appl_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -12359,7 +12359,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -12367,7 +12367,7 @@
         <y>25</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_14</value>
+      <value>BATTLEMAPPART_21appl_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -12375,7 +12375,7 @@
         <y>25</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -12383,7 +12383,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_12</value>
+      <value>BATTLEMAPPART_21appl_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -12391,7 +12391,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -12399,7 +12399,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_192</value>
+      <value>BATTLEMAPPART_21appl_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -12407,7 +12407,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_192</value>
+      <value>BATTLEMAPPART_21appl_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -12415,7 +12415,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_105</value>
+      <value>BATTLEMAPPART_21appl_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -12423,7 +12423,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_108</value>
+      <value>BATTLEMAPPART_21appl_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -12431,7 +12431,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_107</value>
+      <value>BATTLEMAPPART_21appl_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -12439,7 +12439,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_9</value>
+      <value>BATTLEMAPPART_21appl_FT_9</value>
     </entry>
     <entry>
       <key>
@@ -12447,7 +12447,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_8</value>
+      <value>BATTLEMAPPART_21appl_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -12455,7 +12455,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -12463,7 +12463,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_10</value>
+      <value>BATTLEMAPPART_21appl_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -12471,7 +12471,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_1</value>
+      <value>BATTLEMAPPART_21appl_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -12479,7 +12479,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -12487,7 +12487,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_181</value>
+      <value>BATTLEMAPPART_21appl_FT_181</value>
     </entry>
     <entry>
       <key>
@@ -12495,7 +12495,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_108</value>
+      <value>BATTLEMAPPART_21appl_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -12503,7 +12503,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_107</value>
+      <value>BATTLEMAPPART_21appl_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -12511,7 +12511,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_105</value>
+      <value>BATTLEMAPPART_21appl_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -12519,7 +12519,7 @@
         <y>25</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_119</value>
+      <value>BATTLEMAPPART_21appl_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -12527,7 +12527,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -12535,7 +12535,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -12543,7 +12543,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_195</value>
+      <value>BATTLEMAPPART_21appl_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -12551,7 +12551,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_118</value>
+      <value>BATTLEMAPPART_21appl_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -12559,7 +12559,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_106</value>
+      <value>BATTLEMAPPART_21appl_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -12567,7 +12567,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_194</value>
+      <value>BATTLEMAPPART_21appl_FT_194</value>
     </entry>
     <entry>
       <key>
@@ -12575,7 +12575,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_5</value>
+      <value>BATTLEMAPPART_21appl_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -12583,7 +12583,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_3</value>
+      <value>BATTLEMAPPART_21appl_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -12591,7 +12591,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_8</value>
+      <value>BATTLEMAPPART_21appl_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -12599,7 +12599,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_183</value>
+      <value>BATTLEMAPPART_21appl_FT_183</value>
     </entry>
     <entry>
       <key>
@@ -12607,7 +12607,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_182</value>
+      <value>BATTLEMAPPART_21appl_FT_182</value>
     </entry>
     <entry>
       <key>
@@ -12615,7 +12615,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_106</value>
+      <value>BATTLEMAPPART_21appl_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -12623,7 +12623,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_11</value>
+      <value>BATTLEMAPPART_21appl_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -12631,7 +12631,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -12639,7 +12639,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_117</value>
+      <value>BATTLEMAPPART_21appl_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -12647,7 +12647,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_191</value>
+      <value>BATTLEMAPPART_21appl_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -12655,7 +12655,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_106</value>
+      <value>BATTLEMAPPART_21appl_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -12663,7 +12663,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_192</value>
+      <value>BATTLEMAPPART_21appl_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -12671,7 +12671,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_10</value>
+      <value>BATTLEMAPPART_21appl_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -12679,7 +12679,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_5</value>
+      <value>BATTLEMAPPART_21appl_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -12687,7 +12687,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_4</value>
+      <value>BATTLEMAPPART_21appl_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -12695,7 +12695,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_116</value>
+      <value>BATTLEMAPPART_21appl_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -12703,7 +12703,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_3</value>
+      <value>BATTLEMAPPART_21appl_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -12711,7 +12711,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_106</value>
+      <value>BATTLEMAPPART_21appl_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -12719,7 +12719,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -12727,7 +12727,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_14</value>
+      <value>BATTLEMAPPART_21appl_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -12735,7 +12735,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -12743,7 +12743,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -12751,7 +12751,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_193</value>
+      <value>BATTLEMAPPART_21appl_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -12759,7 +12759,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -12767,7 +12767,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -12775,7 +12775,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_117</value>
+      <value>BATTLEMAPPART_21appl_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -12783,7 +12783,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_10</value>
+      <value>BATTLEMAPPART_21appl_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -12791,7 +12791,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_4</value>
+      <value>BATTLEMAPPART_21appl_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -12799,7 +12799,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_8</value>
+      <value>BATTLEMAPPART_21appl_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -12807,7 +12807,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_10</value>
+      <value>BATTLEMAPPART_21appl_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -12815,7 +12815,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_4</value>
+      <value>BATTLEMAPPART_21appl_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -12823,7 +12823,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_4</value>
+      <value>BATTLEMAPPART_21appl_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -12831,7 +12831,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_10</value>
+      <value>BATTLEMAPPART_21appl_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -12839,7 +12839,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_4</value>
+      <value>BATTLEMAPPART_21appl_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -12847,7 +12847,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_3</value>
+      <value>BATTLEMAPPART_21appl_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -12855,7 +12855,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_116</value>
+      <value>BATTLEMAPPART_21appl_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -12863,7 +12863,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_181</value>
+      <value>BATTLEMAPPART_21appl_FT_181</value>
     </entry>
     <entry>
       <key>
@@ -12871,7 +12871,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_14</value>
+      <value>BATTLEMAPPART_21appl_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -12879,7 +12879,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -12887,7 +12887,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -12895,7 +12895,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -12903,7 +12903,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -12911,7 +12911,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_12</value>
+      <value>BATTLEMAPPART_21appl_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -12919,7 +12919,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_1</value>
+      <value>BATTLEMAPPART_21appl_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -12927,7 +12927,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -12935,7 +12935,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_4</value>
+      <value>BATTLEMAPPART_21appl_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -12943,7 +12943,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_1</value>
+      <value>BATTLEMAPPART_21appl_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -12951,7 +12951,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_2</value>
+      <value>BATTLEMAPPART_21appl_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -12959,7 +12959,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_6</value>
+      <value>BATTLEMAPPART_21appl_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -12967,7 +12967,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_4</value>
+      <value>BATTLEMAPPART_21appl_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -12975,7 +12975,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_10</value>
+      <value>BATTLEMAPPART_21appl_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -12983,7 +12983,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_5</value>
+      <value>BATTLEMAPPART_21appl_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -12991,7 +12991,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_1</value>
+      <value>BATTLEMAPPART_21appl_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -12999,7 +12999,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_3</value>
+      <value>BATTLEMAPPART_21appl_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -13007,7 +13007,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_4</value>
+      <value>BATTLEMAPPART_21appl_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -13015,7 +13015,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_5</value>
+      <value>BATTLEMAPPART_21appl_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -13023,7 +13023,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_10</value>
+      <value>BATTLEMAPPART_21appl_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -13031,7 +13031,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_2</value>
+      <value>BATTLEMAPPART_21appl_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -13039,7 +13039,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_4</value>
+      <value>BATTLEMAPPART_21appl_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -13047,7 +13047,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_11</value>
+      <value>BATTLEMAPPART_21appl_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -13055,7 +13055,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_12</value>
+      <value>BATTLEMAPPART_21appl_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -13063,7 +13063,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -13071,7 +13071,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -13079,7 +13079,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_11</value>
+      <value>BATTLEMAPPART_21appl_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -13087,7 +13087,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -13095,7 +13095,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_14</value>
+      <value>BATTLEMAPPART_21appl_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -13103,7 +13103,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -13111,7 +13111,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_11</value>
+      <value>BATTLEMAPPART_21appl_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -13119,7 +13119,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_1</value>
+      <value>BATTLEMAPPART_21appl_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -13127,7 +13127,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_4</value>
+      <value>BATTLEMAPPART_21appl_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -13135,7 +13135,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_6</value>
+      <value>BATTLEMAPPART_21appl_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -13143,7 +13143,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_5</value>
+      <value>BATTLEMAPPART_21appl_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -13151,7 +13151,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_3</value>
+      <value>BATTLEMAPPART_21appl_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -13159,7 +13159,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_2</value>
+      <value>BATTLEMAPPART_21appl_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -13167,7 +13167,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_6</value>
+      <value>BATTLEMAPPART_21appl_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -13175,7 +13175,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_3</value>
+      <value>BATTLEMAPPART_21appl_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -13183,7 +13183,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_5</value>
+      <value>BATTLEMAPPART_21appl_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -13191,7 +13191,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_6</value>
+      <value>BATTLEMAPPART_21appl_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -13199,7 +13199,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_3</value>
+      <value>BATTLEMAPPART_21appl_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -13207,7 +13207,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_4</value>
+      <value>BATTLEMAPPART_21appl_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -13215,7 +13215,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_6</value>
+      <value>BATTLEMAPPART_21appl_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -13223,7 +13223,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_6</value>
+      <value>BATTLEMAPPART_21appl_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -13231,7 +13231,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_5</value>
+      <value>BATTLEMAPPART_21appl_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -13239,7 +13239,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_3</value>
+      <value>BATTLEMAPPART_21appl_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -13247,7 +13247,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_1</value>
+      <value>BATTLEMAPPART_21appl_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -13255,7 +13255,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_4</value>
+      <value>BATTLEMAPPART_21appl_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -13263,7 +13263,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_4</value>
+      <value>BATTLEMAPPART_21appl_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -13271,7 +13271,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_12</value>
+      <value>BATTLEMAPPART_21appl_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -13279,7 +13279,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -13287,7 +13287,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -13295,7 +13295,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -13303,7 +13303,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -13311,7 +13311,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -13319,7 +13319,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -13327,7 +13327,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_14</value>
+      <value>BATTLEMAPPART_21appl_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -13335,7 +13335,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -13343,7 +13343,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_12</value>
+      <value>BATTLEMAPPART_21appl_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -13351,7 +13351,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_16</value>
+      <value>BATTLEMAPPART_21appl_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -13359,7 +13359,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_16</value>
+      <value>BATTLEMAPPART_21appl_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -13367,7 +13367,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_16</value>
+      <value>BATTLEMAPPART_21appl_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -13375,7 +13375,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_7</value>
+      <value>BATTLEMAPPART_21appl_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -13383,7 +13383,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_2</value>
+      <value>BATTLEMAPPART_21appl_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -13391,7 +13391,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_3</value>
+      <value>BATTLEMAPPART_21appl_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -13399,7 +13399,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_3</value>
+      <value>BATTLEMAPPART_21appl_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -13407,7 +13407,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_4</value>
+      <value>BATTLEMAPPART_21appl_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -13415,7 +13415,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_6</value>
+      <value>BATTLEMAPPART_21appl_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -13423,7 +13423,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_16</value>
+      <value>BATTLEMAPPART_21appl_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -13431,7 +13431,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_10</value>
+      <value>BATTLEMAPPART_21appl_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -13439,7 +13439,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_3</value>
+      <value>BATTLEMAPPART_21appl_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -13447,7 +13447,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_4</value>
+      <value>BATTLEMAPPART_21appl_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -13455,7 +13455,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_3</value>
+      <value>BATTLEMAPPART_21appl_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -13463,7 +13463,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -13471,7 +13471,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_3</value>
+      <value>BATTLEMAPPART_21appl_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -13479,7 +13479,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_2</value>
+      <value>BATTLEMAPPART_21appl_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -13487,7 +13487,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_10</value>
+      <value>BATTLEMAPPART_21appl_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -13495,7 +13495,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_16</value>
+      <value>BATTLEMAPPART_21appl_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -13503,7 +13503,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_3</value>
+      <value>BATTLEMAPPART_21appl_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -13511,7 +13511,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_3</value>
+      <value>BATTLEMAPPART_21appl_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -13519,7 +13519,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_16</value>
+      <value>BATTLEMAPPART_21appl_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -13527,7 +13527,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_10</value>
+      <value>BATTLEMAPPART_21appl_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -13535,7 +13535,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_2</value>
+      <value>BATTLEMAPPART_21appl_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -13543,7 +13543,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_6</value>
+      <value>BATTLEMAPPART_21appl_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -13551,7 +13551,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_7</value>
+      <value>BATTLEMAPPART_21appl_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -13559,7 +13559,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_4</value>
+      <value>BATTLEMAPPART_21appl_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -13567,7 +13567,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_6</value>
+      <value>BATTLEMAPPART_21appl_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -13575,7 +13575,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_16</value>
+      <value>BATTLEMAPPART_21appl_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -13583,7 +13583,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -13591,7 +13591,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_13</value>
+      <value>BATTLEMAPPART_21appl_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -13599,7 +13599,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_18</value>
+      <value>BATTLEMAPPART_21appl_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -13607,7 +13607,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -13615,7 +13615,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_15</value>
+      <value>BATTLEMAPPART_21appl_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -13623,7 +13623,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -13631,7 +13631,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_4</value>
+      <value>BATTLEMAPPART_21appl_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -13639,7 +13639,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_1</value>
+      <value>BATTLEMAPPART_21appl_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -13647,7 +13647,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -13655,7 +13655,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_16</value>
+      <value>BATTLEMAPPART_21appl_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -13663,7 +13663,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_2</value>
+      <value>BATTLEMAPPART_21appl_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -13671,7 +13671,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_6</value>
+      <value>BATTLEMAPPART_21appl_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -13679,7 +13679,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_6</value>
+      <value>BATTLEMAPPART_21appl_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -13687,7 +13687,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_3</value>
+      <value>BATTLEMAPPART_21appl_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -13695,7 +13695,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_2</value>
+      <value>BATTLEMAPPART_21appl_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -13703,7 +13703,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -13711,7 +13711,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -13719,7 +13719,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_6</value>
+      <value>BATTLEMAPPART_21appl_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -13727,7 +13727,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_1</value>
+      <value>BATTLEMAPPART_21appl_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -13735,7 +13735,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -13743,7 +13743,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_2</value>
+      <value>BATTLEMAPPART_21appl_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -13751,7 +13751,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_2</value>
+      <value>BATTLEMAPPART_21appl_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -13759,7 +13759,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -13767,7 +13767,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_10</value>
+      <value>BATTLEMAPPART_21appl_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -13775,7 +13775,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_1</value>
+      <value>BATTLEMAPPART_21appl_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -13783,7 +13783,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -13791,7 +13791,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_16</value>
+      <value>BATTLEMAPPART_21appl_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -13799,7 +13799,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_16</value>
+      <value>BATTLEMAPPART_21appl_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -13807,7 +13807,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_117</value>
+      <value>BATTLEMAPPART_21appl_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -13815,7 +13815,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_16</value>
+      <value>BATTLEMAPPART_21appl_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -13823,7 +13823,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_7</value>
+      <value>BATTLEMAPPART_21appl_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -13831,7 +13831,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -13839,7 +13839,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -13847,7 +13847,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_16</value>
+      <value>BATTLEMAPPART_21appl_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -13855,7 +13855,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -13863,7 +13863,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_10</value>
+      <value>BATTLEMAPPART_21appl_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -13871,7 +13871,7 @@
         <y>25</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_1</value>
+      <value>BATTLEMAPPART_21appl_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -13879,7 +13879,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_21appl_SC_17</value>
+      <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

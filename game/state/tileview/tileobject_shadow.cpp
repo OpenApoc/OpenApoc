@@ -1,7 +1,7 @@
 #include "game/state/tileview/tileobject_shadow.h"
 #include "framework/renderer.h"
 #include "game/state/city/vehicle.h"
-#include "game/state/tileview/voxel.h"
+#include "game/state/tileview/collision.h"
 
 namespace OpenApoc
 {

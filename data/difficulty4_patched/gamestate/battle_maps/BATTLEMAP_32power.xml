@@ -1251,13 +1251,13 @@
       <entry>BATTLEMAPPART_32power_RW_50</entry>
       <entry>BATTLEMAPPART_32power_RW_51</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_32power_SC_224</entry>
-      <entry>BATTLEMAPPART_32power_SC_225</entry>
-      <entry>BATTLEMAPPART_32power_SC_226</entry>
-      <entry>BATTLEMAPPART_32power_SC_212</entry>
-      <entry>BATTLEMAPPART_32power_SC_213</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_32power_FT224</entry>
+      <entry>BATTLEMAPPART_32power_FT225</entry>
+      <entry>BATTLEMAPPART_32power_FT226</entry>
+      <entry>BATTLEMAPPART_32power_FT212</entry>
+      <entry>BATTLEMAPPART_32power_FT213</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_32power>

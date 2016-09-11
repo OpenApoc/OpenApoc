@@ -102,9 +102,6 @@
     <ClCompile Include="tileview\tileobject_vehicle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tileview\voxel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="rules\ufo_incursion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -165,13 +162,10 @@
     <ClCompile Include="battle\battleunitmission.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="battletileview\battletileobject_mappart.cpp">
+    <ClCompile Include="tileview\tileobject_battlemappart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="battletileview\battletile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="battletileview\battletileobject.cpp">
+    <ClCompile Include="tileview\collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -263,9 +257,6 @@
     <ClInclude Include="tileview\tileobject_vehicle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tileview\voxel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="rules\vequipment_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -338,13 +329,10 @@
     <ClInclude Include="battle\battleunitmission.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battletileview\battletileobject.h">
+    <ClInclude Include="tileview\tileobject_battlemappart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battletileview\battletileobject_mappart.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="battletileview\battletile.h">
+    <ClInclude Include="tileview\collision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

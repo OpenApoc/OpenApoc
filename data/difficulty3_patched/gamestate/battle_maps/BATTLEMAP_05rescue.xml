@@ -160,13 +160,13 @@
       <entry>BATTLEMAPPART_05rescue_RW_69</entry>
       <entry>BATTLEMAPPART_05rescue_RW_70</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_05rescue_SC_161</entry>
-      <entry>BATTLEMAPPART_05rescue_SC_85</entry>
-      <entry>BATTLEMAPPART_05rescue_SC_84</entry>
-      <entry>BATTLEMAPPART_05rescue_SC_86</entry>
-      <entry>BATTLEMAPPART_05rescue_SC_160</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_05rescue_FT161</entry>
+      <entry>BATTLEMAPPART_05rescue_FT85</entry>
+      <entry>BATTLEMAPPART_05rescue_FT84</entry>
+      <entry>BATTLEMAPPART_05rescue_FT86</entry>
+      <entry>BATTLEMAPPART_05rescue_FT160</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_05rescue>

@@ -121,13 +121,13 @@
       <entry>BATTLEMAPPART_02police_RW_85</entry>
       <entry>BATTLEMAPPART_02police_RW_86</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_02police_SC_239</entry>
-      <entry>BATTLEMAPPART_02police_SC_242</entry>
-      <entry>BATTLEMAPPART_02police_SC_240</entry>
-      <entry>BATTLEMAPPART_02police_SC_238</entry>
-      <entry>BATTLEMAPPART_02police_SC_236</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_02police_FT239</entry>
+      <entry>BATTLEMAPPART_02police_FT242</entry>
+      <entry>BATTLEMAPPART_02police_FT240</entry>
+      <entry>BATTLEMAPPART_02police_FT238</entry>
+      <entry>BATTLEMAPPART_02police_FT236</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_02police>

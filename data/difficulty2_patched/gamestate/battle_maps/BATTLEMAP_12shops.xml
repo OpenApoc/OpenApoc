@@ -151,13 +151,13 @@
       <entry>BATTLEMAPPART_12shops_RW_80</entry>
       <entry>BATTLEMAPPART_12shops_RW_81</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_12shops_SC_238</entry>
-      <entry>BATTLEMAPPART_12shops_SC_239</entry>
-      <entry>BATTLEMAPPART_12shops_SC_240</entry>
-      <entry>BATTLEMAPPART_12shops_SC_225</entry>
-      <entry>BATTLEMAPPART_12shops_SC_227</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_12shops_FT238</entry>
+      <entry>BATTLEMAPPART_12shops_FT239</entry>
+      <entry>BATTLEMAPPART_12shops_FT240</entry>
+      <entry>BATTLEMAPPART_12shops_FT225</entry>
+      <entry>BATTLEMAPPART_12shops_FT227</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_12shops>

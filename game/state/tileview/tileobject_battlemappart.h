@@ -1,16 +1,16 @@
 #pragma once
 #include "game/state/battlemappart.h"
 #include "game/state/battlemappart_type.h"
-#include "game/state/battletileview/battletileobject.h"
+#include "game/state/tileview/tileobject.h"
 
 namespace OpenApoc
 {
-class BattleTileObjectMapPart : public BattleTileObject
+class TileObjectBattleMapPart : public TileObject
 {
   public:
 	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
 	          TileViewMode mode) override;
-	~BattleTileObjectMapPart() override;
+	~TileObjectBattleMapPart() override;
 
 	std::weak_ptr<BattleMapPart> map_part;
 
@@ -19,10 +19,10 @@ class BattleTileObjectMapPart : public BattleTileObject
 	sp<VoxelMap> getVoxelMap() override;
 	Vec3<float> getPosition() const override;
 
-	static BattleTileObject::Type convertType(BattleMapPartType::Type type);
+	static TileObject::Type convertType(BattleMapPartType::Type type);
 
   private:
-	friend class BattleTileMap;
-	BattleTileObjectMapPart(BattleTileMap &map, sp<BattleMapPart> map_part);
+	friend class TileMap;
+	TileObjectBattleMapPart(TileMap &map, sp<BattleMapPart> map_part);
 };
 }

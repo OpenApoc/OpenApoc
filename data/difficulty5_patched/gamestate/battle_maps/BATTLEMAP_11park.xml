@@ -150,13 +150,13 @@
       <entry>BATTLEMAPPART_11park_RW_62</entry>
       <entry>BATTLEMAPPART_11park_RW_63</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_11park_SC_247</entry>
-      <entry>BATTLEMAPPART_11park_SC_248</entry>
-      <entry>BATTLEMAPPART_11park_SC_239</entry>
-      <entry>BATTLEMAPPART_11park_SC_236</entry>
-      <entry>BATTLEMAPPART_11park_SC_237</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_11park_FT247</entry>
+      <entry>BATTLEMAPPART_11park_FT248</entry>
+      <entry>BATTLEMAPPART_11park_FT239</entry>
+      <entry>BATTLEMAPPART_11park_FT236</entry>
+      <entry>BATTLEMAPPART_11park_FT237</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_11park>

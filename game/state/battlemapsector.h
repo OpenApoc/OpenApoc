@@ -61,7 +61,7 @@ class BattleMapSectorTiles
 	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_grounds;
 	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_left_walls;
 	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_right_walls;
-	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_scenery;
+	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_features;
 
 	static const UString mapSectorPath;
 

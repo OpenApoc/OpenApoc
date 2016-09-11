@@ -5,12 +5,13 @@
 #include "game/state/city/projectile.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
+#include "game/state/tileview/collision.h"
+#include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_doodad.h"
 #include "game/state/tileview/tileobject_projectile.h"
 #include "game/state/tileview/tileobject_scenery.h"
 #include "game/state/tileview/tileobject_shadow.h"
 #include "game/state/tileview/tileobject_vehicle.h"
-#include "game/state/tileview/voxel.h"
 #include "library/sp.h"
 #include <random>
 #include <unordered_map>
@@ -305,6 +306,19 @@ void TileMap::addObjectToMap(sp<Doodad> doodad)
 	sp<TileObjectDoodad> obj(new TileObjectDoodad(*this, doodad));
 	obj->setPosition(doodad->getPosition());
 	doodad->tileObject = obj;
+}
+
+void TileMap::addObjectToMap(sp<BattleMapPart> map_part)
+{
+	if (map_part->tileObject)
+	{
+		LogError("Map part already has tile object");
+	}
+	// FIXME: mksp<> doesn't work for private (but accessible due to friend)
+	// constructors?
+	sp<TileObjectBattleMapPart> obj(new TileObjectBattleMapPart(*this, map_part));
+	obj->setPosition(map_part->getPosition());
+	map_part->tileObject = obj;
 }
 
 int TileMap::getLayer(TileObject::Type type) const

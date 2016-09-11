@@ -6682,14 +6682,14 @@
       <value>BATTLEMAPPART_14acnorm_RW_9</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_58</value>
+      <value>BATTLEMAPPART_14acnorm_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -6697,7 +6697,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_117</value>
+      <value>BATTLEMAPPART_14acnorm_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -6705,7 +6705,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_116</value>
+      <value>BATTLEMAPPART_14acnorm_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -6713,7 +6713,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_55</value>
+      <value>BATTLEMAPPART_14acnorm_FT_55</value>
     </entry>
     <entry>
       <key>
@@ -6721,7 +6721,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_134</value>
+      <value>BATTLEMAPPART_14acnorm_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -6729,7 +6729,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_134</value>
+      <value>BATTLEMAPPART_14acnorm_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -6737,7 +6737,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_134</value>
+      <value>BATTLEMAPPART_14acnorm_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -6745,7 +6745,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_134</value>
+      <value>BATTLEMAPPART_14acnorm_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -6753,7 +6753,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_53</value>
+      <value>BATTLEMAPPART_14acnorm_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -6761,7 +6761,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_57</value>
+      <value>BATTLEMAPPART_14acnorm_FT_57</value>
     </entry>
     <entry>
       <key>
@@ -6769,7 +6769,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_87</value>
+      <value>BATTLEMAPPART_14acnorm_FT_87</value>
     </entry>
     <entry>
       <key>
@@ -6777,7 +6777,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_58</value>
+      <value>BATTLEMAPPART_14acnorm_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -6785,7 +6785,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_60</value>
+      <value>BATTLEMAPPART_14acnorm_FT_60</value>
     </entry>
     <entry>
       <key>
@@ -6793,7 +6793,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_55</value>
+      <value>BATTLEMAPPART_14acnorm_FT_55</value>
     </entry>
     <entry>
       <key>
@@ -6801,7 +6801,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_88</value>
+      <value>BATTLEMAPPART_14acnorm_FT_88</value>
     </entry>
     <entry>
       <key>
@@ -6809,7 +6809,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_88</value>
+      <value>BATTLEMAPPART_14acnorm_FT_88</value>
     </entry>
     <entry>
       <key>
@@ -6817,7 +6817,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_60</value>
+      <value>BATTLEMAPPART_14acnorm_FT_60</value>
     </entry>
     <entry>
       <key>
@@ -6825,7 +6825,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_83</value>
+      <value>BATTLEMAPPART_14acnorm_FT_83</value>
     </entry>
     <entry>
       <key>
@@ -6833,7 +6833,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_85</value>
+      <value>BATTLEMAPPART_14acnorm_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -6841,7 +6841,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_89</value>
+      <value>BATTLEMAPPART_14acnorm_FT_89</value>
     </entry>
     <entry>
       <key>
@@ -6849,7 +6849,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_51</value>
+      <value>BATTLEMAPPART_14acnorm_FT_51</value>
     </entry>
     <entry>
       <key>
@@ -6857,7 +6857,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_84</value>
+      <value>BATTLEMAPPART_14acnorm_FT_84</value>
     </entry>
     <entry>
       <key>
@@ -6865,7 +6865,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_86</value>
+      <value>BATTLEMAPPART_14acnorm_FT_86</value>
     </entry>
     <entry>
       <key>
@@ -6873,7 +6873,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_101</value>
+      <value>BATTLEMAPPART_14acnorm_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -6881,7 +6881,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_100</value>
+      <value>BATTLEMAPPART_14acnorm_FT_100</value>
     </entry>
     <entry>
       <key>
@@ -6889,7 +6889,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_124</value>
+      <value>BATTLEMAPPART_14acnorm_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -6897,7 +6897,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_41</value>
+      <value>BATTLEMAPPART_14acnorm_FT_41</value>
     </entry>
     <entry>
       <key>
@@ -6905,7 +6905,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_40</value>
+      <value>BATTLEMAPPART_14acnorm_FT_40</value>
     </entry>
     <entry>
       <key>
@@ -6913,7 +6913,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_100</value>
+      <value>BATTLEMAPPART_14acnorm_FT_100</value>
     </entry>
     <entry>
       <key>
@@ -6921,7 +6921,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_125</value>
+      <value>BATTLEMAPPART_14acnorm_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -6929,7 +6929,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_48</value>
+      <value>BATTLEMAPPART_14acnorm_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -6937,7 +6937,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_43</value>
+      <value>BATTLEMAPPART_14acnorm_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -6945,7 +6945,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_42</value>
+      <value>BATTLEMAPPART_14acnorm_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -6953,7 +6953,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_49</value>
+      <value>BATTLEMAPPART_14acnorm_FT_49</value>
     </entry>
     <entry>
       <key>
@@ -6961,7 +6961,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_134</value>
+      <value>BATTLEMAPPART_14acnorm_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -6969,7 +6969,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_134</value>
+      <value>BATTLEMAPPART_14acnorm_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -6977,7 +6977,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_134</value>
+      <value>BATTLEMAPPART_14acnorm_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -6985,7 +6985,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_134</value>
+      <value>BATTLEMAPPART_14acnorm_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -6993,7 +6993,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_134</value>
+      <value>BATTLEMAPPART_14acnorm_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -7001,7 +7001,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_134</value>
+      <value>BATTLEMAPPART_14acnorm_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -7009,7 +7009,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_134</value>
+      <value>BATTLEMAPPART_14acnorm_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -7017,7 +7017,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_134</value>
+      <value>BATTLEMAPPART_14acnorm_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -7025,7 +7025,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_113</value>
+      <value>BATTLEMAPPART_14acnorm_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -7033,7 +7033,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_112</value>
+      <value>BATTLEMAPPART_14acnorm_FT_112</value>
     </entry>
     <entry>
       <key>
@@ -7041,7 +7041,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_69</value>
+      <value>BATTLEMAPPART_14acnorm_FT_69</value>
     </entry>
     <entry>
       <key>
@@ -7049,7 +7049,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_68</value>
+      <value>BATTLEMAPPART_14acnorm_FT_68</value>
     </entry>
     <entry>
       <key>
@@ -7057,7 +7057,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_95</value>
+      <value>BATTLEMAPPART_14acnorm_FT_95</value>
     </entry>
     <entry>
       <key>
@@ -7065,7 +7065,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_61</value>
+      <value>BATTLEMAPPART_14acnorm_FT_61</value>
     </entry>
     <entry>
       <key>
@@ -7073,7 +7073,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_59</value>
+      <value>BATTLEMAPPART_14acnorm_FT_59</value>
     </entry>
     <entry>
       <key>
@@ -7081,7 +7081,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_115</value>
+      <value>BATTLEMAPPART_14acnorm_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -7089,7 +7089,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_114</value>
+      <value>BATTLEMAPPART_14acnorm_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -7097,7 +7097,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_64</value>
+      <value>BATTLEMAPPART_14acnorm_FT_64</value>
     </entry>
     <entry>
       <key>
@@ -7105,7 +7105,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_66</value>
+      <value>BATTLEMAPPART_14acnorm_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -7113,7 +7113,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_45</value>
+      <value>BATTLEMAPPART_14acnorm_FT_45</value>
     </entry>
     <entry>
       <key>
@@ -7121,7 +7121,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_44</value>
+      <value>BATTLEMAPPART_14acnorm_FT_44</value>
     </entry>
     <entry>
       <key>
@@ -7129,7 +7129,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_65</value>
+      <value>BATTLEMAPPART_14acnorm_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -7137,7 +7137,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_67</value>
+      <value>BATTLEMAPPART_14acnorm_FT_67</value>
     </entry>
     <entry>
       <key>
@@ -7145,7 +7145,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_96</value>
+      <value>BATTLEMAPPART_14acnorm_FT_96</value>
     </entry>
     <entry>
       <key>
@@ -7153,7 +7153,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_77</value>
+      <value>BATTLEMAPPART_14acnorm_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -7161,7 +7161,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_78</value>
+      <value>BATTLEMAPPART_14acnorm_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -7169,7 +7169,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_92</value>
+      <value>BATTLEMAPPART_14acnorm_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -7177,7 +7177,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_91</value>
+      <value>BATTLEMAPPART_14acnorm_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -7185,7 +7185,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_53</value>
+      <value>BATTLEMAPPART_14acnorm_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -7193,7 +7193,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_55</value>
+      <value>BATTLEMAPPART_14acnorm_FT_55</value>
     </entry>
     <entry>
       <key>
@@ -7201,7 +7201,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_53</value>
+      <value>BATTLEMAPPART_14acnorm_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -7209,7 +7209,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_58</value>
+      <value>BATTLEMAPPART_14acnorm_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -7217,7 +7217,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_60</value>
+      <value>BATTLEMAPPART_14acnorm_FT_60</value>
     </entry>
     <entry>
       <key>
@@ -7225,7 +7225,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_56</value>
+      <value>BATTLEMAPPART_14acnorm_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -7233,7 +7233,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_56</value>
+      <value>BATTLEMAPPART_14acnorm_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -7241,7 +7241,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_58</value>
+      <value>BATTLEMAPPART_14acnorm_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -7249,7 +7249,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_55</value>
+      <value>BATTLEMAPPART_14acnorm_FT_55</value>
     </entry>
     <entry>
       <key>
@@ -7257,7 +7257,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_134</value>
+      <value>BATTLEMAPPART_14acnorm_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -7265,7 +7265,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_134</value>
+      <value>BATTLEMAPPART_14acnorm_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -7273,7 +7273,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_134</value>
+      <value>BATTLEMAPPART_14acnorm_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -7281,7 +7281,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_134</value>
+      <value>BATTLEMAPPART_14acnorm_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -7289,7 +7289,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_29</value>
+      <value>BATTLEMAPPART_14acnorm_FT_29</value>
     </entry>
     <entry>
       <key>
@@ -7297,7 +7297,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_14acnorm_SC_28</value>
+      <value>BATTLEMAPPART_14acnorm_FT_28</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

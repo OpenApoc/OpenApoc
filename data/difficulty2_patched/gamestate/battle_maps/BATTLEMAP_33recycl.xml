@@ -111,13 +111,13 @@
       <entry>BATTLEMAPPART_33recycl_RW_44</entry>
       <entry>BATTLEMAPPART_33recycl_RW_45</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_33recycl_SC_250</entry>
-      <entry>BATTLEMAPPART_33recycl_SC_251</entry>
-      <entry>BATTLEMAPPART_33recycl_SC_249</entry>
-      <entry>BATTLEMAPPART_33recycl_SC_245</entry>
-      <entry>BATTLEMAPPART_33recycl_SC_247</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_33recycl_FT250</entry>
+      <entry>BATTLEMAPPART_33recycl_FT251</entry>
+      <entry>BATTLEMAPPART_33recycl_FT249</entry>
+      <entry>BATTLEMAPPART_33recycl_FT245</entry>
+      <entry>BATTLEMAPPART_33recycl_FT247</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_33recycl>

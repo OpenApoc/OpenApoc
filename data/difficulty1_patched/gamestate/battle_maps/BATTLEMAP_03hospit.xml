@@ -110,13 +110,13 @@
       <entry>BATTLEMAPPART_03hospit_RW_62</entry>
       <entry>BATTLEMAPPART_03hospit_RW_63</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_03hospit_SC_9</entry>
-      <entry>BATTLEMAPPART_03hospit_SC_6</entry>
-      <entry>BATTLEMAPPART_03hospit_SC_7</entry>
-      <entry>BATTLEMAPPART_03hospit_SC_8</entry>
-      <entry>BATTLEMAPPART_03hospit_SC_5</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_03hospit_FT9</entry>
+      <entry>BATTLEMAPPART_03hospit_FT6</entry>
+      <entry>BATTLEMAPPART_03hospit_FT7</entry>
+      <entry>BATTLEMAPPART_03hospit_FT8</entry>
+      <entry>BATTLEMAPPART_03hospit_FT5</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_03hospit>

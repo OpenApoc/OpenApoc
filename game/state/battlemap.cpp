@@ -557,7 +557,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 		b->destroyed_ground_tile = destroyed_ground_tile;
 		b->rubble_left_wall = rubble_left_wall;
 		b->rubble_right_wall = rubble_right_wall;
-		b->rubble_scenery = rubble_scenery;
+		b->rubble_feature = rubble_feature;
 		b->mission_type = mission_type;
 		b->mission_location_id = mission_location_id;
 		b->player_craft = player_craft;
@@ -620,7 +620,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 
 						b->map_parts.insert(s);
 					}
-					for (auto &pair : tiles.initial_scenery)
+					for (auto &pair : tiles.initial_features)
 					{
 						auto s = mksp<BattleMapPart>();
 

@@ -2,8 +2,8 @@
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_scenery.h"
-#include "game/state/tileview/voxel.h"
 #include "game/ui/city/basebuyscreen.h"
 
 namespace OpenApoc

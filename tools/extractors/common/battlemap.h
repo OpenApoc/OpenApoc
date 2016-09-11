@@ -83,7 +83,7 @@ static_assert(sizeof(struct SmpData) == 4, "Unexpected SmpData size");
 
 struct RubbleDatStructure
 {
-	uint8_t scenery[5];
+	uint8_t feature[5];
 	uint8_t left_wall[5];
 	uint8_t right_wall[5];
 };

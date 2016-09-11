@@ -311,13 +311,13 @@
       <entry>BATTLEMAPPART_20water_RW_54</entry>
       <entry>BATTLEMAPPART_20water_RW_55</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_20water_SC_251</entry>
-      <entry>BATTLEMAPPART_20water_SC_253</entry>
-      <entry>BATTLEMAPPART_20water_SC_252</entry>
-      <entry>BATTLEMAPPART_20water_SC_254</entry>
-      <entry>BATTLEMAPPART_20water_SC_250</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_20water_FT251</entry>
+      <entry>BATTLEMAPPART_20water_FT253</entry>
+      <entry>BATTLEMAPPART_20water_FT252</entry>
+      <entry>BATTLEMAPPART_20water_FT254</entry>
+      <entry>BATTLEMAPPART_20water_FT250</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_20water>

@@ -28,9 +28,6 @@ set (GAMESTATE_SOURCE_FILES
 	battle/battleunitanimation.cpp
 	battle/battleunitimagepack.cpp
 	battle/battleunitmission.cpp
-	battletileview/battletile.cpp
-	battletileview/battletileobject.cpp
-	battletileview/battletileobject_mappart.cpp
 	city/baselayout.cpp
 	city/building.cpp
 	city/city.cpp
@@ -50,14 +47,15 @@ set (GAMESTATE_SOURCE_FILES
 	rules/vammo_rules.cpp
 	rules/vehicle_type_rules.cpp
 	rules/vequipment_rules.cpp
+	tileview/collision.cpp
 	tileview/tile.cpp
 	tileview/tileobject.cpp
+	tileview/tileobject_battlemappart.cpp
 	tileview/tileobject_doodad.cpp
 	tileview/tileobject_projectile.cpp
 	tileview/tileobject_scenery.cpp
 	tileview/tileobject_shadow.cpp
-	tileview/tileobject_vehicle.cpp
-	tileview/voxel.cpp)
+	tileview/tileobject_vehicle.cpp)
 source_group(gamestate\\sources FILES ${GAMESTATE_SOURCE_FILES})
 set (GAMESTATE_HEADER_FILES
 	agent.h
@@ -86,9 +84,6 @@ set (GAMESTATE_HEADER_FILES
 	battle/battleunitanimation.h
 	battle/battleunitimagepack.h
 	battle/battleunitmission.h
-	battletileview/battletile.h
-	battletileview/battletileobject.h
-	battletileview/battletileobject_mappart.h
 	city/baselayout.h
 	city/building.h
 	city/city.h
@@ -109,14 +104,15 @@ set (GAMESTATE_HEADER_FILES
 	rules/vammo_type.h
 	rules/vehicle_type.h
 	rules/vequipment_type.h
+	tileview/collision.h
 	tileview/tile.h
 	tileview/tileobject.h
+	tileview/tileobject_battlemappart.h
 	tileview/tileobject_doodad.h
 	tileview/tileobject_projectile.h
 	tileview/tileobject_scenery.h
 	tileview/tileobject_shadow.h
-	tileview/tileobject_vehicle.h
-	tileview/voxel.h)
+	tileview/tileobject_vehicle.h)
 source_group(gamestate\\headers FILES ${GAMESTATE_HEADER_FILES})
 
 list(APPEND ALL_SOURCE_FILES ${GAMESTATE_SOURCE_FILES})

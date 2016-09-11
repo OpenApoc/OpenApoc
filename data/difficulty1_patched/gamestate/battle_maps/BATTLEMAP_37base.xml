@@ -68,13 +68,13 @@
       <entry>BATTLEMAPPART_37base_RW_100</entry>
       <entry>BATTLEMAPPART_37base_RW_101</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_37base_SC_227</entry>
-      <entry>BATTLEMAPPART_37base_SC_228</entry>
-      <entry>BATTLEMAPPART_37base_SC_225</entry>
-      <entry>BATTLEMAPPART_37base_SC_219</entry>
-      <entry>BATTLEMAPPART_37base_SC_217</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_37base_FT227</entry>
+      <entry>BATTLEMAPPART_37base_FT228</entry>
+      <entry>BATTLEMAPPART_37base_FT225</entry>
+      <entry>BATTLEMAPPART_37base_FT219</entry>
+      <entry>BATTLEMAPPART_37base_FT217</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_37base>

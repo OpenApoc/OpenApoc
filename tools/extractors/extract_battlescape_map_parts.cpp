@@ -277,10 +277,10 @@ sp<BattleMapTileset> InitialGameStateExtractor::extractTileSet(GameState &state,
 		                   map_prefix + name + mapunits_suffix, "rightmap", "right", "sright");
 	}
 
-	// Read scenery
+	// Read feature
 	{
-		readBattleMapParts(state, this->tacp, t, BattleMapPartType::Type::Scenery,
-		                   BattleMapPartType::getPrefix() + tilePrefix + "SC_",
+		readBattleMapParts(state, this->tacp, t, BattleMapPartType::Type::Feature,
+		                   BattleMapPartType::getPrefix() + tilePrefix + "FT_",
 		                   map_prefix + name + mapunits_suffix, "featmap", "feature", "sfeature");
 	}
 

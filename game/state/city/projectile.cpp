@@ -1,9 +1,9 @@
 #include "game/state/city/projectile.h"
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"
+#include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_projectile.h"
 #include "game/state/tileview/tileobject_vehicle.h"
-#include "game/state/tileview/voxel.h"
 
 namespace OpenApoc
 {

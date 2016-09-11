@@ -1,10 +1,10 @@
 /*
 #include "game/state/battle/battleunitmission.h"
 #include "game/state/battle/battleunit.h"
-#include "game/state/battletileview/battletile.h"
-#include "game/state/battletileview/battletileobject_mappart.h"
-#include "game/state/battletileview/battletileobject_unit.h"
 #include "game/state/gamestate.h"
+#include "game/state/tileview/tile.h"
+#include "game/state/tileview/tileobject_battlemappart.h"
+#include "game/state/tileview/tileobject_unit.h"
 
 namespace OpenApoc
 {

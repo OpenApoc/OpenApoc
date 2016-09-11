@@ -7365,14 +7365,14 @@
       <value>BATTLEMAPPART_08port_RW_23</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_116</value>
+      <value>BATTLEMAPPART_08port_FT_116</value>
     </entry>
     <entry>
       <key>
@@ -7380,7 +7380,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_250</value>
+      <value>BATTLEMAPPART_08port_FT_250</value>
     </entry>
     <entry>
       <key>
@@ -7388,7 +7388,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7396,7 +7396,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7404,7 +7404,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7412,7 +7412,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7420,7 +7420,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7428,7 +7428,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7436,7 +7436,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7444,7 +7444,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7452,7 +7452,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7460,7 +7460,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7468,7 +7468,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7476,7 +7476,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7484,7 +7484,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7492,7 +7492,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7500,7 +7500,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7508,7 +7508,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7516,7 +7516,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7524,7 +7524,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7532,7 +7532,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7540,7 +7540,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7548,7 +7548,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7556,7 +7556,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7564,7 +7564,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7572,7 +7572,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7580,7 +7580,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7588,7 +7588,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7596,7 +7596,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7604,7 +7604,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7612,7 +7612,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7620,7 +7620,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7628,7 +7628,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7636,7 +7636,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7644,7 +7644,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7652,7 +7652,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7660,7 +7660,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7668,7 +7668,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7676,7 +7676,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7684,7 +7684,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7692,7 +7692,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7700,7 +7700,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7708,7 +7708,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_102</value>
+      <value>BATTLEMAPPART_08port_FT_102</value>
     </entry>
     <entry>
       <key>
@@ -7716,7 +7716,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_103</value>
+      <value>BATTLEMAPPART_08port_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -7724,7 +7724,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_114</value>
+      <value>BATTLEMAPPART_08port_FT_114</value>
     </entry>
     <entry>
       <key>
@@ -7732,7 +7732,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_248</value>
+      <value>BATTLEMAPPART_08port_FT_248</value>
     </entry>
     <entry>
       <key>
@@ -7740,7 +7740,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -7748,7 +7748,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -7756,7 +7756,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -7764,7 +7764,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -7772,7 +7772,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -7780,7 +7780,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -7788,7 +7788,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -7796,7 +7796,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_46</value>
+      <value>BATTLEMAPPART_08port_FT_46</value>
     </entry>
     <entry>
       <key>
@@ -7804,7 +7804,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_48</value>
+      <value>BATTLEMAPPART_08port_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -7812,7 +7812,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_49</value>
+      <value>BATTLEMAPPART_08port_FT_49</value>
     </entry>
     <entry>
       <key>
@@ -7820,7 +7820,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_43</value>
+      <value>BATTLEMAPPART_08port_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -7828,7 +7828,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_42</value>
+      <value>BATTLEMAPPART_08port_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -7836,7 +7836,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -7844,7 +7844,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -7852,7 +7852,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -7860,7 +7860,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_47</value>
+      <value>BATTLEMAPPART_08port_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -7868,7 +7868,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_67</value>
+      <value>BATTLEMAPPART_08port_FT_67</value>
     </entry>
     <entry>
       <key>
@@ -7876,7 +7876,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_66</value>
+      <value>BATTLEMAPPART_08port_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -7884,7 +7884,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -7892,7 +7892,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -7900,7 +7900,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -7908,7 +7908,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -7916,7 +7916,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -7924,7 +7924,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_132</value>
+      <value>BATTLEMAPPART_08port_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -7932,7 +7932,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_132</value>
+      <value>BATTLEMAPPART_08port_FT_132</value>
     </entry>
     <entry>
       <key>
@@ -7940,7 +7940,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -7948,7 +7948,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_65</value>
+      <value>BATTLEMAPPART_08port_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -7956,7 +7956,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_64</value>
+      <value>BATTLEMAPPART_08port_FT_64</value>
     </entry>
     <entry>
       <key>
@@ -7964,7 +7964,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -7972,7 +7972,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -7980,7 +7980,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -7988,7 +7988,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -7996,7 +7996,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -8004,7 +8004,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_137</value>
+      <value>BATTLEMAPPART_08port_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -8012,7 +8012,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_131</value>
+      <value>BATTLEMAPPART_08port_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -8020,7 +8020,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_131</value>
+      <value>BATTLEMAPPART_08port_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -8028,7 +8028,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_137</value>
+      <value>BATTLEMAPPART_08port_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -8036,7 +8036,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -8044,7 +8044,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_65</value>
+      <value>BATTLEMAPPART_08port_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -8052,7 +8052,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_64</value>
+      <value>BATTLEMAPPART_08port_FT_64</value>
     </entry>
     <entry>
       <key>
@@ -8060,7 +8060,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -8068,7 +8068,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -8076,7 +8076,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -8084,7 +8084,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -8092,7 +8092,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -8100,7 +8100,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_137</value>
+      <value>BATTLEMAPPART_08port_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -8108,7 +8108,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_11</value>
+      <value>BATTLEMAPPART_08port_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -8116,7 +8116,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8124,7 +8124,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8132,7 +8132,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_11</value>
+      <value>BATTLEMAPPART_08port_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -8140,7 +8140,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_137</value>
+      <value>BATTLEMAPPART_08port_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -8148,7 +8148,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -8156,7 +8156,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_65</value>
+      <value>BATTLEMAPPART_08port_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -8164,7 +8164,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_64</value>
+      <value>BATTLEMAPPART_08port_FT_64</value>
     </entry>
     <entry>
       <key>
@@ -8172,7 +8172,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -8180,7 +8180,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -8188,7 +8188,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -8196,7 +8196,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -8204,7 +8204,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -8212,7 +8212,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_137</value>
+      <value>BATTLEMAPPART_08port_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -8220,7 +8220,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_11</value>
+      <value>BATTLEMAPPART_08port_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -8228,7 +8228,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8236,7 +8236,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8244,7 +8244,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8252,7 +8252,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8260,7 +8260,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_11</value>
+      <value>BATTLEMAPPART_08port_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -8268,7 +8268,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_137</value>
+      <value>BATTLEMAPPART_08port_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -8276,7 +8276,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -8284,7 +8284,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_65</value>
+      <value>BATTLEMAPPART_08port_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -8292,7 +8292,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_64</value>
+      <value>BATTLEMAPPART_08port_FT_64</value>
     </entry>
     <entry>
       <key>
@@ -8300,7 +8300,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -8308,7 +8308,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -8316,7 +8316,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -8324,7 +8324,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -8332,7 +8332,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -8340,7 +8340,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_137</value>
+      <value>BATTLEMAPPART_08port_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -8348,7 +8348,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_11</value>
+      <value>BATTLEMAPPART_08port_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -8356,7 +8356,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8364,7 +8364,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8372,7 +8372,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_173</value>
+      <value>BATTLEMAPPART_08port_FT_173</value>
     </entry>
     <entry>
       <key>
@@ -8380,7 +8380,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8388,7 +8388,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8396,7 +8396,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8404,7 +8404,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_173</value>
+      <value>BATTLEMAPPART_08port_FT_173</value>
     </entry>
     <entry>
       <key>
@@ -8412,7 +8412,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8420,7 +8420,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_11</value>
+      <value>BATTLEMAPPART_08port_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -8428,7 +8428,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_137</value>
+      <value>BATTLEMAPPART_08port_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -8436,7 +8436,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -8444,7 +8444,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_63</value>
+      <value>BATTLEMAPPART_08port_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -8452,7 +8452,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_62</value>
+      <value>BATTLEMAPPART_08port_FT_62</value>
     </entry>
     <entry>
       <key>
@@ -8460,7 +8460,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -8468,7 +8468,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -8476,7 +8476,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -8484,7 +8484,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -8492,7 +8492,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_130</value>
+      <value>BATTLEMAPPART_08port_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -8500,7 +8500,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_129</value>
+      <value>BATTLEMAPPART_08port_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -8508,7 +8508,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8516,7 +8516,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8524,7 +8524,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8532,7 +8532,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8540,7 +8540,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_163</value>
+      <value>BATTLEMAPPART_08port_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -8548,7 +8548,7 @@
         <y>10</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_162</value>
+      <value>BATTLEMAPPART_08port_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -8556,7 +8556,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_162</value>
+      <value>BATTLEMAPPART_08port_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -8564,7 +8564,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8572,7 +8572,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_164</value>
+      <value>BATTLEMAPPART_08port_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -8580,7 +8580,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_162</value>
+      <value>BATTLEMAPPART_08port_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -8588,7 +8588,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_162</value>
+      <value>BATTLEMAPPART_08port_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -8596,7 +8596,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8604,7 +8604,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8612,7 +8612,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8620,7 +8620,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_128</value>
+      <value>BATTLEMAPPART_08port_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -8628,7 +8628,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_127</value>
+      <value>BATTLEMAPPART_08port_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -8636,7 +8636,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -8644,7 +8644,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -8652,7 +8652,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -8660,7 +8660,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -8668,7 +8668,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_130</value>
+      <value>BATTLEMAPPART_08port_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -8676,7 +8676,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_129</value>
+      <value>BATTLEMAPPART_08port_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -8684,7 +8684,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8692,7 +8692,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8700,7 +8700,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8708,7 +8708,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8716,7 +8716,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_165</value>
+      <value>BATTLEMAPPART_08port_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -8724,7 +8724,7 @@
         <y>10</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_162</value>
+      <value>BATTLEMAPPART_08port_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -8732,7 +8732,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_162</value>
+      <value>BATTLEMAPPART_08port_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -8740,7 +8740,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8748,7 +8748,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_162</value>
+      <value>BATTLEMAPPART_08port_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -8756,7 +8756,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_162</value>
+      <value>BATTLEMAPPART_08port_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -8764,7 +8764,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_162</value>
+      <value>BATTLEMAPPART_08port_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -8772,7 +8772,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8780,7 +8780,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8788,7 +8788,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8796,7 +8796,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_128</value>
+      <value>BATTLEMAPPART_08port_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -8804,7 +8804,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_127</value>
+      <value>BATTLEMAPPART_08port_FT_127</value>
     </entry>
     <entry>
       <key>
@@ -8812,7 +8812,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -8820,7 +8820,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -8828,7 +8828,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -8836,7 +8836,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -8844,7 +8844,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -8852,7 +8852,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_137</value>
+      <value>BATTLEMAPPART_08port_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -8860,7 +8860,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_11</value>
+      <value>BATTLEMAPPART_08port_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -8868,7 +8868,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8876,7 +8876,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8884,7 +8884,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_173</value>
+      <value>BATTLEMAPPART_08port_FT_173</value>
     </entry>
     <entry>
       <key>
@@ -8892,7 +8892,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8900,7 +8900,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8908,7 +8908,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8916,7 +8916,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_173</value>
+      <value>BATTLEMAPPART_08port_FT_173</value>
     </entry>
     <entry>
       <key>
@@ -8924,7 +8924,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -8932,7 +8932,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_11</value>
+      <value>BATTLEMAPPART_08port_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -8940,7 +8940,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_137</value>
+      <value>BATTLEMAPPART_08port_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -8948,7 +8948,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -8956,7 +8956,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_67</value>
+      <value>BATTLEMAPPART_08port_FT_67</value>
     </entry>
     <entry>
       <key>
@@ -8964,7 +8964,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_66</value>
+      <value>BATTLEMAPPART_08port_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -8972,7 +8972,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -8980,7 +8980,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -8988,7 +8988,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -8996,7 +8996,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -9004,7 +9004,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -9012,7 +9012,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_137</value>
+      <value>BATTLEMAPPART_08port_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -9020,7 +9020,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_11</value>
+      <value>BATTLEMAPPART_08port_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -9028,7 +9028,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -9036,7 +9036,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -9044,7 +9044,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -9052,7 +9052,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -9060,7 +9060,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_11</value>
+      <value>BATTLEMAPPART_08port_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -9068,7 +9068,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_137</value>
+      <value>BATTLEMAPPART_08port_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -9076,7 +9076,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -9084,7 +9084,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_65</value>
+      <value>BATTLEMAPPART_08port_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -9092,7 +9092,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_64</value>
+      <value>BATTLEMAPPART_08port_FT_64</value>
     </entry>
     <entry>
       <key>
@@ -9100,7 +9100,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -9108,7 +9108,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -9116,7 +9116,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -9124,7 +9124,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -9132,7 +9132,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -9140,7 +9140,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_137</value>
+      <value>BATTLEMAPPART_08port_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -9148,7 +9148,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_11</value>
+      <value>BATTLEMAPPART_08port_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -9156,7 +9156,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -9164,7 +9164,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_211</value>
+      <value>BATTLEMAPPART_08port_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -9172,7 +9172,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_12</value>
+      <value>BATTLEMAPPART_08port_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -9180,7 +9180,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_11</value>
+      <value>BATTLEMAPPART_08port_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -9188,7 +9188,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_137</value>
+      <value>BATTLEMAPPART_08port_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -9196,7 +9196,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -9204,7 +9204,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_65</value>
+      <value>BATTLEMAPPART_08port_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -9212,7 +9212,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_64</value>
+      <value>BATTLEMAPPART_08port_FT_64</value>
     </entry>
     <entry>
       <key>
@@ -9220,7 +9220,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -9228,7 +9228,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -9236,7 +9236,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -9244,7 +9244,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -9252,7 +9252,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -9260,7 +9260,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_137</value>
+      <value>BATTLEMAPPART_08port_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -9268,7 +9268,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_126</value>
+      <value>BATTLEMAPPART_08port_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -9276,7 +9276,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_126</value>
+      <value>BATTLEMAPPART_08port_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -9284,7 +9284,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_137</value>
+      <value>BATTLEMAPPART_08port_FT_137</value>
     </entry>
     <entry>
       <key>
@@ -9292,7 +9292,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -9300,7 +9300,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_65</value>
+      <value>BATTLEMAPPART_08port_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -9308,7 +9308,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_64</value>
+      <value>BATTLEMAPPART_08port_FT_64</value>
     </entry>
     <entry>
       <key>
@@ -9316,7 +9316,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -9324,7 +9324,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -9332,7 +9332,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -9340,7 +9340,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -9348,7 +9348,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -9356,7 +9356,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_125</value>
+      <value>BATTLEMAPPART_08port_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -9364,7 +9364,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_125</value>
+      <value>BATTLEMAPPART_08port_FT_125</value>
     </entry>
     <entry>
       <key>
@@ -9372,7 +9372,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_136</value>
+      <value>BATTLEMAPPART_08port_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -9380,7 +9380,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_65</value>
+      <value>BATTLEMAPPART_08port_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -9388,7 +9388,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_64</value>
+      <value>BATTLEMAPPART_08port_FT_64</value>
     </entry>
     <entry>
       <key>
@@ -9396,7 +9396,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -9404,7 +9404,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -9412,7 +9412,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -9420,7 +9420,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -9428,7 +9428,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_63</value>
+      <value>BATTLEMAPPART_08port_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -9436,7 +9436,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_62</value>
+      <value>BATTLEMAPPART_08port_FT_62</value>
     </entry>
     <entry>
       <key>
@@ -9444,7 +9444,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -9452,7 +9452,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -9460,7 +9460,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -9468,7 +9468,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -9476,7 +9476,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -9484,7 +9484,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -9492,7 +9492,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -9500,7 +9500,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -9508,7 +9508,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_214</value>
+      <value>BATTLEMAPPART_08port_FT_214</value>
     </entry>
     <entry>
       <key>
@@ -9516,7 +9516,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -9524,7 +9524,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -9532,7 +9532,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -9540,7 +9540,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -9548,7 +9548,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_73</value>
+      <value>BATTLEMAPPART_08port_FT_73</value>
     </entry>
     <entry>
       <key>
@@ -9556,7 +9556,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_72</value>
+      <value>BATTLEMAPPART_08port_FT_72</value>
     </entry>
     <entry>
       <key>
@@ -9564,7 +9564,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_72</value>
+      <value>BATTLEMAPPART_08port_FT_72</value>
     </entry>
     <entry>
       <key>
@@ -9572,7 +9572,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_72</value>
+      <value>BATTLEMAPPART_08port_FT_72</value>
     </entry>
     <entry>
       <key>
@@ -9580,7 +9580,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_72</value>
+      <value>BATTLEMAPPART_08port_FT_72</value>
     </entry>
     <entry>
       <key>
@@ -9588,7 +9588,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_71</value>
+      <value>BATTLEMAPPART_08port_FT_71</value>
     </entry>
     <entry>
       <key>
@@ -9596,7 +9596,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_73</value>
+      <value>BATTLEMAPPART_08port_FT_73</value>
     </entry>
     <entry>
       <key>
@@ -9604,7 +9604,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_72</value>
+      <value>BATTLEMAPPART_08port_FT_72</value>
     </entry>
     <entry>
       <key>
@@ -9612,7 +9612,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_72</value>
+      <value>BATTLEMAPPART_08port_FT_72</value>
     </entry>
     <entry>
       <key>
@@ -9620,7 +9620,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_72</value>
+      <value>BATTLEMAPPART_08port_FT_72</value>
     </entry>
     <entry>
       <key>
@@ -9628,7 +9628,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_72</value>
+      <value>BATTLEMAPPART_08port_FT_72</value>
     </entry>
     <entry>
       <key>
@@ -9636,7 +9636,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_71</value>
+      <value>BATTLEMAPPART_08port_FT_71</value>
     </entry>
     <entry>
       <key>
@@ -9644,7 +9644,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_213</value>
+      <value>BATTLEMAPPART_08port_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -9652,7 +9652,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_219</value>
+      <value>BATTLEMAPPART_08port_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -9660,7 +9660,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -9668,7 +9668,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -9676,7 +9676,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -9684,7 +9684,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -9692,7 +9692,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_70</value>
+      <value>BATTLEMAPPART_08port_FT_70</value>
     </entry>
     <entry>
       <key>
@@ -9700,7 +9700,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_69</value>
+      <value>BATTLEMAPPART_08port_FT_69</value>
     </entry>
     <entry>
       <key>
@@ -9708,7 +9708,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_69</value>
+      <value>BATTLEMAPPART_08port_FT_69</value>
     </entry>
     <entry>
       <key>
@@ -9716,7 +9716,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_69</value>
+      <value>BATTLEMAPPART_08port_FT_69</value>
     </entry>
     <entry>
       <key>
@@ -9724,7 +9724,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_69</value>
+      <value>BATTLEMAPPART_08port_FT_69</value>
     </entry>
     <entry>
       <key>
@@ -9732,7 +9732,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_68</value>
+      <value>BATTLEMAPPART_08port_FT_68</value>
     </entry>
     <entry>
       <key>
@@ -9740,7 +9740,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_70</value>
+      <value>BATTLEMAPPART_08port_FT_70</value>
     </entry>
     <entry>
       <key>
@@ -9748,7 +9748,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_69</value>
+      <value>BATTLEMAPPART_08port_FT_69</value>
     </entry>
     <entry>
       <key>
@@ -9756,7 +9756,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_69</value>
+      <value>BATTLEMAPPART_08port_FT_69</value>
     </entry>
     <entry>
       <key>
@@ -9764,7 +9764,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_69</value>
+      <value>BATTLEMAPPART_08port_FT_69</value>
     </entry>
     <entry>
       <key>
@@ -9772,7 +9772,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_69</value>
+      <value>BATTLEMAPPART_08port_FT_69</value>
     </entry>
     <entry>
       <key>
@@ -9780,7 +9780,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_68</value>
+      <value>BATTLEMAPPART_08port_FT_68</value>
     </entry>
     <entry>
       <key>
@@ -9788,7 +9788,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -9796,7 +9796,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -9804,7 +9804,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_108</value>
+      <value>BATTLEMAPPART_08port_FT_108</value>
     </entry>
     <entry>
       <key>
@@ -9812,7 +9812,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_101</value>
+      <value>BATTLEMAPPART_08port_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -9820,7 +9820,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_104</value>
+      <value>BATTLEMAPPART_08port_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -9828,7 +9828,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_105</value>
+      <value>BATTLEMAPPART_08port_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -9836,7 +9836,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_115</value>
+      <value>BATTLEMAPPART_08port_FT_115</value>
     </entry>
     <entry>
       <key>
@@ -9844,7 +9844,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_249</value>
+      <value>BATTLEMAPPART_08port_FT_249</value>
     </entry>
     <entry>
       <key>
@@ -9852,7 +9852,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -9860,7 +9860,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -9868,7 +9868,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -9876,7 +9876,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -9884,7 +9884,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -9892,7 +9892,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -9900,7 +9900,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -9908,7 +9908,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -9916,7 +9916,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -9924,7 +9924,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -9932,7 +9932,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -9940,7 +9940,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -9948,7 +9948,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -9956,7 +9956,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -9964,7 +9964,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -9972,7 +9972,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -9980,7 +9980,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -9988,7 +9988,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -9996,7 +9996,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -10004,7 +10004,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -10012,7 +10012,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -10020,7 +10020,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -10028,7 +10028,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -10036,7 +10036,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -10044,7 +10044,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -10052,7 +10052,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -10060,7 +10060,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -10068,7 +10068,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -10076,7 +10076,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -10084,7 +10084,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -10092,7 +10092,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -10100,7 +10100,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -10108,7 +10108,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -10116,7 +10116,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -10124,7 +10124,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -10132,7 +10132,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -10140,7 +10140,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -10148,7 +10148,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -10156,7 +10156,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -10164,7 +10164,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -10172,7 +10172,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_106</value>
+      <value>BATTLEMAPPART_08port_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -10180,7 +10180,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_107</value>
+      <value>BATTLEMAPPART_08port_FT_107</value>
     </entry>
     <entry>
       <key>
@@ -10188,7 +10188,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_113</value>
+      <value>BATTLEMAPPART_08port_FT_113</value>
     </entry>
     <entry>
       <key>
@@ -10196,7 +10196,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_08port_SC_247</value>
+      <value>BATTLEMAPPART_08port_FT_247</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

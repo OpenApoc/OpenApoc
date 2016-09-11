@@ -18005,14 +18005,14 @@
       <value>BATTLEMAPPART_20water_RW_21</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18020,7 +18020,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18028,7 +18028,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18036,7 +18036,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18044,7 +18044,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18052,7 +18052,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18060,7 +18060,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_82</value>
+      <value>BATTLEMAPPART_20water_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -18068,7 +18068,7 @@
         <y>5</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_86</value>
+      <value>BATTLEMAPPART_20water_FT_86</value>
     </entry>
     <entry>
       <key>
@@ -18076,7 +18076,7 @@
         <y>5</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_83</value>
+      <value>BATTLEMAPPART_20water_FT_83</value>
     </entry>
     <entry>
       <key>
@@ -18084,7 +18084,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18092,7 +18092,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_80</value>
+      <value>BATTLEMAPPART_20water_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -18100,7 +18100,7 @@
         <y>6</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_79</value>
+      <value>BATTLEMAPPART_20water_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -18108,7 +18108,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18116,7 +18116,7 @@
         <y>7</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_188</value>
+      <value>BATTLEMAPPART_20water_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -18124,7 +18124,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18132,7 +18132,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_80</value>
+      <value>BATTLEMAPPART_20water_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -18140,7 +18140,7 @@
         <y>8</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_76</value>
+      <value>BATTLEMAPPART_20water_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -18148,7 +18148,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18156,7 +18156,7 @@
         <y>9</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_85</value>
+      <value>BATTLEMAPPART_20water_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -18164,7 +18164,7 @@
         <y>9</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_86</value>
+      <value>BATTLEMAPPART_20water_FT_86</value>
     </entry>
     <entry>
       <key>
@@ -18172,7 +18172,7 @@
         <y>9</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_84</value>
+      <value>BATTLEMAPPART_20water_FT_84</value>
     </entry>
     <entry>
       <key>
@@ -18180,7 +18180,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18188,7 +18188,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_164</value>
+      <value>BATTLEMAPPART_20water_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -18196,7 +18196,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_165</value>
+      <value>BATTLEMAPPART_20water_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -18204,7 +18204,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18212,7 +18212,7 @@
         <y>11</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -18220,7 +18220,7 @@
         <y>11</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -18228,7 +18228,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18236,7 +18236,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_160</value>
+      <value>BATTLEMAPPART_20water_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -18244,7 +18244,7 @@
         <y>12</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_161</value>
+      <value>BATTLEMAPPART_20water_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -18252,7 +18252,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18260,7 +18260,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18268,7 +18268,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18276,7 +18276,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18284,7 +18284,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_82</value>
+      <value>BATTLEMAPPART_20water_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -18292,7 +18292,7 @@
         <y>16</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_86</value>
+      <value>BATTLEMAPPART_20water_FT_86</value>
     </entry>
     <entry>
       <key>
@@ -18300,7 +18300,7 @@
         <y>16</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_83</value>
+      <value>BATTLEMAPPART_20water_FT_83</value>
     </entry>
     <entry>
       <key>
@@ -18308,7 +18308,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18316,7 +18316,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_188</value>
+      <value>BATTLEMAPPART_20water_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -18324,7 +18324,7 @@
         <y>17</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_79</value>
+      <value>BATTLEMAPPART_20water_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -18332,7 +18332,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18340,7 +18340,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_80</value>
+      <value>BATTLEMAPPART_20water_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -18348,7 +18348,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18356,7 +18356,7 @@
         <y>19</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_80</value>
+      <value>BATTLEMAPPART_20water_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -18364,7 +18364,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18372,7 +18372,7 @@
         <y>20</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_78</value>
+      <value>BATTLEMAPPART_20water_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -18380,7 +18380,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18388,7 +18388,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18396,7 +18396,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18404,7 +18404,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18412,7 +18412,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18420,7 +18420,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18428,7 +18428,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18436,7 +18436,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18444,7 +18444,7 @@
         <y>5</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -18452,7 +18452,7 @@
         <y>5</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -18460,7 +18460,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18468,7 +18468,7 @@
         <y>6</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_81</value>
+      <value>BATTLEMAPPART_20water_FT_81</value>
     </entry>
     <entry>
       <key>
@@ -18476,7 +18476,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18484,7 +18484,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18492,7 +18492,7 @@
         <y>8</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_77</value>
+      <value>BATTLEMAPPART_20water_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -18500,7 +18500,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18508,7 +18508,7 @@
         <y>9</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_190</value>
+      <value>BATTLEMAPPART_20water_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -18516,7 +18516,7 @@
         <y>9</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_191</value>
+      <value>BATTLEMAPPART_20water_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -18524,7 +18524,7 @@
         <y>9</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_188</value>
+      <value>BATTLEMAPPART_20water_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -18532,7 +18532,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18540,7 +18540,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_1</value>
+      <value>BATTLEMAPPART_20water_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -18548,7 +18548,7 @@
         <y>10</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_80</value>
+      <value>BATTLEMAPPART_20water_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -18556,7 +18556,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18564,7 +18564,7 @@
         <y>11</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_4</value>
+      <value>BATTLEMAPPART_20water_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -18572,7 +18572,7 @@
         <y>11</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_80</value>
+      <value>BATTLEMAPPART_20water_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -18580,7 +18580,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18588,7 +18588,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_190</value>
+      <value>BATTLEMAPPART_20water_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -18596,7 +18596,7 @@
         <y>12</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_191</value>
+      <value>BATTLEMAPPART_20water_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -18604,7 +18604,7 @@
         <y>12</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_188</value>
+      <value>BATTLEMAPPART_20water_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -18612,7 +18612,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18620,7 +18620,7 @@
         <y>13</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_80</value>
+      <value>BATTLEMAPPART_20water_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -18628,7 +18628,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18636,7 +18636,7 @@
         <y>14</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_80</value>
+      <value>BATTLEMAPPART_20water_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -18644,7 +18644,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18652,7 +18652,7 @@
         <y>15</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_80</value>
+      <value>BATTLEMAPPART_20water_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -18660,7 +18660,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18668,7 +18668,7 @@
         <y>16</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_80</value>
+      <value>BATTLEMAPPART_20water_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -18676,7 +18676,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18684,7 +18684,7 @@
         <y>17</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_78</value>
+      <value>BATTLEMAPPART_20water_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -18692,7 +18692,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18700,7 +18700,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18708,7 +18708,7 @@
         <y>19</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18716,7 +18716,7 @@
         <y>19</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -18724,7 +18724,7 @@
         <y>19</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -18732,7 +18732,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18740,7 +18740,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18748,7 +18748,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18756,7 +18756,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18764,7 +18764,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18772,7 +18772,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18780,7 +18780,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -18788,7 +18788,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18796,7 +18796,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -18804,7 +18804,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -18812,7 +18812,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18820,7 +18820,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -18828,7 +18828,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18836,7 +18836,7 @@
         <y>6</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_81</value>
+      <value>BATTLEMAPPART_20water_FT_81</value>
     </entry>
     <entry>
       <key>
@@ -18844,7 +18844,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18852,7 +18852,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18860,7 +18860,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18868,7 +18868,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18876,7 +18876,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18884,7 +18884,7 @@
         <y>11</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_56</value>
+      <value>BATTLEMAPPART_20water_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -18892,7 +18892,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18900,7 +18900,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18908,7 +18908,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18916,7 +18916,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -18924,7 +18924,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18932,7 +18932,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -18940,7 +18940,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -18948,7 +18948,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -18956,7 +18956,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -18964,7 +18964,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18972,7 +18972,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18980,7 +18980,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18988,7 +18988,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -18996,7 +18996,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -19004,7 +19004,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -19012,7 +19012,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -19020,7 +19020,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -19028,7 +19028,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -19036,7 +19036,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -19044,7 +19044,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19052,7 +19052,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -19060,7 +19060,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_47</value>
+      <value>BATTLEMAPPART_20water_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -19068,7 +19068,7 @@
         <y>4</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_76</value>
+      <value>BATTLEMAPPART_20water_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -19076,7 +19076,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -19084,7 +19084,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19092,7 +19092,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -19100,7 +19100,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_85</value>
+      <value>BATTLEMAPPART_20water_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -19108,7 +19108,7 @@
         <y>5</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_86</value>
+      <value>BATTLEMAPPART_20water_FT_86</value>
     </entry>
     <entry>
       <key>
@@ -19116,7 +19116,7 @@
         <y>5</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_83</value>
+      <value>BATTLEMAPPART_20water_FT_83</value>
     </entry>
     <entry>
       <key>
@@ -19124,7 +19124,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19132,7 +19132,7 @@
         <y>6</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_78</value>
+      <value>BATTLEMAPPART_20water_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -19140,7 +19140,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19148,7 +19148,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19156,7 +19156,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19164,7 +19164,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19172,7 +19172,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19180,7 +19180,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19188,7 +19188,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19196,7 +19196,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19204,7 +19204,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -19212,7 +19212,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19220,7 +19220,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -19228,7 +19228,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -19236,7 +19236,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19244,7 +19244,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -19252,7 +19252,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_46</value>
+      <value>BATTLEMAPPART_20water_FT_46</value>
     </entry>
     <entry>
       <key>
@@ -19260,7 +19260,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -19268,7 +19268,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -19276,7 +19276,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -19284,7 +19284,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -19292,7 +19292,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -19300,7 +19300,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19308,7 +19308,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19316,7 +19316,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -19324,7 +19324,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19332,7 +19332,7 @@
         <y>2</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_76</value>
+      <value>BATTLEMAPPART_20water_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -19340,7 +19340,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -19348,7 +19348,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19356,7 +19356,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_48</value>
+      <value>BATTLEMAPPART_20water_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -19364,7 +19364,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_188</value>
+      <value>BATTLEMAPPART_20water_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -19372,7 +19372,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19380,7 +19380,7 @@
         <y>4</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_78</value>
+      <value>BATTLEMAPPART_20water_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -19388,7 +19388,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19396,7 +19396,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19404,7 +19404,7 @@
         <y>5</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -19412,7 +19412,7 @@
         <y>5</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -19420,7 +19420,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19428,7 +19428,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19436,7 +19436,7 @@
         <y>6</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -19444,7 +19444,7 @@
         <y>6</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -19452,7 +19452,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19460,7 +19460,7 @@
         <y>7</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_178</value>
+      <value>BATTLEMAPPART_20water_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -19468,7 +19468,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19476,7 +19476,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_234</value>
+      <value>BATTLEMAPPART_20water_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -19484,7 +19484,7 @@
         <y>8</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_238</value>
+      <value>BATTLEMAPPART_20water_FT_238</value>
     </entry>
     <entry>
       <key>
@@ -19492,7 +19492,7 @@
         <y>8</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_179</value>
+      <value>BATTLEMAPPART_20water_FT_179</value>
     </entry>
     <entry>
       <key>
@@ -19500,7 +19500,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19508,7 +19508,7 @@
         <y>9</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_178</value>
+      <value>BATTLEMAPPART_20water_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -19516,7 +19516,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19524,7 +19524,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_234</value>
+      <value>BATTLEMAPPART_20water_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -19532,7 +19532,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_179</value>
+      <value>BATTLEMAPPART_20water_FT_179</value>
     </entry>
     <entry>
       <key>
@@ -19540,7 +19540,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19548,7 +19548,7 @@
         <y>11</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_178</value>
+      <value>BATTLEMAPPART_20water_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -19556,7 +19556,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19564,7 +19564,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_179</value>
+      <value>BATTLEMAPPART_20water_FT_179</value>
     </entry>
     <entry>
       <key>
@@ -19572,7 +19572,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19580,7 +19580,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19588,7 +19588,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19596,7 +19596,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19604,7 +19604,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19612,7 +19612,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_48</value>
+      <value>BATTLEMAPPART_20water_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -19620,7 +19620,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -19628,7 +19628,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19636,7 +19636,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -19644,7 +19644,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19652,7 +19652,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19660,7 +19660,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19668,7 +19668,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19676,7 +19676,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19684,7 +19684,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -19692,7 +19692,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19700,7 +19700,7 @@
         <y>2</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_81</value>
+      <value>BATTLEMAPPART_20water_FT_81</value>
     </entry>
     <entry>
       <key>
@@ -19708,7 +19708,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -19716,7 +19716,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19724,7 +19724,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19732,7 +19732,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19740,7 +19740,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19748,7 +19748,7 @@
         <y>5</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -19756,7 +19756,7 @@
         <y>5</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -19764,7 +19764,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19772,7 +19772,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19780,7 +19780,7 @@
         <y>6</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -19788,7 +19788,7 @@
         <y>6</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -19796,7 +19796,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19804,7 +19804,7 @@
         <y>7</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_178</value>
+      <value>BATTLEMAPPART_20water_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -19812,7 +19812,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19820,7 +19820,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_234</value>
+      <value>BATTLEMAPPART_20water_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -19828,7 +19828,7 @@
         <y>8</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_238</value>
+      <value>BATTLEMAPPART_20water_FT_238</value>
     </entry>
     <entry>
       <key>
@@ -19836,7 +19836,7 @@
         <y>8</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_179</value>
+      <value>BATTLEMAPPART_20water_FT_179</value>
     </entry>
     <entry>
       <key>
@@ -19844,7 +19844,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19852,7 +19852,7 @@
         <y>9</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_178</value>
+      <value>BATTLEMAPPART_20water_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -19860,7 +19860,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19868,7 +19868,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_234</value>
+      <value>BATTLEMAPPART_20water_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -19876,7 +19876,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_179</value>
+      <value>BATTLEMAPPART_20water_FT_179</value>
     </entry>
     <entry>
       <key>
@@ -19884,7 +19884,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19892,7 +19892,7 @@
         <y>11</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_178</value>
+      <value>BATTLEMAPPART_20water_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -19900,7 +19900,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19908,7 +19908,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_179</value>
+      <value>BATTLEMAPPART_20water_FT_179</value>
     </entry>
     <entry>
       <key>
@@ -19916,7 +19916,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19924,7 +19924,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19932,7 +19932,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19940,7 +19940,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19948,7 +19948,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -19956,7 +19956,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -19964,7 +19964,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19972,7 +19972,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -19980,7 +19980,7 @@
         <y>18</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -19988,7 +19988,7 @@
         <y>18</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -19996,7 +19996,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -20004,7 +20004,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -20012,7 +20012,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20020,7 +20020,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20028,7 +20028,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20036,7 +20036,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20044,7 +20044,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20052,7 +20052,7 @@
         <y>2</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_189</value>
+      <value>BATTLEMAPPART_20water_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -20060,7 +20060,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20068,7 +20068,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20076,7 +20076,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20084,7 +20084,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20092,7 +20092,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20100,7 +20100,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20108,7 +20108,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20116,7 +20116,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_178</value>
+      <value>BATTLEMAPPART_20water_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -20124,7 +20124,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20132,7 +20132,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_179</value>
+      <value>BATTLEMAPPART_20water_FT_179</value>
     </entry>
     <entry>
       <key>
@@ -20140,7 +20140,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_245</value>
+      <value>BATTLEMAPPART_20water_FT_245</value>
     </entry>
     <entry>
       <key>
@@ -20148,7 +20148,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_96</value>
+      <value>BATTLEMAPPART_20water_FT_96</value>
     </entry>
     <entry>
       <key>
@@ -20156,7 +20156,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20164,7 +20164,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20172,7 +20172,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20180,7 +20180,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20188,7 +20188,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20196,7 +20196,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20204,7 +20204,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20212,7 +20212,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -20220,7 +20220,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -20228,7 +20228,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20236,7 +20236,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20244,7 +20244,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20252,7 +20252,7 @@
         <y>2</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_81</value>
+      <value>BATTLEMAPPART_20water_FT_81</value>
     </entry>
     <entry>
       <key>
@@ -20260,7 +20260,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20268,7 +20268,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20276,7 +20276,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20284,7 +20284,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20292,7 +20292,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20300,7 +20300,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20308,7 +20308,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20316,7 +20316,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_178</value>
+      <value>BATTLEMAPPART_20water_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -20324,7 +20324,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20332,7 +20332,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_179</value>
+      <value>BATTLEMAPPART_20water_FT_179</value>
     </entry>
     <entry>
       <key>
@@ -20340,7 +20340,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_245</value>
+      <value>BATTLEMAPPART_20water_FT_245</value>
     </entry>
     <entry>
       <key>
@@ -20348,7 +20348,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_96</value>
+      <value>BATTLEMAPPART_20water_FT_96</value>
     </entry>
     <entry>
       <key>
@@ -20356,7 +20356,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20364,7 +20364,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20372,7 +20372,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20380,7 +20380,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20388,7 +20388,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20396,7 +20396,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20404,7 +20404,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20412,7 +20412,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -20420,7 +20420,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -20428,7 +20428,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20436,7 +20436,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20444,7 +20444,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20452,7 +20452,7 @@
         <y>2</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_81</value>
+      <value>BATTLEMAPPART_20water_FT_81</value>
     </entry>
     <entry>
       <key>
@@ -20460,7 +20460,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20468,7 +20468,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20476,7 +20476,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20484,7 +20484,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20492,7 +20492,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20500,7 +20500,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20508,7 +20508,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20516,7 +20516,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20524,7 +20524,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_162</value>
+      <value>BATTLEMAPPART_20water_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -20532,7 +20532,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_163</value>
+      <value>BATTLEMAPPART_20water_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -20540,7 +20540,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20548,7 +20548,7 @@
         <y>11</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -20556,7 +20556,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20564,7 +20564,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_158</value>
+      <value>BATTLEMAPPART_20water_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -20572,7 +20572,7 @@
         <y>12</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_159</value>
+      <value>BATTLEMAPPART_20water_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -20580,7 +20580,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20588,7 +20588,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20596,7 +20596,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20604,7 +20604,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20612,7 +20612,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20620,7 +20620,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20628,7 +20628,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20636,7 +20636,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -20644,7 +20644,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -20652,7 +20652,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20660,7 +20660,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20668,7 +20668,7 @@
         <y>1</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_82</value>
+      <value>BATTLEMAPPART_20water_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -20676,7 +20676,7 @@
         <y>1</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_86</value>
+      <value>BATTLEMAPPART_20water_FT_86</value>
     </entry>
     <entry>
       <key>
@@ -20684,7 +20684,7 @@
         <y>1</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_83</value>
+      <value>BATTLEMAPPART_20water_FT_83</value>
     </entry>
     <entry>
       <key>
@@ -20692,7 +20692,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20700,7 +20700,7 @@
         <y>2</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_78</value>
+      <value>BATTLEMAPPART_20water_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -20708,7 +20708,7 @@
         <y>2</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_79</value>
+      <value>BATTLEMAPPART_20water_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -20716,7 +20716,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20724,7 +20724,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20732,7 +20732,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20740,7 +20740,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20748,7 +20748,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20756,7 +20756,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20764,7 +20764,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -20772,7 +20772,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -20780,7 +20780,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_143</value>
+      <value>BATTLEMAPPART_20water_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -20788,7 +20788,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_141</value>
+      <value>BATTLEMAPPART_20water_FT_141</value>
     </entry>
     <entry>
       <key>
@@ -20796,7 +20796,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -20804,7 +20804,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -20812,7 +20812,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_139</value>
+      <value>BATTLEMAPPART_20water_FT_139</value>
     </entry>
     <entry>
       <key>
@@ -20820,7 +20820,7 @@
         <y>12</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_138</value>
+      <value>BATTLEMAPPART_20water_FT_138</value>
     </entry>
     <entry>
       <key>
@@ -20828,7 +20828,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20836,7 +20836,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_2</value>
+      <value>BATTLEMAPPART_20water_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -20844,7 +20844,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20852,7 +20852,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_65</value>
+      <value>BATTLEMAPPART_20water_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -20860,7 +20860,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20868,7 +20868,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20876,7 +20876,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20884,7 +20884,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20892,7 +20892,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20900,7 +20900,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -20908,7 +20908,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -20916,7 +20916,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20924,7 +20924,7 @@
         <y>0</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -20932,7 +20932,7 @@
         <y>0</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -20940,7 +20940,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20948,7 +20948,7 @@
         <y>1</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -20956,7 +20956,7 @@
         <y>1</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -20964,7 +20964,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -20972,7 +20972,7 @@
         <y>2</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -20980,7 +20980,7 @@
         <y>2</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -20988,7 +20988,7 @@
         <y>2</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_81</value>
+      <value>BATTLEMAPPART_20water_FT_81</value>
     </entry>
     <entry>
       <key>
@@ -20996,7 +20996,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21004,7 +21004,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -21012,7 +21012,7 @@
         <y>3</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -21020,7 +21020,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21028,7 +21028,7 @@
         <y>4</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -21036,7 +21036,7 @@
         <y>4</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -21044,7 +21044,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21052,7 +21052,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -21060,7 +21060,7 @@
         <y>5</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -21068,7 +21068,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21076,7 +21076,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -21084,7 +21084,7 @@
         <y>6</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -21092,7 +21092,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21100,7 +21100,7 @@
         <y>7</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -21108,7 +21108,7 @@
         <y>7</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -21116,7 +21116,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21124,7 +21124,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -21132,7 +21132,7 @@
         <y>8</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -21140,7 +21140,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -21148,7 +21148,7 @@
         <y>9</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -21156,7 +21156,7 @@
         <y>9</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -21164,7 +21164,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -21172,7 +21172,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_187</value>
+      <value>BATTLEMAPPART_20water_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -21180,7 +21180,7 @@
         <y>10</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_187</value>
+      <value>BATTLEMAPPART_20water_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -21188,7 +21188,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_187</value>
+      <value>BATTLEMAPPART_20water_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -21196,7 +21196,7 @@
         <y>10</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_187</value>
+      <value>BATTLEMAPPART_20water_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -21204,7 +21204,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_151</value>
+      <value>BATTLEMAPPART_20water_FT_151</value>
     </entry>
     <entry>
       <key>
@@ -21212,7 +21212,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_150</value>
+      <value>BATTLEMAPPART_20water_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -21220,7 +21220,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -21228,7 +21228,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_187</value>
+      <value>BATTLEMAPPART_20water_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -21236,7 +21236,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_187</value>
+      <value>BATTLEMAPPART_20water_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -21244,7 +21244,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_187</value>
+      <value>BATTLEMAPPART_20water_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -21252,7 +21252,7 @@
         <y>11</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_187</value>
+      <value>BATTLEMAPPART_20water_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -21260,7 +21260,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -21268,7 +21268,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_155</value>
+      <value>BATTLEMAPPART_20water_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -21276,7 +21276,7 @@
         <y>12</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_154</value>
+      <value>BATTLEMAPPART_20water_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -21284,7 +21284,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21292,7 +21292,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_3</value>
+      <value>BATTLEMAPPART_20water_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -21300,7 +21300,7 @@
         <y>13</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -21308,7 +21308,7 @@
         <y>13</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -21316,7 +21316,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21324,7 +21324,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_65</value>
+      <value>BATTLEMAPPART_20water_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -21332,7 +21332,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -21340,7 +21340,7 @@
         <y>14</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -21348,7 +21348,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21356,7 +21356,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -21364,7 +21364,7 @@
         <y>15</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -21372,7 +21372,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21380,7 +21380,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -21388,7 +21388,7 @@
         <y>16</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -21396,7 +21396,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21404,7 +21404,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -21412,7 +21412,7 @@
         <y>17</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -21420,7 +21420,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21428,7 +21428,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -21436,7 +21436,7 @@
         <y>18</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -21444,7 +21444,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21452,7 +21452,7 @@
         <y>19</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -21460,7 +21460,7 @@
         <y>19</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -21468,7 +21468,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -21476,7 +21476,7 @@
         <y>20</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -21484,7 +21484,7 @@
         <y>20</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -21492,7 +21492,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -21500,7 +21500,7 @@
         <y>21</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -21508,7 +21508,7 @@
         <y>21</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -21516,7 +21516,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21524,7 +21524,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21532,7 +21532,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21540,7 +21540,7 @@
         <y>2</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_81</value>
+      <value>BATTLEMAPPART_20water_FT_81</value>
     </entry>
     <entry>
       <key>
@@ -21548,7 +21548,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21556,7 +21556,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21564,7 +21564,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21572,7 +21572,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21580,7 +21580,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21588,7 +21588,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21596,7 +21596,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -21604,7 +21604,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -21612,7 +21612,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_187</value>
+      <value>BATTLEMAPPART_20water_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -21620,7 +21620,7 @@
         <y>10</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_187</value>
+      <value>BATTLEMAPPART_20water_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -21628,7 +21628,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_187</value>
+      <value>BATTLEMAPPART_20water_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -21636,7 +21636,7 @@
         <y>10</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_187</value>
+      <value>BATTLEMAPPART_20water_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -21644,7 +21644,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -21652,7 +21652,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_187</value>
+      <value>BATTLEMAPPART_20water_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -21660,7 +21660,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_187</value>
+      <value>BATTLEMAPPART_20water_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -21668,7 +21668,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_187</value>
+      <value>BATTLEMAPPART_20water_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -21676,7 +21676,7 @@
         <y>11</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_187</value>
+      <value>BATTLEMAPPART_20water_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -21684,7 +21684,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -21692,7 +21692,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21700,7 +21700,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_3</value>
+      <value>BATTLEMAPPART_20water_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -21708,7 +21708,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21716,7 +21716,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_65</value>
+      <value>BATTLEMAPPART_20water_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -21724,7 +21724,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21732,7 +21732,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21740,7 +21740,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21748,7 +21748,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21756,7 +21756,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21764,7 +21764,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -21772,7 +21772,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -21780,7 +21780,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21788,7 +21788,7 @@
         <y>0</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -21796,7 +21796,7 @@
         <y>0</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -21804,7 +21804,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21812,7 +21812,7 @@
         <y>1</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -21820,7 +21820,7 @@
         <y>1</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -21828,7 +21828,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21836,7 +21836,7 @@
         <y>2</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -21844,7 +21844,7 @@
         <y>2</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -21852,7 +21852,7 @@
         <y>2</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_81</value>
+      <value>BATTLEMAPPART_20water_FT_81</value>
     </entry>
     <entry>
       <key>
@@ -21860,7 +21860,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21868,7 +21868,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -21876,7 +21876,7 @@
         <y>3</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -21884,7 +21884,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21892,7 +21892,7 @@
         <y>4</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -21900,7 +21900,7 @@
         <y>4</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -21908,7 +21908,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21916,7 +21916,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -21924,7 +21924,7 @@
         <y>5</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -21932,7 +21932,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21940,7 +21940,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -21948,7 +21948,7 @@
         <y>6</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -21956,7 +21956,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21964,7 +21964,7 @@
         <y>7</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -21972,7 +21972,7 @@
         <y>7</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -21980,7 +21980,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -21988,7 +21988,7 @@
         <y>8</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -21996,7 +21996,7 @@
         <y>8</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -22004,7 +22004,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -22012,7 +22012,7 @@
         <y>9</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -22020,7 +22020,7 @@
         <y>9</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -22028,7 +22028,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -22036,7 +22036,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_153</value>
+      <value>BATTLEMAPPART_20water_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -22044,7 +22044,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_152</value>
+      <value>BATTLEMAPPART_20water_FT_152</value>
     </entry>
     <entry>
       <key>
@@ -22052,7 +22052,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -22060,7 +22060,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -22068,7 +22068,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_157</value>
+      <value>BATTLEMAPPART_20water_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -22076,7 +22076,7 @@
         <y>12</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_156</value>
+      <value>BATTLEMAPPART_20water_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -22084,7 +22084,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22092,7 +22092,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_3</value>
+      <value>BATTLEMAPPART_20water_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -22100,7 +22100,7 @@
         <y>13</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -22108,7 +22108,7 @@
         <y>13</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -22116,7 +22116,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22124,7 +22124,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_65</value>
+      <value>BATTLEMAPPART_20water_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -22132,7 +22132,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -22140,7 +22140,7 @@
         <y>14</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -22148,7 +22148,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22156,7 +22156,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -22164,7 +22164,7 @@
         <y>15</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -22172,7 +22172,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22180,7 +22180,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -22188,7 +22188,7 @@
         <y>16</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -22196,7 +22196,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22204,7 +22204,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -22212,7 +22212,7 @@
         <y>17</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -22220,7 +22220,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22228,7 +22228,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -22236,7 +22236,7 @@
         <y>18</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -22244,7 +22244,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22252,7 +22252,7 @@
         <y>19</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -22260,7 +22260,7 @@
         <y>19</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -22268,7 +22268,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -22276,7 +22276,7 @@
         <y>20</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -22284,7 +22284,7 @@
         <y>20</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -22292,7 +22292,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -22300,7 +22300,7 @@
         <y>21</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -22308,7 +22308,7 @@
         <y>21</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -22316,7 +22316,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22324,7 +22324,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22332,7 +22332,7 @@
         <y>1</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_82</value>
+      <value>BATTLEMAPPART_20water_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -22340,7 +22340,7 @@
         <y>1</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_86</value>
+      <value>BATTLEMAPPART_20water_FT_86</value>
     </entry>
     <entry>
       <key>
@@ -22348,7 +22348,7 @@
         <y>1</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_83</value>
+      <value>BATTLEMAPPART_20water_FT_83</value>
     </entry>
     <entry>
       <key>
@@ -22356,7 +22356,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22364,7 +22364,7 @@
         <y>2</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_79</value>
+      <value>BATTLEMAPPART_20water_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -22372,7 +22372,7 @@
         <y>2</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_78</value>
+      <value>BATTLEMAPPART_20water_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -22380,7 +22380,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22388,7 +22388,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22396,7 +22396,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22404,7 +22404,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22412,7 +22412,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_178</value>
+      <value>BATTLEMAPPART_20water_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -22420,7 +22420,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22428,7 +22428,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_179</value>
+      <value>BATTLEMAPPART_20water_FT_179</value>
     </entry>
     <entry>
       <key>
@@ -22436,7 +22436,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22444,7 +22444,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22452,7 +22452,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_4</value>
+      <value>BATTLEMAPPART_20water_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -22460,7 +22460,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22468,7 +22468,7 @@
         <y>10</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_1</value>
+      <value>BATTLEMAPPART_20water_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -22476,7 +22476,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_143</value>
+      <value>BATTLEMAPPART_20water_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -22484,7 +22484,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_141</value>
+      <value>BATTLEMAPPART_20water_FT_141</value>
     </entry>
     <entry>
       <key>
@@ -22492,7 +22492,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22500,7 +22500,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_4</value>
+      <value>BATTLEMAPPART_20water_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -22508,7 +22508,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22516,7 +22516,7 @@
         <y>12</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_4</value>
+      <value>BATTLEMAPPART_20water_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -22524,7 +22524,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_139</value>
+      <value>BATTLEMAPPART_20water_FT_139</value>
     </entry>
     <entry>
       <key>
@@ -22532,7 +22532,7 @@
         <y>12</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_138</value>
+      <value>BATTLEMAPPART_20water_FT_138</value>
     </entry>
     <entry>
       <key>
@@ -22540,7 +22540,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22548,7 +22548,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22556,7 +22556,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22564,7 +22564,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22572,7 +22572,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22580,7 +22580,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22588,7 +22588,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22596,7 +22596,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -22604,7 +22604,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -22612,7 +22612,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22620,7 +22620,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22628,7 +22628,7 @@
         <y>1</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_76</value>
+      <value>BATTLEMAPPART_20water_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -22636,7 +22636,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22644,7 +22644,7 @@
         <y>2</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_78</value>
+      <value>BATTLEMAPPART_20water_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -22652,7 +22652,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22660,7 +22660,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22668,7 +22668,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22676,7 +22676,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22684,7 +22684,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_178</value>
+      <value>BATTLEMAPPART_20water_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -22692,7 +22692,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22700,7 +22700,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_179</value>
+      <value>BATTLEMAPPART_20water_FT_179</value>
     </entry>
     <entry>
       <key>
@@ -22708,7 +22708,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22716,7 +22716,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22724,7 +22724,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_65</value>
+      <value>BATTLEMAPPART_20water_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -22732,7 +22732,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22740,7 +22740,7 @@
         <y>10</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_65</value>
+      <value>BATTLEMAPPART_20water_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -22748,7 +22748,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_143</value>
+      <value>BATTLEMAPPART_20water_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -22756,7 +22756,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_141</value>
+      <value>BATTLEMAPPART_20water_FT_141</value>
     </entry>
     <entry>
       <key>
@@ -22764,7 +22764,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22772,7 +22772,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_65</value>
+      <value>BATTLEMAPPART_20water_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -22780,7 +22780,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22788,7 +22788,7 @@
         <y>12</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_65</value>
+      <value>BATTLEMAPPART_20water_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -22796,7 +22796,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_139</value>
+      <value>BATTLEMAPPART_20water_FT_139</value>
     </entry>
     <entry>
       <key>
@@ -22804,7 +22804,7 @@
         <y>12</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_138</value>
+      <value>BATTLEMAPPART_20water_FT_138</value>
     </entry>
     <entry>
       <key>
@@ -22812,7 +22812,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22820,7 +22820,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22828,7 +22828,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_162</value>
+      <value>BATTLEMAPPART_20water_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -22836,7 +22836,7 @@
         <y>14</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_163</value>
+      <value>BATTLEMAPPART_20water_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -22844,7 +22844,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22852,7 +22852,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -22860,7 +22860,7 @@
         <y>15</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -22868,7 +22868,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22876,7 +22876,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -22884,7 +22884,7 @@
         <y>16</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -22892,7 +22892,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22900,7 +22900,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -22908,7 +22908,7 @@
         <y>17</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -22916,7 +22916,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22924,7 +22924,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -22932,7 +22932,7 @@
         <y>18</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -22940,7 +22940,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22948,7 +22948,7 @@
         <y>19</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_158</value>
+      <value>BATTLEMAPPART_20water_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -22956,7 +22956,7 @@
         <y>19</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_159</value>
+      <value>BATTLEMAPPART_20water_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -22964,7 +22964,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -22972,7 +22972,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -22980,7 +22980,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22988,7 +22988,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -22996,7 +22996,7 @@
         <y>1</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_189</value>
+      <value>BATTLEMAPPART_20water_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -23004,7 +23004,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -23012,7 +23012,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -23020,7 +23020,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -23028,7 +23028,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -23036,7 +23036,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23044,7 +23044,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23052,7 +23052,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23060,7 +23060,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23068,7 +23068,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23076,7 +23076,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23084,7 +23084,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23092,7 +23092,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_143</value>
+      <value>BATTLEMAPPART_20water_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -23100,7 +23100,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_141</value>
+      <value>BATTLEMAPPART_20water_FT_141</value>
     </entry>
     <entry>
       <key>
@@ -23108,7 +23108,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23116,7 +23116,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23124,7 +23124,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_155</value>
+      <value>BATTLEMAPPART_20water_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -23132,7 +23132,7 @@
         <y>12</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_154</value>
+      <value>BATTLEMAPPART_20water_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -23140,7 +23140,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23148,7 +23148,7 @@
         <y>13</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_146</value>
+      <value>BATTLEMAPPART_20water_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -23156,7 +23156,7 @@
         <y>13</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_147</value>
+      <value>BATTLEMAPPART_20water_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -23164,7 +23164,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23172,7 +23172,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_151</value>
+      <value>BATTLEMAPPART_20water_FT_151</value>
     </entry>
     <entry>
       <key>
@@ -23180,7 +23180,7 @@
         <y>14</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_150</value>
+      <value>BATTLEMAPPART_20water_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -23188,7 +23188,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23196,7 +23196,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_1</value>
+      <value>BATTLEMAPPART_20water_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -23204,7 +23204,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23212,7 +23212,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_4</value>
+      <value>BATTLEMAPPART_20water_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -23220,7 +23220,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23228,7 +23228,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_1</value>
+      <value>BATTLEMAPPART_20water_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -23236,7 +23236,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -23244,7 +23244,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -23252,7 +23252,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_1</value>
+      <value>BATTLEMAPPART_20water_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -23260,7 +23260,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -23268,7 +23268,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -23276,7 +23276,7 @@
         <y>19</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_139</value>
+      <value>BATTLEMAPPART_20water_FT_139</value>
     </entry>
     <entry>
       <key>
@@ -23284,7 +23284,7 @@
         <y>19</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_138</value>
+      <value>BATTLEMAPPART_20water_FT_138</value>
     </entry>
     <entry>
       <key>
@@ -23292,7 +23292,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23300,7 +23300,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23308,7 +23308,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23316,7 +23316,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23324,7 +23324,7 @@
         <y>1</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_81</value>
+      <value>BATTLEMAPPART_20water_FT_81</value>
     </entry>
     <entry>
       <key>
@@ -23332,7 +23332,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -23340,7 +23340,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -23348,7 +23348,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -23356,7 +23356,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -23364,7 +23364,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_45</value>
+      <value>BATTLEMAPPART_20water_FT_45</value>
     </entry>
     <entry>
       <key>
@@ -23372,7 +23372,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23380,7 +23380,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23388,7 +23388,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23396,7 +23396,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23404,7 +23404,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23412,7 +23412,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23420,7 +23420,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23428,7 +23428,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_143</value>
+      <value>BATTLEMAPPART_20water_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -23436,7 +23436,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_141</value>
+      <value>BATTLEMAPPART_20water_FT_141</value>
     </entry>
     <entry>
       <key>
@@ -23444,7 +23444,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23452,7 +23452,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23460,7 +23460,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23468,7 +23468,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23476,7 +23476,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23484,7 +23484,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23492,7 +23492,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23500,7 +23500,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -23508,7 +23508,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -23516,7 +23516,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_45</value>
+      <value>BATTLEMAPPART_20water_FT_45</value>
     </entry>
     <entry>
       <key>
@@ -23524,7 +23524,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -23532,7 +23532,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -23540,7 +23540,7 @@
         <y>19</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_139</value>
+      <value>BATTLEMAPPART_20water_FT_139</value>
     </entry>
     <entry>
       <key>
@@ -23548,7 +23548,7 @@
         <y>19</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_138</value>
+      <value>BATTLEMAPPART_20water_FT_138</value>
     </entry>
     <entry>
       <key>
@@ -23556,7 +23556,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23564,7 +23564,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23572,7 +23572,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -23580,7 +23580,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -23588,7 +23588,7 @@
         <y>1</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_189</value>
+      <value>BATTLEMAPPART_20water_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -23596,7 +23596,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -23604,7 +23604,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -23612,7 +23612,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23620,7 +23620,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_47</value>
+      <value>BATTLEMAPPART_20water_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -23628,7 +23628,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23636,7 +23636,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23644,7 +23644,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23652,7 +23652,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23660,7 +23660,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23668,7 +23668,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23676,7 +23676,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_143</value>
+      <value>BATTLEMAPPART_20water_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -23684,7 +23684,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_141</value>
+      <value>BATTLEMAPPART_20water_FT_141</value>
     </entry>
     <entry>
       <key>
@@ -23692,7 +23692,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23700,7 +23700,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23708,7 +23708,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_157</value>
+      <value>BATTLEMAPPART_20water_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -23716,7 +23716,7 @@
         <y>12</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_156</value>
+      <value>BATTLEMAPPART_20water_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -23724,7 +23724,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23732,7 +23732,7 @@
         <y>13</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -23740,7 +23740,7 @@
         <y>13</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -23748,7 +23748,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23756,7 +23756,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_153</value>
+      <value>BATTLEMAPPART_20water_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -23764,7 +23764,7 @@
         <y>14</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_152</value>
+      <value>BATTLEMAPPART_20water_FT_152</value>
     </entry>
     <entry>
       <key>
@@ -23772,7 +23772,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23780,7 +23780,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23788,7 +23788,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_46</value>
+      <value>BATTLEMAPPART_20water_FT_46</value>
     </entry>
     <entry>
       <key>
@@ -23796,7 +23796,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -23804,7 +23804,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -23812,7 +23812,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -23820,7 +23820,7 @@
         <y>19</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_139</value>
+      <value>BATTLEMAPPART_20water_FT_139</value>
     </entry>
     <entry>
       <key>
@@ -23828,7 +23828,7 @@
         <y>19</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_138</value>
+      <value>BATTLEMAPPART_20water_FT_138</value>
     </entry>
     <entry>
       <key>
@@ -23836,7 +23836,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -23844,7 +23844,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -23852,7 +23852,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -23860,7 +23860,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -23868,7 +23868,7 @@
         <y>1</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_81</value>
+      <value>BATTLEMAPPART_20water_FT_81</value>
     </entry>
     <entry>
       <key>
@@ -23876,7 +23876,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -23884,7 +23884,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -23892,7 +23892,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -23900,7 +23900,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -23908,7 +23908,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -23916,7 +23916,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -23924,7 +23924,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -23932,7 +23932,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -23940,7 +23940,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -23948,7 +23948,7 @@
         <y>5</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -23956,7 +23956,7 @@
         <y>5</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -23964,7 +23964,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -23972,7 +23972,7 @@
         <y>6</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -23980,7 +23980,7 @@
         <y>6</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -23988,7 +23988,7 @@
         <y>6</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -23996,7 +23996,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24004,7 +24004,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24012,7 +24012,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24020,7 +24020,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24028,7 +24028,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_143</value>
+      <value>BATTLEMAPPART_20water_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -24036,7 +24036,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_141</value>
+      <value>BATTLEMAPPART_20water_FT_141</value>
     </entry>
     <entry>
       <key>
@@ -24044,7 +24044,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24052,7 +24052,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24060,7 +24060,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_139</value>
+      <value>BATTLEMAPPART_20water_FT_139</value>
     </entry>
     <entry>
       <key>
@@ -24068,7 +24068,7 @@
         <y>12</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_172</value>
+      <value>BATTLEMAPPART_20water_FT_172</value>
     </entry>
     <entry>
       <key>
@@ -24076,7 +24076,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24084,7 +24084,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24092,7 +24092,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_140</value>
+      <value>BATTLEMAPPART_20water_FT_140</value>
     </entry>
     <entry>
       <key>
@@ -24100,7 +24100,7 @@
         <y>14</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_141</value>
+      <value>BATTLEMAPPART_20water_FT_141</value>
     </entry>
     <entry>
       <key>
@@ -24108,7 +24108,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -24116,7 +24116,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -24124,7 +24124,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -24132,7 +24132,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_2</value>
+      <value>BATTLEMAPPART_20water_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -24140,7 +24140,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -24148,7 +24148,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -24156,7 +24156,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -24164,7 +24164,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_56</value>
+      <value>BATTLEMAPPART_20water_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -24172,7 +24172,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24180,7 +24180,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_3</value>
+      <value>BATTLEMAPPART_20water_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -24188,7 +24188,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24196,7 +24196,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24204,7 +24204,7 @@
         <y>19</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_139</value>
+      <value>BATTLEMAPPART_20water_FT_139</value>
     </entry>
     <entry>
       <key>
@@ -24212,7 +24212,7 @@
         <y>19</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_138</value>
+      <value>BATTLEMAPPART_20water_FT_138</value>
     </entry>
     <entry>
       <key>
@@ -24220,7 +24220,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24228,7 +24228,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24236,7 +24236,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24244,7 +24244,7 @@
         <y>0</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_76</value>
+      <value>BATTLEMAPPART_20water_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -24252,7 +24252,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24260,7 +24260,7 @@
         <y>1</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_78</value>
+      <value>BATTLEMAPPART_20water_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -24268,7 +24268,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24276,7 +24276,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24284,7 +24284,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -24292,7 +24292,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -24300,7 +24300,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -24308,7 +24308,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -24316,7 +24316,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -24324,7 +24324,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -24332,7 +24332,7 @@
         <y>5</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_199</value>
+      <value>BATTLEMAPPART_20water_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -24340,7 +24340,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24348,7 +24348,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24356,7 +24356,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24364,7 +24364,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24372,7 +24372,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24380,7 +24380,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_143</value>
+      <value>BATTLEMAPPART_20water_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -24388,7 +24388,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_141</value>
+      <value>BATTLEMAPPART_20water_FT_141</value>
     </entry>
     <entry>
       <key>
@@ -24396,7 +24396,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24404,7 +24404,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24412,7 +24412,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_139</value>
+      <value>BATTLEMAPPART_20water_FT_139</value>
     </entry>
     <entry>
       <key>
@@ -24420,7 +24420,7 @@
         <y>12</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_138</value>
+      <value>BATTLEMAPPART_20water_FT_138</value>
     </entry>
     <entry>
       <key>
@@ -24428,7 +24428,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24436,7 +24436,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24444,7 +24444,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_140</value>
+      <value>BATTLEMAPPART_20water_FT_140</value>
     </entry>
     <entry>
       <key>
@@ -24452,7 +24452,7 @@
         <y>14</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_141</value>
+      <value>BATTLEMAPPART_20water_FT_141</value>
     </entry>
     <entry>
       <key>
@@ -24460,7 +24460,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -24468,7 +24468,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -24476,7 +24476,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -24484,7 +24484,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_3</value>
+      <value>BATTLEMAPPART_20water_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -24492,7 +24492,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_184</value>
+      <value>BATTLEMAPPART_20water_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -24500,7 +24500,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_230</value>
+      <value>BATTLEMAPPART_20water_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -24508,7 +24508,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_231</value>
+      <value>BATTLEMAPPART_20water_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -24516,7 +24516,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24524,7 +24524,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_2</value>
+      <value>BATTLEMAPPART_20water_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -24532,7 +24532,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24540,7 +24540,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_56</value>
+      <value>BATTLEMAPPART_20water_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -24548,7 +24548,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24556,7 +24556,7 @@
         <y>19</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_139</value>
+      <value>BATTLEMAPPART_20water_FT_139</value>
     </entry>
     <entry>
       <key>
@@ -24564,7 +24564,7 @@
         <y>19</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_138</value>
+      <value>BATTLEMAPPART_20water_FT_138</value>
     </entry>
     <entry>
       <key>
@@ -24572,7 +24572,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24580,7 +24580,7 @@
         <y>20</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_76</value>
+      <value>BATTLEMAPPART_20water_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -24588,7 +24588,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24596,7 +24596,7 @@
         <y>21</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_79</value>
+      <value>BATTLEMAPPART_20water_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -24604,7 +24604,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24612,7 +24612,7 @@
         <y>0</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_78</value>
+      <value>BATTLEMAPPART_20water_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -24620,7 +24620,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24628,7 +24628,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24636,7 +24636,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24644,7 +24644,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24652,7 +24652,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24660,7 +24660,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24668,7 +24668,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24676,7 +24676,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24684,7 +24684,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24692,7 +24692,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24700,7 +24700,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_140</value>
+      <value>BATTLEMAPPART_20water_FT_140</value>
     </entry>
     <entry>
       <key>
@@ -24708,7 +24708,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_141</value>
+      <value>BATTLEMAPPART_20water_FT_141</value>
     </entry>
     <entry>
       <key>
@@ -24716,7 +24716,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24724,7 +24724,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24732,7 +24732,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_139</value>
+      <value>BATTLEMAPPART_20water_FT_139</value>
     </entry>
     <entry>
       <key>
@@ -24740,7 +24740,7 @@
         <y>12</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_138</value>
+      <value>BATTLEMAPPART_20water_FT_138</value>
     </entry>
     <entry>
       <key>
@@ -24748,7 +24748,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24756,7 +24756,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24764,7 +24764,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_140</value>
+      <value>BATTLEMAPPART_20water_FT_140</value>
     </entry>
     <entry>
       <key>
@@ -24772,7 +24772,7 @@
         <y>14</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_141</value>
+      <value>BATTLEMAPPART_20water_FT_141</value>
     </entry>
     <entry>
       <key>
@@ -24780,7 +24780,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24788,7 +24788,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_2</value>
+      <value>BATTLEMAPPART_20water_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -24796,7 +24796,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24804,7 +24804,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_56</value>
+      <value>BATTLEMAPPART_20water_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -24812,7 +24812,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24820,7 +24820,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_3</value>
+      <value>BATTLEMAPPART_20water_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -24828,7 +24828,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24836,7 +24836,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24844,7 +24844,7 @@
         <y>19</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_139</value>
+      <value>BATTLEMAPPART_20water_FT_139</value>
     </entry>
     <entry>
       <key>
@@ -24852,7 +24852,7 @@
         <y>19</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_138</value>
+      <value>BATTLEMAPPART_20water_FT_138</value>
     </entry>
     <entry>
       <key>
@@ -24860,7 +24860,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24868,7 +24868,7 @@
         <y>20</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_189</value>
+      <value>BATTLEMAPPART_20water_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -24876,7 +24876,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24884,7 +24884,7 @@
         <y>21</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_77</value>
+      <value>BATTLEMAPPART_20water_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -24892,7 +24892,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24900,7 +24900,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24908,7 +24908,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24916,7 +24916,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24924,7 +24924,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24932,7 +24932,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -24940,7 +24940,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24948,7 +24948,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24956,7 +24956,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24964,7 +24964,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24972,7 +24972,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -24980,7 +24980,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_140</value>
+      <value>BATTLEMAPPART_20water_FT_140</value>
     </entry>
     <entry>
       <key>
@@ -24988,7 +24988,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_141</value>
+      <value>BATTLEMAPPART_20water_FT_141</value>
     </entry>
     <entry>
       <key>
@@ -24996,7 +24996,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -25004,7 +25004,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -25012,7 +25012,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_139</value>
+      <value>BATTLEMAPPART_20water_FT_139</value>
     </entry>
     <entry>
       <key>
@@ -25020,7 +25020,7 @@
         <y>12</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_138</value>
+      <value>BATTLEMAPPART_20water_FT_138</value>
     </entry>
     <entry>
       <key>
@@ -25028,7 +25028,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -25036,7 +25036,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -25044,7 +25044,7 @@
         <y>14</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_164</value>
+      <value>BATTLEMAPPART_20water_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -25052,7 +25052,7 @@
         <y>14</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_165</value>
+      <value>BATTLEMAPPART_20water_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -25060,7 +25060,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -25068,7 +25068,7 @@
         <y>15</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -25076,7 +25076,7 @@
         <y>15</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -25084,7 +25084,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_217</value>
+      <value>BATTLEMAPPART_20water_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -25092,7 +25092,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -25100,7 +25100,7 @@
         <y>16</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -25108,7 +25108,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -25116,7 +25116,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -25124,7 +25124,7 @@
         <y>17</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -25132,7 +25132,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -25140,7 +25140,7 @@
         <y>18</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_145</value>
+      <value>BATTLEMAPPART_20water_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -25148,7 +25148,7 @@
         <y>18</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_144</value>
+      <value>BATTLEMAPPART_20water_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -25156,7 +25156,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -25164,7 +25164,7 @@
         <y>19</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_160</value>
+      <value>BATTLEMAPPART_20water_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -25172,7 +25172,7 @@
         <y>19</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_161</value>
+      <value>BATTLEMAPPART_20water_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -25180,7 +25180,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -25188,7 +25188,7 @@
         <y>20</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_81</value>
+      <value>BATTLEMAPPART_20water_FT_81</value>
     </entry>
     <entry>
       <key>
@@ -25196,7 +25196,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_20water_SC_91</value>
+      <value>BATTLEMAPPART_20water_FT_91</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

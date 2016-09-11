@@ -16,13 +16,13 @@ enum class BattleLayerDrawingMode
 	OnlyCurrentLevel
 };
 
-class BattleTileMap;
+class TileMap;
 class Image;
 
 class BattleTileView : public Stage, public TileTransform
 {
   protected:
-	BattleTileMap &map;
+	TileMap &map;
 	Vec3<int> isoTileSize;
 	Vec2<int> stratTileSize;
 	TileViewMode viewMode;
@@ -40,7 +40,7 @@ class BattleTileView : public Stage, public TileTransform
 	bool hideGround;
 	bool hideLeftWall;
 	bool hideRightWall;
-	bool hideScenery;
+	bool hideFeature;
 
 	int currentZLevel;
 	BattleLayerDrawingMode layerDrawingMode;
@@ -65,7 +65,7 @@ class BattleTileView : public Stage, public TileTransform
 
 	sp<Palette> pal;
 
-	BattleTileView(BattleTileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
+	BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
 	               TileViewMode initialMode);
 	~BattleTileView() override;
 

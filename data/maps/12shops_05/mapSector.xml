@@ -19385,14 +19385,14 @@
       <value>BATTLEMAPPART_12shops_RW_54</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19400,7 +19400,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -19408,7 +19408,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19416,7 +19416,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -19424,7 +19424,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19432,7 +19432,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -19440,7 +19440,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19448,7 +19448,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -19456,7 +19456,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19464,7 +19464,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -19472,7 +19472,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19480,7 +19480,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -19488,7 +19488,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_215</value>
+      <value>BATTLEMAPPART_12shops_FT_215</value>
     </entry>
     <entry>
       <key>
@@ -19496,7 +19496,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_214</value>
+      <value>BATTLEMAPPART_12shops_FT_214</value>
     </entry>
     <entry>
       <key>
@@ -19504,7 +19504,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_213</value>
+      <value>BATTLEMAPPART_12shops_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -19512,7 +19512,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_61</value>
+      <value>BATTLEMAPPART_12shops_FT_61</value>
     </entry>
     <entry>
       <key>
@@ -19520,7 +19520,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_212</value>
+      <value>BATTLEMAPPART_12shops_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -19528,7 +19528,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19536,7 +19536,7 @@
         <y>12</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_62</value>
+      <value>BATTLEMAPPART_12shops_FT_62</value>
     </entry>
     <entry>
       <key>
@@ -19544,7 +19544,7 @@
         <y>13</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_59</value>
+      <value>BATTLEMAPPART_12shops_FT_59</value>
     </entry>
     <entry>
       <key>
@@ -19552,7 +19552,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_67</value>
+      <value>BATTLEMAPPART_12shops_FT_67</value>
     </entry>
     <entry>
       <key>
@@ -19560,7 +19560,7 @@
         <y>15</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_61</value>
+      <value>BATTLEMAPPART_12shops_FT_61</value>
     </entry>
     <entry>
       <key>
@@ -19568,7 +19568,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_80</value>
+      <value>BATTLEMAPPART_12shops_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -19576,7 +19576,7 @@
         <y>17</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_62</value>
+      <value>BATTLEMAPPART_12shops_FT_62</value>
     </entry>
     <entry>
       <key>
@@ -19584,7 +19584,7 @@
         <y>18</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_59</value>
+      <value>BATTLEMAPPART_12shops_FT_59</value>
     </entry>
     <entry>
       <key>
@@ -19592,7 +19592,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_220</value>
+      <value>BATTLEMAPPART_12shops_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -19600,7 +19600,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_216</value>
+      <value>BATTLEMAPPART_12shops_FT_216</value>
     </entry>
     <entry>
       <key>
@@ -19608,7 +19608,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_220</value>
+      <value>BATTLEMAPPART_12shops_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -19616,7 +19616,7 @@
         <y>3</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_216</value>
+      <value>BATTLEMAPPART_12shops_FT_216</value>
     </entry>
     <entry>
       <key>
@@ -19624,7 +19624,7 @@
         <y>3</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_220</value>
+      <value>BATTLEMAPPART_12shops_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -19632,7 +19632,7 @@
         <y>3</y>
         <z>7</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_216</value>
+      <value>BATTLEMAPPART_12shops_FT_216</value>
     </entry>
     <entry>
       <key>
@@ -19640,7 +19640,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_211</value>
+      <value>BATTLEMAPPART_12shops_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -19648,7 +19648,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_210</value>
+      <value>BATTLEMAPPART_12shops_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -19656,7 +19656,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_209</value>
+      <value>BATTLEMAPPART_12shops_FT_209</value>
     </entry>
     <entry>
       <key>
@@ -19664,7 +19664,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_208</value>
+      <value>BATTLEMAPPART_12shops_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -19672,7 +19672,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19680,7 +19680,7 @@
         <y>12</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_67</value>
+      <value>BATTLEMAPPART_12shops_FT_67</value>
     </entry>
     <entry>
       <key>
@@ -19688,7 +19688,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_81</value>
+      <value>BATTLEMAPPART_12shops_FT_81</value>
     </entry>
     <entry>
       <key>
@@ -19696,7 +19696,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_78</value>
+      <value>BATTLEMAPPART_12shops_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -19704,7 +19704,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_82</value>
+      <value>BATTLEMAPPART_12shops_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -19712,7 +19712,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_66</value>
+      <value>BATTLEMAPPART_12shops_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -19720,7 +19720,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_65</value>
+      <value>BATTLEMAPPART_12shops_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -19728,7 +19728,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_76</value>
+      <value>BATTLEMAPPART_12shops_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -19736,7 +19736,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_65</value>
+      <value>BATTLEMAPPART_12shops_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -19744,7 +19744,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19752,7 +19752,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -19760,7 +19760,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19768,7 +19768,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -19776,7 +19776,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19784,7 +19784,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -19792,7 +19792,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_207</value>
+      <value>BATTLEMAPPART_12shops_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -19800,7 +19800,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_206</value>
+      <value>BATTLEMAPPART_12shops_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -19808,7 +19808,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_205</value>
+      <value>BATTLEMAPPART_12shops_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -19816,7 +19816,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_204</value>
+      <value>BATTLEMAPPART_12shops_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -19824,7 +19824,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19832,7 +19832,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19840,7 +19840,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -19848,7 +19848,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_66</value>
+      <value>BATTLEMAPPART_12shops_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -19856,7 +19856,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_65</value>
+      <value>BATTLEMAPPART_12shops_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -19864,7 +19864,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_67</value>
+      <value>BATTLEMAPPART_12shops_FT_67</value>
     </entry>
     <entry>
       <key>
@@ -19872,7 +19872,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19880,7 +19880,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -19888,7 +19888,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_83</value>
+      <value>BATTLEMAPPART_12shops_FT_83</value>
     </entry>
     <entry>
       <key>
@@ -19896,7 +19896,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19904,7 +19904,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -19912,7 +19912,7 @@
         <y>5</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_23</value>
+      <value>BATTLEMAPPART_12shops_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -19920,7 +19920,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_203</value>
+      <value>BATTLEMAPPART_12shops_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -19928,7 +19928,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_202</value>
+      <value>BATTLEMAPPART_12shops_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -19936,7 +19936,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_201</value>
+      <value>BATTLEMAPPART_12shops_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -19944,7 +19944,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_200</value>
+      <value>BATTLEMAPPART_12shops_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -19952,7 +19952,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19960,7 +19960,7 @@
         <y>20</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_28</value>
+      <value>BATTLEMAPPART_12shops_FT_28</value>
     </entry>
     <entry>
       <key>
@@ -19968,7 +19968,7 @@
         <y>20</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_27</value>
+      <value>BATTLEMAPPART_12shops_FT_27</value>
     </entry>
     <entry>
       <key>
@@ -19976,7 +19976,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_199</value>
+      <value>BATTLEMAPPART_12shops_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -19984,7 +19984,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_198</value>
+      <value>BATTLEMAPPART_12shops_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -19992,7 +19992,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_197</value>
+      <value>BATTLEMAPPART_12shops_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -20000,7 +20000,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_196</value>
+      <value>BATTLEMAPPART_12shops_FT_196</value>
     </entry>
     <entry>
       <key>
@@ -20008,7 +20008,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20016,7 +20016,7 @@
         <y>12</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20024,7 +20024,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_21</value>
+      <value>BATTLEMAPPART_12shops_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -20032,7 +20032,7 @@
         <y>13</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20040,7 +20040,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20048,7 +20048,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_80</value>
+      <value>BATTLEMAPPART_12shops_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -20056,7 +20056,7 @@
         <y>20</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_29</value>
+      <value>BATTLEMAPPART_12shops_FT_29</value>
     </entry>
     <entry>
       <key>
@@ -20064,7 +20064,7 @@
         <y>20</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_26</value>
+      <value>BATTLEMAPPART_12shops_FT_26</value>
     </entry>
     <entry>
       <key>
@@ -20072,7 +20072,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20080,7 +20080,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20088,7 +20088,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_215</value>
+      <value>BATTLEMAPPART_12shops_FT_215</value>
     </entry>
     <entry>
       <key>
@@ -20096,7 +20096,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_214</value>
+      <value>BATTLEMAPPART_12shops_FT_214</value>
     </entry>
     <entry>
       <key>
@@ -20104,7 +20104,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_213</value>
+      <value>BATTLEMAPPART_12shops_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -20112,7 +20112,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_195</value>
+      <value>BATTLEMAPPART_12shops_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -20120,7 +20120,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_212</value>
+      <value>BATTLEMAPPART_12shops_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -20128,7 +20128,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_194</value>
+      <value>BATTLEMAPPART_12shops_FT_194</value>
     </entry>
     <entry>
       <key>
@@ -20136,7 +20136,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_193</value>
+      <value>BATTLEMAPPART_12shops_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -20144,7 +20144,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_192</value>
+      <value>BATTLEMAPPART_12shops_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -20152,7 +20152,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_22</value>
+      <value>BATTLEMAPPART_12shops_FT_22</value>
     </entry>
     <entry>
       <key>
@@ -20160,7 +20160,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_67</value>
+      <value>BATTLEMAPPART_12shops_FT_67</value>
     </entry>
     <entry>
       <key>
@@ -20168,7 +20168,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_76</value>
+      <value>BATTLEMAPPART_12shops_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -20176,7 +20176,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_64</value>
+      <value>BATTLEMAPPART_12shops_FT_64</value>
     </entry>
     <entry>
       <key>
@@ -20184,7 +20184,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -20192,7 +20192,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -20200,7 +20200,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20208,7 +20208,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -20216,7 +20216,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -20224,7 +20224,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20232,7 +20232,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_211</value>
+      <value>BATTLEMAPPART_12shops_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -20240,7 +20240,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_169</value>
+      <value>BATTLEMAPPART_12shops_FT_169</value>
     </entry>
     <entry>
       <key>
@@ -20248,7 +20248,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_210</value>
+      <value>BATTLEMAPPART_12shops_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -20256,7 +20256,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_168</value>
+      <value>BATTLEMAPPART_12shops_FT_168</value>
     </entry>
     <entry>
       <key>
@@ -20264,7 +20264,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -20272,7 +20272,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -20280,7 +20280,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_209</value>
+      <value>BATTLEMAPPART_12shops_FT_209</value>
     </entry>
     <entry>
       <key>
@@ -20288,7 +20288,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_191</value>
+      <value>BATTLEMAPPART_12shops_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -20296,7 +20296,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_208</value>
+      <value>BATTLEMAPPART_12shops_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -20304,7 +20304,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_190</value>
+      <value>BATTLEMAPPART_12shops_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -20312,7 +20312,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_189</value>
+      <value>BATTLEMAPPART_12shops_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -20320,7 +20320,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_188</value>
+      <value>BATTLEMAPPART_12shops_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -20328,7 +20328,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -20336,7 +20336,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -20344,7 +20344,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_66</value>
+      <value>BATTLEMAPPART_12shops_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -20352,7 +20352,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -20360,7 +20360,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -20368,7 +20368,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_83</value>
+      <value>BATTLEMAPPART_12shops_FT_83</value>
     </entry>
     <entry>
       <key>
@@ -20376,7 +20376,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -20384,7 +20384,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -20392,7 +20392,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20400,7 +20400,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_23</value>
+      <value>BATTLEMAPPART_12shops_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -20408,7 +20408,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20416,7 +20416,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_207</value>
+      <value>BATTLEMAPPART_12shops_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -20424,7 +20424,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_167</value>
+      <value>BATTLEMAPPART_12shops_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -20432,7 +20432,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_206</value>
+      <value>BATTLEMAPPART_12shops_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -20440,7 +20440,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_166</value>
+      <value>BATTLEMAPPART_12shops_FT_166</value>
     </entry>
     <entry>
       <key>
@@ -20448,7 +20448,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_205</value>
+      <value>BATTLEMAPPART_12shops_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -20456,7 +20456,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_187</value>
+      <value>BATTLEMAPPART_12shops_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -20464,7 +20464,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_204</value>
+      <value>BATTLEMAPPART_12shops_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -20472,7 +20472,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_186</value>
+      <value>BATTLEMAPPART_12shops_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -20480,7 +20480,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_185</value>
+      <value>BATTLEMAPPART_12shops_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -20488,7 +20488,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_184</value>
+      <value>BATTLEMAPPART_12shops_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -20496,7 +20496,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20504,7 +20504,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20512,7 +20512,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_203</value>
+      <value>BATTLEMAPPART_12shops_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -20520,7 +20520,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_165</value>
+      <value>BATTLEMAPPART_12shops_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -20528,7 +20528,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_202</value>
+      <value>BATTLEMAPPART_12shops_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -20536,7 +20536,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_164</value>
+      <value>BATTLEMAPPART_12shops_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -20544,7 +20544,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_201</value>
+      <value>BATTLEMAPPART_12shops_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -20552,7 +20552,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_200</value>
+      <value>BATTLEMAPPART_12shops_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -20560,7 +20560,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20568,7 +20568,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20576,7 +20576,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20584,7 +20584,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_53</value>
+      <value>BATTLEMAPPART_12shops_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -20592,7 +20592,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20600,7 +20600,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20608,7 +20608,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20616,7 +20616,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_53</value>
+      <value>BATTLEMAPPART_12shops_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -20624,7 +20624,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_245</value>
+      <value>BATTLEMAPPART_12shops_FT_245</value>
     </entry>
     <entry>
       <key>
@@ -20632,7 +20632,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_242</value>
+      <value>BATTLEMAPPART_12shops_FT_242</value>
     </entry>
     <entry>
       <key>
@@ -20640,7 +20640,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_244</value>
+      <value>BATTLEMAPPART_12shops_FT_244</value>
     </entry>
     <entry>
       <key>
@@ -20648,7 +20648,7 @@
         <y>2</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_92</value>
+      <value>BATTLEMAPPART_12shops_FT_92</value>
     </entry>
     <entry>
       <key>
@@ -20656,7 +20656,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20664,7 +20664,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20672,7 +20672,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_199</value>
+      <value>BATTLEMAPPART_12shops_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -20680,7 +20680,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_163</value>
+      <value>BATTLEMAPPART_12shops_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -20688,7 +20688,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_198</value>
+      <value>BATTLEMAPPART_12shops_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -20696,7 +20696,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_162</value>
+      <value>BATTLEMAPPART_12shops_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -20704,7 +20704,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_197</value>
+      <value>BATTLEMAPPART_12shops_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -20712,7 +20712,7 @@
         <y>7</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_70</value>
+      <value>BATTLEMAPPART_12shops_FT_70</value>
     </entry>
     <entry>
       <key>
@@ -20720,7 +20720,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_196</value>
+      <value>BATTLEMAPPART_12shops_FT_196</value>
     </entry>
     <entry>
       <key>
@@ -20728,7 +20728,7 @@
         <y>8</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_68</value>
+      <value>BATTLEMAPPART_12shops_FT_68</value>
     </entry>
     <entry>
       <key>
@@ -20736,7 +20736,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20744,7 +20744,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20752,7 +20752,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20760,7 +20760,7 @@
         <y>16</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_52</value>
+      <value>BATTLEMAPPART_12shops_FT_52</value>
     </entry>
     <entry>
       <key>
@@ -20768,7 +20768,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20776,7 +20776,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20784,7 +20784,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20792,7 +20792,7 @@
         <y>17</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_52</value>
+      <value>BATTLEMAPPART_12shops_FT_52</value>
     </entry>
     <entry>
       <key>
@@ -20800,7 +20800,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_245</value>
+      <value>BATTLEMAPPART_12shops_FT_245</value>
     </entry>
     <entry>
       <key>
@@ -20808,7 +20808,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_242</value>
+      <value>BATTLEMAPPART_12shops_FT_242</value>
     </entry>
     <entry>
       <key>
@@ -20816,7 +20816,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_244</value>
+      <value>BATTLEMAPPART_12shops_FT_244</value>
     </entry>
     <entry>
       <key>
@@ -20824,7 +20824,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -20832,7 +20832,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -20840,7 +20840,7 @@
         <y>2</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_93</value>
+      <value>BATTLEMAPPART_12shops_FT_93</value>
     </entry>
     <entry>
       <key>
@@ -20848,7 +20848,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20856,7 +20856,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20864,7 +20864,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_195</value>
+      <value>BATTLEMAPPART_12shops_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -20872,7 +20872,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_161</value>
+      <value>BATTLEMAPPART_12shops_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -20880,7 +20880,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_194</value>
+      <value>BATTLEMAPPART_12shops_FT_194</value>
     </entry>
     <entry>
       <key>
@@ -20888,7 +20888,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_160</value>
+      <value>BATTLEMAPPART_12shops_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -20896,7 +20896,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -20904,7 +20904,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -20912,7 +20912,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_193</value>
+      <value>BATTLEMAPPART_12shops_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -20920,7 +20920,7 @@
         <y>7</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_91</value>
+      <value>BATTLEMAPPART_12shops_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -20928,7 +20928,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_192</value>
+      <value>BATTLEMAPPART_12shops_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -20936,7 +20936,7 @@
         <y>8</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_90</value>
+      <value>BATTLEMAPPART_12shops_FT_90</value>
     </entry>
     <entry>
       <key>
@@ -20944,7 +20944,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_28</value>
+      <value>BATTLEMAPPART_12shops_FT_28</value>
     </entry>
     <entry>
       <key>
@@ -20952,7 +20952,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_27</value>
+      <value>BATTLEMAPPART_12shops_FT_27</value>
     </entry>
     <entry>
       <key>
@@ -20960,7 +20960,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20968,7 +20968,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20976,7 +20976,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_53</value>
+      <value>BATTLEMAPPART_12shops_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -20984,7 +20984,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -20992,7 +20992,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21000,7 +21000,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_53</value>
+      <value>BATTLEMAPPART_12shops_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -21008,7 +21008,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_245</value>
+      <value>BATTLEMAPPART_12shops_FT_245</value>
     </entry>
     <entry>
       <key>
@@ -21016,7 +21016,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_242</value>
+      <value>BATTLEMAPPART_12shops_FT_242</value>
     </entry>
     <entry>
       <key>
@@ -21024,7 +21024,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_244</value>
+      <value>BATTLEMAPPART_12shops_FT_244</value>
     </entry>
     <entry>
       <key>
@@ -21032,7 +21032,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_5</value>
+      <value>BATTLEMAPPART_12shops_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -21040,7 +21040,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_6</value>
+      <value>BATTLEMAPPART_12shops_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -21048,7 +21048,7 @@
         <y>2</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_88</value>
+      <value>BATTLEMAPPART_12shops_FT_88</value>
     </entry>
     <entry>
       <key>
@@ -21056,7 +21056,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21064,7 +21064,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21072,7 +21072,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_191</value>
+      <value>BATTLEMAPPART_12shops_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -21080,7 +21080,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_159</value>
+      <value>BATTLEMAPPART_12shops_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -21088,7 +21088,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_190</value>
+      <value>BATTLEMAPPART_12shops_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -21096,7 +21096,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_158</value>
+      <value>BATTLEMAPPART_12shops_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -21104,7 +21104,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_189</value>
+      <value>BATTLEMAPPART_12shops_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -21112,7 +21112,7 @@
         <y>7</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_69</value>
+      <value>BATTLEMAPPART_12shops_FT_69</value>
     </entry>
     <entry>
       <key>
@@ -21120,7 +21120,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_188</value>
+      <value>BATTLEMAPPART_12shops_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -21128,7 +21128,7 @@
         <y>8</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_71</value>
+      <value>BATTLEMAPPART_12shops_FT_71</value>
     </entry>
     <entry>
       <key>
@@ -21136,7 +21136,7 @@
         <y>10</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_29</value>
+      <value>BATTLEMAPPART_12shops_FT_29</value>
     </entry>
     <entry>
       <key>
@@ -21144,7 +21144,7 @@
         <y>10</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_26</value>
+      <value>BATTLEMAPPART_12shops_FT_26</value>
     </entry>
     <entry>
       <key>
@@ -21152,7 +21152,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21160,7 +21160,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21168,7 +21168,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_52</value>
+      <value>BATTLEMAPPART_12shops_FT_52</value>
     </entry>
     <entry>
       <key>
@@ -21176,7 +21176,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21184,7 +21184,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21192,7 +21192,7 @@
         <y>17</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_52</value>
+      <value>BATTLEMAPPART_12shops_FT_52</value>
     </entry>
     <entry>
       <key>
@@ -21200,7 +21200,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_245</value>
+      <value>BATTLEMAPPART_12shops_FT_245</value>
     </entry>
     <entry>
       <key>
@@ -21208,7 +21208,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_242</value>
+      <value>BATTLEMAPPART_12shops_FT_242</value>
     </entry>
     <entry>
       <key>
@@ -21216,7 +21216,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_244</value>
+      <value>BATTLEMAPPART_12shops_FT_244</value>
     </entry>
     <entry>
       <key>
@@ -21224,7 +21224,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21232,7 +21232,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21240,7 +21240,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_187</value>
+      <value>BATTLEMAPPART_12shops_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -21248,7 +21248,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_157</value>
+      <value>BATTLEMAPPART_12shops_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -21256,7 +21256,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_186</value>
+      <value>BATTLEMAPPART_12shops_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -21264,7 +21264,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_156</value>
+      <value>BATTLEMAPPART_12shops_FT_156</value>
     </entry>
     <entry>
       <key>
@@ -21272,7 +21272,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_185</value>
+      <value>BATTLEMAPPART_12shops_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -21280,7 +21280,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_184</value>
+      <value>BATTLEMAPPART_12shops_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -21288,7 +21288,7 @@
         <y>8</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_70</value>
+      <value>BATTLEMAPPART_12shops_FT_70</value>
     </entry>
     <entry>
       <key>
@@ -21296,7 +21296,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21304,7 +21304,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_53</value>
+      <value>BATTLEMAPPART_12shops_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -21312,7 +21312,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21320,7 +21320,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_53</value>
+      <value>BATTLEMAPPART_12shops_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -21328,7 +21328,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_245</value>
+      <value>BATTLEMAPPART_12shops_FT_245</value>
     </entry>
     <entry>
       <key>
@@ -21336,7 +21336,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_242</value>
+      <value>BATTLEMAPPART_12shops_FT_242</value>
     </entry>
     <entry>
       <key>
@@ -21344,7 +21344,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_244</value>
+      <value>BATTLEMAPPART_12shops_FT_244</value>
     </entry>
     <entry>
       <key>
@@ -21352,7 +21352,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_243</value>
+      <value>BATTLEMAPPART_12shops_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21360,7 +21360,7 @@
         <y>7</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_91</value>
+      <value>BATTLEMAPPART_12shops_FT_91</value>
     </entry>
     <entry>
       <key>
@@ -21368,7 +21368,7 @@
         <y>8</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_90</value>
+      <value>BATTLEMAPPART_12shops_FT_90</value>
     </entry>
     <entry>
       <key>
@@ -21376,7 +21376,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21384,7 +21384,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_52</value>
+      <value>BATTLEMAPPART_12shops_FT_52</value>
     </entry>
     <entry>
       <key>
@@ -21392,7 +21392,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21400,7 +21400,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_52</value>
+      <value>BATTLEMAPPART_12shops_FT_52</value>
     </entry>
     <entry>
       <key>
@@ -21408,7 +21408,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_245</value>
+      <value>BATTLEMAPPART_12shops_FT_245</value>
     </entry>
     <entry>
       <key>
@@ -21416,7 +21416,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_242</value>
+      <value>BATTLEMAPPART_12shops_FT_242</value>
     </entry>
     <entry>
       <key>
@@ -21424,7 +21424,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_244</value>
+      <value>BATTLEMAPPART_12shops_FT_244</value>
     </entry>
     <entry>
       <key>
@@ -21432,7 +21432,7 @@
         <y>7</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_69</value>
+      <value>BATTLEMAPPART_12shops_FT_69</value>
     </entry>
     <entry>
       <key>
@@ -21440,7 +21440,7 @@
         <y>8</y>
         <z>6</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_71</value>
+      <value>BATTLEMAPPART_12shops_FT_71</value>
     </entry>
     <entry>
       <key>
@@ -21448,7 +21448,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_53</value>
+      <value>BATTLEMAPPART_12shops_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -21456,7 +21456,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_53</value>
+      <value>BATTLEMAPPART_12shops_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -21464,7 +21464,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_245</value>
+      <value>BATTLEMAPPART_12shops_FT_245</value>
     </entry>
     <entry>
       <key>
@@ -21472,7 +21472,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_242</value>
+      <value>BATTLEMAPPART_12shops_FT_242</value>
     </entry>
     <entry>
       <key>
@@ -21480,7 +21480,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_244</value>
+      <value>BATTLEMAPPART_12shops_FT_244</value>
     </entry>
     <entry>
       <key>
@@ -21488,7 +21488,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_52</value>
+      <value>BATTLEMAPPART_12shops_FT_52</value>
     </entry>
     <entry>
       <key>
@@ -21496,7 +21496,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_52</value>
+      <value>BATTLEMAPPART_12shops_FT_52</value>
     </entry>
     <entry>
       <key>
@@ -21504,7 +21504,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_245</value>
+      <value>BATTLEMAPPART_12shops_FT_245</value>
     </entry>
     <entry>
       <key>
@@ -21512,7 +21512,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_242</value>
+      <value>BATTLEMAPPART_12shops_FT_242</value>
     </entry>
     <entry>
       <key>
@@ -21520,7 +21520,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_244</value>
+      <value>BATTLEMAPPART_12shops_FT_244</value>
     </entry>
     <entry>
       <key>
@@ -21528,7 +21528,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21536,7 +21536,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21544,7 +21544,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21552,7 +21552,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21560,7 +21560,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21568,7 +21568,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21576,7 +21576,7 @@
         <y>2</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_245</value>
+      <value>BATTLEMAPPART_12shops_FT_245</value>
     </entry>
     <entry>
       <key>
@@ -21584,7 +21584,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_242</value>
+      <value>BATTLEMAPPART_12shops_FT_242</value>
     </entry>
     <entry>
       <key>
@@ -21592,7 +21592,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21600,7 +21600,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21608,7 +21608,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_245</value>
+      <value>BATTLEMAPPART_12shops_FT_245</value>
     </entry>
     <entry>
       <key>
@@ -21616,7 +21616,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_242</value>
+      <value>BATTLEMAPPART_12shops_FT_242</value>
     </entry>
     <entry>
       <key>
@@ -21624,7 +21624,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21632,7 +21632,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21640,7 +21640,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21648,7 +21648,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21656,7 +21656,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21664,7 +21664,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21672,7 +21672,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21680,7 +21680,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21688,7 +21688,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21696,7 +21696,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21704,7 +21704,7 @@
         <y>10</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_245</value>
+      <value>BATTLEMAPPART_12shops_FT_245</value>
     </entry>
     <entry>
       <key>
@@ -21712,7 +21712,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_242</value>
+      <value>BATTLEMAPPART_12shops_FT_242</value>
     </entry>
     <entry>
       <key>
@@ -21720,7 +21720,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21728,7 +21728,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21736,7 +21736,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_245</value>
+      <value>BATTLEMAPPART_12shops_FT_245</value>
     </entry>
     <entry>
       <key>
@@ -21744,7 +21744,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_242</value>
+      <value>BATTLEMAPPART_12shops_FT_242</value>
     </entry>
     <entry>
       <key>
@@ -21752,7 +21752,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21760,7 +21760,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21768,7 +21768,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21776,7 +21776,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21784,7 +21784,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21792,7 +21792,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21800,7 +21800,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21808,7 +21808,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21816,7 +21816,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21824,7 +21824,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21832,7 +21832,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21840,7 +21840,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21848,7 +21848,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21856,7 +21856,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21864,7 +21864,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_245</value>
+      <value>BATTLEMAPPART_12shops_FT_245</value>
     </entry>
     <entry>
       <key>
@@ -21872,7 +21872,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_242</value>
+      <value>BATTLEMAPPART_12shops_FT_242</value>
     </entry>
     <entry>
       <key>
@@ -21880,7 +21880,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21888,7 +21888,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21896,7 +21896,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_244</value>
+      <value>BATTLEMAPPART_12shops_FT_244</value>
     </entry>
     <entry>
       <key>
@@ -21904,7 +21904,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21912,7 +21912,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21920,7 +21920,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21928,7 +21928,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21936,7 +21936,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21944,7 +21944,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21952,7 +21952,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21960,7 +21960,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21968,7 +21968,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21976,7 +21976,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21984,7 +21984,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -21992,7 +21992,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22000,7 +22000,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22008,7 +22008,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22016,7 +22016,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22024,7 +22024,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22032,7 +22032,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22040,7 +22040,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22048,7 +22048,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22056,7 +22056,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22064,7 +22064,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22072,7 +22072,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22080,7 +22080,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22088,7 +22088,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22096,7 +22096,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22104,7 +22104,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22112,7 +22112,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22120,7 +22120,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22128,7 +22128,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22136,7 +22136,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22144,7 +22144,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22152,7 +22152,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22160,7 +22160,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22168,7 +22168,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22176,7 +22176,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22184,7 +22184,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22192,7 +22192,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22200,7 +22200,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22208,7 +22208,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22216,7 +22216,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22224,7 +22224,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22232,7 +22232,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22240,7 +22240,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22248,7 +22248,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22256,7 +22256,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22264,7 +22264,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22272,7 +22272,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22280,7 +22280,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22288,7 +22288,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22296,7 +22296,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22304,7 +22304,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22312,7 +22312,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22320,7 +22320,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22328,7 +22328,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22336,7 +22336,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22344,7 +22344,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22352,7 +22352,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22360,7 +22360,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22368,7 +22368,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22376,7 +22376,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22384,7 +22384,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22392,7 +22392,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22400,7 +22400,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22408,7 +22408,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22416,7 +22416,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22424,7 +22424,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22432,7 +22432,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22440,7 +22440,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22448,7 +22448,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22456,7 +22456,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22464,7 +22464,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22472,7 +22472,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22480,7 +22480,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22488,7 +22488,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22496,7 +22496,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22504,7 +22504,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22512,7 +22512,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22520,7 +22520,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22528,7 +22528,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22536,7 +22536,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22544,7 +22544,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22552,7 +22552,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22560,7 +22560,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22568,7 +22568,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22576,7 +22576,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22584,7 +22584,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22592,7 +22592,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22600,7 +22600,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22608,7 +22608,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22616,7 +22616,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22624,7 +22624,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22632,7 +22632,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22640,7 +22640,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22648,7 +22648,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22656,7 +22656,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22664,7 +22664,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22672,7 +22672,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22680,7 +22680,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22688,7 +22688,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22696,7 +22696,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22704,7 +22704,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22712,7 +22712,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22720,7 +22720,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22728,7 +22728,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22736,7 +22736,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22744,7 +22744,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22752,7 +22752,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22760,7 +22760,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22768,7 +22768,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22776,7 +22776,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22784,7 +22784,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22792,7 +22792,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22800,7 +22800,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22808,7 +22808,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22816,7 +22816,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22824,7 +22824,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22832,7 +22832,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22840,7 +22840,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22848,7 +22848,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22856,7 +22856,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22864,7 +22864,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22872,7 +22872,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22880,7 +22880,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -22888,7 +22888,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_12shops_SC_221</value>
+      <value>BATTLEMAPPART_12shops_FT_221</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

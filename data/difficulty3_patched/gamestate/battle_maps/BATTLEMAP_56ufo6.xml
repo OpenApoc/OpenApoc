@@ -1176,13 +1176,13 @@
       <entry>56ufo6</entry>
     </tilesets>
     <destroyed_ground_tile>BATTLEMAPPART_56ufo6_GD_8</destroyed_ground_tile>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_56ufo6_SC_97</entry>
-      <entry>BATTLEMAPPART_56ufo6_SC_98</entry>
-      <entry>BATTLEMAPPART_56ufo6_SC_96</entry>
-      <entry>BATTLEMAPPART_56ufo6_SC_94</entry>
-      <entry>BATTLEMAPPART_56ufo6_SC_93</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_56ufo6_FT97</entry>
+      <entry>BATTLEMAPPART_56ufo6_FT98</entry>
+      <entry>BATTLEMAPPART_56ufo6_FT96</entry>
+      <entry>BATTLEMAPPART_56ufo6_FT94</entry>
+      <entry>BATTLEMAPPART_56ufo6_FT93</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_56ufo6>

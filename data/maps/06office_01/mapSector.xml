@@ -18491,14 +18491,14 @@
       <value>BATTLEMAPPART_06office_RW_9</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>0</x>
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -18506,7 +18506,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18514,7 +18514,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18522,7 +18522,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_13</value>
+      <value>BATTLEMAPPART_06office_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -18530,7 +18530,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_14</value>
+      <value>BATTLEMAPPART_06office_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -18538,7 +18538,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -18546,7 +18546,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18554,7 +18554,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18562,7 +18562,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -18570,7 +18570,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -18578,7 +18578,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -18586,7 +18586,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -18594,7 +18594,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -18602,7 +18602,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -18610,7 +18610,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -18618,7 +18618,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -18626,7 +18626,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18634,7 +18634,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18642,7 +18642,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -18650,7 +18650,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -18658,7 +18658,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -18666,7 +18666,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -18674,7 +18674,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18682,7 +18682,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18690,7 +18690,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -18698,7 +18698,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -18706,7 +18706,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -18714,7 +18714,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -18722,7 +18722,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18730,7 +18730,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18738,7 +18738,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -18746,7 +18746,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -18754,7 +18754,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18762,7 +18762,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18770,7 +18770,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -18778,7 +18778,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -18786,7 +18786,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18794,7 +18794,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18802,7 +18802,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18810,7 +18810,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -18818,7 +18818,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18826,7 +18826,7 @@
         <y>10</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18834,7 +18834,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18842,7 +18842,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -18850,7 +18850,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -18858,7 +18858,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -18866,7 +18866,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -18874,7 +18874,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18882,7 +18882,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18890,7 +18890,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -18898,7 +18898,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18906,7 +18906,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18914,7 +18914,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -18922,7 +18922,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_161</value>
+      <value>BATTLEMAPPART_06office_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -18930,7 +18930,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_160</value>
+      <value>BATTLEMAPPART_06office_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -18938,7 +18938,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -18946,7 +18946,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18954,7 +18954,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18962,7 +18962,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18970,7 +18970,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -18978,7 +18978,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18986,7 +18986,7 @@
         <y>10</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -18994,7 +18994,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19002,7 +19002,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_164</value>
+      <value>BATTLEMAPPART_06office_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -19010,7 +19010,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_165</value>
+      <value>BATTLEMAPPART_06office_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -19018,7 +19018,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19026,7 +19026,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_15</value>
+      <value>BATTLEMAPPART_06office_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -19034,7 +19034,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_163</value>
+      <value>BATTLEMAPPART_06office_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -19042,7 +19042,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_162</value>
+      <value>BATTLEMAPPART_06office_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -19050,7 +19050,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_167</value>
+      <value>BATTLEMAPPART_06office_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -19058,7 +19058,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_166</value>
+      <value>BATTLEMAPPART_06office_FT_166</value>
     </entry>
     <entry>
       <key>
@@ -19066,7 +19066,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_16</value>
+      <value>BATTLEMAPPART_06office_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -19074,7 +19074,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_163</value>
+      <value>BATTLEMAPPART_06office_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -19082,7 +19082,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_162</value>
+      <value>BATTLEMAPPART_06office_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -19090,7 +19090,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_167</value>
+      <value>BATTLEMAPPART_06office_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -19098,7 +19098,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_166</value>
+      <value>BATTLEMAPPART_06office_FT_166</value>
     </entry>
     <entry>
       <key>
@@ -19106,7 +19106,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19114,7 +19114,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_163</value>
+      <value>BATTLEMAPPART_06office_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -19122,7 +19122,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_162</value>
+      <value>BATTLEMAPPART_06office_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -19130,7 +19130,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_167</value>
+      <value>BATTLEMAPPART_06office_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -19138,7 +19138,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_166</value>
+      <value>BATTLEMAPPART_06office_FT_166</value>
     </entry>
     <entry>
       <key>
@@ -19146,7 +19146,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19154,7 +19154,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -19162,7 +19162,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19170,7 +19170,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19178,7 +19178,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -19186,7 +19186,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19194,7 +19194,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19202,7 +19202,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19210,7 +19210,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -19218,7 +19218,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -19226,7 +19226,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19234,7 +19234,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_56</value>
+      <value>BATTLEMAPPART_06office_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -19242,7 +19242,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_56</value>
+      <value>BATTLEMAPPART_06office_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -19250,7 +19250,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19258,7 +19258,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -19266,7 +19266,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19274,7 +19274,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19282,7 +19282,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19290,7 +19290,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19298,7 +19298,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19306,7 +19306,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19314,7 +19314,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19322,7 +19322,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -19330,7 +19330,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19338,7 +19338,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19346,7 +19346,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19354,7 +19354,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19362,7 +19362,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19370,7 +19370,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19378,7 +19378,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19386,7 +19386,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19394,7 +19394,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19402,7 +19402,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19410,7 +19410,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19418,7 +19418,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19426,7 +19426,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19434,7 +19434,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -19442,7 +19442,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19450,7 +19450,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19458,7 +19458,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -19466,7 +19466,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19474,7 +19474,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19482,7 +19482,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19490,7 +19490,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19498,7 +19498,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19506,7 +19506,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19514,7 +19514,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19522,7 +19522,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19530,7 +19530,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_56</value>
+      <value>BATTLEMAPPART_06office_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -19538,7 +19538,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_56</value>
+      <value>BATTLEMAPPART_06office_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -19546,7 +19546,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -19554,7 +19554,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19562,7 +19562,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19570,7 +19570,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -19578,7 +19578,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -19586,7 +19586,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -19594,7 +19594,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19602,7 +19602,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19610,7 +19610,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_15</value>
+      <value>BATTLEMAPPART_06office_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -19618,7 +19618,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_16</value>
+      <value>BATTLEMAPPART_06office_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -19626,7 +19626,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -19634,7 +19634,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -19642,7 +19642,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -19650,7 +19650,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19658,7 +19658,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19666,7 +19666,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -19674,7 +19674,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19682,7 +19682,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19690,7 +19690,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19698,7 +19698,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -19706,7 +19706,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19714,7 +19714,7 @@
         <y>10</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19722,7 +19722,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19730,7 +19730,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -19738,7 +19738,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19746,7 +19746,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19754,7 +19754,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19762,7 +19762,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19770,7 +19770,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -19778,7 +19778,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -19786,7 +19786,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19794,7 +19794,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19802,7 +19802,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19810,7 +19810,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -19818,7 +19818,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19826,7 +19826,7 @@
         <y>10</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19834,7 +19834,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19842,7 +19842,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -19850,7 +19850,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19858,7 +19858,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -19866,7 +19866,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19874,7 +19874,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19882,7 +19882,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19890,7 +19890,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -19898,7 +19898,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19906,7 +19906,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -19914,7 +19914,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19922,7 +19922,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_161</value>
+      <value>BATTLEMAPPART_06office_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -19930,7 +19930,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_160</value>
+      <value>BATTLEMAPPART_06office_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -19938,7 +19938,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_164</value>
+      <value>BATTLEMAPPART_06office_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -19946,7 +19946,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_165</value>
+      <value>BATTLEMAPPART_06office_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -19954,7 +19954,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -19962,7 +19962,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_163</value>
+      <value>BATTLEMAPPART_06office_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -19970,7 +19970,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_162</value>
+      <value>BATTLEMAPPART_06office_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -19978,7 +19978,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_167</value>
+      <value>BATTLEMAPPART_06office_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -19986,7 +19986,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_166</value>
+      <value>BATTLEMAPPART_06office_FT_166</value>
     </entry>
     <entry>
       <key>
@@ -19994,7 +19994,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_163</value>
+      <value>BATTLEMAPPART_06office_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -20002,7 +20002,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_162</value>
+      <value>BATTLEMAPPART_06office_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -20010,7 +20010,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_167</value>
+      <value>BATTLEMAPPART_06office_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -20018,7 +20018,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_166</value>
+      <value>BATTLEMAPPART_06office_FT_166</value>
     </entry>
     <entry>
       <key>
@@ -20026,7 +20026,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -20034,7 +20034,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_163</value>
+      <value>BATTLEMAPPART_06office_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -20042,7 +20042,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_162</value>
+      <value>BATTLEMAPPART_06office_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -20050,7 +20050,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_167</value>
+      <value>BATTLEMAPPART_06office_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -20058,7 +20058,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_166</value>
+      <value>BATTLEMAPPART_06office_FT_166</value>
     </entry>
     <entry>
       <key>
@@ -20066,7 +20066,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -20074,7 +20074,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -20082,7 +20082,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -20090,7 +20090,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -20098,7 +20098,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -20106,7 +20106,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -20114,7 +20114,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -20122,7 +20122,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -20130,7 +20130,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -20138,7 +20138,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -20146,7 +20146,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -20154,7 +20154,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -20162,7 +20162,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_35</value>
+      <value>BATTLEMAPPART_06office_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -20170,7 +20170,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -20178,7 +20178,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -20186,7 +20186,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -20194,7 +20194,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_39</value>
+      <value>BATTLEMAPPART_06office_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -20202,7 +20202,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -20210,7 +20210,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -20218,7 +20218,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -20226,7 +20226,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_11</value>
+      <value>BATTLEMAPPART_06office_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -20234,7 +20234,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_12</value>
+      <value>BATTLEMAPPART_06office_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -20242,7 +20242,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_31</value>
+      <value>BATTLEMAPPART_06office_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -20250,7 +20250,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -20258,7 +20258,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_06office_SC_32</value>
+      <value>BATTLEMAPPART_06office_FT_32</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

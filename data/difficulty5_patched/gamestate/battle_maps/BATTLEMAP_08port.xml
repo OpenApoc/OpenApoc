@@ -90,13 +90,13 @@
       <entry>BATTLEMAPPART_08port_RW_76</entry>
       <entry>BATTLEMAPPART_08port_RW_77</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_08port_SC_6</entry>
-      <entry>BATTLEMAPPART_08port_SC_8</entry>
-      <entry>BATTLEMAPPART_08port_SC_7</entry>
-      <entry>BATTLEMAPPART_08port_SC_3</entry>
-      <entry>BATTLEMAPPART_08port_SC_4</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_08port_FT6</entry>
+      <entry>BATTLEMAPPART_08port_FT8</entry>
+      <entry>BATTLEMAPPART_08port_FT7</entry>
+      <entry>BATTLEMAPPART_08port_FT3</entry>
+      <entry>BATTLEMAPPART_08port_FT4</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_08port>

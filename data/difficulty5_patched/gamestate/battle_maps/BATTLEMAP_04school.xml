@@ -1791,13 +1791,13 @@
       <entry>BATTLEMAPPART_04school_RW_70</entry>
       <entry>BATTLEMAPPART_04school_RW_71</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_04school_SC_213</entry>
-      <entry>BATTLEMAPPART_04school_SC_214</entry>
-      <entry>BATTLEMAPPART_04school_SC_212</entry>
-      <entry>BATTLEMAPPART_04school_SC_210</entry>
-      <entry>BATTLEMAPPART_04school_SC_209</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_04school_FT213</entry>
+      <entry>BATTLEMAPPART_04school_FT214</entry>
+      <entry>BATTLEMAPPART_04school_FT212</entry>
+      <entry>BATTLEMAPPART_04school_FT210</entry>
+      <entry>BATTLEMAPPART_04school_FT209</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_04school>

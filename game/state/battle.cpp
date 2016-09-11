@@ -14,14 +14,13 @@ namespace OpenApoc
 {
 // An ordered list of the types drawn in each layer
 // Within the same layer these are ordered by a calculated z based on the 'center' position
-static std::vector<std::set<BattleTileObject::Type>> layerMap = {
+static std::vector<std::set<TileObject::Type>> layerMap = {
     // Draw ground first, then put stuff on top of that
     // In order for selectionBracket to be drawn properly, first layer must contain all mapparts and
     // the unit type
-    {BattleTileObject::Type::Ground, BattleTileObject::Type::LeftWall,
-     BattleTileObject::Type::RightWall, BattleTileObject::Type::Scenery,
-     BattleTileObject::Type::Unit},
-    {},
+    {TileObject::Type::Ground, TileObject::Type::LeftWall, TileObject::Type::RightWall,
+     TileObject::Type::Feature, TileObject::Type::Doodad, TileObject::Type::Projectile,
+     TileObject::Type::Unit, TileObject::Type::Shadow},
 };
 
 Battle::~Battle()
@@ -36,7 +35,7 @@ void Battle::initMap()
 		LogError("Called on battle with existing map");
 		return;
 	}
-	this->map.reset(new BattleTileMap(this->size, layerMap));
+	this->map.reset(new TileMap(this->size, layerMap));
 	for (auto &s : this->map_parts)
 	{
 		this->map->addObjectToMap(s);

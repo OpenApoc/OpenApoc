@@ -13991,14 +13991,14 @@
       <value>BATTLEMAPPART_50senso_RW_10</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>1</x>
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_19</value>
+      <value>BATTLEMAPPART_50senso_FT_19</value>
     </entry>
     <entry>
       <key>
@@ -14006,7 +14006,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -14014,7 +14014,7 @@
         <y>1</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -14022,7 +14022,7 @@
         <y>1</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_19</value>
+      <value>BATTLEMAPPART_50senso_FT_19</value>
     </entry>
     <entry>
       <key>
@@ -14030,7 +14030,7 @@
         <y>1</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -14038,7 +14038,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_20</value>
+      <value>BATTLEMAPPART_50senso_FT_20</value>
     </entry>
     <entry>
       <key>
@@ -14046,7 +14046,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -14054,7 +14054,7 @@
         <y>2</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -14062,7 +14062,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_20</value>
+      <value>BATTLEMAPPART_50senso_FT_20</value>
     </entry>
     <entry>
       <key>
@@ -14070,7 +14070,7 @@
         <y>2</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -14078,7 +14078,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_21</value>
+      <value>BATTLEMAPPART_50senso_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -14086,7 +14086,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -14094,7 +14094,7 @@
         <y>1</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -14102,7 +14102,7 @@
         <y>1</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_21</value>
+      <value>BATTLEMAPPART_50senso_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -14110,7 +14110,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -14118,7 +14118,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -14126,7 +14126,7 @@
         <y>2</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -14134,7 +14134,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -14142,7 +14142,7 @@
         <y>2</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -14150,7 +14150,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_128</value>
+      <value>BATTLEMAPPART_50senso_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -14158,7 +14158,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_128</value>
+      <value>BATTLEMAPPART_50senso_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -14166,7 +14166,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_128</value>
+      <value>BATTLEMAPPART_50senso_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -14174,7 +14174,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_128</value>
+      <value>BATTLEMAPPART_50senso_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -14182,7 +14182,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_128</value>
+      <value>BATTLEMAPPART_50senso_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -14190,7 +14190,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_128</value>
+      <value>BATTLEMAPPART_50senso_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -14198,7 +14198,7 @@
         <y>20</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_128</value>
+      <value>BATTLEMAPPART_50senso_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -14206,7 +14206,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_128</value>
+      <value>BATTLEMAPPART_50senso_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -14214,7 +14214,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_126</value>
+      <value>BATTLEMAPPART_50senso_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -14222,7 +14222,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14230,7 +14230,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_126</value>
+      <value>BATTLEMAPPART_50senso_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -14238,7 +14238,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14246,7 +14246,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14254,7 +14254,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_126</value>
+      <value>BATTLEMAPPART_50senso_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -14262,7 +14262,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14270,7 +14270,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14278,7 +14278,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_126</value>
+      <value>BATTLEMAPPART_50senso_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -14286,7 +14286,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14294,7 +14294,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14302,7 +14302,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14310,7 +14310,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14318,7 +14318,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14326,7 +14326,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14334,7 +14334,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14342,7 +14342,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_228</value>
+      <value>BATTLEMAPPART_50senso_FT_228</value>
     </entry>
     <entry>
       <key>
@@ -14350,7 +14350,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14358,7 +14358,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14366,7 +14366,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14374,7 +14374,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14382,7 +14382,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14390,7 +14390,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14398,7 +14398,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_230</value>
+      <value>BATTLEMAPPART_50senso_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -14406,7 +14406,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14414,7 +14414,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14422,7 +14422,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14430,7 +14430,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14438,7 +14438,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14446,7 +14446,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14454,7 +14454,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14462,7 +14462,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14470,7 +14470,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14478,7 +14478,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14486,7 +14486,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14494,7 +14494,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14502,7 +14502,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14510,7 +14510,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_34</value>
+      <value>BATTLEMAPPART_50senso_FT_34</value>
     </entry>
     <entry>
       <key>
@@ -14518,7 +14518,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_35</value>
+      <value>BATTLEMAPPART_50senso_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -14526,7 +14526,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_53</value>
+      <value>BATTLEMAPPART_50senso_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -14534,7 +14534,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14542,7 +14542,7 @@
         <y>1</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_200</value>
+      <value>BATTLEMAPPART_50senso_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -14550,7 +14550,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14558,7 +14558,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_226</value>
+      <value>BATTLEMAPPART_50senso_FT_226</value>
     </entry>
     <entry>
       <key>
@@ -14566,7 +14566,7 @@
         <y>2</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_200</value>
+      <value>BATTLEMAPPART_50senso_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -14574,7 +14574,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14582,7 +14582,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_229</value>
+      <value>BATTLEMAPPART_50senso_FT_229</value>
     </entry>
     <entry>
       <key>
@@ -14590,7 +14590,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_200</value>
+      <value>BATTLEMAPPART_50senso_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -14598,7 +14598,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14606,7 +14606,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_200</value>
+      <value>BATTLEMAPPART_50senso_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -14614,7 +14614,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_122</value>
+      <value>BATTLEMAPPART_50senso_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -14622,7 +14622,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14630,7 +14630,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_83</value>
+      <value>BATTLEMAPPART_50senso_FT_83</value>
     </entry>
     <entry>
       <key>
@@ -14638,7 +14638,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_200</value>
+      <value>BATTLEMAPPART_50senso_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -14646,7 +14646,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_122</value>
+      <value>BATTLEMAPPART_50senso_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -14654,7 +14654,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14662,7 +14662,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_34</value>
+      <value>BATTLEMAPPART_50senso_FT_34</value>
     </entry>
     <entry>
       <key>
@@ -14670,7 +14670,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_35</value>
+      <value>BATTLEMAPPART_50senso_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -14678,7 +14678,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_59</value>
+      <value>BATTLEMAPPART_50senso_FT_59</value>
     </entry>
     <entry>
       <key>
@@ -14686,7 +14686,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14694,7 +14694,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14702,7 +14702,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14710,7 +14710,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14718,7 +14718,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14726,7 +14726,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14734,7 +14734,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14742,7 +14742,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_225</value>
+      <value>BATTLEMAPPART_50senso_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -14750,7 +14750,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_53</value>
+      <value>BATTLEMAPPART_50senso_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -14758,7 +14758,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14766,7 +14766,7 @@
         <y>1</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_55</value>
+      <value>BATTLEMAPPART_50senso_FT_55</value>
     </entry>
     <entry>
       <key>
@@ -14774,7 +14774,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14782,7 +14782,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_56</value>
+      <value>BATTLEMAPPART_50senso_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -14790,7 +14790,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14798,7 +14798,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14806,7 +14806,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_57</value>
+      <value>BATTLEMAPPART_50senso_FT_57</value>
     </entry>
     <entry>
       <key>
@@ -14814,7 +14814,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14822,7 +14822,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_58</value>
+      <value>BATTLEMAPPART_50senso_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -14830,7 +14830,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14838,7 +14838,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_77</value>
+      <value>BATTLEMAPPART_50senso_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -14846,7 +14846,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14854,7 +14854,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14862,7 +14862,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14870,7 +14870,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14878,7 +14878,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_225</value>
+      <value>BATTLEMAPPART_50senso_FT_225</value>
     </entry>
     <entry>
       <key>
@@ -14886,7 +14886,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_52</value>
+      <value>BATTLEMAPPART_50senso_FT_52</value>
     </entry>
     <entry>
       <key>
@@ -14894,7 +14894,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14902,7 +14902,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14910,7 +14910,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14918,7 +14918,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_56</value>
+      <value>BATTLEMAPPART_50senso_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -14926,7 +14926,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14934,7 +14934,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14942,7 +14942,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14950,7 +14950,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_4</value>
+      <value>BATTLEMAPPART_50senso_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -14958,7 +14958,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_3</value>
+      <value>BATTLEMAPPART_50senso_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -14966,7 +14966,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14974,7 +14974,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14982,7 +14982,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -14990,7 +14990,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -14998,7 +14998,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_228</value>
+      <value>BATTLEMAPPART_50senso_FT_228</value>
     </entry>
     <entry>
       <key>
@@ -15006,7 +15006,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15014,7 +15014,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_232</value>
+      <value>BATTLEMAPPART_50senso_FT_232</value>
     </entry>
     <entry>
       <key>
@@ -15022,7 +15022,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15030,7 +15030,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_230</value>
+      <value>BATTLEMAPPART_50senso_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -15038,7 +15038,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15046,7 +15046,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_122</value>
+      <value>BATTLEMAPPART_50senso_FT_122</value>
     </entry>
     <entry>
       <key>
@@ -15054,7 +15054,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15062,7 +15062,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_232</value>
+      <value>BATTLEMAPPART_50senso_FT_232</value>
     </entry>
     <entry>
       <key>
@@ -15070,7 +15070,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_53</value>
+      <value>BATTLEMAPPART_50senso_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -15078,7 +15078,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15086,7 +15086,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15094,7 +15094,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15102,7 +15102,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_223</value>
+      <value>BATTLEMAPPART_50senso_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -15110,7 +15110,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15118,7 +15118,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_56</value>
+      <value>BATTLEMAPPART_50senso_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -15126,7 +15126,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_207</value>
+      <value>BATTLEMAPPART_50senso_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -15134,7 +15134,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15142,7 +15142,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_206</value>
+      <value>BATTLEMAPPART_50senso_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -15150,7 +15150,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15158,7 +15158,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_205</value>
+      <value>BATTLEMAPPART_50senso_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -15166,7 +15166,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_4</value>
+      <value>BATTLEMAPPART_50senso_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -15174,7 +15174,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_3</value>
+      <value>BATTLEMAPPART_50senso_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -15182,7 +15182,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_8</value>
+      <value>BATTLEMAPPART_50senso_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -15190,7 +15190,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_7</value>
+      <value>BATTLEMAPPART_50senso_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -15198,7 +15198,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15206,7 +15206,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_228</value>
+      <value>BATTLEMAPPART_50senso_FT_228</value>
     </entry>
     <entry>
       <key>
@@ -15214,7 +15214,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15222,7 +15222,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_233</value>
+      <value>BATTLEMAPPART_50senso_FT_233</value>
     </entry>
     <entry>
       <key>
@@ -15230,7 +15230,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15238,7 +15238,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15246,7 +15246,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15254,7 +15254,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_231</value>
+      <value>BATTLEMAPPART_50senso_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -15262,7 +15262,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_224</value>
+      <value>BATTLEMAPPART_50senso_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -15270,7 +15270,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15278,7 +15278,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15286,7 +15286,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15294,7 +15294,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_56</value>
+      <value>BATTLEMAPPART_50senso_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -15302,7 +15302,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15310,7 +15310,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15318,7 +15318,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15326,7 +15326,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_4</value>
+      <value>BATTLEMAPPART_50senso_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -15334,7 +15334,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_3</value>
+      <value>BATTLEMAPPART_50senso_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -15342,7 +15342,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_8</value>
+      <value>BATTLEMAPPART_50senso_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -15350,7 +15350,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_7</value>
+      <value>BATTLEMAPPART_50senso_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -15358,7 +15358,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15366,7 +15366,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15374,7 +15374,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15382,7 +15382,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15390,7 +15390,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15398,7 +15398,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_230</value>
+      <value>BATTLEMAPPART_50senso_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -15406,7 +15406,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15414,7 +15414,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15422,7 +15422,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_56</value>
+      <value>BATTLEMAPPART_50senso_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -15430,7 +15430,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15438,7 +15438,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_234</value>
+      <value>BATTLEMAPPART_50senso_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -15446,7 +15446,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15454,7 +15454,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15462,7 +15462,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_57</value>
+      <value>BATTLEMAPPART_50senso_FT_57</value>
     </entry>
     <entry>
       <key>
@@ -15470,7 +15470,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15478,7 +15478,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_4</value>
+      <value>BATTLEMAPPART_50senso_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -15486,7 +15486,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_3</value>
+      <value>BATTLEMAPPART_50senso_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -15494,7 +15494,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15502,7 +15502,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15510,7 +15510,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15518,7 +15518,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15526,7 +15526,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_227</value>
+      <value>BATTLEMAPPART_50senso_FT_227</value>
     </entry>
     <entry>
       <key>
@@ -15534,7 +15534,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15542,7 +15542,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15550,7 +15550,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15558,7 +15558,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15566,7 +15566,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_224</value>
+      <value>BATTLEMAPPART_50senso_FT_224</value>
     </entry>
     <entry>
       <key>
@@ -15574,7 +15574,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15582,7 +15582,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15590,7 +15590,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15598,7 +15598,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15606,7 +15606,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_233</value>
+      <value>BATTLEMAPPART_50senso_FT_233</value>
     </entry>
     <entry>
       <key>
@@ -15614,7 +15614,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15622,7 +15622,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15630,7 +15630,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_77</value>
+      <value>BATTLEMAPPART_50senso_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -15638,7 +15638,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15646,7 +15646,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15654,7 +15654,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15662,7 +15662,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15670,7 +15670,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_34</value>
+      <value>BATTLEMAPPART_50senso_FT_34</value>
     </entry>
     <entry>
       <key>
@@ -15678,7 +15678,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_35</value>
+      <value>BATTLEMAPPART_50senso_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -15686,7 +15686,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15694,7 +15694,7 @@
         <y>1</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_200</value>
+      <value>BATTLEMAPPART_50senso_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -15702,7 +15702,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15710,7 +15710,7 @@
         <y>2</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_200</value>
+      <value>BATTLEMAPPART_50senso_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -15718,7 +15718,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15726,7 +15726,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_227</value>
+      <value>BATTLEMAPPART_50senso_FT_227</value>
     </entry>
     <entry>
       <key>
@@ -15734,7 +15734,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_200</value>
+      <value>BATTLEMAPPART_50senso_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -15742,7 +15742,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15750,7 +15750,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_200</value>
+      <value>BATTLEMAPPART_50senso_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -15758,7 +15758,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15766,7 +15766,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_80</value>
+      <value>BATTLEMAPPART_50senso_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -15774,7 +15774,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_200</value>
+      <value>BATTLEMAPPART_50senso_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -15782,7 +15782,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_131</value>
+      <value>BATTLEMAPPART_50senso_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15790,7 +15790,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_34</value>
+      <value>BATTLEMAPPART_50senso_FT_34</value>
     </entry>
     <entry>
       <key>
@@ -15798,7 +15798,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_35</value>
+      <value>BATTLEMAPPART_50senso_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -15806,7 +15806,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15814,7 +15814,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15822,7 +15822,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15830,7 +15830,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15838,7 +15838,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15846,7 +15846,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15854,7 +15854,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15862,7 +15862,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15870,7 +15870,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15878,7 +15878,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15886,7 +15886,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15894,7 +15894,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15902,7 +15902,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15910,7 +15910,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15918,7 +15918,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15926,7 +15926,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15934,7 +15934,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15942,7 +15942,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15950,7 +15950,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_227</value>
+      <value>BATTLEMAPPART_50senso_FT_227</value>
     </entry>
     <entry>
       <key>
@@ -15958,7 +15958,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15966,7 +15966,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15974,7 +15974,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15982,7 +15982,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15990,7 +15990,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -15998,7 +15998,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -16006,7 +16006,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_227</value>
+      <value>BATTLEMAPPART_50senso_FT_227</value>
     </entry>
     <entry>
       <key>
@@ -16014,7 +16014,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -16022,7 +16022,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -16030,7 +16030,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -16038,7 +16038,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -16046,7 +16046,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -16054,7 +16054,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -16062,7 +16062,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_231</value>
+      <value>BATTLEMAPPART_50senso_FT_231</value>
     </entry>
     <entry>
       <key>
@@ -16070,7 +16070,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_230</value>
+      <value>BATTLEMAPPART_50senso_FT_230</value>
     </entry>
     <entry>
       <key>
@@ -16078,7 +16078,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_126</value>
+      <value>BATTLEMAPPART_50senso_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -16086,7 +16086,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -16094,7 +16094,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_126</value>
+      <value>BATTLEMAPPART_50senso_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -16102,7 +16102,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -16110,7 +16110,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -16118,7 +16118,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_126</value>
+      <value>BATTLEMAPPART_50senso_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -16126,7 +16126,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -16134,7 +16134,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -16142,7 +16142,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_126</value>
+      <value>BATTLEMAPPART_50senso_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -16150,7 +16150,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_42</value>
+      <value>BATTLEMAPPART_50senso_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -16158,7 +16158,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_19</value>
+      <value>BATTLEMAPPART_50senso_FT_19</value>
     </entry>
     <entry>
       <key>
@@ -16166,7 +16166,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16174,7 +16174,7 @@
         <y>1</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16182,7 +16182,7 @@
         <y>1</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_19</value>
+      <value>BATTLEMAPPART_50senso_FT_19</value>
     </entry>
     <entry>
       <key>
@@ -16190,7 +16190,7 @@
         <y>1</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16198,7 +16198,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_20</value>
+      <value>BATTLEMAPPART_50senso_FT_20</value>
     </entry>
     <entry>
       <key>
@@ -16206,7 +16206,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16214,7 +16214,7 @@
         <y>2</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16222,7 +16222,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_20</value>
+      <value>BATTLEMAPPART_50senso_FT_20</value>
     </entry>
     <entry>
       <key>
@@ -16230,7 +16230,7 @@
         <y>2</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16238,7 +16238,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_129</value>
+      <value>BATTLEMAPPART_50senso_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -16246,7 +16246,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_232</value>
+      <value>BATTLEMAPPART_50senso_FT_232</value>
     </entry>
     <entry>
       <key>
@@ -16254,7 +16254,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_129</value>
+      <value>BATTLEMAPPART_50senso_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -16262,7 +16262,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_129</value>
+      <value>BATTLEMAPPART_50senso_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -16270,7 +16270,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_129</value>
+      <value>BATTLEMAPPART_50senso_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -16278,7 +16278,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_129</value>
+      <value>BATTLEMAPPART_50senso_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -16286,7 +16286,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_129</value>
+      <value>BATTLEMAPPART_50senso_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -16294,7 +16294,7 @@
         <y>20</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_129</value>
+      <value>BATTLEMAPPART_50senso_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -16302,7 +16302,7 @@
         <y>21</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_129</value>
+      <value>BATTLEMAPPART_50senso_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -16310,7 +16310,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_21</value>
+      <value>BATTLEMAPPART_50senso_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -16318,7 +16318,7 @@
         <y>1</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16326,7 +16326,7 @@
         <y>1</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_21</value>
+      <value>BATTLEMAPPART_50senso_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -16334,7 +16334,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16342,7 +16342,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16350,7 +16350,7 @@
         <y>2</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16358,7 +16358,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -16366,7 +16366,7 @@
         <y>2</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_50senso_SC_23</value>
+      <value>BATTLEMAPPART_50senso_FT_23</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

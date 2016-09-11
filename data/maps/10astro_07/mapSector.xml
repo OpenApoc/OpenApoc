@@ -14280,14 +14280,14 @@
       <value>BATTLEMAPPART_10astro_RW_41</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_103</value>
+      <value>BATTLEMAPPART_10astro_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -14295,7 +14295,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_106</value>
+      <value>BATTLEMAPPART_10astro_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -14303,7 +14303,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_103</value>
+      <value>BATTLEMAPPART_10astro_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -14311,7 +14311,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_103</value>
+      <value>BATTLEMAPPART_10astro_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -14319,7 +14319,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_103</value>
+      <value>BATTLEMAPPART_10astro_FT_103</value>
     </entry>
     <entry>
       <key>
@@ -14327,7 +14327,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_105</value>
+      <value>BATTLEMAPPART_10astro_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -14335,7 +14335,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_105</value>
+      <value>BATTLEMAPPART_10astro_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -14343,7 +14343,7 @@
         <y>1</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_146</value>
+      <value>BATTLEMAPPART_10astro_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -14351,7 +14351,7 @@
         <y>2</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -14359,7 +14359,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -14367,7 +14367,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_98</value>
+      <value>BATTLEMAPPART_10astro_FT_98</value>
     </entry>
     <entry>
       <key>
@@ -14375,7 +14375,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_97</value>
+      <value>BATTLEMAPPART_10astro_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -14383,7 +14383,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_97</value>
+      <value>BATTLEMAPPART_10astro_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -14391,7 +14391,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_97</value>
+      <value>BATTLEMAPPART_10astro_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -14399,7 +14399,7 @@
         <y>19</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_98</value>
+      <value>BATTLEMAPPART_10astro_FT_98</value>
     </entry>
     <entry>
       <key>
@@ -14407,7 +14407,7 @@
         <y>19</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_97</value>
+      <value>BATTLEMAPPART_10astro_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -14415,7 +14415,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_99</value>
+      <value>BATTLEMAPPART_10astro_FT_99</value>
     </entry>
     <entry>
       <key>
@@ -14423,7 +14423,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_97</value>
+      <value>BATTLEMAPPART_10astro_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -14431,7 +14431,7 @@
         <y>20</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_97</value>
+      <value>BATTLEMAPPART_10astro_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -14439,7 +14439,7 @@
         <y>20</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_97</value>
+      <value>BATTLEMAPPART_10astro_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -14447,7 +14447,7 @@
         <y>20</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_99</value>
+      <value>BATTLEMAPPART_10astro_FT_99</value>
     </entry>
     <entry>
       <key>
@@ -14455,7 +14455,7 @@
         <y>20</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_97</value>
+      <value>BATTLEMAPPART_10astro_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -14463,7 +14463,7 @@
         <y>1</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -14471,7 +14471,7 @@
         <y>2</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_199</value>
+      <value>BATTLEMAPPART_10astro_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -14479,7 +14479,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -14487,7 +14487,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -14495,7 +14495,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_199</value>
+      <value>BATTLEMAPPART_10astro_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -14503,7 +14503,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -14511,7 +14511,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_153</value>
+      <value>BATTLEMAPPART_10astro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -14519,7 +14519,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_154</value>
+      <value>BATTLEMAPPART_10astro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -14527,7 +14527,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_153</value>
+      <value>BATTLEMAPPART_10astro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -14535,7 +14535,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_154</value>
+      <value>BATTLEMAPPART_10astro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -14543,7 +14543,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_100</value>
+      <value>BATTLEMAPPART_10astro_FT_100</value>
     </entry>
     <entry>
       <key>
@@ -14551,7 +14551,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_97</value>
+      <value>BATTLEMAPPART_10astro_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -14559,7 +14559,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_97</value>
+      <value>BATTLEMAPPART_10astro_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -14567,7 +14567,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_97</value>
+      <value>BATTLEMAPPART_10astro_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -14575,7 +14575,7 @@
         <y>19</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_100</value>
+      <value>BATTLEMAPPART_10astro_FT_100</value>
     </entry>
     <entry>
       <key>
@@ -14583,7 +14583,7 @@
         <y>19</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_97</value>
+      <value>BATTLEMAPPART_10astro_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -14591,7 +14591,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_97</value>
+      <value>BATTLEMAPPART_10astro_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -14599,7 +14599,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_97</value>
+      <value>BATTLEMAPPART_10astro_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -14607,7 +14607,7 @@
         <y>20</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_97</value>
+      <value>BATTLEMAPPART_10astro_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -14615,7 +14615,7 @@
         <y>20</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_97</value>
+      <value>BATTLEMAPPART_10astro_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -14623,7 +14623,7 @@
         <y>20</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_97</value>
+      <value>BATTLEMAPPART_10astro_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -14631,7 +14631,7 @@
         <y>20</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_97</value>
+      <value>BATTLEMAPPART_10astro_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -14639,7 +14639,7 @@
         <y>2</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -14647,7 +14647,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -14655,7 +14655,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_106</value>
+      <value>BATTLEMAPPART_10astro_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -14663,7 +14663,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_206</value>
+      <value>BATTLEMAPPART_10astro_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -14671,7 +14671,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_206</value>
+      <value>BATTLEMAPPART_10astro_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -14679,7 +14679,7 @@
         <y>10</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_206</value>
+      <value>BATTLEMAPPART_10astro_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -14687,7 +14687,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_106</value>
+      <value>BATTLEMAPPART_10astro_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -14695,7 +14695,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_106</value>
+      <value>BATTLEMAPPART_10astro_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -14703,7 +14703,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_204</value>
+      <value>BATTLEMAPPART_10astro_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -14711,7 +14711,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_106</value>
+      <value>BATTLEMAPPART_10astro_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -14719,7 +14719,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_106</value>
+      <value>BATTLEMAPPART_10astro_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -14727,7 +14727,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_106</value>
+      <value>BATTLEMAPPART_10astro_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -14735,7 +14735,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_44</value>
+      <value>BATTLEMAPPART_10astro_FT_44</value>
     </entry>
     <entry>
       <key>
@@ -14743,7 +14743,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_204</value>
+      <value>BATTLEMAPPART_10astro_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -14751,7 +14751,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_47</value>
+      <value>BATTLEMAPPART_10astro_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -14759,7 +14759,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_44</value>
+      <value>BATTLEMAPPART_10astro_FT_44</value>
     </entry>
     <entry>
       <key>
@@ -14767,7 +14767,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_47</value>
+      <value>BATTLEMAPPART_10astro_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -14775,7 +14775,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_106</value>
+      <value>BATTLEMAPPART_10astro_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -14783,7 +14783,7 @@
         <y>1</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_147</value>
+      <value>BATTLEMAPPART_10astro_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -14791,7 +14791,7 @@
         <y>2</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_188</value>
+      <value>BATTLEMAPPART_10astro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -14799,7 +14799,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -14807,7 +14807,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_210</value>
+      <value>BATTLEMAPPART_10astro_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -14815,7 +14815,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_210</value>
+      <value>BATTLEMAPPART_10astro_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -14823,7 +14823,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_43</value>
+      <value>BATTLEMAPPART_10astro_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -14831,7 +14831,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_146</value>
+      <value>BATTLEMAPPART_10astro_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -14839,7 +14839,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_48</value>
+      <value>BATTLEMAPPART_10astro_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -14847,7 +14847,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_43</value>
+      <value>BATTLEMAPPART_10astro_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -14855,7 +14855,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_201</value>
+      <value>BATTLEMAPPART_10astro_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -14863,7 +14863,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_200</value>
+      <value>BATTLEMAPPART_10astro_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -14871,7 +14871,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_48</value>
+      <value>BATTLEMAPPART_10astro_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -14879,7 +14879,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_201</value>
+      <value>BATTLEMAPPART_10astro_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -14887,7 +14887,7 @@
         <y>19</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_200</value>
+      <value>BATTLEMAPPART_10astro_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -14895,7 +14895,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_144</value>
+      <value>BATTLEMAPPART_10astro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -14903,7 +14903,7 @@
         <y>2</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_189</value>
+      <value>BATTLEMAPPART_10astro_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -14911,7 +14911,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_210</value>
+      <value>BATTLEMAPPART_10astro_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -14919,7 +14919,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_210</value>
+      <value>BATTLEMAPPART_10astro_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -14927,7 +14927,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_44</value>
+      <value>BATTLEMAPPART_10astro_FT_44</value>
     </entry>
     <entry>
       <key>
@@ -14935,7 +14935,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_204</value>
+      <value>BATTLEMAPPART_10astro_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -14943,7 +14943,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_47</value>
+      <value>BATTLEMAPPART_10astro_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -14951,7 +14951,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_44</value>
+      <value>BATTLEMAPPART_10astro_FT_44</value>
     </entry>
     <entry>
       <key>
@@ -14959,7 +14959,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_47</value>
+      <value>BATTLEMAPPART_10astro_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -14967,7 +14967,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_144</value>
+      <value>BATTLEMAPPART_10astro_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -14975,7 +14975,7 @@
         <y>2</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_188</value>
+      <value>BATTLEMAPPART_10astro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -14983,7 +14983,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -14991,7 +14991,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_210</value>
+      <value>BATTLEMAPPART_10astro_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -14999,7 +14999,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_210</value>
+      <value>BATTLEMAPPART_10astro_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -15007,7 +15007,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_43</value>
+      <value>BATTLEMAPPART_10astro_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -15015,7 +15015,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_204</value>
+      <value>BATTLEMAPPART_10astro_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -15023,7 +15023,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_48</value>
+      <value>BATTLEMAPPART_10astro_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -15031,7 +15031,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_43</value>
+      <value>BATTLEMAPPART_10astro_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -15039,7 +15039,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_48</value>
+      <value>BATTLEMAPPART_10astro_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -15047,7 +15047,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_150</value>
+      <value>BATTLEMAPPART_10astro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -15055,7 +15055,7 @@
         <y>2</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_189</value>
+      <value>BATTLEMAPPART_10astro_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -15063,7 +15063,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_210</value>
+      <value>BATTLEMAPPART_10astro_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -15071,7 +15071,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_210</value>
+      <value>BATTLEMAPPART_10astro_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -15079,7 +15079,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_201</value>
+      <value>BATTLEMAPPART_10astro_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -15087,7 +15087,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_200</value>
+      <value>BATTLEMAPPART_10astro_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -15095,7 +15095,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_201</value>
+      <value>BATTLEMAPPART_10astro_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -15103,7 +15103,7 @@
         <y>19</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_200</value>
+      <value>BATTLEMAPPART_10astro_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -15111,7 +15111,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_150</value>
+      <value>BATTLEMAPPART_10astro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -15119,7 +15119,7 @@
         <y>1</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_149</value>
+      <value>BATTLEMAPPART_10astro_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -15127,7 +15127,7 @@
         <y>2</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_188</value>
+      <value>BATTLEMAPPART_10astro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -15135,7 +15135,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15143,7 +15143,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_148</value>
+      <value>BATTLEMAPPART_10astro_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -15151,7 +15151,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_150</value>
+      <value>BATTLEMAPPART_10astro_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -15159,7 +15159,7 @@
         <y>2</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_189</value>
+      <value>BATTLEMAPPART_10astro_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -15167,7 +15167,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_44</value>
+      <value>BATTLEMAPPART_10astro_FT_44</value>
     </entry>
     <entry>
       <key>
@@ -15175,7 +15175,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_47</value>
+      <value>BATTLEMAPPART_10astro_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -15183,7 +15183,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_44</value>
+      <value>BATTLEMAPPART_10astro_FT_44</value>
     </entry>
     <entry>
       <key>
@@ -15191,7 +15191,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_47</value>
+      <value>BATTLEMAPPART_10astro_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -15199,7 +15199,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_104</value>
+      <value>BATTLEMAPPART_10astro_FT_104</value>
     </entry>
     <entry>
       <key>
@@ -15207,7 +15207,7 @@
         <y>2</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_188</value>
+      <value>BATTLEMAPPART_10astro_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -15215,7 +15215,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15223,7 +15223,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_43</value>
+      <value>BATTLEMAPPART_10astro_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -15231,7 +15231,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_48</value>
+      <value>BATTLEMAPPART_10astro_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -15239,7 +15239,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_43</value>
+      <value>BATTLEMAPPART_10astro_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -15247,7 +15247,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_201</value>
+      <value>BATTLEMAPPART_10astro_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -15255,7 +15255,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_200</value>
+      <value>BATTLEMAPPART_10astro_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -15263,7 +15263,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_48</value>
+      <value>BATTLEMAPPART_10astro_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -15271,7 +15271,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_201</value>
+      <value>BATTLEMAPPART_10astro_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -15279,7 +15279,7 @@
         <y>19</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_200</value>
+      <value>BATTLEMAPPART_10astro_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -15287,7 +15287,7 @@
         <y>2</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_189</value>
+      <value>BATTLEMAPPART_10astro_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -15295,7 +15295,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_44</value>
+      <value>BATTLEMAPPART_10astro_FT_44</value>
     </entry>
     <entry>
       <key>
@@ -15303,7 +15303,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_47</value>
+      <value>BATTLEMAPPART_10astro_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -15311,7 +15311,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_44</value>
+      <value>BATTLEMAPPART_10astro_FT_44</value>
     </entry>
     <entry>
       <key>
@@ -15319,7 +15319,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_47</value>
+      <value>BATTLEMAPPART_10astro_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -15327,7 +15327,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_44</value>
+      <value>BATTLEMAPPART_10astro_FT_44</value>
     </entry>
     <entry>
       <key>
@@ -15335,7 +15335,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_142</value>
+      <value>BATTLEMAPPART_10astro_FT_142</value>
     </entry>
     <entry>
       <key>
@@ -15343,7 +15343,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_209</value>
+      <value>BATTLEMAPPART_10astro_FT_209</value>
     </entry>
     <entry>
       <key>
@@ -15351,7 +15351,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_143</value>
+      <value>BATTLEMAPPART_10astro_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -15359,7 +15359,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_43</value>
+      <value>BATTLEMAPPART_10astro_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -15367,7 +15367,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_48</value>
+      <value>BATTLEMAPPART_10astro_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -15375,7 +15375,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_43</value>
+      <value>BATTLEMAPPART_10astro_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -15383,7 +15383,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_48</value>
+      <value>BATTLEMAPPART_10astro_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -15391,7 +15391,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_43</value>
+      <value>BATTLEMAPPART_10astro_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -15399,7 +15399,7 @@
         <y>1</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_128</value>
+      <value>BATTLEMAPPART_10astro_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -15407,7 +15407,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_106</value>
+      <value>BATTLEMAPPART_10astro_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -15415,7 +15415,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_204</value>
+      <value>BATTLEMAPPART_10astro_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -15423,7 +15423,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_106</value>
+      <value>BATTLEMAPPART_10astro_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -15431,7 +15431,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_106</value>
+      <value>BATTLEMAPPART_10astro_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -15439,7 +15439,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_201</value>
+      <value>BATTLEMAPPART_10astro_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -15447,7 +15447,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_200</value>
+      <value>BATTLEMAPPART_10astro_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -15455,7 +15455,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_106</value>
+      <value>BATTLEMAPPART_10astro_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -15463,7 +15463,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_201</value>
+      <value>BATTLEMAPPART_10astro_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -15471,7 +15471,7 @@
         <y>19</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_200</value>
+      <value>BATTLEMAPPART_10astro_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -15479,7 +15479,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_105</value>
+      <value>BATTLEMAPPART_10astro_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -15487,7 +15487,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_44</value>
+      <value>BATTLEMAPPART_10astro_FT_44</value>
     </entry>
     <entry>
       <key>
@@ -15495,7 +15495,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_105</value>
+      <value>BATTLEMAPPART_10astro_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -15503,7 +15503,7 @@
         <y>1</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_124</value>
+      <value>BATTLEMAPPART_10astro_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -15511,7 +15511,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_105</value>
+      <value>BATTLEMAPPART_10astro_FT_105</value>
     </entry>
     <entry>
       <key>
@@ -15519,7 +15519,7 @@
         <y>2</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_119</value>
+      <value>BATTLEMAPPART_10astro_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -15527,7 +15527,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_106</value>
+      <value>BATTLEMAPPART_10astro_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -15535,7 +15535,7 @@
         <y>10</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_128</value>
+      <value>BATTLEMAPPART_10astro_FT_128</value>
     </entry>
     <entry>
       <key>
@@ -15543,7 +15543,7 @@
         <y>11</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_47</value>
+      <value>BATTLEMAPPART_10astro_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -15551,7 +15551,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_204</value>
+      <value>BATTLEMAPPART_10astro_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -15559,7 +15559,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_43</value>
+      <value>BATTLEMAPPART_10astro_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -15567,7 +15567,7 @@
         <y>1</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_124</value>
+      <value>BATTLEMAPPART_10astro_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -15575,7 +15575,7 @@
         <y>2</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15583,7 +15583,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15591,7 +15591,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_117</value>
+      <value>BATTLEMAPPART_10astro_FT_117</value>
     </entry>
     <entry>
       <key>
@@ -15599,7 +15599,7 @@
         <y>10</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_124</value>
+      <value>BATTLEMAPPART_10astro_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -15607,7 +15607,7 @@
         <y>11</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_48</value>
+      <value>BATTLEMAPPART_10astro_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -15615,7 +15615,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_44</value>
+      <value>BATTLEMAPPART_10astro_FT_44</value>
     </entry>
     <entry>
       <key>
@@ -15623,7 +15623,7 @@
         <y>1</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15631,7 +15631,7 @@
         <y>1</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_131</value>
+      <value>BATTLEMAPPART_10astro_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15639,7 +15639,7 @@
         <y>2</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_199</value>
+      <value>BATTLEMAPPART_10astro_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -15647,7 +15647,7 @@
         <y>2</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_118</value>
+      <value>BATTLEMAPPART_10astro_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -15655,7 +15655,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15663,7 +15663,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_119</value>
+      <value>BATTLEMAPPART_10astro_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -15671,7 +15671,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15679,7 +15679,7 @@
         <y>4</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_119</value>
+      <value>BATTLEMAPPART_10astro_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -15687,7 +15687,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_109</value>
+      <value>BATTLEMAPPART_10astro_FT_109</value>
     </entry>
     <entry>
       <key>
@@ -15695,7 +15695,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_199</value>
+      <value>BATTLEMAPPART_10astro_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -15703,7 +15703,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15711,7 +15711,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_119</value>
+      <value>BATTLEMAPPART_10astro_FT_119</value>
     </entry>
     <entry>
       <key>
@@ -15719,7 +15719,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_153</value>
+      <value>BATTLEMAPPART_10astro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -15727,7 +15727,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_154</value>
+      <value>BATTLEMAPPART_10astro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -15735,7 +15735,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_118</value>
+      <value>BATTLEMAPPART_10astro_FT_118</value>
     </entry>
     <entry>
       <key>
@@ -15743,7 +15743,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_153</value>
+      <value>BATTLEMAPPART_10astro_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -15751,7 +15751,7 @@
         <y>10</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_124</value>
+      <value>BATTLEMAPPART_10astro_FT_124</value>
     </entry>
     <entry>
       <key>
@@ -15759,7 +15759,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_154</value>
+      <value>BATTLEMAPPART_10astro_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -15767,7 +15767,7 @@
         <y>11</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_47</value>
+      <value>BATTLEMAPPART_10astro_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -15775,7 +15775,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_204</value>
+      <value>BATTLEMAPPART_10astro_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -15783,7 +15783,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_201</value>
+      <value>BATTLEMAPPART_10astro_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -15791,7 +15791,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_200</value>
+      <value>BATTLEMAPPART_10astro_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -15799,7 +15799,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_175</value>
+      <value>BATTLEMAPPART_10astro_FT_175</value>
     </entry>
     <entry>
       <key>
@@ -15807,7 +15807,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_176</value>
+      <value>BATTLEMAPPART_10astro_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -15815,7 +15815,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_185</value>
+      <value>BATTLEMAPPART_10astro_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -15823,7 +15823,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_184</value>
+      <value>BATTLEMAPPART_10astro_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -15831,7 +15831,7 @@
         <y>18</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_201</value>
+      <value>BATTLEMAPPART_10astro_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -15839,7 +15839,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_178</value>
+      <value>BATTLEMAPPART_10astro_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -15847,7 +15847,7 @@
         <y>19</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_200</value>
+      <value>BATTLEMAPPART_10astro_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -15855,7 +15855,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_177</value>
+      <value>BATTLEMAPPART_10astro_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -15863,7 +15863,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_175</value>
+      <value>BATTLEMAPPART_10astro_FT_175</value>
     </entry>
     <entry>
       <key>
@@ -15871,7 +15871,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_176</value>
+      <value>BATTLEMAPPART_10astro_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -15879,7 +15879,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_43</value>
+      <value>BATTLEMAPPART_10astro_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -15887,7 +15887,7 @@
         <y>1</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_129</value>
+      <value>BATTLEMAPPART_10astro_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -15895,7 +15895,7 @@
         <y>2</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15903,7 +15903,7 @@
         <y>2</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_126</value>
+      <value>BATTLEMAPPART_10astro_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -15911,7 +15911,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_130</value>
+      <value>BATTLEMAPPART_10astro_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -15919,7 +15919,7 @@
         <y>4</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_129</value>
+      <value>BATTLEMAPPART_10astro_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -15927,7 +15927,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_198</value>
+      <value>BATTLEMAPPART_10astro_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -15935,7 +15935,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_126</value>
+      <value>BATTLEMAPPART_10astro_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -15943,7 +15943,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_130</value>
+      <value>BATTLEMAPPART_10astro_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -15951,7 +15951,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_129</value>
+      <value>BATTLEMAPPART_10astro_FT_129</value>
     </entry>
     <entry>
       <key>
@@ -15959,7 +15959,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_126</value>
+      <value>BATTLEMAPPART_10astro_FT_126</value>
     </entry>
     <entry>
       <key>
@@ -15967,7 +15967,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_130</value>
+      <value>BATTLEMAPPART_10astro_FT_130</value>
     </entry>
     <entry>
       <key>
@@ -15975,7 +15975,7 @@
         <y>10</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_131</value>
+      <value>BATTLEMAPPART_10astro_FT_131</value>
     </entry>
     <entry>
       <key>
@@ -15983,7 +15983,7 @@
         <y>11</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_48</value>
+      <value>BATTLEMAPPART_10astro_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -15991,7 +15991,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_204</value>
+      <value>BATTLEMAPPART_10astro_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -15999,7 +15999,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_182</value>
+      <value>BATTLEMAPPART_10astro_FT_182</value>
     </entry>
     <entry>
       <key>
@@ -16007,7 +16007,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_106</value>
+      <value>BATTLEMAPPART_10astro_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -16015,7 +16015,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_106</value>
+      <value>BATTLEMAPPART_10astro_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -16023,7 +16023,7 @@
         <y>1</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_50</value>
+      <value>BATTLEMAPPART_10astro_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -16031,7 +16031,7 @@
         <y>2</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_49</value>
+      <value>BATTLEMAPPART_10astro_FT_49</value>
     </entry>
     <entry>
       <key>
@@ -16039,7 +16039,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_50</value>
+      <value>BATTLEMAPPART_10astro_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -16047,7 +16047,7 @@
         <y>4</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_49</value>
+      <value>BATTLEMAPPART_10astro_FT_49</value>
     </entry>
     <entry>
       <key>
@@ -16055,7 +16055,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_50</value>
+      <value>BATTLEMAPPART_10astro_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -16063,7 +16063,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_49</value>
+      <value>BATTLEMAPPART_10astro_FT_49</value>
     </entry>
     <entry>
       <key>
@@ -16071,7 +16071,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_50</value>
+      <value>BATTLEMAPPART_10astro_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -16079,7 +16079,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_49</value>
+      <value>BATTLEMAPPART_10astro_FT_49</value>
     </entry>
     <entry>
       <key>
@@ -16087,7 +16087,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_50</value>
+      <value>BATTLEMAPPART_10astro_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -16095,7 +16095,7 @@
         <y>10</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_49</value>
+      <value>BATTLEMAPPART_10astro_FT_49</value>
     </entry>
     <entry>
       <key>
@@ -16103,7 +16103,7 @@
         <y>11</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_106</value>
+      <value>BATTLEMAPPART_10astro_FT_106</value>
     </entry>
     <entry>
       <key>
@@ -16111,7 +16111,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_10astro_SC_180</value>
+      <value>BATTLEMAPPART_10astro_FT_180</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

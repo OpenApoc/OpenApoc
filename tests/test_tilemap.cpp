@@ -1,6 +1,6 @@
 #include "framework/logger.h"
+#include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"
-#include "game/state/tileview/voxel.h"
 #include "library/voxel.h"
 
 using namespace OpenApoc;

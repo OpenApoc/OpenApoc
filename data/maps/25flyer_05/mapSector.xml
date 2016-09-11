@@ -15633,14 +15633,14 @@
       <value>BATTLEMAPPART_25flyer_RW_24</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15648,7 +15648,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15656,7 +15656,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15664,7 +15664,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15672,7 +15672,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15680,7 +15680,7 @@
         <y>0</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15688,7 +15688,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15696,7 +15696,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15704,7 +15704,7 @@
         <y>1</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15712,7 +15712,7 @@
         <y>1</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15720,7 +15720,7 @@
         <y>1</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15728,7 +15728,7 @@
         <y>1</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15736,7 +15736,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15744,7 +15744,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15752,7 +15752,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15760,7 +15760,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15768,7 +15768,7 @@
         <y>11</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15776,7 +15776,7 @@
         <y>11</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15784,7 +15784,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15792,7 +15792,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15800,7 +15800,7 @@
         <y>12</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15808,7 +15808,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15816,7 +15816,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15824,7 +15824,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15832,7 +15832,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15840,7 +15840,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15848,7 +15848,7 @@
         <y>22</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15856,7 +15856,7 @@
         <y>22</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15864,7 +15864,7 @@
         <y>22</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15872,7 +15872,7 @@
         <y>22</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15880,7 +15880,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15888,7 +15888,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15896,7 +15896,7 @@
         <y>23</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15904,7 +15904,7 @@
         <y>23</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15912,7 +15912,7 @@
         <y>23</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15920,7 +15920,7 @@
         <y>23</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15928,7 +15928,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15936,7 +15936,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15944,7 +15944,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15952,7 +15952,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15960,7 +15960,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15968,7 +15968,7 @@
         <y>0</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -15976,7 +15976,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_220</value>
+      <value>BATTLEMAPPART_25flyer_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -15984,7 +15984,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_216</value>
+      <value>BATTLEMAPPART_25flyer_FT_216</value>
     </entry>
     <entry>
       <key>
@@ -15992,7 +15992,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_212</value>
+      <value>BATTLEMAPPART_25flyer_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -16000,7 +16000,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_208</value>
+      <value>BATTLEMAPPART_25flyer_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -16008,7 +16008,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_204</value>
+      <value>BATTLEMAPPART_25flyer_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -16016,7 +16016,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_200</value>
+      <value>BATTLEMAPPART_25flyer_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -16024,7 +16024,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_196</value>
+      <value>BATTLEMAPPART_25flyer_FT_196</value>
     </entry>
     <entry>
       <key>
@@ -16032,7 +16032,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_192</value>
+      <value>BATTLEMAPPART_25flyer_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -16040,7 +16040,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_220</value>
+      <value>BATTLEMAPPART_25flyer_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -16048,7 +16048,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_216</value>
+      <value>BATTLEMAPPART_25flyer_FT_216</value>
     </entry>
     <entry>
       <key>
@@ -16056,7 +16056,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_212</value>
+      <value>BATTLEMAPPART_25flyer_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -16064,7 +16064,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_208</value>
+      <value>BATTLEMAPPART_25flyer_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -16072,7 +16072,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_204</value>
+      <value>BATTLEMAPPART_25flyer_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -16080,7 +16080,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_200</value>
+      <value>BATTLEMAPPART_25flyer_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -16088,7 +16088,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_196</value>
+      <value>BATTLEMAPPART_25flyer_FT_196</value>
     </entry>
     <entry>
       <key>
@@ -16096,7 +16096,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_192</value>
+      <value>BATTLEMAPPART_25flyer_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -16104,7 +16104,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -16112,7 +16112,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -16120,7 +16120,7 @@
         <y>23</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -16128,7 +16128,7 @@
         <y>23</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -16136,7 +16136,7 @@
         <y>23</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -16144,7 +16144,7 @@
         <y>23</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -16152,7 +16152,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_219</value>
+      <value>BATTLEMAPPART_25flyer_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -16160,7 +16160,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_215</value>
+      <value>BATTLEMAPPART_25flyer_FT_215</value>
     </entry>
     <entry>
       <key>
@@ -16168,7 +16168,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_211</value>
+      <value>BATTLEMAPPART_25flyer_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -16176,7 +16176,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_188</value>
+      <value>BATTLEMAPPART_25flyer_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -16184,7 +16184,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_207</value>
+      <value>BATTLEMAPPART_25flyer_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -16192,7 +16192,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_186</value>
+      <value>BATTLEMAPPART_25flyer_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -16200,7 +16200,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_203</value>
+      <value>BATTLEMAPPART_25flyer_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -16208,7 +16208,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_184</value>
+      <value>BATTLEMAPPART_25flyer_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -16216,7 +16216,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_199</value>
+      <value>BATTLEMAPPART_25flyer_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -16224,7 +16224,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_195</value>
+      <value>BATTLEMAPPART_25flyer_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -16232,7 +16232,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_191</value>
+      <value>BATTLEMAPPART_25flyer_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -16240,7 +16240,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_219</value>
+      <value>BATTLEMAPPART_25flyer_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -16248,7 +16248,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_215</value>
+      <value>BATTLEMAPPART_25flyer_FT_215</value>
     </entry>
     <entry>
       <key>
@@ -16256,7 +16256,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_211</value>
+      <value>BATTLEMAPPART_25flyer_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -16264,7 +16264,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_188</value>
+      <value>BATTLEMAPPART_25flyer_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -16272,7 +16272,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_207</value>
+      <value>BATTLEMAPPART_25flyer_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -16280,7 +16280,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_186</value>
+      <value>BATTLEMAPPART_25flyer_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -16288,7 +16288,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_203</value>
+      <value>BATTLEMAPPART_25flyer_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -16296,7 +16296,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_184</value>
+      <value>BATTLEMAPPART_25flyer_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -16304,7 +16304,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_199</value>
+      <value>BATTLEMAPPART_25flyer_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -16312,7 +16312,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_195</value>
+      <value>BATTLEMAPPART_25flyer_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -16320,7 +16320,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_191</value>
+      <value>BATTLEMAPPART_25flyer_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -16328,7 +16328,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_218</value>
+      <value>BATTLEMAPPART_25flyer_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -16336,7 +16336,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_176</value>
+      <value>BATTLEMAPPART_25flyer_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -16344,7 +16344,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_214</value>
+      <value>BATTLEMAPPART_25flyer_FT_214</value>
     </entry>
     <entry>
       <key>
@@ -16352,7 +16352,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_175</value>
+      <value>BATTLEMAPPART_25flyer_FT_175</value>
     </entry>
     <entry>
       <key>
@@ -16360,7 +16360,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_210</value>
+      <value>BATTLEMAPPART_25flyer_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -16368,7 +16368,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_187</value>
+      <value>BATTLEMAPPART_25flyer_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -16376,7 +16376,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_56</value>
+      <value>BATTLEMAPPART_25flyer_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -16384,7 +16384,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_206</value>
+      <value>BATTLEMAPPART_25flyer_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -16392,7 +16392,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_185</value>
+      <value>BATTLEMAPPART_25flyer_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -16400,7 +16400,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_202</value>
+      <value>BATTLEMAPPART_25flyer_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -16408,7 +16408,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_183</value>
+      <value>BATTLEMAPPART_25flyer_FT_183</value>
     </entry>
     <entry>
       <key>
@@ -16416,7 +16416,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_198</value>
+      <value>BATTLEMAPPART_25flyer_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -16424,7 +16424,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_194</value>
+      <value>BATTLEMAPPART_25flyer_FT_194</value>
     </entry>
     <entry>
       <key>
@@ -16432,7 +16432,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_190</value>
+      <value>BATTLEMAPPART_25flyer_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -16440,7 +16440,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_56</value>
+      <value>BATTLEMAPPART_25flyer_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -16448,7 +16448,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_218</value>
+      <value>BATTLEMAPPART_25flyer_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -16456,7 +16456,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_177</value>
+      <value>BATTLEMAPPART_25flyer_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -16464,7 +16464,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_214</value>
+      <value>BATTLEMAPPART_25flyer_FT_214</value>
     </entry>
     <entry>
       <key>
@@ -16472,7 +16472,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_178</value>
+      <value>BATTLEMAPPART_25flyer_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -16480,7 +16480,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_210</value>
+      <value>BATTLEMAPPART_25flyer_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -16488,7 +16488,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_187</value>
+      <value>BATTLEMAPPART_25flyer_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -16496,7 +16496,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_206</value>
+      <value>BATTLEMAPPART_25flyer_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -16504,7 +16504,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_185</value>
+      <value>BATTLEMAPPART_25flyer_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -16512,7 +16512,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_202</value>
+      <value>BATTLEMAPPART_25flyer_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -16520,7 +16520,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_183</value>
+      <value>BATTLEMAPPART_25flyer_FT_183</value>
     </entry>
     <entry>
       <key>
@@ -16528,7 +16528,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_198</value>
+      <value>BATTLEMAPPART_25flyer_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -16536,7 +16536,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_194</value>
+      <value>BATTLEMAPPART_25flyer_FT_194</value>
     </entry>
     <entry>
       <key>
@@ -16544,7 +16544,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_190</value>
+      <value>BATTLEMAPPART_25flyer_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -16552,7 +16552,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_217</value>
+      <value>BATTLEMAPPART_25flyer_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -16560,7 +16560,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_176</value>
+      <value>BATTLEMAPPART_25flyer_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -16568,7 +16568,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_213</value>
+      <value>BATTLEMAPPART_25flyer_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -16576,7 +16576,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_175</value>
+      <value>BATTLEMAPPART_25flyer_FT_175</value>
     </entry>
     <entry>
       <key>
@@ -16584,7 +16584,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_209</value>
+      <value>BATTLEMAPPART_25flyer_FT_209</value>
     </entry>
     <entry>
       <key>
@@ -16592,7 +16592,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_205</value>
+      <value>BATTLEMAPPART_25flyer_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -16600,7 +16600,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_220</value>
+      <value>BATTLEMAPPART_25flyer_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -16608,7 +16608,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_201</value>
+      <value>BATTLEMAPPART_25flyer_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -16616,7 +16616,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_216</value>
+      <value>BATTLEMAPPART_25flyer_FT_216</value>
     </entry>
     <entry>
       <key>
@@ -16624,7 +16624,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_197</value>
+      <value>BATTLEMAPPART_25flyer_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -16632,7 +16632,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_212</value>
+      <value>BATTLEMAPPART_25flyer_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -16640,7 +16640,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_193</value>
+      <value>BATTLEMAPPART_25flyer_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -16648,7 +16648,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_208</value>
+      <value>BATTLEMAPPART_25flyer_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -16656,7 +16656,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_189</value>
+      <value>BATTLEMAPPART_25flyer_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -16664,7 +16664,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_204</value>
+      <value>BATTLEMAPPART_25flyer_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -16672,7 +16672,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_200</value>
+      <value>BATTLEMAPPART_25flyer_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -16680,7 +16680,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_196</value>
+      <value>BATTLEMAPPART_25flyer_FT_196</value>
     </entry>
     <entry>
       <key>
@@ -16688,7 +16688,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_192</value>
+      <value>BATTLEMAPPART_25flyer_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -16696,7 +16696,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_217</value>
+      <value>BATTLEMAPPART_25flyer_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -16704,7 +16704,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_177</value>
+      <value>BATTLEMAPPART_25flyer_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -16712,7 +16712,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_213</value>
+      <value>BATTLEMAPPART_25flyer_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -16720,7 +16720,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_178</value>
+      <value>BATTLEMAPPART_25flyer_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -16728,7 +16728,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_209</value>
+      <value>BATTLEMAPPART_25flyer_FT_209</value>
     </entry>
     <entry>
       <key>
@@ -16736,7 +16736,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_205</value>
+      <value>BATTLEMAPPART_25flyer_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -16744,7 +16744,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_201</value>
+      <value>BATTLEMAPPART_25flyer_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -16752,7 +16752,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_197</value>
+      <value>BATTLEMAPPART_25flyer_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -16760,7 +16760,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_193</value>
+      <value>BATTLEMAPPART_25flyer_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -16768,7 +16768,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_189</value>
+      <value>BATTLEMAPPART_25flyer_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -16776,7 +16776,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_219</value>
+      <value>BATTLEMAPPART_25flyer_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -16784,7 +16784,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_98</value>
+      <value>BATTLEMAPPART_25flyer_FT_98</value>
     </entry>
     <entry>
       <key>
@@ -16792,7 +16792,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_215</value>
+      <value>BATTLEMAPPART_25flyer_FT_215</value>
     </entry>
     <entry>
       <key>
@@ -16800,7 +16800,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_211</value>
+      <value>BATTLEMAPPART_25flyer_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -16808,7 +16808,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_207</value>
+      <value>BATTLEMAPPART_25flyer_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -16816,7 +16816,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_203</value>
+      <value>BATTLEMAPPART_25flyer_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -16824,7 +16824,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_199</value>
+      <value>BATTLEMAPPART_25flyer_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -16832,7 +16832,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_195</value>
+      <value>BATTLEMAPPART_25flyer_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -16840,7 +16840,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_191</value>
+      <value>BATTLEMAPPART_25flyer_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -16848,7 +16848,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_218</value>
+      <value>BATTLEMAPPART_25flyer_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -16856,7 +16856,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_214</value>
+      <value>BATTLEMAPPART_25flyer_FT_214</value>
     </entry>
     <entry>
       <key>
@@ -16864,7 +16864,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_210</value>
+      <value>BATTLEMAPPART_25flyer_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -16872,7 +16872,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_206</value>
+      <value>BATTLEMAPPART_25flyer_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -16880,7 +16880,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_202</value>
+      <value>BATTLEMAPPART_25flyer_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -16888,7 +16888,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_53</value>
+      <value>BATTLEMAPPART_25flyer_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -16896,7 +16896,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_198</value>
+      <value>BATTLEMAPPART_25flyer_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -16904,7 +16904,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_194</value>
+      <value>BATTLEMAPPART_25flyer_FT_194</value>
     </entry>
     <entry>
       <key>
@@ -16912,7 +16912,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_190</value>
+      <value>BATTLEMAPPART_25flyer_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -16920,7 +16920,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_176</value>
+      <value>BATTLEMAPPART_25flyer_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -16928,7 +16928,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_175</value>
+      <value>BATTLEMAPPART_25flyer_FT_175</value>
     </entry>
     <entry>
       <key>
@@ -16936,7 +16936,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_217</value>
+      <value>BATTLEMAPPART_25flyer_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -16944,7 +16944,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_213</value>
+      <value>BATTLEMAPPART_25flyer_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -16952,7 +16952,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_209</value>
+      <value>BATTLEMAPPART_25flyer_FT_209</value>
     </entry>
     <entry>
       <key>
@@ -16960,7 +16960,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_205</value>
+      <value>BATTLEMAPPART_25flyer_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -16968,7 +16968,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_201</value>
+      <value>BATTLEMAPPART_25flyer_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -16976,7 +16976,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_99</value>
+      <value>BATTLEMAPPART_25flyer_FT_99</value>
     </entry>
     <entry>
       <key>
@@ -16984,7 +16984,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_54</value>
+      <value>BATTLEMAPPART_25flyer_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -16992,7 +16992,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_197</value>
+      <value>BATTLEMAPPART_25flyer_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -17000,7 +17000,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_193</value>
+      <value>BATTLEMAPPART_25flyer_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -17008,7 +17008,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_189</value>
+      <value>BATTLEMAPPART_25flyer_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -17016,7 +17016,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_220</value>
+      <value>BATTLEMAPPART_25flyer_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -17024,7 +17024,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_177</value>
+      <value>BATTLEMAPPART_25flyer_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -17032,7 +17032,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_216</value>
+      <value>BATTLEMAPPART_25flyer_FT_216</value>
     </entry>
     <entry>
       <key>
@@ -17040,7 +17040,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_178</value>
+      <value>BATTLEMAPPART_25flyer_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -17048,7 +17048,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_212</value>
+      <value>BATTLEMAPPART_25flyer_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -17056,7 +17056,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_208</value>
+      <value>BATTLEMAPPART_25flyer_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -17064,7 +17064,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_204</value>
+      <value>BATTLEMAPPART_25flyer_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -17072,7 +17072,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_200</value>
+      <value>BATTLEMAPPART_25flyer_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -17080,7 +17080,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_53</value>
+      <value>BATTLEMAPPART_25flyer_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -17088,7 +17088,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_196</value>
+      <value>BATTLEMAPPART_25flyer_FT_196</value>
     </entry>
     <entry>
       <key>
@@ -17096,7 +17096,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_192</value>
+      <value>BATTLEMAPPART_25flyer_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -17104,7 +17104,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_176</value>
+      <value>BATTLEMAPPART_25flyer_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -17112,7 +17112,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_175</value>
+      <value>BATTLEMAPPART_25flyer_FT_175</value>
     </entry>
     <entry>
       <key>
@@ -17120,7 +17120,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_56</value>
+      <value>BATTLEMAPPART_25flyer_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -17128,7 +17128,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_56</value>
+      <value>BATTLEMAPPART_25flyer_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -17136,7 +17136,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_219</value>
+      <value>BATTLEMAPPART_25flyer_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -17144,7 +17144,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_177</value>
+      <value>BATTLEMAPPART_25flyer_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -17152,7 +17152,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_215</value>
+      <value>BATTLEMAPPART_25flyer_FT_215</value>
     </entry>
     <entry>
       <key>
@@ -17160,7 +17160,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_178</value>
+      <value>BATTLEMAPPART_25flyer_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -17168,7 +17168,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_211</value>
+      <value>BATTLEMAPPART_25flyer_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -17176,7 +17176,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_188</value>
+      <value>BATTLEMAPPART_25flyer_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -17184,7 +17184,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_207</value>
+      <value>BATTLEMAPPART_25flyer_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -17192,7 +17192,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_186</value>
+      <value>BATTLEMAPPART_25flyer_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -17200,7 +17200,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_203</value>
+      <value>BATTLEMAPPART_25flyer_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -17208,7 +17208,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_184</value>
+      <value>BATTLEMAPPART_25flyer_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -17216,7 +17216,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_199</value>
+      <value>BATTLEMAPPART_25flyer_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -17224,7 +17224,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_54</value>
+      <value>BATTLEMAPPART_25flyer_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -17232,7 +17232,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_195</value>
+      <value>BATTLEMAPPART_25flyer_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -17240,7 +17240,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_191</value>
+      <value>BATTLEMAPPART_25flyer_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -17248,7 +17248,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_218</value>
+      <value>BATTLEMAPPART_25flyer_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -17256,7 +17256,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_214</value>
+      <value>BATTLEMAPPART_25flyer_FT_214</value>
     </entry>
     <entry>
       <key>
@@ -17264,7 +17264,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_210</value>
+      <value>BATTLEMAPPART_25flyer_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -17272,7 +17272,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_187</value>
+      <value>BATTLEMAPPART_25flyer_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -17280,7 +17280,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_206</value>
+      <value>BATTLEMAPPART_25flyer_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -17288,7 +17288,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_185</value>
+      <value>BATTLEMAPPART_25flyer_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -17296,7 +17296,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_202</value>
+      <value>BATTLEMAPPART_25flyer_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -17304,7 +17304,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_183</value>
+      <value>BATTLEMAPPART_25flyer_FT_183</value>
     </entry>
     <entry>
       <key>
@@ -17312,7 +17312,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_198</value>
+      <value>BATTLEMAPPART_25flyer_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -17320,7 +17320,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_194</value>
+      <value>BATTLEMAPPART_25flyer_FT_194</value>
     </entry>
     <entry>
       <key>
@@ -17328,7 +17328,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_190</value>
+      <value>BATTLEMAPPART_25flyer_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -17336,7 +17336,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_220</value>
+      <value>BATTLEMAPPART_25flyer_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -17344,7 +17344,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_216</value>
+      <value>BATTLEMAPPART_25flyer_FT_216</value>
     </entry>
     <entry>
       <key>
@@ -17352,7 +17352,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_212</value>
+      <value>BATTLEMAPPART_25flyer_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -17360,7 +17360,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_208</value>
+      <value>BATTLEMAPPART_25flyer_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -17368,7 +17368,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_204</value>
+      <value>BATTLEMAPPART_25flyer_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -17376,7 +17376,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_200</value>
+      <value>BATTLEMAPPART_25flyer_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -17384,7 +17384,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_196</value>
+      <value>BATTLEMAPPART_25flyer_FT_196</value>
     </entry>
     <entry>
       <key>
@@ -17392,7 +17392,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_192</value>
+      <value>BATTLEMAPPART_25flyer_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -17400,7 +17400,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_217</value>
+      <value>BATTLEMAPPART_25flyer_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -17408,7 +17408,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_213</value>
+      <value>BATTLEMAPPART_25flyer_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -17416,7 +17416,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_209</value>
+      <value>BATTLEMAPPART_25flyer_FT_209</value>
     </entry>
     <entry>
       <key>
@@ -17424,7 +17424,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_205</value>
+      <value>BATTLEMAPPART_25flyer_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -17432,7 +17432,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_201</value>
+      <value>BATTLEMAPPART_25flyer_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -17440,7 +17440,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_197</value>
+      <value>BATTLEMAPPART_25flyer_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -17448,7 +17448,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_193</value>
+      <value>BATTLEMAPPART_25flyer_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -17456,7 +17456,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_189</value>
+      <value>BATTLEMAPPART_25flyer_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -17464,7 +17464,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17472,7 +17472,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17480,7 +17480,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17488,7 +17488,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17496,7 +17496,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17504,7 +17504,7 @@
         <y>0</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17512,7 +17512,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_96</value>
+      <value>BATTLEMAPPART_25flyer_FT_96</value>
     </entry>
     <entry>
       <key>
@@ -17520,7 +17520,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_219</value>
+      <value>BATTLEMAPPART_25flyer_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -17528,7 +17528,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_215</value>
+      <value>BATTLEMAPPART_25flyer_FT_215</value>
     </entry>
     <entry>
       <key>
@@ -17536,7 +17536,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_211</value>
+      <value>BATTLEMAPPART_25flyer_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -17544,7 +17544,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_207</value>
+      <value>BATTLEMAPPART_25flyer_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -17552,7 +17552,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_203</value>
+      <value>BATTLEMAPPART_25flyer_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -17560,7 +17560,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_199</value>
+      <value>BATTLEMAPPART_25flyer_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -17568,7 +17568,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_195</value>
+      <value>BATTLEMAPPART_25flyer_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -17576,7 +17576,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_191</value>
+      <value>BATTLEMAPPART_25flyer_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -17584,7 +17584,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_97</value>
+      <value>BATTLEMAPPART_25flyer_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -17592,7 +17592,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17600,7 +17600,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17608,7 +17608,7 @@
         <y>23</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17616,7 +17616,7 @@
         <y>23</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17624,7 +17624,7 @@
         <y>23</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17632,7 +17632,7 @@
         <y>23</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17640,7 +17640,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17648,7 +17648,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17656,7 +17656,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17664,7 +17664,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17672,7 +17672,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17680,7 +17680,7 @@
         <y>0</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17688,7 +17688,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_96</value>
+      <value>BATTLEMAPPART_25flyer_FT_96</value>
     </entry>
     <entry>
       <key>
@@ -17696,7 +17696,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_218</value>
+      <value>BATTLEMAPPART_25flyer_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -17704,7 +17704,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_214</value>
+      <value>BATTLEMAPPART_25flyer_FT_214</value>
     </entry>
     <entry>
       <key>
@@ -17712,7 +17712,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_210</value>
+      <value>BATTLEMAPPART_25flyer_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -17720,7 +17720,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_206</value>
+      <value>BATTLEMAPPART_25flyer_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -17728,7 +17728,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_202</value>
+      <value>BATTLEMAPPART_25flyer_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -17736,7 +17736,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_198</value>
+      <value>BATTLEMAPPART_25flyer_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -17744,7 +17744,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_194</value>
+      <value>BATTLEMAPPART_25flyer_FT_194</value>
     </entry>
     <entry>
       <key>
@@ -17752,7 +17752,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_190</value>
+      <value>BATTLEMAPPART_25flyer_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -17760,7 +17760,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_97</value>
+      <value>BATTLEMAPPART_25flyer_FT_97</value>
     </entry>
     <entry>
       <key>
@@ -17768,7 +17768,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17776,7 +17776,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17784,7 +17784,7 @@
         <y>23</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17792,7 +17792,7 @@
         <y>23</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17800,7 +17800,7 @@
         <y>23</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17808,7 +17808,7 @@
         <y>23</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -17816,7 +17816,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_217</value>
+      <value>BATTLEMAPPART_25flyer_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -17824,7 +17824,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_213</value>
+      <value>BATTLEMAPPART_25flyer_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -17832,7 +17832,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_209</value>
+      <value>BATTLEMAPPART_25flyer_FT_209</value>
     </entry>
     <entry>
       <key>
@@ -17840,7 +17840,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_205</value>
+      <value>BATTLEMAPPART_25flyer_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -17848,7 +17848,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_201</value>
+      <value>BATTLEMAPPART_25flyer_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -17856,7 +17856,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_197</value>
+      <value>BATTLEMAPPART_25flyer_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -17864,7 +17864,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_193</value>
+      <value>BATTLEMAPPART_25flyer_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -17872,7 +17872,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_189</value>
+      <value>BATTLEMAPPART_25flyer_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -17880,7 +17880,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_220</value>
+      <value>BATTLEMAPPART_25flyer_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -17888,7 +17888,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_216</value>
+      <value>BATTLEMAPPART_25flyer_FT_216</value>
     </entry>
     <entry>
       <key>
@@ -17896,7 +17896,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_212</value>
+      <value>BATTLEMAPPART_25flyer_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -17904,7 +17904,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_208</value>
+      <value>BATTLEMAPPART_25flyer_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -17912,7 +17912,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_204</value>
+      <value>BATTLEMAPPART_25flyer_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -17920,7 +17920,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_200</value>
+      <value>BATTLEMAPPART_25flyer_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -17928,7 +17928,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_196</value>
+      <value>BATTLEMAPPART_25flyer_FT_196</value>
     </entry>
     <entry>
       <key>
@@ -17936,7 +17936,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_192</value>
+      <value>BATTLEMAPPART_25flyer_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -17944,7 +17944,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_53</value>
+      <value>BATTLEMAPPART_25flyer_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -17952,7 +17952,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_219</value>
+      <value>BATTLEMAPPART_25flyer_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -17960,7 +17960,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_215</value>
+      <value>BATTLEMAPPART_25flyer_FT_215</value>
     </entry>
     <entry>
       <key>
@@ -17968,7 +17968,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_211</value>
+      <value>BATTLEMAPPART_25flyer_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -17976,7 +17976,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_188</value>
+      <value>BATTLEMAPPART_25flyer_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -17984,7 +17984,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_207</value>
+      <value>BATTLEMAPPART_25flyer_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -17992,7 +17992,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_186</value>
+      <value>BATTLEMAPPART_25flyer_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -18000,7 +18000,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_203</value>
+      <value>BATTLEMAPPART_25flyer_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -18008,7 +18008,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_184</value>
+      <value>BATTLEMAPPART_25flyer_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -18016,7 +18016,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_199</value>
+      <value>BATTLEMAPPART_25flyer_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -18024,7 +18024,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_195</value>
+      <value>BATTLEMAPPART_25flyer_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -18032,7 +18032,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_191</value>
+      <value>BATTLEMAPPART_25flyer_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -18040,7 +18040,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_176</value>
+      <value>BATTLEMAPPART_25flyer_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -18048,7 +18048,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_175</value>
+      <value>BATTLEMAPPART_25flyer_FT_175</value>
     </entry>
     <entry>
       <key>
@@ -18056,7 +18056,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_56</value>
+      <value>BATTLEMAPPART_25flyer_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -18064,7 +18064,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_54</value>
+      <value>BATTLEMAPPART_25flyer_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -18072,7 +18072,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_56</value>
+      <value>BATTLEMAPPART_25flyer_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -18080,7 +18080,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_218</value>
+      <value>BATTLEMAPPART_25flyer_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -18088,7 +18088,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_177</value>
+      <value>BATTLEMAPPART_25flyer_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -18096,7 +18096,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_214</value>
+      <value>BATTLEMAPPART_25flyer_FT_214</value>
     </entry>
     <entry>
       <key>
@@ -18104,7 +18104,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_178</value>
+      <value>BATTLEMAPPART_25flyer_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -18112,7 +18112,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_210</value>
+      <value>BATTLEMAPPART_25flyer_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -18120,7 +18120,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_187</value>
+      <value>BATTLEMAPPART_25flyer_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -18128,7 +18128,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_206</value>
+      <value>BATTLEMAPPART_25flyer_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -18136,7 +18136,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_185</value>
+      <value>BATTLEMAPPART_25flyer_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -18144,7 +18144,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_202</value>
+      <value>BATTLEMAPPART_25flyer_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -18152,7 +18152,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_183</value>
+      <value>BATTLEMAPPART_25flyer_FT_183</value>
     </entry>
     <entry>
       <key>
@@ -18160,7 +18160,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_198</value>
+      <value>BATTLEMAPPART_25flyer_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -18168,7 +18168,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_194</value>
+      <value>BATTLEMAPPART_25flyer_FT_194</value>
     </entry>
     <entry>
       <key>
@@ -18176,7 +18176,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_190</value>
+      <value>BATTLEMAPPART_25flyer_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -18184,7 +18184,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_176</value>
+      <value>BATTLEMAPPART_25flyer_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -18192,7 +18192,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_175</value>
+      <value>BATTLEMAPPART_25flyer_FT_175</value>
     </entry>
     <entry>
       <key>
@@ -18200,7 +18200,7 @@
         <y>10</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_99</value>
+      <value>BATTLEMAPPART_25flyer_FT_99</value>
     </entry>
     <entry>
       <key>
@@ -18208,7 +18208,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_53</value>
+      <value>BATTLEMAPPART_25flyer_FT_53</value>
     </entry>
     <entry>
       <key>
@@ -18216,7 +18216,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_217</value>
+      <value>BATTLEMAPPART_25flyer_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18224,7 +18224,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_177</value>
+      <value>BATTLEMAPPART_25flyer_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -18232,7 +18232,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_213</value>
+      <value>BATTLEMAPPART_25flyer_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -18240,7 +18240,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_178</value>
+      <value>BATTLEMAPPART_25flyer_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -18248,7 +18248,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_209</value>
+      <value>BATTLEMAPPART_25flyer_FT_209</value>
     </entry>
     <entry>
       <key>
@@ -18256,7 +18256,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_205</value>
+      <value>BATTLEMAPPART_25flyer_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -18264,7 +18264,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_201</value>
+      <value>BATTLEMAPPART_25flyer_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -18272,7 +18272,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_197</value>
+      <value>BATTLEMAPPART_25flyer_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -18280,7 +18280,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_193</value>
+      <value>BATTLEMAPPART_25flyer_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -18288,7 +18288,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_189</value>
+      <value>BATTLEMAPPART_25flyer_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -18296,7 +18296,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_54</value>
+      <value>BATTLEMAPPART_25flyer_FT_54</value>
     </entry>
     <entry>
       <key>
@@ -18304,7 +18304,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_176</value>
+      <value>BATTLEMAPPART_25flyer_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -18312,7 +18312,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_175</value>
+      <value>BATTLEMAPPART_25flyer_FT_175</value>
     </entry>
     <entry>
       <key>
@@ -18320,7 +18320,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_220</value>
+      <value>BATTLEMAPPART_25flyer_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -18328,7 +18328,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_216</value>
+      <value>BATTLEMAPPART_25flyer_FT_216</value>
     </entry>
     <entry>
       <key>
@@ -18336,7 +18336,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_212</value>
+      <value>BATTLEMAPPART_25flyer_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -18344,7 +18344,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_208</value>
+      <value>BATTLEMAPPART_25flyer_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -18352,7 +18352,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_204</value>
+      <value>BATTLEMAPPART_25flyer_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -18360,7 +18360,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_177</value>
+      <value>BATTLEMAPPART_25flyer_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -18368,7 +18368,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_200</value>
+      <value>BATTLEMAPPART_25flyer_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -18376,7 +18376,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_178</value>
+      <value>BATTLEMAPPART_25flyer_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -18384,7 +18384,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_196</value>
+      <value>BATTLEMAPPART_25flyer_FT_196</value>
     </entry>
     <entry>
       <key>
@@ -18392,7 +18392,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_192</value>
+      <value>BATTLEMAPPART_25flyer_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -18400,7 +18400,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_176</value>
+      <value>BATTLEMAPPART_25flyer_FT_176</value>
     </entry>
     <entry>
       <key>
@@ -18408,7 +18408,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_175</value>
+      <value>BATTLEMAPPART_25flyer_FT_175</value>
     </entry>
     <entry>
       <key>
@@ -18416,7 +18416,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_56</value>
+      <value>BATTLEMAPPART_25flyer_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -18424,7 +18424,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_96</value>
+      <value>BATTLEMAPPART_25flyer_FT_96</value>
     </entry>
     <entry>
       <key>
@@ -18432,7 +18432,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_219</value>
+      <value>BATTLEMAPPART_25flyer_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -18440,7 +18440,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_215</value>
+      <value>BATTLEMAPPART_25flyer_FT_215</value>
     </entry>
     <entry>
       <key>
@@ -18448,7 +18448,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_211</value>
+      <value>BATTLEMAPPART_25flyer_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -18456,7 +18456,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_188</value>
+      <value>BATTLEMAPPART_25flyer_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -18464,7 +18464,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_207</value>
+      <value>BATTLEMAPPART_25flyer_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -18472,7 +18472,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_186</value>
+      <value>BATTLEMAPPART_25flyer_FT_186</value>
     </entry>
     <entry>
       <key>
@@ -18480,7 +18480,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_56</value>
+      <value>BATTLEMAPPART_25flyer_FT_56</value>
     </entry>
     <entry>
       <key>
@@ -18488,7 +18488,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_203</value>
+      <value>BATTLEMAPPART_25flyer_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -18496,7 +18496,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_184</value>
+      <value>BATTLEMAPPART_25flyer_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -18504,7 +18504,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_177</value>
+      <value>BATTLEMAPPART_25flyer_FT_177</value>
     </entry>
     <entry>
       <key>
@@ -18512,7 +18512,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_199</value>
+      <value>BATTLEMAPPART_25flyer_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -18520,7 +18520,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_178</value>
+      <value>BATTLEMAPPART_25flyer_FT_178</value>
     </entry>
     <entry>
       <key>
@@ -18528,7 +18528,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_195</value>
+      <value>BATTLEMAPPART_25flyer_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -18536,7 +18536,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_191</value>
+      <value>BATTLEMAPPART_25flyer_FT_191</value>
     </entry>
     <entry>
       <key>
@@ -18544,7 +18544,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_96</value>
+      <value>BATTLEMAPPART_25flyer_FT_96</value>
     </entry>
     <entry>
       <key>
@@ -18552,7 +18552,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_218</value>
+      <value>BATTLEMAPPART_25flyer_FT_218</value>
     </entry>
     <entry>
       <key>
@@ -18560,7 +18560,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_214</value>
+      <value>BATTLEMAPPART_25flyer_FT_214</value>
     </entry>
     <entry>
       <key>
@@ -18568,7 +18568,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_210</value>
+      <value>BATTLEMAPPART_25flyer_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -18576,7 +18576,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_187</value>
+      <value>BATTLEMAPPART_25flyer_FT_187</value>
     </entry>
     <entry>
       <key>
@@ -18584,7 +18584,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_206</value>
+      <value>BATTLEMAPPART_25flyer_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -18592,7 +18592,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_185</value>
+      <value>BATTLEMAPPART_25flyer_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -18600,7 +18600,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_202</value>
+      <value>BATTLEMAPPART_25flyer_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -18608,7 +18608,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_183</value>
+      <value>BATTLEMAPPART_25flyer_FT_183</value>
     </entry>
     <entry>
       <key>
@@ -18616,7 +18616,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_198</value>
+      <value>BATTLEMAPPART_25flyer_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -18624,7 +18624,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_194</value>
+      <value>BATTLEMAPPART_25flyer_FT_194</value>
     </entry>
     <entry>
       <key>
@@ -18632,7 +18632,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_190</value>
+      <value>BATTLEMAPPART_25flyer_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -18640,7 +18640,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18648,7 +18648,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18656,7 +18656,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18664,7 +18664,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18672,7 +18672,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18680,7 +18680,7 @@
         <y>0</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18688,7 +18688,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_217</value>
+      <value>BATTLEMAPPART_25flyer_FT_217</value>
     </entry>
     <entry>
       <key>
@@ -18696,7 +18696,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_213</value>
+      <value>BATTLEMAPPART_25flyer_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -18704,7 +18704,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_209</value>
+      <value>BATTLEMAPPART_25flyer_FT_209</value>
     </entry>
     <entry>
       <key>
@@ -18712,7 +18712,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_205</value>
+      <value>BATTLEMAPPART_25flyer_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -18720,7 +18720,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_201</value>
+      <value>BATTLEMAPPART_25flyer_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -18728,7 +18728,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_197</value>
+      <value>BATTLEMAPPART_25flyer_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -18736,7 +18736,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_193</value>
+      <value>BATTLEMAPPART_25flyer_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -18744,7 +18744,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_189</value>
+      <value>BATTLEMAPPART_25flyer_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -18752,7 +18752,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18760,7 +18760,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18768,7 +18768,7 @@
         <y>23</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18776,7 +18776,7 @@
         <y>23</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18784,7 +18784,7 @@
         <y>23</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18792,7 +18792,7 @@
         <y>23</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18800,7 +18800,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18808,7 +18808,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18816,7 +18816,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18824,7 +18824,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18832,7 +18832,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18840,7 +18840,7 @@
         <y>0</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18848,7 +18848,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18856,7 +18856,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18864,7 +18864,7 @@
         <y>1</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18872,7 +18872,7 @@
         <y>1</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18880,7 +18880,7 @@
         <y>1</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18888,7 +18888,7 @@
         <y>1</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18896,7 +18896,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18904,7 +18904,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18912,7 +18912,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18920,7 +18920,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18928,7 +18928,7 @@
         <y>11</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18936,7 +18936,7 @@
         <y>11</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18944,7 +18944,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18952,7 +18952,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18960,7 +18960,7 @@
         <y>12</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18968,7 +18968,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18976,7 +18976,7 @@
         <y>12</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18984,7 +18984,7 @@
         <y>12</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -18992,7 +18992,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19000,7 +19000,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19008,7 +19008,7 @@
         <y>22</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19016,7 +19016,7 @@
         <y>22</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19024,7 +19024,7 @@
         <y>22</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19032,7 +19032,7 @@
         <y>22</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19040,7 +19040,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19048,7 +19048,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19056,7 +19056,7 @@
         <y>23</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19064,7 +19064,7 @@
         <y>23</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19072,7 +19072,7 @@
         <y>23</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -19080,7 +19080,7 @@
         <y>23</y>
         <z>5</z>
       </key>
-      <value>BATTLEMAPPART_25flyer_SC_5</value>
+      <value>BATTLEMAPPART_25flyer_FT_5</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

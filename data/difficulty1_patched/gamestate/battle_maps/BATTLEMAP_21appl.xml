@@ -140,13 +140,13 @@
       <entry>BATTLEMAPPART_21appl_RW_64</entry>
       <entry>BATTLEMAPPART_21appl_RW_65</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_21appl_SC_152</entry>
-      <entry>BATTLEMAPPART_21appl_SC_150</entry>
-      <entry>BATTLEMAPPART_21appl_SC_153</entry>
-      <entry>BATTLEMAPPART_21appl_SC_151</entry>
-      <entry>BATTLEMAPPART_21appl_SC_149</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_21appl_FT152</entry>
+      <entry>BATTLEMAPPART_21appl_FT150</entry>
+      <entry>BATTLEMAPPART_21appl_FT153</entry>
+      <entry>BATTLEMAPPART_21appl_FT151</entry>
+      <entry>BATTLEMAPPART_21appl_FT149</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_21appl>

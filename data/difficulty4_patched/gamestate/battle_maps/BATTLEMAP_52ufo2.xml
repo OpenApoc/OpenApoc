@@ -1456,13 +1456,13 @@
       <entry>52ufo2</entry>
     </tilesets>
     <destroyed_ground_tile>BATTLEMAPPART_52ufo2_GD_8</destroyed_ground_tile>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_52ufo2_SC_99</entry>
-      <entry>BATTLEMAPPART_52ufo2_SC_100</entry>
-      <entry>BATTLEMAPPART_52ufo2_SC_101</entry>
-      <entry>BATTLEMAPPART_52ufo2_SC_95</entry>
-      <entry>BATTLEMAPPART_52ufo2_SC_94</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_52ufo2_FT99</entry>
+      <entry>BATTLEMAPPART_52ufo2_FT100</entry>
+      <entry>BATTLEMAPPART_52ufo2_FT101</entry>
+      <entry>BATTLEMAPPART_52ufo2_FT95</entry>
+      <entry>BATTLEMAPPART_52ufo2_FT94</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_52ufo2>

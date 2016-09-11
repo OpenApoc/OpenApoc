@@ -95,13 +95,13 @@
       <entry>BATTLEMAPPART_14acnorm_RW_54</entry>
       <entry>BATTLEMAPPART_14acnorm_RW_55</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_14acnorm_SC_153</entry>
-      <entry>BATTLEMAPPART_14acnorm_SC_151</entry>
-      <entry>BATTLEMAPPART_14acnorm_SC_145</entry>
-      <entry>BATTLEMAPPART_14acnorm_SC_142</entry>
-      <entry>BATTLEMAPPART_14acnorm_SC_143</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_14acnorm_FT153</entry>
+      <entry>BATTLEMAPPART_14acnorm_FT151</entry>
+      <entry>BATTLEMAPPART_14acnorm_FT145</entry>
+      <entry>BATTLEMAPPART_14acnorm_FT142</entry>
+      <entry>BATTLEMAPPART_14acnorm_FT143</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_14acnorm>

@@ -131,13 +131,13 @@
       <entry>BATTLEMAPPART_36church_RW_110</entry>
       <entry>BATTLEMAPPART_36church_RW_111</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_36church_SC_134</entry>
-      <entry>BATTLEMAPPART_36church_SC_132</entry>
-      <entry>BATTLEMAPPART_36church_SC_131</entry>
-      <entry>BATTLEMAPPART_36church_SC_127</entry>
-      <entry>BATTLEMAPPART_36church_SC_129</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_36church_FT134</entry>
+      <entry>BATTLEMAPPART_36church_FT132</entry>
+      <entry>BATTLEMAPPART_36church_FT131</entry>
+      <entry>BATTLEMAPPART_36church_FT127</entry>
+      <entry>BATTLEMAPPART_36church_FT129</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_36church>

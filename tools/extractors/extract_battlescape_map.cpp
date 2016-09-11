@@ -119,11 +119,11 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 			    &state, UString::format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix,
 			                            "RW_", (unsigned)rdata.right_wall[i]));
 		}
-		if (rdata.scenery[i] != 0)
+		if (rdata.feature[i] != 0)
 		{
-			m->rubble_scenery.emplace_back(
+			m->rubble_feature.emplace_back(
 			    &state, UString::format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix,
-			                            "SC_", (unsigned)rdata.scenery[i]));
+			                            "FT", (unsigned)rdata.feature[i]));
 		}
 	}
 
@@ -408,9 +408,9 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 						{
 							auto tileName =
 							    UString::format("%s%s%s%u", BattleMapPartType::getPrefix(),
-							                    tilePrefix, "SC_", (unsigned)tdata.SC);
+							                    tilePrefix, "FT_", (unsigned)tdata.SC);
 
-							tiles->initial_scenery[Vec3<int>{x, y, z}] = {&state, tileName};
+							tiles->initial_features[Vec3<int>{x, y, z}] = {&state, tileName};
 						}
 					}
 				}

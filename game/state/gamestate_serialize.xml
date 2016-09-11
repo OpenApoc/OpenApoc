@@ -320,7 +320,7 @@
 		<member>destroyed_ground_tile</member>
 		<member>rubble_left_wall</member>
 		<member>rubble_right_wall</member>
-		<member>rubble_scenery</member>
+		<member>rubble_feature</member>
 		<member type="SectionMap">sectors</member>
 	</object>
 	<object>
@@ -337,7 +337,7 @@
 		<member>initial_grounds</member>
 		<member>initial_left_walls</member>
 		<member>initial_right_walls</member>
-		<member>initial_scenery</member>
+		<member>initial_features</member>
 	</object>
 	<object>
 		<name>BattleMapSector::LineOfSightBlock</name>
@@ -865,7 +865,7 @@
 		<value>Ground</value>
 		<value>LeftWall</value>
 		<value>RightWall</value>
-		<value>Scenery</value>
+		<value>Feature</value>
 	</enum>
 	<enum>
 		<name>BattleMapPartType::SupportedByType</name>

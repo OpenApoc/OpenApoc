@@ -4528,14 +4528,14 @@
       <value>BATTLEMAPPART_19sewage_RW_22</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>0</x>
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_76</value>
+      <value>BATTLEMAPPART_19sewage_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -4543,7 +4543,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_77</value>
+      <value>BATTLEMAPPART_19sewage_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -4551,7 +4551,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_80</value>
+      <value>BATTLEMAPPART_19sewage_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -4559,7 +4559,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_85</value>
+      <value>BATTLEMAPPART_19sewage_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -4567,7 +4567,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_84</value>
+      <value>BATTLEMAPPART_19sewage_FT_84</value>
     </entry>
     <entry>
       <key>
@@ -4575,7 +4575,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_77</value>
+      <value>BATTLEMAPPART_19sewage_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -4583,7 +4583,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_87</value>
+      <value>BATTLEMAPPART_19sewage_FT_87</value>
     </entry>
     <entry>
       <key>
@@ -4591,7 +4591,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_84</value>
+      <value>BATTLEMAPPART_19sewage_FT_84</value>
     </entry>
     <entry>
       <key>
@@ -4599,7 +4599,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_189</value>
+      <value>BATTLEMAPPART_19sewage_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -4607,7 +4607,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_190</value>
+      <value>BATTLEMAPPART_19sewage_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -4615,7 +4615,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_85</value>
+      <value>BATTLEMAPPART_19sewage_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -4623,7 +4623,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_83</value>
+      <value>BATTLEMAPPART_19sewage_FT_83</value>
     </entry>
     <entry>
       <key>
@@ -4631,7 +4631,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_87</value>
+      <value>BATTLEMAPPART_19sewage_FT_87</value>
     </entry>
     <entry>
       <key>
@@ -4639,7 +4639,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_84</value>
+      <value>BATTLEMAPPART_19sewage_FT_84</value>
     </entry>
     <entry>
       <key>
@@ -4647,7 +4647,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_87</value>
+      <value>BATTLEMAPPART_19sewage_FT_87</value>
     </entry>
     <entry>
       <key>
@@ -4655,7 +4655,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_83</value>
+      <value>BATTLEMAPPART_19sewage_FT_83</value>
     </entry>
     <entry>
       <key>
@@ -4663,7 +4663,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_82</value>
+      <value>BATTLEMAPPART_19sewage_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -4671,7 +4671,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_84</value>
+      <value>BATTLEMAPPART_19sewage_FT_84</value>
     </entry>
     <entry>
       <key>
@@ -4679,7 +4679,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_188</value>
+      <value>BATTLEMAPPART_19sewage_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -4687,7 +4687,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_184</value>
+      <value>BATTLEMAPPART_19sewage_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -4695,7 +4695,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_188</value>
+      <value>BATTLEMAPPART_19sewage_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -4703,7 +4703,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_184</value>
+      <value>BATTLEMAPPART_19sewage_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -4711,7 +4711,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_188</value>
+      <value>BATTLEMAPPART_19sewage_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -4719,7 +4719,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_184</value>
+      <value>BATTLEMAPPART_19sewage_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -4727,7 +4727,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_188</value>
+      <value>BATTLEMAPPART_19sewage_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -4735,7 +4735,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_184</value>
+      <value>BATTLEMAPPART_19sewage_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -4743,7 +4743,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_189</value>
+      <value>BATTLEMAPPART_19sewage_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -4751,7 +4751,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_190</value>
+      <value>BATTLEMAPPART_19sewage_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -4759,7 +4759,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_189</value>
+      <value>BATTLEMAPPART_19sewage_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -4767,7 +4767,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_190</value>
+      <value>BATTLEMAPPART_19sewage_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -4775,7 +4775,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_188</value>
+      <value>BATTLEMAPPART_19sewage_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -4783,7 +4783,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_184</value>
+      <value>BATTLEMAPPART_19sewage_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -4791,7 +4791,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_188</value>
+      <value>BATTLEMAPPART_19sewage_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -4799,7 +4799,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_184</value>
+      <value>BATTLEMAPPART_19sewage_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -4807,7 +4807,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_188</value>
+      <value>BATTLEMAPPART_19sewage_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -4815,7 +4815,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_184</value>
+      <value>BATTLEMAPPART_19sewage_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -4823,7 +4823,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_188</value>
+      <value>BATTLEMAPPART_19sewage_FT_188</value>
     </entry>
     <entry>
       <key>
@@ -4831,7 +4831,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_184</value>
+      <value>BATTLEMAPPART_19sewage_FT_184</value>
     </entry>
     <entry>
       <key>
@@ -4839,7 +4839,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_189</value>
+      <value>BATTLEMAPPART_19sewage_FT_189</value>
     </entry>
     <entry>
       <key>
@@ -4847,7 +4847,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_190</value>
+      <value>BATTLEMAPPART_19sewage_FT_190</value>
     </entry>
     <entry>
       <key>
@@ -4855,7 +4855,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_87</value>
+      <value>BATTLEMAPPART_19sewage_FT_87</value>
     </entry>
     <entry>
       <key>
@@ -4863,7 +4863,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_83</value>
+      <value>BATTLEMAPPART_19sewage_FT_83</value>
     </entry>
     <entry>
       <key>
@@ -4871,7 +4871,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_79</value>
+      <value>BATTLEMAPPART_19sewage_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -4879,7 +4879,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_82</value>
+      <value>BATTLEMAPPART_19sewage_FT_82</value>
     </entry>
     <entry>
       <key>
@@ -4887,7 +4887,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_83</value>
+      <value>BATTLEMAPPART_19sewage_FT_83</value>
     </entry>
     <entry>
       <key>
@@ -4895,7 +4895,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_79</value>
+      <value>BATTLEMAPPART_19sewage_FT_79</value>
     </entry>
     <entry>
       <key>
@@ -4903,7 +4903,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_80</value>
+      <value>BATTLEMAPPART_19sewage_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -4911,7 +4911,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_19sewage_SC_78</value>
+      <value>BATTLEMAPPART_19sewage_FT_78</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

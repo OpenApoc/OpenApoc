@@ -11,7 +11,7 @@ namespace OpenApoc
     class BattleUnit;
     enum BattleUnit::Stance;
     class BattleTile;
-    class BattleTileMap;
+    class TileMap;
 
     class BattleUnitMission
     {

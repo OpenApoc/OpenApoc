@@ -7,13 +7,13 @@
 namespace OpenApoc
 {
 
-BattleTileView::BattleTileView(BattleTileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
+BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
                                TileViewMode initialMode)
     : Stage(), map(map), isoTileSize(isoTileSize), stratTileSize(stratTileSize),
       viewMode(initialMode), scrollUp(false), scrollDown(false), scrollLeft(false),
       scrollRight(false), dpySize(fw().displayGetWidth(), fw().displayGetHeight()),
       strategyViewBoxColour(212, 176, 172, 255), strategyViewBoxThickness(2.0f), hideGround(false),
-      hideLeftWall(false), hideRightWall(false), hideScenery(false), currentZLevel(1),
+      hideLeftWall(false), hideRightWall(false), hideFeature(false), currentZLevel(1),
       layerDrawingMode(BattleLayerDrawingMode::UpToCurrentLevel), selectedTilePosition(0, 0, 0),
       selectedTileEmptyImageBack(fw().data->loadImage("battle/selected-battletile-empty-back.png")),
       selectedTileEmptyImageFront(
@@ -92,7 +92,7 @@ void BattleTileView::eventOccurred(Event *e)
 				hideRightWall = !hideRightWall;
 				break;
 			case SDLK_4:
-				hideScenery = !hideScenery;
+				hideFeature = !hideFeature;
 				break;
 			case SDLK_F6:
 			{
@@ -242,8 +242,8 @@ void BattleTileView::render()
 	if (this->viewMode == TileViewMode::Isometric)
 	{
 		// Find out when to draw selection bracket parts (if ever)
-		BattleTile *selectedTile = nullptr;
-		sp<BattleTileObject> drawBackBeforeThis;
+		Tile *selectedTile = nullptr;
+		sp<TileObject> drawBackBeforeThis;
 		sp<Image> selectionImageBack;
 		sp<Image> selectionImageFront;
 		if (selectedTilePosition.x >= minX && selectedTilePosition.x < maxX &&
@@ -258,9 +258,9 @@ void BattleTileView::render()
 			for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 			{
 				auto &obj = selectedTile->drawnObjects[0][obj_id];
-				if (!drawBackBeforeThis && obj->getType() != BattleTileObject::Type::Ground)
+				if (!drawBackBeforeThis && obj->getType() != TileObject::Type::Ground)
 					drawBackBeforeThis = obj;
-				if (obj->getType() == BattleTileObject::Type::Unit)
+				if (obj->getType() == TileObject::Type::Unit)
 					foundUnit = true;
 			}
 			if (foundUnit)
@@ -296,14 +296,11 @@ void BattleTileView::render()
 								           selectedTileImageOffset);
 							// FIXME: Remove this when renderer is working 100% properly to make
 							// rendering faster
-							if (((obj->getType() == BattleTileObject::Type::Ground) &&
-							     hideGround) ||
-							    ((obj->getType() == BattleTileObject::Type::LeftWall) &&
-							     hideLeftWall) ||
-							    ((obj->getType() == BattleTileObject::Type::RightWall) &&
+							if (((obj->getType() == TileObject::Type::Ground) && hideGround) ||
+							    ((obj->getType() == TileObject::Type::LeftWall) && hideLeftWall) ||
+							    ((obj->getType() == TileObject::Type::RightWall) &&
 							     hideRightWall) ||
-							    ((obj->getType() == BattleTileObject::Type::Scenery) &&
-							     hideScenery))
+							    ((obj->getType() == TileObject::Type::Feature) && hideFeature))
 								continue;
 							Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
 							obj->draw(r, *this, pos, this->viewMode);
@@ -343,14 +340,11 @@ void BattleTileView::render()
 							auto &obj = tile->drawnObjects[layer][obj_id];
 							// FIXME: Remove this when renderer is working 100% properly to make
 							// rendering faster
-							if (((obj->getType() == BattleTileObject::Type::Ground) &&
-							     hideGround) ||
-							    ((obj->getType() == BattleTileObject::Type::LeftWall) &&
-							     hideLeftWall) ||
-							    ((obj->getType() == BattleTileObject::Type::RightWall) &&
+							if (((obj->getType() == TileObject::Type::Ground) && hideGround) ||
+							    ((obj->getType() == TileObject::Type::LeftWall) && hideLeftWall) ||
+							    ((obj->getType() == TileObject::Type::RightWall) &&
 							     hideRightWall) ||
-							    ((obj->getType() == BattleTileObject::Type::Scenery) &&
-							     hideScenery))
+							    ((obj->getType() == TileObject::Type::Feature) && hideFeature))
 								continue;
 							Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
 							obj->draw(r, *this, pos, this->viewMode);

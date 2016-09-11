@@ -111,13 +111,13 @@
       <entry>BATTLEMAPPART_01senate_RW_70</entry>
       <entry>BATTLEMAPPART_01senate_RW_71</entry>
     </rubble_right_wall>
-    <rubble_scenery>
-      <entry>BATTLEMAPPART_01senate_SC_243</entry>
-      <entry>BATTLEMAPPART_01senate_SC_244</entry>
-      <entry>BATTLEMAPPART_01senate_SC_245</entry>
-      <entry>BATTLEMAPPART_01senate_SC_246</entry>
-      <entry>BATTLEMAPPART_01senate_SC_248</entry>
-    </rubble_scenery>
+    <rubble_feature>
+      <entry>BATTLEMAPPART_01senate_FT243</entry>
+      <entry>BATTLEMAPPART_01senate_FT244</entry>
+      <entry>BATTLEMAPPART_01senate_FT245</entry>
+      <entry>BATTLEMAPPART_01senate_FT246</entry>
+      <entry>BATTLEMAPPART_01senate_FT248</entry>
+    </rubble_feature>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_01senate>

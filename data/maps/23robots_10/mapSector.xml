@@ -25874,14 +25874,14 @@
       <value>BATTLEMAPPART_23robots_RW_11</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -25889,7 +25889,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -25897,7 +25897,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -25905,7 +25905,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -25913,7 +25913,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -25921,7 +25921,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -25929,7 +25929,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -25937,7 +25937,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -25945,7 +25945,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_219</value>
+      <value>BATTLEMAPPART_23robots_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -25953,7 +25953,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_134</value>
+      <value>BATTLEMAPPART_23robots_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -25961,7 +25961,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_134</value>
+      <value>BATTLEMAPPART_23robots_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -25969,7 +25969,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_134</value>
+      <value>BATTLEMAPPART_23robots_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -25977,7 +25977,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_134</value>
+      <value>BATTLEMAPPART_23robots_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -25985,7 +25985,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -25993,7 +25993,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -26001,7 +26001,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -26009,7 +26009,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_147</value>
+      <value>BATTLEMAPPART_23robots_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -26017,7 +26017,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -26025,7 +26025,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_146</value>
+      <value>BATTLEMAPPART_23robots_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -26033,7 +26033,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -26041,7 +26041,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_145</value>
+      <value>BATTLEMAPPART_23robots_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -26049,7 +26049,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -26057,7 +26057,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_219</value>
+      <value>BATTLEMAPPART_23robots_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -26065,7 +26065,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -26073,7 +26073,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -26081,7 +26081,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_135</value>
+      <value>BATTLEMAPPART_23robots_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -26089,7 +26089,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_134</value>
+      <value>BATTLEMAPPART_23robots_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -26097,7 +26097,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_134</value>
+      <value>BATTLEMAPPART_23robots_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -26105,7 +26105,7 @@
         <y>19</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_134</value>
+      <value>BATTLEMAPPART_23robots_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -26113,7 +26113,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -26121,7 +26121,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -26129,7 +26129,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -26137,7 +26137,7 @@
         <y>22</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_135</value>
+      <value>BATTLEMAPPART_23robots_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -26145,7 +26145,7 @@
         <y>22</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_134</value>
+      <value>BATTLEMAPPART_23robots_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -26153,7 +26153,7 @@
         <y>22</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_134</value>
+      <value>BATTLEMAPPART_23robots_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -26161,7 +26161,7 @@
         <y>22</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_134</value>
+      <value>BATTLEMAPPART_23robots_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -26169,7 +26169,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -26177,7 +26177,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_219</value>
+      <value>BATTLEMAPPART_23robots_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -26185,7 +26185,7 @@
         <y>25</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -26193,7 +26193,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -26201,7 +26201,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -26209,7 +26209,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -26217,7 +26217,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_135</value>
+      <value>BATTLEMAPPART_23robots_FT_135</value>
     </entry>
     <entry>
       <key>
@@ -26225,7 +26225,7 @@
         <y>28</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_134</value>
+      <value>BATTLEMAPPART_23robots_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -26233,7 +26233,7 @@
         <y>28</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_134</value>
+      <value>BATTLEMAPPART_23robots_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -26241,7 +26241,7 @@
         <y>28</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_134</value>
+      <value>BATTLEMAPPART_23robots_FT_134</value>
     </entry>
     <entry>
       <key>
@@ -26249,7 +26249,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -26257,7 +26257,7 @@
         <y>30</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -26265,7 +26265,7 @@
         <y>31</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_219</value>
+      <value>BATTLEMAPPART_23robots_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -26273,7 +26273,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -26281,7 +26281,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -26289,7 +26289,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_164</value>
+      <value>BATTLEMAPPART_23robots_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -26297,7 +26297,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -26305,7 +26305,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_237</value>
+      <value>BATTLEMAPPART_23robots_FT_237</value>
     </entry>
     <entry>
       <key>
@@ -26313,7 +26313,7 @@
         <y>2</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_238</value>
+      <value>BATTLEMAPPART_23robots_FT_238</value>
     </entry>
     <entry>
       <key>
@@ -26321,7 +26321,7 @@
         <y>2</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_238</value>
+      <value>BATTLEMAPPART_23robots_FT_238</value>
     </entry>
     <entry>
       <key>
@@ -26329,7 +26329,7 @@
         <y>2</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_157</value>
+      <value>BATTLEMAPPART_23robots_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -26337,7 +26337,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -26345,7 +26345,7 @@
         <y>3</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_234</value>
+      <value>BATTLEMAPPART_23robots_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -26353,7 +26353,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -26361,7 +26361,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_237</value>
+      <value>BATTLEMAPPART_23robots_FT_237</value>
     </entry>
     <entry>
       <key>
@@ -26369,7 +26369,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_238</value>
+      <value>BATTLEMAPPART_23robots_FT_238</value>
     </entry>
     <entry>
       <key>
@@ -26377,7 +26377,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_238</value>
+      <value>BATTLEMAPPART_23robots_FT_238</value>
     </entry>
     <entry>
       <key>
@@ -26385,7 +26385,7 @@
         <y>4</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -26393,7 +26393,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -26401,7 +26401,7 @@
         <y>5</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_234</value>
+      <value>BATTLEMAPPART_23robots_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -26409,7 +26409,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -26417,7 +26417,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_237</value>
+      <value>BATTLEMAPPART_23robots_FT_237</value>
     </entry>
     <entry>
       <key>
@@ -26425,7 +26425,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_238</value>
+      <value>BATTLEMAPPART_23robots_FT_238</value>
     </entry>
     <entry>
       <key>
@@ -26433,7 +26433,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_238</value>
+      <value>BATTLEMAPPART_23robots_FT_238</value>
     </entry>
     <entry>
       <key>
@@ -26441,7 +26441,7 @@
         <y>6</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -26449,7 +26449,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -26457,7 +26457,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_234</value>
+      <value>BATTLEMAPPART_23robots_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -26465,7 +26465,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_160</value>
+      <value>BATTLEMAPPART_23robots_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -26473,7 +26473,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_237</value>
+      <value>BATTLEMAPPART_23robots_FT_237</value>
     </entry>
     <entry>
       <key>
@@ -26481,7 +26481,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_238</value>
+      <value>BATTLEMAPPART_23robots_FT_238</value>
     </entry>
     <entry>
       <key>
@@ -26489,7 +26489,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_238</value>
+      <value>BATTLEMAPPART_23robots_FT_238</value>
     </entry>
     <entry>
       <key>
@@ -26497,7 +26497,7 @@
         <y>8</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -26505,7 +26505,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_163</value>
+      <value>BATTLEMAPPART_23robots_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -26513,7 +26513,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_167</value>
+      <value>BATTLEMAPPART_23robots_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -26521,7 +26521,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_167</value>
+      <value>BATTLEMAPPART_23robots_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -26529,7 +26529,7 @@
         <y>9</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_165</value>
+      <value>BATTLEMAPPART_23robots_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -26537,7 +26537,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_160</value>
+      <value>BATTLEMAPPART_23robots_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -26545,7 +26545,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -26553,7 +26553,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -26561,7 +26561,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -26569,7 +26569,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_142</value>
+      <value>BATTLEMAPPART_23robots_FT_142</value>
     </entry>
     <entry>
       <key>
@@ -26577,7 +26577,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -26585,7 +26585,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -26593,7 +26593,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_163</value>
+      <value>BATTLEMAPPART_23robots_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -26601,7 +26601,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_168</value>
+      <value>BATTLEMAPPART_23robots_FT_168</value>
     </entry>
     <entry>
       <key>
@@ -26609,7 +26609,7 @@
         <y>1</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_167</value>
+      <value>BATTLEMAPPART_23robots_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -26617,7 +26617,7 @@
         <y>1</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_167</value>
+      <value>BATTLEMAPPART_23robots_FT_167</value>
     </entry>
     <entry>
       <key>
@@ -26625,7 +26625,7 @@
         <y>1</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_164</value>
+      <value>BATTLEMAPPART_23robots_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -26633,7 +26633,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -26641,7 +26641,7 @@
         <y>2</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_159</value>
+      <value>BATTLEMAPPART_23robots_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -26649,7 +26649,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -26657,7 +26657,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_160</value>
+      <value>BATTLEMAPPART_23robots_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -26665,7 +26665,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_157</value>
+      <value>BATTLEMAPPART_23robots_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -26673,7 +26673,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -26681,7 +26681,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -26689,7 +26689,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_155</value>
+      <value>BATTLEMAPPART_23robots_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -26697,7 +26697,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -26705,7 +26705,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_143</value>
+      <value>BATTLEMAPPART_23robots_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -26713,7 +26713,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -26721,7 +26721,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -26729,7 +26729,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -26737,7 +26737,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_68</value>
+      <value>BATTLEMAPPART_23robots_FT_68</value>
     </entry>
     <entry>
       <key>
@@ -26745,7 +26745,7 @@
         <y>30</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_157</value>
+      <value>BATTLEMAPPART_23robots_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -26753,7 +26753,7 @@
         <y>31</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -26761,7 +26761,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -26769,7 +26769,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -26777,7 +26777,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -26785,7 +26785,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -26793,7 +26793,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -26801,7 +26801,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -26809,7 +26809,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_101</value>
+      <value>BATTLEMAPPART_23robots_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -26817,7 +26817,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_100</value>
+      <value>BATTLEMAPPART_23robots_FT_100</value>
     </entry>
     <entry>
       <key>
@@ -26825,7 +26825,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -26833,7 +26833,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_158</value>
+      <value>BATTLEMAPPART_23robots_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -26841,7 +26841,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -26849,7 +26849,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -26857,7 +26857,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_155</value>
+      <value>BATTLEMAPPART_23robots_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -26865,7 +26865,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -26873,7 +26873,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -26881,7 +26881,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -26889,7 +26889,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -26897,7 +26897,7 @@
         <y>30</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_155</value>
+      <value>BATTLEMAPPART_23robots_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -26905,7 +26905,7 @@
         <y>31</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_155</value>
+      <value>BATTLEMAPPART_23robots_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -26913,7 +26913,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -26921,7 +26921,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -26929,7 +26929,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -26937,7 +26937,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -26945,7 +26945,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -26953,7 +26953,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -26961,7 +26961,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_101</value>
+      <value>BATTLEMAPPART_23robots_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -26969,7 +26969,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_158</value>
+      <value>BATTLEMAPPART_23robots_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -26977,7 +26977,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -26985,7 +26985,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -26993,7 +26993,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -27001,7 +27001,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_159</value>
+      <value>BATTLEMAPPART_23robots_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -27009,7 +27009,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_158</value>
+      <value>BATTLEMAPPART_23robots_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -27017,7 +27017,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_160</value>
+      <value>BATTLEMAPPART_23robots_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -27025,7 +27025,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -27033,7 +27033,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -27041,7 +27041,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -27049,7 +27049,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -27057,7 +27057,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -27065,7 +27065,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -27073,7 +27073,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -27081,7 +27081,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -27089,7 +27089,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -27097,7 +27097,7 @@
         <y>30</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_155</value>
+      <value>BATTLEMAPPART_23robots_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -27105,7 +27105,7 @@
         <y>31</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_155</value>
+      <value>BATTLEMAPPART_23robots_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -27113,7 +27113,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -27121,7 +27121,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -27129,7 +27129,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_101</value>
+      <value>BATTLEMAPPART_23robots_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -27137,7 +27137,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_158</value>
+      <value>BATTLEMAPPART_23robots_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -27145,7 +27145,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_168</value>
+      <value>BATTLEMAPPART_23robots_FT_168</value>
     </entry>
     <entry>
       <key>
@@ -27153,7 +27153,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_165</value>
+      <value>BATTLEMAPPART_23robots_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -27161,7 +27161,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -27169,7 +27169,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -27177,7 +27177,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_153</value>
+      <value>BATTLEMAPPART_23robots_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -27185,7 +27185,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -27193,7 +27193,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -27201,7 +27201,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_152</value>
+      <value>BATTLEMAPPART_23robots_FT_152</value>
     </entry>
     <entry>
       <key>
@@ -27209,7 +27209,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -27217,7 +27217,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_69</value>
+      <value>BATTLEMAPPART_23robots_FT_69</value>
     </entry>
     <entry>
       <key>
@@ -27225,7 +27225,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -27233,7 +27233,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_151</value>
+      <value>BATTLEMAPPART_23robots_FT_151</value>
     </entry>
     <entry>
       <key>
@@ -27241,7 +27241,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_168</value>
+      <value>BATTLEMAPPART_23robots_FT_168</value>
     </entry>
     <entry>
       <key>
@@ -27249,7 +27249,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_165</value>
+      <value>BATTLEMAPPART_23robots_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -27257,7 +27257,7 @@
         <y>30</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_155</value>
+      <value>BATTLEMAPPART_23robots_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -27265,7 +27265,7 @@
         <y>31</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_155</value>
+      <value>BATTLEMAPPART_23robots_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -27273,7 +27273,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -27281,7 +27281,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_219</value>
+      <value>BATTLEMAPPART_23robots_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -27289,7 +27289,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_101</value>
+      <value>BATTLEMAPPART_23robots_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -27297,7 +27297,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_142</value>
+      <value>BATTLEMAPPART_23robots_FT_142</value>
     </entry>
     <entry>
       <key>
@@ -27305,7 +27305,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -27313,7 +27313,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_153</value>
+      <value>BATTLEMAPPART_23robots_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -27321,7 +27321,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -27329,7 +27329,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_66</value>
+      <value>BATTLEMAPPART_23robots_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -27337,7 +27337,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_152</value>
+      <value>BATTLEMAPPART_23robots_FT_152</value>
     </entry>
     <entry>
       <key>
@@ -27345,7 +27345,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_88</value>
+      <value>BATTLEMAPPART_23robots_FT_88</value>
     </entry>
     <entry>
       <key>
@@ -27353,7 +27353,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -27361,7 +27361,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_151</value>
+      <value>BATTLEMAPPART_23robots_FT_151</value>
     </entry>
     <entry>
       <key>
@@ -27369,7 +27369,7 @@
         <y>30</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_155</value>
+      <value>BATTLEMAPPART_23robots_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -27377,7 +27377,7 @@
         <y>31</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_155</value>
+      <value>BATTLEMAPPART_23robots_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -27385,7 +27385,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_219</value>
+      <value>BATTLEMAPPART_23robots_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -27393,7 +27393,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -27401,7 +27401,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_101</value>
+      <value>BATTLEMAPPART_23robots_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -27409,7 +27409,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -27417,7 +27417,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -27425,7 +27425,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -27433,7 +27433,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_200</value>
+      <value>BATTLEMAPPART_23robots_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -27441,7 +27441,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_206</value>
+      <value>BATTLEMAPPART_23robots_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -27449,7 +27449,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -27457,7 +27457,7 @@
         <y>30</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_155</value>
+      <value>BATTLEMAPPART_23robots_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -27465,7 +27465,7 @@
         <y>31</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_155</value>
+      <value>BATTLEMAPPART_23robots_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -27473,7 +27473,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -27481,7 +27481,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -27489,7 +27489,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -27497,7 +27497,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -27505,7 +27505,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -27513,7 +27513,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -27521,7 +27521,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_101</value>
+      <value>BATTLEMAPPART_23robots_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -27529,7 +27529,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -27537,7 +27537,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -27545,7 +27545,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -27553,7 +27553,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_206</value>
+      <value>BATTLEMAPPART_23robots_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -27561,7 +27561,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -27569,7 +27569,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_206</value>
+      <value>BATTLEMAPPART_23robots_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -27577,7 +27577,7 @@
         <y>29</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -27585,7 +27585,7 @@
         <y>30</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_155</value>
+      <value>BATTLEMAPPART_23robots_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -27593,7 +27593,7 @@
         <y>30</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -27601,7 +27601,7 @@
         <y>31</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_155</value>
+      <value>BATTLEMAPPART_23robots_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -27609,7 +27609,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -27617,7 +27617,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -27625,7 +27625,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -27633,7 +27633,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -27641,7 +27641,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -27649,7 +27649,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -27657,7 +27657,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_101</value>
+      <value>BATTLEMAPPART_23robots_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -27665,7 +27665,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_144</value>
+      <value>BATTLEMAPPART_23robots_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -27673,7 +27673,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -27681,7 +27681,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_147</value>
+      <value>BATTLEMAPPART_23robots_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -27689,7 +27689,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -27697,7 +27697,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_69</value>
+      <value>BATTLEMAPPART_23robots_FT_69</value>
     </entry>
     <entry>
       <key>
@@ -27705,7 +27705,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_146</value>
+      <value>BATTLEMAPPART_23robots_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -27713,7 +27713,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -27721,7 +27721,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_145</value>
+      <value>BATTLEMAPPART_23robots_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -27729,7 +27729,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_208</value>
+      <value>BATTLEMAPPART_23robots_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -27737,7 +27737,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -27745,7 +27745,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_208</value>
+      <value>BATTLEMAPPART_23robots_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -27753,7 +27753,7 @@
         <y>29</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -27761,7 +27761,7 @@
         <y>30</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_158</value>
+      <value>BATTLEMAPPART_23robots_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -27769,7 +27769,7 @@
         <y>30</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_142</value>
+      <value>BATTLEMAPPART_23robots_FT_142</value>
     </entry>
     <entry>
       <key>
@@ -27777,7 +27777,7 @@
         <y>31</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -27785,7 +27785,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -27793,7 +27793,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -27801,7 +27801,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_101</value>
+      <value>BATTLEMAPPART_23robots_FT_101</value>
     </entry>
     <entry>
       <key>
@@ -27809,7 +27809,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -27817,7 +27817,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -27825,7 +27825,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -27833,7 +27833,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -27841,7 +27841,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_88</value>
+      <value>BATTLEMAPPART_23robots_FT_88</value>
     </entry>
     <entry>
       <key>
@@ -27849,7 +27849,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -27857,7 +27857,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -27865,7 +27865,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_210</value>
+      <value>BATTLEMAPPART_23robots_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -27873,7 +27873,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_211</value>
+      <value>BATTLEMAPPART_23robots_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -27881,7 +27881,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_210</value>
+      <value>BATTLEMAPPART_23robots_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -27889,7 +27889,7 @@
         <y>28</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_212</value>
+      <value>BATTLEMAPPART_23robots_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -27897,7 +27897,7 @@
         <y>29</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_211</value>
+      <value>BATTLEMAPPART_23robots_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -27905,7 +27905,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -27913,7 +27913,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_99</value>
+      <value>BATTLEMAPPART_23robots_FT_99</value>
     </entry>
     <entry>
       <key>
@@ -27921,7 +27921,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -27929,7 +27929,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -27937,7 +27937,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_147</value>
+      <value>BATTLEMAPPART_23robots_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -27945,7 +27945,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -27953,7 +27953,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -27961,7 +27961,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_146</value>
+      <value>BATTLEMAPPART_23robots_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -27969,7 +27969,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -27977,7 +27977,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_68</value>
+      <value>BATTLEMAPPART_23robots_FT_68</value>
     </entry>
     <entry>
       <key>
@@ -27985,7 +27985,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -27993,7 +27993,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_145</value>
+      <value>BATTLEMAPPART_23robots_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -28001,7 +28001,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_99</value>
+      <value>BATTLEMAPPART_23robots_FT_99</value>
     </entry>
     <entry>
       <key>
@@ -28009,7 +28009,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -28017,7 +28017,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_199</value>
+      <value>BATTLEMAPPART_23robots_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -28025,7 +28025,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_196</value>
+      <value>BATTLEMAPPART_23robots_FT_196</value>
     </entry>
     <entry>
       <key>
@@ -28033,7 +28033,7 @@
         <y>28</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -28041,7 +28041,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_98</value>
+      <value>BATTLEMAPPART_23robots_FT_98</value>
     </entry>
     <entry>
       <key>
@@ -28049,7 +28049,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_163</value>
+      <value>BATTLEMAPPART_23robots_FT_163</value>
     </entry>
     <entry>
       <key>
@@ -28057,7 +28057,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_164</value>
+      <value>BATTLEMAPPART_23robots_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -28065,7 +28065,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -28073,7 +28073,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -28081,7 +28081,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -28089,7 +28089,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -28097,7 +28097,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -28105,7 +28105,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -28113,7 +28113,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -28121,7 +28121,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -28129,7 +28129,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -28137,7 +28137,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -28145,7 +28145,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -28153,7 +28153,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -28161,7 +28161,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_166</value>
+      <value>BATTLEMAPPART_23robots_FT_166</value>
     </entry>
     <entry>
       <key>
@@ -28169,7 +28169,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_165</value>
+      <value>BATTLEMAPPART_23robots_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -28177,7 +28177,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_164</value>
+      <value>BATTLEMAPPART_23robots_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -28185,7 +28185,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_98</value>
+      <value>BATTLEMAPPART_23robots_FT_98</value>
     </entry>
     <entry>
       <key>
@@ -28193,7 +28193,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -28201,7 +28201,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_160</value>
+      <value>BATTLEMAPPART_23robots_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -28209,7 +28209,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_205</value>
+      <value>BATTLEMAPPART_23robots_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -28217,7 +28217,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_201</value>
+      <value>BATTLEMAPPART_23robots_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -28225,7 +28225,7 @@
         <y>29</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_200</value>
+      <value>BATTLEMAPPART_23robots_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -28233,7 +28233,7 @@
         <y>30</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -28241,7 +28241,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -28249,7 +28249,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -28257,7 +28257,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -28265,7 +28265,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -28273,7 +28273,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -28281,7 +28281,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_99</value>
+      <value>BATTLEMAPPART_23robots_FT_99</value>
     </entry>
     <entry>
       <key>
@@ -28289,7 +28289,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -28297,7 +28297,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -28305,7 +28305,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -28313,7 +28313,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_164</value>
+      <value>BATTLEMAPPART_23robots_FT_164</value>
     </entry>
     <entry>
       <key>
@@ -28321,7 +28321,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -28329,7 +28329,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -28337,7 +28337,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -28345,7 +28345,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -28353,7 +28353,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -28361,7 +28361,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -28369,7 +28369,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -28377,7 +28377,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -28385,7 +28385,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_161</value>
+      <value>BATTLEMAPPART_23robots_FT_161</value>
     </entry>
     <entry>
       <key>
@@ -28393,7 +28393,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_99</value>
+      <value>BATTLEMAPPART_23robots_FT_99</value>
     </entry>
     <entry>
       <key>
@@ -28401,7 +28401,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_160</value>
+      <value>BATTLEMAPPART_23robots_FT_160</value>
     </entry>
     <entry>
       <key>
@@ -28409,7 +28409,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -28417,7 +28417,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_202</value>
+      <value>BATTLEMAPPART_23robots_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -28425,7 +28425,7 @@
         <y>29</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -28433,7 +28433,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -28441,7 +28441,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -28449,7 +28449,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -28457,7 +28457,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -28465,7 +28465,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -28473,7 +28473,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -28481,7 +28481,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_98</value>
+      <value>BATTLEMAPPART_23robots_FT_98</value>
     </entry>
     <entry>
       <key>
@@ -28489,7 +28489,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_155</value>
+      <value>BATTLEMAPPART_23robots_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -28497,7 +28497,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_157</value>
+      <value>BATTLEMAPPART_23robots_FT_157</value>
     </entry>
     <entry>
       <key>
@@ -28505,7 +28505,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -28513,7 +28513,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_165</value>
+      <value>BATTLEMAPPART_23robots_FT_165</value>
     </entry>
     <entry>
       <key>
@@ -28521,7 +28521,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -28529,7 +28529,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_73</value>
+      <value>BATTLEMAPPART_23robots_FT_73</value>
     </entry>
     <entry>
       <key>
@@ -28537,7 +28537,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_138</value>
+      <value>BATTLEMAPPART_23robots_FT_138</value>
     </entry>
     <entry>
       <key>
@@ -28545,7 +28545,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -28553,7 +28553,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_138</value>
+      <value>BATTLEMAPPART_23robots_FT_138</value>
     </entry>
     <entry>
       <key>
@@ -28561,7 +28561,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_138</value>
+      <value>BATTLEMAPPART_23robots_FT_138</value>
     </entry>
     <entry>
       <key>
@@ -28569,7 +28569,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_98</value>
+      <value>BATTLEMAPPART_23robots_FT_98</value>
     </entry>
     <entry>
       <key>
@@ -28577,7 +28577,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -28585,7 +28585,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_155</value>
+      <value>BATTLEMAPPART_23robots_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -28593,7 +28593,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -28601,7 +28601,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -28609,7 +28609,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_109</value>
+      <value>BATTLEMAPPART_23robots_FT_109</value>
     </entry>
     <entry>
       <key>
@@ -28617,7 +28617,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_110</value>
+      <value>BATTLEMAPPART_23robots_FT_110</value>
     </entry>
     <entry>
       <key>
@@ -28625,7 +28625,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -28633,7 +28633,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -28641,7 +28641,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_153</value>
+      <value>BATTLEMAPPART_23robots_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -28649,7 +28649,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_50</value>
+      <value>BATTLEMAPPART_23robots_FT_50</value>
     </entry>
     <entry>
       <key>
@@ -28657,7 +28657,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_152</value>
+      <value>BATTLEMAPPART_23robots_FT_152</value>
     </entry>
     <entry>
       <key>
@@ -28665,7 +28665,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_141</value>
+      <value>BATTLEMAPPART_23robots_FT_141</value>
     </entry>
     <entry>
       <key>
@@ -28673,7 +28673,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_151</value>
+      <value>BATTLEMAPPART_23robots_FT_151</value>
     </entry>
     <entry>
       <key>
@@ -28681,7 +28681,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_142</value>
+      <value>BATTLEMAPPART_23robots_FT_142</value>
     </entry>
     <entry>
       <key>
@@ -28689,7 +28689,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_109</value>
+      <value>BATTLEMAPPART_23robots_FT_109</value>
     </entry>
     <entry>
       <key>
@@ -28697,7 +28697,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_110</value>
+      <value>BATTLEMAPPART_23robots_FT_110</value>
     </entry>
     <entry>
       <key>
@@ -28705,7 +28705,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -28713,7 +28713,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -28721,7 +28721,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -28729,7 +28729,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -28737,7 +28737,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -28745,7 +28745,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_143</value>
+      <value>BATTLEMAPPART_23robots_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -28753,7 +28753,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -28761,7 +28761,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_147</value>
+      <value>BATTLEMAPPART_23robots_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -28769,7 +28769,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_146</value>
+      <value>BATTLEMAPPART_23robots_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -28777,7 +28777,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_145</value>
+      <value>BATTLEMAPPART_23robots_FT_145</value>
     </entry>
     <entry>
       <key>
@@ -28785,7 +28785,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -28793,7 +28793,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -28801,7 +28801,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -28809,7 +28809,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -28817,7 +28817,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -28825,7 +28825,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -28833,7 +28833,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -28841,7 +28841,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -28849,7 +28849,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -28857,7 +28857,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -28865,7 +28865,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -28873,7 +28873,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -28881,7 +28881,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_73</value>
+      <value>BATTLEMAPPART_23robots_FT_73</value>
     </entry>
     <entry>
       <key>
@@ -28889,7 +28889,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -28897,7 +28897,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -28905,7 +28905,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -28913,7 +28913,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -28921,7 +28921,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -28929,7 +28929,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -28937,7 +28937,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -28945,7 +28945,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -28953,7 +28953,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_196</value>
+      <value>BATTLEMAPPART_23robots_FT_196</value>
     </entry>
     <entry>
       <key>
@@ -28961,7 +28961,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_206</value>
+      <value>BATTLEMAPPART_23robots_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -28969,7 +28969,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_202</value>
+      <value>BATTLEMAPPART_23robots_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -28977,7 +28977,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_202</value>
+      <value>BATTLEMAPPART_23robots_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -28985,7 +28985,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -28993,7 +28993,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_200</value>
+      <value>BATTLEMAPPART_23robots_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -29001,7 +29001,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_206</value>
+      <value>BATTLEMAPPART_23robots_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -29009,7 +29009,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -29017,7 +29017,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -29025,7 +29025,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -29033,7 +29033,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -29041,7 +29041,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_234</value>
+      <value>BATTLEMAPPART_23robots_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -29049,7 +29049,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_77</value>
+      <value>BATTLEMAPPART_23robots_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -29057,7 +29057,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -29065,7 +29065,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_234</value>
+      <value>BATTLEMAPPART_23robots_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -29073,7 +29073,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_77</value>
+      <value>BATTLEMAPPART_23robots_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -29081,7 +29081,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -29089,7 +29089,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_234</value>
+      <value>BATTLEMAPPART_23robots_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -29097,7 +29097,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_77</value>
+      <value>BATTLEMAPPART_23robots_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -29105,7 +29105,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -29113,7 +29113,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_162</value>
+      <value>BATTLEMAPPART_23robots_FT_162</value>
     </entry>
     <entry>
       <key>
@@ -29121,7 +29121,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_43</value>
+      <value>BATTLEMAPPART_23robots_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -29129,7 +29129,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_40</value>
+      <value>BATTLEMAPPART_23robots_FT_40</value>
     </entry>
     <entry>
       <key>
@@ -29137,7 +29137,7 @@
         <y>24</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_19</value>
+      <value>BATTLEMAPPART_23robots_FT_19</value>
     </entry>
     <entry>
       <key>
@@ -29145,7 +29145,7 @@
         <y>25</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_38</value>
+      <value>BATTLEMAPPART_23robots_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -29153,7 +29153,7 @@
         <y>25</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_15</value>
+      <value>BATTLEMAPPART_23robots_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -29161,7 +29161,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_34</value>
+      <value>BATTLEMAPPART_23robots_FT_34</value>
     </entry>
     <entry>
       <key>
@@ -29169,7 +29169,7 @@
         <y>26</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_13</value>
+      <value>BATTLEMAPPART_23robots_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -29177,7 +29177,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_34</value>
+      <value>BATTLEMAPPART_23robots_FT_34</value>
     </entry>
     <entry>
       <key>
@@ -29185,7 +29185,7 @@
         <y>27</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_10</value>
+      <value>BATTLEMAPPART_23robots_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -29193,7 +29193,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_31</value>
+      <value>BATTLEMAPPART_23robots_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -29201,7 +29201,7 @@
         <y>28</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_6</value>
+      <value>BATTLEMAPPART_23robots_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -29209,7 +29209,7 @@
         <y>29</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_27</value>
+      <value>BATTLEMAPPART_23robots_FT_27</value>
     </entry>
     <entry>
       <key>
@@ -29217,7 +29217,7 @@
         <y>30</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_23</value>
+      <value>BATTLEMAPPART_23robots_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -29225,7 +29225,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -29233,7 +29233,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_219</value>
+      <value>BATTLEMAPPART_23robots_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -29241,7 +29241,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -29249,7 +29249,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -29257,7 +29257,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -29265,7 +29265,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -29273,7 +29273,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -29281,7 +29281,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_208</value>
+      <value>BATTLEMAPPART_23robots_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -29289,7 +29289,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_200</value>
+      <value>BATTLEMAPPART_23robots_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -29297,7 +29297,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -29305,7 +29305,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_212</value>
+      <value>BATTLEMAPPART_23robots_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -29313,7 +29313,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_142</value>
+      <value>BATTLEMAPPART_23robots_FT_142</value>
     </entry>
     <entry>
       <key>
@@ -29321,7 +29321,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -29329,7 +29329,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -29337,7 +29337,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_206</value>
+      <value>BATTLEMAPPART_23robots_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -29345,7 +29345,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -29353,7 +29353,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_158</value>
+      <value>BATTLEMAPPART_23robots_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -29361,7 +29361,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_159</value>
+      <value>BATTLEMAPPART_23robots_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -29369,7 +29369,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -29377,7 +29377,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_60</value>
+      <value>BATTLEMAPPART_23robots_FT_60</value>
     </entry>
     <entry>
       <key>
@@ -29385,7 +29385,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_80</value>
+      <value>BATTLEMAPPART_23robots_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -29393,7 +29393,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -29401,7 +29401,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_80</value>
+      <value>BATTLEMAPPART_23robots_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -29409,7 +29409,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -29417,7 +29417,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_60</value>
+      <value>BATTLEMAPPART_23robots_FT_60</value>
     </entry>
     <entry>
       <key>
@@ -29425,7 +29425,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_80</value>
+      <value>BATTLEMAPPART_23robots_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -29433,7 +29433,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_158</value>
+      <value>BATTLEMAPPART_23robots_FT_158</value>
     </entry>
     <entry>
       <key>
@@ -29441,7 +29441,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_159</value>
+      <value>BATTLEMAPPART_23robots_FT_159</value>
     </entry>
     <entry>
       <key>
@@ -29449,7 +29449,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_42</value>
+      <value>BATTLEMAPPART_23robots_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -29457,7 +29457,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -29465,7 +29465,7 @@
         <y>24</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_18</value>
+      <value>BATTLEMAPPART_23robots_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -29473,7 +29473,7 @@
         <y>25</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -29481,7 +29481,7 @@
         <y>25</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_12</value>
+      <value>BATTLEMAPPART_23robots_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -29489,7 +29489,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -29497,7 +29497,7 @@
         <y>26</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_12</value>
+      <value>BATTLEMAPPART_23robots_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -29505,7 +29505,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -29513,7 +29513,7 @@
         <y>27</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_9</value>
+      <value>BATTLEMAPPART_23robots_FT_9</value>
     </entry>
     <entry>
       <key>
@@ -29521,7 +29521,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_30</value>
+      <value>BATTLEMAPPART_23robots_FT_30</value>
     </entry>
     <entry>
       <key>
@@ -29529,7 +29529,7 @@
         <y>28</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_5</value>
+      <value>BATTLEMAPPART_23robots_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -29537,7 +29537,7 @@
         <y>29</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_26</value>
+      <value>BATTLEMAPPART_23robots_FT_26</value>
     </entry>
     <entry>
       <key>
@@ -29545,7 +29545,7 @@
         <y>29</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_2</value>
+      <value>BATTLEMAPPART_23robots_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -29553,7 +29553,7 @@
         <y>30</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_22</value>
+      <value>BATTLEMAPPART_23robots_FT_22</value>
     </entry>
     <entry>
       <key>
@@ -29561,7 +29561,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_219</value>
+      <value>BATTLEMAPPART_23robots_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -29569,7 +29569,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -29577,7 +29577,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_211</value>
+      <value>BATTLEMAPPART_23robots_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -29585,7 +29585,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -29593,7 +29593,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_210</value>
+      <value>BATTLEMAPPART_23robots_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -29601,7 +29601,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_201</value>
+      <value>BATTLEMAPPART_23robots_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -29609,7 +29609,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_211</value>
+      <value>BATTLEMAPPART_23robots_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -29617,7 +29617,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -29625,7 +29625,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_206</value>
+      <value>BATTLEMAPPART_23robots_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -29633,7 +29633,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -29641,7 +29641,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_211</value>
+      <value>BATTLEMAPPART_23robots_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -29649,7 +29649,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -29657,7 +29657,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -29665,7 +29665,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_208</value>
+      <value>BATTLEMAPPART_23robots_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -29673,7 +29673,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -29681,7 +29681,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -29689,7 +29689,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_234</value>
+      <value>BATTLEMAPPART_23robots_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -29697,7 +29697,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_77</value>
+      <value>BATTLEMAPPART_23robots_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -29705,7 +29705,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -29713,7 +29713,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_234</value>
+      <value>BATTLEMAPPART_23robots_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -29721,7 +29721,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_77</value>
+      <value>BATTLEMAPPART_23robots_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -29729,7 +29729,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -29737,7 +29737,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_234</value>
+      <value>BATTLEMAPPART_23robots_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -29745,7 +29745,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_77</value>
+      <value>BATTLEMAPPART_23robots_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -29753,7 +29753,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_42</value>
+      <value>BATTLEMAPPART_23robots_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -29761,7 +29761,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -29769,7 +29769,7 @@
         <y>24</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_17</value>
+      <value>BATTLEMAPPART_23robots_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -29777,7 +29777,7 @@
         <y>25</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -29785,7 +29785,7 @@
         <y>25</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_12</value>
+      <value>BATTLEMAPPART_23robots_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -29793,7 +29793,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -29801,7 +29801,7 @@
         <y>26</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_12</value>
+      <value>BATTLEMAPPART_23robots_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -29809,7 +29809,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -29817,7 +29817,7 @@
         <y>27</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_8</value>
+      <value>BATTLEMAPPART_23robots_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -29825,7 +29825,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_29</value>
+      <value>BATTLEMAPPART_23robots_FT_29</value>
     </entry>
     <entry>
       <key>
@@ -29833,7 +29833,7 @@
         <y>28</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_4</value>
+      <value>BATTLEMAPPART_23robots_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -29841,7 +29841,7 @@
         <y>29</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_25</value>
+      <value>BATTLEMAPPART_23robots_FT_25</value>
     </entry>
     <entry>
       <key>
@@ -29849,7 +29849,7 @@
         <y>29</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_1</value>
+      <value>BATTLEMAPPART_23robots_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -29857,7 +29857,7 @@
         <y>30</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_21</value>
+      <value>BATTLEMAPPART_23robots_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -29865,7 +29865,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -29873,7 +29873,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -29881,7 +29881,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_209</value>
+      <value>BATTLEMAPPART_23robots_FT_209</value>
     </entry>
     <entry>
       <key>
@@ -29889,7 +29889,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_206</value>
+      <value>BATTLEMAPPART_23robots_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -29897,7 +29897,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_208</value>
+      <value>BATTLEMAPPART_23robots_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -29905,7 +29905,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_202</value>
+      <value>BATTLEMAPPART_23robots_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -29913,7 +29913,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_209</value>
+      <value>BATTLEMAPPART_23robots_FT_209</value>
     </entry>
     <entry>
       <key>
@@ -29921,7 +29921,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_211</value>
+      <value>BATTLEMAPPART_23robots_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -29929,7 +29929,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_208</value>
+      <value>BATTLEMAPPART_23robots_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -29937,7 +29937,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_211</value>
+      <value>BATTLEMAPPART_23robots_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -29945,7 +29945,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -29953,7 +29953,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -29961,7 +29961,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -29969,7 +29969,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_211</value>
+      <value>BATTLEMAPPART_23robots_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -29977,7 +29977,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_210</value>
+      <value>BATTLEMAPPART_23robots_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -29985,7 +29985,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_212</value>
+      <value>BATTLEMAPPART_23robots_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -29993,7 +29993,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_211</value>
+      <value>BATTLEMAPPART_23robots_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -30001,7 +30001,7 @@
         <y>11</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_142</value>
+      <value>BATTLEMAPPART_23robots_FT_142</value>
     </entry>
     <entry>
       <key>
@@ -30009,7 +30009,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -30017,7 +30017,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_60</value>
+      <value>BATTLEMAPPART_23robots_FT_60</value>
     </entry>
     <entry>
       <key>
@@ -30025,7 +30025,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_80</value>
+      <value>BATTLEMAPPART_23robots_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -30033,7 +30033,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -30041,7 +30041,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_70</value>
+      <value>BATTLEMAPPART_23robots_FT_70</value>
     </entry>
     <entry>
       <key>
@@ -30049,7 +30049,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_80</value>
+      <value>BATTLEMAPPART_23robots_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -30057,7 +30057,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -30065,7 +30065,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_60</value>
+      <value>BATTLEMAPPART_23robots_FT_60</value>
     </entry>
     <entry>
       <key>
@@ -30073,7 +30073,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_80</value>
+      <value>BATTLEMAPPART_23robots_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -30081,7 +30081,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_139</value>
+      <value>BATTLEMAPPART_23robots_FT_139</value>
     </entry>
     <entry>
       <key>
@@ -30089,7 +30089,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_41</value>
+      <value>BATTLEMAPPART_23robots_FT_41</value>
     </entry>
     <entry>
       <key>
@@ -30097,7 +30097,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_39</value>
+      <value>BATTLEMAPPART_23robots_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -30105,7 +30105,7 @@
         <y>24</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_16</value>
+      <value>BATTLEMAPPART_23robots_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -30113,7 +30113,7 @@
         <y>25</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_37</value>
+      <value>BATTLEMAPPART_23robots_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -30121,7 +30121,7 @@
         <y>25</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_14</value>
+      <value>BATTLEMAPPART_23robots_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -30129,7 +30129,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_35</value>
+      <value>BATTLEMAPPART_23robots_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -30137,7 +30137,7 @@
         <y>26</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_11</value>
+      <value>BATTLEMAPPART_23robots_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -30145,7 +30145,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_32</value>
+      <value>BATTLEMAPPART_23robots_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -30153,7 +30153,7 @@
         <y>27</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_7</value>
+      <value>BATTLEMAPPART_23robots_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -30161,7 +30161,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_28</value>
+      <value>BATTLEMAPPART_23robots_FT_28</value>
     </entry>
     <entry>
       <key>
@@ -30169,7 +30169,7 @@
         <y>28</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_3</value>
+      <value>BATTLEMAPPART_23robots_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -30177,7 +30177,7 @@
         <y>29</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_24</value>
+      <value>BATTLEMAPPART_23robots_FT_24</value>
     </entry>
     <entry>
       <key>
@@ -30185,7 +30185,7 @@
         <y>30</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_20</value>
+      <value>BATTLEMAPPART_23robots_FT_20</value>
     </entry>
     <entry>
       <key>
@@ -30193,7 +30193,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -30201,7 +30201,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -30209,7 +30209,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_141</value>
+      <value>BATTLEMAPPART_23robots_FT_141</value>
     </entry>
     <entry>
       <key>
@@ -30217,7 +30217,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_203</value>
+      <value>BATTLEMAPPART_23robots_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -30225,7 +30225,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_210</value>
+      <value>BATTLEMAPPART_23robots_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -30233,7 +30233,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_204</value>
+      <value>BATTLEMAPPART_23robots_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -30241,7 +30241,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -30249,7 +30249,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -30257,7 +30257,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_210</value>
+      <value>BATTLEMAPPART_23robots_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -30265,7 +30265,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -30273,7 +30273,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -30281,7 +30281,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -30289,7 +30289,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_199</value>
+      <value>BATTLEMAPPART_23robots_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -30297,7 +30297,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_196</value>
+      <value>BATTLEMAPPART_23robots_FT_196</value>
     </entry>
     <entry>
       <key>
@@ -30305,7 +30305,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -30313,7 +30313,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -30321,7 +30321,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_234</value>
+      <value>BATTLEMAPPART_23robots_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -30329,7 +30329,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_77</value>
+      <value>BATTLEMAPPART_23robots_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -30337,7 +30337,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -30345,7 +30345,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_234</value>
+      <value>BATTLEMAPPART_23robots_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -30353,7 +30353,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_77</value>
+      <value>BATTLEMAPPART_23robots_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -30361,7 +30361,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -30369,7 +30369,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_234</value>
+      <value>BATTLEMAPPART_23robots_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -30377,7 +30377,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_77</value>
+      <value>BATTLEMAPPART_23robots_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -30385,7 +30385,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_136</value>
+      <value>BATTLEMAPPART_23robots_FT_136</value>
     </entry>
     <entry>
       <key>
@@ -30393,7 +30393,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_142</value>
+      <value>BATTLEMAPPART_23robots_FT_142</value>
     </entry>
     <entry>
       <key>
@@ -30401,7 +30401,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_43</value>
+      <value>BATTLEMAPPART_23robots_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -30409,7 +30409,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_40</value>
+      <value>BATTLEMAPPART_23robots_FT_40</value>
     </entry>
     <entry>
       <key>
@@ -30417,7 +30417,7 @@
         <y>24</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_19</value>
+      <value>BATTLEMAPPART_23robots_FT_19</value>
     </entry>
     <entry>
       <key>
@@ -30425,7 +30425,7 @@
         <y>25</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_38</value>
+      <value>BATTLEMAPPART_23robots_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -30433,7 +30433,7 @@
         <y>25</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_15</value>
+      <value>BATTLEMAPPART_23robots_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -30441,7 +30441,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_34</value>
+      <value>BATTLEMAPPART_23robots_FT_34</value>
     </entry>
     <entry>
       <key>
@@ -30449,7 +30449,7 @@
         <y>26</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_13</value>
+      <value>BATTLEMAPPART_23robots_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -30457,7 +30457,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_34</value>
+      <value>BATTLEMAPPART_23robots_FT_34</value>
     </entry>
     <entry>
       <key>
@@ -30465,7 +30465,7 @@
         <y>27</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_10</value>
+      <value>BATTLEMAPPART_23robots_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -30473,7 +30473,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_31</value>
+      <value>BATTLEMAPPART_23robots_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -30481,7 +30481,7 @@
         <y>28</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_6</value>
+      <value>BATTLEMAPPART_23robots_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -30489,7 +30489,7 @@
         <y>29</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_27</value>
+      <value>BATTLEMAPPART_23robots_FT_27</value>
     </entry>
     <entry>
       <key>
@@ -30497,7 +30497,7 @@
         <y>30</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_23</value>
+      <value>BATTLEMAPPART_23robots_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -30505,7 +30505,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -30513,7 +30513,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -30521,7 +30521,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -30529,7 +30529,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -30537,7 +30537,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -30545,7 +30545,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -30553,7 +30553,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_208</value>
+      <value>BATTLEMAPPART_23robots_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -30561,7 +30561,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -30569,7 +30569,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -30577,7 +30577,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -30585,7 +30585,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_199</value>
+      <value>BATTLEMAPPART_23robots_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -30593,7 +30593,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_212</value>
+      <value>BATTLEMAPPART_23robots_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -30601,7 +30601,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_212</value>
+      <value>BATTLEMAPPART_23robots_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -30609,7 +30609,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -30617,7 +30617,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -30625,7 +30625,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_205</value>
+      <value>BATTLEMAPPART_23robots_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -30633,7 +30633,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_201</value>
+      <value>BATTLEMAPPART_23robots_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -30641,7 +30641,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -30649,7 +30649,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -30657,7 +30657,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_60</value>
+      <value>BATTLEMAPPART_23robots_FT_60</value>
     </entry>
     <entry>
       <key>
@@ -30665,7 +30665,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_80</value>
+      <value>BATTLEMAPPART_23robots_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -30673,7 +30673,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -30681,7 +30681,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_80</value>
+      <value>BATTLEMAPPART_23robots_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -30689,7 +30689,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -30697,7 +30697,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_60</value>
+      <value>BATTLEMAPPART_23robots_FT_60</value>
     </entry>
     <entry>
       <key>
@@ -30705,7 +30705,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_80</value>
+      <value>BATTLEMAPPART_23robots_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -30713,7 +30713,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_42</value>
+      <value>BATTLEMAPPART_23robots_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -30721,7 +30721,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -30729,7 +30729,7 @@
         <y>24</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_18</value>
+      <value>BATTLEMAPPART_23robots_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -30737,7 +30737,7 @@
         <y>25</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -30745,7 +30745,7 @@
         <y>25</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_12</value>
+      <value>BATTLEMAPPART_23robots_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -30753,7 +30753,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -30761,7 +30761,7 @@
         <y>26</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_12</value>
+      <value>BATTLEMAPPART_23robots_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -30769,7 +30769,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -30777,7 +30777,7 @@
         <y>27</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_9</value>
+      <value>BATTLEMAPPART_23robots_FT_9</value>
     </entry>
     <entry>
       <key>
@@ -30785,7 +30785,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_30</value>
+      <value>BATTLEMAPPART_23robots_FT_30</value>
     </entry>
     <entry>
       <key>
@@ -30793,7 +30793,7 @@
         <y>28</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_5</value>
+      <value>BATTLEMAPPART_23robots_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -30801,7 +30801,7 @@
         <y>29</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_26</value>
+      <value>BATTLEMAPPART_23robots_FT_26</value>
     </entry>
     <entry>
       <key>
@@ -30809,7 +30809,7 @@
         <y>29</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_2</value>
+      <value>BATTLEMAPPART_23robots_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -30817,7 +30817,7 @@
         <y>30</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_22</value>
+      <value>BATTLEMAPPART_23robots_FT_22</value>
     </entry>
     <entry>
       <key>
@@ -30825,7 +30825,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -30833,7 +30833,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -30841,7 +30841,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -30849,7 +30849,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -30857,7 +30857,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -30865,7 +30865,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -30873,7 +30873,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -30881,7 +30881,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -30889,7 +30889,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -30897,7 +30897,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -30905,7 +30905,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -30913,7 +30913,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -30921,7 +30921,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -30929,7 +30929,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_202</value>
+      <value>BATTLEMAPPART_23robots_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -30937,7 +30937,7 @@
         <y>10</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -30945,7 +30945,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -30953,7 +30953,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_234</value>
+      <value>BATTLEMAPPART_23robots_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -30961,7 +30961,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_77</value>
+      <value>BATTLEMAPPART_23robots_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -30969,7 +30969,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -30977,7 +30977,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_234</value>
+      <value>BATTLEMAPPART_23robots_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -30985,7 +30985,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_77</value>
+      <value>BATTLEMAPPART_23robots_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -30993,7 +30993,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -31001,7 +31001,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_65</value>
+      <value>BATTLEMAPPART_23robots_FT_65</value>
     </entry>
     <entry>
       <key>
@@ -31009,7 +31009,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_234</value>
+      <value>BATTLEMAPPART_23robots_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -31017,7 +31017,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_77</value>
+      <value>BATTLEMAPPART_23robots_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -31025,7 +31025,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_42</value>
+      <value>BATTLEMAPPART_23robots_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -31033,7 +31033,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -31041,7 +31041,7 @@
         <y>24</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_17</value>
+      <value>BATTLEMAPPART_23robots_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -31049,7 +31049,7 @@
         <y>25</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -31057,7 +31057,7 @@
         <y>25</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_12</value>
+      <value>BATTLEMAPPART_23robots_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -31065,7 +31065,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -31073,7 +31073,7 @@
         <y>26</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_12</value>
+      <value>BATTLEMAPPART_23robots_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -31081,7 +31081,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -31089,7 +31089,7 @@
         <y>27</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_8</value>
+      <value>BATTLEMAPPART_23robots_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -31097,7 +31097,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_29</value>
+      <value>BATTLEMAPPART_23robots_FT_29</value>
     </entry>
     <entry>
       <key>
@@ -31105,7 +31105,7 @@
         <y>28</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_4</value>
+      <value>BATTLEMAPPART_23robots_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -31113,7 +31113,7 @@
         <y>29</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_25</value>
+      <value>BATTLEMAPPART_23robots_FT_25</value>
     </entry>
     <entry>
       <key>
@@ -31121,7 +31121,7 @@
         <y>29</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_1</value>
+      <value>BATTLEMAPPART_23robots_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -31129,7 +31129,7 @@
         <y>30</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -31137,7 +31137,7 @@
         <y>30</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_21</value>
+      <value>BATTLEMAPPART_23robots_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -31145,7 +31145,7 @@
         <y>31</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -31153,7 +31153,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -31161,7 +31161,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -31169,7 +31169,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -31177,7 +31177,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_206</value>
+      <value>BATTLEMAPPART_23robots_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -31185,7 +31185,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_206</value>
+      <value>BATTLEMAPPART_23robots_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -31193,7 +31193,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -31201,7 +31201,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -31209,7 +31209,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -31217,7 +31217,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_60</value>
+      <value>BATTLEMAPPART_23robots_FT_60</value>
     </entry>
     <entry>
       <key>
@@ -31225,7 +31225,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_80</value>
+      <value>BATTLEMAPPART_23robots_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -31233,7 +31233,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -31241,7 +31241,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_80</value>
+      <value>BATTLEMAPPART_23robots_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -31249,7 +31249,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -31257,7 +31257,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_60</value>
+      <value>BATTLEMAPPART_23robots_FT_60</value>
     </entry>
     <entry>
       <key>
@@ -31265,7 +31265,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_80</value>
+      <value>BATTLEMAPPART_23robots_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -31273,7 +31273,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_41</value>
+      <value>BATTLEMAPPART_23robots_FT_41</value>
     </entry>
     <entry>
       <key>
@@ -31281,7 +31281,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_39</value>
+      <value>BATTLEMAPPART_23robots_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -31289,7 +31289,7 @@
         <y>24</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_16</value>
+      <value>BATTLEMAPPART_23robots_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -31297,7 +31297,7 @@
         <y>25</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_37</value>
+      <value>BATTLEMAPPART_23robots_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -31305,7 +31305,7 @@
         <y>25</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_14</value>
+      <value>BATTLEMAPPART_23robots_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -31313,7 +31313,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_35</value>
+      <value>BATTLEMAPPART_23robots_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -31321,7 +31321,7 @@
         <y>26</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_11</value>
+      <value>BATTLEMAPPART_23robots_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -31329,7 +31329,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_32</value>
+      <value>BATTLEMAPPART_23robots_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -31337,7 +31337,7 @@
         <y>27</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_7</value>
+      <value>BATTLEMAPPART_23robots_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -31345,7 +31345,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_28</value>
+      <value>BATTLEMAPPART_23robots_FT_28</value>
     </entry>
     <entry>
       <key>
@@ -31353,7 +31353,7 @@
         <y>28</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_3</value>
+      <value>BATTLEMAPPART_23robots_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -31361,7 +31361,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -31369,7 +31369,7 @@
         <y>29</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_24</value>
+      <value>BATTLEMAPPART_23robots_FT_24</value>
     </entry>
     <entry>
       <key>
@@ -31377,7 +31377,7 @@
         <y>30</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -31385,7 +31385,7 @@
         <y>30</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_20</value>
+      <value>BATTLEMAPPART_23robots_FT_20</value>
     </entry>
     <entry>
       <key>
@@ -31393,7 +31393,7 @@
         <y>31</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -31401,7 +31401,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -31409,7 +31409,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -31417,7 +31417,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -31425,7 +31425,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -31433,7 +31433,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -31441,7 +31441,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_206</value>
+      <value>BATTLEMAPPART_23robots_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -31449,7 +31449,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -31457,7 +31457,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -31465,7 +31465,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_234</value>
+      <value>BATTLEMAPPART_23robots_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -31473,7 +31473,7 @@
         <y>13</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_77</value>
+      <value>BATTLEMAPPART_23robots_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -31481,7 +31481,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -31489,7 +31489,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_66</value>
+      <value>BATTLEMAPPART_23robots_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -31497,7 +31497,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_234</value>
+      <value>BATTLEMAPPART_23robots_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -31505,7 +31505,7 @@
         <y>14</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_77</value>
+      <value>BATTLEMAPPART_23robots_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -31513,7 +31513,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -31521,7 +31521,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_234</value>
+      <value>BATTLEMAPPART_23robots_FT_234</value>
     </entry>
     <entry>
       <key>
@@ -31529,7 +31529,7 @@
         <y>15</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_77</value>
+      <value>BATTLEMAPPART_23robots_FT_77</value>
     </entry>
     <entry>
       <key>
@@ -31537,7 +31537,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_43</value>
+      <value>BATTLEMAPPART_23robots_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -31545,7 +31545,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_40</value>
+      <value>BATTLEMAPPART_23robots_FT_40</value>
     </entry>
     <entry>
       <key>
@@ -31553,7 +31553,7 @@
         <y>24</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_19</value>
+      <value>BATTLEMAPPART_23robots_FT_19</value>
     </entry>
     <entry>
       <key>
@@ -31561,7 +31561,7 @@
         <y>25</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_38</value>
+      <value>BATTLEMAPPART_23robots_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -31569,7 +31569,7 @@
         <y>25</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_15</value>
+      <value>BATTLEMAPPART_23robots_FT_15</value>
     </entry>
     <entry>
       <key>
@@ -31577,7 +31577,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_34</value>
+      <value>BATTLEMAPPART_23robots_FT_34</value>
     </entry>
     <entry>
       <key>
@@ -31585,7 +31585,7 @@
         <y>26</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_13</value>
+      <value>BATTLEMAPPART_23robots_FT_13</value>
     </entry>
     <entry>
       <key>
@@ -31593,7 +31593,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_34</value>
+      <value>BATTLEMAPPART_23robots_FT_34</value>
     </entry>
     <entry>
       <key>
@@ -31601,7 +31601,7 @@
         <y>27</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_10</value>
+      <value>BATTLEMAPPART_23robots_FT_10</value>
     </entry>
     <entry>
       <key>
@@ -31609,7 +31609,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_31</value>
+      <value>BATTLEMAPPART_23robots_FT_31</value>
     </entry>
     <entry>
       <key>
@@ -31617,7 +31617,7 @@
         <y>28</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_6</value>
+      <value>BATTLEMAPPART_23robots_FT_6</value>
     </entry>
     <entry>
       <key>
@@ -31625,7 +31625,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_202</value>
+      <value>BATTLEMAPPART_23robots_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -31633,7 +31633,7 @@
         <y>29</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_27</value>
+      <value>BATTLEMAPPART_23robots_FT_27</value>
     </entry>
     <entry>
       <key>
@@ -31641,7 +31641,7 @@
         <y>30</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_211</value>
+      <value>BATTLEMAPPART_23robots_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -31649,7 +31649,7 @@
         <y>30</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_23</value>
+      <value>BATTLEMAPPART_23robots_FT_23</value>
     </entry>
     <entry>
       <key>
@@ -31657,7 +31657,7 @@
         <y>31</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -31665,7 +31665,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -31673,7 +31673,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -31681,7 +31681,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_197</value>
+      <value>BATTLEMAPPART_23robots_FT_197</value>
     </entry>
     <entry>
       <key>
@@ -31689,7 +31689,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_200</value>
+      <value>BATTLEMAPPART_23robots_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -31697,7 +31697,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_206</value>
+      <value>BATTLEMAPPART_23robots_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -31705,7 +31705,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -31713,7 +31713,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_142</value>
+      <value>BATTLEMAPPART_23robots_FT_142</value>
     </entry>
     <entry>
       <key>
@@ -31721,7 +31721,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_143</value>
+      <value>BATTLEMAPPART_23robots_FT_143</value>
     </entry>
     <entry>
       <key>
@@ -31729,7 +31729,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -31737,7 +31737,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -31745,7 +31745,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -31753,7 +31753,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_42</value>
+      <value>BATTLEMAPPART_23robots_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -31761,7 +31761,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -31769,7 +31769,7 @@
         <y>24</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_18</value>
+      <value>BATTLEMAPPART_23robots_FT_18</value>
     </entry>
     <entry>
       <key>
@@ -31777,7 +31777,7 @@
         <y>25</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -31785,7 +31785,7 @@
         <y>25</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_12</value>
+      <value>BATTLEMAPPART_23robots_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -31793,7 +31793,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -31801,7 +31801,7 @@
         <y>26</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_12</value>
+      <value>BATTLEMAPPART_23robots_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -31809,7 +31809,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -31817,7 +31817,7 @@
         <y>27</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_9</value>
+      <value>BATTLEMAPPART_23robots_FT_9</value>
     </entry>
     <entry>
       <key>
@@ -31825,7 +31825,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -31833,7 +31833,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_30</value>
+      <value>BATTLEMAPPART_23robots_FT_30</value>
     </entry>
     <entry>
       <key>
@@ -31841,7 +31841,7 @@
         <y>28</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_5</value>
+      <value>BATTLEMAPPART_23robots_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -31849,7 +31849,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_204</value>
+      <value>BATTLEMAPPART_23robots_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -31857,7 +31857,7 @@
         <y>29</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_26</value>
+      <value>BATTLEMAPPART_23robots_FT_26</value>
     </entry>
     <entry>
       <key>
@@ -31865,7 +31865,7 @@
         <y>29</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_2</value>
+      <value>BATTLEMAPPART_23robots_FT_2</value>
     </entry>
     <entry>
       <key>
@@ -31873,7 +31873,7 @@
         <y>30</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -31881,7 +31881,7 @@
         <y>30</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_22</value>
+      <value>BATTLEMAPPART_23robots_FT_22</value>
     </entry>
     <entry>
       <key>
@@ -31889,7 +31889,7 @@
         <y>31</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -31897,7 +31897,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -31905,7 +31905,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_219</value>
+      <value>BATTLEMAPPART_23robots_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -31913,7 +31913,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_198</value>
+      <value>BATTLEMAPPART_23robots_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -31921,7 +31921,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_201</value>
+      <value>BATTLEMAPPART_23robots_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -31929,7 +31929,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -31937,7 +31937,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_211</value>
+      <value>BATTLEMAPPART_23robots_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -31945,7 +31945,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -31953,7 +31953,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -31961,7 +31961,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -31969,7 +31969,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_42</value>
+      <value>BATTLEMAPPART_23robots_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -31977,7 +31977,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -31985,7 +31985,7 @@
         <y>24</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_17</value>
+      <value>BATTLEMAPPART_23robots_FT_17</value>
     </entry>
     <entry>
       <key>
@@ -31993,7 +31993,7 @@
         <y>25</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -32001,7 +32001,7 @@
         <y>25</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_12</value>
+      <value>BATTLEMAPPART_23robots_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -32009,7 +32009,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -32017,7 +32017,7 @@
         <y>26</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_12</value>
+      <value>BATTLEMAPPART_23robots_FT_12</value>
     </entry>
     <entry>
       <key>
@@ -32025,7 +32025,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_33</value>
+      <value>BATTLEMAPPART_23robots_FT_33</value>
     </entry>
     <entry>
       <key>
@@ -32033,7 +32033,7 @@
         <y>27</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_8</value>
+      <value>BATTLEMAPPART_23robots_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -32041,7 +32041,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -32049,7 +32049,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_29</value>
+      <value>BATTLEMAPPART_23robots_FT_29</value>
     </entry>
     <entry>
       <key>
@@ -32057,7 +32057,7 @@
         <y>28</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_4</value>
+      <value>BATTLEMAPPART_23robots_FT_4</value>
     </entry>
     <entry>
       <key>
@@ -32065,7 +32065,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -32073,7 +32073,7 @@
         <y>29</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_25</value>
+      <value>BATTLEMAPPART_23robots_FT_25</value>
     </entry>
     <entry>
       <key>
@@ -32081,7 +32081,7 @@
         <y>29</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_1</value>
+      <value>BATTLEMAPPART_23robots_FT_1</value>
     </entry>
     <entry>
       <key>
@@ -32089,7 +32089,7 @@
         <y>30</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -32097,7 +32097,7 @@
         <y>30</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_21</value>
+      <value>BATTLEMAPPART_23robots_FT_21</value>
     </entry>
     <entry>
       <key>
@@ -32105,7 +32105,7 @@
         <y>31</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_212</value>
+      <value>BATTLEMAPPART_23robots_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -32113,7 +32113,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_219</value>
+      <value>BATTLEMAPPART_23robots_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -32121,7 +32121,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -32129,7 +32129,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_206</value>
+      <value>BATTLEMAPPART_23robots_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -32137,7 +32137,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_202</value>
+      <value>BATTLEMAPPART_23robots_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -32145,7 +32145,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_211</value>
+      <value>BATTLEMAPPART_23robots_FT_211</value>
     </entry>
     <entry>
       <key>
@@ -32153,7 +32153,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_212</value>
+      <value>BATTLEMAPPART_23robots_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -32161,7 +32161,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -32169,7 +32169,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -32177,7 +32177,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -32185,7 +32185,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_64</value>
+      <value>BATTLEMAPPART_23robots_FT_64</value>
     </entry>
     <entry>
       <key>
@@ -32193,7 +32193,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_41</value>
+      <value>BATTLEMAPPART_23robots_FT_41</value>
     </entry>
     <entry>
       <key>
@@ -32201,7 +32201,7 @@
         <y>24</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_39</value>
+      <value>BATTLEMAPPART_23robots_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -32209,7 +32209,7 @@
         <y>24</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_16</value>
+      <value>BATTLEMAPPART_23robots_FT_16</value>
     </entry>
     <entry>
       <key>
@@ -32217,7 +32217,7 @@
         <y>25</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_37</value>
+      <value>BATTLEMAPPART_23robots_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -32225,7 +32225,7 @@
         <y>25</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_14</value>
+      <value>BATTLEMAPPART_23robots_FT_14</value>
     </entry>
     <entry>
       <key>
@@ -32233,7 +32233,7 @@
         <y>26</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_35</value>
+      <value>BATTLEMAPPART_23robots_FT_35</value>
     </entry>
     <entry>
       <key>
@@ -32241,7 +32241,7 @@
         <y>26</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_11</value>
+      <value>BATTLEMAPPART_23robots_FT_11</value>
     </entry>
     <entry>
       <key>
@@ -32249,7 +32249,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_141</value>
+      <value>BATTLEMAPPART_23robots_FT_141</value>
     </entry>
     <entry>
       <key>
@@ -32257,7 +32257,7 @@
         <y>27</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_32</value>
+      <value>BATTLEMAPPART_23robots_FT_32</value>
     </entry>
     <entry>
       <key>
@@ -32265,7 +32265,7 @@
         <y>27</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_7</value>
+      <value>BATTLEMAPPART_23robots_FT_7</value>
     </entry>
     <entry>
       <key>
@@ -32273,7 +32273,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -32281,7 +32281,7 @@
         <y>28</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_28</value>
+      <value>BATTLEMAPPART_23robots_FT_28</value>
     </entry>
     <entry>
       <key>
@@ -32289,7 +32289,7 @@
         <y>28</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_3</value>
+      <value>BATTLEMAPPART_23robots_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -32297,7 +32297,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -32305,7 +32305,7 @@
         <y>29</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_24</value>
+      <value>BATTLEMAPPART_23robots_FT_24</value>
     </entry>
     <entry>
       <key>
@@ -32313,7 +32313,7 @@
         <y>30</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -32321,7 +32321,7 @@
         <y>30</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_20</value>
+      <value>BATTLEMAPPART_23robots_FT_20</value>
     </entry>
     <entry>
       <key>
@@ -32329,7 +32329,7 @@
         <y>31</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -32337,7 +32337,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -32345,7 +32345,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -32353,7 +32353,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -32361,7 +32361,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -32369,7 +32369,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -32377,7 +32377,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -32385,7 +32385,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_203</value>
+      <value>BATTLEMAPPART_23robots_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -32393,7 +32393,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_204</value>
+      <value>BATTLEMAPPART_23robots_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -32401,7 +32401,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_210</value>
+      <value>BATTLEMAPPART_23robots_FT_210</value>
     </entry>
     <entry>
       <key>
@@ -32409,7 +32409,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_212</value>
+      <value>BATTLEMAPPART_23robots_FT_212</value>
     </entry>
     <entry>
       <key>
@@ -32417,7 +32417,7 @@
         <y>12</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_141</value>
+      <value>BATTLEMAPPART_23robots_FT_141</value>
     </entry>
     <entry>
       <key>
@@ -32425,7 +32425,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -32433,7 +32433,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -32441,7 +32441,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -32449,7 +32449,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_206</value>
+      <value>BATTLEMAPPART_23robots_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -32457,7 +32457,7 @@
         <y>30</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_206</value>
+      <value>BATTLEMAPPART_23robots_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -32465,7 +32465,7 @@
         <y>31</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -32473,7 +32473,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -32481,7 +32481,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -32489,7 +32489,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -32497,7 +32497,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -32505,7 +32505,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -32513,7 +32513,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -32521,7 +32521,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_208</value>
+      <value>BATTLEMAPPART_23robots_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -32529,7 +32529,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_209</value>
+      <value>BATTLEMAPPART_23robots_FT_209</value>
     </entry>
     <entry>
       <key>
@@ -32537,7 +32537,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -32545,7 +32545,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_213</value>
+      <value>BATTLEMAPPART_23robots_FT_213</value>
     </entry>
     <entry>
       <key>
@@ -32553,7 +32553,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_150</value>
+      <value>BATTLEMAPPART_23robots_FT_150</value>
     </entry>
     <entry>
       <key>
@@ -32561,7 +32561,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_149</value>
+      <value>BATTLEMAPPART_23robots_FT_149</value>
     </entry>
     <entry>
       <key>
@@ -32569,7 +32569,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_64</value>
+      <value>BATTLEMAPPART_23robots_FT_64</value>
     </entry>
     <entry>
       <key>
@@ -32577,7 +32577,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_148</value>
+      <value>BATTLEMAPPART_23robots_FT_148</value>
     </entry>
     <entry>
       <key>
@@ -32585,7 +32585,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_144</value>
+      <value>BATTLEMAPPART_23robots_FT_144</value>
     </entry>
     <entry>
       <key>
@@ -32593,7 +32593,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -32601,7 +32601,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -32609,7 +32609,7 @@
         <y>30</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_207</value>
+      <value>BATTLEMAPPART_23robots_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -32617,7 +32617,7 @@
         <y>31</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_206</value>
+      <value>BATTLEMAPPART_23robots_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -32625,7 +32625,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -32633,7 +32633,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -32641,7 +32641,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -32649,7 +32649,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -32657,7 +32657,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -32665,7 +32665,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -32673,7 +32673,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -32681,7 +32681,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -32689,7 +32689,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -32697,7 +32697,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_219</value>
+      <value>BATTLEMAPPART_23robots_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -32705,7 +32705,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -32713,7 +32713,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -32721,7 +32721,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -32729,7 +32729,7 @@
         <y>13</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_153</value>
+      <value>BATTLEMAPPART_23robots_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -32737,7 +32737,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -32745,7 +32745,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_152</value>
+      <value>BATTLEMAPPART_23robots_FT_152</value>
     </entry>
     <entry>
       <key>
@@ -32753,7 +32753,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -32761,7 +32761,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_151</value>
+      <value>BATTLEMAPPART_23robots_FT_151</value>
     </entry>
     <entry>
       <key>
@@ -32769,7 +32769,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -32777,7 +32777,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_219</value>
+      <value>BATTLEMAPPART_23robots_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -32785,7 +32785,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -32793,7 +32793,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -32801,7 +32801,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -32809,7 +32809,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -32817,7 +32817,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -32825,7 +32825,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -32833,7 +32833,7 @@
         <y>24</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_219</value>
+      <value>BATTLEMAPPART_23robots_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -32841,7 +32841,7 @@
         <y>25</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -32849,7 +32849,7 @@
         <y>26</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -32857,7 +32857,7 @@
         <y>27</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
     <entry>
       <key>
@@ -32865,7 +32865,7 @@
         <y>28</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_222</value>
+      <value>BATTLEMAPPART_23robots_FT_222</value>
     </entry>
     <entry>
       <key>
@@ -32873,7 +32873,7 @@
         <y>29</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_221</value>
+      <value>BATTLEMAPPART_23robots_FT_221</value>
     </entry>
     <entry>
       <key>
@@ -32881,7 +32881,7 @@
         <y>30</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_220</value>
+      <value>BATTLEMAPPART_23robots_FT_220</value>
     </entry>
     <entry>
       <key>
@@ -32889,7 +32889,7 @@
         <y>31</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_219</value>
+      <value>BATTLEMAPPART_23robots_FT_219</value>
     </entry>
     <entry>
       <key>
@@ -32897,7 +32897,7 @@
         <y>32</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_23robots_SC_223</value>
+      <value>BATTLEMAPPART_23robots_FT_223</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>

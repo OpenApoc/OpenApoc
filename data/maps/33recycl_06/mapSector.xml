@@ -18044,14 +18044,14 @@
       <value>BATTLEMAPPART_33recycl_RW_29</value>
     </entry>
   </initial_right_walls>
-  <initial_scenery>
+  <initial_features>
     <entry>
       <key>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18059,7 +18059,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18067,7 +18067,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18075,7 +18075,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18083,7 +18083,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18091,7 +18091,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18099,7 +18099,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18107,7 +18107,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18115,7 +18115,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18123,7 +18123,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18131,7 +18131,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18139,7 +18139,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18147,7 +18147,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18155,7 +18155,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18163,7 +18163,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18171,7 +18171,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18179,7 +18179,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18187,7 +18187,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18195,7 +18195,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -18203,7 +18203,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_183</value>
+      <value>BATTLEMAPPART_33recycl_FT_183</value>
     </entry>
     <entry>
       <key>
@@ -18211,7 +18211,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_202</value>
+      <value>BATTLEMAPPART_33recycl_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -18219,7 +18219,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -18227,7 +18227,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18235,7 +18235,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18243,7 +18243,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18251,7 +18251,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18259,7 +18259,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18267,7 +18267,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18275,7 +18275,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18283,7 +18283,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18291,7 +18291,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18299,7 +18299,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18307,7 +18307,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18315,7 +18315,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18323,7 +18323,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18331,7 +18331,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18339,7 +18339,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18347,7 +18347,7 @@
         <y>23</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18355,7 +18355,7 @@
         <y>23</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18363,7 +18363,7 @@
         <y>23</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18371,7 +18371,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18379,7 +18379,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18387,7 +18387,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18395,7 +18395,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18403,7 +18403,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18411,7 +18411,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18419,7 +18419,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18427,7 +18427,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18435,7 +18435,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18443,7 +18443,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18451,7 +18451,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -18459,7 +18459,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_205</value>
+      <value>BATTLEMAPPART_33recycl_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -18467,7 +18467,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_204</value>
+      <value>BATTLEMAPPART_33recycl_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -18475,7 +18475,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -18483,7 +18483,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18491,7 +18491,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18499,7 +18499,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18507,7 +18507,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18515,7 +18515,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18523,7 +18523,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18531,7 +18531,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18539,7 +18539,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18547,7 +18547,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18555,7 +18555,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18563,7 +18563,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18571,7 +18571,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18579,7 +18579,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18587,7 +18587,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18595,7 +18595,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18603,7 +18603,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18611,7 +18611,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18619,7 +18619,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18627,7 +18627,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18635,7 +18635,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18643,7 +18643,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -18651,7 +18651,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_203</value>
+      <value>BATTLEMAPPART_33recycl_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -18659,7 +18659,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_192</value>
+      <value>BATTLEMAPPART_33recycl_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -18667,7 +18667,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -18675,7 +18675,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18683,7 +18683,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18691,7 +18691,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18699,7 +18699,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18707,7 +18707,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18715,7 +18715,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18723,7 +18723,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18731,7 +18731,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18739,7 +18739,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18747,7 +18747,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18755,7 +18755,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18763,7 +18763,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18771,7 +18771,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18779,7 +18779,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18787,7 +18787,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18795,7 +18795,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18803,7 +18803,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18811,7 +18811,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18819,7 +18819,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18827,7 +18827,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18835,7 +18835,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18843,7 +18843,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18851,7 +18851,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18859,7 +18859,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18867,7 +18867,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18875,7 +18875,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18883,7 +18883,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18891,7 +18891,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18899,7 +18899,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18907,7 +18907,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18915,7 +18915,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18923,7 +18923,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18931,7 +18931,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18939,7 +18939,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18947,7 +18947,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18955,7 +18955,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18963,7 +18963,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18971,7 +18971,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18979,7 +18979,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18987,7 +18987,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -18995,7 +18995,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19003,7 +19003,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -19011,7 +19011,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19019,7 +19019,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_185</value>
+      <value>BATTLEMAPPART_33recycl_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -19027,7 +19027,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19035,7 +19035,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_205</value>
+      <value>BATTLEMAPPART_33recycl_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -19043,7 +19043,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19051,7 +19051,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -19059,7 +19059,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19067,7 +19067,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19075,7 +19075,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19083,7 +19083,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19091,7 +19091,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19099,7 +19099,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19107,7 +19107,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19115,7 +19115,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19123,7 +19123,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19131,7 +19131,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19139,7 +19139,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19147,7 +19147,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19155,7 +19155,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19163,7 +19163,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19171,7 +19171,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19179,7 +19179,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19187,7 +19187,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19195,7 +19195,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19203,7 +19203,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19211,7 +19211,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19219,7 +19219,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19227,7 +19227,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19235,7 +19235,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19243,7 +19243,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19251,7 +19251,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19259,7 +19259,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19267,7 +19267,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19275,7 +19275,7 @@
         <y>20</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19283,7 +19283,7 @@
         <y>20</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19291,7 +19291,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19299,7 +19299,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19307,7 +19307,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19315,7 +19315,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19323,7 +19323,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19331,7 +19331,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19339,7 +19339,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19347,7 +19347,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19355,7 +19355,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19363,7 +19363,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19371,7 +19371,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_80</value>
+      <value>BATTLEMAPPART_33recycl_FT_80</value>
     </entry>
     <entry>
       <key>
@@ -19379,7 +19379,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19387,7 +19387,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_66</value>
+      <value>BATTLEMAPPART_33recycl_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -19395,7 +19395,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19403,7 +19403,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_66</value>
+      <value>BATTLEMAPPART_33recycl_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -19411,7 +19411,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19419,7 +19419,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_66</value>
+      <value>BATTLEMAPPART_33recycl_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -19427,7 +19427,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19435,7 +19435,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_66</value>
+      <value>BATTLEMAPPART_33recycl_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -19443,7 +19443,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19451,7 +19451,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_66</value>
+      <value>BATTLEMAPPART_33recycl_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -19459,7 +19459,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19467,7 +19467,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_85</value>
+      <value>BATTLEMAPPART_33recycl_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -19475,7 +19475,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19483,7 +19483,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19491,7 +19491,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_207</value>
+      <value>BATTLEMAPPART_33recycl_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -19499,7 +19499,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19507,7 +19507,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_89</value>
+      <value>BATTLEMAPPART_33recycl_FT_89</value>
     </entry>
     <entry>
       <key>
@@ -19515,7 +19515,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19523,7 +19523,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_66</value>
+      <value>BATTLEMAPPART_33recycl_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -19531,7 +19531,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19539,7 +19539,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_66</value>
+      <value>BATTLEMAPPART_33recycl_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -19547,7 +19547,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19555,7 +19555,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_66</value>
+      <value>BATTLEMAPPART_33recycl_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -19563,7 +19563,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19571,7 +19571,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_66</value>
+      <value>BATTLEMAPPART_33recycl_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -19579,7 +19579,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19587,7 +19587,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_66</value>
+      <value>BATTLEMAPPART_33recycl_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -19595,7 +19595,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19603,7 +19603,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_76</value>
+      <value>BATTLEMAPPART_33recycl_FT_76</value>
     </entry>
     <entry>
       <key>
@@ -19611,7 +19611,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19619,7 +19619,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19627,7 +19627,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19635,7 +19635,7 @@
         <y>20</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19643,7 +19643,7 @@
         <y>20</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19651,7 +19651,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19659,7 +19659,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19667,7 +19667,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19675,7 +19675,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19683,7 +19683,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19691,7 +19691,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19699,7 +19699,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19707,7 +19707,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19715,7 +19715,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19723,7 +19723,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19731,7 +19731,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -19739,7 +19739,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19747,7 +19747,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_183</value>
+      <value>BATTLEMAPPART_33recycl_FT_183</value>
     </entry>
     <entry>
       <key>
@@ -19755,7 +19755,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19763,7 +19763,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_205</value>
+      <value>BATTLEMAPPART_33recycl_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -19771,7 +19771,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19779,7 +19779,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_198</value>
+      <value>BATTLEMAPPART_33recycl_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -19787,7 +19787,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19795,7 +19795,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_206</value>
+      <value>BATTLEMAPPART_33recycl_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -19803,7 +19803,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19811,7 +19811,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_182</value>
+      <value>BATTLEMAPPART_33recycl_FT_182</value>
     </entry>
     <entry>
       <key>
@@ -19819,7 +19819,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19827,7 +19827,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_209</value>
+      <value>BATTLEMAPPART_33recycl_FT_209</value>
     </entry>
     <entry>
       <key>
@@ -19835,7 +19835,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19843,7 +19843,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_193</value>
+      <value>BATTLEMAPPART_33recycl_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -19851,7 +19851,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19859,7 +19859,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_199</value>
+      <value>BATTLEMAPPART_33recycl_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -19867,7 +19867,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19875,7 +19875,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_202</value>
+      <value>BATTLEMAPPART_33recycl_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -19883,7 +19883,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19891,7 +19891,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_193</value>
+      <value>BATTLEMAPPART_33recycl_FT_193</value>
     </entry>
     <entry>
       <key>
@@ -19899,7 +19899,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19907,7 +19907,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_199</value>
+      <value>BATTLEMAPPART_33recycl_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -19915,7 +19915,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19923,7 +19923,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_202</value>
+      <value>BATTLEMAPPART_33recycl_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -19931,7 +19931,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19939,7 +19939,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_183</value>
+      <value>BATTLEMAPPART_33recycl_FT_183</value>
     </entry>
     <entry>
       <key>
@@ -19947,7 +19947,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19955,7 +19955,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_202</value>
+      <value>BATTLEMAPPART_33recycl_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -19963,7 +19963,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19971,7 +19971,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -19979,7 +19979,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19987,7 +19987,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -19995,7 +19995,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20003,7 +20003,7 @@
         <y>20</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20011,7 +20011,7 @@
         <y>20</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20019,7 +20019,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20027,7 +20027,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20035,7 +20035,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20043,7 +20043,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20051,7 +20051,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20059,7 +20059,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20067,7 +20067,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20075,7 +20075,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20083,7 +20083,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20091,7 +20091,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20099,7 +20099,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -20107,7 +20107,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20115,7 +20115,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_205</value>
+      <value>BATTLEMAPPART_33recycl_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -20123,7 +20123,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20131,7 +20131,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_207</value>
+      <value>BATTLEMAPPART_33recycl_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -20139,7 +20139,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20147,7 +20147,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_203</value>
+      <value>BATTLEMAPPART_33recycl_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -20155,7 +20155,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20163,7 +20163,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_185</value>
+      <value>BATTLEMAPPART_33recycl_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -20171,7 +20171,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20179,7 +20179,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_201</value>
+      <value>BATTLEMAPPART_33recycl_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -20187,7 +20187,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20195,7 +20195,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_205</value>
+      <value>BATTLEMAPPART_33recycl_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -20203,7 +20203,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20211,7 +20211,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_196</value>
+      <value>BATTLEMAPPART_33recycl_FT_196</value>
     </entry>
     <entry>
       <key>
@@ -20219,7 +20219,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20227,7 +20227,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_206</value>
+      <value>BATTLEMAPPART_33recycl_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -20235,7 +20235,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20243,7 +20243,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_195</value>
+      <value>BATTLEMAPPART_33recycl_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -20251,7 +20251,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20259,7 +20259,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_196</value>
+      <value>BATTLEMAPPART_33recycl_FT_196</value>
     </entry>
     <entry>
       <key>
@@ -20267,7 +20267,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20275,7 +20275,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_206</value>
+      <value>BATTLEMAPPART_33recycl_FT_206</value>
     </entry>
     <entry>
       <key>
@@ -20283,7 +20283,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20291,7 +20291,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_195</value>
+      <value>BATTLEMAPPART_33recycl_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -20299,7 +20299,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20307,7 +20307,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_205</value>
+      <value>BATTLEMAPPART_33recycl_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -20315,7 +20315,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20323,7 +20323,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_204</value>
+      <value>BATTLEMAPPART_33recycl_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -20331,7 +20331,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20339,7 +20339,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -20347,7 +20347,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20355,7 +20355,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20363,7 +20363,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20371,7 +20371,7 @@
         <y>20</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20379,7 +20379,7 @@
         <y>20</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20387,7 +20387,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20395,7 +20395,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20403,7 +20403,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20411,7 +20411,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20419,7 +20419,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20427,7 +20427,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20435,7 +20435,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20443,7 +20443,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20451,7 +20451,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20459,7 +20459,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20467,7 +20467,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -20475,7 +20475,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20483,7 +20483,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_203</value>
+      <value>BATTLEMAPPART_33recycl_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -20491,7 +20491,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20499,7 +20499,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_192</value>
+      <value>BATTLEMAPPART_33recycl_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -20507,7 +20507,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20515,7 +20515,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_87</value>
+      <value>BATTLEMAPPART_33recycl_FT_87</value>
     </entry>
     <entry>
       <key>
@@ -20523,7 +20523,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20531,7 +20531,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_71</value>
+      <value>BATTLEMAPPART_33recycl_FT_71</value>
     </entry>
     <entry>
       <key>
@@ -20539,7 +20539,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20547,7 +20547,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_71</value>
+      <value>BATTLEMAPPART_33recycl_FT_71</value>
     </entry>
     <entry>
       <key>
@@ -20555,7 +20555,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20563,7 +20563,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_83</value>
+      <value>BATTLEMAPPART_33recycl_FT_83</value>
     </entry>
     <entry>
       <key>
@@ -20571,7 +20571,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20579,7 +20579,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_195</value>
+      <value>BATTLEMAPPART_33recycl_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -20587,7 +20587,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20595,7 +20595,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_200</value>
+      <value>BATTLEMAPPART_33recycl_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -20603,7 +20603,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20611,7 +20611,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_87</value>
+      <value>BATTLEMAPPART_33recycl_FT_87</value>
     </entry>
     <entry>
       <key>
@@ -20619,7 +20619,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20627,7 +20627,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_71</value>
+      <value>BATTLEMAPPART_33recycl_FT_71</value>
     </entry>
     <entry>
       <key>
@@ -20635,7 +20635,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20643,7 +20643,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_71</value>
+      <value>BATTLEMAPPART_33recycl_FT_71</value>
     </entry>
     <entry>
       <key>
@@ -20651,7 +20651,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20659,7 +20659,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_83</value>
+      <value>BATTLEMAPPART_33recycl_FT_83</value>
     </entry>
     <entry>
       <key>
@@ -20667,7 +20667,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20675,7 +20675,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_183</value>
+      <value>BATTLEMAPPART_33recycl_FT_183</value>
     </entry>
     <entry>
       <key>
@@ -20683,7 +20683,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20691,7 +20691,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_202</value>
+      <value>BATTLEMAPPART_33recycl_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -20699,7 +20699,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20707,7 +20707,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -20715,7 +20715,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20723,7 +20723,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20731,7 +20731,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20739,7 +20739,7 @@
         <y>20</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20747,7 +20747,7 @@
         <y>20</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20755,7 +20755,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20763,7 +20763,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20771,7 +20771,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20779,7 +20779,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20787,7 +20787,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20795,7 +20795,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20803,7 +20803,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20811,7 +20811,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20819,7 +20819,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20827,7 +20827,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20835,7 +20835,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -20843,7 +20843,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20851,7 +20851,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_185</value>
+      <value>BATTLEMAPPART_33recycl_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -20859,7 +20859,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20867,7 +20867,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_205</value>
+      <value>BATTLEMAPPART_33recycl_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -20875,7 +20875,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20883,7 +20883,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -20891,7 +20891,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20899,7 +20899,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20907,7 +20907,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20915,7 +20915,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20923,7 +20923,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20931,7 +20931,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20939,7 +20939,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20947,7 +20947,7 @@
         <y>9</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20955,7 +20955,7 @@
         <y>9</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20963,7 +20963,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -20971,7 +20971,7 @@
         <y>10</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20979,7 +20979,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_208</value>
+      <value>BATTLEMAPPART_33recycl_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -20987,7 +20987,7 @@
         <y>11</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -20995,7 +20995,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_198</value>
+      <value>BATTLEMAPPART_33recycl_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -21003,7 +21003,7 @@
         <y>12</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21011,7 +21011,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -21019,7 +21019,7 @@
         <y>13</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21027,7 +21027,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21035,7 +21035,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21043,7 +21043,7 @@
         <y>14</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21051,7 +21051,7 @@
         <y>14</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21059,7 +21059,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21067,7 +21067,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21075,7 +21075,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21083,7 +21083,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21091,7 +21091,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -21099,7 +21099,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21107,7 +21107,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_205</value>
+      <value>BATTLEMAPPART_33recycl_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -21115,7 +21115,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21123,7 +21123,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_204</value>
+      <value>BATTLEMAPPART_33recycl_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -21131,7 +21131,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21139,7 +21139,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -21147,7 +21147,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21155,7 +21155,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21163,7 +21163,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21171,7 +21171,7 @@
         <y>20</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21179,7 +21179,7 @@
         <y>20</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21187,7 +21187,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21195,7 +21195,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21203,7 +21203,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21211,7 +21211,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21219,7 +21219,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21227,7 +21227,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21235,7 +21235,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21243,7 +21243,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21251,7 +21251,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21259,7 +21259,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21267,7 +21267,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21275,7 +21275,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21283,7 +21283,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21291,7 +21291,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21299,7 +21299,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -21307,7 +21307,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21315,7 +21315,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_203</value>
+      <value>BATTLEMAPPART_33recycl_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -21323,7 +21323,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21331,7 +21331,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_207</value>
+      <value>BATTLEMAPPART_33recycl_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -21339,7 +21339,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21347,7 +21347,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -21355,7 +21355,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21363,7 +21363,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21371,7 +21371,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21379,7 +21379,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21387,7 +21387,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21395,7 +21395,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21403,7 +21403,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -21411,7 +21411,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_185</value>
+      <value>BATTLEMAPPART_33recycl_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -21419,7 +21419,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_3</value>
+      <value>BATTLEMAPPART_33recycl_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -21427,7 +21427,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_205</value>
+      <value>BATTLEMAPPART_33recycl_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -21435,7 +21435,7 @@
         <y>12</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_3</value>
+      <value>BATTLEMAPPART_33recycl_FT_3</value>
     </entry>
     <entry>
       <key>
@@ -21443,7 +21443,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -21451,7 +21451,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21459,7 +21459,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21467,7 +21467,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21475,7 +21475,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21483,7 +21483,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21491,7 +21491,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -21499,7 +21499,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21507,7 +21507,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_203</value>
+      <value>BATTLEMAPPART_33recycl_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -21515,7 +21515,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21523,7 +21523,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_192</value>
+      <value>BATTLEMAPPART_33recycl_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -21531,7 +21531,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21539,7 +21539,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -21547,7 +21547,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21555,7 +21555,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21563,7 +21563,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21571,7 +21571,7 @@
         <y>20</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21579,7 +21579,7 @@
         <y>20</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21587,7 +21587,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21595,7 +21595,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21603,7 +21603,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21611,7 +21611,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21619,7 +21619,7 @@
         <y>23</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21627,7 +21627,7 @@
         <y>23</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21635,7 +21635,7 @@
         <y>23</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21643,7 +21643,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21651,7 +21651,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21659,7 +21659,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21667,7 +21667,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21675,7 +21675,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21683,7 +21683,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21691,7 +21691,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21699,7 +21699,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -21707,7 +21707,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21715,7 +21715,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_183</value>
+      <value>BATTLEMAPPART_33recycl_FT_183</value>
     </entry>
     <entry>
       <key>
@@ -21723,7 +21723,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21731,7 +21731,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21739,7 +21739,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -21747,7 +21747,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21755,7 +21755,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21763,7 +21763,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21771,7 +21771,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21779,7 +21779,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21787,7 +21787,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21795,7 +21795,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -21803,7 +21803,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_207</value>
+      <value>BATTLEMAPPART_33recycl_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -21811,7 +21811,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -21819,7 +21819,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21827,7 +21827,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21835,7 +21835,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21843,7 +21843,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21851,7 +21851,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21859,7 +21859,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -21867,7 +21867,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21875,7 +21875,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_185</value>
+      <value>BATTLEMAPPART_33recycl_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -21883,7 +21883,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21891,7 +21891,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21899,7 +21899,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -21907,7 +21907,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21915,7 +21915,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21923,7 +21923,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21931,7 +21931,7 @@
         <y>20</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21939,7 +21939,7 @@
         <y>20</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21947,7 +21947,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21955,7 +21955,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21963,7 +21963,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21971,7 +21971,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21979,7 +21979,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21987,7 +21987,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -21995,7 +21995,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22003,7 +22003,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22011,7 +22011,7 @@
         <y>3</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22019,7 +22019,7 @@
         <y>3</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22027,7 +22027,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -22035,7 +22035,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22043,7 +22043,7 @@
         <y>4</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22051,7 +22051,7 @@
         <y>4</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22059,7 +22059,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_201</value>
+      <value>BATTLEMAPPART_33recycl_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -22067,7 +22067,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22075,7 +22075,7 @@
         <y>5</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22083,7 +22083,7 @@
         <y>5</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22091,7 +22091,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22099,7 +22099,7 @@
         <y>6</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22107,7 +22107,7 @@
         <y>6</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22115,7 +22115,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -22123,7 +22123,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22131,7 +22131,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22139,7 +22139,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22147,7 +22147,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22155,7 +22155,7 @@
         <y>8</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22163,7 +22163,7 @@
         <y>8</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22171,7 +22171,7 @@
         <y>8</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22179,7 +22179,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22187,7 +22187,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -22195,7 +22195,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_183</value>
+      <value>BATTLEMAPPART_33recycl_FT_183</value>
     </entry>
     <entry>
       <key>
@@ -22203,7 +22203,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_5</value>
+      <value>BATTLEMAPPART_33recycl_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -22211,7 +22211,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_199</value>
+      <value>BATTLEMAPPART_33recycl_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -22219,7 +22219,7 @@
         <y>12</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_5</value>
+      <value>BATTLEMAPPART_33recycl_FT_5</value>
     </entry>
     <entry>
       <key>
@@ -22227,7 +22227,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -22235,7 +22235,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22243,7 +22243,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22251,7 +22251,7 @@
         <y>15</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22259,7 +22259,7 @@
         <y>15</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22267,7 +22267,7 @@
         <y>15</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22275,7 +22275,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -22283,7 +22283,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22291,7 +22291,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22299,7 +22299,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22307,7 +22307,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_201</value>
+      <value>BATTLEMAPPART_33recycl_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -22315,7 +22315,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22323,7 +22323,7 @@
         <y>17</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22331,7 +22331,7 @@
         <y>17</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22339,7 +22339,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22347,7 +22347,7 @@
         <y>18</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22355,7 +22355,7 @@
         <y>18</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22363,7 +22363,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -22371,7 +22371,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22379,7 +22379,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22387,7 +22387,7 @@
         <y>19</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22395,7 +22395,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22403,7 +22403,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22411,7 +22411,7 @@
         <y>20</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22419,7 +22419,7 @@
         <y>20</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22427,7 +22427,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22435,7 +22435,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22443,7 +22443,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22451,7 +22451,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22459,7 +22459,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22467,7 +22467,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22475,7 +22475,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22483,7 +22483,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -22491,7 +22491,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -22499,7 +22499,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_195</value>
+      <value>BATTLEMAPPART_33recycl_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -22507,7 +22507,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -22515,7 +22515,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -22523,7 +22523,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22531,7 +22531,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22539,7 +22539,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_146</value>
+      <value>BATTLEMAPPART_33recycl_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -22547,7 +22547,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -22555,7 +22555,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_201</value>
+      <value>BATTLEMAPPART_33recycl_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -22563,7 +22563,7 @@
         <y>11</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_154</value>
+      <value>BATTLEMAPPART_33recycl_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -22571,7 +22571,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_192</value>
+      <value>BATTLEMAPPART_33recycl_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -22579,7 +22579,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -22587,7 +22587,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22595,7 +22595,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_146</value>
+      <value>BATTLEMAPPART_33recycl_FT_146</value>
     </entry>
     <entry>
       <key>
@@ -22603,7 +22603,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22611,7 +22611,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -22619,7 +22619,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -22627,7 +22627,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_183</value>
+      <value>BATTLEMAPPART_33recycl_FT_183</value>
     </entry>
     <entry>
       <key>
@@ -22635,7 +22635,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -22643,7 +22643,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -22651,7 +22651,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22659,7 +22659,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22667,7 +22667,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22675,7 +22675,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22683,7 +22683,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22691,7 +22691,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22699,7 +22699,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22707,7 +22707,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22715,7 +22715,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -22723,7 +22723,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -22731,7 +22731,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_208</value>
+      <value>BATTLEMAPPART_33recycl_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -22739,7 +22739,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_198</value>
+      <value>BATTLEMAPPART_33recycl_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -22747,7 +22747,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -22755,7 +22755,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -22763,7 +22763,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22771,7 +22771,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22779,7 +22779,7 @@
         <y>9</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_147</value>
+      <value>BATTLEMAPPART_33recycl_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -22787,7 +22787,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -22795,7 +22795,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_195</value>
+      <value>BATTLEMAPPART_33recycl_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -22803,7 +22803,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -22811,7 +22811,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22819,7 +22819,7 @@
         <y>14</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_147</value>
+      <value>BATTLEMAPPART_33recycl_FT_147</value>
     </entry>
     <entry>
       <key>
@@ -22827,7 +22827,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22835,7 +22835,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -22843,7 +22843,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -22851,7 +22851,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_201</value>
+      <value>BATTLEMAPPART_33recycl_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -22859,7 +22859,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_192</value>
+      <value>BATTLEMAPPART_33recycl_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -22867,7 +22867,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -22875,7 +22875,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -22883,7 +22883,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22891,7 +22891,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22899,7 +22899,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22907,7 +22907,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22915,7 +22915,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22923,7 +22923,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22931,7 +22931,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22939,7 +22939,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22947,7 +22947,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22955,7 +22955,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22963,7 +22963,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22971,7 +22971,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -22979,7 +22979,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -22987,7 +22987,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -22995,7 +22995,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_195</value>
+      <value>BATTLEMAPPART_33recycl_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -23003,7 +23003,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_200</value>
+      <value>BATTLEMAPPART_33recycl_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -23011,7 +23011,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -23019,7 +23019,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -23027,7 +23027,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23035,7 +23035,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23043,7 +23043,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -23051,7 +23051,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_208</value>
+      <value>BATTLEMAPPART_33recycl_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -23059,7 +23059,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -23067,7 +23067,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23075,7 +23075,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23083,7 +23083,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -23091,7 +23091,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -23099,7 +23099,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_195</value>
+      <value>BATTLEMAPPART_33recycl_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -23107,7 +23107,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_200</value>
+      <value>BATTLEMAPPART_33recycl_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -23115,7 +23115,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -23123,7 +23123,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -23131,7 +23131,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23139,7 +23139,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23147,7 +23147,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23155,7 +23155,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23163,7 +23163,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23171,7 +23171,7 @@
         <y>23</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23179,7 +23179,7 @@
         <y>23</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23187,7 +23187,7 @@
         <y>23</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23195,7 +23195,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23203,7 +23203,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23211,7 +23211,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23219,7 +23219,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23227,7 +23227,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -23235,7 +23235,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -23243,7 +23243,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_208</value>
+      <value>BATTLEMAPPART_33recycl_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -23251,7 +23251,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_198</value>
+      <value>BATTLEMAPPART_33recycl_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -23259,7 +23259,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -23267,7 +23267,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -23275,7 +23275,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23283,7 +23283,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23291,7 +23291,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -23299,7 +23299,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_183</value>
+      <value>BATTLEMAPPART_33recycl_FT_183</value>
     </entry>
     <entry>
       <key>
@@ -23307,7 +23307,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_202</value>
+      <value>BATTLEMAPPART_33recycl_FT_202</value>
     </entry>
     <entry>
       <key>
@@ -23315,7 +23315,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -23323,7 +23323,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23331,7 +23331,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23339,7 +23339,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -23347,7 +23347,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -23355,7 +23355,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_208</value>
+      <value>BATTLEMAPPART_33recycl_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -23363,7 +23363,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_198</value>
+      <value>BATTLEMAPPART_33recycl_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -23371,7 +23371,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -23379,7 +23379,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -23387,7 +23387,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23395,7 +23395,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23403,7 +23403,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23411,7 +23411,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23419,7 +23419,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23427,7 +23427,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23435,7 +23435,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23443,7 +23443,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23451,7 +23451,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_78</value>
+      <value>BATTLEMAPPART_33recycl_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -23459,7 +23459,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -23467,7 +23467,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_71</value>
+      <value>BATTLEMAPPART_33recycl_FT_71</value>
     </entry>
     <entry>
       <key>
@@ -23475,7 +23475,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_71</value>
+      <value>BATTLEMAPPART_33recycl_FT_71</value>
     </entry>
     <entry>
       <key>
@@ -23483,7 +23483,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_74</value>
+      <value>BATTLEMAPPART_33recycl_FT_74</value>
     </entry>
     <entry>
       <key>
@@ -23491,7 +23491,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -23499,7 +23499,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23507,7 +23507,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23515,7 +23515,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -23523,7 +23523,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_205</value>
+      <value>BATTLEMAPPART_33recycl_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -23531,7 +23531,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_204</value>
+      <value>BATTLEMAPPART_33recycl_FT_204</value>
     </entry>
     <entry>
       <key>
@@ -23539,7 +23539,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -23547,7 +23547,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23555,7 +23555,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23563,7 +23563,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_78</value>
+      <value>BATTLEMAPPART_33recycl_FT_78</value>
     </entry>
     <entry>
       <key>
@@ -23571,7 +23571,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -23579,7 +23579,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_71</value>
+      <value>BATTLEMAPPART_33recycl_FT_71</value>
     </entry>
     <entry>
       <key>
@@ -23587,7 +23587,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_71</value>
+      <value>BATTLEMAPPART_33recycl_FT_71</value>
     </entry>
     <entry>
       <key>
@@ -23595,7 +23595,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_74</value>
+      <value>BATTLEMAPPART_33recycl_FT_74</value>
     </entry>
     <entry>
       <key>
@@ -23603,7 +23603,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -23611,7 +23611,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23619,7 +23619,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23627,7 +23627,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23635,7 +23635,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23643,7 +23643,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23651,7 +23651,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23659,7 +23659,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23667,7 +23667,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23675,7 +23675,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23683,7 +23683,7 @@
         <y>4</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_89</value>
+      <value>BATTLEMAPPART_33recycl_FT_89</value>
     </entry>
     <entry>
       <key>
@@ -23691,7 +23691,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23699,7 +23699,7 @@
         <y>5</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_66</value>
+      <value>BATTLEMAPPART_33recycl_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -23707,7 +23707,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23715,7 +23715,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_66</value>
+      <value>BATTLEMAPPART_33recycl_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -23723,7 +23723,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23731,7 +23731,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_85</value>
+      <value>BATTLEMAPPART_33recycl_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -23739,7 +23739,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23747,7 +23747,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23755,7 +23755,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -23763,7 +23763,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_203</value>
+      <value>BATTLEMAPPART_33recycl_FT_203</value>
     </entry>
     <entry>
       <key>
@@ -23771,7 +23771,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_192</value>
+      <value>BATTLEMAPPART_33recycl_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -23779,7 +23779,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -23787,7 +23787,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23795,7 +23795,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23803,7 +23803,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23811,7 +23811,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_89</value>
+      <value>BATTLEMAPPART_33recycl_FT_89</value>
     </entry>
     <entry>
       <key>
@@ -23819,7 +23819,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23827,7 +23827,7 @@
         <y>17</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_66</value>
+      <value>BATTLEMAPPART_33recycl_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -23835,7 +23835,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23843,7 +23843,7 @@
         <y>18</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_66</value>
+      <value>BATTLEMAPPART_33recycl_FT_66</value>
     </entry>
     <entry>
       <key>
@@ -23851,7 +23851,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23859,7 +23859,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_85</value>
+      <value>BATTLEMAPPART_33recycl_FT_85</value>
     </entry>
     <entry>
       <key>
@@ -23867,7 +23867,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23875,7 +23875,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23883,7 +23883,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23891,7 +23891,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23899,7 +23899,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23907,7 +23907,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_8</value>
+      <value>BATTLEMAPPART_33recycl_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -23915,7 +23915,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23923,7 +23923,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23931,7 +23931,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_9</value>
+      <value>BATTLEMAPPART_33recycl_FT_9</value>
     </entry>
     <entry>
       <key>
@@ -23939,7 +23939,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23947,7 +23947,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23955,7 +23955,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23963,7 +23963,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23971,7 +23971,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23979,7 +23979,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23987,7 +23987,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -23995,7 +23995,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -24003,7 +24003,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_185</value>
+      <value>BATTLEMAPPART_33recycl_FT_185</value>
     </entry>
     <entry>
       <key>
@@ -24011,7 +24011,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_205</value>
+      <value>BATTLEMAPPART_33recycl_FT_205</value>
     </entry>
     <entry>
       <key>
@@ -24019,7 +24019,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -24027,7 +24027,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24035,7 +24035,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24043,7 +24043,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24051,7 +24051,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24059,7 +24059,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24067,7 +24067,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24075,7 +24075,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24083,7 +24083,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24091,7 +24091,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24099,7 +24099,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24107,7 +24107,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24115,7 +24115,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_9</value>
+      <value>BATTLEMAPPART_33recycl_FT_9</value>
     </entry>
     <entry>
       <key>
@@ -24123,7 +24123,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24131,7 +24131,7 @@
         <y>1</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_155</value>
+      <value>BATTLEMAPPART_33recycl_FT_155</value>
     </entry>
     <entry>
       <key>
@@ -24139,7 +24139,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24147,7 +24147,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_9</value>
+      <value>BATTLEMAPPART_33recycl_FT_9</value>
     </entry>
     <entry>
       <key>
@@ -24155,7 +24155,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24163,7 +24163,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24171,7 +24171,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24179,7 +24179,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24187,7 +24187,7 @@
         <y>6</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_154</value>
+      <value>BATTLEMAPPART_33recycl_FT_154</value>
     </entry>
     <entry>
       <key>
@@ -24195,7 +24195,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24203,7 +24203,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24211,7 +24211,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24219,7 +24219,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -24227,7 +24227,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_207</value>
+      <value>BATTLEMAPPART_33recycl_FT_207</value>
     </entry>
     <entry>
       <key>
@@ -24235,7 +24235,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -24243,7 +24243,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24251,7 +24251,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24259,7 +24259,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24267,7 +24267,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24275,7 +24275,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24283,7 +24283,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24291,7 +24291,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24299,7 +24299,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24307,7 +24307,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24315,7 +24315,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24323,7 +24323,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24331,7 +24331,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_9</value>
+      <value>BATTLEMAPPART_33recycl_FT_9</value>
     </entry>
     <entry>
       <key>
@@ -24339,7 +24339,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24347,7 +24347,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24355,7 +24355,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_8</value>
+      <value>BATTLEMAPPART_33recycl_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -24363,7 +24363,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24371,7 +24371,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24379,7 +24379,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24387,7 +24387,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24395,7 +24395,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24403,7 +24403,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24411,7 +24411,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24419,7 +24419,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -24427,7 +24427,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_199</value>
+      <value>BATTLEMAPPART_33recycl_FT_199</value>
     </entry>
     <entry>
       <key>
@@ -24435,7 +24435,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -24443,7 +24443,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24451,7 +24451,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24459,7 +24459,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24467,7 +24467,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24475,7 +24475,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24483,7 +24483,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24491,7 +24491,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24499,7 +24499,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24507,7 +24507,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24515,7 +24515,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24523,7 +24523,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24531,7 +24531,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_8</value>
+      <value>BATTLEMAPPART_33recycl_FT_8</value>
     </entry>
     <entry>
       <key>
@@ -24539,7 +24539,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24547,7 +24547,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24555,7 +24555,7 @@
         <y>2</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_9</value>
+      <value>BATTLEMAPPART_33recycl_FT_9</value>
     </entry>
     <entry>
       <key>
@@ -24563,7 +24563,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24571,7 +24571,7 @@
         <y>3</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_153</value>
+      <value>BATTLEMAPPART_33recycl_FT_153</value>
     </entry>
     <entry>
       <key>
@@ -24579,7 +24579,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24587,7 +24587,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24595,7 +24595,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24603,7 +24603,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24611,7 +24611,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24619,7 +24619,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24627,7 +24627,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -24635,7 +24635,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_201</value>
+      <value>BATTLEMAPPART_33recycl_FT_201</value>
     </entry>
     <entry>
       <key>
@@ -24643,7 +24643,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_192</value>
+      <value>BATTLEMAPPART_33recycl_FT_192</value>
     </entry>
     <entry>
       <key>
@@ -24651,7 +24651,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -24659,7 +24659,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24667,7 +24667,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24675,7 +24675,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24683,7 +24683,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24691,7 +24691,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24699,7 +24699,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24707,7 +24707,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_48</value>
+      <value>BATTLEMAPPART_33recycl_FT_48</value>
     </entry>
     <entry>
       <key>
@@ -24715,7 +24715,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_42</value>
+      <value>BATTLEMAPPART_33recycl_FT_42</value>
     </entry>
     <entry>
       <key>
@@ -24723,7 +24723,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24731,7 +24731,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_47</value>
+      <value>BATTLEMAPPART_33recycl_FT_47</value>
     </entry>
     <entry>
       <key>
@@ -24739,7 +24739,7 @@
         <y>20</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_41</value>
+      <value>BATTLEMAPPART_33recycl_FT_41</value>
     </entry>
     <entry>
       <key>
@@ -24747,7 +24747,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24755,7 +24755,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_46</value>
+      <value>BATTLEMAPPART_33recycl_FT_46</value>
     </entry>
     <entry>
       <key>
@@ -24763,7 +24763,7 @@
         <y>21</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_40</value>
+      <value>BATTLEMAPPART_33recycl_FT_40</value>
     </entry>
     <entry>
       <key>
@@ -24771,7 +24771,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24779,7 +24779,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24787,7 +24787,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24795,7 +24795,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24803,7 +24803,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24811,7 +24811,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24819,7 +24819,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24827,7 +24827,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24835,7 +24835,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24843,7 +24843,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24851,7 +24851,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24859,7 +24859,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24867,7 +24867,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -24875,7 +24875,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_195</value>
+      <value>BATTLEMAPPART_33recycl_FT_195</value>
     </entry>
     <entry>
       <key>
@@ -24883,7 +24883,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_200</value>
+      <value>BATTLEMAPPART_33recycl_FT_200</value>
     </entry>
     <entry>
       <key>
@@ -24891,7 +24891,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -24899,7 +24899,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24907,7 +24907,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24915,7 +24915,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24923,7 +24923,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24931,7 +24931,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24939,7 +24939,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24947,7 +24947,7 @@
         <y>19</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_45</value>
+      <value>BATTLEMAPPART_33recycl_FT_45</value>
     </entry>
     <entry>
       <key>
@@ -24955,7 +24955,7 @@
         <y>19</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_39</value>
+      <value>BATTLEMAPPART_33recycl_FT_39</value>
     </entry>
     <entry>
       <key>
@@ -24963,7 +24963,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24971,7 +24971,7 @@
         <y>20</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_44</value>
+      <value>BATTLEMAPPART_33recycl_FT_44</value>
     </entry>
     <entry>
       <key>
@@ -24979,7 +24979,7 @@
         <y>20</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_38</value>
+      <value>BATTLEMAPPART_33recycl_FT_38</value>
     </entry>
     <entry>
       <key>
@@ -24987,7 +24987,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -24995,7 +24995,7 @@
         <y>21</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_43</value>
+      <value>BATTLEMAPPART_33recycl_FT_43</value>
     </entry>
     <entry>
       <key>
@@ -25003,7 +25003,7 @@
         <y>21</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_37</value>
+      <value>BATTLEMAPPART_33recycl_FT_37</value>
     </entry>
     <entry>
       <key>
@@ -25011,7 +25011,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25019,7 +25019,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25027,7 +25027,7 @@
         <y>0</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25035,7 +25035,7 @@
         <y>0</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25043,7 +25043,7 @@
         <y>0</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25051,7 +25051,7 @@
         <y>0</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25059,7 +25059,7 @@
         <y>0</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25067,7 +25067,7 @@
         <y>1</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25075,7 +25075,7 @@
         <y>2</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25083,7 +25083,7 @@
         <y>3</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25091,7 +25091,7 @@
         <y>4</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25099,7 +25099,7 @@
         <y>5</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25107,7 +25107,7 @@
         <y>6</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25115,7 +25115,7 @@
         <y>7</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25123,7 +25123,7 @@
         <y>7</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25131,7 +25131,7 @@
         <y>7</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25139,7 +25139,7 @@
         <y>7</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25147,7 +25147,7 @@
         <y>7</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25155,7 +25155,7 @@
         <y>8</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25163,7 +25163,7 @@
         <y>9</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25171,7 +25171,7 @@
         <y>10</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_58</value>
+      <value>BATTLEMAPPART_33recycl_FT_58</value>
     </entry>
     <entry>
       <key>
@@ -25179,7 +25179,7 @@
         <y>11</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_208</value>
+      <value>BATTLEMAPPART_33recycl_FT_208</value>
     </entry>
     <entry>
       <key>
@@ -25187,7 +25187,7 @@
         <y>12</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_198</value>
+      <value>BATTLEMAPPART_33recycl_FT_198</value>
     </entry>
     <entry>
       <key>
@@ -25195,7 +25195,7 @@
         <y>13</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_63</value>
+      <value>BATTLEMAPPART_33recycl_FT_63</value>
     </entry>
     <entry>
       <key>
@@ -25203,7 +25203,7 @@
         <y>14</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25211,7 +25211,7 @@
         <y>15</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25219,7 +25219,7 @@
         <y>16</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25227,7 +25227,7 @@
         <y>16</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25235,7 +25235,7 @@
         <y>16</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25243,7 +25243,7 @@
         <y>16</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25251,7 +25251,7 @@
         <y>16</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25259,7 +25259,7 @@
         <y>17</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25267,7 +25267,7 @@
         <y>18</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25275,7 +25275,7 @@
         <y>19</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25283,7 +25283,7 @@
         <y>20</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25291,7 +25291,7 @@
         <y>21</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25299,7 +25299,7 @@
         <y>22</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25307,7 +25307,7 @@
         <y>23</y>
         <z>0</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25315,7 +25315,7 @@
         <y>23</y>
         <z>1</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25323,7 +25323,7 @@
         <y>23</y>
         <z>2</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25331,7 +25331,7 @@
         <y>23</y>
         <z>3</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
     <entry>
       <key>
@@ -25339,7 +25339,7 @@
         <y>23</y>
         <z>4</z>
       </key>
-      <value>BATTLEMAPPART_33recycl_SC_243</value>
+      <value>BATTLEMAPPART_33recycl_FT_243</value>
     </entry>
-  </initial_scenery>
+  </initial_features>
 </mapSector>
