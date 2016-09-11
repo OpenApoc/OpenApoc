@@ -20,10 +20,14 @@ class TileObject : public std::enable_shared_from_this<TileObject>
   public:
 	enum class Type
 	{
+		// For easier checking of Z-levels in battlescape, first four entries
+		// here must be the four battle map parts in their drawing order
 		Ground,
 		LeftWall,
 		RightWall,
 		Feature,
+
+		// From here on in,anything else goes
 		Unit,
 		Projectile,
 		Vehicle,

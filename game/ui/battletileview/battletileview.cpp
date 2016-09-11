@@ -12,8 +12,7 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
     : Stage(), map(map), isoTileSize(isoTileSize), stratTileSize(stratTileSize),
       viewMode(initialMode), scrollUp(false), scrollDown(false), scrollLeft(false),
       scrollRight(false), dpySize(fw().displayGetWidth(), fw().displayGetHeight()),
-      strategyViewBoxColour(212, 176, 172, 255), strategyViewBoxThickness(2.0f), hideGround(false),
-      hideLeftWall(false), hideRightWall(false), hideFeature(false), currentZLevel(1),
+      strategyViewBoxColour(212, 176, 172, 255), strategyViewBoxThickness(2.0f), currentZLevel(1),
       layerDrawingMode(BattleLayerDrawingMode::UpToCurrentLevel), selectedTilePosition(0, 0, 0),
       selectedTileEmptyImageBack(fw().data->loadImage("battle/selected-battletile-empty-back.png")),
       selectedTileEmptyImageFront(
@@ -41,7 +40,6 @@ void BattleTileView::finish() {}
 
 void BattleTileView::eventOccurred(Event *e)
 {
-
 	if (e->type() == EVENT_KEY_DOWN)
 	{
 		switch (e->keyboard().KeyCode)
@@ -83,16 +81,13 @@ void BattleTileView::eventOccurred(Event *e)
 					selectedTilePosition.z--;
 				break;
 			case SDLK_1:
-				hideGround = !hideGround;
+				pal = fw().data->loadPalette("xcom3/ufodata/PAL_01.DAT");
 				break;
 			case SDLK_2:
-				hideLeftWall = !hideLeftWall;
+				pal = fw().data->loadPalette("xcom3/ufodata/PAL_02.DAT");
 				break;
 			case SDLK_3:
-				hideRightWall = !hideRightWall;
-				break;
-			case SDLK_4:
-				hideFeature = !hideFeature;
+				pal = fw().data->loadPalette("xcom3/ufodata/PAL_03.DAT");
 				break;
 			case SDLK_F6:
 			{
@@ -239,30 +234,34 @@ void BattleTileView::render()
 			LogError("Unknown drawing mode");
 	}
 
-	if (this->viewMode == TileViewMode::Isometric)
+	// Find out when to draw selection bracket parts (if ever)
+	Tile *selectedTile = nullptr;
+	sp<TileObject> drawBackBeforeThis;
+	sp<Image> selectionImageBack;
+	sp<Image> selectionImageFront;
+	if (selectedTilePosition.x >= minX && selectedTilePosition.x < maxX &&
+	    selectedTilePosition.y >= minY && selectedTilePosition.y < maxY &&
+	    selectedTilePosition.z >= zFrom && selectedTilePosition.z < zTo)
 	{
-		// Find out when to draw selection bracket parts (if ever)
-		Tile *selectedTile = nullptr;
-		sp<TileObject> drawBackBeforeThis;
-		sp<Image> selectionImageBack;
-		sp<Image> selectionImageFront;
-		if (selectedTilePosition.x >= minX && selectedTilePosition.x < maxX &&
-		    selectedTilePosition.y >= minY && selectedTilePosition.y < maxY &&
-		    selectedTilePosition.z >= zFrom && selectedTilePosition.z < zTo)
-		{
-			selectedTile =
-			    map.getTile(selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z);
+		selectedTile =
+		    map.getTile(selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z);
 
+		if (this->viewMode == TileViewMode::Isometric)
+		{
+			// Find where to draw back selection bracket
 			auto object_count = selectedTile->drawnObjects[0].size();
-			bool foundUnit = false;
 			for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 			{
 				auto &obj = selectedTile->drawnObjects[0][obj_id];
 				if (!drawBackBeforeThis && obj->getType() != TileObject::Type::Ground)
 					drawBackBeforeThis = obj;
-				if (obj->getType() == TileObject::Type::Unit)
-					foundUnit = true;
 			}
+			// Find what kind of selection bracket to draw (yellow or green)
+			bool foundUnit = false;
+			object_count = selectedTile->intersectingObjects.size();
+			for (auto &tile : selectedTile->intersectingObjects)
+				if (tile->getType() == TileObject::Type::Unit)
+					foundUnit = true;
 			if (foundUnit)
 			{
 				selectionImageBack = selectedTileFilledImageBack;
@@ -274,85 +273,61 @@ void BattleTileView::render()
 				selectionImageFront = selectedTileEmptyImageFront;
 			}
 		}
+	}
 
-		for (int z = zFrom; z < zTo; z++)
+	for (int z = zFrom; z < zTo; z++)
+	{
+		for (int layer = 0; layer < map.getLayerCount(); layer++)
 		{
-			for (int layer = 0; layer < map.getLayerCount(); layer++)
+			for (int y = minY; y < maxY; y++)
 			{
-				for (int y = minY; y < maxY; y++)
+				for (int x = minX; x < maxX; x++)
 				{
-					for (int x = minX; x < maxX; x++)
+					auto tile = map.getTile(x, y, z);
+					auto object_count = tile->drawnObjects[layer].size();
+					// I assume splitting it here will improve performance?
+					if (layer == 0 && tile == selectedTile)
+					{
+						for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+						{
+							auto &obj = tile->drawnObjects[layer][obj_id];
+							// Back selection image is drawn
+							// between ground image and everything else
+							if (obj == drawBackBeforeThis)
+								r.draw(selectedTileEmptyImageBack,
+								       tileToOffsetScreenCoords(selectedTilePosition) -
+								           selectedTileImageOffset);
+							Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
+							obj->draw(r, *this, pos, this->viewMode);
+						}
+						// When done with all objects, draw the front selection image
+						// (and back selection image if we haven't yet)
+						if (!drawBackBeforeThis)
+							r.draw(selectedTileEmptyImageBack,
+							       tileToOffsetScreenCoords(selectedTilePosition) -
+							           selectedTileImageOffset);
+						r.draw(selectedTileEmptyImageFront,
+						       tileToOffsetScreenCoords(selectedTilePosition) -
+						           selectedTileImageOffset);
+					}
+					else
 					{
 						auto tile = map.getTile(x, y, z);
 						auto object_count = tile->drawnObjects[layer].size();
 						for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 						{
 							auto &obj = tile->drawnObjects[layer][obj_id];
-							// Back selection image is drawn between ground image and everything
-							// else
-							if (layer == 0 && tile == selectedTile && obj == drawBackBeforeThis)
-								r.draw(selectedTileEmptyImageBack,
-								       tileToOffsetScreenCoords(selectedTilePosition) -
-								           selectedTileImageOffset);
-							// FIXME: Remove this when renderer is working 100% properly to make
-							// rendering faster
-							if (((obj->getType() == TileObject::Type::Ground) && hideGround) ||
-							    ((obj->getType() == TileObject::Type::LeftWall) && hideLeftWall) ||
-							    ((obj->getType() == TileObject::Type::RightWall) &&
-							     hideRightWall) ||
-							    ((obj->getType() == TileObject::Type::Feature) && hideFeature))
-								continue;
 							Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
 							obj->draw(r, *this, pos, this->viewMode);
-						}
-						// When on the last layer, draw the front selection image (and back
-						// selection image if we haven't yet)
-						if (layer == 0 && tile == selectedTile)
-						{
-							// Back selection image is drawn here if it hasn't been drawn yet
-							if (!drawBackBeforeThis)
-								r.draw(selectedTileEmptyImageBack,
-								       tileToOffsetScreenCoords(selectedTilePosition) -
-								           selectedTileImageOffset);
-							r.draw(selectedTileEmptyImageFront,
-							       tileToOffsetScreenCoords(selectedTilePosition) -
-							           selectedTileImageOffset);
 						}
 					}
 				}
 			}
 		}
 	}
+
 	if (this->viewMode == TileViewMode::Strategy)
 	{
-		for (int z = zFrom; z < zTo; z++)
-		{
-			for (int layer = 0; layer < map.getLayerCount(); layer++)
-			{
-				for (int y = minY; y < maxY; y++)
-				{
-					for (int x = minX; x < maxX; x++)
-					{
-						auto tile = map.getTile(x, y, z);
-						auto object_count = tile->drawnObjects[layer].size();
-						for (size_t obj_id = 0; obj_id < object_count; obj_id++)
-						{
-							auto &obj = tile->drawnObjects[layer][obj_id];
-							// FIXME: Remove this when renderer is working 100% properly to make
-							// rendering faster
-							if (((obj->getType() == TileObject::Type::Ground) && hideGround) ||
-							    ((obj->getType() == TileObject::Type::LeftWall) && hideLeftWall) ||
-							    ((obj->getType() == TileObject::Type::RightWall) &&
-							     hideRightWall) ||
-							    ((obj->getType() == TileObject::Type::Feature) && hideFeature))
-								continue;
-							Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
-							obj->draw(r, *this, pos, this->viewMode);
-						}
-					}
-				}
-			}
-		}
 
 		Vec2<float> centerIsoScreenPos = this->tileToScreenCoords(
 		    Vec3<float>{this->centerPos.x, this->centerPos.y, 0}, TileViewMode::Isometric);

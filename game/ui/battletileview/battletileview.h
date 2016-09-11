@@ -37,11 +37,6 @@ class BattleTileView : public Stage, public TileTransform
 	Colour strategyViewBoxColour;
 	float strategyViewBoxThickness;
 
-	bool hideGround;
-	bool hideLeftWall;
-	bool hideRightWall;
-	bool hideFeature;
-
 	int currentZLevel;
 	BattleLayerDrawingMode layerDrawingMode;
 

@@ -272,6 +272,9 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 	// Vertical stacking is also randomized, and disabled if the map does not allow it
 	allow_vertical_stacking =
 	    allow_vertical_stacking && max_battle_size.z > 1 && randBool(state.rng);
+	// This switch is only relevant if we're vertically stacking
+	require_only_largest_mandatory_sector =
+	    require_only_largest_mandatory_sector && allow_vertical_stacking;
 
 	// Begin actually creating a map
 
@@ -374,6 +377,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 			case 3:
 				if (!allow_vertical_stacking)
 					continue;
+				require_only_largest_mandatory_sector = false;
 				size = modded_size;
 				size.z = 1;
 				break;
@@ -383,13 +387,14 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 			case 4:
 				if (!allow_vertical_stacking)
 					continue;
+				require_only_largest_mandatory_sector = false;
 				size = normal_size;
 				size.z = 1;
 				break;
 			// If we reached fifth attempt, it means we failed to create a random map and should
-			// consider creating
-			// non-random map, filling sectors in big-to-small order
+			// try a non-random map, filling sectors in big-to-small order
 			case 5:
+				require_only_largest_mandatory_sector = false;
 				size = normal_size;
 				size.z = 1;
 				random_generation = false;

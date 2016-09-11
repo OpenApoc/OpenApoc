@@ -46,6 +46,15 @@ class TileObjectZComparer
   public:
 	bool operator()(const sp<TileObject> &lhs, const sp<TileObject> &rhs) const
 	{
+		// First sort objects based on wehter they belong to the Ground, Left Wall, Right Wall or
+		// are something other than that (we don't care what exactly)
+		int lhsT = std::min((int)lhs->getType(), 4);
+		int rhsT = std::min((int)rhs->getType(), 4);
+		if (lhsT != rhsT)
+			return lhsT < rhsT;
+
+		// If both objects are of the same mappart type (or are both other type) then proceed to
+		// check their Z
 		float lhsZ = lhs->getPosition().x * 32.0f + lhs->getPosition().y * 32.0f +
 		             lhs->getPosition().z * 16.0f;
 		float rhsZ = rhs->getPosition().x * 32.0f + rhs->getPosition().y * 32.0f +
