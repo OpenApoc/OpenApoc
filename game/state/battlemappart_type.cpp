@@ -11,8 +11,8 @@ namespace OpenApoc
 template <>
 sp<BattleMapPartType> StateObject<BattleMapPartType>::get(const GameState &state, const UString &id)
 {
-	int id_length = 0;
-	int count_underscore = 0;
+	unsigned id_length = 0;
+	unsigned count_underscore = 0;
 	for (auto c : id)
 	{
 		if (c == '_')

@@ -55,7 +55,7 @@ void BattleMapPart::collapse(GameState &state)
 		s->collapse(state);
 }
 
-void BattleMapPart::update(GameState &state, unsigned int ticks)
+void BattleMapPart::update(GameState &, unsigned int ticks)
 {
 	if (!this->falling)
 		return;

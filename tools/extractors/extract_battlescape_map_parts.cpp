@@ -17,7 +17,6 @@ void InitialGameStateExtractor::readBattleMapParts(GameState &state, sp<BattleMa
                                                    const UString &stratPckName)
 {
 	auto &data_t = this->tacp;
-	auto &data_u = this->ufo2p;
 
 	const UString loftempsFile = "xcom3/tacdata/loftemps.dat";
 	const UString loftempsTab = "xcom3/tacdata/loftemps.tab";
@@ -297,7 +296,7 @@ void InitialGameStateExtractor::extractBattlescapeMapPartsFromMap(GameState &sta
 void InitialGameStateExtractor::extractBattlescapeMapParts(
     GameState &state, const std::vector<OpenApoc::UString> &paths)
 {
-	for (int i = 0; i < paths.size(); i++)
+	for (unsigned int i = 0; i < paths.size(); i++)
 	{
 		if (paths[i].length() > 0)
 		{

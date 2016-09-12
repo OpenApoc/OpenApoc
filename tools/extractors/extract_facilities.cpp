@@ -8,12 +8,12 @@ namespace OpenApoc
 void InitialGameStateExtractor::extractFacilities(GameState &state, Difficulty)
 {
 	auto &data = this->ufo2p;
-	LogInfo("Number of facility strings: %d", data.facility_names->count());
-	LogInfo("Number of facility data chunks: %u", data.facility_data->count());
+	LogInfo("Number of facility strings: %u", (unsigned)data.facility_names->count());
+	LogInfo("Number of facility data chunks: %u", (unsigned)data.facility_data->count());
 
 	// Start at 2, as 'earth' and 'corridor' are handled specially, this aren't really 'facilities'
 	// in openapoc terms
-	for (int i = 2; i < data.facility_names->count(); i++)
+	for (unsigned i = 2; i < data.facility_names->count(); i++)
 	{
 		UString id = data.getFacilityId(i);
 		auto f = data.facility_data->get(i);

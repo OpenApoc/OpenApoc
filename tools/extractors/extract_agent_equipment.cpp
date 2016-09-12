@@ -4,6 +4,7 @@
 #include "game/state/rules/damage.h"
 #include "tools/extractors/common/tacp.h"
 #include "tools/extractors/extractors.h"
+#include <limits>
 
 namespace OpenApoc
 {
@@ -30,7 +31,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 		LogError("Failed to open held item sprite TAB file \"%s\"", heldSpriteTabFileName.cStr());
 		return;
 	}
-	size_t heldSpriteCount = heldSpriteTabFile.size() / 4 / 8;
+	// size_t heldSpriteCount = heldSpriteTabFile.size() / 4 / 8;
 
 	std::map<int, sp<AEquipmentType>> weapons;
 	UString tracker_gun_clip_id = "";
@@ -87,7 +88,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 
 		e->id = id;
 
-		unsigned payload_idx = -1;
+		unsigned payload_idx = std::numeric_limits<unsigned>::max();
 		switch (edata.type)
 		{
 			case AGENT_EQUIPMENT_TYPE_ARMOR:
@@ -282,10 +283,10 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 
 		// Read payload information
 		// Only for Ammo, or weapons and grenades with built-in ammo
-		if (payload_idx != -1)
+		if (payload_idx != std::numeric_limits<unsigned>::max())
 		{
 			if (payload_idx >= data_t.agent_payload->count())
-				LogError("Invalid payload index %d for ID %s", payload_idx, id.cStr());
+				LogError("Invalid payload index %u for ID %s", payload_idx, id.cStr());
 
 			auto pdata = data_t.agent_payload->get(payload_idx);
 
@@ -358,15 +359,15 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 	// Equipment sets - score - alien
 	{
 		if (data_t.agent_equipment_set_score_requirement->count() != 1)
-			LogError("Incorrect amount of alien score requirement structures: encountered %d, "
+			LogError("Incorrect amount of alien score requirement structures: encountered %u, "
 			         "expected 1",
-			         data_t.agent_equipment_set_score_requirement->count());
+			         (unsigned)data_t.agent_equipment_set_score_requirement->count());
 		auto sdata = data_t.agent_equipment_set_score_requirement->get(0);
 
 		if (data_t.agent_equipment_set_score_alien->count() != 1)
-			LogError("Incorrect amount of alien score equipment set structures: encountered %d, "
+			LogError("Incorrect amount of alien score equipment set structures: encountered %u, "
 			         "expected 1",
-			         data_t.agent_equipment_set_score_alien->count());
+			         (unsigned)data_t.agent_equipment_set_score_alien->count());
 		auto data = data_t.agent_equipment_set_score_alien->get(0);
 		for (unsigned i = 0; i < 8; i++)
 		{
@@ -442,7 +443,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 				}
 			}
 
-			int diff;
+			int diff = 0;
 			switch (difficulty)
 			{
 				case Difficulty::DIFFICULTY_1:
@@ -460,6 +461,8 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 				case Difficulty::DIFFICULTY_5:
 					diff = 4;
 					break;
+				default:
+					LogError("Unknown difficulty");
 			}
 
 			es->min_score = i == 0 ? INT_MIN : (int)sdata.score[diff][i - 1];
@@ -471,9 +474,9 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 	// Equipment sets - score (level) - human
 	{
 		if (data_t.agent_equipment_set_score_human->count() != 1)
-			LogError("Incorrect amount of human score equipment set structures: encountered %d, "
+			LogError("Incorrect amount of human score equipment set structures: encountered %u, "
 			         "expected 1",
-			         data_t.agent_equipment_set_score_human->count());
+			         (unsigned)data_t.agent_equipment_set_score_human->count());
 		auto data = data_t.agent_equipment_set_score_human->get(0);
 		for (unsigned i = 0; i < 12; i++)
 		{

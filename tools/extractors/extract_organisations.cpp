@@ -9,11 +9,11 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state, Difficult
 {
 	auto &data = this->ufo2p;
 	LogInfo("Number of org strings: %zu", data.organisation_names->readStrings.size());
-	LogInfo("Number of orgs: %u", data.organisation_data->count());
+	LogInfo("Number of orgs: %u", (unsigned)data.organisation_data->count());
 
 	// Organisations
 
-	for (int i = 0; i < data.organisation_data->count(); i++)
+	for (unsigned i = 0; i < data.organisation_data->count(); i++)
 	{
 		auto o = mksp<Organisation>();
 

@@ -8,18 +8,18 @@
 
 namespace OpenApoc
 {
-void InitialGameStateExtractor::extractAgentTypes(GameState &state, Difficulty difficulty)
+void InitialGameStateExtractor::extractAgentTypes(GameState &state, Difficulty)
 {
 	const int HUMAN_FEMALE_PORTRAIT_START = 0;
 	const int HUMAN_FEMALE_PORTRAIT_END = 30;
-	const int HYBRID_FEMALE_PORTRAIT_START = 30;
-	const int HYBRID_FEMALE_PORTRAIT_END = 35;
+	// const int HYBRID_FEMALE_PORTRAIT_START = 30;
+	// const int HYBRID_FEMALE_PORTRAIT_END = 35;
 	const int HUMAN_MALE_PORTRAIT_START = 35;
 	const int HUMAN_MALE_PORTRAIT_END = 65;
-	const int HYBRID_MALE_PORTRAIT_START = 65;
-	const int HYBRID_MALE_PORTRAIT_END = 70;
-	const int ANDROID_MALE_PORTRAIT_START = 70;
-	const int ANDROID_MALE_PORTRAIT_END = 75;
+	// const int HYBRID_MALE_PORTRAIT_START = 65;
+	// const int HYBRID_MALE_PORTRAIT_END = 70;
+	// const int ANDROID_MALE_PORTRAIT_START = 70;
+	// const int ANDROID_MALE_PORTRAIT_END = 75;
 	const int ALIEN_PORTRAIT_OFFSET = 74;
 
 	const int UNIT_TYPE_BIOCHEMIST = 1;

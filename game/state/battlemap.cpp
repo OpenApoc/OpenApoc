@@ -234,11 +234,10 @@ bool PlaceSector(GameState &state,
 	return false;
 }
 
-sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> target_organisation,
-                                   const std::list<StateRef<Agent>> &player_agents,
+sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
+                                   const std::list<StateRef<Agent>> &,
                                    StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
-                                   UString mission_location_id,
-                                   const std::list<StateRef<Agent>> &target_agents)
+                                   UString mission_location_id, const std::list<StateRef<Agent>> &)
 {
 	// Vanilla had vertical stacking of sectors planned, but not implemented. I will implement both
 	// algorithms because I think that would be great to have. We could make it an extended game

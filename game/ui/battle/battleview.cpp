@@ -77,12 +77,12 @@ BattleView::BattleView(sp<GameState> state)
 
 		});
 	this->baseForm->findControl("BUTTON_LAYER_UP")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    this->setZLevel(getZLevel() + 1);
 		    updateLayerButtons();
 		});
 	this->baseForm->findControl("BUTTON_LAYER_DOWN")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    this->setZLevel(getZLevel() - 1);
 		    updateLayerButtons();
 		});

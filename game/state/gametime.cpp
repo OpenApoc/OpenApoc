@@ -22,7 +22,7 @@ time_duration GameTime::ticksToPosix(int64_t ticks)
 	return time_duration(0, 0, 0, tickTotal);
 }
 
-GameTime::GameTime(uint64_t ticks) : ticks(ticks), dayPassedFlag(false), weekPassedFlag(false) {}
+GameTime::GameTime(uint64_t ticks) : ticks(ticks){};
 
 boost::posix_time::ptime GameTime::getPtime() const { return GAME_START + ticksToPosix(ticks); }
 

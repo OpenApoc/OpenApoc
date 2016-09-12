@@ -196,7 +196,7 @@ void Agent::addEquipment(GameState &state, Vec2<int> pos, StateRef<AEquipmentTyp
 	this->addEquipment(state, pos, equipment);
 }
 
-void Agent::addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object)
+void Agent::addEquipment(GameState &, Vec2<int> pos, sp<AEquipment> object)
 {
 	if (!this->canAddEquipment(pos, object->type))
 	{

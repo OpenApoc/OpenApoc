@@ -177,7 +177,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 			auto fileSize = inFile.size();
 			auto objectCount = fileSize / sizeof(struct LineOfSightData);
 
-			for (int i = 0; i < objectCount; i++)
+			for (unsigned i = 0; i < objectCount; i++)
 			{
 				LineOfSightData ldata;
 
@@ -242,7 +242,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 				auto fileSize = inFile.size();
 				auto objectCount = fileSize / sizeof(struct LootLocationData);
 
-				for (int i = 0; i < objectCount; i++)
+				for (unsigned i = 0; i < objectCount; i++)
 				{
 					LootLocationData ldata;
 
@@ -363,7 +363,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 void InitialGameStateExtractor::extractBattlescapeMap(GameState &state,
                                                       const std::vector<OpenApoc::UString> &paths)
 {
-	for (int i = 0; i < paths.size(); i++)
+	for (unsigned i = 0; i < paths.size(); i++)
 	{
 		if (paths[i].length() > 0)
 		{

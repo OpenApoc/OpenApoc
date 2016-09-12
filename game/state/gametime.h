@@ -22,14 +22,15 @@ class GameTime
 
 	boost::posix_time::ptime getPtime() const;
 
-	bool dayPassedFlag;
-	bool weekPassedFlag;
+	bool dayPassedFlag = false;
+	bool weekPassedFlag = false;
 
 	static boost::posix_time::time_duration ticksToPosix(int64_t ticks);
 
   public:
-	uint64_t ticks;
-	GameTime(uint64_t ticks = 0);
+	uint64_t ticks = 0;
+	GameTime() = default;
+	GameTime(uint64_t ticks);
 
 	void addTicks(uint64_t ticks);
 

@@ -95,7 +95,7 @@ bool VoxelMap::operator==(const VoxelMap &other) const
 	{
 		return false;
 	}
-	for (int i = 0; i < this->slices.size(); i++)
+	for (unsigned i = 0; i < this->slices.size(); i++)
 	{
 		if (this->slices[i] == other.slices[i])
 		{

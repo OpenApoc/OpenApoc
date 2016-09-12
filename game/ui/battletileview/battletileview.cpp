@@ -14,8 +14,7 @@ BattleTileView::BattleTileView(BattleTileMap &map, Vec3<int> isoTileSize, Vec2<i
       scrollRight(false), dpySize(fw().displayGetWidth(), fw().displayGetHeight()),
       strategyViewBoxColour(212, 176, 172, 255), strategyViewBoxThickness(2.0f), hideGround(false),
       hideLeftWall(false), hideRightWall(false), hideScenery(false), currentZLevel(1),
-      layerDrawingMode(BattleLayerDrawingMode::UpToCurrentLevel), maxZDraw(map.size.z),
-      selectedTilePosition(0, 0, 0),
+      layerDrawingMode(BattleLayerDrawingMode::UpToCurrentLevel), selectedTilePosition(0, 0, 0),
       selectedTileEmptyImageBack(fw().data->loadImage("battle/selected-battletile-empty-back.png")),
       selectedTileEmptyImageFront(
           fw().data->loadImage("battle/selected-battletile-empty-front.png")),
@@ -23,8 +22,9 @@ BattleTileView::BattleTileView(BattleTileMap &map, Vec3<int> isoTileSize, Vec2<i
           fw().data->loadImage("battle/selected-battletile-filled-back.png")),
       selectedTileFilledImageFront(
           fw().data->loadImage("battle/selected-battletile-filled-front.png")),
-      selectedTileImageOffset(23, 42), centerPos(0, 0, 0), isoScrollSpeed(0.5, 0.5),
-      stratScrollSpeed(2.0f, 2.0f), pal(fw().data->loadPalette("xcom3/tacdata/tactical.pal"))
+      selectedTileImageOffset(23, 42), maxZDraw(map.size.z), centerPos(0, 0, 0),
+      isoScrollSpeed(0.5, 0.5), stratScrollSpeed(2.0f, 2.0f),
+      pal(fw().data->loadPalette("xcom3/tacdata/tactical.pal"))
 {
 	LogInfo("dpySize: {%d,%d}", dpySize.x, dpySize.y);
 }
@@ -217,8 +217,9 @@ void BattleTileView::render()
 	int minY = std::max(0, topRight.y);
 	int maxY = std::min(map.size.y, bottomLeft.y);
 
-	int zFrom;
-	int zTo;
+	int zFrom = 0;
+	int zTo = maxZDraw;
+	;
 
 	switch (layerDrawingMode)
 	{
@@ -234,6 +235,8 @@ void BattleTileView::render()
 			zFrom = currentZLevel - 1;
 			zTo = currentZLevel;
 			break;
+		default:
+			LogError("Unknown drawing mode");
 	}
 
 	if (this->viewMode == TileViewMode::Isometric)
@@ -333,8 +336,6 @@ void BattleTileView::render()
 				{
 					for (int x = minX; x < maxX; x++)
 					{
-						bool selected = selectedTilePosition.x == x &&
-						                selectedTilePosition.y == y && selectedTilePosition.z == z;
 						auto tile = map.getTile(x, y, z);
 						auto object_count = tile->drawnObjects[layer].size();
 						for (size_t obj_id = 0; obj_id < object_count; obj_id++)

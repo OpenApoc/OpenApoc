@@ -10,7 +10,7 @@ namespace OpenApoc
 
 AEquipment::AEquipment() : equippedPosition(0, 0), ammo(0) {}
 
-void AEquipment::update(int ticks)
+void AEquipment::update(int)
 {
 	// FIXME: Update equipment
 }
