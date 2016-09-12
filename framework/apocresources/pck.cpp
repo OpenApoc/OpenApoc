@@ -315,7 +315,7 @@ static sp<PaletteImage> loadStrategy(IFile &file)
 
 			if (x >= 8 || y >= 8)
 			{
-				LogWarning("Writing to {%d,%d} in 8x8 stratmap image", x, y);
+				LogInfo("Writing to {%d,%d} in 8x8 stratmap image", x, y);
 			}
 			else
 			{
