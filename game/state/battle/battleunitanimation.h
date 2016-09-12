@@ -80,14 +80,14 @@ class BattleUnitAnimation : public StateObject<BattleUnitAnimation>
 	int getFrameCount(StateRef<AEquipmentType> heldItem, Vec2<int> facing,
 	                  BattleUnit::Stance currentStance, BattleUnit::Stance targetStance,
 	                  BattleUnit::HandState currentHandState, BattleUnit::HandState targetHandState,
-	                  bool moving){};
+	                  bool moving);
 
 	void drawShadow(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
 	                TileViewMode mode, StateRef<BattleUnitImagePack> shadow,
 	                StateRef<AEquipmentType> heldItem, Vec2<int> facing,
 	                BattleUnit::Stance currentStance, BattleUnit::Stance targetStance,
 	                BattleUnit::HandState currentHandState, BattleUnit::HandState targetHandState,
-	                bool moving, int frame){};
+	                bool moving, int frame);
 
 	void drawUnit(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
 	              TileViewMode mode, StateRef<BattleUnitImagePack> body,
@@ -96,6 +96,6 @@ class BattleUnitAnimation : public StateObject<BattleUnitAnimation>
 	              StateRef<AEquipmentType> heldItem, Vec2<int> facing,
 	              BattleUnit::Stance currentStance, BattleUnit::Stance targetStance,
 	              BattleUnit::HandState currentHandState, BattleUnit::HandState targetHandState,
-	              bool moving, int frame){};
+	              bool moving, int frame);
 };
 }

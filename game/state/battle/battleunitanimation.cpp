@@ -39,4 +39,30 @@ const UString &StateObject<BattleUnitAnimation>::getId(const GameState &state,
 	LogError("No BattleUnitAnimation matching pointer %p", ptr.get());
 	return emptyString;
 }
+
+int BattleUnitAnimation::getFrameCount(StateRef<AEquipmentType>, Vec2<int>, BattleUnit::Stance,
+                                       BattleUnit::Stance, BattleUnit::HandState,
+                                       BattleUnit::HandState, bool)
+{
+	LogWarning("Not implemented");
+	return 0;
+}
+
+void BattleUnitAnimation::drawShadow(Renderer &, TileTransform &, Vec2<float>, TileViewMode,
+                                     StateRef<BattleUnitImagePack>, StateRef<AEquipmentType>,
+                                     Vec2<int>, BattleUnit::Stance, BattleUnit::Stance,
+                                     BattleUnit::HandState, BattleUnit::HandState, bool, int)
+{
+	LogWarning("Not implemented");
+}
+
+void BattleUnitAnimation::drawUnit(Renderer &, TileTransform &, Vec2<float>, TileViewMode,
+                                   StateRef<BattleUnitImagePack>, StateRef<BattleUnitImagePack>,
+                                   StateRef<BattleUnitImagePack>, StateRef<BattleUnitImagePack>,
+                                   StateRef<BattleUnitImagePack>, StateRef<AEquipmentType>,
+                                   Vec2<int>, BattleUnit::Stance, BattleUnit::Stance,
+                                   BattleUnit::HandState, BattleUnit::HandState, bool, int)
+{
+	LogWarning("Not implemented");
+}
 }
