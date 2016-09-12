@@ -1963,6 +1963,16 @@
       </sp>
     </entry>
   </los_blocks>
+  <loot_locations>
+    <entry>
+      <key>
+        <x>3</x>
+        <y>8</y>
+        <z>3</z>
+      </key>
+      <value>A</value>
+    </entry>
+  </loot_locations>
   <initial_grounds>
     <entry>
       <key>

@@ -168,6 +168,12 @@
     <ClCompile Include="tileview\collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="battle\battleitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tileview\tileobject_battleitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agent.h">
@@ -333,6 +339,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tileview\collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\battleitem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tileview\tileobject_battleitem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -70,9 +70,11 @@ int main(int argc, char *argv[])
 		    {"data/difficulty5", InitialGameStateExtractor::Difficulty::DIFFICULTY_5},
 		};
 
-		/*auto dpair = std::pair<UString,
-		InitialGameStateExtractor::Difficulty>("data/difficulty5",
-		InitialGameStateExtractor::Difficulty::DIFFICULTY_5);*/
+		/*
+		auto dpair = std::pair<UString,
+		InitialGameStateExtractor::Difficulty>("data/difficulty1",
+		InitialGameStateExtractor::Difficulty::DIFFICULTY_1);
+		*/
 		for (auto &dpair : difficultyOutputFiles)
 		{
 			GameState s;

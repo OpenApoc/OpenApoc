@@ -50,44 +50,14 @@
     </allow_exit>
     <entrance_level_max>6</entrance_level_max>
     <exit_level_max>6</exit_level_max>
-    <exits>
+    <exitsX>
       <entry>
         <x>10</x>
         <y>0</y>
         <z>2</z>
       </entry>
       <entry>
-        <x>11</x>
-        <y>0</y>
-        <z>2</z>
-      </entry>
-      <entry>
-        <x>12</x>
-        <y>0</y>
-        <z>2</z>
-      </entry>
-      <entry>
-        <x>13</x>
-        <y>0</y>
-        <z>2</z>
-      </entry>
-      <entry>
         <x>10</x>
-        <y>0</y>
-        <z>3</z>
-      </entry>
-      <entry>
-        <x>11</x>
-        <y>0</y>
-        <z>3</z>
-      </entry>
-      <entry>
-        <x>12</x>
-        <y>0</y>
-        <z>3</z>
-      </entry>
-      <entry>
-        <x>13</x>
         <y>0</y>
         <z>3</z>
       </entry>
@@ -99,7 +69,27 @@
       <entry>
         <x>11</x>
         <y>0</y>
+        <z>2</z>
+      </entry>
+      <entry>
+        <x>11</x>
+        <y>0</y>
+        <z>3</z>
+      </entry>
+      <entry>
+        <x>11</x>
+        <y>0</y>
         <z>4</z>
+      </entry>
+      <entry>
+        <x>12</x>
+        <y>0</y>
+        <z>2</z>
+      </entry>
+      <entry>
+        <x>12</x>
+        <y>0</y>
+        <z>3</z>
       </entry>
       <entry>
         <x>12</x>
@@ -109,68 +99,20 @@
       <entry>
         <x>13</x>
         <y>0</y>
-        <z>4</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>15</y>
         <z>2</z>
       </entry>
       <entry>
-        <x>0</x>
-        <y>16</y>
-        <z>2</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>17</y>
-        <z>2</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>18</y>
-        <z>2</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>15</y>
+        <x>13</x>
+        <y>0</y>
         <z>3</z>
       </entry>
       <entry>
-        <x>0</x>
-        <y>16</y>
-        <z>3</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>17</y>
-        <z>3</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>18</y>
-        <z>3</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>15</y>
+        <x>13</x>
+        <y>0</y>
         <z>4</z>
       </entry>
-      <entry>
-        <x>0</x>
-        <y>16</y>
-        <z>4</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>17</y>
-        <z>4</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>18</y>
-        <z>4</z>
-      </entry>
+    </exitsX>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>5</y>
@@ -181,11 +123,77 @@
         <y>6</y>
         <z>5</z>
       </entry>
-    </exits>
+      <entry>
+        <x>0</x>
+        <y>15</y>
+        <z>2</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>15</y>
+        <z>3</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>15</y>
+        <z>4</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>16</y>
+        <z>2</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>16</y>
+        <z>3</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>16</y>
+        <z>4</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>17</y>
+        <z>2</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>17</y>
+        <z>3</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>17</y>
+        <z>4</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>18</y>
+        <z>2</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>18</y>
+        <z>3</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>18</y>
+        <z>4</z>
+      </entry>
+    </exitsY>
     <tilesets>
       <entry>39incub</entry>
     </tilesets>
     <destroyed_ground_tile>BATTLEMAPPART_39incub_GD_5</destroyed_ground_tile>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_39incub_GD_216</entry>
+      <entry>BATTLEMAPPART_39incub_GD_217</entry>
+      <entry>BATTLEMAPPART_39incub_GD_218</entry>
+      <entry>BATTLEMAPPART_39incub_GD_219</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_39incub>

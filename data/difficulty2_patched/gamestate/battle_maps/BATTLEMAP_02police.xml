@@ -51,17 +51,7 @@
     <entrance_level_min>1</entrance_level_min>
     <entrance_level_max>3</entrance_level_max>
     <exit_level_max>5</exit_level_max>
-    <exits>
-      <entry>
-        <x>7</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>8</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
+    <exitsX>
       <entry>
         <x>0</x>
         <y>0</y>
@@ -73,8 +63,30 @@
         <z>1</z>
       </entry>
       <entry>
+        <x>7</x>
+        <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>8</x>
+        <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
         <x>9</x>
         <y>0</y>
+        <z>1</z>
+      </entry>
+    </exitsX>
+    <exitsY>
+      <entry>
+        <x>0</x>
+        <y>0</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>1</y>
         <z>1</z>
       </entry>
       <entry>
@@ -89,20 +101,10 @@
       </entry>
       <entry>
         <x>0</x>
-        <y>0</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>1</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>0</x>
         <y>9</y>
         <z>1</z>
       </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>02police</entry>
     </tilesets>
@@ -122,12 +124,18 @@
       <entry>BATTLEMAPPART_02police_RW_86</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_02police_FT239</entry>
-      <entry>BATTLEMAPPART_02police_FT242</entry>
-      <entry>BATTLEMAPPART_02police_FT240</entry>
-      <entry>BATTLEMAPPART_02police_FT238</entry>
-      <entry>BATTLEMAPPART_02police_FT236</entry>
+      <entry>BATTLEMAPPART_02police_FT_239</entry>
+      <entry>BATTLEMAPPART_02police_FT_242</entry>
+      <entry>BATTLEMAPPART_02police_FT_240</entry>
+      <entry>BATTLEMAPPART_02police_FT_238</entry>
+      <entry>BATTLEMAPPART_02police_FT_236</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_02police_GD_108</entry>
+      <entry>BATTLEMAPPART_02police_GD_109</entry>
+      <entry>BATTLEMAPPART_02police_GD_110</entry>
+      <entry>BATTLEMAPPART_02police_GD_111</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_02police>

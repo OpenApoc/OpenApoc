@@ -28,7 +28,7 @@ class Scenery : public std::enable_shared_from_this<Scenery>
 	{
 		// The "position" is the center, so offset by {0.5,0.5,0.5}
 		Vec3<float> offsetPos = currentPosition;
-		offsetPos += Vec3<float>{0.5, 0.5, 0.5};
+		offsetPos += Vec3<float>{0.5f, 0.5f, 0.5f};
 		return offsetPos;
 	}
 

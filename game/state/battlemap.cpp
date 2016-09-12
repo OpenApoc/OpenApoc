@@ -1,4 +1,7 @@
 #include "game/state/battlemap.h"
+#include "game/state/battle.h"
+#include "game/state/battle/battleitem.h"
+#include "game/state/battle/battleunit.h"
 #include "game/state/battlemappart.h"
 #include "game/state/battlemappart_type.h"
 #include "game/state/city/vehicle.h"
@@ -67,12 +70,12 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> orga
 	{
 		if (organisation == state.getAliens())
 			return building->battle_map->CreateBattle(state, organisation, agents, craft,
-			                                          Battle::MissionType::RaidHumans, building.id,
-			                                          target_agents);
-		else
-			return building->battle_map->CreateBattle(state, organisation, agents, craft,
 			                                          Battle::MissionType::AlienExtermination,
 			                                          building.id, target_agents);
+		else
+			return building->battle_map->CreateBattle(state, organisation, agents, craft,
+			                                          Battle::MissionType::RaidHumans, building.id,
+			                                          target_agents);
 	}
 }
 
@@ -234,11 +237,14 @@ bool PlaceSector(GameState &state,
 	return false;
 }
 
-sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
+sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> target_organisation,
                                    const std::list<StateRef<Agent>> &,
                                    StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
                                    UString mission_location_id, const std::list<StateRef<Agent>> &)
 {
+	// FIXME: To be done in map creations
+	// 1. Add units
+
 	// Vanilla had vertical stacking of sectors planned, but not implemented. I will implement both
 	// algorithms because I think that would be great to have. We could make it an extended game
 	// option in the future.
@@ -275,6 +281,17 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 	// This switch is only relevant if we're vertically stacking
 	require_only_largest_mandatory_sector =
 	    require_only_largest_mandatory_sector && allow_vertical_stacking;
+	// However, there are maps that have too many mandatory sectors
+	// For these maps, we must set this switch, otherwise it's not possible to create a map!
+	if (!require_only_largest_mandatory_sector)
+	{
+		int remainingMapSize = max_battle_size.x * max_battle_size.y * max_battle_size.z;
+		for (auto &s : sectors)
+			remainingMapSize -=
+			    s.second->size.x * s.second->size.y * s.second->size.z * s.second->occurrence_min;
+		if (remainingMapSize < 0)
+			require_only_largest_mandatory_sector = true;
+	}
 
 	// Begin actually creating a map
 
@@ -313,7 +330,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 	}
 
 	// Prepare sectors in a more useful form;
-	// Need 0 to be unused for convenience
+	// Need #0 to be unused for convenience
 	std::vector<UString> secNames;
 	std::vector<sp<BattleMapSector>> secRefs;
 	int secCount = 0;
@@ -332,12 +349,21 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 	}
 
 	// Determine size in chunks
-	auto normal_size = this->max_battle_size;
+	auto size = this->max_battle_size;
 
-	// Apply vertical stacking
+	// Apply vertical stacking flag
 	if (!allow_vertical_stacking)
-		normal_size.z = 1;
-	auto size = normal_size;
+	{
+		// However, some maps have "mandatory" vertical stacking
+		// That is, they only have sectors that are using more than one z chunk
+		// We must check wether or not this map has any sectors that are 1-high on z
+		bool foundUnstackedSector = false;
+		for (int i = 1; i <= secCount; i++)
+			foundUnstackedSector = foundUnstackedSector || (secRefs[i]->size.z == 1);
+		if (foundUnstackedSector)
+			size.z = 1;
+	}
+	auto normal_size = size;
 
 	// Apply size modification
 	int size_mod_x = 0;
@@ -361,7 +387,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 	auto modded_size = size;
 
 	// Now let's see if we can actually make a map out of this
-	for (int attempt_make_map = 1; attempt_make_map <= 5; attempt_make_map++)
+	for (int attempt_make_map = 1; attempt_make_map <= 6; attempt_make_map++)
 	{
 		bool random_generation = false;
 		switch (attempt_make_map)
@@ -377,7 +403,6 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 			case 3:
 				if (!allow_vertical_stacking)
 					continue;
-				require_only_largest_mandatory_sector = false;
 				size = modded_size;
 				size.z = 1;
 				break;
@@ -387,14 +412,20 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 			case 4:
 				if (!allow_vertical_stacking)
 					continue;
-				require_only_largest_mandatory_sector = false;
 				size = normal_size;
 				size.z = 1;
 				break;
 			// If we reached fifth attempt, it means we failed to create a random map and should
-			// try a non-random map, filling sectors in big-to-small order
+			// try a non-random map, filling sectors in big-to-small order, with vertical stacking
 			case 5:
-				require_only_largest_mandatory_sector = false;
+				size = normal_size;
+				random_generation = false;
+				break;
+			// If we reached sixth attempt, it means we failed to create a random map and should
+			// try a non-random map, filling sectors in big-to-small order, without vert. stacking
+			case 6:
+				if (!allow_vertical_stacking)
+					continue;
 				size = normal_size;
 				size.z = 1;
 				random_generation = false;
@@ -418,13 +449,33 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 						remaining_sectors.push_back(i);
 
 		// Disable sectors that don't fit
+		bool mandatorySectorLost = false;
+		bool mandatorySectorRemaining = false;
 		for (int i = (int)remaining_sectors.size() - 1; i >= 0; i--)
 		{
 			sec_num_placed[remaining_sectors[i]] = 0;
 			if (secRefs[remaining_sectors[i]]->size.x > size.x ||
 			    secRefs[remaining_sectors[i]]->size.y > size.y ||
 			    secRefs[remaining_sectors[i]]->size.z > size.z)
+			{
+				mandatorySectorLost =
+				    mandatorySectorLost || (secRefs[remaining_sectors[i]]->occurrence_min > 0);
 				remaining_sectors.erase(remaining_sectors.begin() + i);
+			}
+			else
+			{
+				mandatorySectorRemaining =
+				    mandatorySectorRemaining || (secRefs[remaining_sectors[i]]->occurrence_min > 0);
+			}
+		}
+		// If we have lost all mandatory sectors due to size,
+		// then we cannot create a map of such size
+		if (mandatorySectorLost && !mandatorySectorRemaining)
+		{
+			LogWarning("Failed to place mandatory sectors for map %s with size %d, %d, %d at "
+			           "attempt %d",
+			           id.cStr(), size.x, size.y, size.z, attempt_make_map);
+			continue;
 		}
 
 		// Place all mandatory sectors
@@ -448,7 +499,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 		// then we cannot create a map of such size
 		if (failed)
 		{
-			LogWarning("Failed to place all mandatory sectors for map %s with size %d, %d, %d at "
+			LogWarning("Failed to place mandatory sectors for map %s with size %d, %d, %d at "
 			           "attempt %d",
 			           id.cStr(), size.x, size.y, size.z, attempt_make_map);
 			continue;
@@ -599,47 +650,94 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 					{
 						auto s = mksp<BattleMapPart>();
 
-						s->type = pair.second;
 						s->initialPosition = pair.first + shift;
 						s->currentPosition = s->initialPosition;
+						s->currentPosition += Vec3<float>(0.5f, 0.5f, 0.0f);
 
-						b->map_parts.insert(s);
+						// Check wether this is an exit location, and if so,
+						// replace the ground map part with an appropriate exit
+						Vec3<int> exitLocX = s->currentPosition;
+						Vec3<int> exitLocY = s->currentPosition;
+						bool exitFarSide = false;
+						if (exitLocX.y == 0 || exitLocX.y == size.y * chunk_size.y - 1)
+						{
+							exitFarSide = exitLocX.y != 0;
+							exitLocX.y = 0;
+							exitLocX.x = exitLocX.x % chunk_size.x;
+						}
+						if (exitLocY.x == 0 || exitLocY.x == size.x * chunk_size.x - 1)
+						{
+							exitFarSide = exitLocY.x != 0;
+							exitLocY.x = 0;
+							exitLocY.y = exitLocY.y % chunk_size.y;
+						}
+						if (exitsX.find(exitLocX) != exitsX.end())
+							s->type = exit_grounds[exitFarSide ? 2 : 0];
+						else if (exitsY.find(exitLocY) != exitsY.end())
+							s->type = exit_grounds[exitFarSide ? 1 : 3];
+						else
+							s->type = pair.second;
+
+						b->map_parts.push_back(s);
 					}
 					for (auto &pair : tiles.initial_left_walls)
 					{
 						auto s = mksp<BattleMapPart>();
 
-						s->type = pair.second;
 						s->initialPosition = pair.first + shift;
 						s->currentPosition = s->initialPosition;
+						s->currentPosition += Vec3<float>(0.5f, 0.5f, 0.0f);
+						s->type = pair.second;
 
-						b->map_parts.insert(s);
+						b->map_parts.push_back(s);
 					}
 					for (auto &pair : tiles.initial_right_walls)
 					{
 						auto s = mksp<BattleMapPart>();
 
-						s->type = pair.second;
 						s->initialPosition = pair.first + shift;
 						s->currentPosition = s->initialPosition;
+						s->currentPosition += Vec3<float>(0.5f, 0.5f, 0.0f);
+						s->type = pair.second;
 
-						b->map_parts.insert(s);
+						b->map_parts.push_back(s);
 					}
 					for (auto &pair : tiles.initial_features)
 					{
 						auto s = mksp<BattleMapPart>();
 
-						s->type = pair.second;
 						s->initialPosition = pair.first + shift;
 						s->currentPosition = s->initialPosition;
+						s->currentPosition += Vec3<float>(0.5f, 0.5f, 0.0f);
+						s->type = pair.second;
 
-						b->map_parts.insert(s);
+						b->map_parts.push_back(s);
+					}
+					for (auto &pair : tiles.loot_locations)
+					{
+						if (target_organisation->loot[pair.second].size() == 0)
+							continue;
+						auto l =
+						    vectorRandomizer(state.rng, target_organisation->loot[pair.second]);
+						auto i = mksp<AEquipment>();
+						i->type = l;
+						auto s = mksp<BattleItem>();
+						s->item = i;
+						s->position = pair.first + shift;
+
+						int height = 0;
+						if (tiles.initial_grounds.find(pair.first) != tiles.initial_grounds.end())
+							height = std::max(height, tiles.initial_grounds[pair.first]->height);
+						if (tiles.initial_features.find(pair.first) != tiles.initial_features.end())
+							height = std::max(height, tiles.initial_features[pair.first]->height);
+						s->position +=
+						    Vec3<float>{0.5f, 0.5f, ((float)height) / (float)BATTLE_TILE_Z};
+
+						b->items.push_back(s);
 					}
 				}
 			}
 		}
-
-		b->initMap();
 
 		return b;
 	}

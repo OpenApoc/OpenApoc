@@ -51,54 +51,9 @@
     <entrance_level_min>3</entrance_level_min>
     <entrance_level_max>5</entrance_level_max>
     <exit_level_max>5</exit_level_max>
-    <exits>
+    <exitsX>
       <entry>
         <x>4</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>5</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>6</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>7</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>8</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>15</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>16</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>17</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>18</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>19</x>
         <y>0</y>
         <z>0</z>
       </entry>
@@ -110,7 +65,17 @@
       <entry>
         <x>5</x>
         <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>5</x>
+        <y>0</y>
         <z>3</z>
+      </entry>
+      <entry>
+        <x>6</x>
+        <y>0</y>
+        <z>0</z>
       </entry>
       <entry>
         <x>6</x>
@@ -120,7 +85,17 @@
       <entry>
         <x>7</x>
         <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>7</x>
+        <y>0</y>
         <z>3</z>
+      </entry>
+      <entry>
+        <x>8</x>
+        <y>0</y>
+        <z>0</z>
       </entry>
       <entry>
         <x>8</x>
@@ -130,7 +105,17 @@
       <entry>
         <x>15</x>
         <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>15</x>
+        <y>0</y>
         <z>3</z>
+      </entry>
+      <entry>
+        <x>16</x>
+        <y>0</y>
+        <z>0</z>
       </entry>
       <entry>
         <x>16</x>
@@ -140,7 +125,17 @@
       <entry>
         <x>17</x>
         <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>17</x>
+        <y>0</y>
         <z>3</z>
+      </entry>
+      <entry>
+        <x>18</x>
+        <y>0</y>
+        <z>0</z>
       </entry>
       <entry>
         <x>18</x>
@@ -150,8 +145,15 @@
       <entry>
         <x>19</x>
         <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>19</x>
+        <y>0</y>
         <z>3</z>
       </entry>
+    </exitsX>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>3</y>
@@ -164,43 +166,23 @@
       </entry>
       <entry>
         <x>0</x>
-        <y>5</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>6</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>17</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>18</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>19</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>20</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>0</x>
         <y>4</y>
         <z>3</z>
       </entry>
       <entry>
         <x>0</x>
         <y>5</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>5</y>
         <z>3</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>6</y>
+        <z>0</z>
       </entry>
       <entry>
         <x>0</x>
@@ -230,7 +212,17 @@
       <entry>
         <x>0</x>
         <y>17</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>17</y>
         <z>3</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>18</y>
+        <z>0</z>
       </entry>
       <entry>
         <x>0</x>
@@ -240,9 +232,19 @@
       <entry>
         <x>0</x>
         <y>19</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>19</y>
         <z>3</z>
       </entry>
-    </exits>
+      <entry>
+        <x>0</x>
+        <y>20</y>
+        <z>0</z>
+      </entry>
+    </exitsY>
     <tilesets>
       <entry>25flyer</entry>
     </tilesets>
@@ -262,12 +264,18 @@
       <entry>BATTLEMAPPART_25flyer_RW_67</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_25flyer_FT117</entry>
-      <entry>BATTLEMAPPART_25flyer_FT109</entry>
-      <entry>BATTLEMAPPART_25flyer_FT110</entry>
-      <entry>BATTLEMAPPART_25flyer_FT118</entry>
-      <entry>BATTLEMAPPART_25flyer_FT116</entry>
+      <entry>BATTLEMAPPART_25flyer_FT_117</entry>
+      <entry>BATTLEMAPPART_25flyer_FT_109</entry>
+      <entry>BATTLEMAPPART_25flyer_FT_110</entry>
+      <entry>BATTLEMAPPART_25flyer_FT_118</entry>
+      <entry>BATTLEMAPPART_25flyer_FT_116</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_25flyer_GD_80</entry>
+      <entry>BATTLEMAPPART_25flyer_GD_81</entry>
+      <entry>BATTLEMAPPART_25flyer_GD_82</entry>
+      <entry>BATTLEMAPPART_25flyer_GD_83</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_25flyer>

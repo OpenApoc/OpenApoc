@@ -51,57 +51,7 @@
     <entrance_level_min>2</entrance_level_min>
     <entrance_level_max>3</entrance_level_max>
     <exit_level_max>7</exit_level_max>
-    <exits>
-      <entry>
-        <x>13</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>14</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>15</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>16</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>17</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>13</x>
-        <y>0</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>14</x>
-        <y>0</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>15</x>
-        <y>0</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>16</x>
-        <y>0</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>17</x>
-        <y>0</y>
-        <z>1</z>
-      </entry>
+    <exitsX>
       <entry>
         <x>8</x>
         <y>0</y>
@@ -112,6 +62,58 @@
         <y>0</y>
         <z>6</z>
       </entry>
+      <entry>
+        <x>13</x>
+        <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>13</x>
+        <y>0</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>14</x>
+        <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>14</x>
+        <y>0</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>15</x>
+        <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>15</x>
+        <y>0</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>16</x>
+        <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>16</x>
+        <y>0</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>17</x>
+        <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>17</x>
+        <y>0</y>
+        <z>1</z>
+      </entry>
+    </exitsX>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>5</y>
@@ -132,7 +134,7 @@
         <y>11</y>
         <z>4</z>
       </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>12shops</entry>
     </tilesets>
@@ -152,12 +154,18 @@
       <entry>BATTLEMAPPART_12shops_RW_81</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_12shops_FT238</entry>
-      <entry>BATTLEMAPPART_12shops_FT239</entry>
-      <entry>BATTLEMAPPART_12shops_FT240</entry>
-      <entry>BATTLEMAPPART_12shops_FT225</entry>
-      <entry>BATTLEMAPPART_12shops_FT227</entry>
+      <entry>BATTLEMAPPART_12shops_FT_238</entry>
+      <entry>BATTLEMAPPART_12shops_FT_239</entry>
+      <entry>BATTLEMAPPART_12shops_FT_240</entry>
+      <entry>BATTLEMAPPART_12shops_FT_225</entry>
+      <entry>BATTLEMAPPART_12shops_FT_227</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_12shops_GD_108</entry>
+      <entry>BATTLEMAPPART_12shops_GD_109</entry>
+      <entry>BATTLEMAPPART_12shops_GD_110</entry>
+      <entry>BATTLEMAPPART_12shops_GD_111</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_12shops>

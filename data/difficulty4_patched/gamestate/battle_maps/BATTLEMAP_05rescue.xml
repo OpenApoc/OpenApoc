@@ -50,7 +50,27 @@
     </allow_exit>
     <entrance_level_max>6</entrance_level_max>
     <exit_level_max>6</exit_level_max>
-    <exits>
+    <exitsX>
+      <entry>
+        <x>13</x>
+        <y>0</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>14</x>
+        <y>0</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>15</x>
+        <y>0</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>16</x>
+        <y>0</y>
+        <z>1</z>
+      </entry>
       <entry>
         <x>19</x>
         <y>0</y>
@@ -76,24 +96,26 @@
         <y>0</y>
         <z>0</z>
       </entry>
+    </exitsX>
+    <exitsY>
       <entry>
-        <x>13</x>
-        <y>0</y>
+        <x>0</x>
+        <y>13</y>
         <z>1</z>
       </entry>
       <entry>
-        <x>14</x>
-        <y>0</y>
+        <x>0</x>
+        <y>14</y>
         <z>1</z>
       </entry>
       <entry>
-        <x>15</x>
-        <y>0</y>
+        <x>0</x>
+        <y>15</y>
         <z>1</z>
       </entry>
       <entry>
-        <x>16</x>
-        <y>0</y>
+        <x>0</x>
+        <y>16</y>
         <z>1</z>
       </entry>
       <entry>
@@ -121,27 +143,7 @@
         <y>23</y>
         <z>0</z>
       </entry>
-      <entry>
-        <x>0</x>
-        <y>13</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>14</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>15</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>16</y>
-        <z>1</z>
-      </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>05rescue</entry>
     </tilesets>
@@ -161,12 +163,18 @@
       <entry>BATTLEMAPPART_05rescue_RW_70</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_05rescue_FT161</entry>
-      <entry>BATTLEMAPPART_05rescue_FT85</entry>
-      <entry>BATTLEMAPPART_05rescue_FT84</entry>
-      <entry>BATTLEMAPPART_05rescue_FT86</entry>
-      <entry>BATTLEMAPPART_05rescue_FT160</entry>
+      <entry>BATTLEMAPPART_05rescue_FT_161</entry>
+      <entry>BATTLEMAPPART_05rescue_FT_85</entry>
+      <entry>BATTLEMAPPART_05rescue_FT_84</entry>
+      <entry>BATTLEMAPPART_05rescue_FT_86</entry>
+      <entry>BATTLEMAPPART_05rescue_FT_160</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_05rescue_GD_88</entry>
+      <entry>BATTLEMAPPART_05rescue_GD_89</entry>
+      <entry>BATTLEMAPPART_05rescue_GD_90</entry>
+      <entry>BATTLEMAPPART_05rescue_GD_91</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_05rescue>

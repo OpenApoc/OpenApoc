@@ -71,13 +71,18 @@ sp<Control> MapSelector::createMapRowBuilding(sp<Building> building, sp<GameStat
 				if (a.second->type->role == AgentType::Role::Soldier)
 					agents.emplace_back(state.get(), a.second);
 
-			StateRef<Organisation> org = {state.get(), UString("ORG_ALIEN")};
+			StateRef<Organisation> org = building->owner;
 			StateRef<Building> bld = {state.get(), building};
 			StateRef<Vehicle> veh = {};
-			state->battle = BattleMap::CreateBattle(*state.get(), org, agents, veh, bld);
-			if (!state->battle)
+			auto b = BattleMap::CreateBattle(*state.get(), org, agents, veh, bld);
+			if (!b)
 				return;
-			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BattleView>(state)});
+			if (state->current_battle)
+				fw().stageQueueCommand({StageCmd::Command::POP});
+			fw().stageQueueCommand({StageCmd::Command::POP});
+			state->current_battle = b;
+			b->initBattle();
+			fw().stageQueueCommand({StageCmd::Command::REPLACE, mksp<BattleView>(state)});
 		});
 	}
 
@@ -126,10 +131,15 @@ sp<Control> MapSelector::createMapRowVehicle(sp<VehicleType> vehicle, sp<GameSta
 			state->vehicles[v->name] = v;
 			StateRef<Vehicle> ufo = {state.get(), v->name};
 			StateRef<Vehicle> veh = {};
-			state->battle = BattleMap::CreateBattle(*state.get(), org, agents, veh, ufo);
-			if (!state->battle)
+			auto b = BattleMap::CreateBattle(*state.get(), org, agents, veh, ufo);
+			if (!b)
 				return;
-			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BattleView>(state)});
+			if (state->current_battle)
+				fw().stageQueueCommand({StageCmd::Command::POP});
+			fw().stageQueueCommand({StageCmd::Command::POP});
+			state->current_battle = b;
+			b->initBattle();
+			fw().stageQueueCommand({StageCmd::Command::REPLACE, mksp<BattleView>(state)});
 		});
 	}
 

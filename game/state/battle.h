@@ -13,6 +13,10 @@ namespace OpenApoc
 #define BATTLE_TILE_Y (24)
 #define BATTLE_TILE_Z (40)
 
+#define BATTLE_VOXEL_X (24)
+#define BATTLE_VOXEL_Y (24)
+#define BATTLE_VOXEL_Z (20)
+
 #define BATTLE_STRAT_TILE_X 8
 #define BATTLE_STRAT_TILE_Y 8
 
@@ -20,10 +24,12 @@ class GameState;
 class TileMap;
 class BattleMapPart;
 class BattleUnit;
-// class BattleProjectile;
-// class BattleDoodad;
+class BattleItem;
+class Projectile;
+class Doodad;
+class DoodadType;
 
-class Battle
+class Battle : public std::enable_shared_from_this<Battle>
 {
   public:
 	enum class MapBorder
@@ -46,6 +52,7 @@ class Battle
 	Battle() = default;
 	~Battle();
 
+	void initBattle();
 	void initMap();
 
 	Vec3<int> size;
@@ -60,14 +67,17 @@ class Battle
 
 	StateRef<Vehicle> player_craft;
 
-	std::set<sp<BattleMapPart>> map_parts;
-	// std::set<sp<BattleProjectile>> projectiles;
-	// std::set<sp<BattleUnit>> units;
-	// std::set<sp<BattleDoodad>> doodads;
+	std::list<sp<BattleMapPart>> map_parts;
+	std::list<sp<BattleItem>> items;
+	std::list<sp<BattleUnit>> units;
+	std::list<sp<Doodad>> doodads;
+
+	std::set<sp<Projectile>> projectiles;
 
 	up<TileMap> map;
 
 	void update(GameState &state, unsigned int ticks);
+	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
 };
 
 }; // namespace OpenApoc

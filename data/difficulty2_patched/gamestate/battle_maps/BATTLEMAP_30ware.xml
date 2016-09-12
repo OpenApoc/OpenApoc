@@ -51,21 +51,21 @@
     <entrance_level_min>3</entrance_level_min>
     <entrance_level_max>7</entrance_level_max>
     <exit_level_max>7</exit_level_max>
-    <exits>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>15</y>
-        <z>3</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>16</y>
         <z>3</z>
       </entry>
       <entry>
         <x>0</x>
         <y>15</y>
         <z>4</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>16</y>
+        <z>3</z>
       </entry>
       <entry>
         <x>0</x>
@@ -77,7 +77,7 @@
         <y>16</y>
         <z>6</z>
       </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>30ware</entry>
     </tilesets>
@@ -97,12 +97,18 @@
       <entry>BATTLEMAPPART_30ware_RW_63</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_30ware_FT249</entry>
-      <entry>BATTLEMAPPART_30ware_FT247</entry>
-      <entry>BATTLEMAPPART_30ware_FT251</entry>
-      <entry>BATTLEMAPPART_30ware_FT252</entry>
-      <entry>BATTLEMAPPART_30ware_FT255</entry>
+      <entry>BATTLEMAPPART_30ware_FT_249</entry>
+      <entry>BATTLEMAPPART_30ware_FT_247</entry>
+      <entry>BATTLEMAPPART_30ware_FT_251</entry>
+      <entry>BATTLEMAPPART_30ware_FT_252</entry>
+      <entry>BATTLEMAPPART_30ware_FT_255</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_30ware_GD_71</entry>
+      <entry>BATTLEMAPPART_30ware_GD_72</entry>
+      <entry>BATTLEMAPPART_30ware_GD_73</entry>
+      <entry>BATTLEMAPPART_30ware_GD_74</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_30ware>

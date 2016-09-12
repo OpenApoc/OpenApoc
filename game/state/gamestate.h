@@ -64,12 +64,12 @@ class GameState : public std::enable_shared_from_this<GameState>
 	std::set<UString> loadedTilesets;
 	StateRefMap<BattleMapPartType> battleMapTiles;
 	StateRefMap<BattleMap> battle_maps;
-	sp<Battle> battle;
 	StateRefMap<DamageModifier> damage_modifiers;
 	StateRefMap<DamageType> damage_types;
 	StateRefMap<AEquipmentType> agent_equipment;
 	StateRefMap<EquipmentSet> equipment_sets_by_score;
 	StateRefMap<EquipmentSet> equipment_sets_by_level;
+	sp<Battle> current_battle;
 
 	std::list<EventMessage> messages;
 
@@ -106,6 +106,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	// The time from game start in ticks
 	GameTime gameTime;
+	GameTime gameTimeBeforeBattle = GameTime(0);
 
 	// high level api for loading game
 	bool loadGame(const UString &path);

@@ -102,9 +102,6 @@
     <ClCompile Include="battle\battleview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="battletileview\battletileview.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="general\notificationscreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -198,9 +195,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="battle\battleview.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="battletileview\battletileview.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="general\notificationscreen.h">

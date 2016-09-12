@@ -3,6 +3,7 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/tileview/collision.h"
+#include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_scenery.h"
 #include "game/ui/city/basebuyscreen.h"
 
@@ -14,7 +15,7 @@ static const Colour PLAYER_BASE_AVAILABLE{160, 236, 252};
 
 BaseSelectScreen::BaseSelectScreen(sp<GameState> state, Vec3<float> centerPos)
     : TileView(*state->current_city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
-               Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Strategy),
+               Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Strategy, Mode::City),
       menuform(ui().getForm("FORM_SELECT_BASE_SCREEN")), state(state), counter(0)
 {
 	this->centerPos = centerPos;

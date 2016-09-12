@@ -1,5 +1,7 @@
 #include "game/state/battlemappart.h"
+#include "game/state/battle/battleitem.h"
 #include "game/state/battlemappart_type.h"
+#include "game/state/gamestate.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tile.h"
@@ -9,7 +11,7 @@
 namespace OpenApoc
 {
 
-void BattleMapPart::handleCollision(GameState &state, CollisionB &c)
+void BattleMapPart::handleCollision(GameState &state, Collision &c)
 {
 	// FIXME: Proper damage
 	std::ignore = c;
@@ -27,21 +29,35 @@ void BattleMapPart::handleCollision(GameState &state, CollisionB &c)
 		// Already falling, just continue
 		return;
 	}
-	/*if (!this->damaged && type->damagedTile)
+	if (!this->damaged && type->damaged_map_part)
 	{
-	this->damaged = true;
+		this->damaged = true;
+		this->type = type->damaged_map_part;
 	}
-	else*/
+	else
 	{
 		// Don't destroy bottom tiles, else everything will leak out
-		if (this->initialPosition.z != 0)
+		if (this->initialPosition.z != 0 || this->type->type != BattleMapPartType::Type::Ground)
 		{
 			this->tileObject->removeFromMap();
 			this->tileObject.reset();
 		}
+		else
+		{
+			auto b = battle.lock();
+			if (!b)
+				LogError("Battle disappeared!");
+			this->type = b->destroyed_ground_tile;
+		}
 	}
-	for (auto &s : this->supports)
+	for (auto &s : this->supportedParts)
 		s->collapse(state);
+	for (auto &s : this->supportedItems)
+	{
+		auto i = s.lock();
+		if (i)
+			i->supported = false;
+	}
 }
 
 void BattleMapPart::collapse(GameState &state)
@@ -51,7 +67,7 @@ void BattleMapPart::collapse(GameState &state)
 		return;
 	this->falling = true;
 
-	for (auto &s : this->supports)
+	for (auto &s : this->supportedParts)
 		s->collapse(state);
 }
 

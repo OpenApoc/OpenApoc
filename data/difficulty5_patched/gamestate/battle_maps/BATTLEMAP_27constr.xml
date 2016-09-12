@@ -50,76 +50,88 @@
     </allow_exit>
     <entrance_level_max>3</entrance_level_max>
     <exit_level_max>5</exit_level_max>
-    <exits>
-      <entry>
-        <x>10</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>11</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>12</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>13</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>10</x>
-        <y>0</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>11</x>
-        <y>0</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>12</x>
-        <y>0</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>13</x>
-        <y>0</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>10</x>
-        <y>0</y>
-        <z>2</z>
-      </entry>
-      <entry>
-        <x>11</x>
-        <y>0</y>
-        <z>2</z>
-      </entry>
-      <entry>
-        <x>12</x>
-        <y>0</y>
-        <z>2</z>
-      </entry>
-      <entry>
-        <x>13</x>
-        <y>0</y>
-        <z>2</z>
-      </entry>
+    <exitsX>
       <entry>
         <x>5</x>
         <y>0</y>
         <z>4</z>
       </entry>
       <entry>
+        <x>10</x>
+        <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>10</x>
+        <y>0</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>10</x>
+        <y>0</y>
+        <z>2</z>
+      </entry>
+      <entry>
+        <x>11</x>
+        <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>11</x>
+        <y>0</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>11</x>
+        <y>0</y>
+        <z>2</z>
+      </entry>
+      <entry>
+        <x>12</x>
+        <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>12</x>
+        <y>0</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>12</x>
+        <y>0</y>
+        <z>2</z>
+      </entry>
+      <entry>
+        <x>13</x>
+        <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>13</x>
+        <y>0</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>13</x>
+        <y>0</y>
+        <z>2</z>
+      </entry>
+    </exitsX>
+    <exitsY>
+      <entry>
         <x>0</x>
         <y>10</y>
         <z>0</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>10</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>10</y>
+        <z>2</z>
       </entry>
       <entry>
         <x>0</x>
@@ -128,8 +140,28 @@
       </entry>
       <entry>
         <x>0</x>
+        <y>11</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>11</y>
+        <z>2</z>
+      </entry>
+      <entry>
+        <x>0</x>
         <y>12</y>
         <z>0</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>12</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>12</y>
+        <z>2</z>
       </entry>
       <entry>
         <x>0</x>
@@ -138,38 +170,8 @@
       </entry>
       <entry>
         <x>0</x>
-        <y>10</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>11</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>12</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>0</x>
         <y>13</y>
         <z>1</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>10</y>
-        <z>2</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>11</y>
-        <z>2</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>12</y>
-        <z>2</z>
       </entry>
       <entry>
         <x>0</x>
@@ -181,7 +183,7 @@
         <y>19</y>
         <z>4</z>
       </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>27constr</entry>
     </tilesets>
@@ -201,12 +203,18 @@
       <entry>BATTLEMAPPART_27constr_RW_71</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_27constr_FT251</entry>
-      <entry>BATTLEMAPPART_27constr_FT250</entry>
-      <entry>BATTLEMAPPART_27constr_FT253</entry>
-      <entry>BATTLEMAPPART_27constr_FT249</entry>
-      <entry>BATTLEMAPPART_27constr_FT254</entry>
+      <entry>BATTLEMAPPART_27constr_FT_251</entry>
+      <entry>BATTLEMAPPART_27constr_FT_250</entry>
+      <entry>BATTLEMAPPART_27constr_FT_253</entry>
+      <entry>BATTLEMAPPART_27constr_FT_249</entry>
+      <entry>BATTLEMAPPART_27constr_FT_254</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_27constr_GD_64</entry>
+      <entry>BATTLEMAPPART_27constr_GD_65</entry>
+      <entry>BATTLEMAPPART_27constr_GD_66</entry>
+      <entry>BATTLEMAPPART_27constr_GD_67</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_27constr>

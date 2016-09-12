@@ -51,7 +51,7 @@
     <entrance_level_min>1</entrance_level_min>
     <entrance_level_max>4</entrance_level_max>
     <exit_level_max>4</exit_level_max>
-    <exits>
+    <exitsX>
       <entry>
         <x>11</x>
         <y>0</y>
@@ -60,6 +60,18 @@
       <entry>
         <x>12</x>
         <y>0</y>
+        <z>1</z>
+      </entry>
+    </exitsX>
+    <exitsY>
+      <entry>
+        <x>0</x>
+        <y>8</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>9</y>
         <z>1</z>
       </entry>
       <entry>
@@ -74,16 +86,6 @@
       </entry>
       <entry>
         <x>0</x>
-        <y>8</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>9</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>0</x>
         <y>14</y>
         <z>1</z>
       </entry>
@@ -92,7 +94,7 @@
         <y>15</y>
         <z>1</z>
       </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>33recycl</entry>
     </tilesets>
@@ -112,12 +114,18 @@
       <entry>BATTLEMAPPART_33recycl_RW_45</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_33recycl_FT250</entry>
-      <entry>BATTLEMAPPART_33recycl_FT251</entry>
-      <entry>BATTLEMAPPART_33recycl_FT249</entry>
-      <entry>BATTLEMAPPART_33recycl_FT245</entry>
-      <entry>BATTLEMAPPART_33recycl_FT247</entry>
+      <entry>BATTLEMAPPART_33recycl_FT_250</entry>
+      <entry>BATTLEMAPPART_33recycl_FT_251</entry>
+      <entry>BATTLEMAPPART_33recycl_FT_249</entry>
+      <entry>BATTLEMAPPART_33recycl_FT_245</entry>
+      <entry>BATTLEMAPPART_33recycl_FT_247</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_33recycl_GD_155</entry>
+      <entry>BATTLEMAPPART_33recycl_GD_156</entry>
+      <entry>BATTLEMAPPART_33recycl_GD_157</entry>
+      <entry>BATTLEMAPPART_33recycl_GD_158</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_33recycl>

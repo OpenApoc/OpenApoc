@@ -17,13 +17,22 @@ Projectile::Projectile(StateRef<Vehicle> firer, Vec3<float> position, Vec3<float
                        std::list<sp<Image>> projectile_sprites)
     : type(Type::Beam), position(position), velocity(velocity), age(0), lifetime(lifetime),
       damage(damage), firer(firer), previousPosition(position), tail_length(tail_length),
-      projectile_sprites(projectile_sprites)
+      projectile_sprites(projectile_sprites), velocityScale(VELOCITY_SCALE_CITY)
+{
+}
+// FIXME: Properly add unit projectiles and shit
+Projectile::Projectile(StateRef<BattleUnit>, Vec3<float> position, Vec3<float> velocity,
+                       unsigned int lifetime, int damage, unsigned int tail_length,
+                       std::list<sp<Image>> projectile_sprites)
+    : type(Type::Beam), position(position), velocity(velocity), age(0), lifetime(lifetime),
+      damage(damage), /*firer(firer),*/ previousPosition(position), tail_length(tail_length),
+      projectile_sprites(projectile_sprites), velocityScale(VELOCITY_SCALE_BATTLE)
 {
 }
 
 Projectile::Projectile()
     : type(Type::Beam), position(0, 0, 0), velocity(0, 0, 0), age(0), lifetime(0), damage(0),
-      previousPosition(0, 0, 0), tail_length(0)
+      previousPosition(0, 0, 0), tail_length(0), velocityScale(1, 1, 1)
 {
 }
 
@@ -32,7 +41,7 @@ void Projectile::update(GameState &state, unsigned int ticks)
 	this->age += ticks;
 	this->previousPosition = this->position;
 	auto newPosition = this->position +
-	                   ((static_cast<float>(ticks) / TICK_SCALE) * this->velocity) / VELOCITY_SCALE;
+	                   ((static_cast<float>(ticks) / TICK_SCALE) * this->velocity) / velocityScale;
 
 	auto mapSize = this->tileObject->map.size;
 

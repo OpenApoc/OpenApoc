@@ -1003,6 +1003,16 @@
       </sp>
     </entry>
   </los_blocks>
+  <loot_locations>
+    <entry>
+      <key>
+        <x>19</x>
+        <y>17</y>
+        <z>3</z>
+      </key>
+      <value>C</value>
+    </entry>
+  </loot_locations>
   <initial_grounds>
     <entry>
       <key>

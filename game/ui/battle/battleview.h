@@ -1,5 +1,5 @@
 #pragma once
-#include "game/ui/battletileview/battletileview.h"
+#include "game/ui/tileview/tileview.h"
 #include "library/sp.h"
 
 namespace OpenApoc
@@ -26,12 +26,13 @@ enum class BattleSelectionState
 	Fire,
 };
 
-class BattleView : public BattleTileView
+class BattleView : public TileView
 {
   private:
 	sp<Form> activeTab, baseForm;
 	std::vector<sp<Form>> uiTabs;
 	BattleUpdateSpeed updateSpeed;
+	BattleUpdateSpeed lastSpeed;
 
 	void setUpdateSpeed(BattleUpdateSpeed updateSpeed);
 

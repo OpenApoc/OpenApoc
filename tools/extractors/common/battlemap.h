@@ -77,7 +77,7 @@ struct SmpData
 	uint8_t GD;
 	uint8_t LW;
 	uint8_t RW;
-	uint8_t SC;
+	uint8_t FT;
 };
 static_assert(sizeof(struct SmpData) == 4, "Unexpected SmpData size");
 

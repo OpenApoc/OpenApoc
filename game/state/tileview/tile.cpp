@@ -6,6 +6,7 @@
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/tileview/collision.h"
+#include "game/state/tileview/tileobject_battleitem.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_doodad.h"
 #include "game/state/tileview/tileobject_projectile.h"
@@ -13,14 +14,16 @@
 #include "game/state/tileview/tileobject_shadow.h"
 #include "game/state/tileview/tileobject_vehicle.h"
 #include "library/sp.h"
+#include <algorithm>
 #include <random>
 #include <unordered_map>
 
 namespace OpenApoc
 {
 
-TileMap::TileMap(Vec3<int> size, std::vector<std::set<TileObject::Type>> layerMap)
-    : layerMap(layerMap), size(size)
+TileMap::TileMap(Vec3<int> size, Vec3<float> velocityScale, Vec3<int> voxelMapSize,
+                 std::vector<std::set<TileObject::Type>> layerMap)
+    : layerMap(layerMap), size(size), voxelMapSize(voxelMapSize), velocityScale(velocityScale)
 {
 	tiles.reserve(size.x * size.y * size.z);
 	for (int z = 0; z < size.z; z++)
@@ -54,6 +57,19 @@ TileMap::~TileMap() = default;
 Tile::Tile(TileMap &map, Vec3<int> position, int layerCount)
     : map(map), position(position), drawnObjects(layerCount)
 {
+}
+
+// Position for items and units to be located on
+Vec3<float> Tile::getRestingPosition()
+{
+	float height = 0.0;
+	for (auto o : ownedObjects)
+		if (o->getType() == TileObject::Type::Ground || o->getType() == TileObject::Type::Feature)
+			height = std::max(height, (float)std::static_pointer_cast<TileObjectBattleMapPart>(o)
+			                              ->getOwner()
+			                              ->type->height);
+	return Vec3<float>{position.x + 0.5, position.y + 0.5,
+	                   position.z + height / (float)BATTLE_TILE_Z};
 }
 
 namespace
@@ -321,6 +337,27 @@ void TileMap::addObjectToMap(sp<BattleMapPart> map_part)
 	map_part->tileObject = obj;
 }
 
+void TileMap::addObjectToMap(sp<BattleItem> item)
+{
+	if (item->tileObject)
+	{
+		LogError("Item already has tile object");
+	}
+	if (item->shadowObject)
+	{
+		LogError("Item already has shadow object");
+	}
+	// FIXME: mksp<> doesn't work for private (but accessible due to friend)
+	// constructors?
+	sp<TileObjectBattleItem> obj(new TileObjectBattleItem(*this, item));
+	obj->setPosition(item->getPosition());
+	item->tileObject = obj;
+
+	sp<TileObjectShadow> shadow(new TileObjectShadow(*this, item));
+	shadow->setPosition(item->getPosition());
+	item->shadowObject = shadow;
+}
+
 int TileMap::getLayer(TileObject::Type type) const
 {
 	for (unsigned i = 0; i < this->layerMap.size(); i++)
@@ -344,7 +381,8 @@ bool TileMap::tileIsValid(Vec3<int> tile) const
 	return true;
 }
 
-sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &transform) const
+sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &transform,
+                                 float maxZ) const
 {
 	auto img = mksp<RGBImage>(viewRect.size());
 	std::map<sp<TileObject>, Colour> objectColours;
@@ -366,10 +404,10 @@ sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &
 	{
 		for (int x = 0; x < w; x++)
 		{
-			auto topPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, 9.99f);
+			auto topPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, maxZ - 0.01f);
 			auto bottomPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, 0.0f);
 
-			auto collision = this->findCollision(topPos, bottomPos);
+			auto collision = this->findCollision(topPos, bottomPos, {}, true);
 			if (collision)
 			{
 				if (objectColours.find(collision.obj) == objectColours.end())

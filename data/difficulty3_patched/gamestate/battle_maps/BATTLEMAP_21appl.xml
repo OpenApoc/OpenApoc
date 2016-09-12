@@ -50,7 +50,7 @@
     </allow_exit>
     <entrance_level_max>3</entrance_level_max>
     <exit_level_max>3</exit_level_max>
-    <exits>
+    <exitsX>
       <entry>
         <x>12</x>
         <y>0</y>
@@ -86,6 +86,8 @@
         <y>0</y>
         <z>0</z>
       </entry>
+    </exitsX>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>12</y>
@@ -121,7 +123,7 @@
         <y>18</y>
         <z>0</z>
       </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>21appl</entry>
     </tilesets>
@@ -141,12 +143,18 @@
       <entry>BATTLEMAPPART_21appl_RW_65</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_21appl_FT152</entry>
-      <entry>BATTLEMAPPART_21appl_FT150</entry>
-      <entry>BATTLEMAPPART_21appl_FT153</entry>
-      <entry>BATTLEMAPPART_21appl_FT151</entry>
-      <entry>BATTLEMAPPART_21appl_FT149</entry>
+      <entry>BATTLEMAPPART_21appl_FT_152</entry>
+      <entry>BATTLEMAPPART_21appl_FT_150</entry>
+      <entry>BATTLEMAPPART_21appl_FT_153</entry>
+      <entry>BATTLEMAPPART_21appl_FT_151</entry>
+      <entry>BATTLEMAPPART_21appl_FT_149</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_21appl_GD_61</entry>
+      <entry>BATTLEMAPPART_21appl_GD_62</entry>
+      <entry>BATTLEMAPPART_21appl_GD_63</entry>
+      <entry>BATTLEMAPPART_21appl_GD_64</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_21appl>

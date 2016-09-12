@@ -28,12 +28,13 @@
 		<member>aliens</member>
 		<member>rng</member>
 		<member>gameTime</member>
+		<member>gameTimeBeforeBattle</member>
 		<member type="SectionMap">battle_unit_image_packs</member>
 		<member type="SectionMap">battle_unit_animations</member>
 		<member>loadedTilesets</member>
 		<member type="Section">battleMapTiles</member>
 		<member type="SectionMap">battle_maps</member>
-		<member type="Section">battle</member>
+		<member type="Section">current_battle</member>
 		<member type="Section">damage_modifiers</member>
 		<member type="Section">damage_types</member>
 		<member type="Section">agent_equipment</member>
@@ -295,11 +296,16 @@
 		<member>provides_support</member>
 		<member>supported_by</member>
 		<member>independent_structure</member>
+		<member>exit</member>
 	</object>
 	<object>
 		<name>Battle</name>
 		<member>size</member>
 		<member type="Section">map_parts</member>
+		<member>units</member>
+		<member>items</member>
+		<member>projectiles</member>
+		<member>doodads</member>
 		<member>mission_type</member>
 		<member>mission_location_id</member>
 		<member>player_craft</member>
@@ -315,12 +321,14 @@
 		<member>entrance_level_max</member>
 		<member>exit_level_min</member>
 		<member>exit_level_max</member>
-		<member>exits</member>
+		<member>exitsX</member>
+		<member>exitsY</member>
 		<member>tilesets</member>
 		<member>destroyed_ground_tile</member>
 		<member>rubble_left_wall</member>
 		<member>rubble_right_wall</member>
 		<member>rubble_feature</member>
+		<member>exit_grounds</member>
 		<member type="SectionMap">sectors</member>
 	</object>
 	<object>
@@ -334,6 +342,7 @@
 	<object>
 		<name>BattleMapSectorTiles</name>
 		<member>los_blocks</member>
+		<member>loot_locations</member>
 		<member>initial_grounds</member>
 		<member>initial_left_walls</member>
 		<member>initial_right_walls</member>
@@ -356,7 +365,7 @@
 	</object>
 	<object>
 		<name>BattleUnitAnimation</name>
-		<member>animation</member>
+		<member>animations</member>
 	</object>
 	<object>
 		<name>BattleUnitAnimation::AnimationEntry</name>
@@ -381,6 +390,12 @@
 	<object>
 		<name>BattleUnit</name>
 		<member>agent</member>
+	</object>
+	<object>
+		<name>BattleItem</name>
+		<member>item</member>
+		<member>position</member>
+		<member>velocity</member>
 	</object>
 	<object>
 		<name>BattleMapPart</name>
@@ -517,8 +532,11 @@
 		<member>id</member>
 		<member>name</member>
 		<member>weight</member>
+		<member>strategy_sprite</member>
 		<member>held_sprites</member>
 		<member>dropped_sprite</member>
+		<member>image_offset</member>
+		<member>dropped_shadow_sprite</member>
 		<member>equipscreen_sprite</member>
 		<member>equipscreen_size</member>
 		<member>manufacturer</member>

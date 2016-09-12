@@ -51,17 +51,7 @@
     <entrance_level_min>1</entrance_level_min>
     <entrance_level_max>3</entrance_level_max>
     <exit_level_max>3</exit_level_max>
-    <exits>
-      <entry>
-        <x>15</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>16</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
+    <exitsX>
       <entry>
         <x>0</x>
         <y>0</y>
@@ -83,15 +73,17 @@
         <z>1</z>
       </entry>
       <entry>
-        <x>0</x>
-        <y>15</y>
+        <x>15</x>
+        <y>0</y>
         <z>0</z>
       </entry>
       <entry>
-        <x>0</x>
-        <y>16</y>
+        <x>16</x>
+        <y>0</y>
         <z>0</z>
       </entry>
+    </exitsX>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>0</y>
@@ -112,7 +104,17 @@
         <y>4</y>
         <z>1</z>
       </entry>
-    </exits>
+      <entry>
+        <x>0</x>
+        <y>15</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>16</y>
+        <z>0</z>
+      </entry>
+    </exitsY>
     <tilesets>
       <entry>36church</entry>
     </tilesets>
@@ -132,12 +134,18 @@
       <entry>BATTLEMAPPART_36church_RW_111</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_36church_FT134</entry>
-      <entry>BATTLEMAPPART_36church_FT132</entry>
-      <entry>BATTLEMAPPART_36church_FT131</entry>
-      <entry>BATTLEMAPPART_36church_FT127</entry>
-      <entry>BATTLEMAPPART_36church_FT129</entry>
+      <entry>BATTLEMAPPART_36church_FT_134</entry>
+      <entry>BATTLEMAPPART_36church_FT_132</entry>
+      <entry>BATTLEMAPPART_36church_FT_131</entry>
+      <entry>BATTLEMAPPART_36church_FT_127</entry>
+      <entry>BATTLEMAPPART_36church_FT_129</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_36church_GD_89</entry>
+      <entry>BATTLEMAPPART_36church_GD_90</entry>
+      <entry>BATTLEMAPPART_36church_GD_91</entry>
+      <entry>BATTLEMAPPART_36church_GD_92</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_36church>

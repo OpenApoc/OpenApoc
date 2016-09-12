@@ -125,6 +125,15 @@ void InGameOptions::eventOccurred(Event *e)
 		{
 			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<MapSelector>(state)});
 		}
+		else if (e->forms().RaisedBy->Name == "BUTTON_EXIT_BATTLE")
+		{
+			if (state->current_battle)
+			{
+				state->current_battle = nullptr;
+				fw().stageQueueCommand({StageCmd::Command::POP});
+				fw().stageQueueCommand({StageCmd::Command::POP});
+			}
+		}
 	}
 	if (e->type() == EVENT_FORM_INTERACTION &&
 	    e->forms().EventFlag == FormEventType::ScrollBarChange)

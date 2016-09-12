@@ -51,7 +51,17 @@
     <entrance_level_min>1</entrance_level_min>
     <entrance_level_max>2</entrance_level_max>
     <exit_level_max>9</exit_level_max>
-    <exits>
+    <exitsX>
+      <entry>
+        <x>11</x>
+        <y>0</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>12</x>
+        <y>0</y>
+        <z>1</z>
+      </entry>
       <entry>
         <x>19</x>
         <y>0</y>
@@ -62,14 +72,16 @@
         <y>0</y>
         <z>0</z>
       </entry>
+    </exitsX>
+    <exitsY>
       <entry>
-        <x>11</x>
-        <y>0</y>
+        <x>0</x>
+        <y>11</y>
         <z>1</z>
       </entry>
       <entry>
-        <x>12</x>
-        <y>0</y>
+        <x>0</x>
+        <y>12</y>
         <z>1</z>
       </entry>
       <entry>
@@ -82,17 +94,7 @@
         <y>20</y>
         <z>0</z>
       </entry>
-      <entry>
-        <x>0</x>
-        <y>11</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>12</y>
-        <z>1</z>
-      </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>01senate</entry>
     </tilesets>
@@ -112,12 +114,18 @@
       <entry>BATTLEMAPPART_01senate_RW_71</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_01senate_FT243</entry>
-      <entry>BATTLEMAPPART_01senate_FT244</entry>
-      <entry>BATTLEMAPPART_01senate_FT245</entry>
-      <entry>BATTLEMAPPART_01senate_FT246</entry>
-      <entry>BATTLEMAPPART_01senate_FT248</entry>
+      <entry>BATTLEMAPPART_01senate_FT_243</entry>
+      <entry>BATTLEMAPPART_01senate_FT_244</entry>
+      <entry>BATTLEMAPPART_01senate_FT_245</entry>
+      <entry>BATTLEMAPPART_01senate_FT_246</entry>
+      <entry>BATTLEMAPPART_01senate_FT_248</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_01senate_GD_147</entry>
+      <entry>BATTLEMAPPART_01senate_GD_148</entry>
+      <entry>BATTLEMAPPART_01senate_GD_149</entry>
+      <entry>BATTLEMAPPART_01senate_GD_150</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_01senate>

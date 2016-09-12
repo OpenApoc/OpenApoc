@@ -50,7 +50,7 @@
     </allow_exit>
     <entrance_level_max>3</entrance_level_max>
     <exit_level_max>9</exit_level_max>
-    <exits>
+    <exitsX>
       <entry>
         <x>9</x>
         <y>0</y>
@@ -71,6 +71,8 @@
         <y>0</y>
         <z>0</z>
       </entry>
+    </exitsX>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>9</y>
@@ -91,7 +93,7 @@
         <y>12</y>
         <z>0</z>
       </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>18hydro</entry>
     </tilesets>
@@ -111,12 +113,18 @@
       <entry>BATTLEMAPPART_18hydro_RW_49</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_18hydro_FT66</entry>
-      <entry>BATTLEMAPPART_18hydro_FT65</entry>
-      <entry>BATTLEMAPPART_18hydro_FT64</entry>
-      <entry>BATTLEMAPPART_18hydro_FT63</entry>
-      <entry>BATTLEMAPPART_18hydro_FT62</entry>
+      <entry>BATTLEMAPPART_18hydro_FT_66</entry>
+      <entry>BATTLEMAPPART_18hydro_FT_65</entry>
+      <entry>BATTLEMAPPART_18hydro_FT_64</entry>
+      <entry>BATTLEMAPPART_18hydro_FT_63</entry>
+      <entry>BATTLEMAPPART_18hydro_FT_62</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_18hydro_GD_125</entry>
+      <entry>BATTLEMAPPART_18hydro_GD_126</entry>
+      <entry>BATTLEMAPPART_18hydro_GD_127</entry>
+      <entry>BATTLEMAPPART_18hydro_GD_128</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_18hydro>

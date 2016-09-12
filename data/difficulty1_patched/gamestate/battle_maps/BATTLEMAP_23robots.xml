@@ -51,7 +51,7 @@
     <entrance_level_min>1</entrance_level_min>
     <entrance_level_max>4</entrance_level_max>
     <exit_level_max>4</exit_level_max>
-    <exits>
+    <exitsX>
       <entry>
         <x>11</x>
         <y>0</y>
@@ -67,6 +67,8 @@
         <y>0</y>
         <z>1</z>
       </entry>
+    </exitsX>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>9</y>
@@ -102,7 +104,7 @@
         <y>27</y>
         <z>1</z>
       </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>23robots</entry>
     </tilesets>
@@ -122,12 +124,18 @@
       <entry>BATTLEMAPPART_23robots_RW_60</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_23robots_FT242</entry>
-      <entry>BATTLEMAPPART_23robots_FT243</entry>
-      <entry>BATTLEMAPPART_23robots_FT244</entry>
-      <entry>BATTLEMAPPART_23robots_FT245</entry>
-      <entry>BATTLEMAPPART_23robots_FT246</entry>
+      <entry>BATTLEMAPPART_23robots_FT_242</entry>
+      <entry>BATTLEMAPPART_23robots_FT_243</entry>
+      <entry>BATTLEMAPPART_23robots_FT_244</entry>
+      <entry>BATTLEMAPPART_23robots_FT_245</entry>
+      <entry>BATTLEMAPPART_23robots_FT_246</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_23robots_GD_62</entry>
+      <entry>BATTLEMAPPART_23robots_GD_63</entry>
+      <entry>BATTLEMAPPART_23robots_GD_64</entry>
+      <entry>BATTLEMAPPART_23robots_GD_65</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_23robots>

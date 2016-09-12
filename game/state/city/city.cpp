@@ -69,7 +69,8 @@ void City::initMap()
 		LogError("Called on city with existing map");
 		return;
 	}
-	this->map.reset(new TileMap(this->size, layerMap));
+	this->map.reset(new TileMap(this->size, VELOCITY_SCALE_CITY,
+	                            {CITY_VOXEL_X, CITY_VOXEL_Y, CITY_VOXEL_Z}, layerMap));
 	for (auto &s : this->scenery)
 	{
 		this->map->addObjectToMap(s);

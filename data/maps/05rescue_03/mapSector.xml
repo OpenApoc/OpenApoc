@@ -2883,6 +2883,32 @@
       </sp>
     </entry>
   </los_blocks>
+  <loot_locations>
+    <entry>
+      <key>
+        <x>7</x>
+        <y>14</y>
+        <z>0</z>
+      </key>
+      <value>A</value>
+    </entry>
+    <entry>
+      <key>
+        <x>9</x>
+        <y>7</y>
+        <z>3</z>
+      </key>
+      <value>A</value>
+    </entry>
+    <entry>
+      <key>
+        <x>24</x>
+        <y>15</y>
+        <z>0</z>
+      </key>
+      <value>B</value>
+    </entry>
+  </loot_locations>
   <initial_grounds>
     <entry>
       <key>

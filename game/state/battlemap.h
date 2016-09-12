@@ -33,13 +33,15 @@ class BattleMap : public StateObject<BattleMap>
 	int exit_level_min = 0;
 	int exit_level_max = 0;
 
-	std::list<Vec3<int>> exits;
+	std::set<Vec3<int>> exitsX;
+	std::set<Vec3<int>> exitsY;
 
 	std::list<UString> tilesets;
 	StateRef<BattleMapPartType> destroyed_ground_tile;
 	std::vector<StateRef<BattleMapPartType>> rubble_left_wall;
 	std::vector<StateRef<BattleMapPartType>> rubble_right_wall;
 	std::vector<StateRef<BattleMapPartType>> rubble_feature;
+	std::vector<StateRef<BattleMapPartType>> exit_grounds;
 
 	StateRefMap<BattleMapSector> sectors;
 

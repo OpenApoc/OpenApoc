@@ -77,6 +77,9 @@ void GameState::initState()
 {
 	// FIXME: reseed rng when game starts
 
+	if (current_battle)
+		current_battle->initBattle();
+
 	for (auto &c : this->cities)
 	{
 		auto &city = c.second;
@@ -265,35 +268,55 @@ bool GameState::canTurbo() const
 
 void GameState::update(unsigned int ticks)
 {
-	Trace::start("GameState::update::cities");
-	for (auto &c : this->cities)
+	if (this->current_battle)
 	{
-		c.second->update(*this, ticks);
-	}
-	Trace::end("GameState::update::cities");
-	Trace::start("GameState::update::vehicles");
-	for (auto &v : this->vehicles)
-	{
-		v.second->update(*this, ticks);
-	}
-	Trace::end("GameState::update::vehicles");
-	Trace::start("GameState::update::labs");
-	for (auto &lab : this->research.labs)
-	{
-		Lab::update(ticks, {this, lab.second}, shared_from_this());
-	}
-	Trace::end("GameState::update::labs");
+		// Save time to roll back to
+		if (gameTimeBeforeBattle.getTicks() == 0)
+			gameTimeBeforeBattle = GameTime(gameTime.getTicks());
 
-	gameTime.addTicks(ticks);
-	if (gameTime.dayPassed())
-	{
-		this->updateEndOfDay();
+		Trace::start("GameState::update::battles");
+		this->current_battle->update(*this, ticks);
+		Trace::end("GameState::update::battles");
+		gameTime.addTicks(ticks);
 	}
-	if (gameTime.weekPassed())
+	else
 	{
-		this->updateEndOfWeek();
+		// Roll back to time before battle
+		if (gameTimeBeforeBattle.getTicks() != 0)
+		{
+			gameTime = GameTime(gameTimeBeforeBattle.getTicks());
+			gameTimeBeforeBattle = GameTime(0);
+		}
+
+		Trace::start("GameState::update::cities");
+		for (auto &c : this->cities)
+		{
+			c.second->update(*this, ticks);
+		}
+		Trace::end("GameState::update::cities");
+		Trace::start("GameState::update::vehicles");
+		for (auto &v : this->vehicles)
+		{
+			v.second->update(*this, ticks);
+		}
+		Trace::end("GameState::update::vehicles");
+		Trace::start("GameState::update::labs");
+		for (auto &lab : this->research.labs)
+		{
+			Lab::update(ticks, {this, lab.second}, shared_from_this());
+		}
+		Trace::end("GameState::update::labs");
+
+		if (gameTime.dayPassed())
+		{
+			this->updateEndOfDay();
+		}
+		if (gameTime.weekPassed())
+		{
+			this->updateEndOfWeek();
+		}
+		gameTime.clearFlags();
 	}
-	gameTime.clearFlags();
 }
 
 void GameState::updateEndOfDay()

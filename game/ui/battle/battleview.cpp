@@ -9,8 +9,8 @@
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/ui/base/basescreen.h"
-#include "game/ui/battletileview/battletileview.h"
 #include "game/ui/general/ingameoptions.h"
+#include "game/ui/tileview/tileview.h"
 #include "library/sp.h"
 
 namespace OpenApoc
@@ -25,10 +25,11 @@ static const std::vector<UString> TAB_FORM_NAMES = {
 } // anonymous namespace
 
 BattleView::BattleView(sp<GameState> state)
-    : BattleTileView(*state->battle->map, Vec3<int>{BATTLE_TILE_X, BATTLE_TILE_Y, BATTLE_TILE_Z},
-                     Vec2<int>{BATTLE_STRAT_TILE_X, BATTLE_STRAT_TILE_Y}, TileViewMode::Isometric),
-      baseForm(ui().getForm("FORM_BATTLE_UI")), updateSpeed(BattleUpdateSpeed::Speed1),
-      state(state), followAgent(false),
+    : TileView(*state->current_battle->map, Vec3<int>{BATTLE_TILE_X, BATTLE_TILE_Y, BATTLE_TILE_Z},
+               Vec2<int>{BATTLE_STRAT_TILE_X, BATTLE_STRAT_TILE_Y}, TileViewMode::Isometric,
+               TileView::Mode::Battle),
+      baseForm(ui().getForm("FORM_BATTLE_UI")), updateSpeed(BattleUpdateSpeed::Pause),
+      lastSpeed(BattleUpdateSpeed::Speed1), state(state), followAgent(false),
       palette(fw().data->loadPalette("xcom3/tacdata/tactical.pal")),
       selectionState(BattleSelectionState::Normal)
 {
@@ -65,13 +66,13 @@ BattleView::BattleView(sp<GameState> state)
 		    switch (state)
 		    {
 			    case 1:
-				    setLayerDrawingMode(BattleLayerDrawingMode::UpToCurrentLevel);
+				    setLayerDrawingMode(LayerDrawingMode::UpToCurrentLevel);
 				    break;
 			    case 2:
-				    setLayerDrawingMode(BattleLayerDrawingMode::AllLevels);
+				    setLayerDrawingMode(LayerDrawingMode::AllLevels);
 				    break;
 			    case 3:
-				    setLayerDrawingMode(BattleLayerDrawingMode::OnlyCurrentLevel);
+				    setLayerDrawingMode(LayerDrawingMode::OnlyCurrentLevel);
 				    break;
 		    }
 
@@ -149,7 +150,7 @@ void BattleView::render()
 {
 	TRACE_FN;
 
-	BattleTileView::render();
+	TileView::render();
 	activeTab->render();
 	baseForm->render();
 
@@ -162,6 +163,7 @@ void BattleView::render()
 
 void BattleView::setUpdateSpeed(BattleUpdateSpeed updateSpeed)
 {
+	this->lastSpeed = this->updateSpeed;
 	switch (updateSpeed)
 	{
 		case BattleUpdateSpeed::Pause:
@@ -229,7 +231,7 @@ void BattleView::update()
 void BattleView::eventOccurred(Event *e)
 {
 	static const std::set<int> processedKeystrokes = {SDLK_ESCAPE, SDLK_PAGEUP, SDLK_PAGEDOWN,
-	                                                  SDLK_TAB};
+	                                                  SDLK_TAB, SDLK_SPACE};
 
 	activeTab->eventOccured(e);
 	baseForm->eventOccured(e);
@@ -260,6 +262,12 @@ void BattleView::eventOccurred(Event *e)
 				    ->setChecked(
 				        !this->baseForm->findControlTyped<CheckBox>("BUTTON_TOGGLE_STRATMAP")
 				             ->isChecked());
+				break;
+			case SDLK_SPACE:
+				if (this->updateSpeed != BattleUpdateSpeed::Pause)
+					setUpdateSpeed(BattleUpdateSpeed::Pause);
+				else
+					setUpdateSpeed(this->lastSpeed);
 				break;
 		}
 	}
@@ -314,7 +322,7 @@ void BattleView::eventOccurred(Event *e)
 	}
 	else
 	{
-		BattleTileView::eventOccurred(e);
+		TileView::eventOccurred(e);
 	}
 }
 

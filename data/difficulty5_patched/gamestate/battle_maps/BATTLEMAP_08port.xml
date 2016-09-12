@@ -50,7 +50,7 @@
     </allow_exit>
     <entrance_level_max>3</entrance_level_max>
     <exit_level_max>3</exit_level_max>
-    <exits>
+    <exitsX>
       <entry>
         <x>2</x>
         <y>0</y>
@@ -61,6 +61,8 @@
         <y>0</y>
         <z>0</z>
       </entry>
+    </exitsX>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>2</y>
@@ -71,7 +73,7 @@
         <y>3</y>
         <z>0</z>
       </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>08port</entry>
     </tilesets>
@@ -91,12 +93,18 @@
       <entry>BATTLEMAPPART_08port_RW_77</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_08port_FT6</entry>
-      <entry>BATTLEMAPPART_08port_FT8</entry>
-      <entry>BATTLEMAPPART_08port_FT7</entry>
-      <entry>BATTLEMAPPART_08port_FT3</entry>
-      <entry>BATTLEMAPPART_08port_FT4</entry>
+      <entry>BATTLEMAPPART_08port_FT_6</entry>
+      <entry>BATTLEMAPPART_08port_FT_8</entry>
+      <entry>BATTLEMAPPART_08port_FT_7</entry>
+      <entry>BATTLEMAPPART_08port_FT_3</entry>
+      <entry>BATTLEMAPPART_08port_FT_4</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_08port_GD_133</entry>
+      <entry>BATTLEMAPPART_08port_GD_134</entry>
+      <entry>BATTLEMAPPART_08port_GD_135</entry>
+      <entry>BATTLEMAPPART_08port_GD_136</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_08port>

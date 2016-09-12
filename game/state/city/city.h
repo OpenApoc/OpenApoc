@@ -13,6 +13,10 @@ namespace OpenApoc
 #define CITY_TILE_Y (32)
 #define CITY_TILE_Z (16)
 
+#define CITY_VOXEL_X (32)
+#define CITY_VOXEL_Y (32)
+#define CITY_VOXEL_Z (16)
+
 #define CITY_STRAT_TILE_X 8
 #define CITY_STRAT_TILE_Y 8
 

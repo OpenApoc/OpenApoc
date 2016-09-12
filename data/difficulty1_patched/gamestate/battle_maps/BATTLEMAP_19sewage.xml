@@ -50,11 +50,16 @@
     </allow_exit>
     <entrance_level_max>3</entrance_level_max>
     <exit_level_max>3</exit_level_max>
-    <exits>
+    <exitsX>
       <entry>
         <x>7</x>
         <y>0</y>
         <z>0</z>
+      </entry>
+      <entry>
+        <x>7</x>
+        <y>0</y>
+        <z>2</z>
       </entry>
       <entry>
         <x>8</x>
@@ -62,31 +67,28 @@
         <z>0</z>
       </entry>
       <entry>
-        <x>7</x>
-        <y>0</y>
-        <z>2</z>
-      </entry>
-      <entry>
         <x>12</x>
         <y>0</y>
         <z>3</z>
       </entry>
+    </exitsX>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>7</y>
         <z>0</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>7</y>
+        <z>2</z>
       </entry>
       <entry>
         <x>0</x>
         <y>8</y>
         <z>0</z>
       </entry>
-      <entry>
-        <x>0</x>
-        <y>7</y>
-        <z>2</z>
-      </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>19sewage</entry>
     </tilesets>
@@ -106,12 +108,18 @@
       <entry>BATTLEMAPPART_19sewage_RW_60</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_19sewage_FT204</entry>
-      <entry>BATTLEMAPPART_19sewage_FT205</entry>
-      <entry>BATTLEMAPPART_19sewage_FT201</entry>
-      <entry>BATTLEMAPPART_19sewage_FT196</entry>
-      <entry>BATTLEMAPPART_19sewage_FT193</entry>
+      <entry>BATTLEMAPPART_19sewage_FT_204</entry>
+      <entry>BATTLEMAPPART_19sewage_FT_205</entry>
+      <entry>BATTLEMAPPART_19sewage_FT_201</entry>
+      <entry>BATTLEMAPPART_19sewage_FT_196</entry>
+      <entry>BATTLEMAPPART_19sewage_FT_193</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_19sewage_GD_95</entry>
+      <entry>BATTLEMAPPART_19sewage_GD_96</entry>
+      <entry>BATTLEMAPPART_19sewage_GD_97</entry>
+      <entry>BATTLEMAPPART_19sewage_GD_98</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_19sewage>

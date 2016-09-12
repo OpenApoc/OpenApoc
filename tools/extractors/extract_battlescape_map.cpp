@@ -57,6 +57,23 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 		}
 	}
 
+	int firstExitIdx = 0;
+	{
+		auto fileName = dirName + mapunits_suffix + UString("grounmap.dat");
+
+		auto fullPath = map_prefix + fileName;
+		auto inFile = fw().data->fs.open(fullPath);
+		if (!inFile)
+		{
+			LogError("Failed to open \"%s\"", fileName.cStr());
+			return;
+		}
+
+		auto fileSize = inFile.size();
+		auto objectCount = fileSize / sizeof(struct BattleMapPartEntry);
+		firstExitIdx = objectCount - 4;
+	}
+
 	auto m = mksp<BattleMap>();
 
 	UString id = UString::format("%s%s", BattleMap::getPrefix(), this->battleMapPaths[index]);
@@ -84,19 +101,14 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 	m->exit_level_max = bdata.exit_max_level;
 	m->tilesets.emplace_back(tilePrefix.substr(0, tilePrefix.length() - 1));
 
-	// Side 0 = exits by X axis, Side 1 = exits by Y axis
-	for (int s = 0; s < 2; s++)
+	for (int l = 0; l < 15; l++)
 	{
-		for (int l = 0; l < 15; l++)
+		for (int e = 0; e < 14; e++)
 		{
-			for (int e = 0; e < 14; e++)
-			{
-				if (bdata.exits[s][l].exits[e] != 0xffffffff)
-				{
-					m->exits.emplace_back(s == 0 ? bdata.exits[s][l].exits[e] : 0,
-					                      s == 1 ? bdata.exits[s][l].exits[e] : 0, l);
-				}
-			}
+			if (bdata.exits[0][l].exits[e] != 0xffffffff)
+				m->exitsX.emplace(bdata.exits[0][l].exits[e], 0, l);
+			if (bdata.exits[1][l].exits[e] != 0xffffffff)
+				m->exitsY.emplace(0, bdata.exits[1][l].exits[e], l);
 		}
 	}
 
@@ -123,8 +135,15 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 		{
 			m->rubble_feature.emplace_back(
 			    &state, UString::format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix,
-			                            "FT", (unsigned)rdata.feature[i]));
+			                            "FT_", (unsigned)rdata.feature[i]));
 		}
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		m->exit_grounds.emplace_back(
+		    &state, UString::format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix, "GD_",
+		                            (unsigned)firstExitIdx + i));
 	}
 
 	// Trying all possible names, because game actually has some maps missing sectors in the middle
@@ -404,11 +423,11 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 							tiles->initial_right_walls[Vec3<int>{x, y, z}] = {&state, tileName};
 						}
 						// read scenery
-						if (tdata.SC != 0)
+						if (tdata.FT != 0)
 						{
 							auto tileName =
 							    UString::format("%s%s%s%u", BattleMapPartType::getPrefix(),
-							                    tilePrefix, "FT_", (unsigned)tdata.SC);
+							                    tilePrefix, "FT_", (unsigned)tdata.FT);
 
 							tiles->initial_features[Vec3<int>{x, y, z}] = {&state, tileName};
 						}

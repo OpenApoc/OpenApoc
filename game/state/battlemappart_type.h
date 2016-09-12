@@ -58,7 +58,7 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 	sp<Image> strategySprite;
 	sp<VoxelMap> voxelMapLOF;
 	sp<VoxelMap> voxelMapLOS;
-	Vec2<float> imageOffset = {0, 0};
+	Vec2<float> imageOffset;
 
 	int constitution = 0;
 	int explosion_power = 0;
@@ -89,5 +89,6 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 	bool provides_support = false;
 	SupportedByType supported_by = SupportedByType::Below;
 	bool independent_structure = false;
+	bool exit;
 };
 }

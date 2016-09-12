@@ -29,6 +29,7 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 
 		// From here on in,anything else goes
 		Unit,
+		Item,
 		Projectile,
 		Vehicle,
 		Scenery,

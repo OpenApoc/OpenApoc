@@ -2,24 +2,48 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/includes.h"
-#include "game/state/tileview/tile.h"
-#include "game/state/tileview/tileobject.h"
+#include "game/state/battle.h"
 
 namespace OpenApoc
 {
 
 TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
-                   TileViewMode initialMode)
+                   TileViewMode initialMode, Mode mode)
     : Stage(), map(map), isoTileSize(isoTileSize), stratTileSize(stratTileSize),
-      viewMode(initialMode), scrollUp(false), scrollDown(false), scrollLeft(false),
+      viewMode(initialMode), mode(mode), scrollUp(false), scrollDown(false), scrollLeft(false),
       scrollRight(false), dpySize(fw().displayGetWidth(), fw().displayGetHeight()),
-      strategyViewBoxColour(212, 176, 172, 255), strategyViewBoxThickness(2.0f),
-      maxZDraw(map.size.z), centerPos(0, 0, 0), isoScrollSpeed(0.5, 0.5),
-      stratScrollSpeed(2.0f, 2.0f), selectedTilePosition(0, 0, 0),
-      selectedTileImageBack(fw().data->loadImage("city/selected-citytile-back.png")),
-      selectedTileImageFront(fw().data->loadImage("city/selected-citytile-front.png")),
-      pal(fw().data->loadPalette("xcom3/ufodata/pal_01.dat"))
+      strategyViewBoxColour(212, 176, 172, 255), strategyViewBoxThickness(2.0f), currentZLevel(1),
+      selectedTilePosition(0, 0, 0), maxZDraw(map.size.z), centerPos(0, 0, 0),
+      isoScrollSpeed(0.5, 0.5), stratScrollSpeed(2.0f, 2.0f)
 {
+	switch (mode)
+	{
+		case Mode::City:
+			layerDrawingMode = LayerDrawingMode::AllLevels;
+			selectedTileEmptyImageBack = fw().data->loadImage("city/selected-citytile-back.png");
+			selectedTileFilledImageBack = fw().data->loadImage("city/selected-citytile-back.png");
+			selectedTileEmptyImageFront = fw().data->loadImage("city/selected-citytile-front.png");
+			selectedTileFilledImageFront = fw().data->loadImage("city/selected-citytile-front.png");
+			pal = fw().data->loadPalette("xcom3/ufodata/pal_01.dat");
+			break;
+		case Mode::Battle:
+			layerDrawingMode = LayerDrawingMode::UpToCurrentLevel;
+			selectedTileEmptyImageBack =
+			    fw().data->loadImage("battle/selected-battletile-empty-back.png");
+			selectedTileEmptyImageFront =
+			    fw().data->loadImage("battle/selected-battletile-empty-front.png");
+			selectedTileFilledImageBack =
+			    fw().data->loadImage("battle/selected-battletile-filled-back.png");
+			selectedTileFilledImageFront =
+			    fw().data->loadImage("battle/selected-battletile-filled-front.png");
+			selectedTileImageOffset = {23, 22};
+			pal = fw().data->loadPalette("xcom3/tacdata/tactical.pal");
+			break;
+		default:
+			LogError("Unknown TileView::Mode %d", (int)mode);
+			break;
+	}
+
 	LogInfo("dpySize: {%d,%d}", dpySize.x, dpySize.y);
 }
 
@@ -35,7 +59,6 @@ void TileView::finish() {}
 
 void TileView::eventOccurred(Event *e)
 {
-
 	if (e->type() == EVENT_KEY_DOWN)
 	{
 		switch (e->keyboard().KeyCode)
@@ -89,8 +112,8 @@ void TileView::eventOccurred(Event *e)
 			{
 				LogWarning("Writing voxel view to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
-				auto img = std::dynamic_pointer_cast<RGBImage>(
-				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this));
+				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
+				    {imageOffset, imageOffset + dpySize}, *this, currentZLevel));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 		}
@@ -112,6 +135,15 @@ void TileView::eventOccurred(Event *e)
 				scrollRight = false;
 				break;
 		}
+	}
+	else if (e->type() == EVENT_MOUSE_MOVE)
+	{
+		Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
+		// Offset by 4 since ingame 4 is the typical height of the ground, and game displays cursor
+		// on top of the ground
+		setSelectedTilePosition(this->screenToTileCoords(
+		    Vec2<float>((float)e->mouse().X, (float)e->mouse().Y + 4 - 20) - screenOffset,
+		    currentZLevel - 1));
 	}
 	else if (e->type() == EVENT_FINGER_MOVE)
 	{
@@ -199,7 +231,67 @@ void TileView::render()
 	int minY = std::max(0, topRight.y);
 	int maxY = std::min(map.size.y, bottomLeft.y);
 
-	for (int z = 0; z < maxZDraw; z++)
+	int zFrom = 0;
+	int zTo = maxZDraw;
+
+	switch (layerDrawingMode)
+	{
+		case LayerDrawingMode::UpToCurrentLevel:
+			zFrom = 0;
+			zTo = currentZLevel;
+			break;
+		case LayerDrawingMode::AllLevels:
+			zFrom = 0;
+			zTo = maxZDraw;
+			break;
+		case LayerDrawingMode::OnlyCurrentLevel:
+			zFrom = currentZLevel - 1;
+			zTo = currentZLevel;
+			break;
+	}
+
+	// Find out when to draw selection bracket parts (if ever)
+	Tile *selectedTile = nullptr;
+	sp<TileObject> drawBackBeforeThis;
+	sp<Image> selectionImageBack;
+	sp<Image> selectionImageFront;
+	if (selectedTilePosition.x >= minX && selectedTilePosition.x < maxX &&
+	    selectedTilePosition.y >= minY && selectedTilePosition.y < maxY &&
+	    selectedTilePosition.z >= zFrom && selectedTilePosition.z < zTo)
+	{
+		selectedTile =
+		    map.getTile(selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z);
+
+		if (this->viewMode == TileViewMode::Isometric)
+		{
+			// Find where to draw back selection bracket
+			auto object_count = selectedTile->drawnObjects[0].size();
+			for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+			{
+				auto &obj = selectedTile->drawnObjects[0][obj_id];
+				if (!drawBackBeforeThis && obj->getType() != TileObject::Type::Ground)
+					drawBackBeforeThis = obj;
+			}
+			// Find what kind of selection bracket to draw (yellow or green)
+			bool foundUnit = false;
+			object_count = selectedTile->intersectingObjects.size();
+			for (auto &tile : selectedTile->intersectingObjects)
+				if (tile->getType() == TileObject::Type::Unit)
+					foundUnit = true;
+			if (foundUnit)
+			{
+				selectionImageBack = selectedTileFilledImageBack;
+				selectionImageFront = selectedTileFilledImageFront;
+			}
+			else
+			{
+				selectionImageBack = selectedTileEmptyImageBack;
+				selectionImageFront = selectedTileEmptyImageFront;
+			}
+		}
+	}
+
+	for (int z = zFrom; z < zTo; z++)
 	{
 		for (int layer = 0; layer < map.getLayerCount(); layer++)
 		{
@@ -209,11 +301,42 @@ void TileView::render()
 				{
 					auto tile = map.getTile(x, y, z);
 					auto object_count = tile->drawnObjects[layer].size();
-					for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+					// I assume splitting it here will improve performance?
+					if (viewMode == TileViewMode::Isometric && mode == Mode::Battle && layer == 0 &&
+					    tile == selectedTile)
 					{
-						auto &obj = tile->drawnObjects[layer][obj_id];
-						Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
-						obj->draw(r, *this, pos, this->viewMode);
+						for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+						{
+							auto &obj = tile->drawnObjects[layer][obj_id];
+							// Back selection image is drawn
+							// between ground image and everything else
+							if (obj == drawBackBeforeThis)
+								r.draw(selectedTileEmptyImageBack,
+								       tileToOffsetScreenCoords(selectedTilePosition) -
+								           selectedTileImageOffset);
+							Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
+							obj->draw(r, *this, pos, this->viewMode);
+						}
+						// When done with all objects, draw the front selection image
+						// (and back selection image if we haven't yet)
+						if (!drawBackBeforeThis)
+							r.draw(selectedTileEmptyImageBack,
+							       tileToOffsetScreenCoords(selectedTilePosition) -
+							           selectedTileImageOffset);
+						r.draw(selectedTileEmptyImageFront,
+						       tileToOffsetScreenCoords(selectedTilePosition) -
+						           selectedTileImageOffset);
+					}
+					else
+					{
+						auto tile = map.getTile(x, y, z);
+						auto object_count = tile->drawnObjects[layer].size();
+						for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+						{
+							auto &obj = tile->drawnObjects[layer][obj_id];
+							Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
+							obj->draw(r, *this, pos, this->viewMode);
+						}
 					}
 				}
 			}
@@ -268,6 +391,20 @@ void TileView::render()
 	}
 }
 
+void TileView::setZLevel(int zLevel)
+{
+	currentZLevel = clamp(zLevel, 1, maxZDraw);
+	setScreenCenterTile(Vec3<float>{centerPos.x, centerPos.y, currentZLevel - 1});
+}
+
+int TileView::getZLevel() { return currentZLevel; }
+
+void TileView::setLayerDrawingMode(LayerDrawingMode mode)
+{
+	if (this->mode == Mode::Battle)
+		layerDrawingMode = mode;
+}
+
 bool TileView::isTransition() { return false; }
 
 void TileView::setViewMode(TileViewMode newMode) { this->viewMode = newMode; }
@@ -309,7 +446,26 @@ void TileView::setScreenCenterTile(Vec3<float> center)
 
 void TileView::setScreenCenterTile(Vec2<float> center)
 {
-	this->setScreenCenterTile(Vec3<float>{center.x, center.y, 0});
+	this->setScreenCenterTile(Vec3<float>{center.x, center.y, currentZLevel});
+}
+
+Vec3<int> TileView::getSelectedTilePosition() { return selectedTilePosition; }
+
+void TileView::setSelectedTilePosition(Vec3<int> newPosition)
+{
+	selectedTilePosition = newPosition;
+	if (selectedTilePosition.x < 0)
+		selectedTilePosition.x = 0;
+	if (selectedTilePosition.y < 0)
+		selectedTilePosition.y = 0;
+	if (selectedTilePosition.z < 0)
+		selectedTilePosition.z = 0;
+	if (selectedTilePosition.x >= map.size.x)
+		selectedTilePosition.x = map.size.x - 1;
+	if (selectedTilePosition.y >= map.size.y)
+		selectedTilePosition.y = map.size.y - 1;
+	if (selectedTilePosition.z >= map.size.z)
+		selectedTilePosition.z = map.size.z - 1;
 }
 
 }; // namespace OpenApoc

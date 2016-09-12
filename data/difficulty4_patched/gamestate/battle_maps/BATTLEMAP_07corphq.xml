@@ -50,7 +50,7 @@
     </allow_exit>
     <entrance_level_max>3</entrance_level_max>
     <exit_level_max>7</exit_level_max>
-    <exits>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>8</y>
@@ -71,7 +71,7 @@
         <y>11</y>
         <z>0</z>
       </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>07corphq</entry>
     </tilesets>
@@ -91,12 +91,18 @@
       <entry>BATTLEMAPPART_07corphq_RW_84</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_07corphq_FT229</entry>
-      <entry>BATTLEMAPPART_07corphq_FT228</entry>
-      <entry>BATTLEMAPPART_07corphq_FT227</entry>
-      <entry>BATTLEMAPPART_07corphq_FT226</entry>
-      <entry>BATTLEMAPPART_07corphq_FT222</entry>
+      <entry>BATTLEMAPPART_07corphq_FT_229</entry>
+      <entry>BATTLEMAPPART_07corphq_FT_228</entry>
+      <entry>BATTLEMAPPART_07corphq_FT_227</entry>
+      <entry>BATTLEMAPPART_07corphq_FT_226</entry>
+      <entry>BATTLEMAPPART_07corphq_FT_222</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_07corphq_GD_113</entry>
+      <entry>BATTLEMAPPART_07corphq_GD_114</entry>
+      <entry>BATTLEMAPPART_07corphq_GD_115</entry>
+      <entry>BATTLEMAPPART_07corphq_GD_116</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_07corphq>

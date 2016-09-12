@@ -24,6 +24,16 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 	}
 	size_t gameObjectSpriteCount = gameObjectSpriteTabFile.size() / 4;
 
+	auto gameObjectShadowSpriteTabFileName = UString("xcom3/tacdata/oshadow.tab");
+	auto gameObjectShadowSpriteTabFile = fw().data->fs.open(gameObjectShadowSpriteTabFileName);
+	if (!gameObjectShadowSpriteTabFile)
+	{
+		LogError("Failed to open shadow dropped item sprite TAB file \"%s\"",
+		         gameObjectShadowSpriteTabFileName.cStr());
+		return;
+	}
+	size_t gameObjectShadowSpriteCount = gameObjectShadowSpriteTabFile.size() / 4;
+
 	auto heldSpriteTabFileName = UString("xcom3/tacdata/unit/equip.tab");
 	auto heldSpriteTabFile = fw().data->fs.open(heldSpriteTabFileName);
 	if (!heldSpriteTabFile)
@@ -31,7 +41,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 		LogError("Failed to open held item sprite TAB file \"%s\"", heldSpriteTabFileName.cStr());
 		return;
 	}
-	// size_t heldSpriteCount = heldSpriteTabFile.size() / 4 / 8;
+	size_t heldSpriteCount = heldSpriteTabFile.size() / 4 / 8;
 
 	std::map<int, sp<AEquipmentType>> weapons;
 	UString tracker_gun_clip_id = "";
@@ -77,13 +87,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 		auto e = mksp<AEquipmentType>();
 		auto edata = data_t.agent_equipment->get(i);
 
-		// Since we are reading strings from UFO2P.EXE, we'll be missing the last row
-		// used for a bogus "Elerium Pod" duplicate
-		// Fix this here for now, in future maybe remove alltogether as i think it's unused
-		if (i == data_t.agent_equipment->count() - 1)
-			e->name = data_u.agent_equipment_names->get(i - 2);
-		else
-			e->name = data_u.agent_equipment_names->get(i);
+		e->name = data_u.agent_equipment_names->get(i);
 		UString id = UString::format("%s%s", AEquipmentType::getPrefix(), canon_string(e->name));
 
 		e->id = id;
@@ -253,17 +257,31 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 
 		e->weight = edata.weight;
 
-		if (i < gameObjectSpriteCount)
+		e->strategy_sprite = fw().data->loadImage(
+		    UString::format("PCKSTRAT:xcom3/tacdata/stratico.pck:xcom3/tacdata/"
+		                    "stratico.tab:%d:xcom3/tacdata/tactical.pal",
+		                    480));
+		e->image_offset = {23, 14};
+
+		if (edata.sprite_idx < gameObjectSpriteCount)
 			e->dropped_sprite =
 			    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/"
 			                                         "gameobj.tab:%d:xcom3/tacdata/tactical.pal",
-			                                         i));
+			                                         (int)edata.sprite_idx));
+
+		if (false) // FIXME: Bugs out for now, disabled
+			if (edata.sprite_idx < gameObjectShadowSpriteCount)
+				e->dropped_shadow_sprite = fw().data->loadImage(
+				    UString::format("PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/"
+				                    "oshadow.tab:%d:xcom3/tacdata/tactical.pal",
+				                    (int)edata.sprite_idx));
+		// Cannot replace with dropped sprite because they're not aligned the same way
 
 		// Held sprites begin from 0, which corresponds to item 1, Megapol AP Grenade
-		// Armor pieces go last, and held sprites for every single item after the first armor piece
-		// are identical
-		// There is a total 60 of them
-		int held_sprite_index = std::min((int)i - 1, 59);
+		// Armor pieces go last, and held sprites for every single item that has no corresponding
+		// image
+		// are the same as the last image
+		int held_sprite_index = std::min((int)edata.sprite_idx, (int)heldSpriteCount - 1);
 		for (int j = 0; j < 8; j++)
 			e->held_sprites.push_back(fw().data->loadImage(
 			    UString::format("PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/"

@@ -27,6 +27,7 @@ static void readBattleMapParts(GameState &state, TACP &data_t, sp<BattleMapTiles
 	}
 	auto fileSize = inFile.size();
 	auto objectCount = fileSize / sizeof(struct BattleMapPartEntry);
+	auto firstExitIdx = objectCount - 4;
 
 	auto strategySpriteTabFileName = dirName + "/" + stratPckName + ".tab";
 	auto strategySpriteTabFile = fw().data->fs.open(strategySpriteTabFileName);
@@ -239,6 +240,9 @@ static void readBattleMapParts(GameState &state, TACP &data_t, sp<BattleMapTiles
 				return;
 		}
 		object->independent_structure = entry.independent_structure;
+
+		if (type == BattleMapPartType::Type::Ground && i >= firstExitIdx)
+			object->exit = true;
 
 		t->map_part_types[id] = object;
 	}

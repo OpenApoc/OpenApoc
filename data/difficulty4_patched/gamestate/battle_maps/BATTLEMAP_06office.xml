@@ -51,7 +51,7 @@
     <entrance_level_min>1</entrance_level_min>
     <entrance_level_max>3</entrance_level_max>
     <exit_level_max>3</exit_level_max>
-    <exits>
+    <exitsX>
       <entry>
         <x>3</x>
         <y>0</y>
@@ -59,11 +59,6 @@
       </entry>
       <entry>
         <x>4</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>11</x>
         <y>0</y>
         <z>0</z>
       </entry>
@@ -77,7 +72,12 @@
         <y>0</y>
         <z>1</z>
       </entry>
-    </exits>
+      <entry>
+        <x>11</x>
+        <y>0</y>
+        <z>0</z>
+      </entry>
+    </exitsX>
     <tilesets>
       <entry>06office</entry>
     </tilesets>
@@ -97,12 +97,18 @@
       <entry>BATTLEMAPPART_06office_RW_121</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_06office_FT195</entry>
-      <entry>BATTLEMAPPART_06office_FT196</entry>
-      <entry>BATTLEMAPPART_06office_FT194</entry>
-      <entry>BATTLEMAPPART_06office_FT193</entry>
-      <entry>BATTLEMAPPART_06office_FT193</entry>
+      <entry>BATTLEMAPPART_06office_FT_195</entry>
+      <entry>BATTLEMAPPART_06office_FT_196</entry>
+      <entry>BATTLEMAPPART_06office_FT_194</entry>
+      <entry>BATTLEMAPPART_06office_FT_193</entry>
+      <entry>BATTLEMAPPART_06office_FT_193</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_06office_GD_116</entry>
+      <entry>BATTLEMAPPART_06office_GD_117</entry>
+      <entry>BATTLEMAPPART_06office_GD_118</entry>
+      <entry>BATTLEMAPPART_06office_GD_119</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_06office>

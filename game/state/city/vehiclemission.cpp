@@ -419,7 +419,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 				auto &map = vTile->map;
 				FlyingVehicleTileHelper tileHelper(map, v);
 
-				float distancePreference = 5 * VELOCITY_SCALE.x;
+				float distancePreference = 5 * VELOCITY_SCALE_CITY.x;
 				if (this->type == MissionType::AttackVehicle && v.getFiringRange())
 				{
 					distancePreference = v.getFiringRange();

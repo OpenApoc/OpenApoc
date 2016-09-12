@@ -50,7 +50,12 @@
     </allow_exit>
     <entrance_level_max>2</entrance_level_max>
     <exit_level_max>5</exit_level_max>
-    <exits>
+    <exitsX>
+      <entry>
+        <x>4</x>
+        <y>0</y>
+        <z>4</z>
+      </entry>
       <entry>
         <x>10</x>
         <y>0</y>
@@ -61,11 +66,8 @@
         <y>0</y>
         <z>0</z>
       </entry>
-      <entry>
-        <x>4</x>
-        <y>0</y>
-        <z>4</z>
-      </entry>
+    </exitsX>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>4</y>
@@ -76,7 +78,7 @@
         <y>17</y>
         <z>4</z>
       </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>10astro</entry>
     </tilesets>
@@ -96,12 +98,18 @@
       <entry>BATTLEMAPPART_10astro_RW_75</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_10astro_FT253</entry>
-      <entry>BATTLEMAPPART_10astro_FT254</entry>
-      <entry>BATTLEMAPPART_10astro_FT249</entry>
-      <entry>BATTLEMAPPART_10astro_FT250</entry>
-      <entry>BATTLEMAPPART_10astro_FT251</entry>
+      <entry>BATTLEMAPPART_10astro_FT_253</entry>
+      <entry>BATTLEMAPPART_10astro_FT_254</entry>
+      <entry>BATTLEMAPPART_10astro_FT_249</entry>
+      <entry>BATTLEMAPPART_10astro_FT_250</entry>
+      <entry>BATTLEMAPPART_10astro_FT_251</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_10astro_GD_129</entry>
+      <entry>BATTLEMAPPART_10astro_GD_130</entry>
+      <entry>BATTLEMAPPART_10astro_GD_131</entry>
+      <entry>BATTLEMAPPART_10astro_GD_132</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_10astro>

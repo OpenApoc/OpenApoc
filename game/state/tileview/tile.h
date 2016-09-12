@@ -12,7 +12,8 @@
 // size)?
 // And progressing them by 1/15th of that every tick looks about right?
 #define TICK_SCALE (15)
-#define VELOCITY_SCALE (Vec3<float>{32, 32, 16})
+#define VELOCITY_SCALE_CITY (Vec3<float>{32, 32, 16})
+#define VELOCITY_SCALE_BATTLE (Vec3<float>{24, 24, 20})
 
 namespace OpenApoc
 {
@@ -34,6 +35,10 @@ class Doodad;
 class TileObjectDoodad;
 class BattleMapPart;
 class TileObjectBattleMapPart;
+class BattleUnit;
+class TileObjectBattleUnit;
+class BattleItem;
+class TileObjectBattleItem;
 
 class TileTransform
 {
@@ -56,6 +61,8 @@ class Tile
 
 	std::set<sp<TileObject>> ownedObjects;
 	std::set<sp<TileObject>> intersectingObjects;
+
+	Vec3<float> getRestingPosition();
 
 	// FIXME: This is effectively a z-sorted list of ownedObjects - can this be merged somehow?
 	std::vector<std::vector<sp<TileObject>>> drawnObjects;
@@ -113,8 +120,11 @@ class TileMap
 		                     static_cast<int>(pos.z));
 	}
 	Vec3<int> size;
+	Vec3<int> voxelMapSize;
+	Vec3<float> velocityScale;
 
-	TileMap(Vec3<int> size, std::vector<std::set<TileObject::Type>> layerMap);
+	TileMap(Vec3<int> size, Vec3<float> velocityScale, Vec3<int> voxelMapSize,
+	        std::vector<std::set<TileObject::Type>> layerMap);
 	~TileMap();
 
 	std::list<Tile *> findShortestPath(Vec3<int> origin, Vec3<int> destination,
@@ -122,18 +132,23 @@ class TileMap
 	                                   const CanEnterTileHelper &canEnterTile,
 	                                   float altitude = 5.0f);
 
-	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd) const;
+	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
+	                        std::set<TileObject::Type> validTypes = {},
+	                        bool check_full_path = false) const;
 
 	void addObjectToMap(sp<Projectile>);
 	void addObjectToMap(sp<Vehicle>);
 	void addObjectToMap(sp<Scenery>);
 	void addObjectToMap(sp<Doodad>);
 	void addObjectToMap(sp<BattleMapPart>);
+	void addObjectToMap(sp<BattleItem>);
+	// void addObjectToMap(sp<BattleUnit>);
 
 	int getLayer(TileObject::Type type) const;
 	int getLayerCount() const;
 	bool tileIsValid(Vec3<int> tile) const;
 
-	sp<Image> dumpVoxelView(const Rect<int> viewRect, const TileTransform &transform) const;
+	sp<Image> dumpVoxelView(const Rect<int> viewRect, const TileTransform &transform,
+	                        float maxZ) const;
 };
 }; // namespace OpenApoc

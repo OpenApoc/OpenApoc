@@ -118,28 +118,28 @@ ISOBORD = Unused
         <!--<imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:11:xcom3/tacdata/tactical.pal</imagedepressed>-->
       </graphicbutton>
       <radiobutton id="BUTTON_SPEED0" groupid="SPEED">
-        <position x="565" y="7"/>
-        <size width="71" height="21"/>
+        <position x="583" y="7"/>
+        <size width="53" height="21"/>
         <image/>
-        <!--<imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:28:xcom3/tacdata/tactical.pal</imagechecked>-->
+       <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:144:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_SPEED1" groupid="SPEED">
-        <position x="565" y="53"/>
-        <size width="35" height="21"/>
+        <position x="583" y="53"/>
+        <size width="53" height="21"/>
         <image/>
-        <!--<imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:29:xcom3/tacdata/tactical.pal</imagechecked>-->
+       <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:146:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_SPEED2" groupid="SPEED">
-        <position x="565" y="76"/>
-        <size width="35" height="21"/>
+        <position x="583" y="76"/>
+        <size width="53" height="21"/>
         <image/>
-        <!--<imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:31:xcom3/tacdata/tactical.pal</imagechecked>-->
+       <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:148:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_SPEED3" groupid="SPEED">
-        <position x="565" y="100"/>
-        <size width="71" height="21"/>
+        <position x="583" y="99"/>
+        <size width="53" height="21"/>
         <image/>
-        <!--<imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:33:xcom3/tacdata/tactical.pal</imagechecked>-->
+       <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:150:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <label id="CLOCK" text="TICK TOCK">
         <position x="568" y="34"/>

@@ -50,7 +50,7 @@
     </allow_exit>
     <entrance_level_max>8</entrance_level_max>
     <exit_level_max>8</exit_level_max>
-    <exits>
+    <exitsX>
       <entry>
         <x>41</x>
         <y>0</y>
@@ -91,6 +91,8 @@
         <y>0</y>
         <z>0</z>
       </entry>
+    </exitsX>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>41</y>
@@ -131,7 +133,7 @@
         <y>48</y>
         <z>0</z>
       </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>28slums</entry>
     </tilesets>
@@ -151,12 +153,18 @@
       <entry>BATTLEMAPPART_28slums_RW_88</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_28slums_FT229</entry>
-      <entry>BATTLEMAPPART_28slums_FT230</entry>
-      <entry>BATTLEMAPPART_28slums_FT231</entry>
-      <entry>BATTLEMAPPART_28slums_FT232</entry>
-      <entry>BATTLEMAPPART_28slums_FT223</entry>
+      <entry>BATTLEMAPPART_28slums_FT_229</entry>
+      <entry>BATTLEMAPPART_28slums_FT_230</entry>
+      <entry>BATTLEMAPPART_28slums_FT_231</entry>
+      <entry>BATTLEMAPPART_28slums_FT_232</entry>
+      <entry>BATTLEMAPPART_28slums_FT_223</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_28slums_GD_181</entry>
+      <entry>BATTLEMAPPART_28slums_GD_182</entry>
+      <entry>BATTLEMAPPART_28slums_GD_183</entry>
+      <entry>BATTLEMAPPART_28slums_GD_184</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_28slums>

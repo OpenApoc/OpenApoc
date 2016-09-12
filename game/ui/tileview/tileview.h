@@ -15,11 +15,26 @@ class Image;
 
 class TileView : public Stage, public TileTransform
 {
+  public:
+	enum class LayerDrawingMode
+	{
+		UpToCurrentLevel,
+		AllLevels,
+		OnlyCurrentLevel
+	};
+
+	enum class Mode
+	{
+		City,
+		Battle
+	};
+
   protected:
 	TileMap &map;
 	Vec3<int> isoTileSize;
 	Vec2<int> stratTileSize;
 	TileViewMode viewMode;
+	Mode mode;
 
 	bool scrollUp;
 	bool scrollDown;
@@ -31,23 +46,39 @@ class TileView : public Stage, public TileTransform
 	Colour strategyViewBoxColour;
 	float strategyViewBoxThickness;
 
+	int currentZLevel;
+	LayerDrawingMode layerDrawingMode;
+
+	Vec3<int> selectedTilePosition;
+	sp<Image> selectedTileEmptyImageBack;
+	sp<Image> selectedTileEmptyImageFront;
+	sp<Image> selectedTileFilledImageBack;
+	sp<Image> selectedTileFilledImageFront;
+	Vec2<int> selectedTileImageOffset;
+
   public:
+	void setZLevel(int zLevel);
+	int getZLevel();
+
+	void setLayerDrawingMode(LayerDrawingMode mode);
+
 	int maxZDraw;
 	Vec3<float> centerPos;
 	Vec2<float> isoScrollSpeed;
 	Vec2<float> stratScrollSpeed;
 
-	Vec3<int> selectedTilePosition;
-	sp<Image> selectedTileImageBack, selectedTileImageFront;
 	sp<Palette> pal;
 
-	TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
-	         TileViewMode initialMode);
+	TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize, TileViewMode initialMode,
+	         Mode mode);
 	~TileView() override;
 
 	Vec2<int> getScreenOffset() const;
 	void setScreenCenterTile(Vec2<float> center);
 	void setScreenCenterTile(Vec3<float> center);
+
+	Vec3<int> getSelectedTilePosition();
+	void setSelectedTilePosition(Vec3<int> newPosition);
 
 	template <typename T> Vec2<T> tileToScreenCoords(Vec3<T> c, TileViewMode v) const
 	{

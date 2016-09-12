@@ -50,7 +50,12 @@
     </allow_exit>
     <entrance_level_max>1</entrance_level_max>
     <exit_level_max>3</exit_level_max>
-    <exits>
+    <exitsX>
+      <entry>
+        <x>4</x>
+        <y>0</y>
+        <z>4</z>
+      </entry>
       <entry>
         <x>9</x>
         <y>0</y>
@@ -61,11 +66,8 @@
         <y>0</y>
         <z>0</z>
       </entry>
-      <entry>
-        <x>4</x>
-        <y>0</y>
-        <z>4</z>
-      </entry>
+    </exitsX>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>9</y>
@@ -76,7 +78,7 @@
         <y>10</y>
         <z>0</z>
       </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>14acnorm</entry>
     </tilesets>
@@ -96,12 +98,18 @@
       <entry>BATTLEMAPPART_14acnorm_RW_55</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_14acnorm_FT153</entry>
-      <entry>BATTLEMAPPART_14acnorm_FT151</entry>
-      <entry>BATTLEMAPPART_14acnorm_FT145</entry>
-      <entry>BATTLEMAPPART_14acnorm_FT142</entry>
-      <entry>BATTLEMAPPART_14acnorm_FT143</entry>
+      <entry>BATTLEMAPPART_14acnorm_FT_153</entry>
+      <entry>BATTLEMAPPART_14acnorm_FT_151</entry>
+      <entry>BATTLEMAPPART_14acnorm_FT_145</entry>
+      <entry>BATTLEMAPPART_14acnorm_FT_142</entry>
+      <entry>BATTLEMAPPART_14acnorm_FT_143</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_14acnorm_GD_74</entry>
+      <entry>BATTLEMAPPART_14acnorm_GD_75</entry>
+      <entry>BATTLEMAPPART_14acnorm_GD_76</entry>
+      <entry>BATTLEMAPPART_14acnorm_GD_77</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_14acnorm>

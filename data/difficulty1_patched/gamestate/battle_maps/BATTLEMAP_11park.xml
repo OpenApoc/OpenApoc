@@ -50,26 +50,11 @@
     </allow_exit>
     <entrance_level_max>4</entrance_level_max>
     <exit_level_max>4</exit_level_max>
-    <exits>
+    <exitsX>
       <entry>
         <x>1</x>
         <y>0</y>
         <z>0</z>
-      </entry>
-      <entry>
-        <x>2</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>17</x>
-        <y>0</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>18</x>
-        <y>0</y>
-        <z>1</z>
       </entry>
       <entry>
         <x>1</x>
@@ -79,7 +64,17 @@
       <entry>
         <x>2</x>
         <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>2</x>
+        <y>0</y>
         <z>3</z>
+      </entry>
+      <entry>
+        <x>17</x>
+        <y>0</y>
+        <z>1</z>
       </entry>
       <entry>
         <x>17</x>
@@ -89,26 +84,18 @@
       <entry>
         <x>18</x>
         <y>0</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>18</x>
+        <y>0</y>
         <z>3</z>
       </entry>
-      <entry>
-        <x>0</x>
-        <y>17</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>18</y>
-        <z>0</z>
-      </entry>
+    </exitsX>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>1</y>
-        <z>1</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>2</y>
         <z>1</z>
       </entry>
       <entry>
@@ -119,7 +106,17 @@
       <entry>
         <x>0</x>
         <y>2</y>
+        <z>1</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>2</y>
         <z>3</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>17</y>
+        <z>0</z>
       </entry>
       <entry>
         <x>0</x>
@@ -129,9 +126,14 @@
       <entry>
         <x>0</x>
         <y>18</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>18</y>
         <z>3</z>
       </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>11park</entry>
     </tilesets>
@@ -151,12 +153,18 @@
       <entry>BATTLEMAPPART_11park_RW_63</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_11park_FT247</entry>
-      <entry>BATTLEMAPPART_11park_FT248</entry>
-      <entry>BATTLEMAPPART_11park_FT239</entry>
-      <entry>BATTLEMAPPART_11park_FT236</entry>
-      <entry>BATTLEMAPPART_11park_FT237</entry>
+      <entry>BATTLEMAPPART_11park_FT_247</entry>
+      <entry>BATTLEMAPPART_11park_FT_248</entry>
+      <entry>BATTLEMAPPART_11park_FT_239</entry>
+      <entry>BATTLEMAPPART_11park_FT_236</entry>
+      <entry>BATTLEMAPPART_11park_FT_237</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_11park_GD_113</entry>
+      <entry>BATTLEMAPPART_11park_GD_114</entry>
+      <entry>BATTLEMAPPART_11park_GD_115</entry>
+      <entry>BATTLEMAPPART_11park_GD_116</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_11park>

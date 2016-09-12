@@ -30,6 +30,9 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	Projectile(StateRef<Vehicle> firer, Vec3<float> position, Vec3<float> velocity,
 	           unsigned int lifetime, int damage, unsigned int tail_length,
 	           std::list<sp<Image>> projectile_sprites);
+	Projectile(StateRef<BattleUnit> firer, Vec3<float> position, Vec3<float> velocity,
+	           unsigned int lifetime, int damage, unsigned int tail_length,
+	           std::list<sp<Image>> projectile_sprites);
 	Projectile();
 	virtual void update(GameState &state, unsigned int ticks);
 
@@ -57,6 +60,8 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 
 	unsigned int tail_length;
 	std::list<sp<Image>> projectile_sprites;
+
+	Vec3<float> velocityScale;
 
 	friend class Weapon;
 	friend class TileObjectProjectile;

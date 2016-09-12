@@ -51,16 +51,46 @@
     <entrance_level_min>2</entrance_level_min>
     <entrance_level_max>9</entrance_level_max>
     <exit_level_max>9</exit_level_max>
-    <exits>
+    <exitsX>
+      <entry>
+        <x>0</x>
+        <y>0</y>
+        <z>11</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>0</y>
+        <z>12</z>
+      </entry>
       <entry>
         <x>1</x>
         <y>0</y>
         <z>0</z>
       </entry>
       <entry>
+        <x>1</x>
+        <y>0</y>
+        <z>11</z>
+      </entry>
+      <entry>
+        <x>1</x>
+        <y>0</y>
+        <z>12</z>
+      </entry>
+      <entry>
         <x>2</x>
         <y>0</y>
         <z>0</z>
+      </entry>
+      <entry>
+        <x>2</x>
+        <y>0</y>
+        <z>11</z>
+      </entry>
+      <entry>
+        <x>2</x>
+        <y>0</y>
+        <z>12</z>
       </entry>
       <entry>
         <x>3</x>
@@ -71,6 +101,56 @@
         <x>4</x>
         <y>0</y>
         <z>0</z>
+      </entry>
+      <entry>
+        <x>4</x>
+        <y>0</y>
+        <z>2</z>
+      </entry>
+      <entry>
+        <x>4</x>
+        <y>0</y>
+        <z>8</z>
+      </entry>
+      <entry>
+        <x>5</x>
+        <y>0</y>
+        <z>2</z>
+      </entry>
+      <entry>
+        <x>5</x>
+        <y>0</y>
+        <z>8</z>
+      </entry>
+      <entry>
+        <x>8</x>
+        <y>0</y>
+        <z>11</z>
+      </entry>
+      <entry>
+        <x>10</x>
+        <y>0</y>
+        <z>10</z>
+      </entry>
+      <entry>
+        <x>11</x>
+        <y>0</y>
+        <z>5</z>
+      </entry>
+      <entry>
+        <x>11</x>
+        <y>0</y>
+        <z>10</z>
+      </entry>
+      <entry>
+        <x>15</x>
+        <y>0</y>
+        <z>2</z>
+      </entry>
+      <entry>
+        <x>16</x>
+        <y>0</y>
+        <z>2</z>
       </entry>
       <entry>
         <x>17</x>
@@ -92,83 +172,15 @@
         <y>0</y>
         <z>0</z>
       </entry>
-      <entry>
-        <x>4</x>
-        <y>0</y>
-        <z>2</z>
-      </entry>
-      <entry>
-        <x>5</x>
-        <y>0</y>
-        <z>2</z>
-      </entry>
-      <entry>
-        <x>15</x>
-        <y>0</y>
-        <z>2</z>
-      </entry>
-      <entry>
-        <x>16</x>
-        <y>0</y>
-        <z>2</z>
-      </entry>
-      <entry>
-        <x>11</x>
-        <y>0</y>
-        <z>5</z>
-      </entry>
-      <entry>
-        <x>4</x>
-        <y>0</y>
-        <z>8</z>
-      </entry>
-      <entry>
-        <x>5</x>
-        <y>0</y>
-        <z>8</z>
-      </entry>
-      <entry>
-        <x>10</x>
-        <y>0</y>
-        <z>10</z>
-      </entry>
-      <entry>
-        <x>11</x>
-        <y>0</y>
-        <z>10</z>
-      </entry>
+    </exitsX>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>0</y>
         <z>11</z>
       </entry>
       <entry>
-        <x>1</x>
-        <y>0</y>
-        <z>11</z>
-      </entry>
-      <entry>
-        <x>2</x>
-        <y>0</y>
-        <z>11</z>
-      </entry>
-      <entry>
-        <x>8</x>
-        <y>0</y>
-        <z>11</z>
-      </entry>
-      <entry>
         <x>0</x>
-        <y>0</y>
-        <z>12</z>
-      </entry>
-      <entry>
-        <x>1</x>
-        <y>0</y>
-        <z>12</z>
-      </entry>
-      <entry>
-        <x>2</x>
         <y>0</y>
         <z>12</z>
       </entry>
@@ -179,8 +191,28 @@
       </entry>
       <entry>
         <x>0</x>
+        <y>1</y>
+        <z>11</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>1</y>
+        <z>12</z>
+      </entry>
+      <entry>
+        <x>0</x>
         <y>2</y>
         <z>0</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>2</y>
+        <z>11</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>2</y>
+        <z>12</z>
       </entry>
       <entry>
         <x>0</x>
@@ -191,6 +223,56 @@
         <x>0</x>
         <y>4</y>
         <z>0</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>4</y>
+        <z>3</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>5</y>
+        <z>3</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>5</y>
+        <z>8</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>6</y>
+        <z>8</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>10</y>
+        <z>10</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>11</y>
+        <z>5</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>11</y>
+        <z>10</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>12</y>
+        <z>11</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>15</y>
+        <z>3</z>
+      </entry>
+      <entry>
+        <x>0</x>
+        <y>16</y>
+        <z>3</z>
       </entry>
       <entry>
         <x>0</x>
@@ -212,87 +294,7 @@
         <y>20</y>
         <z>0</z>
       </entry>
-      <entry>
-        <x>0</x>
-        <y>4</y>
-        <z>3</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>5</y>
-        <z>3</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>15</y>
-        <z>3</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>16</y>
-        <z>3</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>11</y>
-        <z>5</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>5</y>
-        <z>8</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>6</y>
-        <z>8</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>10</y>
-        <z>10</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>11</y>
-        <z>10</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>0</y>
-        <z>11</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>1</y>
-        <z>11</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>2</y>
-        <z>11</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>12</y>
-        <z>11</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>0</y>
-        <z>12</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>1</y>
-        <z>12</z>
-      </entry>
-      <entry>
-        <x>0</x>
-        <y>2</y>
-        <z>12</z>
-      </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>20water</entry>
     </tilesets>
@@ -312,12 +314,18 @@
       <entry>BATTLEMAPPART_20water_RW_55</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_20water_FT251</entry>
-      <entry>BATTLEMAPPART_20water_FT253</entry>
-      <entry>BATTLEMAPPART_20water_FT252</entry>
-      <entry>BATTLEMAPPART_20water_FT254</entry>
-      <entry>BATTLEMAPPART_20water_FT250</entry>
+      <entry>BATTLEMAPPART_20water_FT_251</entry>
+      <entry>BATTLEMAPPART_20water_FT_253</entry>
+      <entry>BATTLEMAPPART_20water_FT_252</entry>
+      <entry>BATTLEMAPPART_20water_FT_254</entry>
+      <entry>BATTLEMAPPART_20water_FT_250</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_20water_GD_81</entry>
+      <entry>BATTLEMAPPART_20water_GD_82</entry>
+      <entry>BATTLEMAPPART_20water_GD_83</entry>
+      <entry>BATTLEMAPPART_20water_GD_84</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_20water>

@@ -28,6 +28,7 @@
     <ClCompile Include="battlemappart_type.cpp" />
     <ClCompile Include="battlemapsector.cpp" />
     <ClCompile Include="battle\aequipment.cpp" />
+    <ClCompile Include="battle\battleitem.cpp" />
     <ClCompile Include="battle\battleunit.cpp" />
     <ClCompile Include="battle\battleunitanimation.cpp" />
     <ClCompile Include="battle\battleunitimagepack.cpp" />
@@ -63,6 +64,7 @@
     <ClCompile Include="tileview\collision.cpp" />
     <ClCompile Include="tileview\tile.cpp" />
     <ClCompile Include="tileview\tileobject.cpp" />
+    <ClCompile Include="tileview\tileobject_battleitem.cpp" />
     <ClCompile Include="tileview\tileobject_battlemappart.cpp" />
     <ClCompile Include="tileview\tileobject_doodad.cpp" />
     <ClCompile Include="tileview\tileobject_projectile.cpp" />
@@ -82,6 +84,7 @@
     <ClInclude Include="battlemaptileset.h" />
     <ClInclude Include="battlemappart_type.h" />
     <ClInclude Include="battle\aequipment.h" />
+    <ClInclude Include="battle\battleitem.h" />
     <ClInclude Include="battle\battleunit.h" />
     <ClInclude Include="battle\battleunitanimation.h" />
     <ClInclude Include="battle\battleunitimagepack.h" />
@@ -120,6 +123,7 @@
     <ClInclude Include="tileview\collision.h" />
     <ClInclude Include="tileview\tile.h" />
     <ClInclude Include="tileview\tileobject.h" />
+    <ClInclude Include="tileview\tileobject_battleitem.h" />
     <ClInclude Include="tileview\tileobject_battlemappart.h" />
     <ClInclude Include="tileview\tileobject_doodad.h" />
     <ClInclude Include="tileview\tileobject_projectile.h" />

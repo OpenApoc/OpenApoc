@@ -6,6 +6,8 @@ namespace OpenApoc
 {
 
 class Vehicle;
+class BattleUnit;
+class BattleItem;
 
 class TileObjectShadow : public TileObject
 {
@@ -18,8 +20,12 @@ class TileObjectShadow : public TileObject
 
   private:
 	friend class TileMap;
-	std::weak_ptr<Vehicle> owner;
+	std::weak_ptr<Vehicle> ownerVehicle;
+	std::weak_ptr<BattleUnit> ownerBattleUnit;
+	std::weak_ptr<BattleItem> ownerBattleItem;
 	TileObjectShadow(TileMap &map, sp<Vehicle> owner);
+	TileObjectShadow(TileMap &map, sp<BattleUnit> owner);
+	TileObjectShadow(TileMap &map, sp<BattleItem> item);
 	Vec3<float> shadowPosition;
 	bool fellOffTheBottomOfTheMap;
 };

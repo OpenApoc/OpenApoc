@@ -10,12 +10,14 @@
 namespace OpenApoc
 {
 
-Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd) const
+Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
+                                 std::set<TileObject::Type> validTypes, bool check_full_path) const
 {
+	bool type_checking = validTypes.size() > 0;
 	Collision c;
 	c.obj = nullptr;
-	Vec3<int> tileSize = size;
-	Vec3<float> tileSizef = size;
+	Vec3<int> tileSize = voxelMapSize;
+	Vec3<float> tileSizef = voxelMapSize;
 	Vec3<int> lineSegmentStartVoxel = lineSegmentStart * tileSizef;
 	Vec3<int> lineSegmentEndVoxel = lineSegmentEnd * tileSizef;
 	LineSegment<int, true> line{lineSegmentStartVoxel, lineSegmentEndVoxel};
@@ -25,12 +27,17 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 		if (tile.x < 0 || tile.x >= size.x || tile.y < 0 || tile.y >= size.y || tile.z < 0 ||
 		    tile.z >= size.z)
 		{
-			return c;
+			if (check_full_path)
+				continue;
+			else
+				return c;
 		}
 
 		const Tile *t = this->getTile(tile);
 		for (auto &obj : t->intersectingObjects)
 		{
+			if (type_checking && validTypes.find(obj->type) == validTypes.end())
+				continue;
 			auto voxelMap = obj->getVoxelMap();
 			if (!voxelMap)
 				continue;

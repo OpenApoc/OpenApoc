@@ -78,9 +78,11 @@ static const std::vector<UString> CITY_ICON_VEHICLE_PASSENGER_COUNT_RESOURCES = 
 
 CityView::CityView(sp<GameState> state)
     : TileView(*state->current_city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
-               Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Isometric),
-      baseForm(ui().getForm("FORM_CITY_UI")), updateSpeed(UpdateSpeed::Speed1), state(state),
-      followVehicle(false), selectionState(SelectionState::Normal),
+               Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Isometric,
+               TileView::Mode::City),
+      baseForm(ui().getForm("FORM_CITY_UI")), updateSpeed(UpdateSpeed::Speed1),
+      lastSpeed(UpdateSpeed::Pause), state(state), followVehicle(false),
+      selectionState(SelectionState::Normal),
       day_palette(fw().data->loadPalette("xcom3/ufodata/pal_01.dat")),
       twilight_palette(fw().data->loadPalette("xcom3/ufodata/pal_02.dat")),
       night_palette(fw().data->loadPalette("xcom3/ufodata/pal_03.dat"))
@@ -733,6 +735,13 @@ void CityView::eventOccurred(Event *e)
 		fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InGameOptions>(state)});
 		return;
 	}
+	else if (e->type() == EVENT_KEY_DOWN && e->keyboard().KeyCode == SDLK_SPACE)
+	{
+		if (this->updateSpeed != UpdateSpeed::Pause)
+			setUpdateSpeed(UpdateSpeed::Pause);
+		else
+			setUpdateSpeed(this->lastSpeed);
+	}
 	// FIXME: Check if scancode is better/worse
 	else if (e->type() == EVENT_KEY_DOWN &&
 	         SDL_GetScancodeFromKey(e->keyboard().KeyCode) == SDL_SCANCODE_R)
@@ -1221,6 +1230,7 @@ bool VehicleTileInfo::operator==(const VehicleTileInfo &other) const
 
 void CityView::setUpdateSpeed(UpdateSpeed updateSpeed)
 {
+	this->lastSpeed = this->updateSpeed;
 	switch (updateSpeed)
 	{
 		case UpdateSpeed::Pause:

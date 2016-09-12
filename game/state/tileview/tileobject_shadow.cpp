@@ -1,5 +1,7 @@
 #include "game/state/tileview/tileobject_shadow.h"
 #include "framework/renderer.h"
+#include "game/state/battle/battleitem.h"
+#include "game/state/battle/battleunit.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/tileview/collision.h"
 
@@ -10,10 +12,12 @@ void TileObjectShadow::draw(Renderer &r, TileTransform &transform, Vec2<float> s
                             TileViewMode mode)
 {
 	std::ignore = transform;
-	auto vehicle = this->owner.lock();
-	if (!vehicle)
+	auto vehicle = this->ownerVehicle.lock();
+	auto unit = this->ownerBattleUnit.lock();
+	auto item = this->ownerBattleItem.lock();
+	if (!vehicle && !unit && !item)
 	{
-		LogError("Called with no owning vehicle object");
+		LogError("Called with no owning object");
 		return;
 	}
 	if (this->fellOffTheBottomOfTheMap)
@@ -24,24 +28,38 @@ void TileObjectShadow::draw(Renderer &r, TileTransform &transform, Vec2<float> s
 	{
 		case TileViewMode::Isometric:
 		{
-			float closestAngle = FLT_MAX;
-			sp<Image> closestImage;
-			for (auto &p : vehicle->type->directional_shadow_sprites)
+			if (vehicle)
 			{
-				float angle =
-				    glm::angle(glm::normalize(p.first), glm::normalize(vehicle->getDirection()));
-				if (angle < closestAngle)
+				float closestAngle = FLT_MAX;
+				sp<Image> closestImage;
+				for (auto &p : vehicle->type->directional_shadow_sprites)
 				{
-					closestAngle = angle;
-					closestImage = p.second;
+					float angle = glm::angle(glm::normalize(p.first),
+					                         glm::normalize(vehicle->getDirection()));
+					if (angle < closestAngle)
+					{
+						closestAngle = angle;
+						closestImage = p.second;
+					}
 				}
+				if (!closestImage)
+				{
+					LogError("No image found for vehicle");
+					return;
+				}
+				r.draw(closestImage, screenPosition - vehicle->type->shadow_offset);
 			}
-			if (!closestImage)
+			if (unit)
 			{
-				LogError("No image found for vehicle");
-				return;
+				// FIXME: Actually draw unit shadows
+				// unit->agent->type->animation->drawShadow(r, &transform, screenPosition,
+				// mode,unit->agent->type->shadow_pack, )
 			}
-			r.draw(closestImage, screenPosition - vehicle->type->shadow_offset);
+			if (item)
+			{
+				if (item->item->type->dropped_shadow_sprite)
+					r.draw(item->item->type->dropped_shadow_sprite, screenPosition);
+			}
 			break;
 		}
 		case TileViewMode::Strategy:
@@ -83,7 +101,17 @@ void TileObjectShadow::setPosition(Vec3<float> newPosition)
 TileObjectShadow::~TileObjectShadow() = default;
 
 TileObjectShadow::TileObjectShadow(TileMap &map, sp<Vehicle> vehicle)
-    : TileObject(map, Type::Vehicle, Vec3<float>{0, 0, 0}), owner(vehicle),
+    : TileObject(map, Type::Shadow, Vec3<float>{0, 0, 0}), ownerVehicle(vehicle),
+      fellOffTheBottomOfTheMap(false)
+{
+}
+TileObjectShadow::TileObjectShadow(TileMap &map, sp<BattleUnit> unit)
+    : TileObject(map, Type::Shadow, Vec3<float>{0, 0, 0}), ownerBattleUnit(unit),
+      fellOffTheBottomOfTheMap(false)
+{
+}
+TileObjectShadow::TileObjectShadow(TileMap &map, sp<BattleItem> item)
+    : TileObject(map, Type::Shadow, Vec3<float>{0, 0, 0}), ownerBattleItem(item),
       fellOffTheBottomOfTheMap(false)
 {
 }

@@ -62,7 +62,7 @@ class BattleUnitAnimation : public StateObject<BattleUnitAnimation>
 	         std::map<BattleUnit::Stance,
 	                  std::map<BattleUnit::HandState,
 	                           std::map<Vec2<int>, std::map<ItemInHands, sp<AnimationEntry>>>>>>
-	    animation;
+	    animations;
 
 	// Animation for busy hands is only present for static states
 	// To get an animation with busy hands for a non-static state, legs are used from corresponding

@@ -18,10 +18,16 @@ void TileObjectProjectile::draw(Renderer &r, TileTransform &transform, Vec2<floa
 		return;
 	}
 
+	// FIXME: This is unproper and will draw only linear projectiles, while homing projectiles will
+	// look very weird.
+	// Instead we should "spawn" locations every X pixels or something like that,
+	// and such location should draw animated picture until it reaches the end
+	// This would provide for turning projectiles to draw properly
+
 	Vec2<float> headScreenCoords = screenPosition;
 	Vec3<float> tailPosition =
 	    ((float)projectile->tail_length * (-glm::normalize(projectile->velocity)));
-	tailPosition /= VELOCITY_SCALE;
+	tailPosition /= map.velocityScale;
 
 	Vec2<float> tailScreenCoords = transform.tileToScreenCoords(tailPosition);
 	tailScreenCoords += screenPosition;

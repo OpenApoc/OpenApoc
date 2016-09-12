@@ -50,14 +50,9 @@
     </allow_exit>
     <entrance_level_max>4</entrance_level_max>
     <exit_level_max>4</exit_level_max>
-    <exits>
+    <exitsX>
       <entry>
         <x>18</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>19</x>
         <y>0</y>
         <z>0</z>
       </entry>
@@ -69,8 +64,15 @@
       <entry>
         <x>19</x>
         <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>19</x>
+        <y>0</y>
         <z>1</z>
       </entry>
+    </exitsX>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>10</y>
@@ -81,11 +83,17 @@
         <y>11</y>
         <z>0</z>
       </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>46contrl</entry>
     </tilesets>
     <destroyed_ground_tile>BATTLEMAPPART_46contrl_GD_5</destroyed_ground_tile>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_46contrl_GD_216</entry>
+      <entry>BATTLEMAPPART_46contrl_GD_217</entry>
+      <entry>BATTLEMAPPART_46contrl_GD_218</entry>
+      <entry>BATTLEMAPPART_46contrl_GD_219</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_46contrl>

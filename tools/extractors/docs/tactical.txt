@@ -588,19 +588,19 @@ Content: 36 bytes per entry, each entry defines one animation frame, frames are 
 
 Each block has 2 bytes image index, 1 byte signed x offset, 1 byte signed y offset.
 Units have up to 5 image files, marked with letters (i.e. x-com3a to x-com3e).
-Additionally, there is an image file for weapons and items held in hands.
+Additionally, there is an image file for shadows and for items held in hands.
 
 Blocks go in the following order:
 
-00:		File B #1
+00:		Shadow
 04:		File A
-08:		File B #2
+08:		File B
 12:		File C
 16:		File D
 20:		File E
 24:		Item
 
-File B #2 is a second entry, sometimes not present (0xffff), frequently equal to #1, but sometimes it differs (seems to be alternate leg frame). 
+File B is a second entry, sometimes not present (0xffff). Usually this is unit's legs. It is not present for shooting animations - in this case, you use legs from normal animation and everything else from shooting animation. 
 
 Item entry gives index of item image to be used. 0xffff if item should not be displayed. Does not always correspond to the direction unit is facing in - since 2 handed weapons are carried facing sideways.
 

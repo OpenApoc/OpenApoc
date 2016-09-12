@@ -72,6 +72,7 @@ class CityView : public TileView
 	std::vector<sp<Form>> uiTabs;
 	std::vector<sp<GraphicButton>> miniViews;
 	UpdateSpeed updateSpeed;
+	UpdateSpeed lastSpeed;
 
 	sp<GameState> state;
 	std::map<CityIcon, sp<Image>> icons;

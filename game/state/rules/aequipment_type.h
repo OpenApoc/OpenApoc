@@ -56,7 +56,10 @@ class AEquipmentType : public StateObject<AEquipmentType>
 	UString name;
 	int weight = 0;
 	std::vector<sp<Image>> held_sprites;
+	sp<Image> strategy_sprite;
 	sp<Image> dropped_sprite;
+	Vec2<float> image_offset;
+	sp<Image> dropped_shadow_sprite;
 	sp<Image> equipscreen_sprite;
 	Vec2<int> equipscreen_size;
 	StateRef<Organisation> manufacturer;

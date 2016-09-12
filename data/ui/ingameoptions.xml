@@ -145,6 +145,11 @@
           <font>SMALLSET</font>
           <size width="200" height="32"/>
         </textbutton>
+		<textbutton text="Exit battle" id="BUTTON_EXIT_BATTLE">
+          <position x="310" y="204"/>
+          <font>SMALLSET</font>
+          <size width="200" height="32"/>
+        </textbutton>
       </graphic>
     </style>
   </form>

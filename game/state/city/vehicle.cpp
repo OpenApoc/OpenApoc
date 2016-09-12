@@ -64,7 +64,7 @@ class FlyingVehicleMover : public VehicleMover
 			while (distanceLeft > 0)
 			{
 				Vec3<float> vectorToGoal = goalPosition - vehicleTile->getPosition();
-				float distanceToGoal = glm::length(vectorToGoal * VELOCITY_SCALE);
+				float distanceToGoal = glm::length(vectorToGoal * VELOCITY_SCALE_CITY);
 				if (distanceToGoal <= distanceLeft)
 				{
 					distanceLeft -= distanceToGoal;
@@ -116,7 +116,7 @@ class FlyingVehicleMover : public VehicleMover
 					}
 					vehicleTile->setDirection(dir);
 					Vec3<float> newPosition = distanceLeft * dir;
-					newPosition /= VELOCITY_SCALE;
+					newPosition /= VELOCITY_SCALE_CITY;
 					newPosition += vehicleTile->getPosition();
 					vehicle.setPosition(newPosition);
 					break;

@@ -55,18 +55,24 @@ class TileObjectZComparer
 
 		// If both objects are of the same mappart type (or are both other type) then proceed to
 		// check their Z
-		float lhsZ = lhs->getPosition().x * 32.0f + lhs->getPosition().y * 32.0f +
-		             lhs->getPosition().z * 16.0f;
-		float rhsZ = rhs->getPosition().x * 32.0f + rhs->getPosition().y * 32.0f +
-		             rhs->getPosition().z * 16.0f;
+		float lhsZ = lhs->getPosition().x * lhs->map.velocityScale.x +
+		             lhs->getPosition().y * lhs->map.velocityScale.y +
+		             lhs->getPosition().z * lhs->map.velocityScale.z;
+		float rhsZ = rhs->getPosition().x * rhs->map.velocityScale.x +
+		             rhs->getPosition().y * rhs->map.velocityScale.y +
+		             rhs->getPosition().z * rhs->map.velocityScale.z;
 		// FIXME: Hack to force 'overlay' objects to be half-a-tile up in Z
 		if (lhs->getType() == TileObject::Type::Doodad)
 		{
-			lhsZ += (32.0f + 32.0f + 16.0f) / 2.0f;
+			lhsZ +=
+			    (lhs->map.velocityScale.x + lhs->map.velocityScale.y + lhs->map.velocityScale.z) /
+			    2.0f;
 		}
 		if (rhs->getType() == TileObject::Type::Doodad)
 		{
-			rhsZ += (32.0f + 32.0f + 16.0f) / 2.0f;
+			rhsZ +=
+			    (rhs->map.velocityScale.x + rhs->map.velocityScale.y + rhs->map.velocityScale.z) /
+			    2.0f;
 		}
 		return (lhsZ < rhsZ);
 	}
@@ -80,7 +86,7 @@ float TileObject::getDistanceTo(sp<TileObject> target)
 
 float TileObject::getDistanceTo(Vec3<float> target)
 {
-	return glm::length((target - this->getPosition()) * VELOCITY_SCALE);
+	return glm::length((target - this->getPosition()) * map.velocityScale);
 }
 
 void TileObject::setPosition(Vec3<float> newPosition)

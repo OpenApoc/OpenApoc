@@ -51,7 +51,7 @@
     <entrance_level_min>3</entrance_level_min>
     <entrance_level_max>4</entrance_level_max>
     <exit_level_max>10</exit_level_max>
-    <exits>
+    <exitsX>
       <entry>
         <x>6</x>
         <y>0</y>
@@ -68,6 +68,86 @@
         <z>3</z>
       </entry>
       <entry>
+        <x>9</x>
+        <y>0</y>
+        <z>6</z>
+      </entry>
+      <entry>
+        <x>10</x>
+        <y>0</y>
+        <z>4</z>
+      </entry>
+      <entry>
+        <x>10</x>
+        <y>0</y>
+        <z>6</z>
+      </entry>
+      <entry>
+        <x>11</x>
+        <y>0</y>
+        <z>6</z>
+      </entry>
+      <entry>
+        <x>13</x>
+        <y>0</y>
+        <z>8</z>
+      </entry>
+      <entry>
+        <x>13</x>
+        <y>0</y>
+        <z>9</z>
+      </entry>
+      <entry>
+        <x>14</x>
+        <y>0</y>
+        <z>8</z>
+      </entry>
+      <entry>
+        <x>14</x>
+        <y>0</y>
+        <z>9</z>
+      </entry>
+      <entry>
+        <x>15</x>
+        <y>0</y>
+        <z>8</z>
+      </entry>
+      <entry>
+        <x>15</x>
+        <y>0</y>
+        <z>9</z>
+      </entry>
+      <entry>
+        <x>16</x>
+        <y>0</y>
+        <z>8</z>
+      </entry>
+      <entry>
+        <x>16</x>
+        <y>0</y>
+        <z>9</z>
+      </entry>
+      <entry>
+        <x>18</x>
+        <y>0</y>
+        <z>6</z>
+      </entry>
+      <entry>
+        <x>19</x>
+        <y>0</y>
+        <z>4</z>
+      </entry>
+      <entry>
+        <x>19</x>
+        <y>0</y>
+        <z>6</z>
+      </entry>
+      <entry>
+        <x>20</x>
+        <y>0</y>
+        <z>6</z>
+      </entry>
+      <entry>
         <x>21</x>
         <y>0</y>
         <z>3</z>
@@ -82,87 +162,7 @@
         <y>0</y>
         <z>3</z>
       </entry>
-      <entry>
-        <x>10</x>
-        <y>0</y>
-        <z>4</z>
-      </entry>
-      <entry>
-        <x>19</x>
-        <y>0</y>
-        <z>4</z>
-      </entry>
-      <entry>
-        <x>9</x>
-        <y>0</y>
-        <z>6</z>
-      </entry>
-      <entry>
-        <x>10</x>
-        <y>0</y>
-        <z>6</z>
-      </entry>
-      <entry>
-        <x>11</x>
-        <y>0</y>
-        <z>6</z>
-      </entry>
-      <entry>
-        <x>18</x>
-        <y>0</y>
-        <z>6</z>
-      </entry>
-      <entry>
-        <x>19</x>
-        <y>0</y>
-        <z>6</z>
-      </entry>
-      <entry>
-        <x>20</x>
-        <y>0</y>
-        <z>6</z>
-      </entry>
-      <entry>
-        <x>13</x>
-        <y>0</y>
-        <z>8</z>
-      </entry>
-      <entry>
-        <x>14</x>
-        <y>0</y>
-        <z>8</z>
-      </entry>
-      <entry>
-        <x>15</x>
-        <y>0</y>
-        <z>8</z>
-      </entry>
-      <entry>
-        <x>16</x>
-        <y>0</y>
-        <z>8</z>
-      </entry>
-      <entry>
-        <x>13</x>
-        <y>0</y>
-        <z>9</z>
-      </entry>
-      <entry>
-        <x>14</x>
-        <y>0</y>
-        <z>9</z>
-      </entry>
-      <entry>
-        <x>15</x>
-        <y>0</y>
-        <z>9</z>
-      </entry>
-      <entry>
-        <x>16</x>
-        <y>0</y>
-        <z>9</z>
-      </entry>
-    </exits>
+    </exitsX>
     <tilesets>
       <entry>35tubes</entry>
     </tilesets>
@@ -182,12 +182,18 @@
       <entry>BATTLEMAPPART_35tubes_RW_53</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_35tubes_FT208</entry>
-      <entry>BATTLEMAPPART_35tubes_FT209</entry>
-      <entry>BATTLEMAPPART_35tubes_FT210</entry>
-      <entry>BATTLEMAPPART_35tubes_FT196</entry>
-      <entry>BATTLEMAPPART_35tubes_FT195</entry>
+      <entry>BATTLEMAPPART_35tubes_FT_208</entry>
+      <entry>BATTLEMAPPART_35tubes_FT_209</entry>
+      <entry>BATTLEMAPPART_35tubes_FT_210</entry>
+      <entry>BATTLEMAPPART_35tubes_FT_196</entry>
+      <entry>BATTLEMAPPART_35tubes_FT_195</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_35tubes_GD_80</entry>
+      <entry>BATTLEMAPPART_35tubes_GD_81</entry>
+      <entry>BATTLEMAPPART_35tubes_GD_82</entry>
+      <entry>BATTLEMAPPART_35tubes_GD_83</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_35tubes>

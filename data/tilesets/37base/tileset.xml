@@ -85,6 +85,7 @@
           <size>5</size>
           <los_through_terrain>true</los_through_terrain>
           <movement_cost>4</movement_cost>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -172,6 +173,7 @@
           <size>4</size>
           <movement_cost>255</movement_cost>
           <height>39</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -260,6 +262,7 @@
           <movement_cost>255</movement_cost>
           <height>32</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -348,6 +351,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -436,6 +440,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -524,6 +529,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -612,6 +618,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -701,6 +708,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -789,6 +797,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -877,6 +886,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -965,6 +975,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -1053,6 +1064,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -1141,6 +1153,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -1230,6 +1243,7 @@
           <height>32</height>
           <provides_support>true</provides_support>
           <supported_by>North</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -1318,6 +1332,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -1406,6 +1421,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -1494,6 +1510,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -1582,6 +1599,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -1666,6 +1684,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -1754,6 +1773,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -1843,6 +1863,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -1927,6 +1948,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -2015,6 +2037,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -2099,6 +2122,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -2188,6 +2212,7 @@
           <height>32</height>
           <provides_support>true</provides_support>
           <supported_by>West</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -2276,6 +2301,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -2364,6 +2390,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -2453,6 +2480,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -2542,6 +2570,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -2630,6 +2659,7 @@
           <movement_cost>255</movement_cost>
           <height>38</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -2718,6 +2748,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -2806,6 +2837,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -2894,6 +2926,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -2982,6 +3015,7 @@
           <movement_cost>255</movement_cost>
           <height>38</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -3070,6 +3104,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -3158,6 +3193,7 @@
           <movement_cost>255</movement_cost>
           <height>32</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -3246,6 +3282,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -3334,6 +3371,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -3422,6 +3460,7 @@
           <movement_cost>4</movement_cost>
           <height>25</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -3510,6 +3549,7 @@
           <movement_cost>4</movement_cost>
           <height>25</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -3598,6 +3638,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -3686,6 +3727,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -3774,6 +3816,7 @@
           <movement_cost>4</movement_cost>
           <height>25</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -3862,6 +3905,7 @@
           <movement_cost>4</movement_cost>
           <height>25</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -3950,6 +3994,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -4038,6 +4083,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -4126,6 +4172,7 @@
           <movement_cost>255</movement_cost>
           <height>32</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -4214,6 +4261,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -4302,6 +4350,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -4391,6 +4440,7 @@
           <height>25</height>
           <supported_by>North</supported_by>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -4480,6 +4530,7 @@
           <height>25</height>
           <supported_by>West</supported_by>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -4569,6 +4620,7 @@
           <height>25</height>
           <supported_by>East</supported_by>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -4658,6 +4710,7 @@
           <height>25</height>
           <supported_by>South</supported_by>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -4746,6 +4799,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -4834,6 +4888,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -4918,6 +4973,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -5002,6 +5058,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -5090,6 +5147,7 @@
           <movement_cost>255</movement_cost>
           <height>32</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -5178,6 +5236,7 @@
           <movement_cost>255</movement_cost>
           <height>32</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -5266,6 +5325,7 @@
           <movement_cost>255</movement_cost>
           <height>32</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -5353,6 +5413,7 @@
           <size>4</size>
           <movement_cost>14</movement_cost>
           <height>20</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -5440,6 +5501,7 @@
           <size>4</size>
           <movement_cost>14</movement_cost>
           <height>20</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -5527,6 +5589,7 @@
           <size>4</size>
           <movement_cost>14</movement_cost>
           <height>20</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -5614,6 +5677,7 @@
           <size>4</size>
           <movement_cost>14</movement_cost>
           <height>20</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -5703,6 +5767,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -5792,6 +5857,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -5881,6 +5947,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -5970,6 +6037,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -6058,6 +6126,7 @@
           <movement_cost>255</movement_cost>
           <height>32</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -6147,6 +6216,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -6236,6 +6306,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -6325,6 +6396,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -6414,6 +6486,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -6503,6 +6576,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -6592,6 +6666,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -6681,6 +6756,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -6770,6 +6846,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -6858,6 +6935,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -6946,6 +7024,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -7034,6 +7113,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -7122,6 +7202,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -7210,6 +7291,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -7298,6 +7380,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -7386,6 +7469,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -7474,6 +7558,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -7562,6 +7647,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -7650,6 +7736,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -7738,6 +7825,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -7826,6 +7914,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -7914,6 +8003,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -8002,6 +8092,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -8090,6 +8181,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -8178,6 +8270,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -8265,6 +8358,7 @@
           <size>4</size>
           <movement_cost>255</movement_cost>
           <height>30</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -8352,6 +8446,7 @@
           <size>4</size>
           <movement_cost>255</movement_cost>
           <height>30</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -8440,6 +8535,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -8528,6 +8624,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -8616,6 +8713,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -8703,6 +8801,7 @@
           <size>2</size>
           <movement_cost>255</movement_cost>
           <height>22</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -8790,6 +8889,7 @@
           <size>2</size>
           <movement_cost>255</movement_cost>
           <height>22</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -8878,6 +8978,7 @@
           <movement_cost>255</movement_cost>
           <height>35</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -8966,6 +9067,7 @@
           <movement_cost>255</movement_cost>
           <height>6</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -9054,6 +9156,7 @@
           <movement_cost>255</movement_cost>
           <height>35</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -9141,6 +9244,7 @@
           <size>2</size>
           <movement_cost>255</movement_cost>
           <height>22</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -9229,6 +9333,7 @@
           <movement_cost>255</movement_cost>
           <height>37</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -9317,6 +9422,7 @@
           <movement_cost>255</movement_cost>
           <height>37</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -9404,6 +9510,7 @@
           <size>5</size>
           <movement_cost>255</movement_cost>
           <height>37</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -9491,6 +9598,7 @@
           <size>5</size>
           <movement_cost>255</movement_cost>
           <height>37</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -9579,6 +9687,7 @@
           <movement_cost>4</movement_cost>
           <height>10</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -9667,6 +9776,7 @@
           <movement_cost>4</movement_cost>
           <height>10</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -9755,6 +9865,7 @@
           <movement_cost>4</movement_cost>
           <height>10</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -9843,6 +9954,7 @@
           <movement_cost>4</movement_cost>
           <height>10</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -9931,6 +10043,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -10019,6 +10132,7 @@
           <movement_cost>255</movement_cost>
           <height>6</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -10107,6 +10221,7 @@
           <movement_cost>4</movement_cost>
           <height>10</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -10195,6 +10310,7 @@
           <movement_cost>4</movement_cost>
           <height>10</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -10283,6 +10399,7 @@
           <movement_cost>4</movement_cost>
           <height>10</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -10367,6 +10484,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -10451,6 +10569,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -10535,6 +10654,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -10619,6 +10739,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -10703,6 +10824,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -10787,6 +10909,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -10871,6 +10994,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -10959,6 +11083,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -11043,6 +11168,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -11127,6 +11253,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -11211,6 +11338,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -11299,6 +11427,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -11387,6 +11516,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -11475,6 +11605,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -11563,6 +11694,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -11651,6 +11783,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -11739,6 +11872,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -11827,6 +11961,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -11912,6 +12047,7 @@
           <movement_cost>255</movement_cost>
           <height>37</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -12000,6 +12136,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -12088,6 +12225,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -12176,6 +12314,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -12264,6 +12403,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -12352,6 +12492,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -12440,6 +12581,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -12528,6 +12670,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -12616,6 +12759,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -12704,6 +12848,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -12793,6 +12938,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -12881,6 +13027,7 @@
           <movement_cost>255</movement_cost>
           <height>24</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -12969,6 +13116,7 @@
           <size>2</size>
           <movement_cost>255</movement_cost>
           <height>30</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -13057,6 +13205,7 @@
           <size>2</size>
           <movement_cost>255</movement_cost>
           <height>30</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -13145,6 +13294,7 @@
           <size>2</size>
           <movement_cost>255</movement_cost>
           <height>30</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -13233,6 +13383,7 @@
           <size>2</size>
           <movement_cost>255</movement_cost>
           <height>30</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -13321,6 +13472,7 @@
           <size>2</size>
           <movement_cost>255</movement_cost>
           <height>30</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -13409,6 +13561,7 @@
           <size>2</size>
           <movement_cost>255</movement_cost>
           <height>30</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -13497,6 +13650,7 @@
           <size>2</size>
           <movement_cost>255</movement_cost>
           <height>30</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -13585,6 +13739,7 @@
           <size>2</size>
           <movement_cost>255</movement_cost>
           <height>30</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -13674,6 +13829,7 @@
           <height>35</height>
           <provides_support>true</provides_support>
           <supported_by>East</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -13763,6 +13919,7 @@
           <height>35</height>
           <provides_support>true</provides_support>
           <supported_by>West</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -13851,6 +14008,7 @@
           <movement_cost>255</movement_cost>
           <height>24</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -13939,6 +14097,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -14027,6 +14186,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -14115,6 +14275,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -14199,6 +14360,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -14287,6 +14449,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -14375,6 +14538,7 @@
           <movement_cost>255</movement_cost>
           <height>24</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -14464,6 +14628,7 @@
           <height>35</height>
           <provides_support>true</provides_support>
           <supported_by>South</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -14553,6 +14718,7 @@
           <height>35</height>
           <provides_support>true</provides_support>
           <supported_by>North</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -14641,6 +14807,7 @@
           <movement_cost>255</movement_cost>
           <height>24</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -14729,6 +14896,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -14817,6 +14985,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -14905,6 +15074,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -14993,6 +15163,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -15081,6 +15252,7 @@
           <movement_cost>4</movement_cost>
           <height>14</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -15169,6 +15341,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -15257,6 +15430,7 @@
           <movement_cost>4</movement_cost>
           <height>28</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -15345,6 +15519,7 @@
           <movement_cost>4</movement_cost>
           <height>14</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -15433,6 +15608,7 @@
           <movement_cost>4</movement_cost>
           <height>28</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -15521,6 +15697,7 @@
           <movement_cost>4</movement_cost>
           <height>14</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -15609,6 +15786,7 @@
           <movement_cost>4</movement_cost>
           <height>28</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -15697,6 +15875,7 @@
           <movement_cost>4</movement_cost>
           <height>14</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -15785,6 +15964,7 @@
           <movement_cost>4</movement_cost>
           <height>28</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -15873,6 +16053,7 @@
           <movement_cost>255</movement_cost>
           <height>35</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -15961,6 +16142,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -16045,6 +16227,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -16133,6 +16316,7 @@
           <movement_cost>255</movement_cost>
           <height>37</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -16217,6 +16401,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -16301,6 +16486,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -16385,6 +16571,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -16473,6 +16660,7 @@
           <movement_cost>4</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -16561,6 +16749,7 @@
           <movement_cost>4</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -16649,6 +16838,7 @@
           <movement_cost>4</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -16737,6 +16927,7 @@
           <movement_cost>4</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -16825,6 +17016,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -16913,6 +17105,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -17001,6 +17194,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -17085,6 +17279,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -17173,6 +17368,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -17261,6 +17457,7 @@
           <movement_cost>14</movement_cost>
           <height>25</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -17349,6 +17546,7 @@
           <movement_cost>14</movement_cost>
           <height>25</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -17437,6 +17635,7 @@
           <movement_cost>14</movement_cost>
           <height>25</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -17525,6 +17724,7 @@
           <movement_cost>14</movement_cost>
           <height>25</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -17613,6 +17813,7 @@
           <movement_cost>4</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -17701,6 +17902,7 @@
           <movement_cost>4</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -17789,6 +17991,7 @@
           <movement_cost>4</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -17877,6 +18080,7 @@
           <movement_cost>4</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -17961,6 +18165,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -18049,6 +18254,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -18133,6 +18339,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -18217,6 +18424,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -18301,6 +18509,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -18388,6 +18597,7 @@
           <size>4</size>
           <movement_cost>4</movement_cost>
           <height>22</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -18475,6 +18685,7 @@
           <size>4</size>
           <movement_cost>4</movement_cost>
           <height>22</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -18564,6 +18775,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown20</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -18653,6 +18865,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown20</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -18742,6 +18955,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown20</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -18831,6 +19045,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown20</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -18915,6 +19130,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -19002,6 +19218,7 @@
           <size>4</size>
           <movement_cost>255</movement_cost>
           <height>39</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -19090,6 +19307,7 @@
           <movement_cost>14</movement_cost>
           <height>20</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -19178,6 +19396,7 @@
           <movement_cost>14</movement_cost>
           <height>20</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -19266,6 +19485,7 @@
           <movement_cost>14</movement_cost>
           <height>20</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -19354,6 +19574,7 @@
           <movement_cost>14</movement_cost>
           <height>20</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -19438,6 +19659,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -19522,6 +19744,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -19606,6 +19829,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -19690,6 +19914,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -19774,6 +19999,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -19858,6 +20084,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -19946,6 +20173,7 @@
           <movement_cost>255</movement_cost>
           <height>32</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -20037,6 +20265,7 @@
           <height>8</height>
           <floating>true</floating>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -20128,6 +20357,7 @@
           <height>8</height>
           <floating>true</floating>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -20219,6 +20449,7 @@
           <height>8</height>
           <floating>true</floating>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -20310,6 +20541,7 @@
           <height>8</height>
           <floating>true</floating>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -20397,6 +20629,7 @@
           <height>8</height>
           <floating>true</floating>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -20485,6 +20718,7 @@
           <movement_cost>14</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -20573,6 +20807,7 @@
           <movement_cost>14</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -20657,6 +20892,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -20741,6 +20977,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -20825,6 +21062,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -20911,6 +21149,7 @@
           <size>5</size>
           <los_through_terrain>true</los_through_terrain>
           <movement_cost>4</movement_cost>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -20999,6 +21238,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -21087,6 +21327,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -21175,6 +21416,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -21263,6 +21505,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -21351,6 +21594,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -21439,6 +21683,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -21527,6 +21772,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -21615,6 +21861,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -21703,6 +21950,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -21791,6 +22039,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -21879,6 +22128,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -21967,6 +22217,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -22055,6 +22306,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -22143,6 +22395,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -22231,6 +22484,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -22319,6 +22573,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -22407,6 +22662,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -22495,6 +22751,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -22583,6 +22840,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -22671,6 +22929,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -22759,6 +23018,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -22847,6 +23107,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -22935,6 +23196,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -23023,6 +23285,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -23111,6 +23374,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -23199,6 +23463,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -23287,6 +23552,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -23375,6 +23641,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -23463,6 +23730,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -23551,6 +23819,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -23639,6 +23908,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -23727,6 +23997,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -23815,6 +24086,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -23903,6 +24175,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -23991,6 +24264,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -24079,6 +24353,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -24167,6 +24442,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -24255,6 +24531,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -24343,6 +24620,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -24431,6 +24709,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -24519,6 +24798,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -24607,6 +24887,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -24695,6 +24976,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -24783,6 +25065,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -24871,6 +25154,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -24959,6 +25243,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -25047,6 +25332,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -25135,6 +25421,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -25223,6 +25510,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -25310,6 +25598,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -25397,6 +25686,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -25484,6 +25774,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -25571,6 +25862,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -25658,6 +25950,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -25747,6 +26040,7 @@
           <movement_cost>4</movement_cost>
           <height>8</height>
           <floating>true</floating>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -25836,6 +26130,7 @@
           <movement_cost>4</movement_cost>
           <height>8</height>
           <floating>true</floating>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -25924,6 +26219,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -26013,6 +26309,7 @@
           <movement_cost>4</movement_cost>
           <height>8</height>
           <floating>true</floating>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -26102,6 +26399,7 @@
           <movement_cost>4</movement_cost>
           <height>8</height>
           <floating>true</floating>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -26191,6 +26489,7 @@
           <movement_cost>4</movement_cost>
           <height>8</height>
           <floating>true</floating>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -26278,6 +26577,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>true</exit>
         </sp>
       </value>
     </entry>
@@ -26365,6 +26665,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>true</exit>
         </sp>
       </value>
     </entry>
@@ -26452,6 +26753,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>true</exit>
         </sp>
       </value>
     </entry>
@@ -26539,6 +26841,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>true</exit>
         </sp>
       </value>
     </entry>
@@ -26627,6 +26930,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -26715,6 +27019,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -26803,6 +27108,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -26891,6 +27197,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -26979,6 +27286,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -27067,6 +27375,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -27155,6 +27464,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -27243,6 +27553,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -27331,6 +27642,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -27419,6 +27731,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -27507,6 +27820,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -27595,6 +27909,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -27683,6 +27998,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -27771,6 +28087,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -27859,6 +28176,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -27947,6 +28265,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -28035,6 +28354,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -28123,6 +28443,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -28211,6 +28532,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -28299,6 +28621,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -28387,6 +28710,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -28474,6 +28798,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -28561,6 +28886,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -28648,6 +28974,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -28735,6 +29062,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -28822,6 +29150,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -28910,6 +29239,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -28997,6 +29327,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -29084,6 +29415,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -29171,6 +29503,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -29258,6 +29591,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -29346,6 +29680,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -29434,6 +29769,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -29517,6 +29853,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -29600,6 +29937,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -29688,6 +30026,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -29776,6 +30115,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -29864,6 +30204,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -29947,6 +30288,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -30030,6 +30372,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -30118,6 +30461,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -30206,6 +30550,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -30289,6 +30634,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -30372,6 +30718,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -30460,6 +30807,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -30548,6 +30896,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -30631,6 +30980,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -30714,6 +31064,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -30802,6 +31153,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -30890,6 +31242,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -30978,6 +31331,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -31066,6 +31420,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -31154,6 +31509,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -31242,6 +31598,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -31330,6 +31687,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -31418,6 +31776,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -31506,6 +31865,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -31594,6 +31954,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -31682,6 +32043,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -31770,6 +32132,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -31857,6 +32220,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -31944,6 +32308,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -32031,6 +32396,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -32118,6 +32484,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -32206,6 +32573,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -32294,6 +32662,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -32382,6 +32751,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -32470,6 +32840,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -32558,6 +32929,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -32646,6 +33018,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -32734,6 +33107,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -32817,6 +33191,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -32900,6 +33275,7 @@
           <size>1</size>
           <height>3</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -32987,6 +33363,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -33074,6 +33451,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -33161,6 +33539,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -33248,6 +33627,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -33336,6 +33716,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -33424,6 +33805,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -33512,6 +33894,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -33600,6 +33983,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -33688,6 +34072,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -33776,6 +34161,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -33864,6 +34250,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -33952,6 +34339,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -34040,6 +34428,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -34128,6 +34517,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -34216,6 +34606,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -34304,6 +34695,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -34392,6 +34784,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -34480,6 +34873,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -34568,6 +34962,7 @@
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -34655,6 +35050,7 @@
           <size>5</size>
           <los_through_terrain>true</los_through_terrain>
           <movement_cost>4</movement_cost>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -34743,6 +35139,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -34831,6 +35228,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -34917,6 +35315,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -35003,6 +35402,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -35089,6 +35489,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -35175,6 +35576,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -35261,6 +35663,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -35347,6 +35750,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -35433,6 +35837,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -35519,6 +35924,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -35605,6 +36011,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -35691,6 +36098,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -35779,6 +36187,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -35865,6 +36274,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -35950,6 +36360,7 @@
           <gravlift>true</gravlift>
           <floating>true</floating>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -36041,6 +36452,7 @@
           <height>8</height>
           <floating>true</floating>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -36132,6 +36544,7 @@
           <height>8</height>
           <floating>true</floating>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -36223,6 +36636,7 @@
           <height>8</height>
           <floating>true</floating>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -36308,6 +36722,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -36396,6 +36811,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -36484,6 +36900,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -36572,6 +36989,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -36660,6 +37078,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -36748,6 +37167,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -36836,6 +37256,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -36924,6 +37345,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -37012,6 +37434,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -37100,6 +37523,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -37188,6 +37612,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -37276,6 +37701,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -37364,6 +37790,7 @@
           <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -37452,6 +37879,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -37540,6 +37968,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -37628,6 +38057,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -37713,6 +38143,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -37801,6 +38232,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -37889,6 +38321,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -37977,6 +38410,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -38065,6 +38499,7 @@
           <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -38153,6 +38588,7 @@
           <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -38241,6 +38677,7 @@
           <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -38329,6 +38766,7 @@
           <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -38417,6 +38855,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -38505,6 +38944,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -38593,6 +39033,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -38681,6 +39122,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -38769,6 +39211,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -38857,6 +39300,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -38945,6 +39389,7 @@
           <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -39033,6 +39478,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -39121,6 +39567,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -39209,6 +39656,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -39297,6 +39745,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -39385,6 +39834,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -39473,6 +39923,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -39561,6 +40012,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -39649,6 +40101,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -39747,6 +40200,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -39835,6 +40289,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -39923,6 +40378,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -40011,6 +40467,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -40099,6 +40556,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -40187,6 +40645,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -40275,6 +40734,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -40363,6 +40823,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -40451,6 +40912,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -40539,6 +41001,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -40627,6 +41090,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -40715,6 +41179,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -40803,6 +41268,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -40891,6 +41357,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -40979,6 +41446,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -41067,6 +41535,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -41155,6 +41624,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -41243,6 +41713,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -41331,6 +41802,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -41419,6 +41891,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -41507,6 +41980,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -41595,6 +42069,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -41683,6 +42158,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -41771,6 +42247,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -41859,6 +42336,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -41947,6 +42425,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -42035,6 +42514,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -42123,6 +42603,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -42211,6 +42692,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -42299,6 +42781,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -42387,6 +42870,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -42475,6 +42959,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -42563,6 +43048,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -42651,6 +43137,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -42747,6 +43234,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -42843,6 +43331,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -42939,6 +43428,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -43035,6 +43525,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -43120,6 +43611,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -43205,6 +43697,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -43290,6 +43783,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -43378,6 +43872,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -43463,6 +43958,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -43551,6 +44047,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -43639,6 +44136,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -43727,6 +44225,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -43826,6 +44325,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -43914,6 +44414,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -44002,6 +44503,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -44090,6 +44592,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -44178,6 +44681,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -44266,6 +44770,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -44354,6 +44859,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -44440,6 +44946,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -44526,6 +45033,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -44612,6 +45120,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -44698,6 +45207,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -44784,6 +45294,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -44870,6 +45381,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -44956,6 +45468,7 @@
           <height>22</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -45042,6 +45555,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -45128,6 +45642,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -45214,6 +45729,7 @@
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown36</supported_by>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -45301,6 +45817,7 @@
           <size>5</size>
           <los_through_terrain>true</los_through_terrain>
           <movement_cost>4</movement_cost>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -45389,6 +45906,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -45477,6 +45995,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -45565,6 +46084,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -45653,6 +46173,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -45741,6 +46262,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -45829,6 +46351,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -45917,6 +46440,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -46005,6 +46529,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -46093,6 +46618,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -46181,6 +46707,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -46269,6 +46796,7 @@
           <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -46357,6 +46885,7 @@
           <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -46445,6 +46974,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -46533,6 +47063,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -46621,6 +47152,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -46709,6 +47241,7 @@
           <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -46797,6 +47330,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -46885,6 +47419,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -46973,6 +47508,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -47061,6 +47597,7 @@
           <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -47149,6 +47686,7 @@
           <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -47237,6 +47775,7 @@
           <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -47325,6 +47864,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -47413,6 +47953,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -47501,6 +48042,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -47589,6 +48131,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -47677,6 +48220,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -47765,6 +48309,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -47853,6 +48398,7 @@
           <movement_cost>255</movement_cost>
           <height>30</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -47938,6 +48484,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -48026,6 +48573,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -48114,6 +48662,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -48202,6 +48751,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -48290,6 +48840,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -48388,6 +48939,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -48476,6 +49028,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -48564,6 +49117,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -48652,6 +49206,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -48740,6 +49295,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -48828,6 +49384,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -48916,6 +49473,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -49004,6 +49562,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -49092,6 +49651,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -49180,6 +49740,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -49268,6 +49829,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -49356,6 +49918,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -49444,6 +50007,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -49532,6 +50096,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -49620,6 +50185,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -49708,6 +50274,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -49796,6 +50363,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -49884,6 +50452,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -49972,6 +50541,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -50060,6 +50630,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -50148,6 +50719,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -50236,6 +50808,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -50324,6 +50897,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -50412,6 +50986,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -50500,6 +51075,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -50588,6 +51164,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -50676,6 +51253,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -50764,6 +51342,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -50852,6 +51431,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -50940,6 +51520,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -51028,6 +51609,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -51116,6 +51698,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -51204,6 +51787,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -51292,6 +51876,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -51380,6 +51965,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -51468,6 +52054,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -51556,6 +52143,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -51644,6 +52232,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -51732,6 +52321,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -51828,6 +52418,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -51924,6 +52515,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -52020,6 +52612,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -52116,6 +52709,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -52201,6 +52795,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -52286,6 +52881,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -52374,6 +52970,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -52459,6 +53056,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -52544,6 +53142,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -52632,6 +53231,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -52720,6 +53320,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -52808,6 +53409,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -52896,6 +53498,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -52995,6 +53598,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -53083,6 +53687,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -53171,6 +53776,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -53259,6 +53865,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -53347,6 +53954,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -53435,6 +54043,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -53523,6 +54132,7 @@
           <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -53608,6 +54218,7 @@
           <gravlift>true</gravlift>
           <floating>true</floating>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -53699,6 +54310,7 @@
           <height>8</height>
           <floating>true</floating>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -53790,6 +54402,7 @@
           <height>8</height>
           <floating>true</floating>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -53881,6 +54494,7 @@
           <height>8</height>
           <floating>true</floating>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -53966,6 +54580,7 @@
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -54054,6 +54669,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -54142,6 +54758,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>
@@ -54230,6 +54847,7 @@
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
+          <exit>false</exit>
         </sp>
       </value>
     </entry>

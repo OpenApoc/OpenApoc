@@ -59,6 +59,7 @@ TileObject::Type TileObjectBattleMapPart::convertType(BattleMapPartType::Type ty
 TileObjectBattleMapPart::~TileObjectBattleMapPart() = default;
 
 TileObjectBattleMapPart::TileObjectBattleMapPart(TileMap &map, sp<BattleMapPart> map_part)
+
     : TileObject(map, convertType(map_part->type->type), Vec3<float>{1, 1, 1}), map_part(map_part)
 {
 }

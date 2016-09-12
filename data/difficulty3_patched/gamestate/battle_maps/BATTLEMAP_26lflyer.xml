@@ -50,7 +50,7 @@
     </allow_exit>
     <entrance_level_max>3</entrance_level_max>
     <exit_level_max>7</exit_level_max>
-    <exits>
+    <exitsX>
       <entry>
         <x>14</x>
         <y>0</y>
@@ -71,6 +71,8 @@
         <y>0</y>
         <z>1</z>
       </entry>
+    </exitsX>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>18</y>
@@ -91,7 +93,7 @@
         <y>21</y>
         <z>1</z>
       </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>26lflyer</entry>
     </tilesets>
@@ -111,12 +113,18 @@
       <entry>BATTLEMAPPART_26lflyer_RW_63</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_26lflyer_FT253</entry>
-      <entry>BATTLEMAPPART_26lflyer_FT254</entry>
-      <entry>BATTLEMAPPART_26lflyer_FT249</entry>
-      <entry>BATTLEMAPPART_26lflyer_FT250</entry>
-      <entry>BATTLEMAPPART_26lflyer_FT251</entry>
+      <entry>BATTLEMAPPART_26lflyer_FT_253</entry>
+      <entry>BATTLEMAPPART_26lflyer_FT_254</entry>
+      <entry>BATTLEMAPPART_26lflyer_FT_249</entry>
+      <entry>BATTLEMAPPART_26lflyer_FT_250</entry>
+      <entry>BATTLEMAPPART_26lflyer_FT_251</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_26lflyer_GD_76</entry>
+      <entry>BATTLEMAPPART_26lflyer_GD_77</entry>
+      <entry>BATTLEMAPPART_26lflyer_GD_78</entry>
+      <entry>BATTLEMAPPART_26lflyer_GD_79</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_26lflyer>

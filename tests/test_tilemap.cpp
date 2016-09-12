@@ -66,7 +66,7 @@ int main(int, char **)
 	}
 
 	// LayerMap is only used for drawing
-	TileMap map{{100, 100, 10}, {{TileObject::Type::Scenery}}};
+	TileMap map{{100, 100, 10}, {1, 1, 1}, {32, 32, 16}, {{TileObject::Type::Scenery}}};
 
 	// Spawn some objects
 	std::vector<std::pair<Vec3<float>, sp<TileObject>>> objects = {

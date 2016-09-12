@@ -50,7 +50,7 @@
     </allow_exit>
     <entrance_level_max>4</entrance_level_max>
     <exit_level_max>4</exit_level_max>
-    <exits>
+    <exitsX>
       <entry>
         <x>18</x>
         <y>0</y>
@@ -61,6 +61,8 @@
         <y>0</y>
         <z>0</z>
       </entry>
+    </exitsX>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>10</y>
@@ -71,11 +73,17 @@
         <y>11</y>
         <z>0</z>
       </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>42megapd</entry>
     </tilesets>
     <destroyed_ground_tile>BATTLEMAPPART_42megapd_GD_5</destroyed_ground_tile>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_42megapd_GD_216</entry>
+      <entry>BATTLEMAPPART_42megapd_GD_217</entry>
+      <entry>BATTLEMAPPART_42megapd_GD_218</entry>
+      <entry>BATTLEMAPPART_42megapd_GD_219</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_42megapd>

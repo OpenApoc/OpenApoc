@@ -50,17 +50,7 @@
     </allow_exit>
     <entrance_level_max>3</entrance_level_max>
     <exit_level_max>3</exit_level_max>
-    <exits>
-      <entry>
-        <x>12</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
-      <entry>
-        <x>13</x>
-        <y>0</y>
-        <z>0</z>
-      </entry>
+    <exitsX>
       <entry>
         <x>1</x>
         <y>0</y>
@@ -71,6 +61,18 @@
         <y>0</y>
         <z>2</z>
       </entry>
+      <entry>
+        <x>12</x>
+        <y>0</y>
+        <z>0</z>
+      </entry>
+      <entry>
+        <x>13</x>
+        <y>0</y>
+        <z>0</z>
+      </entry>
+    </exitsX>
+    <exitsY>
       <entry>
         <x>0</x>
         <y>12</y>
@@ -91,7 +93,7 @@
         <y>24</y>
         <z>2</z>
       </entry>
-    </exits>
+    </exitsY>
     <tilesets>
       <entry>03hospit</entry>
     </tilesets>
@@ -111,12 +113,18 @@
       <entry>BATTLEMAPPART_03hospit_RW_63</entry>
     </rubble_right_wall>
     <rubble_feature>
-      <entry>BATTLEMAPPART_03hospit_FT9</entry>
-      <entry>BATTLEMAPPART_03hospit_FT6</entry>
-      <entry>BATTLEMAPPART_03hospit_FT7</entry>
-      <entry>BATTLEMAPPART_03hospit_FT8</entry>
-      <entry>BATTLEMAPPART_03hospit_FT5</entry>
+      <entry>BATTLEMAPPART_03hospit_FT_9</entry>
+      <entry>BATTLEMAPPART_03hospit_FT_6</entry>
+      <entry>BATTLEMAPPART_03hospit_FT_7</entry>
+      <entry>BATTLEMAPPART_03hospit_FT_8</entry>
+      <entry>BATTLEMAPPART_03hospit_FT_5</entry>
     </rubble_feature>
+    <exit_grounds>
+      <entry>BATTLEMAPPART_03hospit_GD_97</entry>
+      <entry>BATTLEMAPPART_03hospit_GD_98</entry>
+      <entry>BATTLEMAPPART_03hospit_GD_99</entry>
+      <entry>BATTLEMAPPART_03hospit_GD_100</entry>
+    </exit_grounds>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
   </sp>
 </BATTLEMAP_03hospit>
