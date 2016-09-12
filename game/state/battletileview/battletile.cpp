@@ -1,5 +1,5 @@
-#include "game/state/battle.h"
 #include "game/state/battletileview/battletile.h"
+#include "game/state/battle.h"
 #include "game/state/battletileview/battletileobject_mappart.h"
 #include "game/state/tileview/voxel.h"
 #include <random>

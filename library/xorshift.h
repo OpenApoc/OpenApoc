@@ -4,10 +4,10 @@
 #include <istream>
 #include <limits>
 #include <list>
+#include <map>
 #include <ostream>
 #include <random>
 #include <vector>
-#include <map> 
 
 namespace OpenApoc
 {

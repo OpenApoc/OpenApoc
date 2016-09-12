@@ -1,7 +1,7 @@
-#include "game/state/base/base.h"
+#include "game/ui/base/basestage.h"
 #include "framework/event.h"
 #include "framework/framework.h"
-#include "game/ui/base/basestage.h"
+#include "game/state/base/base.h"
 
 namespace OpenApoc
 {

@@ -509,13 +509,13 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 		// If we failed at filling a map at this point, then there's nothing else we can do
 		if (!IsMapComplete(sec_map, size))
 		{
-			LogWarning("Failed to complete map %s with size %d, %d, %d at attempt %d", id.cStr(), size.x,
-			           size.y, size.z, attempt_make_map);
+			LogWarning("Failed to complete map %s with size %d, %d, %d at attempt %d", id.cStr(),
+			           size.x, size.y, size.z, attempt_make_map);
 			continue;
 		}
 
-		LogWarning("Successfully completed map %s with size %d, %d, %d at attempt %d", id.cStr(), size.x,
-		           size.y, size.z, attempt_make_map);
+		LogWarning("Successfully completed map %s with size %d, %d, %d at attempt %d", id.cStr(),
+		           size.x, size.y, size.z, attempt_make_map);
 
 		// If we succeeded, time to actually create a battle map
 		auto b = mksp<Battle>();
