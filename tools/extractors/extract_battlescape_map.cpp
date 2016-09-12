@@ -64,20 +64,20 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 	m->id = id;
 	m->chunk_size = {bdata.chunk_x, bdata.chunk_y, bdata.chunk_z};
 	m->max_battle_size = {bdata.battle_x, bdata.battle_y, bdata.battle_z};
-	std::set<int> north = {1, 3, 5, 7, 9, 11, 13, 15};
-	std::set<int> east = {2, 3, 6, 7, 10, 11, 14, 15};
-	std::set<int> south = {4, 5, 6, 7, 12, 13, 14, 15};
-	std::set<int> west = {8, 9, 10, 11, 12, 13, 14, 15};
-	m->allow_entrance[Battle::MapBorder::North] =
-	    north.find(bdata.allow_entrance_from) != north.end();
-	m->allow_entrance[Battle::MapBorder::East] = east.find(bdata.allow_entrance_from) != east.end();
-	m->allow_entrance[Battle::MapBorder::South] =
-	    south.find(bdata.allow_entrance_from) != south.end();
-	m->allow_entrance[Battle::MapBorder::West] = west.find(bdata.allow_entrance_from) != west.end();
-	m->allow_exit[Battle::MapBorder::North] = north.find(bdata.allow_exit_from) != north.end();
-	m->allow_exit[Battle::MapBorder::East] = east.find(bdata.allow_exit_from) != east.end();
-	m->allow_exit[Battle::MapBorder::South] = south.find(bdata.allow_exit_from) != south.end();
-	m->allow_exit[Battle::MapBorder::West] = west.find(bdata.allow_exit_from) != west.end();
+
+	uint8_t north_flag = 0b0001;
+	uint8_t east_flag = 0b0010;
+	uint8_t south_flag = 0b0100;
+	uint8_t west_flag = 0b1000;
+
+	m->allow_entrance[Battle::MapBorder::North] = bdata.allow_entrance_from & north_flag;
+	m->allow_entrance[Battle::MapBorder::East] = bdata.allow_entrance_from & east_flag;
+	m->allow_entrance[Battle::MapBorder::South] = bdata.allow_entrance_from & south_flag;
+	m->allow_entrance[Battle::MapBorder::West] = bdata.allow_entrance_from & west_flag;
+	m->allow_exit[Battle::MapBorder::North] = bdata.allow_exit_from & north_flag;
+	m->allow_exit[Battle::MapBorder::East] = bdata.allow_exit_from & east_flag;
+	m->allow_exit[Battle::MapBorder::South] = bdata.allow_exit_from & south_flag;
+	m->allow_exit[Battle::MapBorder::West] = bdata.allow_exit_from & west_flag;
 	m->entrance_level_min = bdata.entrance_min_level;
 	m->entrance_level_max = bdata.entrance_max_level;
 	m->exit_level_min = bdata.exit_min_level;
