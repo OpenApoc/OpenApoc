@@ -1,24 +1,43 @@
 #include "game/state/agent.h"
+#include "game/state/battle/aequipment.h"
 #include "game/state/gamestate.h"
-#include <random>
 
 namespace OpenApoc
 {
 
-const std::map<Agent::Type, UString> Agent::TypeMap = {
-    {Type::Soldier, "soldier"},
-    {Type::Physicist, "physicist"},
-    {Type::BioChemist, "biochemist"},
-    {Type::Engineer, "engineer"},
-};
+template <> sp<AgentType> StateObject<AgentType>::get(const GameState &state, const UString &id)
+{
+	auto it = state.agent_types.find(id);
+	if (it == state.agent_types.end())
+	{
+		LogError("No agent_type matching ID \"%s\"", id.cStr());
+		return nullptr;
+	}
+	return it->second;
+}
 
-const std::map<Agent::Species, UString> Agent::SpeciesMap = {
-    {Species::Human, "human"}, {Species::Mutant, "mutant"}, {Species::Android, "android"},
-};
-
-const std::map<Agent::Gender, UString> Agent::GenderMap = {
-    {Gender::Male, "male"}, {Gender::Female, "female"},
-};
+template <> const UString &StateObject<AgentType>::getPrefix()
+{
+	static UString prefix = "AGENTTYPE_";
+	return prefix;
+}
+template <> const UString &StateObject<AgentType>::getTypeName()
+{
+	static UString name = "AgentType";
+	return name;
+}
+template <>
+const UString &StateObject<AgentType>::getId(const GameState &state, const sp<AgentType> ptr)
+{
+	static const UString emptyString = "";
+	for (auto &a : state.agent_types)
+	{
+		if (a.second == ptr)
+			return a.first;
+	}
+	LogError("No agent_type matching pointer %p", ptr.get());
+	return emptyString;
+}
 
 template <> sp<Agent> StateObject<Agent>::get(const GameState &state, const UString &id)
 {
@@ -53,86 +72,25 @@ template <> const UString &StateObject<Agent>::getId(const GameState &state, con
 	return emptyString;
 }
 
-template <typename T, typename Generator>
-T probabilityMapRandomizer(Generator &g, const std::map<T, float> &probabilityMap)
+StateRef<Agent> AgentGenerator::createAgent(GameState &state, AgentType::Role role) const
 {
-	if (probabilityMap.empty())
-	{
-		LogError("Called with empty probabilityMap");
-	}
-	float total = 0.0f;
-	for (auto &p : probabilityMap)
-	{
-		total += p.second;
-	}
-	std::uniform_real_distribution<float> dist(0, total);
+	std::list<sp<AgentType>> types;
+	for (auto &t : state.agent_types)
+		if (t.second->role == role && t.second->playable)
+			types.insert(types.begin(), t.second);
+	auto type = listRandomiser(state.rng, types);
 
-	float val = dist(g);
-
-	// Due to fp precision there's a small chance the total will be slightly more than the max,
-	// so have a fallback just in case?
-	T fallback = probabilityMap.begin()->first;
-	total = 0.0f;
-
-	for (auto &p : probabilityMap)
-	{
-		if (val < total + p.second)
-		{
-			return p.first;
-		}
-		total += p.second;
-	}
-	return fallback;
+	return createAgent(state, {&state, AgentType::getId(state, type)});
 }
 
-template <typename T, typename Generator> T listRandomiser(Generator &g, const std::list<T> &list)
-{
-	// we can't do index lookups in a list, so we just have to iterate N times
-	if (list.size() == 1)
-		return *list.begin();
-	else if (list.empty())
-	{
-		LogError("Trying to randomize within empty list");
-	}
-	std::uniform_int_distribution<unsigned> dist(0, list.size() - 1);
-	auto count = dist(g);
-	auto it = list.begin();
-	while (count)
-	{
-		it++;
-		count--;
-	}
-	return *it;
-}
-
-template <typename T, typename Generator> T randBounds(Generator &g, T min, T max)
-{
-	if (min > max)
-	{
-		LogError("Bounds max < min");
-	}
-	// uniform_int_distribution is apparently undefined if min==max
-	if (min == max)
-		return min;
-	std::uniform_int_distribution<T> dist(min, max);
-	return dist(g);
-}
-
-StateRef<Agent> AgentGenerator::createAgent(GameState &state) const
-{
-	auto type = probabilityMapRandomizer(state.rng, this->type_chance);
-	return this->createAgent(state, type);
-}
-
-StateRef<Agent> AgentGenerator::createAgent(GameState &state, Agent::Type type) const
+StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<AgentType> type) const
 {
 	UString ID = UString::format("%s%u", Agent::getPrefix().cStr(), this->num_created);
 
 	auto agent = mksp<Agent>();
 
 	agent->type = type;
-	agent->species = probabilityMapRandomizer(state.rng, this->species_chance);
-	agent->gender = probabilityMapRandomizer(state.rng, this->gender_chance);
+	agent->gender = probabilityMapRandomizer(state.rng, type->gender_chance);
 
 	auto firstNameList = this->first_names.find(agent->gender);
 	if (firstNameList == this->first_names.end())
@@ -145,62 +103,112 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, Agent::Type type) 
 	auto secondName = listRandomiser(state.rng, this->second_names);
 	agent->name = UString::format("%s %s", firstName, secondName);
 
-	auto speciesPortraitMapIt = this->portraits.find(agent->species);
-	if (speciesPortraitMapIt == this->portraits.end())
-	{
-		LogError("No portrait list for species");
-		return nullptr;
-	}
-
-	auto &speciesPortraitMap = speciesPortraitMapIt->second;
-	auto genderPortraitMapIt = speciesPortraitMap.find(agent->gender);
-	if (genderPortraitMapIt == speciesPortraitMap.end())
-	{
-		LogError("No portrait list for gender");
-		return nullptr;
-	}
-
-	agent->portrait = listRandomiser(state.rng, genderPortraitMapIt->second);
-
-	auto minStatsIt = this->min_stats.find(agent->species);
-	if (minStatsIt == this->min_stats.end())
-	{
-		LogError("No min_stats for species");
-		return nullptr;
-	}
-	auto &minStats = minStatsIt->second;
-
-	auto maxStatsIt = this->max_stats.find(agent->species);
-	if (maxStatsIt == this->max_stats.end())
-	{
-		LogError("No max_stats for species");
-		return nullptr;
-	}
-	auto &maxStats = maxStatsIt->second;
+	agent->portrait =
+	    randBoundsInclusive(state.rng, 0, (int)type->portraits[agent->gender].size() - 1);
 
 	AgentStats s;
-	s.health = randBounds(state.rng, minStats.health, maxStats.health);
-	s.accuracy = randBounds(state.rng, minStats.accuracy, maxStats.accuracy);
-	s.reactions = randBounds(state.rng, minStats.reactions, maxStats.reactions);
-	s.speed = randBounds(state.rng, minStats.speed, maxStats.speed);
-	s.stamina = randBounds(state.rng, minStats.stamina, maxStats.stamina);
-	s.bravery = randBounds(state.rng, minStats.bravery, maxStats.bravery);
-	s.strength = randBounds(state.rng, minStats.strength, maxStats.strength);
-	s.psi_energy = randBounds(state.rng, minStats.psi_energy, maxStats.psi_energy);
-	s.psi_attack = randBounds(state.rng, minStats.psi_attack, maxStats.psi_attack);
-	s.psi_defence = randBounds(state.rng, minStats.psi_defence, maxStats.psi_defence);
-	s.physics_skill = randBounds(state.rng, minStats.physics_skill, maxStats.physics_skill);
-	s.biochem_skill = randBounds(state.rng, minStats.biochem_skill, maxStats.biochem_skill);
-	s.engineering_skill =
-	    randBounds(state.rng, minStats.engineering_skill, maxStats.engineering_skill);
+	s.health = randBoundsInclusive(state.rng, type->min_stats.health, type->max_stats.health);
+	s.accuracy = randBoundsInclusive(state.rng, type->min_stats.accuracy, type->max_stats.accuracy);
+	s.reactions =
+	    randBoundsInclusive(state.rng, type->min_stats.reactions, type->max_stats.reactions);
+	s.speed = randBoundsInclusive(state.rng, type->min_stats.speed, type->max_stats.speed);
+	s.stamina = randBoundsInclusive(state.rng, type->min_stats.stamina, type->max_stats.stamina);
+	s.bravery = randBoundsInclusive(state.rng, type->min_stats.bravery, type->max_stats.bravery);
+	s.strength = randBoundsInclusive(state.rng, type->min_stats.strength, type->max_stats.strength);
+	s.psi_energy =
+	    randBoundsInclusive(state.rng, type->min_stats.psi_energy, type->max_stats.psi_energy);
+	s.psi_attack =
+	    randBoundsInclusive(state.rng, type->min_stats.psi_attack, type->max_stats.psi_attack);
+	s.psi_defence =
+	    randBoundsInclusive(state.rng, type->min_stats.psi_defence, type->max_stats.psi_defence);
+	s.physics_skill = randBoundsInclusive(state.rng, type->min_stats.physics_skill,
+	                                      type->max_stats.physics_skill);
+	s.biochem_skill = randBoundsInclusive(state.rng, type->min_stats.biochem_skill,
+	                                      type->max_stats.biochem_skill);
+	s.engineering_skill = randBoundsInclusive(state.rng, type->min_stats.engineering_skill,
+	                                          type->max_stats.engineering_skill);
 
 	agent->initial_stats = s;
 	agent->current_stats = s;
+
+	// FIXME: Default equipment for agents with no inventory?
+	// FIXME: Equip units according to score?
 
 	// Everything worked, add agent to stats
 	this->num_created++;
 	state.agents[ID] = agent;
 	return {&state, ID};
 }
+
+bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type) const
+{
+	Vec2<int> slotOrigin;
+	bool slotFound = false;
+	// Check the slot this occupies hasn't already got something there
+	for (auto &slot : this->type->equipment_layout_slots)
+	{
+		if (slot.bounds.within(pos))
+		{
+			slotOrigin = slot.bounds.p0;
+			slotFound = true;
+			break;
+		}
+	}
+	// If this was not within a slot fail
+	if (!slotFound)
+	{
+		return false;
+	}
+	// Check that the equipment doesn't overlap with any other and doesn't
+	// go outside a slot of the correct type
+	Rect<int> bounds{pos, pos + type->equipscreen_size};
+	for (auto &otherEquipment : this->equipment)
+	{
+		// Something is already in that slot, fail
+		if (otherEquipment->equippedPosition == slotOrigin)
+		{
+			return false;
+		}
+		Rect<int> otherBounds{otherEquipment->equippedPosition,
+		                      otherEquipment->equippedPosition +
+		                          otherEquipment->type->equipscreen_size};
+		if (otherBounds.intersects(bounds))
+		{
+			LogInfo("Equipping \"%s\" on \"%s\" at {%d,%d} failed: Intersects with other equipment",
+			        type->name.cStr(), this->name.cStr(), pos.x, pos.y);
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void Agent::addEquipment(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type)
+{
+	if (!this->canAddEquipment(pos, type))
+	{
+		LogError("Trying to add \"%s\" at {%d,%d} on agent \"%s\" failed", type.id.cStr(), pos.x,
+		         pos.y, this->name.cStr());
+	}
+	auto equipment = mksp<AEquipment>();
+	equipment->type = type;
+	equipment->ammo = type->max_ammo;
+	this->addEquipment(state, pos, equipment);
+}
+
+void Agent::addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object)
+{
+	if (!this->canAddEquipment(pos, object->type))
+	{
+		LogError("Trying to add \"%s\" at {%d,%d} on agent  \"%s\" failed", object->type.id.cStr(),
+		         pos.x, pos.y, this->name.cStr());
+	}
+
+	LogInfo("Equipped \"%s\" with equipment \"%s\"", this->name.cStr(), object->type->name.cStr());
+	object->equippedPosition = pos;
+	this->equipment.emplace_back(object);
+}
+
+void Agent::removeEquipment(sp<AEquipment> object) { this->equipment.remove(object); }
 
 } // namespace OpenApoc

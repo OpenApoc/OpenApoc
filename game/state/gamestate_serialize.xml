@@ -8,7 +8,6 @@
 		<member type="Section">facility_types</member>
 		<member type="Section">doodad_types</member>
 		<member type="Section">vehicle_equipment</member>
-		<member type="Section">agent_equipment</member>
 		<member type="Section">vehicle_ammo</member>
 		<member type="SectionMap">cities</member>
 		<member type="Section">ufo_growth_lists</member>
@@ -19,16 +18,31 @@
 		<member type="Section">ufopaedia</member>
 		<member type="Section">research</member>
 		<member type="Section">agents</member>
+		<member type="Section">agent_types</member>
 		<member type="Section">agent_generator</member>
 		<member>initial_agents</member>
 		<member>initial_facilities</member>
 		<member>current_city</member>
 		<member>current_base</member>
 		<member>player</member>
+		<member>aliens</member>
 		<member>rng</member>
 		<member>gameTime</member>
+		<member type="SectionMap">battle_unit_image_packs</member>
+		<member type="SectionMap">battle_unit_animations</member>
+		<member type="SectionMap">battle_map_tilesets</member>
+		<member type="SectionMap">battle_maps</member>
 		<member type="Section">battle</member>
+		<member type="Section">damage_modifiers</member>
+		<member type="Section">damage_types</member>
+		<member type="Section">agent_equipment</member>
+		<member type="Section">equipment_sets_by_score</member>
+		<member type="Section">equipment_sets_by_level</member>
 		<member>messages</member>
+	</object>
+	<object>
+		<name>BattleMapTileset</name>
+		<member>map_part_types</member>
 	</object>
 	<object>
 		<name>EventMessage</name>
@@ -51,25 +65,80 @@
 		<member>num_created</member>
 		<member>first_names</member>
 		<member>second_names</member>
-		<member>type_chance</member>
-		<member>species_chance</member>
+	</object>
+	<object>
+		<name>AgentType</name>
+		<member>id</member>
+		<member>name</member>
+		<member>role</member>
+		<member>possible_genders</member>
 		<member>gender_chance</member>
 		<member>portraits</member>
 		<member>min_stats</member>
 		<member>max_stats</member>
+		<member>movement_type</member>
+		<member>large</member>
+		<member>image_packs</member>
+		<member>animation</member>
+		<member>voxelMap</member>
+		<member>armor</member>
+		<member>damage_modifier</member>
+		<member>inventory</member>
+		<member>built_in_weapon_left</member>
+		<member>built_in_weapon_right</member>
+		<member>equipment_layout_slots</member>
+		<member>can_improve</member>
+		<member>playable</member>
+		<member>score</member>
+	</object>
+	<object>
+		<name>AEquipment</name>
+		<member>type</member>
+		<member>equippedPosition</member>
+		<member>owner</member>
+		<member>ammo</member>
+	</object>
+	<object>
+		<name>AgentType::EquipmentLayoutSlot</name>
+		<member>align_x</member>
+		<member>align_y</member>
+		<member>bounds</member>
+	</object>
+	<object>
+		<name>EquipmentSet</name>
+		<member>id</member>
+		<member>min_score</member>
+		<member>max_score</member>
+		<member>weapons</member>
+		<member>grenades</member>
+		<member>equipment</member>
+	</object>
+	<object>
+		<name>EquipmentSet::WeaponData</name>
+		<member>weapon</member>
+		<member>clip</member>
+		<member>clip_amount</member>
+	</object>
+	<object>
+		<name>EquipmentSet::GrenadeData</name>
+		<member>grenade</member>
+		<member>grenade_amount</member>
+	</object>
+		<object>
+		<name>EquipmentSet::EquipmentData</name>
+		<member>equipment</member>
 	</object>
 	<object>
 		<name>Agent</name>
 		<member>name</member>
 		<member>portrait</member>
-		<member>type</member>
-		<member>species</member>
 		<member>gender</member>
 		<member>initial_stats</member>
 		<member>current_stats</member>
 		<member>home_base</member>
 		<member>owner</member>
 		<member>assigned_to_lab</member>
+		<member>equipment</member>
 	</object>
 	<object>
 		<name>AgentPortrait</name>
@@ -202,19 +271,110 @@
 		<member>imageOffset</member>
 		<member>constitution</member>
 		<member>explosion_power</member>
-		<member>explosion_radius_divizor</member>
+		<member>explosion_depletion_rate</member>
+		<member>explosion_type</member>
+		<member>fire_resist</member>
+		<member>fire_burn_time</member>
+		<member>block_physical</member>
+		<member>block_gas</member>
+		<member>block_fire</member>
+		<member>block_psionic</member>
+		<member>size</member>
 		<member>damaged_map_part</member>
 		<member>animation_frames</member>
+		<member>transparent</member>
+		<member>sfx</member>
+		<member>door</member>
+		<member>los_through_terrain</member>
+		<member>floor</member>
+		<member>gravlift</member>
+		<member>movement_cost</member>
+		<member>height</member>
+		<member>floating</member>
+		<member>provides_support</member>
+		<member>supported_by</member>
+		<member>independent_structure</member>
 	</object>
 	<object>
 		<name>Battle</name>
 		<member>size</member>
-		<member type="Section">map_part_types</member>
-		<member type="Section">initial_grounds</member>
-		<member type="Section">initial_left_walls</member>
-		<member type="Section">initial_right_walls</member>
-		<member type="Section">initial_scenery</member>
 		<member type="Section">map_parts</member>
+		<member>mission_type</member>
+		<member>mission_location_id</member>
+		<member>player_craft</member>
+	</object>
+	<object>
+		<name>BattleMap</name>
+		<member>id</member>
+		<member>chunk_size</member>
+		<member>max_battle_size</member>
+		<member>allow_entrance</member>
+		<member>allow_exit</member>
+		<member>entrance_level_min</member>
+		<member>entrance_level_max</member>
+		<member>exit_level_min</member>
+		<member>exit_level_max</member>
+		<member>exits</member>
+		<member>tilesets</member>
+		<member>destroyed_ground_tile</member>
+		<member>rubble_left_wall</member>
+		<member>rubble_right_wall</member>
+		<member>rubble_scenery</member>
+		<member type="SectionMap">sectors</member>
+	</object>
+	<object>
+		<name>BattleMapSector</name>
+		<member>size</member>
+		<member>occurrence_min</member>
+		<member>occurrence_max</member>
+		<member>los_blocks</member>
+		<member>initial_grounds</member>
+		<member>initial_left_walls</member>
+		<member>initial_right_walls</member>
+		<member>initial_scenery</member>
+	</object>
+	<object>
+		<name>BattleMapSector::LineOfSightBlock</name>
+		<member>start</member>
+		<member>end</member>
+		<member>ai_patrol_priority</member>
+		<member>ai_target_priority</member>
+		<member>spawn_type</member>
+		<member>spawn_priority</member>
+		<member>spawn_large_units</member>
+		<member>spawn_walking_units</member>
+	</object>
+	<object>
+		<name>BattleUnitImagePack</name>
+		<member>images</member>
+	</object>
+	<object>
+		<name>BattleUnitAnimation</name>
+		<member>animation</member>
+	</object>
+	<object>
+		<name>BattleUnitAnimation::AnimationEntry</name>
+		<member>frames</member>
+		<member>frame_count</member>
+	</object>
+	<object>
+		<name>BattleUnitAnimation::AnimationEntry::Frame</name>
+		<member>shadow</member>
+		<member>body</member>
+		<member>leg</member>
+		<member>helmet</member>
+		<member>right_arm</member>
+		<member>left_arm</member>
+	</object>
+	<object>
+		<name>BattleUnitAnimation::AnimationEntry::Frame::InfoBlock</name>
+		<member>index</member>
+		<member>offset_x</member>
+		<member>offset_y</member>
+	</object>
+	<object>
+		<name>BattleUnit</name>
+		<member>agent</member>
 	</object>
 	<object>
 		<name>BattleMapPart</name>
@@ -282,6 +442,7 @@
 		<member>owner</member>
 		<member>bounds</member>
 		<member>base_layout</member>
+		<member>battle_map</member>
 		<member>landingPadLocations</member>
 		<member>landed_vehicles</member>
 	</object>
@@ -332,13 +493,56 @@
 		<member>store_space</member>
 	</object>
 	<object>
-		<name>AEquipmentType</name>
+		<name>DamageModifier</name>
 		<member>id</member>
 		<member>name</member>
+	</object>
+	<object>
+		<name>DamageType</name>
+		<member>id</member>
+		<member>name</member>
+		<member>icon_sprite</member>
+		<member>ignore_shield</member>
+		<member>modifiers</member>
+	</object>
+	<object>
+		<name>AEquipmentType</name>
+		<member>type</member>
+		<member>id</member>
+		<member>name</member>
+		<member>weight</member>
+		<member>held_sprites</member>
+		<member>dropped_sprite</member>
 		<member>equipscreen_sprite</member>
 		<member>equipscreen_size</member>
 		<member>manufacturer</member>
 		<member>store_space</member>
+		<member>armor</member>
+		<member>score</member>
+		<member>research_dependency</member>
+		<member>damage_modifier</member>
+		<member>body_part</member>
+		<member>image_pack</member>
+		<member>provides_flight</member>
+		<member>ammo_types</member>
+		<member>max_ammo</member>
+		<member>recharge</member>
+		<member>speed</member>
+		<member>projectile_sprites</member>
+		<member>damage</member>
+		<member>accuracy</member>
+		<member>fire_delay</member>
+		<member>tail_size</member>
+		<member>guided</member>
+		<member>turn_rate</member>
+		<member>range</member>
+		<member>ttl</member>
+		<member>explosion_graphic</member>
+		<member>fire_sfx</member>
+		<member>impact_sfx</member>
+		<member>damage_type</member>
+		<member>trigger_type</member>
+		<member>explosion_depletion_rate</member>
 	</object>
 	<object>
 		<name>VEquipmentType</name>
@@ -403,6 +607,9 @@
 		<member>name</member>
 		<member>balance</member>
 		<member>income</member>
+		<member>tech_level</member>
+		<member>average_guards</member>
+		<member>loot</member>
 		<member>current_relations</member>
 	</object>
 	<object>
@@ -423,6 +630,7 @@
 		<member>aggressiveness</member>
 		<member>score</member>
 		<member>icon</member>
+		<member>battle_map</member>
 		<member>equipment_screen</member>
 		<member>equip_icon_big</member>
 		<member>equip_icon_small</member>
@@ -524,24 +732,6 @@
 		<value>Centre</value>
 	</enum>
 	<enum>
-		<name>Agent::Type</name>
-		<value>Soldier</value>
-		<value>Physicist</value>
-		<value>BioChemist</value>
-		<value>Engineer</value>
-	</enum>
-	<enum>
-		<name>Agent::Species</name>
-		<value>Human</value>
-		<value>Mutant</value>
-		<value>Android</value>
-	</enum>
-	<enum>
-		<name>Agent::Gender</name>
-		<value>Male</value>
-		<value>Female</value>
-	</enum>
-	<enum>
 		<name>ResearchTopic::Type</name>
 		<value>BioChem</value>
 		<value>Physics</value>
@@ -597,6 +787,74 @@
 		<value>OutOfAmmo</value>
 	</enum>
 	<enum>
+		<name>Battle::MissionType</name>
+		<value>AlienExtermination</value>
+		<value>RaidAliens</value>
+		<value>BaseDefense</value>
+		<value>RaidHumans</value>
+		<value>UfoRecovery</value>
+	</enum>
+	<enum>
+		<name>Battle::MapBorder</name>
+		<value>North</value>
+		<value>East</value>
+		<value>South</value>
+		<value>West</value>
+	</enum>
+	<enum>
+		<name>BattleMapSector::LineOfSightBlock::SpawnType</name>
+		<value>Player</value>
+		<value>Enemy</value>
+		<value>Civilian</value>
+	</enum>
+	<enum>
+		<name>BattleUnitAnimation::AnimationDirection</name>
+		<value>Into</value>
+		<value>Within</value>
+		<value>Back</value>
+	</enum>
+	<enum>
+		<name>BattleUnitAnimation::ItemInHands</name>
+		<value>None</value>
+		<value>OneHanded</value>
+		<value>TwoHanded</value>
+	</enum>
+	<enum>
+		<name>BattleUnit::Behavior</name>
+		<value>Aggressive</value>
+		<value>Normal</value>
+		<value>Evasive</value>
+	</enum>
+	<enum>
+		<name>BattleUnit::MovementMode</name>
+		<value>Prone</value>
+		<value>Walking</value>
+		<value>Running</value>
+	</enum>
+	<enum>
+		<name>BattleUnit::Stance</name>
+		<value>Standing</value>
+		<value>Hovering</value>
+		<value>Kneeling</value>
+		<value>Lying</value>
+		<value>Strafing</value>
+		<value>Jumping</value>
+		<value>Downed</value>
+	</enum>
+	<enum>
+		<name>BattleUnit::HandState</name>
+		<value>Empty</value>
+		<value>Carrying</value>
+		<value>Aiming</value>
+		<value>Firing</value>
+	</enum>
+	<enum>
+		<name>Organisation::LootPriority</name>
+		<value>A</value>
+		<value>B</value>
+		<value>C</value>
+	</enum>
+	<enum>
 		<name>BattleMapPartType::Type</name>
 		<value>Ground</value>
 		<value>LeftWall</value>
@@ -604,12 +862,34 @@
 		<value>Scenery</value>
 	</enum>
 	<enum>
-		<name>BattleMapPartType::ExplosionType</name>
-		<value>BlankOrSmoke</value>
-		<value>AlienGas</value>
-		<value>Incendary</value>
-		<value>StunGas</value>
-		<value>HighExplosive</value>
+		<name>BattleMapPartType::SupportedByType</name>
+		<value>Below</value>
+		<value>North</value>
+		<value>East</value>
+		<value>South</value>
+		<value>West</value>
+		<value>Above</value>
+		<value>Unknown07</value>
+		<value>NorthBelow</value>
+		<value>EastBelow</value>
+		<value>SouthBelow</value>
+		<value>WestBelow</value>
+		<value>Unknown20</value>
+		<value>NorthAbove</value>
+		<value>EastAbove</value>
+		<value>SouthAbove</value>
+		<value>WestAbove</value>
+		<value>Unknown30</value>
+		<value>Unknown32</value>
+		<value>Unknown36</value>
+		<value>Unknown41</value>
+		<value>Unknown42</value>
+		<value>Unknown43</value>
+		<value>Unknown44</value>
+		<value>Unknown51</value>
+		<value>Unknown52</value>
+		<value>Unknown53</value>
+		<value>Unknown54</value>
 	</enum>
 	<enum>
 		<name>Projectile::Type</name>
@@ -672,5 +952,71 @@
 		<value>Equipment</value>
 		<value>Facility</value>
 		<value>Building</value>
+	</enum>
+	<enum>
+		<name>AEquipmentType::Type</name>
+		<value>Armor</value>
+		<value>Weapon</value>
+		<value>Grenade</value>
+		<value>Ammo</value>
+		<value>MotionScanner</value>
+		<value>StructureProbe</value>
+		<value>VortexAnalyzer</value>
+		<value>MultiTracker</value>
+		<value>MindShield</value>
+		<value>MindBender</value>
+		<value>AlienDetector</value>
+		<value>DisruptorShield</value>
+		<value>Teleporter</value>
+		<value>CloakingField</value>
+		<value>DimensionForceField</value>
+		<value>MediKit</value>
+		<value>Loot</value>
+	</enum>
+	<enum>
+		<name>AgentType::BodyPart</name>
+		<value>Body</value>
+		<value>Legs</value>
+		<value>Helmet</value>
+		<value>LeftArm</value>
+		<value>RightArm</value>
+	</enum>
+	<enum>
+		<name>AEquipmentType::TriggerType</name>
+		<value>Normal</value>
+		<value>Proximity</value>
+		<value>Boomeroid</value>
+	</enum>
+	<enum>
+		<name>AgentType::Role</name>
+		<value>Soldier</value>
+		<value>Physicist</value>
+		<value>BioChemist</value>
+		<value>Engineer</value>
+	</enum>
+	<enum>
+		<name>AgentType::Gender</name>
+		<value>Male</value>
+		<value>Female</value>
+	</enum>
+	<enum>
+		<name>AgentType::MovementType</name>
+		<value>Stationary</value>
+		<value>Standart</value>
+		<value>Flying</value>
+		<value>StandartLarge</value>
+		<value>FlyingLarge</value>
+	</enum>
+	<enum>
+		<name>AgentType::AlignmentX</name>
+		<value>Left</value>
+		<value>Right</value>
+		<value>Centre</value>
+	</enum>
+	<enum>
+		<name>AgentType::AlignmentY</name>
+		<value>Top</value>
+		<value>Bottom</value>
+		<value>Centre</value>
 	</enum>
 </openapoc_gamestate>

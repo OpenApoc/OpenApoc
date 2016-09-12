@@ -24,8 +24,8 @@ This many chunks will be combined together to form a battlefield by a map genera
 25 	   		- 1 byte, bitwise, allow exit from NESW
 This means that bit 0 stands for N, bit 1 for E etc. So, value of 15 (1111) would mean "any direction" and 12 (1100) would mean "south and west". North in the game is the top-right direction, east is bottom-right etc.
 
-26..33 		- 8 bytes, contain min and max values for entrance levels. 
-34..41  	- 8 bytes, contain min and max values for exit levels.
+26..33 		- 8 bytes, 4 bytes per value, contain min and max values for entrance levels. 
+34..41  	- 8 bytes, 4 bytes per value, contain min and max values for exit levels.
 These values limit at what levels you can spawn and leave - for example, you cannot spawn at level 1 in 36CHURCH (basement), even though you can exit there. 
 
 42..1961 	- Exit locations. 15 exits per side per level, 15 max levels. 4 bytes per value, and 16 values are stored, 16th is always 0xFFFFFFFF
@@ -38,13 +38,13 @@ EX#01L01, EX#02L01,...,EX#15L01,<0xFFFFFFFF>,EX#01L02,EX#02L02,.....,EX#15L15,<0
 
 1962..1965 	- 4 bytes, contains index of a destroyed ground tile. I guess this is placed on level 1 if ground is destroyed, so that there's no "blanks" in the map.
 
--- XXSECYY.SDT, XXSECYY.SLS, XXSECYY.SMP, XXSECYY.SOB (ex: 37SEC12.SDT etc.)
+-- XXSECYY.SDT, XXSECYY.SLS, XXSECYY.SMP, XXSECYY.SOB (ex: 37SEC12.SDT, 37SEC12.SLS, etc.)
 
 Groups of four files. ".SOB" file is not always present. They represent a single block in a map. Map can then consist of some amount of those blocks. Like, Cult of Sirius temples have typical "building blocks" they're made from - twin altar room, twin lift room, chessboard room, dining room. 
 
 --- XXSECYY.SDT
 
-Length: 20.
+Length: 20
 Content:
 00..11 - 12 bytes, contain x, y, z number of chunks. 
 12..15 - 4 bytes, min number of occurences
@@ -54,27 +54,68 @@ Number of chunks seems to be used for the case when some blocks are bigger than 
 
 --- XXSECYY.SLS
 
-Length: Inconsistent.
-Content: unknown. Line of sight probably? 
+Length: Blocks of 136
+Content: Line of Sight, waypoint, spawning and AI priority information
 
-jedpossum from forums says:
+The map is divided into blocks. Each block is revealed when a unit enters one of it's cells (however, it seems normal LOS calculation is also present, so that you can see into other blocks without entering them, I assume seeing one of the block's cells reveals whole block too).
+
+Additionally, three kinds of information are present.
+
+1) Pathing (waypoint) information.
+This has not yet been decoded, nor we will need to, because we will most likely have our own pathing algorithms.
+
+2) AI priority information
+This sets values 0 to 4 for "Patrol priority" and "Target priority". Not yet certain how those differ, from reading TacEdit help files, it seems that "Target" means "have units in the area" and "Patrol" means "move through the area", or, probably, "see the area"? "Target" is unused in vanilla maps (never has values over 0).
+
+3) Spawning information
+Which units can spawn in the block and how likely.
+
+Following are the offsets. Each block has 136 bytes:
+
+00..01	- 2 bytes, unknown, usually = 1, setting it to 0 makes TacEdit ignore the block, setting to 2 or more seems to have no effect
+02..13	- 12 bytes, 2 sets of x, y, z coordinates, 2 bytes per coordinate, these are coordinates of two 3d points defining a block (a 3d box).
+
+14..71  - 58 bytes, contain the majority of data, not yet decyphered. This is most likely where pathing data is located.
+
+72..129 - Starting with 72, there's hardly any data. In 58 bytes only 2 are meaningful.
+
+72 		- 4 bytes,  is in the range of 0..240
+76..91 	- 16 bytes, always 0
+92 		- 4 bytes,  is in the range of 0..9
+96..129 - 34 bytes, always 0
+
+130.135 - AI and Spawning information
+
+130 	- 1 byte, 	AI Patrol Priority (valid values 0 to 4, in vanilla maps either 0 or 2)
+131 	- 1 byte,   AI Target Priority (valid values 0 to 4, in vanilla maps always 0)
+
+132 	- 1 byte,   Spawn Type (valid values 0 to 8, however, only 0 to 2 mean something, 0 = X-Com, 1 = Rival Organisations, 2 = Civilians)
+133 	- 1 byte,   Spawn Priority (valid values 0 to 4, 0 means do not spawn at all)
+134 	- 1 byte,   Can Deploy Large Units (valid values 0 = no, 1 = yes)
+135 	- 1 byte,   Can Deploy Non-Flying Units (valid values 0 = no, 1 = yes)
+
+Also, jedpossum from forums says:
 "As for the SLS it seems to be fog of war maybe some other data as well. Seems to have a pattern of 272 bytes(0x110 in hex) for each part.
 Edit
 The fog is stored as just plain binary 0 not shown 1 a tile being shown in the memory. Of course, it follows the same way as the tile map start top going down right."
 
-I do not know what this means. Size seems inconsistent (usually smaller than .MAP file by a little).
+I do not understand what to make of this, however.
 
 --- XXSECYY.SMP
 
-Length: sizeX*Y*Z*chunksX*Y*Z*4
+Length: sizeX * sizeY * sizeZ * chunksX * chunksY * chunksZ * 4
 Content: Stores tiles of the map block. 
 Each value contains four bytes: GD LW RW SC - Ground, Left Wall, Right Wall, Scenery.
 Stored in X then Y then Z order, as a whole (if there's more than one chunk, they are still stored in X then Y then Z order regardless).
 
 --- XXSECYY.SOB
 
-Length: 160 (if present)
-Content: Loot information, what items to spawn where. Format not yet deciphered.
+Length: 20 blocks of 8 (if present)
+Content: Loot information, what items to spawn where.
+
+There are 20 entries of 8 bytes each. Each entry contains 4 values, 2 bytes each - x, y, z coordinates of an object, and a "priority" level, which goes from 1 to 3. 0 means there is no object, and marks unused entries.
+
+The game has a list of loot for every organisation. The list contains 3 entries of 5 items - that is, 5 items for each priority level - 1, 2 and 3. The game then spawns 1 item on every spawn point, randomly chosen from one of the five items of an appropriate priority level. Have not checked if there's some probability to spawn anything at all, it appears as if it spawns every time.
 
 -- MAPUNITS
 
@@ -87,7 +128,7 @@ File types .PCK and .TAB are typical picture containers.
 
 --- .DAT (four files for ground, scenery, left and right walls)
 
-Length: X*86
+Length: Blocks of 86
 Content: Contains information about map objects: walls, floor tiles etc. Each block contains 86 bytes. 
 
 Values below will be indexed in the following format: "HH/DD[L]:" where HH is hex notation, DD is decimal notation of the offset, and L is length (how many bytes are used). In case there's a group of values performing a similar function, (HH-HH/DD-DD): notation will be used.
@@ -518,4 +559,61 @@ Unknown. XED won't open it. Only present in several maps. Maybe unused, but forg
 - XCOM3/SCENARIO
 
 Supposedly here the contents of the currently played tactical map are copied.
+
+
+- XCOM/TACDATA/UNIT, XCOM/TACDATA/ALIEN, XCOM/TACDATA/CIV
+
+Animation data and frames, UNIT for humanoid combat units (X-COM, Anthropod, Skeletoid, Gangs, Cultists...), CIV for civilians, ALIEN for aliens tha are not humanoid (Spitter, Popper, Worms etc.)
+
+-- .AD, .UA, .UF
+
+Animation data files. Called ANIM when applied to multiple units
+
+--- ANIM.AD
+
+Length: 1600 (2x800)
+Content: 2 bytes per entry, index(*4) into ANIM.UA file. Each index is for one specific state (unit with bare hands running nw, unit with 2-h weapon kneeling sw, unit with 1-h weapon shooting n etc.). They go in order - first 8 are standing with no weapon, then standing with 1-h weapon, then with 2-h, then kneeling bare handed etc.
+
+--- ANIM.UA
+
+Length: 2784 (4x696)
+Content: 4 bytes per entry, contains 2-byte index(*36) into ANIM.UF file, 1 byte animation frame count and 1 unknown value.
+
+--- ANIM.UF
+
+Length: 74880 (36x2080)
+Content: 36 bytes per entry, each entry defines one animation frame, frames are read sequentially for the amount specified in .UA file.
+
+00-27: 	28 bytes, 7 blocks of 4 bytes, containing image indexes and offsets
+
+Each block has 2 bytes image index, 1 byte signed x offset, 1 byte signed y offset.
+Units have up to 5 image files, marked with letters (i.e. x-com3a to x-com3e).
+Additionally, there is an image file for weapons and items held in hands.
+
+Blocks go in the following order:
+
+00:		File B #1
+04:		File A
+08:		File B #2
+12:		File C
+16:		File D
+20:		File E
+24:		Item
+
+File B #2 is a second entry, sometimes not present (0xffff), frequently equal to #1, but sometimes it differs (seems to be alternate leg frame). 
+
+Item entry gives index of item image to be used. 0xffff if item should not be displayed. Does not always correspond to the direction unit is facing in - since 2 handed weapons are carried facing sideways.
+
+For humanoid units, A is body, B is legs, C is head, D is left hand, E is right hand. Some other units have only one file, like Spitters, or just several, like Megaspawns.
+
+Other bytes are unknown for now.
+
+28: 1 byte, always 0
+29: 1 byte, values in {1 2   4 5 6}
+30: 1 byte, values in {1 2 3 4 5 6}
+31: 1 byte, values in {1 2 3 4 5 6}
+32: 1 byte, values in {1 2 3 4 5 6}
+33: 1 byte, values in {1 2 3 4 5 6}
+34: 1 byte, values in {1 2 3 4 5 6}
+35: 1 byte, 0-255
 

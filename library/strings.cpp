@@ -232,7 +232,7 @@ UString Strings::fromFloat(float f) { return UString::format("%f", f); }
 bool Strings::isWhiteSpace(UniChar c)
 {
 	// FIXME: Only works on ASCII whitespace
-	return isspace(c);
+	return isspace(c) != 0;
 }
 
 }; // namespace OpenApoc

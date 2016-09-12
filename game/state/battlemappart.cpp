@@ -1,14 +1,13 @@
 #include "game/state/battlemappart.h"
 #include "game/state/battlemappart_type.h"
-#include "game/state/battletile.h"
-#include "game/state/battletileobject_mappart.h"
+#include "game/state/battletileview/battletile.h"
+#include "game/state/battletileview/battletileobject_mappart.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_scenery.h"
 
 namespace OpenApoc
 {
-BattleMapPart::BattleMapPart() : damaged(false), falling(false), destroyed(false) {}
 
 void BattleMapPart::handleCollision(GameState &state, CollisionB &c)
 {

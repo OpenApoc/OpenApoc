@@ -7,13 +7,30 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 set (GAMESTATE_SOURCE_FILES
 	agent.cpp
 	battle.cpp
+	battlemap.cpp
 	battlemappart.cpp
 	battlemappart_type.cpp
-	battletile.cpp
-	battletileobject.cpp
-	battletileobject_mappart.cpp
+	battlemapsector.cpp
+	gameevent.cpp
+	gamestate.cpp
+	gamestate_serialize.cpp
+	gamestate_serialize_generated.cpp
+	gametime.cpp
+	message.cpp
+	organisation.cpp
+	research.cpp
+	savemanager.cpp
+	ufopaedia.cpp
 	base/base.cpp
 	base/facility.cpp
+	battle/aequipment.cpp
+	battle/battleunit.cpp
+	battle/battleunitanimation.cpp
+	battle/battleunitimagepack.cpp
+	battle/battleunitmission.cpp
+	battletileview/battletile.cpp
+	battletileview/battletileobject.cpp
+	battletileview/battletileobject_mappart.cpp
 	city/baselayout.cpp
 	city/building.cpp
 	city/city.cpp
@@ -23,14 +40,8 @@ set (GAMESTATE_SOURCE_FILES
 	city/vehicle.cpp
 	city/vehiclemission.cpp
 	city/vequipment.cpp
-	gameevent.cpp
-	gamestate.cpp
-	gamestate_serialize.cpp
-	gametime.cpp
-	message.cpp
-	organisation.cpp
-	research.cpp
 	rules/aequipment_rules.cpp
+	rules/damage_rules.cpp
 	rules/doodad_type.cpp
 	rules/facility_type.cpp
 	rules/scenery_tile_type.cpp
@@ -39,7 +50,6 @@ set (GAMESTATE_SOURCE_FILES
 	rules/vammo_rules.cpp
 	rules/vehicle_type_rules.cpp
 	rules/vequipment_rules.cpp
-	savemanager.cpp
 	tileview/tile.cpp
 	tileview/tileobject.cpp
 	tileview/tileobject_doodad.cpp
@@ -47,20 +57,38 @@ set (GAMESTATE_SOURCE_FILES
 	tileview/tileobject_scenery.cpp
 	tileview/tileobject_shadow.cpp
 	tileview/tileobject_vehicle.cpp
-	tileview/voxel.cpp
-	ufopaedia.cpp
-	gamestate_serialize_generated.cpp)
+	tileview/voxel.cpp)
 source_group(gamestate\\sources FILES ${GAMESTATE_SOURCE_FILES})
 set (GAMESTATE_HEADER_FILES
 	agent.h
 	battle.h
+	battlemap.h
 	battlemappart.h
 	battlemappart_type.h
-	battletile.h
-	battletileobject.h
-	battletileobject_mappart.h
+	battlemapsector.h
+	battlemaptileset.h
+	gameevent.h
+	gameevent_types.h
+	gamestate.h
+	gamestate_serialize_generated.h
+	gametime.h
+	gametime_facet.h
+	message.h
+	organisation.h
+	research.h
+	savemanager.h
+	stateobject.h
+	ufopaedia.h
 	base/base.h
 	base/facility.h
+	battle/aequipment.h
+	battle/battleunit.h
+	battle/battleunitanimation.h
+	battle/battleunitimagepack.h
+	battle/battleunitmission.h
+	battletileview/battletile.h
+	battletileview/battletileobject.h
+	battletileview/battletileobject_mappart.h
 	city/baselayout.h
 	city/building.h
 	city/city.h
@@ -70,15 +98,8 @@ set (GAMESTATE_HEADER_FILES
 	city/vehicle.h
 	city/vehiclemission.h
 	city/vequipment.h
-	gameevent.h
-	gameevent_types.h
-	gamestate.h
-	gametime.h
-	gametime_facet.h
-	message.h
-	organisation.h
-	research.h
 	rules/aequipment_type.h
+	rules/damage.h
 	rules/doodad_type.h
 	rules/facility_type.h
 	rules/resource_aliases.h
@@ -88,8 +109,6 @@ set (GAMESTATE_HEADER_FILES
 	rules/vammo_type.h
 	rules/vehicle_type.h
 	rules/vequipment_type.h
-	savemanager.h
-	stateobject.h
 	tileview/tile.h
 	tileview/tileobject.h
 	tileview/tileobject_doodad.h
@@ -97,9 +116,7 @@ set (GAMESTATE_HEADER_FILES
 	tileview/tileobject_scenery.h
 	tileview/tileobject_shadow.h
 	tileview/tileobject_vehicle.h
-	tileview/voxel.h
-	ufopaedia.h
-	gamestate_serialize_generated.h)
+	tileview/voxel.h)
 source_group(gamestate\\headers FILES ${GAMESTATE_HEADER_FILES})
 
 list(APPEND ALL_SOURCE_FILES ${GAMESTATE_SOURCE_FILES})

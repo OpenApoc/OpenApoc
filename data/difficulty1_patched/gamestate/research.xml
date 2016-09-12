@@ -250,6 +250,29 @@
       </value>
     </entry>
     <entry>
+      <key>MANUFACTURE_DIMENSION_SHIFTER</key>
+      <value>
+        <sp>
+          <name>Teleporter</name>
+          <order>30160</order>
+          <man_hours>50000</man_hours>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
+          <dependencies>
+            <research>
+              <entry>
+                <type>All</type>
+                <topics>
+                  <entry>RESEARCH_DIMENSION_SHIFTER</entry>
+                </topics>
+              </entry>
+            </research>
+          </dependencies>
+          <cost>14000</cost>
+        </sp>
+      </value>
+    </entry>
+    <entry>
       <key>MANUFACTURE_DISRUPTOR_ARMOR_(HEAD)</key>
       <value>
         <sp>

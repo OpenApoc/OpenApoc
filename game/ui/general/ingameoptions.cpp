@@ -3,8 +3,8 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/gamestate.h"
-#include "game/ui/battle/battleview.h"
 #include "game/ui/general/mainmenu.h"
+#include "game/ui/general/mapselector.h"
 #include "game/ui/general/savemenu.h"
 
 namespace OpenApoc
@@ -123,9 +123,7 @@ void InGameOptions::eventOccurred(Event *e)
 		}
 		else if (e->forms().RaisedBy->Name == "BUTTON_INTO_BATTLE")
 		{
-			state->battle.start();
-			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BattleView>(state)});
-			return;
+			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<MapSelector>(state)});
 		}
 	}
 	if (e->type() == EVENT_FORM_INTERACTION &&

@@ -227,6 +227,12 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 				    "PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:%d",
 				    (int)(v.shadow_graphic));
 				vehicle->directional_shadow_sprites[{1, 0, 0}] = fw().data->loadImage(str);
+
+				// UFOs starting with trans (id = 2) up to mship (id = 9) have maps from 51 to 58
+				// Therefore 49 + id gives map index for the ufo
+				if (i > 1)
+					vehicle->battle_map = {&state,
+					                       UString::format("%s%d", BattleMap::getPrefix(), 49 + i)};
 			}
 			else
 			{

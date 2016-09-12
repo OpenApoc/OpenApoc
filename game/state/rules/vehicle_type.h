@@ -1,4 +1,5 @@
 #pragma once
+#include "game/state/battlemap.h"
 #include "game/state/rules/vequipment_type.h"
 #include "game/state/stateobject.h"
 #include "library/rect.h"
@@ -103,6 +104,7 @@ class VehicleType : public StateObject<VehicleType>
 	float aggressiveness = 0;
 	int score = 0;
 	sp<Image> icon;
+	StateRef<BattleMap> battle_map;
 
 	// The following (equip screen, equip icon big and small) are only required
 	// for vehicles able to be used by the player

@@ -5,7 +5,7 @@
 #include "game/state/battle.h"
 #include "game/state/battlemappart.h"
 #include "game/state/battlemappart_type.h"
-#include "game/state/battletileobject_mappart.h"
+#include "game/state/battletileview/battletileobject_mappart.h"
 #include "game/state/gameevent.h"
 #include "game/state/tileview/voxel.h"
 #include "game/ui/base/basescreen.h"
@@ -25,7 +25,7 @@ static const std::vector<UString> TAB_FORM_NAMES = {
 } // anonymous namespace
 
 BattleView::BattleView(sp<GameState> state)
-    : BattleTileView(*state->battle.map, Vec3<int>{BATTLE_TILE_X, BATTLE_TILE_Y, BATTLE_TILE_Z},
+    : BattleTileView(*state->battle->map, Vec3<int>{BATTLE_TILE_X, BATTLE_TILE_Y, BATTLE_TILE_Z},
                      Vec2<int>{BATTLE_STRAT_TILE_X, BATTLE_STRAT_TILE_Y}, TileViewMode::Isometric),
       baseForm(ui().getForm("FORM_BATTLE_UI")), updateSpeed(BattleUpdateSpeed::Speed1),
       state(state), followAgent(false),
@@ -130,15 +130,15 @@ BattleView::~BattleView() = default;
 
 void BattleView::begin()
 {
-	this->baseForm->findControl("BUTTON_LAYER_1")->Enabled = maxZDraw >= 1;
-	this->baseForm->findControl("BUTTON_LAYER_2")->Enabled = maxZDraw >= 2;
-	this->baseForm->findControl("BUTTON_LAYER_3")->Enabled = maxZDraw >= 3;
-	this->baseForm->findControl("BUTTON_LAYER_4")->Enabled = maxZDraw >= 4;
-	this->baseForm->findControl("BUTTON_LAYER_5")->Enabled = maxZDraw >= 5;
-	this->baseForm->findControl("BUTTON_LAYER_6")->Enabled = maxZDraw >= 6;
-	this->baseForm->findControl("BUTTON_LAYER_7")->Enabled = maxZDraw >= 7;
-	this->baseForm->findControl("BUTTON_LAYER_8")->Enabled = maxZDraw >= 8;
-	this->baseForm->findControl("BUTTON_LAYER_9")->Enabled = maxZDraw >= 9;
+	this->baseForm->findControl("BUTTON_LAYER_1")->Visible = maxZDraw >= 1;
+	this->baseForm->findControl("BUTTON_LAYER_2")->Visible = maxZDraw >= 2;
+	this->baseForm->findControl("BUTTON_LAYER_3")->Visible = maxZDraw >= 3;
+	this->baseForm->findControl("BUTTON_LAYER_4")->Visible = maxZDraw >= 4;
+	this->baseForm->findControl("BUTTON_LAYER_5")->Visible = maxZDraw >= 5;
+	this->baseForm->findControl("BUTTON_LAYER_6")->Visible = maxZDraw >= 6;
+	this->baseForm->findControl("BUTTON_LAYER_7")->Visible = maxZDraw >= 7;
+	this->baseForm->findControl("BUTTON_LAYER_8")->Visible = maxZDraw >= 8;
+	this->baseForm->findControl("BUTTON_LAYER_9")->Visible = maxZDraw >= 9;
 	this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_1")->setChecked(true);
 	this->setZLevel(1);
 }

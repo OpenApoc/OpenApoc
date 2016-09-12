@@ -1657,6 +1657,34 @@
         </sp>
       </value>
     </entry>
+	 <entry>
+      <key>MANUFACTURE_DIMENSION_SHIFTER</key>
+      <value>
+        <sp>
+          <name>Teleporter</name>
+          <order>30160</order>
+          <description></description>
+          <ufopaedia_entry/>
+          <man_hours>50000</man_hours>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
+          <current_lab/>
+          <dependencies>
+            <research>
+              <entry>
+                <type>All</type>
+                <topics>
+                  <entry>RESEARCH_DIMENSION_SHIFTER</entry>
+                </topics>
+              </entry>
+            </research>
+            <items/>
+          </dependencies>
+          <cost>14000</cost>
+          <item_type>VehicleEquipment</item_type>
+        </sp>
+      </value>
+    </entry>
     <!-- Manufacture Topics - Vehicle Equipment End -->
     <!-- Manufacture Topics - Agent Equipment & Ammo Begin -->
     <entry>

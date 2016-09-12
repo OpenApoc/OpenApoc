@@ -5,7 +5,6 @@
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="facility_types.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="doodad_types.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vehicle_equipment.xml" />
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_equipment.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vehicle_ammo.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="cities.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufo_growth_lists.xml" />
@@ -13,6 +12,7 @@
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="base_layouts.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufopaedia.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="research.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_types.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_generator.xml" />
   <initial_agents>
     <entry>
@@ -75,5 +75,12 @@
     </entry>
   </initial_facilities>
   <player>ORG_X-COM</player>
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="battle.xml" />
+  <aliens>ORG_ALIEN</aliens>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="battle_map_tilesets.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="battle_maps.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="damage_modifiers.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="damage_types.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_equipment.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="equipment_sets_by_score.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="equipment_sets_by_level.xml" />
 </gamestate>

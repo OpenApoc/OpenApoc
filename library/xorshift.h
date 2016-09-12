@@ -3,7 +3,11 @@
 #include <cstdint>
 #include <istream>
 #include <limits>
+#include <list>
 #include <ostream>
+#include <random>
+#include <vector>
+#include <map> 
 
 namespace OpenApoc
 {
@@ -93,5 +97,100 @@ std::basic_istream<charT, traits> &operator>>(std::basic_istream<charT, traits> 
 }
 
 template <typename T> using xorshift = Xorshift128Plus<T>;
+
+template <typename T, typename Generator>
+T probabilityMapRandomizer(Generator &g, const std::map<T, float> &probabilityMap)
+{
+	if (probabilityMap.empty())
+	{
+		LogError("Called with empty probabilityMap");
+	}
+	float total = 0.0f;
+	for (auto &p : probabilityMap)
+	{
+		total += p.second;
+	}
+	std::uniform_real_distribution<float> dist(0, total);
+
+	float val = dist(g);
+
+	// Due to fp precision there's a small chance the total will be slightly more than the max,
+	// so have a fallback just in case?
+	T fallback = probabilityMap.begin()->first;
+	total = 0.0f;
+
+	for (auto &p : probabilityMap)
+	{
+		if (val < total + p.second)
+		{
+			return p.first;
+		}
+		total += p.second;
+	}
+	return fallback;
+}
+
+template <typename T, typename Generator> T randBoundsExclusive(Generator &g, T min, T max)
+{
+	return randBoundsInclusive(g, min, max - 1);
+}
+
+template <typename Generator> bool randBool(Generator &g)
+{
+	return randBoundsInclusive(g, 0, 1) == 0;
+}
+
+template <typename T, typename Generator> T randBoundsInclusive(Generator &g, T min, T max)
+{
+	if (min > max)
+	{
+		LogError("Bounds max < min");
+	}
+	// uniform_int_distribution is apparently undefined if min==max
+	if (min == max)
+		return min;
+	std::uniform_int_distribution<T> dist(min, max);
+	return dist(g);
+}
+
+template <typename T, typename Generator> T listRandomiser(Generator &g, const std::list<T> &list)
+{
+	// we can't do index lookups in a list, so we just have to iterate N times
+	if (list.size() == 1)
+		return *list.begin();
+	else if (list.empty())
+	{
+		LogError("Trying to randomize within empty list");
+	}
+	auto count = randBoundsExclusive(g, (unsigned)0, (unsigned)list.size());
+
+	auto it = list.begin();
+	while (count)
+	{
+		it++;
+		count--;
+	}
+	return *it;
+}
+
+template <typename T, typename Generator>
+T vectorRandomizer(Generator &g, const std::vector<T> &vector)
+{
+	// we can't do index lookups in a list, so we just have to iterate N times
+	if (vector.size() == 1)
+		return *vector.begin();
+	else if (vector.empty())
+	{
+		LogError("Trying to randomize within empty vector");
+	}
+	auto count = randBoundsExclusive(g, (unsigned)0, (unsigned)vector.size());
+	auto it = vector.begin();
+	while (count)
+	{
+		it++;
+		count--;
+	}
+	return *it;
+}
 
 } // namespace OpenApoc

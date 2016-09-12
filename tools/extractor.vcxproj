@@ -24,9 +24,10 @@
     <ClCompile Include="extractors\common\ufo2p.cpp" />
     <ClCompile Include="extractors\extractors.cpp" />
     <ClCompile Include="extractors\extract_agent_equipment.cpp" />
+    <ClCompile Include="extractors\extract_agent_types.cpp" />
     <ClCompile Include="extractors\extract_base_layouts.cpp" />
     <ClCompile Include="extractors\extract_battlescape_map.cpp" />
-    <ClCompile Include="extractors\extract_battlescape_stuff.cpp" />
+    <ClCompile Include="extractors\extract_battlescape_map_parts.cpp" />
     <ClCompile Include="extractors\extract_buildings.cpp" />
     <ClCompile Include="extractors\extract_bulletsprites.cpp" />
     <ClCompile Include="extractors\extract_city_map.cpp" />
@@ -40,8 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="extractors\common\aequipment.h" />
+    <ClInclude Include="extractors\common\agent.h" />
     <ClInclude Include="extractors\common\audio.h" />
     <ClInclude Include="extractors\common\baselayout.h" />
+    <ClInclude Include="extractors\common\battlemap.h" />
     <ClInclude Include="extractors\common\building.h" />
     <ClInclude Include="extractors\common\bulletsprite.h" />
     <ClInclude Include="extractors\common\canonstring.h" />

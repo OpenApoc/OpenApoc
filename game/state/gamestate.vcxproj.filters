@@ -135,19 +135,43 @@
     <ClCompile Include="battlemappart_type.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="battletileobject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="battletile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="battletileobject_mappart.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="battlemappart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gamestate_serialize_generated.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\damage_rules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battle\aequipment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battlemap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battlemapsector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battle\battleunitimagepack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battle\battleunitanimation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battle\battleunit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battle\battleunitmission.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battletileview\battletileobject_mappart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battletileview\battletile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battletileview\battletileobject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -278,22 +302,49 @@
     <ClInclude Include="message.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battletileobject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="battlemappart_type.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="battletile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="battletileobject_mappart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="battlemappart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gamestate_serialize_generated.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\damage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\aequipment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battlemap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battlemapsector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battlemaptileset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\battleunitimagepack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\battleunitanimation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\battleunit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\battleunitmission.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battletileview\battletileobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battletileview\battletileobject_mappart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battletileview\battletile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

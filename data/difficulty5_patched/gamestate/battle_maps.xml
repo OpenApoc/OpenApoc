@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<battle_maps>
+  <entry>
+    <key>BATTLEMAP_1</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_1.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_10</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_10.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_11</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_11.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_12</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_12.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_14</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_14.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_15</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_15.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_18</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_18.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_19</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_19.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_2</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_2.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_20</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_20.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_21</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_21.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_22</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_22.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_23</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_23.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_25</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_25.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_26</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_26.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_27</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_27.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_28</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_28.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_3</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_3.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_30</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_30.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_32</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_32.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_33</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_33.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_35</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_35.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_36</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_36.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_37</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_37.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_39</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_39.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_4</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_4.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_40</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_40.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_41</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_41.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_42</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_42.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_43</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_43.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_44</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_44.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_45</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_45.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_46</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_46.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_47</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_47.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_48</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_48.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_5</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_5.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_51</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_51.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_52</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_52.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_53</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_53.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_54</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_54.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_55</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_55.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_56</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_56.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_57</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_57.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_58</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_58.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_6</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_6.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_7</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_7.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_8</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_8.xml" />
+  </entry>
+  <entry>
+    <key>BATTLEMAP_9</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="BATTLEMAP_9.xml" />
+  </entry>
+</battle_maps>

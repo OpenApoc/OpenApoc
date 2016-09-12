@@ -29,52 +29,6 @@ Battle::~Battle()
 	// For now, do nothing
 }
 
-void Battle::start()
-{
-	for (auto &pair : initial_grounds)
-	{
-		auto s = mksp<BattleMapPart>();
-
-		s->type = pair.second;
-		s->initialPosition = pair.first;
-		s->currentPosition = s->initialPosition;
-
-		map_parts.insert(s);
-	}
-	for (auto &pair : initial_left_walls)
-	{
-		auto s = mksp<BattleMapPart>();
-
-		s->type = pair.second;
-		s->initialPosition = pair.first;
-		s->currentPosition = s->initialPosition;
-
-		map_parts.insert(s);
-	}
-	for (auto &pair : initial_right_walls)
-	{
-		auto s = mksp<BattleMapPart>();
-
-		s->type = pair.second;
-		s->initialPosition = pair.first;
-		s->currentPosition = s->initialPosition;
-
-		map_parts.insert(s);
-	}
-	for (auto &pair : initial_scenery)
-	{
-		auto s = mksp<BattleMapPart>();
-
-		s->type = pair.second;
-		s->initialPosition = pair.first;
-		s->currentPosition = s->initialPosition;
-
-		map_parts.insert(s);
-	}
-
-	initMap();
-}
-
 void Battle::initMap()
 {
 	if (this->map)
@@ -91,12 +45,12 @@ void Battle::initMap()
 
 void Battle::update(GameState &state, unsigned int ticks)
 {
-	Trace::start("City::update::map_parts->update");
+	Trace::start("Battle::update::map_parts->update");
 	for (auto &s : this->map_parts)
 	{
 		s->update(state, ticks);
 	}
-	Trace::end("City::update::ground->update");
+	Trace::end("Battle::update::map_parts->update");
 }
 
 } // namespace OpenApoc

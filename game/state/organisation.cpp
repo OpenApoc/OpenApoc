@@ -5,10 +5,7 @@
 namespace OpenApoc
 {
 
-Organisation::Organisation(const UString &name, int balance, int income)
-    : name(name), balance(balance), income(income)
-{
-}
+Organisation::Organisation() : balance(0), income(0), tech_level(1), average_guards(1) {}
 
 float Organisation::getRelationTo(const StateRef<Organisation> &other) const
 {

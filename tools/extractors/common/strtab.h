@@ -13,6 +13,6 @@ class StrTab
 	StrTab(std::istream &file, off_t start_offset, off_t end_offset, bool makeUnique = false);
 	StrTab(std::vector<std::string> strings);
 	std::string get(int offset);
-	int count() { return readStrings.size(); }
+	size_t count() { return readStrings.size(); }
 };
 } // namespace OpenApoc

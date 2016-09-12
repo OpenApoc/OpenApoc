@@ -1,7 +1,7 @@
 #pragma once
 #include "framework/includes.h"
 #include "game/state/battlemappart_type.h"
-#include "game/state/battletile.h"
+#include "game/state/battletileview/battletile.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
@@ -19,25 +19,51 @@ namespace OpenApoc
 class GameState;
 class BattleTileMap;
 class BattleMapPart;
+class BattleUnit;
+// class BattleProjectile;
+// class BattleDoodad;
 
 class Battle
 {
   public:
+	enum class MapBorder
+	{
+		North,
+		East,
+		South,
+		West
+	};
+
+	enum class MissionType
+	{
+		AlienExtermination,
+		RaidAliens,
+		BaseDefense,
+		RaidHumans,
+		UfoRecovery,
+	};
+
 	Battle() = default;
 	~Battle();
 
-	void start();
 	void initMap();
 
 	Vec3<int> size;
-	StateRefMap<BattleMapPartType> map_part_types;
 
-	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_grounds;
-	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_left_walls;
-	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_right_walls;
-	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_scenery;
+	StateRef<BattleMapPartType> destroyed_ground_tile;
+	std::vector<StateRef<BattleMapPartType>> rubble_left_wall;
+	std::vector<StateRef<BattleMapPartType>> rubble_right_wall;
+	std::vector<StateRef<BattleMapPartType>> rubble_scenery;
+
+	MissionType mission_type = MissionType::AlienExtermination;
+	UString mission_location_id;
+
+	StateRef<Vehicle> player_craft;
 
 	std::set<sp<BattleMapPart>> map_parts;
+	// std::set<sp<BattleProjectile>> projectiles;
+	// std::set<sp<BattleUnit>> units;
+	// std::set<sp<BattleDoodad>> doodads;
 
 	up<BattleTileMap> map;
 

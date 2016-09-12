@@ -4,12 +4,18 @@
 #include "game/state/agent.h"
 #include "game/state/base/base.h"
 #include "game/state/battle.h"
+#include "game/state/battle/aequipment.h"
+#include "game/state/battle/battleunitanimation.h"
+#include "game/state/battle/battleunitimagepack.h"
+#include "game/state/battlemap.h"
+#include "game/state/battlemaptileset.h"
 #include "game/state/city/city.h"
 #include "game/state/gametime.h"
 #include "game/state/message.h"
 #include "game/state/organisation.h"
 #include "game/state/research.h"
 #include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/damage.h"
 #include "game/state/rules/doodad_type.h"
 #include "game/state/rules/facility_type.h"
 #include "game/state/rules/ufo_growth.h"
@@ -45,7 +51,6 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<DoodadType> doodad_types;
 	StateRefMap<VEquipmentType> vehicle_equipment;
 	StateRefMap<VAmmoType> vehicle_ammo;
-	StateRefMap<AEquipmentType> agent_equipment;
 	StateRefMap<BaseLayout> base_layouts;
 	StateRefMap<UFOGrowth> ufo_growth_lists;
 	StateRefMap<UFOIncursion> ufo_incursions;
@@ -54,19 +59,30 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<Vehicle> vehicles;
 	StateRefMap<UfopaediaCategory> ufopaedia;
 	ResearchState research;
-	Battle battle;
+	StateRefMap<BattleUnitImagePack> battle_unit_image_packs;
+	StateRefMap<BattleUnitAnimation> battle_unit_animations;
+	StateRefMap<BattleMapTileset> battle_map_tilesets;
+	StateRefMap<BattleMap> battle_maps;
+	sp<Battle> battle;
+	StateRefMap<DamageModifier> damage_modifiers;
+	StateRefMap<DamageType> damage_types;
+	StateRefMap<AEquipmentType> agent_equipment;
+	StateRefMap<EquipmentSet> equipment_sets_by_score;
+	StateRefMap<EquipmentSet> equipment_sets_by_level;
 
 	std::list<EventMessage> messages;
 
 	mutable unsigned lastVehicle = 0;
 
+	StateRefMap<AgentType> agent_types;
 	StateRefMap<Agent> agents;
 	AgentGenerator agent_generator;
 
-	std::map<Agent::Type, unsigned> initial_agents;
+	std::map<AgentType::Role, unsigned> initial_agents;
 	std::map<UString, unsigned> initial_facilities;
 
 	StateRef<Organisation> player;
+	StateRef<Organisation> aliens;
 
 	StateRef<City> current_city;
 	StateRef<Base> current_base;
@@ -84,6 +100,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRef<Organisation> getOrganisation(const UString &orgID);
 	const StateRef<Organisation> &getPlayer() const;
 	StateRef<Organisation> getPlayer();
+	const StateRef<Organisation> &getAliens() const;
+	StateRef<Organisation> getAliens();
 
 	// The time from game start in ticks
 	GameTime gameTime;

@@ -30,116 +30,116 @@ ISOBORD = Unused
       <radiobutton id="BUTTON_LAYER_1" groupid="LAYER">
         <position x="314" y="113"/>
         <size width="12" height="8"/>
-        <image/>
-        <imagechecked/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:100:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:33:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_2" groupid="LAYER">
         <position x="314" y="104"/>
         <size width="12" height="8"/>
-        <image/>
-        <imagechecked/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:101:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:34:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_3" groupid="LAYER">
         <position x="314" y="95"/>
         <size width="12" height="8"/>
-        <image/>
-        <imagechecked/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:102:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:35:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_4" groupid="LAYER">
         <position x="314" y="86"/>
         <size width="12" height="8"/>
-        <image/>
-        <imagechecked/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:103:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:36:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_5" groupid="LAYER">
         <position x="314" y="77"/>
         <size width="12" height="8"/>
-        <image/>
-        <imagechecked/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:104:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:37:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_6" groupid="LAYER">
         <position x="314" y="68"/>
         <size width="12" height="8"/>
-        <image/>
-        <imagechecked/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:105:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:38:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_7" groupid="LAYER">
         <position x="314" y="59"/>
         <size width="12" height="8"/>
-        <image/>
-        <imagechecked/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:106:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:39:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_8" groupid="LAYER">
         <position x="314" y="50"/>
         <size width="12" height="8"/>
-        <image/>
-        <imagechecked/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:107:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:40:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_9" groupid="LAYER">
         <position x="314" y="41"/>
         <size width="12" height="8"/>
-        <image/>
-        <imagechecked/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:108:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:41:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <checkbox id="BUTTON_FOLLOW_AGENT">
         <position x="4" y="7"/>
         <size width="53" height="21"/>
         <image/>
-        <!--<imagechecked>PCK:xcom3/tacdata/icon_m.pck:xcom3/tacdata/icon_m.tab:19:xcom3/tacdata/tactical.pal</imagechecked>-->
+        <!--<imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:19:xcom3/tacdata/tactical.pal</imagechecked>-->
       </checkbox>
       <checkbox id="BUTTON_TOGGLE_STRATMAP">
         <position x="4" y="30"/>
         <size width="53" height="21"/>
         <image/>
-        <!--<imagechecked>PCK:xcom3/tacdata/icon_m.pck:xcom3/tacdata/icon_m.tab:12:xcom3/tacdata/tactical.pal</imagechecked>-->
+        <!--<imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:12:xcom3/tacdata/tactical.pal</imagechecked>-->
       </checkbox>
       <tristatebox id="BUTTON_LAYERING">
         <position x="4" y="53"/>
         <size width="53" height="21"/>
         <image/>
-        <!--<imagedepressed>PCK:xcom3/tacdata/icon_m.pck:xcom3/tacdata/icon_m.tab:13:xcom3/tacdata/tactical.pal</imagedepressed>-->
+        <!--<imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:13:xcom3/tacdata/tactical.pal</imagedepressed>-->
       </tristatebox>
       <graphicbutton id="BUTTON_SHOW_OPTIONS">
         <position x="4" y="99"/>
         <size width="53" height="21"/>
         <image/>
-        <!--<imagedepressed>PCK:xcom3/tacdata/icon_m.pck:xcom3/tacdata/icon_m.tab:13:xcom3/tacdata/tactical.pal</imagedepressed>-->
+        <!--<imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:13:xcom3/tacdata/tactical.pal</imagedepressed>-->
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_LOG">
         <position x="67" y="1"/>
         <size width="25" height="25"/>
         <image/>
-        <!--<imagedepressed>PCK:xcom3/tacdata/icon_m.pck:xcom3/tacdata/icon_m.tab:10:xcom3/tacdata/tactical.pal</imagedepressed>-->
+        <!--<imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:10:xcom3/tacdata/tactical.pal</imagedepressed>-->
       </graphicbutton>
       <graphicbutton id="BUTTON_ZOOM_EVENT">
         <position x="549" y="1"/>
         <size width="25" height="25"/>
         <image/>
-        <!--<imagedepressed>PCK:xcom3/tacdata/icon_m.pck:xcom3/tacdata/icon_m.tab:11:xcom3/tacdata/tactical.pal</imagedepressed>-->
+        <!--<imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:11:xcom3/tacdata/tactical.pal</imagedepressed>-->
       </graphicbutton>
       <radiobutton id="BUTTON_SPEED0" groupid="SPEED">
         <position x="565" y="7"/>
         <size width="71" height="21"/>
         <image/>
-        <!--<imagechecked>PCK:xcom3/tacdata/icon_m.pck:xcom3/tacdata/icon_m.tab:28:xcom3/tacdata/tactical.pal</imagechecked>-->
+        <!--<imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:28:xcom3/tacdata/tactical.pal</imagechecked>-->
       </radiobutton>
       <radiobutton id="BUTTON_SPEED1" groupid="SPEED">
         <position x="565" y="53"/>
         <size width="35" height="21"/>
         <image/>
-        <!--<imagechecked>PCK:xcom3/tacdata/icon_m.pck:xcom3/tacdata/icon_m.tab:29:xcom3/tacdata/tactical.pal</imagechecked>-->
+        <!--<imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:29:xcom3/tacdata/tactical.pal</imagechecked>-->
       </radiobutton>
       <radiobutton id="BUTTON_SPEED2" groupid="SPEED">
         <position x="565" y="76"/>
         <size width="35" height="21"/>
         <image/>
-        <!--<imagechecked>PCK:xcom3/tacdata/icon_m.pck:xcom3/tacdata/icon_m.tab:31:xcom3/tacdata/tactical.pal</imagechecked>-->
+        <!--<imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:31:xcom3/tacdata/tactical.pal</imagechecked>-->
       </radiobutton>
       <radiobutton id="BUTTON_SPEED3" groupid="SPEED">
         <position x="565" y="100"/>
         <size width="71" height="21"/>
         <image/>
-        <!--<imagechecked>PCK:xcom3/tacdata/icon_m.pck:xcom3/tacdata/icon_m.tab:33:xcom3/tacdata/tactical.pal</imagechecked>-->
+        <!--<imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:33:xcom3/tacdata/tactical.pal</imagechecked>-->
       </radiobutton>
       <label id="CLOCK" text="TICK TOCK">
         <position x="568" y="34"/>

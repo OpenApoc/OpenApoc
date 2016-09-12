@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sectors>
+  <entry>
+    <key>SEC01</key>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="SEC01.xml" />
+  </entry>
+</sectors>

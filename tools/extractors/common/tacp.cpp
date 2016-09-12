@@ -68,8 +68,51 @@ TACP::TACP(std::string file_name)
 		this->damage_modifier_names.reset(new StrTab(vec));
 	}
 
+	this->damage_type_names.reset(
+	    new StrTab(file, DAMAGE_TYPE_NAMES_OFFSET_START, DAMAGE_TYPE_NAMES_OFFSET_END, true));
+
+	this->damage_types.reset(new DataChunk<DamageTypeData>(file, DAMAGE_TYPE_DATA_OFFSET_START,
+	                                                       DAMAGE_TYPE_DATA_OFFSET_END));
+
+	this->damage_modifiers.reset(new DataChunk<DamageModifierData>(
+	    file, DAMAGE_MODIFIER_DATA_OFFSET_START, DAMAGE_MODIFIER_DATA_OFFSET_END));
+
 	this->agent_equipment.reset(new DataChunk<AgentEquipmentData>(
 	    file, AGENT_EQUIPMENT_DATA_OFFSET_START, AGENT_EQUIPMENT_DATA_OFFSET_END));
+
+	this->agent_armor.reset(new DataChunk<AgentArmorData>(file, AGENT_ARMOR_DATA_OFFSET_START,
+	                                                      AGENT_ARMOR_DATA_OFFSET_END));
+
+	this->agent_weapons.reset(new DataChunk<AgentWeaponData>(file, AGENT_WEAPON_DATA_OFFSET_START,
+	                                                         AGENT_WEAPON_DATA_OFFSET_END));
+
+	this->agent_general.reset(new DataChunk<AgentGeneralData>(file, AGENT_GENERAL_DATA_OFFSET_START,
+	                                                          AGENT_GENERAL_DATA_OFFSET_END));
+
+	this->agent_payload.reset(new DataChunk<AgentPayloadData>(file, AGENT_PAYLOAD_DATA_OFFSET_START,
+	                                                          AGENT_PAYLOAD_DATA_OFFSET_END));
+
+	this->agent_equipment_set_built_in.reset(new DataChunk<AgentEquipmentSetBuiltInData>(
+	    file, AGENT_EQUIPMENT_SET_BUILTIN_DATA_OFFSET_START,
+	    AGENT_EQUIPMENT_SET_BUILTIN_DATA_OFFSET_END));
+
+	this->agent_equipment_set_score_alien.reset(new DataChunk<AgentEquipmentSetScoreDataAlien>(
+	    file, AGENT_EQUIPMENT_SET_SCORE_ALIEN_DATA_OFFSET_START,
+	    AGENT_EQUIPMENT_SET_SCORE_ALIEN_DATA_OFFSET_END));
+
+	this->agent_equipment_set_score_human.reset(new DataChunk<AgentEquipmentSetScoreDataHuman>(
+	    file, AGENT_EQUIPMENT_SET_SCORE_HUMAN_DATA_OFFSET_START,
+	    AGENT_EQUIPMENT_SET_SCORE_HUMAN_DATA_OFFSET_END));
+
+	this->agent_equipment_set_score_requirement.reset(
+	    new DataChunk<AgentEquipmentSetScoreRequirement>(
+	        file, AGENT_EQUIPMENT_SET_SCORE_REQUIREMENT_DATA_OFFSET_START,
+	        AGENT_EQUIPMENT_SET_SCORE_REQUIREMENT_DATA_OFFSET_END));
+
+	this->bullet_sprites.reset(new DataChunk<BulletSprite>(
+	    file, BULLETSPRITE_DATA_TACP_OFFSET_START, BULLETSPRITE_DATA_TACP_OFFSET_END));
+	this->projectile_sprites.reset(new DataChunk<ProjectileSprites>(
+	    file, PROJECTILESPRITES_DATA_TACP_OFFSET_START, PROJECTILESPRITES_DATA_TACP_OFFSET_END));
 }
 
 } // namespace OpenApoc

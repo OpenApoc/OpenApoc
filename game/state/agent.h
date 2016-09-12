@@ -1,8 +1,12 @@
 #pragma once
 #include "framework/image.h"
+#include "game/state/battle/battleunitimagepack.h"
+#include "game/state/rules/damage.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
+#include "library/vec.h"
+#include "library/voxel.h"
 #include <map>
 
 namespace OpenApoc
@@ -10,6 +14,9 @@ namespace OpenApoc
 
 class Base;
 class Organisation;
+class AEquipment;
+class AEquipmentType;
+class BattleUnitAnimation;
 
 class AgentStats
 {
@@ -38,42 +45,111 @@ class AgentPortrait
 	sp<Image> icon;
 };
 
-class Agent : public StateObject<Agent>
+class AgentType : public StateObject<AgentType>
 {
   public:
-	Agent() = default;
-
-	enum class Type
+	enum class Role
 	{
 		Soldier,
 		Physicist,
 		BioChemist,
 		Engineer,
 	};
-	static const std::map<Type, UString> TypeMap;
-
-	enum class Species
-	{
-		Human,
-		Mutant,
-		Android,
-	};
-	static const std::map<Species, UString> SpeciesMap;
-
 	enum class Gender
 	{
 		Male,
 		Female,
 	};
-	static const std::map<Gender, UString> GenderMap;
+	enum class MovementType
+	{
+		Stationary,
+		Standart,
+		Flying,
+		StandartLarge,
+		FlyingLarge
+	};
+	enum class AlignmentX
+	{
+		Left,
+		Right,
+		Centre,
+	};
+	enum class AlignmentY
+	{
+		Top,
+		Bottom,
+		Centre,
+	};
+	enum class BodyPart
+	{
+		Body,
+		Legs,
+		Helmet,
+		LeftArm,
+		RightArm,
+	};
+
+	UString id;
+	UString name;
+	Role role = Role::Soldier;
+
+	std::set<Gender> possible_genders;
+	std::map<AgentType::Gender, float> gender_chance;
+	std::map<Gender, std::map<int, AgentPortrait>> portraits;
+
+	AgentStats min_stats;
+	AgentStats max_stats;
+
+	// Can be improved from standart to flying by the use of the flying body armor
+	MovementType movement_type = MovementType::Stationary;
+	bool large = false;
+	sp<VoxelMap> voxelMap;
+
+	StateRef<BattleUnitImagePack> shadow_pack;
+	std::map<BodyPart, StateRef<BattleUnitImagePack>> image_packs;
+	StateRef<BattleUnitAnimation> animation;
+
+	std::map<BodyPart, int> armor;
+	StateRef<DamageModifier> damage_modifier;
+
+	bool inventory = false;
+	// Only used if no inventory
+	StateRef<AEquipmentType> built_in_weapon_left;
+	StateRef<AEquipmentType> built_in_weapon_right;
+
+	class EquipmentLayoutSlot
+	{
+	  public:
+		AlignmentX align_x = AlignmentX::Left;
+		AlignmentY align_y = AlignmentY::Top;
+		Rect<int> bounds;
+		EquipmentLayoutSlot() = default;
+		EquipmentLayoutSlot(AlignmentX align_x, AlignmentY align_y, Rect<int> bounds)
+		    : align_x(align_x), align_y(align_y), bounds(bounds)
+		{
+		}
+	};
+	std::list<EquipmentLayoutSlot> equipment_layout_slots;
+
+	bool can_improve = false;
+	// Can this be generated for the player
+	bool playable = false;
+
+	int score = 0;
+};
+
+class Agent : public StateObject<Agent>
+{
+  public:
+	Agent() = default;
+
+	StateRef<AgentType> type;
 
 	UString name;
-	AgentPortrait portrait;
 
-	Type type = Type::Soldier;
-	Species species = Species::Human;
-	Gender gender = Gender::Male;
-
+	int portrait;
+	AgentPortrait get_portrait() { return type->portraits[gender][portrait]; }
+	AgentType::Gender gender = AgentType::Gender::Male;
 	AgentStats initial_stats;
 	AgentStats current_stats;
 
@@ -81,6 +157,12 @@ class Agent : public StateObject<Agent>
 	StateRef<Organisation> owner;
 
 	bool assigned_to_lab = false;
+
+	std::list<sp<AEquipment>> equipment;
+	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type) const;
+	void addEquipment(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type);
+	void addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object);
+	void removeEquipment(sp<AEquipment> object);
 };
 
 class AgentGenerator
@@ -90,22 +172,13 @@ class AgentGenerator
 	// Magic number to make unique agent IDs
 	mutable unsigned int num_created = 0;
 	// FIXME: I think there should be some kind of 'nationality' stuff going on here
-	std::map<Agent::Gender, std::list<UString>> first_names;
+	std::map<AgentType::Gender, std::list<UString>> first_names;
 	std::list<UString> second_names;
 
-	std::map<Agent::Type, float> type_chance;
-	std::map<Agent::Species, float> species_chance;
-	std::map<Agent::Gender, float> gender_chance;
-
-	std::map<Agent::Species, std::map<Agent::Gender, std::list<AgentPortrait>>> portraits;
-
-	std::map<Agent::Species, AgentStats> min_stats;
-	std::map<Agent::Species, AgentStats> max_stats;
-
-	// Create an agent of random type
-	StateRef<Agent> createAgent(GameState &state) const;
+	// Create an agent of specified role
+	StateRef<Agent> createAgent(GameState &state, AgentType::Role role) const;
 	// Create an agent of specified type
-	StateRef<Agent> createAgent(GameState &state, Agent::Type type) const;
+	StateRef<Agent> createAgent(GameState &state, StateRef<AgentType> type) const;
 };
 
 } // namespace OpenApoc

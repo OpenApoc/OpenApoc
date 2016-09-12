@@ -34,6 +34,6 @@ template <typename T> class DataChunk
 		return readData[offset];
 	}
 
-	unsigned count() { return readData.size(); }
+	size_t count() { return readData.size(); }
 };
 } // namespace OpenApoc

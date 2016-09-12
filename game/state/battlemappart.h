@@ -27,9 +27,9 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	Vec3<int> initialPosition;
 	Vec3<float> currentPosition;
 
-	bool damaged;
-	bool falling;
-	bool destroyed;
+	bool damaged = false;
+	bool falling = false;
+	bool destroyed = false;
 
 	void handleCollision(GameState &state, CollisionB &c);
 
@@ -43,7 +43,6 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	std::set<sp<BattleMapPart>> supportedBy;
 	StateRef<Battle> battle;
 
-	BattleMapPart();
 	~BattleMapPart() = default;
 };
 }

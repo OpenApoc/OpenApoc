@@ -127,6 +127,11 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Diffic
 				break;
 			}
 			default:
+				// FIXME:
+				// We should never reach here because we "continue" before in "usable_by" field
+				// If we do reach here, however, should we not just log a warning and go on?
+				// Or log an error that we actually got here (which is the actual bug, and
+				// not the fact that we encountered an expected and known id for empty item)
 				LogError("Unexpected vequipment type %d for ID %s", (int)e->type, id.cStr());
 		}
 

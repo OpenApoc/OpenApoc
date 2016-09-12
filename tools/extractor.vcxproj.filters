@@ -60,13 +60,16 @@
     <ClCompile Include="extractors\extract_battlescape_map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="extractors\extract_battlescape_stuff.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="extractors\extract_agent_equipment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="extractors\common\tacp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="extractors\extract_agent_types.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="extractors\extract_battlescape_map_parts.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -126,6 +129,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="extractors\common\tacp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="extractors\common\agent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="extractors\common\battlemap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

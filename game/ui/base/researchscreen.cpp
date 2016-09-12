@@ -236,22 +236,22 @@ void ResearchScreen::setCurrentLabInfo()
 	this->assigned_agent_count = 0;
 	auto labType = this->selected_lab->type->capacityType;
 	UString labTypeName = "UNKNOWN";
-	Agent::Type listedAgentType = Agent::Type::BioChemist;
+	AgentType::Role listedAgentType = AgentType::Role::BioChemist;
 
 	if (labType == FacilityType::Capacity::Chemistry)
 	{
 		labTypeName = tr("Biochemistry");
-		listedAgentType = Agent::Type::BioChemist;
+		listedAgentType = AgentType::Role::BioChemist;
 	}
 	else if (labType == FacilityType::Capacity::Physics)
 	{
 		labTypeName = tr("Quantum Physics");
-		listedAgentType = Agent::Type::Physicist;
+		listedAgentType = AgentType::Role::Physicist;
 	}
 	else if (labType == FacilityType::Capacity::Workshop)
 	{
 		labTypeName = tr("Engineering");
-		listedAgentType = Agent::Type::Engineer;
+		listedAgentType = AgentType::Role::Engineer;
 	}
 	else
 	{
@@ -273,7 +273,7 @@ void ResearchScreen::setCurrentLabInfo()
 		if (agent.second->home_base != this->state->current_base)
 			continue;
 
-		if (agent.second->type != listedAgentType)
+		if (agent.second->type->role != listedAgentType)
 			continue;
 
 		if (agent.second->assigned_to_lab)
@@ -418,7 +418,7 @@ sp<Control> ResearchScreen::createAgentControl(Vec2<int> size, StateRef<Agent> a
 	auto frameGraphic = baseControl->createChild<Graphic>(fw().data->loadImage(agentFramePath));
 	frameGraphic->AutoSize = true;
 	frameGraphic->Location = {5, 5};
-	auto photoGraphic = frameGraphic->createChild<Graphic>(agent->portrait.icon);
+	auto photoGraphic = frameGraphic->createChild<Graphic>(agent->get_portrait().icon);
 	photoGraphic->AutoSize = true;
 	photoGraphic->Location = {1, 1};
 
@@ -445,15 +445,15 @@ sp<Control> ResearchScreen::createAgentControl(Vec2<int> size, StateRef<Agent> a
 	nameLabel->Size = {100, font->getFontHeight() * 2};
 
 	int skill = 0;
-	if (agent->type == Agent::Type::Physicist)
+	if (agent->type->role == AgentType::Role::Physicist)
 	{
 		skill = agent->current_stats.physics_skill;
 	}
-	else if (agent->type == Agent::Type::BioChemist)
+	else if (agent->type->role == AgentType::Role::BioChemist)
 	{
 		skill = agent->current_stats.biochem_skill;
 	}
-	else if (agent->type == Agent::Type::Engineer)
+	else if (agent->type->role == AgentType::Role::Engineer)
 	{
 		skill = agent->current_stats.engineering_skill;
 	}

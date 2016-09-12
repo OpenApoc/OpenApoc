@@ -7,28 +7,40 @@
 
 namespace OpenApoc
 {
-const std::map<BattleMapPartType::Type, UString> BattleMapPartType::TypeMap = {
-    {Type::Ground, "ground"},
-    {Type::LeftWall, "leftwall"},
-    {Type::RightWall, "rightwall"},
-    {Type::Scenery, "scenery"},
-};
-
-const std::map<BattleMapPartType::ExplosionType, UString> BattleMapPartType::ExplosionTypeMap = {
-    {ExplosionType::BlankOrSmoke, "blank/smoke"},    {ExplosionType::AlienGas, "aliengas"},
-    {ExplosionType::Incendary, "incendary"},         {ExplosionType::StunGas, "stungas"},
-    {ExplosionType::HighExplosive, "highexplosive"},
-};
 
 template <>
 sp<BattleMapPartType> StateObject<BattleMapPartType>::get(const GameState &state, const UString &id)
 {
+	int id_length = 0;
+	int count_underscore = 0;
+	for (auto c : id)
+	{
+		if (c == '_')
+			count_underscore++;
+		if (count_underscore == 2)
+			break;
+		id_length++;
+	}
+	if (id_length == id.length())
+	{
+		LogError(
+		    "Wrong ID \"%s\" for a BattleMapPartType, expected it to contain a tileset name first",
+		    id.cStr());
+		return nullptr;
+	}
 
-	auto it = state.battle.map_part_types.find(id);
-	if (it != state.battle.map_part_types.end())
+	UString tileset_id = id.substr(0, id_length);
+	if (state.battle_map_tilesets.find(tileset_id) == state.battle_map_tilesets.end())
+	{
+		LogError("No battle_map_tileset matching id \"%s\"", tileset_id.cStr());
+		return nullptr;
+	}
+
+	auto it = state.battle_map_tilesets.at(tileset_id)->map_part_types.find(id);
+	if (it != state.battle_map_tilesets.at(tileset_id)->map_part_types.end())
 		return it->second;
-
 	LogError("No battle map part type matching ID \"%s\"", id.cStr());
+
 	return nullptr;
 }
 

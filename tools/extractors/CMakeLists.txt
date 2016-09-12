@@ -9,8 +9,9 @@ set (DATAEXTRACTOR_SOURCE_FILES
 	common/strtab.cpp
 	common/ufo2p.cpp
 	extract_agent_equipment.cpp
+	extract_agent_types.cpp
 	extract_battlescape_map.cpp
-	extract_battlescape_stuff.cpp
+	extract_battlescape_map_parts.cpp
 	extract_facilities.cpp
 	extract_organisations.cpp
 	extract_vehicle_equipment.cpp
@@ -44,6 +45,7 @@ set (DATAEXTRACTOR_HEADER_FILES
 	common/research.h
 	common/bulletsprite.h
 	common/building.h
+	common/battlemap.h
 	common/tacp.h
 	extractors.h)
 

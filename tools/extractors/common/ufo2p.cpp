@@ -48,6 +48,15 @@ UFO2P::UFO2P(std::string file_name)
 	this->ufopaedia_group.reset(
 	    new StrTab(file, UFOPAEDIA_GROUP_STRTAB_OFFSET_START, UFOPAEDIA_GROUP_STRTAB_OFFSET_END));
 
+	this->organisation_data.reset(new DataChunk<OrganisationData>(
+	    file, ORGANISATION_DATA_OFFSET_START, ORGANISATION_DATA_OFFSET_END));
+	this->organisation_raid_loot_data.reset(new DataChunk<OrgRaidLootData>(
+	    file, ORGANISATION_RAID_LOOT_DATA_OFFSET_START, ORGANISATION_RAID_LOOT_DATA_OFFSET_END));
+	this->organisation_starting_relationships_data.reset(
+	    new DataChunk<OrgStartingRelationshipsData>(
+	        file, ORGANISATION_STARTING_RELATIONSHIPS_DATA_OFFSET_START,
+	        ORGANISATION_STARTING_RELATIONSHIPS_DATA_OFFSET_END));
+
 	this->vehicle_data.reset(
 	    new DataChunk<VehicleData>(file, VEHICLE_DATA_OFFSET_START, VEHICLE_DATA_OFFSET_END));
 	this->vehicle_names.reset(
@@ -71,6 +80,12 @@ UFO2P::UFO2P(std::string file_name)
 
 	this->agent_equipment_names.reset(
 	    new StrTab(file, AGENT_EQUIPMENT_NAMES_OFFSET_START, AGENT_EQUIPMENT_NAMES_OFFSET_END));
+
+	this->agent_type_names.reset(
+	    new StrTab(file, AGENT_TYPE_NAMES_OFFSET_START, AGENT_TYPE_NAMES_OFFSET_END));
+
+	this->agent_types.reset(new DataChunk<AgentTypeData>(file, AGENT_TYPE_DATA_OFFSET_START,
+	                                                     AGENT_TYPE_DATA_OFFSET_END));
 
 	this->vehicle_equipment_names.reset(
 	    new StrTab(file, VEHICLE_EQUIPMENT_NAMES_OFFSET_START, VEHICLE_EQUIPMENT_NAMES_OFFSET_END));
@@ -96,10 +111,10 @@ UFO2P::UFO2P(std::string file_name)
 	this->scenery_minimap_colour.reset(new DataChunk<SceneryMinimapColour>(
 	    file, SCENERY_MINIMAP_COLOUR_DATA_OFFSET_START, SCENERY_MINIMAP_COLOUR_DATA_OFFSET_END));
 
-	this->bullet_sprites.reset(new DataChunk<BulletSprite>(file, BULLETSPRITE_DATA_OFFSET_START,
-	                                                       BULLETSPRITE_DATA_OFFSET_END));
+	this->bullet_sprites.reset(new DataChunk<BulletSprite>(
+	    file, BULLETSPRITE_DATA_UFO2P_OFFSET_START, BULLETSPRITE_DATA_UFO2P_OFFSET_END));
 	this->projectile_sprites.reset(new DataChunk<ProjectileSprites>(
-	    file, PROJECTILESPRITES_DATA_OFFSET_START, PROJECTILESPRITES_DATA_OFFSET_END));
+	    file, PROJECTILESPRITES_DATA_UFO2P_OFFSET_START, PROJECTILESPRITES_DATA_UFO2P_OFFSET_END));
 }
 
 } // namespace OpenApoc

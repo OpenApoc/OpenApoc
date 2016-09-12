@@ -1829,6 +1829,7 @@
         <aggressiveness>550</aggressiveness>
         <score>300</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:9:xcom3/ufodata/pal_01.dat</icon>
+        <battle_map>BATTLEMAP_54</battle_map>
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -2338,6 +2339,7 @@
         <aggressiveness>800</aggressiveness>
         <score>500</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:12:xcom3/ufodata/pal_01.dat</icon>
+        <battle_map>BATTLEMAP_57</battle_map>
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -2854,6 +2856,7 @@
         <aggressiveness>850</aggressiveness>
         <score>300</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:10:xcom3/ufodata/pal_01.dat</icon>
+        <battle_map>BATTLEMAP_55</battle_map>
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -3370,6 +3373,7 @@
         <aggressiveness>750</aggressiveness>
         <score>250</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:8:xcom3/ufodata/pal_01.dat</icon>
+        <battle_map>BATTLEMAP_53</battle_map>
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -3872,6 +3876,7 @@
         <aggressiveness>900</aggressiveness>
         <score>250</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:11:xcom3/ufodata/pal_01.dat</icon>
+        <battle_map>BATTLEMAP_56</battle_map>
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -4381,6 +4386,7 @@
         <aggressiveness>700</aggressiveness>
         <score>200</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:7:xcom3/ufodata/pal_01.dat</icon>
+        <battle_map>BATTLEMAP_52</battle_map>
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -4876,6 +4882,7 @@
         <aggressiveness>1000</aggressiveness>
         <score>700</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:13:xcom3/ufodata/pal_01.dat</icon>
+        <battle_map>BATTLEMAP_58</battle_map>
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -6373,6 +6380,7 @@
         <aggressiveness>600</aggressiveness>
         <score>150</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:6:xcom3/ufodata/pal_01.dat</icon>
+        <battle_map>BATTLEMAP_51</battle_map>
         <directional_strategy_sprites>
           <entry>
             <key>

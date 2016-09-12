@@ -128,7 +128,8 @@ void BattleTileView::eventOccurred(Event *e)
 		// Offset by 4 since ingame 4 is the typical height of the ground, and game displays cursor
 		// on top of the ground
 		setSelectedTilePosition(this->screenToTileCoords(
-		    Vec2<float>(e->mouse().X, e->mouse().Y + 4) - screenOffset, currentZLevel - 1));
+		    Vec2<float>((float)e->mouse().X, (float)e->mouse().Y + 4) - screenOffset,
+		    currentZLevel - 1));
 	}
 	else if (e->type() == EVENT_FINGER_MOVE)
 	{
@@ -254,7 +255,7 @@ void BattleTileView::render()
 			for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 			{
 				auto &obj = selectedTile->drawnObjects[0][obj_id];
-				if (!drawBackBeforeThis && (int)obj->getType() > 0)
+				if (!drawBackBeforeThis && obj->getType() != BattleTileObject::Type::Ground)
 					drawBackBeforeThis = obj;
 				if (obj->getType() == BattleTileObject::Type::Unit)
 					foundUnit = true;

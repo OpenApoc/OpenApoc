@@ -22,6 +22,7 @@ set (GAMEUI_SOURCE_FILES
 	debugtools/debugmenu.cpp
 	debugtools/formpreview.cpp
 	debugtools/imagepreview.cpp
+	general/mapselector.cpp
 	general/difficultymenu.cpp
 	general/ingameoptions.cpp
 	general/loadingscreen.cpp
@@ -55,6 +56,7 @@ set (GAMEUI_HEADER_FILES
 	debugtools/debugmenu.h
 	debugtools/formpreview.h
 	debugtools/imagepreview.h
+	general/mapselector.h
 	general/difficultymenu.h
 	general/ingameoptions.h
 	general/loadingscreen.h

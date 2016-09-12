@@ -42,12 +42,24 @@ int main(int argc, char *argv[])
 		Framework *fw = new Framework(UString(argv[0]), cmdline, false);
 		InitialGameStateExtractor e;
 
-		auto bullet_sprites = e.extractBulletSprites();
-
-		for (auto &sprite_pair : bullet_sprites)
 		{
-			auto path = "data/" + sprite_pair.first;
-			fw->data->writeImage(path, sprite_pair.second);
+			auto bullet_sprites = e.extractBulletSpritesCity();
+
+			for (auto &sprite_pair : bullet_sprites)
+			{
+				auto path = "data/" + sprite_pair.first;
+				fw->data->writeImage(path, sprite_pair.second);
+			}
+		}
+		{
+			auto bullet_sprites = e.extractBulletSpritesBattle();
+
+			for (auto &sprite_pair : bullet_sprites)
+			{
+				auto path = "data/" + sprite_pair.first;
+				fw->data->writeImage(path, sprite_pair.second,
+				                     fw->data->loadPalette("xcom3/tacdata/tactical.pal"));
+			}
 		}
 
 		std::map<UString, InitialGameStateExtractor::Difficulty> difficultyOutputFiles = {

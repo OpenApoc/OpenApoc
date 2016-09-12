@@ -6,6 +6,7 @@
 #include "game/state/rules/vehicle_type.h"
 #include "game/state/rules/vequipment_type.h"
 #include "tools/extractors/common/aequipment.h"
+#include "tools/extractors/common/agent.h"
 #include "tools/extractors/common/audio.h"
 #include "tools/extractors/common/baselayout.h"
 #include "tools/extractors/common/building.h"
@@ -43,12 +44,22 @@ class UFO2P
 
 	std::unique_ptr<DataChunk<VehicleData>> vehicle_data;
 
+	std::unique_ptr<DataChunk<OrganisationData>> organisation_data;
+	std::unique_ptr<DataChunk<OrgRaidLootData>> organisation_raid_loot_data;
+	std::unique_ptr<DataChunk<OrgStartingRelationshipsData>>
+	    organisation_starting_relationships_data;
+
 	std::unique_ptr<StrTab> ufopaedia_group;
 
 	std::unique_ptr<DataChunk<RawSoundData>> rawsound;
 	std::unique_ptr<DataChunk<BaseLayoutData>> baselayouts;
 
+	// Extracted from UFO2P.EXE and not TACP.EXE because here they are better formatted
 	std::unique_ptr<StrTab> agent_equipment_names;
+
+	std::unique_ptr<StrTab> agent_type_names;
+
+	std::unique_ptr<DataChunk<AgentTypeData>> agent_types;
 
 	std::unique_ptr<StrTab> vehicle_equipment_names;
 
