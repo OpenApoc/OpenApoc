@@ -213,7 +213,6 @@ void ResearchScreen::render()
 		this->refreshView();
 	}
 	fw().stageGetPrevious(this->shared_from_this())->render();
-	// fw().renderer->drawFilledRect({0, 0}, fw().displayGetSize(), Colour{0, 0, 0, 128});
 	form->render();
 	BaseStage::render();
 }

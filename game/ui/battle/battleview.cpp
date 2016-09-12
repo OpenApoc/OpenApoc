@@ -152,6 +152,12 @@ void BattleView::render()
 	BattleTileView::render();
 	activeTab->render();
 	baseForm->render();
+
+	// If there's a modal dialog, darken the screen
+	if (fw().stageGetCurrent() != this->shared_from_this())
+	{
+		fw().renderer->drawFilledRect({0, 0}, fw().displayGetSize(), Colour{0, 0, 0, 128});
+	}
 }
 
 void BattleView::setUpdateSpeed(BattleUpdateSpeed updateSpeed)

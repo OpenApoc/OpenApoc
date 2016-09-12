@@ -195,7 +195,6 @@ void InGameOptions::update() { menuform->update(); }
 void InGameOptions::render()
 {
 	fw().stageGetPrevious(this->shared_from_this())->render();
-	fw().renderer->drawFilledRect({0, 0}, fw().displayGetSize(), Colour{0, 0, 0, 128});
 	menuform->render();
 }
 

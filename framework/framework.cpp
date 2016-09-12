@@ -998,6 +998,8 @@ void Framework::audioShutdown()
 	this->soundBackend.reset();
 }
 
+sp<Stage> Framework::stageGetCurrent() { return p->ProgramStages.current(); }
+
 sp<Stage> Framework::stageGetPrevious() { return p->ProgramStages.previous(); }
 
 sp<Stage> Framework::stageGetPrevious(sp<Stage> From) { return p->ProgramStages.previous(From); }

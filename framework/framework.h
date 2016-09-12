@@ -77,6 +77,7 @@ class Framework
 	bool isSlowMode();
 	void setSlowMode(bool SlowEnabled);
 
+	sp<Stage> stageGetCurrent();
 	sp<Stage> stageGetPrevious();
 	sp<Stage> stageGetPrevious(sp<Stage> From);
 

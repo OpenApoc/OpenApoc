@@ -252,8 +252,6 @@ void VEquipScreen::render()
 
 	fw().renderer->setPalette(this->pal);
 
-	fw().renderer->drawFilledRect({0, 0}, fw().displayGetSize(), Colour{0, 0, 0, 128});
-
 	// The labels/values in the stats column are used for lots of different things, so keep them
 	// around clear them and keep them around in a vector so we don't have 5 copies of the same
 	// "reset unused entries" code around
