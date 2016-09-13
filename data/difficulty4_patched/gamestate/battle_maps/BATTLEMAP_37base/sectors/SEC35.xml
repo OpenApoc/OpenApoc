@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SEC35>
+  <sp>
+    <size>
+      <x>2</x>
+      <y>2</y>
+      <z>1</z>
+    </size>
+    <occurrence_max>99</occurrence_max>
+    <sectorTilesName>37base_35</sectorTilesName>
+  </sp>
+</SEC35>

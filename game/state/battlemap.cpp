@@ -275,6 +275,40 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 
 	// Begin actually creating a map
 
+	// First load any referenced tile sets
+	for (auto &tilesetName : this->tilesets)
+	{
+		if (state.loadedTilesets.find(tilesetName) != state.loadedTilesets.end())
+		{
+			LogInfo("Tileset \"%s\" already loaded", tilesetName.cStr());
+			continue;
+		}
+		unsigned count = 0;
+		auto tilesetPath = BattleMapTileset::tilesetPath + "/" + tilesetName;
+		LogInfo("Loading tileset \"%s\" from \"%s\"", tilesetName.cStr(), tilesetPath.cStr());
+		BattleMapTileset tileset;
+		if (!tileset.loadTileset(state, tilesetPath))
+		{
+			LogError("Failed to load tileset \"%s\" from \"%s\"", tilesetName.cStr(),
+			         tilesetPath.cStr());
+		}
+
+		for (auto &tilePair : tileset.map_part_types)
+		{
+			auto &tileName = tilePair.first;
+			auto &tile = tilePair.second;
+			// Sanity check
+			if (state.battleMapTiles.find(tileName) != state.battleMapTiles.end())
+			{
+				LogError("Duplicate tile with ID \"%s\"", tileName.cStr());
+			}
+			state.battleMapTiles.emplace(tileName, tile);
+			count++;
+		}
+		LogInfo("Loaded %u tiles from tileset \"%s\"", count, tilesetName.cStr());
+		state.loadedTilesets.insert(tilesetName);
+	}
+
 	// Prepare sectors in a more useful form;
 	// Need 0 to be unused for convenience
 	std::vector<UString> secNames;
@@ -537,9 +571,26 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 					auto sec = sec_map[x][y][z];
 					if (!sec)
 						continue;
+					if (!sec->tiles)
+					{
+						LogInfo("Loading sector tiles \"%s\"", sec->sectorTilesName.cStr());
+						sec->tiles.reset(new BattleMapSectorTiles());
+						if (!sec->tiles->loadSector(state, BattleMapSectorTiles::mapSectorPath +
+						                                       "/" + sec->sectorTilesName))
+						{
+							LogError("Failed to load sector tiles \"%s\"",
+							         sec->sectorTilesName.cStr());
+						}
+					}
+					else
+					{
+						LogInfo("Using already-loaded sector tiles \"%s\"",
+						        sec->sectorTilesName.cStr());
+					}
+					auto &tiles = *sec->tiles;
 					Vec3<int> shift = {x * chunk_size.x, y * chunk_size.y, z * chunk_size.z};
 
-					for (auto &pair : sec->initial_grounds)
+					for (auto &pair : tiles.initial_grounds)
 					{
 						auto s = mksp<BattleMapPart>();
 
@@ -549,7 +600,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 
 						b->map_parts.insert(s);
 					}
-					for (auto &pair : sec->initial_left_walls)
+					for (auto &pair : tiles.initial_left_walls)
 					{
 						auto s = mksp<BattleMapPart>();
 
@@ -559,7 +610,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 
 						b->map_parts.insert(s);
 					}
-					for (auto &pair : sec->initial_right_walls)
+					for (auto &pair : tiles.initial_right_walls)
 					{
 						auto s = mksp<BattleMapPart>();
 
@@ -569,7 +620,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation>,
 
 						b->map_parts.insert(s);
 					}
-					for (auto &pair : sec->initial_scenery)
+					for (auto &pair : tiles.initial_scenery)
 					{
 						auto s = mksp<BattleMapPart>();
 

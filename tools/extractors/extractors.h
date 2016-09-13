@@ -28,6 +28,14 @@ class InitialGameStateExtractor
 	std::map<UString, sp<Image>> extractBulletSpritesCity();
 	std::map<UString, sp<Image>> extractBulletSpritesBattle();
 
+	// Though this takes a gamestate, that's just used to hang StateRef<>s off
+	sp<BattleMapTileset> extractTileSet(GameState &state, const UString &name);
+	std::map<UString, up<BattleMapSectorTiles>> extractMapSectors(GameState &state,
+	                                                              const UString &mapRootName);
+
+	// Lookup table of building function number -> battlemap path
+	static const std::vector<UString> battleMapPaths;
+
   private:
 	void extractVehicles(GameState &state, Difficulty difficulty);
 	void extractOrganisations(GameState &state, Difficulty difficulty);
@@ -46,13 +54,6 @@ class InitialGameStateExtractor
 	                        UString ovrFile, sp<City> city);
 
 	void extractBattlescapeMap(GameState &state, const std::vector<OpenApoc::UString> &paths);
-	void extractBattlescapeMapParts(GameState &state, const std::vector<OpenApoc::UString> &paths);
-
-	void readBattleMapParts(GameState &state, sp<BattleMapTileset> t, BattleMapPartType::Type type,
-	                        const UString &idPrefix, const UString &dirName, const UString &datName,
-	                        const UString &pckName, const UString &stratPckName);
-	void extractBattlescapeMapPartsFromMap(GameState &state, const UString dirName,
-	                                       const int index);
 	void extractBattlescapeMapFromPath(GameState &state, const UString dirName, const int index);
 };
 }

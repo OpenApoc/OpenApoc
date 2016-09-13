@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SEC02>
+  <sp>
+    <size>
+      <x>3</x>
+      <y>2</y>
+      <z>1</z>
+    </size>
+    <occurrence_max>1</occurrence_max>
+    <sectorTilesName>19sewage_02</sectorTilesName>
+  </sp>
+</SEC02>

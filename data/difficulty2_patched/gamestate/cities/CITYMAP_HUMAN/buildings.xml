@@ -17,7 +17,7 @@
             <y>40</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_14</battle_map>
+        <battle_map>BATTLEMAP_14acnorm</battle_map>
       </sp>
     </value>
   </entry>
@@ -38,7 +38,7 @@
             <y>37</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_12</battle_map>
+        <battle_map>BATTLEMAP_12shops</battle_map>
       </sp>
     </value>
   </entry>
@@ -59,7 +59,7 @@
             <y>62</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_28</battle_map>
+        <battle_map>BATTLEMAP_28slums</battle_map>
       </sp>
     </value>
   </entry>
@@ -80,7 +80,7 @@
             <y>78</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_21</battle_map>
+        <battle_map>BATTLEMAP_21appl</battle_map>
       </sp>
     </value>
   </entry>
@@ -101,7 +101,7 @@
             <y>108</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_21</battle_map>
+        <battle_map>BATTLEMAP_21appl</battle_map>
       </sp>
     </value>
   </entry>
@@ -122,7 +122,7 @@
             <y>32</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_22</battle_map>
+        <battle_map>BATTLEMAP_22arms</battle_map>
       </sp>
     </value>
   </entry>
@@ -143,7 +143,7 @@
             <y>99</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_22</battle_map>
+        <battle_map>BATTLEMAP_22arms</battle_map>
       </sp>
     </value>
   </entry>
@@ -164,7 +164,7 @@
             <y>100</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_14</battle_map>
+        <battle_map>BATTLEMAP_14acnorm</battle_map>
       </sp>
     </value>
   </entry>
@@ -185,7 +185,7 @@
             <y>105</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_14</battle_map>
+        <battle_map>BATTLEMAP_14acnorm</battle_map>
       </sp>
     </value>
   </entry>
@@ -207,7 +207,7 @@
           </p1>
         </bounds>
         <base_layout>BASELAYOUT_13</base_layout>
-        <battle_map>BATTLEMAP_28</battle_map>
+        <battle_map>BATTLEMAP_28slums</battle_map>
       </sp>
     </value>
   </entry>
@@ -228,7 +228,7 @@
             <y>87</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_28</battle_map>
+        <battle_map>BATTLEMAP_28slums</battle_map>
       </sp>
     </value>
   </entry>
@@ -249,7 +249,7 @@
             <y>33</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_4</battle_map>
+        <battle_map>BATTLEMAP_04school</battle_map>
       </sp>
     </value>
   </entry>
@@ -270,7 +270,7 @@
             <y>110</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_28</battle_map>
+        <battle_map>BATTLEMAP_28slums</battle_map>
       </sp>
     </value>
   </entry>
@@ -291,7 +291,7 @@
             <y>44</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_25</battle_map>
+        <battle_map>BATTLEMAP_25flyer</battle_map>
       </sp>
     </value>
   </entry>
@@ -312,7 +312,7 @@
             <y>44</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_25</battle_map>
+        <battle_map>BATTLEMAP_25flyer</battle_map>
       </sp>
     </value>
   </entry>
@@ -333,7 +333,7 @@
             <y>85</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_28</battle_map>
+        <battle_map>BATTLEMAP_28slums</battle_map>
       </sp>
     </value>
   </entry>
@@ -354,7 +354,7 @@
             <y>48</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_19</battle_map>
+        <battle_map>BATTLEMAP_19sewage</battle_map>
       </sp>
     </value>
   </entry>
@@ -375,7 +375,7 @@
             <y>76</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_19</battle_map>
+        <battle_map>BATTLEMAP_19sewage</battle_map>
       </sp>
     </value>
   </entry>
@@ -396,7 +396,7 @@
             <y>71</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_28</battle_map>
+        <battle_map>BATTLEMAP_28slums</battle_map>
       </sp>
     </value>
   </entry>
@@ -417,7 +417,7 @@
             <y>44</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_27</battle_map>
+        <battle_map>BATTLEMAP_27constr</battle_map>
       </sp>
     </value>
   </entry>
@@ -438,7 +438,7 @@
             <y>56</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_18</battle_map>
+        <battle_map>BATTLEMAP_18hydro</battle_map>
       </sp>
     </value>
   </entry>
@@ -459,7 +459,7 @@
             <y>113</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_18</battle_map>
+        <battle_map>BATTLEMAP_18hydro</battle_map>
       </sp>
     </value>
   </entry>
@@ -480,7 +480,7 @@
             <y>99</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_28</battle_map>
+        <battle_map>BATTLEMAP_28slums</battle_map>
       </sp>
     </value>
   </entry>
@@ -501,7 +501,7 @@
             <y>36</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_15</battle_map>
+        <battle_map>BATTLEMAP_15acposh</battle_map>
       </sp>
     </value>
   </entry>
@@ -522,7 +522,7 @@
             <y>100</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_7</battle_map>
+        <battle_map>BATTLEMAP_07corphq</battle_map>
       </sp>
     </value>
   </entry>
@@ -543,7 +543,7 @@
             <y>88</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_32</battle_map>
+        <battle_map>BATTLEMAP_32power</battle_map>
       </sp>
     </value>
   </entry>
@@ -564,7 +564,7 @@
             <y>88</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_2</battle_map>
+        <battle_map>BATTLEMAP_02police</battle_map>
       </sp>
     </value>
   </entry>
@@ -585,7 +585,7 @@
             <y>53</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_25</battle_map>
+        <battle_map>BATTLEMAP_25flyer</battle_map>
       </sp>
     </value>
   </entry>
@@ -606,7 +606,7 @@
             <y>53</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_25</battle_map>
+        <battle_map>BATTLEMAP_25flyer</battle_map>
       </sp>
     </value>
   </entry>
@@ -627,7 +627,7 @@
             <y>59</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_7</battle_map>
+        <battle_map>BATTLEMAP_07corphq</battle_map>
       </sp>
     </value>
   </entry>
@@ -648,7 +648,7 @@
             <y>64</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_11</battle_map>
+        <battle_map>BATTLEMAP_11park</battle_map>
       </sp>
     </value>
   </entry>
@@ -669,7 +669,7 @@
             <y>120</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_28</battle_map>
+        <battle_map>BATTLEMAP_28slums</battle_map>
       </sp>
     </value>
   </entry>
@@ -690,7 +690,7 @@
             <y>120</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_28</battle_map>
+        <battle_map>BATTLEMAP_28slums</battle_map>
       </sp>
     </value>
   </entry>
@@ -711,7 +711,7 @@
             <y>53</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_6</battle_map>
+        <battle_map>BATTLEMAP_06office</battle_map>
       </sp>
     </value>
   </entry>
@@ -733,7 +733,7 @@
           </p1>
         </bounds>
         <base_layout>BASELAYOUT_15</base_layout>
-        <battle_map>BATTLEMAP_28</battle_map>
+        <battle_map>BATTLEMAP_28slums</battle_map>
       </sp>
     </value>
   </entry>
@@ -754,7 +754,7 @@
             <y>73</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_20</battle_map>
+        <battle_map>BATTLEMAP_20water</battle_map>
       </sp>
     </value>
   </entry>
@@ -775,7 +775,7 @@
             <y>41</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_12</battle_map>
+        <battle_map>BATTLEMAP_12shops</battle_map>
       </sp>
     </value>
   </entry>
@@ -796,7 +796,7 @@
             <y>102</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_4</battle_map>
+        <battle_map>BATTLEMAP_04school</battle_map>
       </sp>
     </value>
   </entry>
@@ -817,7 +817,7 @@
             <y>62</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_2</battle_map>
+        <battle_map>BATTLEMAP_02police</battle_map>
       </sp>
     </value>
   </entry>
@@ -838,7 +838,7 @@
             <y>80</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_2</battle_map>
+        <battle_map>BATTLEMAP_02police</battle_map>
       </sp>
     </value>
   </entry>
@@ -859,7 +859,7 @@
             <y>71</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_28</battle_map>
+        <battle_map>BATTLEMAP_28slums</battle_map>
       </sp>
     </value>
   </entry>
@@ -880,7 +880,7 @@
             <y>81</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_26</battle_map>
+        <battle_map>BATTLEMAP_26lflyer</battle_map>
       </sp>
     </value>
   </entry>
@@ -901,7 +901,7 @@
             <y>85</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_26</battle_map>
+        <battle_map>BATTLEMAP_26lflyer</battle_map>
       </sp>
     </value>
   </entry>
@@ -922,7 +922,7 @@
             <y>82</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_10</battle_map>
+        <battle_map>BATTLEMAP_10astro</battle_map>
       </sp>
     </value>
   </entry>
@@ -943,7 +943,7 @@
             <y>59</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_9</battle_map>
+        <battle_map>BATTLEMAP_50senso</battle_map>
       </sp>
     </value>
   </entry>
@@ -964,7 +964,7 @@
             <y>71</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_9</battle_map>
+        <battle_map>BATTLEMAP_50senso</battle_map>
       </sp>
     </value>
   </entry>
@@ -985,7 +985,7 @@
             <y>82</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_10</battle_map>
+        <battle_map>BATTLEMAP_10astro</battle_map>
       </sp>
     </value>
   </entry>
@@ -1006,7 +1006,7 @@
             <y>71</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_28</battle_map>
+        <battle_map>BATTLEMAP_28slums</battle_map>
       </sp>
     </value>
   </entry>
@@ -1027,7 +1027,7 @@
             <y>39</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_7</battle_map>
+        <battle_map>BATTLEMAP_07corphq</battle_map>
       </sp>
     </value>
   </entry>
@@ -1048,7 +1048,7 @@
             <y>111</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_15</battle_map>
+        <battle_map>BATTLEMAP_15acposh</battle_map>
       </sp>
     </value>
   </entry>
@@ -1069,7 +1069,7 @@
             <y>99</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_28</battle_map>
+        <battle_map>BATTLEMAP_28slums</battle_map>
       </sp>
     </value>
   </entry>
@@ -1090,7 +1090,7 @@
             <y>62</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_6</battle_map>
+        <battle_map>BATTLEMAP_06office</battle_map>
       </sp>
     </value>
   </entry>
@@ -1111,7 +1111,7 @@
             <y>62</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_3</battle_map>
+        <battle_map>BATTLEMAP_03hospit</battle_map>
       </sp>
     </value>
   </entry>
@@ -1132,7 +1132,7 @@
             <y>31</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_14</battle_map>
+        <battle_map>BATTLEMAP_14acnorm</battle_map>
       </sp>
     </value>
   </entry>
@@ -1153,7 +1153,7 @@
             <y>44</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_6</battle_map>
+        <battle_map>BATTLEMAP_06office</battle_map>
       </sp>
     </value>
   </entry>
@@ -1174,7 +1174,7 @@
             <y>71</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_33</battle_map>
+        <battle_map>BATTLEMAP_33recycl</battle_map>
       </sp>
     </value>
   </entry>
@@ -1195,7 +1195,7 @@
             <y>80</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_5</battle_map>
+        <battle_map>BATTLEMAP_05rescue</battle_map>
       </sp>
     </value>
   </entry>
@@ -1216,7 +1216,7 @@
             <y>89</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_23</battle_map>
+        <battle_map>BATTLEMAP_23robots</battle_map>
       </sp>
     </value>
   </entry>
@@ -1237,7 +1237,7 @@
             <y>95</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_28</battle_map>
+        <battle_map>BATTLEMAP_28slums</battle_map>
       </sp>
     </value>
   </entry>
@@ -1258,7 +1258,7 @@
             <y>45</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_36</battle_map>
+        <battle_map>BATTLEMAP_36church</battle_map>
       </sp>
     </value>
   </entry>
@@ -1279,7 +1279,7 @@
             <y>73</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_36</battle_map>
+        <battle_map>BATTLEMAP_36church</battle_map>
       </sp>
     </value>
   </entry>
@@ -1300,7 +1300,7 @@
             <y>102</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_36</battle_map>
+        <battle_map>BATTLEMAP_36church</battle_map>
       </sp>
     </value>
   </entry>
@@ -1321,7 +1321,7 @@
             <y>46</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_7</battle_map>
+        <battle_map>BATTLEMAP_07corphq</battle_map>
       </sp>
     </value>
   </entry>
@@ -1342,7 +1342,7 @@
             <y>112</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_7</battle_map>
+        <battle_map>BATTLEMAP_07corphq</battle_map>
       </sp>
     </value>
   </entry>
@@ -1363,7 +1363,7 @@
             <y>74</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_1</battle_map>
+        <battle_map>BATTLEMAP_01senate</battle_map>
       </sp>
     </value>
   </entry>
@@ -1384,7 +1384,7 @@
             <y>110</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_28</battle_map>
+        <battle_map>BATTLEMAP_28slums</battle_map>
       </sp>
     </value>
   </entry>
@@ -1405,7 +1405,7 @@
             <y>84</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_8</battle_map>
+        <battle_map>BATTLEMAP_08port</battle_map>
       </sp>
     </value>
   </entry>
@@ -1426,7 +1426,7 @@
             <y>44</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_7</battle_map>
+        <battle_map>BATTLEMAP_07corphq</battle_map>
       </sp>
     </value>
   </entry>
@@ -1447,7 +1447,7 @@
             <y>37</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_15</battle_map>
+        <battle_map>BATTLEMAP_15acposh</battle_map>
       </sp>
     </value>
   </entry>
@@ -1468,7 +1468,7 @@
             <y>40</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_30</battle_map>
+        <battle_map>BATTLEMAP_30ware</battle_map>
       </sp>
     </value>
   </entry>
@@ -1489,7 +1489,7 @@
             <y>59</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_30</battle_map>
+        <battle_map>BATTLEMAP_30ware</battle_map>
       </sp>
     </value>
   </entry>
@@ -1510,7 +1510,7 @@
             <y>59</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_30</battle_map>
+        <battle_map>BATTLEMAP_30ware</battle_map>
       </sp>
     </value>
   </entry>
@@ -1532,7 +1532,7 @@
           </p1>
         </bounds>
         <base_layout>BASELAYOUT_11</base_layout>
-        <battle_map>BATTLEMAP_30</battle_map>
+        <battle_map>BATTLEMAP_30ware</battle_map>
       </sp>
     </value>
   </entry>
@@ -1554,7 +1554,7 @@
           </p1>
         </bounds>
         <base_layout>BASELAYOUT_10</base_layout>
-        <battle_map>BATTLEMAP_30</battle_map>
+        <battle_map>BATTLEMAP_30ware</battle_map>
       </sp>
     </value>
   </entry>
@@ -1575,7 +1575,7 @@
             <y>65</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_30</battle_map>
+        <battle_map>BATTLEMAP_30ware</battle_map>
       </sp>
     </value>
   </entry>
@@ -1597,7 +1597,7 @@
           </p1>
         </bounds>
         <base_layout>BASELAYOUT_9</base_layout>
-        <battle_map>BATTLEMAP_30</battle_map>
+        <battle_map>BATTLEMAP_30ware</battle_map>
       </sp>
     </value>
   </entry>
@@ -1618,7 +1618,7 @@
             <y>53</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_30</battle_map>
+        <battle_map>BATTLEMAP_30ware</battle_map>
       </sp>
     </value>
   </entry>
@@ -1640,7 +1640,7 @@
           </p1>
         </bounds>
         <base_layout>BASELAYOUT_5</base_layout>
-        <battle_map>BATTLEMAP_30</battle_map>
+        <battle_map>BATTLEMAP_30ware</battle_map>
       </sp>
     </value>
   </entry>

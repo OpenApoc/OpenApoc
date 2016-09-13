@@ -42,45 +42,46 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 			b->name = data.building_names->get(entry.name_idx);
 			b->function = data.building_functions->get(entry.function_idx);
 		}
-		int battle_map_index = entry.function_idx + (alienBuilding ? 39 : 0);
+		int battle_map_index = entry.function_idx - 1 + (alienBuilding ? 39 : 0);
 		// Fix battle index for buildings that use other maps
 		switch (battle_map_index)
 		{
 			// 24 Car Factory uses 25 Flying Car Factory
-			case 24:
-				battle_map_index = 25;
+			case 23:
+				battle_map_index = 24;
 				break;
 			// 13 Car Park is not used in vanilla
 			// Still, we should provide a reasonable substitute
-			case 13:
-				battle_map_index = 11; // 11 Procreation Park
+			case 12:
+				battle_map_index = 10; // 11 Procreation Park
 				break;
 			// 16 Hotel is not used in vanilla
 			// Still, we should provide a reasonable substitute
-			case 16:
-				battle_map_index = 15; // 15 Luxury Appartments
+			case 15:
+				battle_map_index = 14; // 15 Luxury Appartments
 				break;
 			// 17 Atmosphere Processor is not used in vanilla
 			// Still, we should provide a reasonable substitute
-			case 17:
-				battle_map_index = 20; // 20 Water Purifier
+			case 16:
+				battle_map_index = 19; // 20 Water Purifier
 				break;
 			// 29 Ruins is not used in vanilla
 			// Still, we should provide a reasonable substitute
-			case 29:
-				battle_map_index = 11; // 11 Procreation Park
+			case 28:
+				battle_map_index = 10; // 11 Procreation Park
 				break;
 				// 31 Space Ship is not used in vanilla
 				// Still, we should provide a reasonable substitutecase 31:
-				battle_map_index = 8; // 08 Space Port
+				battle_map_index = 7; // 08 Space Port
 				break;
 			// 34 Outdoor Parks is not used in vanilla
 			// Still, we should provide a reasonable substitute
-			case 34:
-				battle_map_index = 11; // 11 Procreation Park
+			case 33:
+				battle_map_index = 10; // 11 Procreation Park
 				break;
 		}
-		b->battle_map = {&state, UString::format("%s%d", BattleMap::getPrefix(), battle_map_index)};
+		b->battle_map = {&state, UString::format("%s%s", BattleMap::getPrefix(),
+		                                         this->battleMapPaths[battle_map_index])};
 		b->owner = {&state, data.getOrgId(entry.owner_idx)};
 		// Our rects are exclusive of p2
 		// Shift position by 20 tiles

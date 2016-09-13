@@ -231,8 +231,8 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 				// UFOs starting with trans (id = 2) up to mship (id = 9) have maps from 51 to 58
 				// Therefore 49 + id gives map index for the ufo
 				if (i > 1)
-					vehicle->battle_map = {&state,
-					                       UString::format("%s%d", BattleMap::getPrefix(), 49 + i)};
+					vehicle->battle_map = {&state, UString::format("%s%s", BattleMap::getPrefix(),
+					                                               this->battleMapPaths[48 + i])};
 			}
 			else
 			{

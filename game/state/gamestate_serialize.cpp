@@ -296,4 +296,122 @@ bool GameState::deserialize(const sp<SerializationArchive> archive)
 	return true;
 }
 
+static bool serialize(const BattleMapTileset &tileSet, sp<SerializationArchive> archive)
+{
+	try
+	{
+		BattleMapTileset defaultTileset;
+		serializeOut(archive->newRoot("", "tileset"), tileSet, defaultTileset);
+	}
+	catch (SerializationException &e)
+	{
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
+		return false;
+	}
+	return true;
+}
+
+static bool deserialize(BattleMapTileset &tileSet, const GameState &state,
+                        const sp<SerializationArchive> archive)
+{
+	try
+	{
+		serializeIn(&state, archive->getRoot("", "tileset"), tileSet);
+	}
+	catch (SerializationException &e)
+	{
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
+		return false;
+	}
+	return true;
+}
+
+// FIXME: Move tilesetPath to some config variable?
+const UString BattleMapTileset::tilesetPath = "data/tilesets";
+
+bool BattleMapTileset::saveTileset(const UString &path, bool pack)
+{
+	TRACE_FN_ARGS1("path", path);
+	auto archive = SerializationArchive::createArchive();
+	if (serialize(*this, archive))
+	{
+		archive->write(path, pack);
+		return true;
+	}
+	return false;
+}
+
+bool BattleMapTileset::loadTileset(GameState &state, const UString &path)
+{
+
+	TRACE_FN_ARGS1("path", path);
+	auto archive = SerializationArchive::readArchive(path);
+	if (!archive)
+	{
+		LogError("Failed to read \"%s\"", path.cStr());
+		return false;
+	}
+
+	return deserialize(*this, state, archive);
+}
+
+static bool serialize(const BattleMapSectorTiles &mapSector, sp<SerializationArchive> archive)
+{
+	try
+	{
+		BattleMapSectorTiles defaultMapSector;
+		serializeOut(archive->newRoot("", "mapSector"), mapSector, defaultMapSector);
+	}
+	catch (SerializationException &e)
+	{
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
+		return false;
+	}
+	return true;
+}
+
+static bool deserialize(BattleMapSectorTiles &mapSector, const GameState &state,
+                        const sp<SerializationArchive> archive)
+{
+	try
+	{
+		serializeIn(&state, archive->getRoot("", "mapSector"), mapSector);
+	}
+	catch (SerializationException &e)
+	{
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
+		return false;
+	}
+	return true;
+}
+
+// FIXME: Move tilesetPath to some config variable?
+const UString BattleMapSectorTiles::mapSectorPath = "data/maps";
+
+bool BattleMapSectorTiles::saveSector(const UString &path, bool pack)
+{
+	TRACE_FN_ARGS1("path", path);
+	auto archive = SerializationArchive::createArchive();
+	if (serialize(*this, archive))
+	{
+		archive->write(path, pack);
+		return true;
+	}
+	return false;
+}
+
+bool BattleMapSectorTiles::loadSector(GameState &state, const UString &path)
+{
+
+	TRACE_FN_ARGS1("path", path);
+	auto archive = SerializationArchive::readArchive(path);
+	if (!archive)
+	{
+		LogError("Failed to read \"%s\"", path.cStr());
+		return false;
+	}
+
+	return deserialize(*this, state, archive);
+}
+
 } // namespace OpenApoc

@@ -14,7 +14,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
                                                               const UString dirName,
                                                               const int index)
 {
-	UString tilePrefix = UString::format("%d_", index);
+	UString tilePrefix = UString::format("%s_", dirName);
 	UString map_prefix = "xcom3/maps/";
 	UString mapunits_suffix = "/mapunits/";
 
@@ -59,7 +59,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 
 	auto m = mksp<BattleMap>();
 
-	UString id = UString::format("%s%d", BattleMap::getPrefix(), index);
+	UString id = UString::format("%s%s", BattleMap::getPrefix(), this->battleMapPaths[index]);
 
 	m->id = id;
 	m->chunk_size = {bdata.chunk_x, bdata.chunk_y, bdata.chunk_z};
@@ -82,8 +82,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 	m->entrance_level_max = bdata.entrance_max_level;
 	m->exit_level_min = bdata.exit_min_level;
 	m->exit_level_max = bdata.exit_max_level;
-	m->tilesets.emplace_back(BattleMapPartType::getPrefix() +
-	                         tilePrefix.substr(0, tilePrefix.length() - 1));
+	m->tilesets.emplace_back(tilePrefix.substr(0, tilePrefix.length() - 1));
 
 	// Side 0 = exits by X axis, Side 1 = exits by Y axis
 	for (int s = 0; s < 2; s++)
@@ -134,6 +133,8 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 	{
 		UString secName = UString::format("%02d", sector);
 
+		UString tilesName = UString::format("%s_%02d", dirName, sector);
+
 		SecSdtStructure sdata;
 		{
 			auto fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("sec") +
@@ -160,6 +161,68 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 		s->size = {sdata.chunks_x, sdata.chunks_y, sdata.chunks_z};
 		s->occurrence_min = sdata.occurrence_min;
 		s->occurrence_max = sdata.occurrence_max;
+		s->sectorTilesName = tilesName;
+
+		m->sectors["SEC" + secName] = s;
+	}
+
+	state.battle_maps[id] = m;
+}
+
+std::map<UString, up<BattleMapSectorTiles>>
+InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &mapRootName)
+{
+	std::map<UString, up<BattleMapSectorTiles>> sectors;
+	UString map_prefix = "xcom3/maps/";
+	UString dirName = mapRootName;
+	UString tilePrefix = UString::format("%s_", dirName);
+	BuildingDatStructure bdata;
+	{
+		auto fileName = dirName + UString("/building.dat");
+
+		auto datFileName = map_prefix + fileName;
+		auto inFile = fw().data->fs.open(datFileName);
+		if (!inFile)
+		{
+			LogError("Failed to open \"%s\"", fileName.cStr());
+			return {};
+		}
+
+		inFile.read((char *)&bdata, sizeof(bdata));
+		if (!inFile)
+		{
+			LogError("Failed to read entry in \"%s\"", fileName.cStr());
+			return {};
+		}
+	}
+	// Trying all possible names, because game actually has some maps missing sectors in the middle
+	// (like, 05RESCUE has no SEC04 but has SEC05 and on)
+	for (int sector = 1; sector < 100; sector++)
+	{
+		UString secName = UString::format("%02d", sector);
+		UString tilesName = UString::format("%s_%02d", dirName, sector);
+		up<BattleMapSectorTiles> tiles(new BattleMapSectorTiles());
+
+		SecSdtStructure sdata;
+		{
+			auto fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("sec") +
+			                secName + UString(".sdt");
+
+			auto fullPath = map_prefix + fileName;
+			auto inFile = fw().data->fs.open(fullPath);
+			if (!inFile)
+			{
+				LogInfo("Sector %d not present for map %s", sector, mapRootName.cStr());
+				continue;
+			}
+
+			inFile.read((char *)&sdata, sizeof(sdata));
+			if (!inFile)
+			{
+				LogError("Failed to read entry in \"%s\"", fileName.cStr());
+				return {};
+			}
+		}
 
 		// Read LOS blocks
 		{
@@ -171,7 +234,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 			if (!inFile)
 			{
 				LogError("Failed to open \"%s\"", fileName.cStr());
-				return;
+				return {};
 			}
 
 			auto fileSize = inFile.size();
@@ -185,7 +248,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 				if (!inFile)
 				{
 					LogError("Failed to read entry %d in \"%s\"", i, fileName.cStr());
-					return;
+					return {};
 				}
 
 				auto los_block = mksp<BattleMapSector::LineOfSightBlock>();
@@ -226,7 +289,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 					}
 				}
 
-				s->los_blocks.push_back(los_block);
+				tiles->los_blocks.push_back(los_block);
 			}
 		}
 
@@ -250,7 +313,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 					if (!inFile)
 					{
 						LogError("Failed to read entry %d in \"%s\"", i, fileName.cStr());
-						return;
+						return {};
 					}
 
 					if (ldata.priority == 0)
@@ -271,9 +334,9 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 						default:
 							LogError("Encountered invalid loot priority in %d for sector %d", i,
 							         sector);
-							return;
+							return {};
 					}
-					s->loot_locations[{ldata.x, ldata.y, ldata.z}] = lp;
+					tiles->loot_locations[{ldata.x, ldata.y, ldata.z}] = lp;
 				}
 			}
 		}
@@ -311,7 +374,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 						{
 							LogError("Failed to read entry %d,%d,%d in \"%s\"", x, y, z,
 							         fileName.cStr());
-							return;
+							return {};
 						}
 						// read ground
 						if (tdata.GD != 0)
@@ -320,7 +383,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 							    UString::format("%s%s%s%u", BattleMapPartType::getPrefix(),
 							                    tilePrefix, "GD_", (unsigned)tdata.GD);
 
-							s->initial_grounds[Vec3<int>{x, y, z}] = {&state, tileName};
+							tiles->initial_grounds[Vec3<int>{x, y, z}] = {&state, tileName};
 						}
 						// read left wall
 						if (tdata.LW != 0)
@@ -329,7 +392,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 							    UString::format("%s%s%s%u", BattleMapPartType::getPrefix(),
 							                    tilePrefix, "LW_", (unsigned)tdata.LW);
 
-							s->initial_left_walls[Vec3<int>{x, y, z}] = {&state, tileName};
+							tiles->initial_left_walls[Vec3<int>{x, y, z}] = {&state, tileName};
 						}
 						// read right wall
 						if (tdata.RW != 0)
@@ -338,7 +401,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 							    UString::format("%s%s%s%u", BattleMapPartType::getPrefix(),
 							                    tilePrefix, "RW_", (unsigned)tdata.RW);
 
-							s->initial_right_walls[Vec3<int>{x, y, z}] = {&state, tileName};
+							tiles->initial_right_walls[Vec3<int>{x, y, z}] = {&state, tileName};
 						}
 						// read scenery
 						if (tdata.SC != 0)
@@ -347,17 +410,16 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 							    UString::format("%s%s%s%u", BattleMapPartType::getPrefix(),
 							                    tilePrefix, "SC_", (unsigned)tdata.SC);
 
-							s->initial_scenery[Vec3<int>{x, y, z}] = {&state, tileName};
+							tiles->initial_scenery[Vec3<int>{x, y, z}] = {&state, tileName};
 						}
 					}
 				}
 			}
 		}
-
-		m->sectors["SEC" + secName] = s;
+		sectors[tilesName] = std::move(tiles);
 	}
 
-	state.battle_maps[id] = m;
+	return sectors;
 }
 
 void InitialGameStateExtractor::extractBattlescapeMap(GameState &state,
@@ -367,7 +429,7 @@ void InitialGameStateExtractor::extractBattlescapeMap(GameState &state,
 	{
 		if (paths[i].length() > 0)
 		{
-			extractBattlescapeMapFromPath(state, paths[i], i + 1);
+			extractBattlescapeMapFromPath(state, paths[i], i);
 		}
 	}
 }

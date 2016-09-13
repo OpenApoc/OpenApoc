@@ -70,38 +70,79 @@ int main(int argc, char *argv[])
 		    {"data/difficulty5", InitialGameStateExtractor::Difficulty::DIFFICULTY_5},
 		};
 
-		std::list<std::future<void>> tasks;
-
 		/*auto dpair = std::pair<UString,
 		InitialGameStateExtractor::Difficulty>("data/difficulty5",
 		InitialGameStateExtractor::Difficulty::DIFFICULTY_5);*/
 		for (auto &dpair : difficultyOutputFiles)
 		{
-			auto future = fw->threadPool->enqueue([dpair, &e]() {
-				GameState s;
-				LogWarning("Extracting initial game state for \"%s\"", dpair.first.cStr());
-				e.extract(s, dpair.second);
-				LogWarning("Finished extracting initial game state for \"%s\"", dpair.first.cStr());
+			GameState s;
+			LogWarning("Extracting initial game state for \"%s\"", dpair.first.cStr());
+			e.extract(s, dpair.second);
+			LogWarning("Finished extracting initial game state for \"%s\"", dpair.first.cStr());
 
-				LogWarning("Importing common patch");
-				s.loadGame("data/common_patch");
-				LogWarning("Done importing common patch");
+			LogWarning("Importing common patch");
+			s.loadGame("data/common_patch");
+			LogWarning("Done importing common patch");
 
-				UString patchName = dpair.first + "_patch";
-				LogWarning("Trying to import patch \"%s\"", patchName.cStr());
-				s.loadGame(patchName);
-				LogWarning("Patching finished");
+			UString patchName = dpair.first + "_patch";
+			LogWarning("Trying to import patch \"%s\"", patchName.cStr());
+			s.loadGame(patchName);
+			LogWarning("Patching finished");
 
-				UString patchedOutputName = dpair.first + "_patched";
-				LogWarning("Saving patched state to \"%s\"", patchedOutputName.cStr());
-				s.saveGame(patchedOutputName, false);
-				LogWarning("Done saving patched state");
-			});
-			tasks.push_back(std::move(future));
+			UString patchedOutputName = dpair.first + "_patched";
+			LogWarning("Saving patched state to \"%s\"", patchedOutputName.cStr());
+			s.saveGame(patchedOutputName, false);
+			LogWarning("Done saving patched state");
 		}
 
-		for (auto &task : tasks)
-			task.wait();
+		for (auto &tileSetName : e.battleMapPaths)
+		{
+			// Some indices are empty?
+			if (tileSetName.empty())
+				continue;
+			GameState s;
+			LogInfo("Extracting tileset \"%s\"", tileSetName.cStr());
+
+			auto tileSet = e.extractTileSet(s, tileSetName);
+			if (!tileSet)
+			{
+				LogError("Failed to extract tileset \"%s\"", tileSetName.cStr());
+			}
+			else
+			{
+				if (!tileSet->saveTileset(BattleMapTileset::tilesetPath + "/" + tileSetName, false))
+				{
+					LogError("Failed to save tileset \"%s\"", tileSetName.cStr());
+				}
+			}
+		}
+
+		for (auto &mapName : e.battleMapPaths)
+		{
+			// Some indices are empty?
+			if (mapName.empty())
+				continue;
+			GameState s;
+			LogInfo("Extracting map sectors from \"%s\"", mapName.cStr());
+
+			auto sectors = e.extractMapSectors(s, mapName);
+			LogInfo("Extracted %u sectors from \"%s\"", (unsigned)sectors.size(), mapName.cStr());
+			if (sectors.empty())
+			{
+				LogError("Failed to sectors from map \"%s\"", mapName.cStr());
+			}
+			for (auto &sectorPair : sectors)
+			{
+				auto &sectorName = sectorPair.first;
+				auto &sector = sectorPair.second;
+				auto path = BattleMapSectorTiles::mapSectorPath;
+				if (!sector->saveSector(BattleMapSectorTiles::mapSectorPath + "/" + sectorName,
+				                        false))
+				{
+					LogError("Failed to save map sector \"%s\"", sectorName.cStr());
+				}
+			}
+		}
 
 		delete fw;
 	}

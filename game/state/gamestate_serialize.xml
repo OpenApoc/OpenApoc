@@ -30,7 +30,8 @@
 		<member>gameTime</member>
 		<member type="SectionMap">battle_unit_image_packs</member>
 		<member type="SectionMap">battle_unit_animations</member>
-		<member type="SectionMap">battle_map_tilesets</member>
+		<member>loadedTilesets</member>
+		<member type="Section">battleMapTiles</member>
 		<member type="SectionMap">battle_maps</member>
 		<member type="Section">battle</member>
 		<member type="Section">damage_modifiers</member>
@@ -327,6 +328,11 @@
 		<member>size</member>
 		<member>occurrence_min</member>
 		<member>occurrence_max</member>
+		<member>sectorTilesName</member>
+		<member>tiles</member>
+	</object>
+	<object>
+		<name>BattleMapSectorTiles</name>
 		<member>los_blocks</member>
 		<member>initial_grounds</member>
 		<member>initial_left_walls</member>

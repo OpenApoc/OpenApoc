@@ -17,7 +17,7 @@
             <y>57</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_40</battle_map>
+        <battle_map>BATTLEMAP_40spawn</battle_map>
       </sp>
     </value>
   </entry>
@@ -38,7 +38,7 @@
             <y>49</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_44</battle_map>
+        <battle_map>BATTLEMAP_44organ</battle_map>
       </sp>
     </value>
   </entry>
@@ -59,7 +59,7 @@
             <y>50</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_48</battle_map>
+        <battle_map>BATTLEMAP_48gate</battle_map>
       </sp>
     </value>
   </entry>
@@ -80,7 +80,7 @@
             <y>98</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_45</battle_map>
+        <battle_map>BATTLEMAP_45farm</battle_map>
       </sp>
     </value>
   </entry>
@@ -101,7 +101,7 @@
             <y>73</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_43</battle_map>
+        <battle_map>BATTLEMAP_43sleep</battle_map>
       </sp>
     </value>
   </entry>
@@ -122,7 +122,7 @@
             <y>48</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_42</battle_map>
+        <battle_map>BATTLEMAP_42megapd</battle_map>
       </sp>
     </value>
   </entry>
@@ -143,7 +143,7 @@
             <y>91</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_47</battle_map>
+        <battle_map>BATTLEMAP_47maint</battle_map>
       </sp>
     </value>
   </entry>
@@ -164,7 +164,7 @@
             <y>72</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_46</battle_map>
+        <battle_map>BATTLEMAP_46contrl</battle_map>
       </sp>
     </value>
   </entry>
@@ -185,7 +185,7 @@
             <y>80</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_39</battle_map>
+        <battle_map>BATTLEMAP_39incub</battle_map>
       </sp>
     </value>
   </entry>
@@ -206,7 +206,7 @@
             <y>88</y>
           </p1>
         </bounds>
-        <battle_map>BATTLEMAP_41</battle_map>
+        <battle_map>BATTLEMAP_41food</battle_map>
       </sp>
     </value>
   </entry>

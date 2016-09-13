@@ -61,7 +61,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	ResearchState research;
 	StateRefMap<BattleUnitImagePack> battle_unit_image_packs;
 	StateRefMap<BattleUnitAnimation> battle_unit_animations;
-	StateRefMap<BattleMapTileset> battle_map_tilesets;
+	std::set<UString> loadedTilesets;
+	StateRefMap<BattleMapPartType> battleMapTiles;
 	StateRefMap<BattleMap> battle_maps;
 	sp<Battle> battle;
 	StateRefMap<DamageModifier> damage_modifiers;

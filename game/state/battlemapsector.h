@@ -6,6 +6,9 @@
 
 namespace OpenApoc
 {
+
+class BattleMapSectorTiles;
+
 class BattleMapSector
 {
   public:
@@ -44,7 +47,14 @@ class BattleMapSector
 	int occurrence_min = 0;
 	int occurrence_max = 0;
 
-	std::list<sp<LineOfSightBlock>> los_blocks;
+	UString sectorTilesName;
+	up<BattleMapSectorTiles> tiles;
+};
+
+class BattleMapSectorTiles
+{
+  public:
+	std::list<sp<BattleMapSector::LineOfSightBlock>> los_blocks;
 
 	std::map<Vec3<int>, Organisation::LootPriority> loot_locations;
 
@@ -52,5 +62,13 @@ class BattleMapSector
 	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_left_walls;
 	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_right_walls;
 	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_scenery;
+
+	static const UString mapSectorPath;
+
+	// high level api for loading map sectors
+	bool loadSector(GameState &state, const UString &path);
+
+	// high level api for saving map sectors
+	bool saveSector(const UString &path, bool pack = true);
 };
 }

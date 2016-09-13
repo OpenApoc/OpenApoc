@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SEC01>
+  <sp>
+    <size>
+      <x>2</x>
+      <y>2</y>
+      <z>1</z>
+    </size>
+    <occurrence_min>1</occurrence_min>
+    <occurrence_max>1</occurrence_max>
+    <sectorTilesName>48gate_01</sectorTilesName>
+  </sp>
+</SEC01>

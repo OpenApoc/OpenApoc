@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SEC04>
+  <sp>
+    <size>
+      <x>1</x>
+      <y>1</y>
+      <z>1</z>
+    </size>
+    <occurrence_max>1</occurrence_max>
+    <sectorTilesName>03hospit_04</sectorTilesName>
+  </sp>
+</SEC04>

@@ -10,14 +10,11 @@
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::readBattleMapParts(GameState &state, sp<BattleMapTileset> t,
-                                                   BattleMapPartType::Type type,
-                                                   const UString &idPrefix, const UString &dirName,
-                                                   const UString &datName, const UString &pckName,
-                                                   const UString &stratPckName)
+static void readBattleMapParts(GameState &state, TACP &data_t, sp<BattleMapTileset> t,
+                               BattleMapPartType::Type type, const UString &idPrefix,
+                               const UString &dirName, const UString &datName,
+                               const UString &pckName, const UString &stratPckName)
 {
-	auto &data_t = this->tacp;
-
 	const UString loftempsFile = "xcom3/tacdata/loftemps.dat";
 	const UString loftempsTab = "xcom3/tacdata/loftemps.tab";
 
@@ -247,11 +244,10 @@ void InitialGameStateExtractor::readBattleMapParts(GameState &state, sp<BattleMa
 	}
 }
 
-void InitialGameStateExtractor::extractBattlescapeMapPartsFromMap(GameState &state,
-                                                                  const UString dirName,
-                                                                  const int index)
+sp<BattleMapTileset> InitialGameStateExtractor::extractTileSet(GameState &state,
+                                                               const UString &name)
 {
-	UString tilePrefix = UString::format("%d_", index);
+	UString tilePrefix = UString::format("%s_", name.cStr());
 	UString map_prefix = "xcom3/maps/";
 	UString mapunits_suffix = "/mapunits/";
 	UString spriteFile;
@@ -262,47 +258,33 @@ void InitialGameStateExtractor::extractBattlescapeMapPartsFromMap(GameState &sta
 
 	// Read ground (tiles)
 	{
-		readBattleMapParts(state, t, BattleMapPartType::Type::Ground,
+		readBattleMapParts(state, this->tacp, t, BattleMapPartType::Type::Ground,
 		                   BattleMapPartType::getPrefix() + tilePrefix + "GD_",
-		                   map_prefix + dirName + mapunits_suffix, "grounmap", "ground", "sground");
+		                   map_prefix + name + mapunits_suffix, "grounmap", "ground", "sground");
 	}
 
 	// Read left walls
 	{
-		readBattleMapParts(state, t, BattleMapPartType::Type::LeftWall,
+		readBattleMapParts(state, this->tacp, t, BattleMapPartType::Type::LeftWall,
 		                   BattleMapPartType::getPrefix() + tilePrefix + "LW_",
-		                   map_prefix + dirName + mapunits_suffix, "leftmap", "left", "sleft");
+		                   map_prefix + name + mapunits_suffix, "leftmap", "left", "sleft");
 	}
 
 	// Read right walls
 	{
-		readBattleMapParts(state, t, BattleMapPartType::Type::RightWall,
+		readBattleMapParts(state, this->tacp, t, BattleMapPartType::Type::RightWall,
 		                   BattleMapPartType::getPrefix() + tilePrefix + "RW_",
-		                   map_prefix + dirName + mapunits_suffix, "rightmap", "right", "sright");
+		                   map_prefix + name + mapunits_suffix, "rightmap", "right", "sright");
 	}
 
 	// Read scenery
 	{
-		readBattleMapParts(state, t, BattleMapPartType::Type::Scenery,
+		readBattleMapParts(state, this->tacp, t, BattleMapPartType::Type::Scenery,
 		                   BattleMapPartType::getPrefix() + tilePrefix + "SC_",
-		                   map_prefix + dirName + mapunits_suffix, "featmap", "feature",
-		                   "sfeature");
+		                   map_prefix + name + mapunits_suffix, "featmap", "feature", "sfeature");
 	}
 
-	UString id = BattleMapPartType::getPrefix() + tilePrefix.substr(0, tilePrefix.length() - 1);
-	state.battle_map_tilesets[id] = t;
-}
-
-void InitialGameStateExtractor::extractBattlescapeMapParts(
-    GameState &state, const std::vector<OpenApoc::UString> &paths)
-{
-	for (unsigned int i = 0; i < paths.size(); i++)
-	{
-		if (paths[i].length() > 0)
-		{
-			extractBattlescapeMapPartsFromMap(state, paths[i], i + 1);
-		}
-	}
+	return t;
 }
 
 } // namespace OpenApoc
