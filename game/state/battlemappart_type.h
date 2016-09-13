@@ -89,6 +89,6 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 	bool provides_support = false;
 	SupportedByType supported_by = SupportedByType::Below;
 	bool independent_structure = false;
-	bool exit;
+	bool exit = false;
 };
 }
