@@ -28,8 +28,31 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state, Difficult
 		o->tech_level = odata.starting_tech_level + 1;
 		o->average_guards = odata.average_guards;
 
-		// "Civilian" organisation has no loot
-		if (i != data.organisation_data->count() - 1)
+		// "Civilian" organisation has no loot entry
+		if (i == data.organisation_data->count() - 1)
+		{
+			for (int k = 0; k < 3; k++)
+			{
+				Organisation::LootPriority priority;
+				switch (k)
+				{
+					case 0:
+						priority = Organisation::LootPriority::A;
+						break;
+					case 1:
+						priority = Organisation::LootPriority::B;
+						break;
+					case 2:
+						priority = Organisation::LootPriority::C;
+						break;
+				}
+				for (int j = 0; j < 5; j++)
+				{
+					o->loot[priority].push_back(nullptr);
+				}
+			}
+		}
+		else
 		{
 			auto ldata = data.organisation_raid_loot_data->get(i);
 

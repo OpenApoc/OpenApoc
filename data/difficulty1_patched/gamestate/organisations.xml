@@ -129,6 +129,38 @@
       <sp>
         <name>Civilian</name>
         <average_guards>0</average_guards>
+        <loot>
+          <entry>
+            <key>A</key>
+            <value>
+              <entry />
+              <entry />
+              <entry />
+              <entry />
+              <entry />
+            </value>
+          </entry>
+          <entry>
+            <key>B</key>
+            <value>
+              <entry />
+              <entry />
+              <entry />
+              <entry />
+              <entry />
+            </value>
+          </entry>
+          <entry>
+            <key>C</key>
+            <value>
+              <entry />
+              <entry />
+              <entry />
+              <entry />
+              <entry />
+            </value>
+          </entry>
+        </loot>
         <current_relations>
           <entry>
             <key>ORG_ALIEN</key>

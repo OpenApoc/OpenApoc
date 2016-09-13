@@ -112,8 +112,9 @@ void TileView::eventOccurred(Event *e)
 			{
 				LogWarning("Writing voxel view to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
-				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-				    {imageOffset, imageOffset + dpySize}, *this, currentZLevel));
+				auto img = std::dynamic_pointer_cast<RGBImage>(
+				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this,
+				                            mode == Mode::Battle ? currentZLevel : 10.0f));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 		}

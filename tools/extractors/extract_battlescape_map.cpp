@@ -185,6 +185,11 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 		m->sectors["SEC" + secName] = s;
 	}
 
+	if (bdata.destroyed_ground_idx != 0)
+		m->destroyed_ground_tile = {
+		    &state, UString::format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix, "GD_",
+		                            (unsigned)bdata.destroyed_ground_idx)};
+
 	state.battle_maps[id] = m;
 }
 
