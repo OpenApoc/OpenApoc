@@ -658,23 +658,24 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 						// replace the ground map part with an appropriate exit
 						Vec3<int> exitLocX = s->currentPosition;
 						Vec3<int> exitLocY = s->currentPosition;
-						bool exitFarSide = false;
+						bool exitFarSideX = false;
+						bool exitFarSideY = false;
 						if (exitLocX.y == 0 || exitLocX.y == size.y * chunk_size.y - 1)
 						{
-							exitFarSide = exitLocX.y != 0;
+							exitFarSideX = exitLocX.y != 0;
 							exitLocX.y = 0;
 							exitLocX.x = exitLocX.x % chunk_size.x;
 						}
 						if (exitLocY.x == 0 || exitLocY.x == size.x * chunk_size.x - 1)
 						{
-							exitFarSide = exitLocY.x != 0;
+							exitFarSideY = exitLocY.x != 0;
 							exitLocY.x = 0;
 							exitLocY.y = exitLocY.y % chunk_size.y;
 						}
 						if (exitsX.find(exitLocX) != exitsX.end())
-							s->type = exit_grounds[exitFarSide ? 2 : 0];
+							s->type = exit_grounds[exitFarSideX ? 2 : 0];
 						else if (exitsY.find(exitLocY) != exitsY.end())
-							s->type = exit_grounds[exitFarSide ? 1 : 3];
+							s->type = exit_grounds[exitFarSideY ? 1 : 3];
 						else
 							s->type = pair.second;
 

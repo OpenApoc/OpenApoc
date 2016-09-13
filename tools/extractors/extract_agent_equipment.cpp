@@ -261,6 +261,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 		    UString::format("PCKSTRAT:xcom3/tacdata/stratico.pck:xcom3/tacdata/"
 		                    "stratico.tab:%d:xcom3/tacdata/tactical.pal",
 		                    480));
+
 		e->image_offset = {23, 14};
 
 		if (edata.sprite_idx < gameObjectSpriteCount)
@@ -269,12 +270,12 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 			                                         "gameobj.tab:%d:xcom3/tacdata/tactical.pal",
 			                                         (int)edata.sprite_idx));
 
-			if (edata.sprite_idx < gameObjectShadowSpriteCount)
-				e->dropped_shadow_sprite = fw().data->loadImage(
-				    UString::format("PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/"
-				                    "oshadow.tab:%d:xcom3/tacdata/tactical.pal",
-				                    (int)edata.sprite_idx));
-		// Cannot replace with dropped sprite because they're not aligned the same way
+		if (edata.sprite_idx < gameObjectShadowSpriteCount)
+			e->dropped_shadow_sprite = fw().data->loadImage(
+			    UString::format("PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/"
+			                    "oshadow.tab:%d:xcom3/tacdata/tactical.pal",
+			                    (int)edata.sprite_idx));
+
 		// Held sprites begin from 0, which corresponds to item 1, Megapol AP Grenade
 		// Armor pieces go last, and held sprites for every single item that has no corresponding
 		// image
