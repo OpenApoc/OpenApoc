@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mapSector>
+<mapsector>
   <los_blocks>
     <entry>
       <sp>
@@ -13882,4 +13882,4 @@
       <value>BATTLEMAPPART_21appl_FT_17</value>
     </entry>
   </initial_features>
-</mapSector>
+</mapsector>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mapSector>
+<mapsector>
   <los_blocks>
     <entry>
       <sp>
@@ -18548,4 +18548,4 @@
       <value>BATTLEMAPPART_36church_FT_85</value>
     </entry>
   </initial_features>
-</mapSector>
+</mapsector>

@@ -329,7 +329,7 @@
 		<member>rubble_right_wall</member>
 		<member>rubble_feature</member>
 		<member>exit_grounds</member>
-		<member type="SectionMap">sectors</member>
+		<member>sectors</member>
 	</object>
 	<object>
 		<name>BattleMapSector</name>

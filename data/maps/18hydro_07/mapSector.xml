@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mapSector>
+<mapsector>
   <los_blocks>
     <entry>
       <sp>
@@ -6815,4 +6815,4 @@
       <value>BATTLEMAPPART_18hydro_LW_32</value>
     </entry>
   </initial_left_walls>
-</mapSector>
+</mapsector>

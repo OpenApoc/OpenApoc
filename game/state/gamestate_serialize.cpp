@@ -360,7 +360,7 @@ static bool serialize(const BattleMapSectorTiles &mapSector, sp<SerializationArc
 	try
 	{
 		BattleMapSectorTiles defaultMapSector;
-		serializeOut(archive->newRoot("", "mapSector"), mapSector, defaultMapSector);
+		serializeOut(archive->newRoot("", "mapsector"), mapSector, defaultMapSector);
 	}
 	catch (SerializationException &e)
 	{
@@ -375,7 +375,7 @@ static bool deserialize(BattleMapSectorTiles &mapSector, const GameState &state,
 {
 	try
 	{
-		serializeIn(&state, archive->getRoot("", "mapSector"), mapSector);
+		serializeIn(&state, archive->getRoot("", "mapsector"), mapSector);
 	}
 	catch (SerializationException &e)
 	{
