@@ -73,7 +73,11 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state, Difficult
 				}
 				for (int j = 0; j < 5; j++)
 				{
-					if (ldata.loot_idx[k][j] > 0)
+					if (ldata.loot_idx[k][j] == 0)
+					{
+						o->loot[priority].push_back(nullptr);
+					}
+					else
 					{
 						o->loot[priority].emplace_back(
 						    &state, UString::format("%s%s", AEquipmentType::getPrefix(),

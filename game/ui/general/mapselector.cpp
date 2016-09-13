@@ -81,7 +81,6 @@ sp<Control> MapSelector::createMapRowBuilding(sp<Building> building, sp<GameStat
 				fw().stageQueueCommand({StageCmd::Command::POP});
 			fw().stageQueueCommand({StageCmd::Command::POP});
 			state->current_battle = b;
-			b->initBattle();
 			fw().stageQueueCommand({StageCmd::Command::REPLACE, mksp<BattleView>(state)});
 		});
 	}
@@ -138,7 +137,6 @@ sp<Control> MapSelector::createMapRowVehicle(sp<VehicleType> vehicle, sp<GameSta
 				fw().stageQueueCommand({StageCmd::Command::POP});
 			fw().stageQueueCommand({StageCmd::Command::POP});
 			state->current_battle = b;
-			b->initBattle();
 			fw().stageQueueCommand({StageCmd::Command::REPLACE, mksp<BattleView>(state)});
 		});
 	}

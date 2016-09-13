@@ -558,7 +558,7 @@
   <checksum SHA1="856efffa1a1b569efe03105d284f356e99b01b9f">gamestate/equipment_sets_by_level.xml</checksum>
   <checksum SHA1="c7bef3a1cedf190c32acf33437f9d8ff97583da3">gamestate/equipment_sets_by_score.xml</checksum>
   <checksum SHA1="a2a7a18c55f3f11e87bd42d4b15989ad9341ede3">gamestate/facility_types.xml</checksum>
-  <checksum SHA1="cf17fb456a005bf29d7f4703db7ac2822a215cbe">gamestate/organisations.xml</checksum>
+  <checksum SHA1="39266609bb7deb26605f8160a38947cbe375d5c1">gamestate/organisations.xml</checksum>
   <checksum SHA1="7956d0ff5aa4e708dfe3b058ecb5a9ac578712e9">gamestate/research.xml</checksum>
   <checksum SHA1="81cb72171c980403f7e2630a3b80ae148a09bc2f">gamestate/ufo_growth_lists.xml</checksum>
   <checksum SHA1="4ff510f3a82800fe99376a44a0af5069313f49fb">gamestate/ufo_incursions.xml</checksum>

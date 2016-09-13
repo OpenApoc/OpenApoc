@@ -307,6 +307,7 @@ void GameState::update(unsigned int ticks)
 		}
 		Trace::end("GameState::update::labs");
 
+		gameTime.addTicks(ticks);
 		if (gameTime.dayPassed())
 		{
 			this->updateEndOfDay();

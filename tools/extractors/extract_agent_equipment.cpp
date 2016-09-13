@@ -277,9 +277,9 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 			                    (int)edata.sprite_idx));
 
 		// Held sprites begin from 0, which corresponds to item 1, Megapol AP Grenade
-		// Armor pieces go last, and held sprites for every single item that has no corresponding
-		// image
-		// are the same as the last image
+		// Armor pieces go last, and held sprites for every single item after the first armor piece
+		// are identical
+		// There is a total 60 of them
 		int held_sprite_index = std::min((int)edata.sprite_idx, (int)heldSpriteCount - 1);
 		for (int j = 0; j < 8; j++)
 			e->held_sprites.push_back(fw().data->loadImage(

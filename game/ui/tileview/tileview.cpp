@@ -13,8 +13,8 @@ TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
       viewMode(initialMode), mode(mode), scrollUp(false), scrollDown(false), scrollLeft(false),
       scrollRight(false), dpySize(fw().displayGetWidth(), fw().displayGetHeight()),
       strategyViewBoxColour(212, 176, 172, 255), strategyViewBoxThickness(2.0f), currentZLevel(1),
-      selectedTilePosition(0, 0, 0), maxZDraw(map.size.z), centerPos(0, 0, 0),
-      isoScrollSpeed(0.5, 0.5), stratScrollSpeed(2.0f, 2.0f)
+      selectedTilePosition(0, 0, 0), selectedTileImageOffset(0, 0), maxZDraw(map.size.z),
+      centerPos(0, 0, 0), isoScrollSpeed(0.5, 0.5), stratScrollSpeed(2.0f, 2.0f)
 {
 	switch (mode)
 	{

@@ -101,6 +101,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 	m->exit_level_max = bdata.exit_max_level;
 	m->tilesets.emplace_back(tilePrefix.substr(0, tilePrefix.length() - 1));
 
+	// Side 0 = exits by X axis, Side 1 = exits by Y axis
 	for (int l = 0; l < 15; l++)
 	{
 		for (int e = 0; e < 14; e++)

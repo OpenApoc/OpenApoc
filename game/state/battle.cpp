@@ -71,7 +71,6 @@ Battle::~Battle()
 	this->items.clear();
 }
 
-// FIXME: Bullshit, need to make it properly but it won't work with shared_from_this
 void Battle::initBattle()
 {
 	for (auto &s : this->map_parts)

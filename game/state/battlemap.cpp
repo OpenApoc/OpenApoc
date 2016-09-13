@@ -296,6 +296,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 	// Begin actually creating a map
 
 	// First load any referenced tile sets
+	// FIXIT: Unload tilesets that are not in use
 	for (auto &tilesetName : this->tilesets)
 	{
 		if (state.loadedTilesets.find(tilesetName) != state.loadedTilesets.end())
@@ -720,6 +721,8 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 							continue;
 						auto l =
 						    vectorRandomizer(state.rng, target_organisation->loot[pair.second]);
+						if (!l)
+							continue;
 						auto i = mksp<AEquipment>();
 						i->type = l;
 						auto s = mksp<BattleItem>();
@@ -739,6 +742,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 				}
 			}
 		}
+		b->initBattle();
 
 		return b;
 	}
