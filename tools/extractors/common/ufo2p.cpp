@@ -82,7 +82,7 @@ UFO2P::UFO2P(std::string file_name)
 	    new StrTab(file, AGENT_EQUIPMENT_NAMES_OFFSET_START, AGENT_EQUIPMENT_NAMES_OFFSET_END));
 
 	this->agent_type_names.reset(
-	    new StrTab(file, AGENT_TYPE_NAMES_OFFSET_START, AGENT_TYPE_NAMES_OFFSET_END));
+	    new StrTab(file, AGENT_TYPE_NAMES_OFFSET_START, AGENT_TYPE_NAMES_OFFSET_END, true));
 
 	this->agent_types.reset(new DataChunk<AgentTypeData>(file, AGENT_TYPE_DATA_OFFSET_START,
 	                                                     AGENT_TYPE_DATA_OFFSET_END));

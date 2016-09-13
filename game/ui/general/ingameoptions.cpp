@@ -29,6 +29,8 @@ InGameOptions::InGameOptions(sp<GameState> state)
 	menuform->findControlTyped<CheckBox>("SHOW_TILE_ORIGIN")->setChecked(state->showTileOrigin);
 	menuform->findControlTyped<CheckBox>("SHOW_SELECTABLE_BOUNDS")
 	    ->setChecked(state->showSelectableBounds);
+
+	menuform->findControlTyped<TextButton>("BUTTON_BATTLE")->setText(state->current_battle ? "Exit Battle" : "Enter Battle");
 }
 
 InGameOptions::~InGameOptions()
@@ -121,17 +123,19 @@ void InGameOptions::eventOccurred(Event *e)
 			this->state->research.resortTopicList();
 			return;
 		}
-		else if (e->forms().RaisedBy->Name == "BUTTON_INTO_BATTLE")
-		{
-			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<MapSelector>(state)});
-		}
-		else if (e->forms().RaisedBy->Name == "BUTTON_EXIT_BATTLE")
+		else if (e->forms().RaisedBy->Name == "BUTTON_BATTLE")
 		{
 			if (state->current_battle)
 			{
-				state->current_battle = nullptr;
-				fw().stageQueueCommand({StageCmd::Command::POP});
-				fw().stageQueueCommand({StageCmd::Command::POP});
+				Battle::FinishBattle(*state.get());
+				Battle::ExitBattle(*state.get());
+
+				fw().stageQueueCommand({ StageCmd::Command::POP });
+				fw().stageQueueCommand({ StageCmd::Command::POP });
+			}
+			else
+			{
+				fw().stageQueueCommand({ StageCmd::Command::PUSH, mksp<MapSelector>(state) });
 			}
 		}
 	}

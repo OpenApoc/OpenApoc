@@ -95,7 +95,7 @@ void ResearchSelect::begin()
 	});
 
 	research_list->addCallback(FormEventType::ListBoxChangeHover, [this](Event *e) {
-		LogInfo("Research selection change");
+		LogInfo("Research display on hover change");
 		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
 		auto topic = list->getHoveredData<ResearchTopic>();
 		auto title = this->form->findControlTyped<Label>("TEXT_SELECTED_TITLE");

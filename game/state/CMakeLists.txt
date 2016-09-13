@@ -5,12 +5,8 @@ PROJECT(OpenApoc_GameState CXX C)
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
 set (GAMESTATE_SOURCE_FILES
+	aequipment.cpp
 	agent.cpp
-	battle.cpp
-	battlemap.cpp
-	battlemappart.cpp
-	battlemappart_type.cpp
-	battlemapsector.cpp
 	gameevent.cpp
 	gamestate.cpp
 	gamestate_serialize.cpp
@@ -23,10 +19,15 @@ set (GAMESTATE_SOURCE_FILES
 	ufopaedia.cpp
 	base/base.cpp
 	base/facility.cpp
-	battle/aequipment.cpp
+	battle/battle.cpp
+	battle/battlemap.cpp
+	battle/battleforces.cpp
+	battle/battlemappart.cpp
+	battle/battlemappart_type.cpp
+	battle/battlemapsector.cpp
 	battle/battleitem.cpp
 	battle/battleunit.cpp
-	battle/battleunitanimation.cpp
+	battle/battleunitanimationpack.cpp
 	battle/battleunitimagepack.cpp
 	battle/battleunitmission.cpp
 	city/baselayout.cpp
@@ -53,6 +54,7 @@ set (GAMESTATE_SOURCE_FILES
 	tileview/tileobject.cpp
 	tileview/tileobject_battlemappart.cpp
 	tileview/tileobject_battleitem.cpp
+	tileview/tileobject_battleunit.cpp
 	tileview/tileobject_doodad.cpp
 	tileview/tileobject_projectile.cpp
 	tileview/tileobject_scenery.cpp
@@ -60,13 +62,8 @@ set (GAMESTATE_SOURCE_FILES
 	tileview/tileobject_vehicle.cpp)
 source_group(gamestate\\sources FILES ${GAMESTATE_SOURCE_FILES})
 set (GAMESTATE_HEADER_FILES
+	aequipment.h
 	agent.h
-	battle.h
-	battlemap.h
-	battlemappart.h
-	battlemappart_type.h
-	battlemapsector.h
-	battlemaptileset.h
 	gameevent.h
 	gameevent_types.h
 	gamestate.h
@@ -81,10 +78,16 @@ set (GAMESTATE_HEADER_FILES
 	ufopaedia.h
 	base/base.h
 	base/facility.h
-	battle/aequipment.h
+	battle/battle.h
+	battle/battlemap.h
+	battle/battleforces.h
+	battle/battlemappart.h
+	battle/battlemappart_type.h
+	battle/battlemapsector.h
+	battle/battlemaptileset.h
 	battle/battleitem.h
 	battle/battleunit.h
-	battle/battleunitanimation.h
+	battle/battleunitanimationpack.h
 	battle/battleunitimagepack.h
 	battle/battleunitmission.h
 	city/baselayout.h
@@ -112,6 +115,7 @@ set (GAMESTATE_HEADER_FILES
 	tileview/tileobject.h
 	tileview/tileobject_battlemappart.h
 	tileview/tileobject_battleitem.h
+	tileview/tileobject_battleunit.h
 	tileview/tileobject_doodad.h
 	tileview/tileobject_projectile.h
 	tileview/tileobject_scenery.h

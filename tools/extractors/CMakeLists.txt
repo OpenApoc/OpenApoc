@@ -23,6 +23,8 @@ set (DATAEXTRACTOR_SOURCE_FILES
 	extract_bulletsprites.cpp
 	extractors.cpp
 	extract_research.cpp
+	extract_unit_animation_packs.cpp
+	extract_unit_image_packs.cpp
 	main.cpp)
 
 source_group(dataextractor\\sources FILES ${DATAEXTRACTOR_SOURCE_FILES})

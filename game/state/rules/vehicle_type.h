@@ -1,5 +1,5 @@
 #pragma once
-#include "game/state/battlemap.h"
+#include "game/state/battle/battlemap.h"
 #include "game/state/rules/vequipment_type.h"
 #include "game/state/stateobject.h"
 #include "library/rect.h"

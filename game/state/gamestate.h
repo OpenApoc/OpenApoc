@@ -3,12 +3,13 @@
 
 #include "game/state/agent.h"
 #include "game/state/base/base.h"
-#include "game/state/battle.h"
-#include "game/state/battle/aequipment.h"
-#include "game/state/battle/battleunitanimation.h"
+#include "game/state/battle/battle.h"
+#include "game/state/aequipment.h"
+#include "game/state/battle/battlestrategyiconlist.h"
+#include "game/state/battle/battleunitanimationpack.h"
 #include "game/state/battle/battleunitimagepack.h"
-#include "game/state/battlemap.h"
-#include "game/state/battlemaptileset.h"
+#include "game/state/battle/battlemap.h"
+#include "game/state/battle/battlemaptileset.h"
 #include "game/state/city/city.h"
 #include "game/state/gametime.h"
 #include "game/state/message.h"
@@ -59,10 +60,6 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<Vehicle> vehicles;
 	StateRefMap<UfopaediaCategory> ufopaedia;
 	ResearchState research;
-	StateRefMap<BattleUnitImagePack> battle_unit_image_packs;
-	StateRefMap<BattleUnitAnimation> battle_unit_animations;
-	std::set<UString> loadedTilesets;
-	StateRefMap<BattleMapPartType> battleMapTiles;
 	StateRefMap<BattleMap> battle_maps;
 	StateRefMap<DamageModifier> damage_modifiers;
 	StateRefMap<DamageType> damage_types;
@@ -70,6 +67,12 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<EquipmentSet> equipment_sets_by_score;
 	StateRefMap<EquipmentSet> equipment_sets_by_level;
 	sp<Battle> current_battle;
+	sp<BattleStrategyIconList> battle_strategy_icon_list;
+
+	// Loaded temporarily for the duration of the battle
+	StateRefMap<BattleUnitImagePack> battle_unit_image_packs;
+	StateRefMap<BattleUnitAnimationPack> battle_unit_animation_packs;
+	StateRefMap<BattleMapPartType> battleMapTiles;
 
 	std::list<EventMessage> messages;
 
@@ -84,6 +87,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	StateRef<Organisation> player;
 	StateRef<Organisation> aliens;
+	StateRef<Organisation> civilian;
 
 	StateRef<City> current_city;
 	StateRef<Base> current_base;
@@ -103,6 +107,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRef<Organisation> getPlayer();
 	const StateRef<Organisation> &getAliens() const;
 	StateRef<Organisation> getAliens();
+	const StateRef<Organisation> &getCivilian() const;
+	StateRef<Organisation> getCivilian();
 
 	// The time from game start in ticks
 	GameTime gameTime;

@@ -1,6 +1,7 @@
 #pragma once
 #include "game/state/stateobject.h"
 #include "library/sp.h"
+#include "library/vec.h"
 #include "library/strings.h"
 #include <vector>
 
@@ -10,6 +11,19 @@ class Image;
 class BattleUnitImagePack : public StateObject<BattleUnitImagePack>
 {
   public:
+	Vec2<float> image_offset;
+	
 	std::vector<sp<Image>> images;
+
+	// high level api for loading
+	bool loadImagePack(GameState &state, const UString &path);
+
+	// high level api for saving
+	bool saveImagePack(const UString &path, bool pack = true);
+
+	// Function used when getting file path
+	static const UString getNameFromID(UString id);
+
+	static const UString imagePackPath;
 };
 }

@@ -1,5 +1,5 @@
 #include "game/state/agent.h"
-#include "game/state/battle/aequipment.h"
+#include "game/state/aequipment.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc
@@ -103,6 +103,8 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<AgentType
 	auto secondName = listRandomiser(state.rng, this->second_names);
 	agent->name = UString::format("%s %s", firstName, secondName);
 
+	agent->appearance = randBoundsExclusive(state.rng, 0, type->appearance_count);
+
 	agent->portrait =
 	    randBoundsInclusive(state.rng, 0, (int)type->portraits[agent->gender].size() - 1);
 
@@ -113,8 +115,9 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<AgentType
 	    randBoundsInclusive(state.rng, type->min_stats.reactions, type->max_stats.reactions);
 	s.speed = randBoundsInclusive(state.rng, type->min_stats.speed, type->max_stats.speed);
 	s.stamina = randBoundsInclusive(state.rng, type->min_stats.stamina, type->max_stats.stamina);
-	s.bravery = randBoundsInclusive(state.rng, type->min_stats.bravery, type->max_stats.bravery);
+	s.bravery = randBoundsInclusive(state.rng, type->min_stats.bravery/10, type->max_stats.bravery/10)*10;
 	s.strength = randBoundsInclusive(state.rng, type->min_stats.strength, type->max_stats.strength);
+	s.morale = 100;
 	s.psi_energy =
 	    randBoundsInclusive(state.rng, type->min_stats.psi_energy, type->max_stats.psi_energy);
 	s.psi_attack =
@@ -130,12 +133,14 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<AgentType
 
 	agent->initial_stats = s;
 	agent->current_stats = s;
-	agent->modified_stats = s;
+	agent->max_stats = s;
 
 	// FIXME: Default equipment for agents with no inventory?
 	// FIXME: Equip units according to score?
 
-	// Everything worked, add agent to stats
+	agent->updateSpeed();
+
+	// Everything worked, add agent to state
 	this->num_created++;
 	state.agents[ID] = agent;
 	return {&state, ID};
@@ -208,8 +213,41 @@ void Agent::addEquipment(GameState &, Vec2<int> pos, sp<AEquipment> object)
 	LogInfo("Equipped \"%s\" with equipment \"%s\"", this->name.cStr(), object->type->name.cStr());
 	object->equippedPosition = pos;
 	this->equipment.emplace_back(object);
+	updateSpeed();
 }
 
-void Agent::removeEquipment(sp<AEquipment> object) { this->equipment.remove(object); }
+void Agent::removeEquipment(sp<AEquipment> object) { this->equipment.remove(object); updateSpeed(); }
 
+// Fixme: calculate how much equipment slows us down here
+void Agent::updateSpeed() 
+{
+
+}
+
+StateRef<BattleUnitAnimationPack> Agent::getAnimationPack() { return type->animation_packs[appearance]; }
+
+// FIXME: Properly return item that is in right hand (or in left if right is empty)
+StateRef<AEquipmentType> Agent::getItemInHands() 
+{
+	return nullptr;
+}
+
+// FIXME: Properly return worn armor image pack if present
+StateRef<BattleUnitImagePack> Agent::getImagePack(AgentType::BodyPart bodyPart) 
+{
+	switch (bodyPart)
+	{
+	case AgentType::BodyPart::Body:
+		break;
+	case AgentType::BodyPart::Legs:
+		break;
+	case AgentType::BodyPart::Helmet:
+		break;
+	case AgentType::BodyPart::LeftArm:
+		break;
+	case AgentType::BodyPart::RightArm:
+		break;
+	}
+	return type->image_packs[appearance][bodyPart];
+}
 } // namespace OpenApoc

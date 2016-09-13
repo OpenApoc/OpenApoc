@@ -123,16 +123,16 @@
     <ClCompile Include="rules\vammo_rules.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="battle.cpp">
+    <ClCompile Include="battle\battle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="message.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="battlemappart_type.cpp">
+    <ClCompile Include="battle\battlemappart_type.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="battlemappart.cpp">
+    <ClCompile Include="battle\battlemappart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gamestate_serialize_generated.cpp">
@@ -141,19 +141,16 @@
     <ClCompile Include="rules\damage_rules.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="battle\aequipment.cpp">
+    <ClCompile Include="aequipment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="battlemap.cpp">
+    <ClCompile Include="battle\battlemap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="battlemapsector.cpp">
+    <ClCompile Include="battle\battlemapsector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="battle\battleunitimagepack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="battle\battleunitanimation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="battle\battleunit.cpp">
@@ -172,6 +169,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tileview\tileobject_battleitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battle\battleunitanimationpack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tileview\tileobject_battleunit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battle\battleforces.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -293,16 +299,16 @@
     <ClInclude Include="rules\vammo_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battle.h">
+    <ClInclude Include="battle\battle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="message.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battlemappart_type.h">
+    <ClInclude Include="battle\battlemappart_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battlemappart.h">
+    <ClInclude Include="battle\battlemappart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gamestate_serialize_generated.h">
@@ -311,22 +317,19 @@
     <ClInclude Include="rules\damage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battle\aequipment.h">
+    <ClInclude Include="aequipment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battlemap.h">
+    <ClInclude Include="battle\battlemap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battlemapsector.h">
+    <ClInclude Include="battle\battlemapsector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battlemaptileset.h">
+    <ClInclude Include="battle\battlemaptileset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="battle\battleunitimagepack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="battle\battleunitanimation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="battle\battleunit.h">
@@ -345,6 +348,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tileview\tileobject_battleitem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\battleunitanimationpack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\battlestrategyiconlist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tileview\tileobject_battleunit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\battleforces.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

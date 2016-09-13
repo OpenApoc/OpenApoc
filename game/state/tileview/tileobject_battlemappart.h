@@ -1,6 +1,6 @@
 #pragma once
-#include "game/state/battlemappart.h"
-#include "game/state/battlemappart_type.h"
+#include "game/state/battle/battlemappart.h"
+#include "game/state/battle/battlemappart_type.h"
 #include "game/state/tileview/tileobject.h"
 
 namespace OpenApoc
@@ -9,7 +9,7 @@ class TileObjectBattleMapPart : public TileObject
 {
   public:
 	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-	          TileViewMode mode) override;
+	          TileViewMode mode, int) override;
 	~TileObjectBattleMapPart() override;
 
 	wp<BattleMapPart> map_part;

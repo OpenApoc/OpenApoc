@@ -7,6 +7,7 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battleitem.h"
+#include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_doodad.h"
 #include "game/state/tileview/tileobject_projectile.h"
@@ -70,6 +71,18 @@ Vec3<float> Tile::getRestingPosition()
 			                              ->type->height);
 	return Vec3<float>{position.x + 0.5, position.y + 0.5,
 	                   position.z + height / (float)BATTLE_TILE_Z};
+}
+
+sp<TileObjectBattleUnit> Tile::getUnitIfPresent()
+{
+	for (auto o : intersectingObjects)
+	{
+		if (o->getType() == TileObject::Type::Unit)
+		{
+			return std::static_pointer_cast<TileObjectBattleUnit>(o);
+		}
+	}
+	return nullptr;
 }
 
 namespace
@@ -357,6 +370,31 @@ void TileMap::addObjectToMap(sp<BattleItem> item)
 	shadow->setPosition(item->getPosition());
 	item->shadowObject = shadow;
 }
+
+void TileMap::addObjectToMap(sp<BattleUnit> unit)
+{
+	if (unit->tileObject)
+	{
+		LogError("Unit already has tile object");
+	}
+	if (unit->shadowObject)
+	{
+		LogError("Unit already has shadow object");
+	}
+	// FIXME: mksp<> doesn't work for private (but accessible due to friend)
+	// constructors?
+	sp<TileObjectBattleUnit> obj(new TileObjectBattleUnit(*this, unit));
+	obj->setPosition(unit->getPosition());
+	unit->tileObject = obj;
+
+	if (!unit->agent->type->shadow_pack)
+		return;
+
+	sp<TileObjectShadow> shadow(new TileObjectShadow(*this, unit));
+	shadow->setPosition(unit->getPosition());
+	unit->shadowObject = shadow;
+}
+
 
 int TileMap::getLayer(TileObject::Type type) const
 {

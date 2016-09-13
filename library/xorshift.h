@@ -193,4 +193,24 @@ T vectorRandomizer(Generator &g, const std::vector<T> &vector)
 	return *it;
 }
 
+template <typename T, typename Generator>
+T setRandomizer(Generator &g, const std::set<T> &set)
+{
+	// we can't do index lookups in a list, so we just have to iterate N times
+	if (set.size() == 1)
+		return *set.begin();
+	else if (set.empty())
+	{
+		LogError("Trying to randomize within empty vector");
+	}
+	auto count = randBoundsExclusive(g, (unsigned)0, (unsigned)set.size());
+	auto it = set.begin();
+	while (count)
+	{
+		it++;
+		count--;
+	}
+	return *it;
+}
+
 } // namespace OpenApoc

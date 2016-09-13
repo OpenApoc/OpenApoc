@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<imagepack>
+  <image_offset>
+    <x>23</x>
+    <y>34</y>
+  </image_offset>
+  <images>
+    <entry>PCK:xcom3/tacdata/alien/mwegga.pck:xcom3/tacdata/alien/mwegga.tab:0</entry>
+    <entry>PCK:xcom3/tacdata/alien/mwegga.pck:xcom3/tacdata/alien/mwegga.tab:1</entry>
+    <entry>PCK:xcom3/tacdata/alien/mwegga.pck:xcom3/tacdata/alien/mwegga.tab:2</entry>
+    <entry>PCK:xcom3/tacdata/alien/mwegga.pck:xcom3/tacdata/alien/mwegga.tab:3</entry>
+    <entry>PCK:xcom3/tacdata/alien/mwegga.pck:xcom3/tacdata/alien/mwegga.tab:4</entry>
+    <entry>PCK:xcom3/tacdata/alien/mwegga.pck:xcom3/tacdata/alien/mwegga.tab:5</entry>
+    <entry>PCK:xcom3/tacdata/alien/mwegga.pck:xcom3/tacdata/alien/mwegga.tab:6</entry>
+    <entry>PCK:xcom3/tacdata/alien/mwegga.pck:xcom3/tacdata/alien/mwegga.tab:7</entry>
+    <entry>PCK:xcom3/tacdata/alien/mwegga.pck:xcom3/tacdata/alien/mwegga.tab:8</entry>
+    <entry>PCK:xcom3/tacdata/alien/mwegga.pck:xcom3/tacdata/alien/mwegga.tab:9</entry>
+    <entry>PCK:xcom3/tacdata/alien/mwegga.pck:xcom3/tacdata/alien/mwegga.tab:10</entry>
+    <entry>PCK:xcom3/tacdata/alien/mwegga.pck:xcom3/tacdata/alien/mwegga.tab:11</entry>
+    <entry>PCK:xcom3/tacdata/alien/mwegga.pck:xcom3/tacdata/alien/mwegga.tab:12</entry>
+    <entry>PCK:xcom3/tacdata/alien/mwegga.pck:xcom3/tacdata/alien/mwegga.tab:13</entry>
+    <entry>PCK:xcom3/tacdata/alien/mwegga.pck:xcom3/tacdata/alien/mwegga.tab:14</entry>
+    <entry>PCK:xcom3/tacdata/alien/mwegga.pck:xcom3/tacdata/alien/mwegga.tab:15</entry>
+  </images>
+</imagepack>

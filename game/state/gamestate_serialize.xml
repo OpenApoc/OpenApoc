@@ -24,14 +24,15 @@
 		<member>initial_facilities</member>
 		<member>current_city</member>
 		<member>current_base</member>
+		<member type="Section">battle_strategy_icon_list</member>
 		<member>player</member>
 		<member>aliens</member>
+		<member>civilian</member>
 		<member>rng</member>
 		<member>gameTime</member>
 		<member>gameTimeBeforeBattle</member>
 		<member type="SectionMap">battle_unit_image_packs</member>
-		<member type="SectionMap">battle_unit_animations</member>
-		<member>loadedTilesets</member>
+		<member type="SectionMap">battle_unit_animation_packs</member>
 		<member type="Section">battleMapTiles</member>
 		<member type="SectionMap">battle_maps</member>
 		<member type="Section">current_battle</member>
@@ -78,11 +79,15 @@
 		<member>portraits</member>
 		<member>min_stats</member>
 		<member>max_stats</member>
-		<member>movement_type</member>
+		<member>allowed_body_states</member>
+		<member>allowed_movement_states</member>
+		<member>allowed_facing</member>
 		<member>large</member>
+		<member>voxelMaps</member>
+		<member>shadow_pack</member>
+		<member>appearance_count</member>
 		<member>image_packs</member>
-		<member>animation</member>
-		<member>voxelMap</member>
+		<member>animation_packs</member>
 		<member>armor</member>
 		<member>damage_modifier</member>
 		<member>inventory</member>
@@ -94,17 +99,19 @@
 		<member>score</member>
 	</object>
 	<object>
-		<name>AEquipment</name>
-		<member>type</member>
-		<member>equippedPosition</member>
-		<member>owner</member>
-		<member>ammo</member>
-	</object>
-	<object>
 		<name>AgentType::EquipmentLayoutSlot</name>
 		<member>align_x</member>
 		<member>align_y</member>
 		<member>bounds</member>
+	</object>
+	<object>
+		<name>AEquipment</name>
+		<member>type</member>
+		<member>equippedPosition</member>
+		<member>ownerAgent</member>
+		<member>ammo</member>
+		<member>aiming</member>
+		<member>weapon_fire_ticks_remaining</member>
 	</object>
 	<object>
 		<name>EquipmentSet</name>
@@ -158,6 +165,7 @@
 		<member>stamina</member>
 		<member>bravery</member>
 		<member>strength</member>
+		<member>morale</member>
 		<member>psi_energy</member>
 		<member>psi_attack</member>
 		<member>psi_defence</member>
@@ -303,14 +311,17 @@
 	<object>
 		<name>Battle</name>
 		<member>size</member>
-		<member type="Section">map_parts</member>
-		<member>units</member>
-		<member>items</member>
-		<member>projectiles</member>
-		<member>doodads</member>
+		<member>battle_map</member>
+		<member>los_blocks</member>
 		<member>mission_type</member>
 		<member>mission_location_id</member>
 		<member>player_craft</member>
+		<member type="Section">map_parts</member>
+		<member>units</member>
+		<member>items</member>
+		<member>doodads</member>
+		<member>projectiles</member>
+		<member>participants</member>
 	</object>
 	<object>
 		<name>BattleMap</name>
@@ -331,7 +342,7 @@
 		<member>rubble_right_wall</member>
 		<member>rubble_feature</member>
 		<member>exit_grounds</member>
-		<member type="SectionMap">sectors</member>
+		<member>sectors</member>
 	</object>
 	<object>
 		<name>BattleMapSector</name>
@@ -363,41 +374,66 @@
 	</object>
 	<object>
 		<name>BattleUnitImagePack</name>
+		<member>image_offset</member>
 		<member>images</member>
 	</object>
 	<object>
-		<name>BattleUnitAnimation</name>
-		<member>animations</member>
+		<name>BattleStrategyIconList</name>
+		<member>images</member>
 	</object>
 	<object>
-		<name>BattleUnitAnimation::AnimationEntry</name>
+		<name>BattleUnitAnimationPack</name>
+		<member type="Section">standart_animations</member>
+		<member type="Section">hand_state_animations</member>
+		<member type="Section">body_state_animations</member>
+	</object>
+	<object>
+		<name>BattleUnitAnimationPack::AnimationEntry</name>
+		<member>is_overlay</member>
 		<member>frames</member>
 		<member>frame_count</member>
 	</object>
 	<object>
-		<name>BattleUnitAnimation::AnimationEntry::Frame</name>
-		<member>shadow</member>
-		<member>body</member>
-		<member>leg</member>
-		<member>helmet</member>
-		<member>right_arm</member>
-		<member>left_arm</member>
+		<name>BattleUnitAnimationPack::AnimationEntry::Frame</name>
+		<member>unit_image_parts</member>
+		<member>unit_image_draw_order</member>
 	</object>
 	<object>
-		<name>BattleUnitAnimation::AnimationEntry::Frame::InfoBlock</name>
+		<name>BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock</name>
 		<member>index</member>
-		<member>offset_x</member>
-		<member>offset_y</member>
+		<member>offset</member>
 	</object>
 	<object>
 		<name>BattleUnit</name>
 		<member>agent</member>
+		<member>owner</member>
+		<member>squadNumber</member>
+		<member>squadPosition</member>
+		<member>behavior_mode</member>
+		<member>fire_aiming_mode</member>
+		<member>fire_permission_mode</member>
+		<member>movement_mode</member>
+		<member>kneeling_mode</member>
+		<member>body_animation_ticks_remaining</member>
+		<member>current_body_state</member>
+		<member>target_body_state</member>
+		<member>hand_animation_ticks_remaining</member>
+		<member>current_hand_state</member>
+		<member>target_hand_state</member>
+		<member>movement_ticks_passed</member>
+		<member>turning_ticks_remaining</member>
+		<member>position</member>
+		<member>facing</member>
+		<member>retreated</member>
+		<member>destroyed</member>
+		<member>falling</member>
 	</object>
 	<object>
 		<name>BattleItem</name>
 		<member>item</member>
 		<member>position</member>
 		<member>velocity</member>
+		<member>supported</member>
 	</object>
 	<object>
 		<name>BattleMapPart</name>
@@ -534,11 +570,11 @@
 		<member>id</member>
 		<member>name</member>
 		<member>weight</member>
-		<member>strategy_sprite</member>
-		<member>held_sprites</member>
+		<member>held_image_pack</member>
 		<member>dropped_sprite</member>
-		<member>image_offset</member>
+		<member>dropped_offset</member>
 		<member>dropped_shadow_sprite</member>
+		<member>shadow_offset</member>
 		<member>equipscreen_sprite</member>
 		<member>equipscreen_size</member>
 		<member>manufacturer</member>
@@ -546,11 +582,13 @@
 		<member>armor</member>
 		<member>score</member>
 		<member>research_dependency</member>
+		<member>two_handed</member>
+		<member>body_sprite</member>
 		<member>damage_modifier</member>
 		<member>body_part</member>
-		<member>image_pack</member>
+		<member>body_image_pack</member>
 		<member>provides_flight</member>
-		<member>ammo_types</member>
+		<member>weapon_types</member>
 		<member>max_ammo</member>
 		<member>recharge</member>
 		<member>speed</member>
@@ -834,22 +872,37 @@
 		<value>Civilian</value>
 	</enum>
 	<enum>
-		<name>BattleUnitAnimation::AnimationDirection</name>
-		<value>Into</value>
-		<value>Within</value>
-		<value>Back</value>
-	</enum>
-	<enum>
-		<name>BattleUnitAnimation::ItemInHands</name>
+		<name>BattleUnitAnimationPack::ItemWieldMode</name>
 		<value>None</value>
 		<value>OneHanded</value>
 		<value>TwoHanded</value>
 	</enum>
 	<enum>
-		<name>BattleUnit::Behavior</name>
+		<name>BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart</name>
+		<value>Shadow</value>
+		<value>Body</value>
+		<value>Legs</value>
+		<value>Helmet</value>
+		<value>LeftArm</value>
+		<value>RightArm</value>
+		<value>Weapon</value>
+	</enum>
+	<enum>
+		<name>BattleUnit::BehaviorMode</name>
 		<value>Aggressive</value>
 		<value>Normal</value>
 		<value>Evasive</value>
+	</enum>
+	<enum>
+		<name>BattleUnit::FireAimingMode</name>
+		<value>Aimed</value>
+		<value>Snap</value>
+		<value>Auto</value>
+	</enum>
+	<enum>
+		<name>BattleUnit::FirePermissionMode</name>
+		<value>AtWill</value>
+		<value>CeaseFire</value>
 	</enum>
 	<enum>
 		<name>BattleUnit::MovementMode</name>
@@ -858,21 +911,9 @@
 		<value>Running</value>
 	</enum>
 	<enum>
-		<name>BattleUnit::Stance</name>
-		<value>Standing</value>
-		<value>Hovering</value>
+		<name>BattleUnit::KneelingMode</name>
+		<value>None</value>
 		<value>Kneeling</value>
-		<value>Lying</value>
-		<value>Strafing</value>
-		<value>Jumping</value>
-		<value>Downed</value>
-	</enum>
-	<enum>
-		<name>BattleUnit::HandState</name>
-		<value>Empty</value>
-		<value>Carrying</value>
-		<value>Aiming</value>
-		<value>Firing</value>
 	</enum>
 	<enum>
 		<name>Organisation::LootPriority</name>
@@ -1000,14 +1041,6 @@
 		<value>Loot</value>
 	</enum>
 	<enum>
-		<name>AgentType::BodyPart</name>
-		<value>Body</value>
-		<value>Legs</value>
-		<value>Helmet</value>
-		<value>LeftArm</value>
-		<value>RightArm</value>
-	</enum>
-	<enum>
 		<name>AEquipmentType::TriggerType</name>
 		<value>Normal</value>
 		<value>Proximity</value>
@@ -1026,14 +1059,6 @@
 		<value>Female</value>
 	</enum>
 	<enum>
-		<name>AgentType::MovementType</name>
-		<value>Stationary</value>
-		<value>Standart</value>
-		<value>Flying</value>
-		<value>StandartLarge</value>
-		<value>FlyingLarge</value>
-	</enum>
-	<enum>
 		<name>AgentType::AlignmentX</name>
 		<value>Left</value>
 		<value>Right</value>
@@ -1044,5 +1069,36 @@
 		<value>Top</value>
 		<value>Bottom</value>
 		<value>Centre</value>
+	</enum>
+	<enum>
+		<name>AgentType::BodyPart</name>
+		<value>Body</value>
+		<value>Legs</value>
+		<value>Helmet</value>
+		<value>LeftArm</value>
+		<value>RightArm</value>
+	</enum>
+	<enum>
+		<name>AgentType::BodyState</name>
+		<value>Standing</value>
+		<value>Flying</value>
+		<value>Kneeling</value>
+		<value>Prone</value>
+		<value>Jumping</value>
+		<value>Throwing</value>
+		<value>Downed</value>
+	</enum>
+	<enum>
+		<name>AgentType::HandState</name>
+		<value>AtEase</value>
+		<value>Aiming</value>
+		<value>Firing</value>
+	</enum>
+	<enum>
+		<name>AgentType::MovementState</name>
+		<value>None</value>
+		<value>Normal</value>
+		<value>Running</value>
+		<value>Strafing</value>
 	</enum>
 </openapoc_gamestate>

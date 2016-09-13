@@ -7,8 +7,6 @@ namespace OpenApoc
 
 class TileObject;
 class Projectile;
-// class BattleTileObject;
-// class BattleProjectile;
 
 class Collision
 {

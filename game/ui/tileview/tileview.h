@@ -54,6 +54,8 @@ class TileView : public Stage, public TileTransform
 	sp<Image> selectedTileEmptyImageFront;
 	sp<Image> selectedTileFilledImageBack;
 	sp<Image> selectedTileFilledImageFront;
+	sp<Image> selectedTileBackgroundImageBack;
+	sp<Image> selectedTileBackgroundImageFront;
 	Vec2<int> selectedTileImageOffset;
 
   public:

@@ -35,6 +35,8 @@
     <ClCompile Include="extractors\extract_facilities.cpp" />
     <ClCompile Include="extractors\extract_organisations.cpp" />
     <ClCompile Include="extractors\extract_research.cpp" />
+    <ClCompile Include="extractors\extract_unit_animation_packs.cpp" />
+    <ClCompile Include="extractors\extract_unit_image_packs.cpp" />
     <ClCompile Include="extractors\extract_vehicles.cpp" />
     <ClCompile Include="extractors\extract_vehicle_equipment.cpp" />
     <ClCompile Include="extractors\main.cpp" />
@@ -42,6 +44,7 @@
   <ItemGroup>
     <ClInclude Include="extractors\common\aequipment.h" />
     <ClInclude Include="extractors\common\agent.h" />
+    <ClInclude Include="extractors\common\animation.h" />
     <ClInclude Include="extractors\common\audio.h" />
     <ClInclude Include="extractors\common\baselayout.h" />
     <ClInclude Include="extractors\common\battlemap.h" />

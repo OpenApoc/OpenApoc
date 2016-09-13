@@ -85,7 +85,7 @@ ISOBORD = Unused
         <position x="4" y="7"/>
         <size width="53" height="21"/>
         <image/>
-        <!--<imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:19:xcom3/tacdata/tactical.pal</imagechecked>-->
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:141:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
       <checkbox id="BUTTON_TOGGLE_STRATMAP">
         <position x="4" y="30"/>

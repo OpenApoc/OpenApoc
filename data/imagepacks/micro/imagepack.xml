@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<imagepack>
+  <image_offset>
+    <x>23</x>
+    <y>34</y>
+  </image_offset>
+  <images>
+    <entry>PCK:xcom3/tacdata/alien/micro-.pck:xcom3/tacdata/alien/micro-.tab:0</entry>
+    <entry>PCK:xcom3/tacdata/alien/micro-.pck:xcom3/tacdata/alien/micro-.tab:1</entry>
+    <entry>PCK:xcom3/tacdata/alien/micro-.pck:xcom3/tacdata/alien/micro-.tab:2</entry>
+    <entry>PCK:xcom3/tacdata/alien/micro-.pck:xcom3/tacdata/alien/micro-.tab:3</entry>
+    <entry>PCK:xcom3/tacdata/alien/micro-.pck:xcom3/tacdata/alien/micro-.tab:4</entry>
+    <entry>PCK:xcom3/tacdata/alien/micro-.pck:xcom3/tacdata/alien/micro-.tab:5</entry>
+    <entry>PCK:xcom3/tacdata/alien/micro-.pck:xcom3/tacdata/alien/micro-.tab:6</entry>
+    <entry>PCK:xcom3/tacdata/alien/micro-.pck:xcom3/tacdata/alien/micro-.tab:7</entry>
+    <entry>PCK:xcom3/tacdata/alien/micro-.pck:xcom3/tacdata/alien/micro-.tab:8</entry>
+    <entry>PCK:xcom3/tacdata/alien/micro-.pck:xcom3/tacdata/alien/micro-.tab:9</entry>
+    <entry>PCK:xcom3/tacdata/alien/micro-.pck:xcom3/tacdata/alien/micro-.tab:10</entry>
+    <entry>PCK:xcom3/tacdata/alien/micro-.pck:xcom3/tacdata/alien/micro-.tab:11</entry>
+    <entry>PCK:xcom3/tacdata/alien/micro-.pck:xcom3/tacdata/alien/micro-.tab:12</entry>
+    <entry>PCK:xcom3/tacdata/alien/micro-.pck:xcom3/tacdata/alien/micro-.tab:13</entry>
+    <entry>PCK:xcom3/tacdata/alien/micro-.pck:xcom3/tacdata/alien/micro-.tab:14</entry>
+  </images>
+</imagepack>

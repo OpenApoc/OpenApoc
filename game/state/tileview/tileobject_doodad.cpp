@@ -6,7 +6,7 @@ namespace OpenApoc
 {
 
 void TileObjectDoodad::draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-                            TileViewMode mode)
+                            TileViewMode mode, int)
 {
 	std::ignore = transform;
 	// Mode isn't used as TileView::tileToScreenCoords already transforms according to the mode

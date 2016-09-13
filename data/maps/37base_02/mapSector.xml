@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mapSector>
+<mapsector>
   <los_blocks>
     <entry>
       <sp>
         <end>
-          <x>15</x>
-          <y>15</y>
-          <z>1</z>
+          <x>16</x>
+          <y>16</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -19,8 +19,23 @@
           <z>4</z>
         </start>
         <end>
-          <x>15</x>
-          <y>15</y>
+          <x>16</x>
+          <y>16</y>
+          <z>5</z>
+        </end>
+        <ai_patrol_priority>2</ai_patrol_priority>
+      </sp>
+    </entry>
+    <entry>
+      <sp>
+        <start>
+          <x>8</x>
+          <y>8</y>
+          <z>2</z>
+        </start>
+        <end>
+          <x>16</x>
+          <y>16</y>
           <z>4</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
@@ -30,13 +45,13 @@
       <sp>
         <start>
           <x>8</x>
-          <y>8</y>
+          <y>0</y>
           <z>2</z>
         </start>
         <end>
-          <x>15</x>
-          <y>15</y>
-          <z>3</z>
+          <x>16</x>
+          <y>8</y>
+          <z>4</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -44,29 +59,14 @@
     <entry>
       <sp>
         <start>
+          <x>0</x>
+          <y>0</y>
+          <z>2</z>
+        </start>
+        <end>
           <x>8</x>
-          <y>0</y>
-          <z>2</z>
-        </start>
-        <end>
-          <x>15</x>
-          <y>7</y>
-          <z>3</z>
-        </end>
-        <ai_patrol_priority>2</ai_patrol_priority>
-      </sp>
-    </entry>
-    <entry>
-      <sp>
-        <start>
-          <x>0</x>
-          <y>0</y>
-          <z>2</z>
-        </start>
-        <end>
-          <x>7</x>
-          <y>7</y>
-          <z>3</z>
+          <y>8</y>
+          <z>4</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -79,9 +79,9 @@
           <z>2</z>
         </start>
         <end>
-          <x>7</x>
-          <y>15</y>
-          <z>3</z>
+          <x>8</x>
+          <y>16</y>
+          <z>4</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -12903,4 +12903,4 @@
       <value>BATTLEMAPPART_37base_FT_77</value>
     </entry>
   </initial_features>
-</mapSector>
+</mapsector>

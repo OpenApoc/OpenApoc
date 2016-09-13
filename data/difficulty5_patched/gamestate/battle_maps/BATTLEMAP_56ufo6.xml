@@ -151,6 +151,22 @@
       <entry>BATTLEMAPPART_56ufo6_GD_118</entry>
       <entry>BATTLEMAPPART_56ufo6_GD_119</entry>
     </exit_grounds>
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
+    <sectors>
+      <entry>
+        <key>SEC01</key>
+        <value>
+          <sp>
+            <size>
+              <x>2</x>
+              <y>2</y>
+              <z>1</z>
+            </size>
+            <occurrence_min>1</occurrence_min>
+            <occurrence_max>1</occurrence_max>
+            <sectorTilesName>56ufo6_01</sectorTilesName>
+          </sp>
+        </value>
+      </entry>
+    </sectors>
   </sp>
 </BATTLEMAP_56ufo6>

@@ -72,13 +72,15 @@ const StateRef<Organisation> &GameState::getPlayer() const { return this->player
 StateRef<Organisation> GameState::getPlayer() { return this->player; }
 const StateRef<Organisation> &GameState::getAliens() const { return this->aliens; }
 StateRef<Organisation> GameState::getAliens() { return this->aliens; }
+const StateRef<Organisation> &GameState::getCivilian() const { return this->civilian; }
+StateRef<Organisation> GameState::getCivilian() { return this->civilian; }
 
 void GameState::initState()
 {
 	// FIXME: reseed rng when game starts
 
 	if (current_battle)
-		current_battle->initBattle();
+		current_battle->initBattle(*this);
 
 	for (auto &c : this->cities)
 	{
@@ -121,6 +123,16 @@ void GameState::initState()
 			}
 		}
 	}
+	// Fill links for weapon's ammo
+	for (auto &t : this->agent_equipment)
+	{
+		for (auto w : t.second->weapon_types)
+		{
+			w->ammo_types.emplace(this, t.first);
+		}
+	}
+	// Run nessecary methods for different types
+	research.updateTopicList();
 }
 
 void GameState::startGame()

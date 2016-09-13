@@ -4,8 +4,8 @@
 #include "framework/serialization/serialize.h"
 #include "framework/trace.h"
 #include "game/state/base/facility.h"
-#include "game/state/battlemappart.h"
-#include "game/state/battlemappart_type.h"
+#include "game/state/battle/battlemappart.h"
+#include "game/state/battle/battlemappart_type.h"
 #include "game/state/city/baselayout.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
@@ -296,6 +296,9 @@ bool GameState::deserialize(const sp<SerializationArchive> archive)
 	return true;
 }
 
+// FIXME: Move tilesetPath and others to some config variable?
+const UString BattleMapTileset::tilesetPath = "data/tilesets";
+
 static bool serialize(const BattleMapTileset &tileSet, sp<SerializationArchive> archive)
 {
 	try
@@ -312,7 +315,7 @@ static bool serialize(const BattleMapTileset &tileSet, sp<SerializationArchive> 
 }
 
 static bool deserialize(BattleMapTileset &tileSet, const GameState &state,
-                        const sp<SerializationArchive> archive)
+	const sp<SerializationArchive> archive)
 {
 	try
 	{
@@ -325,9 +328,6 @@ static bool deserialize(BattleMapTileset &tileSet, const GameState &state,
 	}
 	return true;
 }
-
-// FIXME: Move tilesetPath to some config variable?
-const UString BattleMapTileset::tilesetPath = "data/tilesets";
 
 bool BattleMapTileset::saveTileset(const UString &path, bool pack)
 {
@@ -355,12 +355,130 @@ bool BattleMapTileset::loadTileset(GameState &state, const UString &path)
 	return deserialize(*this, state, archive);
 }
 
+const UString BattleUnitImagePack::imagePackPath = "data/imagepacks";
+
+static bool serialize(const BattleUnitImagePack &imagePack, sp<SerializationArchive> archive)
+{
+	try
+	{
+		BattleUnitImagePack defaultImagePack;
+		serializeOut(archive->newRoot("", "imagepack"), imagePack, defaultImagePack);
+	}
+	catch (SerializationException &e)
+	{
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
+		return false;
+	}
+	return true;
+}
+
+static bool deserialize(BattleUnitImagePack &imagePack, const GameState &state,
+	const sp<SerializationArchive> archive)
+{
+	try
+	{
+		serializeIn(&state, archive->getRoot("", "imagepack"), imagePack);
+	}
+	catch (SerializationException &e)
+	{
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
+		return false;
+	}
+	return true;
+}
+
+bool BattleUnitImagePack::saveImagePack(const UString &path, bool pack)
+{
+	TRACE_FN_ARGS1("path", path);
+	auto archive = SerializationArchive::createArchive();
+	if (serialize(*this, archive))
+	{
+		archive->write(path, pack);
+		return true;
+	}
+	return false;
+}
+
+bool BattleUnitImagePack::loadImagePack(GameState &state, const UString &path)
+{
+
+	TRACE_FN_ARGS1("path", path);
+	auto archive = SerializationArchive::readArchive(path);
+	if (!archive)
+	{
+		LogError("Failed to read \"%s\"", path.cStr());
+		return false;
+	}
+
+	return deserialize(*this, state, archive);
+}
+
+const UString BattleUnitAnimationPack::animationPackPath = "data/animationpacks";
+
+
+static bool serialize(const BattleUnitAnimationPack &animationPack, sp<SerializationArchive> archive)
+{
+	try
+	{
+		BattleUnitAnimationPack defaultAnimationPack;
+		serializeOut(archive->newRoot("", "animationpack"), animationPack, defaultAnimationPack);
+	}
+	catch (SerializationException &e)
+	{
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
+		return false;
+	}
+	return true;
+}
+
+static bool deserialize(BattleUnitAnimationPack &animationPack, const GameState &state,
+	const sp<SerializationArchive> archive)
+{
+	try
+	{
+		serializeIn(&state, archive->getRoot("", "animationpack"), animationPack);
+	}
+	catch (SerializationException &e)
+	{
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
+		return false;
+	}
+	return true;
+}
+
+bool BattleUnitAnimationPack::saveAnimationPack(const UString &path, bool pack)
+{
+	TRACE_FN_ARGS1("path", path);
+	auto archive = SerializationArchive::createArchive();
+	if (serialize(*this, archive))
+	{
+		archive->write(path, pack);
+		return true;
+	}
+	return false;
+}
+
+bool BattleUnitAnimationPack::loadAnimationPack(GameState &state, const UString &path)
+{
+
+	TRACE_FN_ARGS1("path", path);
+	auto archive = SerializationArchive::readArchive(path);
+	if (!archive)
+	{
+		LogError("Failed to read \"%s\"", path.cStr());
+		return false;
+	}
+
+	return deserialize(*this, state, archive);
+}
+
+
 static bool serialize(const BattleMapSectorTiles &mapSector, sp<SerializationArchive> archive)
 {
 	try
 	{
 		BattleMapSectorTiles defaultMapSector;
-		serializeOut(archive->newRoot("", "mapSector"), mapSector, defaultMapSector);
+		serializeOut(archive->newRoot("", "mapsector"), mapSector, defaultMapSector);
 	}
 	catch (SerializationException &e)
 	{
@@ -375,7 +493,7 @@ static bool deserialize(BattleMapSectorTiles &mapSector, const GameState &state,
 {
 	try
 	{
-		serializeIn(&state, archive->getRoot("", "mapSector"), mapSector);
+		serializeIn(&state, archive->getRoot("", "mapsector"), mapSector);
 	}
 	catch (SerializationException &e)
 	{

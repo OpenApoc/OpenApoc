@@ -8,11 +8,20 @@ namespace OpenApoc
 {
 
 TileObject::TileObject(TileMap &map, Type type, Vec3<float> bounds)
-    : map(map), type(type), owningTile(nullptr), bounds(bounds), name("UNKNOWN_OBJECT")
+    : map(map), type(type), owningTile(nullptr), 
+	name("UNKNOWN_OBJECT")
 {
+	setBounds(bounds);
 }
 
 TileObject::~TileObject() = default;
+
+void TileObject::setBounds(Vec3<float> bounds)
+{
+	this->bounds = bounds;
+	this->bounds_div_2 = bounds / 2.0f;
+	this->bounds_div_2_sub_1 = bounds_div_2 - 0.001f;
+}
 
 void TileObject::removeFromMap()
 {
@@ -53,14 +62,14 @@ class TileObjectZComparer
 		if (lhsT != rhsT)
 			return lhsT < rhsT;
 
-		// If both objects are of the same mappart type (or are both other type) then proceed to
-		// check their Z
+		// If both objects are of the same mappart type (or are both other type) 
+		// then proceed to check their Z. However, type remains the tiebreaker
 		float lhsZ = lhs->getPosition().x * lhs->map.velocityScale.x +
 		             lhs->getPosition().y * lhs->map.velocityScale.y +
-		             lhs->getPosition().z * lhs->map.velocityScale.z;
+		             lhs->getPosition().z * lhs->map.velocityScale.z + (float)lhs->getType() / 1000.0f;
 		float rhsZ = rhs->getPosition().x * rhs->map.velocityScale.x +
 		             rhs->getPosition().y * rhs->map.velocityScale.y +
-		             rhs->getPosition().z * rhs->map.velocityScale.z;
+		             rhs->getPosition().z * rhs->map.velocityScale.z + (float)rhs->getType() / 1000.0f;
 		// FIXME: Hack to force 'overlay' objects to be half-a-tile up in Z
 		if (lhs->getType() == TileObject::Type::Doodad)
 		{
@@ -109,7 +118,8 @@ void TileObject::setPosition(Vec3<float> newPosition)
 	}
 	this->removeFromMap();
 
-	this->owningTile = map.getTile(newPosition);
+	// This makes sure object is always assigned the bottom-most, right-most tile it occupies
+	this->owningTile = map.getTile(newPosition + this->bounds_div_2_sub_1);
 	if (!this->owningTile)
 	{
 		LogError("Failed to get tile for position {%f,%f,%f}", newPosition.x, newPosition.y,
@@ -128,12 +138,12 @@ void TileObject::setPosition(Vec3<float> newPosition)
 	std::sort(this->owningTile->drawnObjects[layer].begin(),
 	          this->owningTile->drawnObjects[layer].end(), TileObjectZComparer{});
 
-	Vec3<int> minBounds = {floorf(newPosition.x - this->bounds.x / 2.0f),
-	                       floorf(newPosition.y - this->bounds.y / 2.0f),
-	                       floorf(newPosition.z - this->bounds.z / 2.0f)};
-	Vec3<int> maxBounds = {ceilf(newPosition.x + this->bounds.x / 2.0f),
-	                       ceilf(newPosition.y + this->bounds.y / 2.0f),
-	                       ceilf(newPosition.z + this->bounds.z / 2.0f)};
+	Vec3<int> minBounds = {floorf(newPosition.x - this->bounds_div_2.x),
+	                       floorf(newPosition.y - this->bounds_div_2.y),
+	                       floorf(newPosition.z - this->bounds_div_2.z)};
+	Vec3<int> maxBounds = {ceilf(newPosition.x + this->bounds_div_2.x),
+	                       ceilf(newPosition.y + this->bounds_div_2.y),
+	                       ceilf(newPosition.z + this->bounds_div_2.z)};
 
 	for (int x = minBounds.x; x < maxBounds.x; x++)
 	{

@@ -67,6 +67,8 @@ class Tile
 	// FIXME: This is effectively a z-sorted list of ownedObjects - can this be merged somehow?
 	std::vector<std::vector<sp<TileObject>>> drawnObjects;
 
+	sp<TileObjectBattleUnit> getUnitIfPresent();
+
 	Tile(TileMap &map, Vec3<int> position, int layerCount);
 };
 
@@ -142,7 +144,7 @@ class TileMap
 	void addObjectToMap(sp<Doodad>);
 	void addObjectToMap(sp<BattleMapPart>);
 	void addObjectToMap(sp<BattleItem>);
-	// void addObjectToMap(sp<BattleUnit>);
+	void addObjectToMap(sp<BattleUnit>);
 
 	int getLayer(TileObject::Type type) const;
 	int getLayerCount() const;

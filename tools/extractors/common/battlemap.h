@@ -123,7 +123,7 @@ struct BattleMapPartEntry
 	uint16_t alternative_object_requirement;
 	uint16_t alternative_object_idx;
 	uint8_t alternative_object_type;
-	uint8_t movement_cost;
+	int8_t movement_cost;
 	uint8_t is_climbable;
 	uint8_t height;
 	uint8_t is_floating;

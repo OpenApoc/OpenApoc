@@ -194,6 +194,52 @@
       <entry>BATTLEMAPPART_39incub_GD_218</entry>
       <entry>BATTLEMAPPART_39incub_GD_219</entry>
     </exit_grounds>
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sectors.xml" />
+    <sectors>
+      <entry>
+        <key>SEC01</key>
+        <value>
+          <sp>
+            <size>
+              <x>2</x>
+              <y>2</y>
+              <z>1</z>
+            </size>
+            <occurrence_min>1</occurrence_min>
+            <occurrence_max>1</occurrence_max>
+            <sectorTilesName>39incub_01</sectorTilesName>
+          </sp>
+        </value>
+      </entry>
+      <entry>
+        <key>SEC02</key>
+        <value>
+          <sp>
+            <size>
+              <x>1</x>
+              <y>1</y>
+              <z>1</z>
+            </size>
+            <occurrence_min>1</occurrence_min>
+            <occurrence_max>1</occurrence_max>
+            <sectorTilesName>39incub_02</sectorTilesName>
+          </sp>
+        </value>
+      </entry>
+      <entry>
+        <key>SEC03</key>
+        <value>
+          <sp>
+            <size>
+              <x>1</x>
+              <y>1</y>
+              <z>1</z>
+            </size>
+            <occurrence_min>1</occurrence_min>
+            <occurrence_max>1</occurrence_max>
+            <sectorTilesName>39incub_03</sectorTilesName>
+          </sp>
+        </value>
+      </entry>
+    </sectors>
   </sp>
 </BATTLEMAP_39incub>

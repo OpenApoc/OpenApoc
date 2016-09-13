@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<imagepack>
+  <image_offset>
+    <x>23</x>
+    <y>34</y>
+  </image_offset>
+  <images>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:0</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:1</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:2</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:3</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:4</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:5</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:6</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:7</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:8</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:9</entry>
+  </images>
+</imagepack>

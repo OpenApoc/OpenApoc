@@ -72,6 +72,12 @@
     <ClCompile Include="extractors\extract_battlescape_map_parts.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="extractors\extract_unit_image_packs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="extractors\extract_unit_animation_packs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="extractors\extractors.h">
@@ -135,6 +141,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="extractors\common\battlemap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="extractors\common\animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -368,6 +368,11 @@ sp<Image> Data::loadImage(const UString &path, bool lazy)
 			{
 				sp<PaletteImage> pImg = std::dynamic_pointer_cast<PaletteImage>(this->loadImage(
 				    "PCK:" + splitString[1] + ":" + splitString[2] + ":" + splitString[3]));
+				// In some cases, PCKS do not have enough pictures even though TAB references them. 
+				// Example: tacdata/unit/xcom1a.pck
+				// We should not throw in this case.
+				if (!pImg)
+					return nullptr;
 				LogAssert(pImg);
 				auto pal = this->loadPalette(splitString[4]);
 				LogAssert(pal);
@@ -501,6 +506,12 @@ sp<Image> Data::loadImage(const UString &path, bool lazy)
 			LogInfo("Failed to load image \"%s\"", path.cStr());
 			return nullptr;
 		}
+	}
+
+	if (!img)
+	{
+		LogInfo("Failed to load image \"%s\"", path.cStr());
+		return nullptr;
 	}
 
 	this->pinnedImages.push(img);

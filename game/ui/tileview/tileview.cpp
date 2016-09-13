@@ -2,7 +2,7 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/includes.h"
-#include "game/state/battle.h"
+#include "game/state/battle/battle.h"
 
 namespace OpenApoc
 {
@@ -22,8 +22,10 @@ TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
 			layerDrawingMode = LayerDrawingMode::AllLevels;
 			selectedTileEmptyImageBack = fw().data->loadImage("city/selected-citytile-back.png");
 			selectedTileFilledImageBack = fw().data->loadImage("city/selected-citytile-back.png");
+			selectedTileBackgroundImageBack = fw().data->loadImage("city/selected-citytile-back.png");
 			selectedTileEmptyImageFront = fw().data->loadImage("city/selected-citytile-front.png");
 			selectedTileFilledImageFront = fw().data->loadImage("city/selected-citytile-front.png");
+			selectedTileBackgroundImageFront = fw().data->loadImage("city/selected-citytile-front.png");
 			pal = fw().data->loadPalette("xcom3/ufodata/pal_01.dat");
 			break;
 		case Mode::Battle:
@@ -36,6 +38,10 @@ TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
 			    fw().data->loadImage("battle/selected-battletile-filled-back.png");
 			selectedTileFilledImageFront =
 			    fw().data->loadImage("battle/selected-battletile-filled-front.png");
+			selectedTileBackgroundImageBack =
+				fw().data->loadImage("battle/selected-battletile-background-back.png");
+			selectedTileBackgroundImageFront =
+				fw().data->loadImage("battle/selected-battletile-background-front.png");
 			selectedTileImageOffset = {23, 22};
 			pal = fw().data->loadPalette("xcom3/tacdata/tactical.pal");
 			break;
@@ -251,49 +257,122 @@ void TileView::render()
 			break;
 	}
 
-	// Find out when to draw selection bracket parts (if ever)
-	Tile *selectedTile = nullptr;
-	sp<TileObject> drawBackBeforeThis;
-	sp<Image> selectionImageBack;
-	sp<Image> selectionImageFront;
-	if (selectedTilePosition.x >= minX && selectedTilePosition.x < maxX &&
-	    selectedTilePosition.y >= minY && selectedTilePosition.y < maxY &&
-	    selectedTilePosition.z >= zFrom && selectedTilePosition.z < zTo)
-	{
-		selectedTile =
-		    map.getTile(selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z);
+	// FIXME: A different algorithm is required in order to properly display big units.
+	/*
+		1) Rendering must go in diagonal lines. Illustration:
 
-		if (this->viewMode == TileViewMode::Isometric)
-		{
-			// Find where to draw back selection bracket
-			auto object_count = selectedTile->drawnObjects[0].size();
-			for (size_t obj_id = 0; obj_id < object_count; obj_id++)
-			{
-				auto &obj = selectedTile->drawnObjects[0][obj_id];
-				if (!drawBackBeforeThis && obj->getType() != TileObject::Type::Ground)
-					drawBackBeforeThis = obj;
-			}
-			// Find what kind of selection bracket to draw (yellow or green)
-			bool foundUnit = false;
-			object_count = selectedTile->intersectingObjects.size();
-			for (auto &tile : selectedTile->intersectingObjects)
-				if (tile->getType() == TileObject::Type::Unit)
-					foundUnit = true;
-			if (foundUnit)
-			{
-				selectionImageBack = selectedTileFilledImageBack;
-				selectionImageFront = selectedTileFilledImageFront;
-			}
-			else
-			{
-				selectionImageBack = selectedTileEmptyImageBack;
-				selectionImageFront = selectedTileEmptyImageFront;
-			}
-		}
-	}
+		CURRENT		TARGET
+
+		147			136
+		258			258
+		369			479
+
+		2) Objects must be located in the bottom-most, right-most tile they intersect
+		(already implemented)
+		
+		3) Object can either occupy 1, 2 or 3 tiles on the X axis (only X matters)
+		
+		- Tiny objects (items, projectiles) occupy 1 tile always
+		- Small typical objects (walls, sceneries, small units) occupy 1 tile when static, 
+																  2 when moving on X axis
+		- Large objects (large units) occupy 2 tiles when static, 3 when moving on x axis
+
+		How to determine this value is TBD.
+
+		4) When rendering we must check 1 tile ahead for 2-tile object 
+		and 1 tile ahead and further on x axis for 3-tile object. 
+
+		If present we must draw 1 tile ahead for 2-tile object
+		or 2 tiles ahead and one tile further on x-axis for 3 tile object
+		then resume normal draw order without drawing already drawn tiles
+		
+		Illustration:
+
+		SMALL MOVING	LARGE STATIC	LARGE MOVING		LEGEND
+
+										xxxxx > xxxxx6.		x		= tile w/o  object drawn
+		 xxxx > xxxx48	xxxx > xxxx48	x+++  > x+++59		+		= tile with object drawn
+		 xxx  > xxx37	x++  > x++37	x++O  > x++28.		digit	= draw order
+		 x+O  > x+16	x+O  > x+16		x+OO  > x+13.		o		= object yet to draw
+		 x?   > x25		x?   > x25		x?	  > x47.		?		= current position
+
+		So, if we encounter a 2-tile (on x axis) object in the next position (x-1, y+1)
+		then we must first draw tile (x-1,y+1), and then draw our tile, 
+		and then skip drawing next tile (as we have already drawn it!)
+
+		If we encounter a 3-tile (on x axis) object in the position (x-1,y+2)
+		then we must first draw (x-1,y+1), then (x-2,y+2), then (x-1,y+2), then draw our tile,
+		and then skip drawing next two tiles (as we have already drawn it) and skip drawing
+		the tile (x-1, y+2) on the next row
+
+		This is done best by having a set of Vec3<int>'s, and "skip next X tiles" variable.
+		When encountering a 2-tile object, we inrement "skip next X tiles" by 1.
+		When encountering a 3-tile object, we increment "skip next X tiles" by 2,
+		and we add (x-1, y+2) to the set. 
+		When trying to draw a tile we first check the "skip next X tiles" variable,
+		if > 0 we decrement and continue.
+		Second, we check if our tile is in the set. If so, we remove from set and continue.
+		Third, we draw normally
+	*/
+	
+	// FIXME: A different drawing algorithm is required for battle's strategic view
+	/*
+		First, draw everything except units and items
+		Then, draw items only on current z-level
+		Then, draw agents, bottom to top, drawing hollow sprites for non-current levels
+	*/
 
 	for (int z = zFrom; z < zTo; z++)
 	{
+		int currentLevel = z - currentZLevel;
+		// FIXME: Draw double selection bracket for big units?
+		// Find out when to draw selection bracket parts (if ever)
+		Tile *selTileOnCurLevel = nullptr;
+		Vec3<int> selTilePosOnCurLevel;
+		sp<TileObject> drawBackBeforeThis;
+		sp<Image> selectionImageBack;
+		sp<Image> selectionImageFront;
+		if (mode == Mode::Battle && this->viewMode == TileViewMode::Isometric)
+		{
+			if (selectedTilePosition.z >= z &&
+			selectedTilePosition.x >= minX && selectedTilePosition.x < maxX &&
+			selectedTilePosition.y >= minY && selectedTilePosition.y < maxY)
+			{
+				selTilePosOnCurLevel = { selectedTilePosition.x, selectedTilePosition.y, z };
+				selTileOnCurLevel = map.getTile(selTilePosOnCurLevel.x, selTilePosOnCurLevel.y,
+					selTilePosOnCurLevel.z);
+
+				// Find where to draw back selection bracket
+				auto object_count = selTileOnCurLevel->drawnObjects[0].size();
+				for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+				{
+					auto &obj = selTileOnCurLevel->drawnObjects[0][obj_id];
+					if (!drawBackBeforeThis && obj->getType() != TileObject::Type::Ground)
+						drawBackBeforeThis = obj;
+				}
+				// Find what kind of selection bracket to draw (yellow or green)
+				// Yellow if this tile intersects with a unit
+				if (selectedTilePosition.z == z)
+				{
+					if (selTileOnCurLevel->getUnitIfPresent())
+					{
+						selectionImageBack = selectedTileFilledImageBack;
+						selectionImageFront = selectedTileFilledImageFront;
+					}
+					else
+					{
+						selectionImageBack = selectedTileEmptyImageBack;
+						selectionImageFront = selectedTileEmptyImageFront;
+					}
+				}
+				else
+				{
+					selectionImageBack = selectedTileBackgroundImageBack;
+					selectionImageFront = selectedTileBackgroundImageFront;
+				}
+			}
+		}
+
 		for (int layer = 0; layer < map.getLayerCount(); layer++)
 		{
 			for (int y = minY; y < maxY; y++)
@@ -303,8 +382,7 @@ void TileView::render()
 					auto tile = map.getTile(x, y, z);
 					auto object_count = tile->drawnObjects[layer].size();
 					// I assume splitting it here will improve performance?
-					if (viewMode == TileViewMode::Isometric && mode == Mode::Battle && layer == 0 &&
-					    tile == selectedTile)
+					if (tile == selTileOnCurLevel && layer == 0)
 					{
 						for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 						{
@@ -312,20 +390,20 @@ void TileView::render()
 							// Back selection image is drawn
 							// between ground image and everything else
 							if (obj == drawBackBeforeThis)
-								r.draw(selectedTileEmptyImageBack,
-								       tileToOffsetScreenCoords(selectedTilePosition) -
+								r.draw(selectionImageBack,
+								       tileToOffsetScreenCoords(selTilePosOnCurLevel) -
 								           selectedTileImageOffset);
 							Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
-							obj->draw(r, *this, pos, this->viewMode);
+							obj->draw(r, *this, pos, this->viewMode, currentLevel);
 						}
 						// When done with all objects, draw the front selection image
 						// (and back selection image if we haven't yet)
 						if (!drawBackBeforeThis)
-							r.draw(selectedTileEmptyImageBack,
-							       tileToOffsetScreenCoords(selectedTilePosition) -
+							r.draw(selectionImageBack,
+							       tileToOffsetScreenCoords(selTilePosOnCurLevel) -
 							           selectedTileImageOffset);
-						r.draw(selectedTileEmptyImageFront,
-						       tileToOffsetScreenCoords(selectedTilePosition) -
+						r.draw(selectionImageFront,
+						       tileToOffsetScreenCoords(selTilePosOnCurLevel) -
 						           selectedTileImageOffset);
 					}
 					else
@@ -336,7 +414,7 @@ void TileView::render()
 						{
 							auto &obj = tile->drawnObjects[layer][obj_id];
 							Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
-							obj->draw(r, *this, pos, this->viewMode);
+							obj->draw(r, *this, pos, this->viewMode, currentLevel);
 						}
 					}
 				}

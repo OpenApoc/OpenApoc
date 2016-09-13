@@ -30,12 +30,22 @@ class InitialGameStateExtractor
 
 	// Though this takes a gamestate, that's just used to hang StateRef<>s off
 	sp<BattleMapTileset> extractTileSet(GameState &state, const UString &name);
+	sp<BattleUnitImagePack> extractImagePack(GameState &state, const UString &path, bool shadow);
+	sp<BattleUnitImagePack> extractItemImagePack(GameState &state, int item);
+	int InitialGameStateExtractor::getItemImagePacksCount();
+	sp<BattleUnitAnimationPack> extractAnimationPack(GameState &state, const UString &path, const UString &name);
 	std::map<UString, up<BattleMapSectorTiles>> extractMapSectors(GameState &state,
 	                                                              const UString &mapRootName);
 
 	// Lookup table of building function number -> battlemap path
 	static const std::vector<UString> battleMapPaths;
-
+	// List of paths and names for unit image packs
+	static const std::map<OpenApoc::UString, OpenApoc::UString> unitImagePackPaths;
+	// List of paths and names for unit shadow packs
+	static const std::map<OpenApoc::UString, OpenApoc::UString> unitShadowPackPaths;
+	// List of paths and names for animation packs
+	static const std::map<OpenApoc::UString, OpenApoc::UString> unitAnimationPackPaths;
+	
   private:
 	void extractVehicles(GameState &state, Difficulty difficulty);
 	void extractOrganisations(GameState &state, Difficulty difficulty);
