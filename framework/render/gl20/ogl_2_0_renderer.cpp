@@ -677,7 +677,8 @@ class OGL20Renderer : public Renderer
 		gl20::GetIntegerv(gl20::MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTexUnits);
 		LogInfo("MAX_COMBINED_TEXTURE_IMAGE_UNITS: %d", maxTexUnits);
 		gl20::Enable(gl20::BLEND);
-		gl20::BlendFunc(gl20::SRC_ALPHA, gl20::ONE_MINUS_SRC_ALPHA);
+		gl20::BlendFuncSeparate(gl20::SRC_ALPHA, gl20::ONE_MINUS_SRC_ALPHA, gl20::SRC_ALPHA,
+		                        gl20::DST_ALPHA);
 	}
 	~OGL20Renderer() override = default;
 	void clear(Colour c = Colour{0, 0, 0, 0}) override

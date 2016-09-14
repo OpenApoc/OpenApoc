@@ -1622,7 +1622,7 @@ OGLES30Renderer::OGLES30Renderer() : state(State::Idle)
 	    mksp<GLSurface>(0, Vec2<int>{viewport[2], viewport[3]});
 	this->current_surface = default_surface;
 	gl->Enable(GL::BLEND);
-	gl->BlendFunc(GL::SRC_ALPHA, GL::ONE_MINUS_SRC_ALPHA);
+	gl->BlendFuncSeparate(GL::SRC_ALPHA, GL::ONE_MINUS_SRC_ALPHA, GL::SRC_ALPHA, GL::DST_ALPHA);
 	gl->PixelStorei(GL::UNPACK_ALIGNMENT, 1);
 
 	GL::GLint max_texture_size;
