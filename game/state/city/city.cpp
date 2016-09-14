@@ -163,7 +163,6 @@ void City::update(GameState &state, unsigned int ticks)
 	}
 	Trace::end("City::update::buildings->landed_vehicles");
 	Trace::start("City::update::projectiles->update");
-	std::list<std::future<Collision>> collisions;
 	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
 	{
 		auto p = *it++;
@@ -171,19 +170,7 @@ void City::update(GameState &state, unsigned int ticks)
 	}
 	for (auto &p : this->projectiles)
 	{
-		auto func = std::bind(&Projectile::checkProjectileCollision, p, std::placeholders::_1);
-		collisions.emplace_back(fw().threadPool->enqueue(func, std::ref(*map)));
-	}
-	for (auto &future : collisions)
-	{
-		// Make sure every user of the TileMap is finished before processing (as the tileobject/map
-		// lists are not locked, so probably OK for read-only...)
-		future.wait();
-	}
-	for (auto &future : collisions)
-	{
-
-		auto c = future.get();
+		auto c = p->checkProjectileCollision(*map);
 		if (c)
 		{
 			// FIXME: Handle collision
