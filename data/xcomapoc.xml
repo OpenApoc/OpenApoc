@@ -25,5 +25,6 @@
     <include>ui/city/baseselect.xml</include>
     <include>ui/battle/battle.xml</include>
 	<include>ui/mapselector.xml</include>
+	<include>ui/aequipscreen.xml</include>
   </game>
 </openapoc>

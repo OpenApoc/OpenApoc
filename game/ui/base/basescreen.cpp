@@ -5,6 +5,7 @@
 #include "framework/image.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
+#include "game/ui/base/aequipscreen.h"
 #include "game/ui/base/basegraphics.h"
 #include "game/ui/base/researchscreen.h"
 #include "game/ui/base/vequipscreen.h"
@@ -75,6 +76,11 @@ void BaseScreen::begin()
 	form->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [](Event *) { fw().stageQueueCommand({StageCmd::Command::POP}); });
+	form->findControlTyped<GraphicButton>("BUTTON_BASE_EQUIPAGENT")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    // FIXME: If you don't have any vehicles this button should do nothing
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<AEquipScreen>(state)});
+		});
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_EQUIPVEHICLE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    // FIXME: If you don't have any vehicles this button should do nothing

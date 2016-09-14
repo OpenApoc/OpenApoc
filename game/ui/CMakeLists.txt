@@ -12,6 +12,7 @@ set (GAMEUI_SOURCE_FILES
 	base/researchscreen.cpp
 	base/researchselect.cpp
 	base/vequipscreen.cpp
+	base/aequipscreen.cpp
 	city/basebuyscreen.cpp
 	city/baseselectscreen.cpp
 	city/buildingscreen.cpp
@@ -45,6 +46,7 @@ set (GAMEUI_HEADER_FILES
 	base/researchscreen.h
 	base/researchselect.h
 	base/vequipscreen.h
+	base/aequipscreen.h
 	city/basebuyscreen.h
 	city/baseselectscreen.h
 	city/buildingscreen.h

@@ -25,6 +25,7 @@
     <ClCompile Include="base\researchscreen.cpp" />
     <ClCompile Include="base\researchselect.cpp" />
     <ClCompile Include="base\vequipscreen.cpp" />
+	<ClCompile Include="base\aequipscreen.cpp" />
     <ClCompile Include="battle\battleview.cpp" />
     <ClCompile Include="boot.cpp" />
     <ClCompile Include="city\basebuyscreen.cpp" />
@@ -58,6 +59,7 @@
     <ClInclude Include="base\researchscreen.h" />
     <ClInclude Include="base\researchselect.h" />
     <ClInclude Include="base\vequipscreen.h" />
+	<ClInclude Include="base\aequipscreen.h" />
     <ClInclude Include="battle\battleview.h" />
     <ClInclude Include="boot.h" />
     <ClInclude Include="city\basebuyscreen.h" />
@@ -282,3 +284,4 @@ gen_version_win.bat</Command>
     <Error Condition="!Exists('..\..\packages\sdl2.v140.2.0.4\build\native\sdl2.v140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\sdl2.v140.2.0.4\build\native\sdl2.v140.targets'))" />
   </Target>
 </Project>
+

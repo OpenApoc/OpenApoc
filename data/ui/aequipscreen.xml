@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_AEQUIPSCREEN">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="640" height="480"/>
+      <graphic id="BACKGROUND">
+        <image>xcom3/ufodata/agenteqp.pcx</image>
+        <position x="0" y="0"/>
+        <size width="640" height="480"/>
+      </graphic>
+      <label text="EQUIP AGENT">
+        <position x="20" y="0"/>
+        <size width="600" height="36"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>BIGFONT</font>
+      </label>
+      <label id="TEXT_FUNDS">
+        <position x="572" y="11"/>
+        <size width="60" height="10"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <graphicbutton id="BUTTON_OK">
+        <position x="602" y="443"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphic id="PAPER_DOLL">
+        <position x="192" y="52"/>
+        <size width="256" height="256"/>
+        <imageposition>tile</imageposition>
+        <image/>
+      </graphic>
+    </style>
+  </form>
+</openapoc>
