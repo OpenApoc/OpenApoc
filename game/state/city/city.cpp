@@ -168,8 +168,9 @@ void City::update(GameState &state, unsigned int ticks)
 		auto p = *it++;
 		p->update(state, ticks);
 	}
-	for (auto &p : this->projectiles)
+	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
 	{
+		auto &p = *it++;
 		auto c = p->checkProjectileCollision(*map);
 		if (c)
 		{
