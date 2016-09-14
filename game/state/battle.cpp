@@ -129,7 +129,6 @@ void Battle::update(GameState &state, unsigned int ticks)
 	TRACE_FN_ARGS1("ticks", Strings::fromInteger(static_cast<int>(ticks)));
 
 	Trace::start("Battle::update::projectiles->update");
-	std::list<std::future<Collision>> collisions;
 	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
 	{
 		auto p = *it++;
@@ -137,20 +136,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 	}
 	for (auto &p : this->projectiles)
 	{
-		auto func = std::bind(&Projectile::checkProjectileCollision, p, std::placeholders::_1);
-		collisions.emplace_back(fw().threadPool->enqueue(func, std::ref(*map)));
-	}
-	for (auto &future : collisions)
-	{
-		// Make sure every user of the TileMap is finished before processing (as the tileobject/map
-		// lists are not locked, so probably OK for read-only...)
-		future.wait();
-	}
-	for (auto &future : collisions)
-	{
-
-		auto c = future.get();
-		if (c)
+		auto c = p->checkProjectileCollision(*map);
 		{
 			// FIXME: Handle collision
 			this->projectiles.erase(c.projectile);
