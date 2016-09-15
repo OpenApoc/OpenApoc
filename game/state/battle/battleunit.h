@@ -16,7 +16,8 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
   public:
 	static const unsigned SHIELD_RECHARGE_TIME = TICKS_PER_SECOND * 100;
 
-	enum class Behavior
+	// Enums for player selectable modes for the agent
+	enum class BehaviorMode
 	{
 		Aggressive,
 		Normal,
@@ -31,50 +32,51 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	};
 	enum class MovementMode
 	{
-		Prone,
+		Running,
 		Walking,
-		Running
+		Prone
 	};
-	enum class Stance
+	enum class KneelingMode
 	{
-		// Standart
-		Standing,
-		Hovering,
-		Kneeling,
-		Lying,
-
-		// Special
-		Strafing,
-		Jumping,
-		Downed,
+		None,
+		Kneeling
 	};
-	enum class HandState
-	{
-		Empty,
-		Carrying,
-		Aiming,
-		Firing
-	};
-
+	
 	StateRef<Agent> agent;
 
-	Behavior behavior;
+	// User set modes
+
+	BehaviorMode behavior_mode;
 	FireMode fire_mode;
 	MovementMode movement_mode;
-	bool kneel;
+	KneelingMode kneeling_mode;
 
-	Stance current_stance;
-	Stance target_stance;
-	HandState current_hand_state;
+	// Animation frames and state
+
+	// Time, in game ticks, until body animation is finished
+	int body_animation_ticks_remaining = 0;
+	AgentType::BodyState current_body_state = AgentType::BodyState::Standing;
+	AgentType::BodyState target_body_state = AgentType::BodyState::Standing;
+	// Time, in game ticks, until hands animation is finished
+	int hand_animation_ticks_remaining = 0;
+	AgentType::HandState current_hand_state = AgentType::HandState::AtEase;
+	AgentType::HandState target_hand_state = AgentType::HandState::AtEase;
+	// Distance, in movement ticks, spent since starting to move
+	int movement_ticks_passed = 0;
+	AgentType::MovementState movement_state = AgentType::MovementState::None;
+	// Time, in game ticks, until unit can turn by 1/8th of a circle
+	int turning_animation_ticks_remaining = 0;
 
 	// std::list<up<BattleUnitMission>> missions;
 
 	Vec3<float> position;
 	Vec2<int> facing;
 
-	int health;
-	int shield;
-	int shieldRecharge;
+	bool retreated = false;
+	bool destroyed = false;
+
+	//int shield;
+	//int shieldRecharge;
 
 	// sp<BattleTileObjectUnit> tileObject;
 	// sp<BattleTileObjectShadow> shadowObject;
@@ -88,10 +90,6 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// const Vec3<float> &getPosition() const { return this->position; }
 	// const Vec3<float> &getDirection() const;
 
-	//'Constitution' is the sum of health and shield
-	// int getMaxConstitution() const;
-	// int getConstitution() const;
-
 	// int getMaxHealth() const;
 	// int getHealth() const;
 
@@ -103,19 +101,12 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// virtual void update(GameState &state, unsigned int ticks);
 
 	/*
-	"* Structure for a combat entity
-
-- reference to a unit (who is this)
-- current pos
-- current state (standing/sitting/etc)
-- current frame (i.e. jumping #3)
-- current TUs
-- current order
-- curr. mind state (controlled/berserk/…)
-- ref. to psi attacker (who is controlling it/...)
-- unit side current
-- squad number"
-
-*/
+	- current pos
+	- current order
+	- curr. mind state (controlled/berserk/…)
+	- ref. to psi attacker (who is controlling it/...)
+	- unit side current
+	- squad number"
+	*/
 };
 }

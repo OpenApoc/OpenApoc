@@ -7,6 +7,7 @@ namespace OpenApoc
 {
 
 class Agent;
+class BattleItem;
 // class Projectile;
 
 class AEquipment
@@ -18,8 +19,12 @@ class AEquipment
 	StateRef<AEquipmentType> type;
 
 	Vec2<int> equippedPosition;
-	StateRef<Agent> owner;
+	StateRef<Agent> ownerAgent;
+	wp<BattleItem> ownerItem;
 	int ammo = 0;
+	
+	bool aiming = false;
+	int weapon_fire_ticks_remaining = 0;
 
 	void update(int ticks);
 	/*

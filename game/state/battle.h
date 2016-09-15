@@ -1,4 +1,5 @@
 #pragma once
+#include "game/state/agent.h"
 #include "framework/includes.h"
 #include "game/state/battlemappart_type.h"
 #include "game/state/stateobject.h"
@@ -28,6 +29,9 @@ class BattleItem;
 class Projectile;
 class Doodad;
 class DoodadType;
+class BattleMap;
+class Vehicle;
+class Building;
 
 class Battle : public std::enable_shared_from_this<Battle>
 {
@@ -52,15 +56,12 @@ class Battle : public std::enable_shared_from_this<Battle>
 	Battle() = default;
 	~Battle();
 
-	void initBattle();
+	void initBattle(GameState &state);
 	void initMap();
 
 	Vec3<int> size;
 
-	StateRef<BattleMapPartType> destroyed_ground_tile;
-	std::vector<StateRef<BattleMapPartType>> rubble_left_wall;
-	std::vector<StateRef<BattleMapPartType>> rubble_right_wall;
-	std::vector<StateRef<BattleMapPartType>> rubble_feature;
+	StateRef<BattleMap> battle_map;
 
 	MissionType mission_type = MissionType::AlienExtermination;
 	UString mission_location_id;
@@ -78,6 +79,36 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	void update(GameState &state, unsigned int ticks);
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
+
+	// To be called when battle must be started, before showing battle briefing screen
+	static void StartBattle(GameState &state, StateRef<Organisation> target_organisation,
+		const std::list<StateRef<Agent>> &player_agents,
+		StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft);
+	
+	// To be called when battle must be started, before showing battle briefing screen
+	static void StartBattle(GameState &state, StateRef<Organisation> target_organisation,
+		const std::list<StateRef<Agent>> &player_agents,
+		StateRef<Vehicle> player_craft,
+		StateRef<Building> target_building);
+	
+	// To be called when battle must be finished, before showing score screen
+	static void FinishBattle(GameState &state);
+
+	// To be called after battle was finished and before returning to cityscape
+	static void ExitBattle(GameState &state);
+
+  private:
+
+	void LoadResources(GameState &state);
+	void UnloadResources(GameState &state);
+
+	void LoadImagePacks(GameState &state);
+	void UnloadImagePacks(GameState &state);
+
+	void LoadAnimationPacks(GameState &state);
+	void UnloadAnimationPacks(GameState &state);
+
+	friend class BattleMap;
 };
 
 }; // namespace OpenApoc

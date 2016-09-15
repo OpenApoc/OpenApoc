@@ -6,6 +6,7 @@
       <sp>
         <id>DAMAGETYPE_ANTI-ALIEN_GAS</id>
         <name>Anti-Alien Gas</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:15:xcom3/tacdata/tactical.pal</icon_sprite>
         <ignore_shield>true</ignore_shield>
         <modifiers>
           <entry>
@@ -110,6 +111,7 @@
       <sp>
         <id>DAMAGETYPE_ARMOR_PIERCING</id>
         <name>Armor Piercing</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:21:xcom3/tacdata/tactical.pal</icon_sprite>
         <modifiers>
           <entry>
             <key>DAMAGEMODIFIER_ALIEN_EGG</key>
@@ -213,6 +215,7 @@
       <sp>
         <id>DAMAGETYPE_BRAINSUCKER</id>
         <name>Brainsucker</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:32:xcom3/tacdata/tactical.pal</icon_sprite>
       </sp>
     </value>
   </entry>
@@ -222,6 +225,7 @@
       <sp>
         <id>DAMAGETYPE_DIMENSION_DESTABILISER</id>
         <name>Dimension Destabiliser</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:27:xcom3/tacdata/tactical.pal</icon_sprite>
         <modifiers>
           <entry>
             <key>DAMAGEMODIFIER_ALIEN_EGG</key>
@@ -325,6 +329,7 @@
       <sp>
         <id>DAMAGETYPE_DISRUPTOR_BEAM</id>
         <name>Disruptor Beam</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:28:xcom3/tacdata/tactical.pal</icon_sprite>
         <modifiers>
           <entry>
             <key>DAMAGEMODIFIER_ALIEN_EGG</key>
@@ -428,6 +433,7 @@
       <sp>
         <id>DAMAGETYPE_ENTROPY_ENZYME</id>
         <name>Entropy Enzyme</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:30:xcom3/tacdata/tactical.pal</icon_sprite>
         <modifiers>
           <entry>
             <key>DAMAGEMODIFIER_ALIEN_EGG</key>
@@ -531,6 +537,7 @@
       <sp>
         <id>DAMAGETYPE_EXPLOSIVE</id>
         <name>Explosive</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:18:xcom3/tacdata/tactical.pal</icon_sprite>
         <modifiers>
           <entry>
             <key>DAMAGEMODIFIER_ALIEN_EGG</key>
@@ -634,6 +641,7 @@
       <sp>
         <id>DAMAGETYPE_EXPLOSIVE_1</id>
         <name>Explosive 1</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:29:xcom3/tacdata/tactical.pal</icon_sprite>
         <modifiers>
           <entry>
             <key>DAMAGEMODIFIER_ALIEN_EGG</key>
@@ -737,6 +745,7 @@
       <sp>
         <id>DAMAGETYPE_FALLING_OBJECT</id>
         <name>Falling Object</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:31:xcom3/tacdata/tactical.pal</icon_sprite>
         <modifiers>
           <entry>
             <key>DAMAGEMODIFIER_ALIEN_EGG</key>
@@ -840,6 +849,7 @@
       <sp>
         <id>DAMAGETYPE_INCENDIARY</id>
         <name>Incendiary</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:16:xcom3/tacdata/tactical.pal</icon_sprite>
         <ignore_shield>true</ignore_shield>
         <modifiers>
           <entry>
@@ -944,6 +954,7 @@
       <sp>
         <id>DAMAGETYPE_LASER_BEAM</id>
         <name>Laser Beam</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:22:xcom3/tacdata/tactical.pal</icon_sprite>
         <modifiers>
           <entry>
             <key>DAMAGEMODIFIER_ALIEN_EGG</key>
@@ -1047,6 +1058,7 @@
       <sp>
         <id>DAMAGETYPE_PLASMA</id>
         <name>Plasma</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:23:xcom3/tacdata/tactical.pal</icon_sprite>
         <modifiers>
           <entry>
             <key>DAMAGEMODIFIER_ALIEN_EGG</key>
@@ -1150,6 +1162,7 @@
       <sp>
         <id>DAMAGETYPE_PSIONIC_BLAST</id>
         <name>Psionic Blast</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:20:xcom3/tacdata/tactical.pal</icon_sprite>
         <ignore_shield>true</ignore_shield>
         <modifiers>
           <entry>
@@ -1254,6 +1267,7 @@
       <sp>
         <id>DAMAGETYPE_SMOKE</id>
         <name>Smoke</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:14:xcom3/tacdata/tactical.pal</icon_sprite>
         <ignore_shield>true</ignore_shield>
         <modifiers>
           <entry>
@@ -1358,6 +1372,7 @@
       <sp>
         <id>DAMAGETYPE_STUN</id>
         <name>Stun</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:19:xcom3/tacdata/tactical.pal</icon_sprite>
         <modifiers>
           <entry>
             <key>DAMAGEMODIFIER_ALIEN_EGG</key>
@@ -1461,6 +1476,7 @@
       <sp>
         <id>DAMAGETYPE_STUN_GAS</id>
         <name>Stun Gas</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:17:xcom3/tacdata/tactical.pal</icon_sprite>
         <ignore_shield>true</ignore_shield>
         <modifiers>
           <entry>
@@ -1565,6 +1581,7 @@
       <sp>
         <id>DAMAGETYPE_TOXIN_A</id>
         <name>Toxin A</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:24:xcom3/tacdata/tactical.pal</icon_sprite>
         <ignore_shield>true</ignore_shield>
         <modifiers>
           <entry>
@@ -1669,6 +1686,7 @@
       <sp>
         <id>DAMAGETYPE_TOXIN_B</id>
         <name>Toxin B</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:25:xcom3/tacdata/tactical.pal</icon_sprite>
         <ignore_shield>true</ignore_shield>
         <modifiers>
           <entry>
@@ -1773,6 +1791,7 @@
       <sp>
         <id>DAMAGETYPE_TOXIN_C</id>
         <name>Toxin C</name>
+        <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:26:xcom3/tacdata/tactical.pal</icon_sprite>
         <ignore_shield>true</ignore_shield>
         <modifiers>
           <entry>

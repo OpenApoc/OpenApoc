@@ -16,7 +16,7 @@ class Base;
 class Organisation;
 class AEquipment;
 class AEquipmentType;
-class BattleUnitAnimation;
+class BattleUnitAnimationPack;
 
 class AgentStats
 {
@@ -29,6 +29,7 @@ class AgentStats
 	int stamina = 0;
 	int bravery = 0;
 	int strength = 0;
+	int morale = 0;
 	int psi_energy = 0;
 	int psi_attack = 0;
 	int psi_defence = 0;
@@ -60,14 +61,6 @@ class AgentType : public StateObject<AgentType>
 		Male,
 		Female,
 	};
-	enum class MovementType
-	{
-		Stationary,
-		Standart,
-		Flying,
-		StandartLarge,
-		FlyingLarge
-	};
 	enum class AlignmentX
 	{
 		Left,
@@ -89,6 +82,31 @@ class AgentType : public StateObject<AgentType>
 		RightArm,
 	};
 
+	// Enums for animation
+	enum class BodyState
+	{
+		Standing,
+		Flying,
+		Kneeling,
+		Prone,
+		Jumping,
+		Throwing,
+		Downed,
+	};
+	enum class HandState
+	{
+		AtEase,
+		Aiming,
+		Firing
+	};
+	enum class MovementState
+	{
+		None,
+		Normal,
+		Running,
+		Strafing
+	};
+
 	UString id;
 	UString name;
 	Role role = Role::Soldier;
@@ -100,14 +118,17 @@ class AgentType : public StateObject<AgentType>
 	AgentStats min_stats;
 	AgentStats max_stats;
 
-	// Can be improved from standart to flying by the use of the flying body armor
-	MovementType movement_type = MovementType::Stationary;
+	// This, among others, determines wether unit has built-in hover capability, can can be overriden by use of certain armor
+	std::set<BodyState> allowed_body_states;
+	std::set<MovementState> allowed_movement_states;
+	// Unit is large and will be treated accordingly
 	bool large = false;
+
 	sp<VoxelMap> voxelMap;
 
 	StateRef<BattleUnitImagePack> shadow_pack;
 	std::map<BodyPart, StateRef<BattleUnitImagePack>> image_packs;
-	StateRef<BattleUnitAnimation> animation;
+	StateRef<BattleUnitAnimationPack> animation_pack;
 
 	std::map<BodyPart, int> armor;
 	StateRef<DamageModifier> damage_modifier;
@@ -150,7 +171,12 @@ class Agent : public StateObject<Agent>
 	int portrait;
 	AgentPortrait get_portrait() { return type->portraits[gender][portrait]; }
 	AgentType::Gender gender = AgentType::Gender::Male;
+	
+	// Stats when agent was recruited
 	AgentStats initial_stats;
+	// Current max stats of the agent, before taking into account damage, exhaustion etc.
+	AgentStats max_stats;
+	// Current stats of the agent, tracking expenditure such as movement, psi attacks and so on.
 	AgentStats current_stats;
 
 	StateRef<Base> home_base;
@@ -163,6 +189,8 @@ class Agent : public StateObject<Agent>
 	void addEquipment(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type);
 	void addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object);
 	void removeEquipment(sp<AEquipment> object);
+
+	void updateSpeed();
 };
 
 class AgentGenerator

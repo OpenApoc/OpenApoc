@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<imagepack>
+  <images>
+    <entry>PCK:xcom3/tacdata/alien/gun.pck:xcom3/tacdata/alien/gun.tab:0:xcom3/tacdata/tactical.pal</entry>
+    <entry>PCK:xcom3/tacdata/alien/gun.pck:xcom3/tacdata/alien/gun.tab:1:xcom3/tacdata/tactical.pal</entry>
+    <entry>PCK:xcom3/tacdata/alien/gun.pck:xcom3/tacdata/alien/gun.tab:2:xcom3/tacdata/tactical.pal</entry>
+    <entry>PCK:xcom3/tacdata/alien/gun.pck:xcom3/tacdata/alien/gun.tab:3:xcom3/tacdata/tactical.pal</entry>
+    <entry>PCK:xcom3/tacdata/alien/gun.pck:xcom3/tacdata/alien/gun.tab:4:xcom3/tacdata/tactical.pal</entry>
+    <entry>PCK:xcom3/tacdata/alien/gun.pck:xcom3/tacdata/alien/gun.tab:5:xcom3/tacdata/tactical.pal</entry>
+    <entry>PCK:xcom3/tacdata/alien/gun.pck:xcom3/tacdata/alien/gun.tab:6:xcom3/tacdata/tactical.pal</entry>
+    <entry>PCK:xcom3/tacdata/alien/gun.pck:xcom3/tacdata/alien/gun.tab:7:xcom3/tacdata/tactical.pal</entry>
+  </images>
+</imagepack>

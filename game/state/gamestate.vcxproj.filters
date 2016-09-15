@@ -153,9 +153,6 @@
     <ClCompile Include="battle\battleunitimagepack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="battle\battleunitanimation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="battle\battleunit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -172,6 +169,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tileview\tileobject_battleitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battle\battleunitanimationpack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -326,9 +326,6 @@
     <ClInclude Include="battle\battleunitimagepack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battle\battleunitanimation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="battle\battleunit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -345,6 +342,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tileview\tileobject_battleitem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\battleunitanimationpack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

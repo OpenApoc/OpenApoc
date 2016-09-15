@@ -593,11 +593,11 @@ Additionally, there is an image file for shadows and for items held in hands.
 Blocks go in the following order:
 
 00:		Shadow
-04:		File A
-08:		File B
-12:		File C
-16:		File D
-20:		File E
+04:		File A (Body)
+08:		File B (Legs)
+12:		File C (Head)
+16:		File D (Left Arm)
+20:		File E (Right Arm)
 24:		Item
 
 File B is a second entry, sometimes not present (0xffff). Usually this is unit's legs. It is not present for shooting animations - in this case, you use legs from normal animation and everything else from shooting animation. 
@@ -606,14 +606,9 @@ Item entry gives index of item image to be used. 0xffff if item should not be di
 
 For humanoid units, A is body, B is legs, C is head, D is left hand, E is right hand. Some other units have only one file, like Spitters, or just several, like Megaspawns.
 
-Other bytes are unknown for now.
+28-35: 	Image to be drawn
 
-28: 1 byte, always 0
-29: 1 byte, values in {1 2   4 5 6}
-30: 1 byte, values in {1 2 3 4 5 6}
-31: 1 byte, values in {1 2 3 4 5 6}
-32: 1 byte, values in {1 2 3 4 5 6}
-33: 1 byte, values in {1 2 3 4 5 6}
-34: 1 byte, values in {1 2 3 4 5 6}
-35: 1 byte, 0-255
+Seven bytes designating the draw order. Each index refers to a block from before ( 0 = shadow, 2 = Legs etc.). Going from the first value (at 28) to the last one (at 35), corresponding images are drawn one after another.
+
+35: 1 byte, Unknown, 0-255
 

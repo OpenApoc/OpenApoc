@@ -58,7 +58,9 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 		d->ignore_shield =
 		    (i < data_t.damage_types->count()) && (data_t.damage_types->get(i).ignore_shield == 1);
 
-		// FIXME: Read damage type icons
+		// Damage icons are located in tacdata icons, starting with id 14 and on
+		d->icon_sprite =  fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+				"icons.tab:%d:xcom3/tacdata/tactical.pal", (int)i+14));
 
 		state.damage_types[id] = d;
 	}
@@ -92,6 +94,36 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 
 		e->id = id;
 
+		// Mark two-handed items
+		switch (edata.sprite_idx)
+		{
+			// Minigun
+			case 7	:
+			// Laser Sniper
+			case 9	:
+			// Autocannon
+			case 11	:
+			// Heavy Launcher
+			case 17	:
+			// MiniLauncher
+			case 21	:
+			// Stun Grapple
+			case 25	:
+			// Tracker Gun
+			case 28	:
+			// ForceWeb
+			case 31	:
+			// Devastator Canon
+			case 41	:
+			// Brainsucker
+			case 44	:
+			// Dimension Missile Launcher
+			case 46	:
+				e->two_handed = true;
+			default:
+				e->two_handed = false;
+		}
+
 		unsigned payload_idx = std::numeric_limits<unsigned>::max();
 		switch (edata.type)
 		{
@@ -101,12 +133,19 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 				e->type = AEquipmentType::Type::Armor;
 				e->damage_modifier = {&state, data_t.getDModId(adata.damage_modifier)};
 				e->armor = adata.armor;
+				UString bodyPartLetter = "";
+				int armoredUnitPicIndex = 0;
+				int armorBodyPicIndex = 0;
 				switch (adata.body_part)
 				{
 					case AGENT_ARMOR_BODY_PART_LEGS:
+						bodyPartLetter = "b";
+						armorBodyPicIndex = 4;
 						e->body_part = AgentType::BodyPart::Legs;
 						break;
 					case AGENT_ARMOR_BODY_PART_BODY:
+						bodyPartLetter = "a";
+						armorBodyPicIndex = 2;
 						e->body_part = AgentType::BodyPart::Body;
 						// Vanilla decides if flight is enabled by checking if a "marsec" damage mod
 						// body armor is equipped
@@ -114,18 +153,46 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 							e->provides_flight = true;
 						break;
 					case AGENT_ARMOR_BODY_PART_LEFT_ARM:
+						bodyPartLetter = "d";
+						armorBodyPicIndex = 1;
 						e->body_part = AgentType::BodyPart::LeftArm;
 						break;
 					case AGENT_ARMOR_BODY_PART_RIGHT_ARM:
+						bodyPartLetter = "e";
+						armorBodyPicIndex = 3;
 						e->body_part = AgentType::BodyPart::RightArm;
 						break;
 					case AGENT_ARMOR_BODY_PART_HELMET:
+						bodyPartLetter = "c";
+						armorBodyPicIndex = 0;
 						e->body_part = AgentType::BodyPart::Helmet;
 						break;
 					default:
 						LogError("Unexpected body part type %d for ID %s", (int)adata.body_part,
 						         id.cStr());
 				}
+				switch (adata.damage_modifier)
+				{
+					case 17:
+						armoredUnitPicIndex = 2;
+						break;
+					case 18:
+						armoredUnitPicIndex = 3;
+						break;
+					case 19:
+						armoredUnitPicIndex = 4;
+						break;
+					default:
+						LogError("Unexpected damage modifier %d for ID %s", (int)adata.damage_modifier,
+							id.cStr());
+						break;
+				}
+				e->image_pack = { &state, UString::format("%s%s%d%s", BattleUnitImagePack::getPrefix(), "xcom", armoredUnitPicIndex, bodyPartLetter) };
+				// Body sprites are stored in armour.pck file, in head-left-body-right-legs order
+				// Since armor damage modifier values start with 17, we can subtract that to get armor index
+				e->body_sprite = fw().data->loadImage(UString::format("PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/"
+							"armour.tab:%d:xcom3/tacdata/equip.pal",
+							(int)((adata.damage_modifier - 17) * 5 + armorBodyPicIndex)));
 			}
 			break;
 			case AGENT_EQUIPMENT_TYPE_WEAPON:
@@ -199,9 +266,8 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 								tracker_gun_clip_id = id;
 							else
 								// Behave normally
-								weapons[gdata.ammo_type != 0xffff ? gdata.ammo_type
-								                                  : gdata.ammo_type_duplicate]
-								    ->ammo_types.emplace(&state, id);
+								e->weapon_types.emplace(&state, weapons[gdata.ammo_type != 0xffff ? gdata.ammo_type
+									: gdata.ammo_type_duplicate]->id);
 						}
 						break;
 					case AGENT_GENERAL_TYPE_MOTION_SCANNER:
@@ -371,7 +437,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 	}
 
 	// Fix the tracker gun ammo
-	weapons[8]->ammo_types.emplace(&state, tracker_gun_clip_id);
+	state.agent_equipment[tracker_gun_clip_id]->weapon_types.emplace(&state, weapons[8]->id);
 
 	// Equipment sets - score - alien
 	{

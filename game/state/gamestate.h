@@ -5,7 +5,7 @@
 #include "game/state/base/base.h"
 #include "game/state/battle.h"
 #include "game/state/battle/aequipment.h"
-#include "game/state/battle/battleunitanimation.h"
+#include "game/state/battle/battleunitanimationpack.h"
 #include "game/state/battle/battleunitimagepack.h"
 #include "game/state/battlemap.h"
 #include "game/state/battlemaptileset.h"
@@ -59,10 +59,6 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<Vehicle> vehicles;
 	StateRefMap<UfopaediaCategory> ufopaedia;
 	ResearchState research;
-	StateRefMap<BattleUnitImagePack> battle_unit_image_packs;
-	StateRefMap<BattleUnitAnimation> battle_unit_animations;
-	std::set<UString> loadedTilesets;
-	StateRefMap<BattleMapPartType> battleMapTiles;
 	StateRefMap<BattleMap> battle_maps;
 	StateRefMap<DamageModifier> damage_modifiers;
 	StateRefMap<DamageType> damage_types;
@@ -70,6 +66,11 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<EquipmentSet> equipment_sets_by_score;
 	StateRefMap<EquipmentSet> equipment_sets_by_level;
 	sp<Battle> current_battle;
+
+	// Loaded temporarily for the duration of the battle
+	StateRefMap<BattleUnitImagePack> battle_unit_image_packs;
+	StateRefMap<BattleUnitAnimationPack> battle_unit_animation_packs;
+	StateRefMap<BattleMapPartType> battleMapTiles;
 
 	std::list<EventMessage> messages;
 

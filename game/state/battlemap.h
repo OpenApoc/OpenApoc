@@ -1,11 +1,7 @@
 #pragma once
-#include "game/state/agent.h"
-#include "game/state/agent.h"
 #include "game/state/battle.h"
 #include "game/state/battlemappart_type.h"
 #include "game/state/battlemapsector.h"
-#include "game/state/city/building.h"
-#include "game/state/organisation.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include <map>
@@ -14,6 +10,9 @@ namespace OpenApoc
 {
 
 class Building;
+class Agent;
+class Organisation;
+class Vehicle;
 
 class BattleMap : public StateObject<BattleMap>
 {
@@ -45,19 +44,25 @@ class BattleMap : public StateObject<BattleMap>
 
 	StateRefMap<BattleMapSector> sectors;
 
+  private:
 	static sp<Battle> CreateBattle(GameState &state, StateRef<Organisation> target_organisation,
 	                               const std::list<StateRef<Agent>> &player_agents,
 	                               StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft);
+	
 	static sp<Battle> CreateBattle(GameState &state, StateRef<Organisation> target_organisation,
 	                               const std::list<StateRef<Agent>> &player_agents,
 	                               StateRef<Vehicle> player_craft,
 	                               StateRef<Building> target_building);
 
-  private:
 	sp<Battle> CreateBattle(GameState &state, StateRef<Organisation> target_organisation,
 	                        const std::list<StateRef<Agent>> &player_agents,
 	                        StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
 	                        UString mission_location_id,
 	                        const std::list<StateRef<Agent>> &target_agents);
+
+	void LoadTilesets(GameState &state) const;
+	static void UnloadTilesets(GameState &state);
+
+	friend class Battle;
 };
 }

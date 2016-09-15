@@ -67,8 +67,10 @@ class AEquipmentType : public StateObject<AEquipmentType>
 	int armor = 0;
 	int score = 0;
 	ResearchDependency research_dependency;
+	bool two_handed;
 
 	// Armor only
+	sp<Image> body_sprite;
 	StateRef<DamageModifier> damage_modifier;
 	AgentType::BodyPart body_part = AgentType::BodyPart::Body;
 	StateRef<BattleUnitImagePack> image_pack;
@@ -76,7 +78,13 @@ class AEquipmentType : public StateObject<AEquipmentType>
 
 	// Weapon & Grenade only
 	// For weapons with built-in ammo and for grenades leave this empty
+	// This is not stored in files, but rather filled in gamestate inint
+	// In files we only store ammo's link to the weapon
+	// This way, modders can introduce ammunition for existing weapons without having mod conflicts
 	std::set<StateRef<AEquipmentType>> ammo_types;
+
+	// Ammo only
+	std::set<StateRef<AEquipmentType>> weapon_types;
 
 	// Ammo, Weapons & Grenades with built-in ammo, General with charge
 	int max_ammo = 0;

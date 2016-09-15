@@ -74,13 +74,10 @@ sp<Control> MapSelector::createMapRowBuilding(sp<Building> building, sp<GameStat
 			StateRef<Organisation> org = building->owner;
 			StateRef<Building> bld = {state.get(), building};
 			StateRef<Vehicle> veh = {};
-			auto b = BattleMap::CreateBattle(*state.get(), org, agents, veh, bld);
-			if (!b)
-				return;
-			if (state->current_battle)
-				fw().stageQueueCommand({StageCmd::Command::POP});
-			fw().stageQueueCommand({StageCmd::Command::POP});
-			state->current_battle = b;
+			
+			Battle::StartBattle(*state.get(), org, agents, veh, bld);
+
+			fw().stageQueueCommand({ StageCmd::Command::POP });
 			fw().stageQueueCommand({StageCmd::Command::REPLACE, mksp<BattleView>(state)});
 		});
 	}
@@ -130,13 +127,10 @@ sp<Control> MapSelector::createMapRowVehicle(sp<VehicleType> vehicle, sp<GameSta
 			state->vehicles[v->name] = v;
 			StateRef<Vehicle> ufo = {state.get(), v->name};
 			StateRef<Vehicle> veh = {};
-			auto b = BattleMap::CreateBattle(*state.get(), org, agents, veh, ufo);
-			if (!b)
-				return;
-			if (state->current_battle)
-				fw().stageQueueCommand({StageCmd::Command::POP});
-			fw().stageQueueCommand({StageCmd::Command::POP});
-			state->current_battle = b;
+			
+			Battle::StartBattle(*state.get(), org, agents, veh, ufo);
+
+			fw().stageQueueCommand({ StageCmd::Command::POP });
 			fw().stageQueueCommand({StageCmd::Command::REPLACE, mksp<BattleView>(state)});
 		});
 	}

@@ -47,7 +47,7 @@ void BattleMapPart::handleCollision(GameState &state, Collision &c)
 			auto b = battle.lock();
 			if (!b)
 				LogError("Battle disappeared!");
-			this->type = b->destroyed_ground_tile;
+			this->type = b->battle_map->destroyed_ground_tile;
 		}
 	}
 	for (auto &s : this->supportedParts)

@@ -251,49 +251,50 @@ void TileView::render()
 			break;
 	}
 
-	// Find out when to draw selection bracket parts (if ever)
-	Tile *selectedTile = nullptr;
-	sp<TileObject> drawBackBeforeThis;
-	sp<Image> selectionImageBack;
-	sp<Image> selectionImageFront;
-	if (selectedTilePosition.x >= minX && selectedTilePosition.x < maxX &&
-	    selectedTilePosition.y >= minY && selectedTilePosition.y < maxY &&
-	    selectedTilePosition.z >= zFrom && selectedTilePosition.z < zTo)
-	{
-		selectedTile =
-		    map.getTile(selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z);
-
-		if (this->viewMode == TileViewMode::Isometric)
-		{
-			// Find where to draw back selection bracket
-			auto object_count = selectedTile->drawnObjects[0].size();
-			for (size_t obj_id = 0; obj_id < object_count; obj_id++)
-			{
-				auto &obj = selectedTile->drawnObjects[0][obj_id];
-				if (!drawBackBeforeThis && obj->getType() != TileObject::Type::Ground)
-					drawBackBeforeThis = obj;
-			}
-			// Find what kind of selection bracket to draw (yellow or green)
-			bool foundUnit = false;
-			object_count = selectedTile->intersectingObjects.size();
-			for (auto &tile : selectedTile->intersectingObjects)
-				if (tile->getType() == TileObject::Type::Unit)
-					foundUnit = true;
-			if (foundUnit)
-			{
-				selectionImageBack = selectedTileFilledImageBack;
-				selectionImageFront = selectedTileFilledImageFront;
-			}
-			else
-			{
-				selectionImageBack = selectedTileEmptyImageBack;
-				selectionImageFront = selectedTileEmptyImageFront;
-			}
-		}
-	}
-
 	for (int z = zFrom; z < zTo; z++)
 	{
+		// Find out when to draw selection bracket parts (if ever)
+		Tile *selectedTile = nullptr;
+		sp<TileObject> drawBackBeforeThis;
+		sp<Image> selectionImageBack;
+		sp<Image> selectionImageFront;
+		if (mode == Mode::Battle && this->viewMode == TileViewMode::Isometric)
+		{
+			if (selectedTilePosition.z >= z &&
+			selectedTilePosition.x >= minX && selectedTilePosition.x < maxX &&
+			selectedTilePosition.y >= minY && selectedTilePosition.y < maxY)
+			{
+				selectedTile =
+					map.getTile(selectedTilePosition.x, selectedTilePosition.y, z);
+
+				// Find where to draw back selection bracket
+				auto object_count = selectedTile->drawnObjects[0].size();
+				for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+				{
+					auto &obj = selectedTile->drawnObjects[0][obj_id];
+					if (!drawBackBeforeThis && obj->getType() != TileObject::Type::Ground)
+						drawBackBeforeThis = obj;
+				}
+				// Find what kind of selection bracket to draw (yellow or green)
+				// Yellow if this tile intersects with a unit
+				bool foundUnit = false;
+				if (selectedTilePosition.z == z)
+				for (auto &tile : selectedTile->intersectingObjects)
+					if (tile->getType() == TileObject::Type::Unit)
+						foundUnit = true;
+				if (foundUnit)
+				{
+					selectionImageBack = selectedTileFilledImageBack;
+					selectionImageFront = selectedTileFilledImageFront;
+				}
+				else
+				{
+					selectionImageBack = selectedTileEmptyImageBack;
+					selectionImageFront = selectedTileEmptyImageFront;
+				}
+			}
+		}
+
 		for (int layer = 0; layer < map.getLayerCount(); layer++)
 		{
 			for (int y = minY; y < maxY; y++)
@@ -303,8 +304,7 @@ void TileView::render()
 					auto tile = map.getTile(x, y, z);
 					auto object_count = tile->drawnObjects[layer].size();
 					// I assume splitting it here will improve performance?
-					if (viewMode == TileViewMode::Isometric && mode == Mode::Battle && layer == 0 &&
-					    tile == selectedTile)
+					if (tile == selectedTile && layer == 0)
 					{
 						for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 						{

@@ -30,7 +30,7 @@
     <ClCompile Include="battle\aequipment.cpp" />
     <ClCompile Include="battle\battleitem.cpp" />
     <ClCompile Include="battle\battleunit.cpp" />
-    <ClCompile Include="battle\battleunitanimation.cpp" />
+    <ClCompile Include="battle\battleunitanimationpack.cpp" />
     <ClCompile Include="battle\battleunitimagepack.cpp" />
     <ClCompile Include="battle\battleunitmission.cpp" />
     <ClCompile Include="city\baselayout.cpp" />
@@ -86,7 +86,7 @@
     <ClInclude Include="battle\aequipment.h" />
     <ClInclude Include="battle\battleitem.h" />
     <ClInclude Include="battle\battleunit.h" />
-    <ClInclude Include="battle\battleunitanimation.h" />
+    <ClInclude Include="battle\battleunitanimationpack.h" />
     <ClInclude Include="battle\battleunitimagepack.h" />
     <ClInclude Include="battle\battleunitmission.h" />
     <ClInclude Include="city\baselayout.h" />

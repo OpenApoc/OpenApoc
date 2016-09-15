@@ -238,6 +238,9 @@
         <manufacturer>ORG_MEGAPOL</manufacturer>
         <store_space>8</store_space>
         <armor>20</armor>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_MEGAPOL_AUTO_CANNON</entry>
+        </weapon_types>
         <max_ammo>24</max_ammo>
         <speed>22</speed>
         <projectile_sprites>
@@ -316,6 +319,9 @@
         <manufacturer>ORG_MEGAPOL</manufacturer>
         <store_space>8</store_space>
         <armor>20</armor>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_MEGAPOL_AUTO_CANNON</entry>
+        </weapon_types>
         <max_ammo>24</max_ammo>
         <speed>22</speed>
         <projectile_sprites>
@@ -394,6 +400,9 @@
         <manufacturer>ORG_MEGAPOL</manufacturer>
         <store_space>8</store_space>
         <armor>20</armor>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_MEGAPOL_AUTO_CANNON</entry>
+        </weapon_types>
         <max_ammo>24</max_ammo>
         <speed>22</speed>
         <projectile_sprites>
@@ -539,9 +548,6 @@
         <store_space>45</store_space>
         <armor>60</armor>
         <score>6</score>
-        <ammo_types>
-          <entry>AEQUIPMENTTYPE_BRAINSUCKER_POD</entry>
-        </ammo_types>
       </sp>
     </value>
   </entry>
@@ -579,6 +585,9 @@
         <store_space>16</store_space>
         <armor>20</armor>
         <score>8</score>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER</entry>
+        </weapon_types>
         <max_ammo>1</max_ammo>
         <speed>8</speed>
         <projectile_sprites>
@@ -744,9 +753,6 @@
         <store_space>5</store_space>
         <armor>60</armor>
         <score>5</score>
-        <ammo_types>
-          <entry>AEQUIPMENTTYPE_ENERGY_POD</entry>
-        </ammo_types>
       </sp>
     </value>
   </entry>
@@ -820,6 +826,9 @@
         <store_space>9</store_space>
         <armor>30</armor>
         <score>8</score>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_DIMENSION_MISSILE_LAUNCHER</entry>
+        </weapon_types>
         <max_ammo>1</max_ammo>
         <speed>16</speed>
         <projectile_sprites>
@@ -906,9 +915,6 @@
         <store_space>40</store_space>
         <armor>80</armor>
         <score>10</score>
-        <ammo_types>
-          <entry>AEQUIPMENTTYPE_DIMENSION_MISSILE</entry>
-        </ammo_types>
       </sp>
     </value>
   </entry>
@@ -1047,6 +1053,9 @@
         <manufacturer>ORG_X-COM</manufacturer>
         <store_space>5</store_space>
         <armor>20</armor>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_DIMENSION_DESTABILISER</entry>
+        </weapon_types>
         <max_ammo>1</max_ammo>
         <speed>26</speed>
         <projectile_sprites>
@@ -1130,9 +1139,6 @@
         <store_space>20</store_space>
         <armor>70</armor>
         <score>7</score>
-        <ammo_types>
-          <entry>AEQUIPMENTTYPE_ENTROPY_POD</entry>
-        </ammo_types>
       </sp>
     </value>
   </entry>
@@ -1170,6 +1176,9 @@
         <store_space>8</store_space>
         <armor>20</armor>
         <score>7</score>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_ENTROPY_LAUNCHER</entry>
+        </weapon_types>
         <max_ammo>3</max_ammo>
         <speed>8</speed>
         <projectile_sprites>
@@ -1292,6 +1301,9 @@
         <store_space>9</store_space>
         <armor>15</armor>
         <score>1</score>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_MARSEC_HEAVY_LAUNCHER</entry>
+        </weapon_types>
         <max_ammo>1</max_ammo>
         <speed>14</speed>
         <projectile_sprites>
@@ -1378,6 +1390,9 @@
         <store_space>9</store_space>
         <armor>15</armor>
         <score>1</score>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_MARSEC_HEAVY_LAUNCHER</entry>
+        </weapon_types>
         <max_ammo>1</max_ammo>
         <speed>14</speed>
         <projectile_sprites>
@@ -1464,6 +1479,9 @@
         <store_space>9</store_space>
         <armor>15</armor>
         <score>1</score>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_MARSEC_HEAVY_LAUNCHER</entry>
+        </weapon_types>
         <max_ammo>1</max_ammo>
         <speed>14</speed>
         <projectile_sprites>
@@ -1684,7 +1702,9 @@
         <store_space>50</store_space>
         <armor>35</armor>
         <score>5</score>
+        <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:7:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MARSEC_ARMOR</damage_modifier>
+        <image_pack>BATTLEUNITIMAGEPACK_xcom3a</image_pack>
         <provides_flight>true</provides_flight>
       </sp>
     </value>
@@ -1723,8 +1743,10 @@
         <store_space>50</store_space>
         <armor>38</armor>
         <score>5</score>
+        <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:5:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MARSEC_ARMOR</damage_modifier>
         <body_part>Helmet</body_part>
+        <image_pack>BATTLEUNITIMAGEPACK_xcom3c</image_pack>
       </sp>
     </value>
   </entry>
@@ -1762,11 +1784,6 @@
         <store_space>40</store_space>
         <armor>50</armor>
         <score>4</score>
-        <ammo_types>
-          <entry>AEQUIPMENTTYPE_HEAVY_LAUNCHER_AG_MISSILE</entry>
-          <entry>AEQUIPMENTTYPE_HEAVY_LAUNCHER_HE_MISSILE</entry>
-          <entry>AEQUIPMENTTYPE_HEAVY_LAUNCHER_IN_MISSILE</entry>
-        </ammo_types>
       </sp>
     </value>
   </entry>
@@ -1867,8 +1884,10 @@
         <store_space>50</store_space>
         <armor>32</armor>
         <score>5</score>
+        <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:6:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MARSEC_ARMOR</damage_modifier>
         <body_part>LeftArm</body_part>
+        <image_pack>BATTLEUNITIMAGEPACK_xcom3d</image_pack>
       </sp>
     </value>
   </entry>
@@ -1906,8 +1925,10 @@
         <store_space>50</store_space>
         <armor>36</armor>
         <score>5</score>
+        <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:9:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MARSEC_ARMOR</damage_modifier>
         <body_part>Legs</body_part>
+        <image_pack>BATTLEUNITIMAGEPACK_xcom3b</image_pack>
       </sp>
     </value>
   </entry>
@@ -1944,6 +1965,9 @@
         <manufacturer>ORG_MARSEC</manufacturer>
         <store_space>5</store_space>
         <armor>30</armor>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_MARSEC_M4000_MACHINE_GUN</entry>
+        </weapon_types>
         <max_ammo>36</max_ammo>
         <speed>22</speed>
         <projectile_sprites>
@@ -2017,9 +2041,6 @@
         <store_space>15</store_space>
         <armor>50</armor>
         <score>2</score>
-        <ammo_types>
-          <entry>AEQUIPMENTTYPE_MARSEC_M4000_GUN_CLIP</entry>
-        </ammo_types>
       </sp>
     </value>
   </entry>
@@ -2057,11 +2078,6 @@
         <store_space>18</store_space>
         <armor>30</armor>
         <score>4</score>
-        <ammo_types>
-          <entry>AEQUIPMENTTYPE_MINILAUNCHER_AG_MISSILE</entry>
-          <entry>AEQUIPMENTTYPE_MINILAUNCHER_HE_MISSILE</entry>
-          <entry>AEQUIPMENTTYPE_MINILAUNCHER_IN_MISSILE</entry>
-        </ammo_types>
       </sp>
     </value>
   </entry>
@@ -2163,8 +2179,10 @@
         <store_space>50</store_space>
         <armor>32</armor>
         <score>5</score>
+        <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:8:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MARSEC_ARMOR</damage_modifier>
         <body_part>RightArm</body_part>
+        <image_pack>BATTLEUNITIMAGEPACK_xcom3e</image_pack>
       </sp>
     </value>
   </entry>
@@ -2302,11 +2320,6 @@
         <store_space>30</store_space>
         <armor>40</armor>
         <score>3</score>
-        <ammo_types>
-          <entry>AEQUIPMENTTYPE_AUTO_CANNON_AP_CLIP</entry>
-          <entry>AEQUIPMENTTYPE_AUTO_CANNON_HE_CLIP</entry>
-          <entry>AEQUIPMENTTYPE_AUTO_CANNON_IN_CLIP</entry>
-        </ammo_types>
       </sp>
     </value>
   </entry>
@@ -2344,7 +2357,9 @@
         <store_space>45</store_space>
         <armor>45</armor>
         <score>3</score>
+        <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:2:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MEGAPOL_ARMOR</damage_modifier>
+        <image_pack>BATTLEUNITIMAGEPACK_xcom2a</image_pack>
       </sp>
     </value>
   </entry>
@@ -2382,8 +2397,10 @@
         <store_space>45</store_space>
         <armor>44</armor>
         <score>3</score>
+        <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:0:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MEGAPOL_ARMOR</damage_modifier>
         <body_part>Helmet</body_part>
+        <image_pack>BATTLEUNITIMAGEPACK_xcom2c</image_pack>
       </sp>
     </value>
   </entry>
@@ -2420,6 +2437,9 @@
         <manufacturer>ORG_MEGAPOL</manufacturer>
         <store_space>5</store_space>
         <armor>20</armor>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_MEGAPOL_LASER_SNIPER_GUN</entry>
+        </weapon_types>
         <max_ammo>30</max_ammo>
         <speed>36</speed>
         <projectile_sprites>
@@ -2504,9 +2524,6 @@
         <store_space>20</store_space>
         <armor>30</armor>
         <score>3</score>
-        <ammo_types>
-          <entry>AEQUIPMENTTYPE_MEGAPOL_LASER_POD</entry>
-        </ammo_types>
       </sp>
     </value>
   </entry>
@@ -2544,9 +2561,6 @@
         <store_space>9</store_space>
         <armor>40</armor>
         <score>2</score>
-        <ammo_types>
-          <entry>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL_CLIP</entry>
-        </ammo_types>
       </sp>
     </value>
   </entry>
@@ -2583,6 +2597,9 @@
         <manufacturer>ORG_MEGAPOL</manufacturer>
         <store_space>5</store_space>
         <armor>30</armor>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL</entry>
+        </weapon_types>
         <max_ammo>16</max_ammo>
         <speed>22</speed>
         <projectile_sprites>
@@ -2647,8 +2664,10 @@
         <store_space>45</store_space>
         <armor>38</armor>
         <score>3</score>
+        <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:1:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MEGAPOL_ARMOR</damage_modifier>
         <body_part>LeftArm</body_part>
+        <image_pack>BATTLEUNITIMAGEPACK_xcom2d</image_pack>
       </sp>
     </value>
   </entry>
@@ -2686,8 +2705,10 @@
         <store_space>45</store_space>
         <armor>42</armor>
         <score>3</score>
+        <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:4:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MEGAPOL_ARMOR</damage_modifier>
         <body_part>Legs</body_part>
+        <image_pack>BATTLEUNITIMAGEPACK_xcom2b</image_pack>
       </sp>
     </value>
   </entry>
@@ -2725,9 +2746,6 @@
         <store_space>10</store_space>
         <armor>60</armor>
         <score>4</score>
-        <ammo_types>
-          <entry>AEQUIPMENTTYPE_MEGAPOL_PLASMA_POD</entry>
-        </ammo_types>
       </sp>
     </value>
   </entry>
@@ -2765,6 +2783,9 @@
         <store_space>5</store_space>
         <armor>40</armor>
         <score>1</score>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_MEGAPOL_PLASMA_GUN</entry>
+        </weapon_types>
         <max_ammo>42</max_ammo>
         <speed>30</speed>
         <projectile_sprites>
@@ -2849,8 +2870,10 @@
         <store_space>45</store_space>
         <armor>38</armor>
         <score>3</score>
+        <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:3:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MEGAPOL_ARMOR</damage_modifier>
         <body_part>RightArm</body_part>
+        <image_pack>BATTLEUNITIMAGEPACK_xcom2e</image_pack>
       </sp>
     </value>
   </entry>
@@ -3316,6 +3339,9 @@
         <store_space>6</store_space>
         <armor>12</armor>
         <score>1</score>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_MARSEC_MINILAUNCHER</entry>
+        </weapon_types>
         <max_ammo>5</max_ammo>
         <speed>14</speed>
         <projectile_sprites>
@@ -3398,6 +3424,9 @@
         <store_space>6</store_space>
         <armor>12</armor>
         <score>1</score>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_MARSEC_MINILAUNCHER</entry>
+        </weapon_types>
         <max_ammo>5</max_ammo>
         <speed>14</speed>
         <projectile_sprites>
@@ -3480,6 +3509,9 @@
         <store_space>6</store_space>
         <armor>12</armor>
         <score>1</score>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_MARSEC_MINILAUNCHER</entry>
+        </weapon_types>
         <max_ammo>5</max_ammo>
         <speed>14</speed>
         <projectile_sprites>
@@ -4249,11 +4281,6 @@
         <store_space>15</store_space>
         <armor>30</armor>
         <score>4</score>
-        <ammo_types>
-          <entry>AEQUIPMENTTYPE_TOXIGUN_A-CLIP</entry>
-          <entry>AEQUIPMENTTYPE_TOXIGUN_B-CLIP</entry>
-          <entry>AEQUIPMENTTYPE_TOXIGUN_C-CLIP</entry>
-        </ammo_types>
       </sp>
     </value>
   </entry>
@@ -4291,6 +4318,9 @@
         <store_space>5</store_space>
         <armor>25</armor>
         <score>2</score>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_TOXIGUN</entry>
+        </weapon_types>
         <max_ammo>16</max_ammo>
         <speed>22</speed>
         <projectile_sprites>
@@ -4355,6 +4385,9 @@
         <store_space>5</store_space>
         <armor>25</armor>
         <score>2</score>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_TOXIGUN</entry>
+        </weapon_types>
         <max_ammo>16</max_ammo>
         <speed>22</speed>
         <projectile_sprites>
@@ -4419,6 +4452,9 @@
         <store_space>5</store_space>
         <armor>25</armor>
         <score>2</score>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_TOXIGUN</entry>
+        </weapon_types>
         <max_ammo>16</max_ammo>
         <speed>22</speed>
         <projectile_sprites>
@@ -4483,9 +4519,6 @@
         <store_space>5</store_space>
         <armor>20</armor>
         <score>1</score>
-        <ammo_types>
-          <entry>AEQUIPMENTTYPE_TRACKER_GUN_CLIP</entry>
-        </ammo_types>
       </sp>
     </value>
   </entry>
@@ -4522,6 +4555,9 @@
         <manufacturer>ORG_MEGAPOL</manufacturer>
         <store_space>5</store_space>
         <armor>40</armor>
+        <weapon_types>
+          <entry>AEQUIPMENTTYPE_TRACKER_GUN</entry>
+        </weapon_types>
         <max_ammo>20</max_ammo>
         <speed>22</speed>
         <projectile_sprites>
@@ -4647,7 +4683,9 @@
         <store_space>35</store_space>
         <armor>75</armor>
         <score>7</score>
+        <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:12:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_X-COM_DISRUPTOR_ARMOR</damage_modifier>
+        <image_pack>BATTLEUNITIMAGEPACK_xcom4a</image_pack>
       </sp>
     </value>
   </entry>
@@ -4685,8 +4723,10 @@
         <store_space>35</store_space>
         <armor>75</armor>
         <score>7</score>
+        <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:10:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_X-COM_DISRUPTOR_ARMOR</damage_modifier>
         <body_part>Helmet</body_part>
+        <image_pack>BATTLEUNITIMAGEPACK_xcom4c</image_pack>
       </sp>
     </value>
   </entry>
@@ -4724,8 +4764,10 @@
         <store_space>35</store_space>
         <armor>65</armor>
         <score>7</score>
+        <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:11:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_X-COM_DISRUPTOR_ARMOR</damage_modifier>
         <body_part>LeftArm</body_part>
+        <image_pack>BATTLEUNITIMAGEPACK_xcom4d</image_pack>
       </sp>
     </value>
   </entry>
@@ -4763,8 +4805,10 @@
         <store_space>35</store_space>
         <armor>65</armor>
         <score>7</score>
+        <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:14:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_X-COM_DISRUPTOR_ARMOR</damage_modifier>
         <body_part>Legs</body_part>
+        <image_pack>BATTLEUNITIMAGEPACK_xcom4b</image_pack>
       </sp>
     </value>
   </entry>
@@ -4802,8 +4846,10 @@
         <store_space>35</store_space>
         <armor>65</armor>
         <score>7</score>
+        <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:13:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_X-COM_DISRUPTOR_ARMOR</damage_modifier>
         <body_part>RightArm</body_part>
+        <image_pack>BATTLEUNITIMAGEPACK_xcom4e</image_pack>
       </sp>
     </value>
   </entry>

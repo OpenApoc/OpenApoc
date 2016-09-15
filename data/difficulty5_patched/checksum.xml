@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checksums>
   <checksum SHA1="87eacdaa95e86a91f93e5d5484a322e75277b4ee">gamestate.xml</checksum>
-  <checksum SHA1="0b9e4d5cbe10e983ee7ac7764a7d8a4891f2377c">gamestate/agent_equipment.xml</checksum>
+  <checksum SHA1="f83f39f591e38027fa0d76cd1fa97e02f2a463a2">gamestate/agent_equipment.xml</checksum>
   <checksum SHA1="282e2b08cda4a9a7094fb16355bd5e58cdc2a224">gamestate/agent_generator.xml</checksum>
-  <checksum SHA1="9f9897bb5c4890d60a93bd3f56320a6a664c84fe">gamestate/agent_types.xml</checksum>
+  <checksum SHA1="d933479be6594d3b203a55e20758cd7f341f07e5">gamestate/agent_types.xml</checksum>
   <checksum SHA1="0b1fc22224d3d4d266780fe20b1db95ee052bba0">gamestate/base_layouts.xml</checksum>
   <checksum SHA1="dcebd55d2b40ea7b7c117ce16ee71ab23be4e4ef">gamestate/battle_maps.xml</checksum>
   <checksum SHA1="09a0229c616b482ad6f16bdf5f90d879e648fb62">gamestate/battle_maps/BATTLEMAP_01senate.xml</checksum>
@@ -63,7 +63,7 @@
   <checksum SHA1="541643027e1a4b50c899eadb90a6f3123d09381b">gamestate/cities/CITYMAP_HUMAN/initial_tiles.xml</checksum>
   <checksum SHA1="c6ecbef6353e01287697badf870909d9be2275a2">gamestate/cities/CITYMAP_HUMAN/tile_types.xml</checksum>
   <checksum SHA1="51b871a260bbfd9fad8d8da5b693b678aa1edbfe">gamestate/damage_modifiers.xml</checksum>
-  <checksum SHA1="283febe16d77ad58364fca61c92f56b7289d2a01">gamestate/damage_types.xml</checksum>
+  <checksum SHA1="78dcd090b816ac7c2baad61e0c945cdd6903bab5">gamestate/damage_types.xml</checksum>
   <checksum SHA1="43e04302d171bb92a3615cc0176f17b0e8227553">gamestate/doodad_types.xml</checksum>
   <checksum SHA1="856efffa1a1b569efe03105d284f356e99b01b9f">gamestate/equipment_sets_by_level.xml</checksum>
   <checksum SHA1="532483b7b88793c1d014c08a9b5d9de83706872d">gamestate/equipment_sets_by_score.xml</checksum>

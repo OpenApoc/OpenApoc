@@ -39,4 +39,14 @@ const UString &StateObject<BattleUnitImagePack>::getId(const GameState &state,
 	LogError("No BattleUnitImagePack matching pointer %p", ptr.get());
 	return emptyString;
 }
+
+const UString BattleUnitImagePack::getNameFromID(UString id)
+{
+	static const UString emptyString = "";
+	auto plen = getPrefix().length();
+	if (id.length() > plen)
+		return id.substr(plen, id.length() - plen);
+	LogError("Invalid BattleUnitImagePack ID %s", id.cStr());
+	return emptyString;
+}
 }

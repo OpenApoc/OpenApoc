@@ -183,24 +183,39 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state, Difficulty)
 		switch (data.movement_type)
 		{
 			case AGENT_MOVEMENT_TYPE_STATIONARY:
-				a->movement_type = AgentType::MovementType::Stationary;
+				// FIXME: This will later be edited by hand
+				a->allowed_body_states.insert(AgentType::BodyState::Standing);
+				a->allowed_movement_states.insert(AgentType::MovementState::None);
 				break;
 			case AGENT_MOVEMENT_TYPE_STANDART:
-				a->movement_type = AgentType::MovementType::Standart;
+				a->allowed_body_states.insert(AgentType::BodyState::Standing);
+				a->allowed_body_states.insert(AgentType::BodyState::Flying);
+				a->allowed_body_states.insert(AgentType::BodyState::Kneeling);
+				a->allowed_body_states.insert(AgentType::BodyState::Prone);
+				a->allowed_body_states.insert(AgentType::BodyState::Jumping);
+				a->allowed_body_states.insert(AgentType::BodyState::Throwing);
+				a->allowed_body_states.insert(AgentType::BodyState::Downed);
+				a->allowed_movement_states.insert(AgentType::MovementState::None);
+				a->allowed_movement_states.insert(AgentType::MovementState::Normal);
+				a->allowed_movement_states.insert(AgentType::MovementState::Running);
+				a->allowed_movement_states.insert(AgentType::MovementState::Strafing);
 				break;
 			case AGENT_MOVEMENT_TYPE_FLYING:
-				a->movement_type = AgentType::MovementType::Flying;
+				a->allowed_body_states.insert(AgentType::BodyState::Standing);
+				a->allowed_movement_states.insert(AgentType::MovementState::None);
 				break;
 			case AGENT_MOVEMENT_TYPE_STANDART_LARGE:
-				a->movement_type = AgentType::MovementType::StandartLarge;
+				a->allowed_body_states.insert(AgentType::BodyState::Standing);
+				a->allowed_movement_states.insert(AgentType::MovementState::None);
 				break;
 			case AGENT_MOVEMENT_TYPE_FLYING_LARGE:
-				a->movement_type = AgentType::MovementType::FlyingLarge;
+				a->allowed_body_states.insert(AgentType::BodyState::Standing);
+				a->allowed_movement_states.insert(AgentType::MovementState::None);
 				break;
 		}
 		a->large = (data.loftemps_height > 40) ||
-		           (a->movement_type == AgentType::MovementType::StandartLarge) ||
-		           (a->movement_type == AgentType::MovementType::FlyingLarge);
+		           (data.movement_type == AGENT_MOVEMENT_TYPE_STANDART_LARGE) ||
+		           (data.movement_type == AGENT_MOVEMENT_TYPE_FLYING_LARGE);
 
 		// FIXME: Need to scale voxelmap to fit twice the size
 		a->voxelMap = a->large ? mksp<VoxelMap>(Vec3<int>{48, 48, 40})

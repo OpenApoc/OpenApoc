@@ -78,7 +78,7 @@ void GameState::initState()
 	// FIXME: reseed rng when game starts
 
 	if (current_battle)
-		current_battle->initBattle();
+		current_battle->initBattle(*this);
 
 	for (auto &c : this->cities)
 	{
@@ -121,6 +121,15 @@ void GameState::initState()
 			}
 		}
 	}
+	// Fill links for weapon's ammo
+	for (auto &t : this->agent_equipment)
+	{
+		for (auto w : t.second->weapon_types)
+		{
+			w->ammo_types.emplace(this, t.first);
+		}
+	}
+	research.updateTopicList();
 }
 
 void GameState::startGame()
