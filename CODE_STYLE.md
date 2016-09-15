@@ -15,7 +15,7 @@ GCCIsntMuchBetter
 
 C++11 features are heavily encouraged - patterns from 'older' c++ versions that have been superceded should be avoided.
 
-The formatting sections of this document are enforced by the ``clang-format`` tool [http://llvm.org/releases/3.7.0/tools/clang/docs/ClangFormat.html]. Currently the '3.7' version of ``clang-format`` is to be used. The configuration file ``.clang-format`` in the root of the OpenApoc source repository should match the formatting guidelines specified below.
+The formatting sections of this document are enforced by the ``clang-format`` tool [http://llvm.org/releases/3.8.0/tools/clang/docs/ClangFormat.html]. Currently the '3.8' version of ``clang-format`` is to be used. The configuration file ``.clang-format`` in the root of the OpenApoc source repository should match the formatting guidelines specified below.
 
 With this, it is highly recommended to run ``clang-format`` on all modified files before check-in. This can be run on source files with the following command:
 
