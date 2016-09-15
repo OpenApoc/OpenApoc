@@ -597,9 +597,9 @@ class CueIO
 		if (len > remainLength)
 		{
 			// FIXME: This produces way too much output as well, though we could use it somehow?
-			LogWarning("Requested read of size %" PRIu64 " is bigger than remaining %" PRIu64
-			           " bytes",
-			           len, remainLength);
+			//LogWarning("Requested read of size %" PRIu64 " is bigger than remaining %" PRIu64
+			//           " bytes",
+			//           len, remainLength);
 			len = remainLength;
 		}
 		int64_t totalRead = 0;
@@ -871,6 +871,8 @@ class CueArchiver
 			*semicolonPos = '\0';
 		} // Ignore the semicolon and everything after it
 		parent.name = dirRecord.fileName;
+		// As of commit 07a2fe9, we only use lower-case names
+		parent.name = parent.name.toLower();
 		parent.length = length;
 		parent.offset = location;
 		parent.timestamp = d_datetime.toUnixTime();
@@ -1097,7 +1099,7 @@ class CueArchiver
 			           parser.getDataFileName().cStr());
 			LogWarning("Trying case-insensitive search...");
 			UString ucBin(parser.getDataFileName().cStr());
-			ucBin = ucBin.toUpper();
+			ucBin = ucBin.toLower();
 			// for (boost::filesystem::directory_entry &dirent :
 			// boost::filesystem::directory_iterator(cueFilePath.parent_path()))
 			for (auto dirent_it = boost::filesystem::directory_iterator(cueFilePath.parent_path());
@@ -1106,7 +1108,7 @@ class CueArchiver
 				auto dirent = *dirent_it;
 				LogInfo("Trying %s", dirent.path().c_str());
 				UString ucDirent(dirent.path().filename().string());
-				ucDirent = ucDirent.toUpper();
+				ucDirent = ucDirent.toLower();
 				if (ucDirent == ucBin)
 				{
 					dataFilePath = cueFilePath.parent_path();
