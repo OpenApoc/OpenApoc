@@ -103,6 +103,8 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<AgentType
 	auto secondName = listRandomiser(state.rng, this->second_names);
 	agent->name = UString::format("%s %s", firstName, secondName);
 
+	agent->appearance = randBoundsExclusive(state.rng, 0, type->appearance_count);
+
 	agent->portrait =
 	    randBoundsInclusive(state.rng, 0, (int)type->portraits[agent->gender].size() - 1);
 

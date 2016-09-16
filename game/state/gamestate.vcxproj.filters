@@ -347,6 +347,9 @@
     <ClInclude Include="battle\battleunitanimationpack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="battle\battlestrategyiconlist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

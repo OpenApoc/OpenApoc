@@ -85,6 +85,7 @@
     <ClInclude Include="battlemappart_type.h" />
     <ClInclude Include="battle\aequipment.h" />
     <ClInclude Include="battle\battleitem.h" />
+    <ClInclude Include="battle\battlestrategyiconlist.h" />
     <ClInclude Include="battle\battleunit.h" />
     <ClInclude Include="battle\battleunitanimationpack.h" />
     <ClInclude Include="battle\battleunitimagepack.h" />

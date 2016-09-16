@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<animationpack />
+<animationpack>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="standart_animations.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="hand_state_animations.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="body_state_animations.xml" />
+</animationpack>

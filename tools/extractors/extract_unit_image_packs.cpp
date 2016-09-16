@@ -26,7 +26,7 @@ sp<BattleUnitImagePack> InitialGameStateExtractor::extractImagePack(GameState &s
 	for (size_t i = 0; i < imageTabFileEntryCount; i++)
 	{
 		p->images.push_back(
-			fw().data->loadImage(UString::format("%s:%s%s.pck:%s%s.tab:%u:%stactical.pal", shadow ? "PCKSHADOW" : "PCK", dirName, path, dirName, path, dirName, (unsigned)i))
+			fw().data->loadImage(UString::format("%s:%s%s.pck:%s%s.tab:%u", shadow ? "PCKSHADOW" : "PCK", dirName, path, dirName, path, (unsigned)i))
 		);
 	}
 	

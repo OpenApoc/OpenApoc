@@ -182,7 +182,7 @@ const std::map<OpenApoc::UString, OpenApoc::UString> InitialGameStateExtractor::
 	{ "megas",		"alien/mega-s" },
 	{ "poppers",	"alien/poppers" },
 	{ "psis",		"alien/psi-s" },
-	{ "spits",		"alien/spit-s" },
+	{ "spitrs",		"alien/spit-s" },
 };
 
 // Should not be changed. List of keys here is expected to be the same in 
@@ -190,17 +190,19 @@ const std::map<OpenApoc::UString, OpenApoc::UString> InitialGameStateExtractor::
 const std::map<OpenApoc::UString, OpenApoc::UString> InitialGameStateExtractor::unitAnimationPackPaths = {
 	{ "unit",		"unit/anim" },
 	{ "bsk",		"alien/bsk" },
-	{ "chrys",		"" },
+	{ "chrys1",		"" }, // facing #1
+	{ "chrys2",		"" }, // facing #2
 	{ "gun",		"" },
 	{ "hypr",		"alien/hypr" },
 	{ "mega",		"alien/mega" },
 	{ "micro",		"" },
 	{ "multi",		"alien/multi" },
-	{ "mwegg",		"" },
+	{ "mwegg1",		"" }, // facing #1
+	{ "mwegg1",		"" }, // facing #2
 	{ "popper",		"" },
 	{ "psi",		"alien/psi" },
 	{ "queen",		"alien/queen", },
-	{ "spit",		"alien/spit" },
+	{ "spitr",		"alien/spit" },
 	{ "civ",		"civ/anim" },
 };
 

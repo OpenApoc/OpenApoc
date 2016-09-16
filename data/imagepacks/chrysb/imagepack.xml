@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <imagepack>
   <images>
-    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:0:xcom3/tacdata/tactical.pal</entry>
-    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:1:xcom3/tacdata/tactical.pal</entry>
-    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:2:xcom3/tacdata/tactical.pal</entry>
-    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:3:xcom3/tacdata/tactical.pal</entry>
-    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:4:xcom3/tacdata/tactical.pal</entry>
-    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:5:xcom3/tacdata/tactical.pal</entry>
-    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:6:xcom3/tacdata/tactical.pal</entry>
-    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:7:xcom3/tacdata/tactical.pal</entry>
-    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:8:xcom3/tacdata/tactical.pal</entry>
-    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:9:xcom3/tacdata/tactical.pal</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:0</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:1</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:2</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:3</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:4</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:5</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:6</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:7</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:8</entry>
+    <entry>PCK:xcom3/tacdata/alien/chrysb.pck:xcom3/tacdata/alien/chrysb.tab:9</entry>
   </images>
 </imagepack>

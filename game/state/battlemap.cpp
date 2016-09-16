@@ -1,5 +1,7 @@
 #include "game/state/battlemap.h"
 #include "game/state/battle.h"
+#include "game/state/agent.h"
+#include "game/state/organisation.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/battlemappart.h"
@@ -50,6 +52,8 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> orga
                                    StateRef<Vehicle> craft, StateRef<Vehicle> ufo)
 {
 	std::list<StateRef<Agent>> target_agents;
+	// FIXME: Generate list of agent types for enemies (and civs)
+	// Then generate agents from agent types
 	return ufo->type->battle_map->CreateBattle(state, organisation, agents, craft,
 	                                           Battle::MissionType::UfoRecovery, ufo.id,
 	                                           target_agents);
@@ -60,6 +64,8 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> orga
                                    StateRef<Vehicle> craft, StateRef<Building> building)
 {
 	std::list<StateRef<Agent>> target_agents;
+	// FIXME: Generate list of agent types for enemies (and civs)
+	// Then generate agents from agent types
 	if (building->owner == state.getPlayer())
 	{
 		return building->battle_map->CreateBattle(state, organisation, agents, craft,
@@ -242,8 +248,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
                                    StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
                                    UString mission_location_id, const std::list<StateRef<Agent>> &)
 {
-	// FIXME: To be done in map creations
-	// 1. Add units
+	// FIXME: Add Agents to the map
 
 	// Vanilla had vertical stacking of sectors planned, but not implemented. I will implement both
 	// algorithms because I think that would be great to have. We could make it an extended game
@@ -291,43 +296,6 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 			    s.second->size.x * s.second->size.y * s.second->size.z * s.second->occurrence_min;
 		if (remainingMapSize < 0)
 			require_only_largest_mandatory_sector = true;
-	}
-
-	// Begin actually creating a map
-
-	// First load any referenced tile sets
-	// FIXIT: Unload tilesets that are not in use
-	for (auto &tilesetName : this->tilesets)
-	{
-		if (state.loadedTilesets.find(tilesetName) != state.loadedTilesets.end())
-		{
-			LogInfo("Tileset \"%s\" already loaded", tilesetName.cStr());
-			continue;
-		}
-		unsigned count = 0;
-		auto tilesetPath = BattleMapTileset::tilesetPath + "/" + tilesetName;
-		LogInfo("Loading tileset \"%s\" from \"%s\"", tilesetName.cStr(), tilesetPath.cStr());
-		BattleMapTileset tileset;
-		if (!tileset.loadTileset(state, tilesetPath))
-		{
-			LogError("Failed to load tileset \"%s\" from \"%s\"", tilesetName.cStr(),
-			         tilesetPath.cStr());
-		}
-
-		for (auto &tilePair : tileset.map_part_types)
-		{
-			auto &tileName = tilePair.first;
-			auto &tile = tilePair.second;
-			// Sanity check
-			if (state.battleMapTiles.find(tileName) != state.battleMapTiles.end())
-			{
-				LogError("Duplicate tile with ID \"%s\"", tileName.cStr());
-			}
-			state.battleMapTiles.emplace(tileName, tile);
-			count++;
-		}
-		LogInfo("Loaded %u tiles from tileset \"%s\"", count, tilesetName.cStr());
-		state.loadedTilesets.insert(tilesetName);
 	}
 
 	// Prepare sectors in a more useful form;
@@ -611,13 +579,11 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 		auto b = mksp<Battle>();
 
 		b->size = {chunk_size.x * size.x, chunk_size.y * size.y, chunk_size.z * size.z};
-		b->destroyed_ground_tile = destroyed_ground_tile;
-		b->rubble_left_wall = rubble_left_wall;
-		b->rubble_right_wall = rubble_right_wall;
-		b->rubble_feature = rubble_feature;
+		b->battle_map = { &state, id };
 		b->mission_type = mission_type;
 		b->mission_location_id = mission_location_id;
 		b->player_craft = player_craft;
+		b->LoadResources(state);
 
 		for (int x = 0; x < size.x; x++)
 		{
@@ -742,11 +708,63 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 				}
 			}
 		}
-		b->initBattle();
+
+		// Unload sector tiles
+		for (auto &s : sectors)
+			s.second->tiles = nullptr;
+
+		LogInfo("Unloaded sector tiles.");
+
+		b->initBattle(state);
 
 		return b;
 	}
 	LogError("Failed to create map %s", id.cStr());
 	return nullptr;
+}
+
+void BattleMap::LoadTilesets(GameState & state) const
+{
+	if (state.battleMapTiles.size() > 0)
+	{
+		LogInfo("Tilesets are already loaded.");
+		return;
+	}
+	
+	// Load all tilesets used by the map
+	for (auto &tilesetName : this->tilesets)
+	{
+		unsigned count = 0;
+		auto tilesetPath = BattleMapTileset::tilesetPath + "/" + tilesetName;
+		LogInfo("Loading tileset \"%s\" from \"%s\"", tilesetName.cStr(), tilesetPath.cStr());
+		BattleMapTileset tileset;
+		if (!tileset.loadTileset(state, tilesetPath))
+		{
+			LogError("Failed to load tileset \"%s\" from \"%s\"", tilesetName.cStr(),
+				tilesetPath.cStr());
+			continue;
+		}
+
+		for (auto &tilePair : tileset.map_part_types)
+		{
+			auto &tileName = tilePair.first;
+			auto &tile = tilePair.second;
+			// Sanity check
+			if (state.battleMapTiles.find(tileName) != state.battleMapTiles.end())
+			{
+				LogError("Duplicate tile with ID \"%s\"", tileName.cStr());
+				continue;
+			}
+			state.battleMapTiles.emplace(tileName, tile);
+			count++;
+		}
+		LogInfo("Loaded %u tiles from tileset \"%s\"", count, tilesetName.cStr());
+	}
+}
+
+void BattleMap::UnloadTilesets(GameState & state)
+{
+	state.battleMapTiles.clear();
+	LogInfo("Unloaded all tilesets.");
 }
 }

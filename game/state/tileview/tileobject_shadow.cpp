@@ -9,7 +9,7 @@ namespace OpenApoc
 {
 
 void TileObjectShadow::draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-                            TileViewMode mode)
+                            TileViewMode mode, bool)
 {
 	std::ignore = transform;
 	auto vehicle = this->ownerVehicle.lock();
@@ -57,8 +57,11 @@ void TileObjectShadow::draw(Renderer &r, TileTransform &transform, Vec2<float> s
 			}
 			if (item)
 			{
+				// Items on the ground give no shadows
+				if (item->supported)
+					break;
 				if (item->item->type->dropped_shadow_sprite)
-					r.draw(item->item->type->dropped_shadow_sprite, screenPosition);
+					r.draw(item->item->type->dropped_shadow_sprite, screenPosition - item->item->type->shadow_offset);
 			}
 			break;
 		}

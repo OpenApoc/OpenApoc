@@ -24,6 +24,7 @@
 		<member>initial_facilities</member>
 		<member>current_city</member>
 		<member>current_base</member>
+		<member type="Section">battle_strategy_icon_list</member>
 		<member>player</member>
 		<member>aliens</member>
 		<member>rng</member>
@@ -79,11 +80,13 @@
 		<member>max_stats</member>
 		<member>allowed_body_states</member>
 		<member>allowed_movement_states</member>
+		<member>allowed_facing</member>
 		<member>large</member>
-		<member>voxelMap</member>
+		<member>voxelMaps</member>
 		<member>shadow_pack</member>
+		<member>appearance_count</member>
 		<member>image_packs</member>
-		<member>animation_pack</member>
+		<member>animation_packs</member>
 		<member>armor</member>
 		<member>damage_modifier</member>
 		<member>inventory</member>
@@ -369,11 +372,14 @@
 		<member>images</member>
 	</object>
 	<object>
+		<name>BattleStrategyIconList</name>
+		<member>images</member>
+	</object>
+	<object>
 		<name>BattleUnitAnimationPack</name>
-		<member>standart_animations</member>
-		<member>shooting_animations</member>
-		<member>hand_state_animations</member>
-		<member>body_state_animations</member>
+		<member type="Section">standart_animations</member>
+		<member type="Section">hand_state_animations</member>
+		<member type="Section">body_state_animations</member>
 	</object>
 	<object>
 		<name>BattleUnitAnimationPack::AnimationEntry</name>
@@ -383,7 +389,6 @@
 	</object>
 	<object>
 		<name>BattleUnitAnimationPack::AnimationEntry::Frame</name>
-		<member>shadow</member>
 		<member>unit_image_parts</member>
 		<member>unit_image_draw_order</member>
 	</object>
@@ -397,7 +402,8 @@
 		<name>BattleUnit</name>
 		<member>agent</member>
 		<member>behavior_mode</member>
-		<member>fire_mode</member>
+		<member>fire_aiming_mode</member>
+		<member>fire_permission_mode</member>
 		<member>movement_mode</member>
 		<member>kneeling_mode</member>
 		<member>body_animation_ticks_remaining</member>
@@ -418,6 +424,7 @@
 		<member>item</member>
 		<member>position</member>
 		<member>velocity</member>
+		<member>supported</member>
 	</object>
 	<object>
 		<name>BattleMapPart</name>
@@ -554,9 +561,9 @@
 		<member>id</member>
 		<member>name</member>
 		<member>weight</member>
-		<member>strategy_sprite</member>
 		<member>held_sprites</member>
 		<member>dropped_sprite</member>
+		<member>shadow_offset</member>
 		<member>image_offset</member>
 		<member>dropped_shadow_sprite</member>
 		<member>equipscreen_sprite</member>
@@ -862,7 +869,7 @@
 		<value>TwoHanded</value>
 	</enum>
 	<enum>
-		<name>BattleUnitAnimationPack::AnimationEntry::UnitImagePart</name>
+		<name>BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart</name>
 		<value>Shadow</value>
 		<value>Body</value>
 		<value>Legs</value>
@@ -878,11 +885,15 @@
 		<value>Evasive</value>
 	</enum>
 	<enum>
-		<name>BattleUnit::FireMode</name>
-		<value>CeaseFire</value>
+		<name>BattleUnit::FireAimingMode</name>
 		<value>Aimed</value>
 		<value>Snap</value>
 		<value>Auto</value>
+	</enum>
+	<enum>
+		<name>BattleUnit::FirePermissionMode</name>
+		<value>AtWill</value>
+		<value>CeaseFire</value>
 	</enum>
 	<enum>
 		<name>BattleUnit::MovementMode</name>

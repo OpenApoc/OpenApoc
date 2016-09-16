@@ -26,6 +26,7 @@ class AgentStats
 	int accuracy = 0;
 	int reactions = 0;
 	int speed = 0;
+	int getActualSpeedValue() { return speed / 8; }
 	int stamina = 0;
 	int bravery = 0;
 	int strength = 0;
@@ -121,14 +122,22 @@ class AgentType : public StateObject<AgentType>
 	// This, among others, determines wether unit has built-in hover capability, can can be overriden by use of certain armor
 	std::set<BodyState> allowed_body_states;
 	std::set<MovementState> allowed_movement_states;
+	std::set<Vec2<int>> allowed_facing;
 	// Unit is large and will be treated accordingly
 	bool large = false;
 
-	sp<VoxelMap> voxelMap;
+	std::map<BodyState, sp<VoxelMap>> voxelMaps;
 
 	StateRef<BattleUnitImagePack> shadow_pack;
-	std::map<BodyPart, StateRef<BattleUnitImagePack>> image_packs;
-	StateRef<BattleUnitAnimationPack> animation_pack;
+	// A unit can have more than one appearance. 
+	// Examples are: 
+	// - Gang members, who have two attires - red and pink
+	// - Androids, who can have 4 different heads
+	// - Also Chrysalises and Multiworm eggs work this way since their bodies are immobile,
+	// but can face in several directions
+	int appearance_count = 0;
+	std::vector<std::map<BodyPart, StateRef<BattleUnitImagePack>>> image_packs;
+	std::vector<StateRef<BattleUnitAnimationPack>> animation_packs;
 
 	std::map<BodyPart, int> armor;
 	StateRef<DamageModifier> damage_modifier;
@@ -168,7 +177,9 @@ class Agent : public StateObject<Agent>
 
 	UString name;
 
-	int portrait;
+	// Appearance that this specific agent chose from available list of its type
+	int appearance = 0;
+	int portrait = 0;
 	AgentPortrait get_portrait() { return type->portraits[gender][portrait]; }
 	AgentType::Gender gender = AgentType::Gender::Male;
 	

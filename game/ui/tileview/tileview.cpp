@@ -253,6 +253,7 @@ void TileView::render()
 
 	for (int z = zFrom; z < zTo; z++)
 	{
+		bool currentLevel = z == currentZLevel;
 		// Find out when to draw selection bracket parts (if ever)
 		Tile *selectedTile = nullptr;
 		sp<TileObject> drawBackBeforeThis;
@@ -316,7 +317,7 @@ void TileView::render()
 								       tileToOffsetScreenCoords(selectedTilePosition) -
 								           selectedTileImageOffset);
 							Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
-							obj->draw(r, *this, pos, this->viewMode);
+							obj->draw(r, *this, pos, this->viewMode, currentLevel);
 						}
 						// When done with all objects, draw the front selection image
 						// (and back selection image if we haven't yet)
@@ -336,7 +337,7 @@ void TileView::render()
 						{
 							auto &obj = tile->drawnObjects[layer][obj_id];
 							Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
-							obj->draw(r, *this, pos, this->viewMode);
+							obj->draw(r, *this, pos, this->viewMode, currentLevel);
 						}
 					}
 				}

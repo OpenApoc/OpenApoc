@@ -8,10 +8,11 @@
 namespace OpenApoc
 {
 
+class BattleStrategyIconList;
 // class BattleTileObjectUnit;
 // class BattleTileObjectShadow;
 
-class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_from_this<BattleUnit>
+class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 {
   public:
 	static const unsigned SHIELD_RECHARGE_TIME = TICKS_PER_SECOND * 100;
@@ -23,12 +24,16 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 		Normal,
 		Evasive
 	};
-	enum class FireMode
+	enum class FireAimingMode
 	{
-		CeaseFire,
 		Aimed,
 		Snap,
 		Auto
+	};
+	enum class FirePermissionMode
+	{
+		AtWill,
+		CeaseFire
 	};
 	enum class MovementMode
 	{
@@ -45,11 +50,11 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	StateRef<Agent> agent;
 
 	// User set modes
-
-	BehaviorMode behavior_mode;
-	FireMode fire_mode;
-	MovementMode movement_mode;
-	KneelingMode kneeling_mode;
+	BehaviorMode behavior_mode = BehaviorMode::Normal;
+	FireAimingMode fire_aiming_mode = FireAimingMode::Snap;
+	FirePermissionMode fire_permission_mode = FirePermissionMode::AtWill;
+	MovementMode movement_mode = MovementMode::Walking;
+	KneelingMode kneeling_mode = KneelingMode::None;
 
 	// Animation frames and state
 
@@ -99,6 +104,11 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// void setPosition(const Vec3<float> &pos);
 
 	// virtual void update(GameState &state, unsigned int ticks);
+
+	// Following members are not serialized, but rather are set in initBattle method
+
+	sp<BattleStrategyIconList> strategy_icon_list;
+
 
 	/*
 	- current pos

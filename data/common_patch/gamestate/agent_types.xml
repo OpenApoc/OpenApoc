@@ -4,8 +4,7 @@
     <key>AGENTTYPE_X-COM_AGENT_HUMAN</key>
     <value>
       <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_unit</animation_pack>
-		<id>AGENTTYPE_X-COM_AGENT_HUMAN</id>
+        <id>AGENTTYPE_X-COM_AGENT_HUMAN</id>
         <name>X-COM Agent (Human)</name>
         <role>Soldier</role>
         <possible_genders>
@@ -478,12 +477,290 @@
           <psi_attack>20</psi_attack>
           <psi_defence>30</psi_defence>
         </max_stats>
-        <movement_type>Standart</movement_type>
-        <size>
-          <x>32</x>
-          <y>5</y>
-        </size>
-        <armor>
+        <allowed_body_states>
+          <entry>Standing</entry>
+          <entry>Kneeling</entry>
+          <entry>Prone</entry>
+          <entry>Jumping</entry>
+          <entry>Throwing</entry>
+          <entry>Downed</entry>
+        </allowed_body_states>
+        <allowed_movement_states>
+          <entry>None</entry>
+          <entry>Normal</entry>
+          <entry>Running</entry>
+          <entry>Strafing</entry>
+        </allowed_movement_states>
+        <allowed_facing>
+          <entry>
+            <x>-1</x>
+            <y>-1</y>
+          </entry>
+          <entry>
+            <x>-1</x>
+            <y>0</y>
+          </entry>
+          <entry>
+            <x>-1</x>
+            <y>1</y>
+          </entry>
+          <entry>
+            <x>0</x>
+            <y>-1</y>
+          </entry>
+          <entry>
+            <x>0</x>
+            <y>1</y>
+          </entry>
+          <entry>
+            <x>1</x>
+            <y>-1</y>
+          </entry>
+          <entry>
+            <x>1</x>
+            <y>0</y>
+          </entry>
+          <entry>
+            <x>1</x>
+            <y>1</y>
+          </entry>
+        </allowed_facing>
+        <voxelMaps>
+          <entry>
+            <key>Standing</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+          <entry>
+            <key>Flying</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+          <entry>
+            <key>Kneeling</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+          <entry>
+            <key>Jumping</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+          <entry>
+            <key>Throwing</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+          <entry>
+            <key>Downed</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+        </voxelMaps>
+        <shadow_pack>BATTLEUNITIMAGEPACK_shadow</shadow_pack>
+        <appearance_count>1</appearance_count>
+        <image_packs>
+          <entry>
+            <entry>
+              <key>Body</key>
+              <value>BATTLEUNITIMAGEPACK_xcom1a</value>
+            </entry>
+            <entry>
+              <key>Legs</key>
+              <value>BATTLEUNITIMAGEPACK_xcom1b</value>
+            </entry>
+            <entry>
+              <key>Helmet</key>
+              <value>BATTLEUNITIMAGEPACK_xcom1c</value>
+            </entry>
+            <entry>
+              <key>LeftArm</key>
+              <value>BATTLEUNITIMAGEPACK_xcom1d</value>
+            </entry>
+            <entry>
+              <key>RightArm</key>
+              <value>BATTLEUNITIMAGEPACK_xcom1e</value>
+            </entry>
+          </entry>
+        </image_packs>
+        <animation_packs>
+          <entry>BATTLEUNITIANIMATIONPACK_unit</entry>
+        </animation_packs>
+		<armor>
           <entry>
             <key>Legs</key>
             <value>0</value>
@@ -517,8 +794,7 @@
     <key>AGENTTYPE_X-COM_AGENT_HYBRID</key>
     <value>
       <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_unit</animation_pack>
-		<id>AGENTTYPE_X-COM_AGENT_HYBRID</id>
+        <id>AGENTTYPE_X-COM_AGENT_HYBRID</id>
         <name>X-COM Agent (Hybrid)</name>
         <role>Soldier</role>
         <possible_genders>
@@ -641,12 +917,290 @@
           <psi_attack>40</psi_attack>
           <psi_defence>40</psi_defence>
         </max_stats>
-        <movement_type>Standart</movement_type>
-        <size>
-          <x>32</x>
-          <y>5</y>
-        </size>
-        <armor>
+        <allowed_body_states>
+          <entry>Standing</entry>
+          <entry>Kneeling</entry>
+          <entry>Prone</entry>
+          <entry>Jumping</entry>
+          <entry>Throwing</entry>
+          <entry>Downed</entry>
+        </allowed_body_states>
+        <allowed_movement_states>
+          <entry>None</entry>
+          <entry>Normal</entry>
+          <entry>Running</entry>
+          <entry>Strafing</entry>
+        </allowed_movement_states>
+        <allowed_facing>
+          <entry>
+            <x>-1</x>
+            <y>-1</y>
+          </entry>
+          <entry>
+            <x>-1</x>
+            <y>0</y>
+          </entry>
+          <entry>
+            <x>-1</x>
+            <y>1</y>
+          </entry>
+          <entry>
+            <x>0</x>
+            <y>-1</y>
+          </entry>
+          <entry>
+            <x>0</x>
+            <y>1</y>
+          </entry>
+          <entry>
+            <x>1</x>
+            <y>-1</y>
+          </entry>
+          <entry>
+            <x>1</x>
+            <y>0</y>
+          </entry>
+          <entry>
+            <x>1</x>
+            <y>1</y>
+          </entry>
+        </allowed_facing>
+        <voxelMaps>
+          <entry>
+            <key>Standing</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+          <entry>
+            <key>Flying</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+          <entry>
+            <key>Kneeling</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+          <entry>
+            <key>Jumping</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+          <entry>
+            <key>Throwing</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+          <entry>
+            <key>Downed</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+        </voxelMaps>
+        <shadow_pack>BATTLEUNITIMAGEPACK_shadow</shadow_pack>
+        <appearance_count>1</appearance_count>
+        <image_packs>
+          <entry>
+            <entry>
+              <key>Body</key>
+              <value>BATTLEUNITIMAGEPACK_xcom1a</value>
+            </entry>
+            <entry>
+              <key>Legs</key>
+              <value>BATTLEUNITIMAGEPACK_xcom1b</value>
+            </entry>
+            <entry>
+              <key>Helmet</key>
+              <value>BATTLEUNITIMAGEPACK_xcom1c</value>
+            </entry>
+            <entry>
+              <key>LeftArm</key>
+              <value>BATTLEUNITIMAGEPACK_xcom1d</value>
+            </entry>
+            <entry>
+              <key>RightArm</key>
+              <value>BATTLEUNITIMAGEPACK_xcom1e</value>
+            </entry>
+          </entry>
+        </image_packs>
+        <animation_packs>
+          <entry>BATTLEUNITIANIMATIONPACK_unit</entry>
+        </animation_packs>
+		<armor>
           <entry>
             <key>Legs</key>
             <value>0</value>
@@ -755,12 +1309,290 @@
           <strength>85</strength>
           <psi_defence>100</psi_defence>
         </max_stats>
-        <movement_type>Standart</movement_type>
-        <size>
-          <x>32</x>
-          <y>5</y>
-        </size>
-        <armor>
+        <allowed_body_states>
+          <entry>Standing</entry>
+          <entry>Kneeling</entry>
+          <entry>Prone</entry>
+          <entry>Jumping</entry>
+          <entry>Throwing</entry>
+          <entry>Downed</entry>
+        </allowed_body_states>
+        <allowed_movement_states>
+          <entry>None</entry>
+          <entry>Normal</entry>
+          <entry>Running</entry>
+          <entry>Strafing</entry>
+        </allowed_movement_states>
+        <allowed_facing>
+          <entry>
+            <x>-1</x>
+            <y>-1</y>
+          </entry>
+          <entry>
+            <x>-1</x>
+            <y>0</y>
+          </entry>
+          <entry>
+            <x>-1</x>
+            <y>1</y>
+          </entry>
+          <entry>
+            <x>0</x>
+            <y>-1</y>
+          </entry>
+          <entry>
+            <x>0</x>
+            <y>1</y>
+          </entry>
+          <entry>
+            <x>1</x>
+            <y>-1</y>
+          </entry>
+          <entry>
+            <x>1</x>
+            <y>0</y>
+          </entry>
+          <entry>
+            <x>1</x>
+            <y>1</y>
+          </entry>
+        </allowed_facing>
+        <voxelMaps>
+          <entry>
+            <key>Standing</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+          <entry>
+            <key>Flying</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+          <entry>
+            <key>Kneeling</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+          <entry>
+            <key>Jumping</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+          <entry>
+            <key>Throwing</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+          <entry>
+            <key>Downed</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+        </voxelMaps>
+        <shadow_pack>BATTLEUNITIMAGEPACK_shadow</shadow_pack>
+        <appearance_count>1</appearance_count>
+        <image_packs>
+          <entry>
+            <entry>
+              <key>Body</key>
+              <value>BATTLEUNITIMAGEPACK_xcom1a</value>
+            </entry>
+            <entry>
+              <key>Legs</key>
+              <value>BATTLEUNITIMAGEPACK_xcom1b</value>
+            </entry>
+            <entry>
+              <key>Helmet</key>
+              <value>BATTLEUNITIMAGEPACK_xcom1c</value>
+            </entry>
+            <entry>
+              <key>LeftArm</key>
+              <value>BATTLEUNITIMAGEPACK_xcom1d</value>
+            </entry>
+            <entry>
+              <key>RightArm</key>
+              <value>BATTLEUNITIMAGEPACK_xcom1e</value>
+            </entry>
+          </entry>
+        </image_packs>
+        <animation_packs>
+          <entry>BATTLEUNITIANIMATIONPACK_unit</entry>
+        </animation_packs>
+		<armor>
           <entry>
             <key>Legs</key>
             <value>0</value>
@@ -791,12 +1623,11 @@
     </value>
   </entry>  
   <entry>
-    <key>AGENTTYPE_X-COM_BASE_TURRET</key>
+    <key>AGENTTYPE_X-COM_BASE_TURRET_LASER</key>
     <value>
       <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_gun</animation_pack>
-		<id>AGENTTYPE_X-COM_BASE_TURRET</id>
-        <name>X-COM Base Turret</name>
+        <id>AGENTTYPE_X-COM_BASE_TURRET_LASER</id>
+        <name>X-COM Laser Base Turret</name>
         <role>Soldier</role>
         <possible_genders>
           <entry>Male</entry>
@@ -845,12 +1676,130 @@
           <psi_attack>0</psi_attack>
           <psi_defence>100</psi_defence>
         </max_stats>
-        <movement_type>Standart</movement_type>
-        <size>
-          <x>32</x>
-          <y>5</y>
-        </size>
-        <armor>
+        <allowed_body_states>
+          <entry>Standing</entry>
+          <entry>Downed</entry>
+        </allowed_body_states>
+        <allowed_movement_states>
+          <entry>None</entry>
+        </allowed_movement_states>
+        <allowed_facing>
+          <entry>
+            <x>-1</x>
+            <y>-1</y>
+          </entry>
+          <entry>
+            <x>-1</x>
+            <y>0</y>
+          </entry>
+          <entry>
+            <x>-1</x>
+            <y>1</y>
+          </entry>
+          <entry>
+            <x>0</x>
+            <y>-1</y>
+          </entry>
+          <entry>
+            <x>0</x>
+            <y>1</y>
+          </entry>
+          <entry>
+            <x>1</x>
+            <y>-1</y>
+          </entry>
+          <entry>
+            <x>1</x>
+            <y>0</y>
+          </entry>
+          <entry>
+            <x>1</x>
+            <y>1</y>
+          </entry>
+        </allowed_facing>
+        <voxelMaps>
+          <entry>
+            <key>Standing</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+          <entry>
+            <key>Downed</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+        </voxelMaps>
+        <appearance_count>1</appearance_count>
+        <image_packs>
+          <entry>
+            <entry>
+              <key>Body</key>
+              <value>BATTLEUNITIMAGEPACK_gun</value>
+            </entry>
+          </entry>
+        </image_packs>
+        <animation_packs>
+          <entry>BATTLEUNITIANIMATIONPACK_gun</entry>
+        </animation_packs>
+		<armor>
           <entry>
             <key>Legs</key>
             <value>0</value>
@@ -874,363 +1823,214 @@
         </armor>
         <damage_modifier>DAMAGEMODIFIER_GUN_EMPLACEMENT</damage_modifier>
         <score>10</score>
+		<built_in_weapon_right>AEQUIPMENTTYPE_X-COM_BASE_TURRET_LASER</built_in_weapon_right>
       </sp>
     </value>
   </entry>  
   <entry>
-    <key>AGENTTYPE_ALIEN_GREY</key>
+    <key>AGENTTYPE_X-COM_BASE_TURRET_DISRUPTOR</key>
     <value>
       <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
+        <animation_pack>BATTLEUNITIANIMATIONPACK_gun</animation_pack>
+		<id>AGENTTYPE_X-COM_BASE_TURRET_DISRUPTOR</id>
+        <name>X-COM Disruptor Base Turret</name>
+        <role>Soldier</role>
+        <possible_genders>
+          <entry>Male</entry>
+        </possible_genders>
+        <gender_chance>
+          <entry>
+            <key>Male</key>
+            <value>1</value>
+          </entry>
+        </gender_chance>
+        <portraits>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>
+                <key>0</key>
+                <value>
+                  <photo>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:70:xcom3/ufodata/pal_01.dat</photo>
+                  <icon>PCK:xcom3/ufodata/agntico.pck:xcom3/ufodata/agntico.tab:70:xcom3/ufodata/pal_01.dat</icon>
+                </value>
+              </entry>
+			</value>
+          </entry>
+        </portraits>
+        <min_stats>
+          <health>500</health>
+          <accuracy>60</accuracy>
+          <reactions>44</reactions>
+          <speed>60</speed>
+          <stamina>80</stamina>
+          <bravery>0</bravery>
+          <strength>10</strength>
+          <psi_energy>0</psi_energy>
+          <psi_attack>0</psi_attack>
+          <psi_defence>100</psi_defence>
+        </min_stats>
+        <max_stats>
+          <health>500</health>
+          <accuracy>60</accuracy>
+          <reactions>44</reactions>
+          <speed>60</speed>
+          <stamina>80</stamina>
+          <bravery>0</bravery>
+          <strength>10</strength>
+          <psi_energy>0</psi_energy>
+          <psi_attack>0</psi_attack>
+          <psi_defence>100</psi_defence>
+        </max_stats>
+        <allowed_body_states>
+          <entry>Standing</entry>
+          <entry>Downed</entry>
+        </allowed_body_states>
+        <allowed_movement_states>
+          <entry>None</entry>
+        </allowed_movement_states>
+        <allowed_facing>
+          <entry>
+            <x>-1</x>
+            <y>-1</y>
+          </entry>
+          <entry>
+            <x>-1</x>
+            <y>0</y>
+          </entry>
+          <entry>
+            <x>-1</x>
+            <y>1</y>
+          </entry>
+          <entry>
+            <x>0</x>
+            <y>-1</y>
+          </entry>
+          <entry>
+            <x>0</x>
+            <y>1</y>
+          </entry>
+          <entry>
+            <x>1</x>
+            <y>-1</y>
+          </entry>
+          <entry>
+            <x>1</x>
+            <y>0</y>
+          </entry>
+          <entry>
+            <x>1</x>
+            <y>1</y>
+          </entry>
+        </allowed_facing>
+        <voxelMaps>
+          <entry>
+            <key>Standing</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+          <entry>
+            <key>Downed</key>
+            <value>
+              <sp>
+                <size>
+                  <x>24</x>
+                  <y>24</y>
+                  <z>20</z>
+                </size>
+                <slices>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry>LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/loftemps.tab:5</entry>
+                  <entry />
+                  <entry />
+                  <entry />
+                  <entry />
+                </slices>
+              </sp>
+            </value>
+          </entry>
+        </voxelMaps>
+        <appearance_count>1</appearance_count>
+        <image_packs>
+          <entry>
+            <entry>
+              <key>Body</key>
+              <value>BATTLEUNITIMAGEPACK_gun</value>
+            </entry>
+          </entry>
+        </image_packs>
+        <animation_packs>
+          <entry>BATTLEUNITIANIMATIONPACK_gun</entry>
+        </animation_packs>
+		<armor>
+          <entry>
+            <key>Legs</key>
+            <value>0</value>
+          </entry>
+          <entry>
+            <key>Body</key>
+            <value>0</value>
+          </entry>
+          <entry>
+            <key>LeftArm</key>
+            <value>0</value>
+          </entry>
+          <entry>
+            <key>RightArm</key>
+            <value>0</value>
+          </entry>
+          <entry>
+            <key>Helmet</key>
+            <value>0</value>
+          </entry>
+        </armor>
+        <damage_modifier>DAMAGEMODIFIER_GUN_EMPLACEMENT</damage_modifier>
+        <score>10</score>
+		<built_in_weapon_right>AEQUIPMENTTYPE_X-COM_BASE_TURRET_DISRUPTOR</built_in_weapon_right>
       </sp>
     </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_ANDROID</key>
-    <value>
-       <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_ANTHROPOD</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_unit</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_BRAINSUCKER</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_bsk</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_BUILDING_SECURITY</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_unit</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_CHIEF_OF_POLICE</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_unit</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_CHRYSALIS</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_chrys</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_CIVILIAN_FEMALE</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_CIVILIAN_MALE</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_CORPORATE_BOSS</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_unit</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_CORPORATE_HOOD</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_unit</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_CULTIST</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_unit</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_CULT_LEADER</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_unit</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_GANGSTER</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_unit</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_GANG_LEADER</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_unit</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_HYPERWORM</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_hypr</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_LOWER_CLASS_FEMALE</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_LOWER_CLASS_MALE</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_MEGASPAWN</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_mega</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_MICRONOID_AGGREGATE</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_micro</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_MULTIWORM</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_multi</animation_pack>
-      </sp>
-  </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_MULTIWORM_EGG</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_mwegg</animation_pack>
-      </sp>
-  </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_POLICE</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_unit</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_POLITICIAN</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_unit</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_POPPER</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_popper</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_PSIMORPH</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_psi</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_QUEENSPAWN</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_queen</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_SKELETOID</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_unit</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_SPITTER</key>
-    <value>
-     <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_spit</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_UPPER_CLASS_FEMALE</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_UPPER_CLASS_MALE</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_X-COM_BIOCHEMIST</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_X-COM_MECHANIC</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_X-COM_QUANTUM_PHYSICIST</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_CIVILIAN_FEMALE_1</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_CIVILIAN_FEMALE_2</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_CIVILIAN_MALE_1</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_CIVILIAN_MALE_2</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_LOWER_CLASS_FEMALE_1</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_LOWER_CLASS_FEMALE_2</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_LOWER_CLASS_MALE_1</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_LOWER_CLASS_MALE_2</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </value>
-  </entry>
-   <entry>
-    <key>AGENTTYPE_UPPER_CLASS_FEMALE_1</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_UPPER_CLASS_FEMALE_2</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_UPPER_CLASS_MALE_1</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </value>
-  </entry>
-  <entry>
-    <key>AGENTTYPE_UPPER_CLASS_MALE_2</key>
-    <value>
-      <sp>
-        <animation_pack>BATTLEUNITIANIMATIONPACK_civ</animation_pack>
-      </value>
-  </entry>
+  </entry>  
 </agent_types>

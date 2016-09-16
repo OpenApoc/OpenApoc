@@ -7,7 +7,7 @@ namespace OpenApoc
 {
 
 void TileObjectBattleItem::draw(Renderer &r, TileTransform &, Vec2<float> screenPosition,
-                                TileViewMode mode)
+                                TileViewMode mode, bool)
 {
 	// Mode isn't used as TileView::tileToScreenCoords already transforms according to the mode
 	std::ignore = mode;
@@ -24,12 +24,12 @@ void TileObjectBattleItem::draw(Renderer &r, TileTransform &, Vec2<float> screen
 		case TileViewMode::Isometric:
 			sprite = item->item->type->dropped_sprite;
 			transformedScreenPos -=
-			    item->item->type->image_offset - Vec2<float>{0.0f, -20.0f}; // FIXME: Proper
+			    item->item->type->image_offset;
 			break;
 		case TileViewMode::Strategy:
-			sprite = item->item->type->strategy_sprite;
-			// All strategy sprites so far are 8x8 so offset by 4 to draw from the center
-			// FIXME: Not true for large sprites (2x2 UFOs?)
+			if (!item->supported)
+				break;
+			sprite = item->strategy_icon_list->images[480];
 			transformedScreenPos -= Vec2<float>{4, 4};
 			break;
 		default:

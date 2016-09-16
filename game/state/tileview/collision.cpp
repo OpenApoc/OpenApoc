@@ -33,6 +33,8 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 				return c;
 		}
 
+		// FIXME: Voxelmaps can be different size and should rotate with the object
+		// Optionally, we can create and fill a voxelmap for every object facing
 		const Tile *t = this->getTile(tile);
 		for (auto &obj : t->intersectingObjects)
 		{

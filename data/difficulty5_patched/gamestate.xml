@@ -74,6 +74,7 @@
       <value>1</value>
     </entry>
   </initial_facilities>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="battle_strategy_icon_list.xml" />
   <player>ORG_X-COM</player>
   <aliens>ORG_ALIEN</aliens>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="battle_maps.xml" />

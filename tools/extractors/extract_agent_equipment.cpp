@@ -1,5 +1,6 @@
 #include "framework/framework.h"
 #include "game/state/agent.h"
+#include "game/state/battle/battlestrategyiconlist.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
 #include "tools/extractors/common/tacp.h"
@@ -239,7 +240,9 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 					{
 						payload_idx = wdata.ammo_effect[0];
 						e->max_ammo = wdata.ammo_rounds[0];
-						e->recharge = wdata.ammo_recharge[0];
+						// Alien weapons start from index 29, and are not marked as recharging 
+						// despite doing so. Therefore, mark them manually
+						e->recharge = (edata.data_idx > 28) ? 1 : wdata.ammo_recharge[0];
 					}
 				}
 			}
@@ -323,23 +326,19 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 
 		e->weight = edata.weight;
 
-		e->strategy_sprite = fw().data->loadImage(
-		    UString::format("PCKSTRAT:xcom3/tacdata/stratico.pck:xcom3/tacdata/"
-		                    "stratico.tab:%d:xcom3/tacdata/tactical.pal",
-		                    480));
-
-		e->image_offset = {23, 14};
+		e->shadow_offset = { 23, -14 };
+		e->image_offset = { 23, 34 };
 
 		if (edata.sprite_idx < gameObjectSpriteCount)
 			e->dropped_sprite =
 			    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/"
-			                                         "gameobj.tab:%d:xcom3/tacdata/tactical.pal",
+			                                         "gameobj.tab:%d",
 			                                         (int)edata.sprite_idx));
 
 		if (edata.sprite_idx < gameObjectShadowSpriteCount)
 			e->dropped_shadow_sprite = fw().data->loadImage(
 			    UString::format("PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/"
-			                    "oshadow.tab:%d:xcom3/tacdata/tactical.pal",
+			                    "oshadow.tab:%d",
 			                    (int)edata.sprite_idx));
 
 		// Held sprites begin from 0, which corresponds to item 1, Megapol AP Grenade
@@ -350,7 +349,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 		for (int j = 0; j < 8; j++)
 			e->held_sprites.push_back(fw().data->loadImage(
 			    UString::format("PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/"
-			                    "unit/equip.tab:%d:xcom3/tacdata/tactical.pal",
+			                    "unit/equip.tab:%d",
 			                    held_sprite_index * 8 + j)));
 
 		e->equipscreen_sprite = fw().data->loadImage(UString::format(
@@ -645,6 +644,25 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 				state.equipment_sets_by_level[id] = es;
 			}
 		}
+	}
+
+	auto gameObjectStrategySpriteTabFileName = UString("xcom3/tacdata/stratico.tab");
+	auto gameObjectStrategySpriteTabFile = fw().data->fs.open(gameObjectStrategySpriteTabFileName);
+	if (!gameObjectStrategySpriteTabFile)
+	{
+		LogError("Failed to open dropped item StrategySprite TAB file \"%s\"",
+			gameObjectStrategySpriteTabFileName.cStr());
+		return;
+	}
+	size_t gameObjectStrategySpriteCount = gameObjectStrategySpriteTabFile.size() / 4;
+
+	state.battle_strategy_icon_list = mksp<BattleStrategyIconList>();
+
+	for (size_t i = 0; i < gameObjectStrategySpriteCount; i++)
+	{
+		state.battle_strategy_icon_list->images.push_back(fw().data->loadImage(
+				UString::format("PCKSTRAT:xcom3/tacdata/stratico.pck:xcom3/tacdata/"
+					"stratico.tab:%u", (unsigned)i)));
 	}
 }
 

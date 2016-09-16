@@ -129,6 +129,7 @@ void GameState::initState()
 			w->ammo_types.emplace(this, t.first);
 		}
 	}
+	// Run nessecary methods for different types
 	research.updateTopicList();
 }
 

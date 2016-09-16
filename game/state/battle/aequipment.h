@@ -20,11 +20,14 @@ class AEquipment
 
 	Vec2<int> equippedPosition;
 	StateRef<Agent> ownerAgent;
-	wp<BattleItem> ownerItem;
 	int ammo = 0;
 	
 	bool aiming = false;
 	int weapon_fire_ticks_remaining = 0;
+
+	// Following members are not serialized, but rather are set in initBattle method	
+	
+	wp<BattleItem> ownerItem;
 
 	void update(int ticks);
 	/*

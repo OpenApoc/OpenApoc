@@ -94,12 +94,14 @@ class BattleUnitAnimationPack : public StateObject<BattleUnitAnimationPack>
 	int getFrameCountBody(StateRef<AEquipmentType> heldItem,
 	                AgentType::BodyState currentBody, AgentType::BodyState targetBody,
 					AgentType::HandState currentHands,
-					AgentType::MovementState movement);
+					AgentType::MovementState movement,
+					Vec2<int> direction);
 
 	int getFrameCountHands(StateRef<AEquipmentType> heldItem,
 					AgentType::BodyState currentBody, 
 					AgentType::HandState currentHands, AgentType::HandState targetHands,
-					AgentType::MovementState movement);
+					AgentType::MovementState movement,
+					Vec2<int> direction);
 
 	void drawShadow(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
 	                TileViewMode mode, StateRef<BattleUnitImagePack> shadow,

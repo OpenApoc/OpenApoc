@@ -33,13 +33,6 @@ namespace OpenApoc
 
 	sp<BattleUnitAnimationPack::AnimationEntry> getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
 		const std::vector<AnimationDataUA> &dataUA, std::vector<AnimationDataUF> &dataUF,
-		int index, Vec2<int> direction, bool isOverlay = false)
-	{
-		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, 0, false, false);
-	};
-
-	sp<BattleUnitAnimationPack::AnimationEntry> getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
-		const std::vector<AnimationDataUA> &dataUA, std::vector<AnimationDataUF> &dataUF,
 		int index, Vec2<int> direction, int split_point, bool left_side, bool isOverlay = false)
 	{
 		static const std::map<Vec2<int>, int> offset_dir_map = {
@@ -110,6 +103,14 @@ namespace OpenApoc
 		return e;
 	}
 
+	sp<BattleUnitAnimationPack::AnimationEntry> getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
+		const std::vector<AnimationDataUA> &dataUA, std::vector<AnimationDataUF> &dataUF,
+		int index, Vec2<int> direction, bool isOverlay = false)
+	{
+		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, 0, false, isOverlay);
+	}
+
+	// Parsing animations for "unit/anim" files
 	void extractAnimationPackUnit(sp<BattleUnitAnimationPack> p, const std::vector<AnimationDataAD> &dataAD,
 		const std::vector<AnimationDataUA> &dataUA, std::vector<AnimationDataUF> &dataUF, int x, int y)
 	{
@@ -338,8 +339,18 @@ namespace OpenApoc
 				[AgentType::HandState::Aiming][AgentType::MovementState::None]
 				[AgentType::BodyState::Flying][{ x, y }] =
 				getAnimationEntry(dataAD, dataUA, dataUF, 90, { x,y });
+			
+			// Flying aiming moving animation: 86, 90
+			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
+				[AgentType::HandState::Aiming][AgentType::MovementState::Normal]
+				[AgentType::BodyState::Flying][{ x, y }] =
+				getAnimationEntry(dataAD, dataUA, dataUF, 86, { x,y });
+			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
+				[AgentType::HandState::Aiming][AgentType::MovementState::Normal]
+				[AgentType::BodyState::Flying][{ x, y }] =
+				getAnimationEntry(dataAD, dataUA, dataUF, 90, { x,y });
 
-			// Standing aiming overlay animation: 78, 82
+			// Standing aiming moving overlay animation: 78, 82
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::Aiming][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Standing][{ x, y }] =
@@ -357,7 +368,7 @@ namespace OpenApoc
 				[AgentType::BodyState::Standing][{ x, y }] =
 				getAnimationEntry(dataAD, dataUA, dataUF, 82, { x,y }, true);
 
-			// Standing firing animation: 53, 57
+			// Standing firing static animation: 53, 57
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::Firing][AgentType::MovementState::None]
 				[AgentType::BodyState::Standing][{ x, y }] =
@@ -367,7 +378,7 @@ namespace OpenApoc
 				[AgentType::BodyState::Standing][{ x, y }] =
 				getAnimationEntry(dataAD, dataUA, dataUF, 57, { x,y });
 
-			// Kneeling firing animation: 61, 65
+			// Kneeling firing static animation: 61, 65
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::Firing][AgentType::MovementState::None]
 				[AgentType::BodyState::Kneeling][{ x, y }] =
@@ -377,7 +388,7 @@ namespace OpenApoc
 				[AgentType::BodyState::Kneeling][{ x, y }] =
 				getAnimationEntry(dataAD, dataUA, dataUF, 65, { x,y });
 
-			// Prone firing animation: 69, 73
+			// Prone firing static animation: 69, 73
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::Firing][AgentType::MovementState::None]
 				[AgentType::BodyState::Prone][{ x, y }] =
@@ -387,13 +398,23 @@ namespace OpenApoc
 				[AgentType::BodyState::Prone][{ x, y }] =
 				getAnimationEntry(dataAD, dataUA, dataUF, 73, { x,y });
 
-			// Flying firing animation: 85, 89
+			// Flying firing static animation: 85, 89
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::Firing][AgentType::MovementState::None]
 				[AgentType::BodyState::Flying][{ x, y }] =
 				getAnimationEntry(dataAD, dataUA, dataUF, 85, { x,y });
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::Firing][AgentType::MovementState::None]
+				[AgentType::BodyState::Flying][{ x, y }] =
+				getAnimationEntry(dataAD, dataUA, dataUF, 89, { x,y });
+			
+			// Flying firing "walking" animation: 85, 89
+			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
+				[AgentType::HandState::Firing][AgentType::MovementState::Normal]
+				[AgentType::BodyState::Flying][{ x, y }] =
+				getAnimationEntry(dataAD, dataUA, dataUF, 85, { x,y });
+			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
+				[AgentType::HandState::Firing][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Flying][{ x, y }] =
 				getAnimationEntry(dataAD, dataUA, dataUF, 89, { x,y });
 
@@ -571,17 +592,17 @@ namespace OpenApoc
 
 		// Hand state change animation
 		{
-			// Hand Aiming -> Ease standing animation: 55, 59
+			// Hand Aiming -> Ease standing static animation: 55, 59
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::Aiming][AgentType::HandState::AtEase]
-			    [AgentType::MovementState::None][AgentType::BodyState::Standing][{ x, y }] =
+				[AgentType::MovementState::None][AgentType::BodyState::Standing][{ x, y }] =
 				getAnimationEntry(dataAD, dataUA, dataUF, 55, { x,y });
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::Aiming][AgentType::HandState::AtEase]
 				[AgentType::MovementState::None][AgentType::BodyState::Standing][{ x, y }] =
 				getAnimationEntry(dataAD, dataUA, dataUF, 59, { x,y });
 
-			// Hand Ease -> Aiming standing animation: 52, 56
+			// Hand Ease -> Aiming standing static animation: 52, 56
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::AtEase][AgentType::HandState::Aiming]
 				[AgentType::MovementState::None][AgentType::BodyState::Standing][{ x, y }] =
@@ -591,7 +612,7 @@ namespace OpenApoc
 				[AgentType::MovementState::None][AgentType::BodyState::Standing][{ x, y }] =
 				getAnimationEntry(dataAD, dataUA, dataUF, 56, { x,y });
 
-			// Hand Aiming -> Ease kneeling animation: 63, 67
+			// Hand Aiming -> Ease kneeling static animation: 63, 67
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::Aiming][AgentType::HandState::AtEase]
 				[AgentType::MovementState::None][AgentType::BodyState::Kneeling][{ x, y }] =
@@ -601,7 +622,7 @@ namespace OpenApoc
 				[AgentType::MovementState::None][AgentType::BodyState::Kneeling][{ x, y }] =
 				getAnimationEntry(dataAD, dataUA, dataUF, 67, { x,y });
 
-			// Hand Ease -> Aiming kneeling animation: 60, 64
+			// Hand Ease -> Aiming kneeling static animation: 60, 64
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::AtEase][AgentType::HandState::Aiming]
 				[AgentType::MovementState::None][AgentType::BodyState::Kneeling][{ x, y }] =
@@ -610,8 +631,8 @@ namespace OpenApoc
 				[AgentType::HandState::AtEase][AgentType::HandState::Aiming]
 				[AgentType::MovementState::None][AgentType::BodyState::Kneeling][{ x, y }] =
 				getAnimationEntry(dataAD, dataUA, dataUF, 64, { x,y });
-			
-			// Hand Aiming -> Ease prone animation: 71, 75
+
+			// Hand Aiming -> Ease prone static animation: 71, 75
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::Aiming][AgentType::HandState::AtEase]
 				[AgentType::MovementState::None][AgentType::BodyState::Prone][{ x, y }] =
@@ -621,7 +642,7 @@ namespace OpenApoc
 				[AgentType::MovementState::None][AgentType::BodyState::Prone][{ x, y }] =
 				getAnimationEntry(dataAD, dataUA, dataUF, 75, { x,y });
 
-			// Hand Ease -> Aiming prone animation: 68, 72
+			// Hand Ease -> Aiming prone static animation: 68, 72
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::AtEase][AgentType::HandState::Aiming]
 				[AgentType::MovementState::None][AgentType::BodyState::Prone][{ x, y }] =
@@ -631,7 +652,7 @@ namespace OpenApoc
 				[AgentType::MovementState::None][AgentType::BodyState::Prone][{ x, y }] =
 				getAnimationEntry(dataAD, dataUA, dataUF, 72, { x,y });
 
-			// Hand Aiming -> Ease flying animation: 87, 91
+			// Hand Aiming -> Ease flying static animation: 87, 91
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::Aiming][AgentType::HandState::AtEase]
 				[AgentType::MovementState::None][AgentType::BodyState::Flying][{ x, y }] =
@@ -641,7 +662,7 @@ namespace OpenApoc
 				[AgentType::MovementState::None][AgentType::BodyState::Flying][{ x, y }] =
 				getAnimationEntry(dataAD, dataUA, dataUF, 91, { x,y });
 
-			// Hand Ease -> Aiming flying animation: 84, 88
+			// Hand Ease -> Aiming flying static animation: 84, 88
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::AtEase][AgentType::HandState::Aiming]
 				[AgentType::MovementState::None][AgentType::BodyState::Flying][{ x, y }] =
@@ -650,16 +671,46 @@ namespace OpenApoc
 				[AgentType::HandState::AtEase][AgentType::HandState::Aiming]
 				[AgentType::MovementState::None][AgentType::BodyState::Flying][{ x, y }] =
 				getAnimationEntry(dataAD, dataUA, dataUF, 88, { x,y });
-		/*
-						
-		
-			
-			79	X Aim->Ease	1H	Standing	Aiming	Ease	NORMAL
-			83	X Aim->Ease	2H	Standing	Aiming	Ease	NORMAL
-			76	X Ease->Aim	1H	Standing	Ease	Aiming	NORMAL
-			80	X Ease->Aim	2H	Standing	Ease	Aiming	NORMAL
 
-			*/
+			// Hand Aiming -> Ease flying moving animation: 87, 91
+			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
+				[AgentType::HandState::Aiming][AgentType::HandState::AtEase]
+				[AgentType::MovementState::Normal][AgentType::BodyState::Flying][{ x, y }] =
+				getAnimationEntry(dataAD, dataUA, dataUF, 87, { x,y });
+			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
+				[AgentType::HandState::Aiming][AgentType::HandState::AtEase]
+				[AgentType::MovementState::Normal][AgentType::BodyState::Flying][{ x, y }] =
+				getAnimationEntry(dataAD, dataUA, dataUF, 91, { x,y });
+
+			// Hand Ease -> Aiming flying moving animation: 84, 88
+			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
+				[AgentType::HandState::AtEase][AgentType::HandState::Aiming]
+				[AgentType::MovementState::Normal][AgentType::BodyState::Flying][{ x, y }] =
+				getAnimationEntry(dataAD, dataUA, dataUF, 84, { x,y });
+			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
+				[AgentType::HandState::AtEase][AgentType::HandState::Aiming]
+				[AgentType::MovementState::Normal][AgentType::BodyState::Flying][{ x, y }] =
+				getAnimationEntry(dataAD, dataUA, dataUF, 88, { x,y });
+
+			// Hand Aiming -> Ease standing overlay moving animation: 79, 83
+			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
+				[AgentType::HandState::Aiming][AgentType::HandState::AtEase]
+				[AgentType::MovementState::Normal][AgentType::BodyState::Standing][{ x, y }] =
+				getAnimationEntry(dataAD, dataUA, dataUF, 79, { x,y }, true);
+			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
+				[AgentType::HandState::Aiming][AgentType::HandState::AtEase]
+				[AgentType::MovementState::Normal][AgentType::BodyState::Standing][{ x, y }] =
+				getAnimationEntry(dataAD, dataUA, dataUF, 83, { x,y }, true);
+
+			// Hand Ease -> Aiming standing overlay moving animation: 76, 80
+			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
+				[AgentType::HandState::AtEase][AgentType::HandState::Aiming]
+				[AgentType::MovementState::Normal][AgentType::BodyState::Standing][{ x, y }] =
+				getAnimationEntry(dataAD, dataUA, dataUF, 76, { x,y }), true;
+			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
+				[AgentType::HandState::AtEase][AgentType::HandState::Aiming]
+				[AgentType::MovementState::Normal][AgentType::BodyState::Standing][{ x, y }] =
+				getAnimationEntry(dataAD, dataUA, dataUF, 80, { x,y }, true);
 		}
 	}
 
@@ -686,7 +737,7 @@ namespace OpenApoc
 					if (!inFile)
 					{
 						LogError("Failed to read entry in \"%s\"", fileName.cStr());
-						return;
+						return nullptr;
 					}
 					dataAD.push_back(data);
 				}
@@ -710,7 +761,7 @@ namespace OpenApoc
 					if (!inFile)
 					{
 						LogError("Failed to read entry in \"%s\"", fileName.cStr());
-						return;
+						return nullptr;
 					}
 					dataUA.push_back(data);
 				}
@@ -734,13 +785,12 @@ namespace OpenApoc
 					if (!inFile)
 					{
 						LogError("Failed to read entry in \"%s\"", fileName.cStr());
-						return;
+						return nullptr;
 					}
 					dataUF.push_back(data);
 				}
 			}
 		}
-
 
 		// It is not understood in what order animations come in .AD files.
 		// Plus, some simplier aliens are missing those files alltogether.
@@ -759,9 +809,12 @@ namespace OpenApoc
 		if (name == "bsk")
 		{
 		}	
-		if (name == "chrys")
+		if (name == "chrys1")
 		{
 		}	
+		if (name == "chrys2")
+		{
+		}
 		if (name == "gun")
 		{
 		}	
@@ -777,9 +830,12 @@ namespace OpenApoc
 		if (name == "multi")
 		{
 		}	
-		if (name == "mwegg")
+		if (name == "mwegg1")
 		{
 		}	
+		if (name == "mwegg2")
+		{
+		}
 		if (name == "popper")
 		{
 		}	
@@ -789,7 +845,7 @@ namespace OpenApoc
 		if (name == "queen")
 		{
 		}	
-		if (name == "spit")
+		if (name == "spitr")
 		{
 		}	
 		if (name == "civ")

@@ -50,26 +50,32 @@ const UString BattleUnitAnimationPack::getNameFromID(UString id)
 	return emptyString;
 }
 
-BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock::InfoBlock(int index, int offset_x, int offet_y) :
+BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock::InfoBlock(int index, int offset_x, int offset_y) :
 	index(index), offset_x(offset_x), offset_y(offset_y) {}
 
 
 int BattleUnitAnimationPack::getFrameCountBody(StateRef<AEquipmentType> heldItem,
 	AgentType::BodyState currentBody, AgentType::BodyState targetBody,
 	AgentType::HandState currentHands,
-	AgentType::MovementState movement)
+	AgentType::MovementState movement,
+	Vec2<int> direction)
 {
-	LogWarning("Not implemented");
-	return 0;
+	if (currentBody == targetBody)
+		return standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][movement][currentBody][direction]->frame_count;
+	else
+		return body_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][movement][currentBody][targetBody][direction]->frame_count;
 }
 
 int BattleUnitAnimationPack::getFrameCountHands(StateRef<AEquipmentType> heldItem,
 	AgentType::BodyState currentBody,
 	AgentType::HandState currentHands, AgentType::HandState targetHands,
-	AgentType::MovementState movement)
+	AgentType::MovementState movement,
+	Vec2<int> direction)
 {
-	LogWarning("Not implemented");
-	return 0;
+	if (currentHands == targetHands)
+		return standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][movement][currentBody][direction]->frame_count;
+	else
+		return hand_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][targetHands][movement][currentBody][direction]->frame_count;
 }
 
 
@@ -94,6 +100,7 @@ void BattleUnitAnimationPack::drawUnit(Renderer &r, TileTransform &transform, Ve
 	AgentType::MovementState movement,
 	int body_animation_delay, int hands_animation_delay, int distance_passed)
 {
+	
 	LogWarning("Not implemented");
 }
 }

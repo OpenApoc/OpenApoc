@@ -7,7 +7,7 @@ namespace OpenApoc
 {
 
 void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-                             TileViewMode mode)
+                             TileViewMode mode, bool)
 {
 	std::ignore = transform;
 	auto vehicle = this->vehicle.lock();

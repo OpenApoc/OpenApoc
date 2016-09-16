@@ -2,11 +2,12 @@
 #include "framework/framework.h"
 #include "framework/trace.h"
 #include "game/state/battle/battleitem.h"
-#include "game/state/battle/battleitem.h"
+#include "game/state/battlemap.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/battlemappart.h"
 #include "game/state/battlemappart_type.h"
 #include "game/state/city/city.h"
+#include "game/state/city/vehicle.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/projectile.h"
 #include "game/state/gamestate.h"
@@ -71,8 +72,9 @@ Battle::~Battle()
 	this->items.clear();
 }
 
-void Battle::initBattle()
+void Battle::initBattle(GameState &state)
 {
+	LoadResources(state);
 	for (auto &s : this->map_parts)
 	{
 		s->battle = shared_from_this();
@@ -80,6 +82,12 @@ void Battle::initBattle()
 	for (auto &o : this->items)
 	{
 		o->battle = shared_from_this();
+		o->item->ownerItem = o->shared_from_this();
+		o->strategy_icon_list = state.battle_strategy_icon_list;
+	}
+	for (auto &o : this->units)
+	{
+		o->strategy_icon_list = state.battle_strategy_icon_list;
 	}
 	initMap();
 }
@@ -212,6 +220,195 @@ void Battle::update(GameState &state, unsigned int ticks)
 		auto d = *it++;
 		d->update(state, ticks);
 	}
+
+}
+
+// To be called when battle must be started, before showing battle briefing screen
+void Battle::StartBattle(GameState &state, StateRef<Organisation> target_organisation,
+	const std::list<StateRef<Agent>> &player_agents,
+	StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft)
+{
+	if (state.current_battle)
+	{
+		LogError("Battle::StartBattle called while another battle is in progress!");
+		return;
+	}
+	auto b = BattleMap::CreateBattle(state, target_organisation, player_agents, player_craft, target_craft);
+	if (!b)
+		return;
+	state.current_battle = b;
+}
+
+// To be called when battle must be started, before showing battle briefing screen
+void Battle::StartBattle(GameState &state, StateRef<Organisation> target_organisation,
+	const std::list<StateRef<Agent>> &player_agents,
+	StateRef<Vehicle> player_craft, StateRef<Building> target_building)
+{
+	if (state.current_battle)
+	{
+		LogError("Battle::StartBattle called while another battle is in progress!");
+		return;
+	}
+	auto b = BattleMap::CreateBattle(state, target_organisation, player_agents, player_craft, target_building);
+	if (!b)
+		return;
+	state.current_battle = b;
+}
+
+// To be called when battle must be finished and before showing score screen
+void Battle::FinishBattle(GameState &state)
+{
+	//  - Identify how battle ended(if enemies present then Failure, otherwise Success)
+	//	- (Failure) Determine surviving player agents(kill all player agents that are too far from exits)
+	//	- Prepare list of surviving aliens
+	//	- (Success) Prepare list of alien bodies
+	//	- Remove dead player agents and all enemy agents from the game and vehicles
+	//	- Apply experience to stats of living agents
+	//	- (Success) Prepare list of loot(including alien saucer equipment)
+	//	- Calculate score
+
+	//	(AFTER THIS FUNCTION)
+	//  Show score screen
+	//	(If mod is on)
+	//	- If not enough alien body containment, display alien containment transfer window
+	//	- If not enough storage, display storage transfer window
+
+}
+
+// To be called after battle was finished, score screen was shown and before returning to cityscape
+void Battle::ExitBattle(GameState &state)
+{
+	state.current_battle->UnloadResources(state);
+	//  - Apply score
+	//	- (UFO mission) Clear UFO crash
+	//	- Load loot into vehicles
+	//	- Load aliens into bio - trans
+	//	- Put surviving aliens back in the building (?or somewhere else if UFO?)
+	
+	state.current_battle = nullptr;
+}
+
+void Battle::LoadResources(GameState &state)
+{
+	battle_map->LoadTilesets(state);
+	LoadImagePacks(state);
+	LoadAnimationPacks(state);
+}
+
+void Battle::UnloadResources(GameState &state)
+{
+	BattleMap::UnloadTilesets(state);
+	UnloadImagePacks(state);
+	UnloadAnimationPacks(state);
+}
+
+void Battle::LoadImagePacks(GameState &state)
+{
+	if (state.battle_unit_image_packs.size() > 0)
+	{
+		LogInfo("Image packs are already loaded.");
+		return;
+	}
+	// Find out all image packs used by map's units and items
+	std::set<UString> imagePacks;
+	for (auto &bu : units)
+	{
+		if (bu->agent->type->shadow_pack)
+		{
+			auto packName = BattleUnitImagePack::getNameFromID(bu->agent->type->shadow_pack.id);
+			if (imagePacks.find(packName) == imagePacks.end())
+				imagePacks.insert(packName);
+		}
+		for (auto &pv : bu->agent->type->image_packs)
+		{
+			for (auto &ip : pv)
+			{
+				auto packName = BattleUnitImagePack::getNameFromID(ip.second.id);
+				if (imagePacks.find(packName) == imagePacks.end())
+					imagePacks.insert(packName);
+			}
+		}
+		for (auto &ae : bu->agent->equipment)
+		{
+			if (ae->type->image_pack)
+			{
+				auto packName = BattleUnitImagePack::getNameFromID(ae->type->image_pack.id);
+				if (imagePacks.find(packName) == imagePacks.end())
+					imagePacks.insert(packName);
+			}
+		}
+	}
+	for (auto &bi : items)
+	{
+		if (bi->item->type->image_pack)
+		{
+			auto packName = BattleUnitImagePack::getNameFromID(bi->item->type->image_pack.id);
+			if (imagePacks.find(packName) == imagePacks.end())
+				imagePacks.insert(packName);
+		}
+	}
+	// Load all used image packs
+	for (auto &imagePackName : imagePacks)
+	{
+		unsigned count = 0;
+		auto imagePackPath = BattleUnitImagePack::imagePackPath + "/" + imagePackName;
+		LogInfo("Loading image pack \"%s\" from \"%s\"", imagePackName.cStr(), imagePackPath.cStr());
+		auto imagePack = mksp<BattleUnitImagePack>();
+		if (!imagePack->loadImagePack(state, imagePackPath))
+		{
+			LogError("Failed to load image pack \"%s\" from \"%s\"", imagePackName.cStr(), imagePackPath.cStr());
+			continue;
+		}
+		state.battle_unit_image_packs[UString::format("%s%s", BattleUnitImagePack::getPrefix(), imagePackName)] = imagePack;
+		LogInfo("Loaded image pack \"%s\" from \"%s\"", imagePackName.cStr(), imagePackPath.cStr());
+	}
+}
+
+void Battle::UnloadImagePacks(GameState &state)
+{
+	state.battle_unit_image_packs.clear();
+	LogInfo("Unloaded all image packs.");
+}
+
+void Battle::LoadAnimationPacks(GameState &state)
+{
+	if (state.battle_unit_animation_packs.size() > 0)
+	{
+		LogInfo("Animation packs are already loaded.");
+		return;
+	}
+	// Find out all animation packs used by units
+	std::set<UString> animationPacks;
+	for (auto &bu : units)
+	{
+		for (auto &ap : bu->agent->type->animation_packs)
+		{
+			auto packName = BattleUnitAnimationPack::getNameFromID(ap.id);
+			if (animationPacks.find(packName) == animationPacks.end())
+				animationPacks.insert(packName);
+		}
+	}
+	// Load all used animation packs
+	for (auto &animationPackName : animationPacks)
+	{
+		unsigned count = 0;
+		auto animationPackPath = BattleUnitAnimationPack::animationPackPath + "/" + animationPackName;
+		LogInfo("Loading animation pack \"%s\" from \"%s\"", animationPackName.cStr(), animationPackPath.cStr());
+		auto animationPack = mksp<BattleUnitAnimationPack>();
+		if (!animationPack->loadAnimationPack(state, animationPackPath))
+		{
+			LogError("Failed to load animation pack \"%s\" from \"%s\"", animationPackName.cStr(), animationPackPath.cStr());
+			continue;
+		}
+		state.battle_unit_animation_packs[UString::format("%s%s", BattleUnitAnimationPack::getPrefix(), animationPackName)] = animationPack;
+		LogInfo("Loaded animation pack \"%s\" from \"%s\"", animationPackName.cStr(), animationPackPath.cStr());
+	}
+}
+
+void Battle::UnloadAnimationPacks(GameState &state)
+{
+	state.battle_unit_animation_packs.clear();
+	LogInfo("Unloaded all animation packs.");
 }
 
 } // namespace OpenApoc

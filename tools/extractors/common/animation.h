@@ -18,9 +18,9 @@ static_assert(sizeof(struct AnimationDataUA) == 4, "Invalid AnimationDataUA size
 
 struct AnimationEntryUF
 {
-	uint16_t frame_idx;
-	uint8_t x_offset;
-	uint8_t y_offset;
+	int16_t frame_idx;
+	int8_t x_offset;
+	int8_t y_offset;
 };
 static_assert(sizeof(struct AnimationEntryUF) == 4, "Invalid AnimationEntryUF size");
 
