@@ -172,11 +172,20 @@ void BaseScreen::eventOccurred(Event *e)
 					}
 				}
 			}
-			else if (e->forms().MouseInfo.Button == 4 &&
-			         e->forms().RaisedBy->Name == "LISTBOX_FACILITIES")
+			else if (e->forms().MouseInfo.Button == 4)
 			{
-				auto list = std::dynamic_pointer_cast<ListBox>(e->forms().RaisedBy);
-				auto clickedFacilityName = list->getHoveredData<UString>();
+				sp<UString> clickedFacilityName;
+				if (e->forms().RaisedBy->Name == "LISTBOX_FACILITIES")
+				{
+					auto list = std::dynamic_pointer_cast<ListBox>(e->forms().RaisedBy);
+					clickedFacilityName = list->getHoveredData<UString>();
+				}
+				else if (e->forms().RaisedBy->Name == "GRAPHIC_BASE_VIEW")
+				{
+					if (selFacility)
+						clickedFacilityName = mksp<UString>(selFacility->type.id);
+				}
+
 				StateRef<FacilityType> clickedFacility;
 				if (clickedFacilityName)
 					clickedFacility = StateRef<FacilityType>{state.get(), *clickedFacilityName};
