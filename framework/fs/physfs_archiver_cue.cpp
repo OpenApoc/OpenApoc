@@ -597,7 +597,7 @@ class CueIO
 		if (len > remainLength)
 		{
 			// FIXME: This produces way too much output as well, though we could use it somehow?
-			//LogWarning("Requested read of size %" PRIu64 " is bigger than remaining %" PRIu64
+			// LogWarning("Requested read of size %" PRIu64 " is bigger than remaining %" PRIu64
 			//           " bytes",
 			//           len, remainLength);
 			len = remainLength;

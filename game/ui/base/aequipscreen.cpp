@@ -11,6 +11,12 @@ namespace OpenApoc
 static sp<Image> createStatsBar(int initialValue, int currentValue, int modifiedValue, int maxValue,
                                 Colour &initialColour, Colour &currentColour, Vec2<int> imageSize)
 {
+	// Some agent types (e.g. Android's Psi-attack) have zero values. Break out here to avoid
+	// dividing by zero.
+	if (initialValue == 0 && currentValue == 0 && modifiedValue == 0 && maxValue == 0)
+	{
+		return mksp<RGBImage>(imageSize);
+	}
 	LogAssert(initialValue >= 0);
 	LogAssert(currentValue >= 0);
 	LogAssert(currentValue >= initialValue);
