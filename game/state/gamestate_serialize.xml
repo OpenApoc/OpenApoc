@@ -132,6 +132,7 @@
 	</object>
 	<object>
 		<name>Agent</name>
+		<member>type</member>
 		<member>name</member>
 		<member>portrait</member>
 		<member>gender</member>
