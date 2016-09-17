@@ -27,14 +27,15 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 		RightWall,
 		Feature,
 
-		// From here on in,anything else goes
-		Unit,
+		// From here on in, anything else goes. However, object type is a tiebreaker 
+		// in case both objects are located on the same exact position
+		Shadow, 
 		Item,
+		Unit,
 		Projectile,
 		Vehicle,
 		Scenery,
 		Doodad,
-		Shadow,
 	};
 
 	/* 'screenPosition' is where the center of the object should be drawn */
@@ -51,7 +52,7 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	Tile *getOwningTile() const { return this->owningTile; }
 
 	virtual sp<VoxelMap> getVoxelMap() { return nullptr; }
-	virtual Vec3<float> getVoxelOffset() const { return bounds / 2.0f; }
+	virtual Vec3<float> getVoxelOffset() const { return bounds_div_2; }
 
 	virtual const UString &getName() { return this->name; }
 
@@ -71,6 +72,12 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 
 	// The bounds is a cube centered around the 'position' used for stuff like collision detection
 	Vec3<float> bounds;
+	// Bounds never change, so this will provide faster calculations
+	// Bounds divided by 2, used to find inclusive object boundary's coordinates
+	Vec3<float> bounds_div_2;
+	// Bounds divided by 2, subtracting 1, used to find exclusive object boundary's coordinates
+	Vec3<float> bounds_div_2_sub_1;
+
 	UString name;
 };
 

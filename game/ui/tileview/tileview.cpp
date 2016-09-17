@@ -22,8 +22,10 @@ TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
 			layerDrawingMode = LayerDrawingMode::AllLevels;
 			selectedTileEmptyImageBack = fw().data->loadImage("city/selected-citytile-back.png");
 			selectedTileFilledImageBack = fw().data->loadImage("city/selected-citytile-back.png");
+			selectedTileBackgroundImageBack = fw().data->loadImage("city/selected-citytile-back.png");
 			selectedTileEmptyImageFront = fw().data->loadImage("city/selected-citytile-front.png");
 			selectedTileFilledImageFront = fw().data->loadImage("city/selected-citytile-front.png");
+			selectedTileBackgroundImageFront = fw().data->loadImage("city/selected-citytile-front.png");
 			pal = fw().data->loadPalette("xcom3/ufodata/pal_01.dat");
 			break;
 		case Mode::Battle:
@@ -36,6 +38,10 @@ TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
 			    fw().data->loadImage("battle/selected-battletile-filled-back.png");
 			selectedTileFilledImageFront =
 			    fw().data->loadImage("battle/selected-battletile-filled-front.png");
+			selectedTileBackgroundImageBack =
+				fw().data->loadImage("battle/selected-battletile-background-back.png");
+			selectedTileBackgroundImageFront =
+				fw().data->loadImage("battle/selected-battletile-background-front.png");
 			selectedTileImageOffset = {23, 22};
 			pal = fw().data->loadPalette("xcom3/tacdata/tactical.pal");
 			break;
@@ -255,7 +261,8 @@ void TileView::render()
 	{
 		bool currentLevel = z == currentZLevel;
 		// Find out when to draw selection bracket parts (if ever)
-		Tile *selectedTile = nullptr;
+		Tile *selTileOnCurLevel = nullptr;
+		Vec3<int> selTilePosOnCurLevel;
 		sp<TileObject> drawBackBeforeThis;
 		sp<Image> selectionImageBack;
 		sp<Image> selectionImageFront;
@@ -265,34 +272,43 @@ void TileView::render()
 			selectedTilePosition.x >= minX && selectedTilePosition.x < maxX &&
 			selectedTilePosition.y >= minY && selectedTilePosition.y < maxY)
 			{
-				selectedTile =
-					map.getTile(selectedTilePosition.x, selectedTilePosition.y, z);
+				selTilePosOnCurLevel = { selectedTilePosition.x, selectedTilePosition.y, z };
+				selTileOnCurLevel = map.getTile(selTilePosOnCurLevel.x, selTilePosOnCurLevel.y,
+					selTilePosOnCurLevel.z);
 
 				// Find where to draw back selection bracket
-				auto object_count = selectedTile->drawnObjects[0].size();
+				auto object_count = selTileOnCurLevel->drawnObjects[0].size();
 				for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 				{
-					auto &obj = selectedTile->drawnObjects[0][obj_id];
+					auto &obj = selTileOnCurLevel->drawnObjects[0][obj_id];
 					if (!drawBackBeforeThis && obj->getType() != TileObject::Type::Ground)
 						drawBackBeforeThis = obj;
 				}
 				// Find what kind of selection bracket to draw (yellow or green)
 				// Yellow if this tile intersects with a unit
-				bool foundUnit = false;
 				if (selectedTilePosition.z == z)
-				for (auto &tile : selectedTile->intersectingObjects)
-					if (tile->getType() == TileObject::Type::Unit)
-						foundUnit = true;
-				if (foundUnit)
 				{
-					selectionImageBack = selectedTileFilledImageBack;
-					selectionImageFront = selectedTileFilledImageFront;
+					bool foundUnit = false;
+					for (auto &tile : selTileOnCurLevel->intersectingObjects)
+						if (tile->getType() == TileObject::Type::Unit)
+							foundUnit = true;
+					if (foundUnit)
+					{
+						selectionImageBack = selectedTileFilledImageBack;
+						selectionImageFront = selectedTileFilledImageFront;
+					}
+					else
+					{
+						selectionImageBack = selectedTileEmptyImageBack;
+						selectionImageFront = selectedTileEmptyImageFront;
+					}
 				}
 				else
 				{
-					selectionImageBack = selectedTileEmptyImageBack;
-					selectionImageFront = selectedTileEmptyImageFront;
+					selectionImageBack = selectedTileBackgroundImageBack;
+					selectionImageFront = selectedTileBackgroundImageFront;
 				}
+
 			}
 		}
 
@@ -305,7 +321,7 @@ void TileView::render()
 					auto tile = map.getTile(x, y, z);
 					auto object_count = tile->drawnObjects[layer].size();
 					// I assume splitting it here will improve performance?
-					if (tile == selectedTile && layer == 0)
+					if (tile == selTileOnCurLevel && layer == 0)
 					{
 						for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 						{
@@ -313,8 +329,8 @@ void TileView::render()
 							// Back selection image is drawn
 							// between ground image and everything else
 							if (obj == drawBackBeforeThis)
-								r.draw(selectedTileEmptyImageBack,
-								       tileToOffsetScreenCoords(selectedTilePosition) -
+								r.draw(selectionImageBack,
+								       tileToOffsetScreenCoords(selTilePosOnCurLevel) -
 								           selectedTileImageOffset);
 							Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
 							obj->draw(r, *this, pos, this->viewMode, currentLevel);
@@ -322,11 +338,11 @@ void TileView::render()
 						// When done with all objects, draw the front selection image
 						// (and back selection image if we haven't yet)
 						if (!drawBackBeforeThis)
-							r.draw(selectedTileEmptyImageBack,
-							       tileToOffsetScreenCoords(selectedTilePosition) -
+							r.draw(selectionImageBack,
+							       tileToOffsetScreenCoords(selTilePosOnCurLevel) -
 							           selectedTileImageOffset);
-						r.draw(selectedTileEmptyImageFront,
-						       tileToOffsetScreenCoords(selectedTilePosition) -
+						r.draw(selectionImageFront,
+						       tileToOffsetScreenCoords(selTilePosOnCurLevel) -
 						           selectedTileImageOffset);
 					}
 					else
