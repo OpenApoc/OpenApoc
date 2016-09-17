@@ -224,4 +224,30 @@ void Agent::updateSpeed()
 
 }
 
+StateRef<BattleUnitAnimationPack> Agent::getAnimationPack() { return type->animation_packs[appearance]; }
+
+// FIXME: Properly return item that is in right hand (or in left if right is empty)
+StateRef<AEquipmentType> Agent::getItemInHands() 
+{
+	return nullptr;
+}
+
+// FIXME: Properly return worn armor image pack if present
+StateRef<BattleUnitImagePack> Agent::getImagePack(AgentType::BodyPart bodyPart) 
+{
+	switch (bodyPart)
+	{
+	case AgentType::BodyPart::Body:
+		break;
+	case AgentType::BodyPart::Legs:
+		break;
+	case AgentType::BodyPart::Helmet:
+		break;
+	case AgentType::BodyPart::LeftArm:
+		break;
+	case AgentType::BodyPart::RightArm:
+		break;
+	}
+	return type->image_packs[appearance][bodyPart];
+}
 } // namespace OpenApoc

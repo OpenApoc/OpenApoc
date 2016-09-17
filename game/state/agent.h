@@ -202,6 +202,10 @@ class Agent : public StateObject<Agent>
 	void removeEquipment(sp<AEquipment> object);
 
 	void updateSpeed();
+
+	StateRef<BattleUnitAnimationPack> getAnimationPack();
+	StateRef<AEquipmentType> getItemInHands();
+	StateRef<BattleUnitImagePack> getImagePack(AgentType::BodyPart bodyPart);
 };
 
 class AgentGenerator

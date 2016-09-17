@@ -142,7 +142,7 @@ class TileMap
 	void addObjectToMap(sp<Doodad>);
 	void addObjectToMap(sp<BattleMapPart>);
 	void addObjectToMap(sp<BattleItem>);
-	// void addObjectToMap(sp<BattleUnit>);
+	void addObjectToMap(sp<BattleUnit>);
 
 	int getLayer(TileObject::Type type) const;
 	int getLayerCount() const;

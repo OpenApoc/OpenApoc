@@ -66,6 +66,7 @@
     <ClCompile Include="tileview\tileobject.cpp" />
     <ClCompile Include="tileview\tileobject_battleitem.cpp" />
     <ClCompile Include="tileview\tileobject_battlemappart.cpp" />
+    <ClCompile Include="tileview\tileobject_battleunit.cpp" />
     <ClCompile Include="tileview\tileobject_doodad.cpp" />
     <ClCompile Include="tileview\tileobject_projectile.cpp" />
     <ClCompile Include="tileview\tileobject_scenery.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="tileview\tileobject.h" />
     <ClInclude Include="tileview\tileobject_battleitem.h" />
     <ClInclude Include="tileview\tileobject_battlemappart.h" />
+    <ClInclude Include="tileview\tileobject_battleunit.h" />
     <ClInclude Include="tileview\tileobject_doodad.h" />
     <ClInclude Include="tileview\tileobject_projectile.h" />
     <ClInclude Include="tileview\tileobject_scenery.h" />

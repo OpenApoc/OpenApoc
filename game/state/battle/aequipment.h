@@ -20,6 +20,7 @@ class AEquipment
 
 	Vec2<int> equippedPosition;
 	StateRef<Agent> ownerAgent;
+	// Ammunition for weapons, or 
 	int ammo = 0;
 	
 	bool aiming = false;

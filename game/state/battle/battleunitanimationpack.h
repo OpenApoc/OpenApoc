@@ -33,9 +33,8 @@ class BattleUnitAnimationPack : public StateObject<BattleUnitAnimationPack>
 			class InfoBlock
 			{
 			  public:
-				int index = 0;
-				int offset_x = 0;
-				int offset_y = 0;
+				int index = -1;
+				Vec2<float> offset;
 				InfoBlock() = default;
 				InfoBlock(int index, int offset_x, int offet_y);
 			};
@@ -95,31 +94,29 @@ class BattleUnitAnimationPack : public StateObject<BattleUnitAnimationPack>
 	                AgentType::BodyState currentBody, AgentType::BodyState targetBody,
 					AgentType::HandState currentHands,
 					AgentType::MovementState movement,
-					Vec2<int> direction);
+					Vec2<int> facing);
 
 	int getFrameCountHands(StateRef<AEquipmentType> heldItem,
 					AgentType::BodyState currentBody, 
 					AgentType::HandState currentHands, AgentType::HandState targetHands,
 					AgentType::MovementState movement,
-					Vec2<int> direction);
+					Vec2<int> facing);
 
-	void drawShadow(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-	                TileViewMode mode, StateRef<BattleUnitImagePack> shadow,
+	void drawShadow(Renderer &r, Vec2<float> screenPosition, StateRef<BattleUnitImagePack> shadow,
 	                StateRef<AEquipmentType> heldItem, Vec2<int> facing,
 					AgentType::BodyState currentBody, AgentType::BodyState targetBody,
 					AgentType::HandState currentHands, AgentType::HandState targetHands,
 					AgentType::MovementState movement,
-	                int body_animation_delay, int hands_animation_delay, int distance_passed);
+	                int body_animation_delay, int hands_animation_delay, int distance_travelled);
 
-	void drawUnit(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-	                TileViewMode mode, StateRef<BattleUnitImagePack> body,
+	void drawUnit(Renderer &r, Vec2<float> screenPosition, StateRef<BattleUnitImagePack> body,
 	                StateRef<BattleUnitImagePack> legs, StateRef<BattleUnitImagePack> helmet,
 	                StateRef<BattleUnitImagePack> leftHand, StateRef<BattleUnitImagePack> rightHand,
 	                StateRef<AEquipmentType> heldItem, Vec2<int> facing,
 					AgentType::BodyState currentBody, AgentType::BodyState targetBody,
 					AgentType::HandState currentHands, AgentType::HandState targetHands,
 					AgentType::MovementState movement,
-					int body_animation_delay, int hands_animation_delay, int distance_passed);
+					int body_animation_delay, int hands_animation_delay, int distance_travelled);
 
 	// high level api for loading
 	bool loadAnimationPack(GameState &state, const UString &path);

@@ -10,7 +10,7 @@ class TileObjectScenery : public TileObject
 {
   public:
 	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-	          TileViewMode mode, bool) override;
+	          TileViewMode mode, int) override;
 	~TileObjectScenery() override;
 
 	std::weak_ptr<Scenery> scenery;

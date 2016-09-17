@@ -5,7 +5,7 @@
 namespace OpenApoc
 {
 void TileObjectBattleMapPart::draw(Renderer &r, TileTransform &transform,
-                                   Vec2<float> screenPosition, TileViewMode mode, bool)
+                                   Vec2<float> screenPosition, TileViewMode mode, int)
 {
 	std::ignore = transform;
 	// Mode isn't used as TileView::tileToScreenCoords already transforms according to the mode

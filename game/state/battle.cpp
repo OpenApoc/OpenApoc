@@ -13,6 +13,7 @@
 #include "game/state/gamestate.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battleitem.h"
+#include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_doodad.h"
 #include "game/state/tileview/tileobject_projectile.h"
@@ -111,8 +112,7 @@ void Battle::initMap()
 	}
 	for (auto &o : this->units)
 	{
-		std::ignore = o;
-		// this->map->addObjectToMap(o);
+		this->map->addObjectToMap(o);
 	}
 	for (auto &p : this->projectiles)
 	{
@@ -167,13 +167,13 @@ void Battle::update(GameState &state, unsigned int ticks)
 
 			switch (c.obj->getType())
 			{
-				/*case TileObject::Type::Vehicle:
+				case TileObject::Type::Unit:
 				{
-				    auto vehicle = std::static_pointer_cast<TileObjectVehicle>(c.obj)->getVehicle();
-				    vehicle->handleCollision(state, c);
-				    LogWarning("Vehicle collision");
+				    auto unit = std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit();
+					unit->handleCollision(state, c);
+				    LogWarning("Unit collision");
 				    break;
-				}*/
+				}
 				case TileObject::Type::Ground:
 				case TileObject::Type::LeftWall:
 				case TileObject::Type::RightWall:
@@ -210,8 +210,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 	Trace::start("Battle::update::units->update");
 	for (auto &o : this->units)
 	{
-		std::ignore = o;
-		// o->update(state, ticks);
+		o->update(state, ticks);
 	}
 	Trace::end("Battle::update::units->update");
 	Trace::start("Battle::update::doodads->update");
@@ -220,7 +219,6 @@ void Battle::update(GameState &state, unsigned int ticks)
 		auto d = *it++;
 		d->update(state, ticks);
 	}
-
 }
 
 // To be called when battle must be started, before showing battle briefing screen

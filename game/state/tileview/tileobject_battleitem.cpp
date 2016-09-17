@@ -7,7 +7,7 @@ namespace OpenApoc
 {
 
 void TileObjectBattleItem::draw(Renderer &r, TileTransform &, Vec2<float> screenPosition,
-                                TileViewMode mode, bool)
+                                TileViewMode mode, int)
 {
 	// Mode isn't used as TileView::tileToScreenCoords already transforms according to the mode
 	std::ignore = mode;
@@ -42,7 +42,7 @@ void TileObjectBattleItem::draw(Renderer &r, TileTransform &, Vec2<float> screen
 TileObjectBattleItem::~TileObjectBattleItem() = default;
 
 TileObjectBattleItem::TileObjectBattleItem(TileMap &map, sp<BattleItem> item)
-    : TileObject(map, Type::Item, Vec3<float>{0.5f, 0.5f, 0.5f}), item(item)
+    : TileObject(map, Type::Item, Vec3<float>{0.0f, 0.0f, 0.0f}), item(item)
 {
 }
 

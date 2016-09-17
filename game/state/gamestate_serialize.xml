@@ -395,8 +395,8 @@
 	<object>
 		<name>BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock</name>
 		<member>index</member>
-		<member>offset_x</member>
-		<member>offset_y</member>
+		<member>offset</member>
+		<member>offset</member>
 	</object>
 	<object>
 		<name>BattleUnit</name>
@@ -413,11 +413,12 @@
 		<member>current_hand_state</member>
 		<member>target_hand_state</member>
 		<member>movement_ticks_passed</member>
-		<member>turning_animation_ticks_remaining</member>
+		<member>turning_ticks_remaining</member>
 		<member>position</member>
 		<member>facing</member>
 		<member>retreated</member>
 		<member>destroyed</member>
+		<member>falling</member>
 	</object>
 	<object>
 		<name>BattleItem</name>

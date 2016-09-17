@@ -26,7 +26,7 @@ set (GAMESTATE_SOURCE_FILES
 	battle/aequipment.cpp
 	battle/battleitem.cpp
 	battle/battleunit.cpp
-	battle/battleunitanimation.cpp
+	battle/battleunitanimationpack.cpp
 	battle/battleunitimagepack.cpp
 	battle/battleunitmission.cpp
 	city/baselayout.cpp
@@ -53,6 +53,7 @@ set (GAMESTATE_SOURCE_FILES
 	tileview/tileobject.cpp
 	tileview/tileobject_battlemappart.cpp
 	tileview/tileobject_battleitem.cpp
+	tileview/tileobject_battleunit.cpp
 	tileview/tileobject_doodad.cpp
 	tileview/tileobject_projectile.cpp
 	tileview/tileobject_scenery.cpp
@@ -84,7 +85,7 @@ set (GAMESTATE_HEADER_FILES
 	battle/aequipment.h
 	battle/battleitem.h
 	battle/battleunit.h
-	battle/battleunitanimation.h
+	battle/battleunitanimationpack.h
 	battle/battleunitimagepack.h
 	battle/battleunitmission.h
 	city/baselayout.h
@@ -112,6 +113,7 @@ set (GAMESTATE_HEADER_FILES
 	tileview/tileobject.h
 	tileview/tileobject_battlemappart.h
 	tileview/tileobject_battleitem.h
+	tileview/tileobject_battleunit.h
 	tileview/tileobject_doodad.h
 	tileview/tileobject_projectile.h
 	tileview/tileobject_scenery.h
