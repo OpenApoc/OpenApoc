@@ -150,8 +150,10 @@ class Agent : public StateObject<Agent>
 	int portrait;
 	AgentPortrait get_portrait() { return type->portraits[gender][portrait]; }
 	AgentType::Gender gender = AgentType::Gender::Male;
-	AgentStats initial_stats;
-	AgentStats current_stats;
+	AgentStats initial_stats;  // Stats at agent creatrion
+	AgentStats current_stats;  // Stats after agent training/improvement
+	AgentStats modified_stats; // Stats after 'temporary' modification (health damage, slowdown due
+	                           // to equipment weight, used stamina etc)
 
 	StateRef<Base> home_base;
 	StateRef<Organisation> owner;

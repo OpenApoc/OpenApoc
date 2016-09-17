@@ -130,6 +130,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<AgentType
 
 	agent->initial_stats = s;
 	agent->current_stats = s;
+	agent->modified_stats = s;
 
 	// FIXME: Default equipment for agents with no inventory?
 	// FIXME: Equip units according to score?

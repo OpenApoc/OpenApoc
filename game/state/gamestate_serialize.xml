@@ -137,6 +137,7 @@
 		<member>gender</member>
 		<member>initial_stats</member>
 		<member>current_stats</member>
+		<member>modified_stats</member>
 		<member>home_base</member>
 		<member>owner</member>
 		<member>assigned_to_lab</member>

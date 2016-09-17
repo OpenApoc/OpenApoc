@@ -33,6 +33,177 @@
         <imageposition>tile</imageposition>
         <image/>
       </graphic>
+      <label id="AGENT_NAME" text="AGENT NAME GOES HERE">
+        <position x="10" y="148"/>
+        <size width="172" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <graphic id="SELECTED_PORTRAIT">
+        <position x="21" y="69"/>
+        <size width="65" height="64"/>
+        <image>placeholder.png</image>
+        <imageposition>fit</imageposition>
+      </graphic>
+      <graphic id="SELECTED_RANK">
+        <position x="132" y="103"/>
+        <size width="33" height="32"/>
+        <image>placeholder.png</image>
+        <imageposition>fit</imageposition>
+      </graphic>
+      <graphic id="INVENTORY">
+        <position x="26" y="368"/>
+        <size width="64" height="550"/>
+        <image/>
+        <imageposition>fit</imageposition>
+      </graphic>
+      <radiobutton id="BUTTON_SHOW_WEAPONS" groupid="TYPE">
+        <position x="602" y="40"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:6:xcom3/ufodata/agenteqp.pcx</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_SHOW_ARMOUR" groupid="TYPE">
+        <position x="602" y="80"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:7:xcom3/ufodata/agenteqp.pcx</imagechecked>
+      </radiobutton>
+      <scroll id="AGENT_SELECT_SCROLL">
+        <position x="571" y="81"/>
+        <size width="16" height="242"/>
+      </scroll>
+      <listbox id="AGENT_SELECT_BOX" scrollbarid="AGENT_SELECT_SCROLL">
+        <position x="463" y="65"/>
+        <size width="98" height="270"/>
+        <item size="0" spacing="5"/>
+        <hovercolour r="255" g="255" b="255" a="255"/>
+        <selcolour r="0" g="255" b="0" a="255"/>
+      </listbox>
+      <graphicbutton id="AGENT_SCROLL_UP" scrollprev="AGENT_SELECT_SCROLL">
+        <position x="568" y="56"/>
+        <size width="22" height="21"/>
+        <image/>
+        <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="AGENT_SCROLL_DOWN" scrollnext="AGENT_SELECT_SCROLL">
+        <position x="568" y="326"/>
+        <size width="22" height="21"/>
+        <image/>
+        <imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <checkbox ID="BUTTON_TOGGLE_STATS">
+        <position x="167" y="56"/>
+        <size width="22" height="21"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:11:xcom3/ufodata/agenteqp.pcx</imagechecked>
+      </checkbox>
+      <graphic id="PAPER_DOLL">
+        <position x="192" y="52"/>
+        <size width="256" height="256"/>
+        <imageposition>tile</imageposition>
+        <image/>
+      </graphic>
+      <label id="LABEL_HEALTH" text="Health">
+        <position x="10" y="168"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <label id="LABEL_ACCURACY" text="Accuracy">
+        <position x="10" y="184"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <label id="LABEL_REACTIONS" text="Reactions">
+        <position x="10" y="200"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <label id="LABEL_SPEED" text="Speed">
+        <position x="10" y="216"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <label id="LABEL_STAMINA" text="Stamina">
+        <position x="10" y="232"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <label id="LABEL_BRAVERY" text="Bravery">
+        <position x="10" y="248"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <label id="LABEL_STRENGTH" text="Strength">
+        <position x="10" y="264"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <label id="LABEL_PSI-ENERGY" text="Psi-energy">
+        <position x="10" y="280"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <label id="LABEL_PSI-ATTACK" text="Psi-attack">
+        <position x="10" y="296"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <label id="LABEL_PSI-DEFENCE" text="Psi-defence">
+        <position x="10" y="312"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <graphic id="VALUE_1">
+        <position x="86" y="174"/>
+        <size width="64" height="4"/>
+      </graphic>
+      <graphic id="VALUE_2">
+        <position x="86" y="190"/>
+        <size width="64" height="4"/>
+      </graphic>
+      <graphic id="VALUE_3">
+        <position x="86" y="206"/>
+        <size width="64" height="4"/>
+      </graphic>
+      <graphic id="VALUE_4">
+        <position x="86" y="222"/>
+        <size width="64" height="4"/>
+      </graphic>
+      <graphic id="VALUE_5">
+        <position x="86" y="238"/>
+        <size width="64" height="4"/>
+      </graphic>
+      <graphic id="VALUE_6">
+        <position x="86" y="254"/>
+        <size width="64" height="4"/>
+      </graphic>
+      <graphic id="VALUE_7">
+        <position x="86" y="270"/>
+        <size width="64" height="4"/>
+      </graphic>
+      <graphic id="VALUE_8">
+        <position x="86" y="286"/>
+        <size width="64" height="4"/>
+      </graphic>
+      <graphic id="VALUE_9">
+        <position x="86" y="302"/>
+        <size width="64" height="4"/>
+      </graphic>
+      <graphic id="VALUE_10">
+        <position x="86" y="318"/>
+        <size width="64" height="4"/>
+      </graphic>
     </style>
   </form>
 </openapoc>

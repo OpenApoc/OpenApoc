@@ -10,6 +10,7 @@ namespace OpenApoc
 class Form;
 class GameState;
 class Palette;
+class Agent;
 
 class AEquipScreen : public Stage
 {
@@ -17,6 +18,7 @@ class AEquipScreen : public Stage
 	sp<Form> form;
 	sp<Palette> pal;
 	sp<GameState> state;
+	sp<Agent> currentAgent;
 
   public:
 	AEquipScreen(sp<GameState> state);
@@ -30,6 +32,8 @@ class AEquipScreen : public Stage
 	void update() override;
 	void render() override;
 	bool isTransition() override;
+
+	void setSelectedAgent(sp<Agent> agent);
 };
 
 } // namespace OpenApoc
