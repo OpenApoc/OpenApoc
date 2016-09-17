@@ -51,6 +51,11 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	};
 	
 	StateRef<Agent> agent;
+	StateRef<Organisation> owner;
+	int squadNumber = 0;
+	int squadPosition = 0;
+	bool assignToSquad(int squadNumber);
+	void moveToSquadPosition(int squadPosition);
 
 	// User set modes
 	BehaviorMode behavior_mode = BehaviorMode::Normal;
@@ -90,9 +95,6 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	// Freefalling
 	bool falling = false;
 
-	 sp<TileObjectBattleUnit> tileObject;
-	 sp<TileObjectShadow> shadowObject;
-
 	bool applyDamage(GameState &state, int damage, float armour);
 	void handleCollision(GameState &state, Collision &c);
 	// sp<TileObjectVehicle> findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile);
@@ -113,8 +115,10 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 
 	// Following members are not serialized, but rather are set in initBattle method
 
+	sp<TileObjectBattleUnit> tileObject;
+	sp<TileObjectShadow> shadowObject;
+	wp<Battle> battle;
 	sp<BattleStrategyIconList> strategy_icon_list;
-
 
 	/*
 	- current order

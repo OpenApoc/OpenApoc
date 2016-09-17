@@ -315,8 +315,9 @@
 		<member type="Section">map_parts</member>
 		<member>units</member>
 		<member>items</member>
-		<member>projectiles</member>
 		<member>doodads</member>
+		<member>projectiles</member>
+		<member>participants</member>
 	</object>
 	<object>
 		<name>BattleMap</name>
@@ -396,11 +397,13 @@
 		<name>BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock</name>
 		<member>index</member>
 		<member>offset</member>
-		<member>offset</member>
 	</object>
 	<object>
 		<name>BattleUnit</name>
 		<member>agent</member>
+		<member>owner</member>
+		<member>squadNumber</member>
+		<member>squadPosition</member>
 		<member>behavior_mode</member>
 		<member>fire_aiming_mode</member>
 		<member>fire_permission_mode</member>

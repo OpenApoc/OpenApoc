@@ -7,6 +7,26 @@
 
 namespace OpenApoc
 {
+	bool BattleUnit::assignToSquad(int squad)
+	{
+		auto b = battle.lock();
+		if (!b)
+		{
+			LogError("Battle disappeared");
+		}
+		return b->forces[owner].insert(squad, shared_from_this());
+	}
+
+	void BattleUnit::moveToSquadPosition(int position)
+	{
+		auto b = battle.lock();
+		if (!b)
+		{
+			LogError("Battle disappeared");
+		}
+		b->forces[owner].insertAt(squadNumber, position);
+	}
+
 	void BattleUnit::setPosition(const Vec3<float> &pos)
 	{
 		this->position = pos;

@@ -46,19 +46,18 @@ class BattleMap : public StateObject<BattleMap>
 
   private:
 	static sp<Battle> CreateBattle(GameState &state, StateRef<Organisation> target_organisation,
-	                               const std::list<StateRef<Agent>> &player_agents,
+	                               std::list<StateRef<Agent>> &player_agents,
 	                               StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft);
 	
 	static sp<Battle> CreateBattle(GameState &state, StateRef<Organisation> target_organisation,
-	                               const std::list<StateRef<Agent>> &player_agents,
+	                               std::list<StateRef<Agent>> &player_agents,
 	                               StateRef<Vehicle> player_craft,
 	                               StateRef<Building> target_building);
 
 	sp<Battle> CreateBattle(GameState &state, StateRef<Organisation> target_organisation,
-	                        const std::list<StateRef<Agent>> &player_agents,
+	                        std::list<StateRef<Agent>> &agents,
 	                        StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
-	                        UString mission_location_id,
-	                        const std::list<StateRef<Agent>> &target_agents);
+	                        UString mission_location_id);
 
 	void LoadTilesets(GameState &state) const;
 	static void UnloadTilesets(GameState &state);

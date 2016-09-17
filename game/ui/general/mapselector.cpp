@@ -75,7 +75,8 @@ sp<Control> MapSelector::createMapRowBuilding(sp<Building> building, sp<GameStat
 			StateRef<Building> bld = {state.get(), building};
 			StateRef<Vehicle> veh = {};
 			
-			Battle::StartBattle(*state.get(), org, agents, veh, bld);
+			Battle::EnterBattle(*state.get(), org, agents, veh, bld);
+			Battle::BeginBattle(*state.get());
 
 			fw().stageQueueCommand({ StageCmd::Command::POP });
 			fw().stageQueueCommand({StageCmd::Command::REPLACE, mksp<BattleView>(state)});
@@ -128,7 +129,8 @@ sp<Control> MapSelector::createMapRowVehicle(sp<VehicleType> vehicle, sp<GameSta
 			StateRef<Vehicle> ufo = {state.get(), v->name};
 			StateRef<Vehicle> veh = {};
 			
-			Battle::StartBattle(*state.get(), org, agents, veh, ufo);
+			Battle::EnterBattle(*state.get(), org, agents, veh, ufo);
+			Battle::BeginBattle(*state.get());
 
 			fw().stageQueueCommand({ StageCmd::Command::POP });
 			fw().stageQueueCommand({StageCmd::Command::REPLACE, mksp<BattleView>(state)});

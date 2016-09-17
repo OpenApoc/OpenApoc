@@ -88,7 +88,40 @@ void Battle::initBattle(GameState &state)
 	}
 	for (auto &o : this->units)
 	{
+		o->battle = shared_from_this();
 		o->strategy_icon_list = state.battle_strategy_icon_list;
+	}
+	if (forces.size() == 0)
+	{
+		// Init forces and fill squads with nullptrs so that we have where to place units
+		for (auto &o : this->participants)
+		{
+			forces[o];
+			for (int i = 0;i < 6;i++)
+			{
+				forces[o].squads[i].units = std::vector<sp<BattleUnit>>(6);
+			}
+		}
+		// Place units into squads directly to their positions
+		for (auto &u : this->units)
+		{
+			forces[u->owner].squads[u->squadNumber].units[u->squadPosition] = u;
+		}
+		// Trim nullptrs from squad units
+		for (auto &o : this->participants)
+		{
+			for (int i = 0;i < 6;i++)
+			{
+				for (int j = 5; j >= 0; j--)
+				{
+					if (forces[o].squads[i].units[j])
+					{
+						break;
+					}
+					forces[o].squads[i].units.erase(forces[o].squads[i].units.begin() + j);
+				}
+			}
+		}
 	}
 	initMap();
 }
@@ -110,9 +143,9 @@ void Battle::initMap()
 	{
 		this->map->addObjectToMap(o);
 	}
-	for (auto &o : this->units)
+	for (auto &u : this->units)
 	{
-		this->map->addObjectToMap(o);
+		this->map->addObjectToMap(u);
 	}
 	for (auto &p : this->projectiles)
 	{
@@ -222,13 +255,13 @@ void Battle::update(GameState &state, unsigned int ticks)
 }
 
 // To be called when battle must be started, before showing battle briefing screen
-void Battle::StartBattle(GameState &state, StateRef<Organisation> target_organisation,
-	const std::list<StateRef<Agent>> &player_agents,
+void Battle::EnterBattle(GameState &state, StateRef<Organisation> target_organisation,
+	std::list<StateRef<Agent>> &player_agents,
 	StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft)
 {
 	if (state.current_battle)
 	{
-		LogError("Battle::StartBattle called while another battle is in progress!");
+		LogError("Battle::EnterBattle called while another battle is in progress!");
 		return;
 	}
 	auto b = BattleMap::CreateBattle(state, target_organisation, player_agents, player_craft, target_craft);
@@ -238,13 +271,13 @@ void Battle::StartBattle(GameState &state, StateRef<Organisation> target_organis
 }
 
 // To be called when battle must be started, before showing battle briefing screen
-void Battle::StartBattle(GameState &state, StateRef<Organisation> target_organisation,
-	const std::list<StateRef<Agent>> &player_agents,
+void Battle::EnterBattle(GameState &state, StateRef<Organisation> target_organisation,
+	std::list<StateRef<Agent>> &player_agents,
 	StateRef<Vehicle> player_craft, StateRef<Building> target_building)
 {
 	if (state.current_battle)
 	{
-		LogError("Battle::StartBattle called while another battle is in progress!");
+		LogError("Battle::EnterBattle called while another battle is in progress!");
 		return;
 	}
 	auto b = BattleMap::CreateBattle(state, target_organisation, player_agents, player_craft, target_building);
@@ -253,9 +286,59 @@ void Battle::StartBattle(GameState &state, StateRef<Organisation> target_organis
 	state.current_battle = b;
 }
 
+// To be called when battle must be started, after the player has assigned agents to squads
+void Battle::BeginBattle(GameState &state)
+{
+	if (!state.current_battle)
+	{
+		LogError("Battle::BeginBattle called with no battle!");
+		return;
+	}
+
+	auto &b = state.current_battle;
+
+	for (auto &o : b->participants)
+	{
+		// Create spawn maps
+		std::list<sp<BattleMapSector::LineOfSightBlock>> spawnMapWalker;
+		std::list<sp<BattleMapSector::LineOfSightBlock>> spawnMapFlying;
+		std::list<sp<BattleMapSector::LineOfSightBlock>> spawnMapLargeFlying;
+		std::list<sp<BattleMapSector::LineOfSightBlock>> spawnMapLargeWalker;
+
+		// Fill spawn maps
+		
+		// FIXME: 
+		// Choose side based on what org it is
+		// For each LOS block that belongs to side, add it to list several number of times (based on priority)
+
+		// Spawn agents
+		for (auto &f : state.current_battle->forces)
+		{
+			for (auto &s : f.second.squads)
+			{
+				if (s.getNumUnits() == 0)
+					continue;
+
+				// FIXME:
+				// Find out what units are in the squad.
+				// Pick a spawn map
+				// Do a list randomiser on the spawn map, picking a block
+				// Spawn units within a block
+			}
+		}
+	}
+
+	state.current_battle->initBattle(state);
+}
+
 // To be called when battle must be finished and before showing score screen
 void Battle::FinishBattle(GameState &state)
 {
+	if (!state.current_battle)
+	{
+		LogError("Battle::FinishBattle called with no battle!");
+		return;
+	}
 	//  - Identify how battle ended(if enemies present then Failure, otherwise Success)
 	//	- (Failure) Determine surviving player agents(kill all player agents that are too far from exits)
 	//	- Prepare list of surviving aliens
@@ -276,6 +359,12 @@ void Battle::FinishBattle(GameState &state)
 // To be called after battle was finished, score screen was shown and before returning to cityscape
 void Battle::ExitBattle(GameState &state)
 {
+	if (!state.current_battle)
+	{
+		LogError("Battle::ExitBattle called with no battle!");
+		return;
+	}
+
 	state.current_battle->UnloadResources(state);
 	//  - Apply score
 	//	- (UFO mission) Clear UFO crash

@@ -36,11 +36,10 @@ class BattleMapSector
 		bool spawn_large_units = false;
 		bool spawn_walking_units = false;
 
-		bool contains(Vec3<int> tile)
-		{
-			return tile.x >= start.x && tile.y >= start.y && tile.z >= start.z && tile.x <= end.x &&
-			       tile.y <= end.y && tile.z <= end.z;
-		}
+		bool contains(Vec3<int> tile);
+		bool contains(Vec3<float> position);
+
+		sp<LineOfSightBlock> clone(Vec3<int> shift);
 	};
 
 	Vec3<int> size;

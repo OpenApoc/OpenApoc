@@ -177,6 +177,9 @@
     <ClCompile Include="tileview\tileobject_battleunit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="battle\battleforces.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agent.h">
@@ -354,6 +357,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tileview\tileobject_battleunit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\battleforces.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

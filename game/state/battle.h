@@ -1,6 +1,7 @@
 #pragma once
 #include "game/state/agent.h"
 #include "framework/includes.h"
+#include "game/state/battle/battleforces.h"
 #include "game/state/battlemappart_type.h"
 #include "game/state/stateobject.h"
 #include "game/state/tileview/tile.h"
@@ -63,6 +64,8 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	StateRef<BattleMap> battle_map;
 
+	std::vector<sp<BattleMapSector::LineOfSightBlock>> los_blocks;
+
 	MissionType mission_type = MissionType::AlienExtermination;
 	UString mission_location_id;
 
@@ -72,25 +75,33 @@ class Battle : public std::enable_shared_from_this<Battle>
 	std::list<sp<BattleItem>> items;
 	std::list<sp<BattleUnit>> units;
 	std::list<sp<Doodad>> doodads;
-
 	std::set<sp<Projectile>> projectiles;
 
 	up<TileMap> map;
 
+	std::set<StateRef<Organisation>> participants;
+
+	// Following members are not serialized, but rather are set in initBattle method
+
+	std::map<StateRef<Organisation>, BattleForces> forces;
+
 	void update(GameState &state, unsigned int ticks);
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
 
-	// To be called when battle must be started, before showing battle briefing screen
-	static void StartBattle(GameState &state, StateRef<Organisation> target_organisation,
-		const std::list<StateRef<Agent>> &player_agents,
+	// To be called when battle must be created, before showing battle briefing screen
+	static void EnterBattle(GameState &state, StateRef<Organisation> target_organisation,
+		std::list<StateRef<Agent>> &player_agents,
 		StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft);
 	
-	// To be called when battle must be started, before showing battle briefing screen
-	static void StartBattle(GameState &state, StateRef<Organisation> target_organisation,
-		const std::list<StateRef<Agent>> &player_agents,
+	// To be called when battle must be created, before showing battle briefing screen
+	static void EnterBattle(GameState &state, StateRef<Organisation> target_organisation,
+		std::list<StateRef<Agent>> &player_agents,
 		StateRef<Vehicle> player_craft,
 		StateRef<Building> target_building);
 	
+	// To be called when battle must be started, after briefing screen
+	static void BeginBattle(GameState &state);
+
 	// To be called when battle must be finished, before showing score screen
 	static void FinishBattle(GameState &state);
 

@@ -48,40 +48,37 @@ const UString &StateObject<BattleMap>::getId(const GameState &state, const sp<Ba
 }
 
 sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> organisation,
-                                   const std::list<StateRef<Agent>> &agents,
+                                   std::list<StateRef<Agent>> &player_agents,
                                    StateRef<Vehicle> craft, StateRef<Vehicle> ufo)
 {
-	std::list<StateRef<Agent>> target_agents;
 	// FIXME: Generate list of agent types for enemies (and civs)
 	// Then generate agents from agent types
-	return ufo->type->battle_map->CreateBattle(state, organisation, agents, craft,
-	                                           Battle::MissionType::UfoRecovery, ufo.id,
-	                                           target_agents);
+	// Add them to list of player agents and pass it further
+	return ufo->type->battle_map->CreateBattle(state, organisation, player_agents, craft,
+	                                           Battle::MissionType::UfoRecovery, ufo.id);
 }
 
 sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> organisation,
-                                   const std::list<StateRef<Agent>> &agents,
+                                   std::list<StateRef<Agent>> &player_agents,
                                    StateRef<Vehicle> craft, StateRef<Building> building)
 {
-	std::list<StateRef<Agent>> target_agents;
 	// FIXME: Generate list of agent types for enemies (and civs)
 	// Then generate agents from agent types
+	// Add them to list of player agents and pass it further
 	if (building->owner == state.getPlayer())
 	{
-		return building->battle_map->CreateBattle(state, organisation, agents, craft,
-		                                          Battle::MissionType::BaseDefense, building.id,
-		                                          target_agents);
+		return building->battle_map->CreateBattle(state, organisation, player_agents, craft,
+		                                          Battle::MissionType::BaseDefense, building.id);
 	}
 	else
 	{
 		if (organisation == state.getAliens())
-			return building->battle_map->CreateBattle(state, organisation, agents, craft,
+			return building->battle_map->CreateBattle(state, organisation, player_agents, craft,
 			                                          Battle::MissionType::AlienExtermination,
-			                                          building.id, target_agents);
+			                                          building.id);
 		else
-			return building->battle_map->CreateBattle(state, organisation, agents, craft,
-			                                          Battle::MissionType::RaidHumans, building.id,
-			                                          target_agents);
+			return building->battle_map->CreateBattle(state, organisation, player_agents, craft,
+			                                          Battle::MissionType::RaidHumans, building.id);
 	}
 }
 
@@ -244,12 +241,10 @@ bool PlaceSector(GameState &state,
 }
 
 sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> target_organisation,
-                                   const std::list<StateRef<Agent>> &,
+                                   std::list<StateRef<Agent>> &agents,
                                    StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
-                                   UString mission_location_id, const std::list<StateRef<Agent>> &)
+                                   UString mission_location_id)
 {
-	// FIXME: Add Agents to the map
-
 	// Vanilla had vertical stacking of sectors planned, but not implemented. I will implement both
 	// algorithms because I think that would be great to have. We could make it an extended game
 	// option in the future.
@@ -705,6 +700,82 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 
 						b->items.push_back(s);
 					}
+					for (auto &lb : tiles.los_blocks)
+					{
+						b->los_blocks.push_back(lb->clone(shift));
+					}
+				}
+			}
+		}
+
+		// Agents are just added to squads in default way here. 
+		// Player will be allowed a chance to equip them and assign to squads how they prefer
+		// We will assign their positions and "spawn" them in "BeginBattle" function
+		for (auto &a : agents)
+		{
+			auto u = mksp<BattleUnit>();
+			
+			u->agent = a;
+			u->owner = a->owner;
+			u->squadNumber = -1;
+
+			b->units.push_back(u);
+		}
+		
+		// Fill list of participants and find out number of agents in each org
+		b->participants.insert(state.getPlayer());
+		b->participants.insert(target_organisation);
+		std::map<StateRef<Organisation>, int> agentCount;
+		for (auto &o : b->participants)
+		{
+			b->forces[o];
+			agentCount[o] = 0;
+		}
+		for (auto &u : b->units)
+		{
+			agentCount[u->owner]++;
+		}
+
+		// Distribute agents into squads
+		for (auto &o : b->participants)
+		{
+			// First add agents in groups of threes
+			// If only 2 remain, add them still
+			// If only 1 remains, do not add them
+			for (int s = 0; s < 6; s++)
+			{
+				if (agentCount[o] == 0)
+					break;
+				if (agentCount[o] > 1)
+				{
+					for (auto &u : b->units)
+					{
+						if (b->forces[o].squads[s].getNumUnits() >= 3)
+							break;
+						if (u->owner != o)
+							continue;
+						u->assignToSquad(s);
+						agentCount[o]--;
+						if (agentCount[o] == 0)
+							break;
+					}
+				}
+			}
+			// Now fill squads with remaining agents
+			for (int s = 0; s < 6; s++)
+			{
+				if (agentCount[o] == 0)
+					break;
+				for (auto &u : b->units)
+				{
+					if (b->forces[o].squads[s].getNumUnits() == 6)
+						break;
+					if (u->owner != o || u->squadNumber != -1)
+						continue;
+					u->assignToSquad(s);
+					agentCount[o]--;
+					if (agentCount[o] == 0)
+						break;
 				}
 			}
 		}
@@ -714,8 +785,6 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 			s.second->tiles = nullptr;
 
 		LogInfo("Unloaded sector tiles.");
-
-		b->initBattle(state);
 
 		return b;
 	}

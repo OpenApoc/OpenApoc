@@ -28,6 +28,7 @@
     <ClCompile Include="battlemappart_type.cpp" />
     <ClCompile Include="battlemapsector.cpp" />
     <ClCompile Include="battle\aequipment.cpp" />
+    <ClCompile Include="battle\battleforces.cpp" />
     <ClCompile Include="battle\battleitem.cpp" />
     <ClCompile Include="battle\battleunit.cpp" />
     <ClCompile Include="battle\battleunitanimationpack.cpp" />
@@ -85,6 +86,7 @@
     <ClInclude Include="battlemaptileset.h" />
     <ClInclude Include="battlemappart_type.h" />
     <ClInclude Include="battle\aequipment.h" />
+    <ClInclude Include="battle\battleforces.h" />
     <ClInclude Include="battle\battleitem.h" />
     <ClInclude Include="battle\battlestrategyiconlist.h" />
     <ClInclude Include="battle\battleunit.h" />
