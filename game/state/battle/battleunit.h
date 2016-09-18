@@ -52,11 +52,14 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	};
 	
 	StateRef<Agent> agent;
+	
 	StateRef<Organisation> owner;
 	int squadNumber = 0;
 	int squadPosition = 0;
 	bool assignToSquad(int squadNumber);
 	void moveToSquadPosition(int squadPosition);
+
+	AgentStats experiencePoints;
 
 	// User set modes
 	BehaviorMode behavior_mode = BehaviorMode::Normal;
@@ -65,21 +68,23 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	MovementMode movement_mode = MovementMode::Walking;
 	KneelingMode kneeling_mode = KneelingMode::None;
 
+	bool isBodyStateAllowed(AgentType::BodyState bodyState);
+
 	// Animation frames and state
 
 	// Time, in game ticks, until body animation is finished
 	int body_animation_ticks_remaining = 0;
-	int getBodyAnimationFrame() { return std::max(0, (body_animation_ticks_remaining - 1) / TICKS_PER_FRAME); }
+	int getBodyAnimationFrame() const { return std::max(0, (body_animation_ticks_remaining - 1) / TICKS_PER_FRAME); }
 	AgentType::BodyState current_body_state = AgentType::BodyState::Standing;
 	AgentType::BodyState target_body_state = AgentType::BodyState::Standing;
 	// Time, in game ticks, until hands animation is finished
 	int hand_animation_ticks_remaining = 0;
-	int getHandAnimationFrame() { return std::max(0, (hand_animation_ticks_remaining - 1) / TICKS_PER_FRAME); }
+	int getHandAnimationFrame() const { return std::max(0, (hand_animation_ticks_remaining - 1) / TICKS_PER_FRAME); }
 	AgentType::HandState current_hand_state = AgentType::HandState::AtEase;
 	AgentType::HandState target_hand_state = AgentType::HandState::AtEase;
 	// Distance, in movement ticks, spent since starting to move
 	int movement_ticks_passed = 0;
-	int getDistanceTravelled() { return std::max(0, movement_ticks_passed / TICKS_PER_UNIT_TRAVELLED); }
+	int getDistanceTravelled() const { return std::max(0, movement_ticks_passed / TICKS_PER_UNIT_TRAVELLED); }
 	AgentType::MovementState movement_state = AgentType::MovementState::None;
 	// Time, in game ticks, until unit can turn by 1/8th of a circle
 	int turning_ticks_remaining = 0;
@@ -95,6 +100,11 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	bool destroyed = false;
 	// Freefalling
 	bool falling = false;
+	// Stun damage acquired
+	int stunDamageInTicks = 0;
+	int getStunDamage() const;
+	bool isDead() const;
+	bool isUnconscious() const;
 
 	bool applyDamage(GameState &state, int damage, float armour);
 	void handleCollision(GameState &state, Collision &c);

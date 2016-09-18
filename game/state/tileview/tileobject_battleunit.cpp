@@ -61,7 +61,7 @@ namespace OpenApoc
 		case TileViewMode::Strategy:
 		{
 			// Dead units don't appear on strategy screen
-			if (unit->getHealth() == 0)
+			if (unit->isDead())
 				break;
 
 			// FIXME: Actually determine unit's side and relationship to player here to get unit's icon color

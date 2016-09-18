@@ -73,6 +73,18 @@ Vec3<float> Tile::getRestingPosition()
 	                   position.z + height / (float)BATTLE_TILE_Z};
 }
 
+sp<TileObjectBattleUnit> Tile::getUnitIfPresent()
+{
+	for (auto o : intersectingObjects)
+	{
+		if (o->getType() == TileObject::Type::Unit)
+		{
+			return std::static_pointer_cast<TileObjectBattleUnit>(o);
+		}
+	}
+	return nullptr;
+}
+
 namespace
 {
 class PathNode

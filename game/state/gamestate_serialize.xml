@@ -27,6 +27,7 @@
 		<member type="Section">battle_strategy_icon_list</member>
 		<member>player</member>
 		<member>aliens</member>
+		<member>civilian</member>
 		<member>rng</member>
 		<member>gameTime</member>
 		<member>gameTimeBeforeBattle</member>
@@ -309,6 +310,7 @@
 		<name>Battle</name>
 		<member>size</member>
 		<member>battle_map</member>
+		<member>los_blocks</member>
 		<member>mission_type</member>
 		<member>mission_location_id</member>
 		<member>player_craft</member>
@@ -370,6 +372,7 @@
 	</object>
 	<object>
 		<name>BattleUnitImagePack</name>
+		<member>image_offset</member>
 		<member>images</member>
 	</object>
 	<object>
@@ -565,11 +568,11 @@
 		<member>id</member>
 		<member>name</member>
 		<member>weight</member>
-		<member>held_sprites</member>
+		<member>held_image_pack</member>
 		<member>dropped_sprite</member>
-		<member>shadow_offset</member>
-		<member>image_offset</member>
+		<member>dropped_offset</member>
 		<member>dropped_shadow_sprite</member>
+		<member>shadow_offset</member>
 		<member>equipscreen_sprite</member>
 		<member>equipscreen_size</member>
 		<member>manufacturer</member>
@@ -581,7 +584,7 @@
 		<member>body_sprite</member>
 		<member>damage_modifier</member>
 		<member>body_part</member>
-		<member>image_pack</member>
+		<member>body_image_pack</member>
 		<member>provides_flight</member>
 		<member>weapon_types</member>
 		<member>max_ammo</member>

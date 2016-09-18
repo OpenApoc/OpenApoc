@@ -27,6 +27,7 @@ class AgentStats
 	int reactions = 0;
 	int speed = 0;
 	int getActualSpeedValue() { return speed / 8; }
+	int getDisplaySpeedValue() { return 8 * getActualSpeedValue(); }
 	int stamina = 0;
 	int bravery = 0;
 	int strength = 0;

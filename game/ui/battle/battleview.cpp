@@ -8,6 +8,7 @@
 #include "game/state/gameevent.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
+#include "game/state/tileview/tileobject_battleunit.h"
 #include "game/ui/base/basescreen.h"
 #include "game/ui/general/ingameoptions.h"
 #include "game/ui/tileview/tileview.h"
@@ -105,6 +106,11 @@ BattleView::BattleView(sp<GameState> state)
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(8); });
 	this->baseForm->findControl("BUTTON_LAYER_9")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(9); });
+	this->baseForm->findControl("BUTTON_FOLLOW_AGENT")
+		->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
+		this->followAgent =
+			std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy)->isChecked();
+	});
 	this->baseForm->findControl("BUTTON_SPEED0")
 	    ->addCallback(FormEventType::CheckBoxSelected,
 	                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Pause; });
@@ -183,6 +189,22 @@ void BattleView::setUpdateSpeed(BattleUpdateSpeed updateSpeed)
 
 void BattleView::update()
 {
+	auto it = selectedUnits.begin();
+	while (it != selectedUnits.end())
+	{
+		auto u = *it;
+		auto o = state->getPlayer();
+		if (!u || u->isDead() || u->isUnconscious() || u->owner != o)
+		{
+			it = selectedUnits.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+	updateSelectionMode();
+
 	unsigned int ticks = 0;
 	switch (this->updateSpeed)
 	{
@@ -213,6 +235,7 @@ void BattleView::update()
 
 	clockControl->setText(state->gameTime.getTimeString());
 
+	// FIXME: Pulsate palette colors for strategy map and gravlifts
 	this->pal = palette;
 
 	// FIXME: Possibly more efficient ways than re-generating all controls every frame?
@@ -220,19 +243,55 @@ void BattleView::update()
 	activeTab->update();
 	baseForm->update();
 
-	// If we have 'follow vehicle' enabled we clobber any other movement that may have occurred in
+	// If we have 'follow agent' enabled we clobber any other movement that may have occurred in
 	// this frame
 	if (this->followAgent)
 	{
-		// No agents yet!
+		if (selectedUnits.size() > 0)
+		{
+			auto u = *selectedUnits.begin();
+			setScreenCenterTile(u->getPosition());
+		}
+	}
+}
+
+void BattleView::updateSelectionMode()
+{
+	// FIXME: Add Throwing and Psi in the mix
+	if (selectedUnits.size() == 0)
+	{
+		if (ModifierRCtrl || ModifierRCtrl)
+		{
+			selectionState = BattleSelectionState::NormalCtrl;
+		}
+		else
+		{
+			selectionState = BattleSelectionState::Normal;
+		}
+	}
+	else
+	{
+		if (ModifierLCtrl || ModifierRCtrl)
+		{
+			selectionState = BattleSelectionState::NormalCtrl;
+		}
+		else if (ModifierLShift || ModifierRShift)
+		{
+			selectionState = BattleSelectionState::Fire;
+		}
+		else if (ModifierLAlt || ModifierRAlt)
+		{
+			selectionState = BattleSelectionState::NormalAlt;
+		}
+		else
+		{
+			selectionState = BattleSelectionState::Normal;
+		}
 	}
 }
 
 void BattleView::eventOccurred(Event *e)
 {
-	static const std::set<int> processedKeystrokes = {SDLK_ESCAPE, SDLK_PAGEUP, SDLK_PAGEDOWN,
-	                                                  SDLK_TAB, SDLK_SPACE};
-
 	activeTab->eventOccured(e);
 	baseForm->eventOccured(e);
 
@@ -241,11 +300,46 @@ void BattleView::eventOccurred(Event *e)
 		return;
 	}
 
-	if (e->type() == EVENT_KEY_DOWN &&
-	    processedKeystrokes.find(e->keyboard().KeyCode) != processedKeystrokes.end())
+	if (e->type() == EVENT_KEY_DOWN &&(
+		e->keyboard().KeyCode == SDLK_ESCAPE
+		|| e->keyboard().KeyCode == SDLK_PAGEUP
+		|| e->keyboard().KeyCode == SDLK_PAGEDOWN
+		|| e->keyboard().KeyCode == SDLK_TAB
+		|| e->keyboard().KeyCode == SDLK_SPACE
+		|| e->keyboard().KeyCode == SDLK_RSHIFT
+		|| e->keyboard().KeyCode == SDLK_LSHIFT
+		|| e->keyboard().KeyCode == SDLK_RALT
+		|| e->keyboard().KeyCode == SDLK_LALT
+		|| e->keyboard().KeyCode == SDLK_RCTRL
+		|| e->keyboard().KeyCode == SDLK_LCTRL
+		))
 	{
 		switch (e->keyboard().KeyCode)
 		{
+			case SDLK_RSHIFT:
+				ModifierRShift = true;
+				updateSelectionMode();
+				break;
+			case SDLK_LSHIFT:
+				ModifierLShift = true;
+				updateSelectionMode();
+				break;
+			case SDLK_RALT:
+				ModifierRAlt = true;
+				updateSelectionMode();
+				break;
+			case SDLK_LALT:
+				ModifierLAlt = true;
+				updateSelectionMode();
+				break;
+			case SDLK_RCTRL:
+				ModifierLCtrl = true;
+				updateSelectionMode();
+				break;
+			case SDLK_LCTRL:
+				ModifierRCtrl = true;
+				updateSelectionMode();
+				break;
 			case SDLK_ESCAPE:
 				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InGameOptions>(state)});
 				return;
@@ -271,6 +365,43 @@ void BattleView::eventOccurred(Event *e)
 				break;
 		}
 	}
+	else if (e->type() == EVENT_KEY_UP && (
+		e->keyboard().KeyCode == SDLK_RSHIFT
+		|| e->keyboard().KeyCode == SDLK_LSHIFT
+		|| e->keyboard().KeyCode == SDLK_RALT
+		|| e->keyboard().KeyCode == SDLK_LALT
+		|| e->keyboard().KeyCode == SDLK_RCTRL
+		|| e->keyboard().KeyCode == SDLK_LCTRL
+		))
+	{
+		switch (e->keyboard().KeyCode)
+		{
+		case SDLK_RSHIFT:
+			ModifierRShift = false;
+			updateSelectionMode();
+			break;
+		case SDLK_LSHIFT:
+			ModifierLShift = false;
+			updateSelectionMode();
+			break;
+		case SDLK_RALT:
+			ModifierRAlt = false;
+			updateSelectionMode();
+			break;
+		case SDLK_LALT:
+			ModifierLAlt = false;
+			updateSelectionMode();
+			break;
+		case SDLK_RCTRL:
+			ModifierLCtrl = false;
+			updateSelectionMode();
+			break;
+		case SDLK_LCTRL:
+			ModifierRCtrl = false;
+			updateSelectionMode();
+			break;
+		}
+	}
 	// Exclude mouse down events that are over the form
 	else if (e->type() == EVENT_MOUSE_DOWN)
 	{
@@ -283,19 +414,107 @@ void BattleView::eventOccurred(Event *e)
 			this->setScreenCenterTile({clickTile.x, clickTile.y});
 		}
 		else if (e->type() == EVENT_MOUSE_DOWN &&
-		         (e->mouse().Button == 1 || e->mouse().Button == 4))
+		         (e->mouse().Button == 1 
+				|| e->mouse().Button == 4))
 		{
 			// If a click has not been handled by a form it's in the map.
 			auto t = this->getSelectedTilePosition();
-			switch (e->mouse().Button)
+			auto o = map.getTile(t.x, t.y, t.z)->getUnitIfPresent();
+			auto u = o ? o->getUnit() : nullptr;
+		
+			switch (selectionState)
 			{
+			case BattleSelectionState::Normal:
+				switch (e->mouse().Button)
+				{
 				case 1:
-					LogWarning("Left click at tile %d, %d, %d", t.x, t.y, t.z);
+					// Select if friendly unit present under cursor
+					if (u && u->owner == state->getPlayer())
+					{
+						auto pos = std::find(selectedUnits.begin(), selectedUnits.end(), u);
+						if (pos == selectedUnits.end())
+						{
+							// Unit not in selection => replace selection with unit
+							selectedUnits.clear();
+							selectedUnits.push_back(u);
+						}
+						else
+						{
+							// Unit in selection  => move unit to front
+							selectedUnits.erase(pos);
+							selectedUnits.push_front(u);
+						}
+					}
+					else if (!u)
+					{
+						// FIXME: Order move here
+					}
 					break;
 				case 4:
-					LogWarning("Right click at tile %d, %d, %d", t.x, t.y, t.z);
+					if (selectedUnits.size() == 0)
+						break;
+					// FIXME: Turn to look, focus fire if clicked on enemy
 					break;
+				}
+				break;
+			case BattleSelectionState::NormalAlt:
+				switch (e->mouse().Button)
+				{
+				case 1:
+					// FIXME: Move strafing
+					break;
+				case 4:
+					if (selectedUnits.size() == 0)
+						break;
+					// FIXME: Turn to look
+					break;
+				}
+				break;
+			case BattleSelectionState::NormalCtrl:
+				switch (e->mouse().Button)
+				{
+				// LMB = Add to selection
+				case 1:
+					if (u && u->owner == state->getPlayer())
+					{
+						auto pos = std::find(selectedUnits.begin(), selectedUnits.end(), u);
+						if (pos == selectedUnits.end() && selectedUnits.size() < 6)
+						{
+							// Unit not in selection, and not full => add unit to selection
+							selectedUnits.push_front(u);
+						}
+						else
+						{
+							// Unit in selection  => move unit to front
+							selectedUnits.erase(pos);
+							selectedUnits.push_front(u);
+						}
+					}
+					break;
+				// RMB = Remove from selection
+				case 4:
+					if (u && u->owner == state->getPlayer())
+					{
+						auto pos = std::find(selectedUnits.begin(), selectedUnits.end(), u);
+						if (pos != selectedUnits.end())
+						{
+							// Unit in selection => remove
+							selectedUnits.erase(pos);
+						}
+					}
+					break;
+				}
+				break;
+			case BattleSelectionState::Fire:
+				if (e->mouse().Button != 1 && e->mouse().Button != 4)
+					break;
+				if (selectedUnits.size() == 0)
+					break;
+				// FIXME: Fire
+				break;
 			}
+			LogWarning("Click at tile %d, %d, %d", t.x, t.y, t.z);
+			LogWarning("Selected units count: %d", (int)selectedUnits.size());
 		}
 	}
 	else if (e->type() == EVENT_GAME_STATE)

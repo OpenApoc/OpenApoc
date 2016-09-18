@@ -354,11 +354,7 @@ void TileView::render()
 				// Yellow if this tile intersects with a unit
 				if (selectedTilePosition.z == z)
 				{
-					bool foundUnit = false;
-					for (auto &tile : selTileOnCurLevel->intersectingObjects)
-						if (tile->getType() == TileObject::Type::Unit)
-							foundUnit = true;
-					if (foundUnit)
+					if (selTileOnCurLevel->getUnitIfPresent())
 					{
 						selectionImageBack = selectedTileFilledImageBack;
 						selectionImageFront = selectedTileFilledImageFront;

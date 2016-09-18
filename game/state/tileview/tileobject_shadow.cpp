@@ -52,7 +52,7 @@ void TileObjectShadow::draw(Renderer &r, TileTransform &transform, Vec2<float> s
 			if (unit)
 			{
 				// Dead units on the ground drop no shadows
-				if (unit->getHealth() == 0 && !unit->falling)
+				if (unit->isDead() && !unit->falling)
 					break;
 				unit->agent->getAnimationPack()->drawShadow(r, screenPosition,
 					unit->agent->type->shadow_pack,

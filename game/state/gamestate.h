@@ -87,6 +87,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	StateRef<Organisation> player;
 	StateRef<Organisation> aliens;
+	StateRef<Organisation> civilian;
 
 	StateRef<City> current_city;
 	StateRef<Base> current_base;
@@ -106,6 +107,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRef<Organisation> getPlayer();
 	const StateRef<Organisation> &getAliens() const;
 	StateRef<Organisation> getAliens();
+	const StateRef<Organisation> &getCivilian() const;
+	StateRef<Organisation> getCivilian();
 
 	// The time from game start in ticks
 	GameTime gameTime;

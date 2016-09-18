@@ -8,6 +8,15 @@
 
 namespace OpenApoc
 {
+	bool BattleUnit::isBodyStateAllowed(AgentType::BodyState bodyState)
+	{
+		if (bodyState == AgentType::BodyState::Flying)
+		{
+			// FIXME: See if unit is wearing flying armor
+		}
+		return agent->type->allowed_body_states.find(bodyState) != agent->type->allowed_body_states.end();
+	}
+
 	bool BattleUnit::assignToSquad(int squad)
 	{
 		auto b = battle.lock();
@@ -33,7 +42,7 @@ namespace OpenApoc
 		this->position = pos;
 		if (!this->tileObject)
 		{
-			LogError("setPosition called on vehicle with no tile object");
+			LogError("setPosition called on unit with no tile object");
 		}
 		else
 		{
@@ -77,6 +86,24 @@ namespace OpenApoc
 
 		return curShield;
 	}
+
+	int BattleUnit::getStunDamage() const
+	{
+		// FIXME: Figure out stun damage scale
+		int SCALE = 1;
+		return stunDamageInTicks / SCALE;
+	}
+
+	bool BattleUnit::isDead() const
+	{
+		return getHealth() == 0 || destroyed;
+	}
+
+	bool BattleUnit::isUnconscious() const
+	{
+		return !isDead() && getStunDamage() > getHealth();
+	}
+
 
 	// FIXME: Apply damage to the unit
 	bool BattleUnit::applyDamage(GameState &state, int damage, float armour)

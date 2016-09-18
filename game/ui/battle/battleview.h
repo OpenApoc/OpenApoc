@@ -21,9 +21,12 @@ enum class BattleUpdateSpeed
 enum class BattleSelectionState
 {
 	Normal,
-	Move,
-	Throw,
+	NormalAlt,
+	NormalCtrl,
 	Fire,
+	
+	//Throw,
+	//Psi,
 };
 
 class BattleView : public TileView
@@ -38,12 +41,21 @@ class BattleView : public TileView
 
 	sp<GameState> state;
 
+	std::list<sp<BattleUnit>> selectedUnits;
+
 	bool followAgent;
 
 	sp<Palette> palette;
 
 	BattleSelectionState selectionState;
-
+	bool ModifierLShift = false;
+	bool ModifierRShift = false;
+	bool ModifierLAlt = false;
+	bool ModifierRAlt = false;
+	bool ModifierLCtrl = false;
+	bool ModifierRCtrl = false;
+	void updateSelectionMode();
+		
 	void updateLayerButtons();
 
   public:
