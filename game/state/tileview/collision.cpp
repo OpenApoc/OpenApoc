@@ -1,5 +1,5 @@
 #include "game/state/tileview/collision.h"
-#include "game/state/battle.h"
+#include "game/state/battle/battle.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject.h"
 #include "library/line.h"

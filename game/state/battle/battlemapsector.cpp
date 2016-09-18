@@ -1,4 +1,4 @@
-#include "game/state/battlemapsector.h"
+#include "game/state/battle/battlemapsector.h"
 
 namespace OpenApoc
 {

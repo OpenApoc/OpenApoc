@@ -1,4 +1,4 @@
-#include "game/state/battlemappart_type.h"
+#include "game/state/battle/battlemappart_type.h"
 #include "framework/includes.h"
 #include "game/state/gamestate.h"
 #include "game/state/stateobject.h"

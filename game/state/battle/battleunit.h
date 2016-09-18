@@ -12,6 +12,7 @@ namespace OpenApoc
 class BattleStrategyIconList;
 class TileObjectBattleUnit;
 class TileObjectShadow;
+class Battle;
 
 class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 {

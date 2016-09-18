@@ -2,7 +2,7 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/includes.h"
-#include "game/state/battle.h"
+#include "game/state/battle/battle.h"
 
 namespace OpenApoc
 {

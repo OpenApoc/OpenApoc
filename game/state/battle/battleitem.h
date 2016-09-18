@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game/state/battle/aequipment.h"
+#include "game/state/aequipment.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"

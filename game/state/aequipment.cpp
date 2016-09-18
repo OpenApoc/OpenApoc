@@ -1,4 +1,4 @@
-#include "game/state/battle/aequipment.h"
+#include "game/state/aequipment.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "game/state/agent.h"

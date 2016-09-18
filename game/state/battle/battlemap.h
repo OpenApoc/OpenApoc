@@ -1,7 +1,7 @@
 #pragma once
-#include "game/state/battle.h"
-#include "game/state/battlemappart_type.h"
-#include "game/state/battlemapsector.h"
+#include "game/state/battle/battle.h"
+#include "game/state/battle/battlemappart_type.h"
+#include "game/state/battle/battlemapsector.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include <map>

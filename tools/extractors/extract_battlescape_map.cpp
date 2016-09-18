@@ -1,7 +1,7 @@
 #include "framework/data.h"
 #include "framework/framework.h"
-#include "game/state/battle.h"
-#include "game/state/battlemap.h"
+#include "game/state/battle/battle.h"
+#include "game/state/battle/battlemap.h"
 #include "tools/extractors/common/battlemap.h"
 #include "tools/extractors/extractors.h"
 

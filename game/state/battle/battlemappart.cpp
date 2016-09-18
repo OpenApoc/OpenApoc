@@ -1,6 +1,6 @@
-#include "game/state/battlemappart.h"
+#include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battleitem.h"
-#include "game/state/battlemappart_type.h"
+#include "game/state/battle/battlemappart_type.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "game/state/tileview/tile.h"

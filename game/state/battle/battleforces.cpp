@@ -15,7 +15,6 @@ bool BattleForces::insert(int squad, sp<BattleUnit> unit)
 	return insertAt(squad, squads[squad].getNumUnits(), unit);
 }
 
-
 bool BattleForces::insertAt(int squad, int position, sp<BattleUnit> unit)
 {
 	if (squads[squad].getNumUnits() == 6 && unit->squadNumber != squad)

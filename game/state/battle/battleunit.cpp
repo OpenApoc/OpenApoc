@@ -1,4 +1,5 @@
 #include "game/state/battle/battleunit.h"
+#include "game/state/battle/battle.h"
 #include "game/state/battle/battleunitanimationpack.h"
 #include "game/state/gamestate.h"
 #include "game/state/tileview/tileobject_shadow.h"
@@ -24,7 +25,7 @@ namespace OpenApoc
 		{
 			LogError("Battle disappeared");
 		}
-		b->forces[owner].insertAt(squadNumber, position);
+		b->forces[owner].insertAt(squadNumber, position, shared_from_this());
 	}
 
 	void BattleUnit::setPosition(const Vec3<float> &pos)

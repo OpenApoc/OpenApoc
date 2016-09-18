@@ -1,5 +1,5 @@
 #include "game/state/agent.h"
-#include "game/state/battle/aequipment.h"
+#include "game/state/aequipment.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc

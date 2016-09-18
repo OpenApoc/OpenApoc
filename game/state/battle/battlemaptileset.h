@@ -1,5 +1,5 @@
 #pragma once
-#include "game/state/battlemappart_type.h"
+#include "game/state/battle/battlemappart_type.h"
 #include "game/state/stateobject.h"
 
 namespace OpenApoc

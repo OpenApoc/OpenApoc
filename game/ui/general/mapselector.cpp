@@ -2,7 +2,7 @@
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
-#include "game/state/battlemap.h"
+#include "game/state/battle/battlemap.h"
 #include "game/state/city/building.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
