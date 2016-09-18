@@ -75,10 +75,11 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	// Bounds never change, so this will provide faster calculations
 	// Bounds divided by 2, used to find inclusive object boundary's coordinates
 	Vec3<float> bounds_div_2;
-	// Bounds divided by 2, subtracting 1, used to find exclusive object boundary's coordinates
-	Vec3<float> bounds_div_2_sub_1;
+	
+	// Offset for selecting a tile
+	Vec3<float> tileOffset;
 
-	void setBounds(Vec3<float> bounds);
+	virtual void setBounds(Vec3<float> bounds);
 
 	UString name;
 };

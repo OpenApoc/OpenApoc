@@ -8,7 +8,7 @@ namespace OpenApoc
 {
 
 TileObject::TileObject(TileMap &map, Type type, Vec3<float> bounds)
-    : map(map), type(type), owningTile(nullptr), 
+    : map(map), type(type), owningTile(nullptr), tileOffset(0.0f,0.0f,0.0f),
 	name("UNKNOWN_OBJECT")
 {
 	setBounds(bounds);
@@ -20,7 +20,6 @@ void TileObject::setBounds(Vec3<float> bounds)
 {
 	this->bounds = bounds;
 	this->bounds_div_2 = bounds / 2.0f;
-	this->bounds_div_2_sub_1 = bounds_div_2 - 0.001f;
 }
 
 void TileObject::removeFromMap()
@@ -119,7 +118,7 @@ void TileObject::setPosition(Vec3<float> newPosition)
 	this->removeFromMap();
 
 	// This makes sure object is always assigned the bottom-most, right-most tile it occupies
-	this->owningTile = map.getTile(newPosition + this->bounds_div_2_sub_1);
+	this->owningTile = map.getTile(newPosition + this->tileOffset);
 	if (!this->owningTile)
 	{
 		LogError("Failed to get tile for position {%f,%f,%f}", newPosition.x, newPosition.y,

@@ -20,6 +20,8 @@ namespace OpenApoc
 		sp<VoxelMap> getVoxelMap() override;
 		Vec3<float> getPosition() const override;
 
+		void setBounds(Vec3<float> bounds);
+
 	private:
 		friend class TileMap;
 		std::weak_ptr<BattleUnit> unit;

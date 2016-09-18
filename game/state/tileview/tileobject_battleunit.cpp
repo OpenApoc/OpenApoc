@@ -6,6 +6,12 @@
 
 namespace OpenApoc
 {
+	void TileObjectBattleUnit::setBounds(Vec3<float> bounds)
+	{
+		TileObject::setBounds(bounds);
+		tileOffset = bounds_div_2 - 0.001f;
+	}
+
 	void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
 		TileViewMode mode, int currentLevel)
 	{
