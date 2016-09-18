@@ -184,12 +184,10 @@ class Agent : public StateObject<Agent>
 	AgentPortrait get_portrait() { return type->portraits[gender][portrait]; }
 	AgentType::Gender gender = AgentType::Gender::Male;
 	
-	// Stats when agent was recruited
-	AgentStats initial_stats;
-	// Current max stats of the agent, before taking into account damage, exhaustion etc.
-	AgentStats max_stats;
-	// Current stats of the agent, tracking expenditure such as movement, psi attacks and so on.
-	AgentStats current_stats;
+	AgentStats initial_stats;  // Stats at agent creatrion
+	AgentStats current_stats;  // Stats after agent training/improvement
+	AgentStats modified_stats; // Stats after 'temporary' modification (health damage, slowdown due
+							   // to equipment weight, used stamina etc)
 
 	StateRef<Base> home_base;
 	StateRef<Organisation> owner;

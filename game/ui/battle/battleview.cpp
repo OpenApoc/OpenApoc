@@ -478,10 +478,13 @@ void BattleView::eventOccurred(Event *e)
 					if (u && u->owner == state->getPlayer())
 					{
 						auto pos = std::find(selectedUnits.begin(), selectedUnits.end(), u);
-						if (pos == selectedUnits.end() && selectedUnits.size() < 6)
+						if (pos == selectedUnits.end())
 						{
 							// Unit not in selection, and not full => add unit to selection
-							selectedUnits.push_front(u);
+							if (selectedUnits.size() < 6)
+							{
+								selectedUnits.push_front(u);
+							}
 						}
 						else
 						{

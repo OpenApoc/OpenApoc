@@ -55,9 +55,9 @@ namespace OpenApoc
 		}
 	}
 
-	int BattleUnit::getMaxHealth() const { return this->agent->max_stats.health; }
+	int BattleUnit::getMaxHealth() const { return this->agent->current_stats.health; }
 
-	int BattleUnit::getHealth() const { return this->agent->current_stats.health; }
+	int BattleUnit::getHealth() const { return this->agent->modified_stats.health; }
 
 	int BattleUnit::getMaxShield() const
 	{
