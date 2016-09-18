@@ -574,6 +574,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 		auto b = mksp<Battle>();
 
 		b->size = {chunk_size.x * size.x, chunk_size.y * size.y, chunk_size.z * size.z};
+		b->spawnMap =  { (unsigned)b->size.x, { (unsigned)b->size.y, std::vector<int>((unsigned)b->size.z, 0) } };
 		b->battle_map = { &state, id };
 		b->mission_type = mission_type;
 		b->mission_location_id = mission_location_id;
@@ -641,6 +642,18 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 						else
 							s->type = pair.second;
 
+						// Set spawnability and height
+						if (s->type->movement_cost == -1 || b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z] == -1)
+						{
+							b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z] = -1;
+						}
+						else
+						{
+							b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z] = 
+								std::max(b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z],
+								s->type->height);
+						}
+
 						b->map_parts.push_back(s);
 					}
 					for (auto &pair : tiles.initial_left_walls)
@@ -673,6 +686,18 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 						s->currentPosition = s->initialPosition;
 						s->currentPosition += Vec3<float>(0.5f, 0.5f, 0.0f);
 						s->type = pair.second;
+
+						// Set spawnability and height
+						if (s->type->movement_cost == -1 || b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z] == -1)
+						{
+							b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z] = -1;
+						}
+						else
+						{
+							b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z] =
+								std::max(b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z],
+									s->type->height);
+						}
 
 						b->map_parts.push_back(s);
 					}
@@ -718,6 +743,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 			u->agent = a;
 			u->owner = a->owner;
 			u->squadNumber = -1;
+			u->battle = b;
 
 			b->units.push_back(u);
 		}
@@ -751,8 +777,8 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 					for (auto &u : b->units)
 					{
 						if (b->forces[o].squads[s].getNumUnits() >= 3)
-							break;
-						if (u->owner != o)
+							break; 
+						if (u->owner != o || u->squadNumber != -1)
 							continue;
 						u->assignToSquad(s);
 						agentCount[o]--;

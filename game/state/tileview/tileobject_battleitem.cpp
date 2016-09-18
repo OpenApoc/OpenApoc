@@ -24,7 +24,7 @@ void TileObjectBattleItem::draw(Renderer &r, TileTransform &, Vec2<float> screen
 		case TileViewMode::Isometric:
 			sprite = item->item->type->dropped_sprite;
 			transformedScreenPos -=
-			    item->item->type->image_offset;
+			    item->item->type->dropped_offset;
 			break;
 		case TileViewMode::Strategy:
 			if (!item->supported)

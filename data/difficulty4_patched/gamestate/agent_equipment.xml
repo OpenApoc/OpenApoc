@@ -8,24 +8,15 @@
         <id>AEQUIPMENTTYPE_ALIEN_ARTIFACT</id>
         <name>Alien Artifact</name>
         <weight>6</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:78:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -45,26 +36,17 @@
         <id>AEQUIPMENTTYPE_ALIEN_DETECTOR</id>
         <name>Alien Detector</name>
         <weight>2</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:312</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:313</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:314</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:315</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:316</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:317</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:318</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:319</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item39</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:39</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:39</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:39</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:39:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -84,24 +66,15 @@
         <id>AEQUIPMENTTYPE_ALIEN_EGG_S_VOMIT_TUBE</id>
         <name>Alien Egg's Vomit Tube</name>
         <weight>6</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:78:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>3</x>
@@ -160,26 +133,17 @@
         <id>AEQUIPMENTTYPE_ALIEN_GAS_GRENADE</id>
         <name>Alien Gas Grenade</name>
         <weight>2</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:208</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:209</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:210</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:211</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:212</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:213</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:214</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:215</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item26</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:26</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:26</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:26</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:26:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -226,26 +190,17 @@
         <id>AEQUIPMENTTYPE_AUTO_CANNON_AP_CLIP</id>
         <name>Auto Cannon AP Clip</name>
         <weight>2</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:96</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:97</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:98</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:99</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:100</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:101</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:102</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:103</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item12</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:12</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:12</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:12</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:12:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -310,26 +265,17 @@
         <id>AEQUIPMENTTYPE_AUTO_CANNON_HE_CLIP</id>
         <name>Auto Cannon HE Clip</name>
         <weight>2</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:104</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:105</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:106</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:107</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:108</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:109</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:110</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:111</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item13</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:13</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:13</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:13</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:13:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -394,26 +340,17 @@
         <id>AEQUIPMENTTYPE_AUTO_CANNON_IN_CLIP</id>
         <name>Auto Cannon IN Clip</name>
         <weight>2</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:112</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:113</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:114</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:115</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:116</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:117</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:118</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:119</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item14</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:14</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:14</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:14</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:14:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -478,26 +415,17 @@
         <id>AEQUIPMENTTYPE_BOOMEROID</id>
         <name>Boomeroid</name>
         <weight>3</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:336</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:337</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:338</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:339</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:340</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:341</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:342</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:343</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item42</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:42</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:42</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:42</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:42:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -547,26 +475,17 @@
         <id>AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER</id>
         <name>Brainsucker Launcher</name>
         <weight>9</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:352</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:353</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:354</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:355</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:356</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:357</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:358</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:359</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item44</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:44</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:44</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:44</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:44:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -587,26 +506,17 @@
         <id>AEQUIPMENTTYPE_BRAINSUCKER_POD</id>
         <name>Brainsucker Pod</name>
         <weight>3</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:448</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:449</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:450</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:451</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:452</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:453</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:454</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:455</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item56</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:56</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:56</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:56</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:56:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -674,26 +584,17 @@
         <id>AEQUIPMENTTYPE_DEVASTATOR_CANNON</id>
         <name>Devastator Cannon</name>
         <weight>8</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:328</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:329</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:330</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:331</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:332</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:333</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:334</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:335</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item41</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:41</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:41</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:41</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:41:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -761,26 +662,17 @@
         <id>AEQUIPMENTTYPE_DIMENSION_DESTABILISER</id>
         <name>Dimension Destabiliser</name>
         <weight>3</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:288</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:289</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:290</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:291</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:292</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:293</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:294</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:295</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item36</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:36</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:36</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:36</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:36:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -801,26 +693,17 @@
         <id>AEQUIPMENTTYPE_DIMENSION_FORCE_FIELD</id>
         <name>Dimension Force Field</name>
         <weight>4</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:416</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:417</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:418</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:419</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:420</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:421</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:422</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:423</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item52</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:52</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:52</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:52</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:52:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -840,26 +723,17 @@
         <id>AEQUIPMENTTYPE_DIMENSION_MISSILE</id>
         <name>Dimension Missile</name>
         <weight>4</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:376</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:377</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:378</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:379</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:380</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:381</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:382</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:383</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item47</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:47</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:47</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:47</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:47:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -932,26 +806,17 @@
         <id>AEQUIPMENTTYPE_DIMENSION_MISSILE_LAUNCHER</id>
         <name>Dimension Missile Launcher</name>
         <weight>12</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:368</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:369</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:370</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:371</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:372</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:373</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:374</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:375</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item46</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:46</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:46</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:46</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:46:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>3</x>
@@ -972,26 +837,17 @@
         <id>AEQUIPMENTTYPE_DISRUPTOR_GUN</id>
         <name>Disruptor Gun</name>
         <weight>5</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:320</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:321</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:322</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:323</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:324</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:325</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:326</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:327</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item40</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:40</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:40</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:40</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:40:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -1040,26 +896,17 @@
         <id>AEQUIPMENTTYPE_ELERIUM</id>
         <name>Elerium</name>
         <weight>6</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:75</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:75</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:75</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:75:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -1080,26 +927,17 @@
         <id>AEQUIPMENTTYPE_ENERGY_POD</id>
         <name>Energy Pod</name>
         <weight>3</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:424</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:425</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:426</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:427</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:428</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:429</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:430</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:431</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item53</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:53</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:53</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:53</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:53:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -1168,26 +1006,17 @@
         <id>AEQUIPMENTTYPE_ENTROPY_LAUNCHER</id>
         <name>Entropy Launcher</name>
         <weight>10</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:360</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:361</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:362</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:363</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:364</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:365</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:366</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:367</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item45</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:45</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:45</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:45</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:45:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -1208,26 +1037,17 @@
         <id>AEQUIPMENTTYPE_ENTROPY_POD</id>
         <name>Entropy Pod</name>
         <weight>2</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:456</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:457</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:458</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:459</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:460</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:461</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:462</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:463</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item57</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:57</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:57</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:57</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:57:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -1299,26 +1119,17 @@
         <id>AEQUIPMENTTYPE_FORCEWEB</id>
         <name>ForceWeb</name>
         <weight>6</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:248</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:249</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:250</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:251</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:252</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:253</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:254</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:255</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item31</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:31</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:31</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:31</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:31:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -1339,26 +1150,17 @@
         <id>AEQUIPMENTTYPE_HEAVY_LAUNCHER_AG_MISSILE</id>
         <name>Heavy Launcher AG Missile</name>
         <weight>4</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:144</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:145</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:146</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:147</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:148</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:149</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:150</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:151</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item18</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:18</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:18</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:18</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:18:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -1431,26 +1233,17 @@
         <id>AEQUIPMENTTYPE_HEAVY_LAUNCHER_HE_MISSILE</id>
         <name>Heavy Launcher HE Missile</name>
         <weight>4</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:152</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:153</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:154</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:155</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:156</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:157</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:158</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:159</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item19</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:19</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:19</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:19</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:19:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -1523,26 +1316,17 @@
         <id>AEQUIPMENTTYPE_HEAVY_LAUNCHER_IN_MISSILE</id>
         <name>Heavy Launcher IN Missile</name>
         <weight>4</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:160</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:161</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:162</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:163</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:164</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:165</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:166</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:167</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item20</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:20</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:20</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:20</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:20:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -1615,24 +1399,15 @@
         <id>AEQUIPMENTTYPE_HYPERWORM_S_BITE</id>
         <name>Hyperworm's Bite</name>
         <weight>6</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:80:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>3</x>
@@ -1690,26 +1465,17 @@
         <id>AEQUIPMENTTYPE_INCENDIARY_GRENADE</id>
         <name>Incendiary Grenade</name>
         <weight>1</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:464</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:465</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:466</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:467</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:468</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:469</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:470</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:471</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item58</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:58</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:58</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:58</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:58:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -1756,26 +1522,17 @@
         <id>AEQUIPMENTTYPE_MARSEC_BODY_UNIT</id>
         <name>Marsec Body Unit</name>
         <weight>12</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:65</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:65</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:65</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:65:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>3</x>
@@ -1787,7 +1544,7 @@
         <score>5</score>
         <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:7:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MARSEC_ARMOR</damage_modifier>
-        <image_pack>BATTLEUNITIMAGEPACK_xcom3a</image_pack>
+        <body_image_pack>BATTLEUNITIMAGEPACK_xcom3a</body_image_pack>
         <provides_flight>true</provides_flight>
       </sp>
     </value>
@@ -1800,26 +1557,17 @@
         <id>AEQUIPMENTTYPE_MARSEC_HEAD_UNIT</id>
         <name>Marsec Head Unit</name>
         <weight>4</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:68</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:68</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:68</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:68:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -1832,7 +1580,7 @@
         <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:5:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MARSEC_ARMOR</damage_modifier>
         <body_part>Helmet</body_part>
-        <image_pack>BATTLEUNITIMAGEPACK_xcom3c</image_pack>
+        <body_image_pack>BATTLEUNITIMAGEPACK_xcom3c</body_image_pack>
       </sp>
     </value>
   </entry>
@@ -1844,26 +1592,17 @@
         <id>AEQUIPMENTTYPE_MARSEC_HEAVY_LAUNCHER</id>
         <name>Marsec Heavy Launcher</name>
         <weight>9</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:136</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:137</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:138</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:139</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:140</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:141</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:142</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:143</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item17</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:17</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:17</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:17</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:17:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>3</x>
@@ -1884,26 +1623,17 @@
         <id>AEQUIPMENTTYPE_MARSEC_HIGH_EXPLOSIVE</id>
         <name>Marsec High Explosive</name>
         <weight>14</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:32</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:33</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:34</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:35</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:36</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:37</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:38</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:39</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item4</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:4</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:4</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:4</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:4:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -1950,26 +1680,17 @@
         <id>AEQUIPMENTTYPE_MARSEC_LEFT_ARM_UNIT</id>
         <name>Marsec Left Arm Unit</name>
         <weight>5</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:66</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:66</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:66</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:66:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -1982,7 +1703,7 @@
         <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:6:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MARSEC_ARMOR</damage_modifier>
         <body_part>LeftArm</body_part>
-        <image_pack>BATTLEUNITIMAGEPACK_xcom3d</image_pack>
+        <body_image_pack>BATTLEUNITIMAGEPACK_xcom3d</body_image_pack>
       </sp>
     </value>
   </entry>
@@ -1994,26 +1715,17 @@
         <id>AEQUIPMENTTYPE_MARSEC_LEG_UNITS</id>
         <name>Marsec Leg Units</name>
         <weight>6</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:64</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:64</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:64</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:64:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>3</x>
@@ -2026,7 +1738,7 @@
         <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:9:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MARSEC_ARMOR</damage_modifier>
         <body_part>Legs</body_part>
-        <image_pack>BATTLEUNITIMAGEPACK_xcom3b</image_pack>
+        <body_image_pack>BATTLEUNITIMAGEPACK_xcom3b</body_image_pack>
       </sp>
     </value>
   </entry>
@@ -2038,26 +1750,17 @@
         <id>AEQUIPMENTTYPE_MARSEC_M4000_GUN_CLIP</id>
         <name>Marsec M4000 Gun Clip</name>
         <weight>1</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:64</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:65</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:66</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:67</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:68</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:69</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:70</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:71</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item8</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:8</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:8</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:8</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:8:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -2116,26 +1819,17 @@
         <id>AEQUIPMENTTYPE_MARSEC_M4000_MACHINE_GUN</id>
         <name>Marsec M4000 Machine Gun</name>
         <weight>7</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:56</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:57</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:58</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:59</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:60</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:61</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:62</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:63</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item7</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:7</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:7</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:7</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:7:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -2156,26 +1850,17 @@
         <id>AEQUIPMENTTYPE_MARSEC_MINILAUNCHER</id>
         <name>Marsec MiniLauncher</name>
         <weight>5</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:168</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:169</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:170</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:171</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:172</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:173</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:174</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:175</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item21</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:21</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:21</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:21</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:21:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -2196,26 +1881,17 @@
         <id>AEQUIPMENTTYPE_MARSEC_PROXIMITY_MINE</id>
         <name>Marsec Proximity Mine</name>
         <weight>3</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:24</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:25</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:26</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:27</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:28</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:29</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:30</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:31</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item3</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:3</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:3</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:3</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:3:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -2263,26 +1939,17 @@
         <id>AEQUIPMENTTYPE_MARSEC_RIGHT_ARM_UNIT</id>
         <name>Marsec Right Arm Unit</name>
         <weight>5</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:67</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:67</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:67</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:67:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -2295,7 +1962,7 @@
         <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:8:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MARSEC_ARMOR</damage_modifier>
         <body_part>RightArm</body_part>
-        <image_pack>BATTLEUNITIMAGEPACK_xcom3e</image_pack>
+        <body_image_pack>BATTLEUNITIMAGEPACK_xcom3e</body_image_pack>
       </sp>
     </value>
   </entry>
@@ -2307,26 +1974,17 @@
         <id>AEQUIPMENTTYPE_MEDI-KIT</id>
         <name>Medi-kit</name>
         <weight>3</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:432</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:433</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:434</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:435</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:436</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:437</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:438</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:439</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item54</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:54</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:54</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:54</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:54:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -2347,26 +2005,17 @@
         <id>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</id>
         <name>Megapol AP Grenade</name>
         <weight>2</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:0</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:1</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:2</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:3</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:4</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:5</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:6</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:7</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item0</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:0</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:0</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:0</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:0:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -2413,26 +2062,17 @@
         <id>AEQUIPMENTTYPE_MEGAPOL_AUTO_CANNON</id>
         <name>Megapol Auto Cannon</name>
         <weight>10</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:88</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:89</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:90</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:91</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:92</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:93</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:94</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:95</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item11</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:11</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:11</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:11</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:11:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -2453,26 +2093,17 @@
         <id>AEQUIPMENTTYPE_MEGAPOL_BODY_ARMOR</id>
         <name>Megapol Body Armor</name>
         <weight>14</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:60</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:60</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:60</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:60:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>3</x>
@@ -2484,7 +2115,7 @@
         <score>3</score>
         <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:2:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MEGAPOL_ARMOR</damage_modifier>
-        <image_pack>BATTLEUNITIMAGEPACK_xcom2a</image_pack>
+        <body_image_pack>BATTLEUNITIMAGEPACK_xcom2a</body_image_pack>
       </sp>
     </value>
   </entry>
@@ -2496,26 +2127,17 @@
         <id>AEQUIPMENTTYPE_MEGAPOL_HELMET</id>
         <name>Megapol Helmet</name>
         <weight>9</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:63</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:63</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:63</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:63:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -2528,7 +2150,7 @@
         <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:0:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MEGAPOL_ARMOR</damage_modifier>
         <body_part>Helmet</body_part>
-        <image_pack>BATTLEUNITIMAGEPACK_xcom2c</image_pack>
+        <body_image_pack>BATTLEUNITIMAGEPACK_xcom2c</body_image_pack>
       </sp>
     </value>
   </entry>
@@ -2540,26 +2162,17 @@
         <id>AEQUIPMENTTYPE_MEGAPOL_LASER_POD</id>
         <name>Megapol Laser Pod</name>
         <weight>1</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:80</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:81</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:82</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:83</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:84</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:85</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:86</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:87</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item10</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:10</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:10</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:10</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:10:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -2629,26 +2242,17 @@
         <id>AEQUIPMENTTYPE_MEGAPOL_LASER_SNIPER_GUN</id>
         <name>Megapol Laser Sniper Gun</name>
         <weight>6</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:72</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:73</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:74</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:75</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:76</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:77</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:78</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:79</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item9</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:9</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:9</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:9</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:9:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -2669,26 +2273,17 @@
         <id>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL</id>
         <name>Megapol Lawpistol</name>
         <weight>3</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:40</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:41</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:42</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:43</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:44</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:45</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:46</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:47</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item5</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:5</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:5</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:5</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:5:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -2709,26 +2304,17 @@
         <id>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL_CLIP</id>
         <name>Megapol Lawpistol Clip</name>
         <weight>1</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:48</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:49</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:50</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:51</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:52</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:53</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:54</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:55</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item6</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:6</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:6</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:6</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:6:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -2778,26 +2364,17 @@
         <id>AEQUIPMENTTYPE_MEGAPOL_LEFT_ARM_ARMOR</id>
         <name>Megapol Left Arm Armor</name>
         <weight>10</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:61</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:61</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:61</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:61:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -2810,7 +2387,7 @@
         <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:1:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MEGAPOL_ARMOR</damage_modifier>
         <body_part>LeftArm</body_part>
-        <image_pack>BATTLEUNITIMAGEPACK_xcom2d</image_pack>
+        <body_image_pack>BATTLEUNITIMAGEPACK_xcom2d</body_image_pack>
       </sp>
     </value>
   </entry>
@@ -2822,26 +2399,17 @@
         <id>AEQUIPMENTTYPE_MEGAPOL_LEG_ARMOR</id>
         <name>Megapol Leg Armor</name>
         <weight>12</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:59</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:59</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:59</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:59:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>3</x>
@@ -2854,7 +2422,7 @@
         <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:4:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MEGAPOL_ARMOR</damage_modifier>
         <body_part>Legs</body_part>
-        <image_pack>BATTLEUNITIMAGEPACK_xcom2b</image_pack>
+        <body_image_pack>BATTLEUNITIMAGEPACK_xcom2b</body_image_pack>
       </sp>
     </value>
   </entry>
@@ -2866,26 +2434,17 @@
         <id>AEQUIPMENTTYPE_MEGAPOL_PLASMA_GUN</id>
         <name>Megapol Plasma Gun</name>
         <weight>5</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:120</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:121</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:122</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:123</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:124</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:125</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:126</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:127</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item15</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:15</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:15</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:15</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:15:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -2906,26 +2465,17 @@
         <id>AEQUIPMENTTYPE_MEGAPOL_PLASMA_POD</id>
         <name>Megapol Plasma Pod</name>
         <weight>1</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:128</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:129</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:130</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:131</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:132</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:133</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:134</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:135</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item16</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:16</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:16</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:16</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:16:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -2996,26 +2546,17 @@
         <id>AEQUIPMENTTYPE_MEGAPOL_RIGHT_ARM_ARMOR</id>
         <name>Megapol Right Arm Armor</name>
         <weight>10</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:62</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:62</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:62</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:62:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -3028,7 +2569,7 @@
         <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:3:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MEGAPOL_ARMOR</damage_modifier>
         <body_part>RightArm</body_part>
-        <image_pack>BATTLEUNITIMAGEPACK_xcom2e</image_pack>
+        <body_image_pack>BATTLEUNITIMAGEPACK_xcom2e</body_image_pack>
       </sp>
     </value>
   </entry>
@@ -3040,26 +2581,17 @@
         <id>AEQUIPMENTTYPE_MEGAPOL_SMOKE_GRENADE</id>
         <name>Megapol Smoke Grenade</name>
         <weight>2</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:16</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:17</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:18</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:19</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:20</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:21</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:22</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:23</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item2</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:2</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:2</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:2</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:2:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -3106,26 +2638,17 @@
         <id>AEQUIPMENTTYPE_MEGAPOL_STUN_GRAPPLE</id>
         <name>Megapol Stun Grapple</name>
         <weight>6</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:200</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:201</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:202</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:203</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:204</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:205</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:206</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:207</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item25</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:25</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:25</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:25</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:25:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -3174,26 +2697,17 @@
         <id>AEQUIPMENTTYPE_MEGAPOL_STUN_GRENADE</id>
         <name>Megapol Stun Grenade</name>
         <weight>2</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:8</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:9</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:10</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:11</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:12</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:13</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:14</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:15</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item1</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:1</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:1</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:1</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:1:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -3240,24 +2754,15 @@
         <id>AEQUIPMENTTYPE_MEGASPAWN_S_DISRUPTOR</id>
         <name>Megaspawn's Disruptor</name>
         <weight>6</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:82:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>3</x>
@@ -3323,24 +2828,15 @@
         <id>AEQUIPMENTTYPE_MEGASPAWN_S_LAUNCHER</id>
         <name>Megaspawn's Launcher</name>
         <weight>6</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:83:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>3</x>
@@ -3410,26 +2906,17 @@
         <id>AEQUIPMENTTYPE_MIND_BENDER</id>
         <name>Mind Bender</name>
         <weight>3</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:304</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:305</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:306</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:307</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:308</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:309</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:310</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:311</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item38</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:38</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:38</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:38</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:38:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -3450,26 +2937,17 @@
         <id>AEQUIPMENTTYPE_MIND_SHIELD</id>
         <name>Mind Shield</name>
         <weight>3</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:296</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:297</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:298</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:299</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:300</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:301</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:302</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:303</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item37</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:37</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:37</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:37</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:37:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -3490,26 +2968,17 @@
         <id>AEQUIPMENTTYPE_MINILAUNCHER_AG_MISSILE</id>
         <name>MiniLauncher AG Missile</name>
         <weight>2</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:176</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:177</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:178</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:179</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:180</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:181</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:182</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:183</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item22</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:22</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:22</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:22</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:22:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -3578,26 +3047,17 @@
         <id>AEQUIPMENTTYPE_MINILAUNCHER_HE_MISSILE</id>
         <name>MiniLauncher HE Missile</name>
         <weight>2</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:184</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:185</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:186</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:187</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:188</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:189</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:190</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:191</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item23</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:23</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:23</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:23</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:23:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -3666,26 +3126,17 @@
         <id>AEQUIPMENTTYPE_MINILAUNCHER_IN_MISSILE</id>
         <name>MiniLauncher IN Missile</name>
         <weight>2</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:192</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:193</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:194</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:195</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:196</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:197</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:198</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:199</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item24</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:24</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:24</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:24</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:24:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -3754,26 +3205,17 @@
         <id>AEQUIPMENTTYPE_MOTION_SCANNER</id>
         <name>Motion Scanner</name>
         <weight>2</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:440</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:441</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:442</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:443</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:444</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:445</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:446</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:447</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item55</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:55</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:55</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:55</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:55:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -3794,26 +3236,17 @@
         <id>AEQUIPMENTTYPE_MULTI-TRACKER</id>
         <name>Multi-Tracker</name>
         <weight>2</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:232</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:233</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:234</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:235</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:236</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:237</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:238</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:239</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item29</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:29</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:29</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:29</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:29:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -3834,24 +3267,15 @@
         <id>AEQUIPMENTTYPE_MULTIWORM_S_SPIT</id>
         <name>Multiworm's Spit</name>
         <weight>6</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:76:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>3</x>
@@ -3918,26 +3342,17 @@
         <id>AEQUIPMENTTYPE_PERSONAL_CLOAKING_FIELD</id>
         <name>Personal Cloaking Field</name>
         <weight>6</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:408</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:409</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:410</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:411</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:412</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:413</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:414</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:415</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item51</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:51</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:51</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:51</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:51:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -3958,26 +3373,17 @@
         <id>AEQUIPMENTTYPE_PERSONAL_DISRUPTOR_SHIELD</id>
         <name>Personal Disruptor Shield</name>
         <weight>4</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:392</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:393</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:394</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:395</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:396</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:397</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:398</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:399</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item49</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:49</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:49</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:49</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:49:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>3</x>
@@ -4000,26 +3406,17 @@
         <id>AEQUIPMENTTYPE_PERSONAL_TELEPORTER</id>
         <name>Personal Teleporter</name>
         <weight>8</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:400</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:401</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:402</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:403</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:404</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:405</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:406</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:407</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item50</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:50</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:50</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:50</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:50:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -4042,24 +3439,15 @@
         <id>AEQUIPMENTTYPE_POPPER_S_BOMB</id>
         <name>Popper's Bomb</name>
         <weight>6</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:81:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>3</x>
@@ -4106,26 +3494,17 @@
         <id>AEQUIPMENTTYPE_POWER_SWORD</id>
         <name>Power Sword</name>
         <weight>4</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:344</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:345</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:346</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:347</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:348</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:349</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:350</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:351</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item43</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:43</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:43</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:43</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:43:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -4174,26 +3553,17 @@
         <id>AEQUIPMENTTYPE_PSI-GRENADE</id>
         <name>PSI-Grenade</name>
         <weight>1</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:240</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:241</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:242</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:243</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:244</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:245</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:246</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:247</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item30</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:30</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:30</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:30</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:30:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -4239,26 +3609,17 @@
         <id>AEQUIPMENTTYPE_PSICLONE</id>
         <name>Psiclone</name>
         <weight>6</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:74</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:74</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:74</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:74:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -4279,24 +3640,15 @@
         <id>AEQUIPMENTTYPE_PSIMORPH_S_MINDBENDER</id>
         <name>Psimorph's Mindbender</name>
         <weight>6</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:79:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -4316,24 +3668,15 @@
         <id>AEQUIPMENTTYPE_QUEENSPAWN_S_TENTACLES</id>
         <name>Queenspawn's Tentacles</name>
         <weight>6</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:77:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>3</x>
@@ -4399,24 +3742,15 @@
         <id>AEQUIPMENTTYPE_SPITTER_S_VOMIT_FUNNEL</id>
         <name>Spitter's Vomit Funnel</name>
         <weight>6</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:77:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>3</x>
@@ -4483,26 +3817,17 @@
         <id>AEQUIPMENTTYPE_TOXIGUN</id>
         <name>Toxigun</name>
         <weight>5</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:256</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:257</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:258</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:259</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:260</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:261</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:262</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:263</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item32</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:32</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:32</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:32</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:32:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -4523,26 +3848,17 @@
         <id>AEQUIPMENTTYPE_TOXIGUN_A-CLIP</id>
         <name>Toxigun A-Clip</name>
         <weight>1</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:264</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:265</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:266</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:267</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:268</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:269</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:270</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:271</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item33</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:33</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:33</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:33</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:33:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -4593,26 +3909,17 @@
         <id>AEQUIPMENTTYPE_TOXIGUN_B-CLIP</id>
         <name>Toxigun B-Clip</name>
         <weight>1</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:272</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:273</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:274</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:275</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:276</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:277</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:278</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:279</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item34</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:34</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:34</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:34</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:34:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -4663,26 +3970,17 @@
         <id>AEQUIPMENTTYPE_TOXIGUN_C-CLIP</id>
         <name>Toxigun C-Clip</name>
         <weight>1</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:280</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:281</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:282</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:283</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:284</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:285</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:286</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:287</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item35</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:35</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:35</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:35</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:35:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -4733,26 +4031,17 @@
         <id>AEQUIPMENTTYPE_TRACKER_GUN</id>
         <name>Tracker Gun</name>
         <weight>4</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:224</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:225</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:226</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:227</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:228</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:229</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:230</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:231</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item28</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:28</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:28</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:28</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:28:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -4773,26 +4062,17 @@
         <id>AEQUIPMENTTYPE_TRACKER_GUN_CLIP</id>
         <name>Tracker Gun Clip</name>
         <weight>1</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:216</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:217</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:218</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:219</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:220</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:221</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:222</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:223</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item27</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:27</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:27</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:27</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:27:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
@@ -4840,26 +4120,17 @@
         <id>AEQUIPMENTTYPE_VORTEX_MINE</id>
         <name>Vortex Mine</name>
         <weight>4</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:384</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:385</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:386</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:387</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:388</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:389</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:390</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:391</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item48</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:48</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:48</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:48</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:48:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -5033,26 +4304,17 @@
         <id>AEQUIPMENTTYPE_X-COM_BODY_SHIELD</id>
         <name>X-COM Body Shield</name>
         <weight>2</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:70</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:70</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:70</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:70:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>3</x>
@@ -5064,7 +4326,7 @@
         <score>7</score>
         <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:12:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_X-COM_DISRUPTOR_ARMOR</damage_modifier>
-        <image_pack>BATTLEUNITIMAGEPACK_xcom4a</image_pack>
+        <body_image_pack>BATTLEUNITIMAGEPACK_xcom4a</body_image_pack>
       </sp>
     </value>
   </entry>
@@ -5076,26 +4338,17 @@
         <id>AEQUIPMENTTYPE_X-COM_HEAD_SHIELD</id>
         <name>X-COM Head Shield</name>
         <weight>1</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:73</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:73</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:73</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:73:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -5108,7 +4361,7 @@
         <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:10:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_X-COM_DISRUPTOR_ARMOR</damage_modifier>
         <body_part>Helmet</body_part>
-        <image_pack>BATTLEUNITIMAGEPACK_xcom4c</image_pack>
+        <body_image_pack>BATTLEUNITIMAGEPACK_xcom4c</body_image_pack>
       </sp>
     </value>
   </entry>
@@ -5120,26 +4373,17 @@
         <id>AEQUIPMENTTYPE_X-COM_LEFT_ARM_SHIELD</id>
         <name>X-COM Left Arm Shield</name>
         <weight>1</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:71</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:71</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:71</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:71:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -5152,7 +4396,7 @@
         <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:11:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_X-COM_DISRUPTOR_ARMOR</damage_modifier>
         <body_part>LeftArm</body_part>
-        <image_pack>BATTLEUNITIMAGEPACK_xcom4d</image_pack>
+        <body_image_pack>BATTLEUNITIMAGEPACK_xcom4d</body_image_pack>
       </sp>
     </value>
   </entry>
@@ -5164,26 +4408,17 @@
         <id>AEQUIPMENTTYPE_X-COM_LEG_SHIELDS</id>
         <name>X-COM Leg Shields</name>
         <weight>2</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:69</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:69</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:69</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:69:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>3</x>
@@ -5196,7 +4431,7 @@
         <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:14:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_X-COM_DISRUPTOR_ARMOR</damage_modifier>
         <body_part>Legs</body_part>
-        <image_pack>BATTLEUNITIMAGEPACK_xcom4b</image_pack>
+        <body_image_pack>BATTLEUNITIMAGEPACK_xcom4b</body_image_pack>
       </sp>
     </value>
   </entry>
@@ -5208,26 +4443,17 @@
         <id>AEQUIPMENTTYPE_X-COM_RIGHT_ARM_SHIELD</id>
         <name>X-COM Right Arm Shield</name>
         <weight>1</weight>
-        <held_sprites>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:472</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:473</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:474</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:475</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:476</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:477</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:478</entry>
-          <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:479</entry>
-        </held_sprites>
+        <held_image_pack>BATTLEUNITIMAGEPACK_item59</held_image_pack>
         <dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:72</dropped_sprite>
+        <dropped_offset>
+          <x>23</x>
+          <y>34</y>
+        </dropped_offset>
+        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:72</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
           <y>-14</y>
         </shadow_offset>
-        <image_offset>
-          <x>23</x>
-          <y>34</y>
-        </image_offset>
-        <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:72</dropped_shadow_sprite>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:72:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>2</x>
@@ -5240,7 +4466,7 @@
         <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:13:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_X-COM_DISRUPTOR_ARMOR</damage_modifier>
         <body_part>RightArm</body_part>
-        <image_pack>BATTLEUNITIMAGEPACK_xcom4e</image_pack>
+        <body_image_pack>BATTLEUNITIMAGEPACK_xcom4e</body_image_pack>
       </sp>
     </value>
   </entry>

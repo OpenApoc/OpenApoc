@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<imagepack>
+  <image_offset>
+    <x>23</x>
+    <y>34</y>
+  </image_offset>
+  <images>
+    <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:88</entry>
+    <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:89</entry>
+    <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:90</entry>
+    <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:91</entry>
+    <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:92</entry>
+    <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:93</entry>
+    <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:94</entry>
+    <entry>PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:95</entry>
+  </images>
+</imagepack>

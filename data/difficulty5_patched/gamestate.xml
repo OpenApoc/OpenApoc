@@ -77,6 +77,7 @@
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="battle_strategy_icon_list.xml" />
   <player>ORG_X-COM</player>
   <aliens>ORG_ALIEN</aliens>
+  <civilian>ORG_CIVILIAN</civilian>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="battle_maps.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="damage_modifiers.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="damage_types.xml" />

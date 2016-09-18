@@ -55,11 +55,11 @@ class AEquipmentType : public StateObject<AEquipmentType>
 	UString id;
 	UString name;
 	int weight = 0;
-	std::vector<sp<Image>> held_sprites;
+	StateRef<BattleUnitImagePack> held_image_pack;
 	sp<Image> dropped_sprite;
-	Vec2<float> shadow_offset;
-	Vec2<float> image_offset;
+	Vec2<float> dropped_offset;
 	sp<Image> dropped_shadow_sprite;
+	Vec2<float> shadow_offset;
 	sp<Image> equipscreen_sprite;
 	Vec2<int> equipscreen_size;
 	StateRef<Organisation> manufacturer;
@@ -73,7 +73,7 @@ class AEquipmentType : public StateObject<AEquipmentType>
 	sp<Image> body_sprite;
 	StateRef<DamageModifier> damage_modifier;
 	AgentType::BodyPart body_part = AgentType::BodyPart::Body;
-	StateRef<BattleUnitImagePack> image_pack;
+	StateRef<BattleUnitImagePack> body_image_pack;
 	bool provides_flight = false;
 
 	// Weapon & Grenade only

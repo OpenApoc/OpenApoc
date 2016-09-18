@@ -23,6 +23,8 @@ sp<BattleUnitImagePack> InitialGameStateExtractor::extractImagePack(GameState &s
 
 	auto p = mksp<BattleUnitImagePack>();
 
+	p->image_offset = shadow ? Vec2<float>{23, -14} : Vec2<float>{ 23, 34 };
+
 	for (size_t i = 0; i < imageTabFileEntryCount; i++)
 	{
 		p->images.push_back(
@@ -33,4 +35,32 @@ sp<BattleUnitImagePack> InitialGameStateExtractor::extractImagePack(GameState &s
 	return p;
 }
 
+sp<BattleUnitImagePack> InitialGameStateExtractor::extractItemImagePack(GameState &state, int item)
+{
+	UString dirName = "xcom3/tacdata/";
+
+	auto p = mksp<BattleUnitImagePack>();
+
+	p->image_offset = { 23, 34 };
+
+	for (int j = 0; j < 8; j++)
+		p->images.push_back(fw().data->loadImage(
+			UString::format("PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/"
+				"unit/equip.tab:%d",
+				item * 8 + j)));
+
+	return p;
+}
+
+int InitialGameStateExtractor::getItemImagePacksCount()
+{
+	auto heldSpriteTabFileName = UString("xcom3/tacdata/unit/equip.tab");
+	auto heldSpriteTabFile = fw().data->fs.open(heldSpriteTabFileName);
+	if (!heldSpriteTabFile)
+	{
+		LogError("Failed to open held item sprite TAB file \"%s\"", heldSpriteTabFileName.cStr());
+		return -1;
+	}
+	return heldSpriteTabFile.size() / 4 / 8;
+}
 }

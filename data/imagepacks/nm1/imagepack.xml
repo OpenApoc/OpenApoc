@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <imagepack>
+  <image_offset>
+    <x>23</x>
+    <y>34</y>
+  </image_offset>
   <images>
     <entry>PCK:xcom3/tacdata/civ/nm1-.pck:xcom3/tacdata/civ/nm1-.tab:0</entry>
     <entry>PCK:xcom3/tacdata/civ/nm1-.pck:xcom3/tacdata/civ/nm1-.tab:1</entry>

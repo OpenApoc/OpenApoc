@@ -168,7 +168,7 @@
           <fire_burn_time>255</fire_burn_time>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_1</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -254,7 +254,7 @@
           <fire_burn_time>255</fire_burn_time>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_10</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -342,7 +342,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -430,7 +430,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -518,7 +518,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -606,7 +606,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -694,7 +694,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -782,7 +782,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -870,7 +870,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -958,7 +958,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -1046,7 +1046,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -1134,7 +1134,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -1220,7 +1220,7 @@
           <fire_burn_time>255</fire_burn_time>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_11</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -1308,7 +1308,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -1396,7 +1396,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -1484,7 +1484,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -1572,7 +1572,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -1660,7 +1660,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -1748,7 +1748,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -1836,7 +1836,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -1924,7 +1924,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -2012,7 +2012,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -2186,7 +2186,7 @@
           <fire_burn_time>255</fire_burn_time>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_12</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -3676,7 +3676,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_1</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -3767,7 +3767,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_2</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -3858,7 +3858,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_3</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -3949,7 +3949,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_4</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -4040,7 +4040,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_5</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -4222,7 +4222,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_6</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -4313,7 +4313,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_7</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -4400,7 +4400,7 @@
           <fire_burn_time>255</fire_burn_time>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_8</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -4491,7 +4491,7 @@
           <block_psionic>1</block_psionic>
           <size>3</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_9</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>32</height>
         </sp>
       </value>
@@ -4581,7 +4581,7 @@
           <block_psionic>1</block_psionic>
           <size>3</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_10</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>32</height>
         </sp>
       </value>
@@ -4671,7 +4671,7 @@
           <block_psionic>1</block_psionic>
           <size>3</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_11</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>32</height>
         </sp>
       </value>
@@ -4761,7 +4761,7 @@
           <block_psionic>1</block_psionic>
           <size>3</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_12</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>32</height>
         </sp>
       </value>
@@ -4848,7 +4848,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>2</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -4936,7 +4936,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>2</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -5024,7 +5024,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>2</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -5203,7 +5203,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>2</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -5288,7 +5288,7 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -5372,7 +5372,7 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -5456,7 +5456,7 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -5540,7 +5540,7 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -5964,7 +5964,7 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>35</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -6144,7 +6144,7 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>35</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -6408,7 +6408,7 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>30</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -6496,7 +6496,7 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>30</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -6584,7 +6584,7 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>30</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -6760,7 +6760,7 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>30</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -7625,7 +7625,7 @@
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_176</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -7710,7 +7710,7 @@
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_177</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -7795,7 +7795,7 @@
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_178</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -7880,7 +7880,7 @@
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_179</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -9827,7 +9827,7 @@
           <fire_burn_time>255</fire_burn_time>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_2</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -11152,7 +11152,7 @@
           <fire_burn_time>255</fire_burn_time>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_3</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -12142,7 +12142,7 @@
           <fire_burn_time>255</fire_burn_time>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_4</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -13120,7 +13120,7 @@
           <fire_burn_time>255</fire_burn_time>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_5</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -14100,7 +14100,7 @@
           <fire_burn_time>255</fire_burn_time>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_6</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -14363,7 +14363,7 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>32</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -14451,7 +14451,7 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -14539,7 +14539,7 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -14627,7 +14627,7 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -14715,7 +14715,7 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -14803,7 +14803,7 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -14891,7 +14891,7 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -14979,7 +14979,7 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -15065,7 +15065,7 @@
           <fire_burn_time>255</fire_burn_time>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_7</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -15153,7 +15153,7 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <supported_by>Above</supported_by>
         </sp>
@@ -15244,7 +15244,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_2</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -15333,7 +15333,7 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <supported_by>Above</supported_by>
         </sp>
@@ -15424,7 +15424,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_3</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -15515,7 +15515,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_1</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -15606,7 +15606,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_1</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -15697,7 +15697,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_1</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -15788,7 +15788,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_3</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -15879,7 +15879,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_2</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -15970,7 +15970,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_4</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -16056,7 +16056,7 @@
           <fire_burn_time>255</fire_burn_time>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_8</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -16147,7 +16147,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_3</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -16238,7 +16238,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_1</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -16329,7 +16329,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_2</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -16420,7 +16420,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_1</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -16511,7 +16511,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_3</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -16602,7 +16602,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_2</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -16690,7 +16690,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -16778,7 +16778,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -16866,7 +16866,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -16954,7 +16954,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -17040,7 +17040,7 @@
           <fire_burn_time>255</fire_burn_time>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_9</damaged_map_part>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -17128,7 +17128,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -17216,7 +17216,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -17304,7 +17304,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -17392,7 +17392,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -17480,7 +17480,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -17568,7 +17568,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -17656,7 +17656,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -17744,7 +17744,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -17832,7 +17832,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -17920,7 +17920,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>8</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -37418,7 +37418,7 @@
           <block_gas>35</block_gas>
           <block_fire>35</block_fire>
           <size>2</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>West</supported_by>
@@ -37769,7 +37769,7 @@
           <block_fire>255</block_fire>
           <block_psionic>35</block_psionic>
           <size>6</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>West</supported_by>
@@ -38380,7 +38380,7 @@
           <block_gas>35</block_gas>
           <block_fire>35</block_fire>
           <size>2</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>West</supported_by>
@@ -38469,7 +38469,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>22</height>
         </sp>
       </value>
@@ -38556,7 +38556,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -38644,7 +38644,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -38732,7 +38732,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -38820,7 +38820,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -38908,7 +38908,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -38996,7 +38996,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -39084,7 +39084,7 @@
           <block_gas>35</block_gas>
           <block_fire>35</block_fire>
           <size>2</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>West</supported_by>
@@ -39258,7 +39258,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -39529,7 +39529,7 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>34</height>
         </sp>
       </value>
@@ -39616,7 +39616,7 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>34</height>
         </sp>
       </value>
@@ -39877,7 +39877,7 @@
           <block_gas>35</block_gas>
           <block_fire>35</block_fire>
           <size>2</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>North</supported_by>
@@ -40228,7 +40228,7 @@
           <block_fire>255</block_fire>
           <block_psionic>35</block_psionic>
           <size>6</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>North</supported_by>
@@ -40839,7 +40839,7 @@
           <block_gas>35</block_gas>
           <block_fire>35</block_fire>
           <size>2</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>North</supported_by>
@@ -40928,7 +40928,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>22</height>
         </sp>
       </value>
@@ -41015,7 +41015,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -41103,7 +41103,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -41191,7 +41191,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -41279,7 +41279,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -41367,7 +41367,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -41455,7 +41455,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -41543,7 +41543,7 @@
           <block_gas>35</block_gas>
           <block_fire>35</block_fire>
           <size>2</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>North</supported_by>
@@ -41717,7 +41717,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -41988,7 +41988,7 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>34</height>
         </sp>
       </value>
@@ -42075,7 +42075,7 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>255</movement_cost>
+          <movement_cost>-1</movement_cost>
           <height>34</height>
         </sp>
       </value>

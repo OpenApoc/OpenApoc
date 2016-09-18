@@ -78,6 +78,8 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	// Bounds divided by 2, subtracting 1, used to find exclusive object boundary's coordinates
 	Vec3<float> bounds_div_2_sub_1;
 
+	void setBounds(Vec3<float> bounds);
+
 	UString name;
 };
 

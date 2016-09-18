@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <imagepack>
+  <image_offset>
+    <x>23</x>
+    <y>-14</y>
+  </image_offset>
   <images>
     <entry>PCKSHADOW:xcom3/tacdata/alien/hyprs.pck:xcom3/tacdata/alien/hyprs.tab:0</entry>
     <entry>PCKSHADOW:xcom3/tacdata/alien/hyprs.pck:xcom3/tacdata/alien/hyprs.tab:1</entry>

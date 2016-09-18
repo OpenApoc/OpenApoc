@@ -4,9 +4,9 @@
     <entry>
       <sp>
         <end>
-          <x>15</x>
-          <y>15</y>
-          <z>0</z>
+          <x>16</x>
+          <y>16</y>
+          <z>1</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -19,9 +19,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>15</x>
-          <y>15</y>
-          <z>1</z>
+          <x>16</x>
+          <y>16</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -34,9 +34,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>11</x>
-          <y>10</y>
-          <z>1</z>
+          <x>12</x>
+          <y>11</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -49,9 +49,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>15</x>
-          <y>10</y>
-          <z>1</z>
+          <x>16</x>
+          <y>11</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -64,9 +64,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>11</x>
-          <y>5</y>
-          <z>1</z>
+          <x>12</x>
+          <y>6</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -79,9 +79,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>15</x>
-          <y>4</y>
-          <z>1</z>
+          <x>16</x>
+          <y>5</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -94,9 +94,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>9</x>
-          <y>3</y>
-          <z>1</z>
+          <x>10</x>
+          <y>4</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -109,9 +109,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>5</x>
-          <y>4</y>
-          <z>1</z>
+          <x>6</x>
+          <y>5</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -124,9 +124,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>4</x>
-          <y>5</y>
-          <z>1</z>
+          <x>5</x>
+          <y>6</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -139,9 +139,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>3</x>
-          <y>10</y>
-          <z>1</z>
+          <x>4</x>
+          <y>11</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -154,9 +154,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>4</x>
-          <y>10</y>
-          <z>1</z>
+          <x>5</x>
+          <y>11</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -169,9 +169,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>5</x>
-          <y>15</y>
-          <z>1</z>
+          <x>6</x>
+          <y>16</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -184,9 +184,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>9</x>
-          <y>15</y>
-          <z>1</z>
+          <x>10</x>
+          <y>16</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -199,9 +199,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>9</x>
-          <y>11</y>
-          <z>1</z>
+          <x>10</x>
+          <y>12</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -214,9 +214,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>10</x>
-          <y>5</y>
-          <z>1</z>
+          <x>11</x>
+          <y>6</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -229,9 +229,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>11</x>
-          <y>9</y>
-          <z>1</z>
+          <x>12</x>
+          <y>10</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -244,9 +244,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>10</x>
-          <y>10</y>
-          <z>1</z>
+          <x>11</x>
+          <y>11</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -259,9 +259,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>5</x>
-          <y>9</y>
-          <z>1</z>
+          <x>6</x>
+          <y>10</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -274,9 +274,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>5</x>
-          <y>5</y>
-          <z>1</z>
+          <x>6</x>
+          <y>6</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -289,9 +289,9 @@
           <z>1</z>
         </start>
         <end>
-          <x>5</x>
-          <y>10</y>
-          <z>1</z>
+          <x>6</x>
+          <y>11</y>
+          <z>2</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>
@@ -304,9 +304,9 @@
           <z>2</z>
         </start>
         <end>
-          <x>3</x>
-          <y>15</y>
-          <z>4</z>
+          <x>4</x>
+          <y>16</y>
+          <z>5</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
         <spawn_priority>2</spawn_priority>
@@ -322,9 +322,9 @@
           <z>2</z>
         </start>
         <end>
-          <x>7</x>
-          <y>15</y>
-          <z>4</z>
+          <x>8</x>
+          <y>16</y>
+          <z>5</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
         <spawn_priority>2</spawn_priority>
@@ -340,9 +340,9 @@
           <z>2</z>
         </start>
         <end>
-          <x>15</x>
-          <y>15</y>
-          <z>4</z>
+          <x>16</x>
+          <y>16</y>
+          <z>5</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
         <spawn_priority>2</spawn_priority>
@@ -358,9 +358,9 @@
           <z>2</z>
         </start>
         <end>
-          <x>11</x>
-          <y>15</y>
-          <z>4</z>
+          <x>12</x>
+          <y>16</y>
+          <z>5</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
         <spawn_priority>2</spawn_priority>
@@ -376,9 +376,9 @@
           <z>2</z>
         </start>
         <end>
-          <x>3</x>
-          <y>3</y>
-          <z>4</z>
+          <x>4</x>
+          <y>4</y>
+          <z>5</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
         <spawn_priority>2</spawn_priority>
@@ -394,9 +394,9 @@
           <z>2</z>
         </start>
         <end>
-          <x>15</x>
-          <y>3</y>
-          <z>4</z>
+          <x>16</x>
+          <y>4</y>
+          <z>5</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
         <spawn_priority>2</spawn_priority>
@@ -412,9 +412,9 @@
           <z>2</z>
         </start>
         <end>
-          <x>3</x>
-          <y>7</y>
-          <z>4</z>
+          <x>4</x>
+          <y>8</y>
+          <z>5</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
         <spawn_priority>2</spawn_priority>
@@ -430,9 +430,9 @@
           <z>2</z>
         </start>
         <end>
-          <x>3</x>
-          <y>11</y>
-          <z>4</z>
+          <x>4</x>
+          <y>12</y>
+          <z>5</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
         <spawn_priority>2</spawn_priority>
@@ -448,9 +448,9 @@
           <z>2</z>
         </start>
         <end>
-          <x>7</x>
-          <y>3</y>
-          <z>4</z>
+          <x>8</x>
+          <y>4</y>
+          <z>5</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
         <spawn_priority>2</spawn_priority>
@@ -466,9 +466,9 @@
           <z>2</z>
         </start>
         <end>
-          <x>11</x>
-          <y>3</y>
-          <z>4</z>
+          <x>12</x>
+          <y>4</y>
+          <z>5</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
         <spawn_priority>2</spawn_priority>
@@ -484,9 +484,9 @@
           <z>2</z>
         </start>
         <end>
-          <x>15</x>
-          <y>7</y>
-          <z>4</z>
+          <x>16</x>
+          <y>8</y>
+          <z>5</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
         <spawn_priority>2</spawn_priority>
@@ -502,9 +502,9 @@
           <z>2</z>
         </start>
         <end>
-          <x>15</x>
-          <y>11</y>
-          <z>4</z>
+          <x>16</x>
+          <y>12</y>
+          <z>5</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
         <spawn_priority>2</spawn_priority>
@@ -520,9 +520,9 @@
           <z>2</z>
         </start>
         <end>
-          <x>11</x>
-          <y>11</y>
-          <z>4</z>
+          <x>12</x>
+          <y>12</y>
+          <z>5</z>
         </end>
         <ai_patrol_priority>2</ai_patrol_priority>
       </sp>

@@ -188,7 +188,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 							id.cStr());
 						break;
 				}
-				e->image_pack = { &state, UString::format("%s%s%d%s", BattleUnitImagePack::getPrefix(), "xcom", armoredUnitPicIndex, bodyPartLetter) };
+				e->body_image_pack = { &state, UString::format("%s%s%d%s", BattleUnitImagePack::getPrefix(), "xcom", armoredUnitPicIndex, bodyPartLetter) };
 				// Body sprites are stored in armour.pck file, in head-left-body-right-legs order
 				// Since armor damage modifier values start with 17, we can subtract that to get armor index
 				e->body_sprite = fw().data->loadImage(UString::format("PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/"
@@ -327,7 +327,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 		e->weight = edata.weight;
 
 		e->shadow_offset = { 23, -14 };
-		e->image_offset = { 23, 34 };
+		e->dropped_offset = { 23, 34 };
 
 		if (edata.sprite_idx < gameObjectSpriteCount)
 			e->dropped_sprite =
@@ -346,11 +346,8 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 		// are identical
 		// There is a total 60 of them
 		int held_sprite_index = std::min((int)edata.sprite_idx, (int)heldSpriteCount - 1);
-		for (int j = 0; j < 8; j++)
-			e->held_sprites.push_back(fw().data->loadImage(
-			    UString::format("PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/"
-			                    "unit/equip.tab:%d",
-			                    held_sprite_index * 8 + j)));
+		e->held_image_pack = { &state, UString::format("%s%s%d",
+			BattleUnitImagePack::getPrefix(), "item", held_sprite_index) };
 
 		e->equipscreen_sprite = fw().data->loadImage(UString::format(
 		    "PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:%d:xcom3/tacdata/tactical.pal",

@@ -3,6 +3,7 @@
 #include "game/state/organisation.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
+#include <vector>
 
 namespace OpenApoc
 {
@@ -25,7 +26,9 @@ class BattleMapSector
 			Civilian
 		};
 
+		// Inclusive lower boundary
 		Vec3<int> start;
+		// Exclusive upper boundary
 		Vec3<int> end;
 
 		int ai_patrol_priority = 0;

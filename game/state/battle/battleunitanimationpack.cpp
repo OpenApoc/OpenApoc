@@ -56,8 +56,6 @@ BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock::InfoBlock(int index, 
 	// therefore, we flip the sign here
 	index(index), offset(Vec2<float>{-offset_x, -offset_y}) {} 
 
-
-
 int BattleUnitAnimationPack::getFrameCountBody(StateRef<AEquipmentType> heldItem,
 	AgentType::BodyState currentBody, AgentType::BodyState targetBody,
 	AgentType::HandState currentHands,
@@ -119,7 +117,7 @@ void BattleUnitAnimationPack::drawShadow(Renderer &r, Vec2<float> screenPosition
 	if (b.index == -1)
 		return;
 	
-	r.draw(shadow->images[b.index], screenPosition - b.offset);
+	r.draw(shadow->images[b.index], screenPosition - b.offset - shadow->image_offset);
 }
 
 void BattleUnitAnimationPack::drawUnit(Renderer &r, Vec2<float> screenPosition,
@@ -191,32 +189,32 @@ void BattleUnitAnimationPack::drawUnit(Renderer &r, Vec2<float> screenPosition,
 			case AnimationEntry::Frame::UnitImagePart::Body:
 				if (!body)
 					continue;
-				r.draw(body->images[b->index], screenPosition - b->offset);
+				r.draw(body->images[b->index], screenPosition - b->offset - body->image_offset);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::Legs:
 				if (!legs)
 					continue;
-				r.draw(legs->images[b->index], screenPosition - b->offset);
+				r.draw(legs->images[b->index], screenPosition - b->offset - legs->image_offset);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::Helmet:
 				if (!helmet)
 					continue;
-				r.draw(helmet->images[b->index], screenPosition - b->offset);
+				r.draw(helmet->images[b->index], screenPosition - b->offset - helmet->image_offset);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::LeftArm:
 				if (!leftHand)
 					continue;
-				r.draw(leftHand->images[b->index], screenPosition - b->offset);
+				r.draw(leftHand->images[b->index], screenPosition - b->offset - leftHand->image_offset);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::RightArm:
 				if (!rightHand)
 					continue;
-				r.draw(rightHand->images[b->index], screenPosition - b->offset);
+				r.draw(rightHand->images[b->index], screenPosition - b->offset - rightHand->image_offset);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::Weapon:
 				if (!heldItem)
 					continue;
-				r.draw(heldItem->held_sprites[b->index], screenPosition - b->offset);
+				r.draw(heldItem->held_image_pack->images[b->index], screenPosition - b->offset - heldItem->held_image_pack->image_offset);
 				break;
 		}
 	}

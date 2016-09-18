@@ -116,6 +116,27 @@ int main(int argc, char *argv[])
 			}
 		}
 
+		int itemImagePacksCount = e.getItemImagePacksCount();
+		for (int i = 0; i < itemImagePacksCount; i++)
+		{
+			GameState s;
+			LogInfo("Extracting item image pack \"%d\"", i);
+
+			auto imagePack = e.extractItemImagePack(s, i);
+			if (!imagePack)
+			{
+				LogError("Failed to extract  item image pack \"%d\"", i);
+			}
+			else
+			{
+				if (!imagePack->saveImagePack(UString::format("%s%s%d",BattleUnitImagePack::imagePackPath, "/item", i), false))
+				{
+					LogError("Failed to save  item image pack \"%d\"", i);
+				}
+			}
+			
+		}
+
 		for (auto &imagePackStrings : e.unitShadowPackPaths)
 		{
 			GameState s;

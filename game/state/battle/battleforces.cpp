@@ -28,6 +28,8 @@ bool BattleForces::insertAt(int squad, int position, sp<BattleUnit> unit)
 		position = squads[squad].units.size();
 	}
 	squads[squad].units.insert(squads[squad].units.begin() + position, unit);
+	unit->squadNumber = squad;
+	unit->squadPosition = position;
 	return true;
 }
 

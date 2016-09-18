@@ -8,13 +8,20 @@ namespace OpenApoc
 {
 
 TileObject::TileObject(TileMap &map, Type type, Vec3<float> bounds)
-    : map(map), type(type), owningTile(nullptr), bounds(bounds), 
-	bounds_div_2(bounds / 2.0f), bounds_div_2_sub_1(bounds_div_2 - 0.001f), 
+    : map(map), type(type), owningTile(nullptr), 
 	name("UNKNOWN_OBJECT")
 {
+	setBounds(bounds);
 }
 
 TileObject::~TileObject() = default;
+
+void TileObject::setBounds(Vec3<float> bounds)
+{
+	this->bounds = bounds;
+	this->bounds_div_2 = bounds / 2.0f;
+	this->bounds_div_2_sub_1 = bounds_div_2 - 0.001f;
+}
 
 void TileObject::removeFromMap()
 {

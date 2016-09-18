@@ -41,7 +41,7 @@ class BattleMap : public StateObject<BattleMap>
 	std::vector<StateRef<BattleMapPartType>> rubble_right_wall;
 	std::vector<StateRef<BattleMapPartType>> rubble_feature;
 	std::vector<StateRef<BattleMapPartType>> exit_grounds;
-
+	
 	StateRefMap<BattleMapSector> sectors;
 
   private:

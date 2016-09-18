@@ -73,7 +73,7 @@ Which units can spawn in the block and how likely.
 Following are the offsets. Each block has 136 bytes:
 
 00..01	- 2 bytes, unknown, usually = 1, setting it to 0 makes TacEdit ignore the block, setting to 2 or more seems to have no effect
-02..13	- 12 bytes, 2 sets of x, y, z coordinates, 2 bytes per coordinate, these are coordinates of two 3d points defining a block (a 3d box).
+02..13	- 12 bytes, 2 sets of x, y, z coordinates, 2 bytes per coordinate, these are coordinates of two 3d points defining a block (a 3d box). They are inclusive
 
 14..71  - 58 bytes, contain the majority of data, not yet decyphered. This is most likely where pathing data is located.
 

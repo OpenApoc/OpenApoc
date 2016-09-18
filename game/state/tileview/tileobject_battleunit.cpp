@@ -119,8 +119,12 @@ namespace OpenApoc
 	TileObjectBattleUnit::~TileObjectBattleUnit() = default;
 
 	TileObjectBattleUnit::TileObjectBattleUnit(TileMap &map, sp<BattleUnit> unit)
-		: TileObject(map, Type::Vehicle, Vec3<float>{0, 0, 0}), unit(unit)
+		: TileObject(map, Type::Unit, Vec3<float>{0, 0, 0}), unit(unit)
 	{
+		if (unit->agent->type->large)
+			setBounds({ 2.0f, 2.0f, 2.0f });
+		else
+			setBounds({ 1.0f, 1.0f, 1.0f });
 	}
 
 	Vec3<float> TileObjectBattleUnit::getCentrePosition()

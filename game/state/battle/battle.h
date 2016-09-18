@@ -65,7 +65,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	StateRef<BattleMap> battle_map;
 
-	std::vector<sp<BattleMapSector::LineOfSightBlock>> los_blocks;
+	std::list<sp<BattleMapSector::LineOfSightBlock>> los_blocks;
 
 	MissionType mission_type = MissionType::AlienExtermination;
 	UString mission_location_id;
@@ -81,6 +81,9 @@ class Battle : public std::enable_shared_from_this<Battle>
 	up<TileMap> map;
 
 	std::set<StateRef<Organisation>> participants;
+
+	// No need to serialize this, as we cannot save/load during briefing
+	std::vector<std::vector<std::vector<int>>> spawnMap;
 
 	// Following members are not serialized, but rather are set in initBattle method
 
