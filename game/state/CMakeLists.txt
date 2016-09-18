@@ -21,6 +21,7 @@ set (GAMESTATE_SOURCE_FILES
 	base/facility.cpp
 	battle/battle.cpp
 	battle/battlemap.cpp
+	battle/battleforces.cpp
 	battle/battlemappart.cpp
 	battle/battlemappart_type.cpp
 	battle/battlemapsector.cpp
@@ -79,6 +80,7 @@ set (GAMESTATE_HEADER_FILES
 	base/facility.h
 	battle/battle.h
 	battle/battlemap.h
+	battle/battleforces.h
 	battle/battlemappart.h
 	battle/battlemappart_type.h
 	battle/battlemapsector.h
