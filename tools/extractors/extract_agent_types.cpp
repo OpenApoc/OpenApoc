@@ -836,8 +836,8 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state, Difficulty)
 		a->inventory = data.inventory == 1;
 
 		// Fill right and left hand slots present on all units
-		pushEquipmentSlot(a, 0, 6, 3, 5, AgentType::EquipmentSlotType::WeaponRightHand, AgentType::AlignmentX::Centre, AgentType::AlignmentY::Centre);
-		pushEquipmentSlot(a, 12, 6, 3, 5, AgentType::EquipmentSlotType::WeaponLeftHand, AgentType::AlignmentX::Centre, AgentType::AlignmentY::Centre);
+		pushEquipmentSlot(a, 0, 6, 3, 5, AgentType::EquipmentSlotType::RightHand, AgentType::AlignmentX::Centre, AgentType::AlignmentY::Centre);
+		pushEquipmentSlot(a, 12, 6, 3, 5, AgentType::EquipmentSlotType::LeftHand, AgentType::AlignmentX::Centre, AgentType::AlignmentY::Centre);
 
 		if (!data.inventory)
 		{

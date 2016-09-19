@@ -1,4 +1,5 @@
 #include "game/state/agent.h"
+#include "game/state/organisation.h"
 #include "game/state/aequipment.h"
 #include "game/state/gamestate.h"
 
@@ -72,7 +73,7 @@ template <> const UString &StateObject<Agent>::getId(const GameState &state, con
 	return emptyString;
 }
 
-StateRef<Agent> AgentGenerator::createAgent(GameState &state, AgentType::Role role) const
+StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisation> org, AgentType::Role role) const
 {
 	std::list<sp<AgentType>> types;
 	for (auto &t : state.agent_types)
@@ -80,15 +81,16 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, AgentType::Role ro
 			types.insert(types.begin(), t.second);
 	auto type = listRandomiser(state.rng, types);
 
-	return createAgent(state, {&state, AgentType::getId(state, type)});
+	return createAgent(state, org, {&state, AgentType::getId(state, type)});
 }
 
-StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<AgentType> type) const
+StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisation> org, StateRef<AgentType> type) const
 {
 	UString ID = UString::format("%s%u", Agent::getPrefix().cStr(), this->num_created);
 
 	auto agent = mksp<Agent>();
 
+	agent->owner = org;
 	agent->type = type;
 	agent->gender = probabilityMapRandomizer(state.rng, type->gender_chance);
 
@@ -135,8 +137,41 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<AgentType
 	agent->current_stats = s;
 	agent->modified_stats = s;
 
-	// FIXME: Default equipment for agents with no inventory?
-	// FIXME: Equip units according to score?
+	if (type->inventory)
+	{
+		// Player gets no default equipment
+		if (org == state.getPlayer())
+		{
+		}
+		// Aliens get equipment based on player score
+		if (org == state.getAliens())
+		{
+			// FIXME: actually get player score here
+			int playerScore = 50000;
+
+			auto l = EquipmentSet::getByScore(state, playerScore)->generateEquipmentList(state);
+
+			for (auto t : l)
+			{
+				agent->addEquipment(state, { &state, t->id });
+			}
+		}
+		// Every human org but civilians and player gets equipment based on tech level
+		else if (org != state.getCivilian())
+		{
+			auto l = EquipmentSet::getByLevel(state, org->tech_level)->generateEquipmentList(state);
+
+			for (auto t : l)
+			{
+				agent->addEquipment(state, { &state, t->id });
+			}
+		}
+	}
+	else
+	{
+		agent->addEquipment(state, type->built_in_weapon_right);
+		agent->addEquipment(state, type->built_in_weapon_left);
+	}
 
 	agent->updateSpeed();
 
@@ -189,6 +224,27 @@ bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type) const
 	return true;
 }
 
+void Agent::addEquipment(GameState &state, StateRef<AEquipmentType> type)
+{
+	Vec2<int> pos = { -1, 0 };
+	for (auto &slot : this->type->equipment_layout_slots)
+	{
+		if (canAddEquipment(slot.bounds.p0, type))
+		{
+			pos = slot.bounds.p0;
+			break;
+		}
+	}
+	if (pos.x == -1)
+	{
+		LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id.cStr(), this->name.cStr());
+		return;
+	}
+
+	this->addEquipment(state, pos, type);
+}
+
+
 void Agent::addEquipment(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type)
 {
 	if (!this->canAddEquipment(pos, type))
@@ -202,7 +258,7 @@ void Agent::addEquipment(GameState &state, Vec2<int> pos, StateRef<AEquipmentTyp
 	this->addEquipment(state, pos, equipment);
 }
 
-void Agent::addEquipment(GameState &, Vec2<int> pos, sp<AEquipment> object)
+void Agent::addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object)
 {
 	if (!this->canAddEquipment(pos, object->type))
 	{
@@ -212,6 +268,7 @@ void Agent::addEquipment(GameState &, Vec2<int> pos, sp<AEquipment> object)
 
 	LogInfo("Equipped \"%s\" with equipment \"%s\"", this->name.cStr(), object->type->name.cStr());
 	object->equippedPosition = pos;
+	object->ownerAgent = StateRef<Agent>(&state, shared_from_this());
 	this->equipment.emplace_back(object);
 	updateSpeed();
 }
@@ -226,9 +283,34 @@ void Agent::updateSpeed()
 
 StateRef<BattleUnitAnimationPack> Agent::getAnimationPack() { return type->animation_packs[appearance]; }
 
-// FIXME: Properly return item that is in right hand (or in left if right is empty)
+
 StateRef<AEquipmentType> Agent::getItemInHands() 
 {
+	sp<AEquipment> e;
+	e = getFirstItemInSlot(AgentType::EquipmentSlotType::RightHand);
+	if (e)
+		return{ e->type };
+	e = getFirstItemInSlot(AgentType::EquipmentSlotType::LeftHand);
+	if (e)
+		return{ e->type };
+	return nullptr;
+}
+
+sp<AEquipment> Agent::getFirstItemInSlot(AgentType::EquipmentSlotType type)
+{
+	for (auto e : equipment)
+	{
+		for (auto s : this->type->equipment_layout_slots)
+		{
+			if (s.bounds.p0 == e->equippedPosition)
+			{
+				if (s.type == type)
+				{
+					return e;
+				}
+			}
+		}
+	}
 	return nullptr;
 }
 

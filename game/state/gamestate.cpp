@@ -250,9 +250,8 @@ void GameState::startGame()
 		auto count = agentTypePair.second;
 		while (count > 0)
 		{
-			auto agent = this->agent_generator.createAgent(*this, type);
+			auto agent = this->agent_generator.createAgent(*this, this->getPlayer(), type);
 			agent->home_base = {this, base};
-			agent->owner = this->getPlayer();
 			count--;
 		}
 	}
