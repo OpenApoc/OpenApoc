@@ -62,14 +62,31 @@ class Tile
 	std::set<sp<TileObject>> ownedObjects;
 	std::set<sp<TileObject>> intersectingObjects;
 
-	Vec3<float> getRestingPosition();
-
 	// FIXME: This is effectively a z-sorted list of ownedObjects - can this be merged somehow?
 	std::vector<std::vector<sp<TileObject>>> drawnObjects;
 
-	sp<TileObjectBattleUnit> getUnitIfPresent();
-
 	Tile(TileMap &map, Vec3<int> position, int layerCount);
+
+	// Only used by Battle
+
+	// Returns unit present in the tile, if any
+	sp<TileObjectBattleUnit> getUnitIfPresent();
+	// Returns resting position for items and units in the tile
+	Vec3<float> getRestingPosition();
+	// Updates tile height and passability values
+	void updateHeightAndPassability();
+
+	// Height, 0-1, of the tile's ground and feature
+	float height = 0.0f;
+	// Movement cost through the tile's ground (or feature)
+	int movementCostIn = -1;
+	// Movement cost through the tile's left wall
+	int movementCostLeft = -1;
+	// Movement cost through the tile's right wall
+	int movementCostRight = -1;
+	// Tile provides solid ground for standing. 
+	// False = only flyers can stand here, True = cannot pop head into this tile when ascending
+	bool solidGround = false;
 };
 
 class CanEnterTileHelper

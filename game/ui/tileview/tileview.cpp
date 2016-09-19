@@ -322,10 +322,12 @@ void TileView::render()
 		Then, draw agents, bottom to top, drawing hollow sprites for non-current levels
 	*/
 
+	// FIXME: Draw double selection bracket for big units?
+
 	for (int z = zFrom; z < zTo; z++)
 	{
 		int currentLevel = z - currentZLevel;
-		// FIXME: Draw double selection bracket for big units?
+
 		// Find out when to draw selection bracket parts (if ever)
 		Tile *selTileOnCurLevel = nullptr;
 		Vec3<int> selTilePosOnCurLevel;
@@ -373,6 +375,7 @@ void TileView::render()
 			}
 		}
 
+		// Actually draw stuff
 		for (int layer = 0; layer < map.getLayerCount(); layer++)
 		{
 			for (int y = minY; y < maxY; y++)

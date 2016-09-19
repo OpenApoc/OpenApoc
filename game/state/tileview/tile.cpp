@@ -63,14 +63,47 @@ Tile::Tile(TileMap &map, Vec3<int> position, int layerCount)
 // Position for items and units to be located on
 Vec3<float> Tile::getRestingPosition()
 {
-	float height = 0.0;
-	for (auto o : ownedObjects)
-		if (o->getType() == TileObject::Type::Ground || o->getType() == TileObject::Type::Feature)
-			height = std::max(height, (float)std::static_pointer_cast<TileObjectBattleMapPart>(o)
-			                              ->getOwner()
-			                              ->type->height);
 	return Vec3<float>{position.x + 0.5, position.y + 0.5,
-	                   position.z + height / (float)BATTLE_TILE_Z};
+	                   position.z + height};
+}
+
+void Tile::updateHeightAndPassability()
+{
+	height = 0.0f;
+	movementCostIn = -2; // -2 means empty, and will be set to 4 afterwards
+	movementCostLeft = 0;
+	movementCostRight = 0;
+	bool impassable = false;
+	solidGround = false;
+	for (auto o : ownedObjects)
+	{
+		if (o->getType() == TileObject::Type::Ground || o->getType() == TileObject::Type::Feature)
+		{
+			auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+			height = std::max(height, (float)mp->type->height);
+			solidGround = mp->type->floor || o->getType() == TileObject::Type::Feature;
+			movementCostIn = std::max(movementCostIn, mp->type->movement_cost);
+			impassable = impassable || mp->type->movement_cost == -1;
+		}
+		if (o->getType() == TileObject::Type::LeftWall)
+		{
+			movementCostLeft = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner()->type->movement_cost;
+		}
+		if (o->getType() == TileObject::Type::RightWall)
+		{
+			movementCostRight = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner()->type->movement_cost;
+		}
+	}
+	if (impassable)
+	{
+		movementCostIn = -1;
+	}
+	if (movementCostIn == -2)
+	{
+		movementCostIn = 4;
+	}
+	height = height / (float)BATTLE_TILE_Z;
+
 }
 
 sp<TileObjectBattleUnit> Tile::getUnitIfPresent()

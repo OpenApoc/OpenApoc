@@ -28,6 +28,7 @@ void TileObject::removeFromMap()
 	/* owner may be NULL as this can be used to set the initial position after creation */
 	if (this->owningTile)
 	{
+		auto t = owningTile;
 		auto erased = this->owningTile->ownedObjects.erase(thisPtr);
 		if (erased != 1)
 		{
@@ -39,6 +40,8 @@ void TileObject::removeFromMap()
 		                this->owningTile->drawnObjects[layer].end(), thisPtr),
 		    this->owningTile->drawnObjects[layer].end());
 		this->owningTile = nullptr;
+		if (type == Type::Ground || type == Type::LeftWall || type == Type::RightWall || type == Type::Feature)
+			t->updateHeightAndPassability();
 	}
 	for (auto *tile : this->intersectingTiles)
 	{
@@ -174,6 +177,8 @@ void TileObject::setPosition(Vec3<float> newPosition)
 			LogError("Intersecting objects inconsistent");
 		}
 	}
+	if (type == Type::Ground || type == Type::LeftWall || type == Type::RightWall || type == Type::Feature)
+		owningTile->updateHeightAndPassability();
 }
 
 } // namespace OpenApoc

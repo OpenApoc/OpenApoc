@@ -82,6 +82,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	std::set<StateRef<Organisation>> participants;
 
+	// Contains height at which to spawn units, or -1 if spawning is not possible
 	// No need to serialize this, as we cannot save/load during briefing
 	std::vector<std::vector<std::vector<int>>> spawnMap;
 

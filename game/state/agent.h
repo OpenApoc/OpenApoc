@@ -50,7 +50,7 @@ class AgentPortrait
 
 class AgentType : public StateObject<AgentType>
 {
-  public:
+public:
 	enum class Role
 	{
 		Soldier,
@@ -62,6 +62,17 @@ class AgentType : public StateObject<AgentType>
 	{
 		Male,
 		Female,
+	};
+	enum class EquipmentSlotType
+	{
+		General,
+		ArmorBody,
+		ArmorLegs,
+		ArmorHelmet,
+		ArmorLeftHand,
+		ArmorRightHand,
+		WeaponLeftHand,
+		WeaponRightHand
 	};
 	enum class AlignmentX
 	{
@@ -151,6 +162,7 @@ class AgentType : public StateObject<AgentType>
 	class EquipmentLayoutSlot
 	{
 	  public:
+		EquipmentSlotType type = EquipmentSlotType::General;
 		AlignmentX align_x = AlignmentX::Left;
 		AlignmentY align_y = AlignmentY::Top;
 		Rect<int> bounds;

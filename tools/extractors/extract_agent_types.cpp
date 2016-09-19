@@ -9,19 +9,29 @@
 
 namespace OpenApoc
 {
-	void fillAgentImagePacksByDefault(GameState &state, sp<AgentType> a, UString imagePackName)
-	{
-		a->image_packs[a->image_packs.size() - 1][AgentType::BodyPart::Body] = { &state, UString::format("%s%s%s",
-			BattleUnitImagePack::getPrefix(), imagePackName, "a") };
-		a->image_packs[a->image_packs.size() - 1][AgentType::BodyPart::Legs] = { &state, UString::format("%s%s%s",
-			BattleUnitImagePack::getPrefix(), imagePackName, "b") };
-		a->image_packs[a->image_packs.size() - 1][AgentType::BodyPart::Helmet] = { &state, UString::format("%s%s%s",
-			BattleUnitImagePack::getPrefix(), imagePackName, "c") };
-		a->image_packs[a->image_packs.size() - 1][AgentType::BodyPart::LeftArm] = { &state, UString::format("%s%s%s",
-			BattleUnitImagePack::getPrefix(), imagePackName, "d") };
-		a->image_packs[a->image_packs.size() - 1][AgentType::BodyPart::RightArm] = { &state, UString::format("%s%s%s",
-			BattleUnitImagePack::getPrefix(), imagePackName, "e") };
-	}
+void fillAgentImagePacksByDefault(GameState &state, sp<AgentType> a, UString imagePackName)
+{
+	a->image_packs[a->image_packs.size() - 1][AgentType::BodyPart::Body] = { &state, UString::format("%s%s%s",
+		BattleUnitImagePack::getPrefix(), imagePackName, "a") };
+	a->image_packs[a->image_packs.size() - 1][AgentType::BodyPart::Legs] = { &state, UString::format("%s%s%s",
+		BattleUnitImagePack::getPrefix(), imagePackName, "b") };
+	a->image_packs[a->image_packs.size() - 1][AgentType::BodyPart::Helmet] = { &state, UString::format("%s%s%s",
+		BattleUnitImagePack::getPrefix(), imagePackName, "c") };
+	a->image_packs[a->image_packs.size() - 1][AgentType::BodyPart::LeftArm] = { &state, UString::format("%s%s%s",
+		BattleUnitImagePack::getPrefix(), imagePackName, "d") };
+	a->image_packs[a->image_packs.size() - 1][AgentType::BodyPart::RightArm] = { &state, UString::format("%s%s%s",
+		BattleUnitImagePack::getPrefix(), imagePackName, "e") };
+}
+
+void pushEquipmentSlot(sp<AgentType> a, int x, int y, int w = 1, int h = 1, AgentType::EquipmentSlotType type = AgentType::EquipmentSlotType::General, AgentType::AlignmentX align_x = AgentType::AlignmentX::Left, AgentType::AlignmentY align_y = AgentType::AlignmentY::Top)
+{
+	a->equipment_layout_slots.emplace_back();
+	auto &outSlot = a->equipment_layout_slots.back();
+	outSlot.type = type;
+	outSlot.align_x = align_x;
+	outSlot.align_y = align_y;
+	outSlot.bounds = { x, y, x + w, y + h };
+}
 
 void InitialGameStateExtractor::extractAgentTypes(GameState &state, Difficulty)
 {
@@ -824,6 +834,11 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state, Difficulty)
 		    UString::format("%s%s", DamageModifier::getPrefix(),
 		                    canon_string(data_t.damage_modifier_names->get(data.damage_modifier)))};
 		a->inventory = data.inventory == 1;
+
+		// Fill right and left hand slots present on all units
+		pushEquipmentSlot(a, 0, 6, 3, 5, AgentType::EquipmentSlotType::WeaponRightHand, AgentType::AlignmentX::Centre, AgentType::AlignmentY::Centre);
+		pushEquipmentSlot(a, 12, 6, 3, 5, AgentType::EquipmentSlotType::WeaponLeftHand, AgentType::AlignmentX::Centre, AgentType::AlignmentY::Centre);
+
 		if (!data.inventory)
 		{
 			if (data.equipment_sets[0] != 0xff)
@@ -848,14 +863,40 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state, Difficulty)
 					                            canon_string(data_u.agent_equipment_names->get(
 					                                es_data.weapons[1].weapon_idx)))};
 			}
-			// FIXME: Fill layouts for units without inventory
-			// That is, give them left and right hand slots!
-			// std::list<EquipmentLayoutSlot> equipment_layout_slots;
 		}
 		else
 		{
-			// FIXME: Fill layouts for units with inventory
-			// std::list<EquipmentLayoutSlot> equipment_layout_slots;
+			// FIXIT: Can humanoids with inventory other than X-Com wear armor in vanilla? Probably not? 
+			// But why not let them for fun? :)))) Armored flying anthropod FTW!
+
+			// Armor
+			pushEquipmentSlot(a, 6, 3, 2, 2, AgentType::EquipmentSlotType::ArmorHelmet, AgentType::AlignmentX::Centre, AgentType::AlignmentY::Centre);
+			pushEquipmentSlot(a, 4, 5, 2, 6, AgentType::EquipmentSlotType::ArmorRightHand, AgentType::AlignmentX::Right, AgentType::AlignmentY::Centre);
+			pushEquipmentSlot(a, 6, 5, 2, 6, AgentType::EquipmentSlotType::ArmorBody, AgentType::AlignmentX::Centre, AgentType::AlignmentY::Centre);
+			pushEquipmentSlot(a, 8, 5, 2, 6, AgentType::EquipmentSlotType::ArmorLeftHand, AgentType::AlignmentX::Left, AgentType::AlignmentY::Centre);
+			pushEquipmentSlot(a, 4, 11, 6, 5, AgentType::EquipmentSlotType::ArmorLegs, AgentType::AlignmentX::Centre, AgentType::AlignmentY::Top);
+			// Shoulders
+			pushEquipmentSlot(a, 4, 2);		
+			pushEquipmentSlot(a, 10, 2);
+			// Belt
+			for (int i = 0; i < 4; i++)
+			{
+				pushEquipmentSlot(a, i, 12);
+				pushEquipmentSlot(a, 12 + i, 12);
+			}
+			pushEquipmentSlot(a, 0, 11);
+			pushEquipmentSlot(a, 12 + 3, 13);
+			// Special
+			pushEquipmentSlot(a, 2, 14, 2, 2, AgentType::EquipmentSlotType::General, AgentType::AlignmentX::Centre, AgentType::AlignmentY::Centre);
+			pushEquipmentSlot(a, 11, 14, 2, 2, AgentType::EquipmentSlotType::General, AgentType::AlignmentX::Centre, AgentType::AlignmentY::Centre);
+			// Backpack
+			for (int i = 0; i < 4; i++)
+			{
+				for (int j = 0; j < 5; j++)
+				{
+					pushEquipmentSlot(a, 12 + i, 0 + j);
+				}
+			}
 		}
 
 		a->can_improve = false;

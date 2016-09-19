@@ -21,13 +21,13 @@ ISOBORD = Unused
         <position x="427" y="70"/>
         <size width="23" height="19"/>
         <image/>
-		<imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:134:xcom3/tacdata/tactical.pal</imagechecked>
+		<imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:134:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_LAYER_DOWN">
         <position x="449" y="70"/>
         <size width="23" height="19"/>
         <image/>
-		<imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:135:xcom3/tacdata/tactical.pal</imagechecked>
+		<imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:135:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
       <radiobutton id="BUTTON_LAYER_1" groupid="LAYER">
         <position x="314" y="113"/>

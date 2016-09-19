@@ -100,6 +100,7 @@
 	</object>
 	<object>
 		<name>AgentType::EquipmentLayoutSlot</name>
+		<member>type</member>
 		<member>align_x</member>
 		<member>align_y</member>
 		<member>bounds</member>
@@ -1057,6 +1058,17 @@
 		<name>AgentType::Gender</name>
 		<value>Male</value>
 		<value>Female</value>
+	</enum>
+	<enum>
+		<name>AgentType::EquipmentSlotType</name>
+		<value>General</value>
+		<value>ArmorBody</value>
+		<value>ArmorLegs</value>
+		<value>ArmorHelmet</value>
+		<value>ArmorLeftHand</value>
+		<value>ArmorRightHand</value>
+		<value>WeaponLeftHand</value>
+		<value>WeaponRightHand</value>
 	</enum>
 	<enum>
 		<name>AgentType::AlignmentX</name>
