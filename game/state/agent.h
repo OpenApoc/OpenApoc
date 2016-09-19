@@ -71,8 +71,8 @@ public:
 		ArmorHelmet,
 		ArmorLeftHand,
 		ArmorRightHand,
-		WeaponLeftHand,
-		WeaponRightHand
+		LeftHand,
+		RightHand
 	};
 	enum class AlignmentX
 	{
@@ -181,7 +181,7 @@ public:
 	int score = 0;
 };
 
-class Agent : public StateObject<Agent>
+class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Agent>
 {
   public:
 	Agent() = default;
@@ -208,14 +208,15 @@ class Agent : public StateObject<Agent>
 
 	std::list<sp<AEquipment>> equipment;
 	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type) const;
+	void addEquipment(GameState &state, StateRef<AEquipmentType> type);
 	void addEquipment(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type);
 	void addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object);
 	void removeEquipment(sp<AEquipment> object);
-
 	void updateSpeed();
 
 	StateRef<BattleUnitAnimationPack> getAnimationPack();
 	StateRef<AEquipmentType> getItemInHands();
+	sp<AEquipment> getFirstItemInSlot(AgentType::EquipmentSlotType type);
 	StateRef<BattleUnitImagePack> getImagePack(AgentType::BodyPart bodyPart);
 };
 
@@ -230,9 +231,9 @@ class AgentGenerator
 	std::list<UString> second_names;
 
 	// Create an agent of specified role
-	StateRef<Agent> createAgent(GameState &state, AgentType::Role role) const;
+	StateRef<Agent> createAgent(GameState &state, StateRef<Organisation> org, AgentType::Role role) const;
 	// Create an agent of specified type
-	StateRef<Agent> createAgent(GameState &state, StateRef<AgentType> type) const;
+	StateRef<Agent> createAgent(GameState &state, StateRef<Organisation> org, StateRef<AgentType> type) const;
 };
 
 } // namespace OpenApoc
