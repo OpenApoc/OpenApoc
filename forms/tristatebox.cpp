@@ -137,11 +137,11 @@ void TriStateBox::configureSelfFromXml(tinyxml2::XMLElement *Element)
 	}
 	if (Element->FirstChildElement("image2") != nullptr)
 	{
-		image1 = fw().data->loadImage(Element->FirstChildElement("image2")->GetText());
+		image2 = fw().data->loadImage(Element->FirstChildElement("image2")->GetText());
 	}
 	if (Element->FirstChildElement("image3") != nullptr)
 	{
-		image1 = fw().data->loadImage(Element->FirstChildElement("image3")->GetText());
+		image3 = fw().data->loadImage(Element->FirstChildElement("image3")->GetText());
 	}
 }
 }; // namespace OpenApoc

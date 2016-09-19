@@ -54,9 +54,11 @@ class BattleView : public TileView
 	bool ModifierRAlt = false;
 	bool ModifierLCtrl = false;
 	bool ModifierRCtrl = false;
+	
 	void updateSelectionMode();
-		
+	void updateSelectedUnits();
 	void updateLayerButtons();
+	void updateSoldierButtons();
 
   public:
 	BattleView(sp<GameState> state);

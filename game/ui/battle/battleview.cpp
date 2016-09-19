@@ -4,6 +4,7 @@
 #include "framework/framework.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlemappart.h"
+#include "game/state/battle/battleunit.h"
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/gameevent.h"
 #include "game/state/tileview/collision.h"
@@ -78,6 +79,118 @@ BattleView::BattleView(sp<GameState> state)
 		    }
 
 		});
+
+
+	this->baseForm->findControl("BUTTON_CEASE_FIRE")
+		->addCallback(FormEventType::MouseClick, [this](Event *) {
+		bool at_will = false;
+		for (auto u : selectedUnits)
+		{
+			if (u->fire_permission_mode == BattleUnit::FirePermissionMode::AtWill)
+			{
+				at_will = true;
+			}
+		}
+		for (auto u : selectedUnits)
+		{
+			if (at_will)
+			{
+				u->fire_permission_mode = BattleUnit::FirePermissionMode::CeaseFire;
+			}
+			else
+			{
+				u->fire_permission_mode = BattleUnit::FirePermissionMode::AtWill;
+			}
+
+		}
+	});
+	this->baseForm->findControl("BUTTON_AIMED")
+		->addCallback(FormEventType::MouseClick, [this](Event *) {
+		for (auto u : selectedUnits)
+		{
+			u->fire_aiming_mode = BattleUnit::FireAimingMode::Aimed;
+		}
+	});
+	this->baseForm->findControl("BUTTON_SNAP")
+		->addCallback(FormEventType::MouseClick, [this](Event *) {
+		for (auto u : selectedUnits)
+		{
+			u->fire_aiming_mode = BattleUnit::FireAimingMode::Snap;
+		}
+	});
+	this->baseForm->findControl("BUTTON_AUTO")
+		->addCallback(FormEventType::MouseClick, [this](Event *) {
+		for (auto u : selectedUnits)
+		{
+			u->fire_aiming_mode = BattleUnit::FireAimingMode::Auto;
+		}
+	});
+	this->baseForm->findControl("BUTTON_KNEEL")
+		->addCallback(FormEventType::MouseClick, [this](Event *) {
+		bool not_kneeling = false;
+
+		for (auto u : selectedUnits)
+		{
+			if (u->kneeling_mode == BattleUnit::KneelingMode::None)
+			{
+				not_kneeling = true;
+			}
+		}
+		for (auto u : selectedUnits)
+		{
+			if (not_kneeling)
+			{
+				u->kneeling_mode = BattleUnit::KneelingMode::Kneeling;
+			}
+			else
+			{
+				u->kneeling_mode = BattleUnit::KneelingMode::None;
+			}
+		}
+	});
+	this->baseForm->findControl("BUTTON_PRONE")
+		->addCallback(FormEventType::MouseClick, [this](Event *) {
+		for (auto u : selectedUnits)
+		{
+			u->movement_mode = BattleUnit::MovementMode::Prone;
+		}
+	});
+	this->baseForm->findControl("BUTTON_WALK")
+		->addCallback(FormEventType::MouseClick, [this](Event *) {
+		for (auto u : selectedUnits)
+		{
+			u->movement_mode = BattleUnit::MovementMode::Walking;
+		}
+	});
+	this->baseForm->findControl("BUTTON_RUN")
+		->addCallback(FormEventType::MouseClick, [this](Event *) {
+		for (auto u : selectedUnits)
+		{
+			u->movement_mode = BattleUnit::MovementMode::Running;
+		}
+	});
+	this->baseForm->findControl("BUTTON_EVASIVE")
+		->addCallback(FormEventType::MouseClick, [this](Event *) {
+		for (auto u : selectedUnits)
+		{
+			u->behavior_mode = BattleUnit::BehaviorMode::Evasive;
+		}
+	});
+	this->baseForm->findControl("BUTTON_NORMAL")
+		->addCallback(FormEventType::MouseClick, [this](Event *) {
+		for (auto u : selectedUnits)
+		{
+			u->behavior_mode = BattleUnit::BehaviorMode::Normal;
+		}
+	});
+	this->baseForm->findControl("BUTTON_AGGRESSIVE")
+		->addCallback(FormEventType::MouseClick, [this](Event *) {
+		for (auto u : selectedUnits)
+		{
+			u->behavior_mode = BattleUnit::BehaviorMode::Aggressive;
+		}
+	});
+
 	this->baseForm->findControl("BUTTON_LAYER_UP")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    this->setZLevel(getZLevel() + 1);
@@ -189,21 +302,9 @@ void BattleView::setUpdateSpeed(BattleUpdateSpeed updateSpeed)
 
 void BattleView::update()
 {
-	auto it = selectedUnits.begin();
-	while (it != selectedUnits.end())
-	{
-		auto u = *it;
-		auto o = state->getPlayer();
-		if (!u || u->isDead() || u->isUnconscious() || u->owner != o)
-		{
-			it = selectedUnits.erase(it);
-		}
-		else
-		{
-			++it;
-		}
-	}
+	updateSelectedUnits();
 	updateSelectionMode();
+	updateSoldierButtons();
 
 	unsigned int ticks = 0;
 	switch (this->updateSpeed)
@@ -255,6 +356,24 @@ void BattleView::update()
 	}
 }
 
+void BattleView::updateSelectedUnits()
+{
+	auto it = selectedUnits.begin();
+	while (it != selectedUnits.end())
+	{
+		auto u = *it;
+		auto o = state->getPlayer();
+		if (!u || u->isDead() || u->isUnconscious() || u->owner != o)
+		{
+			it = selectedUnits.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+}
+
 void BattleView::updateSelectionMode()
 {
 	// FIXME: Add Throwing and Psi in the mix
@@ -288,6 +407,91 @@ void BattleView::updateSelectionMode()
 			selectionState = BattleSelectionState::Normal;
 		}
 	}
+}
+
+void BattleView::updateSoldierButtons()
+{
+	bool cease_fire = false;
+	bool at_will = false;
+	bool aimed = false;
+	bool snap = false;
+	bool auto_fire = false;
+	bool kneeling = false;
+	bool not_kneeling = false;
+	bool prone = false;
+	bool walk = false;
+	bool run = false;
+	bool evasive = false;
+	bool normal = false;
+	bool aggressive = false;
+
+	for (auto u : selectedUnits)
+	{
+		switch (u->fire_aiming_mode)
+		{
+			case BattleUnit::FireAimingMode::Aimed:
+				aimed = true;
+				break;
+			case BattleUnit::FireAimingMode::Snap:
+				snap = true;
+				break;
+			case BattleUnit::FireAimingMode::Auto:
+				auto_fire = true;
+				break;
+		}
+		if (u->fire_permission_mode == BattleUnit::FirePermissionMode::CeaseFire)
+		{
+			cease_fire = true;
+		}
+		else
+		{
+			at_will = true;
+		}
+		switch (u->behavior_mode)
+		{
+			case BattleUnit::BehaviorMode::Evasive:
+				evasive = true;
+				break;
+			case BattleUnit::BehaviorMode::Normal:
+				normal = true;
+				break;
+			case BattleUnit::BehaviorMode::Aggressive:
+				aggressive = true;
+				break;
+		}
+		switch (u->movement_mode)
+		{
+			case BattleUnit::MovementMode::Prone:
+				prone = true;
+				break;
+			case BattleUnit::MovementMode::Walking:
+				walk = true;
+				break;
+			case BattleUnit::MovementMode::Running:
+				run = true;
+				break;
+		}
+		if (u->kneeling_mode == BattleUnit::KneelingMode::Kneeling)
+		{
+			kneeling = true;
+		}
+		else
+		{
+			not_kneeling = true;
+		}
+	}
+
+	this->baseForm->findControlTyped<TriStateBox>("BUTTON_CEASE_FIRE")->setState(cease_fire && at_will ? 3 : (cease_fire ? 2 : 1));
+	this->baseForm->findControlTyped<CheckBox>("BUTTON_AIMED")->setChecked(aimed);
+	this->baseForm->findControlTyped<CheckBox>("BUTTON_SNAP")->setChecked(snap);
+	this->baseForm->findControlTyped<CheckBox>("BUTTON_AUTO")->setChecked(auto_fire);
+	this->baseForm->findControlTyped<TriStateBox>("BUTTON_KNEEL")->setState(kneeling && not_kneeling ? 3 : (kneeling ? 2 : 1));
+	this->baseForm->findControlTyped<CheckBox>("BUTTON_PRONE")->setChecked(prone);
+	this->baseForm->findControlTyped<CheckBox>("BUTTON_WALK")->setChecked(walk);
+	this->baseForm->findControlTyped<CheckBox>("BUTTON_RUN")->setChecked(run);
+	this->baseForm->findControlTyped<CheckBox>("BUTTON_EVASIVE")->setChecked(evasive);
+	this->baseForm->findControlTyped<CheckBox>("BUTTON_NORMAL")->setChecked(normal);
+	this->baseForm->findControlTyped<CheckBox>("BUTTON_AGGRESSIVE")->setChecked(aggressive);
 }
 
 void BattleView::eventOccurred(Event *e)

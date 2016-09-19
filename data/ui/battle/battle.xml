@@ -21,11 +21,13 @@ ISOBORD = Unused
         <position x="427" y="70"/>
         <size width="23" height="19"/>
         <image/>
+		<imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:134:xcom3/tacdata/tactical.pal</imagechecked>
       </graphicbutton>
       <graphicbutton id="BUTTON_LAYER_DOWN">
         <position x="449" y="70"/>
         <size width="23" height="19"/>
         <image/>
+		<imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:135:xcom3/tacdata/tactical.pal</imagechecked>
       </graphicbutton>
       <radiobutton id="BUTTON_LAYER_1" groupid="LAYER">
         <position x="314" y="113"/>
@@ -91,19 +93,20 @@ ISOBORD = Unused
         <position x="4" y="30"/>
         <size width="53" height="21"/>
         <image/>
-        <!--<imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:12:xcom3/tacdata/tactical.pal</imagechecked>-->
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:133:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
       <tristatebox id="BUTTON_LAYERING">
         <position x="4" y="53"/>
         <size width="53" height="21"/>
         <image/>
-        <!--<imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:13:xcom3/tacdata/tactical.pal</imagedepressed>-->
+        <image2>battle/battlescape-icons-fixed-139.png</image2>
+		<image3>battle/battlescape-icons-fixed-138.png</image3>
       </tristatebox>
       <graphicbutton id="BUTTON_SHOW_OPTIONS">
         <position x="4" y="99"/>
         <size width="53" height="21"/>
         <image/>
-        <!--<imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:13:xcom3/tacdata/tactical.pal</imagedepressed>-->
+        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:136:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_LOG">
         <position x="67" y="1"/>
@@ -153,6 +156,78 @@ ISOBORD = Unused
         <alignment horizontal="centre" vertical="centre"/>
         <font>SMALFONT</font>
       </ticker>
+	  <!-- Soldier Buttons -->
+	  <!-- Fire -->
+	  <tristatebox id="BUTTON_CEASE_FIRE">
+        <position x="72" y="100"/>
+        <size width="29" height="25"/>
+        <image/>
+        <image2>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:126:xcom3/tacdata/tactical.pal</image2>
+		<image3>battle/battlescape-buttons-cease-3.png</image3>
+      </tristatebox>
+	  <checkbox id="BUTTON_AIMED">
+        <position x="101" y="100"/>
+        <size width="29" height="25"/>
+        <image/>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:128:xcom3/tacdata/tactical.pal</imagechecked>
+      </checkbox>
+	  <checkbox id="BUTTON_SNAP">
+        <position x="130" y="100"/>
+        <size width="29" height="25"/>
+        <image/>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:130:xcom3/tacdata/tactical.pal</imagechecked>
+      </checkbox>
+	   <checkbox id="BUTTON_AUTO">
+        <position x="159" y="100"/>
+        <size width="29" height="25"/>
+        <image/>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:132:xcom3/tacdata/tactical.pal</imagechecked>
+      </checkbox>
+	  <!-- Movement -->
+	  <tristatebox id="BUTTON_KNEEL">
+        <position x="449" y="100"/>
+        <size width="29" height="25"/>
+        <image/>
+        <image2>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:165:xcom3/tacdata/tactical.pal</image2>
+		<image3>battle/battlescape-buttons-kneel-3.png</image3>
+      </tristatebox>
+	  <checkbox id="BUTTON_PRONE">
+        <position x="482" y="100"/>
+        <size width="29" height="25"/>
+        <image/>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:110:xcom3/tacdata/tactical.pal</imagechecked>
+      </checkbox>
+	  <checkbox id="BUTTON_WALK">
+        <position x="511" y="100"/>
+        <size width="29" height="25"/>
+        <image/>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:112:xcom3/tacdata/tactical.pal</imagechecked>
+      </checkbox>
+	  <checkbox id="BUTTON_RUN">
+        <position x="540" y="100"/>
+        <size width="29" height="25"/>
+        <image/>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:114:xcom3/tacdata/tactical.pal</imagechecked>
+      </checkbox>
+	  <!-- Behavior -->
+	  <checkbox id="BUTTON_EVASIVE">
+        <position x="487" y="68"/>
+        <size width="24" height="25"/>
+        <image/>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:116:xcom3/tacdata/tactical.pal</imagechecked>
+      </checkbox>
+	  <checkbox id="BUTTON_NORMAL">
+        <position x="511" y="68"/>
+        <size width="24" height="25"/>
+        <image/>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:118:xcom3/tacdata/tactical.pal</imagechecked>
+      </checkbox>
+	  <checkbox id="BUTTON_AGGRESSIVE">
+        <position x="535" y="68"/>
+        <size width="24" height="25"/>
+        <image/>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:120:xcom3/tacdata/tactical.pal</imagechecked>
+      </checkbox>
     </style>
   </form>
   <!-- Real Time Main Screen -->
