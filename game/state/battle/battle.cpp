@@ -786,7 +786,7 @@ void Battle::BeginBattle(GameState &state)
 		}
 		else
 		{
-			LogError("Unit %s cannot Stand, Fly, Kneel or go Prone!", u->agent->type.id);
+			LogError("Unit %s cannot Stand, Fly, Kneel or go Prone!", u->agent->type.id.cStr());
 		}
 	}
 
