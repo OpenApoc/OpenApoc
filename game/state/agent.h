@@ -174,6 +174,8 @@ public:
 	};
 	std::list<EquipmentLayoutSlot> equipment_layout_slots;
 
+	EquipmentLayoutSlot *getFirstSlot(EquipmentSlotType type);
+
 	bool can_improve = false;
 	// Can this be generated for the player
 	bool playable = false;
@@ -201,6 +203,8 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 	AgentStats modified_stats; // Stats after 'temporary' modification (health damage, slowdown due
 							   // to equipment weight, used stamina etc)
 
+	int getArmorValue(AgentType::BodyPart bodyPart);
+
 	StateRef<Base> home_base;
 	StateRef<Organisation> owner;
 
@@ -208,7 +212,10 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 
 	std::list<sp<AEquipment>> equipment;
 	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type) const;
+	// Add equipment to the first available slot of any type
 	void addEquipment(GameState &state, StateRef<AEquipmentType> type);
+	// Add equipment to the first available slot of a specific type
+	void addEquipment(GameState &state, StateRef<AEquipmentType> type, AgentType::EquipmentSlotType slotType);
 	void addEquipment(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type);
 	void addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object);
 	void removeEquipment(sp<AEquipment> object);

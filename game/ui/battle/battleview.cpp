@@ -269,6 +269,62 @@ void BattleView::render()
 {
 	TRACE_FN;
 
+	// FIXME: Draw charges
+	// Set items in hands
+	if (selectedUnits.size() > 0)
+	{
+		auto u = *selectedUnits.begin();
+		{
+			auto e = u->agent->getFirstItemInSlot(AgentType::EquipmentSlotType::RightHand);
+			if (e)
+			{
+				this->baseForm->findControlTyped<Graphic>("IMAGE_RIGHT_HAND")->setImage(e->type->equipscreen_sprite);
+				auto p = e->getPayloadType();
+				if (p && p->damage_type)
+				{
+					this->baseForm->findControlTyped<Graphic>("IMAGE_RIGHT_DAMAGETYPE")->setImage(p->damage_type->icon_sprite);
+				}
+				else
+				{
+					this->baseForm->findControlTyped<Graphic>("IMAGE_RIGHT_DAMAGETYPE")->setImage(nullptr);
+				}
+			}
+			else
+			{
+				this->baseForm->findControlTyped<Graphic>("IMAGE_RIGHT_HAND")->setImage(nullptr);
+				this->baseForm->findControlTyped<Graphic>("IMAGE_RIGHT_DAMAGETYPE")->setImage(nullptr);
+			}
+		}
+		{
+			auto e = u->agent->getFirstItemInSlot(AgentType::EquipmentSlotType::LeftHand);
+			if (e)
+			{
+				this->baseForm->findControlTyped<Graphic>("IMAGE_LEFT_HAND")->setImage(e->type->equipscreen_sprite);
+				auto p = e->getPayloadType();
+				if (p && p->damage_type)
+				{
+					this->baseForm->findControlTyped<Graphic>("IMAGE_LEFT_DAMAGETYPE")->setImage(p->damage_type->icon_sprite);
+				}
+				else
+				{
+					this->baseForm->findControlTyped<Graphic>("IMAGE_LEFT_DAMAGETYPE")->setImage(nullptr);
+				}
+			}
+			else
+			{
+				this->baseForm->findControlTyped<Graphic>("IMAGE_LEFT_HAND")->setImage(nullptr);
+				this->baseForm->findControlTyped<Graphic>("IMAGE_LEFT_DAMAGETYPE")->setImage(nullptr);
+			}
+		}
+	}
+	else
+	{
+		this->baseForm->findControlTyped<Graphic>("IMAGE_RIGHT_HAND")->setImage(nullptr);
+		this->baseForm->findControlTyped<Graphic>("IMAGE_RIGHT_DAMAGETYPE")->setImage(nullptr);
+		this->baseForm->findControlTyped<Graphic>("IMAGE_LEFT_HAND")->setImage(nullptr);
+		this->baseForm->findControlTyped<Graphic>("IMAGE_LEFT_DAMAGETYPE")->setImage(nullptr);
+	}
+	
 	TileView::render();
 	activeTab->render();
 	baseForm->render();

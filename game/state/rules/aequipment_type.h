@@ -67,7 +67,7 @@ class AEquipmentType : public StateObject<AEquipmentType>
 	int armor = 0;
 	int score = 0;
 	ResearchDependency research_dependency;
-	bool two_handed;
+	bool two_handed = false;
 
 	// Armor only
 	sp<Image> body_sprite;

@@ -121,8 +121,10 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 			// Dimension Missile Launcher
 			case 46	:
 				e->two_handed = true;
+				break;
 			default:
 				e->two_handed = false;
+				break;
 		}
 
 		unsigned payload_idx = std::numeric_limits<unsigned>::max();
@@ -134,6 +136,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 				e->type = AEquipmentType::Type::Armor;
 				e->damage_modifier = {&state, data_t.getDModId(adata.damage_modifier)};
 				e->armor = adata.armor;
+				e->max_ammo = adata.armor;
 				UString bodyPartLetter = "";
 				int armoredUnitPicIndex = 0;
 				int armorBodyPicIndex = 0;

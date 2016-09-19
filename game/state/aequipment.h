@@ -17,10 +17,13 @@ class AEquipment
 	~AEquipment() = default;
 
 	StateRef<AEquipmentType> type;
+	// Type of loaded ammunition
+	StateRef<AEquipmentType> payloadType;
+	StateRef<AEquipmentType> getPayloadType();
 
 	Vec2<int> equippedPosition;
 	StateRef<Agent> ownerAgent;
-	// Ammunition for weapons, or 
+	// Ammunition for weapons, protection for armor, charge for items
 	int ammo = 0;
 	
 	bool aiming = false;

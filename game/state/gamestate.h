@@ -84,6 +84,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	std::map<AgentType::Role, unsigned> initial_agents;
 	std::map<UString, unsigned> initial_facilities;
+	std::list<std::list<StateRef<AEquipmentType>>> initial_agent_equipment;
+	std::map<UString, int> initial_base_agent_equipment;
 
 	StateRef<Organisation> player;
 	StateRef<Organisation> aliens;
@@ -134,6 +136,9 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// that is serialized but not serialized itself). This should also be called on starting a new
 	// game after startGame()
 	void initState();
+
+	// Fills out initial player property
+	void fillPlayerStartingProperty();
 
 	// Returns true if we can go at max speed (IE push all update loops to 5 minute intervals -
 	// causes insta-completion of all routes etc.

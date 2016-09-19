@@ -706,7 +706,7 @@ namespace OpenApoc
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::AtEase][AgentType::HandState::Aiming]
 				[AgentType::MovementState::Normal][AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 76, { x,y }), true;
+				getAnimationEntry(dataAD, dataUA, dataUF, 76, { x, y }, true);
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::AtEase][AgentType::HandState::Aiming]
 				[AgentType::MovementState::Normal][AgentType::BodyState::Standing][{ x, y }] =

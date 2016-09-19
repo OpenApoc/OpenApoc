@@ -2,6 +2,7 @@
 #include "game/ui/general/loadingscreen.h"
 #include "framework/framework.h"
 #include "game/ui/city/cityview.h"
+#include "game/ui/battle/battleview.h"
 #include <cmath>
 
 namespace OpenApoc
@@ -53,6 +54,8 @@ void LoadingScreen::update()
 			if (gameState != nullptr)
 			{
 				fw().stageQueueCommand({StageCmd::Command::REPLACEALL, mksp<CityView>(gameState)});
+				if (gameState->current_battle)
+					fw().stageQueueCommand({ StageCmd::Command::PUSH, mksp<BattleView>(gameState) });
 			}
 			else
 			{
