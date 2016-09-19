@@ -16,26 +16,14 @@ class Image;
 class TileView : public Stage, public TileTransform
 {
   public:
-	enum class LayerDrawingMode
-	{
-		UpToCurrentLevel,
-		AllLevels,
-		OnlyCurrentLevel
-	};
-
-	enum class Mode
-	{
-		City,
-		Battle
-	};
-
+	
+	
   protected:
 	TileMap &map;
 	Vec3<int> isoTileSize;
 	Vec2<int> stratTileSize;
 	TileViewMode viewMode;
-	Mode mode;
-
+	
 	bool scrollUp;
 	bool scrollDown;
 	bool scrollLeft;
@@ -45,9 +33,6 @@ class TileView : public Stage, public TileTransform
 
 	Colour strategyViewBoxColour;
 	float strategyViewBoxThickness;
-
-	int currentZLevel;
-	LayerDrawingMode layerDrawingMode;
 
 	Vec3<int> selectedTilePosition;
 	sp<Image> selectedTileEmptyImageBack;
@@ -59,11 +44,7 @@ class TileView : public Stage, public TileTransform
 	Vec2<int> selectedTileImageOffset;
 
   public:
-	void setZLevel(int zLevel);
-	int getZLevel();
-
-	void setLayerDrawingMode(LayerDrawingMode mode);
-
+	  
 	int maxZDraw;
 	Vec3<float> centerPos;
 	Vec2<float> isoScrollSpeed;
@@ -71,8 +52,7 @@ class TileView : public Stage, public TileTransform
 
 	sp<Palette> pal;
 
-	TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize, TileViewMode initialMode,
-	         Mode mode);
+	TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize, TileViewMode initialMode);
 	~TileView() override;
 
 	Vec2<int> getScreenOffset() const;
@@ -167,10 +147,12 @@ class TileView : public Stage, public TileTransform
 	void resume() override;
 	void finish() override;
 	void eventOccurred(Event *e) override;
-	void render() override;
 	bool isTransition() override;
 
 	virtual void setViewMode(TileViewMode newMode);
 	virtual TileViewMode getViewMode() const;
+
+	void applyScrolling();
+	void renderStrategyOverlay(Renderer &r);
 };
 }; // namespace OpenApoc

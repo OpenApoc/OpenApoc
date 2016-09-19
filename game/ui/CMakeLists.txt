@@ -33,6 +33,8 @@ set (GAMEUI_SOURCE_FILES
 	general/videoscreen.cpp
 	general/messagelogscreen.cpp
 	general/notificationscreen.cpp
+	tileview/battletileview.cpp
+	tileview/citytileview.cpp
 	tileview/tileview.cpp
 	ufopaedia/ufopaediacategoryview.cpp
 	ufopaedia/ufopaediaview.cpp
@@ -67,6 +69,8 @@ set (GAMEUI_HEADER_FILES
 	general/videoscreen.h
 	general/messagelogscreen.h
 	general/notificationscreen.h
+	tileview/battletileview.h
+	tileview/citytileview.h
 	tileview/tileview.h
 	ufopaedia/ufopaediacategoryview.h
 	ufopaedia/ufopaediaview.h

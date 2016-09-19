@@ -3,13 +3,13 @@
 
 #include "forms/forms.h"
 #include "framework/stage.h"
-#include "game/ui/tileview/tileview.h"
+#include "game/ui/tileview/citytileview.h"
 #include "library/sp.h"
 
 namespace OpenApoc
 {
 
-class BaseSelectScreen : public TileView
+class BaseSelectScreen : public CityTileView
 {
   private:
 	static const int COUNTER_MAX = 90;

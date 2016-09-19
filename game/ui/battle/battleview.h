@@ -1,5 +1,5 @@
 #pragma once
-#include "game/ui/tileview/tileview.h"
+#include "game/ui/tileview/battletileview.h"
 #include "library/sp.h"
 
 namespace OpenApoc
@@ -29,7 +29,7 @@ enum class BattleSelectionState
 	//Psi,
 };
 
-class BattleView : public TileView
+class BattleView : public BattleTileView
 {
   private:
 	sp<Form> activeTab, baseForm;
