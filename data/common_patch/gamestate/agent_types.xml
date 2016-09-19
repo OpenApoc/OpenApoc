@@ -788,7 +788,7 @@
 		<playable>true</playable>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -803,7 +803,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -1745,7 +1745,7 @@
 		<playable>true</playable>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -1760,7 +1760,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -2654,7 +2654,7 @@
 		<playable>true</playable>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -2669,7 +2669,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -3375,7 +3375,7 @@
         <damage_modifier>DAMAGEMODIFIER_GUN_EMPLACEMENT</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -3390,7 +3390,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -3613,7 +3613,7 @@
         <damage_modifier>DAMAGEMODIFIER_GUN_EMPLACEMENT</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -3628,7 +3628,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>

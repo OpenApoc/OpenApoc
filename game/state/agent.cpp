@@ -302,12 +302,9 @@ sp<AEquipment> Agent::getFirstItemInSlot(AgentType::EquipmentSlotType type)
 	{
 		for (auto s : this->type->equipment_layout_slots)
 		{
-			if (s.bounds.p0 == e->equippedPosition)
+			if (s.bounds.p0 == e->equippedPosition && s.type == type)
 			{
-				if (s.type == type)
-				{
-					return e;
-				}
+				return e;
 			}
 		}
 	}

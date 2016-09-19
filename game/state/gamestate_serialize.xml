@@ -1067,8 +1067,8 @@
 		<value>ArmorHelmet</value>
 		<value>ArmorLeftHand</value>
 		<value>ArmorRightHand</value>
-		<value>WeaponLeftHand</value>
-		<value>WeaponRightHand</value>
+		<value>LeftHand</value>
+		<value>RightHand</value>
 	</enum>
 	<enum>
 		<name>AgentType::AlignmentX</name>

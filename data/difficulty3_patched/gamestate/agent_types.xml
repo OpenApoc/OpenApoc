@@ -232,7 +232,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -247,7 +247,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -531,7 +531,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -546,7 +546,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -920,7 +920,7 @@
         <inventory>true</inventory>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -935,7 +935,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -1636,7 +1636,7 @@
         <damage_modifier>DAMAGEMODIFIER_BRAINSUCKER</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -1651,7 +1651,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -2455,7 +2455,7 @@
         <inventory>true</inventory>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -2470,7 +2470,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -3759,7 +3759,7 @@
         <inventory>true</inventory>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -3774,7 +3774,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -4459,7 +4459,7 @@
         <damage_modifier>DAMAGEMODIFIER_CRYSALIS</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -4474,7 +4474,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -4899,7 +4899,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -4914,7 +4914,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -5339,7 +5339,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -5354,7 +5354,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -5779,7 +5779,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -5794,7 +5794,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -6219,7 +6219,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -6234,7 +6234,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -6659,7 +6659,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -6674,7 +6674,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -7099,7 +7099,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -7114,7 +7114,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -7534,7 +7534,7 @@
         <damage_modifier>DAMAGEMODIFIER_GUN_EMPLACEMENT</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -7549,7 +7549,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -8352,7 +8352,7 @@
         <inventory>true</inventory>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -8367,7 +8367,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -9656,7 +9656,7 @@
         <inventory>true</inventory>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -9671,7 +9671,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -10960,7 +10960,7 @@
         <inventory>true</inventory>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -10975,7 +10975,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -12287,7 +12287,7 @@
         <inventory>true</inventory>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -12302,7 +12302,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -13591,7 +13591,7 @@
         <inventory>true</inventory>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -13606,7 +13606,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -14308,7 +14308,7 @@
         <built_in_weapon_right>AEQUIPMENTTYPE_HYPERWORM_S_BITE</built_in_weapon_right>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -14323,7 +14323,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -14748,7 +14748,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -14763,7 +14763,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -15188,7 +15188,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -15203,7 +15203,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -15628,7 +15628,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -15643,7 +15643,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -16068,7 +16068,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -16083,7 +16083,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -16508,7 +16508,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -16523,7 +16523,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -16948,7 +16948,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -16963,7 +16963,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -17131,7 +17131,7 @@
         <built_in_weapon_right>AEQUIPMENTTYPE_MEGASPAWN_S_DISRUPTOR</built_in_weapon_right>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -17146,7 +17146,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -17366,7 +17366,7 @@
         <built_in_weapon_right>AEQUIPMENTTYPE_PSIMORPH_S_MINDBENDER</built_in_weapon_right>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -17381,7 +17381,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -17597,7 +17597,7 @@
         <built_in_weapon_right>AEQUIPMENTTYPE_MULTIWORM_S_SPIT</built_in_weapon_right>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -17612,7 +17612,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -17841,7 +17841,7 @@
         <built_in_weapon_right>AEQUIPMENTTYPE_ALIEN_EGG_S_VOMIT_TUBE</built_in_weapon_right>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -17856,7 +17856,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -18660,7 +18660,7 @@
         <inventory>true</inventory>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -18675,7 +18675,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -19964,7 +19964,7 @@
         <inventory>true</inventory>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -19979,7 +19979,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -20681,7 +20681,7 @@
         <built_in_weapon_right>AEQUIPMENTTYPE_POPPER_S_BOMB</built_in_weapon_right>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -20696,7 +20696,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -20851,7 +20851,7 @@
         <built_in_weapon_right>AEQUIPMENTTYPE_PSIMORPH_S_MINDBENDER</built_in_weapon_right>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -20866,7 +20866,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -21003,7 +21003,7 @@
         <built_in_weapon_right>AEQUIPMENTTYPE_QUEENSPAWN_S_TENTACLES</built_in_weapon_right>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -21018,7 +21018,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -21395,7 +21395,7 @@
         <inventory>true</inventory>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -21410,7 +21410,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -22114,7 +22114,7 @@
         <built_in_weapon_right>AEQUIPMENTTYPE_SPITTER_S_VOMIT_FUNNEL</built_in_weapon_right>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -22129,7 +22129,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -22554,7 +22554,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -22569,7 +22569,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -22994,7 +22994,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -23009,7 +23009,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -23434,7 +23434,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -23449,7 +23449,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -23874,7 +23874,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -23889,7 +23889,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -24314,7 +24314,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -24329,7 +24329,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -24754,7 +24754,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -24769,7 +24769,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -25174,7 +25174,7 @@
         <inventory>true</inventory>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -25189,7 +25189,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -26480,7 +26480,7 @@
         <inventory>true</inventory>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -26495,7 +26495,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -27436,7 +27436,7 @@
         <inventory>true</inventory>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -27451,7 +27451,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -28153,7 +28153,7 @@
         <built_in_weapon_right>AEQUIPMENTTYPE_X-COM_BASE_TURRET_DISRUPTOR</built_in_weapon_right>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -28168,7 +28168,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -28383,7 +28383,7 @@
         <built_in_weapon_right>AEQUIPMENTTYPE_X-COM_BASE_TURRET_LASER</built_in_weapon_right>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -28398,7 +28398,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -29049,7 +29049,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -29064,7 +29064,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -29716,7 +29716,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -29731,7 +29731,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -30385,7 +30385,7 @@
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
         <equipment_layout_slots>
           <entry>
-            <type>WeaponRightHand</type>
+            <type>RightHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -30400,7 +30400,7 @@
             </bounds>
           </entry>
           <entry>
-            <type>WeaponLeftHand</type>
+            <type>LeftHand</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
