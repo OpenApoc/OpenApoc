@@ -12,7 +12,6 @@
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "game/ui/base/basescreen.h"
 #include "game/ui/general/ingameoptions.h"
-#include "game/ui/tileview/tileview.h"
 #include "library/sp.h"
 
 namespace OpenApoc
@@ -27,9 +26,8 @@ static const std::vector<UString> TAB_FORM_NAMES = {
 } // anonymous namespace
 
 BattleView::BattleView(sp<GameState> state)
-    : TileView(*state->current_battle->map, Vec3<int>{BATTLE_TILE_X, BATTLE_TILE_Y, BATTLE_TILE_Z},
-               Vec2<int>{BATTLE_STRAT_TILE_X, BATTLE_STRAT_TILE_Y}, TileViewMode::Isometric,
-               TileView::Mode::Battle),
+    : BattleTileView(*state->current_battle->map, Vec3<int>{BATTLE_TILE_X, BATTLE_TILE_Y, BATTLE_TILE_Z},
+               Vec2<int>{BATTLE_STRAT_TILE_X, BATTLE_STRAT_TILE_Y}, TileViewMode::Isometric),
       baseForm(ui().getForm("FORM_BATTLE_UI")), updateSpeed(BattleUpdateSpeed::Pause),
       lastSpeed(BattleUpdateSpeed::Speed1), state(state), followAgent(false),
       palette(fw().data->loadPalette("xcom3/tacdata/tactical.pal")),
@@ -325,7 +323,7 @@ void BattleView::render()
 		this->baseForm->findControlTyped<Graphic>("IMAGE_LEFT_DAMAGETYPE")->setImage(nullptr);
 	}
 	
-	TileView::render();
+	BattleTileView::render();
 	activeTab->render();
 	baseForm->render();
 
@@ -804,7 +802,7 @@ void BattleView::eventOccurred(Event *e)
 	}
 	else
 	{
-		TileView::eventOccurred(e);
+		BattleTileView::eventOccurred(e);
 	}
 }
 

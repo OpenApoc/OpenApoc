@@ -1,5 +1,5 @@
 #pragma once
-#include "game/ui/tileview/tileview.h"
+#include "game/ui/tileview/citytileview.h"
 #include "library/sp.h"
 
 namespace OpenApoc
@@ -65,7 +65,7 @@ class VehicleTileInfo
 	bool operator==(const VehicleTileInfo &other) const;
 };
 
-class CityView : public TileView
+class CityView : public CityTileView
 {
   private:
 	sp<Form> activeTab, baseForm;

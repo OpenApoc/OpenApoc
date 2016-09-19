@@ -27,9 +27,9 @@
     <ClCompile Include="base\vequipscreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-	<ClCompile Include="base\aequipscreen.cpp">
-	  <Filter>Source Files</Filter>
-	</ClCompile>
+    <ClCompile Include="base\aequipscreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="city\basebuyscreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -111,6 +111,12 @@
     <ClCompile Include="general\mapselector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tileview\battletileview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tileview\citytileview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boot.h">
@@ -125,9 +131,9 @@
     <ClInclude Include="base\vequipscreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-	<ClInclude Include="base\aequipscreen.h">
-	  <Filter>Header Files</Filter>
-	</ClInclude>
+    <ClInclude Include="base\aequipscreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="city\basebuyscreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -207,6 +213,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="general\mapselector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tileview\citytileview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tileview\battletileview.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
