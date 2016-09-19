@@ -495,6 +495,7 @@
         <store_space>45</store_space>
         <armor>60</armor>
         <score>6</score>
+        <two_handed>true</two_handed>
       </sp>
     </value>
   </entry>
@@ -604,6 +605,7 @@
         <store_space>30</store_space>
         <armor>70</armor>
         <score>10</score>
+        <two_handed>true</two_handed>
         <max_ammo>34</max_ammo>
         <recharge>1</recharge>
         <speed>26</speed>
@@ -826,6 +828,7 @@
         <store_space>40</store_space>
         <armor>80</armor>
         <score>10</score>
+        <two_handed>true</two_handed>
       </sp>
     </value>
   </entry>
@@ -1139,6 +1142,7 @@
         <store_space>5</store_space>
         <armor>25</armor>
         <score>1</score>
+        <two_handed>true</two_handed>
       </sp>
     </value>
   </entry>
@@ -1612,6 +1616,7 @@
         <store_space>40</store_space>
         <armor>50</armor>
         <score>4</score>
+        <two_handed>true</two_handed>
       </sp>
     </value>
   </entry>
@@ -1839,6 +1844,7 @@
         <store_space>15</store_space>
         <armor>50</armor>
         <score>2</score>
+        <two_handed>true</two_handed>
       </sp>
     </value>
   </entry>
@@ -1870,6 +1876,7 @@
         <store_space>18</store_space>
         <armor>30</armor>
         <score>4</score>
+        <two_handed>true</two_handed>
       </sp>
     </value>
   </entry>
@@ -2082,6 +2089,7 @@
         <store_space>30</store_space>
         <armor>40</armor>
         <score>3</score>
+        <two_handed>true</two_handed>
       </sp>
     </value>
   </entry>
@@ -2262,6 +2270,7 @@
         <store_space>20</store_space>
         <armor>30</armor>
         <score>3</score>
+        <two_handed>true</two_handed>
       </sp>
     </value>
   </entry>
@@ -2658,6 +2667,7 @@
         <store_space>25</store_space>
         <armor>40</armor>
         <score>1</score>
+        <two_handed>true</two_handed>
         <max_ammo>5</max_ammo>
         <recharge>1</recharge>
         <speed>22</speed>
@@ -4051,6 +4061,7 @@
         <store_space>5</store_space>
         <armor>20</armor>
         <score>1</score>
+        <two_handed>true</two_handed>
       </sp>
     </value>
   </entry>

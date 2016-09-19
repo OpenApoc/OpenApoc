@@ -31,55 +31,55 @@ ISOBORD = Unused
       </graphicbutton>
       <radiobutton id="BUTTON_LAYER_1" groupid="LAYER">
         <position x="314" y="113"/>
-        <size width="12" height="8"/>
+        <size width="13" height="8"/>
         <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:100:xcom3/tacdata/tactical.pal</image>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:33:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_2" groupid="LAYER">
         <position x="314" y="104"/>
-        <size width="12" height="8"/>
+        <size width="13" height="8"/>
           <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:101:xcom3/tacdata/tactical.pal</image>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:34:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_3" groupid="LAYER">
         <position x="314" y="95"/>
-        <size width="12" height="8"/>
+        <size width="13" height="8"/>
           <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:102:xcom3/tacdata/tactical.pal</image>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:35:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_4" groupid="LAYER">
         <position x="314" y="86"/>
-        <size width="12" height="8"/>
+        <size width="13" height="8"/>
           <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:103:xcom3/tacdata/tactical.pal</image>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:36:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_5" groupid="LAYER">
         <position x="314" y="77"/>
-        <size width="12" height="8"/>
+        <size width="13" height="8"/>
           <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:104:xcom3/tacdata/tactical.pal</image>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:37:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_6" groupid="LAYER">
         <position x="314" y="68"/>
-        <size width="12" height="8"/>
+        <size width="13" height="8"/>
           <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:105:xcom3/tacdata/tactical.pal</image>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:38:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_7" groupid="LAYER">
         <position x="314" y="59"/>
-        <size width="12" height="8"/>
+        <size width="13" height="8"/>
           <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:106:xcom3/tacdata/tactical.pal</image>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:39:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_8" groupid="LAYER">
         <position x="314" y="50"/>
-        <size width="12" height="8"/>
+        <size width="13" height="8"/>
           <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:107:xcom3/tacdata/tactical.pal</image>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:40:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_9" groupid="LAYER">
         <position x="314" y="41"/>
-        <size width="12" height="8"/>
+        <size width="13" height="8"/>
           <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:108:xcom3/tacdata/tactical.pal</image>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:41:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
@@ -228,6 +228,26 @@ ISOBORD = Unused
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:120:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
+	  <graphic id = "IMAGE_RIGHT_HAND">
+	    <position x="263" y="29"/>
+        <size width="50" height="92"/>
+	    <alignment horizontal = "centre" vertical = "centre"/>
+	  </graphic>
+	  <graphic id = "IMAGE_LEFT_HAND">
+	    <position x="328" y="29"/>
+        <size width="50" height="93"/>
+	    <alignment horizontal = "centre" vertical = "centre"/>
+	  </graphic>
+	  <graphic id = "IMAGE_RIGHT_DAMAGETYPE">
+	    <position x="229" y="68"/>
+        <size width="29" height="29"/>
+	    <alignment horizontal = "centre" vertical = "centre"/>
+	  </graphic>
+	  <graphic id = "IMAGE_LEFT_DAMAGETYPE">
+	    <position x="382" y="68"/>
+        <size width="29" height="29"/>
+	    <alignment horizontal = "centre" vertical = "centre"/>
+	  </graphic>
     </style>
   </form>
   <!-- Real Time Main Screen -->

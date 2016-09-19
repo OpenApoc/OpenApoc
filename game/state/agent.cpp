@@ -73,6 +73,18 @@ template <> const UString &StateObject<Agent>::getId(const GameState &state, con
 	return emptyString;
 }
 
+AgentType::EquipmentLayoutSlot *AgentType::getFirstSlot(EquipmentSlotType type)
+{
+	for (auto &s : equipment_layout_slots)
+	{
+		if (s.type == type)
+		{
+			return &s;
+		}
+	}
+	return nullptr;
+}
+
 StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisation> org, AgentType::Role role) const
 {
 	std::list<sp<AgentType>> types;
@@ -137,6 +149,12 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	agent->current_stats = s;
 	agent->modified_stats = s;
 
+	// Everything worked, add agent to state (before we add his equipment)
+	this->num_created++;
+	state.agents[ID] = agent;
+
+	// Fill initial equipment list
+	std::list<sp<AEquipmentType>> initialEquipment;
 	if (type->inventory)
 	{
 		// Player gets no default equipment
@@ -144,54 +162,98 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 		{
 		}
 		// Aliens get equipment based on player score
-		if (org == state.getAliens())
+		else if (org == state.getAliens())
 		{
 			// FIXME: actually get player score here
 			int playerScore = 50000;
 
-			auto l = EquipmentSet::getByScore(state, playerScore)->generateEquipmentList(state);
-
-			for (auto t : l)
-			{
-				agent->addEquipment(state, { &state, t->id });
-			}
+			initialEquipment = EquipmentSet::getByScore(state, playerScore)->generateEquipmentList(state);
 		}
 		// Every human org but civilians and player gets equipment based on tech level
 		else if (org != state.getCivilian())
 		{
-			auto l = EquipmentSet::getByLevel(state, org->tech_level)->generateEquipmentList(state);
-
-			for (auto t : l)
-			{
-				agent->addEquipment(state, { &state, t->id });
-			}
+			initialEquipment = EquipmentSet::getByLevel(state, org->tech_level)->generateEquipmentList(state);
 		}
 	}
 	else
 	{
-		agent->addEquipment(state, type->built_in_weapon_right);
-		agent->addEquipment(state, type->built_in_weapon_left);
+		initialEquipment.push_back(type->built_in_weapon_right);
+		initialEquipment.push_back(type->built_in_weapon_left);
+	}
+	
+	// Add initial equipment
+	for (auto t : initialEquipment)
+	{
+		if (!t)
+			continue;
+		if (t->type == AEquipmentType::Type::Ammo)
+		{
+			agent->addEquipment(state, { &state, t->id }, AgentType::EquipmentSlotType::General);
+		}
+		else
+		{
+			agent->addEquipment(state, { &state, t->id });
+		}
 	}
 
 	agent->updateSpeed();
 
-	// Everything worked, add agent to state
-	this->num_created++;
-	state.agents[ID] = agent;
 	return {&state, ID};
+}
+
+int Agent::getArmorValue(AgentType::BodyPart bodyPart)
+{
+	AgentType::EquipmentSlotType slotType = AgentType::EquipmentSlotType::General;
+	switch (bodyPart)
+	{
+	case AgentType::BodyPart::Body:
+		slotType = AgentType::EquipmentSlotType::ArmorBody;
+		break;
+	case AgentType::BodyPart::Legs:
+		slotType = AgentType::EquipmentSlotType::ArmorLegs;
+		break;
+	case AgentType::BodyPart::Helmet:
+		slotType = AgentType::EquipmentSlotType::ArmorHelmet;
+		break;
+	case AgentType::BodyPart::LeftArm:
+		slotType = AgentType::EquipmentSlotType::ArmorLeftHand;
+		break;
+	case AgentType::BodyPart::RightArm:
+		slotType = AgentType::EquipmentSlotType::ArmorRightHand;
+		break;
+	}
+	auto a = getFirstItemInSlot(slotType);
+	if (a)
+	{
+		return a->ammo;
+	}
+	return type->armor[bodyPart];
 }
 
 bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type) const
 {
 	Vec2<int> slotOrigin;
 	bool slotFound = false;
+	bool slotIsArmor = false;
 	// Check the slot this occupies hasn't already got something there
 	for (auto &slot : this->type->equipment_layout_slots)
 	{
 		if (slot.bounds.within(pos))
 		{
+			// If we are equipping into an armor slot, ensure the item being equipped is armor
+			if (slot.type == AgentType::EquipmentSlotType::ArmorBody
+				|| slot.type == AgentType::EquipmentSlotType::ArmorLegs
+				|| slot.type == AgentType::EquipmentSlotType::ArmorHelmet
+				|| slot.type == AgentType::EquipmentSlotType::ArmorLeftHand
+				|| slot.type == AgentType::EquipmentSlotType::ArmorRightHand)
+			{
+				slotIsArmor = true;
+				if (type->type != AEquipmentType::Type::Armor)
+					break;
+			}
 			slotOrigin = slot.bounds.p0;
 			slotFound = true;
+			
 			break;
 		}
 	}
@@ -200,24 +262,66 @@ bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type) const
 	{
 		return false;
 	}
+
 	// Check that the equipment doesn't overlap with any other and doesn't
 	// go outside a slot of the correct type
-	Rect<int> bounds{pos, pos + type->equipscreen_size};
-	for (auto &otherEquipment : this->equipment)
+	// For agents, armor on the agent body does indeed overlap with each other,
+	// So there is no point checking if there's an overlap (there will be)
+	if (slotIsArmor)
 	{
-		// Something is already in that slot, fail
-		if (otherEquipment->equippedPosition == slotOrigin)
+		// This could would check that every slot is of appropriate type,
+		// But for units armor this is unnecesary
+		/*
+		for (int y = 0; y < type->equipscreen_size.y; y++)
 		{
-			return false;
+			for (int x = 0; x < type->equipscreen_size.x; x++)
+			{
+				Vec2<int> slotPos = { x, y };
+				slotPos += pos;
+				bool validSlot = false;
+				for (auto &slot : this->type->equipment_layout_slots)
+				{
+					if (slot.bounds.within(slotPos) && (
+						slot.type == AgentType::EquipmentSlotType::ArmorBody
+						|| slot.type == AgentType::EquipmentSlotType::ArmorLegs
+						|| slot.type == AgentType::EquipmentSlotType::ArmorHelmet
+						|| slot.type == AgentType::EquipmentSlotType::ArmorLeftHand
+						|| slot.type == AgentType::EquipmentSlotType::ArmorRightHand
+						))
+					{
+						validSlot = true;
+						break;
+					}
+				}
+				if (!validSlot)
+				{
+					LogInfo("Equipping \"%s\" on \"%s\" at {%d,%d} failed: Armor intersecting both armor and non-armor slot",
+						type->name.cStr(), this->name.cStr(), pos.x, pos.y);
+					return false;
+				}
+			}
 		}
-		Rect<int> otherBounds{otherEquipment->equippedPosition,
-		                      otherEquipment->equippedPosition +
-		                          otherEquipment->type->equipscreen_size};
-		if (otherBounds.intersects(bounds))
+		*/
+	}
+	else
+	{
+		Rect<int> bounds{ pos, pos + type->equipscreen_size };
+		for (auto &otherEquipment : this->equipment)
 		{
-			LogInfo("Equipping \"%s\" on \"%s\" at {%d,%d} failed: Intersects with other equipment",
-			        type->name.cStr(), this->name.cStr(), pos.x, pos.y);
-			return false;
+			// Something is already in that slot, fail
+			if (otherEquipment->equippedPosition == slotOrigin)
+			{
+				return false;
+			}
+			Rect<int> otherBounds{ otherEquipment->equippedPosition,
+								  otherEquipment->equippedPosition +
+									  otherEquipment->type->equipscreen_size };
+			if (otherBounds.intersects(bounds))
+			{
+				LogInfo("Equipping \"%s\" on \"%s\" at {%d,%d} failed: Intersects with other equipment",
+					type->name.cStr(), this->name.cStr(), pos.x, pos.y);
+				return false;
+			}
 		}
 	}
 
@@ -226,10 +330,32 @@ bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type) const
 
 void Agent::addEquipment(GameState &state, StateRef<AEquipmentType> type)
 {
-	Vec2<int> pos = { -1, 0 };
+	Vec2<int> pos;
+	bool slotFound = false;
 	for (auto &slot : this->type->equipment_layout_slots)
 	{
 		if (canAddEquipment(slot.bounds.p0, type))
+		{
+			pos = slot.bounds.p0;
+			slotFound = true;
+			break;
+		}
+	}
+	if (!slotFound)
+	{
+		LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id.cStr(), this->name.cStr());
+		return;
+	}
+
+	this->addEquipment(state, pos, type);
+}
+
+void Agent::addEquipment(GameState &state, StateRef<AEquipmentType> type, AgentType::EquipmentSlotType slotType)
+{
+	Vec2<int> pos = { -1, 0 };
+	for (auto &slot : this->type->equipment_layout_slots)
+	{
+		if (slot.type == slotType && canAddEquipment(slot.bounds.p0, type))
 		{
 			pos = slot.bounds.p0;
 			break;
@@ -244,7 +370,6 @@ void Agent::addEquipment(GameState &state, StateRef<AEquipmentType> type)
 	this->addEquipment(state, pos, type);
 }
 
-
 void Agent::addEquipment(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type)
 {
 	if (!this->canAddEquipment(pos, type))
@@ -254,7 +379,15 @@ void Agent::addEquipment(GameState &state, Vec2<int> pos, StateRef<AEquipmentTyp
 	}
 	auto equipment = mksp<AEquipment>();
 	equipment->type = type;
-	equipment->ammo = type->max_ammo;
+	if (type->ammo_types.size() > 0)
+	{
+		equipment->payloadType = *type->ammo_types.begin();
+		equipment->ammo = equipment->payloadType->max_ammo;
+	}
+	else
+	{
+		equipment->ammo = type->max_ammo;
+	}
 	this->addEquipment(state, pos, equipment);
 }
 
@@ -283,7 +416,6 @@ void Agent::updateSpeed()
 
 StateRef<BattleUnitAnimationPack> Agent::getAnimationPack() { return type->animation_packs[appearance]; }
 
-
 StateRef<AEquipmentType> Agent::getItemInHands() 
 {
 	sp<AEquipment> e;
@@ -311,22 +443,30 @@ sp<AEquipment> Agent::getFirstItemInSlot(AgentType::EquipmentSlotType type)
 	return nullptr;
 }
 
-// FIXME: Properly return worn armor image pack if present
 StateRef<BattleUnitImagePack> Agent::getImagePack(AgentType::BodyPart bodyPart) 
 {
+	AgentType::EquipmentSlotType slotType = AgentType::EquipmentSlotType::General;
 	switch (bodyPart)
 	{
 	case AgentType::BodyPart::Body:
+		slotType = AgentType::EquipmentSlotType::ArmorBody;
 		break;
 	case AgentType::BodyPart::Legs:
+		slotType = AgentType::EquipmentSlotType::ArmorLegs;
 		break;
 	case AgentType::BodyPart::Helmet:
+		slotType = AgentType::EquipmentSlotType::ArmorHelmet;
 		break;
 	case AgentType::BodyPart::LeftArm:
+		slotType = AgentType::EquipmentSlotType::ArmorLeftHand;
 		break;
 	case AgentType::BodyPart::RightArm:
+		slotType = AgentType::EquipmentSlotType::ArmorRightHand;
 		break;
 	}
+	auto e = getFirstItemInSlot(slotType);
+	if (e)
+		return e->type->body_image_pack;
 	return type->image_packs[appearance][bodyPart];
 }
 } // namespace OpenApoc

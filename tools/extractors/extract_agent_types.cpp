@@ -875,20 +875,24 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state, Difficulty)
 			pushEquipmentSlot(a, 6, 5, 2, 6, AgentType::EquipmentSlotType::ArmorBody, AgentType::AlignmentX::Centre, AgentType::AlignmentY::Centre);
 			pushEquipmentSlot(a, 8, 5, 2, 6, AgentType::EquipmentSlotType::ArmorLeftHand, AgentType::AlignmentX::Left, AgentType::AlignmentY::Centre);
 			pushEquipmentSlot(a, 4, 11, 6, 5, AgentType::EquipmentSlotType::ArmorLegs, AgentType::AlignmentX::Centre, AgentType::AlignmentY::Top);
-			// Shoulders
-			pushEquipmentSlot(a, 4, 2);		
-			pushEquipmentSlot(a, 10, 2);
-			// Belt
+			// Belt #1
 			for (int i = 0; i < 4; i++)
 			{
 				pushEquipmentSlot(a, i, 12);
-				pushEquipmentSlot(a, 12 + i, 12);
 			}
-			pushEquipmentSlot(a, 0, 11);
-			pushEquipmentSlot(a, 12 + 3, 13);
+			pushEquipmentSlot(a, 0, 13);
 			// Special
 			pushEquipmentSlot(a, 2, 14, 2, 2, AgentType::EquipmentSlotType::General, AgentType::AlignmentX::Centre, AgentType::AlignmentY::Centre);
 			pushEquipmentSlot(a, 11, 14, 2, 2, AgentType::EquipmentSlotType::General, AgentType::AlignmentX::Centre, AgentType::AlignmentY::Centre);
+			// Belt #2
+			for (int i = 0; i < 4; i++)
+			{
+				pushEquipmentSlot(a, 12 + i, 12);
+			}
+			pushEquipmentSlot(a, 12 + 3, 13);
+			// Shoulders
+			pushEquipmentSlot(a, 4, 2);
+			pushEquipmentSlot(a, 10, 2);
 			// Backpack
 			for (int i = 0; i < 4; i++)
 			{

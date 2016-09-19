@@ -56,6 +56,16 @@ sp<EquipmentSet> StateObject<EquipmentSet>::get(const GameState &state, const US
 	return it->second;
 }
 
+
+StateRef<AEquipmentType> AEquipment::getPayloadType()
+{
+	if (type->type == AEquipmentType::Type::Weapon && type->ammo_types.size() > 0)
+	{
+		return payloadType;
+	}
+	return type;
+}
+
 std::list<sp<AEquipmentType>> EquipmentSet::generateEquipmentList(GameState &state)
 {
 	std::list<sp<AEquipmentType>> output;
@@ -107,4 +117,5 @@ sp<EquipmentSet> EquipmentSet::getByLevel(const GameState &state, const int leve
 	LogError("No equipment set matching level %d", level);
 	return nullptr;
 }
+
 }

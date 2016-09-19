@@ -37,6 +37,7 @@ std::future<sp<GameState>> loadGame(const UString &path)
 		}
 		state->startGame();
 		state->initState();
+		state->fillPlayerStartingProperty();
 		return state;
 	});
 

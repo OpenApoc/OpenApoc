@@ -6899,6 +6899,7 @@
                         </key>
                         <value>
                           <sp>
+                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -7087,6 +7088,7 @@
                         </key>
                         <value>
                           <sp>
+                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -7275,6 +7277,7 @@
                         </key>
                         <value>
                           <sp>
+                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -7463,6 +7466,7 @@
                         </key>
                         <value>
                           <sp>
+                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -7651,6 +7655,7 @@
                         </key>
                         <value>
                           <sp>
+                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -7839,6 +7844,7 @@
                         </key>
                         <value>
                           <sp>
+                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -8027,6 +8033,7 @@
                         </key>
                         <value>
                           <sp>
+                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -8215,6 +8222,7 @@
                         </key>
                         <value>
                           <sp>
+                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>

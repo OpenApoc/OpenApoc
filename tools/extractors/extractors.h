@@ -32,7 +32,7 @@ class InitialGameStateExtractor
 	sp<BattleMapTileset> extractTileSet(GameState &state, const UString &name);
 	sp<BattleUnitImagePack> extractImagePack(GameState &state, const UString &path, bool shadow);
 	sp<BattleUnitImagePack> extractItemImagePack(GameState &state, int item);
-	int InitialGameStateExtractor::getItemImagePacksCount();
+	int getItemImagePacksCount();
 	sp<BattleUnitAnimationPack> extractAnimationPack(GameState &state, const UString &path, const UString &name);
 	std::map<UString, up<BattleMapSectorTiles>> extractMapSectors(GameState &state,
 	                                                              const UString &mapRootName);
