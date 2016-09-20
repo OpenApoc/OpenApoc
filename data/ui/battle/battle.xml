@@ -10,7 +10,6 @@ TACBORD6 = Real-Time Psi-attack
 TACBORD7 = Real-Time Grenade arm
 TACBORD8 = Real-Time Event pause
 TACBORD9 = Real-Time Interrupt
-ISOBORD = Unused
  -->
   <!-- Common controls -->
   <form id="FORM_BATTLE_UI">

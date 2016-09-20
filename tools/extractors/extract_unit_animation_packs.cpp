@@ -716,6 +716,7 @@ namespace OpenApoc
 
 	sp<BattleUnitAnimationPack> InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString &path, const UString &name)
 	{
+		std::ignore = state;
 		UString dirName = "xcom3/tacdata/";
 
 		auto p = mksp<BattleUnitAnimationPack>();

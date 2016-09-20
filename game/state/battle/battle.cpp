@@ -548,7 +548,7 @@ void Battle::BeginBattle(GameState &state)
 							break;
 					}
 
-					if (unitsToSpawn.size() >= 0)
+					if (unitsToSpawn.size() > 0)
 					{
 						LogWarning("Map has not big enough to spawn all units!?!?!?");
 						return;
@@ -910,7 +910,6 @@ void Battle::LoadImagePacks(GameState &state)
 	{
 		if (imagePackName.length() == 0)
 			continue;
-		unsigned count = 0;
 		auto imagePackPath = BattleUnitImagePack::imagePackPath + "/" + imagePackName;
 		LogInfo("Loading image pack \"%s\" from \"%s\"", imagePackName.cStr(), imagePackPath.cStr());
 		auto imagePack = mksp<BattleUnitImagePack>();
@@ -951,7 +950,6 @@ void Battle::LoadAnimationPacks(GameState &state)
 	// Load all used animation packs
 	for (auto &animationPackName : animationPacks)
 	{
-		unsigned count = 0;
 		auto animationPackPath = BattleUnitAnimationPack::animationPackPath + "/" + animationPackName;
 		LogInfo("Loading animation pack \"%s\" from \"%s\"", animationPackName.cStr(), animationPackPath.cStr());
 		auto animationPack = mksp<BattleUnitAnimationPack>();

@@ -12,8 +12,9 @@ class BattleForces
 {
   public:
 	std::vector<BattleSquad> squads;
-	bool insert(int squad, sp<BattleUnit> unit);
-	bool insertAt(int squad, int position, sp<BattleUnit> unit);
+	bool insert(unsigned squad, sp<BattleUnit> unit);
+	bool insertAt(unsigned squad, unsigned position, sp<BattleUnit> unit);
+	void removeAt(unsigned squad, unsigned position);
 	BattleForces();
 };
 

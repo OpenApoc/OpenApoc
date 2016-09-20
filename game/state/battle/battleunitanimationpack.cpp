@@ -216,6 +216,9 @@ void BattleUnitAnimationPack::drawUnit(Renderer &r, Vec2<float> screenPosition,
 					continue;
 				r.draw(heldItem->held_image_pack->images[b->index], screenPosition - b->offset - heldItem->held_image_pack->image_offset);
 				break;
+			// Travis complains I'm not handling "Shadow"
+			default:
+				break;
 		}
 	}
 }

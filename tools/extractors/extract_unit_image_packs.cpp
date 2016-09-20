@@ -10,6 +10,7 @@ namespace OpenApoc
 
 sp<BattleUnitImagePack> InitialGameStateExtractor::extractImagePack(GameState &state, const UString &path, bool shadow)
 {
+	std::ignore = state;
 	UString dirName = "xcom3/tacdata/";
 
 	auto imageTabFileName = UString::format("%s%s.tab", dirName, path);
@@ -37,6 +38,7 @@ sp<BattleUnitImagePack> InitialGameStateExtractor::extractImagePack(GameState &s
 
 sp<BattleUnitImagePack> InitialGameStateExtractor::extractItemImagePack(GameState &state, int item)
 {
+	std::ignore = state;
 	UString dirName = "xcom3/tacdata/";
 
 	auto p = mksp<BattleUnitImagePack>();
