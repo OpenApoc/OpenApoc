@@ -77,7 +77,7 @@ Battle::~Battle()
 
 void Battle::initBattle(GameState &state)
 {
-	LoadResources(state);
+	loadResources(state);
 	for (auto &s : this->map_parts)
 	{
 		s->battle = shared_from_this();
@@ -244,7 +244,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 }
 
 // To be called when battle must be started, before showing battle briefing screen
-void Battle::EnterBattle(GameState &state, StateRef<Organisation> target_organisation,
+void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organisation,
 	std::list<StateRef<Agent>> &player_agents,
 	StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft)
 {
@@ -253,14 +253,14 @@ void Battle::EnterBattle(GameState &state, StateRef<Organisation> target_organis
 		LogError("Battle::EnterBattle called while another battle is in progress!");
 		return;
 	}
-	auto b = BattleMap::CreateBattle(state, target_organisation, player_agents, player_craft, target_craft);
+	auto b = BattleMap::createBattle(state, target_organisation, player_agents, player_craft, target_craft);
 	if (!b)
 		return;
 	state.current_battle = b;
 }
 
 // To be called when battle must be started, before showing battle briefing screen
-void Battle::EnterBattle(GameState &state, StateRef<Organisation> target_organisation,
+void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organisation,
 	std::list<StateRef<Agent>> &player_agents,
 	StateRef<Vehicle> player_craft, StateRef<Building> target_building)
 {
@@ -269,14 +269,14 @@ void Battle::EnterBattle(GameState &state, StateRef<Organisation> target_organis
 		LogError("Battle::EnterBattle called while another battle is in progress!");
 		return;
 	}
-	auto b = BattleMap::CreateBattle(state, target_organisation, player_agents, player_craft, target_building);
+	auto b = BattleMap::createBattle(state, target_organisation, player_agents, player_craft, target_building);
 	if (!b)
 		return;
 	state.current_battle = b;
 }
 
 // To be called when battle must be started, after the player has assigned agents to squads
-void Battle::BeginBattle(GameState &state)
+void Battle::enterBattle(GameState &state)
 {
 	if (!state.current_battle)
 	{
@@ -548,7 +548,7 @@ void Battle::BeginBattle(GameState &state)
 							break;
 					}
 
-					if (unitsToSpawn.size() >= 0)
+					if (unitsToSpawn.size() > 0)
 					{
 						LogWarning("Map has not big enough to spawn all units!?!?!?");
 						return;
@@ -796,7 +796,7 @@ void Battle::BeginBattle(GameState &state)
 }
 
 // To be called when battle must be finished and before showing score screen
-void Battle::FinishBattle(GameState &state)
+void Battle::finishBattle(GameState &state)
 {
 	if (!state.current_battle)
 	{
@@ -821,7 +821,7 @@ void Battle::FinishBattle(GameState &state)
 }
 
 // To be called after battle was finished, score screen was shown and before returning to cityscape
-void Battle::ExitBattle(GameState &state)
+void Battle::exitBattle(GameState &state)
 {
 	if (!state.current_battle)
 	{
@@ -829,7 +829,7 @@ void Battle::ExitBattle(GameState &state)
 		return;
 	}
 
-	state.current_battle->UnloadResources(state);
+	state.current_battle->unloadResources(state);
 	//  - Apply score
 	//	- (UFO mission) Clear UFO crash
 	//	- Load loot into vehicles
@@ -839,21 +839,21 @@ void Battle::ExitBattle(GameState &state)
 	state.current_battle = nullptr;
 }
 
-void Battle::LoadResources(GameState &state)
+void Battle::loadResources(GameState &state)
 {
-	battle_map->LoadTilesets(state);
-	LoadImagePacks(state);
-	LoadAnimationPacks(state);
+	battle_map->loadTilesets(state);
+	loadImagePacks(state);
+	loadAnimationPacks(state);
 }
 
-void Battle::UnloadResources(GameState &state)
+void Battle::unloadResources(GameState &state)
 {
-	BattleMap::UnloadTilesets(state);
-	UnloadImagePacks(state);
-	UnloadAnimationPacks(state);
+	BattleMap::unloadTilesets(state);
+	unloadImagePacks(state);
+	unloadAnimationPacks(state);
 }
 
-void Battle::LoadImagePacks(GameState &state)
+void Battle::loadImagePacks(GameState &state)
 {
 	if (state.battle_unit_image_packs.size() > 0)
 	{
@@ -910,7 +910,6 @@ void Battle::LoadImagePacks(GameState &state)
 	{
 		if (imagePackName.length() == 0)
 			continue;
-		unsigned count = 0;
 		auto imagePackPath = BattleUnitImagePack::imagePackPath + "/" + imagePackName;
 		LogInfo("Loading image pack \"%s\" from \"%s\"", imagePackName.cStr(), imagePackPath.cStr());
 		auto imagePack = mksp<BattleUnitImagePack>();
@@ -924,13 +923,13 @@ void Battle::LoadImagePacks(GameState &state)
 	}
 }
 
-void Battle::UnloadImagePacks(GameState &state)
+void Battle::unloadImagePacks(GameState &state)
 {
 	state.battle_unit_image_packs.clear();
 	LogInfo("Unloaded all image packs.");
 }
 
-void Battle::LoadAnimationPacks(GameState &state)
+void Battle::loadAnimationPacks(GameState &state)
 {
 	if (state.battle_unit_animation_packs.size() > 0)
 	{
@@ -951,7 +950,6 @@ void Battle::LoadAnimationPacks(GameState &state)
 	// Load all used animation packs
 	for (auto &animationPackName : animationPacks)
 	{
-		unsigned count = 0;
 		auto animationPackPath = BattleUnitAnimationPack::animationPackPath + "/" + animationPackName;
 		LogInfo("Loading animation pack \"%s\" from \"%s\"", animationPackName.cStr(), animationPackPath.cStr());
 		auto animationPack = mksp<BattleUnitAnimationPack>();
@@ -965,7 +963,7 @@ void Battle::LoadAnimationPacks(GameState &state)
 	}
 }
 
-void Battle::UnloadAnimationPacks(GameState &state)
+void Battle::unloadAnimationPacks(GameState &state)
 {
 	state.battle_unit_animation_packs.clear();
 	LogInfo("Unloaded all animation packs.");

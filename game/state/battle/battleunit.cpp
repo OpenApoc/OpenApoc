@@ -37,6 +37,18 @@ namespace OpenApoc
 		b->forces[owner].insertAt(squadNumber, position, shared_from_this());
 	}
 
+	bool BattleUnit::isFatallyWounded()
+	{
+		for (auto e : fatalWounds)
+		{
+			if (e.second > 0)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	void BattleUnit::setPosition(const Vec3<float> &pos)
 	{
 		this->position = pos;
@@ -108,6 +120,9 @@ namespace OpenApoc
 	// FIXME: Apply damage to the unit
 	bool BattleUnit::applyDamage(GameState &state, int damage, float armour)
 	{
+		std::ignore = state;
+		std::ignore = damage;
+		std::ignore = armour;
 		//if (this->shield <= damage)
 		//{
 		//	if (this->shield > 0)
@@ -158,6 +173,8 @@ namespace OpenApoc
 	// FIXME: Handle unit's collision with projectile
 	void BattleUnit::handleCollision(GameState &state, Collision &c)
 	{
+		std::ignore = state;
+
 		if (!this->tileObject)
 		{
 			LogError("It's possible multiple projectiles hit the same tile in the same tick (?)");
@@ -219,7 +236,9 @@ namespace OpenApoc
 
 	void BattleUnit::update(GameState &state, unsigned int ticks)
 	{
-
+		std::ignore = state;
+		std::ignore = ticks;
 	}
 
+	// FIXME: When unit dies, gets destroyed, retreats or changes ownership, remove it from squad
 }

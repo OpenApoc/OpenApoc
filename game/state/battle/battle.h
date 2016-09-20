@@ -55,6 +55,12 @@ class Battle : public std::enable_shared_from_this<Battle>
 		UfoRecovery,
 	};
 
+	enum class Mode
+	{
+		RealTime,
+		TurnBased
+	};
+
 	Battle() = default;
 	~Battle();
 
@@ -69,6 +75,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	MissionType mission_type = MissionType::AlienExtermination;
 	UString mission_location_id;
+	Mode mode = Mode::RealTime;
 
 	StateRef<Vehicle> player_craft;
 
@@ -93,36 +100,40 @@ class Battle : public std::enable_shared_from_this<Battle>
 	void update(GameState &state, unsigned int ticks);
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
 
+	// Battle Start Functions
+
 	// To be called when battle must be created, before showing battle briefing screen
-	static void EnterBattle(GameState &state, StateRef<Organisation> target_organisation,
+	static void beginBattle(GameState &state, StateRef<Organisation> target_organisation,
 		std::list<StateRef<Agent>> &player_agents,
 		StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft);
 	
 	// To be called when battle must be created, before showing battle briefing screen
-	static void EnterBattle(GameState &state, StateRef<Organisation> target_organisation,
+	static void beginBattle(GameState &state, StateRef<Organisation> target_organisation,
 		std::list<StateRef<Agent>> &player_agents,
 		StateRef<Vehicle> player_craft,
 		StateRef<Building> target_building);
 	
 	// To be called when battle must be started, after briefing screen
-	static void BeginBattle(GameState &state);
+	static void enterBattle(GameState &state);
+
+	// Battle End Functions
 
 	// To be called when battle must be finished, before showing score screen
-	static void FinishBattle(GameState &state);
+	static void finishBattle(GameState &state);
 
 	// To be called after battle was finished and before returning to cityscape
-	static void ExitBattle(GameState &state);
+	static void exitBattle(GameState &state);
 
   private:
 
-	void LoadResources(GameState &state);
-	void UnloadResources(GameState &state);
+	void loadResources(GameState &state);
+	void unloadResources(GameState &state);
 
-	void LoadImagePacks(GameState &state);
-	void UnloadImagePacks(GameState &state);
+	void loadImagePacks(GameState &state);
+	void unloadImagePacks(GameState &state);
 
-	void LoadAnimationPacks(GameState &state);
-	void UnloadAnimationPacks(GameState &state);
+	void loadAnimationPacks(GameState &state);
+	void unloadAnimationPacks(GameState &state);
 
 	friend class BattleMap;
 };

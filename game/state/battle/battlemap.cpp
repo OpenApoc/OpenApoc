@@ -47,18 +47,18 @@ const UString &StateObject<BattleMap>::getId(const GameState &state, const sp<Ba
 	return emptyString;
 }
 
-sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> organisation,
+sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> organisation,
                                    std::list<StateRef<Agent>> &player_agents,
                                    StateRef<Vehicle> craft, StateRef<Vehicle> ufo)
 {
 	// FIXME: Generate list of agent types for enemies (and civs)
 	// Then generate agents from agent types
 	// Add them to list of player agents and pass it further
-	return ufo->type->battle_map->CreateBattle(state, organisation, player_agents, craft,
+	return ufo->type->battle_map->createBattle(state, organisation, player_agents, craft,
 	                                           Battle::MissionType::UfoRecovery, ufo.id);
 }
 
-sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> organisation,
+sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> organisation,
                                    std::list<StateRef<Agent>> &player_agents,
                                    StateRef<Vehicle> craft, StateRef<Building> building)
 {
@@ -67,30 +67,30 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> orga
 	// Add them to list of player agents and pass it further
 	if (building->owner == state.getPlayer())
 	{
-		return building->battle_map->CreateBattle(state, organisation, player_agents, craft,
+		return building->battle_map->createBattle(state, organisation, player_agents, craft,
 		                                          Battle::MissionType::BaseDefense, building.id);
 	}
 	else
 	{
 		if (organisation == state.getAliens())
-			return building->battle_map->CreateBattle(state, organisation, player_agents, craft,
+			return building->battle_map->createBattle(state, organisation, player_agents, craft,
 			                                          Battle::MissionType::AlienExtermination,
 			                                          building.id);
 		else
-			return building->battle_map->CreateBattle(state, organisation, player_agents, craft,
+			return building->battle_map->createBattle(state, organisation, player_agents, craft,
 			                                          Battle::MissionType::RaidHumans, building.id);
 	}
 }
 
 // Checks wether two cubes intersect
-bool DoTwoSectorsIntersect(int x1, int y1, int z1, const Vec3<int> &s1, int x2, int y2, int z2,
+bool doTwoSectorsIntersect(int x1, int y1, int z1, const Vec3<int> &s1, int x2, int y2, int z2,
                            const Vec3<int> &s2)
 {
 	return x1 + s1.x > x2 && x2 + s2.x > x1 && z1 + s1.z > z2 && z2 + s2.z > z1 && y1 + s1.y > y2 &&
 	       y2 + s2.y > y1;
 }
 
-bool DoesCellIntersectSomething(std::vector<std::vector<std::vector<sp<BattleMapSector>>>> &sec_map,
+bool doesCellIntersectSomething(std::vector<std::vector<std::vector<sp<BattleMapSector>>>> &sec_map,
                                 const Vec3<int> &map_size, int x1, int y1, int z1)
 {
 	bool intersects = false;
@@ -99,12 +99,12 @@ bool DoesCellIntersectSomething(std::vector<std::vector<std::vector<sp<BattleMap
 		for (int y2 = 0; y2 < map_size.y; y2++)
 			for (int z2 = 0; z2 < map_size.z; z2++)
 				intersects = intersects || (sec_map[x2][y2][z2] &&
-				                            DoTwoSectorsIntersect(x1, y1, z1, cell_size, x2, y2, z2,
+				                            doTwoSectorsIntersect(x1, y1, z1, cell_size, x2, y2, z2,
 				                                                  sec_map[x2][y2][z2]->size));
 	return intersects;
 }
 
-bool IsMapComplete(std::vector<std::vector<std::vector<sp<BattleMapSector>>>> &sec_map,
+bool isMapComplete(std::vector<std::vector<std::vector<sp<BattleMapSector>>>> &sec_map,
                    const Vec3<int> &map_size)
 {
 	// We check if every single cell of a map intersects with at least some sector
@@ -112,11 +112,11 @@ bool IsMapComplete(std::vector<std::vector<std::vector<sp<BattleMapSector>>>> &s
 	for (int x1 = 0; x1 < map_size.x; x1++)
 		for (int y1 = 0; y1 < map_size.y; y1++)
 			for (int z1 = 0; z1 < map_size.z; z1++)
-				complete = complete && DoesCellIntersectSomething(sec_map, map_size, x1, y1, z1);
+				complete = complete && doesCellIntersectSomething(sec_map, map_size, x1, y1, z1);
 	return complete;
 }
 
-bool PlaceSector(GameState &state,
+bool placeSector(GameState &state,
                  std::vector<std::vector<std::vector<sp<BattleMapSector>>>> &sec_map,
                  const Vec3<int> &map_size, const sp<BattleMapSector> sector, bool force = false,
                  bool invert_x_packing = false, bool invert_y_packing = false)
@@ -155,7 +155,7 @@ bool PlaceSector(GameState &state,
 						for (int y2 = y1; y2 < y1 + sec_map[x1][y1][z1]->size.y; y2++)
 							for (int z2 = z1; z2 < z1 + sec_map[x1][y1][z1]->size.z; z2++)
 								can_move = can_move &&
-								           !DoesCellIntersectSomething(sec_map, map_size, x1 - dx1,
+								           !doesCellIntersectSomething(sec_map, map_size, x1 - dx1,
 								                                       y2, z2);
 						if (can_move)
 						{
@@ -170,7 +170,7 @@ bool PlaceSector(GameState &state,
 						for (int x2 = x1; x2 < x1 + sec_map[x1][y1][z1]->size.x; x2++)
 							for (int z2 = z1; z2 < z1 + sec_map[x1][y1][z1]->size.z; z2++)
 								can_move = can_move &&
-								           !DoesCellIntersectSomething(sec_map, map_size, x2,
+								           !doesCellIntersectSomething(sec_map, map_size, x2,
 								                                       y1 - dy1, z2);
 						if (can_move)
 						{
@@ -185,7 +185,7 @@ bool PlaceSector(GameState &state,
 						for (int x2 = x1; x2 < x1 + sec_map[x1][y1][z1]->size.x; x2++)
 							for (int y2 = z1; y2 < y1 + sec_map[x1][y1][z1]->size.y; y2++)
 								can_move = can_move &&
-								           !DoesCellIntersectSomething(sec_map, map_size, x2, y2,
+								           !doesCellIntersectSomething(sec_map, map_size, x2, y2,
 								                                       z1 - dz1);
 						if (can_move)
 						{
@@ -218,7 +218,7 @@ bool PlaceSector(GameState &state,
 							for (int z2 = 0; z2 < map_size.z; z2++)
 								fits = fits &&
 								       (!sec_map[x2][y2][z2] ||
-								        !DoTwoSectorsIntersect(x1, y1, z1, sector->size, x2, y2, z2,
+								        !doTwoSectorsIntersect(x1, y1, z1, sector->size, x2, y2, z2,
 								                               sec_map[x2][y2][z2]->size));
 					if (!fits)
 						continue;
@@ -240,7 +240,7 @@ bool PlaceSector(GameState &state,
 	return false;
 }
 
-sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> target_organisation,
+sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> target_organisation,
                                    std::list<StateRef<Agent>> &agents,
                                    StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
                                    UString mission_location_id)
@@ -450,7 +450,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 				break;
 			for (int j = 0; j < secRefs[remaining_sectors[i]]->occurrence_min; j++)
 				failed = failed ||
-				         !PlaceSector(state, sec_map, size, secRefs[remaining_sectors[i]], true,
+				         !placeSector(state, sec_map, size, secRefs[remaining_sectors[i]], true,
 				                      invert_x_packing, invert_y_packing);
 			sec_num_placed[remaining_sectors[i]] = secRefs[remaining_sectors[i]]->occurrence_min;
 			if (sec_num_placed[remaining_sectors[i]] ==
@@ -475,7 +475,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 			// Here we make two attemps to fill a map.
 			for (int attempt_fill_map = 1; attempt_fill_map <= 2; attempt_fill_map++)
 			{
-				if (IsMapComplete(sec_map, size))
+				if (isMapComplete(sec_map, size))
 					break;
 
 				// If map is not complete on first attempt, we try again, this time forcing
@@ -503,10 +503,10 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 				// Place non-mandatory sectors, abiding the rules of max occurrence, until either
 				// map is
 				// complete or we cannot place another sector
-				while (!IsMapComplete(sec_map, size) && remaining_sectors.size() > 0)
+				while (!isMapComplete(sec_map, size) && remaining_sectors.size() > 0)
 				{
 					int i = randBoundsExclusive(state.rng, (int)0, (int)remaining_sectors.size());
-					if (PlaceSector(state, sec_map, size, secRefs[remaining_sectors[i]],
+					if (placeSector(state, sec_map, size, secRefs[remaining_sectors[i]],
 					                attempt_fill_map == 2, invert_x_packing, invert_y_packing))
 					{
 						if (++sec_num_placed[remaining_sectors[i]] ==
@@ -538,7 +538,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 							for (int z = 0; z <= size.z - secRefs[remaining_sectors[i]]->size.z;
 							     z++)
 							{
-								placed = PlaceSector(state, sec_map, size,
+								placed = placeSector(state, sec_map, size,
 								                     secRefs[remaining_sectors[i]]);
 								if (placed)
 									break;
@@ -554,13 +554,13 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 					sec_num_placed[remaining_sectors[i]]++;
 				}
 				remaining_sectors.erase(remaining_sectors.begin() + i);
-				if (IsMapComplete(sec_map, size))
+				if (isMapComplete(sec_map, size))
 					break;
 			}
 		}
 
 		// If we failed at filling a map at this point, then there's nothing else we can do
-		if (!IsMapComplete(sec_map, size))
+		if (!isMapComplete(sec_map, size))
 		{
 			LogWarning("Failed to complete map %s with size %d, %d, %d at attempt %d", id.cStr(),
 			           size.x, size.y, size.z, attempt_make_map);
@@ -579,7 +579,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 		b->mission_type = mission_type;
 		b->mission_location_id = mission_location_id;
 		b->player_craft = player_craft;
-		b->LoadResources(state);
+		b->loadResources(state);
 
 		for (int x = 0; x < size.x; x++)
 		{
@@ -818,7 +818,7 @@ sp<Battle> BattleMap::CreateBattle(GameState &state, StateRef<Organisation> targ
 	return nullptr;
 }
 
-void BattleMap::LoadTilesets(GameState & state) const
+void BattleMap::loadTilesets(GameState & state) const
 {
 	if (state.battleMapTiles.size() > 0)
 	{
@@ -857,7 +857,7 @@ void BattleMap::LoadTilesets(GameState & state) const
 	}
 }
 
-void BattleMap::UnloadTilesets(GameState & state)
+void BattleMap::unloadTilesets(GameState & state)
 {
 	state.battleMapTiles.clear();
 	LogInfo("Unloaded all tilesets.");

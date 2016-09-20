@@ -60,6 +60,10 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	void moveToSquadPosition(int squadPosition);
 
 	AgentStats experiencePoints;
+	std::map<AgentType::BodyPart, int> fatalWounds;
+	bool isFatallyWounded();
+	AgentType::BodyPart healingBodyPart = AgentType::BodyPart::Body;
+	bool isHealing = false;
 
 	// User set modes
 	BehaviorMode behavior_mode = BehaviorMode::Normal;

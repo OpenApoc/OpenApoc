@@ -195,7 +195,7 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 	// Appearance that this specific agent chose from available list of its type
 	int appearance = 0;
 	int portrait = 0;
-	AgentPortrait get_portrait() { return type->portraits[gender][portrait]; }
+	AgentPortrait getPortrait() { return type->portraits[gender][portrait]; }
 	AgentType::Gender gender = AgentType::Gender::Male;
 	
 	AgentStats initial_stats;  // Stats at agent creatrion

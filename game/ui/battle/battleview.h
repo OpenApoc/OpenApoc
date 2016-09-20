@@ -33,15 +33,14 @@ class BattleView : public BattleTileView
 {
   private:
 	sp<Form> activeTab, baseForm;
-	std::vector<sp<Form>> uiTabs;
+	std::vector<sp<Form>> uiTabsRT;
+	std::vector<sp<Form>> uiTabsTB;
 	BattleUpdateSpeed updateSpeed;
 	BattleUpdateSpeed lastSpeed;
 
 	void setUpdateSpeed(BattleUpdateSpeed updateSpeed);
 
 	sp<GameState> state;
-
-	std::list<sp<BattleUnit>> selectedUnits;
 
 	bool followAgent;
 

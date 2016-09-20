@@ -8,20 +8,20 @@ namespace OpenApoc
 
 BattleForces::BattleForces() : squads(6) {};
 
-bool BattleForces::insert(int squad, sp<BattleUnit> unit)
+bool BattleForces::insert(unsigned squad, sp<BattleUnit> unit)
 {
-	if (squads[squad].getNumUnits() == 6 && unit->squadNumber != squad)
+	if (squads[squad].getNumUnits() == 6 && unit->squadNumber != (int)squad)
 		return false;
 	return insertAt(squad, squads[squad].getNumUnits(), unit);
 }
 
-bool BattleForces::insertAt(int squad, int position, sp<BattleUnit> unit)
+bool BattleForces::insertAt(unsigned squad, unsigned position, sp<BattleUnit> unit)
 {
-	if (squads[squad].getNumUnits() == 6 && unit->squadNumber != squad)
+	if (squads[squad].getNumUnits() == 6 && unit->squadNumber != (int)squad)
 		return false;
 	if (unit->squadNumber != -1)
 	{
-		squads[unit->squadNumber].units.erase(squads[unit->squadNumber].units.begin() + unit->squadPosition);
+		removeAt(unit->squadNumber, unit->squadPosition);
 	}
 	if (position > squads[squad].units.size())
 	{
@@ -31,6 +31,12 @@ bool BattleForces::insertAt(int squad, int position, sp<BattleUnit> unit)
 	unit->squadNumber = squad;
 	unit->squadPosition = position;
 	return true;
+}
+
+void BattleForces::removeAt(unsigned squad, unsigned position)
+{
+	squads[squad].units[position]->squadNumber = -1;
+	squads[squad].units.erase(squads[squad].units.begin() + position);
 }
 
 BattleSquad::BattleSquad() {};

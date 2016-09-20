@@ -30,6 +30,9 @@ class CheckBox : public Control
 	void eventOccured(Event *e) override;
 	void update() override;
 	void unloadResources() override;
+	
+	sp<Sample> getClickSound() const;
+	void setClickSound(sp<Sample> sample);
 	virtual bool isChecked() const { return Checked; }
 	virtual void setChecked(bool checked);
 

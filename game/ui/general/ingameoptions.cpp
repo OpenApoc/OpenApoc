@@ -127,8 +127,8 @@ void InGameOptions::eventOccurred(Event *e)
 		{
 			if (state->current_battle)
 			{
-				Battle::FinishBattle(*state.get());
-				Battle::ExitBattle(*state.get());
+				Battle::finishBattle(*state.get());
+				Battle::exitBattle(*state.get());
 
 				fw().stageQueueCommand({ StageCmd::Command::POP });
 				fw().stageQueueCommand({ StageCmd::Command::POP });

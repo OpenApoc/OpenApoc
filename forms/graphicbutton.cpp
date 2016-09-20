@@ -24,7 +24,10 @@ void GraphicButton::eventOccured(Event *e)
 	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
 	    e->forms().EventFlag == FormEventType::MouseDown)
 	{
-		fw().soundBackend->playSample(buttonclick);
+		if (buttonclick)
+		{
+			fw().soundBackend->playSample(buttonclick);
+		}
 	}
 
 	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
@@ -93,6 +96,10 @@ void GraphicButton::unloadResources()
 	imagehover.reset();
 	Control::unloadResources();
 }
+
+sp<Sample> GraphicButton::getClickSound() const { return buttonclick; }
+
+void GraphicButton::setClickSound(sp<Sample> sample) { buttonclick = sample; }
 
 sp<Image> GraphicButton::getImage() const { return image; }
 

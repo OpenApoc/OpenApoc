@@ -18,23 +18,22 @@ namespace OpenApoc
 {
 namespace
 {
-static const std::vector<UString> TAB_FORM_NAMES = {
-    "FORM_BATTLE_UI_RT_1", "FORM_BATTLE_UI_RT_2", "FORM_BATTLE_UI_RT_3",
-    "FORM_BATTLE_UI_RT_4", "FORM_BATTLE_UI_TB_1", "FORM_BATTLE_UI_TB_2",
-    "FORM_BATTLE_UI_TB_3", "FORM_BATTLE_UI_TB_4", "FORM_BATTLE_UI_TB_5"};
-
+static const std::vector<UString> TAB_FORM_NAMES_RT = {
+    "FORM_BATTLE_UI_RT_1", "FORM_BATTLE_UI_RT_2", "FORM_BATTLE_UI_RT_3", };
+static const std::vector<UString> TAB_FORM_NAMES_TB = {
+	"FORM_BATTLE_UI_TB_1", "FORM_BATTLE_UI_TB_2", "FORM_BATTLE_UI_TB_3", };
 } // anonymous namespace
+
+
 
 BattleView::BattleView(sp<GameState> state)
     : BattleTileView(*state->current_battle->map, Vec3<int>{BATTLE_TILE_X, BATTLE_TILE_Y, BATTLE_TILE_Z},
                Vec2<int>{BATTLE_STRAT_TILE_X, BATTLE_STRAT_TILE_Y}, TileViewMode::Isometric),
-      baseForm(ui().getForm("FORM_BATTLE_UI")), updateSpeed(BattleUpdateSpeed::Pause),
-      lastSpeed(BattleUpdateSpeed::Speed1), state(state), followAgent(false),
+      baseForm(ui().getForm("FORM_BATTLE_UI")), state(state), followAgent(false),
       palette(fw().data->loadPalette("xcom3/tacdata/tactical.pal")),
       selectionState(BattleSelectionState::Normal)
 {
-	baseForm->findControlTyped<RadioButton>("BUTTON_SPEED0")->setChecked(true);
-	for (auto &formName : TAB_FORM_NAMES)
+	for (auto &formName : TAB_FORM_NAMES_RT)
 	{
 		sp<Form> f(ui().getForm(formName));
 		if (!f)
@@ -43,9 +42,37 @@ BattleView::BattleView(sp<GameState> state)
 			return;
 		}
 		f->takesFocus = false;
-		this->uiTabs.push_back(f);
+		this->uiTabsRT.push_back(f);
 	}
-	this->activeTab = this->uiTabs[0];
+	for (auto &formName : TAB_FORM_NAMES_TB)
+	{
+		sp<Form> f(ui().getForm(formName));
+		if (!f)
+		{
+			LogError("Failed to load form \"%s\"", formName.cStr());
+			return;
+		}
+		f->takesFocus = false;
+		this->uiTabsTB.push_back(f);
+	}
+	
+	switch (state->current_battle->mode)
+	{
+		case Battle::Mode::RealTime:
+			this->activeTab = this->uiTabsRT[0];
+			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED0")->setChecked(true);
+			updateSpeed = BattleUpdateSpeed::Pause;
+			lastSpeed = BattleUpdateSpeed::Speed1;
+			break;
+		case Battle::Mode::TurnBased:
+			this->activeTab = this->uiTabsTB[0];
+			updateSpeed = BattleUpdateSpeed::Speed2;
+			lastSpeed = BattleUpdateSpeed::Pause;
+			break;
+		default:
+			LogError("Unexpected battle mode \"%d\"", (int)state->current_battle->mode);
+			break;
+	}
 
 	// Refresh base views
 	resume();
@@ -77,7 +104,6 @@ BattleView::BattleView(sp<GameState> state)
 		    }
 
 		});
-
 
 	this->baseForm->findControl("BUTTON_CEASE_FIRE")
 		->addCallback(FormEventType::MouseClick, [this](Event *) {
@@ -129,7 +155,7 @@ BattleView::BattleView(sp<GameState> state)
 
 		for (auto u : selectedUnits)
 		{
-			if (u->kneeling_mode == BattleUnit::KneelingMode::None)
+			if (u->kneeling_mode == BattleUnit::KneelingMode::None && u->isBodyStateAllowed(AgentType::BodyState::Kneeling))
 			{
 				not_kneeling = true;
 			}
@@ -150,21 +176,30 @@ BattleView::BattleView(sp<GameState> state)
 		->addCallback(FormEventType::MouseClick, [this](Event *) {
 		for (auto u : selectedUnits)
 		{
-			u->movement_mode = BattleUnit::MovementMode::Prone;
+			if (u->isBodyStateAllowed(AgentType::BodyState::Prone))
+			{
+				u->movement_mode = BattleUnit::MovementMode::Prone;
+			}
 		}
 	});
 	this->baseForm->findControl("BUTTON_WALK")
 		->addCallback(FormEventType::MouseClick, [this](Event *) {
 		for (auto u : selectedUnits)
 		{
-			u->movement_mode = BattleUnit::MovementMode::Walking;
+			if (u->isBodyStateAllowed(AgentType::BodyState::Standing) || u->isBodyStateAllowed(AgentType::BodyState::Flying))
+			{
+				u->movement_mode = BattleUnit::MovementMode::Walking;
+			}
 		}
 	});
 	this->baseForm->findControl("BUTTON_RUN")
 		->addCallback(FormEventType::MouseClick, [this](Event *) {
 		for (auto u : selectedUnits)
 		{
-			u->movement_mode = BattleUnit::MovementMode::Running;
+			if (u->isBodyStateAllowed(AgentType::BodyState::Standing) || u->isBodyStateAllowed(AgentType::BodyState::Flying))
+			{
+				u->movement_mode = BattleUnit::MovementMode::Running;
+			}
 		}
 	});
 	this->baseForm->findControl("BUTTON_EVASIVE")
@@ -222,18 +257,7 @@ BattleView::BattleView(sp<GameState> state)
 		this->followAgent =
 			std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy)->isChecked();
 	});
-	this->baseForm->findControl("BUTTON_SPEED0")
-	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Pause; });
-	this->baseForm->findControl("BUTTON_SPEED1")
-	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed1; });
-	this->baseForm->findControl("BUTTON_SPEED2")
-	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed2; });
-	this->baseForm->findControl("BUTTON_SPEED3")
-	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed3; });
+
 	this->baseForm->findControl("BUTTON_SHOW_OPTIONS")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InGameOptions>(this->state)});
@@ -242,6 +266,56 @@ BattleView::BattleView(sp<GameState> state)
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { LogWarning("Show log"); });
 	this->baseForm->findControl("BUTTON_ZOOM_EVENT")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { LogWarning("Zoom to event"); });
+
+	// FIXME: When clicking on items or weapons, activate them or go into fire / teleport mode accordingly
+
+	this->uiTabsRT[0]->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND")->setClickSound(nullptr);
+	this->uiTabsRT[0]->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND")->addCallback(FormEventType::MouseClick, [this](Event *) {
+	
+	});
+	this->uiTabsRT[0]->findControlTyped<CheckBox>("BUTTON_LEFT_HAND")->setClickSound(nullptr);
+	this->uiTabsRT[0]->findControlTyped<CheckBox>("BUTTON_LEFT_HAND")->addCallback(FormEventType::MouseClick, [this](Event *) {
+
+	});
+	this->uiTabsTB[0]->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND")->setClickSound(nullptr);
+	this->uiTabsTB[0]->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND")->addCallback(FormEventType::MouseClick, [this](Event *) {
+
+	});
+	this->uiTabsTB[0]->findControlTyped<CheckBox>("BUTTON_LEFT_HAND")->setClickSound(nullptr);
+	this->uiTabsTB[0]->findControlTyped<CheckBox>("BUTTON_LEFT_HAND")->addCallback(FormEventType::MouseClick, [this](Event *) {
+
+	});
+
+
+	switch (state->current_battle->mode)
+	{
+		case Battle::Mode::RealTime:
+			this->baseForm->findControl("BUTTON_SPEED0")
+				->addCallback(FormEventType::CheckBoxSelected,
+					[this](Event *) { this->updateSpeed = BattleUpdateSpeed::Pause; });
+			this->baseForm->findControl("BUTTON_SPEED1")
+				->addCallback(FormEventType::CheckBoxSelected,
+					[this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed1; });
+			this->baseForm->findControl("BUTTON_SPEED2")
+				->addCallback(FormEventType::CheckBoxSelected,
+					[this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed2; });
+			this->baseForm->findControl("BUTTON_SPEED3")
+				->addCallback(FormEventType::CheckBoxSelected,
+					[this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed3; });
+// FIXME: Disable TB controls
+			break;
+		case Battle::Mode::TurnBased:
+			// FIXME: Assign TB controls
+			this->baseForm->findControl("BUTTON_SPEED0")->Visible = false;
+			this->baseForm->findControl("BUTTON_SPEED1")->Visible = false;
+			this->baseForm->findControl("BUTTON_SPEED2")->Visible = false;
+			this->baseForm->findControl("BUTTON_SPEED3")->Visible = false;
+			this->baseForm->findControl("CLOCK")->Visible = false;
+			break;
+		default:
+			LogError("Unexpected battle mode \"%d\"", (int)state->current_battle->mode);
+			break;
+	}
 }
 
 BattleView::~BattleView() = default;
@@ -269,58 +343,58 @@ void BattleView::render()
 
 	// FIXME: Draw charges
 	// Set items in hands
-	if (selectedUnits.size() > 0)
+	if (selectedUnits.size() > 0 && (this->activeTab == uiTabsRT[0] || this->activeTab == uiTabsTB[0]))
 	{
 		auto u = *selectedUnits.begin();
 		{
 			auto e = u->agent->getFirstItemInSlot(AgentType::EquipmentSlotType::RightHand);
 			if (e)
 			{
-				this->baseForm->findControlTyped<Graphic>("IMAGE_RIGHT_HAND")->setImage(e->type->equipscreen_sprite);
+				this->activeTab->findControlTyped<Graphic>("IMAGE_RIGHT_HAND")->setImage(e->type->equipscreen_sprite);
 				auto p = e->getPayloadType();
 				if (p && p->damage_type)
 				{
-					this->baseForm->findControlTyped<Graphic>("IMAGE_RIGHT_DAMAGETYPE")->setImage(p->damage_type->icon_sprite);
+					this->activeTab->findControlTyped<Graphic>("IMAGE_RIGHT_DAMAGETYPE")->setImage(p->damage_type->icon_sprite);
 				}
 				else
 				{
-					this->baseForm->findControlTyped<Graphic>("IMAGE_RIGHT_DAMAGETYPE")->setImage(nullptr);
+					this->activeTab->findControlTyped<Graphic>("IMAGE_RIGHT_DAMAGETYPE")->setImage(nullptr);
 				}
 			}
 			else
 			{
-				this->baseForm->findControlTyped<Graphic>("IMAGE_RIGHT_HAND")->setImage(nullptr);
-				this->baseForm->findControlTyped<Graphic>("IMAGE_RIGHT_DAMAGETYPE")->setImage(nullptr);
+				this->activeTab->findControlTyped<Graphic>("IMAGE_RIGHT_HAND")->setImage(nullptr);
+				this->activeTab->findControlTyped<Graphic>("IMAGE_RIGHT_DAMAGETYPE")->setImage(nullptr);
 			}
 		}
 		{
 			auto e = u->agent->getFirstItemInSlot(AgentType::EquipmentSlotType::LeftHand);
 			if (e)
 			{
-				this->baseForm->findControlTyped<Graphic>("IMAGE_LEFT_HAND")->setImage(e->type->equipscreen_sprite);
+				this->activeTab->findControlTyped<Graphic>("IMAGE_LEFT_HAND")->setImage(e->type->equipscreen_sprite);
 				auto p = e->getPayloadType();
 				if (p && p->damage_type)
 				{
-					this->baseForm->findControlTyped<Graphic>("IMAGE_LEFT_DAMAGETYPE")->setImage(p->damage_type->icon_sprite);
+					this->activeTab->findControlTyped<Graphic>("IMAGE_LEFT_DAMAGETYPE")->setImage(p->damage_type->icon_sprite);
 				}
 				else
 				{
-					this->baseForm->findControlTyped<Graphic>("IMAGE_LEFT_DAMAGETYPE")->setImage(nullptr);
+					this->activeTab->findControlTyped<Graphic>("IMAGE_LEFT_DAMAGETYPE")->setImage(nullptr);
 				}
 			}
 			else
 			{
-				this->baseForm->findControlTyped<Graphic>("IMAGE_LEFT_HAND")->setImage(nullptr);
-				this->baseForm->findControlTyped<Graphic>("IMAGE_LEFT_DAMAGETYPE")->setImage(nullptr);
+				this->activeTab->findControlTyped<Graphic>("IMAGE_LEFT_HAND")->setImage(nullptr);
+				this->activeTab->findControlTyped<Graphic>("IMAGE_LEFT_DAMAGETYPE")->setImage(nullptr);
 			}
 		}
 	}
 	else
 	{
-		this->baseForm->findControlTyped<Graphic>("IMAGE_RIGHT_HAND")->setImage(nullptr);
-		this->baseForm->findControlTyped<Graphic>("IMAGE_RIGHT_DAMAGETYPE")->setImage(nullptr);
-		this->baseForm->findControlTyped<Graphic>("IMAGE_LEFT_HAND")->setImage(nullptr);
-		this->baseForm->findControlTyped<Graphic>("IMAGE_LEFT_DAMAGETYPE")->setImage(nullptr);
+		this->activeTab->findControlTyped<Graphic>("IMAGE_RIGHT_HAND")->setImage(nullptr);
+		this->activeTab->findControlTyped<Graphic>("IMAGE_RIGHT_DAMAGETYPE")->setImage(nullptr);
+		this->activeTab->findControlTyped<Graphic>("IMAGE_LEFT_HAND")->setImage(nullptr);
+		this->activeTab->findControlTyped<Graphic>("IMAGE_LEFT_DAMAGETYPE")->setImage(nullptr);
 	}
 	
 	BattleTileView::render();
@@ -386,15 +460,16 @@ void BattleView::update()
 		this->state->update();
 		ticks--;
 	}
-	auto clockControl = baseForm->findControlTyped<Label>("CLOCK");
-
-	clockControl->setText(state->gameTime.getTimeString());
+	if (state->current_battle->mode == Battle::Mode::RealTime)
+	{
+		auto clockControl = baseForm->findControlTyped<Label>("CLOCK");
+		clockControl->setText(state->gameTime.getTimeString());
+	}
 
 	// FIXME: Pulsate palette colors for strategy map and gravlifts
 	this->pal = palette;
 
 	// FIXME: Possibly more efficient ways than re-generating all controls every frame?
-
 	activeTab->update();
 	baseForm->update();
 

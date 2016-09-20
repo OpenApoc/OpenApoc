@@ -319,6 +319,7 @@
 		<member>los_blocks</member>
 		<member>mission_type</member>
 		<member>mission_location_id</member>
+		<member>mode</member>
 		<member>player_craft</member>
 		<member type="Section">map_parts</member>
 		<member>units</member>
@@ -413,6 +414,10 @@
 		<member>owner</member>
 		<member>squadNumber</member>
 		<member>squadPosition</member>
+		<member>experiencePoints</member>
+		<member>fatalWounds</member>
+		<member>healingBodyPart</member>
+		<member>isHealing</member>
 		<member>behavior_mode</member>
 		<member>fire_aiming_mode</member>
 		<member>fire_permission_mode</member>
@@ -868,6 +873,11 @@
 		<value>East</value>
 		<value>South</value>
 		<value>West</value>
+	</enum>
+	<enum>
+		<name>Battle::Mode</name>
+		<value>RealTime</value>
+		<value>TurnBased</value>
 	</enum>
 	<enum>
 		<name>BattleMapSector::LineOfSightBlock::SpawnType</name>

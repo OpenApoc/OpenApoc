@@ -45,22 +45,22 @@ class BattleMap : public StateObject<BattleMap>
 	StateRefMap<BattleMapSector> sectors;
 
   private:
-	static sp<Battle> CreateBattle(GameState &state, StateRef<Organisation> target_organisation,
+	static sp<Battle> createBattle(GameState &state, StateRef<Organisation> target_organisation,
 	                               std::list<StateRef<Agent>> &player_agents,
 	                               StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft);
 	
-	static sp<Battle> CreateBattle(GameState &state, StateRef<Organisation> target_organisation,
+	static sp<Battle> createBattle(GameState &state, StateRef<Organisation> target_organisation,
 	                               std::list<StateRef<Agent>> &player_agents,
 	                               StateRef<Vehicle> player_craft,
 	                               StateRef<Building> target_building);
 
-	sp<Battle> CreateBattle(GameState &state, StateRef<Organisation> target_organisation,
+	sp<Battle> createBattle(GameState &state, StateRef<Organisation> target_organisation,
 	                        std::list<StateRef<Agent>> &agents,
 	                        StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
 	                        UString mission_location_id);
 
-	void LoadTilesets(GameState &state) const;
-	static void UnloadTilesets(GameState &state);
+	void loadTilesets(GameState &state) const;
+	static void unloadTilesets(GameState &state);
 
 	friend class Battle;
 };
