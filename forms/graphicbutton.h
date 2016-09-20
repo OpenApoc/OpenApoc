@@ -35,6 +35,8 @@ class GraphicButton : public Control
 	void update() override;
 	void unloadResources() override;
 
+	sp<Sample> getClickSound() const;
+	void setClickSound(sp<Sample> sample);
 	sp<Image> getImage() const;
 	void setImage(sp<Image> Image);
 	sp<Image> getDepressedImage() const;

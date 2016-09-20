@@ -4,12 +4,12 @@
 TACBORD = Real-Time Main
 TACBORD2 = Real-Time Psi-attack
 TACBORD3 = Real-Time Grenade arm
-TACBORD4 = Real-Time Event pause
-TACBORD5 = Real-Time Main
-TACBORD6 = Real-Time Psi-attack
-TACBORD7 = Real-Time Grenade arm
-TACBORD8 = Real-Time Event pause
-TACBORD9 = Real-Time Interrupt
+TACBORD4 = Real-Time Event pause - NOT USED HERE
+TACBORD5 = Turn-Based Main
+TACBORD6 = Turn-Based Psi-attack
+TACBORD7 = Turn-Based Grenade arm
+TACBORD8 = Turn-Based Event pause - NOT USED HERE
+TACBORD9 = Turn-Based Interrupt - NOT USED HERE
  -->
   <!-- Common controls -->
   <form id="FORM_BATTLE_UI">
@@ -108,47 +108,17 @@ TACBORD9 = Real-Time Interrupt
         <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:136:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_LOG">
-        <position x="67" y="1"/>
+        <position x="65" y="1"/>
         <size width="25" height="25"/>
         <image/>
-        <!--<imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:10:xcom3/tacdata/tactical.pal</imagedepressed>-->
+        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:155:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_ZOOM_EVENT">
         <position x="549" y="1"/>
         <size width="25" height="25"/>
         <image/>
-        <!--<imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:11:xcom3/tacdata/tactical.pal</imagedepressed>-->
+        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:156:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
-      <radiobutton id="BUTTON_SPEED0" groupid="SPEED">
-        <position x="583" y="7"/>
-        <size width="53" height="21"/>
-        <image/>
-       <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:144:xcom3/tacdata/tactical.pal</imagechecked>
-      </radiobutton>
-      <radiobutton id="BUTTON_SPEED1" groupid="SPEED">
-        <position x="583" y="53"/>
-        <size width="53" height="21"/>
-        <image/>
-       <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:146:xcom3/tacdata/tactical.pal</imagechecked>
-      </radiobutton>
-      <radiobutton id="BUTTON_SPEED2" groupid="SPEED">
-        <position x="583" y="76"/>
-        <size width="53" height="21"/>
-        <image/>
-       <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:148:xcom3/tacdata/tactical.pal</imagechecked>
-      </radiobutton>
-      <radiobutton id="BUTTON_SPEED3" groupid="SPEED">
-        <position x="583" y="99"/>
-        <size width="53" height="21"/>
-        <image/>
-       <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:150:xcom3/tacdata/tactical.pal</imagechecked>
-      </radiobutton>
-      <label id="CLOCK" text="TICK TOCK">
-        <position x="568" y="34"/>
-        <size width="68" height="12"/>
-        <alignment horizontal="centre" vertical="centre"/>
-        <font>SMALFONT</font>
-      </label>
       <ticker id="NEWS_TICKER">
         <position x="94" y="5"/>
         <size width="452" height="17"/>
@@ -227,6 +197,133 @@ TACBORD9 = Real-Time Interrupt
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:120:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
+	  <!-- Time Controls (Disabled in Turn Based) -->
+	  <radiobutton id="BUTTON_SPEED0" groupid="SPEED">
+        <position x="583" y="7"/>
+        <size width="53" height="21"/>
+        <image/>
+       <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:144:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_SPEED1" groupid="SPEED">
+        <position x="583" y="53"/>
+        <size width="53" height="21"/>
+        <image/>
+       <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:146:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_SPEED2" groupid="SPEED">
+        <position x="583" y="76"/>
+        <size width="53" height="21"/>
+        <image/>
+       <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:148:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_SPEED3" groupid="SPEED">
+        <position x="583" y="99"/>
+        <size width="53" height="21"/>
+        <image/>
+       <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:150:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <label id="CLOCK" text="TICK TOCK">
+        <position x="568" y="34"/>
+        <size width="68" height="12"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+	  <!-- Turn Controls (Disabled in Real Time) -->
+	  <!-- TBD -->
+	  <!-- TBD -->
+	  <!-- TBD -->
+    </style>
+  </form>
+  <!-- Real Time Main Screen -->
+  <form id="FORM_BATTLE_UI_RT_1">
+    <style minwidth="640" minheight="128">
+      <position x="centre" y="bottom"/>
+      <size width="640" height="128"/>
+      <backcolour r="128" g="96" b="80"/>
+      <graphic>
+        <size width="640" height="128"/>
+        <image>RAW:xcom3/tacdata/tacbord.dat:640:128:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+	  <!-- Items in hands -->
+	  <graphic id = "IMAGE_RIGHT_HAND">
+	    <position x="263" y="29"/>
+        <size width="50" height="92"/>
+	    <alignment horizontal = "centre" vertical = "centre"/>
+	  </graphic>
+	  <graphic id = "IMAGE_LEFT_HAND">
+	    <position x="328" y="29"/>
+        <size width="50" height="93"/>
+	    <alignment horizontal = "centre" vertical = "centre"/>
+	  </graphic>
+	  <checkbox id = "BUTTON_RIGHT_HAND">
+	    <position x="266" y="42"/>
+        <size width="45" height="78"/>
+		<imagechecked>battle/battle-item-select-icon.png</imagechecked>
+	  </checkbox>
+	  <checkbox id = "BUTTON_LEFT_HAND">
+	    <position x="329" y="42"/>
+        <size width="45" height="78"/>
+		<imagechecked>battle/battle-item-select-icon.png</imagechecked>
+	  </checkbox>
+	  <graphic id = "IMAGE_RIGHT_DAMAGETYPE">
+	    <position x="229" y="68"/>
+        <size width="29" height="29"/>
+	    <alignment horizontal = "centre" vertical = "centre"/>
+	  </graphic>
+	  <graphic id = "IMAGE_LEFT_DAMAGETYPE">
+	    <position x="382" y="68"/>
+        <size width="29" height="29"/>
+	    <alignment horizontal = "centre" vertical = "centre"/>
+	  </graphic>
+    </style>
+  </form>
+  <!-- Real Time Psi Attack -->
+  <form id="FORM_BATTLE_UI_RT_2">
+    <style minwidth="640" minheight="128">
+      <position x="centre" y="bottom"/>
+      <size width="640" height="128"/>
+      <backcolour r="128" g="96" b="80"/>
+      <graphic>
+        <size width="640" height="128"/>
+        <image>RAW:xcom3/tacdata/tacbord2.dat:640:128:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+	  <!-- PSI interface -->
+	  <!-- TBD -->
+	  <!-- TBD -->
+	  <!-- TBD -->
+    </style>
+  </form>
+  <!-- Real Time Grenade Prime-->
+  <form id="FORM_BATTLE_UI_RT_3">
+    <style minwidth="640" minheight="128">
+      <position x="centre" y="bottom"/>
+      <size width="640" height="128"/>
+      <backcolour r="128" g="96" b="80"/>
+      <graphic>
+        <size width="640" height="128"/>
+        <image>RAW:xcom3/tacdata/tacbord3.dat:640:128:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+      <!-- Grenade interface -->
+	  <!-- TBD -->
+	  <!-- TBD -->
+	  <!-- TBD -->
+    </style>
+  </form>
+  <!-- Turn-Based Main Screen -->
+  <form id="FORM_BATTLE_UI_TB_1">
+    <style minwidth="640" minheight="128">
+      <position x="centre" y="bottom"/>
+      <size width="640" height="128"/>
+      <backcolour r="128" g="96" b="80"/>
+      <graphic>
+        <size width="640" height="128"/>
+        <image>RAW:xcom3/tacdata/tacbord5.dat:640:128:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+	  <!-- Turn based buttons -->
+	  <!-- TBD -->
+	  <!-- TBD -->
+	  <!-- TBD -->
+	  <!-- Items in hands -->
 	  <graphic id = "IMAGE_RIGHT_HAND">
 	    <position x="263" y="29"/>
         <size width="50" height="92"/>
@@ -247,66 +344,6 @@ TACBORD9 = Real-Time Interrupt
         <size width="29" height="29"/>
 	    <alignment horizontal = "centre" vertical = "centre"/>
 	  </graphic>
-    </style>
-  </form>
-  <!-- Real Time Main Screen -->
-  <form id="FORM_BATTLE_UI_RT_1">
-    <style minwidth="640" minheight="128">
-      <position x="centre" y="bottom"/>
-      <size width="640" height="128"/>
-      <backcolour r="128" g="96" b="80"/>
-      <graphic>
-        <size width="640" height="128"/>
-        <image>RAW:xcom3/tacdata/tacbord.dat:640:128:xcom3/tacdata/tactical.pal</image>
-      </graphic>
-    </style>
-  </form>
-  <!-- Real Time Psi Attack -->
-  <form id="FORM_BATTLE_UI_RT_2">
-    <style minwidth="640" minheight="128">
-      <position x="centre" y="bottom"/>
-      <size width="640" height="128"/>
-      <backcolour r="128" g="96" b="80"/>
-      <graphic>
-        <size width="640" height="128"/>
-        <image>RAW:xcom3/tacdata/tacbord2.dat:640:128:xcom3/tacdata/tactical.pal</image>
-      </graphic>
-    </style>
-  </form>
-  <!-- Real Time Grenade Prime-->
-  <form id="FORM_BATTLE_UI_RT_3">
-    <style minwidth="640" minheight="128">
-      <position x="centre" y="bottom"/>
-      <size width="640" height="128"/>
-      <backcolour r="128" g="96" b="80"/>
-      <graphic>
-        <size width="640" height="128"/>
-        <image>RAW:xcom3/tacdata/tacbord3.dat:640:128:xcom3/tacdata/tactical.pal</image>
-      </graphic>
-    </style>
-  </form>
-  <!-- Real Time Main Event Pause -->
-  <form id="FORM_BATTLE_UI_RT_4">
-    <style minwidth="640" minheight="128">
-      <position x="centre" y="bottom"/>
-      <size width="640" height="128"/>
-      <backcolour r="128" g="96" b="80"/>
-      <graphic>
-        <size width="640" height="128"/>
-        <image>RAW:xcom3/tacdata/tacbord4.dat:640:128:xcom3/tacdata/tactical.pal</image>
-      </graphic>
-    </style>
-  </form>
-  <!-- Turn-Based Main Screen -->
-  <form id="FORM_BATTLE_UI_TB_1">
-    <style minwidth="640" minheight="128">
-      <position x="centre" y="bottom"/>
-      <size width="640" height="128"/>
-      <backcolour r="128" g="96" b="80"/>
-      <graphic>
-        <size width="640" height="128"/>
-        <image>RAW:xcom3/tacdata/tacbord5.dat:640:128:xcom3/tacdata/tactical.pal</image>
-      </graphic>
     </style>
   </form>
   <!-- Turn-Based Psi Attack -->
@@ -330,30 +367,6 @@ TACBORD9 = Real-Time Interrupt
       <graphic>
         <size width="640" height="128"/>
         <image>RAW:xcom3/tacdata/tacbord7.dat:640:128:xcom3/tacdata/tactical.pal</image>
-      </graphic>
-    </style>
-  </form>
-  <!-- Turn-Based Event Pause -->
-  <form id="FORM_BATTLE_UI_TB_4">
-    <style minwidth="640" minheight="128">
-      <position x="centre" y="bottom"/>
-      <size width="640" height="128"/>
-      <backcolour r="128" g="96" b="80"/>
-      <graphic>
-        <size width="640" height="128"/>
-        <image>RAW:xcom3/tacdata/tacbord8.dat:640:128:xcom3/tacdata/tactical.pal</image>
-      </graphic>
-    </style>
-  </form>
-  <!-- Turn-Based Interrupt -->
-  <form id="FORM_BATTLE_UI_TB_5">
-    <style minwidth="640" minheight="128">
-      <position x="centre" y="bottom"/>
-      <size width="640" height="128"/>
-      <backcolour r="128" g="96" b="80"/>
-      <graphic>
-        <size width="640" height="128"/>
-        <image>RAW:xcom3/tacdata/tacbord9.dat:640:128:xcom3/tacdata/tactical.pal</image>
       </graphic>
     </style>
   </form>

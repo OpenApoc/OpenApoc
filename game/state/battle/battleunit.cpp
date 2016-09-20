@@ -37,6 +37,18 @@ namespace OpenApoc
 		b->forces[owner].insertAt(squadNumber, position, shared_from_this());
 	}
 
+	bool BattleUnit::isFatallyWounded()
+	{
+		for (auto e : fatalWounds)
+		{
+			if (e.second > 0)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	void BattleUnit::setPosition(const Vec3<float> &pos)
 	{
 		this->position = pos;

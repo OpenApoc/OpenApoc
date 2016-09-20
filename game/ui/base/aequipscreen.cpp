@@ -135,11 +135,10 @@ bool AEquipScreen::isTransition() { return false; }
 void AEquipScreen::setSelectedAgent(sp<Agent> agent)
 {
 	this->currentAgent = agent;
-	;
 
 	this->form->findControlTyped<Label>("AGENT_NAME")->setText(agent->name);
 	this->form->findControlTyped<Graphic>("SELECTED_PORTRAIT")
-	    ->setImage(agent->get_portrait().photo);
+	    ->setImage(agent->getPortrait().photo);
 	// FIXME: Make stats colours part of GameState
 	// FIXME: 'initial' colours taken from screenshot, 'current' guessed
 	Colour healthInitialColour{156, 4, 4};

@@ -10,14 +10,14 @@ BattleForces::BattleForces() : squads(6) {};
 
 bool BattleForces::insert(unsigned squad, sp<BattleUnit> unit)
 {
-	if (squads[squad].getNumUnits() == 6 && unit->squadNumber != squad)
+	if (squads[squad].getNumUnits() == 6 && unit->squadNumber != (int)squad)
 		return false;
 	return insertAt(squad, squads[squad].getNumUnits(), unit);
 }
 
 bool BattleForces::insertAt(unsigned squad, unsigned position, sp<BattleUnit> unit)
 {
-	if (squads[squad].getNumUnits() == 6 && unit->squadNumber != squad)
+	if (squads[squad].getNumUnits() == 6 && unit->squadNumber != (int)squad)
 		return false;
 	if (unit->squadNumber != -1)
 	{

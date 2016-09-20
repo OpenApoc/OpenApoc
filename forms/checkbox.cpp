@@ -24,7 +24,10 @@ void CheckBox::eventOccured(Event *e)
 	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
 	    e->forms().EventFlag == FormEventType::MouseDown)
 	{
-		fw().soundBackend->playSample(buttonclick);
+		if (buttonclick)
+		{
+			fw().soundBackend->playSample(buttonclick);
+		}
 	}
 
 	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
@@ -62,6 +65,10 @@ void CheckBox::unloadResources()
 	imageunchecked.reset();
 	Control::unloadResources();
 }
+
+sp<Sample> CheckBox::getClickSound() const { return buttonclick; }
+
+void CheckBox::setClickSound(sp<Sample> sample) { buttonclick = sample; }
 
 void CheckBox::setChecked(bool checked)
 {

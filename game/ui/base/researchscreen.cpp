@@ -417,7 +417,7 @@ sp<Control> ResearchScreen::createAgentControl(Vec2<int> size, StateRef<Agent> a
 	auto frameGraphic = baseControl->createChild<Graphic>(fw().data->loadImage(agentFramePath));
 	frameGraphic->AutoSize = true;
 	frameGraphic->Location = {5, 5};
-	auto photoGraphic = frameGraphic->createChild<Graphic>(agent->get_portrait().icon);
+	auto photoGraphic = frameGraphic->createChild<Graphic>(agent->getPortrait().icon);
 	photoGraphic->AutoSize = true;
 	photoGraphic->Location = {1, 1};
 

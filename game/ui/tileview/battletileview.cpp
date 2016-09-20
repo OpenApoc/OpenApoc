@@ -3,6 +3,7 @@
 #include "framework/framework.h"
 #include "framework/includes.h"
 #include "game/state/battle/battle.h"
+#include "game/state/tileview/tileobject_battleunit.h"
 
 namespace OpenApoc
 {
@@ -24,6 +25,40 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 		fw().data->loadImage("battle/selected-battletile-background-front.png");
 	selectedTileImageOffset = { 23, 22 };
 	pal = fw().data->loadPalette("xcom3/tacdata/tactical.pal");
+
+	for (int i = 0; i < 6; i++)
+	{
+		activeUnitSelectionArrow.push_back(fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+			"icons.tab:%d:xcom3/tacdata/tactical.pal", 167 + i)));
+		inactiveUnitSelectionArrow.push_back(fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+			"icons.tab:%d:xcom3/tacdata/tactical.pal", 173 + i)));
+	}
+	
+	behaviorUnitSelectionUnderlay[BattleUnit::BehaviorMode::Evasive] = fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal", 190));
+	behaviorUnitSelectionUnderlay[BattleUnit::BehaviorMode::Normal] = fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal", 191));
+	behaviorUnitSelectionUnderlay[BattleUnit::BehaviorMode::Aggressive] = fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal", 192));
+
+	runningIcon = fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal", 193));
+
+	bleedingIcon = fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal", 194));
+
+	int healingIconsInARow = 4;
+	for (int i = 0; i < healingIconsInARow; i++)
+	{
+		healingIcons.push_back(fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+			"icons.tab:%d:xcom3/tacdata/tactical.pal", 195)));
+	}
+	for (int i = 0; i < healingIconsInARow; i++)
+	{
+		healingIcons.push_back(fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+			"icons.tab:%d:xcom3/tacdata/tactical.pal", 196)));
+	}
+	healingIcon = *healingIcons.begin();
 };
 
 BattleTileView::~BattleTileView() = default;
@@ -72,6 +107,14 @@ void BattleTileView::render()
 	Renderer &r = *fw().renderer;
 	r.clear();
 	r.setPalette(this->pal);
+
+	// Rotate Healing Icons
+	{
+		auto pos = ++std::find(healingIcons.begin(), healingIcons.end(), healingIcon);
+		if (pos == healingIcons.end())
+			pos = healingIcons.begin();
+		healingIcon = *pos;
+	}
 
 	applyScrolling();
 
@@ -173,110 +216,280 @@ void BattleTileView::render()
 	*/
 
 	// FIXME: Draw double selection bracket for big units?
-
-	for (int z = zFrom; z < zTo; z++)
+	switch (this->viewMode)
 	{
-		int currentLevel = z - currentZLevel + 1;
-
-		// Find out when to draw selection bracket parts (if ever)
-		Tile *selTileOnCurLevel = nullptr;
-		Vec3<int> selTilePosOnCurLevel;
-		sp<TileObject> drawBackBeforeThis;
-		sp<Image> selectionImageBack;
-		sp<Image> selectionImageFront;
-		if (this->viewMode == TileViewMode::Isometric)
+		case TileViewMode::Isometric:
 		{
-			if (selectedTilePosition.z >= z &&
-				selectedTilePosition.x >= minX && selectedTilePosition.x < maxX &&
-				selectedTilePosition.y >= minY && selectedTilePosition.y < maxY)
-			{
-				selTilePosOnCurLevel = { selectedTilePosition.x, selectedTilePosition.y, z };
-				selTileOnCurLevel = map.getTile(selTilePosOnCurLevel.x, selTilePosOnCurLevel.y,
-					selTilePosOnCurLevel.z);
+			std::list<sp<TileObjectBattleUnit>> unitsToDraw;
 
-				// Find where to draw back selection bracket
-				auto object_count = selTileOnCurLevel->drawnObjects[0].size();
-				for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+			for (int z = zFrom; z < zTo; z++)
+			{
+				int currentLevel = z - currentZLevel + 1;
+
+				// Find out when to draw selection bracket parts (if ever)
+				Tile *selTileOnCurLevel = nullptr;
+				Vec3<int> selTilePosOnCurLevel;
+				sp<TileObject> drawBackBeforeThis;
+				sp<Image> selectionImageBack;
+				sp<Image> selectionImageFront;
+
+				if (selectedTilePosition.z >= z &&
+					selectedTilePosition.x >= minX && selectedTilePosition.x < maxX &&
+					selectedTilePosition.y >= minY && selectedTilePosition.y < maxY)
 				{
-					auto &obj = selTileOnCurLevel->drawnObjects[0][obj_id];
-					if (!drawBackBeforeThis && obj->getType() != TileObject::Type::Ground)
-						drawBackBeforeThis = obj;
-				}
-				// Find what kind of selection bracket to draw (yellow or green)
-				// Yellow if this tile intersects with a unit
-				if (selectedTilePosition.z == z)
-				{
-					if (selTileOnCurLevel->getUnitIfPresent())
+					selTilePosOnCurLevel = { selectedTilePosition.x, selectedTilePosition.y, z };
+					selTileOnCurLevel = map.getTile(selTilePosOnCurLevel.x, selTilePosOnCurLevel.y,
+						selTilePosOnCurLevel.z);
+
+					// Find where to draw back selection bracket
+					auto object_count = selTileOnCurLevel->drawnObjects[0].size();
+					for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 					{
-						selectionImageBack = selectedTileFilledImageBack;
-						selectionImageFront = selectedTileFilledImageFront;
+						auto &obj = selTileOnCurLevel->drawnObjects[0][obj_id];
+						if (!drawBackBeforeThis && obj->getType() != TileObject::Type::Ground)
+							drawBackBeforeThis = obj;
+					}
+					// Find what kind of selection bracket to draw (yellow or green)
+					// Yellow if this tile intersects with a unit
+					if (selectedTilePosition.z == z)
+					{
+						if (selTileOnCurLevel->getUnitIfPresent())
+						{
+							selectionImageBack = selectedTileFilledImageBack;
+							selectionImageFront = selectedTileFilledImageFront;
+						}
+						else
+						{
+							selectionImageBack = selectedTileEmptyImageBack;
+							selectionImageFront = selectedTileEmptyImageFront;
+						}
 					}
 					else
 					{
-						selectionImageBack = selectedTileEmptyImageBack;
-						selectionImageFront = selectedTileEmptyImageFront;
+						selectionImageBack = selectedTileBackgroundImageBack;
+						selectionImageFront = selectedTileBackgroundImageFront;
 					}
 				}
-				else
-				{
-					selectionImageBack = selectedTileBackgroundImageBack;
-					selectionImageFront = selectedTileBackgroundImageFront;
-				}
-			}
-		}
 
-		// Actually draw stuff
-		for (int layer = 0; layer < map.getLayerCount(); layer++)
-		{
-			for (int y = minY; y < maxY; y++)
-			{
-				for (int x = minX; x < maxX; x++)
+				// Actually draw stuff
+				for (int layer = 0; layer < map.getLayerCount(); layer++)
 				{
-					auto tile = map.getTile(x, y, z);
-					auto object_count = tile->drawnObjects[layer].size();
-					// I assume splitting it here will improve performance?
-					if (tile == selTileOnCurLevel && layer == 0)
+					for (int y = minY; y < maxY; y++)
 					{
-						for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+						for (int x = minX; x < maxX; x++)
 						{
-							auto &obj = tile->drawnObjects[layer][obj_id];
-							// Back selection image is drawn
-							// between ground image and everything else
-							if (obj == drawBackBeforeThis)
-								r.draw(selectionImageBack,
+							auto tile = map.getTile(x, y, z);
+							auto object_count = tile->drawnObjects[layer].size();
+							// I assume splitting it here will improve performance?
+							if (tile == selTileOnCurLevel && layer == 0)
+							{
+								for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+								{
+									auto &obj = tile->drawnObjects[layer][obj_id];
+									if (obj->getType() == TileObject::Type::Unit)
+									{
+										unitsToDraw.push_back(std::static_pointer_cast<TileObjectBattleUnit>(obj));
+									}
+									// Back selection image is drawn
+									// between ground image and everything else
+									if (obj == drawBackBeforeThis)
+										r.draw(selectionImageBack,
+											tileToOffsetScreenCoords(selTilePosOnCurLevel) -
+											selectedTileImageOffset);
+									Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
+									obj->draw(r, *this, pos, this->viewMode, currentLevel);
+								}
+								// When done with all objects, draw the front selection image
+								// (and back selection image if we haven't yet)
+								if (!drawBackBeforeThis)
+									r.draw(selectionImageBack,
+										tileToOffsetScreenCoords(selTilePosOnCurLevel) -
+										selectedTileImageOffset);
+								r.draw(selectionImageFront,
 									tileToOffsetScreenCoords(selTilePosOnCurLevel) -
 									selectedTileImageOffset);
-							Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
-							obj->draw(r, *this, pos, this->viewMode, currentLevel);
-						}
-						// When done with all objects, draw the front selection image
-						// (and back selection image if we haven't yet)
-						if (!drawBackBeforeThis)
-							r.draw(selectionImageBack,
-								tileToOffsetScreenCoords(selTilePosOnCurLevel) -
-								selectedTileImageOffset);
-						r.draw(selectionImageFront,
-							tileToOffsetScreenCoords(selTilePosOnCurLevel) -
-							selectedTileImageOffset);
-					}
-					else
-					{
-						auto tile = map.getTile(x, y, z);
-						auto object_count = tile->drawnObjects[layer].size();
-						for (size_t obj_id = 0; obj_id < object_count; obj_id++)
-						{
-							auto &obj = tile->drawnObjects[layer][obj_id];
-							Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
-							obj->draw(r, *this, pos, this->viewMode, currentLevel);
+							}
+							else
+							{
+								for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+								{
+									auto &obj = tile->drawnObjects[layer][obj_id];
+									if (obj->getType() == TileObject::Type::Unit)
+									{
+										unitsToDraw.push_back(std::static_pointer_cast<TileObjectBattleUnit>(obj));
+									}
+									Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
+									obj->draw(r, *this, pos, this->viewMode, currentLevel);
+								}
+							}
 						}
 					}
 				}
 			}
+
+			if (selectedUnits.size() > 0)
+			{
+				for (auto obj : unitsToDraw)
+				{
+					auto selectedPos = std::find(selectedUnits.begin(), selectedUnits.end(), obj->getUnit());
+
+					if (selectedPos == selectedUnits.begin())
+					{
+						drawUnitSelectionArrow(r, obj, true);
+					}
+					else if (selectedPos != selectedUnits.end())
+					{
+						drawUnitSelectionArrow(r, obj, false);
+					}
+				}
+			}
+		}
+		break;
+		case TileViewMode::Strategy:
+		{
+			std::list<sp<TileObject>> unitsToDraw;
+			std::list<sp<TileObject>> itemsToDraw;
+
+			for (int z = 0; z < zFrom; z++)
+			{
+				for (int layer = 0; layer < map.getLayerCount(); layer++)
+				{
+					for (int y = minY; y < maxY; y++)
+					{
+						for (int x = minX; x < maxX; x++)
+						{
+							auto tile = map.getTile(x, y, z);
+							auto object_count = tile->drawnObjects[layer].size();
+
+							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+							{
+								auto &obj = tile->drawnObjects[layer][obj_id];
+								if (obj->getType() == TileObject::Type::Unit)
+								{
+									unitsToDraw.push_back(obj);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			for (int z = zFrom; z < zTo; z++)
+			{
+				// currentZLevel is an upper exclusive boundary, that's why we need to sub 1 here
+				int currentLevel = z - (currentZLevel - 1);
+
+				for (int layer = 0; layer < map.getLayerCount(); layer++)
+				{
+					for (int y = minY; y < maxY; y++)
+					{
+						for (int x = minX; x < maxX; x++)
+						{
+							auto tile = map.getTile(x, y, z);
+							auto object_count = tile->drawnObjects[layer].size();
+
+							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+							{
+								auto &obj = tile->drawnObjects[layer][obj_id];
+								if (obj->getType() == TileObject::Type::Unit)
+								{
+									unitsToDraw.push_back(obj);
+									continue;
+								}
+								else if (obj->getType() == TileObject::Type::Item)
+								{
+									if (currentLevel == 0)
+									{
+										itemsToDraw.push_back(obj);
+									}
+									continue;
+								}
+
+								Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
+								obj->draw(r, *this, pos, this->viewMode, currentLevel);
+							}
+						}
+					}
+				}
+			}
+
+			for (int z = zTo; z < maxZDraw; z++)
+			{
+				for (int layer = 0; layer < map.getLayerCount(); layer++)
+				{
+					for (int y = minY; y < maxY; y++)
+					{
+						for (int x = minX; x < maxX; x++)
+						{
+							auto tile = map.getTile(x, y, z);
+							auto object_count = tile->drawnObjects[layer].size();
+
+							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+							{
+								auto &obj = tile->drawnObjects[layer][obj_id];
+								if (obj->getType() == TileObject::Type::Unit)
+								{
+									unitsToDraw.push_back(obj);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			for (auto obj : unitsToDraw)
+			{
+				Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
+				obj->draw(r, *this, pos, this->viewMode, obj->getOwningTile()->position.z - (currentZLevel - 1));
+			}
+
+			for (auto obj : itemsToDraw)
+			{
+				Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
+				obj->draw(r, *this, pos, this->viewMode, obj->getOwningTile()->position.z - (currentZLevel - 1));
+			}
+
+
+			renderStrategyOverlay(r);
+		}
+		break;
+		default:
+			LogError("Unexpected tile view mode \"%d\"", (int)this->viewMode);
+			break;
+	}
+}
+
+void BattleTileView::drawUnitSelectionArrow(Renderer &r, sp<TileObjectBattleUnit> obj, bool first)
+{
+	static const Vec2<float> offset = { -13.0f, -43.0f };
+	static const Vec2<float> offsetRunning = { 0.0f, 0.0f };
+	static const Vec2<float> offsetBehavior = { 0.0f, 0.0f };
+	static const Vec2<float> offsetBleed = { -5.0f, 0.0f };
+
+	auto u = obj->getUnit();
+	Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition()) + offset;
+
+	// FIXME: Draw hit points
+	r.draw(first ? activeUnitSelectionArrow[u->squadNumber] : inactiveUnitSelectionArrow[u->squadNumber], pos);
+	r.draw(behaviorUnitSelectionUnderlay[u->behavior_mode], pos + offsetBehavior);
+
+	if (u->movement_mode == BattleUnit::MovementMode::Running)
+	{
+		r.draw(runningIcon, pos + offsetRunning);
+	}
+	if (u->isFatallyWounded())
+	{
+		if (u->isHealing)
+		{
+			r.draw(bleedingIcon, pos + offsetBleed);
+		}
+		else
+		{
+			r.draw(healingIcon, pos + offsetBleed);
 		}
 	}
-
-	renderStrategyOverlay(r);
 }
+
 
 void BattleTileView::setZLevel(int zLevel)
 {
@@ -290,6 +503,4 @@ void BattleTileView::setLayerDrawingMode(LayerDrawingMode mode)
 {
 	layerDrawingMode = mode;
 }
-
-
 }
