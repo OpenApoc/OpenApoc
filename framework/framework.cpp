@@ -826,7 +826,9 @@ void Framework::displayInitialise()
 	SDL_ShowCursor(SDL_DISABLE);
 
 	p->registeredRenderers["GLES_3_0"].reset(getGLES30RendererFactory());
+#ifndef __ANDROID__ //GL2 is not available on Android
 	p->registeredRenderers["GL_2_0"].reset(getGL20RendererFactory());
+#endif
 
 	for (auto &rendererName : Settings->getString("Visual.Renderers").split(':'))
 	{
