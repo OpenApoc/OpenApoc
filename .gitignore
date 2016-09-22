@@ -98,3 +98,5 @@ saves/
 game/state/gamestate_serialize_generated.cpp
 game/state/gamestate_serialize_generated.h
 
+OpenApoc.exe.lnk
+OpenApoc.lnk
