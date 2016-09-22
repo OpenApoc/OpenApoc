@@ -2,18 +2,16 @@
 #include "framework/includes.h"
 #include "framework/logger.h"
 #include "game/state/tileview/tileobject.h"
+#include "game/state/battle/battle.h"
 #include "library/sp.h"
 #include <functional>
 #include <set>
 #include <vector>
 
-// DANGER WILL ROBINSON - MADE UP VALUES AHEAD
-// I suspect quantities of distance/velocity are stored in units of {32,32,16} (same as the voxel
-// size)?
-// And progressing them by 1/15th of that every tick looks about right?
-#define TICK_SCALE (15)
+#define TICK_SCALE (36)
 #define VELOCITY_SCALE_CITY (Vec3<float>{32, 32, 16})
 #define VELOCITY_SCALE_BATTLE (Vec3<float>{24, 24, 20})
+#define FALLING_SPEED_CAP float(20)
 
 namespace OpenApoc
 {
@@ -39,6 +37,7 @@ class BattleUnit;
 class TileObjectBattleUnit;
 class BattleItem;
 class TileObjectBattleItem;
+class Sample;
 
 class TileTransform
 {
@@ -63,6 +62,8 @@ class Tile
 	std::set<sp<TileObject>> intersectingObjects;
 
 	// FIXME: This is effectively a z-sorted list of ownedObjects - can this be merged somehow?
+	// Alexey Andronov (Istrebitel): This is no longer so, because
+	// units are drawn on a tile different to their owner tile.
 	std::vector<std::vector<sp<TileObject>>> drawnObjects;
 
 	Tile(TileMap &map, Vec3<int> position, int layerCount);
@@ -70,28 +71,51 @@ class Tile
 	// Only used by Battle
 
 	// Returns unit present in the tile, if any
-	sp<TileObjectBattleUnit> getUnitIfPresent();
+	sp<TileObjectBattleUnit> getUnitIfPresent(bool onlyConscious = false, sp<TileObjectBattleUnit> exceptThis = nullptr);
 	// Returns resting position for items and units in the tile
-	Vec3<float> getRestingPosition();
+	Vec3<float> getRestingPosition(bool large = false);
+	// Returns if the tile is passable (including side tiles for large)
+	bool getPassable(bool large = false);
+	// Returns if the tile provides ground for standing (including side tiles for large)
+	bool getCanStand(bool large = false);
+	// Returns if the tile is solid (cannot pop head into it)
+	bool getSolidGround(bool large = false);
 	// Updates tile height and passability values
-	void updateHeightAndPassability();
+	void updateBattlescapeHeightAndPassability();
+	// Updates battlescape ui draw order variables
+	void updateBattlescapeUIDrawOrder();
 
-	// Height, 0-1, of the tile's ground and feature
-	float height = 0.0f;
+	// Height, 0.025-1.000, of the tile's ground and feature's height
+	// Height cannot be 0 as that is equal to 1.000 on the tile below
+	float height = 1.0 / (float) TILE_Z_BATTLE;
 	// Movement cost through the tile's ground (or feature)
-	int movementCostIn = -1;
+	int movementCostIn = 4;
+	// Movement cost to walk on the level above this, if next level is empty and this has height = 40
+	int movementCostOver = 255;
 	// Movement cost through the tile's left wall
-	int movementCostLeft = -1;
+	int movementCostLeft = 0;
 	// Movement cost through the tile's right wall
-	int movementCostRight = -1;
+	int movementCostRight = 0;
 	// Tile provides solid ground for standing. 
-	// False = only flyers can stand here, True = cannot pop head into this tile when ascending
+	// True = cannot pop head into this tile when ascending
 	bool solidGround = false;
+	// False = only flyers can stand here, True = anyone can
+	bool canStand = false;
+	// True = anyone can go upwards from this tile to another lift tile
+	bool hasLift = false;
+	// position in drawnObjects vector to draw back selection bracket at
+	int drawBattlescapeSelectionBackAt = 0;
+	// position in drawnObjects vector to draw target location at
+	int drawTargetLocationIconAt = 0;
+	// sfx to use when passing through tile
+	sp<std::vector<sp<Sample>>> walkSfx;
 };
 
 class CanEnterTileHelper
 {
   public:
+	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
+	virtual bool canEnterTile(Tile *from, Tile *to, float &cost) const = 0;
 	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
 	virtual bool canEnterTile(Tile *from, Tile *to) const = 0;
 	virtual float adjustCost(Vec3<int> /*  nextPosition */, int /* z */) const { return 0; }

@@ -6,12 +6,6 @@
 
 namespace OpenApoc
 {
-	void TileObjectBattleUnit::setBounds(Vec3<float> bounds)
-	{
-		TileObject::setBounds(bounds);
-		tileOffset = bounds_div_2 - 0.001f;
-	}
-
 	void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
 		TileViewMode mode, int currentLevel)
 	{
@@ -61,7 +55,7 @@ namespace OpenApoc
 				unit->agent->getItemInHands(), unit->facing,
 				unit->current_body_state, unit->target_body_state,
 				unit->current_hand_state, unit->target_hand_state,
-				unit->movement_state, unit->getBodyAnimationFrame(), unit->getHandAnimationFrame(), unit->getDistanceTravelled());
+				unit->usingLift ? AgentType::MovementState::None : unit->current_movement_state, unit->getBodyAnimationFrame(), unit->getHandAnimationFrame(), unit->getDistanceTravelled());
 			break;
 		}
 		case TileViewMode::Strategy:
@@ -128,9 +122,9 @@ namespace OpenApoc
 		: TileObject(map, Type::Unit, Vec3<float>{0, 0, 0}), unit(unit)
 	{
 		if (unit->agent->type->large)
-			setBounds({ 2.0f, 2.0f, 2.0f });
+			setBounds({ 2.0f, 2.0f, (float)unit->agent->type->height / 40.0f });
 		else
-			setBounds({ 1.0f, 1.0f, 1.0f });
+			setBounds({ 1.0f, 1.0f, (float)unit->agent->type->height / 40.0f });
 	}
 
 	Vec3<float> TileObjectBattleUnit::getCentrePosition()

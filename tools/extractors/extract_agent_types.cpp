@@ -295,6 +295,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state, Difficulty)
 		
 		// Allowed body states, voxel maps and animations
 		std::map<AgentType::BodyState, Vec2<int>> voxelInfo;
+		a->height = data.loftemps_height;
 		a->appearance_count = 1;
 		switch (i)
 		{
@@ -764,6 +765,148 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state, Difficulty)
 					BattleUnitImagePack::getPrefix(), "micro") };
 				break;
 		}
+
+		// Sounds
+
+		// Aliens have no damage and fatal damage sounds
+		// By default, all aliens have 2 walk, 2 cry and 1 die sound
+		UString walkSfxName = "";
+		int walkSfxCount = 2;
+		bool walkSfxNumbered = true;
+		UString crySfxName = "";
+		int crySfxCount = 2;
+		bool crySfxNumbered = true;
+		UString dieSfxName = "";
+		// Assign sound names to aliens
+		switch (i)
+		{
+		case UNIT_TYPE_MULTIWORM_EGG:
+			walkSfxCount = 0;
+			crySfxCount = 0;
+			dieSfxName = "wormegg";
+			break;
+		case UNIT_TYPE_BRAINSUCKER:
+			walkSfxName = "scuttle";
+			walkSfxNumbered = false;
+			walkSfxCount = 1;
+			crySfxName = "brnsukr";
+			dieSfxName = "brnsukr2";
+			break;
+		case UNIT_TYPE_MULTIWORM:
+			walkSfxName = "multworm";
+			walkSfxNumbered = false;
+			crySfxName = "mworm";
+			dieSfxName = "gunk";
+			break;
+		case UNIT_TYPE_HYPERWORM:
+			walkSfxName = "hypworm";
+			walkSfxCount = 1;
+			crySfxCount = 0;
+			dieSfxName = "hypwrm01";
+			break;
+		case UNIT_TYPE_CRYSALIS:
+			walkSfxCount = 0;
+			crySfxName = "saliscry";
+			crySfxNumbered = false;
+			dieSfxName = "chrysals";
+			break;
+		case UNIT_TYPE_ANTHROPOD:
+			walkSfxName = "anthrop";
+			walkSfxCount = 1;
+			crySfxName = "anthrpd";
+			dieSfxName = "anthrpd1";
+			break;
+		case UNIT_TYPE_SKELETOID:
+			walkSfxName = "skelstp";
+			crySfxName = "skeletld";
+			crySfxNumbered = false;
+			dieSfxName = "skeletd1";
+			break;
+		case UNIT_TYPE_SPITTER:
+			walkSfxName = "spitter";
+			crySfxName = "spittr";
+			dieSfxName = "spittr1";
+			break;
+		case UNIT_TYPE_POPPER:
+			walkSfxName = "popper";
+			crySfxName = "popper";
+			dieSfxName = "";
+			break;
+		case UNIT_TYPE_MEGASPAWN:
+			walkSfxName = "megtron";
+			crySfxName = "megtron";
+			crySfxNumbered = false;
+			dieSfxName = "meghowl";
+			break;
+		case UNIT_TYPE_PSIMORPH:
+			walkSfxCount = 0;
+			crySfxName = "psimrph";
+			dieSfxName = "howl";
+			break;
+		case UNIT_TYPE_QUEENSPAWN:
+			walkSfxName = "queenspn"; // Even though queen is static
+			walkSfxNumbered = false;
+			crySfxName = "queensp";
+			crySfxCount = 1;
+			dieSfxName = "queensp2";
+			break;
+		case UNIT_TYPE_MICRONOID:
+			walkSfxCount = 0;
+			crySfxCount = 0;
+			dieSfxName = "";
+			break;
+		// All humans
+		default:
+			// Humans will be assigned sounds manually
+			break;
+		}
+		
+		// Load sounds
+		switch (i)
+		{
+		case UNIT_TYPE_MULTIWORM_EGG:
+		case UNIT_TYPE_BRAINSUCKER:
+		case UNIT_TYPE_MULTIWORM:
+		case UNIT_TYPE_HYPERWORM:
+		case UNIT_TYPE_CRYSALIS:
+		case UNIT_TYPE_ANTHROPOD:
+		case UNIT_TYPE_SKELETOID:
+		case UNIT_TYPE_SPITTER:
+		case UNIT_TYPE_POPPER:
+		case UNIT_TYPE_MEGASPAWN:
+		case UNIT_TYPE_PSIMORPH:
+		case UNIT_TYPE_QUEENSPAWN:
+		case UNIT_TYPE_MICRONOID:
+			if (walkSfxNumbered)
+				for (int i = 1;i <= walkSfxCount;i++)
+					a->walkSfx.push_back(fw().data->loadSample(UString::format("RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/%s%d.raw:22050", walkSfxName, i)));
+			else
+				a->walkSfx.push_back(fw().data->loadSample(UString::format("RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/%s.raw:22050", walkSfxName)));
+			if (crySfxNumbered)
+				for (int i = 1;i <= crySfxCount;i++)
+					a->crySfx.push_back(fw().data->loadSample(UString::format("RAWSOUND:xcom3/rawsound/tactical/aliens/cries/%s%d.raw:22050", crySfxName, i)));
+			else
+				a->crySfx.push_back(fw().data->loadSample(UString::format("RAWSOUND:xcom3/rawsound/tactical/aliens/cries/%s.raw:22050", crySfxName)));
+			if (dieSfxName.length()>0)
+				a->dieSfx[AgentType::Gender::Male].push_back(fw().data->loadSample(UString::format("RAWSOUND:xcom3/rawsound/tactical/aliens/deaths/%s.raw:22050", dieSfxName)));
+			break;
+		default:
+			// Humans have no walk sounds and no cries
+			for (int i = 1;i <= 3;i++)
+			{
+				a->damageSfx[AgentType::Gender::Male].push_back(fw().data->loadSample(UString::format("RAWSOUND:xcom3/rawsound/extra/hpainm%d.raw:22050", i)));
+				a->fatalWoundSfx[AgentType::Gender::Male].push_back(fw().data->loadSample(UString::format("RAWSOUND:xcom3/rawsound/extra/hdethm%d.raw:22050", i)));
+				a->dieSfx[AgentType::Gender::Male].push_back(fw().data->loadSample(UString::format("RAWSOUND:xcom3/rawsound/extra/hdethm%d.raw:22050", i)));
+			}
+			for (int i = 1;i <= 2;i++)
+			{
+				a->damageSfx[AgentType::Gender::Female].push_back(fw().data->loadSample(UString::format("RAWSOUND:xcom3/rawsound/extra/hpainf%d.raw:22050", i)));
+				a->fatalWoundSfx[AgentType::Gender::Female].push_back(fw().data->loadSample(UString::format("RAWSOUND:xcom3/rawsound/extra/hdethf%d.raw:22050", i)));
+				a->dieSfx[AgentType::Gender::Female].push_back(fw().data->loadSample(UString::format("RAWSOUND:xcom3/rawsound/extra/hdethf%d.raw:22050", i)));
+			}
+			break;
+		}
+
 
 		// Stats 
 		a->min_stats.accuracy = 100 - data.accuracy_base - data.accuracy_inc;

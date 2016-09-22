@@ -39,8 +39,6 @@ class Vehicle : public StateObject<Vehicle>, public std::enable_shared_from_this
 	~Vehicle() override;
 	Vehicle();
 
-	static const unsigned SHIELD_RECHARGE_TIME = TICKS_PER_SECOND * 200;
-
 	enum class AttackMode
 	{
 		Aggressive,
@@ -114,6 +112,7 @@ class Vehicle : public StateObject<Vehicle>, public std::enable_shared_from_this
 
 	int getMaxShield() const;
 	int getShield() const;
+	int getShieldRechargeRate() const;
 
 	// This is the 'sum' of all armors?
 	int getArmor() const;

@@ -67,6 +67,7 @@ class FlyingVehicleMover : public VehicleMover
 				float distanceToGoal = glm::length(vectorToGoal * VELOCITY_SCALE_CITY);
 				if (distanceToGoal <= distanceLeft)
 				{
+					// FIXME: Aren't we essentially setting vehicle position every update for no reason? What if it doesn't need to move? 
 					distanceLeft -= distanceToGoal;
 					vehicle.setPosition(goalPosition);
 					auto dir = glm::normalize(vectorToGoal);
@@ -287,12 +288,11 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	int maxShield = this->getMaxShield();
 	if (maxShield)
 	{
-		int threshold = SHIELD_RECHARGE_TIME / maxShield;
 		this->shieldRecharge += ticks;
-		if (this->shieldRecharge > threshold)
+		if (this->shieldRecharge > TICKS_PER_SECOND)
 		{
-			this->shield += this->shieldRecharge / threshold;
-			this->shieldRecharge %= threshold;
+			this->shield += this->getShieldRechargeRate() * this->shieldRecharge / TICKS_PER_SECOND;
+			this->shieldRecharge %= TICKS_PER_SECOND;
 			if (this->shield > maxShield)
 			{
 				this->shield = maxShield;
@@ -580,6 +580,20 @@ int Vehicle::getMaxShield() const
 	}
 
 	return maxShield;
+}
+
+int Vehicle::getShieldRechargeRate() const
+{
+	int shieldRecharge = 0;
+
+	for (auto &e : this->equipment)
+	{
+		if (e->type->type != VEquipmentType::Type::General)
+			continue;
+		shieldRecharge += e->type->shielding > 0 ? 1 : 0;
+	}
+
+	return shieldRecharge;
 }
 
 int Vehicle::getShield() const { return this->shield; }

@@ -9,16 +9,13 @@
 namespace OpenApoc
 {
 
-#define CITY_TILE_X (64)
-#define CITY_TILE_Y (32)
-#define CITY_TILE_Z (16)
+#define TILE_X_CITY (64)
+#define TILE_Y_CITY (32)
+#define TILE_Z_CITY (16)
 
-#define CITY_VOXEL_X (32)
-#define CITY_VOXEL_Y (32)
-#define CITY_VOXEL_Z (16)
-
-#define CITY_STRAT_TILE_X 8
-#define CITY_STRAT_TILE_Y 8
+#define VOXEL_X_CITY (32)
+#define VOXEL_Y_CITY (32)
+#define VOXEL_Z_CITY (16)
 
 class Vehicle;
 class GameState;

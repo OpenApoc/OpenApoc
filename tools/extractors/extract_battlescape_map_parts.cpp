@@ -140,9 +140,42 @@ static void readBattleMapParts(GameState &state, TACP &data_t, sp<BattleMapTiles
 		object->imageOffset = {23, 34};
 
 		object->transparent = entry.transparent == 1;
-		// FIXME: Were to find those? Throws error for every possible value! Values from 0 to 8
-		// object->sfx =
-		// fw().data->loadSample(UString::format("RAWSOUND:%d", (int)entry.sfx));
+		UString sfx_name = "";
+		switch (entry.sfx)
+		{
+		case SOUND_NONE:
+			break;
+		case SOUND_CONC:
+			sfx_name = "ftconc";
+			break;
+		case SOUND_MARB:
+			sfx_name = "ftmarb";
+			break;
+		case SOUND_METAL:
+			sfx_name = "ftmetal";
+			break;
+		case SOUND_MUD:
+			sfx_name = "ftmud";
+			break;
+		case SOUND_SLUDG:
+			sfx_name = "ftsludg";
+			break;
+		case SOUND_SOFT:
+			sfx_name = "ftsoft";
+			break;
+		case SOUND_TUBE:
+			sfx_name = "fttube";
+			break;
+		case SOUND_WOOD:
+			sfx_name = "ftwood";
+			break;
+		}
+		if (sfx_name.length() > 0)
+		{
+			object->sfx = mksp<std::vector<sp<Sample>>>();
+			object->sfx->push_back(fw().data->loadSample(UString::format("RAWSOUND:xcom3/rawsound/extra/%s%d.raw:22050", sfx_name.cStr(), 1)));
+			object->sfx->push_back(fw().data->loadSample(UString::format("RAWSOUND:xcom3/rawsound/extra/%s%d.raw:22050", sfx_name.cStr(), 2)));
+		}
 		object->door = entry.is_door == 1 && entry.is_door_closed == 1;
 		object->los_through_terrain = entry.los_through_terrain == 1;
 		object->floor = entry.is_floor == 1;

@@ -77,8 +77,8 @@ static const std::vector<UString> CITY_ICON_VEHICLE_PASSENGER_COUNT_RESOURCES = 
 } // anonymous namespace
 
 CityView::CityView(sp<GameState> state)
-    : CityTileView(*state->current_city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
-               Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Isometric),
+    : CityTileView(*state->current_city->map, Vec3<int>{TILE_X_CITY, TILE_Y_CITY, TILE_Z_CITY},
+               Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric),
       baseForm(ui().getForm("FORM_CITY_UI")), updateSpeed(UpdateSpeed::Speed1),
       lastSpeed(UpdateSpeed::Pause), state(state), followVehicle(false),
       selectionState(SelectionState::Normal),

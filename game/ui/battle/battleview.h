@@ -59,6 +59,13 @@ class BattleView : public BattleTileView
 	void updateLayerButtons();
 	void updateSoldierButtons();
 
+	// Unit orers
+	// Move, offset 1 means strafing, 2 means move backwards
+	void orderMove(Vec3<int> target, int facingOffset = 0);
+	void orderTurn(Vec3<int> target);
+	void orderSelect(sp<BattleUnit> u, bool inverse = false, bool additive = false);
+	void attemptToClearCurrentOrders(sp<BattleUnit> u);
+
   public:
 	BattleView(sp<GameState> state);
 	~BattleView() override;

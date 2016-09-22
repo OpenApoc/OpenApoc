@@ -17,6 +17,7 @@ class Organisation;
 class AEquipment;
 class AEquipmentType;
 class BattleUnitAnimationPack;
+class Sample;
 
 class AgentStats
 {
@@ -28,7 +29,10 @@ class AgentStats
 	int speed = 0;
 	int getActualSpeedValue() { return speed / 8; }
 	int getDisplaySpeedValue() { return 8 * getActualSpeedValue(); }
+	int time_units = 0;
+	void restoreTU() { time_units = speed; }
 	int stamina = 0;
+	bool canRun() { return stamina > 0; }
 	int bravery = 0;
 	int strength = 0;
 	int morale = 0;
@@ -125,7 +129,7 @@ public:
 	Role role = Role::Soldier;
 
 	std::set<Gender> possible_genders;
-	std::map<AgentType::Gender, float> gender_chance;
+	std::map<Gender, float> gender_chance;
 	std::map<Gender, std::map<int, AgentPortrait>> portraits;
 
 	AgentStats min_stats;
@@ -137,6 +141,8 @@ public:
 	std::set<Vec2<int>> allowed_facing;
 	// Unit is large and will be treated accordingly
 	bool large = false;
+	// Unit's height, used in pathfinding
+	int height = 0;
 
 	std::map<BodyState, sp<VoxelMap>> voxelMaps;
 
@@ -180,6 +186,16 @@ public:
 	// Can this be generated for the player
 	bool playable = false;
 
+	// Sounds unit makes when walking, overrides terrain's walk sounds if present
+	std::vector<sp<Sample>> walkSfx;
+	// Sounds unit randomly makes when acting, used by aliens
+	std::list<sp<Sample>> crySfx;
+	// Sounds unit emits when taking non-fatal damage
+	std::map<Gender, std::list<sp<Sample>>> damageSfx;
+	// Sounds unit emits when taking fatal damage 
+	std::map<Gender, std::list<sp<Sample>>> fatalWoundSfx;
+	std::map<Gender, std::list<sp<Sample>>> dieSfx;
+
 	int score = 0;
 };
 
@@ -204,6 +220,9 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 							   // to equipment weight, used stamina etc)
 
 	int getArmorValue(AgentType::BodyPart bodyPart);
+	bool isBodyStateAllowed(AgentType::BodyState bodyState);
+	bool isMovementStateAllowed(AgentType::MovementState movementState);
+	bool isFacingAllowed(Vec2<int> facing);
 
 	StateRef<Base> home_base;
 	StateRef<Organisation> owner;
@@ -220,6 +239,7 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 	void addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object);
 	void removeEquipment(sp<AEquipment> object);
 	void updateSpeed();
+	bool canRun() { return modified_stats.canRun(); }
 
 	StateRef<BattleUnitAnimationPack> getAnimationPack();
 	StateRef<AEquipmentType> getItemInHands();

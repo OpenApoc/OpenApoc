@@ -85,6 +85,7 @@
 		<member>allowed_movement_states</member>
 		<member>allowed_facing</member>
 		<member>large</member>
+		<member>height</member>
 		<member>voxelMaps</member>
 		<member>shadow_pack</member>
 		<member>appearance_count</member>
@@ -99,6 +100,11 @@
 		<member>can_improve</member>
 		<member>playable</member>
 		<member>score</member>
+		<member>walkSfx</member>
+		<member>crySfx</member>
+		<member>damageSfx</member>
+		<member>fatalWoundSfx</member>
+		<member>dieSfx</member>
 	</object>
 	<object>
 		<name>AgentType::EquipmentLayoutSlot</name>
@@ -166,6 +172,7 @@
 		<member>accuracy</member>
 		<member>reactions</member>
 		<member>speed</member>
+		<member>time_units</member>
 		<member>stamina</member>
 		<member>bravery</member>
 		<member>strength</member>
@@ -247,6 +254,14 @@
 		<member>targetVehicle</member>
 		<member>timeToSnooze</member>
 		<member>missionCounter</member>
+		<member>currentPlannedPath</member>
+	</object>
+	<object>
+		<name>BattleUnitMission</name>
+		<member>type</member>
+		<member>targetLocation</member>
+		<member>timeToSnooze</member>
+		<member>bodyState</member>
 		<member>currentPlannedPath</member>
 	</object>
 	<object>
@@ -394,9 +409,10 @@
 	</object>
 	<object>
 		<name>BattleUnitAnimationPack::AnimationEntry</name>
-		<member>is_overlay</member>
 		<member>frames</member>
+		<member>is_overlay</member>
 		<member>frame_count</member>
+		<member>frames_per_100_units</member>
 	</object>
 	<object>
 		<name>BattleUnitAnimationPack::AnimationEntry::Frame</name>
@@ -418,6 +434,7 @@
 		<member>fatalWounds</member>
 		<member>healingBodyPart</member>
 		<member>isHealing</member>
+		<member>woundTicksAccumulated</member>
 		<member>behavior_mode</member>
 		<member>fire_aiming_mode</member>
 		<member>fire_permission_mode</member>
@@ -430,12 +447,19 @@
 		<member>current_hand_state</member>
 		<member>target_hand_state</member>
 		<member>movement_ticks_passed</member>
-		<member>turning_ticks_remaining</member>
+		<member>movement_sounds_played</member>
+		<member>turning_animation_ticks_remaining</member>
+		<member>missions</member>
 		<member>position</member>
+		<member>goalPosition</member>
+		<member>atGoal</member>
+		<member>usingLift</member>
 		<member>facing</member>
+		<member>goalFacing</member>
 		<member>retreated</member>
 		<member>destroyed</member>
 		<member>falling</member>
+		<member>fallingSpeed</member>
 	</object>
 	<object>
 		<name>BattleItem</name>
@@ -851,6 +875,16 @@
 		<value>GotoPortal</value>
 		<value>Infiltrate</value>
 		<value>Subvert</value>
+	</enum>
+	<enum>
+		<name>BattleUnitMission::MissionType</name>
+		<value>GotoLocation</value>
+		<value>Snooze</value>
+		<value>AcquireTU</value>
+		<value>ChangeBodyState</value>
+		<value>ThrowItem</value>
+		<value>Turn</value>
+		<value>Fall</value>
 	</enum>
 	<enum>
 		<name>VEquipment::WeaponState</name>

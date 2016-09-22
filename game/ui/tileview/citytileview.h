@@ -12,5 +12,10 @@ class CityTileView : public TileView
 
 	void eventOccurred(Event *e) override;
 	void render() override;
+
+  private:
+    sp<Image> selectedTileImageBack;
+	sp<Image> selectedTileImageFront;
+	Vec2<int> selectedTileImageOffset;
 };
 }

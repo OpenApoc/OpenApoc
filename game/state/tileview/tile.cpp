@@ -61,29 +61,158 @@ Tile::Tile(TileMap &map, Vec3<int> position, int layerCount)
 }
 
 // Position for items and units to be located on
-Vec3<float> Tile::getRestingPosition()
+Vec3<float> Tile::getRestingPosition(bool large)
 {
+	if (large)
+	{
+		if (position.x < 1 || position.y < 1)
+		{
+			LogError("Trying to get resting position for a large unit when it can't fit! %d, %d, %d", position.x, position.y, position.z);
+			return Vec3<float>{position.x + 0.5, position.y + 0.5, position.z};
+		}
+		float maxHeight = height;
+		maxHeight = std::max(maxHeight, map.getTile(position.x - 1, position.y, position.z)->height);
+		maxHeight = std::max(maxHeight, map.getTile(position.x, position.y - 1, position.z)->height);
+		maxHeight = std::max(maxHeight, map.getTile(position.x - 1, position.y - 1, position.z)->height);
+
+		return Vec3<float>{position.x, position.y,
+			position.z + maxHeight};
+	}
 	return Vec3<float>{position.x + 0.5, position.y + 0.5,
-	                   position.z + height};
+	                   position.z + height - 0.025f};
 }
 
-void Tile::updateHeightAndPassability()
+bool Tile::getSolidGround(bool large)
+{
+	if (large)
+	{
+		if (position.x < 1 || position.y < 1)
+		{
+			LogError("Trying to get solid ground for a large unit when it can't fit! %d, %d, %d", position.x, position.y, position.z);
+			return false;
+		}
+		if (solidGround) { return true; }
+		if (map.getTile(position.x - 1, position.y, position.z)->solidGround) { return true; }
+		if (map.getTile(position.x, position.y - 1, position.z)->solidGround) { return true; }
+		if (map.getTile(position.x - 1, position.y - 1, position.z)->solidGround) { return true; }
+	}
+	else
+	{
+		if (solidGround) { return true; }
+	}
+	return false;
+}
+
+bool Tile::getCanStand(bool large)
+{
+	if (large)
+	{
+		if (position.x < 1 || position.y < 1)
+		{
+			LogError("Trying to get standing abilit for a large unit when it can't fit! %d, %d, %d", position.x, position.y, position.z);
+			return false;
+		}
+		if (canStand) { return true; }
+		if (map.getTile(position.x - 1, position.y, position.z)->canStand) { return true; }
+		if (map.getTile(position.x, position.y - 1, position.z)->canStand) { return true; }
+		if (map.getTile(position.x - 1, position.y - 1, position.z)->canStand) { return true; }
+	}
+	else
+	{
+		if (canStand) { return true; }
+	}
+	return false;
+}
+
+bool Tile::getPassable(bool large)
+{
+	if (large)
+	{
+		if (position.x < 1 || position.y < 1 || position.z >= map.size.z - 1)
+		{
+			return false;
+		}
+		int maxCost = movementCostIn;
+		auto tX = map.getTile(position.x - 1, position.y, position.z);
+		auto tY = map.getTile(position.x, position.y - 1, position.z);
+		auto tXY = map.getTile(position.x - 1, position.y - 1, position.z);
+		auto tZ = map.getTile(position.x, position.y, position.z + 1);
+		auto tXZ = map.getTile(position.x - 1, position.y, position.z + 1);
+		auto tYZ = map.getTile(position.x, position.y - 1, position.z + 1);
+		auto tXYZ = map.getTile(position.x - 1, position.y - 1, position.z + 1);
+
+		maxCost = std::max(maxCost, tX->movementCostIn);
+		maxCost = std::max(maxCost, tY->movementCostIn);
+		maxCost = std::max(maxCost, tXY->movementCostIn);
+		maxCost = std::max(maxCost, tZ->movementCostIn);
+		maxCost = std::max(maxCost, tXZ->movementCostIn);
+		maxCost = std::max(maxCost, tYZ->movementCostIn);
+		maxCost = std::max(maxCost, tXYZ->movementCostIn);
+		maxCost = std::max(maxCost, movementCostLeft);
+		maxCost = std::max(maxCost, movementCostRight);
+		maxCost = std::max(maxCost, tX->movementCostRight);
+		maxCost = std::max(maxCost, tY->movementCostLeft);
+		maxCost = std::max(maxCost, tZ->movementCostLeft);
+		maxCost = std::max(maxCost, tZ->movementCostRight);
+		maxCost = std::max(maxCost, tXZ->movementCostRight);
+		maxCost = std::max(maxCost, tYZ->movementCostLeft);
+		return maxCost != 255;
+	}
+	return movementCostIn != 255;
+}
+
+void Tile::updateBattlescapeUIDrawOrder()
+{
+	drawBattlescapeSelectionBackAt = -1;
+	drawTargetLocationIconAt = -1;
+
+	auto object_count = drawnObjects[0].size();
+	size_t obj_id;
+	for (obj_id = 0; obj_id < object_count; obj_id++)
+	{
+		auto &obj = drawnObjects[0][obj_id];
+		if (drawBattlescapeSelectionBackAt == -1 && obj->getType() != TileObject::Type::Ground)
+		{
+			drawBattlescapeSelectionBackAt = obj_id;
+		}
+		if (drawTargetLocationIconAt == -1 && (int)obj->getType() > 3)
+		{
+			drawTargetLocationIconAt = obj_id;
+		}
+	}
+	if (drawBattlescapeSelectionBackAt == -1)
+	{
+		drawBattlescapeSelectionBackAt = obj_id;
+	}
+	if (drawTargetLocationIconAt == -1)
+	{
+		drawTargetLocationIconAt = obj_id;
+	}
+}
+
+void Tile::updateBattlescapeHeightAndPassability()
 {
 	height = 0.0f;
-	movementCostIn = -2; // -2 means empty, and will be set to 4 afterwards
+	movementCostIn = -1; // -1 means empty, and will be set to 4 afterwards
+	movementCostOver = 255;
 	movementCostLeft = 0;
 	movementCostRight = 0;
-	bool impassable = false;
 	solidGround = false;
+	canStand = false;
+	hasLift = false;
+	walkSfx = nullptr;
 	for (auto o : ownedObjects)
 	{
 		if (o->getType() == TileObject::Type::Ground || o->getType() == TileObject::Type::Feature)
 		{
 			auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
 			height = std::max(height, (float)mp->type->height);
-			solidGround = mp->type->floor || o->getType() == TileObject::Type::Feature;
+			solidGround = solidGround  
+				|| (mp->type->floor && !mp->type->gravlift) 
+				|| (o->getType() == TileObject::Type::Feature && !mp->type->gravlift);
+			hasLift = hasLift || mp->type->gravlift;
 			movementCostIn = std::max(movementCostIn, mp->type->movement_cost);
-			impassable = impassable || mp->type->movement_cost == -1;
+			walkSfx = mp->type->sfx;
 		}
 		if (o->getType() == TileObject::Type::LeftWall)
 		{
@@ -94,25 +223,57 @@ void Tile::updateHeightAndPassability()
 			movementCostRight = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner()->type->movement_cost;
 		}
 	}
-	if (impassable)
+	canStand = solidGround || hasLift;
+	if (!canStand && position.z > 0)
 	{
-		movementCostIn = -1;
+		// check if tile below is full height
+		auto t = map.getTile(position.x, position.y, position.z - 1);
+		canStand = t->solidGround && (t->height == 1.0f);
+		if (canStand)
+		{
+			movementCostIn = std::max(movementCostIn, t->movementCostOver);
+		}
 	}
-	if (movementCostIn == -2)
+	if (movementCostIn == -1)
 	{
 		movementCostIn = 4;
 	}
-	height = height / (float)BATTLE_TILE_Z;
-
+	// Height of 39 means whole tile, height of 0 means 1/40th of tile, so we must increment
+	height++;
+	if (height == 40 && solidGround)
+	{
+		movementCostOver = movementCostIn;
+		movementCostIn = 255;
+		// Provide solid ground upwards
+		if (position.z + 1 < map.size.z)
+		{
+			auto t = map.getTile(position.x, position.y, position.z + 1);
+			if (!t->canStand)
+			{
+				t->canStand = true;
+				t->movementCostIn = std::max(movementCostOver, t->movementCostIn);
+			}
+		}
+	}
+	height = height / (float)TILE_Z_BATTLE;
 }
 
-sp<TileObjectBattleUnit> Tile::getUnitIfPresent()
+sp<TileObjectBattleUnit> Tile::getUnitIfPresent(bool onlyConscious, sp<TileObjectBattleUnit> exceptThis)
 {
 	for (auto o : intersectingObjects)
 	{
 		if (o->getType() == TileObject::Type::Unit)
 		{
-			return std::static_pointer_cast<TileObjectBattleUnit>(o);
+			auto u = std::static_pointer_cast<TileObjectBattleUnit>(o);
+			if (onlyConscious && !u->getUnit()->isConscious())
+			{
+				continue;
+			}
+			if (u == exceptThis)
+			{
+				continue;
+			}
+			return u;
 		}
 	}
 	return nullptr;
@@ -145,14 +306,14 @@ class PathNode
 	float distanceToGoal;
 };
 
-class PathNodeComparer
-{
-  public:
-	bool operator()(const PathNode &p1, const PathNode &p2)
-	{
-		return (p1.costToGetHere + p1.distanceToGoal) < (p2.costToGetHere + p2.distanceToGoal);
-	}
-};
+//class PathNodeComparer
+//{
+//  public:
+//	bool operator()(const PathNode &p1, const PathNode &p2)
+//	{
+//		return (p1.costToGetHere + p1.distanceToGoal) < (p2.costToGetHere + p2.distanceToGoal);
+//	}
+//};
 
 } // anonymous namespace
 
@@ -187,9 +348,8 @@ std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destinat
                                             const CanEnterTileHelper &canEnterTile, float)
 {
 	TRACE_FN;
-	PathNodeComparer c;
 	std::unordered_map<Tile *, PathNode> visitedTiles;
-	std::set<PathNode, PathNodeComparer> fringe(c);
+	std::list<PathNode> fringe;
 	Vec3<float> goalPosition;
 	unsigned int iterationCount = 0;
 
@@ -232,7 +392,7 @@ std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destinat
 	}
 
 	PathNode startNode(0.0f, nullptr, startTile, goalPosition);
-	fringe.emplace(startNode);
+	fringe.emplace_back(startNode);
 	visitedTiles.emplace(startTile, startNode);
 
 	auto closestNodeSoFar = *fringe.begin();
@@ -283,23 +443,30 @@ std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destinat
 					if (visitedTiles.find(tile) != visitedTiles.end())
 						continue;
 					// FIXME: Make 'blocked' tiles cleverer (e.g. don't plan around objects that
-					// will
-					// move anyway?)
-					if (!canEnterTile.canEnterTile(nodeToExpand.thisTile, tile))
+					// will move anyway?)
+					float cost = 0.0f;
+					if (!canEnterTile.canEnterTile(nodeToExpand.thisTile, tile, cost))
 						continue;
 					// FIXME: The old code *tried* to disallow diagonal paths that would clip past
 					// scenery but it didn't seem to work, no we should re-add that here
 					float newNodeCost = nodeToExpand.costToGetHere;
 
-					newNodeCost +=
-					    glm::length(Vec3<float>{nextPosition} - Vec3<float>{currentPosition});
+					newNodeCost += cost;
 
 					// make pathfinder biased towards vehicle's altitude preference
 					newNodeCost += canEnterTile.adjustCost(nextPosition, z);
 
 					PathNode newNode(newNodeCost, nodeToExpand.thisTile, tile, goalPosition);
-					visitedTiles.emplace(tile, newNode);
-					fringe.emplace(newNode);
+					// Allow entering goal multiple times, so that we can find a faster route
+					if (nextPosition != destination)
+					{
+						visitedTiles.emplace(tile, newNode);
+					}
+					// Put node at appropriate place in the list
+					auto it = fringe.begin();
+					while (it != fringe.end() && (it->costToGetHere + it->distanceToGoal) < (newNode.costToGetHere + newNode.distanceToGoal))
+						it++;
+					fringe.emplace(it, newNode);
 				}
 			}
 		}

@@ -206,6 +206,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -400,6 +401,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -594,6 +596,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -788,6 +791,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -982,6 +986,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -1176,6 +1181,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -1370,6 +1376,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -1564,6 +1571,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -1783,6 +1791,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -1993,6 +2002,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -2203,6 +2213,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -2417,6 +2428,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -2627,6 +2639,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -2841,6 +2854,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -3055,6 +3069,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -3253,6 +3268,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -3496,6 +3512,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -3734,6 +3751,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -3972,6 +3990,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -4210,6 +4229,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -4448,6 +4468,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -4686,6 +4707,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -4924,6 +4946,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -5162,6 +5185,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -5381,6 +5405,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -5595,6 +5620,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -5833,6 +5859,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -6047,6 +6074,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -6249,6 +6277,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -6475,6 +6504,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -6677,6 +6707,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -6879,6 +6910,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -6899,7 +6931,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -7077,7 +7108,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -7088,7 +7121,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -7266,7 +7298,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -7277,7 +7311,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -7455,7 +7488,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -7466,7 +7501,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -7644,7 +7678,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -7655,7 +7691,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -7833,7 +7868,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -7844,7 +7881,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -8022,7 +8058,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -8033,7 +8071,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -8211,7 +8248,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -8222,7 +8261,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -8400,7 +8438,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -8620,6 +8660,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -8830,6 +8871,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -9040,6 +9082,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -9254,6 +9297,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -9464,6 +9508,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -9678,6 +9723,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -9892,6 +9938,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -10090,6 +10137,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -10304,6 +10352,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -10498,6 +10547,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -10692,6 +10742,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -10886,6 +10937,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -11080,6 +11132,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -11274,6 +11327,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -11468,6 +11522,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -11662,6 +11717,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -11881,6 +11937,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -12095,6 +12152,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -12309,6 +12367,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -12523,6 +12582,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -12737,6 +12797,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -12951,6 +13012,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -13165,6 +13227,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -13359,6 +13422,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -13602,6 +13666,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -13840,6 +13905,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -14078,6 +14144,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -14316,6 +14383,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -14554,6 +14622,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -14792,6 +14861,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -15030,6 +15100,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -15268,6 +15339,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -15487,6 +15559,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -15701,6 +15774,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -15939,6 +16013,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -16153,6 +16228,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -16355,6 +16431,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -16581,6 +16658,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -16783,6 +16861,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -16985,6 +17064,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -17005,7 +17085,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -17183,7 +17262,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -17194,7 +17275,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -17372,7 +17452,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -17383,7 +17465,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -17561,7 +17642,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -17572,7 +17655,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -17750,7 +17832,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -17761,7 +17845,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -17939,7 +18022,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -17950,7 +18035,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -18128,7 +18212,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -18139,7 +18225,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -18317,7 +18402,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -18328,7 +18415,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -18506,7 +18592,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -18726,6 +18814,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -18940,6 +19029,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -19154,6 +19244,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -19368,6 +19459,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -19582,6 +19674,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -19796,6 +19889,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -20010,6 +20104,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -20204,6 +20299,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -20431,6 +20527,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -20633,6 +20730,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -20835,6 +20933,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -21037,6 +21136,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -21239,6 +21339,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -21441,6 +21542,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -21635,6 +21737,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -21837,6 +21940,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -22068,6 +22172,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -22294,6 +22399,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -22520,6 +22626,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -22746,6 +22853,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -22972,6 +23080,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -23198,6 +23307,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -23416,6 +23526,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -23622,6 +23733,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -23865,6 +23977,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -24103,6 +24216,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -24341,6 +24455,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -24579,6 +24694,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -24817,6 +24933,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -25055,6 +25172,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -25293,6 +25411,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -25531,6 +25650,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -25754,6 +25874,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -25972,6 +26093,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -26206,6 +26328,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -26424,6 +26547,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -26630,6 +26754,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -26864,6 +26989,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -27070,6 +27196,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -27276,6 +27403,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -27296,7 +27424,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -27482,7 +27609,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -27493,7 +27622,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -27679,7 +27807,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -27690,7 +27820,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -27876,7 +28005,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -27887,7 +28018,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -28073,7 +28203,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -28084,7 +28216,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -28270,7 +28401,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -28281,7 +28414,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -28467,7 +28599,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -28478,7 +28612,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -28656,7 +28789,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -28667,7 +28802,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -28853,7 +28987,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -29085,6 +29221,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -29311,6 +29448,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -29537,6 +29675,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -29763,6 +29902,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -29989,6 +30129,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -30215,6 +30356,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -30433,6 +30575,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -30639,6 +30782,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -30861,6 +31005,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -31063,6 +31208,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -31265,6 +31411,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -31467,6 +31614,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -31669,6 +31817,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -31871,6 +32020,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -32065,6 +32215,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -32267,6 +32418,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -32431,6 +32583,7 @@
                               </entry>
                             </frames>
                             <frame_count>2</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -32590,6 +32743,7 @@
                               </entry>
                             </frames>
                             <frame_count>2</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -32749,6 +32903,7 @@
                               </entry>
                             </frames>
                             <frame_count>2</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -32908,6 +33063,7 @@
                               </entry>
                             </frames>
                             <frame_count>2</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -33067,6 +33223,7 @@
                               </entry>
                             </frames>
                             <frame_count>2</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -33226,6 +33383,7 @@
                               </entry>
                             </frames>
                             <frame_count>2</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -33377,6 +33535,7 @@
                               </entry>
                             </frames>
                             <frame_count>2</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -33520,6 +33679,7 @@
                               </entry>
                             </frames>
                             <frame_count>2</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -33763,6 +33923,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -34001,6 +34162,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -34239,6 +34401,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -34477,6 +34640,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -34715,6 +34879,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -34953,6 +35118,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -35191,6 +35357,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -35429,6 +35596,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -35644,6 +35812,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -35854,6 +36023,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -36084,6 +36254,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -36294,6 +36465,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -36492,6 +36664,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -36722,6 +36895,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -36920,6 +37094,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -37118,6 +37293,7 @@
                               </entry>
                             </frames>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>100</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -37138,7 +37314,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -37324,7 +37499,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -37335,7 +37512,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -37521,7 +37697,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -37532,7 +37710,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -37718,7 +37895,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -37729,7 +37908,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -37915,7 +38093,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -37926,7 +38106,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -38112,7 +38291,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -38123,7 +38304,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -38309,7 +38489,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -38320,7 +38502,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -38498,7 +38679,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -38509,7 +38692,6 @@
                         </key>
                         <value>
                           <sp>
-                            <is_overlay>true</is_overlay>
                             <frames>
                               <entry>
                                 <unit_image_parts>
@@ -38695,7 +38877,9 @@
                                 </unit_image_draw_order>
                               </entry>
                             </frames>
+                            <is_overlay>true</is_overlay>
                             <frame_count>3</frame_count>
+                            <frames_per_100_units>1</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -38860,6 +39044,7 @@
                               </entry>
                             </frames>
                             <frame_count>2</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -39019,6 +39204,7 @@
                               </entry>
                             </frames>
                             <frame_count>2</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -39178,6 +39364,7 @@
                               </entry>
                             </frames>
                             <frame_count>2</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -39337,6 +39524,7 @@
                               </entry>
                             </frames>
                             <frame_count>2</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -39496,6 +39684,7 @@
                               </entry>
                             </frames>
                             <frame_count>2</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -39655,6 +39844,7 @@
                               </entry>
                             </frames>
                             <frame_count>2</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -39806,6 +39996,7 @@
                               </entry>
                             </frames>
                             <frame_count>2</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>
@@ -39949,6 +40140,7 @@
                               </entry>
                             </frames>
                             <frame_count>2</frame_count>
+                            <frames_per_100_units>300</frames_per_100_units>
                           </sp>
                         </value>
                       </entry>

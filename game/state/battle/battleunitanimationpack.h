@@ -55,10 +55,13 @@ class BattleUnitAnimationPack : public StateObject<BattleUnitAnimationPack>
 			std::list<UnitImagePart> unit_image_draw_order;
 		};
 
+		std::vector<Frame> frames;
 		// If set, will require addition of legs from "at ease" animation with same parameters
 		bool is_overlay = false;
-		std::vector<Frame> frames;
+		// Just for convenience
 		int frame_count = 0;
+		// In case we have non-integer amount of frames per unit
+		int frames_per_100_units = 0;
 	};
 
 	// Animations for cases where current state is equal to target state

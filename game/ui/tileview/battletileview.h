@@ -1,13 +1,17 @@
 #pragma once
 #include "game/ui/tileview/tileview.h"
-
+#include "framework/framework.h"
 
 namespace OpenApoc
 {
+
 class TileObjectBattleUnit;
 
 class BattleTileView : public TileView
 {
+	// Formula: FPS / ICON_COUNT / DESIRED_ANIMATIONS_PER_SECOND
+	static const int TARGET_ICONS_ANIMATION_DELAY = 60 / 4; 
+
   public:
 	enum class LayerDrawingMode
 	{
@@ -21,6 +25,14 @@ class BattleTileView : public TileView
 	int currentZLevel;
 	LayerDrawingMode layerDrawingMode;
 
+	sp<Image> selectedTileEmptyImageBack;
+	sp<Image> selectedTileEmptyImageFront;
+	sp<Image> selectedTileFilledImageBack;
+	sp<Image> selectedTileFilledImageFront;
+	sp<Image> selectedTileBackgroundImageBack;
+	sp<Image> selectedTileBackgroundImageFront;
+	Vec2<int> selectedTileImageOffset;
+
 	std::vector<sp<Image>> activeUnitSelectionArrow;
 	std::vector<sp<Image>> inactiveUnitSelectionArrow;
 	std::map<BattleUnit::BehaviorMode, sp<Image>> behaviorUnitSelectionUnderlay;
@@ -28,6 +40,11 @@ class BattleTileView : public TileView
 	sp<Image> bleedingIcon;
 	std::list<sp<Image>> healingIcons;
 	sp<Image> healingIcon;
+	std::vector<sp<Image>> targetLocationIcons;
+	Vec2<float> targetLocationOffset;
+	// Must have same amount it items as in targetLocationIcons
+	std::vector<sp<Image>> waypointIcons;
+	int iconAnimationTicksAccumulated = 0;
 
   public:
 	BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize, TileViewMode initialMode);
@@ -38,11 +55,14 @@ class BattleTileView : public TileView
 	void setZLevel(int zLevel);
 	int getZLevel();
 
+	void setScreenCenterTile(Vec2<float> center) override;
+	void setScreenCenterTile(Vec3<float> center) override;
+
 	void setLayerDrawingMode(LayerDrawingMode mode);
 
 	void eventOccurred(Event *e) override;
 	void render() override;
 
-	void drawUnitSelectionArrow(Renderer &r, sp<TileObjectBattleUnit> obj, bool first);
+	void drawUnitSelectionArrow(Renderer &r, sp<BattleUnit> u, bool first);
 };
 }

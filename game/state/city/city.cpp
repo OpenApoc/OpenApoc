@@ -70,7 +70,7 @@ void City::initMap()
 		return;
 	}
 	this->map.reset(new TileMap(this->size, VELOCITY_SCALE_CITY,
-	                            {CITY_VOXEL_X, CITY_VOXEL_Y, CITY_VOXEL_Z}, layerMap));
+	                            {VOXEL_X_CITY, VOXEL_Y_CITY, VOXEL_Z_CITY}, layerMap));
 	for (auto &s : this->scenery)
 	{
 		this->map->addObjectToMap(s);

@@ -124,6 +124,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>24</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -263,6 +264,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -386,6 +438,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -562,6 +615,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -659,6 +763,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -1436,6 +1541,21 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <walkSfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/anthrop1.raw:22050</entry>
+        </walkSfx>
+        <crySfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/cries/anthrpd1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/cries/anthrpd2.raw:22050</entry>
+        </crySfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/deaths/anthrpd1.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -1528,6 +1648,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>10</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -1667,6 +1788,21 @@
           </entry>
         </equipment_layout_slots>
         <score>4</score>
+        <walkSfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/scuttle.raw:22050</entry>
+        </walkSfx>
+        <crySfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/cries/brnsukr1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/cries/brnsukr2.raw:22050</entry>
+        </crySfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/deaths/brnsukr2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -2194,6 +2330,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -2971,6 +3108,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -3498,6 +3686,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -4275,6 +4464,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -4337,6 +4577,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>20</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -4490,6 +4731,17 @@
           </entry>
         </equipment_layout_slots>
         <score>3</score>
+        <crySfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/cries/saliscry.raw:22050</entry>
+        </crySfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/deaths/chrysals.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -4791,6 +5043,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -4930,6 +5183,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -5231,6 +5535,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -5370,6 +5675,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -5671,6 +6027,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -5810,6 +6167,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -6111,6 +6519,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -6250,6 +6659,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -6551,6 +7011,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -6690,6 +7151,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -6991,6 +7503,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -7130,6 +7643,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -7426,6 +7990,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -7564,6 +8129,57 @@
             </bounds>
           </entry>
         </equipment_layout_slots>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -8091,6 +8707,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -8868,6 +9485,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -9395,6 +10063,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -10172,6 +10841,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -10699,6 +11419,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -11476,6 +12197,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -12003,6 +12775,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -12803,6 +13576,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -13330,6 +14154,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -14107,6 +14932,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -14199,6 +15075,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>10</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -14339,6 +15216,17 @@
           </entry>
         </equipment_layout_slots>
         <score>5</score>
+        <walkSfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/hypworm1.raw:22050</entry>
+        </walkSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/deaths/hypwrm01.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -14640,6 +15528,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -14779,6 +15668,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -15080,6 +16020,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -15219,6 +16160,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -15520,6 +16512,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -15659,6 +16652,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -15960,6 +17004,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -16099,6 +17144,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -16400,6 +17496,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -16539,6 +17636,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -16840,6 +17988,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -16979,6 +18128,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -17075,6 +18275,7 @@
           </entry>
         </allowed_facing>
         <large>true</large>
+        <height>70</height>
         <shadow_pack>BATTLEUNITIMAGEPACK_megas</shadow_pack>
         <appearance_count>1</appearance_count>
         <image_packs>
@@ -17162,6 +18363,21 @@
           </entry>
         </equipment_layout_slots>
         <score>30</score>
+        <walkSfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/megtron1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/megtron2.raw:22050</entry>
+        </walkSfx>
+        <crySfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/cries/megtron.raw:22050</entry>
+        </crySfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/deaths/meghowl.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -17258,6 +18474,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>8</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -17489,6 +18706,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>16</height>
         <voxelMaps>
           <entry>
             <key>Kneeling</key>
@@ -17628,6 +18846,21 @@
           </entry>
         </equipment_layout_slots>
         <score>8</score>
+        <walkSfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/multworm.raw:22050</entry>
+        </walkSfx>
+        <crySfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/cries/mworm1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/cries/mworm2.raw:22050</entry>
+        </crySfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/deaths/gunk.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -17718,6 +18951,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>18</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -17872,6 +19106,14 @@
           </entry>
         </equipment_layout_slots>
         <score>4</score>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/deaths/wormegg.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -18399,6 +19641,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -19176,6 +20419,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -19703,6 +20997,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -20480,6 +21775,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -20572,6 +21918,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>16</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -20712,6 +22059,14 @@
           </entry>
         </equipment_layout_slots>
         <score>8</score>
+        <walkSfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/popper1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/popper2.raw:22050</entry>
+        </walkSfx>
+        <crySfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/cries/popper1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/cries/popper2.raw:22050</entry>
+        </crySfx>
       </sp>
     </value>
   </entry>
@@ -20812,6 +22167,7 @@
           </entry>
         </allowed_facing>
         <large>true</large>
+        <height>70</height>
         <shadow_pack>BATTLEUNITIMAGEPACK_psis</shadow_pack>
         <appearance_count>1</appearance_count>
         <image_packs>
@@ -20882,6 +22238,18 @@
           </entry>
         </equipment_layout_slots>
         <score>30</score>
+        <crySfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/cries/psimrph1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/cries/psimrph2.raw:22050</entry>
+        </crySfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/deaths/howl.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -20961,6 +22329,7 @@
           </entry>
         </allowed_facing>
         <large>true</large>
+        <height>70</height>
         <appearance_count>1</appearance_count>
         <image_packs>
           <entry>
@@ -21034,6 +22403,20 @@
           </entry>
         </equipment_layout_slots>
         <score>50</score>
+        <walkSfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/queenspn.raw:22050</entry>
+        </walkSfx>
+        <crySfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/cries/queensp1.raw:22050</entry>
+        </crySfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/deaths/queensp2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -21134,6 +22517,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -21911,6 +23295,21 @@
           </entry>
         </equipment_layout_slots>
         <score>14</score>
+        <walkSfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/skelstp1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/skelstp2.raw:22050</entry>
+        </walkSfx>
+        <crySfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/cries/skeletld.raw:22050</entry>
+        </crySfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/deaths/skeletd1.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -22005,6 +23404,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -22145,6 +23545,22 @@
           </entry>
         </equipment_layout_slots>
         <score>8</score>
+        <walkSfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/spitter1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/spitter2.raw:22050</entry>
+        </walkSfx>
+        <crySfx>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/cries/spittr1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/cries/spittr2.raw:22050</entry>
+        </crySfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/deaths/spittr1.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -22446,6 +23862,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -22585,6 +24002,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -22886,6 +24354,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -23025,6 +24494,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -23326,6 +24846,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -23465,6 +24986,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -23766,6 +25338,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -23905,6 +25478,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -24206,6 +25830,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -24345,6 +25970,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -24646,6 +26322,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -24785,6 +26462,57 @@
           </entry>
         </equipment_layout_slots>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -24913,6 +26641,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -25692,6 +27421,57 @@
         <can_improve>true</can_improve>
         <playable>true</playable>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -26219,6 +27999,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -26998,6 +28779,57 @@
         <can_improve>true</can_improve>
         <playable>true</playable>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -27175,6 +29007,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -27954,6 +29787,57 @@
         <can_improve>true</can_improve>
         <playable>true</playable>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -28045,6 +29929,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -28275,6 +30160,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -28941,6 +30827,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -29081,6 +30968,57 @@
         </equipment_layout_slots>
         <playable>true</playable>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -29608,6 +31546,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -29748,6 +31687,57 @@
         </equipment_layout_slots>
         <playable>true</playable>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>
@@ -30277,6 +32267,7 @@
             <y>1</y>
           </entry>
         </allowed_facing>
+        <height>32</height>
         <voxelMaps>
           <entry>
             <key>Standing</key>
@@ -30417,6 +32408,57 @@
         </equipment_layout_slots>
         <playable>true</playable>
         <score>10</score>
+        <damageSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hpainf2.raw:22050</entry>
+            </value>
+          </entry>
+        </damageSfx>
+        <fatalWoundSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </fatalWoundSfx>
+        <dieSfx>
+          <entry>
+            <key>Male</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm2.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethm3.raw:22050</entry>
+            </value>
+          </entry>
+          <entry>
+            <key>Female</key>
+            <value>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/hdethf2.raw:22050</entry>
+            </value>
+          </entry>
+        </dieSfx>
       </sp>
     </value>
   </entry>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checksums>
   <checksum SHA1="61e89dde91f71522666df689a444f22b00df0712">animationpack.xml</checksum>
-  <checksum SHA1="64d0ac7a3fa28403b87a5eb422d49f38a95b7d74">animationpack/body_state_animations.xml</checksum>
-  <checksum SHA1="428fc6f616768c311536a0dc832854743850b38f">animationpack/hand_state_animations.xml</checksum>
-  <checksum SHA1="3970ab740bd669a08d5aae7da93b60a006b25ef8">animationpack/standart_animations.xml</checksum>
+  <checksum SHA1="454ef17e7ebbe8ad8f49759c65c2d491295aac09">animationpack/body_state_animations.xml</checksum>
+  <checksum SHA1="87469e02c3a38e59de02da0d4c0b03be0aa2a6f9">animationpack/hand_state_animations.xml</checksum>
+  <checksum SHA1="1aaf26aca5bd9f094a7f95d4d5ead1bce149f6a1">animationpack/standart_animations.xml</checksum>
 </checksums>

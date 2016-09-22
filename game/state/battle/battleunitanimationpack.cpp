@@ -62,10 +62,15 @@ int BattleUnitAnimationPack::getFrameCountBody(StateRef<AEquipmentType> heldItem
 	AgentType::MovementState movement,
 	Vec2<int> facing)
 {
+	sp<AnimationEntry> e;
 	if (currentBody == targetBody)
-		return standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][movement][currentBody][facing]->frame_count;
+		e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][movement][currentBody][facing];
 	else
-		return body_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][movement][currentBody][targetBody][facing]->frame_count;
+		e = body_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][movement][currentBody][targetBody][facing];
+	if (e)
+		return e->frame_count;
+	else
+		return 0;
 }
 
 int BattleUnitAnimationPack::getFrameCountHands(StateRef<AEquipmentType> heldItem,
@@ -74,10 +79,15 @@ int BattleUnitAnimationPack::getFrameCountHands(StateRef<AEquipmentType> heldIte
 	AgentType::MovementState movement,
 	Vec2<int> facing)
 {
+	sp<AnimationEntry> e;
 	if (currentHands == targetHands)
-		return standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][movement][currentBody][facing]->frame_count;
+		e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][movement][currentBody][facing];
 	else
-		return hand_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][targetHands][movement][currentBody][facing]->frame_count;
+		e = hand_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][targetHands][movement][currentBody][facing];
+	if (e)
+		return e->frame_count;
+	else
+		return 0;
 }
 
 
@@ -110,8 +120,15 @@ void BattleUnitAnimationPack::drawShadow(Renderer &r, Vec2<float> screenPosition
 		if (currentHands == AgentType::HandState::Firing)
 			frame = e->frame_count - hands_animation_delay;
 		else
-			frame = distance_travelled % e->frame_count;
+			frame = (distance_travelled * 100 / e->frames_per_100_units ) % e->frame_count;
 	}
+
+	if (e->frames.size() <= frame)
+	{
+		LogError("Frame missing?");
+		return;
+	}
+
 	AnimationEntry::Frame::InfoBlock &b = e->frames[frame].unit_image_parts[AnimationEntry::Frame::UnitImagePart::Shadow];
 	
 	if (b.index == -1)
@@ -141,14 +158,13 @@ void BattleUnitAnimationPack::drawUnit(Renderer &r, Vec2<float> screenPosition,
 		if (e->is_overlay)
 		{
 			e_legs = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][AgentType::HandState::AtEase][movement][currentBody][facing];
-			frame_legs = distance_travelled % e_legs->frame_count;
+			frame_legs = (distance_travelled * 100 / e->frames_per_100_units) % e_legs->frame_count;
 		}
 	}
 	else if (currentBody != targetBody)
 	{
 		e = body_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][movement][currentBody][targetBody][facing];
 		frame = e->frame_count - body_animation_delay;
-
 	}
 	else
 	{
@@ -156,15 +172,22 @@ void BattleUnitAnimationPack::drawUnit(Renderer &r, Vec2<float> screenPosition,
 		if (currentHands == AgentType::HandState::Firing)
 			frame = e->frame_count - hands_animation_delay;
 		else
-			frame = distance_travelled % e->frame_count;
+			frame = (distance_travelled * 100 / e->frames_per_100_units) % e->frame_count;
 		// Technically, if we're aiming, and this is overlay, we must always set frame to 0
 		// But since frame_count is 1, the previous line attains the same result, so why bother
 		if (e->is_overlay)
 		{
 			e_legs = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][AgentType::HandState::AtEase][movement][currentBody][facing];
-			frame_legs = distance_travelled % e_legs->frame_count;
+			frame_legs = (distance_travelled * 100 / e_legs->frames_per_100_units) % e_legs->frame_count;
 		}
+	}	
+	
+	if (e->frames.size() <= frame)
+	{
+		LogError("Frame missing?");
+		return;
 	}
+
 	AnimationEntry::Frame &f = e->frames[frame];
 
 	// Draw parts in order
@@ -178,6 +201,11 @@ void BattleUnitAnimationPack::drawUnit(Renderer &r, Vec2<float> screenPosition,
 		AnimationEntry::Frame::InfoBlock *b = &f.unit_image_parts[ie];
 		if (b->index == -1 && ie == AnimationEntry::Frame::UnitImagePart::Legs && frame_legs != -1)
 		{
+			if (e_legs->frames.size() <= frame_legs)
+			{
+				LogError("Frame missing?");
+				return;
+			}
 			b = &e_legs->frames[frame_legs].unit_image_parts[ie];
 		}
 		if (b->index == -1)

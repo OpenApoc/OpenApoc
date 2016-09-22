@@ -301,7 +301,17 @@ Auto-loop. This is never used on any proper object (excl. ones denoted at the be
 
 43/67[1]:
 --------
-Sound effect. What offset for RAWSOUN is not yet determined. Possible values 0-8.
+Sound effect. Possible values 0-8.
+
+0 - ??
+1 - RAWSOUND\EXTRA\METAL
+2 - RAWSOUND\EXTRA\FTSOFT
+3 - RAWSOUND\EXTRA\FTMUD
+4 - RAWSOUND\EXTRA\FTSLUDG
+5 - RAWSOUND\EXTRA\FTWOOD
+6 - RAWSOUND\EXTRA\FTMARB
+7 - RAWSOUND\EXTRA\FTCONC
+8 - RAWSOUND\EXTRA\FTTUBE
 
 (44-45/68-69)[2]: 
 ----------------

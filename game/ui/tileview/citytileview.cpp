@@ -8,12 +8,9 @@ namespace OpenApoc
 CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize, TileViewMode initialMode)
 	:TileView(map, isoTileSize, stratTileSize, initialMode) 
 {
-	selectedTileEmptyImageBack = fw().data->loadImage("city/selected-citytile-back.png");
-	selectedTileFilledImageBack = fw().data->loadImage("city/selected-citytile-back.png");
-	selectedTileBackgroundImageBack = fw().data->loadImage("city/selected-citytile-back.png");
-	selectedTileEmptyImageFront = fw().data->loadImage("city/selected-citytile-front.png");
-	selectedTileFilledImageFront = fw().data->loadImage("city/selected-citytile-front.png");
-	selectedTileBackgroundImageFront = fw().data->loadImage("city/selected-citytile-front.png");
+	selectedTileImageBack = fw().data->loadImage("city/selected-citytile-back.png");
+	selectedTileImageFront = fw().data->loadImage("city/selected-citytile-front.png");
+	selectedTileImageOffset = { 0, 0 };
 	pal = fw().data->loadPalette("xcom3/ufodata/pal_01.dat");
 };
 

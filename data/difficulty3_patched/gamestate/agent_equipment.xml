@@ -1550,6 +1550,7 @@
         <damage_modifier>DAMAGEMODIFIER_MARSEC_ARMOR</damage_modifier>
         <body_image_pack>BATTLEUNITIMAGEPACK_xcom3a</body_image_pack>
         <provides_flight>true</provides_flight>
+        <max_ammo>35</max_ammo>
       </sp>
     </value>
   </entry>
@@ -1585,6 +1586,7 @@
         <damage_modifier>DAMAGEMODIFIER_MARSEC_ARMOR</damage_modifier>
         <body_part>Helmet</body_part>
         <body_image_pack>BATTLEUNITIMAGEPACK_xcom3c</body_image_pack>
+        <max_ammo>38</max_ammo>
       </sp>
     </value>
   </entry>
@@ -1709,6 +1711,7 @@
         <damage_modifier>DAMAGEMODIFIER_MARSEC_ARMOR</damage_modifier>
         <body_part>LeftArm</body_part>
         <body_image_pack>BATTLEUNITIMAGEPACK_xcom3d</body_image_pack>
+        <max_ammo>32</max_ammo>
       </sp>
     </value>
   </entry>
@@ -1744,6 +1747,7 @@
         <damage_modifier>DAMAGEMODIFIER_MARSEC_ARMOR</damage_modifier>
         <body_part>Legs</body_part>
         <body_image_pack>BATTLEUNITIMAGEPACK_xcom3b</body_image_pack>
+        <max_ammo>36</max_ammo>
       </sp>
     </value>
   </entry>
@@ -1970,6 +1974,7 @@
         <damage_modifier>DAMAGEMODIFIER_MARSEC_ARMOR</damage_modifier>
         <body_part>RightArm</body_part>
         <body_image_pack>BATTLEUNITIMAGEPACK_xcom3e</body_image_pack>
+        <max_ammo>32</max_ammo>
       </sp>
     </value>
   </entry>
@@ -2124,6 +2129,7 @@
         <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:2:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_MEGAPOL_ARMOR</damage_modifier>
         <body_image_pack>BATTLEUNITIMAGEPACK_xcom2a</body_image_pack>
+        <max_ammo>45</max_ammo>
       </sp>
     </value>
   </entry>
@@ -2159,6 +2165,7 @@
         <damage_modifier>DAMAGEMODIFIER_MEGAPOL_ARMOR</damage_modifier>
         <body_part>Helmet</body_part>
         <body_image_pack>BATTLEUNITIMAGEPACK_xcom2c</body_image_pack>
+        <max_ammo>44</max_ammo>
       </sp>
     </value>
   </entry>
@@ -2397,6 +2404,7 @@
         <damage_modifier>DAMAGEMODIFIER_MEGAPOL_ARMOR</damage_modifier>
         <body_part>LeftArm</body_part>
         <body_image_pack>BATTLEUNITIMAGEPACK_xcom2d</body_image_pack>
+        <max_ammo>38</max_ammo>
       </sp>
     </value>
   </entry>
@@ -2432,6 +2440,7 @@
         <damage_modifier>DAMAGEMODIFIER_MEGAPOL_ARMOR</damage_modifier>
         <body_part>Legs</body_part>
         <body_image_pack>BATTLEUNITIMAGEPACK_xcom2b</body_image_pack>
+        <max_ammo>42</max_ammo>
       </sp>
     </value>
   </entry>
@@ -2579,6 +2588,7 @@
         <damage_modifier>DAMAGEMODIFIER_MEGAPOL_ARMOR</damage_modifier>
         <body_part>RightArm</body_part>
         <body_image_pack>BATTLEUNITIMAGEPACK_xcom2e</body_image_pack>
+        <max_ammo>38</max_ammo>
       </sp>
     </value>
   </entry>
@@ -4338,6 +4348,7 @@
         <body_sprite>PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/armour.tab:12:xcom3/tacdata/equip.pal</body_sprite>
         <damage_modifier>DAMAGEMODIFIER_X-COM_DISRUPTOR_ARMOR</damage_modifier>
         <body_image_pack>BATTLEUNITIMAGEPACK_xcom4a</body_image_pack>
+        <max_ammo>75</max_ammo>
       </sp>
     </value>
   </entry>
@@ -4373,6 +4384,7 @@
         <damage_modifier>DAMAGEMODIFIER_X-COM_DISRUPTOR_ARMOR</damage_modifier>
         <body_part>Helmet</body_part>
         <body_image_pack>BATTLEUNITIMAGEPACK_xcom4c</body_image_pack>
+        <max_ammo>75</max_ammo>
       </sp>
     </value>
   </entry>
@@ -4408,6 +4420,7 @@
         <damage_modifier>DAMAGEMODIFIER_X-COM_DISRUPTOR_ARMOR</damage_modifier>
         <body_part>LeftArm</body_part>
         <body_image_pack>BATTLEUNITIMAGEPACK_xcom4d</body_image_pack>
+        <max_ammo>65</max_ammo>
       </sp>
     </value>
   </entry>
@@ -4443,6 +4456,7 @@
         <damage_modifier>DAMAGEMODIFIER_X-COM_DISRUPTOR_ARMOR</damage_modifier>
         <body_part>Legs</body_part>
         <body_image_pack>BATTLEUNITIMAGEPACK_xcom4b</body_image_pack>
+        <max_ammo>65</max_ammo>
       </sp>
     </value>
   </entry>
@@ -4478,6 +4492,7 @@
         <damage_modifier>DAMAGEMODIFIER_X-COM_DISRUPTOR_ARMOR</damage_modifier>
         <body_part>RightArm</body_part>
         <body_image_pack>BATTLEUNITIMAGEPACK_xcom4e</body_image_pack>
+        <max_ammo>65</max_ammo>
       </sp>
     </value>
   </entry>

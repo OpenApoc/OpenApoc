@@ -24,6 +24,7 @@
 #include <limits>
 #include <algorithm>
 #include <unordered_map>
+#include "game/state/tileview/tile.h"
 
 namespace OpenApoc
 {
@@ -136,7 +137,7 @@ void Battle::initMap()
 		return;
 	}
 	this->map.reset(new TileMap(this->size, VELOCITY_SCALE_BATTLE,
-	                            {BATTLE_VOXEL_X, BATTLE_VOXEL_Y, BATTLE_VOXEL_Z}, layerMap));
+	                            {VOXEL_X_BATTLE, VOXEL_Y_BATTLE, VOXEL_Z_BATTLE}, layerMap));
 	for (auto &s : this->map_parts)
 	{
 		this->map->addObjectToMap(s);
@@ -387,7 +388,7 @@ void Battle::enterBattle(GameState &state)
 						needLarge = true;
 						neededSpace += 3;
 					}
-					if (!u->isBodyStateAllowed(AgentType::BodyState::Flying))
+					if (!u->canFly())
 					{
 						needWalker = true;
 					}
@@ -526,7 +527,7 @@ void Battle::enterBattle(GameState &state)
 									b->spawnMap[x - 1][y][z + 1] = -1;
 									b->spawnMap[x][y - 1][z + 1] = -1;
 									b->spawnMap[x - 1][y - 1][z + 1] = -1;
-									u->setPosition({ x, y, z + ((float)height) / (float)BATTLE_TILE_Z });
+									u->position = { x + 0.0f, y + 0.0f, z + ((float)height) / (float)TILE_Z_BATTLE };
 									unitsToSpawn.pop_back();
 								}
 								else
@@ -535,7 +536,7 @@ void Battle::enterBattle(GameState &state)
 										continue;
 									int height = b->spawnMap[x][y][z];
 									b->spawnMap[x][y][z] = -1;
-									u->setPosition({ x + 0.5f, y + 0.5f, z + ((float)height) / (float)BATTLE_TILE_Z });
+									u->position = { x + 0.5f, y + 0.5f, z + ((float)height) / (float)TILE_Z_BATTLE };
 									unitsToSpawn.pop_back();
 								}
 								if (unitsToSpawn.size() == 0)
@@ -597,7 +598,7 @@ void Battle::enterBattle(GameState &state)
 								b->spawnMap[x - 1][y][z + 1] = -1;
 								b->spawnMap[x][y - 1][z + 1] = -1;
 								b->spawnMap[x - 1][y - 1][z + 1] = -1;
-								u->position = { x, y, z + ((float)height) / (float)BATTLE_TILE_Z };
+								u->position = { x + 0.0f, y + 0.0f, z + ((float)height) / (float)TILE_Z_BATTLE };
 								unitsToSpawn.pop_back();
 								//numSpawned++;
 							}
@@ -607,7 +608,7 @@ void Battle::enterBattle(GameState &state)
 									continue;
 								int height = b->spawnMap[x][y][z];
 								b->spawnMap[x][y][z] = -1;
-								u->position = { x + 0.5f, y + 0.5f, z + ((float)height) / (float)BATTLE_TILE_Z };
+								u->position = { x + 0.5f, y + 0.5f, z + ((float)height) / (float)TILE_Z_BATTLE };
 								unitsToSpawn.pop_back();
 								numSpawned++;
 							}
@@ -758,39 +759,39 @@ void Battle::enterBattle(GameState &state)
 			}
 		}
 		// Facing
-		if (u->agent->type->allowed_facing.find(u->facing)
-			== u->agent->type->allowed_facing.end())
+		if (!u->agent->isFacingAllowed(u->facing))
 		{
 			u->facing = setRandomizer(state.rng, u->agent->type->allowed_facing);
 		}
 		// Stance
-		if (u->agent->type->allowed_body_states.find(AgentType::BodyState::Standing)
-			!= u->agent->type->allowed_body_states.end())
+		if (u->agent->isBodyStateAllowed(AgentType::BodyState::Standing))
 		{
-			u->current_body_state = AgentType::BodyState::Standing;
+			u->setBodyState(AgentType::BodyState::Standing);
 		}
-		else if (u->agent->type->allowed_body_states.find(AgentType::BodyState::Kneeling)
-			!= u->agent->type->allowed_body_states.end())
+		else if (u->agent->isBodyStateAllowed(AgentType::BodyState::Flying))
 		{
-			u->current_body_state = AgentType::BodyState::Kneeling;
+			u->setBodyState(AgentType::BodyState::Flying);
 		}
-		else if (u->agent->type->allowed_body_states.find(AgentType::BodyState::Prone)
-			!= u->agent->type->allowed_body_states.end())
+		else if (u->agent->isBodyStateAllowed(AgentType::BodyState::Kneeling))
 		{
-			u->current_body_state = AgentType::BodyState::Prone;
+			u->setBodyState(AgentType::BodyState::Kneeling);
 		}
-		else if (u->agent->type->allowed_body_states.find(AgentType::BodyState::Flying)
-			!= u->agent->type->allowed_body_states.end())
+		else if (u->agent->isBodyStateAllowed(AgentType::BodyState::Prone))
 		{
-			u->current_body_state = AgentType::BodyState::Flying;
+			u->setBodyState(AgentType::BodyState::Prone);
+			if (u->canMove() && u->agent->type->allowed_facing.size() > 1)
+			{
+				LogError("Unit %s cannot Stand, Fly or Kneel, but can turn!", u->agent->type.id.cStr());
+			}
 		}
 		else
 		{
 			LogError("Unit %s cannot Stand, Fly, Kneel or go Prone!", u->agent->type.id.cStr());
 		}
+		// Miscellaneous
+		u->agent->modified_stats.restoreTU();
+		u->resetGoal();
 	}
-
-
 
 	state.current_battle->initBattle(state);
 }

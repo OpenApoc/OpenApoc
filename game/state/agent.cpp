@@ -197,8 +197,42 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	}
 
 	agent->updateSpeed();
+	agent->modified_stats.restoreTU();
 
 	return {&state, ID};
+}
+
+bool Agent::isBodyStateAllowed(AgentType::BodyState bodyState)
+{
+	static const std::list<AgentType::EquipmentSlotType> armorslots =
+	{ AgentType::EquipmentSlotType::ArmorBody, AgentType::EquipmentSlotType::ArmorHelmet,
+		AgentType::EquipmentSlotType::ArmorLeftHand, AgentType::EquipmentSlotType::ArmorLegs,
+		AgentType::EquipmentSlotType::ArmorRightHand };
+	
+	if (type->allowed_body_states.find(bodyState) != type->allowed_body_states.end())
+		return true;
+	if (bodyState == AgentType::BodyState::Flying)
+	{
+		for (auto t : armorslots)
+		{
+			auto e = getFirstItemInSlot(t);
+			if (e && e->type->provides_flight)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool Agent::isMovementStateAllowed(AgentType::MovementState movementState)
+{
+	return type->allowed_movement_states.find(movementState) != type->allowed_movement_states.end();
+}
+
+bool Agent::isFacingAllowed(Vec2<int> facing)
+{
+	return type->allowed_facing.find(facing) != type->allowed_facing.end();
 }
 
 int Agent::getArmorValue(AgentType::BodyPart bodyPart)
@@ -408,10 +442,11 @@ void Agent::addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object)
 
 void Agent::removeEquipment(sp<AEquipment> object) { this->equipment.remove(object); updateSpeed(); }
 
-// Fixme: calculate how much equipment slows us down here
 void Agent::updateSpeed() 
 {
-
+	// Fixme: calculate how much equipment slows us down here
+	initial_stats.restoreTU();
+	current_stats.restoreTU();
 }
 
 StateRef<BattleUnitAnimationPack> Agent::getAnimationPack() { return type->animation_packs[appearance]; }

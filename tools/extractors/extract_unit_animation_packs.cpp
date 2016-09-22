@@ -33,7 +33,7 @@ namespace OpenApoc
 
 	sp<BattleUnitAnimationPack::AnimationEntry> getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
 		const std::vector<AnimationDataUA> &dataUA, std::vector<AnimationDataUF> &dataUF,
-		int index, Vec2<int> direction, int split_point, bool left_side, bool isOverlay = false)
+		int index, Vec2<int> direction, int frames_per_100_units, int split_point, bool left_side, bool isOverlay = false)
 	{
 		static const std::map<Vec2<int>, int> offset_dir_map = {
 			{ {0,-1},	0 },
@@ -99,21 +99,29 @@ namespace OpenApoc
 		
 		e->is_overlay = isOverlay;
 		e->frame_count = e->frames.size();
+		e->frames_per_100_units = frames_per_100_units;
 
 		return e;
 	}
 
 	sp<BattleUnitAnimationPack::AnimationEntry> getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
 		const std::vector<AnimationDataUA> &dataUA, std::vector<AnimationDataUF> &dataUF,
-		int index, Vec2<int> direction, bool isOverlay = false)
+		int index, Vec2<int> direction, int frames_per_100_units = 100, bool isOverlay = false)
 	{
-		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, 0, false, isOverlay);
+		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, frames_per_100_units, 0, false, isOverlay);
 	}
 
 	// Parsing animations for "unit/anim" files
 	void extractAnimationPackUnit(sp<BattleUnitAnimationPack> p, const std::vector<AnimationDataAD> &dataAD,
 		const std::vector<AnimationDataUA> &dataUA, std::vector<AnimationDataUF> &dataUF, int x, int y)
 	{
+		// Frames per 100 units
+		static const int pFrames = 300; // Prone
+		static const int wFrames = 300; // Walk
+		static const int rFrames = 600; // Run
+		static const int sFrames = 300; // Strafe
+		static const int jFrames = 300; // Jump
+
 		// 0, 0 facing does not exist
 		if (x == 0 && y == 0)
 			return;
@@ -180,71 +188,71 @@ namespace OpenApoc
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::None]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 9, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 9, { x,y }, wFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 10, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 10, { x,y }, wFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 11, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 11, { x,y }, wFrames);
 
 			// Standing strafing states: 12, 13, 14
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::None]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Strafing]
 				[AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 12, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 12, { x,y }, sFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Strafing]
 				[AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 13, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 13, { x,y }, sFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Strafing]
 				[AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 14, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 14, { x,y }), sFrames;
 
 			// Standing running state: 15
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::None]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Running]
 				[AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 15, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 15, { x,y }, rFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Running]
 				[AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 15, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 15, { x,y }, rFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Running]
 				[AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 15, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 15, { x,y }, rFrames);
 
 			// Prone moving state: 18
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::None]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Prone][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 18, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 18, { x,y }, pFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Prone][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 18, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 18, { x,y }, pFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Prone][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 18, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 18, { x,y }, pFrames);
 
 			// Jumping moving state: 22
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::None]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Jumping][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 22, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 22, { x,y }, jFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Jumping][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 22, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 22, { x,y }, jFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Jumping][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 22, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 22, { x,y }, jFrames);
 
 			// Flying standing/moving/running/strafing state: 24, 25, 26
 			// Standing
@@ -264,41 +272,41 @@ namespace OpenApoc
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::None]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Flying][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 24, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 24, { x,y }, wFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Flying][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 25, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 25, { x,y }, wFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Flying][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 26, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 26, { x,y }, wFrames);
 			// "Running" in the air
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::None]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Running]
 				[AgentType::BodyState::Flying][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 24, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 24, { x,y }, rFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Running]
 				[AgentType::BodyState::Flying][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 25, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 25, { x,y }, rFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Running]
 				[AgentType::BodyState::Flying][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 26, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 26, { x,y }, rFrames);
 			// "Strafing" in the air
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::None]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Strafing]
 				[AgentType::BodyState::Flying][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 24, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 24, { x,y }, sFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Strafing]
 				[AgentType::BodyState::Flying][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 25, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 25, { x,y }, sFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Strafing]
 				[AgentType::BodyState::Flying][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 26, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 26, { x,y }, sFrames);
 
 			// Standing aiming static animation: 54, 58
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
@@ -344,29 +352,29 @@ namespace OpenApoc
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::Aiming][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Flying][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 86, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 86, { x,y }, wFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::Aiming][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Flying][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 90, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 90, { x,y }, wFrames);
 
 			// Standing aiming moving overlay animation: 78, 82
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::Aiming][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 78, { x,y }, true);
+				getAnimationEntry(dataAD, dataUA, dataUF, 78, { x,y }, true, wFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::Aiming][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 82, { x,y }, true);
+				getAnimationEntry(dataAD, dataUA, dataUF, 82, { x,y }, true, wFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::Aiming][AgentType::MovementState::Strafing]
 				[AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 78, { x,y }, true);
+				getAnimationEntry(dataAD, dataUA, dataUF, 78, { x,y }, true, wFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::Aiming][AgentType::MovementState::Strafing]
 				[AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 82, { x,y }, true);
+				getAnimationEntry(dataAD, dataUA, dataUF, 82, { x,y }, true, wFrames);
 
 			// Standing firing static animation: 53, 57
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
@@ -412,21 +420,21 @@ namespace OpenApoc
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::Firing][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Flying][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 85, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 85, { x,y }, wFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::Firing][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Flying][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 89, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 89, { x,y }, wFrames);
 
 			// Standing firing moving overlay animation: 77, 81
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::Firing][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 77, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 77, { x,y }, true, wFrames);
 			p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::Firing][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 81, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 81, { x,y }, true, wFrames);
 		}
 		
 		// Body state change animations
@@ -491,29 +499,29 @@ namespace OpenApoc
 			p->body_state_animations[BattleUnitAnimationPack::ItemWieldMode::None]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Standing][AgentType::BodyState::Jumping][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 21, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 21, { x,y }, jFrames);
 			p->body_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Standing][AgentType::BodyState::Jumping][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 21, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 21, { x,y }, jFrames);
 			p->body_state_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Standing][AgentType::BodyState::Jumping][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 21, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 21, { x,y }, jFrames);
 
 			// Body Jumping -> Standing animation: 23, 28, 29
 			p->body_state_animations[BattleUnitAnimationPack::ItemWieldMode::None]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Jumping][AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 23, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 23, { x,y }, jFrames);
 			p->body_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Jumping][AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 28, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 28, { x,y }, jFrames);
 			p->body_state_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::AtEase][AgentType::MovementState::Normal]
 				[AgentType::BodyState::Jumping][AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 29, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 29, { x,y }, jFrames);
 
 			// Body Standing -> Kneeling animation: 35, 36, 37
 			p->body_state_animations[BattleUnitAnimationPack::ItemWieldMode::None]
@@ -676,41 +684,41 @@ namespace OpenApoc
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::Aiming][AgentType::HandState::AtEase]
 				[AgentType::MovementState::Normal][AgentType::BodyState::Flying][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 87, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 87, { x,y }, wFrames);
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::Aiming][AgentType::HandState::AtEase]
 				[AgentType::MovementState::Normal][AgentType::BodyState::Flying][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 91, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 91, { x,y }, wFrames);
 
 			// Hand Ease -> Aiming flying moving animation: 84, 88
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::AtEase][AgentType::HandState::Aiming]
 				[AgentType::MovementState::Normal][AgentType::BodyState::Flying][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 84, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 84, { x,y }, wFrames);
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::AtEase][AgentType::HandState::Aiming]
 				[AgentType::MovementState::Normal][AgentType::BodyState::Flying][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 88, { x,y });
+				getAnimationEntry(dataAD, dataUA, dataUF, 88, { x,y }, wFrames);
 
 			// Hand Aiming -> Ease standing overlay moving animation: 79, 83
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::Aiming][AgentType::HandState::AtEase]
 				[AgentType::MovementState::Normal][AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 79, { x,y }, true);
+				getAnimationEntry(dataAD, dataUA, dataUF, 79, { x,y }, true, wFrames);
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::Aiming][AgentType::HandState::AtEase]
 				[AgentType::MovementState::Normal][AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 83, { x,y }, true);
+				getAnimationEntry(dataAD, dataUA, dataUF, 83, { x,y }, true, wFrames);
 
 			// Hand Ease -> Aiming standing overlay moving animation: 76, 80
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 				[AgentType::HandState::AtEase][AgentType::HandState::Aiming]
 				[AgentType::MovementState::Normal][AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 76, { x, y }, true);
+				getAnimationEntry(dataAD, dataUA, dataUF, 76, { x, y }, true, wFrames);
 			p->hand_state_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 				[AgentType::HandState::AtEase][AgentType::HandState::Aiming]
 				[AgentType::MovementState::Normal][AgentType::BodyState::Standing][{ x, y }] =
-				getAnimationEntry(dataAD, dataUA, dataUF, 80, { x,y }, true);
+				getAnimationEntry(dataAD, dataUA, dataUF, 80, { x,y }, true, wFrames);
 		}
 	}
 

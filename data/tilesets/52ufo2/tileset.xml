@@ -170,6 +170,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>10</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <supported_by>Above</supported_by>
@@ -258,6 +264,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>5</height>
           <supported_by>Above</supported_by>
@@ -346,6 +358,12 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>7</height>
           <independent_structure>true</independent_structure>
@@ -434,6 +452,12 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>7</height>
           <independent_structure>true</independent_structure>
@@ -522,6 +546,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>5</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -611,6 +641,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>5</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -700,6 +736,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>5</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -789,6 +831,12 @@
           <block_gas>60</block_gas>
           <block_fire>60</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>28</height>
           <independent_structure>true</independent_structure>
@@ -877,6 +925,12 @@
           <block_gas>60</block_gas>
           <block_fire>60</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>28</height>
           <independent_structure>true</independent_structure>
@@ -965,6 +1019,12 @@
           <block_gas>60</block_gas>
           <block_fire>60</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>28</height>
           <independent_structure>true</independent_structure>
@@ -1053,6 +1113,12 @@
           <block_gas>60</block_gas>
           <block_fire>60</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>28</height>
           <independent_structure>true</independent_structure>
@@ -1141,6 +1207,12 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>8</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>14</movement_cost>
           <height>17</height>
           <independent_structure>true</independent_structure>
@@ -1229,6 +1301,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>10</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <supported_by>Above</supported_by>
@@ -1317,6 +1395,12 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>8</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>14</movement_cost>
           <height>17</height>
           <independent_structure>true</independent_structure>
@@ -1405,7 +1489,13 @@
           <block_gas>35</block_gas>
           <block_fire>35</block_fire>
           <size>8</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -1493,7 +1583,13 @@
           <block_gas>35</block_gas>
           <block_fire>35</block_fire>
           <size>8</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -1581,7 +1677,13 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -1669,6 +1771,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
@@ -1757,6 +1865,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
@@ -1845,6 +1959,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
@@ -1933,6 +2053,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
@@ -2021,6 +2147,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>15</height>
           <independent_structure>true</independent_structure>
@@ -2109,6 +2241,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>28</height>
           <provides_support>true</provides_support>
@@ -2197,6 +2335,12 @@
           <block_gas>225</block_gas>
           <block_fire>225</block_fire>
           <size>9</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>35</height>
           <supported_by>Above</supported_by>
@@ -2285,6 +2429,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>14</height>
         </sp>
@@ -2372,6 +2522,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>14</height>
         </sp>
@@ -2459,6 +2615,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>28</height>
           <provides_support>true</provides_support>
@@ -2547,6 +2709,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>28</height>
           <provides_support>true</provides_support>
@@ -2635,6 +2803,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>14</height>
         </sp>
@@ -2722,6 +2896,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>14</height>
         </sp>
@@ -2809,6 +2989,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>28</height>
           <provides_support>true</provides_support>
@@ -2897,6 +3083,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>28</height>
           <provides_support>true</provides_support>
@@ -2985,6 +3177,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>14</height>
         </sp>
@@ -3072,6 +3270,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>14</height>
         </sp>
@@ -3159,6 +3363,12 @@
           <block_gas>200</block_gas>
           <block_fire>200</block_fire>
           <size>8</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>31</height>
           <supported_by>Above</supported_by>
@@ -3247,6 +3457,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>28</height>
           <provides_support>true</provides_support>
@@ -3335,6 +3551,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>14</height>
         </sp>
@@ -3422,6 +3644,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>28</height>
           <provides_support>true</provides_support>
@@ -3510,6 +3738,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>14</height>
         </sp>
@@ -3597,6 +3831,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>28</height>
           <provides_support>true</provides_support>
@@ -3685,6 +3925,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>14</height>
         </sp>
@@ -3772,6 +4018,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>28</height>
         </sp>
@@ -3859,6 +4111,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>14</height>
         </sp>
@@ -3946,6 +4204,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>28</height>
         </sp>
@@ -4033,6 +4297,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>28</height>
         </sp>
@@ -4120,6 +4390,12 @@
           <block_gas>160</block_gas>
           <block_fire>160</block_fire>
           <size>7</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>27</height>
           <supported_by>Above</supported_by>
@@ -4208,6 +4484,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>14</height>
         </sp>
@@ -4295,6 +4577,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>14</height>
         </sp>
@@ -4382,6 +4670,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>28</height>
         </sp>
@@ -4469,6 +4763,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>4</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
         </sp>
@@ -4556,6 +4856,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>30</height>
         </sp>
@@ -4643,6 +4949,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>15</height>
         </sp>
@@ -4730,6 +5042,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>10</height>
         </sp>
@@ -4817,6 +5135,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>4</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
         </sp>
@@ -4904,6 +5228,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>30</height>
         </sp>
@@ -4991,6 +5321,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>15</height>
         </sp>
@@ -5078,6 +5414,12 @@
           <block_gas>100</block_gas>
           <block_fire>100</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>23</height>
           <supported_by>Above</supported_by>
@@ -5166,6 +5508,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>10</height>
         </sp>
@@ -5253,6 +5601,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>10</height>
         </sp>
@@ -5340,6 +5694,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>15</height>
         </sp>
@@ -5427,6 +5787,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>30</height>
         </sp>
@@ -5514,6 +5880,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>4</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
         </sp>
@@ -5601,6 +5973,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>10</height>
         </sp>
@@ -5688,6 +6066,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>15</height>
         </sp>
@@ -5775,6 +6159,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>30</height>
         </sp>
@@ -5862,6 +6252,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>4</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
         </sp>
@@ -5949,7 +6345,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -6037,6 +6439,12 @@
           <block_gas>80</block_gas>
           <block_fire>80</block_fire>
           <size>5</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>19</height>
           <supported_by>Above</supported_by>
@@ -6125,7 +6533,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -6213,7 +6627,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -6301,7 +6721,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -6389,7 +6815,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -6477,7 +6909,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -6565,7 +7003,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -6653,7 +7097,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -6741,7 +7191,13 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>3</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -6829,7 +7285,13 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>3</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -6917,7 +7379,13 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>3</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -7005,6 +7473,12 @@
           <block_gas>80</block_gas>
           <block_fire>80</block_fire>
           <size>5</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>19</height>
           <supported_by>Above</supported_by>
@@ -7093,7 +7567,13 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>3</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -7178,7 +7658,13 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -7262,7 +7748,13 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -7346,7 +7838,13 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -7430,7 +7928,13 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -7518,7 +8022,13 @@
           <block_gas>30</block_gas>
           <block_fire>30</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -7605,7 +8115,13 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -7693,7 +8209,13 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>18</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -7781,7 +8303,13 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>18</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -7869,7 +8397,13 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>18</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -7957,6 +8491,12 @@
           <block_gas>60</block_gas>
           <block_fire>60</block_fire>
           <size>4</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>15</height>
           <supported_by>Above</supported_by>
@@ -8045,7 +8585,13 @@
           <block_gas>30</block_gas>
           <block_fire>30</block_fire>
           <size>3</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -8132,7 +8678,13 @@
           <block_gas>30</block_gas>
           <block_fire>30</block_fire>
           <size>3</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -8219,7 +8771,13 @@
           <block_gas>30</block_gas>
           <block_fire>30</block_fire>
           <size>3</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -8306,7 +8864,13 @@
           <block_gas>30</block_gas>
           <block_fire>30</block_fire>
           <size>3</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -8393,7 +8957,13 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>20</height>
         </sp>
       </value>
@@ -8480,7 +9050,13 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>20</height>
         </sp>
       </value>
@@ -8567,7 +9143,13 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>20</height>
         </sp>
       </value>
@@ -8654,7 +9236,13 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>20</height>
         </sp>
       </value>
@@ -8741,7 +9329,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>35</height>
           <provides_support>true</provides_support>
         </sp>
@@ -8829,7 +9423,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>35</height>
           <provides_support>true</provides_support>
         </sp>
@@ -8917,6 +9517,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>7</height>
           <supported_by>Above</supported_by>
@@ -9006,7 +9612,13 @@
           <block_gas>35</block_gas>
           <block_fire>35</block_fire>
           <size>3</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>22</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -9094,7 +9706,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>3</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>18</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -9182,7 +9800,13 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
           <supported_by>East</supported_by>
@@ -9271,7 +9895,13 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
           <supported_by>East</supported_by>
@@ -9360,7 +9990,13 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
           <supported_by>East</supported_by>
@@ -9449,7 +10085,13 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
           <supported_by>North</supported_by>
@@ -9538,7 +10180,13 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
           <supported_by>North</supported_by>
@@ -9627,7 +10275,13 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
           <supported_by>North</supported_by>
@@ -9716,7 +10370,13 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
           <supported_by>West</supported_by>
@@ -9805,7 +10465,13 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
           <supported_by>West</supported_by>
@@ -9894,6 +10560,12 @@
           <block_gas>225</block_gas>
           <block_fire>225</block_fire>
           <size>9</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>35</height>
           <supported_by>Above</supported_by>
@@ -9982,6 +10654,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>5</height>
           <supported_by>Above</supported_by>
@@ -10070,7 +10748,13 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
           <supported_by>West</supported_by>
@@ -10159,7 +10843,13 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
           <supported_by>South</supported_by>
@@ -10248,7 +10938,13 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>22</height>
           <provides_support>true</provides_support>
           <supported_by>South</supported_by>
@@ -10337,6 +11033,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>5</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -10425,6 +11127,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>5</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -10513,6 +11221,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>5</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -10601,6 +11315,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>5</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -11114,6 +11834,12 @@
           <block_gas>200</block_gas>
           <block_fire>200</block_fire>
           <size>8</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>31</height>
           <supported_by>Above</supported_by>
@@ -12052,6 +12778,12 @@
           <block_gas>160</block_gas>
           <block_fire>160</block_fire>
           <size>7</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>27</height>
           <supported_by>Above</supported_by>
@@ -12395,6 +13127,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>10</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <supported_by>Above</supported_by>
@@ -12483,6 +13221,12 @@
           <block_gas>225</block_gas>
           <block_fire>225</block_fire>
           <size>9</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>35</height>
           <supported_by>Above</supported_by>
@@ -12571,6 +13315,12 @@
           <block_gas>200</block_gas>
           <block_fire>200</block_fire>
           <size>8</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>31</height>
           <supported_by>Above</supported_by>
@@ -12659,6 +13409,12 @@
           <block_gas>160</block_gas>
           <block_fire>160</block_fire>
           <size>7</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>27</height>
           <supported_by>Above</supported_by>
@@ -12747,6 +13503,12 @@
           <block_gas>100</block_gas>
           <block_fire>100</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>23</height>
           <supported_by>Above</supported_by>
@@ -12835,6 +13597,12 @@
           <block_gas>80</block_gas>
           <block_fire>80</block_fire>
           <size>5</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>19</height>
           <supported_by>Above</supported_by>
@@ -12923,6 +13691,12 @@
           <block_gas>60</block_gas>
           <block_fire>60</block_fire>
           <size>4</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>15</height>
           <supported_by>Above</supported_by>
@@ -13011,6 +13785,12 @@
           <block_gas>100</block_gas>
           <block_fire>100</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>23</height>
           <supported_by>Above</supported_by>
@@ -13099,6 +13879,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>7</height>
           <supported_by>Above</supported_by>
@@ -13187,6 +13973,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>7</height>
           <supported_by>Above</supported_by>
@@ -13275,6 +14067,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>5</height>
           <supported_by>Above</supported_by>
@@ -13363,6 +14161,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>10</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <supported_by>Above</supported_by>
@@ -13451,6 +14255,12 @@
           <block_gas>225</block_gas>
           <block_fire>225</block_fire>
           <size>9</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>35</height>
           <supported_by>Above</supported_by>
@@ -13539,6 +14349,12 @@
           <block_gas>200</block_gas>
           <block_fire>200</block_fire>
           <size>8</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>31</height>
           <supported_by>Above</supported_by>
@@ -13627,6 +14443,12 @@
           <block_gas>160</block_gas>
           <block_fire>160</block_fire>
           <size>7</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>27</height>
           <supported_by>Above</supported_by>
@@ -13715,6 +14537,12 @@
           <block_gas>100</block_gas>
           <block_fire>100</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>23</height>
           <supported_by>Above</supported_by>
@@ -13803,6 +14631,12 @@
           <block_gas>80</block_gas>
           <block_fire>80</block_fire>
           <size>5</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>19</height>
           <supported_by>Above</supported_by>
@@ -13891,6 +14725,12 @@
           <block_gas>60</block_gas>
           <block_fire>60</block_fire>
           <size>4</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>15</height>
           <supported_by>Above</supported_by>
@@ -13979,6 +14819,12 @@
           <block_gas>80</block_gas>
           <block_fire>80</block_fire>
           <size>5</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>19</height>
           <supported_by>Above</supported_by>
@@ -14067,6 +14913,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>7</height>
           <supported_by>Above</supported_by>
@@ -14155,6 +15007,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>7</height>
           <supported_by>Above</supported_by>
@@ -14243,6 +15101,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>5</height>
           <supported_by>Above</supported_by>
@@ -14417,6 +15281,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -14505,6 +15375,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -14593,6 +15469,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -14681,6 +15563,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -14769,6 +15657,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -14858,6 +15752,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -14947,6 +15847,12 @@
           <block_gas>60</block_gas>
           <block_fire>60</block_fire>
           <size>4</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>15</height>
           <supported_by>Above</supported_by>
@@ -15035,7 +15941,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>-1</movement_cost>
+          <movement_cost>255</movement_cost>
           <height>20</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -15123,7 +16029,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>-1</movement_cost>
+          <movement_cost>255</movement_cost>
           <height>20</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -15296,7 +16202,7 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
-          <movement_cost>-1</movement_cost>
+          <movement_cost>255</movement_cost>
           <height>20</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -15384,7 +16290,13 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>1</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -15472,7 +16384,13 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>1</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>20</height>
         </sp>
       </value>
@@ -15559,7 +16477,13 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>1</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -15647,7 +16571,13 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>1</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -15735,7 +16665,13 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>1</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>20</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -15823,7 +16759,13 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>1</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>20</height>
           <independent_structure>true</independent_structure>
         </sp>
@@ -15911,6 +16853,12 @@
           <block_gas>40</block_gas>
           <block_fire>40</block_fire>
           <size>3</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>11</height>
           <supported_by>Above</supported_by>
@@ -15999,7 +16947,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>5</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -16087,7 +17041,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>5</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -16175,6 +17135,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -16263,6 +17229,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -16351,6 +17323,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -16439,6 +17417,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -16527,6 +17511,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -16615,6 +17605,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -16703,6 +17699,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -16791,6 +17793,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -16879,6 +17887,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>7</height>
           <supported_by>Above</supported_by>
@@ -16967,6 +17981,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -17055,6 +18075,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -17143,6 +18169,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -17231,6 +18263,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>6</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -17319,6 +18357,12 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>18</height>
           <independent_structure>true</independent_structure>
@@ -17407,6 +18451,12 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>18</height>
           <independent_structure>true</independent_structure>
@@ -17495,6 +18545,12 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>7</height>
           <independent_structure>true</independent_structure>
@@ -17583,6 +18639,12 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>7</height>
           <independent_structure>true</independent_structure>
@@ -17671,6 +18733,12 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>7</height>
           <independent_structure>true</independent_structure>
@@ -17759,6 +18827,12 @@
           <block_gas>5</block_gas>
           <block_fire>5</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>7</height>
           <independent_structure>true</independent_structure>
@@ -17932,6 +19006,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -18019,6 +19099,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -18106,6 +19192,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -18193,6 +19285,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -18280,6 +19378,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -18367,6 +19471,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -18454,6 +19564,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -18541,6 +19657,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -18629,6 +19751,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_9</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -18717,6 +19845,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_10</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -18805,6 +19939,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_5</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -18893,6 +20033,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_6</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -18980,6 +20126,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -19068,6 +20220,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_7</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -19156,6 +20314,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_8</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -19244,6 +20408,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_9</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -19332,6 +20502,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_10</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -19420,6 +20596,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_5</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -19508,6 +20690,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_6</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -19596,6 +20784,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_7</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -19684,6 +20878,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_8</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -19771,6 +20971,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -19859,6 +21065,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -19947,6 +21159,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -20034,6 +21252,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -20122,6 +21346,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -20210,6 +21440,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -20298,6 +21534,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -20386,6 +21628,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -20473,6 +21721,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -20560,6 +21814,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -20647,6 +21907,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -20734,6 +22000,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -20822,6 +22094,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_5</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -20910,6 +22188,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_6</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -20997,6 +22281,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -21085,6 +22375,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_7</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -21173,6 +22469,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_8</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -21261,6 +22563,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_9</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -21349,6 +22657,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_10</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -21437,6 +22751,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_5</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -21525,6 +22845,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_6</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -21613,6 +22939,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_7</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -21701,6 +23033,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_8</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -21789,6 +23127,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_9</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -21877,6 +23221,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_10</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -21964,6 +23314,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -22052,6 +23408,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_5</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -22140,6 +23502,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_6</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -22228,6 +23596,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_7</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -22316,6 +23690,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_8</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -22404,6 +23784,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_9</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -22492,6 +23878,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_10</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -22580,6 +23972,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_5</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -22668,6 +24066,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_6</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -22921,6 +24325,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -23091,6 +24501,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -23178,6 +24594,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -23265,6 +24687,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -23352,6 +24780,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -23439,6 +24873,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -23526,6 +24966,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -23613,6 +25059,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -23700,6 +25152,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -23787,6 +25245,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -23874,6 +25338,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -23961,6 +25431,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -24049,6 +25525,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_8</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -24137,6 +25619,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_9</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -24225,6 +25713,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_10</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -24313,6 +25807,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_5</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -24401,6 +25901,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_6</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -24489,6 +25995,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_7</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -24577,6 +26089,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_8</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -24665,6 +26183,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_9</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -24753,6 +26277,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_10</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -24840,6 +26370,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -24928,6 +26464,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_5</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -25016,6 +26558,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_6</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -25104,6 +26652,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_7</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -25192,6 +26746,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_8</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -25280,6 +26840,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_9</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -25368,6 +26934,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_10</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -25456,6 +27028,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_5</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -25544,6 +27122,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_6</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -25632,6 +27216,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_7</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -25720,6 +27310,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_8</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -25807,6 +27403,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -25895,6 +27497,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_9</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -25983,6 +27591,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_10</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -26071,6 +27685,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_5</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -26159,6 +27779,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_6</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -26247,6 +27873,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_7</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -26335,6 +27967,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_8</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -26423,6 +28061,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_9</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -26511,6 +28155,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_10</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -26599,6 +28249,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_5</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -26687,6 +28343,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_6</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -26774,6 +28436,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -26862,6 +28530,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_7</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -26950,6 +28624,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_8</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -27038,6 +28718,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_9</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -27126,6 +28812,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_10</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -27214,6 +28906,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_5</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -27302,6 +29000,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_6</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -27390,6 +29094,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_7</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -27478,6 +29188,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_8</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -27566,6 +29282,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_9</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -27654,6 +29376,12 @@
           <block_fire>255</block_fire>
           <size>2</size>
           <damaged_map_part>BATTLEMAPPART_52ufo2_GD_10</damaged_map_part>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -27741,6 +29469,12 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -27828,6 +29562,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -27915,6 +29655,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -28002,6 +29748,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -28089,6 +29841,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -28176,6 +29934,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -28263,6 +30027,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -28350,6 +30120,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -28437,6 +30213,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -28524,6 +30306,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -28611,6 +30399,12 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <floor>true</floor>
           <movement_cost>4</movement_cost>
           <height>3</height>
@@ -28786,7 +30580,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -28874,7 +30674,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -28962,7 +30768,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -29050,7 +30862,13 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>21</height>
         </sp>
       </value>
@@ -29137,7 +30955,13 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>21</height>
         </sp>
       </value>
@@ -29224,7 +31048,13 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>21</height>
         </sp>
       </value>
@@ -29311,6 +31141,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>21</height>
         </sp>
@@ -29398,7 +31234,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -29486,7 +31328,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -29574,6 +31422,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -29662,6 +31516,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -29750,7 +31610,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -29838,7 +31704,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -29926,7 +31798,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -30014,6 +31892,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -30102,6 +31986,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -30190,7 +32080,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -30278,7 +32174,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -30366,7 +32268,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -30454,7 +32362,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -30542,7 +32456,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -30630,7 +32550,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -30718,7 +32644,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -30806,7 +32738,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -30894,7 +32832,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -30979,6 +32923,12 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -31065,6 +33015,12 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -31151,6 +33107,12 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -31326,7 +33288,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown07</supported_by>
@@ -31415,7 +33383,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown07</supported_by>
@@ -31501,6 +33475,12 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -31587,6 +33567,12 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -31676,7 +33662,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -31764,7 +33756,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftwood1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftwood2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -31852,7 +33850,13 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -31939,7 +33943,13 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -32033,6 +34043,12 @@
             <entry>PCK:xcom3/maps/52ufo2/mapunits/animate.pck:xcom3/maps/52ufo2/mapunits/animate.tab:16</entry>
             <entry>PCK:xcom3/maps/52ufo2/mapunits/animate.pck:xcom3/maps/52ufo2/mapunits/animate.tab:17</entry>
           </animation_frames>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <door>true</door>
           <movement_cost>4</movement_cost>
           <height>39</height>
@@ -32129,6 +34145,12 @@
             <entry>PCK:xcom3/maps/52ufo2/mapunits/animate.pck:xcom3/maps/52ufo2/mapunits/animate.tab:22</entry>
             <entry>PCK:xcom3/maps/52ufo2/mapunits/animate.pck:xcom3/maps/52ufo2/mapunits/animate.tab:23</entry>
           </animation_frames>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <door>true</door>
           <movement_cost>4</movement_cost>
           <height>39</height>
@@ -32214,6 +34236,12 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftwood1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftwood2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -32302,7 +34330,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -32390,7 +34424,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -32478,7 +34518,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -32566,7 +34612,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -32654,7 +34706,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -32829,7 +34887,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -32917,7 +34981,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -33005,7 +35075,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -33093,7 +35169,13 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>21</height>
         </sp>
       </value>
@@ -33180,7 +35262,13 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>21</height>
         </sp>
       </value>
@@ -33267,7 +35355,13 @@
           <block_gas>15</block_gas>
           <block_fire>15</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>21</height>
         </sp>
       </value>
@@ -33354,6 +35448,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>21</height>
         </sp>
@@ -33441,7 +35541,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -33529,7 +35635,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -33617,6 +35729,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -33705,6 +35823,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -33793,7 +35917,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -33881,7 +36011,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -33969,7 +36105,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -34057,6 +36199,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -34145,6 +36293,12 @@
           <block_gas>10</block_gas>
           <block_fire>10</block_fire>
           <size>2</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -34233,7 +36387,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -34321,7 +36481,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -34409,7 +36575,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -34497,7 +36669,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -34585,7 +36763,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -34673,7 +36857,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -34761,7 +36951,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -34849,7 +37045,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -34937,7 +37139,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -35111,7 +37319,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown07</supported_by>
@@ -35200,7 +37414,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
           <supported_by>Unknown07</supported_by>
@@ -35289,7 +37509,13 @@
           <block_gas>20</block_gas>
           <block_fire>20</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftwood1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftwood2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -35377,7 +37603,13 @@
           <block_gas>25</block_gas>
           <block_fire>25</block_fire>
           <size>2</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>30</height>
         </sp>
       </value>
@@ -35461,6 +37693,12 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>5</height>
         </sp>
@@ -35556,6 +37794,12 @@
             <entry>PCK:xcom3/maps/52ufo2/mapunits/animate.pck:xcom3/maps/52ufo2/mapunits/animate.tab:4</entry>
             <entry>PCK:xcom3/maps/52ufo2/mapunits/animate.pck:xcom3/maps/52ufo2/mapunits/animate.tab:5</entry>
           </animation_frames>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <door>true</door>
           <movement_cost>4</movement_cost>
           <height>39</height>
@@ -35653,6 +37897,12 @@
             <entry>PCK:xcom3/maps/52ufo2/mapunits/animate.pck:xcom3/maps/52ufo2/mapunits/animate.tab:10</entry>
             <entry>PCK:xcom3/maps/52ufo2/mapunits/animate.pck:xcom3/maps/52ufo2/mapunits/animate.tab:11</entry>
           </animation_frames>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
           <door>true</door>
           <movement_cost>4</movement_cost>
           <height>39</height>
@@ -35742,7 +37992,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -35827,6 +38083,12 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftwood1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftwood2.raw:22050</entry>
+            </sp>
+          </sfx>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -35915,7 +38177,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -36003,7 +38271,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -36091,7 +38365,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -36179,7 +38459,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>
@@ -36267,7 +38553,13 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
-          <movement_cost>-1</movement_cost>
+          <sfx>
+            <sp>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+              <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+            </sp>
+          </sfx>
+          <movement_cost>255</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
         </sp>

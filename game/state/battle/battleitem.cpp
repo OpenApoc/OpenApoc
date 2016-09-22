@@ -65,8 +65,10 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 	if (supported)
 		return;
 
-	this->velocity.z -= (float)item->type->weight * static_cast<float>(ticks) / TICK_SCALE;
+	velocity.z -= (float)item->type->weight * static_cast<float>(ticks) / TICK_SCALE;
 	// FIXME: Limit velocity after applying gravity?
+	// Disabled until we figure out starting throwing item vectors properly
+	// velocity = std::min(glm::length(velocity), FALLING_SPEED_CAP) * glm::normalize(velocity);
 
 	auto previousPosition = position;
 	auto newPosition =

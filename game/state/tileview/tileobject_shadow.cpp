@@ -51,15 +51,15 @@ void TileObjectShadow::draw(Renderer &r, TileTransform &transform, Vec2<float> s
 			}
 			if (unit)
 			{
-				// Dead units on the ground drop no shadows
-				if (unit->isDead() && !unit->falling)
+				// Bodies on the ground drop no shadows
+				if (!unit->isConscious() && !unit->falling)
 					break;
 				unit->agent->getAnimationPack()->drawShadow(r, screenPosition,
 					unit->agent->type->shadow_pack,
 					unit->agent->getItemInHands(), unit->facing,
 					unit->current_body_state, unit->target_body_state,
 					unit->current_hand_state, unit->target_hand_state,
-					unit->movement_state, unit->getBodyAnimationFrame(), unit->getHandAnimationFrame(), unit->getDistanceTravelled());
+					unit->usingLift ? AgentType::MovementState::None : unit->current_movement_state, unit->getBodyAnimationFrame(), unit->getHandAnimationFrame(), unit->getDistanceTravelled());
 			}
 			if (item)
 			{
@@ -118,6 +118,10 @@ TileObjectShadow::TileObjectShadow(TileMap &map, sp<BattleUnit> unit)
     : TileObject(map, Type::Shadow, Vec3<float>{0, 0, 0}), ownerBattleUnit(unit),
       fellOffTheBottomOfTheMap(false)
 {
+	if (unit->agent->type->large)
+		setBounds({ 2.0f, 2.0f, 2.0f });
+	else
+		setBounds({ 1.0f, 1.0f, 1.0f });
 }
 TileObjectShadow::TileObjectShadow(TileMap &map, sp<BattleItem> item)
     : TileObject(map, Type::Shadow, Vec3<float>{0, 0, 0}), ownerBattleItem(item),

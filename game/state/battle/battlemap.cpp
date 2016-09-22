@@ -643,7 +643,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 							s->type = pair.second;
 
 						// Set spawnability and height
-						if (s->type->movement_cost == -1 || b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z] == -1)
+						if (s->type->movement_cost == 255 || b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z] == -1)
 						{
 							b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z] = -1;
 						}
@@ -688,7 +688,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						s->type = pair.second;
 
 						// Set spawnability and height
-						if (s->type->movement_cost == -1 || b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z] == -1)
+						if (s->type->movement_cost == 255 || b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z] == -1)
 						{
 							b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z] = -1;
 						}
@@ -721,7 +721,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						if (tiles.initial_features.find(pair.first) != tiles.initial_features.end())
 							height = std::max(height, tiles.initial_features[pair.first]->height);
 						s->position +=
-						    Vec3<float>{0.5f, 0.5f, ((float)height) / (float)BATTLE_TILE_Z};
+						    Vec3<float>{0.5f, 0.5f, ((float)height) / (float)TILE_Z_BATTLE};
 
 						b->items.push_back(s);
 					}

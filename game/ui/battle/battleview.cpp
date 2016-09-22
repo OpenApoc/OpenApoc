@@ -27,8 +27,8 @@ static const std::vector<UString> TAB_FORM_NAMES_TB = {
 
 
 BattleView::BattleView(sp<GameState> state)
-    : BattleTileView(*state->current_battle->map, Vec3<int>{BATTLE_TILE_X, BATTLE_TILE_Y, BATTLE_TILE_Z},
-               Vec2<int>{BATTLE_STRAT_TILE_X, BATTLE_STRAT_TILE_Y}, TileViewMode::Isometric),
+    : BattleTileView(*state->current_battle->map, Vec3<int>{TILE_X_BATTLE, TILE_Y_BATTLE, TILE_Z_BATTLE},
+               Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric),
       baseForm(ui().getForm("FORM_BATTLE_UI")), state(state), followAgent(false),
       palette(fw().data->loadPalette("xcom3/tacdata/tactical.pal")),
       selectionState(BattleSelectionState::Normal)
@@ -155,7 +155,7 @@ BattleView::BattleView(sp<GameState> state)
 
 		for (auto u : selectedUnits)
 		{
-			if (u->kneeling_mode == BattleUnit::KneelingMode::None && u->isBodyStateAllowed(AgentType::BodyState::Kneeling))
+			if (u->kneeling_mode == BattleUnit::KneelingMode::None && u->agent->isBodyStateAllowed(AgentType::BodyState::Kneeling))
 			{
 				not_kneeling = true;
 			}
@@ -176,7 +176,7 @@ BattleView::BattleView(sp<GameState> state)
 		->addCallback(FormEventType::MouseClick, [this](Event *) {
 		for (auto u : selectedUnits)
 		{
-			if (u->isBodyStateAllowed(AgentType::BodyState::Prone))
+			if (u->agent->isBodyStateAllowed(AgentType::BodyState::Prone))
 			{
 				u->movement_mode = BattleUnit::MovementMode::Prone;
 			}
@@ -186,7 +186,7 @@ BattleView::BattleView(sp<GameState> state)
 		->addCallback(FormEventType::MouseClick, [this](Event *) {
 		for (auto u : selectedUnits)
 		{
-			if (u->isBodyStateAllowed(AgentType::BodyState::Standing) || u->isBodyStateAllowed(AgentType::BodyState::Flying))
+			if (u->agent->isBodyStateAllowed(AgentType::BodyState::Standing) || u->agent->isBodyStateAllowed(AgentType::BodyState::Flying))
 			{
 				u->movement_mode = BattleUnit::MovementMode::Walking;
 			}
@@ -196,7 +196,7 @@ BattleView::BattleView(sp<GameState> state)
 		->addCallback(FormEventType::MouseClick, [this](Event *) {
 		for (auto u : selectedUnits)
 		{
-			if (u->isBodyStateAllowed(AgentType::BodyState::Standing) || u->isBodyStateAllowed(AgentType::BodyState::Flying))
+			if (u->agent->isBodyStateAllowed(AgentType::BodyState::Standing) || u->agent->isBodyStateAllowed(AgentType::BodyState::Flying))
 			{
 				u->movement_mode = BattleUnit::MovementMode::Running;
 			}
@@ -286,7 +286,6 @@ BattleView::BattleView(sp<GameState> state)
 
 	});
 
-
 	switch (state->current_battle->mode)
 	{
 		case Battle::Mode::RealTime:
@@ -302,10 +301,10 @@ BattleView::BattleView(sp<GameState> state)
 			this->baseForm->findControl("BUTTON_SPEED3")
 				->addCallback(FormEventType::CheckBoxSelected,
 					[this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed3; });
-// FIXME: Disable TB controls
+			// FIXME: Disable TB controls
 			break;
 		case Battle::Mode::TurnBased:
-			// FIXME: Assign TB controls
+			// FIXME: Assign events to TB controls
 			this->baseForm->findControl("BUTTON_SPEED0")->Visible = false;
 			this->baseForm->findControl("BUTTON_SPEED1")->Visible = false;
 			this->baseForm->findControl("BUTTON_SPEED2")->Visible = false;
@@ -623,6 +622,130 @@ void BattleView::updateSoldierButtons()
 	this->baseForm->findControlTyped<CheckBox>("BUTTON_AGGRESSIVE")->setChecked(aggressive);
 }
 
+void BattleView::attemptToClearCurrentOrders(sp<BattleUnit> u)
+{
+	bool startRequired = false;
+	
+	for (auto it = u->missions.begin(); it != u->missions.end();)
+	{
+		auto m = it++;
+		// See if we can remove the mission
+		switch ((*m)->type)
+		{
+		// Missions that cannot be cancelled before finished
+		case BattleUnitMission::MissionType::Fall:
+		case BattleUnitMission::MissionType::Snooze:
+		case BattleUnitMission::MissionType::ThrowItem:
+		case BattleUnitMission::MissionType::ChangeBodyState:
+			continue;
+		// Missions that can be cancelled before finished
+		case BattleUnitMission::MissionType::AcquireTU:
+		case BattleUnitMission::MissionType::GotoLocation:
+		case BattleUnitMission::MissionType::ReachGoal:
+		case BattleUnitMission::MissionType::RestartNextMission:
+			break;
+		// Special case - can cancel turning but must undo it
+		case BattleUnitMission::MissionType::Turn:
+			u->goalFacing = u->facing;
+			u->turning_animation_ticks_remaining = 0;
+			break;
+		default:
+			LogError("Unknown mission type %d!", (int)(*m)->type);
+			continue;
+		}
+		if (it == u->missions.begin())
+		{
+			startRequired = true;
+		}
+		u->missions.erase(m);
+	}
+	if (startRequired && u->missions.size() > 0)
+	{
+		u->missions.front()->start(*this->state, *u);
+	}
+}
+
+void BattleView::orderMove(Vec3<int> target, int facingOffset)
+{
+	// FIXME: Handle group movement
+	for (auto unit : selectedUnits)
+	{
+		attemptToClearCurrentOrders(unit);
+		// FIXME: handle strafe and backwards movement
+ 		unit->missions.emplace_back(BattleUnitMission::gotoLocation(*unit, target));
+		if (unit->missions.size() == 1)
+		{
+			unit->missions.front()->start(*this->state, *unit);
+			LogWarning("BattleUnit \"%s\" going to location {%d,%d,%d}",
+				unit->agent->name.cStr(), target.x, target.y, target.z);
+		}
+	}
+}
+
+void BattleView::orderTurn(Vec3<int> target)
+{
+	for (auto unit : selectedUnits)
+	{
+		attemptToClearCurrentOrders(unit);
+		unit->missions.emplace_back(BattleUnitMission::turn(*unit, target));
+		if (unit->missions.size() == 1)
+		{
+			unit->missions.front()->start(*this->state, *unit);
+			LogWarning("BattleUnit \"%s\" turning to face location {%d,%d,%d}",
+				unit->agent->name.cStr(), target.x, target.y, target.z);
+		}
+	}
+}
+
+void BattleView::orderSelect(sp<BattleUnit> u, bool inverse, bool additive)
+{
+	auto pos = std::find(selectedUnits.begin(), selectedUnits.end(), u);
+	if (inverse)
+	{
+		// Unit in selection => remove
+		if (pos != selectedUnits.end())
+		{
+			selectedUnits.erase(pos);
+		}
+	}
+	else
+	{
+		// Unit not selected
+		if (pos == selectedUnits.end())
+		{
+			if (additive)
+			{
+				// Unit not in selection, and not full => add unit to selection
+				if (selectedUnits.size() < 6)
+				{
+					selectedUnits.push_front(u);
+				}
+			}
+			else
+			{
+				// Unit not in selection => replace selection with unit
+				selectedUnits.clear();
+				selectedUnits.push_back(u);
+			}
+		}
+		// Unit is selected
+		else
+		{
+			// Unit in selection  => move unit to front
+			if (additive || selectedUnits.size() > 1)
+			{
+				selectedUnits.erase(pos);
+				selectedUnits.push_front(u);
+			}
+			// If not in additive mode and clicked on selected unit - deselect
+			else
+			{
+				selectedUnits.clear();
+			}
+		}
+	}
+}
+
 void BattleView::eventOccurred(Event *e)
 {
 	activeTab->eventOccured(e);
@@ -678,10 +801,12 @@ void BattleView::eventOccurred(Event *e)
 				return;
 			case SDLK_PAGEUP:
 				this->setZLevel(getZLevel() + 1);
+				setSelectedTilePosition({ selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z + 1 });
 				updateLayerButtons();
 				break;
 			case SDLK_PAGEDOWN:
 				this->setZLevel(getZLevel() - 1);
+				setSelectedTilePosition({ selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z - 1 });
 				updateLayerButtons();
 				break;
 			case SDLK_TAB:
@@ -738,7 +863,7 @@ void BattleView::eventOccurred(Event *e)
 	// Exclude mouse down events that are over the form
 	else if (e->type() == EVENT_MOUSE_DOWN)
 	{
-		if (this->getViewMode() == TileViewMode::Strategy && e->type() == EVENT_MOUSE_DOWN &&
+		if (this->getViewMode() == TileViewMode::Strategy && 
 		    e->mouse().Button == 2)
 		{
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
@@ -746,13 +871,12 @@ void BattleView::eventOccurred(Event *e)
 			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
 			this->setScreenCenterTile({clickTile.x, clickTile.y});
 		}
-		else if (e->type() == EVENT_MOUSE_DOWN &&
-		         (e->mouse().Button == 1 
+		else if ((e->mouse().Button == 1 
 				|| e->mouse().Button == 4))
 		{
 			// If a click has not been handled by a form it's in the map.
 			auto t = this->getSelectedTilePosition();
-			auto o = map.getTile(t.x, t.y, t.z)->getUnitIfPresent();
+			auto o = map.getTile(t.x, t.y, t.z)->getUnitIfPresent(true);
 			auto u = o ? o->getUnit() : nullptr;
 		
 			switch (selectionState)
@@ -764,29 +888,25 @@ void BattleView::eventOccurred(Event *e)
 					// Select if friendly unit present under cursor
 					if (u && u->owner == state->getPlayer())
 					{
-						auto pos = std::find(selectedUnits.begin(), selectedUnits.end(), u);
-						if (pos == selectedUnits.end())
-						{
-							// Unit not in selection => replace selection with unit
-							selectedUnits.clear();
-							selectedUnits.push_back(u);
-						}
-						else
-						{
-							// Unit in selection  => move unit to front
-							selectedUnits.erase(pos);
-							selectedUnits.push_front(u);
-						}
+						orderSelect(u);
 					}
+					// Move if empty
 					else if (!u)
 					{
-						// FIXME: Order move here
+						orderMove(t);
 					}
 					break;
 				case 4:
-					if (selectedUnits.size() == 0)
-						break;
-					// FIXME: Turn to look, focus fire if clicked on enemy
+					// Turn if no enemy unit present under cursor
+					if (!u || u->owner == state->getPlayer())
+					{
+						orderTurn(t);
+					}
+					// Focus fire / fire in tb if enemy unit present 
+					else 
+					{
+						//FIXME: Focus fire on enemy or fire in turn based
+					}
 					break;
 				}
 				break;
@@ -794,12 +914,10 @@ void BattleView::eventOccurred(Event *e)
 				switch (e->mouse().Button)
 				{
 				case 1:
-					// FIXME: Move strafing
+					orderMove(t, 1);
 					break;
 				case 4:
-					if (selectedUnits.size() == 0)
-						break;
-					// FIXME: Turn to look
+					orderTurn(t);
 					break;
 				}
 				break;
@@ -810,33 +928,14 @@ void BattleView::eventOccurred(Event *e)
 				case 1:
 					if (u && u->owner == state->getPlayer())
 					{
-						auto pos = std::find(selectedUnits.begin(), selectedUnits.end(), u);
-						if (pos == selectedUnits.end())
-						{
-							// Unit not in selection, and not full => add unit to selection
-							if (selectedUnits.size() < 6)
-							{
-								selectedUnits.push_front(u);
-							}
-						}
-						else
-						{
-							// Unit in selection  => move unit to front
-							selectedUnits.erase(pos);
-							selectedUnits.push_front(u);
-						}
+						orderSelect(u, false, true);
 					}
 					break;
 				// RMB = Remove from selection
 				case 4:
 					if (u && u->owner == state->getPlayer())
 					{
-						auto pos = std::find(selectedUnits.begin(), selectedUnits.end(), u);
-						if (pos != selectedUnits.end())
-						{
-							// Unit in selection => remove
-							selectedUnits.erase(pos);
-						}
+						orderSelect(u, true);
 					}
 					break;
 				}
@@ -844,9 +943,7 @@ void BattleView::eventOccurred(Event *e)
 			case BattleSelectionState::Fire:
 				if (e->mouse().Button != 1 && e->mouse().Button != 4)
 					break;
-				if (selectedUnits.size() == 0)
-					break;
-				// FIXME: Fire
+				// FIXME: Fire!
 				break;
 			}
 			LogWarning("Click at tile %d, %d, %d", t.x, t.y, t.z);
@@ -880,6 +977,7 @@ void BattleView::eventOccurred(Event *e)
 		BattleTileView::eventOccurred(e);
 	}
 }
+
 
 void BattleView::updateLayerButtons()
 {

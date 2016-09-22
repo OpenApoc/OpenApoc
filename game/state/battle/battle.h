@@ -5,23 +5,19 @@
 #include "game/state/battle/battlemapsector.h"
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/stateobject.h"
-#include "game/state/tileview/tile.h"
 #include "library/sp.h"
 #include "library/vec.h"
 #include "library/voxel.h"
 
 namespace OpenApoc
 {
-#define BATTLE_TILE_X (48)
-#define BATTLE_TILE_Y (24)
-#define BATTLE_TILE_Z (40)
+#define TILE_X_BATTLE (48)
+#define TILE_Y_BATTLE (24)
+#define TILE_Z_BATTLE (40)
 
-#define BATTLE_VOXEL_X (24)
-#define BATTLE_VOXEL_Y (24)
-#define BATTLE_VOXEL_Z (20)
-
-#define BATTLE_STRAT_TILE_X 8
-#define BATTLE_STRAT_TILE_Y 8
+#define VOXEL_X_BATTLE (24)
+#define VOXEL_Y_BATTLE (24)
+#define VOXEL_Z_BATTLE (20)
 
 class GameState;
 class TileMap;

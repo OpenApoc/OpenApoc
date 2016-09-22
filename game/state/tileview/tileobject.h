@@ -46,13 +46,22 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 
 	virtual float getDistanceTo(sp<TileObject> target);
 	virtual float getDistanceTo(Vec3<float> target);
+	// For TileObjects, position is usually the location of the object's centre
+	// Usually, owner objects will have the same position (i.e. proj.pos == to_proj.pos)
+	// Some, however, will not (scenery's position points to top left corner, but
+	// getPosition returns centre)
+	// Some TileObjects, OTOH, have position pointing to their center on xy and bottom on z
+	// This is useful for battlescape where object should be assigned to the tile where 
+	// it is resting, therefore, where it's bottom is
 	virtual void setPosition(Vec3<float> newPosition);
 	virtual void removeFromMap();
 
 	Tile *getOwningTile() const { return this->owningTile; }
+	std::vector<Tile *> getIntersectingTiles() const { return this->intersectingTiles; }
 
 	virtual sp<VoxelMap> getVoxelMap() { return nullptr; }
 	virtual Vec3<float> getVoxelOffset() const { return bounds_div_2; }
+	virtual Vec3<float> getCenterOffset() const { return { 0.0f, 0.0f, 0.0f }; }
 
 	virtual const UString &getName() { return this->name; }
 
@@ -66,6 +75,7 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	Type type;
 
 	Tile *owningTile;
+	Tile *drawOnTile;
 	std::vector<Tile *> intersectingTiles;
 
 	TileObject(TileMap &map, Type type, Vec3<float> bounds);
@@ -76,9 +86,6 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	// Bounds divided by 2, used to find inclusive object boundary's coordinates
 	Vec3<float> bounds_div_2;
 	
-	// Offset for selecting a tile
-	Vec3<float> tileOffset;
-
 	virtual void setBounds(Vec3<float> bounds);
 
 	UString name;

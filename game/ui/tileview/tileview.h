@@ -7,6 +7,9 @@
 #include "game/state/tileview/tile.h"
 #include "library/sp.h"
 
+#define STRAT_TILE_X 8
+#define STRAT_TILE_Y 8
+
 namespace OpenApoc
 {
 
@@ -15,9 +18,6 @@ class Image;
 
 class TileView : public Stage, public TileTransform
 {
-  public:
-	
-	
   protected:
 	TileMap &map;
 	Vec3<int> isoTileSize;
@@ -35,16 +35,8 @@ class TileView : public Stage, public TileTransform
 	float strategyViewBoxThickness;
 
 	Vec3<int> selectedTilePosition;
-	sp<Image> selectedTileEmptyImageBack;
-	sp<Image> selectedTileEmptyImageFront;
-	sp<Image> selectedTileFilledImageBack;
-	sp<Image> selectedTileFilledImageFront;
-	sp<Image> selectedTileBackgroundImageBack;
-	sp<Image> selectedTileBackgroundImageFront;
-	Vec2<int> selectedTileImageOffset;
-
+	
   public:
-	  
 	int maxZDraw;
 	Vec3<float> centerPos;
 	Vec2<float> isoScrollSpeed;
@@ -56,8 +48,8 @@ class TileView : public Stage, public TileTransform
 	~TileView() override;
 
 	Vec2<int> getScreenOffset() const;
-	void setScreenCenterTile(Vec2<float> center);
-	void setScreenCenterTile(Vec3<float> center);
+	virtual void setScreenCenterTile(Vec2<float> center);
+	virtual void setScreenCenterTile(Vec3<float> center);
 
 	Vec3<int> getSelectedTilePosition();
 	void setSelectedTilePosition(Vec3<int> newPosition);

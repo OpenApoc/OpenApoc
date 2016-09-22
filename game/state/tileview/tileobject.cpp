@@ -8,8 +8,7 @@ namespace OpenApoc
 {
 
 TileObject::TileObject(TileMap &map, Type type, Vec3<float> bounds)
-    : map(map), type(type), owningTile(nullptr), tileOffset(0.0f,0.0f,0.0f),
-	name("UNKNOWN_OBJECT")
+    : map(map), type(type), owningTile(nullptr), name("UNKNOWN_OBJECT")
 {
 	setBounds(bounds);
 }
@@ -28,20 +27,24 @@ void TileObject::removeFromMap()
 	/* owner may be NULL as this can be used to set the initial position after creation */
 	if (this->owningTile)
 	{
-		auto t = owningTile;
+		auto prevOwningTile = owningTile;
+		auto prevDrawOnTile = drawOnTile;
 		auto erased = this->owningTile->ownedObjects.erase(thisPtr);
 		if (erased != 1)
 		{
 			LogError("Nothing erased?");
 		}
 		int layer = map.getLayer(this->type);
-		this->owningTile->drawnObjects[layer].erase(
-		    std::remove(this->owningTile->drawnObjects[layer].begin(),
-		                this->owningTile->drawnObjects[layer].end(), thisPtr),
-		    this->owningTile->drawnObjects[layer].end());
+		this->drawOnTile->drawnObjects[layer].erase(
+		    std::remove(this->drawOnTile->drawnObjects[layer].begin(),
+		                this->drawOnTile->drawnObjects[layer].end(), thisPtr),
+		    this->drawOnTile->drawnObjects[layer].end());
 		this->owningTile = nullptr;
 		if (type == Type::Ground || type == Type::LeftWall || type == Type::RightWall || type == Type::Feature)
-			t->updateHeightAndPassability();
+		{
+			prevOwningTile->updateBattlescapeHeightAndPassability();
+			prevDrawOnTile->updateBattlescapeUIDrawOrder();
+		}
 	}
 	for (auto *tile : this->intersectingTiles)
 	{
@@ -119,9 +122,9 @@ void TileObject::setPosition(Vec3<float> newPosition)
 		LogWarning("Clamped object to {%f,%f,%f}", newPosition.x, newPosition.y, newPosition.z);
 	}
 	this->removeFromMap();
-
-	// This makes sure object is always assigned the bottom-most, right-most tile it occupies
-	this->owningTile = map.getTile(newPosition + this->tileOffset);
+	
+	// This makes sure object for unit is always assigned the bottom-most, right-most tile it occupies
+	this->owningTile = map.getTile(newPosition);
 	if (!this->owningTile)
 	{
 		LogError("Failed to get tile for position {%f,%f,%f}", newPosition.x, newPosition.y,
@@ -135,18 +138,17 @@ void TileObject::setPosition(Vec3<float> newPosition)
 	}
 
 	int layer = map.getLayer(this->type);
+	
+	
+	Vec3<int> minBounds = {floorf(newPosition.x + getCenterOffset().x - this->bounds_div_2.x),
+	                       floorf(newPosition.y + getCenterOffset().y - this->bounds_div_2.y),
+	                       floorf(newPosition.z + getCenterOffset().z - this->bounds_div_2.z)};
+	Vec3<int> maxBounds = {ceilf(newPosition.x + getCenterOffset().x + this->bounds_div_2.x),
+	                       ceilf(newPosition.y + getCenterOffset().y + this->bounds_div_2.y),
+	                       ceilf(newPosition.z + getCenterOffset().z + this->bounds_div_2.z)};
 
-	this->owningTile->drawnObjects[layer].push_back(thisPtr);
-	std::sort(this->owningTile->drawnObjects[layer].begin(),
-	          this->owningTile->drawnObjects[layer].end(), TileObjectZComparer{});
-
-	Vec3<int> minBounds = {floorf(newPosition.x - this->bounds_div_2.x),
-	                       floorf(newPosition.y - this->bounds_div_2.y),
-	                       floorf(newPosition.z - this->bounds_div_2.z)};
-	Vec3<int> maxBounds = {ceilf(newPosition.x + this->bounds_div_2.x),
-	                       ceilf(newPosition.y + this->bounds_div_2.y),
-	                       ceilf(newPosition.z + this->bounds_div_2.z)};
-
+	Vec3<int> maxCoords = { -1,-1,-1 };
+	this->drawOnTile = owningTile;
 	for (int x = minBounds.x; x < maxBounds.x; x++)
 	{
 		for (int y = minBounds.y; y < maxBounds.y; y++)
@@ -166,9 +168,22 @@ void TileObject::setPosition(Vec3<float> newPosition)
 				}
 				this->intersectingTiles.push_back(intersectingTile);
 				intersectingTile->intersectingObjects.insert(thisPtr);
+				// Units are drawn in the topmost tile they intersect
+				// However, their top must be no further than 1/4 below the tile in order to draw in it
+				// Otherwise, they can only be drawn in it if it's their owner tile
+				if ((type == Type::Unit || type == Type::Shadow) && maxCoords.z * 1000 + maxCoords.x + maxCoords.y < z * 1000 + x + y
+					&& newPosition.z > (float)z - 0.33f)
+				{
+					this->drawOnTile = intersectingTile;
+					maxCoords = { x, y, z };
+				}
 			}
 		}
 	}
+	this->drawOnTile->drawnObjects[layer].push_back(thisPtr);
+	std::sort(this->drawOnTile->drawnObjects[layer].begin(),
+		this->drawOnTile->drawnObjects[layer].end(), TileObjectZComparer{});
+	
 	// Quick sanity check
 	for (auto *t : this->intersectingTiles)
 	{
@@ -178,7 +193,10 @@ void TileObject::setPosition(Vec3<float> newPosition)
 		}
 	}
 	if (type == Type::Ground || type == Type::LeftWall || type == Type::RightWall || type == Type::Feature)
-		owningTile->updateHeightAndPassability();
+	{
+		owningTile->updateBattlescapeHeightAndPassability();
+		drawOnTile->updateBattlescapeUIDrawOrder();
+	}
 }
 
 } // namespace OpenApoc
