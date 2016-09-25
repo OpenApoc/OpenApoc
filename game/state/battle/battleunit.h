@@ -125,6 +125,7 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 
 	// Successfully retreated from combat
 	bool retreated = false;
+	void retreat(GameState &state);
 	// Died and corpse was destroyed in an explosion
 	bool destroyed = false;
 	// Freefalling

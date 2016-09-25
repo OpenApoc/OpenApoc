@@ -6,7 +6,7 @@
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_shadow.h"
-#include "math.h"
+#include <cmath>
 
 namespace OpenApoc
 {
@@ -311,6 +311,11 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	    TileObject::Type::Ground, TileObject::Type::LeftWall, TileObject::Type::RightWall,
 	    TileObject::Type::Feature};
 
+	if (destroyed || retreated)
+	{
+		return;
+	}
+
 	auto b = battle.lock();
 	if (!b)
 		return;
@@ -320,11 +325,6 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 
 	if (!this->missions.empty())
 		this->missions.front()->update(state, *this, ticks);
-
-	if (destroyed)
-	{
-		return;
-	}
 
 	// FIXME: Regenerate stamina
 
@@ -663,7 +663,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					}
 
 					Vec3<float> vectorToGoal = goalPosition - getPosition();
-					int distanceToGoal = std::ceilf(glm::length(
+					int distanceToGoal = ceilf(glm::length(
 					    vectorToGoal * VELOCITY_SCALE_BATTLE * (float)TICKS_PER_UNIT_TRAVELLED));
 					int moveTicksConsumeRate =
 					    current_movement_state == AgentType::MovementState::Running ? 1 : 2;
@@ -788,6 +788,11 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			{
 				LogWarning("Unit mission \"%s\" finished", missions.front()->getName().cStr());
 				missions.pop_front();
+				
+				// We may have retreated as a result of finished mission
+				if (retreated)
+					return;
+				
 				if (!missions.empty())
 				{
 					missions.front()->start(state, *this);
@@ -936,6 +941,15 @@ void BattleUnit::dropDown(GameState &state)
 	missions.emplace_front(BattleUnitMission::changeStance(*this, AgentType::BodyState::Downed));
 	missions.front()->start(state, *this);
 }
+
+
+void BattleUnit::retreat(GameState &state)
+{
+	tileObject->removeFromMap();
+	retreated = true;
+	// FIXME: Trigger retreated event
+}
+
 
 void BattleUnit::die(GameState &state, bool violently)
 {
