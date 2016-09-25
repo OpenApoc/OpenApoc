@@ -12,10 +12,15 @@
 #define GLESWRAP_APIENTRY
 #endif
 
+#ifndef __ANDROID__
 #ifdef _WIN64
 typedef signed long long int ssize_t;
 #else
 typedef signed long int ssize_t;
+#endif
+#else
+// Looks like ssize_t is defined in Android's types.h
+#include <sys/types.h>
 #endif
 
 #define IN_GLES_WRAP_H

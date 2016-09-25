@@ -22,7 +22,9 @@ bool FileDataProvider::readDocument(const UString &path, UString &result)
 {
 	std::string documentPath = (static_cast<fs::path>(archivePath.str()) / path.str()).string();
 	std::ifstream in(documentPath, std::ios::binary);
-	result = static_cast<std::ostringstream &>(std::ostringstream{} << in.rdbuf()).str();
+	std::ostringstream oss;
+	oss << in.rdbuf();
+	result = oss.str();
 	return !in.bad();
 }
 

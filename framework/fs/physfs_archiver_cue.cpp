@@ -2,6 +2,10 @@
 // Created by sf on 4/15/16.
 //
 
+#ifdef __ANDROID__
+#define __STDC_FORMAT_MACROS
+#include <inttypes.h>
+#endif
 #include "physfs_archiver_cue.h"
 #include "framework/logger.h"
 
