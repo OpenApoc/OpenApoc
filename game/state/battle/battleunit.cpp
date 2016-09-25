@@ -6,6 +6,7 @@
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_shadow.h"
+#include "math.h"
 
 namespace OpenApoc
 {
