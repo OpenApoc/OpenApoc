@@ -29,7 +29,7 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 	pal = fw().data->loadPalette("xcom3/tacdata/tactical.pal");
 
 	for (int i = 0; i < 6; i++)
-	{
+	{ 
 		activeUnitSelectionArrow.push_back(
 		    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
 		                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
