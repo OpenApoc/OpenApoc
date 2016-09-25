@@ -11,6 +11,16 @@
 namespace OpenApoc
 {
 
+void BattleUnit::removeFromSquad()
+{
+	auto b = battle.lock();
+	if (!b)
+	{
+		LogError("Battle disappeared");
+	}
+	b->forces[owner].removeAt(squadNumber, squadPosition);
+}
+
 bool BattleUnit::assignToSquad(int squad)
 {
 	auto b = battle.lock();
@@ -947,6 +957,7 @@ void BattleUnit::retreat(GameState &state)
 {
 	tileObject->removeFromMap();
 	retreated = true;
+	removeFromSquad();
 	// FIXME: Trigger retreated event
 }
 

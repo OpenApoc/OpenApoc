@@ -59,6 +59,7 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	StateRef<Organisation> owner;
 	int squadNumber = 0;
 	int squadPosition = 0;
+	void removeFromSquad();
 	bool assignToSquad(int squadNumber);
 	void moveToSquadPosition(int squadPosition);
 

@@ -827,7 +827,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 
 BattleUnitMission *BattleUnitMission::gotoLocation(BattleUnit &u, Vec3<int> target, int facingDelta,
                                                    bool allowSkipNodes, int giveWayAttempts,
-                                                   bool demandGiveWay)
+                                                   bool demandGiveWay, bool allowRunningAway)
 {
 	auto t = u.tileObject->map.getTile(target);
 	if (!t->getPassable(u.isLarge()) && target.z < u.tileObject->map.size.z - 1)
@@ -864,6 +864,7 @@ BattleUnitMission *BattleUnitMission::gotoLocation(BattleUnit &u, Vec3<int> targ
 	mission->giveWayAttemptsRemaining = giveWayAttempts;
 	mission->allowSkipNodes = allowSkipNodes;
 	mission->demandGiveWay = demandGiveWay;
+	mission->allowRunningAway = allowRunningAway;
 	return mission;
 }
 
@@ -1110,6 +1111,13 @@ bool BattleUnitMission::isFinished(GameState &state, BattleUnit &u)
 				if (u.current_movement_state != AgentType::MovementState::None)
 				{
 					u.setMovementState(AgentType::MovementState::None);
+				}
+				if (allowRunningAway)
+				{
+					if (u.tileObject->getOwningTile()->getHasExit(u.isLarge()))
+					{
+						u.retreat(state);
+					}
 				}
 				return true;
 			}

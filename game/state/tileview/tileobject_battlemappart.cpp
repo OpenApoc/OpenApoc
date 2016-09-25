@@ -63,7 +63,7 @@ void TileObjectBattleMapPart::setPosition(Vec3<float> newPosition)
 	if (type == Type::Ground || type == Type::LeftWall || type == Type::RightWall ||
 	    type == Type::Feature)
 	{
-		owningTile->updateBattlescapeHeightAndPassability();
+		owningTile->updateBattlescapeParameters();
 		drawOnTile->updateBattlescapeUIDrawOrder();
 	}
 }
@@ -77,7 +77,7 @@ void TileObjectBattleMapPart::removeFromMap()
 	TileObject::removeFromMap();
 	if (requireRecalc)
 	{
-		prevOwningTile->updateBattlescapeHeightAndPassability();
+		prevOwningTile->updateBattlescapeParameters();
 		prevDrawOnTile->updateBattlescapeUIDrawOrder();
 	}
 }

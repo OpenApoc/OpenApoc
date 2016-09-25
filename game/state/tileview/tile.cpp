@@ -95,22 +95,14 @@ bool Tile::getSolidGround(bool large)
 			         position.x, position.y, position.z);
 			return false;
 		}
-		if (solidGround)
+		if (solidGround 
+			|| map.getTile(position.x - 1, position.y, position.z)->solidGround
+			|| map.getTile(position.x, position.y - 1, position.z)->solidGround
+			|| map.getTile(position.x - 1, position.y - 1, position.z)->solidGround)
 		{
 			return true;
 		}
-		if (map.getTile(position.x - 1, position.y, position.z)->solidGround)
-		{
-			return true;
-		}
-		if (map.getTile(position.x, position.y - 1, position.z)->solidGround)
-		{
-			return true;
-		}
-		if (map.getTile(position.x - 1, position.y - 1, position.z)->solidGround)
-		{
-			return true;
-		}
+	
 	}
 	else
 	{
@@ -128,23 +120,14 @@ bool Tile::getCanStand(bool large)
 	{
 		if (position.x < 1 || position.y < 1)
 		{
-			LogError("Trying to get standing abilit for a large unit when it can't fit! %d, %d, %d",
+			LogError("Trying to get standing ability for a large unit when it can't fit! %d, %d, %d",
 			         position.x, position.y, position.z);
 			return false;
 		}
-		if (canStand)
-		{
-			return true;
-		}
-		if (map.getTile(position.x - 1, position.y, position.z)->canStand)
-		{
-			return true;
-		}
-		if (map.getTile(position.x, position.y - 1, position.z)->canStand)
-		{
-			return true;
-		}
-		if (map.getTile(position.x - 1, position.y - 1, position.z)->canStand)
+		if (canStand
+			|| map.getTile(position.x - 1, position.y, position.z)->canStand
+			|| map.getTile(position.x, position.y - 1, position.z)->canStand
+			|| map.getTile(position.x - 1, position.y - 1, position.z)->canStand)
 		{
 			return true;
 		}
@@ -152,6 +135,35 @@ bool Tile::getCanStand(bool large)
 	else
 	{
 		if (canStand)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool Tile::getHasExit(bool large)
+{
+	if (large)
+	{
+		if (position.x < 1 || position.y < 1)
+		{
+			LogError("Trying to get exit for a large unit when it can't fit! %d, %d, %d",
+				position.x, position.y, position.z);
+			return false;
+		}
+		if (hasExit
+			|| map.getTile(position.x - 1, position.y, position.z)->hasExit
+			|| map.getTile(position.x, position.y - 1, position.z)->hasExit
+			|| map.getTile(position.x - 1, position.y - 1, position.z)->hasExit)
+		{
+			return true;
+		}
+	}
+	else
+	{
+		if (hasExit)
 		{
 			return true;
 		}
@@ -225,7 +237,7 @@ void Tile::updateBattlescapeUIDrawOrder()
 	}
 }
 
-void Tile::updateBattlescapeHeightAndPassability()
+void Tile::updateBattlescapeParameters()
 {
 	height = 0.0f;
 	movementCostIn = -1; // -1 means empty, and will be set to 4 afterwards
@@ -235,6 +247,7 @@ void Tile::updateBattlescapeHeightAndPassability()
 	solidGround = false;
 	canStand = false;
 	hasLift = false;
+	hasExit = false;
 	walkSfx = nullptr;
 	objectDropSfx = nullptr;
 	for (auto o : ownedObjects)
@@ -246,6 +259,7 @@ void Tile::updateBattlescapeHeightAndPassability()
 			solidGround = solidGround || (mp->type->floor && !mp->type->gravlift) ||
 			              (o->getType() == TileObject::Type::Feature && !mp->type->gravlift);
 			hasLift = hasLift || mp->type->gravlift;
+			hasExit = hasExit || mp->type->exit;
 			movementCostIn = std::max(movementCostIn, mp->type->movement_cost);
 			if (mp->type->sfxIndex != -1)
 			{

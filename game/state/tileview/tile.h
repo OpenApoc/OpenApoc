@@ -84,7 +84,7 @@ class Tile
 	// Returns if the tile is solid (cannot pop head into it)
 	bool getSolidGround(bool large = false);
 	// Updates tile height and passability values
-	void updateBattlescapeHeightAndPassability();
+	void updateBattlescapeParameters();
 	// Updates battlescape ui draw order variables
 	void updateBattlescapeUIDrawOrder();
 
@@ -93,8 +93,7 @@ class Tile
 	float height = 0.0f;
 	// Movement cost through the tile's ground (or feature)
 	int movementCostIn = 4;
-	// Movement cost to walk on the level above this, if next level is empty and this has height =
-	// 40
+	// Movement cost to walk on the level above this, if next level is empty and this height is 0.975
 	int movementCostOver = 255;
 	// Movement cost through the tile's left wall
 	int movementCostLeft = 0;
@@ -107,6 +106,8 @@ class Tile
 	bool canStand = false;
 	// True = anyone can go upwards from this tile to another lift tile
 	bool hasLift = false;
+	bool hasExit;
+	bool getHasExit(bool large = false);
 	// position in drawnObjects vector to draw back selection bracket at
 	int drawBattlescapeSelectionBackAt = 0;
 	// position in drawnObjects vector to draw target location at

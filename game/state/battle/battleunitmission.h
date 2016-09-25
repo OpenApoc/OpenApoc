@@ -76,8 +76,8 @@ class BattleUnitMission
 
 	// Methods to create new missions
 	static BattleUnitMission *gotoLocation(BattleUnit &u, Vec3<int> target, int facingDelta = 0,
-	                                       bool allowSkipNodes = false, int giveWayAttempts = 10,
-	                                       bool demandGiveWay = false);
+	                                       bool allowSkipNodes = true, int giveWayAttempts = 10,
+	                                       bool demandGiveWay = false, bool allowRunningAway = false);
 	static BattleUnitMission *snooze(BattleUnit &u, unsigned int ticks);
 	static BattleUnitMission *restartNextMission(BattleUnit &u);
 	static BattleUnitMission *acquireTU(BattleUnit &u, unsigned int tu);
@@ -98,6 +98,7 @@ class BattleUnitMission
 	// GotoLocation
 	int facingDelta = 0;
 	int giveWayAttemptsRemaining = 0;
+	bool allowRunningAway = false;
 	// Unit will follow its path exactly without trying to skip nodes
 	bool allowSkipNodes = false;
 	// Unit will ignore static non-large units when pathfinding

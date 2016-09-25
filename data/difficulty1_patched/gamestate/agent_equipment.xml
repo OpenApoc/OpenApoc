@@ -115,7 +115,7 @@
           <entry>bulletsprites/battle/45.png</entry>
         </projectile_sprites>
         <damage>30</damage>
-        <accuracy>12</accuracy>
+        <accuracy>88</accuracy>
         <fire_delay>40</fire_delay>
         <tail_size>26</tail_size>
         <turn_rate>40</turn_rate>
@@ -174,6 +174,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>80</damage>
+        <accuracy>100</accuracy>
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
@@ -248,7 +249,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>40</damage>
-        <accuracy>60</accuracy>
+        <accuracy>40</accuracy>
         <fire_delay>34</fire_delay>
         <tail_size>31</tail_size>
         <range>900</range>
@@ -323,7 +324,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>33</damage>
-        <accuracy>60</accuracy>
+        <accuracy>40</accuracy>
         <fire_delay>34</fire_delay>
         <tail_size>31</tail_size>
         <range>900</range>
@@ -398,7 +399,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>37</damage>
-        <accuracy>60</accuracy>
+        <accuracy>40</accuracy>
         <fire_delay>34</fire_delay>
         <tail_size>31</tail_size>
         <range>900</range>
@@ -456,6 +457,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>70</damage>
+        <accuracy>100</accuracy>
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <guided>true</guided>
@@ -569,7 +571,7 @@
           <entry>bulletsprites/battle/45.png</entry>
         </projectile_sprites>
         <damage>90</damage>
-        <accuracy>90</accuracy>
+        <accuracy>10</accuracy>
         <fire_delay>64</fire_delay>
         <tail_size>34</tail_size>
         <range>500</range>
@@ -647,7 +649,7 @@
           <entry>bulletsprites/battle/50.png</entry>
         </projectile_sprites>
         <damage>70</damage>
-        <accuracy>25</accuracy>
+        <accuracy>75</accuracy>
         <fire_delay>40</fire_delay>
         <tail_size>35</tail_size>
         <range>1000</range>
@@ -789,7 +791,7 @@
           <entry>bulletsprites/battle/55.png</entry>
         </projectile_sprites>
         <damage>110</damage>
-        <accuracy>15</accuracy>
+        <accuracy>85</accuracy>
         <fire_delay>96</fire_delay>
         <tail_size>36</tail_size>
         <guided>true</guided>
@@ -883,7 +885,7 @@
           <entry>bulletsprites/battle/50.png</entry>
         </projectile_sprites>
         <damage>42</damage>
-        <accuracy>70</accuracy>
+        <accuracy>30</accuracy>
         <fire_delay>32</fire_delay>
         <tail_size>17</tail_size>
         <range>800</range>
@@ -992,7 +994,7 @@
           <entry>bulletsprites/battle/50.png</entry>
         </projectile_sprites>
         <damage>70</damage>
-        <accuracy>25</accuracy>
+        <accuracy>75</accuracy>
         <fire_delay>40</fire_delay>
         <tail_size>35</tail_size>
         <range>1000</range>
@@ -1104,6 +1106,7 @@
           <entry>bulletsprites/battle/22.png</entry>
         </projectile_sprites>
         <damage>18</damage>
+        <accuracy>100</accuracy>
         <fire_delay>100</fire_delay>
         <tail_size>36</tail_size>
         <guided>true</guided>
@@ -1218,7 +1221,7 @@
           <entry>bulletsprites/battle/22.png</entry>
         </projectile_sprites>
         <damage>90</damage>
-        <accuracy>90</accuracy>
+        <accuracy>10</accuracy>
         <fire_delay>80</fire_delay>
         <tail_size>36</tail_size>
         <guided>true</guided>
@@ -1301,7 +1304,7 @@
           <entry>bulletsprites/battle/22.png</entry>
         </projectile_sprites>
         <damage>90</damage>
-        <accuracy>90</accuracy>
+        <accuracy>10</accuracy>
         <fire_delay>80</fire_delay>
         <tail_size>36</tail_size>
         <guided>true</guided>
@@ -1384,7 +1387,7 @@
           <entry>bulletsprites/battle/22.png</entry>
         </projectile_sprites>
         <damage>90</damage>
-        <accuracy>90</accuracy>
+        <accuracy>10</accuracy>
         <fire_delay>80</fire_delay>
         <tail_size>36</tail_size>
         <guided>true</guided>
@@ -1452,7 +1455,7 @@
           <entry>bulletsprites/battle/45.png</entry>
         </projectile_sprites>
         <damage>40</damage>
-        <accuracy>10</accuracy>
+        <accuracy>90</accuracy>
         <fire_delay>35</fire_delay>
         <tail_size>26</tail_size>
         <turn_rate>40</turn_rate>
@@ -1510,6 +1513,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>80</damage>
+        <accuracy>100</accuracy>
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
@@ -1671,6 +1675,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>120</damage>
+        <accuracy>100</accuracy>
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
@@ -1811,7 +1816,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>21</damage>
-        <accuracy>70</accuracy>
+        <accuracy>30</accuracy>
         <fire_delay>12</fire_delay>
         <tail_size>25</tail_size>
         <range>900</range>
@@ -1933,6 +1938,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>75</damage>
+        <accuracy>100</accuracy>
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
@@ -2058,6 +2064,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>56</damage>
+        <accuracy>100</accuracy>
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
@@ -2240,7 +2247,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>26</damage>
-        <accuracy>5</accuracy>
+        <accuracy>95</accuracy>
         <fire_delay>42</fire_delay>
         <tail_size>36</tail_size>
         <range>1200</range>
@@ -2363,7 +2370,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>24</damage>
-        <accuracy>55</accuracy>
+        <accuracy>45</accuracy>
         <fire_delay>18</fire_delay>
         <tail_size>16</tail_size>
         <range>700</range>
@@ -2547,7 +2554,7 @@
           <entry>bulletsprites/battle/39.png</entry>
         </projectile_sprites>
         <damage>35</damage>
-        <accuracy>45</accuracy>
+        <accuracy>55</accuracy>
         <fire_delay>30</fire_delay>
         <tail_size>36</tail_size>
         <range>900</range>
@@ -2641,6 +2648,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>90</damage>
+        <accuracy>100</accuracy>
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
@@ -2700,7 +2708,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>90</damage>
-        <accuracy>25</accuracy>
+        <accuracy>75</accuracy>
         <fire_delay>44</fire_delay>
         <tail_size>16</tail_size>
         <range>100</range>
@@ -2758,6 +2766,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>80</damage>
+        <accuracy>100</accuracy>
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
@@ -2831,7 +2840,7 @@
           <entry>bulletsprites/battle/50.png</entry>
         </projectile_sprites>
         <damage>70</damage>
-        <accuracy>25</accuracy>
+        <accuracy>75</accuracy>
         <fire_delay>60</fire_delay>
         <tail_size>35</tail_size>
         <range>1000</range>
@@ -2907,7 +2916,7 @@
           <entry>bulletsprites/battle/55.png</entry>
         </projectile_sprites>
         <damage>100</damage>
-        <accuracy>15</accuracy>
+        <accuracy>85</accuracy>
         <fire_delay>110</fire_delay>
         <tail_size>36</tail_size>
         <guided>true</guided>
@@ -3048,7 +3057,7 @@
           <entry>bulletsprites/battle/22.png</entry>
         </projectile_sprites>
         <damage>40</damage>
-        <accuracy>70</accuracy>
+        <accuracy>30</accuracy>
         <fire_delay>65</fire_delay>
         <tail_size>32</tail_size>
         <guided>true</guided>
@@ -3127,7 +3136,7 @@
           <entry>bulletsprites/battle/22.png</entry>
         </projectile_sprites>
         <damage>40</damage>
-        <accuracy>70</accuracy>
+        <accuracy>30</accuracy>
         <fire_delay>65</fire_delay>
         <tail_size>32</tail_size>
         <guided>true</guided>
@@ -3206,7 +3215,7 @@
           <entry>bulletsprites/battle/22.png</entry>
         </projectile_sprites>
         <damage>40</damage>
-        <accuracy>70</accuracy>
+        <accuracy>30</accuracy>
         <fire_delay>65</fire_delay>
         <tail_size>32</tail_size>
         <guided>true</guided>
@@ -3344,7 +3353,7 @@
           <entry>bulletsprites/battle/45.png</entry>
         </projectile_sprites>
         <damage>36</damage>
-        <accuracy>12</accuracy>
+        <accuracy>88</accuracy>
         <fire_delay>28</fire_delay>
         <tail_size>34</tail_size>
         <turn_rate>40</turn_rate>
@@ -3497,7 +3506,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>130</damage>
-        <accuracy>10</accuracy>
+        <accuracy>90</accuracy>
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
@@ -3556,7 +3565,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>75</damage>
-        <accuracy>5</accuracy>
+        <accuracy>95</accuracy>
         <fire_delay>35</fire_delay>
         <tail_size>16</tail_size>
         <range>40</range>
@@ -3614,6 +3623,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>80</damage>
+        <accuracy>100</accuracy>
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
@@ -3745,6 +3755,7 @@
           <entry>bulletsprites/battle/45.png</entry>
         </projectile_sprites>
         <damage>255</damage>
+        <accuracy>100</accuracy>
         <fire_delay>64</fire_delay>
         <tail_size>34</tail_size>
         <turn_rate>40</turn_rate>
@@ -3819,7 +3830,7 @@
           <entry>bulletsprites/battle/45.png</entry>
         </projectile_sprites>
         <damage>34</damage>
-        <accuracy>15</accuracy>
+        <accuracy>85</accuracy>
         <fire_delay>52</fire_delay>
         <tail_size>34</tail_size>
         <turn_rate>40</turn_rate>
@@ -3912,7 +3923,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>50</damage>
-        <accuracy>60</accuracy>
+        <accuracy>40</accuracy>
         <fire_delay>8</fire_delay>
         <tail_size>16</tail_size>
         <range>800</range>
@@ -3973,7 +3984,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>65</damage>
-        <accuracy>60</accuracy>
+        <accuracy>40</accuracy>
         <fire_delay>8</fire_delay>
         <tail_size>16</tail_size>
         <range>800</range>
@@ -4034,7 +4045,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>85</damage>
-        <accuracy>60</accuracy>
+        <accuracy>40</accuracy>
         <fire_delay>8</fire_delay>
         <tail_size>16</tail_size>
         <range>800</range>
@@ -4125,7 +4136,7 @@
           <entry />
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
-        <accuracy>45</accuracy>
+        <accuracy>55</accuracy>
         <fire_delay>36</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
@@ -4182,6 +4193,7 @@
           <entry>bulletsprites/battle/09.png</entry>
         </projectile_sprites>
         <damage>150</damage>
+        <accuracy>100</accuracy>
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>300</range>

@@ -1,4 +1,6 @@
 #pragma once
+#include "game/state/agent.h"
+#include "game/state/battle/battleunit.h"
 #include "game/state/rules/aequipment_type.h"
 #include "library/sp.h"
 #include "library/vec.h"
@@ -6,7 +8,6 @@
 namespace OpenApoc
 {
 
-class Agent;
 class BattleItem;
 // class Projectile;
 
@@ -29,6 +30,8 @@ class AEquipment
 	bool aiming = false;
 	int weapon_fire_ticks_remaining = 0;
 
+	int getAccuracy(AgentType::BodyState bodyState, BattleUnit::FireAimingMode fireMode);
+	
 	// Following members are not serialized, but rather are set in initBattle method
 
 	wp<BattleItem> ownerItem;

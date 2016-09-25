@@ -284,6 +284,7 @@
 		<member>timeUnits</member>
 		<member>bodyState</member>
 		<member>currentPlannedPath</member>
+		<member>allowRunningAway</member>
 	</object>
 	<object>
 		<name>Base</name>

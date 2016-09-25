@@ -38,6 +38,8 @@ BattleView::BattleView(sp<GameState> state)
 {
 	this->pal = palette;
 
+	selectedItemOverlay = fw().data->loadImage("battle/battle-item-select-icon.png");
+
 	for (auto &formName : TAB_FORM_NAMES_RT)
 	{
 		sp<Form> f(ui().getForm(formName));
@@ -277,30 +279,26 @@ BattleView::BattleView(sp<GameState> state)
 	// FIXME: When clicking on items or weapons, activate them or go into fire / teleport mode
 	// accordingly
 
-	this->uiTabsRT[0]->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND")->setClickSound(nullptr);
+	std::function<void(FormsEvent *e)> clickedRightHand = [this](Event *) {
+		LogWarning("Clicked right hand");
+	};
+
+	std::function<void(FormsEvent *e)> clickedLeftHand = [this](Event *) {
+		LogWarning("Clicked left hand");
+	};
+
 	this->uiTabsRT[0]
-	    ->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND")
-	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
-
-		});
-	this->uiTabsRT[0]->findControlTyped<CheckBox>("BUTTON_LEFT_HAND")->setClickSound(nullptr);
+	    ->findControlTyped<Graphic>("OVERLAY_RIGHT_HAND")
+	    ->addCallback(FormEventType::MouseClick, clickedRightHand);
 	this->uiTabsRT[0]
-	    ->findControlTyped<CheckBox>("BUTTON_LEFT_HAND")
-	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
-
-		});
-	this->uiTabsTB[0]->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND")->setClickSound(nullptr);
+	    ->findControlTyped<Graphic>("OVERLAY_LEFT_HAND")
+	    ->addCallback(FormEventType::MouseClick, clickedLeftHand);
 	this->uiTabsTB[0]
-	    ->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND")
-	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
-
-		});
-	this->uiTabsTB[0]->findControlTyped<CheckBox>("BUTTON_LEFT_HAND")->setClickSound(nullptr);
+	    ->findControlTyped<Graphic>("OVERLAY_RIGHT_HAND")
+		->addCallback(FormEventType::MouseClick, clickedRightHand);
 	this->uiTabsTB[0]
-	    ->findControlTyped<CheckBox>("BUTTON_LEFT_HAND")
-	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
-
-		});
+	    ->findControlTyped<Graphic>("OVERLAY_LEFT_HAND")
+		->addCallback(FormEventType::MouseClick, clickedLeftHand);
 
 	switch (state->current_battle->mode)
 	{
@@ -355,73 +353,6 @@ void BattleView::resume() {}
 void BattleView::render()
 {
 	TRACE_FN;
-
-	// Set items in hands
-	// FIXME: Draw charges
-	if (selectedUnits.size() > 0 &&
-	    (this->activeTab == uiTabsRT[0] || this->activeTab == uiTabsTB[0]))
-	{
-		auto u = *selectedUnits.begin();
-		{
-			auto e =
-			    u->agent->getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::RightHand);
-			if (e)
-			{
-				this->activeTab->findControlTyped<Graphic>("IMAGE_RIGHT_HAND")
-				    ->setImage(e->type->equipscreen_sprite);
-				auto p = e->getPayloadType();
-				if (p && p->damage_type)
-				{
-					this->activeTab->findControlTyped<Graphic>("IMAGE_RIGHT_DAMAGETYPE")
-					    ->setImage(p->damage_type->icon_sprite);
-				}
-				else
-				{
-					this->activeTab->findControlTyped<Graphic>("IMAGE_RIGHT_DAMAGETYPE")
-					    ->setImage(nullptr);
-				}
-			}
-			else
-			{
-				this->activeTab->findControlTyped<Graphic>("IMAGE_RIGHT_HAND")->setImage(nullptr);
-				this->activeTab->findControlTyped<Graphic>("IMAGE_RIGHT_DAMAGETYPE")
-				    ->setImage(nullptr);
-			}
-		}
-		{
-			auto e =
-			    u->agent->getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::LeftHand);
-			if (e)
-			{
-				this->activeTab->findControlTyped<Graphic>("IMAGE_LEFT_HAND")
-				    ->setImage(e->type->equipscreen_sprite);
-				auto p = e->getPayloadType();
-				if (p && p->damage_type)
-				{
-					this->activeTab->findControlTyped<Graphic>("IMAGE_LEFT_DAMAGETYPE")
-					    ->setImage(p->damage_type->icon_sprite);
-				}
-				else
-				{
-					this->activeTab->findControlTyped<Graphic>("IMAGE_LEFT_DAMAGETYPE")
-					    ->setImage(nullptr);
-				}
-			}
-			else
-			{
-				this->activeTab->findControlTyped<Graphic>("IMAGE_LEFT_HAND")->setImage(nullptr);
-				this->activeTab->findControlTyped<Graphic>("IMAGE_LEFT_DAMAGETYPE")
-				    ->setImage(nullptr);
-			}
-		}
-	}
-	else
-	{
-		this->activeTab->findControlTyped<Graphic>("IMAGE_RIGHT_HAND")->setImage(nullptr);
-		this->activeTab->findControlTyped<Graphic>("IMAGE_RIGHT_DAMAGETYPE")->setImage(nullptr);
-		this->activeTab->findControlTyped<Graphic>("IMAGE_LEFT_HAND")->setImage(nullptr);
-		this->activeTab->findControlTyped<Graphic>("IMAGE_LEFT_DAMAGETYPE")->setImage(nullptr);
-	}
 
 	BattleTileView::render();
 	activeTab->render();
@@ -524,6 +455,20 @@ void BattleView::update()
 	    255 - 0, Colour((colorCurrent * 5 + 255 * 3) / 8, 0, (colorCurrent * 5 + 255 * 3) / 8));
 	this->pal = newPal;
 
+	// Update weapons if required
+	auto rightInfo = createItemOverlayInfo(true);
+	if(!(rightInfo == rightHandInfo) && (this->activeTab == uiTabsRT[0] || this->activeTab == uiTabsTB[0]))
+	{
+		rightHandInfo = rightInfo;
+		updateItemInfo(true);
+	}
+	auto leftInfo = createItemOverlayInfo(false);
+	if (!(leftInfo == leftHandInfo) && (this->activeTab == uiTabsRT[0] || this->activeTab == uiTabsTB[0]))
+	{
+		leftHandInfo = leftInfo;
+		updateItemInfo(false);
+	}
+
 	// FIXME: Possibly more efficient ways than re-generating all controls every frame?
 	activeTab->update();
 	baseForm->update();
@@ -546,13 +491,13 @@ void BattleView::updateSelectedUnits()
 	{
 		auto u = *it;
 		auto o = state->getPlayer();
-		if (!u || u->isDead() || u->isUnconscious() || u->owner != o)
+		if (!u || u->isDead() || u->isUnconscious() || u->owner != o || u->retreated)
 		{
 			it = selectedUnits.erase(it);
 		}
 		else
 		{
-			++it;
+			it++;
 		}
 	}
 }
@@ -752,12 +697,23 @@ void BattleView::attemptToClearCurrentOrders(sp<BattleUnit> u)
 
 void BattleView::orderMove(Vec3<int> target, int facingOffset, bool demandGiveWay)
 {
-	// FIXME: Handle group movement
+	// Check if ordered to exit
+	bool runAway = map.getTile(target)->getHasExit();
+	
+	// FIXME: Handle group movement (don't forget to turn it off when running away)
 	for (auto unit : selectedUnits)
 	{
 		attemptToClearCurrentOrders(unit);
 		// FIXME: handle strafe and backwards movement properly
-		unit->missions.emplace_back(BattleUnitMission::gotoLocation(*unit, target, facingOffset));
+		if (runAway)
+		{
+			// Running away units are impatient!
+			unit->missions.emplace_back(BattleUnitMission::gotoLocation(*unit, target, facingOffset, true, 1, false, true));
+		}
+		else // not running away
+		{
+			unit->missions.emplace_back(BattleUnitMission::gotoLocation(*unit, target, facingOffset));
+		}
 		if (unit->missions.size() == 1)
 		{
 			unit->missions.front()->start(*this->state, *unit);
@@ -1141,6 +1097,150 @@ void BattleView::updateLayerButtons()
 			this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_9")->setChecked(true);
 			break;
 	}
+}
+
+void BattleView::updateItemInfo(bool right)
+{
+	UString name = right ? "RIGHT" : "LEFT";
+	AgentEquipmentInfo info = right ? rightHandInfo : leftHandInfo;
+	// Item info
+	if (info.itemType)
+	{
+		this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND")
+			->setImage(info.itemType->equipscreen_sprite);
+		if (info.damageType)
+		{
+			this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_DAMAGETYPE")
+				->setImage(info.damageType->icon_sprite);
+		}
+		else
+		{
+			this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_DAMAGETYPE")
+				->setImage(nullptr);
+		}
+	}
+	else
+	{
+		this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND")->setImage(nullptr);
+		this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_DAMAGETYPE")
+			->setImage(nullptr);
+	}
+	
+	// Selection bracket
+	if (info.selected)
+	{
+		this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND_SELECTED")
+			->setImage(selectedItemOverlay);
+	}
+	else
+	{
+		this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND_SELECTED")
+			->setImage(nullptr);
+	}
+
+	auto overlay = mksp<RGBImage>(Vec2<int>{ 50, 95 });
+	{
+		RGBImageLock l(overlay);
+		
+		// Draw accuracy
+		if (info.accuracy / 2 > 0)
+		{
+			int accuracy = info.accuracy / 2;
+			int colorsCount = accuracyColors.size();
+			int y = 93;
+			if (right)
+			{
+				for (int x = 0; x < accuracy; x++)
+				{
+					l.set({ x, y }, accuracyColors[x * colorsCount / accuracy]);
+					l.set({ x, y + 1 }, accuracyColors[x * colorsCount / accuracy]);
+				}
+			}
+			else
+			{
+				for (int x = 0; x < accuracy; x++)
+				{
+					l.set({ 50 - 1 - x, y }, accuracyColors[x * colorsCount / accuracy]);
+					l.set({ 50 - 1 - x, y + 1 }, accuracyColors[x * colorsCount / accuracy]);
+				}
+			}
+		}
+		// Draw ammo
+		if (info.maxAmmo > 0 && info.curAmmo > 0)
+		{
+			int ammoDisplaySize = 90;
+			
+			int ammoCount = info.curAmmo;
+			int ammoPadding = 1;
+			int ammoSize = ammoDisplaySize / info.maxAmmo - 1;
+			int x = right ? 1 : 47;
+			if (ammoSize == 0)
+			{
+				ammoSize = 1;
+				ammoPadding = 0;
+				ammoCount = ammoCount * ammoDisplaySize / info.maxAmmo;
+			}
+
+			for (int i = 0; i < ammoCount; i++)
+			{
+				for (int j = 0; j < ammoSize;j++)
+				{
+					l.set({ x, ammoDisplaySize - 1 - i * (ammoSize + ammoPadding) - j }, ammoColour);
+					l.set({ x + 1, ammoDisplaySize - 1 - i * (ammoSize + ammoPadding) - j }, ammoColour);
+				}
+			}
+		}
+	}
+	this->activeTab->findControlTyped<Graphic>("OVERLAY_" + name + "_HAND")->setImage(overlay);
+}
+
+AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
+{
+	AgentEquipmentInfo a;
+	if (selectedUnits.size() == 0)
+	{
+		return a;
+	}
+	auto u = *selectedUnits.begin();
+	sp<AEquipment> e = nullptr;
+	if (rightHand)
+	{
+		e = u->agent->getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::RightHand);
+	}
+	else
+	{
+		e = u->agent->getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::LeftHand);
+	}
+	if (e)
+	{
+		a.itemType = e->type;
+		if (a.itemType)
+		{
+			auto p = e->getPayloadType();
+			if (p)
+			{
+				a.damageType = p->damage_type;
+				if (a.itemType->type == AEquipmentType::Type::Weapon)
+				{
+					a.maxAmmo = p->max_ammo;
+					a.curAmmo = e->ammo;
+				}
+				//FIXME: Handle selection
+				a.selected = false;
+			}
+			// FIXME: Grenade throw accuracy?
+			if (a.itemType->type == AEquipmentType::Type::Weapon)
+			{
+				a.accuracy = e->getAccuracy(u->current_body_state, u->fire_aiming_mode);
+			}
+		}
+	}
+}
+
+bool AgentEquipmentInfo::operator==(const AgentEquipmentInfo &other) const
+{
+	return (this->accuracy / 2 == other.accuracy / 2 && this->curAmmo == other.curAmmo &&
+		this->itemType == other.itemType && this->damageType == other.damageType);
 }
 
 }; // namespace OpenApoc
