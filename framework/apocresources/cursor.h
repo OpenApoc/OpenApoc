@@ -34,7 +34,7 @@ class ApocCursor
 
 	CursorType CurrentType;
 
-	const Vec2<int> &getPosition() { return cursorPos; }
+	const Vec2<int> &getPosition() const { return cursorPos; }
 
 	ApocCursor(sp<Palette> ColourPalette);
 	~ApocCursor();
