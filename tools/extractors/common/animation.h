@@ -1,6 +1,6 @@
 #pragma once
-#include <cstdint>
 #include "tools/extractors/common/animation.h"
+#include <cstdint>
 
 struct AnimationDataAD
 {

@@ -193,8 +193,7 @@ T vectorRandomizer(Generator &g, const std::vector<T> &vector)
 	return *it;
 }
 
-template <typename T, typename Generator>
-T setRandomizer(Generator &g, const std::set<T> &set)
+template <typename T, typename Generator> T setRandomizer(Generator &g, const std::set<T> &set)
 {
 	// we can't do index lookups in a list, so we just have to iterate N times
 	if (set.size() == 1)

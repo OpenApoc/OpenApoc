@@ -21,6 +21,8 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 	Vec3<int> lineSegmentStartVoxel = lineSegmentStart * tileSizef;
 	Vec3<int> lineSegmentEndVoxel = lineSegmentEnd * tileSizef;
 	LineSegment<int, true> line{lineSegmentStartVoxel, lineSegmentEndVoxel};
+	// "point" is thee corrdinate measured in voxel scale units, meaning,
+	// voxel point coordinate within map
 	for (auto &point : line)
 	{
 		auto tile = point / tileSize;
@@ -33,25 +35,32 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 				return c;
 		}
 
-		// FIXME: Voxelmaps can be different size and should rotate with the object
-		// Optionally, we can create and fill a voxelmap for every object facing
 		const Tile *t = this->getTile(tile);
 		for (auto &obj : t->intersectingObjects)
 		{
+			if (!obj->hasVoxelMap())
+				continue;
 			if (type_checking && validTypes.find(obj->type) == validTypes.end())
 				continue;
-			auto voxelMap = obj->getVoxelMap();
+			// coordinate of the object's voxelmap's min point
+			auto objPos = obj->getCenter();
+			objPos -= obj->getVoxelOffset();
+			objPos *= tileSizef;
+			// coordinate of the voxel within object
+			Vec3<int> voxelPos = point - Vec3<int>{objPos};
+			// voxel map to use
+			Vec3<int> voxelMapIndex = voxelPos / tileSize;
+			auto voxelMap = obj->getVoxelMap(voxelMapIndex);
 			if (!voxelMap)
 				continue;
-			auto objPos = obj->getPosition();
-			objPos -= obj->getVoxelOffset();
-			objPos *= tileSize;
-			Vec3<int> voxelPos = point - Vec3<int>{objPos};
-			if (voxelMap->getBit(voxelPos))
+			// coordinate of the voxel within map
+			Vec3<int> voxelPosWithinMap = voxelPos % tileSize;
+			// FIXME: Get appropriate voxel map for the position and facing of the object
+			if (voxelMap->getBit(voxelPosWithinMap))
 			{
 				c.obj = obj;
 				c.position = Vec3<float>{point};
-				c.position /= tileSize;
+				c.position /= tileSizef;
 				return c;
 			}
 		}

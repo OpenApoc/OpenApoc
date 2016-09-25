@@ -78,7 +78,7 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 	std::vector<sp<Image>> animation_frames;
 
 	bool transparent = false;
-	sp<std::vector<sp<Sample>>> sfx;
+	int sfxIndex = -1;
 	bool door = false;
 	bool los_through_terrain = false;
 	bool floor = false;

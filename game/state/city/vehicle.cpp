@@ -67,7 +67,8 @@ class FlyingVehicleMover : public VehicleMover
 				float distanceToGoal = glm::length(vectorToGoal * VELOCITY_SCALE_CITY);
 				if (distanceToGoal <= distanceLeft)
 				{
-					// FIXME: Aren't we essentially setting vehicle position every update for no reason? What if it doesn't need to move? 
+					// FIXME: Aren't we essentially setting vehicle position every update for no
+					// reason? What if it doesn't need to move?
 					distanceLeft -= distanceToGoal;
 					vehicle.setPosition(goalPosition);
 					auto dir = glm::normalize(vectorToGoal);
@@ -401,7 +402,7 @@ void Vehicle::handleCollision(GameState &state, Collision &c)
 		if (applyDamage(state, projectile->damage, armourValue))
 		{
 			auto doodad = city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_EXPLOSION_2"},
-			                                this->tileObject->getPosition());
+			                                this->tileObject->getCenter());
 
 			this->shadowObject->removeFromMap();
 			this->tileObject->removeFromMap();

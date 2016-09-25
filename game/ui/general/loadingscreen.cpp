@@ -1,8 +1,8 @@
 #define _USE_MATH_DEFINES
 #include "game/ui/general/loadingscreen.h"
 #include "framework/framework.h"
-#include "game/ui/city/cityview.h"
 #include "game/ui/battle/battleview.h"
+#include "game/ui/city/cityview.h"
 #include <cmath>
 
 namespace OpenApoc
@@ -55,7 +55,7 @@ void LoadingScreen::update()
 			{
 				fw().stageQueueCommand({StageCmd::Command::REPLACEALL, mksp<CityView>(gameState)});
 				if (gameState->current_battle)
-					fw().stageQueueCommand({ StageCmd::Command::PUSH, mksp<BattleView>(gameState) });
+					fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BattleView>(gameState)});
 			}
 			else
 			{

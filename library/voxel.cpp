@@ -48,7 +48,8 @@ void VoxelMap::setSlice(int z, sp<VoxelSlice> slice)
 	{
 		return;
 	}
-	if (slice->getSize() != Vec2<int>{this->size.x, this->size.y})
+	// Slices greater than map size are fine, we will just ignore extra pixels
+	if (slice->getSize().x < this->size.x || slice->getSize().y < this->size.y)
 	{
 		return;
 	}

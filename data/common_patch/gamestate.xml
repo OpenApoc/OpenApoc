@@ -11,6 +11,7 @@
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vehicle_equipment.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vehicle_ammo.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="research.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_body_types.xml" />
   <initial_agents>
     <entry>
       <key>Soldier</key>
@@ -73,7 +74,7 @@
   </initial_facilities>
   <initial_agent_equipment>
     <entry>
-      <entry>AEQUIPMENTTYPE_MEGAPOL_BODY_ARMOR</entry>
+      <entry>AEQUIPMENTTYPE_MARSEC_BODY_UNIT</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_HELMET</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_LEFT_ARM_ARMOR</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_LEG_ARMOR</entry>

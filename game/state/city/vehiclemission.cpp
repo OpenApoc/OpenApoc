@@ -23,12 +23,17 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 
   public:
 	FlyingVehicleTileHelper(TileMap &map, Vehicle &v) : map(map), v(v) {}
-	
-	bool canEnterTile(Tile *from, Tile *to) const override  { float nothing; return canEnterTile(from, to, nothing); }
+
+	bool canEnterTile(Tile *from, Tile *to, bool demandGiveWay = false) const override
+	{
+		float nothing;
+		return canEnterTile(from, to, nothing, demandGiveWay);
+	}
 
 	// Support 'from' being nullptr for if a vehicle is being spawned in the map
-	bool canEnterTile(Tile *from, Tile *to, float &cost) const override
+	bool canEnterTile(Tile *from, Tile *to, float &cost, bool demandGiveWay = false) const override
 	{
+		std::ignore = demandGiveWay;
 		Vec3<int> fromPos = {0, 0, 0};
 		if (from)
 		{
@@ -90,7 +95,7 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 
 		// FIXME: Handle 'large' vehicles interacting more than with just the 'owned' objects of a
 		// single tile?
-		cost = glm::length(Vec3<float>{fromPos} -Vec3<float>{toPos});
+		cost = glm::length(Vec3<float>{fromPos} - Vec3<float>{toPos});
 		return true;
 	}
 

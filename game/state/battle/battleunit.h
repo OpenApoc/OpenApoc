@@ -12,11 +12,11 @@
 #define UNITS_TRAVELLED_PER_SOUND 12
 // If running, unit will only emit sound every this number of times it normally would
 #define UNITS_TRAVELLED_PER_SOUND_RUNNING_DIVISOR 2
+#define FLYING_ACCELERATION_DIVISOR 2
 
 namespace OpenApoc
 {
 
-class BattleStrategyIconList;
 class TileObjectBattleUnit;
 class TileObjectShadow;
 class Battle;
@@ -24,7 +24,6 @@ class Battle;
 class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 {
   public:
-	  
 	// Enums for player selectable modes for the agent
 	enum class BehaviorMode
 	{
@@ -54,9 +53,9 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 		None,
 		Kneeling
 	};
-	
+
 	StateRef<Agent> agent;
-	
+
 	StateRef<Organisation> owner;
 	int squadNumber = 0;
 	int squadPosition = 0;
@@ -81,19 +80,29 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 
 	// Time, in game ticks, until body animation is finished
 	int body_animation_ticks_remaining = 0;
-	int getBodyAnimationFrame() const { return (body_animation_ticks_remaining + TICKS_PER_FRAME - 1) / TICKS_PER_FRAME; }
+	int getBodyAnimationFrame() const
+	{
+		return (body_animation_ticks_remaining + TICKS_PER_FRAME - 1) / TICKS_PER_FRAME;
+	}
 	AgentType::BodyState current_body_state = AgentType::BodyState::Standing;
 	AgentType::BodyState target_body_state = AgentType::BodyState::Standing;
 	void setBodyState(AgentType::BodyState state);
+	void beginBodyStateChange(AgentType::BodyState state, int ticks);
 	// Time, in game ticks, until hands animation is finished
 	int hand_animation_ticks_remaining = 0;
-	int getHandAnimationFrame() const { return (hand_animation_ticks_remaining + TICKS_PER_FRAME - 1) / TICKS_PER_FRAME; }
+	int getHandAnimationFrame() const
+	{
+		return (hand_animation_ticks_remaining + TICKS_PER_FRAME - 1) / TICKS_PER_FRAME;
+	}
 	AgentType::HandState current_hand_state = AgentType::HandState::AtEase;
 	AgentType::HandState target_hand_state = AgentType::HandState::AtEase;
 	void setHandState(AgentType::HandState state);
 	// Distance, in movement ticks, spent since starting to move
 	int movement_ticks_passed = 0;
-	int getDistanceTravelled() const { return std::max(0, movement_ticks_passed / TICKS_PER_UNIT_TRAVELLED); }
+	int getDistanceTravelled() const
+	{
+		return std::max(0, movement_ticks_passed / TICKS_PER_UNIT_TRAVELLED);
+	}
 	// Movement sounds
 	int movement_sounds_played = 0;
 	bool shouldPlaySoundNow();
@@ -111,7 +120,9 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	bool usingLift = false;
 	Vec2<int> facing;
 	Vec2<int> goalFacing;
-	
+	// Value 0 - 100, Simulates slow takeoff, when starting to use flight this slowly rises to 1
+	int flyingSpeedModifier = 0;
+
 	// Successfully retreated from combat
 	bool retreated = false;
 	// Died and corpse was destroyed in an explosion
@@ -126,13 +137,28 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	bool isDead() const;
 	// Returns true if the unit is unconscious and not dead
 	bool isUnconscious() const;
-	// Return true if the unit is conscious 
+	// Return true if the unit is conscious
 	// and not currently in the dropped state (curent and target)
 	bool isConscious() const;
 	// Returns true if the unit is conscious and can fly
-	bool canFly();
+	bool canFly() const;
 	// Returns true if the unit is conscious and can fly
-	bool canMove();
+	bool canMove() const;
+	// So we can stop going ->isLarge() all the time
+	bool isLarge() const { return agent->type->bodyType->large; }
+	// Wether unit is static - not moving, not falling, not changing body state
+	bool isStatic() const;
+	// Wether unit is busy - with aiming or firing or otherwise involved
+	bool isBusy() const;
+	// Wether unit can go prone in current position and facing
+	bool canGoProne() const;
+	// Wether unit can kneel in current position and facing
+	bool canKneel() const;
+	int getCurrentHeight() const { return agent->type->bodyType->height.at(current_body_state); }
+
+	// If unit is asked to give way, this list will be filled with facings
+	// in order of priority that should be tried by it
+	std::list<Vec2<int>> giveWayRequest;
 
 	bool applyDamage(GameState &state, int damage, float armour);
 	void handleCollision(GameState &state, Collision &c);
@@ -158,7 +184,6 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	sp<TileObjectBattleUnit> tileObject;
 	sp<TileObjectShadow> shadowObject;
 	wp<Battle> battle;
-	sp<BattleStrategyIconList> strategy_icon_list;
 
 	void dropDown(GameState &state);
 	void tryToRiseUp(GameState &state);

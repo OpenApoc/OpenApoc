@@ -11,6 +11,7 @@ using namespace OpenApoc;
 int main(int argc, char *argv[])
 {
 	bool enable_trace = false;
+	bool skip_intro = false;
 	LogInfo("Starting OpenApoc \"%s\"", OPENAPOC_VERSION);
 	std::vector<UString> cmdline;
 	size_t frameLimit = 0;
@@ -28,6 +29,11 @@ int main(int argc, char *argv[])
 		else if (UString(argv[i]) == "--disable-tracing")
 		{
 			enable_trace = false;
+			continue;
+		}
+		else if (UString(argv[i]) == "--skip-intro")
+		{
+			skip_intro = true;
 			continue;
 		}
 		else if (UString(argv[i]).substr(0, strlen("--frame-limit=")) == "--frame-limit=")
@@ -72,7 +78,7 @@ int main(int argc, char *argv[])
 
 		if (saveFile == "")
 		{
-			fw->run(mksp<BootUp>(), frameLimit);
+			fw->run(mksp<BootUp>(skip_intro), frameLimit);
 		}
 		else
 		{

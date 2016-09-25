@@ -78,7 +78,7 @@ static const std::vector<UString> CITY_ICON_VEHICLE_PASSENGER_COUNT_RESOURCES = 
 
 CityView::CityView(sp<GameState> state)
     : CityTileView(*state->current_city->map, Vec3<int>{TILE_X_CITY, TILE_Y_CITY, TILE_Z_CITY},
-               Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric),
+                   Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric),
       baseForm(ui().getForm("FORM_CITY_UI")), updateSpeed(UpdateSpeed::Speed1),
       lastSpeed(UpdateSpeed::Pause), state(state), followVehicle(false),
       selectionState(SelectionState::Normal),
@@ -713,7 +713,7 @@ void CityView::update()
 			// The selected vehicle may not have a tile object if it's not on the map
 			if (v->tileObject)
 			{
-				this->setScreenCenterTile(v->tileObject->getPosition());
+				this->setScreenCenterTile(v->tileObject->getCenter());
 			}
 		}
 	}
@@ -1103,7 +1103,7 @@ void CityView::eventOccurred(Event *e)
 	}
 	else
 	{
-		TileView::eventOccurred(e);
+		CityTileView::eventOccurred(e);
 	}
 }
 

@@ -129,7 +129,7 @@ class VehicleType : public StateObject<VehicleType>
 	// UFOs also have a 'crashed' sprite
 	sp<Image> crashed_sprite;
 
-	sp<VoxelMap> voxelMap;
+	std::vector<std::map<Vec3<float>, sp<VoxelMap>>> voxelMaps;
 
 	class EquipmentLayoutSlot
 	{

@@ -51,4 +51,10 @@ Vec3<float> TileObjectDoodad::getPosition() const
 	return d->getPosition();
 }
 
+float TileObjectDoodad::getZOrder() const
+{
+	// FIXME: Hack to force 'overlay' objects to be half-a-tile up in Z
+	// The formula to calculate "3.5f" is: (tile_x + tile_y + tile_z) / tile_z /2
+	return getCenter().z + 3.5f + (float)getType() / 1000.0f;
+}
 } // namespace OpenApoc

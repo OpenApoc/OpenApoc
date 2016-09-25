@@ -23,10 +23,12 @@ enum class BattleSelectionState
 	Normal,
 	NormalAlt,
 	NormalCtrl,
+	NormalCtrlAlt,
+	NormalCtrlAltShift,
 	Fire,
-	
-	//Throw,
-	//Psi,
+
+	// Throw,
+	// Psi,
 };
 
 class BattleView : public BattleTileView
@@ -44,6 +46,8 @@ class BattleView : public BattleTileView
 
 	bool followAgent;
 
+	bool colorForward = true;
+	int colorCurrent = 0;
 	sp<Palette> palette;
 
 	BattleSelectionState selectionState;
@@ -53,7 +57,7 @@ class BattleView : public BattleTileView
 	bool ModifierRAlt = false;
 	bool ModifierLCtrl = false;
 	bool ModifierRCtrl = false;
-	
+
 	void updateSelectionMode();
 	void updateSelectedUnits();
 	void updateLayerButtons();
@@ -61,10 +65,11 @@ class BattleView : public BattleTileView
 
 	// Unit orers
 	// Move, offset 1 means strafing, 2 means move backwards
-	void orderMove(Vec3<int> target, int facingOffset = 0);
+	void orderMove(Vec3<int> target, int facingOffset = 0, bool demandGiveWay = false);
 	void orderTurn(Vec3<int> target);
 	void orderSelect(sp<BattleUnit> u, bool inverse = false, bool additive = false);
 	void attemptToClearCurrentOrders(sp<BattleUnit> u);
+	bool canEmplaceTurnInFront(sp<BattleUnit> u);
 
   public:
 	BattleView(sp<GameState> state);

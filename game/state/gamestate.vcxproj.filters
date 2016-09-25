@@ -362,6 +362,9 @@
     <ClInclude Include="battle\battleunitmission.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="battle\battlecommonsamplelist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

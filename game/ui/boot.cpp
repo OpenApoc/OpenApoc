@@ -27,9 +27,10 @@ void BootUp::update()
 		std::ignore = ui_instance;
 	});
 
-	fw().stageQueueCommand({StageCmd::Command::REPLACE,
-	                        mksp<VideoScreen>("SMK:xcom3/smk/intro1.smk", std::move(loadTask),
-	                                          []() -> sp<Stage> { return mksp<MainMenu>(); })});
+	fw().stageQueueCommand(
+	    {StageCmd::Command::REPLACE,
+	     mksp<VideoScreen>(skipIntro ? "" : "SMK:xcom3/smk/intro1.smk", std::move(loadTask),
+	                       []() -> sp<Stage> { return mksp<MainMenu>(); })});
 }
 
 void BootUp::render() {}

@@ -14,7 +14,6 @@ class Collision;
 class GameState;
 class TileMap;
 class Battle;
-class BattleStrategyIconList;
 
 class BattleItem : public std::enable_shared_from_this<BattleItem>
 {
@@ -38,7 +37,6 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 	sp<TileObjectBattleItem> tileObject;
 	sp<TileObjectShadow> shadowObject;
 	wp<Battle> battle;
-	sp<BattleStrategyIconList> strategy_icon_list;
 
 	BattleItem() = default;
 	~BattleItem() = default;

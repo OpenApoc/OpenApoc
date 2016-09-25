@@ -33,6 +33,8 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 
 	bool isAlive() const;
 
+	// Following members are not serialized, but rather are set in initBattle method
+
 	sp<TileObjectBattleMapPart> tileObject;
 	std::list<wp<BattleItem>> supportedItems;
 	std::set<sp<BattleMapPart>> supportedParts;

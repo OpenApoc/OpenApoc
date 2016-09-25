@@ -23,7 +23,7 @@ class TileView : public Stage, public TileTransform
 	Vec3<int> isoTileSize;
 	Vec2<int> stratTileSize;
 	TileViewMode viewMode;
-	
+
 	bool scrollUp;
 	bool scrollDown;
 	bool scrollLeft;
@@ -35,7 +35,7 @@ class TileView : public Stage, public TileTransform
 	float strategyViewBoxThickness;
 
 	Vec3<int> selectedTilePosition;
-	
+
   public:
 	int maxZDraw;
 	Vec3<float> centerPos;
@@ -44,7 +44,8 @@ class TileView : public Stage, public TileTransform
 
 	sp<Palette> pal;
 
-	TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize, TileViewMode initialMode);
+	TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
+	         TileViewMode initialMode);
 	~TileView() override;
 
 	Vec2<int> getScreenOffset() const;

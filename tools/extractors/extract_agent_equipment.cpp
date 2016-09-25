@@ -60,8 +60,10 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 		    (i < data_t.damage_types->count()) && (data_t.damage_types->get(i).ignore_shield == 1);
 
 		// Damage icons are located in tacdata icons, starting with id 14 and on
-		d->icon_sprite =  fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-				"icons.tab:%d:xcom3/tacdata/tactical.pal", (int)i+14));
+		d->icon_sprite =
+		    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
+		                                         (int)i + 14));
 
 		state.damage_types[id] = d;
 	}
@@ -99,27 +101,27 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 		switch (edata.sprite_idx)
 		{
 			// Minigun
-			case 7	:
+			case 7:
 			// Laser Sniper
-			case 9	:
+			case 9:
 			// Autocannon
-			case 11	:
+			case 11:
 			// Heavy Launcher
-			case 17	:
+			case 17:
 			// MiniLauncher
-			case 21	:
+			case 21:
 			// Stun Grapple
-			case 25	:
+			case 25:
 			// Tracker Gun
-			case 28	:
+			case 28:
 			// ForceWeb
-			case 31	:
+			case 31:
 			// Devastator Canon
-			case 41	:
+			case 41:
 			// Brainsucker
-			case 44	:
+			case 44:
 			// Dimension Missile Launcher
-			case 46	:
+			case 46:
 				e->two_handed = true;
 				break;
 			default:
@@ -187,16 +189,20 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 						armoredUnitPicIndex = 4;
 						break;
 					default:
-						LogError("Unexpected damage modifier %d for ID %s", (int)adata.damage_modifier,
-							id.cStr());
+						LogError("Unexpected damage modifier %d for ID %s",
+						         (int)adata.damage_modifier, id.cStr());
 						break;
 				}
-				e->body_image_pack = { &state, UString::format("%s%s%d%s", BattleUnitImagePack::getPrefix(), "xcom", armoredUnitPicIndex, bodyPartLetter) };
+				e->body_image_pack = {&state,
+				                      UString::format("%s%s%d%s", BattleUnitImagePack::getPrefix(),
+				                                      "xcom", armoredUnitPicIndex, bodyPartLetter)};
 				// Body sprites are stored in armour.pck file, in head-left-body-right-legs order
-				// Since armor damage modifier values start with 17, we can subtract that to get armor index
-				e->body_sprite = fw().data->loadImage(UString::format("PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/"
-							"armour.tab:%d:xcom3/tacdata/equip.pal",
-							(int)((adata.damage_modifier - 17) * 5 + armorBodyPicIndex)));
+				// Since armor damage modifier values start with 17, we can subtract that to get
+				// armor index
+				e->body_sprite = fw().data->loadImage(
+				    UString::format("PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/"
+				                    "armour.tab:%d:xcom3/tacdata/equip.pal",
+				                    (int)((adata.damage_modifier - 17) * 5 + armorBodyPicIndex)));
 			}
 			break;
 			case AGENT_EQUIPMENT_TYPE_WEAPON:
@@ -243,7 +249,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 					{
 						payload_idx = wdata.ammo_effect[0];
 						e->max_ammo = wdata.ammo_rounds[0];
-						// Alien weapons start from index 29, and are not marked as recharging 
+						// Alien weapons start from index 29, and are not marked as recharging
 						// despite doing so. Therefore, mark them manually
 						e->recharge = (edata.data_idx > 28) ? 1 : wdata.ammo_recharge[0];
 					}
@@ -272,8 +278,11 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 								tracker_gun_clip_id = id;
 							else
 								// Behave normally
-								e->weapon_types.emplace(&state, weapons[gdata.ammo_type != 0xffff ? gdata.ammo_type
-									: gdata.ammo_type_duplicate]->id);
+								e->weapon_types.emplace(
+								    &state,
+								    weapons[gdata.ammo_type != 0xffff ? gdata.ammo_type
+								                                      : gdata.ammo_type_duplicate]
+								        ->id);
 						}
 						break;
 					case AGENT_GENERAL_TYPE_MOTION_SCANNER:
@@ -323,14 +332,14 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 			}
 			break;
 			default:
-				LogWarning("Encountered empty item in ID %s, moving on", id.cStr());
+				LogInfo("Encountered empty item in ID %s, moving on", id.cStr());
 				continue;
 		}
 
 		e->weight = edata.weight;
 
-		e->shadow_offset = { 23, -14 };
-		e->dropped_offset = { 23, 34 };
+		e->shadow_offset = {23, -14};
+		e->dropped_offset = {23, 34};
 
 		if (edata.sprite_idx < gameObjectSpriteCount)
 			e->dropped_sprite =
@@ -349,8 +358,8 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 		// are identical
 		// There is a total 60 of them
 		int held_sprite_index = std::min((int)edata.sprite_idx, (int)heldSpriteCount - 1);
-		e->held_image_pack = { &state, UString::format("%s%s%d",
-			BattleUnitImagePack::getPrefix(), "item", held_sprite_index) };
+		e->held_image_pack = {&state, UString::format("%s%s%d", BattleUnitImagePack::getPrefix(),
+		                                              "item", held_sprite_index)};
 
 		e->equipscreen_sprite = fw().data->loadImage(UString::format(
 		    "PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:%d:xcom3/tacdata/tactical.pal",
@@ -644,25 +653,6 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 				state.equipment_sets_by_level[id] = es;
 			}
 		}
-	}
-
-	auto gameObjectStrategySpriteTabFileName = UString("xcom3/tacdata/stratico.tab");
-	auto gameObjectStrategySpriteTabFile = fw().data->fs.open(gameObjectStrategySpriteTabFileName);
-	if (!gameObjectStrategySpriteTabFile)
-	{
-		LogError("Failed to open dropped item StrategySprite TAB file \"%s\"",
-			gameObjectStrategySpriteTabFileName.cStr());
-		return;
-	}
-	size_t gameObjectStrategySpriteCount = gameObjectStrategySpriteTabFile.size() / 4;
-
-	state.battle_strategy_icon_list = mksp<BattleStrategyIconList>();
-
-	for (size_t i = 0; i < gameObjectStrategySpriteCount; i++)
-	{
-		state.battle_strategy_icon_list->images.push_back(fw().data->loadImage(
-				UString::format("PCKSTRAT:xcom3/tacdata/stratico.pck:xcom3/tacdata/"
-					"stratico.tab:%u", (unsigned)i)));
 	}
 }
 

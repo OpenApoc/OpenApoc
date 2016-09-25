@@ -40,11 +40,6 @@ void TileObject::removeFromMap()
 		                this->drawOnTile->drawnObjects[layer].end(), thisPtr),
 		    this->drawOnTile->drawnObjects[layer].end());
 		this->owningTile = nullptr;
-		if (type == Type::Ground || type == Type::LeftWall || type == Type::RightWall || type == Type::Feature)
-		{
-			prevOwningTile->updateBattlescapeHeightAndPassability();
-			prevDrawOnTile->updateBattlescapeUIDrawOrder();
-		}
 	}
 	for (auto *tile : this->intersectingTiles)
 	{
@@ -60,34 +55,12 @@ class TileObjectZComparer
   public:
 	bool operator()(const sp<TileObject> &lhs, const sp<TileObject> &rhs) const
 	{
-		// First sort objects based on wehter they belong to the Ground, Left Wall, Right Wall or
-		// are something other than that (we don't care what exactly)
-		int lhsT = std::min((int)lhs->getType(), 4);
-		int rhsT = std::min((int)rhs->getType(), 4);
-		if (lhsT != rhsT)
-			return lhsT < rhsT;
-
-		// If both objects are of the same mappart type (or are both other type) 
-		// then proceed to check their Z. However, type remains the tiebreaker
-		float lhsZ = lhs->getPosition().x * lhs->map.velocityScale.x +
-		             lhs->getPosition().y * lhs->map.velocityScale.y +
-		             lhs->getPosition().z * lhs->map.velocityScale.z + (float)lhs->getType() / 1000.0f;
-		float rhsZ = rhs->getPosition().x * rhs->map.velocityScale.x +
-		             rhs->getPosition().y * rhs->map.velocityScale.y +
-		             rhs->getPosition().z * rhs->map.velocityScale.z + (float)rhs->getType() / 1000.0f;
-		// FIXME: Hack to force 'overlay' objects to be half-a-tile up in Z
-		if (lhs->getType() == TileObject::Type::Doodad)
-		{
-			lhsZ +=
-			    (lhs->map.velocityScale.x + lhs->map.velocityScale.y + lhs->map.velocityScale.z) /
-			    2.0f;
-		}
-		if (rhs->getType() == TileObject::Type::Doodad)
-		{
-			rhsZ +=
-			    (rhs->map.velocityScale.x + rhs->map.velocityScale.y + rhs->map.velocityScale.z) /
-			    2.0f;
-		}
+		float lhsZ = lhs->getCenter().x * lhs->map.velocityScale.x +
+		             lhs->getCenter().y * lhs->map.velocityScale.y +
+		             lhs->getZOrder() * lhs->map.velocityScale.z;
+		float rhsZ = rhs->getCenter().x * rhs->map.velocityScale.x +
+		             rhs->getCenter().y * rhs->map.velocityScale.y +
+		             rhs->getZOrder() * rhs->map.velocityScale.z;
 		return (lhsZ < rhsZ);
 	}
 };
@@ -95,12 +68,12 @@ class TileObjectZComparer
 
 float TileObject::getDistanceTo(sp<TileObject> target)
 {
-	return getDistanceTo(target->getPosition());
+	return getDistanceTo(target->getCenter());
 }
 
 float TileObject::getDistanceTo(Vec3<float> target)
 {
-	return glm::length((target - this->getPosition()) * map.velocityScale);
+	return glm::length((target - this->getCenter()) * map.velocityScale);
 }
 
 void TileObject::setPosition(Vec3<float> newPosition)
@@ -122,8 +95,9 @@ void TileObject::setPosition(Vec3<float> newPosition)
 		LogWarning("Clamped object to {%f,%f,%f}", newPosition.x, newPosition.y, newPosition.z);
 	}
 	this->removeFromMap();
-	
-	// This makes sure object for unit is always assigned the bottom-most, right-most tile it occupies
+
+	// This makes sure object for unit is always assigned the bottom-most, right-most tile it
+	// occupies
 	this->owningTile = map.getTile(newPosition);
 	if (!this->owningTile)
 	{
@@ -137,9 +111,6 @@ void TileObject::setPosition(Vec3<float> newPosition)
 		LogError("Object already in owned object list?");
 	}
 
-	int layer = map.getLayer(this->type);
-	
-	
 	Vec3<int> minBounds = {floorf(newPosition.x + getCenterOffset().x - this->bounds_div_2.x),
 	                       floorf(newPosition.y + getCenterOffset().y - this->bounds_div_2.y),
 	                       floorf(newPosition.z + getCenterOffset().z - this->bounds_div_2.z)};
@@ -147,8 +118,6 @@ void TileObject::setPosition(Vec3<float> newPosition)
 	                       ceilf(newPosition.y + getCenterOffset().y + this->bounds_div_2.y),
 	                       ceilf(newPosition.z + getCenterOffset().z + this->bounds_div_2.z)};
 
-	Vec3<int> maxCoords = { -1,-1,-1 };
-	this->drawOnTile = owningTile;
 	for (int x = minBounds.x; x < maxBounds.x; x++)
 	{
 		for (int y = minBounds.y; y < maxBounds.y; y++)
@@ -168,22 +137,9 @@ void TileObject::setPosition(Vec3<float> newPosition)
 				}
 				this->intersectingTiles.push_back(intersectingTile);
 				intersectingTile->intersectingObjects.insert(thisPtr);
-				// Units are drawn in the topmost tile they intersect
-				// However, their top must be no further than 1/4 below the tile in order to draw in it
-				// Otherwise, they can only be drawn in it if it's their owner tile
-				if ((type == Type::Unit || type == Type::Shadow) && maxCoords.z * 1000 + maxCoords.x + maxCoords.y < z * 1000 + x + y
-					&& newPosition.z > (float)z - 0.33f)
-				{
-					this->drawOnTile = intersectingTile;
-					maxCoords = { x, y, z };
-				}
 			}
 		}
 	}
-	this->drawOnTile->drawnObjects[layer].push_back(thisPtr);
-	std::sort(this->drawOnTile->drawnObjects[layer].begin(),
-		this->drawOnTile->drawnObjects[layer].end(), TileObjectZComparer{});
-	
 	// Quick sanity check
 	for (auto *t : this->intersectingTiles)
 	{
@@ -192,11 +148,17 @@ void TileObject::setPosition(Vec3<float> newPosition)
 			LogError("Intersecting objects inconsistent");
 		}
 	}
-	if (type == Type::Ground || type == Type::LeftWall || type == Type::RightWall || type == Type::Feature)
-	{
-		owningTile->updateBattlescapeHeightAndPassability();
-		drawOnTile->updateBattlescapeUIDrawOrder();
-	}
+
+	addToDrawnTiles(owningTile);
+}
+
+void TileObject::addToDrawnTiles(Tile *tile)
+{
+	this->drawOnTile = tile;
+	int layer = map.getLayer(this->type);
+	this->drawOnTile->drawnObjects[layer].push_back(shared_from_this());
+	std::sort(this->drawOnTile->drawnObjects[layer].begin(),
+	          this->drawOnTile->drawnObjects[layer].end(), TileObjectZComparer{});
 }
 
 } // namespace OpenApoc

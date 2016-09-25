@@ -1,14 +1,15 @@
-#include "game/state/battle/battleunitimagepack.h"
-#include "game/state/gamestate.h"
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/palette.h"
+#include "game/state/battle/battleunitimagepack.h"
+#include "game/state/gamestate.h"
 #include "tools/extractors/extractors.h"
 
 namespace OpenApoc
 {
 
-sp<BattleUnitImagePack> InitialGameStateExtractor::extractImagePack(GameState &state, const UString &path, bool shadow)
+sp<BattleUnitImagePack>
+InitialGameStateExtractor::extractImagePack(GameState &state, const UString &path, bool shadow)
 {
 	std::ignore = state;
 	UString dirName = "xcom3/tacdata/";
@@ -24,15 +25,15 @@ sp<BattleUnitImagePack> InitialGameStateExtractor::extractImagePack(GameState &s
 
 	auto p = mksp<BattleUnitImagePack>();
 
-	p->image_offset = shadow ? Vec2<float>{23, -14} : Vec2<float>{ 23, 34 };
+	p->image_offset = shadow ? Vec2<float>{23, 6} : Vec2<float>{23, 34};
 
 	for (size_t i = 0; i < imageTabFileEntryCount; i++)
 	{
-		p->images.push_back(
-			fw().data->loadImage(UString::format("%s:%s%s.pck:%s%s.tab:%u", shadow ? "PCKSHADOW" : "PCK", dirName, path, dirName, path, (unsigned)i))
-		);
+		p->images.push_back(fw().data->loadImage(
+		    UString::format("%s:%s%s.pck:%s%s.tab:%u", shadow ? "PCKSHADOW" : "PCK", dirName, path,
+		                    dirName, path, (unsigned)i)));
 	}
-	
+
 	return p;
 }
 
@@ -43,13 +44,13 @@ sp<BattleUnitImagePack> InitialGameStateExtractor::extractItemImagePack(GameStat
 
 	auto p = mksp<BattleUnitImagePack>();
 
-	p->image_offset = { 23, 34 };
+	p->image_offset = {23, 34};
 
 	for (int j = 0; j < 8; j++)
-		p->images.push_back(fw().data->loadImage(
-			UString::format("PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/"
-				"unit/equip.tab:%d",
-				item * 8 + j)));
+		p->images.push_back(
+		    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/"
+		                                         "unit/equip.tab:%d",
+		                                         item * 8 + j)));
 
 	return p;
 }

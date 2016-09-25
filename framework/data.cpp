@@ -106,7 +106,9 @@ sp<VoxelSlice> Data::loadVoxelSlice(const UString &path)
 	if (path.substr(0, 9) == "LOFTEMPS:")
 	{
 		auto splitString = path.split(':');
-		//"LOFTEMPS:DATFILE:TABFILE:INDEX"
+		// "LOFTEMPS:DATFILE:TABFILE:INDEX"
+		//  or
+		// "LOFTEMPS:DATFILE:TABFILE:INDEX:X:Y"
 		if (splitString.size() != 4)
 		{
 			LogError("Invalid LOFTEMPS string \"%s\"", path.cStr());
@@ -368,7 +370,7 @@ sp<Image> Data::loadImage(const UString &path, bool lazy)
 			{
 				sp<PaletteImage> pImg = std::dynamic_pointer_cast<PaletteImage>(this->loadImage(
 				    "PCK:" + splitString[1] + ":" + splitString[2] + ":" + splitString[3]));
-				// In some cases, PCKS do not have enough pictures even though TAB references them. 
+				// In some cases, PCKS do not have enough pictures even though TAB references them.
 				// Example: tacdata/unit/xcom1a.pck
 				// We should not throw in this case.
 				if (!pImg)

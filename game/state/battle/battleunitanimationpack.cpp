@@ -1,12 +1,12 @@
 #include "game/state/battle/battleunitanimationpack.h"
-#include "game/state/gamestate.h"
 #include "framework/renderer.h"
+#include "game/state/gamestate.h"
 
 namespace OpenApoc
 {
 template <>
 sp<BattleUnitAnimationPack> StateObject<BattleUnitAnimationPack>::get(const GameState &state,
-                                                              const UString &id)
+                                                                      const UString &id)
 {
 	auto it = state.battle_unit_animation_packs.find(id);
 	if (it == state.battle_unit_animation_packs.end())
@@ -29,7 +29,7 @@ template <> const UString &StateObject<BattleUnitAnimationPack>::getTypeName()
 }
 template <>
 const UString &StateObject<BattleUnitAnimationPack>::getId(const GameState &state,
-                                                       const sp<BattleUnitAnimationPack> ptr)
+                                                           const sp<BattleUnitAnimationPack> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &a : state.battle_unit_animation_packs)
@@ -51,22 +51,33 @@ const UString BattleUnitAnimationPack::getNameFromID(UString id)
 	return emptyString;
 }
 
-BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock::InfoBlock(int index, int offset_x, int offset_y) :
-	// We're used to subtracting offests from positions, but vanilla uses an offset that should be added
-	// therefore, we flip the sign here
-	index(index), offset(Vec2<float>{-offset_x, -offset_y}) {} 
+BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock::InfoBlock(int index, int offset_x,
+                                                                     int offset_y)
+    : // We're used to subtracting offests from positions, but vanilla uses an offset that should be
+      // added
+      // therefore, we flip the sign here
+      index(index),
+      offset(Vec2<float>{-offset_x, -offset_y})
+{
+}
 
 int BattleUnitAnimationPack::getFrameCountBody(StateRef<AEquipmentType> heldItem,
-	AgentType::BodyState currentBody, AgentType::BodyState targetBody,
-	AgentType::HandState currentHands,
-	AgentType::MovementState movement,
-	Vec2<int> facing)
+                                               AgentType::BodyState currentBody,
+                                               AgentType::BodyState targetBody,
+                                               AgentType::HandState currentHands,
+                                               AgentType::MovementState movement, Vec2<int> facing)
 {
 	sp<AnimationEntry> e;
 	if (currentBody == targetBody)
-		e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][movement][currentBody][facing];
+		e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+		                                                         : ItemWieldMode::OneHanded)
+		                                 : ItemWieldMode::None][currentHands][movement][currentBody]
+		                       [facing];
 	else
-		e = body_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][movement][currentBody][targetBody][facing];
+		e = body_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+		                                                           : ItemWieldMode::OneHanded)
+		                                   : ItemWieldMode::None][currentHands][movement]
+		                         [currentBody][targetBody][facing];
 	if (e)
 		return e->frame_count;
 	else
@@ -74,53 +85,66 @@ int BattleUnitAnimationPack::getFrameCountBody(StateRef<AEquipmentType> heldItem
 }
 
 int BattleUnitAnimationPack::getFrameCountHands(StateRef<AEquipmentType> heldItem,
-	AgentType::BodyState currentBody,
-	AgentType::HandState currentHands, AgentType::HandState targetHands,
-	AgentType::MovementState movement,
-	Vec2<int> facing)
+                                                AgentType::BodyState currentBody,
+                                                AgentType::HandState currentHands,
+                                                AgentType::HandState targetHands,
+                                                AgentType::MovementState movement, Vec2<int> facing)
 {
 	sp<AnimationEntry> e;
 	if (currentHands == targetHands)
-		e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][movement][currentBody][facing];
+		e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+		                                                         : ItemWieldMode::OneHanded)
+		                                 : ItemWieldMode::None][currentHands][movement][currentBody]
+		                       [facing];
 	else
-		e = hand_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][targetHands][movement][currentBody][facing];
+		e = hand_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+		                                                           : ItemWieldMode::OneHanded)
+		                                   : ItemWieldMode::None][currentHands][targetHands]
+		                         [movement][currentBody][facing];
 	if (e)
 		return e->frame_count;
 	else
 		return 0;
 }
 
-
-void BattleUnitAnimationPack::drawShadow(Renderer &r, Vec2<float> screenPosition,
-	StateRef<BattleUnitImagePack> shadow,
-	StateRef<AEquipmentType> heldItem, Vec2<int> facing,
-	AgentType::BodyState currentBody, AgentType::BodyState targetBody,
-	AgentType::HandState currentHands, AgentType::HandState targetHands,
-	AgentType::MovementState movement,
-	int body_animation_delay, int hands_animation_delay, int distance_travelled)
+void BattleUnitAnimationPack::drawShadow(
+    Renderer &r, Vec2<float> screenPosition, StateRef<BattleUnitImagePack> shadow,
+    StateRef<AEquipmentType> heldItem, Vec2<int> facing, AgentType::BodyState currentBody,
+    AgentType::BodyState targetBody, AgentType::HandState currentHands,
+    AgentType::HandState targetHands, AgentType::MovementState movement, int body_animation_delay,
+    int hands_animation_delay, int distance_travelled)
 {
-	// If we are calling this, then we have already ensured that object has shadows, 
+	// If we are calling this, then we have already ensured that object has shadows,
 	// and should not check for it again
 
 	sp<AnimationEntry> e;
 	int frame = -1;
 	if (currentHands != targetHands)
 	{
-		e = hand_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][targetHands][movement][currentBody][facing];
+		e = hand_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+		                                                           : ItemWieldMode::OneHanded)
+		                                   : ItemWieldMode::None][currentHands][targetHands]
+		                         [movement][currentBody][facing];
 		frame = e->frame_count - hands_animation_delay;
 	}
 	else if (currentBody != targetBody)
 	{
-		e = body_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][movement][currentBody][targetBody][facing];
+		e = body_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+		                                                           : ItemWieldMode::OneHanded)
+		                                   : ItemWieldMode::None][currentHands][movement]
+		                         [currentBody][targetBody][facing];
 		frame = e->frame_count - body_animation_delay;
 	}
 	else
 	{
-		e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][movement][currentBody][facing];
+		e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+		                                                         : ItemWieldMode::OneHanded)
+		                                 : ItemWieldMode::None][currentHands][movement][currentBody]
+		                       [facing];
 		if (currentHands == AgentType::HandState::Firing)
 			frame = e->frame_count - hands_animation_delay;
 		else
-			frame = (distance_travelled * 100 / e->frames_per_100_units ) % e->frame_count;
+			frame = (distance_travelled * 100 / e->frames_per_100_units) % e->frame_count;
 	}
 
 	if (e->frames.size() <= frame)
@@ -129,23 +153,23 @@ void BattleUnitAnimationPack::drawShadow(Renderer &r, Vec2<float> screenPosition
 		return;
 	}
 
-	AnimationEntry::Frame::InfoBlock &b = e->frames[frame].unit_image_parts[AnimationEntry::Frame::UnitImagePart::Shadow];
-	
+	AnimationEntry::Frame::InfoBlock &b =
+	    e->frames[frame].unit_image_parts[AnimationEntry::Frame::UnitImagePart::Shadow];
+
 	if (b.index == -1)
 		return;
-	
+
 	r.draw(shadow->images[b.index], screenPosition - b.offset - shadow->image_offset);
 }
 
-void BattleUnitAnimationPack::drawUnit(Renderer &r, Vec2<float> screenPosition,
-	StateRef<BattleUnitImagePack> body,
-	StateRef<BattleUnitImagePack> legs, StateRef<BattleUnitImagePack> helmet,
-	StateRef<BattleUnitImagePack> leftHand, StateRef<BattleUnitImagePack> rightHand,
-	StateRef<AEquipmentType> heldItem, Vec2<int> facing,
-	AgentType::BodyState currentBody, AgentType::BodyState targetBody,
-	AgentType::HandState currentHands, AgentType::HandState targetHands,
-	AgentType::MovementState movement,
-	int body_animation_delay, int hands_animation_delay, int distance_travelled)
+void BattleUnitAnimationPack::drawUnit(
+    Renderer &r, Vec2<float> screenPosition, StateRef<BattleUnitImagePack> body,
+    StateRef<BattleUnitImagePack> legs, StateRef<BattleUnitImagePack> helmet,
+    StateRef<BattleUnitImagePack> leftHand, StateRef<BattleUnitImagePack> rightHand,
+    StateRef<AEquipmentType> heldItem, Vec2<int> facing, AgentType::BodyState currentBody,
+    AgentType::BodyState targetBody, AgentType::HandState currentHands,
+    AgentType::HandState targetHands, AgentType::MovementState movement, int body_animation_delay,
+    int hands_animation_delay, int distance_travelled)
 {
 	sp<AnimationEntry> e;
 	sp<AnimationEntry> e_legs;
@@ -153,22 +177,35 @@ void BattleUnitAnimationPack::drawUnit(Renderer &r, Vec2<float> screenPosition,
 	int frame_legs = -1;
 	if (currentHands != targetHands)
 	{
-		e = hand_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][targetHands][movement][currentBody][facing];
+		e = hand_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+		                                                           : ItemWieldMode::OneHanded)
+		                                   : ItemWieldMode::None][currentHands][targetHands]
+		                         [movement][currentBody][facing];
 		frame = e->frame_count - hands_animation_delay;
 		if (e->is_overlay)
 		{
-			e_legs = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][AgentType::HandState::AtEase][movement][currentBody][facing];
+			e_legs =
+			    standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+			                                                         : ItemWieldMode::OneHanded)
+			                                 : ItemWieldMode::None][AgentType::HandState::AtEase]
+			                       [movement][currentBody][facing];
 			frame_legs = (distance_travelled * 100 / e->frames_per_100_units) % e_legs->frame_count;
 		}
 	}
 	else if (currentBody != targetBody)
 	{
-		e = body_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][movement][currentBody][targetBody][facing];
+		e = body_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+		                                                           : ItemWieldMode::OneHanded)
+		                                   : ItemWieldMode::None][currentHands][movement]
+		                         [currentBody][targetBody][facing];
 		frame = e->frame_count - body_animation_delay;
 	}
 	else
 	{
-		e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][currentHands][movement][currentBody][facing];
+		e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+		                                                         : ItemWieldMode::OneHanded)
+		                                 : ItemWieldMode::None][currentHands][movement][currentBody]
+		                       [facing];
 		if (currentHands == AgentType::HandState::Firing)
 			frame = e->frame_count - hands_animation_delay;
 		else
@@ -177,11 +214,16 @@ void BattleUnitAnimationPack::drawUnit(Renderer &r, Vec2<float> screenPosition,
 		// But since frame_count is 1, the previous line attains the same result, so why bother
 		if (e->is_overlay)
 		{
-			e_legs = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded) : ItemWieldMode::None][AgentType::HandState::AtEase][movement][currentBody][facing];
-			frame_legs = (distance_travelled * 100 / e_legs->frames_per_100_units) % e_legs->frame_count;
+			e_legs =
+			    standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+			                                                         : ItemWieldMode::OneHanded)
+			                                 : ItemWieldMode::None][AgentType::HandState::AtEase]
+			                       [movement][currentBody][facing];
+			frame_legs =
+			    (distance_travelled * 100 / e_legs->frames_per_100_units) % e_legs->frame_count;
 		}
-	}	
-	
+	}
+
 	if (e->frames.size() <= frame)
 	{
 		LogError("Frame missing?");
@@ -210,7 +252,7 @@ void BattleUnitAnimationPack::drawUnit(Renderer &r, Vec2<float> screenPosition,
 		}
 		if (b->index == -1)
 			continue;
-		
+
 		// Actually draw the part
 		switch (ie)
 		{
@@ -232,17 +274,20 @@ void BattleUnitAnimationPack::drawUnit(Renderer &r, Vec2<float> screenPosition,
 			case AnimationEntry::Frame::UnitImagePart::LeftArm:
 				if (!leftHand)
 					continue;
-				r.draw(leftHand->images[b->index], screenPosition - b->offset - leftHand->image_offset);
+				r.draw(leftHand->images[b->index],
+				       screenPosition - b->offset - leftHand->image_offset);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::RightArm:
 				if (!rightHand)
 					continue;
-				r.draw(rightHand->images[b->index], screenPosition - b->offset - rightHand->image_offset);
+				r.draw(rightHand->images[b->index],
+				       screenPosition - b->offset - rightHand->image_offset);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::Weapon:
 				if (!heldItem)
 					continue;
-				r.draw(heldItem->held_image_pack->images[b->index], screenPosition - b->offset - heldItem->held_image_pack->image_offset);
+				r.draw(heldItem->held_image_pack->images[b->index],
+				       screenPosition - b->offset - heldItem->held_image_pack->image_offset);
 				break;
 			// Travis complains I'm not handling "Shadow"
 			default:

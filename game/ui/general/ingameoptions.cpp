@@ -30,7 +30,8 @@ InGameOptions::InGameOptions(sp<GameState> state)
 	menuform->findControlTyped<CheckBox>("SHOW_SELECTABLE_BOUNDS")
 	    ->setChecked(state->showSelectableBounds);
 
-	menuform->findControlTyped<TextButton>("BUTTON_BATTLE")->setText(state->current_battle ? "Exit Battle" : "Enter Battle");
+	menuform->findControlTyped<TextButton>("BUTTON_BATTLE")
+	    ->setText(state->current_battle ? "Exit Battle" : "Enter Battle");
 }
 
 InGameOptions::~InGameOptions()
@@ -130,12 +131,12 @@ void InGameOptions::eventOccurred(Event *e)
 				Battle::finishBattle(*state.get());
 				Battle::exitBattle(*state.get());
 
-				fw().stageQueueCommand({ StageCmd::Command::POP });
-				fw().stageQueueCommand({ StageCmd::Command::POP });
+				fw().stageQueueCommand({StageCmd::Command::POP});
+				fw().stageQueueCommand({StageCmd::Command::POP});
 			}
 			else
 			{
-				fw().stageQueueCommand({ StageCmd::Command::PUSH, mksp<MapSelector>(state) });
+				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<MapSelector>(state)});
 			}
 		}
 	}

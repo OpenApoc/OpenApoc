@@ -371,15 +371,220 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 		                         data.vehicle_equipment_layouts->get(v.equipment_layout),
 		                         v.loaded_equipment_slots);
 
-		vehicle->voxelMap =
-		    std::make_shared<VoxelMap>(Vec3<int>{v.size_x * 32, v.size_y * 32, v.size_z * 16});
+		// Alexey Andronov (Istrebitel)
+		//
+		// Loftemps... Okay, loftemps for vehicles, this gets weird.
+		// Here's what I was able to figure out:
+		//
+		// Vehicles use loftemps 119, 120, 121, 122, 150 and 151.
+		// I will present them in ASCII here for easier understanding.		Legend:
+		//																	* border,
+		//	119 and 120 :					121 :							- empty
+		//	Look something like this.				     					X filled
+		//  120 is a bit thinner.
+		//
+		//  ******************				******************
+		//  *------XXXX------*				*XXXX--------XXXX*
+		//  *------XXXX------*				*XXXXXXXXXXXXXXXX*
+		//  *------XXXX------*				*-XXXXXXXXXXXXXX-*
+		//  *-----XXXXXX-----*				*-XXXXXXXXXXXXXX-*
+		//	*------XXXX------*				*-XXXXXXXXXXXXXX-*
+		//	*------XXXX------*				*-XXXXXXXXXXXXXX-*
+		//	*------XXXX------*				*XXXXXXXXXXXXXXXX*
+		//	*-----XXXXXX-----*				*XXXX--------XXXX*
+		//	******************				******************
+		//
+		//  122  :							150:
+		//
+		//  ******************				(64x64)
+		//  *----------------*				(contains a full circle)
+		//  *----------------*
+		//  *----------------*				151:
+		//  *-------------XXX*
+		//	*-----------XXXXX*				(32x64, only top 32x32 filled)
+		//	*---------XXXXXXX*				(contains small dot in the middle)
+		//	*--------XXXXXXXX*
+		//	*--------XXXXXXXX*
+		//	******************
+		//
+		//  As we can see, we must do some adjustments to use them properly
+		//  Especially since we only use static size loftemps (32x32x16)
+		//
+		//  1) 119 and 120 have 166 and 117 respectively for horisontal alignment
+		//	   Unfortunately, there is no diagonal version
+		//	2) 121 can be used without any adjustment as it's omnidirectional
+		//	3) 122 is clearly a mistake. It's a part of 2x2 image.
+		//	   If we assume that game does not actually use that 2x2 image, but
+		//	   uses 122 where told to, we should replace 122 with a proper map of
+		//	   of the similar size (that will make it act close to vanilla)
+		//	   111 fits the most, so we will use it
+		//	4) 150 can be substituted with 2x2 consisting of 93, 94, 96, 95
+		//	   which form the same circle but are 32x32 in size each
+		//	5) 151 is obviously a mistake, as Hoverbike is the only vehicle that uses it
+		//	   and Hoverbike is 1x1x1 vehicle. We hsould just discard the bottom part
 
-		for (int i = 0; i < v.loftemps_height; i++)
+		// read indexes
+		int horizontalVoxelMapIndex = -1;
+		int verticalVoxelMapIdx = v.loftemps_index;
+		switch (v.loftemps_index)
 		{
-			auto str =
-			    UString::format("LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/ufodata/loftemps.tab:%d",
-			                    (int)v.loftemps_index);
-			vehicle->voxelMap->setSlice(i, fw().data->loadVoxelSlice(str));
+			// bidirectional
+			case 121:
+			case 151:
+				horizontalVoxelMapIndex = v.loftemps_index;
+				break;
+			// use 116 for horizontal direction
+			case 119:
+				horizontalVoxelMapIndex = 116;
+				break;
+			// use 117 for horizontal direction
+			case 120:
+				horizontalVoxelMapIndex = 117;
+				break;
+			//  bidirectional, but use 111 for both directions
+			case 122:
+				horizontalVoxelMapIndex = 111;
+				verticalVoxelMapIdx = 111;
+				break;
+			// use 93 94 first row, 96 95 second row
+			case 150:
+				// special case, treated separately below
+				break;
+			default:
+				LogError("Unsupported vehicle loftemps index %d!", (int)v.loftemps_index);
+		}
+
+		// read voxelmaps
+		vehicle->voxelMaps =
+		    std::vector<std::map<Vec3<float>, sp<VoxelMap>>>(v.size_x * v.size_y * v.size_z);
+		switch (v.loftemps_index)
+		{
+			// omnidirectional
+			case 121:
+			case 122:
+			case 151:
+				for (int x = 0; x < v.size_x; x++)
+				{
+					for (int y = 0; y < v.size_y; y++)
+					{
+						for (int z = 0; z < v.size_z; z++)
+						{
+							// One facing
+							vehicle->voxelMaps[z * v.size_y * v.size_x + y * v.size_x + x]
+							                  [{0.0f, -1.0f, 0.0f}] =
+							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
+							int limit = std::max(16, v.loftemps_height - 16 * z);
+							for (int i = 0; i < limit; i++)
+							{
+								vehicle
+								    ->voxelMaps[z * v.size_y * v.size_x + y * v.size_x + x]
+								               [{0.0f, -1.0f, 0.0f}]
+								    ->setSlice(i, fw().data->loadVoxelSlice(UString::format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      verticalVoxelMapIdx)));
+							}
+						}
+					}
+				}
+				break;
+			// bidirectional
+			case 119:
+			case 120:
+				for (int x = 0; x < v.size_x; x++)
+				{
+					for (int y = 0; y < v.size_y; y++)
+					{
+						for (int z = 0; z < v.size_z; z++)
+						{
+							// Four facings
+							// Facing north
+							vehicle->voxelMaps[z * v.size_y * v.size_x + y * v.size_x + x]
+							                  [{0.0f, -1.0f, 0.0f}] =
+							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
+							// Facing south
+							vehicle->voxelMaps[z * v.size_y * v.size_x + y * v.size_x + x]
+							                  [{0.0f, 1.0f, 0.0f}] =
+							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
+							// Facing east
+							vehicle->voxelMaps[z * v.size_y * v.size_x + y * v.size_x + x]
+							                  [{1.0f, 0.0f, 0.0f}] =
+							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
+							// Facing west
+							vehicle->voxelMaps[z * v.size_y * v.size_x + y * v.size_x + x]
+							                  [{-1.0f, 0.0f, 0.0f}] =
+							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
+							int limit = std::max(16, v.loftemps_height - 16 * z);
+							for (int i = 0; i < limit; i++)
+							{
+								// Facing north
+								vehicle
+								    ->voxelMaps[z * v.size_y * v.size_x + y * v.size_x + x]
+								               [{0.0f, -1.0f, 0.0f}]
+								    ->setSlice(i, fw().data->loadVoxelSlice(UString::format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      verticalVoxelMapIdx)));
+								// Facing south
+								vehicle
+								    ->voxelMaps[z * v.size_y * v.size_x + y * v.size_x + x]
+								               [{0.0f, 1.0f, 0.0f}]
+								    ->setSlice(i, fw().data->loadVoxelSlice(UString::format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      verticalVoxelMapIdx)));
+								// Facing east
+								vehicle
+								    ->voxelMaps[z * v.size_y * v.size_x + y * v.size_x + x]
+								               [{1.0f, 0.0f, 0.0f}]
+								    ->setSlice(i, fw().data->loadVoxelSlice(UString::format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      horizontalVoxelMapIndex)));
+								// Facing west
+								vehicle
+								    ->voxelMaps[z * v.size_y * v.size_x + y * v.size_x + x]
+								               [{-1.0f, 0.0f, 0.0f}]
+								    ->setSlice(i, fw().data->loadVoxelSlice(UString::format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      horizontalVoxelMapIndex)));
+							}
+						}
+					}
+				}
+				break;
+			// use 93 94 first row, 96 95 second row
+			case 150:
+				if (v.size_x != 2 || v.size_y != 2)
+				{
+					LogError("Vehicle Type using loftemps 150 has invalid x and y size: expected "
+					         "2x2, got %dx%d",
+					         v.size_x, v.size_y);
+				}
+				std::map<Vec2<int>, int> loftempsMap = {
+				    {{0, 0}, 93}, {{1, 0}, 94}, {{0, 1}, 96}, {{1, 1}, 95}};
+				for (int z = 0; z < v.size_z; z++)
+				{
+					for (auto &pair : loftempsMap)
+					{
+						vehicle->voxelMaps[z * v.size_y * v.size_x + pair.first.y * v.size_x +
+						                   pair.first.x][{0.0f, -1.0f, 0.0f}] =
+						    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
+						int limit = std::max(16, v.loftemps_height - 16 * z);
+						for (int i = 0; i < limit; i++)
+						{
+							vehicle
+							    ->voxelMaps[z * v.size_y * v.size_x + pair.first.y * v.size_x +
+							                pair.first.x][{0.0f, -1.0f, 0.0f}]
+							    ->setSlice(i, fw().data->loadVoxelSlice(UString::format(
+							                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+							                      "ufodata/loftemps.tab:%d",
+							                      pair.second)));
+						}
+					}
+				}
+				break;
 		}
 	}
 }

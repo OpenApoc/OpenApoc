@@ -6,16 +6,6 @@
 #define SPAWN_TYPE_ENEMY 0x01
 #define SPAWN_TYPE_CIVILIAN 0x02
 
-#define SOUND_NONE 0x00
-#define SOUND_METAL 0x01
-#define SOUND_SOFT 0x02
-#define SOUND_MUD 0x03
-#define SOUND_SLUDG 0x04
-#define SOUND_WOOD 0x05
-#define SOUND_MARB 0x06 
-#define SOUND_CONC 0x07
-#define SOUND_TUBE 0x08
-
 struct BuildingExitData
 {
 	uint32_t exits[15];

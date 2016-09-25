@@ -1,15 +1,16 @@
 #pragma once
 #include "library/sp.h"
 
+#include "game/state/aequipment.h"
 #include "game/state/agent.h"
 #include "game/state/base/base.h"
 #include "game/state/battle/battle.h"
-#include "game/state/aequipment.h"
+#include "game/state/battle/battlecommonsamplelist.h"
+#include "game/state/battle/battlemap.h"
+#include "game/state/battle/battlemaptileset.h"
 #include "game/state/battle/battlestrategyiconlist.h"
 #include "game/state/battle/battleunitanimationpack.h"
 #include "game/state/battle/battleunitimagepack.h"
-#include "game/state/battle/battlemap.h"
-#include "game/state/battle/battlemaptileset.h"
 #include "game/state/city/city.h"
 #include "game/state/gametime.h"
 #include "game/state/message.h"
@@ -68,6 +69,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<EquipmentSet> equipment_sets_by_level;
 	sp<Battle> current_battle;
 	sp<BattleStrategyIconList> battle_strategy_icon_list;
+	sp<BattleCommonSampleList> battle_common_sample_list;
 
 	// Loaded temporarily for the duration of the battle
 	StateRefMap<BattleUnitImagePack> battle_unit_image_packs;
@@ -79,6 +81,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	mutable unsigned lastVehicle = 0;
 
 	StateRefMap<AgentType> agent_types;
+	StateRefMap<AgentBodyType> agent_body_types;
+	StateRefMap<AgentEquipmentLayout> agent_equipment_layouts;
 	StateRefMap<Agent> agents;
 	AgentGenerator agent_generator;
 

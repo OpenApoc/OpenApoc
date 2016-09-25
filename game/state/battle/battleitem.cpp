@@ -1,7 +1,8 @@
 #include "game/state/battle/battleitem.h"
+#include "framework/framework.h"
 #include "framework/logger.h"
-#include "game/state/battle/battle.h"
 #include "game/state/aequipment.h"
+#include "game/state/battle/battle.h"
 #include "game/state/gamestate.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"
@@ -95,11 +96,18 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 		velocity.z = 0.0f;
 		newPosition = previousPosition;
 
+		auto tile = tileObject->getOwningTile();
 		auto obj = std::static_pointer_cast<TileObjectBattleMapPart>(c.obj)->getOwner();
 		obj->supportedItems.push_back(shared_from_this());
-		Vec3<float> proper_position = tileObject->getOwningTile()->getRestingPosition();
+		Vec3<float> proper_position = tile->getRestingPosition();
 		if (position != proper_position)
 			setPosition(proper_position);
+
+		// Emit sound
+		if (tile->objectDropSfx)
+		{
+			fw().soundBackend->playSample(tile->objectDropSfx, getPosition(), 0.25f);
+		}
 	}
 
 	// If moved - check if within level bounds

@@ -33,7 +33,8 @@ class InitialGameStateExtractor
 	sp<BattleUnitImagePack> extractImagePack(GameState &state, const UString &path, bool shadow);
 	sp<BattleUnitImagePack> extractItemImagePack(GameState &state, int item);
 	int getItemImagePacksCount();
-	sp<BattleUnitAnimationPack> extractAnimationPack(GameState &state, const UString &path, const UString &name);
+	sp<BattleUnitAnimationPack> extractAnimationPack(GameState &state, const UString &path,
+	                                                 const UString &name);
 	std::map<UString, up<BattleMapSectorTiles>> extractMapSectors(GameState &state,
 	                                                              const UString &mapRootName);
 
@@ -45,7 +46,7 @@ class InitialGameStateExtractor
 	static const std::map<OpenApoc::UString, OpenApoc::UString> unitShadowPackPaths;
 	// List of paths and names for animation packs
 	static const std::map<OpenApoc::UString, OpenApoc::UString> unitAnimationPackPaths;
-	
+
   private:
 	void extractVehicles(GameState &state, Difficulty difficulty);
 	void extractOrganisations(GameState &state, Difficulty difficulty);
@@ -54,6 +55,7 @@ class InitialGameStateExtractor
 	void extractVehicleEquipment(GameState &state, Difficulty difficulty);
 	void extractAgentEquipment(GameState &state, Difficulty difficulty);
 	void extractAgentTypes(GameState &state, Difficulty difficulty);
+	void extractAgentBodyTypes(GameState &state, Difficulty difficulty);
 	void extractResearch(GameState &state, Difficulty difficulty);
 
 	void extractBuildings(GameState &state, UString bldFileName, sp<City> city,
@@ -65,5 +67,7 @@ class InitialGameStateExtractor
 
 	void extractBattlescapeMap(GameState &state, const std::vector<OpenApoc::UString> &paths);
 	void extractBattlescapeMapFromPath(GameState &state, const UString dirName, const int index);
+
+	void extractSharedBattleResources(GameState &state);
 };
 }

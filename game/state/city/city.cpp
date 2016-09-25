@@ -194,8 +194,8 @@ void City::update(GameState &state, unsigned int ticks)
 					// FIXME: Don't just explode scenery, but damaged tiles/falling stuff? Different
 					// explosion doodads? Not all weapons instantly destory buildings too
 
-					auto doodad = this->placeDoodad({&state, "DOODAD_EXPLOSION_2"},
-					                                sceneryTile->getPosition());
+					auto doodad =
+					    this->placeDoodad({&state, "DOODAD_EXPLOSION_2"}, sceneryTile->getCenter());
 					sceneryTile->getOwner()->handleCollision(state, c);
 					break;
 				}

@@ -13,6 +13,8 @@
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufopaedia.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="research.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_types.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_body_types.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_equipment_layouts.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_generator.xml" />
   <initial_agents>
     <entry>
@@ -76,7 +78,7 @@
   </initial_facilities>
   <initial_agent_equipment>
     <entry>
-      <entry>AEQUIPMENTTYPE_MEGAPOL_BODY_ARMOR</entry>
+      <entry>AEQUIPMENTTYPE_MARSEC_BODY_UNIT</entry>
       <entry>AEQUIPMENTTYPE_MEGAPOL_HELMET</entry>
       <entry>AEQUIPMENTTYPE_MEGAPOL_LEFT_ARM_ARMOR</entry>
       <entry>AEQUIPMENTTYPE_MEGAPOL_LEG_ARMOR</entry>
@@ -243,6 +245,7 @@
     </entry>
   </initial_base_agent_equipment>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="battle_strategy_icon_list.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="battle_common_sample_list.xml" />
   <player>ORG_X-COM</player>
   <aliens>ORG_ALIEN</aliens>
   <civilian>ORG_CIVILIAN</civilian>

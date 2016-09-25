@@ -1,8 +1,8 @@
 #pragma once
 #include "framework/includes.h"
 #include "framework/logger.h"
-#include "game/state/tileview/tileobject.h"
 #include "game/state/battle/battle.h"
+#include "game/state/tileview/tileobject.h"
 #include "library/sp.h"
 #include <functional>
 #include <set>
@@ -71,7 +71,10 @@ class Tile
 	// Only used by Battle
 
 	// Returns unit present in the tile, if any
-	sp<TileObjectBattleUnit> getUnitIfPresent(bool onlyConscious = false, sp<TileObjectBattleUnit> exceptThis = nullptr);
+	sp<TileObjectBattleUnit> getUnitIfPresent(bool onlyConscious = false, bool mustOccupy = false,
+	                                          bool mustBeStatic = false,
+	                                          sp<TileObjectBattleUnit> exceptThis = nullptr,
+	                                          bool onlyLarge = false);
 	// Returns resting position for items and units in the tile
 	Vec3<float> getRestingPosition(bool large = false);
 	// Returns if the tile is passable (including side tiles for large)
@@ -85,18 +88,19 @@ class Tile
 	// Updates battlescape ui draw order variables
 	void updateBattlescapeUIDrawOrder();
 
-	// Height, 0.025-1.000, of the tile's ground and feature's height
+	// Height, 0-0.975, of the tile's ground and feature's height
 	// Height cannot be 0 as that is equal to 1.000 on the tile below
-	float height = 1.0 / (float) TILE_Z_BATTLE;
+	float height = 0.0f;
 	// Movement cost through the tile's ground (or feature)
 	int movementCostIn = 4;
-	// Movement cost to walk on the level above this, if next level is empty and this has height = 40
+	// Movement cost to walk on the level above this, if next level is empty and this has height =
+	// 40
 	int movementCostOver = 255;
 	// Movement cost through the tile's left wall
 	int movementCostLeft = 0;
 	// Movement cost through the tile's right wall
 	int movementCostRight = 0;
-	// Tile provides solid ground for standing. 
+	// Tile provides solid ground for standing.
 	// True = cannot pop head into this tile when ascending
 	bool solidGround = false;
 	// False = only flyers can stand here, True = anyone can
@@ -109,15 +113,17 @@ class Tile
 	int drawTargetLocationIconAt = 0;
 	// sfx to use when passing through tile
 	sp<std::vector<sp<Sample>>> walkSfx;
+	sp<Sample> objectDropSfx;
 };
 
 class CanEnterTileHelper
 {
   public:
 	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
-	virtual bool canEnterTile(Tile *from, Tile *to, float &cost) const = 0;
+	virtual bool canEnterTile(Tile *from, Tile *to, float &cost,
+	                          bool demandGiveWay = false) const = 0;
 	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
-	virtual bool canEnterTile(Tile *from, Tile *to) const = 0;
+	virtual bool canEnterTile(Tile *from, Tile *to, bool demandGiveWay = false) const = 0;
 	virtual float adjustCost(Vec3<int> /*  nextPosition */, int /* z */) const { return 0; }
 	virtual ~CanEnterTileHelper() = default;
 };
@@ -173,7 +179,7 @@ class TileMap
 	std::list<Tile *> findShortestPath(Vec3<int> origin, Vec3<int> destination,
 	                                   unsigned int iterationLimit,
 	                                   const CanEnterTileHelper &canEnterTile,
-	                                   float altitude = 5.0f);
+	                                   float altitude = 5.0f, bool demandGiveWay = false);
 
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
 	                        std::set<TileObject::Type> validTypes = {},
@@ -191,7 +197,7 @@ class TileMap
 	int getLayerCount() const;
 	bool tileIsValid(Vec3<int> tile) const;
 
-	sp<Image> dumpVoxelView(const Rect<int> viewRect, const TileTransform &transform,
-	                        float maxZ) const;
+	sp<Image> dumpVoxelView(const Rect<int> viewRect, const TileTransform &transform, float maxZ,
+	                        bool fast = false) const;
 };
 }; // namespace OpenApoc

@@ -6,11 +6,11 @@
 
 namespace OpenApoc
 {
-	class Image;
+class Image;
 
-	class BattleStrategyIconList
-	{
-	public:
-		std::vector<sp<Image>> images;
-	};
+class BattleStrategyIconList
+{
+  public:
+	std::vector<sp<Image>> images;
+};
 }

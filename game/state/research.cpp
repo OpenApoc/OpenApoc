@@ -339,21 +339,31 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 								{
 									case ResearchTopic::ItemType::VehicleEquipment:
 									{
-										base.second->inventoryVehicleEquipment[lab->current_project->item_produced]
-											= base.second->inventoryVehicleEquipment[lab->current_project->item_produced] + 1;
+										base.second->inventoryVehicleEquipment
+										    [lab->current_project->item_produced] =
+										    base.second->inventoryVehicleEquipment
+										        [lab->current_project->item_produced] +
+										    1;
 									}
 									break;
 									case ResearchTopic::ItemType::VehicleEquipmentAmmo:
 									{
-										base.second->inventoryVehicleAmmo[lab->current_project->item_produced] 
-											= base.second->inventoryVehicleAmmo[lab->current_project->item_produced] + 1;
+										base.second->inventoryVehicleAmmo[lab->current_project
+										                                      ->item_produced] =
+										    base.second->inventoryVehicleAmmo[lab->current_project
+										                                          ->item_produced] +
+										    1;
 									}
 									break;
 									case ResearchTopic::ItemType::AgentEquipment:
 									{
-										// Apparently if we ++ it doesn't work on new entries properly
-										base.second->inventoryAgentEquipment[lab->current_project->item_produced] 
-											= base.second->inventoryAgentEquipment[lab->current_project->item_produced] + 1;
+										// Apparently if we ++ it doesn't work on new entries
+										// properly
+										base.second->inventoryAgentEquipment[lab->current_project
+										                                         ->item_produced] =
+										    base.second->inventoryAgentEquipment
+										        [lab->current_project->item_produced] +
+										    1;
 									}
 									break;
 									case ResearchTopic::ItemType::Craft:

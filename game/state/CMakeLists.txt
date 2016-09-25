@@ -79,13 +79,15 @@ set (GAMESTATE_HEADER_FILES
 	base/base.h
 	base/facility.h
 	battle/battle.h
-	battle/battlemap.h
+	battle/battlecommonsamplelist.h
+	battle/battleitem.h
 	battle/battleforces.h
+	battle/battlemap.h
 	battle/battlemappart.h
 	battle/battlemappart_type.h
 	battle/battlemapsector.h
 	battle/battlemaptileset.h
-	battle/battleitem.h
+	battle/battlestrategyiconlist.h
 	battle/battleunit.h
 	battle/battleunitanimationpack.h
 	battle/battleunitimagepack.h

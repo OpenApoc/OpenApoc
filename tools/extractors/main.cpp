@@ -97,6 +97,7 @@ int main(int argc, char *argv[])
 			LogWarning("Done saving patched state");
 		}
 
+		LogWarning("Extracting Unit Image Packs");
 		for (auto &imagePackStrings : e.unitImagePackPaths)
 		{
 			GameState s;
@@ -109,13 +110,15 @@ int main(int argc, char *argv[])
 			}
 			else
 			{
-				if (!imagePack->saveImagePack(BattleUnitImagePack::imagePackPath + "/" + imagePackStrings.first, false))
+				if (!imagePack->saveImagePack(
+				        BattleUnitImagePack::imagePackPath + "/" + imagePackStrings.first, false))
 				{
 					LogError("Failed to save image pack \"%s\"", imagePackStrings.first.cStr());
 				}
 			}
 		}
 
+		LogWarning("Extracting Item Image Packs");
 		int itemImagePacksCount = e.getItemImagePacksCount();
 		for (int i = 0; i < itemImagePacksCount; i++)
 		{
@@ -129,14 +132,16 @@ int main(int argc, char *argv[])
 			}
 			else
 			{
-				if (!imagePack->saveImagePack(UString::format("%s%s%d",BattleUnitImagePack::imagePackPath, "/item", i), false))
+				if (!imagePack->saveImagePack(
+				        UString::format("%s%s%d", BattleUnitImagePack::imagePackPath, "/item", i),
+				        false))
 				{
 					LogError("Failed to save  item image pack \"%d\"", i);
 				}
 			}
-			
 		}
 
+		LogWarning("Extracting Unit Shadow Packs");
 		for (auto &imagePackStrings : e.unitShadowPackPaths)
 		{
 			GameState s;
@@ -149,33 +154,40 @@ int main(int argc, char *argv[])
 			}
 			else
 			{
-				if (!imagePack->saveImagePack(BattleUnitImagePack::imagePackPath + "/" + imagePackStrings.first, false))
+				if (!imagePack->saveImagePack(
+				        BattleUnitImagePack::imagePackPath + "/" + imagePackStrings.first, false))
 				{
 					LogError("Failed to save image pack \"%s\"", imagePackStrings.first.cStr());
 				}
 			}
 		}
 
+		LogWarning("Extracting Unit Animation Packs");
 		for (auto &animationPackStrings : e.unitAnimationPackPaths)
 		{
 			GameState s;
 			LogInfo("Extracting animation pack \"%s\"", animationPackStrings.first.cStr());
 
-			auto animationPack = e.extractAnimationPack(s, animationPackStrings.second, animationPackStrings.first);
+			auto animationPack =
+			    e.extractAnimationPack(s, animationPackStrings.second, animationPackStrings.first);
 			if (!animationPack)
 			{
-				LogError("Failed to extract animation pack \"%s\"", animationPackStrings.first.cStr());
+				LogError("Failed to extract animation pack \"%s\"",
+				         animationPackStrings.first.cStr());
 			}
 			else
 			{
-				if (!animationPack->saveAnimationPack(BattleUnitAnimationPack::animationPackPath + "/" + animationPackStrings.first, false))
+				if (!animationPack->saveAnimationPack(BattleUnitAnimationPack::animationPackPath +
+				                                          "/" + animationPackStrings.first,
+				                                      false))
 				{
-					LogError("Failed to save animation pack \"%s\"", animationPackStrings.first.cStr());
+					LogError("Failed to save animation pack \"%s\"",
+					         animationPackStrings.first.cStr());
 				}
 			}
 		}
 
-
+		LogWarning("Extracting Battle Map Tilesets");
 		for (auto &tileSetName : e.battleMapPaths)
 		{
 			// Some indices are empty?
@@ -198,6 +210,7 @@ int main(int argc, char *argv[])
 			}
 		}
 
+		LogWarning("Extracting Battle Map Sectors");
 		for (auto &mapName : e.battleMapPaths)
 		{
 			// Some indices are empty?

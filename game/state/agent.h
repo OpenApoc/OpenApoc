@@ -18,6 +18,7 @@ class AEquipment;
 class AEquipmentType;
 class BattleUnitAnimationPack;
 class Sample;
+class AgentBodyType;
 
 class AgentStats
 {
@@ -52,21 +53,9 @@ class AgentPortrait
 	sp<Image> icon;
 };
 
-class AgentType : public StateObject<AgentType>
+class AgentEquipmentLayout : public StateObject<AgentEquipmentLayout>
 {
-public:
-	enum class Role
-	{
-		Soldier,
-		Physicist,
-		BioChemist,
-		Engineer,
-	};
-	enum class Gender
-	{
-		Male,
-		Female,
-	};
+  public:
 	enum class EquipmentSlotType
 	{
 		General,
@@ -89,6 +78,37 @@ public:
 		Top,
 		Bottom,
 		Centre,
+	};
+	class EquipmentLayoutSlot
+	{
+	  public:
+		EquipmentSlotType type = EquipmentSlotType::General;
+		AlignmentX align_x = AlignmentX::Left;
+		AlignmentY align_y = AlignmentY::Top;
+		Rect<int> bounds;
+		EquipmentLayoutSlot() = default;
+		EquipmentLayoutSlot(AlignmentX align_x, AlignmentY align_y, Rect<int> bounds)
+		    : align_x(align_x), align_y(align_y), bounds(bounds)
+		{
+		}
+	};
+	std::list<EquipmentLayoutSlot> slots;
+};
+
+class AgentType : public StateObject<AgentType>
+{
+  public:
+	enum class Role
+	{
+		Soldier,
+		Physicist,
+		BioChemist,
+		Engineer,
+	};
+	enum class Gender
+	{
+		Male,
+		Female,
 	};
 	enum class BodyPart
 	{
@@ -135,20 +155,12 @@ public:
 	AgentStats min_stats;
 	AgentStats max_stats;
 
-	// This, among others, determines wether unit has built-in hover capability, can can be overriden by use of certain armor
-	std::set<BodyState> allowed_body_states;
-	std::set<MovementState> allowed_movement_states;
-	std::set<Vec2<int>> allowed_facing;
-	// Unit is large and will be treated accordingly
-	bool large = false;
-	// Unit's height, used in pathfinding
-	int height = 0;
-
-	std::map<BodyState, sp<VoxelMap>> voxelMaps;
+	// Defines size, voxel maps, allowed states and facings
+	StateRef<AgentBodyType> bodyType;
 
 	StateRef<BattleUnitImagePack> shadow_pack;
-	// A unit can have more than one appearance. 
-	// Examples are: 
+	// A unit can have more than one appearance.
+	// Examples are:
 	// - Gang members, who have two attires - red and pink
 	// - Androids, who can have 4 different heads
 	// - Also Chrysalises and Multiworm eggs work this way since their bodies are immobile,
@@ -165,22 +177,10 @@ public:
 	StateRef<AEquipmentType> built_in_weapon_left;
 	StateRef<AEquipmentType> built_in_weapon_right;
 
-	class EquipmentLayoutSlot
-	{
-	  public:
-		EquipmentSlotType type = EquipmentSlotType::General;
-		AlignmentX align_x = AlignmentX::Left;
-		AlignmentY align_y = AlignmentY::Top;
-		Rect<int> bounds;
-		EquipmentLayoutSlot() = default;
-		EquipmentLayoutSlot(AlignmentX align_x, AlignmentY align_y, Rect<int> bounds)
-		    : align_x(align_x), align_y(align_y), bounds(bounds)
-		{
-		}
-	};
-	std::list<EquipmentLayoutSlot> equipment_layout_slots;
+	StateRef<AgentEquipmentLayout> equipment_layout;
 
-	EquipmentLayoutSlot *getFirstSlot(EquipmentSlotType type);
+	AgentEquipmentLayout::EquipmentLayoutSlot *
+	getFirstSlot(AgentEquipmentLayout::EquipmentSlotType type);
 
 	bool can_improve = false;
 	// Can this be generated for the player
@@ -192,11 +192,33 @@ public:
 	std::list<sp<Sample>> crySfx;
 	// Sounds unit emits when taking non-fatal damage
 	std::map<Gender, std::list<sp<Sample>>> damageSfx;
-	// Sounds unit emits when taking fatal damage 
+	// Sounds unit emits when taking fatal damage
 	std::map<Gender, std::list<sp<Sample>>> fatalWoundSfx;
 	std::map<Gender, std::list<sp<Sample>>> dieSfx;
 
 	int score = 0;
+};
+
+class AgentBodyType : public StateObject<AgentBodyType>
+{
+  public:
+	// This, among others, determines wether unit has built-in hover capability, can can be
+	// overriden by use of certain armor
+	std::set<AgentType::BodyState> allowed_body_states;
+	std::set<AgentType::MovementState> allowed_movement_states;
+	std::set<Vec2<int>> allowed_facing;
+
+	// Unit is large and will be treated accordingly
+	bool large = false;
+	// Unit's height, used in pathfinding
+	int maxHeight = 0;
+	// Unit's height in each body state, used when displaying unit selection arrows
+	std::map<AgentType::BodyState, int> height;
+
+	// Voxel maps (x,y,z) for each body state and facing of the agent
+	std::map<AgentType::BodyState, std::map<Vec2<int>, Vec3<int>>> size;
+	// Voxel maps for each body state and facing of the agent
+	std::map<AgentType::BodyState, std::map<Vec2<int>, std::vector<sp<VoxelMap>>>> voxelMaps;
 };
 
 class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Agent>
@@ -213,16 +235,16 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 	int portrait = 0;
 	AgentPortrait getPortrait() { return type->portraits[gender][portrait]; }
 	AgentType::Gender gender = AgentType::Gender::Male;
-	
+
 	AgentStats initial_stats;  // Stats at agent creatrion
 	AgentStats current_stats;  // Stats after agent training/improvement
 	AgentStats modified_stats; // Stats after 'temporary' modification (health damage, slowdown due
-							   // to equipment weight, used stamina etc)
+	                           // to equipment weight, used stamina etc)
 
-	int getArmorValue(AgentType::BodyPart bodyPart);
-	bool isBodyStateAllowed(AgentType::BodyState bodyState);
-	bool isMovementStateAllowed(AgentType::MovementState movementState);
-	bool isFacingAllowed(Vec2<int> facing);
+	int getArmorValue(AgentType::BodyPart bodyPart) const;
+	bool isBodyStateAllowed(AgentType::BodyState bodyState) const;
+	bool isMovementStateAllowed(AgentType::MovementState movementState) const;
+	bool isFacingAllowed(Vec2<int> facing) const;
 
 	StateRef<Base> home_base;
 	StateRef<Organisation> owner;
@@ -234,17 +256,18 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 	// Add equipment to the first available slot of any type
 	void addEquipment(GameState &state, StateRef<AEquipmentType> type);
 	// Add equipment to the first available slot of a specific type
-	void addEquipment(GameState &state, StateRef<AEquipmentType> type, AgentType::EquipmentSlotType slotType);
+	void addEquipment(GameState &state, StateRef<AEquipmentType> type,
+	                  AgentEquipmentLayout::EquipmentSlotType slotType);
 	void addEquipment(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type);
 	void addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object);
 	void removeEquipment(sp<AEquipment> object);
 	void updateSpeed();
 	bool canRun() { return modified_stats.canRun(); }
 
-	StateRef<BattleUnitAnimationPack> getAnimationPack();
-	StateRef<AEquipmentType> getItemInHands();
-	sp<AEquipment> getFirstItemInSlot(AgentType::EquipmentSlotType type);
-	StateRef<BattleUnitImagePack> getImagePack(AgentType::BodyPart bodyPart);
+	StateRef<BattleUnitAnimationPack> getAnimationPack() const;
+	StateRef<AEquipmentType> getItemInHands() const;
+	sp<AEquipment> getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType type) const;
+	StateRef<BattleUnitImagePack> getImagePack(AgentType::BodyPart bodyPart) const;
 };
 
 class AgentGenerator
@@ -258,9 +281,11 @@ class AgentGenerator
 	std::list<UString> second_names;
 
 	// Create an agent of specified role
-	StateRef<Agent> createAgent(GameState &state, StateRef<Organisation> org, AgentType::Role role) const;
+	StateRef<Agent> createAgent(GameState &state, StateRef<Organisation> org,
+	                            AgentType::Role role) const;
 	// Create an agent of specified type
-	StateRef<Agent> createAgent(GameState &state, StateRef<Organisation> org, StateRef<AgentType> type) const;
+	StateRef<Agent> createAgent(GameState &state, StateRef<Organisation> org,
+	                            StateRef<AgentType> type) const;
 };
 
 } // namespace OpenApoc

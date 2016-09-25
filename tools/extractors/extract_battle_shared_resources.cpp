@@ -1,0 +1,124 @@
+#include "framework/framework.h"
+#include "game/state/agent.h"
+#include "game/state/battle/battlestrategyiconlist.h"
+#include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/damage.h"
+#include "tools/extractors/common/tacp.h"
+#include "tools/extractors/extractors.h"
+#include <limits>
+
+namespace OpenApoc
+{
+
+void InitialGameStateExtractor::extractSharedBattleResources(GameState &state)
+{
+	static const int SOUND_METAL = 0x01;
+	static const int SOUND_SOFT = 0x02;
+	static const int SOUND_MUD = 0x03;
+	static const int SOUND_SLUDG = 0x04;
+	static const int SOUND_WOOD = 0x05;
+	static const int SOUND_MARB = 0x06;
+	static const int SOUND_CONC = 0x07;
+	static const int SOUND_TUBE = 0x08;
+
+	auto gameObjectStrategySpriteTabFileName = UString("xcom3/tacdata/stratico.tab");
+	auto gameObjectStrategySpriteTabFile = fw().data->fs.open(gameObjectStrategySpriteTabFileName);
+	if (!gameObjectStrategySpriteTabFile)
+	{
+		LogError("Failed to open dropped item StrategySprite TAB file \"%s\"",
+		         gameObjectStrategySpriteTabFileName.cStr());
+		return;
+	}
+	size_t gameObjectStrategySpriteCount = gameObjectStrategySpriteTabFile.size() / 4;
+
+	state.battle_strategy_icon_list = mksp<BattleStrategyIconList>();
+
+	for (size_t i = 0; i < gameObjectStrategySpriteCount; i++)
+	{
+		state.battle_strategy_icon_list->images.push_back(fw().data->loadImage(
+		    UString::format("PCKSTRAT:xcom3/tacdata/stratico.pck:xcom3/tacdata/"
+		                    "stratico.tab:%u",
+		                    (unsigned)i)));
+	}
+
+	state.battle_common_sample_list = mksp<BattleCommonSampleList>();
+
+	state.battle_common_sample_list->gravlift =
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/zextra/gravlift.raw:22050");
+	state.battle_common_sample_list->door =
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/terrain/doorwhsh.raw:22050");
+	state.battle_common_sample_list->brainsuckerHatch =
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/extra/brhatch.raw:22050");
+	state.battle_common_sample_list->teleport =
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosions/teleport.raw:22050");
+
+	UString sfx_name = "";
+	for (int i = 1; i <= 8; i++)
+	{
+		switch (i)
+		{
+			case SOUND_CONC:
+				sfx_name = "conc";
+				break;
+			case SOUND_MARB:
+				sfx_name = "marb";
+				break;
+			case SOUND_METAL:
+				sfx_name = "metal";
+				break;
+			case SOUND_MUD:
+				sfx_name = "mud";
+				break;
+			case SOUND_SLUDG:
+				sfx_name = "sludg";
+				break;
+			case SOUND_SOFT:
+				sfx_name = "soft";
+				break;
+			case SOUND_TUBE:
+				sfx_name = "tube";
+				break;
+			case SOUND_WOOD:
+				sfx_name = "wood";
+				break;
+		}
+
+		state.battle_common_sample_list->walkSounds.push_back(mksp<std::vector<sp<Sample>>>());
+		state.battle_common_sample_list->walkSounds[i - 1]->push_back(fw().data->loadSample(
+		    UString::format("RAWSOUND:xcom3/rawsound/extra/ft%s%d.raw:22050", sfx_name.cStr(), 1)));
+		state.battle_common_sample_list->walkSounds[i - 1]->push_back(fw().data->loadSample(
+		    UString::format("RAWSOUND:xcom3/rawsound/extra/ft%s%d.raw:22050", sfx_name.cStr(), 2)));
+
+		state.battle_common_sample_list->objectDropSounds.push_back(fw().data->loadSample(
+		    UString::format("RAWSOUND:xcom3/rawsound/extra/ob%s.raw:22050", sfx_name.cStr())));
+	}
+
+	state.battle_common_sample_list->throwSounds.push_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/throw1.raw:22050"));
+	state.battle_common_sample_list->throwSounds.push_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/throw2.raw:22050"));
+
+	state.battle_common_sample_list->explosionSoundMap[{&state, "DAMAGETYPE_ANTI-ALIEN_GAS"}]
+	    .push_back(
+	        fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/gasexpls.raw:22050"));
+	state.battle_common_sample_list->explosionSoundMap[{&state, "DAMAGETYPE_EXPLOSIVE"}].push_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/explosn1.raw:22050"));
+	state.battle_common_sample_list->explosionSoundMap[{&state, "DAMAGETYPE_EXPLOSIVE"}].push_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/explosn2.raw:22050"));
+	state.battle_common_sample_list->explosionSoundMap[{&state, "DAMAGETYPE_EXPLOSIVE_1"}]
+	    .push_back(
+	        fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/explosn1.raw:22050"));
+	state.battle_common_sample_list->explosionSoundMap[{&state, "DAMAGETYPE_EXPLOSIVE_1"}]
+	    .push_back(
+	        fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/explosn2.raw:22050"));
+	state.battle_common_sample_list->explosionSoundMap[{&state, "DAMAGETYPE_INCENDIARY"}].push_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/firexpls.raw:22050"));
+	state.battle_common_sample_list->explosionSoundMap[{&state, "DAMAGETYPE_PSIONIC_BLAST"}]
+	    .push_back(
+	        fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/psigrnad.raw:22050"));
+	state.battle_common_sample_list->explosionSoundMap[{&state, "DAMAGETYPE_SMOKE"}].push_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/gasexpls.raw:22050"));
+	state.battle_common_sample_list->explosionSoundMap[{&state, "DAMAGETYPE_STUN_GAS"}].push_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/gasexpls.raw:22050"));
+}
+}

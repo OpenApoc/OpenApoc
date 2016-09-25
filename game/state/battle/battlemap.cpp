@@ -1,13 +1,13 @@
 #include "game/state/battle/battlemap.h"
-#include "game/state/battle/battle.h"
 #include "game/state/agent.h"
-#include "game/state/organisation.h"
+#include "game/state/battle/battle.h"
 #include "game/state/battle/battleitem.h"
-#include "game/state/battle/battleunit.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
+#include "game/state/battle/battleunit.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
+#include "game/state/organisation.h"
 
 namespace OpenApoc
 {
@@ -573,9 +573,11 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 		// If we succeeded, time to actually create a battle map
 		auto b = mksp<Battle>();
 
+		b->currentPlayer = state.getPlayer();
 		b->size = {chunk_size.x * size.x, chunk_size.y * size.y, chunk_size.z * size.z};
-		b->spawnMap =  { (unsigned)b->size.x, { (unsigned)b->size.y, std::vector<int>((unsigned)b->size.z, 0) } };
-		b->battle_map = { &state, id };
+		b->spawnMap = {(unsigned)b->size.x,
+		               {(unsigned)b->size.y, std::vector<int>((unsigned)b->size.z, 0)}};
+		b->battle_map = {&state, id};
 		b->mission_type = mission_type;
 		b->mission_location_id = mission_location_id;
 		b->player_craft = player_craft;
@@ -643,15 +645,20 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 							s->type = pair.second;
 
 						// Set spawnability and height
-						if (s->type->movement_cost == 255 || b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z] == -1)
+						if (s->type->movement_cost == 255 ||
+						    b->spawnMap[s->initialPosition.x][s->initialPosition.y]
+						               [s->initialPosition.z] == -1)
 						{
-							b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z] = -1;
+							b->spawnMap[s->initialPosition.x][s->initialPosition.y]
+							           [s->initialPosition.z] = -1;
 						}
 						else
 						{
-							b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z] = 
-								std::max(b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z],
-								s->type->height);
+							b->spawnMap[s->initialPosition.x][s->initialPosition.y]
+							           [s->initialPosition.z] =
+							    std::max(b->spawnMap[s->initialPosition.x][s->initialPosition.y]
+							                        [s->initialPosition.z],
+							             s->type->height);
 						}
 
 						b->map_parts.push_back(s);
@@ -688,15 +695,20 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						s->type = pair.second;
 
 						// Set spawnability and height
-						if (s->type->movement_cost == 255 || b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z] == -1)
+						if (s->type->movement_cost == 255 ||
+						    b->spawnMap[s->initialPosition.x][s->initialPosition.y]
+						               [s->initialPosition.z] == -1)
 						{
-							b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z] = -1;
+							b->spawnMap[s->initialPosition.x][s->initialPosition.y]
+							           [s->initialPosition.z] = -1;
 						}
 						else
 						{
-							b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z] =
-								std::max(b->spawnMap[s->initialPosition.x][s->initialPosition.y][s->initialPosition.z],
-									s->type->height);
+							b->spawnMap[s->initialPosition.x][s->initialPosition.y]
+							           [s->initialPosition.z] =
+							    std::max(b->spawnMap[s->initialPosition.x][s->initialPosition.y]
+							                        [s->initialPosition.z],
+							             s->type->height);
 						}
 
 						b->map_parts.push_back(s);
@@ -733,13 +745,13 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 			}
 		}
 
-		// Agents are just added to squads in default way here. 
+		// Agents are just added to squads in default way here.
 		// Player will be allowed a chance to equip them and assign to squads how they prefer
 		// We will assign their positions and "spawn" them in "BeginBattle" function
 		for (auto &a : agents)
 		{
 			auto u = mksp<BattleUnit>();
-			
+
 			u->agent = a;
 			u->owner = a->owner;
 			u->squadNumber = -1;
@@ -747,7 +759,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 
 			b->units.push_back(u);
 		}
-		
+
 		// Fill list of participants and find out number of agents in each org
 		b->participants.insert(state.getPlayer());
 		b->participants.insert(target_organisation);
@@ -777,7 +789,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 					for (auto &u : b->units)
 					{
 						if (b->forces[o].squads[s].getNumUnits() >= 3)
-							break; 
+							break;
 						if (u->owner != o || u->squadNumber != -1)
 							continue;
 						u->assignToSquad(s);
@@ -818,14 +830,14 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 	return nullptr;
 }
 
-void BattleMap::loadTilesets(GameState & state) const
+void BattleMap::loadTilesets(GameState &state) const
 {
 	if (state.battleMapTiles.size() > 0)
 	{
 		LogInfo("Tilesets are already loaded.");
 		return;
 	}
-	
+
 	// Load all tilesets used by the map
 	for (auto &tilesetName : this->tilesets)
 	{
@@ -836,7 +848,7 @@ void BattleMap::loadTilesets(GameState & state) const
 		if (!tileset.loadTileset(state, tilesetPath))
 		{
 			LogError("Failed to load tileset \"%s\" from \"%s\"", tilesetName.cStr(),
-				tilesetPath.cStr());
+			         tilesetPath.cStr());
 			continue;
 		}
 
@@ -857,7 +869,7 @@ void BattleMap::loadTilesets(GameState & state) const
 	}
 }
 
-void BattleMap::unloadTilesets(GameState & state)
+void BattleMap::unloadTilesets(GameState &state)
 {
 	state.battleMapTiles.clear();
 	LogInfo("Unloaded all tilesets.");

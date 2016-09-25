@@ -6,7 +6,7 @@
 namespace OpenApoc
 {
 
-BattleForces::BattleForces() : squads(6) {};
+BattleForces::BattleForces() : squads(6){};
 
 bool BattleForces::insert(unsigned squad, sp<BattleUnit> unit)
 {
@@ -39,10 +39,7 @@ void BattleForces::removeAt(unsigned squad, unsigned position)
 	squads[squad].units.erase(squads[squad].units.begin() + position);
 }
 
-BattleSquad::BattleSquad() {};
+BattleSquad::BattleSquad(){};
 
-int BattleSquad::getNumUnits() {
-	return (int)units.size();
-}
-
+int BattleSquad::getNumUnits() { return (int)units.size(); }
 }

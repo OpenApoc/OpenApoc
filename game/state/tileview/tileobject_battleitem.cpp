@@ -11,6 +11,7 @@ void TileObjectBattleItem::draw(Renderer &r, TileTransform &, Vec2<float> screen
 {
 	// Mode isn't used as TileView::tileToScreenCoords already transforms according to the mode
 	std::ignore = mode;
+
 	auto item = this->item.lock();
 	if (!item)
 	{
@@ -23,15 +24,19 @@ void TileObjectBattleItem::draw(Renderer &r, TileTransform &, Vec2<float> screen
 	{
 		case TileViewMode::Isometric:
 			sprite = item->item->type->dropped_sprite;
-			transformedScreenPos -=
-			    item->item->type->dropped_offset;
+			transformedScreenPos -= item->item->type->dropped_offset;
 			break;
 		case TileViewMode::Strategy:
+		{
 			if (!item->supported)
 				break;
-			sprite = item->strategy_icon_list->images[480];
+			auto battle = item->battle.lock();
+			if (!battle)
+				return;
+			sprite = battle->strategy_icon_list->images[480];
 			transformedScreenPos -= Vec2<float>{4, 4};
 			break;
+		}
 		default:
 			LogError("Unsupported view mode");
 	}

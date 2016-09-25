@@ -278,15 +278,16 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 
 				auto los_block = mksp<BattleMapSector::LineOfSightBlock>();
 
-				// Vanilla had inclusive boundaries, and they can go both ways, but we must make them exclusive
+				// Vanilla had inclusive boundaries, and they can go both ways, but we must make
+				// them exclusive
 				int x_min = std::min(ldata.begin_x, ldata.end_x);
 				int x_max = std::max(ldata.begin_x, ldata.end_x);
 				int y_min = std::min(ldata.begin_y, ldata.end_y);
 				int y_max = std::max(ldata.begin_y, ldata.end_y);
 				int z_min = std::min(ldata.begin_z, ldata.end_z);
 				int z_max = std::max(ldata.begin_z, ldata.end_z);
-				los_block->start = { x_min, y_min, z_min };
-				los_block->end = { x_max + 1, y_max + 1, z_max + 1 };
+				los_block->start = {x_min, y_min, z_min};
+				los_block->end = {x_max + 1, y_max + 1, z_max + 1};
 				los_block->ai_patrol_priority = ldata.ai_patrol_priority;
 				los_block->ai_target_priority = ldata.ai_target_priority;
 

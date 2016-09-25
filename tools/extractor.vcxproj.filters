@@ -78,6 +78,9 @@
     <ClCompile Include="extractors\extract_unit_animation_packs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="extractors\extract_battle_shared_resources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="extractors\extractors.h">

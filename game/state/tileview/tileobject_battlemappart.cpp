@@ -4,6 +4,7 @@
 
 namespace OpenApoc
 {
+
 void TileObjectBattleMapPart::draw(Renderer &r, TileTransform &transform,
                                    Vec2<float> screenPosition, TileViewMode mode, int)
 {
@@ -56,11 +57,36 @@ TileObject::Type TileObjectBattleMapPart::convertType(BattleMapPartType::Type ty
 	}
 }
 
+void TileObjectBattleMapPart::setPosition(Vec3<float> newPosition)
+{
+	TileObject::setPosition(newPosition);
+	if (type == Type::Ground || type == Type::LeftWall || type == Type::RightWall ||
+	    type == Type::Feature)
+	{
+		owningTile->updateBattlescapeHeightAndPassability();
+		drawOnTile->updateBattlescapeUIDrawOrder();
+	}
+}
+
+void TileObjectBattleMapPart::removeFromMap()
+{
+	bool requireRecalc = owningTile != nullptr;
+	auto prevOwningTile = owningTile;
+	auto prevDrawOnTile = drawOnTile;
+
+	TileObject::removeFromMap();
+	if (requireRecalc)
+	{
+		prevOwningTile->updateBattlescapeHeightAndPassability();
+		prevDrawOnTile->updateBattlescapeUIDrawOrder();
+	}
+}
 TileObjectBattleMapPart::~TileObjectBattleMapPart() = default;
 
 TileObjectBattleMapPart::TileObjectBattleMapPart(TileMap &map, sp<BattleMapPart> map_part)
 
-    : TileObject(map, convertType(map_part->type->type), Vec3<float>{1, 1, 1}), map_part(map_part)
+    : TileObject(map, convertType(map_part->type->type), Vec3<float>{1.0f, 1.0f, 1.0f}),
+      map_part(map_part)
 {
 }
 
@@ -74,7 +100,10 @@ sp<BattleMapPart> TileObjectBattleMapPart::getOwner()
 	return s;
 }
 
-sp<VoxelMap> TileObjectBattleMapPart::getVoxelMap() { return this->getOwner()->type->voxelMapLOF; }
+sp<VoxelMap> TileObjectBattleMapPart::getVoxelMap(Vec3<int>)
+{
+	return this->getOwner()->type->voxelMapLOF;
+}
 
 Vec3<float> TileObjectBattleMapPart::getPosition() const
 {
@@ -85,5 +114,29 @@ Vec3<float> TileObjectBattleMapPart::getPosition() const
 		return {0, 0, 0};
 	}
 	return s->getPosition();
+}
+
+float TileObjectBattleMapPart::getZOrder() const
+{
+	auto z = getPosition().z;
+	switch (type)
+	{
+		case Type::Ground:
+			return z - 3.0f;
+		case Type::LeftWall:
+			return z - 2.0f;
+		case Type::RightWall:
+			return z - 1.0f;
+		case Type::Feature:
+		{
+			auto mp = map_part.lock();
+			if (!mp)
+				return -1.0f;
+			return z + (float)mp->type->height / 40.0f / 2.0f;
+		}
+		default:
+			LogError("Impossible map part type %d", (int)type);
+			return 0.0f;
+	}
 }
 }

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<battle_common_sample_list>
+  <sp>
+    <door>RAWSOUND:xcom3/rawsound/tactical/terrain/doorwhsh.raw:22050</door>
+    <brainsuckerHatch>RAWSOUND:xcom3/rawsound/extra/brhatch.raw:22050</brainsuckerHatch>
+    <walkSounds>
+      <entry>
+        <sp>
+          <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/extra/ftmetal2.raw:22050</entry>
+        </sp>
+      </entry>
+      <entry>
+        <sp>
+          <entry>RAWSOUND:xcom3/rawsound/extra/ftsoft1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/extra/ftsoft2.raw:22050</entry>
+        </sp>
+      </entry>
+      <entry>
+        <sp>
+          <entry>RAWSOUND:xcom3/rawsound/extra/ftmud1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/extra/ftmud2.raw:22050</entry>
+        </sp>
+      </entry>
+      <entry>
+        <sp>
+          <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/extra/ftsludg2.raw:22050</entry>
+        </sp>
+      </entry>
+      <entry>
+        <sp>
+          <entry>RAWSOUND:xcom3/rawsound/extra/ftwood1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/extra/ftwood2.raw:22050</entry>
+        </sp>
+      </entry>
+      <entry>
+        <sp>
+          <entry>RAWSOUND:xcom3/rawsound/extra/ftmarb1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/extra/ftmarb2.raw:22050</entry>
+        </sp>
+      </entry>
+      <entry>
+        <sp>
+          <entry>RAWSOUND:xcom3/rawsound/extra/ftconc1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/extra/ftconc2.raw:22050</entry>
+        </sp>
+      </entry>
+      <entry>
+        <sp>
+          <entry>RAWSOUND:xcom3/rawsound/extra/fttube1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/extra/fttube2.raw:22050</entry>
+        </sp>
+      </entry>
+    </walkSounds>
+    <objectDropSounds>
+      <entry>RAWSOUND:xcom3/rawsound/extra/obmetal.raw:22050</entry>
+      <entry>RAWSOUND:xcom3/rawsound/extra/obsoft.raw:22050</entry>
+      <entry>RAWSOUND:xcom3/rawsound/extra/obmud.raw:22050</entry>
+      <entry>RAWSOUND:xcom3/rawsound/extra/obsludg.raw:22050</entry>
+      <entry>RAWSOUND:xcom3/rawsound/extra/obwood.raw:22050</entry>
+      <entry>RAWSOUND:xcom3/rawsound/extra/obmarb.raw:22050</entry>
+      <entry>RAWSOUND:xcom3/rawsound/extra/obconc.raw:22050</entry>
+      <entry>RAWSOUND:xcom3/rawsound/extra/obtube.raw:22050</entry>
+    </objectDropSounds>
+    <throwSounds>
+      <entry>RAWSOUND:xcom3/rawsound/tactical/weapons/throw1.raw:22050</entry>
+      <entry>RAWSOUND:xcom3/rawsound/tactical/weapons/throw2.raw:22050</entry>
+    </throwSounds>
+    <explosionSoundMap>
+      <entry>
+        <key>DAMAGETYPE_ANTI-ALIEN_GAS</key>
+        <value>
+          <entry />
+        </value>
+      </entry>
+      <entry>
+        <key>DAMAGETYPE_EXPLOSIVE</key>
+        <value>
+          <entry />
+          <entry />
+        </value>
+      </entry>
+      <entry>
+        <key>DAMAGETYPE_EXPLOSIVE_1</key>
+        <value>
+          <entry />
+          <entry />
+        </value>
+      </entry>
+      <entry>
+        <key>DAMAGETYPE_INCENDIARY</key>
+        <value>
+          <entry />
+        </value>
+      </entry>
+      <entry>
+        <key>DAMAGETYPE_PSIONIC_BLAST</key>
+        <value>
+          <entry />
+        </value>
+      </entry>
+      <entry>
+        <key>DAMAGETYPE_SMOKE</key>
+        <value>
+          <entry />
+        </value>
+      </entry>
+      <entry>
+        <key>DAMAGETYPE_STUN_GAS</key>
+        <value>
+          <entry />
+        </value>
+      </entry>
+    </explosionSoundMap>
+  </sp>
+</battle_common_sample_list>

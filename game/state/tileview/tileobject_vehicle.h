@@ -9,8 +9,8 @@ namespace OpenApoc
 class TileObjectVehicle : public TileObject
 {
   public:
-	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-	          TileViewMode mode, int) override;
+	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition, TileViewMode mode,
+	          int currentLevel = 0) override;
 	~TileObjectVehicle() override;
 
 	sp<Vehicle> getVehicle() const;
@@ -22,7 +22,8 @@ class TileObjectVehicle : public TileObject
 	}
 
 	Vec3<float> getCentrePosition();
-	sp<VoxelMap> getVoxelMap() override;
+	bool hasVoxelMap() override { return true; }
+	sp<VoxelMap> getVoxelMap(Vec3<int> mapIndex) override;
 	Vec3<float> getPosition() const override;
 	void nextFrame(int ticks);
 

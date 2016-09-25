@@ -99,7 +99,7 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state, Difficult
 	}
 	state.player = {&state, "ORG_X-COM"};
 	state.aliens = {&state, "ORG_ALIEN"};
-	state.civilian = { &state, "ORG_CIVILIAN" };
+	state.civilian = {&state, "ORG_CIVILIAN"};
 }
 
 } // namespace OpenApoc

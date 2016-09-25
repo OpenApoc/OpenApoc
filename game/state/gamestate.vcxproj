@@ -80,6 +80,7 @@
     <ClInclude Include="base\base.h" />
     <ClInclude Include="base\facility.h" />
     <ClInclude Include="battle\battle.h" />
+    <ClInclude Include="battle\battlecommonsamplelist.h" />
     <ClInclude Include="battle\battlemap.h" />
     <ClInclude Include="battle\battlemappart.h" />
     <ClInclude Include="battle\battlemapsector.h" />

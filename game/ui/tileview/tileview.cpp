@@ -13,8 +13,8 @@ TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
       viewMode(initialMode), scrollUp(false), scrollDown(false), scrollLeft(false),
       scrollRight(false), dpySize(fw().displayGetWidth(), fw().displayGetHeight()),
       strategyViewBoxColour(212, 176, 172, 255), strategyViewBoxThickness(2.0f),
-      selectedTilePosition(0, 0, 0), maxZDraw(map.size.z),
-      centerPos(0, 0, 0), isoScrollSpeed(0.5, 0.5), stratScrollSpeed(2.0f, 2.0f)
+      selectedTilePosition(0, 0, 0), maxZDraw(map.size.z), centerPos(0, 0, 0),
+      isoScrollSpeed(0.5, 0.5), stratScrollSpeed(2.0f, 2.0f)
 {
 	LogInfo("dpySize: {%d,%d}", dpySize.x, dpySize.y);
 }
@@ -228,7 +228,7 @@ void TileView::renderStrategyOverlay(Renderer &r)
 	if (this->viewMode == TileViewMode::Strategy)
 	{
 		Vec2<float> centerIsoScreenPos = this->tileToScreenCoords(
-			Vec3<float>{this->centerPos.x, this->centerPos.y, 0}, TileViewMode::Isometric);
+		    Vec3<float>{this->centerPos.x, this->centerPos.y, 0}, TileViewMode::Isometric);
 
 		/* Draw the rectangle of where the isometric view would be */
 		Vec2<float> topLeftIsoScreenPos = centerIsoScreenPos;
@@ -248,13 +248,13 @@ void TileView::renderStrategyOverlay(Renderer &r)
 		bottomRightIsoScreenPos.y += dpySize.y / 2;
 
 		Vec3<float> topLeftIsoTilePos =
-			this->screenToTileCoords(topLeftIsoScreenPos, 0.0f, TileViewMode::Isometric);
+		    this->screenToTileCoords(topLeftIsoScreenPos, 0.0f, TileViewMode::Isometric);
 		Vec3<float> topRightIsoTilePos =
-			this->screenToTileCoords(topRightIsoScreenPos, 0.0f, TileViewMode::Isometric);
+		    this->screenToTileCoords(topRightIsoScreenPos, 0.0f, TileViewMode::Isometric);
 		Vec3<float> bottomLeftIsoTilePos =
-			this->screenToTileCoords(bottomLeftIsoScreenPos, 0.0f, TileViewMode::Isometric);
+		    this->screenToTileCoords(bottomLeftIsoScreenPos, 0.0f, TileViewMode::Isometric);
 		Vec3<float> bottomRightIsoTilePos =
-			this->screenToTileCoords(bottomRightIsoScreenPos, 0.0f, TileViewMode::Isometric);
+		    this->screenToTileCoords(bottomRightIsoScreenPos, 0.0f, TileViewMode::Isometric);
 
 		Vec2<float> topLeftRectPos = this->tileToOffsetScreenCoords(topLeftIsoTilePos);
 		Vec2<float> topRightRectPos = this->tileToOffsetScreenCoords(topRightIsoTilePos);
@@ -262,14 +262,14 @@ void TileView::renderStrategyOverlay(Renderer &r)
 		Vec2<float> bottomRightRectPos = this->tileToOffsetScreenCoords(bottomRightIsoTilePos);
 
 		r.drawLine(topLeftRectPos, topRightRectPos, this->strategyViewBoxColour,
-			this->strategyViewBoxThickness);
+		           this->strategyViewBoxThickness);
 		r.drawLine(topRightRectPos, bottomRightRectPos, this->strategyViewBoxColour,
-			this->strategyViewBoxThickness);
+		           this->strategyViewBoxThickness);
 
 		r.drawLine(bottomRightRectPos, bottomLeftRectPos, this->strategyViewBoxColour,
-			this->strategyViewBoxThickness);
+		           this->strategyViewBoxThickness);
 		r.drawLine(bottomLeftRectPos, topLeftRectPos, this->strategyViewBoxColour,
-			this->strategyViewBoxThickness);
+		           this->strategyViewBoxThickness);
 	}
 }
 

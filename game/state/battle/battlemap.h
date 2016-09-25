@@ -41,23 +41,22 @@ class BattleMap : public StateObject<BattleMap>
 	std::vector<StateRef<BattleMapPartType>> rubble_right_wall;
 	std::vector<StateRef<BattleMapPartType>> rubble_feature;
 	std::vector<StateRef<BattleMapPartType>> exit_grounds;
-	
+
 	StateRefMap<BattleMapSector> sectors;
 
   private:
 	static sp<Battle> createBattle(GameState &state, StateRef<Organisation> target_organisation,
 	                               std::list<StateRef<Agent>> &player_agents,
 	                               StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft);
-	
+
 	static sp<Battle> createBattle(GameState &state, StateRef<Organisation> target_organisation,
 	                               std::list<StateRef<Agent>> &player_agents,
 	                               StateRef<Vehicle> player_craft,
 	                               StateRef<Building> target_building);
 
 	sp<Battle> createBattle(GameState &state, StateRef<Organisation> target_organisation,
-	                        std::list<StateRef<Agent>> &agents,
-	                        StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
-	                        UString mission_location_id);
+	                        std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
+	                        Battle::MissionType mission_type, UString mission_location_id);
 
 	void loadTilesets(GameState &state) const;
 	static void unloadTilesets(GameState &state);

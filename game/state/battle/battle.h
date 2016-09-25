@@ -1,9 +1,9 @@
 #pragma once
-#include "game/state/agent.h"
 #include "framework/includes.h"
+#include "game/state/agent.h"
 #include "game/state/battle/battleforces.h"
-#include "game/state/battle/battlemapsector.h"
 #include "game/state/battle/battlemappart_type.h"
+#include "game/state/battle/battlemapsector.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
@@ -19,6 +19,8 @@ namespace OpenApoc
 #define VOXEL_Y_BATTLE (24)
 #define VOXEL_Z_BATTLE (20)
 
+class BattleStrategyIconList;
+class BattleCommonSampleList;
 class GameState;
 class TileMap;
 class BattleMapPart;
@@ -85,11 +87,22 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	std::set<StateRef<Organisation>> participants;
 
+	// Current player in control of the interface (will only change if we're going multiplayer)
+	StateRef<Organisation> currentPlayer;
+
+	// Store information about last screen center location, so that when we load a save
+	// we could restore it
+	int battleviewZLevel;
+	Vec3<float> battleviewScreenCenter;
+
 	// Contains height at which to spawn units, or -1 if spawning is not possible
 	// No need to serialize this, as we cannot save/load during briefing
 	std::vector<std::vector<std::vector<int>>> spawnMap;
 
 	// Following members are not serialized, but rather are set in initBattle method
+
+	sp<BattleStrategyIconList> strategy_icon_list;
+	sp<BattleCommonSampleList> common_sample_list;
 
 	std::map<StateRef<Organisation>, BattleForces> forces;
 
@@ -100,15 +113,14 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	// To be called when battle must be created, before showing battle briefing screen
 	static void beginBattle(GameState &state, StateRef<Organisation> target_organisation,
-		std::list<StateRef<Agent>> &player_agents,
-		StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft);
-	
+	                        std::list<StateRef<Agent>> &player_agents,
+	                        StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft);
+
 	// To be called when battle must be created, before showing battle briefing screen
 	static void beginBattle(GameState &state, StateRef<Organisation> target_organisation,
-		std::list<StateRef<Agent>> &player_agents,
-		StateRef<Vehicle> player_craft,
-		StateRef<Building> target_building);
-	
+	                        std::list<StateRef<Agent>> &player_agents,
+	                        StateRef<Vehicle> player_craft, StateRef<Building> target_building);
+
 	// To be called when battle must be started, after briefing screen
 	static void enterBattle(GameState &state);
 
@@ -121,7 +133,6 @@ class Battle : public std::enable_shared_from_this<Battle>
 	static void exitBattle(GameState &state);
 
   private:
-
 	void loadResources(GameState &state);
 	void unloadResources(GameState &state);
 

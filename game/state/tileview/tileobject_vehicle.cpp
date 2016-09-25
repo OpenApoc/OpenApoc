@@ -7,9 +7,10 @@ namespace OpenApoc
 {
 
 void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-                             TileViewMode mode, int)
+                             TileViewMode mode, int currentLevel)
 {
 	std::ignore = transform;
+	std::ignore = currentLevel;
 	auto vehicle = this->vehicle.lock();
 	if (!vehicle)
 	{
@@ -103,23 +104,56 @@ void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 TileObjectVehicle::~TileObjectVehicle() = default;
 
 TileObjectVehicle::TileObjectVehicle(TileMap &map, sp<Vehicle> vehicle)
-    : TileObject(map, Type::Vehicle, Vec3<float>{0, 0, 0}), vehicle(vehicle), animationDelay(0)
+    : TileObject(map, Type::Vehicle, vehicle->type->size), vehicle(vehicle), animationDelay(0)
 {
 	animationFrame = vehicle->type->animation_sprites.begin();
 }
 
 Vec3<float> TileObjectVehicle::getCentrePosition()
 {
-	Vec3<float> tileSize = {32, 32, 16};
-	this->getVoxelMap()->calculateCentre();
-	auto voxelCentre = this->getVoxelMap()->centre;
-	auto objPos = this->getPosition();
+	auto vtype = this->getVehicle()->type;
+
+	Vec3<int> voxelCentre = {0, 0, 0};
+	for (int x = 0; x < vtype->size.x; x++)
+	{
+		for (int y = 0; y < vtype->size.y; y++)
+		{
+			for (int z = 0; z < vtype->size.z; z++)
+			{
+				voxelCentre += getVoxelMap({x, y, z})->centre;
+			}
+		}
+	}
+	voxelCentre /= vtype->size.x * vtype->size.y * vtype->size.z;
+
+	auto objPos = this->getCenter();
 	objPos -= this->getVoxelOffset();
-	return Vec3<float>(objPos.x + voxelCentre.x / tileSize.x, objPos.y + voxelCentre.y / tileSize.y,
-	                   objPos.z + voxelCentre.z / tileSize.z);
+	return Vec3<float>(objPos.x + voxelCentre.x / map.voxelMapSize.x,
+	                   objPos.y + voxelCentre.y / map.voxelMapSize.y,
+	                   objPos.z + voxelCentre.z / map.voxelMapSize.z);
 }
 
-sp<VoxelMap> TileObjectVehicle::getVoxelMap() { return this->getVehicle()->type->voxelMap; }
+sp<VoxelMap> TileObjectVehicle::getVoxelMap(Vec3<int> mapIndex)
+{
+	auto vtype = this->getVehicle()->type;
+	if (mapIndex.x >= vtype->size.x || mapIndex.y >= vtype->size.y || mapIndex.z >= vtype->size.z)
+		return nullptr;
+
+	float closestAngle = FLT_MAX;
+	sp<VoxelMap> closestMap = nullptr;
+	auto it = vtype->voxelMaps[mapIndex.z * vtype->size.y * vtype->size.x +
+	                           mapIndex.y * vtype->size.x + mapIndex.x];
+	for (auto &p : it)
+	{
+		float angle = glm::angle(glm::normalize(p.first), glm::normalize(this->getDirection()));
+		if (angle < closestAngle)
+		{
+			closestAngle = angle;
+			closestMap = p.second;
+		}
+	}
+	return closestMap;
+}
 
 sp<Vehicle> TileObjectVehicle::getVehicle() const { return this->vehicle.lock(); }
 

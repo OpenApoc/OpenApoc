@@ -5,12 +5,13 @@
 
 namespace OpenApoc
 {
-CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize, TileViewMode initialMode)
-	:TileView(map, isoTileSize, stratTileSize, initialMode) 
+CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
+                           TileViewMode initialMode)
+    : TileView(map, isoTileSize, stratTileSize, initialMode)
 {
 	selectedTileImageBack = fw().data->loadImage("city/selected-citytile-back.png");
 	selectedTileImageFront = fw().data->loadImage("city/selected-citytile-front.png");
-	selectedTileImageOffset = { 0, 0 };
+	selectedTileImageOffset = {0, 0};
 	pal = fw().data->loadPalette("xcom3/ufodata/pal_01.dat");
 };
 
@@ -18,16 +19,14 @@ CityTileView::~CityTileView() = default;
 
 void CityTileView::eventOccurred(Event *e)
 {
-	if (e->type() == EVENT_KEY_DOWN && (
-		e->keyboard().KeyCode == SDLK_1
-		|| e->keyboard().KeyCode == SDLK_2
-		|| e->keyboard().KeyCode == SDLK_3
-		|| e->keyboard().KeyCode == SDLK_F6
-		))
+	if (e->type() == EVENT_KEY_DOWN &&
+	    (e->keyboard().KeyCode == SDLK_1 || e->keyboard().KeyCode == SDLK_2 ||
+	     e->keyboard().KeyCode == SDLK_3 || e->keyboard().KeyCode == SDLK_F6 ||
+	     e->keyboard().KeyCode == SDLK_F7))
 	{
 		switch (e->keyboard().KeyCode)
 		{
-			case SDLK_1 :
+			case SDLK_1:
 				pal = fw().data->loadPalette("xcom3/ufodata/pal_01.dat");
 				break;
 			case SDLK_2:
@@ -41,8 +40,15 @@ void CityTileView::eventOccurred(Event *e)
 				LogWarning("Writing voxel view to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
 				auto img = std::dynamic_pointer_cast<RGBImage>(
-					this->map.dumpVoxelView({ imageOffset, imageOffset + dpySize }, *this,
-						10.0f));
+				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this, 10.0f));
+				fw().data->writeImage("tileviewvoxels.png", img);
+			}
+			case SDLK_F7:
+			{
+				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
+				auto imageOffset = -this->getScreenOffset();
+				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
+				    {imageOffset, imageOffset + dpySize}, *this, 10.0f, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 			break;
@@ -89,8 +95,8 @@ void CityTileView::render()
 					for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 					{
 						auto &obj = tile->drawnObjects[layer][obj_id];
-						Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
-						obj->draw(r, *this, pos, this->viewMode, 0);
+						Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
+						obj->draw(r, *this, pos, this->viewMode);
 					}
 				}
 			}
@@ -99,5 +105,4 @@ void CityTileView::render()
 
 	renderStrategyOverlay(r);
 }
-
 }

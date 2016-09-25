@@ -117,6 +117,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, VoxelMap &m
 		return;
 	serializeIn(state, node->getNode("size"), map.size);
 	serializeIn(state, node->getNode("slices"), map.slices);
+	map.calculateCentre();
 }
 
 void serializeIn(const GameState *state, sp<SerializationNode> node, Colour &c)
@@ -315,7 +316,7 @@ static bool serialize(const BattleMapTileset &tileSet, sp<SerializationArchive> 
 }
 
 static bool deserialize(BattleMapTileset &tileSet, const GameState &state,
-	const sp<SerializationArchive> archive)
+                        const sp<SerializationArchive> archive)
 {
 	try
 	{
@@ -373,7 +374,7 @@ static bool serialize(const BattleUnitImagePack &imagePack, sp<SerializationArch
 }
 
 static bool deserialize(BattleUnitImagePack &imagePack, const GameState &state,
-	const sp<SerializationArchive> archive)
+                        const sp<SerializationArchive> archive)
 {
 	try
 	{
@@ -415,8 +416,8 @@ bool BattleUnitImagePack::loadImagePack(GameState &state, const UString &path)
 
 const UString BattleUnitAnimationPack::animationPackPath = "data/animationpacks";
 
-
-static bool serialize(const BattleUnitAnimationPack &animationPack, sp<SerializationArchive> archive)
+static bool serialize(const BattleUnitAnimationPack &animationPack,
+                      sp<SerializationArchive> archive)
 {
 	try
 	{
@@ -432,7 +433,7 @@ static bool serialize(const BattleUnitAnimationPack &animationPack, sp<Serializa
 }
 
 static bool deserialize(BattleUnitAnimationPack &animationPack, const GameState &state,
-	const sp<SerializationArchive> archive)
+                        const sp<SerializationArchive> archive)
 {
 	try
 	{
@@ -471,7 +472,6 @@ bool BattleUnitAnimationPack::loadAnimationPack(GameState &state, const UString 
 
 	return deserialize(*this, state, archive);
 }
-
 
 static bool serialize(const BattleMapSectorTiles &mapSector, sp<SerializationArchive> archive)
 {

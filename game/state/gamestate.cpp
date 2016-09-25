@@ -133,7 +133,6 @@ void GameState::initState()
 	}
 	// Run nessecary methods for different types
 	research.updateTopicList();
-
 }
 
 void GameState::startGame()
@@ -199,7 +198,7 @@ void GameState::fillPlayerStartingProperty()
 	// Create the intial starting base
 	// Randomly shuffle buildings until we find one with a base layout
 	sp<City> humanCity = this->cities["CITYMAP_HUMAN"];
-	this->current_city = { this, humanCity };
+	this->current_city = {this, humanCity};
 
 	std::vector<sp<Building>> buildingsWithBases;
 	for (auto &b : humanCity->buildings)
@@ -221,9 +220,9 @@ void GameState::fillPlayerStartingProperty()
 	base->startingBase(*this);
 	base->name = "Base " + Strings::fromInteger(this->player_bases.size() + 1);
 	this->player_bases[Base::getPrefix() + Strings::fromInteger(this->player_bases.size() + 1)] =
-		base;
+	    base;
 	bld->owner = this->getPlayer();
-	this->current_base = { this, base };
+	this->current_base = {this, base};
 
 	// Give the player one of each equipable vehicle
 	for (auto &it : this->vehicle_types)
@@ -232,16 +231,16 @@ void GameState::fillPlayerStartingProperty()
 		if (!type->equipment_screen)
 			continue;
 		auto v = mksp<Vehicle>();
-		v->type = { this, type };
+		v->type = {this, type};
 		v->name = UString::format("%s %d", type->name, ++type->numCreated);
-		v->city = { this, "CITYMAP_HUMAN" };
-		v->currentlyLandedBuilding = { this, bld };
-		v->homeBuilding = { this, bld };
+		v->city = {this, "CITYMAP_HUMAN"};
+		v->currentlyLandedBuilding = {this, bld};
+		v->homeBuilding = {this, bld};
 		v->owner = this->getPlayer();
 		v->health = type->health;
 		UString vID = UString::format("%s%d", Vehicle::getPrefix(), lastVehicle++);
 		this->vehicles[vID] = v;
-		v->currentlyLandedBuilding->landed_vehicles.insert({ this, vID });
+		v->currentlyLandedBuilding->landed_vehicles.insert({this, vID});
 		v->equipDefaultEquipment(*this);
 	}
 	// Give that base some vehicle inventory
@@ -265,7 +264,7 @@ void GameState::fillPlayerStartingProperty()
 		while (count > 0)
 		{
 			auto agent = this->agent_generator.createAgent(*this, this->getPlayer(), type);
-			agent->home_base = { this, base };
+			agent->home_base = {this, base};
 			count--;
 			if (type == AgentType::Role::Soldier && it != initial_agent_equipment.end())
 			{
@@ -273,34 +272,38 @@ void GameState::fillPlayerStartingProperty()
 				{
 					if (t->type == AEquipmentType::Type::Armor)
 					{
-						AgentType::EquipmentSlotType slotType = AgentType::EquipmentSlotType::General;
+						AgentEquipmentLayout::EquipmentSlotType slotType =
+						    AgentEquipmentLayout::EquipmentSlotType::General;
 						switch (t->body_part)
 						{
-						case AgentType::BodyPart::Body:
-							slotType = AgentType::EquipmentSlotType::ArmorBody;
-							break;
-						case AgentType::BodyPart::Legs:
-							slotType = AgentType::EquipmentSlotType::ArmorLegs;
-							break;
-						case AgentType::BodyPart::Helmet:
-							slotType = AgentType::EquipmentSlotType::ArmorHelmet;
-							break;
-						case AgentType::BodyPart::LeftArm:
-							slotType = AgentType::EquipmentSlotType::ArmorLeftHand;
-							break;
-						case AgentType::BodyPart::RightArm:
-							slotType = AgentType::EquipmentSlotType::ArmorRightHand;
-							break;
+							case AgentType::BodyPart::Body:
+								slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorBody;
+								break;
+							case AgentType::BodyPart::Legs:
+								slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorLegs;
+								break;
+							case AgentType::BodyPart::Helmet:
+								slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorHelmet;
+								break;
+							case AgentType::BodyPart::LeftArm:
+								slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorLeftHand;
+								break;
+							case AgentType::BodyPart::RightArm:
+								slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorRightHand;
+								break;
 						}
-						agent->addEquipment(*this, { this, t->id }, slotType);
+						agent->addEquipment(*this, {this, t->id}, slotType);
 					}
-					else if (t->type == AEquipmentType::Type::Ammo || t->type == AEquipmentType::Type::MediKit || t->type == AEquipmentType::Type::Grenade)
+					else if (t->type == AEquipmentType::Type::Ammo ||
+					         t->type == AEquipmentType::Type::MediKit ||
+					         t->type == AEquipmentType::Type::Grenade)
 					{
-						agent->addEquipment(*this, { this, t->id }, AgentType::EquipmentSlotType::General);
+						agent->addEquipment(*this, {this, t->id},
+						                    AgentEquipmentLayout::EquipmentSlotType::General);
 					}
 					else
 					{
-						agent->addEquipment(*this, { this, t->id });
+						agent->addEquipment(*this, {this, t->id});
 					}
 				}
 				it++;

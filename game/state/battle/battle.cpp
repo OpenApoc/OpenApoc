@@ -3,28 +3,28 @@
 #include "framework/trace.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemap.h"
-#include "game/state/battle/battleunit.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
+#include "game/state/battle/battleunit.h"
 #include "game/state/city/city.h"
-#include "game/state/city/vehicle.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/projectile.h"
+#include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/tileview/collision.h"
+#include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_battleitem.h"
-#include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
+#include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_doodad.h"
 #include "game/state/tileview/tileobject_projectile.h"
 #include "game/state/tileview/tileobject_shadow.h"
 #include "library/xorshift.h"
+#include <algorithm>
 #include <functional>
 #include <future>
 #include <limits>
-#include <algorithm>
 #include <unordered_map>
-#include "game/state/tileview/tile.h"
 
 namespace OpenApoc
 {
@@ -78,6 +78,8 @@ Battle::~Battle()
 
 void Battle::initBattle(GameState &state)
 {
+	strategy_icon_list = state.battle_strategy_icon_list;
+	common_sample_list = state.battle_common_sample_list;
 	loadResources(state);
 	for (auto &s : this->map_parts)
 	{
@@ -87,12 +89,10 @@ void Battle::initBattle(GameState &state)
 	{
 		o->battle = shared_from_this();
 		o->item->ownerItem = o->shared_from_this();
-		o->strategy_icon_list = state.battle_strategy_icon_list;
 	}
 	for (auto &o : this->units)
 	{
 		o->battle = shared_from_this();
-		o->strategy_icon_list = state.battle_strategy_icon_list;
 	}
 	if (forces.size() == 0)
 	{
@@ -100,7 +100,7 @@ void Battle::initBattle(GameState &state)
 		for (auto &o : this->participants)
 		{
 			forces[o];
-			for (int i = 0;i < 6;i++)
+			for (int i = 0; i < 6; i++)
 			{
 				forces[o].squads[i].units = std::vector<sp<BattleUnit>>(6);
 			}
@@ -113,7 +113,7 @@ void Battle::initBattle(GameState &state)
 		// Trim nullptrs from squad units
 		for (auto &o : this->participants)
 		{
-			for (int i = 0;i < 6;i++)
+			for (int i = 0; i < 6; i++)
 			{
 				for (int j = 5; j >= 0; j--)
 				{
@@ -192,10 +192,10 @@ void Battle::update(GameState &state, unsigned int ticks)
 			{
 				case TileObject::Type::Unit:
 				{
-				    auto unit = std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit();
+					auto unit = std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit();
 					unit->handleCollision(state, c);
-				    LogWarning("Unit collision");
-				    break;
+					LogWarning("Unit collision");
+					break;
 				}
 				case TileObject::Type::Ground:
 				case TileObject::Type::LeftWall:
@@ -206,8 +206,8 @@ void Battle::update(GameState &state, unsigned int ticks)
 					// FIXME: Don't just explode mapPart, but damaged tiles/falling stuff? Different
 					// explosion doodads? Not all weapons instantly destory buildings too
 
-					auto doodad = this->placeDoodad({&state, "DOODAD_EXPLOSION_2"},
-					                                mapPartTile->getPosition());
+					auto doodad =
+					    this->placeDoodad({&state, "DOODAD_EXPLOSION_2"}, mapPartTile->getCenter());
 					mapPartTile->getOwner()->handleCollision(state, c);
 					break;
 				}
@@ -246,15 +246,16 @@ void Battle::update(GameState &state, unsigned int ticks)
 
 // To be called when battle must be started, before showing battle briefing screen
 void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organisation,
-	std::list<StateRef<Agent>> &player_agents,
-	StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft)
+                         std::list<StateRef<Agent>> &player_agents, StateRef<Vehicle> player_craft,
+                         StateRef<Vehicle> target_craft)
 {
 	if (state.current_battle)
 	{
 		LogError("Battle::EnterBattle called while another battle is in progress!");
 		return;
 	}
-	auto b = BattleMap::createBattle(state, target_organisation, player_agents, player_craft, target_craft);
+	auto b = BattleMap::createBattle(state, target_organisation, player_agents, player_craft,
+	                                 target_craft);
 	if (!b)
 		return;
 	state.current_battle = b;
@@ -262,15 +263,16 @@ void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organis
 
 // To be called when battle must be started, before showing battle briefing screen
 void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organisation,
-	std::list<StateRef<Agent>> &player_agents,
-	StateRef<Vehicle> player_craft, StateRef<Building> target_building)
+                         std::list<StateRef<Agent>> &player_agents, StateRef<Vehicle> player_craft,
+                         StateRef<Building> target_building)
 {
 	if (state.current_battle)
 	{
 		LogError("Battle::EnterBattle called while another battle is in progress!");
 		return;
 	}
-	auto b = BattleMap::createBattle(state, target_organisation, player_agents, player_craft, target_building);
+	auto b = BattleMap::createBattle(state, target_organisation, player_agents, player_craft,
+	                                 target_building);
 	if (!b)
 		return;
 	state.current_battle = b;
@@ -288,22 +290,41 @@ void Battle::enterBattle(GameState &state)
 	auto &b = state.current_battle;
 
 	// Create spawn maps
-	std::map<BattleMapSector::LineOfSightBlock::SpawnType, std::list<sp<BattleMapSector::LineOfSightBlock>>> spawnMapsSmallWalker;
-	std::map<BattleMapSector::LineOfSightBlock::SpawnType, std::list<sp<BattleMapSector::LineOfSightBlock>>> spawnMapsSmallFlying;
-	std::map<BattleMapSector::LineOfSightBlock::SpawnType, std::list<sp<BattleMapSector::LineOfSightBlock>>> spawnMapsSmallAny;
-	std::map<BattleMapSector::LineOfSightBlock::SpawnType, std::list<sp<BattleMapSector::LineOfSightBlock>>> spawnMapsLargeFlying;
-	std::map<BattleMapSector::LineOfSightBlock::SpawnType, std::list<sp<BattleMapSector::LineOfSightBlock>>> spawnMapsLargeWalker;
-	std::map<BattleMapSector::LineOfSightBlock::SpawnType, std::list<sp<BattleMapSector::LineOfSightBlock>>> spawnMapsLargeAny;
-	std::map<BattleMapSector::LineOfSightBlock::SpawnType, std::list<sp<BattleMapSector::LineOfSightBlock>>> spawnMapsAnyWalker;
-	std::map<BattleMapSector::LineOfSightBlock::SpawnType, std::list<sp<BattleMapSector::LineOfSightBlock>>> spawnMapsAnyFlying;
-	std::map<BattleMapSector::LineOfSightBlock::SpawnType, std::list<sp<BattleMapSector::LineOfSightBlock>>> spawnMapsAnyAny;
+	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
+	         std::list<sp<BattleMapSector::LineOfSightBlock>>>
+	    spawnMapsSmallWalker;
+	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
+	         std::list<sp<BattleMapSector::LineOfSightBlock>>>
+	    spawnMapsSmallFlying;
+	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
+	         std::list<sp<BattleMapSector::LineOfSightBlock>>>
+	    spawnMapsSmallAny;
+	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
+	         std::list<sp<BattleMapSector::LineOfSightBlock>>>
+	    spawnMapsLargeFlying;
+	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
+	         std::list<sp<BattleMapSector::LineOfSightBlock>>>
+	    spawnMapsLargeWalker;
+	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
+	         std::list<sp<BattleMapSector::LineOfSightBlock>>>
+	    spawnMapsLargeAny;
+	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
+	         std::list<sp<BattleMapSector::LineOfSightBlock>>>
+	    spawnMapsAnyWalker;
+	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
+	         std::list<sp<BattleMapSector::LineOfSightBlock>>>
+	    spawnMapsAnyFlying;
+	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
+	         std::list<sp<BattleMapSector::LineOfSightBlock>>>
+	    spawnMapsAnyAny;
 	std::list<sp<BattleMapSector::LineOfSightBlock>> spawnMapOther;
 	std::map<StateRef<Organisation>, BattleMapSector::LineOfSightBlock::SpawnType> spawnTypeMap;
 
 	// Fill organisation to spawn type maps
 	for (auto &o : b->participants)
 	{
-		BattleMapSector::LineOfSightBlock::SpawnType spawnType = BattleMapSector::LineOfSightBlock::SpawnType::Enemy;
+		BattleMapSector::LineOfSightBlock::SpawnType spawnType =
+		    BattleMapSector::LineOfSightBlock::SpawnType::Enemy;
 		if (o == state.getPlayer())
 		{
 			spawnType = BattleMapSector::LineOfSightBlock::SpawnType::Player;
@@ -331,7 +352,6 @@ void Battle::enterBattle(GameState &state)
 				{
 					spawnMapsLargeWalker[l->spawn_type].push_back(l);
 					spawnMapsLargeAny[l->spawn_type].push_back(l);
-
 				}
 				else
 				{
@@ -383,7 +403,7 @@ void Battle::enterBattle(GameState &state)
 				for (auto &u : s.units)
 				{
 					neededSpace++;
-					if (u->agent->type->large)
+					if (u->isLarge())
 					{
 						needLarge = true;
 						neededSpace += 3;
@@ -396,7 +416,7 @@ void Battle::enterBattle(GameState &state)
 
 				// Make a list of priorities, in which order will we try to find a block
 				sp<BattleMapSector::LineOfSightBlock> block = nullptr;
-				std::list<std::list<sp<BattleMapSector::LineOfSightBlock>>*> priorityList;
+				std::list<std::list<sp<BattleMapSector::LineOfSightBlock>> *> priorityList;
 				if (needWalker && needLarge)
 				{
 					priorityList.push_back(&spawnMapsLargeWalker[spawnTypeMap[f.first]]);
@@ -499,7 +519,7 @@ void Battle::enterBattle(GameState &state)
 				if (!block)
 				{
 					LogWarning("Map has not enough blocks with spawn points!?!?!?");
-					
+
 					for (int x = 0; x < b->size.x; x++)
 					{
 						for (int y = 0; y < b->size.y; y++)
@@ -507,13 +527,17 @@ void Battle::enterBattle(GameState &state)
 							for (int z = 0; z < b->size.z; z++)
 							{
 								auto u = unitsToSpawn[unitsToSpawn.size() - 1];
-								if (u->agent->type->large)
+								if (u->isLarge())
 								{
-									if (x < 1 || y < 1 || z >= (b->size.z - 1)
-										|| b->spawnMap[x][y][z] == -1 || b->spawnMap[x - 1][y][z] == -1
-										|| b->spawnMap[x][y - 1][z] == -1 || b->spawnMap[x - 1][y - 1][z] == -1
-										|| b->spawnMap[x][y][z + 1] == -1 || b->spawnMap[x - 1][y][z + 1] == -1
-										|| b->spawnMap[x][y - 1][z + 1] == -1 || b->spawnMap[x - 1][y - 1][z + 1] == -1)
+									if (x < 1 || y < 1 || z >= (b->size.z - 1) ||
+									    b->spawnMap[x][y][z] == -1 ||
+									    b->spawnMap[x - 1][y][z] == -1 ||
+									    b->spawnMap[x][y - 1][z] == -1 ||
+									    b->spawnMap[x - 1][y - 1][z] == -1 ||
+									    b->spawnMap[x][y][z + 1] == -1 ||
+									    b->spawnMap[x - 1][y][z + 1] == -1 ||
+									    b->spawnMap[x][y - 1][z + 1] == -1 ||
+									    b->spawnMap[x - 1][y - 1][z + 1] == -1)
 										continue;
 									int height = b->spawnMap[x][y][z];
 									height = std::max(b->spawnMap[x][y - 1][z], height);
@@ -527,7 +551,8 @@ void Battle::enterBattle(GameState &state)
 									b->spawnMap[x - 1][y][z + 1] = -1;
 									b->spawnMap[x][y - 1][z + 1] = -1;
 									b->spawnMap[x - 1][y - 1][z + 1] = -1;
-									u->position = { x + 0.0f, y + 0.0f, z + ((float)height) / (float)TILE_Z_BATTLE };
+									u->position = {x + 0.0f, y + 0.0f,
+									               z + ((float)height) / (float)TILE_Z_BATTLE};
 									unitsToSpawn.pop_back();
 								}
 								else
@@ -536,7 +561,8 @@ void Battle::enterBattle(GameState &state)
 										continue;
 									int height = b->spawnMap[x][y][z];
 									b->spawnMap[x][y][z] = -1;
-									u->position = { x + 0.5f, y + 0.5f, z + ((float)height) / (float)TILE_Z_BATTLE };
+									u->position = {x + 0.5f, y + 0.5f,
+									               z + ((float)height) / (float)TILE_Z_BATTLE};
 									unitsToSpawn.pop_back();
 								}
 								if (unitsToSpawn.size() == 0)
@@ -556,7 +582,7 @@ void Battle::enterBattle(GameState &state)
 					}
 					continue;
 				}
-				
+
 				// Actually spawn units
 				int startX = randBoundsExclusive(state.rng, block->start.x, block->end.x);
 				int startY = randBoundsExclusive(state.rng, block->start.y, block->end.y);
@@ -565,26 +591,27 @@ void Battle::enterBattle(GameState &state)
 				int numSpawned = 0;
 				// While we're not completely out of bounds for this block
 				// Keep enlarging the offset and spawning units
-				while (startX - offset >= block->start.x
-					|| startY - offset >= block->start.y
-					|| startX + offset < block->end.x
-					|| startY + offset >= block->end.y)
+				while (startX - offset >= block->start.x || startY - offset >= block->start.y ||
+				       startX + offset < block->end.x || startY + offset >= block->end.y)
 				{
 					for (int x = startX - offset; x <= startX + offset; x++)
 					{
 						for (int y = startY - offset; y <= startY + offset; y++)
 						{
-							if (!block->contains(Vec3<int>{ x, y, z }))
+							if (!block->contains(Vec3<int>{x, y, z}))
 								continue;
-							
+
 							auto u = unitsToSpawn[unitsToSpawn.size() - 1];
-							if (u->agent->type->large)
+							if (u->isLarge())
 							{
-								if (x < 1 || y < 1 || z >= (b->size.z - 1)
-									|| b->spawnMap[x][y][z] == -1 || b->spawnMap[x - 1][y][z] == -1
-									|| b->spawnMap[x][y - 1][z] == -1 || b->spawnMap[x - 1][y - 1][z] == -1
-									|| b->spawnMap[x][y][z + 1] == -1 || b->spawnMap[x - 1][y][z + 1] == -1
-									|| b->spawnMap[x][y - 1][z + 1] == -1 || b->spawnMap[x - 1][y - 1][z + 1] == -1)
+								if (x < 1 || y < 1 || z >= (b->size.z - 1) ||
+								    b->spawnMap[x][y][z] == -1 || b->spawnMap[x - 1][y][z] == -1 ||
+								    b->spawnMap[x][y - 1][z] == -1 ||
+								    b->spawnMap[x - 1][y - 1][z] == -1 ||
+								    b->spawnMap[x][y][z + 1] == -1 ||
+								    b->spawnMap[x - 1][y][z + 1] == -1 ||
+								    b->spawnMap[x][y - 1][z + 1] == -1 ||
+								    b->spawnMap[x - 1][y - 1][z + 1] == -1)
 									continue;
 								int height = b->spawnMap[x][y][z];
 								height = std::max(b->spawnMap[x][y - 1][z], height);
@@ -594,13 +621,14 @@ void Battle::enterBattle(GameState &state)
 								b->spawnMap[x - 1][y][z] = -1;
 								b->spawnMap[x][y - 1][z] = -1;
 								b->spawnMap[x - 1][y - 1][z] = -1;
-								b->spawnMap[x][y][z+1] = -1;
+								b->spawnMap[x][y][z + 1] = -1;
 								b->spawnMap[x - 1][y][z + 1] = -1;
 								b->spawnMap[x][y - 1][z + 1] = -1;
 								b->spawnMap[x - 1][y - 1][z + 1] = -1;
-								u->position = { x + 0.0f, y + 0.0f, z + ((float)height) / (float)TILE_Z_BATTLE };
+								u->position = {x + 0.0f, y + 0.0f,
+								               z + ((float)height) / (float)TILE_Z_BATTLE};
 								unitsToSpawn.pop_back();
-								//numSpawned++;
+								// numSpawned++;
 							}
 							else
 							{
@@ -608,7 +636,8 @@ void Battle::enterBattle(GameState &state)
 									continue;
 								int height = b->spawnMap[x][y][z];
 								b->spawnMap[x][y][z] = -1;
-								u->position = { x + 0.5f, y + 0.5f, z + ((float)height) / (float)TILE_Z_BATTLE };
+								u->position = {x + 0.5f, y + 0.5f,
+								               z + ((float)height) / (float)TILE_Z_BATTLE};
 								unitsToSpawn.pop_back();
 								numSpawned++;
 							}
@@ -761,7 +790,7 @@ void Battle::enterBattle(GameState &state)
 		// Facing
 		if (!u->agent->isFacingAllowed(u->facing))
 		{
-			u->facing = setRandomizer(state.rng, u->agent->type->allowed_facing);
+			u->facing = setRandomizer(state.rng, u->agent->type->bodyType->allowed_facing);
 		}
 		// Stance
 		if (u->agent->isBodyStateAllowed(AgentType::BodyState::Standing))
@@ -779,9 +808,10 @@ void Battle::enterBattle(GameState &state)
 		else if (u->agent->isBodyStateAllowed(AgentType::BodyState::Prone))
 		{
 			u->setBodyState(AgentType::BodyState::Prone);
-			if (u->canMove() && u->agent->type->allowed_facing.size() > 1)
+			if (u->canMove() && u->agent->type->bodyType->allowed_facing.size() > 1)
 			{
-				LogError("Unit %s cannot Stand, Fly or Kneel, but can turn!", u->agent->type.id.cStr());
+				LogError("Unit %s cannot Stand, Fly or Kneel, but can turn!",
+				         u->agent->type.id.cStr());
 			}
 		}
 		else
@@ -791,6 +821,28 @@ void Battle::enterBattle(GameState &state)
 		// Miscellaneous
 		u->agent->modified_stats.restoreTU();
 		u->resetGoal();
+	}
+
+	// Find first player unit
+	sp<BattleUnit> firstPlayerUnit = nullptr;
+	for (auto f : state.current_battle->forces[state.getPlayer()].squads)
+	{
+		if (f.getNumUnits() > 0)
+		{
+			firstPlayerUnit = f.units.front();
+			break;
+		}
+	}
+	if (!firstPlayerUnit)
+	{
+		LogError("WTF, no player units found?");
+		state.current_battle->battleviewScreenCenter = state.current_battle->map->size / 2;
+		state.current_battle->battleviewZLevel = state.current_battle->map->size.z / 2 + 1;
+	}
+	else
+	{
+		state.current_battle->battleviewScreenCenter = firstPlayerUnit->position;
+		state.current_battle->battleviewZLevel = ceilf(firstPlayerUnit->position.z);
 	}
 
 	state.current_battle->initBattle(state);
@@ -805,7 +857,8 @@ void Battle::finishBattle(GameState &state)
 		return;
 	}
 	//  - Identify how battle ended(if enemies present then Failure, otherwise Success)
-	//	- (Failure) Determine surviving player agents(kill all player agents that are too far from exits)
+	//	- (Failure) Determine surviving player agents(kill all player agents that are too far from
+	//exits)
 	//	- Prepare list of surviving aliens
 	//	- (Success) Prepare list of alien bodies
 	//	- Remove dead player agents and all enemy agents from the game and vehicles
@@ -818,7 +871,6 @@ void Battle::finishBattle(GameState &state)
 	//	(If mod is on)
 	//	- If not enough alien body containment, display alien containment transfer window
 	//	- If not enough storage, display storage transfer window
-
 }
 
 // To be called after battle was finished, score screen was shown and before returning to cityscape
@@ -836,7 +888,7 @@ void Battle::exitBattle(GameState &state)
 	//	- Load loot into vehicles
 	//	- Load aliens into bio - trans
 	//	- Put surviving aliens back in the building (?or somewhere else if UFO?)
-	
+
 	state.current_battle = nullptr;
 }
 
@@ -912,14 +964,17 @@ void Battle::loadImagePacks(GameState &state)
 		if (imagePackName.length() == 0)
 			continue;
 		auto imagePackPath = BattleUnitImagePack::imagePackPath + "/" + imagePackName;
-		LogInfo("Loading image pack \"%s\" from \"%s\"", imagePackName.cStr(), imagePackPath.cStr());
+		LogInfo("Loading image pack \"%s\" from \"%s\"", imagePackName.cStr(),
+		        imagePackPath.cStr());
 		auto imagePack = mksp<BattleUnitImagePack>();
 		if (!imagePack->loadImagePack(state, imagePackPath))
 		{
-			LogError("Failed to load image pack \"%s\" from \"%s\"", imagePackName.cStr(), imagePackPath.cStr());
+			LogError("Failed to load image pack \"%s\" from \"%s\"", imagePackName.cStr(),
+			         imagePackPath.cStr());
 			continue;
 		}
-		state.battle_unit_image_packs[UString::format("%s%s", BattleUnitImagePack::getPrefix(), imagePackName)] = imagePack;
+		state.battle_unit_image_packs[UString::format("%s%s", BattleUnitImagePack::getPrefix(),
+		                                              imagePackName)] = imagePack;
 		LogInfo("Loaded image pack \"%s\" from \"%s\"", imagePackName.cStr(), imagePackPath.cStr());
 	}
 }
@@ -951,16 +1006,21 @@ void Battle::loadAnimationPacks(GameState &state)
 	// Load all used animation packs
 	for (auto &animationPackName : animationPacks)
 	{
-		auto animationPackPath = BattleUnitAnimationPack::animationPackPath + "/" + animationPackName;
-		LogInfo("Loading animation pack \"%s\" from \"%s\"", animationPackName.cStr(), animationPackPath.cStr());
+		auto animationPackPath =
+		    BattleUnitAnimationPack::animationPackPath + "/" + animationPackName;
+		LogInfo("Loading animation pack \"%s\" from \"%s\"", animationPackName.cStr(),
+		        animationPackPath.cStr());
 		auto animationPack = mksp<BattleUnitAnimationPack>();
 		if (!animationPack->loadAnimationPack(state, animationPackPath))
 		{
-			LogError("Failed to load animation pack \"%s\" from \"%s\"", animationPackName.cStr(), animationPackPath.cStr());
+			LogError("Failed to load animation pack \"%s\" from \"%s\"", animationPackName.cStr(),
+			         animationPackPath.cStr());
 			continue;
 		}
-		state.battle_unit_animation_packs[UString::format("%s%s", BattleUnitAnimationPack::getPrefix(), animationPackName)] = animationPack;
-		LogInfo("Loaded animation pack \"%s\" from \"%s\"", animationPackName.cStr(), animationPackPath.cStr());
+		state.battle_unit_animation_packs[UString::format(
+		    "%s%s", BattleUnitAnimationPack::getPrefix(), animationPackName)] = animationPack;
+		LogInfo("Loaded animation pack \"%s\" from \"%s\"", animationPackName.cStr(),
+		        animationPackPath.cStr());
 	}
 }
 

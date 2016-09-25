@@ -1,6 +1,6 @@
 #pragma once
-#include "game/ui/tileview/tileview.h"
 #include "framework/framework.h"
+#include "game/ui/tileview/tileview.h"
 
 namespace OpenApoc
 {
@@ -9,8 +9,8 @@ class TileObjectBattleUnit;
 
 class BattleTileView : public TileView
 {
-	// Formula: FPS / ICON_COUNT / DESIRED_ANIMATIONS_PER_SECOND
-	static const int TARGET_ICONS_ANIMATION_DELAY = 60 / 4; 
+	// Formula: FPS / DESIRED_ANIMATIONS_PER_SECOND
+	static const int TARGET_ICONS_ANIMATION_DELAY = 60 / 4;
 
   public:
 	enum class LayerDrawingMode
@@ -21,7 +21,6 @@ class BattleTileView : public TileView
 	};
 
   private:
-
 	int currentZLevel;
 	LayerDrawingMode layerDrawingMode;
 
@@ -47,7 +46,8 @@ class BattleTileView : public TileView
 	int iconAnimationTicksAccumulated = 0;
 
   public:
-	BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize, TileViewMode initialMode);
+	BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
+	               TileViewMode initialMode, int currentZLevel, Vec3<float> screenCenterTile);
 	~BattleTileView() override;
 
 	std::list<sp<BattleUnit>> selectedUnits;
@@ -62,7 +62,5 @@ class BattleTileView : public TileView
 
 	void eventOccurred(Event *e) override;
 	void render() override;
-
-	void drawUnitSelectionArrow(Renderer &r, sp<BattleUnit> u, bool first);
 };
 }

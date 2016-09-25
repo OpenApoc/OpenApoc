@@ -210,10 +210,10 @@ const std::map<OpenApoc::UString, OpenApoc::UString> InitialGameStateExtractor::
 
 void InitialGameStateExtractor::extract(GameState &state, Difficulty difficulty)
 {
-
 	this->extractOrganisations(state, difficulty);
 	this->extractVehicleEquipment(state, difficulty);
 	this->extractAgentEquipment(state, difficulty);
+	this->extractAgentBodyTypes(state, difficulty);
 	this->extractAgentTypes(state, difficulty);
 	this->extractVehicles(state, difficulty);
 	this->extractFacilities(state, difficulty);
@@ -244,6 +244,8 @@ void InitialGameStateExtractor::extract(GameState &state, Difficulty difficulty)
 	                         "cityovr", state.cities[humanMapId]);
 
 	this->extractBattlescapeMap(state, battleMapPaths);
+
+	this->extractSharedBattleResources(state);
 }
 
 } // namespace OpenApoc

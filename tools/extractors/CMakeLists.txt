@@ -12,6 +12,7 @@ set (DATAEXTRACTOR_SOURCE_FILES
 	extract_agent_types.cpp
 	extract_battlescape_map.cpp
 	extract_battlescape_map_parts.cpp
+	extract_battle_shared_resources.cpp
 	extract_facilities.cpp
 	extract_organisations.cpp
 	extract_vehicle_equipment.cpp
