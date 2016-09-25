@@ -1,6 +1,7 @@
 #include "game/ui/base/vequipscreen.h"
 #include "forms/forms.h"
 #include "forms/ui.h"
+#include "framework/apocresources/cursor.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/city/vehicle.h"
@@ -211,7 +212,7 @@ void VEquipScreen::eventOccurred(Event *e)
 			auto paperDollControl = form->findControlTyped<Graphic>("PAPER_DOLL");
 			Vec2<int> equipOffset = paperDollControl->Location + form->Location;
 
-			Vec2<int> equipmentPos = fw().getCursorPosition() + this->draggedEquipmentOffset;
+			Vec2<int> equipmentPos = fw().getCursor().getPosition() + this->draggedEquipmentOffset;
 			// If this is within the grid try to snap it
 			Vec2<int> equipmentGridPos = equipmentPos - equipOffset;
 			equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
@@ -649,14 +650,14 @@ void VEquipScreen::render()
 	if (this->draggedEquipment)
 	{
 		// Draw equipment we're currently dragging (snapping to the grid if possible)
-		Vec2<int> equipmentPos = fw().getCursorPosition() + this->draggedEquipmentOffset;
+		Vec2<int> equipmentPos = fw().getCursor().getPosition() + this->draggedEquipmentOffset;
 		// If this is within the grid try to snap it
 		Vec2<int> equipmentGridPos = equipmentPos - equipOffset;
 		equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
 		if (equipmentGridPos.x < 0 || equipmentGridPos.x >= EQUIP_GRID_SLOTS.x ||
 		    equipmentGridPos.y < 0 || equipmentGridPos.y >= EQUIP_GRID_SLOTS.y)
 		{
-			// This is outside thge grid
+			// This is outside the grid
 		}
 		else
 		{

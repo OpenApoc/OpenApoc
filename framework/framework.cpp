@@ -826,7 +826,7 @@ void Framework::displayInitialise()
 	SDL_ShowCursor(SDL_DISABLE);
 
 	p->registeredRenderers["GLES_3_0"].reset(getGLES30RendererFactory());
-#ifndef __ANDROID__ //GL2 is not available on Android
+#ifndef __ANDROID__ // GL2 is not available on Android
 	p->registeredRenderers["GL_2_0"].reset(getGL20RendererFactory());
 #endif
 
@@ -1008,7 +1008,7 @@ sp<Stage> Framework::stageGetPrevious(sp<Stage> From) { return p->ProgramStages.
 
 void Framework::stageQueueCommand(const StageCmd &cmd) { stageCommands.emplace_back(cmd); }
 
-Vec2<int> Framework::getCursorPosition() { return this->cursor->getPosition(); }
+ApocCursor &Framework::getCursor() { return *this->cursor; }
 
 void Framework::textStartInput() { SDL_StartTextInput(); }
 

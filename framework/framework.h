@@ -83,7 +83,7 @@ class Framework
 
 	void stageQueueCommand(const StageCmd &cmd);
 
-	Vec2<int> getCursorPosition();
+	ApocCursor &getCursor();
 
 	void textStartInput();
 	void textStopInput();

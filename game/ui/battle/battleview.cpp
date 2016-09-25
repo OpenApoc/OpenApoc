@@ -924,14 +924,19 @@ void BattleView::eventOccurred(Event *e)
 	// Exclude mouse down events that are over the form
 	else if (e->type() == EVENT_MOUSE_DOWN)
 	{
-		if (this->getViewMode() == TileViewMode::Strategy && e->mouse().Button == 2)
+
+		if (this->getViewMode() == TileViewMode::Strategy && e->type() == EVENT_MOUSE_DOWN &&
+		    Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
 		{
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
 			auto clickTile = this->screenToTileCoords(
 			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
 			this->setScreenCenterTile({clickTile.x, clickTile.y});
 		}
-		else if ((e->mouse().Button == 1 || e->mouse().Button == 4))
+
+		else if (e->type() == EVENT_MOUSE_DOWN &&
+		         (Event::isPressed(e->mouse().Button, Event::MouseButton::Left) ||
+		          Event::isPressed(e->mouse().Button, Event::MouseButton::Right)))
 		{
 			// If a click has not been handled by a form it's in the map.
 			auto t = this->getSelectedTilePosition();

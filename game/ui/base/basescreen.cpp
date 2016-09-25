@@ -168,7 +168,7 @@ void BaseScreen::eventOccurred(Event *e)
 
 		if (e->forms().EventFlag == FormEventType::MouseDown)
 		{
-			if (e->forms().MouseInfo.Button == 1)
+			if (Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Left))
 			{
 				if (!drag && dragFacility)
 				{
@@ -178,7 +178,7 @@ void BaseScreen::eventOccurred(Event *e)
 					}
 				}
 			}
-			else if (e->forms().MouseInfo.Button == 4)
+			else if (Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right))
 			{
 				sp<UString> clickedFacilityName;
 				if (e->forms().RaisedBy->Name == "LISTBOX_FACILITIES")
