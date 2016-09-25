@@ -275,7 +275,7 @@ void BattleView::eventOccurred(Event *e)
 	else if (e->type() == EVENT_MOUSE_DOWN)
 	{
 		if (this->getViewMode() == TileViewMode::Strategy && e->type() == EVENT_MOUSE_DOWN &&
-		    e->mouse().Button == 2)
+		    Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
 		{
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
 			auto clickTile = this->screenToTileCoords(
@@ -283,7 +283,8 @@ void BattleView::eventOccurred(Event *e)
 			this->setScreenCenterTile({clickTile.x, clickTile.y});
 		}
 		else if (e->type() == EVENT_MOUSE_DOWN &&
-		         (e->mouse().Button == 1 || e->mouse().Button == 4))
+		         (Event::isPressed(e->mouse().Button, Event::MouseButton::Left) ||
+		          Event::isPressed(e->mouse().Button, Event::MouseButton::Right)))
 		{
 			// If a click has not been handled by a form it's in the map.
 			auto t = this->getSelectedTilePosition();

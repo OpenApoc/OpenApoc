@@ -126,6 +126,18 @@ struct FrameworkUserEvent
 */
 class Event
 {
+  public:
+	enum class MouseButton
+	{
+		Left = 1,
+		Middle = 2,
+		Right = 3,
+		Back = 4,
+		Forward = 5
+	};
+
+	static bool isPressed(int mask, MouseButton button);
+
   protected:
 	Event(EventTypes type);
 	EventTypes eventType;

@@ -767,14 +767,15 @@ void CityView::eventOccurred(Event *e)
 	else if (e->type() == EVENT_MOUSE_DOWN)
 	{
 		if (this->getViewMode() == TileViewMode::Strategy && e->type() == EVENT_MOUSE_DOWN &&
-		    e->mouse().Button == 2)
+		    Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
 		{
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
 			auto clickTile = this->screenToTileCoords(
 			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
 			this->setScreenCenterTile({clickTile.x, clickTile.y});
 		}
-		else if (e->type() == EVENT_MOUSE_DOWN && e->mouse().Button == 1)
+		else if (e->type() == EVENT_MOUSE_DOWN &&
+		         Event::isPressed(e->mouse().Button, Event::MouseButton::Left))
 		{
 			// If a click has not been handled by a form it's in the map. See if we intersect with
 			// anything
