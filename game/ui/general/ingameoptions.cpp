@@ -6,6 +6,7 @@
 #include "game/ui/general/mainmenu.h"
 #include "game/ui/general/mapselector.h"
 #include "game/ui/general/savemenu.h"
+#include "game/ui/city/cityview.h"
 
 namespace OpenApoc
 {
@@ -131,12 +132,11 @@ void InGameOptions::eventOccurred(Event *e)
 				Battle::finishBattle(*state.get());
 				Battle::exitBattle(*state.get());
 
-				fw().stageQueueCommand({StageCmd::Command::POP});
-				fw().stageQueueCommand({StageCmd::Command::POP});
+				fw().stageQueueCommand({ StageCmd::Command::REPLACEALL, mksp<CityView>(state) });
 			}
 			else
 			{
-				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<MapSelector>(state)});
+				fw().stageQueueCommand({ StageCmd::Command::PUSH, mksp<MapSelector>(state) });
 			}
 		}
 	}

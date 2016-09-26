@@ -36985,6 +36985,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_LW_65</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:64</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:65</entry>
@@ -37083,6 +37084,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_LW_67</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:58</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:59</entry>
@@ -37359,6 +37361,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_LW_81</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:40</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:41</entry>
@@ -37457,6 +37460,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_LW_41</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:34</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:35</entry>
@@ -37821,6 +37825,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_LW_68</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:29</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:30</entry>
@@ -38185,6 +38190,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_LW_69</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:5</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:6</entry>
@@ -38460,6 +38466,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_LW_70</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:17</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:18</entry>
@@ -41095,6 +41102,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_LW_58</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:82</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:83</entry>
@@ -41193,6 +41201,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_LW_78</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:88</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:89</entry>
@@ -41461,6 +41470,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_LW_62</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:182</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:183</entry>
@@ -41558,6 +41568,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_LW_80</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:94</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:95</entry>
@@ -41656,6 +41667,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_LW_59</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:100</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:101</entry>
@@ -41839,6 +41851,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_LW_64</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:170</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:171</entry>
@@ -42799,6 +42812,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_LW_74</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:130</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:131</entry>
@@ -42981,6 +42995,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_LW_76</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:135</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:136</entry>
@@ -44757,6 +44772,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_RW_48</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:70</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:71</entry>
@@ -44855,6 +44871,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_RW_49</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:76</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:77</entry>
@@ -45131,6 +45148,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_RW_50</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:46</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:47</entry>
@@ -45229,6 +45247,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_RW_60</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:52</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:53</entry>
@@ -45681,6 +45700,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_RW_52</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:24</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:25</entry>
@@ -46045,6 +46065,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_RW_53</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:1</entry>
@@ -46408,6 +46429,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_RW_54</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:10</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:11</entry>
@@ -47485,6 +47507,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_RW_49</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:112</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:113</entry>
@@ -47753,6 +47776,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_RW_46</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:118</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:119</entry>
@@ -47851,6 +47875,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_RW_43</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:124</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:125</entry>
@@ -48034,6 +48059,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_RW_66</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:176</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:177</entry>
@@ -49444,6 +49470,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_RW_62</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:160</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:161</entry>
@@ -49626,6 +49653,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_RW_64</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:165</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:166</entry>
@@ -50245,6 +50273,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_01senate_RW_65</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:188</entry>
             <entry>PCK:xcom3/maps/01senate/mapunits/animate.pck:xcom3/maps/01senate/mapunits/animate.tab:189</entry>

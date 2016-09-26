@@ -4,6 +4,7 @@
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemap.h"
 #include "game/state/battle/battlemappart.h"
+#include "game/state/battle/battledoor.h"
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/city/city.h"
@@ -57,13 +58,6 @@ Battle::~Battle()
 			s->tileObject->removeFromMap();
 		s->tileObject = nullptr;
 	}
-	// FIXME: Due to tiles possibly being cross-supported we need to clear that sp<> to avoid leaks
-	// Should this be pushed into a weak_ptr<> or some other ref?
-	for (auto s : this->map_parts)
-	{
-		s->supportedParts.clear();
-		s->supportedBy.clear();
-	}
 	this->map_parts.clear();
 	for (auto &s : this->items)
 	{
@@ -81,18 +75,28 @@ void Battle::initBattle(GameState &state)
 	strategy_icon_list = state.battle_strategy_icon_list;
 	common_sample_list = state.battle_common_sample_list;
 	loadResources(state);
+	auto stt = shared_from_this();
 	for (auto &s : this->map_parts)
 	{
-		s->battle = shared_from_this();
+		s->battle = stt;
+		if (s->doorID != -1)
+		{
+			doors[s->doorID]->mapParts.push_back(s);
+			doors[s->doorID]->position = s->getPosition();
+		}
+	}
+	for (auto &d : this->doors)
+	{
+		d->battle = stt;
 	}
 	for (auto &o : this->items)
 	{
-		o->battle = shared_from_this();
+		o->battle = stt;
 		o->item->ownerItem = o->shared_from_this();
 	}
 	for (auto &o : this->units)
 	{
-		o->battle = shared_from_this();
+		o->battle = stt;
 	}
 	if (forces.size() == 0)
 	{
@@ -140,14 +144,31 @@ void Battle::initMap()
 	                            {VOXEL_X_BATTLE, VOXEL_Y_BATTLE, VOXEL_Z_BATTLE}, layerMap));
 	for (auto &s : this->map_parts)
 	{
+		if (s->destroyed)
+		{
+			continue;
+		}
 		this->map->addObjectToMap(s);
+	}
+	for (auto &s : this->map_parts)
+	{
+		s->findSupport();
+	}
+	for (auto &s : this->map_parts)
+	{
+		s->tryCollapse();
 	}
 	for (auto &o : this->items)
 	{
 		this->map->addObjectToMap(o);
+		o->findSupport(false);
 	}
 	for (auto &u : this->units)
 	{
+		if (u->destroyed || u->retreated)
+		{
+			continue;
+		}
 		this->map->addObjectToMap(u);
 	}
 	for (auto &p : this->projectiles)
@@ -217,6 +238,12 @@ void Battle::update(GameState &state, unsigned int ticks)
 		}
 	}
 	Trace::end("Battle::update::projectiles->update");
+	Trace::start("Battle::update::doors->update");
+	for (auto &o : this->doors)
+	{
+		o->update(state, ticks);
+	}
+	Trace::end("Battle::update::doors->update");
 	Trace::start("Battle::update::map_parts->update");
 	for (auto &o : this->map_parts)
 	{
@@ -845,6 +872,11 @@ void Battle::enterBattle(GameState &state)
 		state.current_battle->battleviewZLevel = ceilf(firstPlayerUnit->position.z);
 	}
 
+	if (state.current_battle->mission_type == Battle::MissionType::RaidHumans)
+	{
+		// FIXME: Make X-COM hostile to target org for the duration of this mission
+	}
+
 	state.current_battle->initBattle(state);
 }
 
@@ -888,6 +920,7 @@ void Battle::exitBattle(GameState &state)
 	//	- Load loot into vehicles
 	//	- Load aliens into bio - trans
 	//	- Put surviving aliens back in the building (?or somewhere else if UFO?)
+	//  - Restore X-Com relationship to target organisation
 
 	state.current_battle = nullptr;
 }

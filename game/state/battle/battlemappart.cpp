@@ -1,19 +1,48 @@
 #include "game/state/battle/battlemappart.h"
+#include "game/state/battle/battledoor.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/scenery_tile_type.h"
-#include "game/state/tileview/tile.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
-#include "game/state/tileview/tileobject_scenery.h"
 
 namespace OpenApoc
 {
 
+int BattleMapPart::getMaxFrames()
+{
+	return alternative_type ? alternative_type->animation_frames.size() : type->animation_frames.size();
+}
+
+int BattleMapPart::getAnimationFrame()
+{
+	if (isDoor())
+	{
+		return std::min(getMaxFrames() - 1, getDoor()->getAnimationFrame());
+	}
+	else
+	{
+		return type->animation_frames.size() == 0 ? -1 : animation_frame_ticks / TICKS_PER_FRAME_MAP_PART;
+	}
+}
+
+sp<BattleDoor> BattleMapPart::getDoor()
+{
+	auto b = battle.lock();
+	if (!b ) //|| doorID == -1 ||  b->doors.size() >= doorID // <-- need to check this too?
+	{
+		LogError("getDoor - Battle disappeared!");
+		return nullptr;
+	} 
+	return b->doors[doorID];
+}
+
 void BattleMapPart::handleCollision(GameState &state, Collision &c)
 {
-	// FIXME: Proper damage
+	// FIXME: Proper damage application
+	//
+	// - if (not enough damage to type) then return
+
 	std::ignore = c;
 	// If this tile has a damaged tile, replace it with that. If it's already damaged, destroy as
 	// normal
@@ -37,64 +66,115 @@ void BattleMapPart::handleCollision(GameState &state, Collision &c)
 	else
 	{
 		// Don't destroy bottom tiles, else everything will leak out
-		if (this->initialPosition.z != 0 || this->type->type != BattleMapPartType::Type::Ground)
+		if (this->initialPosition.z == 0 && this->type->type == BattleMapPartType::Type::Ground)
+		{
+			auto b = battle.lock();
+			if (!b) 
+			{
+				LogError("handleCollision - Battle disappeared!");
+				return;
+			}
+			this->type = b->battle_map->destroyed_ground_tile;
+		}
+		// Destroy map part
+		else
 		{
 			this->tileObject->removeFromMap();
 			this->tileObject.reset();
-		}
-		else
-		{
-			auto b = battle.lock();
-			if (!b)
-				LogError("Battle disappeared!");
-			this->type = b->battle_map->destroyed_ground_tile;
+
+			ceaseSupportProvision();
 		}
 	}
+}
+
+void BattleMapPart::findSupport()
+{
+	// If it's already falling or destroyed or supported do nothing
+	if (this->falling || !this->tileObject || supported)
+		return;
+	
+	supported = false;
+	// FIXME: Implement
+	//
+	// - Check every neighbouring map part of our type
+	//		- If map part fits our supportedBy criteria then add it to a temp list
+	// - If our temp list fits our criteria then we are supported
+	supported = true;
+}
+
+void BattleMapPart::ceaseSupportProvision()
+{
 	for (auto &s : this->supportedParts)
-		s->collapse(state);
+	{
+		auto i = s.lock();
+		if (i)
+		{
+			i->findSupport();
+			i->tryCollapse();
+		}
+	}
+	this->supportedParts.clear();
 	for (auto &s : this->supportedItems)
 	{
 		auto i = s.lock();
 		if (i)
+		{
 			i->supported = false;
+			i->findSupport(false);
+		}
 	}
+	this->supportedItems.clear();
 }
 
-void BattleMapPart::collapse(GameState &state)
+void BattleMapPart::tryCollapse(bool force)
 {
-	// IF it's already falling or destroyed do nothing
-	if (this->falling || !this->tileObject)
+	// If it's already falling or destroyed or supported do nothing
+	if (this->falling || !this->tileObject || (!force && supported))
 		return;
 	this->falling = true;
-
-	for (auto &s : this->supportedParts)
-		s->collapse(state);
+	ceaseSupportProvision();
+	if (isDoor())
+	{
+		getDoor()->collapse();
+	}
 }
 
 void BattleMapPart::update(GameState &, unsigned int ticks)
 {
-	if (!this->falling)
-		return;
-	if (!this->tileObject)
+	// Process falling
+	if (this->falling)
 	{
-		LogError("Falling map part with no object?");
-	}
-
-	auto currentPos = this->tileObject->getPosition();
-	// FIXME: gravity acceleration?
-	currentPos.z -= static_cast<float>(ticks) / 16.0f;
-	this->tileObject->setPosition(currentPos);
-
-	for (auto &obj : this->tileObject->getOwningTile()->ownedObjects)
-	{
-		switch (obj->getType())
+		if (!this->tileObject)
 		{
+			LogError("Falling map part with no object?");
+		}
+
+		auto currentPos = this->tileObject->getPosition();
+		// FIXME: gravity acceleration?
+		currentPos.z -= static_cast<float>(ticks) / 16.0f;
+		this->tileObject->setPosition(currentPos);
+
+		for (auto &obj : this->tileObject->getOwningTile()->ownedObjects)
+		{
+			switch (obj->getType())
+			{
 			case TileObject::Type::Ground:
 				// FIXME: do something?
 				break;
 			default:
 				// Ignore other object types?
 				break;
+			}
+		}
+		return;
+	}
+	else // !this -> falling
+	{
+		// Animate non-doors
+		if (!isDoor() && type->animation_frames.size() > 0)
+		{
+			animation_frame_ticks += ticks;
+			animation_frame_ticks %= TICKS_PER_FRAME_MAP_PART * type->animation_frames.size();
 		}
 	}
 }
@@ -105,4 +185,5 @@ bool BattleMapPart::isAlive() const
 		return false;
 	return true;
 }
+
 }

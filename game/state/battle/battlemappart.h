@@ -3,6 +3,8 @@
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 
+#define TICKS_PER_FRAME_MAP_PART 8
+
 namespace OpenApoc
 {
 class Battle;
@@ -10,12 +12,13 @@ class Collision;
 class TileObjectBattleMapPart;
 class BattleMapPartType;
 class BattleItem;
+class BattleDoor;
 
 class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 {
-
   public:
 	StateRef<BattleMapPartType> type;
+	StateRef<BattleMapPartType> alternative_type;
 
 	Vec3<float> getPosition() const { return currentPosition; }
 
@@ -25,22 +28,35 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	bool damaged = false;
 	bool falling = false;
 	bool destroyed = false;
-
+	int doorID = -1;
+	bool isDoor() { return battle.lock() && doorID != -1; }
+	sp<BattleDoor> getDoor();
+	
+	// Ticks for animation of non-doors
+	int animation_frame_ticks = 0;
+	int getAnimationFrame();
+	int getMaxFrames();
+	
 	void handleCollision(GameState &state, Collision &c);
 
 	void update(GameState &state, unsigned int ticks);
-	void collapse(GameState &state);
+	// Check if we are still supported, and collapse if not
+	void tryCollapse(bool force = false);
+	// Cease providing or requiring support
+	void ceaseSupportProvision();
+	// Find map parts that support this one and set "supported" flag
+	void findSupport();
 
 	bool isAlive() const;
 
+	~BattleMapPart() = default;
+
 	// Following members are not serialized, but rather are set in initBattle method
 
+	bool supported = false;
 	sp<TileObjectBattleMapPart> tileObject;
 	std::list<wp<BattleItem>> supportedItems;
-	std::set<sp<BattleMapPart>> supportedParts;
-	std::set<sp<BattleMapPart>> supportedBy;
+	std::list<wp<BattleMapPart>> supportedParts;
 	wp<Battle> battle;
-
-	~BattleMapPart() = default;
 };
 }

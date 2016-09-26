@@ -8,6 +8,7 @@ namespace OpenApoc
 {
 
 class Vehicle;
+class AgentType;
 class AEquipmentType;
 template <typename T> class StateObject;
 
@@ -34,6 +35,8 @@ class Organisation : public StateObject<Organisation>
 
 	int tech_level;
 	int average_guards;
+	// What guard types can spawn, supports duplicates to provide variety
+	std::list<StateRef<AgentType>> guard_types;
 
 	std::map<LootPriority, std::vector<StateRef<AEquipmentType>>> loot;
 

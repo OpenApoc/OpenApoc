@@ -31095,6 +31095,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_LW_71</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:14</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:15</entry>
@@ -31459,6 +31460,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_LW_80</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:72</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:73</entry>
@@ -31556,6 +31558,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_LW_81</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:61</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:62</entry>
@@ -31920,6 +31923,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_LW_70</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:7</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:8</entry>
@@ -32286,6 +32290,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_LW_69</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:1</entry>
@@ -32741,6 +32746,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_LW_72</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:19</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:20</entry>
@@ -33116,6 +33122,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_LW_77</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:36</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:37</entry>
@@ -35577,6 +35584,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_LW_73</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:26</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:27</entry>
@@ -35763,6 +35771,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_LW_74</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:31</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:32</entry>
@@ -36042,6 +36051,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_LW_73</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:41</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:42</entry>
@@ -36681,6 +36691,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_LW_69</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:56</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:57</entry>
@@ -38967,6 +38978,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_RW_61</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:121</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:122</entry>
@@ -39420,6 +39432,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_RW_54</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:78</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:79</entry>
@@ -39606,6 +39619,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_RW_53</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:84</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:85</entry>
@@ -39789,6 +39803,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_RW_21</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:145</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:146</entry>
@@ -39888,6 +39903,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_RW_62</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:126</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:127</entry>
@@ -40254,6 +40270,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_RW_55</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:133</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:134</entry>
@@ -40976,6 +40993,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_RW_55</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:78</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:79</entry>
@@ -41520,6 +41538,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_RW_56</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:94</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:95</entry>
@@ -41886,6 +41905,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_RW_57</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:101</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:102</entry>
@@ -41983,6 +42003,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_RW_58</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:106</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:107</entry>
@@ -42080,6 +42101,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_RW_58</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:111</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:112</entry>
@@ -42177,6 +42199,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_RW_58</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:116</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:117</entry>
@@ -42274,6 +42297,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_RW_57</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:145</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:146</entry>
@@ -42371,6 +42395,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_RW_57</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:150</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:151</entry>
@@ -44735,6 +44760,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_04school_RW_55</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:89</entry>
             <entry>PCK:xcom3/maps/04school/mapunits/animate.pck:xcom3/maps/04school/mapunits/animate.tab:90</entry>

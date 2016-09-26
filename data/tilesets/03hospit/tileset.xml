@@ -32476,6 +32476,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_LW_63</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:17</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:18</entry>
@@ -32572,6 +32573,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_LW_61</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:13</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:14</entry>
@@ -33291,6 +33293,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_LW_64</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:21</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:22</entry>
@@ -33569,6 +33572,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_LW_65</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:30</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:31</entry>
@@ -34647,6 +34651,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_LW_66</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:37</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:38</entry>
@@ -34744,6 +34749,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_LW_69</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:42</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:43</entry>
@@ -36917,6 +36923,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_LW_61</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:5</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:6</entry>
@@ -37705,6 +37712,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_LW_66</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:47</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:48</entry>
@@ -37977,6 +37985,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_LW_66</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:52</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:53</entry>
@@ -38160,6 +38169,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_LW_69</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:57</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:58</entry>
@@ -38337,6 +38347,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_LW_69</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:62</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:63</entry>
@@ -39398,6 +39409,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_LW_60</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:1</entry>
@@ -39760,6 +39772,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_RW_42</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:75</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:76</entry>
@@ -40124,6 +40137,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_RW_44</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:84</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:85</entry>
@@ -40405,6 +40419,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_RW_45</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:88</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:89</entry>
@@ -40769,6 +40784,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_RW_46</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:93</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:94</entry>
@@ -42215,6 +42231,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_RW_50</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:114</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:115</entry>
@@ -42312,6 +42329,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_RW_48</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:109</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:110</entry>
@@ -43281,6 +43299,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_RW_48</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:119</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:120</entry>
@@ -43464,6 +43483,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_RW_48</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:124</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:125</entry>
@@ -43736,6 +43756,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_RW_50</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:129</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:130</entry>
@@ -43913,6 +43934,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_RW_50</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:134</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:135</entry>
@@ -44974,6 +44996,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_03hospit_RW_41</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:67</entry>
             <entry>PCK:xcom3/maps/03hospit/mapunits/animate.pck:xcom3/maps/03hospit/mapunits/animate.tab:68</entry>

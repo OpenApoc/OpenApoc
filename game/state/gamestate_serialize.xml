@@ -334,6 +334,7 @@
 		<member>block_psionic</member>
 		<member>size</member>
 		<member>damaged_map_part</member>
+		<member>alternative_map_part</member>
 		<member>animation_frames</member>
 		<member>transparent</member>
 		<member>sfxIndex</member>
@@ -503,16 +504,26 @@
 		<member>item</member>
 		<member>position</member>
 		<member>velocity</member>
-		<member>supported</member>
 	</object>
 	<object>
 		<name>BattleMapPart</name>
 		<member>type</member>
+		<member>alternative_type</member>
 		<member>initialPosition</member>
 		<member>currentPosition</member>
 		<member>damaged</member>
 		<member>falling</member>
 		<member>destroyed</member>
+		<member>doorID</member>
+	</object>
+	<object>
+		<name>BattleDoor</name>
+		<member>operational</member>
+		<member>right</member>
+		<member>open</member>
+		<member>animationFrameCount</member>
+		<member>openTicksRemaining</member>
+		<member>animationTicksRemaining</member>
 	</object>
 	<object>
 		<name>City</name>
@@ -743,6 +754,7 @@
 		<member>income</member>
 		<member>tech_level</member>
 		<member>average_guards</member>
+		<member>guard_types</member>
 		<member>loot</member>
 		<member>current_relations</member>
 	</object>

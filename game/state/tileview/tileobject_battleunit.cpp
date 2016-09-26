@@ -63,8 +63,8 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 				return;
 
 			bool friendly = unit->owner == battle->currentPlayer;
-			bool hostile =
-			    unit->owner->isRelatedTo(battle->currentPlayer) == Organisation::Relation::Hostile;
+			bool hostile = battle->currentPlayer->isRelatedTo(unit->owner) 
+				== Organisation::Relation::Hostile;
 
 			// 0 = enemy, 2 = friendly, 3 = neutral
 			int side_offset = friendly ? 2 : (hostile ? 0 : 3);
@@ -156,6 +156,18 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 	}
 }
 
+void TileObjectBattleUnit::removeFromMap()
+{
+	bool requireRecalc = owningTile != nullptr;
+	auto prevOwningTile = owningTile;
+
+	TileObject::removeFromMap();
+	if (requireRecalc)
+	{
+		prevOwningTile->updateBattlescapeUnitPresent();
+	}
+}
+
 void TileObjectBattleUnit::setPosition(Vec3<float> newPosition)
 {
 	auto u = getUnit();
@@ -188,7 +200,10 @@ void TileObjectBattleUnit::setPosition(Vec3<float> newPosition)
 	}
 
 	occupiedTiles.clear();
+	
 	TileObject::setPosition(newPosition);
+	owningTile->updateBattlescapeUnitPresent();
+
 	auto pos = owningTile->position;
 
 	// Vanilla allowed units to "pop into" other units without any limit

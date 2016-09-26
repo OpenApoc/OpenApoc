@@ -29976,6 +29976,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_19sewage_LW_60</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:48</entry>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:49</entry>
@@ -30343,6 +30344,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_19sewage_LW_59</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:40</entry>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:41</entry>
@@ -32050,6 +32052,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_19sewage_LW_59</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:56</entry>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:57</entry>
@@ -34593,6 +34596,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_19sewage_LW_58</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:32</entry>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:33</entry>
@@ -34954,6 +34958,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_19sewage_LW_64</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:116</entry>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:117</entry>
@@ -35137,6 +35142,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_19sewage_LW_66</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:121</entry>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:122</entry>
@@ -35320,6 +35326,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_19sewage_LW_68</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:126</entry>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:127</entry>
@@ -35503,6 +35510,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_19sewage_LW_68</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:131</entry>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:132</entry>
@@ -36752,6 +36760,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_19sewage_RW_46</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:16</entry>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:17</entry>
@@ -37119,6 +37128,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_19sewage_RW_45</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:8</entry>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:9</entry>
@@ -38816,6 +38826,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_19sewage_RW_45</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:24</entry>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:25</entry>
@@ -40240,6 +40251,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_19sewage_RW_49</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:96</entry>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:97</entry>
@@ -40512,6 +40524,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_19sewage_RW_49</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:101</entry>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:102</entry>
@@ -40695,6 +40708,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_19sewage_RW_53</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:106</entry>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:107</entry>
@@ -40878,6 +40892,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_19sewage_RW_55</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:111</entry>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:112</entry>
@@ -41595,6 +41610,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_19sewage_RW_44</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/19sewage/mapunits/animate.pck:xcom3/maps/19sewage/mapunits/animate.tab:1</entry>

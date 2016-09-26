@@ -7,6 +7,7 @@
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battlemap.h"
+#include "game/state/battle/battledoor.h"
 #include "game/state/battle/battlemaptileset.h"
 #include "game/state/battle/battlestrategyiconlist.h"
 #include "game/state/battle/battleunitanimationpack.h"

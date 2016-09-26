@@ -33641,6 +33641,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_LW_48</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:104</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:105</entry>
@@ -33739,6 +33740,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_LW_61</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:78</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:79</entry>
@@ -33837,6 +33839,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_LW_57</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:84</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:85</entry>
@@ -34559,6 +34562,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_LW_52</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:50</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:51</entry>
@@ -35012,6 +35016,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_LW_51</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:45</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:46</entry>
@@ -35109,6 +35114,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_LW_53</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:60</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:61</entry>
@@ -37822,6 +37828,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_LW_56</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:20</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:21</entry>
@@ -37919,6 +37926,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_LW_57</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:25</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:26</entry>
@@ -38188,6 +38196,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_LW_60</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:30</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:31</entry>
@@ -38285,6 +38294,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_LW_61</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:35</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:36</entry>
@@ -38999,6 +39009,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_LW_67</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:116</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:117</entry>
@@ -39182,6 +39193,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_LW_69</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:121</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:122</entry>
@@ -39454,6 +39466,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_LW_71</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:126</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:127</entry>
@@ -39637,6 +39650,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_LW_73</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:131</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:132</entry>
@@ -40610,6 +40624,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_RW_42</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:97</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:98</entry>
@@ -41243,6 +41258,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_RW_37</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:55</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:56</entry>
@@ -41696,6 +41712,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_RW_36</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:40</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:41</entry>
@@ -41793,6 +41810,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_RW_38</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:69</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:70</entry>
@@ -43384,6 +43402,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_RW_41</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:1</entry>
@@ -43570,6 +43589,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_RW_42</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:5</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:6</entry>
@@ -43839,6 +43859,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_RW_45</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:10</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:11</entry>
@@ -43936,6 +43957,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_RW_46</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:15</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:16</entry>
@@ -44650,6 +44672,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_RW_52</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:146</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:147</entry>
@@ -44833,6 +44856,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_RW_52</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:151</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:152</entry>
@@ -45016,6 +45040,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_RW_56</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:136</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:137</entry>
@@ -45199,6 +45224,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_RW_58</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:141</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:142</entry>
@@ -46005,6 +46031,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_RW_33</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:110</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:111</entry>
@@ -46103,6 +46130,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_11park_RW_46</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:91</entry>
             <entry>PCK:xcom3/maps/11park/mapunits/animate.pck:xcom3/maps/11park/mapunits/animate.tab:92</entry>

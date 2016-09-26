@@ -33739,6 +33739,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_02police_LW_76</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:82</entry>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:83</entry>
@@ -34016,6 +34017,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_02police_LW_95</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:47</entry>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:48</entry>
@@ -34825,6 +34827,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_02police_LW_95</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:52</entry>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:53</entry>
@@ -34924,6 +34927,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_02police_LW_81</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:59</entry>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:60</entry>
@@ -35020,6 +35024,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_02police_LW_97</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:63</entry>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:64</entry>
@@ -35651,6 +35656,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_02police_LW_83</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:77</entry>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:78</entry>
@@ -35748,6 +35754,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_02police_LW_79</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:38</entry>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:39</entry>
@@ -36472,6 +36479,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_02police_LW_83</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:68</entry>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:69</entry>
@@ -36662,6 +36670,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_02police_LW_83</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:89</entry>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:90</entry>
@@ -42626,6 +42635,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_02police_RW_64</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:113</entry>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:114</entry>
@@ -42903,6 +42913,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_02police_RW_60</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:9</entry>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:10</entry>
@@ -43356,6 +43367,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_02police_RW_60</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:14</entry>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:15</entry>
@@ -43544,6 +43556,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_02police_RW_65</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:108</entry>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:109</entry>
@@ -43819,6 +43832,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_02police_RW_70</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:25</entry>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:26</entry>
@@ -43915,6 +43929,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_02police_RW_72</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:21</entry>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:22</entry>
@@ -44545,6 +44560,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_02police_RW_65</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:120</entry>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:121</entry>
@@ -44642,6 +44658,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_02police_RW_61</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:1</entry>
@@ -45366,6 +45383,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_02police_RW_62</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:29</entry>
             <entry>PCK:xcom3/maps/02police/mapunits/animate.pck:xcom3/maps/02police/mapunits/animate.tab:30</entry>

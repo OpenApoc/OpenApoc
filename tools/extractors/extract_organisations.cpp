@@ -28,6 +28,9 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state, Difficult
 		o->tech_level = odata.starting_tech_level + 1;
 		o->average_guards = odata.average_guards;
 
+		// We fill this by hand
+		//o->guard_types.push_back({ &state, "AGENTTYPE_BUILDING_SECURITY" });
+
 		// "Civilian" organisation has no loot entry
 		if (i == data.organisation_data->count() - 1)
 		{

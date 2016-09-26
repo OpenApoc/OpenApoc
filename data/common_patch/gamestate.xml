@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gamestate>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="facility_types.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="organisations.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="doodad_types.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufopaedia.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_generator.xml"/>

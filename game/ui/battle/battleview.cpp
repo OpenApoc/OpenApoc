@@ -1240,6 +1240,7 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 			}
 		}
 	}
+	return a;
 }
 
 bool AgentEquipmentInfo::operator==(const AgentEquipmentInfo &other) const

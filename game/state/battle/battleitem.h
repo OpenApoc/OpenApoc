@@ -26,21 +26,22 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 	Vec3<float> position;
 	Vec3<float> velocity;
 
-	bool supported = false;
-
 	void handleCollision(GameState &state, Collision &c);
 	void die(GameState &state, bool violently);
 	void update(GameState &state, unsigned int ticks);
-
-	// Following members are not serialized, but rather are set in initBattle method
-
-	sp<TileObjectBattleItem> tileObject;
-	sp<TileObjectShadow> shadowObject;
-	wp<Battle> battle;
 
 	BattleItem() = default;
 	~BattleItem() = default;
 
 	void setPosition(const Vec3<float> &pos);
+
+	bool findSupport(bool emitSound = true, bool forced = false);
+
+	// Following members are not serialized, but rather are set up in the initBattle method
+
+	bool supported = false;
+	sp<TileObjectBattleItem> tileObject;
+	sp<TileObjectShadow> shadowObject;
+	wp<Battle> battle;
 };
 } // namespace OpenApoc

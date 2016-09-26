@@ -25,21 +25,23 @@ class BattleUnitTileHelper : public CanEnterTileHelper
 	bool canEnterTile(Tile *from, Tile *to, bool demandGiveWay = false) const override
 	{
 		float nothing;
-		return canEnterTile(from, to, nothing, false, demandGiveWay);
+		bool none;
+		return canEnterTile(from, to, nothing, none, false, demandGiveWay);
 	}
 
-	bool canEnterTile(Tile *from, Tile *to, float &cost, bool demandGiveWay = false) const override
+	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay, bool demandGiveWay = false) const override
 	{
-		return canEnterTile(from, to, cost, false, demandGiveWay);
+		return canEnterTile(from, to, cost, doorInTheWay, false, demandGiveWay);
 	}
 
 	bool canEnterTile(Tile *from, Tile *to, bool ignoreUnits, bool demandGiveWay) const
 	{
 		float nothing;
-		return canEnterTile(from, to, nothing, ignoreUnits, demandGiveWay);
+		bool none;
+		return canEnterTile(from, to, nothing, none, ignoreUnits, demandGiveWay);
 	}
 
-	bool canEnterTile(Tile *from, Tile *to, float &cost, bool ignoreUnits,
+	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay, bool ignoreUnits,
 	                  bool demandGiveWay) const;
 };
 

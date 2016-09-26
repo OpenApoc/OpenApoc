@@ -34371,6 +34371,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>3</size>
+          <alternative_map_part>BATTLEMAPPART_54ufo4_LW_45</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/54ufo4/mapunits/animate.pck:xcom3/maps/54ufo4/mapunits/animate.tab:12</entry>
             <entry>PCK:xcom3/maps/54ufo4/mapunits/animate.pck:xcom3/maps/54ufo4/mapunits/animate.tab:13</entry>
@@ -34468,6 +34469,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>3</size>
+          <alternative_map_part>BATTLEMAPPART_54ufo4_LW_45</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/54ufo4/mapunits/animate.pck:xcom3/maps/54ufo4/mapunits/animate.tab:18</entry>
             <entry>PCK:xcom3/maps/54ufo4/mapunits/animate.pck:xcom3/maps/54ufo4/mapunits/animate.tab:19</entry>
@@ -37930,6 +37932,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>3</size>
+          <alternative_map_part>BATTLEMAPPART_54ufo4_RW_40</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/54ufo4/mapunits/animate.pck:xcom3/maps/54ufo4/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/54ufo4/mapunits/animate.pck:xcom3/maps/54ufo4/mapunits/animate.tab:1</entry>
@@ -38028,6 +38031,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>3</size>
+          <alternative_map_part>BATTLEMAPPART_54ufo4_RW_40</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/54ufo4/mapunits/animate.pck:xcom3/maps/54ufo4/mapunits/animate.tab:6</entry>
             <entry>PCK:xcom3/maps/54ufo4/mapunits/animate.pck:xcom3/maps/54ufo4/mapunits/animate.tab:7</entry>

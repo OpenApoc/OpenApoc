@@ -338,8 +338,8 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 
 		e->weight = edata.weight;
 
-		e->shadow_offset = {23, -14};
-		e->dropped_offset = {23, 34};
+		e->shadow_offset = BATTLE_SHADOW_OFFSET;
+		e->dropped_offset = BATTLE_IMAGE_OFFSET;
 
 		if (edata.sprite_idx < gameObjectSpriteCount)
 			e->dropped_sprite =

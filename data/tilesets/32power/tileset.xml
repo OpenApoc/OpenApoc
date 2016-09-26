@@ -7345,6 +7345,7 @@
           <block_fire>128</block_fire>
           <block_psionic>225</block_psionic>
           <size>1</size>
+          <alternative_map_part>BATTLEMAPPART_32power_FT_255</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:21</entry>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:22</entry>
@@ -29443,6 +29444,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_32power_LW_43</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:8</entry>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:9</entry>
@@ -29807,6 +29809,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_32power_LW_45</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:13</entry>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:14</entry>
@@ -29995,6 +29998,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_32power_LW_46</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:20</entry>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:21</entry>
@@ -30893,6 +30897,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_32power_LW_44</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:1</entry>
@@ -32560,6 +32565,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_32power_LW_48</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:25</entry>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:26</entry>
@@ -32743,6 +32749,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_32power_LW_50</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:30</entry>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:31</entry>
@@ -33015,6 +33022,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_32power_LW_52</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:35</entry>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:36</entry>
@@ -33198,6 +33206,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_32power_LW_54</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:40</entry>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:41</entry>
@@ -34980,6 +34989,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_32power_RW_36</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:53</entry>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:54</entry>
@@ -35077,6 +35087,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_32power_RW_38</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:63</entry>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:64</entry>
@@ -35532,6 +35543,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_32power_RW_37</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:58</entry>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:59</entry>
@@ -37223,6 +37235,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_32power_RW_40</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:70</entry>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:71</entry>
@@ -37581,6 +37594,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_32power_RW_41</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:75</entry>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:76</entry>
@@ -37678,6 +37692,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_32power_RW_44</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:80</entry>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:81</entry>
@@ -37861,6 +37876,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_32power_RW_46</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:85</entry>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:86</entry>
@@ -38756,6 +38772,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_32power_RW_35</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:45</entry>
             <entry>PCK:xcom3/maps/32power/mapunits/animate.pck:xcom3/maps/32power/mapunits/animate.tab:46</entry>

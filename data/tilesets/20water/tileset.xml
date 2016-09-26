@@ -30871,6 +30871,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_20water_LW_60</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/20water/mapunits/animate.pck:xcom3/maps/20water/mapunits/animate.tab:28</entry>
             <entry>PCK:xcom3/maps/20water/mapunits/animate.pck:xcom3/maps/20water/mapunits/animate.tab:29</entry>
@@ -31235,6 +31236,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_20water_LW_61</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/20water/mapunits/animate.pck:xcom3/maps/20water/mapunits/animate.tab:33</entry>
             <entry>PCK:xcom3/maps/20water/mapunits/animate.pck:xcom3/maps/20water/mapunits/animate.tab:34</entry>
@@ -35214,6 +35216,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_20water_LW_58</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/20water/mapunits/animate.pck:xcom3/maps/20water/mapunits/animate.tab:15</entry>
             <entry>PCK:xcom3/maps/20water/mapunits/animate.pck:xcom3/maps/20water/mapunits/animate.tab:16</entry>
@@ -35483,6 +35486,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_20water_LW_59</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/20water/mapunits/animate.pck:xcom3/maps/20water/mapunits/animate.tab:20</entry>
             <entry>PCK:xcom3/maps/20water/mapunits/animate.pck:xcom3/maps/20water/mapunits/animate.tab:21</entry>
@@ -37173,6 +37177,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_20water_RW_41</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/20water/mapunits/animate.pck:xcom3/maps/20water/mapunits/animate.tab:28</entry>
             <entry>PCK:xcom3/maps/20water/mapunits/animate.pck:xcom3/maps/20water/mapunits/animate.tab:29</entry>
@@ -37537,6 +37542,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_20water_RW_42</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/20water/mapunits/animate.pck:xcom3/maps/20water/mapunits/animate.tab:53</entry>
             <entry>PCK:xcom3/maps/20water/mapunits/animate.pck:xcom3/maps/20water/mapunits/animate.tab:54</entry>
@@ -41535,6 +41541,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_20water_RW_40</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/20water/mapunits/animate.pck:xcom3/maps/20water/mapunits/animate.tab:40</entry>
             <entry>PCK:xcom3/maps/20water/mapunits/animate.pck:xcom3/maps/20water/mapunits/animate.tab:41</entry>

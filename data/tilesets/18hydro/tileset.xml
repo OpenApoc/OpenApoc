@@ -34578,6 +34578,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_18hydro_LW_44</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/18hydro/mapunits/animate.pck:xcom3/maps/18hydro/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/18hydro/mapunits/animate.pck:xcom3/maps/18hydro/mapunits/animate.tab:1</entry>
@@ -36436,6 +36437,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_18hydro_LW_45</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/18hydro/mapunits/animate.pck:xcom3/maps/18hydro/mapunits/animate.tab:8</entry>
             <entry>PCK:xcom3/maps/18hydro/mapunits/animate.pck:xcom3/maps/18hydro/mapunits/animate.tab:9</entry>
@@ -37406,6 +37408,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_18hydro_LW_46</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/18hydro/mapunits/animate.pck:xcom3/maps/18hydro/mapunits/animate.tab:13</entry>
             <entry>PCK:xcom3/maps/18hydro/mapunits/animate.pck:xcom3/maps/18hydro/mapunits/animate.tab:14</entry>
@@ -39552,6 +39555,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_18hydro_RW_32</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/18hydro/mapunits/animate.pck:xcom3/maps/18hydro/mapunits/animate.tab:51</entry>
             <entry>PCK:xcom3/maps/18hydro/mapunits/animate.pck:xcom3/maps/18hydro/mapunits/animate.tab:52</entry>
@@ -43443,6 +43447,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_18hydro_RW_30</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/18hydro/mapunits/animate.pck:xcom3/maps/18hydro/mapunits/animate.tab:38</entry>
             <entry>PCK:xcom3/maps/18hydro/mapunits/animate.pck:xcom3/maps/18hydro/mapunits/animate.tab:39</entry>
@@ -43721,6 +43726,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_18hydro_RW_31</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/18hydro/mapunits/animate.pck:xcom3/maps/18hydro/mapunits/animate.tab:46</entry>
             <entry>PCK:xcom3/maps/18hydro/mapunits/animate.pck:xcom3/maps/18hydro/mapunits/animate.tab:47</entry>

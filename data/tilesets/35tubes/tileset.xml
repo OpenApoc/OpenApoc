@@ -26949,6 +26949,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_LW_52</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:66</entry>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:67</entry>
@@ -28964,6 +28965,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_LW_52</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:74</entry>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:75</entry>
@@ -29323,6 +29325,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_LW_53</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:40</entry>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:41</entry>
@@ -30300,6 +30303,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_LW_52</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:45</entry>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:46</entry>
@@ -31262,6 +31266,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_LW_51</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:10</entry>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:11</entry>
@@ -31535,6 +31540,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_LW_53</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:20</entry>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:21</entry>
@@ -31632,6 +31638,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_LW_53</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:15</entry>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:16</entry>
@@ -31729,6 +31736,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_LW_52</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:25</entry>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:26</entry>
@@ -32536,6 +32544,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_RW_44</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:60</entry>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:61</entry>
@@ -33695,6 +33704,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_RW_44</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:79</entry>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:80</entry>
@@ -34836,6 +34846,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_RW_44</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:35</entry>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:36</entry>
@@ -35189,6 +35200,7 @@
           <fire_burn_time>255</fire_burn_time>
           <block_physical>255</block_physical>
           <size>1</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_RW_5</alternative_map_part>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -35361,6 +35373,7 @@
           <fire_burn_time>255</fire_burn_time>
           <block_physical>255</block_physical>
           <size>1</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_RW_9</alternative_map_part>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -35447,6 +35460,7 @@
           <fire_burn_time>255</fire_burn_time>
           <block_physical>255</block_physical>
           <size>1</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_RW_7</alternative_map_part>
           <movement_cost>4</movement_cost>
           <height>39</height>
           <provides_support>true</provides_support>
@@ -35783,6 +35797,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_RW_45</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:50</entry>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:51</entry>
@@ -36232,6 +36247,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_RW_44</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:1</entry>
@@ -36329,6 +36345,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_RW_43</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:55</entry>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:56</entry>
@@ -36426,6 +36443,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_RW_44</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:5</entry>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:6</entry>
@@ -36523,6 +36541,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_35tubes_RW_45</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:30</entry>
             <entry>PCK:xcom3/maps/35tubes/mapunits/animate.pck:xcom3/maps/35tubes/mapunits/animate.tab:31</entry>

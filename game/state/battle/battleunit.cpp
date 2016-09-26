@@ -16,7 +16,7 @@ void BattleUnit::removeFromSquad()
 	auto b = battle.lock();
 	if (!b)
 	{
-		LogError("Battle disappeared");
+		LogError("removeFromSquad - Battle disappeared");
 	}
 	b->forces[owner].removeAt(squadNumber, squadPosition);
 }
@@ -26,7 +26,7 @@ bool BattleUnit::assignToSquad(int squad)
 	auto b = battle.lock();
 	if (!b)
 	{
-		LogError("Battle disappeared");
+		LogError("assignToSquad - Battle disappeared");
 	}
 	return b->forces[owner].insert(squad, shared_from_this());
 }
@@ -36,7 +36,7 @@ void BattleUnit::moveToSquadPosition(int position)
 	auto b = battle.lock();
 	if (!b)
 	{
-		LogError("Battle disappeared");
+		LogError("moveToSquadPosition - Battle disappeared");
 	}
 	b->forces[owner].insertAt(squadNumber, position, shared_from_this());
 }
@@ -341,9 +341,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	// Stun removal
 	if (stunDamageInTicks > 0)
 	{
-		stunDamageInTicks -= ticks;
-		if (stunDamageInTicks < 0)
-			stunDamageInTicks = 0;
+		stunDamageInTicks = std::max(0, stunDamageInTicks - (int)ticks);
 	}
 
 	// Attempt rising if laying on the ground and not unconscious
@@ -691,12 +689,13 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						usingLift = true;
 						movement_ticks_passed = 0;
 					}
+					int movementTicksAccumulated = 0;
 					if (distanceToGoal * moveTicksConsumeRate * 100 / speedModifier <=
 					    moveTicksRemaining)
 					{
 						if (distanceToGoal > 0)
 						{
-							movement_ticks_passed += distanceToGoal;
+							movementTicksAccumulated = distanceToGoal;
 							if (flyingSpeedModifier != 100)
 							{
 								flyingSpeedModifier =
@@ -718,7 +717,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 							                      moveTicksRemaining / moveTicksConsumeRate /
 							                          FLYING_ACCELERATION_DIVISOR);
 						}
-						movement_ticks_passed += moveTicksRemaining / moveTicksConsumeRate;
+						movementTicksAccumulated = moveTicksRemaining / moveTicksConsumeRate;
 						auto dir = glm::normalize(vectorToGoal);
 						Vec3<float> newPosition =
 						    (float)(moveTicksRemaining / moveTicksConsumeRate) *
@@ -729,6 +728,22 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						setPosition(newPosition);
 						moveTicksRemaining = moveTicksRemaining % moveTicksConsumeRate;
 					}
+					// Scale ticks so that animations look proper on isometric sceen
+					// facing down or up on screen
+					if (facing.x == facing.y)
+					{
+						movement_ticks_passed += movementTicksAccumulated * 2 / 3;
+					}
+					// facing left or right on screen
+					else if (facing.x == -facing.y)
+					{
+						movement_ticks_passed += movementTicksAccumulated * 141 / 150;
+					}
+					else
+					{
+						movement_ticks_passed += movementTicksAccumulated;
+					}
+					// Footsteps
 					if (shouldPlaySoundNow() && current_body_state != AgentType::BodyState::Flying)
 					{
 						if (agent->type->walkSfx.size() > 0)

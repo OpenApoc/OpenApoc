@@ -6,12 +6,14 @@
 #include "library/strings.h"
 #include <algorithm>
 
+// How many in-game ticks are required to travel one in-game unit
 #define TICKS_PER_UNIT_TRAVELLED 32
-#define TICKS_PER_FRAME 8
+#define TICKS_PER_FRAME_UNIT 8
 // Every this amount of units travelled, unit will emit an appropriate sound
 #define UNITS_TRAVELLED_PER_SOUND 12
 // If running, unit will only emit sound every this number of times it normally would
 #define UNITS_TRAVELLED_PER_SOUND_RUNNING_DIVISOR 2
+// This defines how fast a flying unit accelerates to full speed
 #define FLYING_ACCELERATION_DIVISOR 2
 
 namespace OpenApoc
@@ -83,7 +85,7 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	int body_animation_ticks_remaining = 0;
 	int getBodyAnimationFrame() const
 	{
-		return (body_animation_ticks_remaining + TICKS_PER_FRAME - 1) / TICKS_PER_FRAME;
+		return (body_animation_ticks_remaining + TICKS_PER_FRAME_UNIT - 1) / TICKS_PER_FRAME_UNIT;
 	}
 	AgentType::BodyState current_body_state = AgentType::BodyState::Standing;
 	AgentType::BodyState target_body_state = AgentType::BodyState::Standing;
@@ -93,7 +95,7 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	int hand_animation_ticks_remaining = 0;
 	int getHandAnimationFrame() const
 	{
-		return (hand_animation_ticks_remaining + TICKS_PER_FRAME - 1) / TICKS_PER_FRAME;
+		return (hand_animation_ticks_remaining + TICKS_PER_FRAME_UNIT - 1) / TICKS_PER_FRAME_UNIT;
 	}
 	AgentType::HandState current_hand_state = AgentType::HandState::AtEase;
 	AgentType::HandState target_hand_state = AgentType::HandState::AtEase;
@@ -179,13 +181,7 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	void setPosition(const Vec3<float> &pos);
 	void resetGoal();
 
-	virtual void update(GameState &state, unsigned int ticks);
-
-	// Following members are not serialized, but rather are set in initBattle method
-
-	sp<TileObjectBattleUnit> tileObject;
-	sp<TileObjectShadow> shadowObject;
-	wp<Battle> battle;
+	void update(GameState &state, unsigned int ticks);
 
 	void dropDown(GameState &state);
 	void tryToRiseUp(GameState &state);
@@ -193,12 +189,15 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	void die(GameState &state, bool violently);
 	void destroy(GameState &state);
 
+	// Following members are not serialized, but rather are set in initBattle method
+
+	sp<TileObjectBattleUnit> tileObject;
+	sp<TileObjectShadow> shadowObject;
+	wp<Battle> battle;
+
 	/*
-	- current order
 	- curr. mind state (controlled/berserk/…)
 	- ref. to psi attacker (who is controlling it/...)
-	- unit side current
-	- squad number"
 	*/
 };
 }

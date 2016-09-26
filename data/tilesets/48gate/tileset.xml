@@ -4448,6 +4448,7 @@
           <fire_burn_time>255</fire_burn_time>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_8</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_48gate_FT_138</alternative_map_part>
           <sfxIndex>3</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -15379,6 +15380,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_2</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_48gate_FT_136</alternative_map_part>
           <sfxIndex>3</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -15561,6 +15563,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_3</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_48gate_FT_137</alternative_map_part>
           <sfxIndex>3</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -15653,6 +15656,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_1</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_48gate_FT_135</alternative_map_part>
           <sfxIndex>3</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -15745,6 +15749,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_1</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_48gate_FT_135</alternative_map_part>
           <sfxIndex>3</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -15837,6 +15842,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_1</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_48gate_FT_135</alternative_map_part>
           <sfxIndex>3</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -15929,6 +15935,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_3</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_48gate_FT_137</alternative_map_part>
           <sfxIndex>3</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -16021,6 +16028,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_2</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_48gate_FT_136</alternative_map_part>
           <sfxIndex>3</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -16113,6 +16121,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_4</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_48gate_FT_138</alternative_map_part>
           <sfxIndex>3</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -16292,6 +16301,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_3</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_48gate_FT_137</alternative_map_part>
           <sfxIndex>3</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -16384,6 +16394,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_1</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_48gate_FT_135</alternative_map_part>
           <sfxIndex>3</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -16476,6 +16487,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_2</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_48gate_FT_136</alternative_map_part>
           <sfxIndex>3</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -16568,6 +16580,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_1</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_48gate_FT_135</alternative_map_part>
           <sfxIndex>3</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -16660,6 +16673,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_3</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_48gate_FT_137</alternative_map_part>
           <sfxIndex>3</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -16752,6 +16766,7 @@
           <block_psionic>1</block_psionic>
           <size>4</size>
           <damaged_map_part>BATTLEMAPPART_48gate_FT_2</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_48gate_FT_136</alternative_map_part>
           <sfxIndex>3</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -39743,6 +39758,7 @@
           <block_gas>45</block_gas>
           <block_fire>45</block_fire>
           <size>6</size>
+          <alternative_map_part>BATTLEMAPPART_48gate_LW_6</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/48gate/mapunits/animate.pck:xcom3/maps/48gate/mapunits/animate.tab:7</entry>
             <entry>PCK:xcom3/maps/48gate/mapunits/animate.pck:xcom3/maps/48gate/mapunits/animate.tab:8</entry>
@@ -42228,6 +42244,7 @@
           <block_gas>45</block_gas>
           <block_fire>45</block_fire>
           <size>6</size>
+          <alternative_map_part>BATTLEMAPPART_48gate_RW_6</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/48gate/mapunits/animate.pck:xcom3/maps/48gate/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/48gate/mapunits/animate.pck:xcom3/maps/48gate/mapunits/animate.tab:1</entry>

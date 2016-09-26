@@ -160,7 +160,28 @@
     <value>
       <sp>
         <name>Civilian</name>
-        <average_guards>0</average_guards>
+        <average_guards>10</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_ANDROID</entry>
+          <entry>AGENTTYPE_CIVILIAN_FEMALE</entry>
+          <entry>AGENTTYPE_CIVILIAN_FEMALE_1</entry>
+          <entry>AGENTTYPE_CIVILIAN_FEMALE_2</entry>
+          <entry>AGENTTYPE_CIVILIAN_MALE</entry>
+          <entry>AGENTTYPE_CIVILIAN_MALE_1</entry>
+          <entry>AGENTTYPE_CIVILIAN_MALE_2</entry>
+          <entry>AGENTTYPE_LOWER_CLASS_FEMALE</entry>
+          <entry>AGENTTYPE_LOWER_CLASS_FEMALE_1</entry>
+          <entry>AGENTTYPE_LOWER_CLASS_FEMALE_2</entry>
+          <entry>AGENTTYPE_LOWER_CLASS_MALE</entry>
+          <entry>AGENTTYPE_LOWER_CLASS_MALE_1</entry>
+          <entry>AGENTTYPE_LOWER_CLASS_MALE_2</entry>
+          <entry>AGENTTYPE_UPPER_CLASS_FEMALE</entry>
+          <entry>AGENTTYPE_UPPER_CLASS_FEMALE_1</entry>
+          <entry>AGENTTYPE_UPPER_CLASS_FEMALE_2</entry>
+          <entry>AGENTTYPE_UPPER_CLASS_MALE</entry>
+          <entry>AGENTTYPE_UPPER_CLASS_MALE_1</entry>
+          <entry>AGENTTYPE_UPPER_CLASS_MALE_2</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -319,6 +340,18 @@
         <income>15000</income>
         <tech_level>2</tech_level>
         <average_guards>10</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_CULTIST</entry>
+          <entry>AGENTTYPE_CULTIST</entry>
+          <entry>AGENTTYPE_CULTIST</entry>
+          <entry>AGENTTYPE_CULTIST</entry>
+          <entry>AGENTTYPE_CULTIST</entry>
+          <entry>AGENTTYPE_CULTIST</entry>
+          <entry>AGENTTYPE_CULTIST</entry>
+          <entry>AGENTTYPE_CULTIST</entry>
+          <entry>AGENTTYPE_CULTIST</entry>
+          <entry>AGENTTYPE_CULT_LEADER</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -477,6 +510,9 @@
         <income>1000</income>
         <tech_level>3</tech_level>
         <average_guards>11</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -635,6 +671,18 @@
         <income>30000</income>
         <tech_level>4</tech_level>
         <average_guards>13</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANG_LEADER</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -792,6 +840,9 @@
         <balance>1000</balance>
         <income>1000</income>
         <average_guards>7</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -949,6 +1000,9 @@
         <balance>1000</balance>
         <income>1000</income>
         <average_guards>7</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -1106,6 +1160,9 @@
         <balance>1000</balance>
         <income>13000</income>
         <average_guards>7</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -1264,6 +1321,9 @@
         <income>1000</income>
         <tech_level>2</tech_level>
         <average_guards>8</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -1421,6 +1481,9 @@
         <balance>20000</balance>
         <tech_level>3</tech_level>
         <average_guards>14</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -1578,6 +1641,9 @@
         <balance>1000</balance>
         <income>6000</income>
         <average_guards>7</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -1735,6 +1801,9 @@
         <balance>1000</balance>
         <income>1000</income>
         <average_guards>9</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -1893,6 +1962,9 @@
         <income>120000</income>
         <tech_level>4</tech_level>
         <average_guards>14</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -2051,6 +2123,9 @@
         <income>1000</income>
         <tech_level>3</tech_level>
         <average_guards>16</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_POLICE</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -2209,6 +2284,9 @@
         <income>12000</income>
         <tech_level>3</tech_level>
         <average_guards>10</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -2367,6 +2445,9 @@
         <income>1000</income>
         <tech_level>2</tech_level>
         <average_guards>10</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -2524,6 +2605,9 @@
         <balance>1000</balance>
         <income>1000</income>
         <average_guards>7</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -2682,6 +2766,18 @@
         <income>44000</income>
         <tech_level>4</tech_level>
         <average_guards>16</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANG_LEADER</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -2840,6 +2936,18 @@
         <income>20000</income>
         <tech_level>4</tech_level>
         <average_guards>10</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANGSTER</entry>
+          <entry>AGENTTYPE_GANG_LEADER</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -2997,6 +3105,9 @@
         <balance>1000</balance>
         <income>1000</income>
         <average_guards>7</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -3155,6 +3266,9 @@
         <income>1000</income>
         <tech_level>2</tech_level>
         <average_guards>7</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -3313,6 +3427,9 @@
         <income>130000</income>
         <tech_level>4</tech_level>
         <average_guards>12</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -3471,6 +3588,9 @@
         <income>1000</income>
         <tech_level>2</tech_level>
         <average_guards>9</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -3628,6 +3748,9 @@
         <balance>1000</balance>
         <income>1000</income>
         <average_guards>7</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -3786,6 +3909,9 @@
         <income>16000</income>
         <tech_level>3</tech_level>
         <average_guards>10</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -3943,6 +4069,9 @@
         <balance>1000</balance>
         <income>11000</income>
         <average_guards>7</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>
@@ -4101,6 +4230,9 @@
         <income>1000</income>
         <tech_level>2</tech_level>
         <average_guards>8</average_guards>
+        <guard_types>
+          <entry>AGENTTYPE_BUILDING_SECURITY</entry>
+        </guard_types>
         <loot>
           <entry>
             <key>A</key>

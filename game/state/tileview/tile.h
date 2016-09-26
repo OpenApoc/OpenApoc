@@ -70,21 +70,29 @@ class Tile
 
 	// Only used by Battle
 
+	// Returns unit present in the tile, if any (quick call for just any unit ever)
+	sp<TileObjectBattleUnit> getUnitIfPresent();
 	// Returns unit present in the tile, if any
-	sp<TileObjectBattleUnit> getUnitIfPresent(bool onlyConscious = false, bool mustOccupy = false,
+	sp<TileObjectBattleUnit> getUnitIfPresent(bool onlyConscious, bool mustOccupy = false,
 	                                          bool mustBeStatic = false,
 	                                          sp<TileObjectBattleUnit> exceptThis = nullptr,
 	                                          bool onlyLarge = false);
 	// Returns resting position for items and units in the tile
 	Vec3<float> getRestingPosition(bool large = false);
+	// Returns the object that provides support (resting position) for items
+	sp<BattleMapPart> getItemSupportingObject();
 	// Returns if the tile is passable (including side tiles for large)
 	bool getPassable(bool large = false);
 	// Returns if the tile provides ground for standing (including side tiles for large)
 	bool getCanStand(bool large = false);
 	// Returns if the tile is solid (cannot pop head into it)
 	bool getSolidGround(bool large = false);
-	// Updates tile height and passability values
+	// Returns wether tile is an exit
+	bool getHasExit(bool large = false);
+	// Updates most battlescape tile parameters
 	void updateBattlescapeParameters();
+	// Updates "unit present" parameter
+	void updateBattlescapeUnitPresent();
 	// Updates battlescape ui draw order variables
 	void updateBattlescapeUIDrawOrder();
 
@@ -99,6 +107,10 @@ class Tile
 	int movementCostLeft = 0;
 	// Movement cost through the tile's right wall
 	int movementCostRight = 0;
+	// True = there is currently a closed door to the left of this tile
+	bool closedDoorLeft = false;
+	// True = there is currently a closed door to the right of this tile
+	bool closedDoorRight = false;
 	// Tile provides solid ground for standing.
 	// True = cannot pop head into this tile when ascending
 	bool solidGround = false;
@@ -106,22 +118,30 @@ class Tile
 	bool canStand = false;
 	// True = anyone can go upwards from this tile to another lift tile
 	bool hasLift = false;
-	bool hasExit;
-	bool getHasExit(bool large = false);
+	// True = clicking move to this tile will make soldier retreat on arrival
+	// and will override squad movement pattern (everybody will move only to exists in the vicinity)
+	bool hasExit = false;
+	// True = unit is present in this tile
+	sp<TileObjectBattleUnit> firstUnitPresent;
+	// True = unit that qualifies as a door opener present in this tile
+	bool doorOpeningUnitPresent = false;
 	// position in drawnObjects vector to draw back selection bracket at
 	int drawBattlescapeSelectionBackAt = 0;
 	// position in drawnObjects vector to draw target location at
 	int drawTargetLocationIconAt = 0;
 	// sfx to use when passing through tile
 	sp<std::vector<sp<Sample>>> walkSfx;
+	// sfx to use when object falls on tile
 	sp<Sample> objectDropSfx;
+	// Solid tileobject in the tile with the highest height that supports items
+	sp<BattleMapPart> supportProviderForItems;
 };
 
 class CanEnterTileHelper
 {
   public:
 	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
-	virtual bool canEnterTile(Tile *from, Tile *to, float &cost,
+	virtual bool canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay,
 	                          bool demandGiveWay = false) const = 0;
 	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
 	virtual bool canEnterTile(Tile *from, Tile *to, bool demandGiveWay = false) const = 0;

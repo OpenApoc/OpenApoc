@@ -43,6 +43,7 @@ void CityTileView::eventOccurred(Event *e)
 				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this, 10.0f));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
+			break;
 			case SDLK_F7:
 			{
 				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");

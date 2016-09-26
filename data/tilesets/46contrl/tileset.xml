@@ -22204,6 +22204,7 @@
           <fire_burn_time>1</fire_burn_time>
           <size>10</size>
           <damaged_map_part>BATTLEMAPPART_46contrl_GD_255</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_46contrl_GD_255</alternative_map_part>
           <transparent>true</transparent>
           <sfxIndex>7</sfxIndex>
           <door>true</door>
@@ -39925,6 +39926,7 @@
           <block_gas>45</block_gas>
           <block_fire>45</block_fire>
           <size>6</size>
+          <alternative_map_part>BATTLEMAPPART_46contrl_LW_6</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/46contrl/mapunits/animate.pck:xcom3/maps/46contrl/mapunits/animate.tab:7</entry>
             <entry>PCK:xcom3/maps/46contrl/mapunits/animate.pck:xcom3/maps/46contrl/mapunits/animate.tab:8</entry>
@@ -42411,6 +42413,7 @@
           <block_gas>45</block_gas>
           <block_fire>45</block_fire>
           <size>6</size>
+          <alternative_map_part>BATTLEMAPPART_46contrl_RW_6</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/46contrl/mapunits/animate.pck:xcom3/maps/46contrl/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/46contrl/mapunits/animate.pck:xcom3/maps/46contrl/mapunits/animate.tab:1</entry>

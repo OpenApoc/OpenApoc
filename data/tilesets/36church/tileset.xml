@@ -23620,6 +23620,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_LW_117</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:26</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:27</entry>
@@ -25492,6 +25493,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_LW_123</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:1</entry>
@@ -25590,6 +25592,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_LW_124</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:6</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:7</entry>
@@ -25955,6 +25958,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_LW_120</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:97</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:98</entry>
@@ -26319,6 +26323,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_LW_122</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:62</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:63</entry>
@@ -26861,6 +26866,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_LW_118</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:41</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:42</entry>
@@ -27047,6 +27053,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_LW_133</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:12</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:13</entry>
@@ -27689,6 +27696,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_LW_118</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:34</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:35</entry>
@@ -28055,6 +28063,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_LW_128</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:19</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:20</entry>
@@ -28154,6 +28163,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_LW_118</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:34</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:35</entry>
@@ -28698,6 +28708,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
+          <alternative_map_part>BATTLEMAPPART_36church_LW_126</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:82</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:83</entry>
@@ -28795,6 +28806,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
+          <alternative_map_part>BATTLEMAPPART_36church_LW_127</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:67</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:68</entry>
@@ -28892,6 +28904,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
+          <alternative_map_part>BATTLEMAPPART_36church_LW_125</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:77</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:78</entry>
@@ -28989,6 +29002,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
+          <alternative_map_part>BATTLEMAPPART_36church_LW_127</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:72</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:73</entry>
@@ -31033,6 +31047,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_LW_128</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:87</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:88</entry>
@@ -32014,6 +32029,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_LW_128</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:92</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:93</entry>
@@ -34742,6 +34758,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_RW_88</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:124</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:125</entry>
@@ -35821,6 +35838,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_RW_98</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:142</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:143</entry>
@@ -35919,6 +35937,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_RW_101</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:148</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:149</entry>
@@ -36195,6 +36214,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_RW_93</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:152</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:153</entry>
@@ -36292,6 +36312,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_RW_94</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:157</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:158</entry>
@@ -36656,6 +36677,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_RW_98</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:176</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:177</entry>
@@ -37110,6 +37132,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_RW_98</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:108</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:109</entry>
@@ -37209,6 +37232,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_RW_95</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:162</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:163</entry>
@@ -37308,6 +37332,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_RW_98</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:169</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:170</entry>
@@ -37763,6 +37788,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_RW_98</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:169</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:170</entry>
@@ -38129,6 +38155,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_RW_102</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:115</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:116</entry>
@@ -38673,6 +38700,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
+          <alternative_map_part>BATTLEMAPPART_36church_RW_100</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:196</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:197</entry>
@@ -38770,6 +38798,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
+          <alternative_map_part>BATTLEMAPPART_36church_RW_102</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:201</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:202</entry>
@@ -38867,6 +38896,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
+          <alternative_map_part>BATTLEMAPPART_36church_RW_99</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:191</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:192</entry>
@@ -38964,6 +38994,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
+          <alternative_map_part>BATTLEMAPPART_36church_RW_102</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:206</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:207</entry>
@@ -39150,6 +39181,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_36church_RW_100</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:102</entry>
             <entry>PCK:xcom3/maps/36church/mapunits/animate.pck:xcom3/maps/36church/mapunits/animate.tab:103</entry>

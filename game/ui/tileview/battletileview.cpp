@@ -14,17 +14,30 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
     : TileView(map, isoTileSize, stratTileSize, initialMode), currentZLevel(currentZLevel)
 {
 	layerDrawingMode = LayerDrawingMode::UpToCurrentLevel;
-	selectedTileEmptyImageBack = fw().data->loadImage("battle/selected-battletile-empty-back.png");
+	selectedTileEmptyImageBack = 
+		fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+			"icons.tab:%d:xcom3/tacdata/tactical.pal", 182));
 	selectedTileEmptyImageFront =
-	    fw().data->loadImage("battle/selected-battletile-empty-front.png");
+		fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+			"icons.tab:%d:xcom3/tacdata/tactical.pal", 183));
 	selectedTileFilledImageBack =
-	    fw().data->loadImage("battle/selected-battletile-filled-back.png");
+		fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+			"icons.tab:%d:xcom3/tacdata/tactical.pal", 184));
 	selectedTileFilledImageFront =
-	    fw().data->loadImage("battle/selected-battletile-filled-front.png");
+		fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+			"icons.tab:%d:xcom3/tacdata/tactical.pal", 185));
+	selectedTileFireImageBack =
+		fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+			"icons.tab:%d:xcom3/tacdata/tactical.pal", 186));
+	selectedTileFireImageFront =
+		fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+			"icons.tab:%d:xcom3/tacdata/tactical.pal", 187));
 	selectedTileBackgroundImageBack =
-	    fw().data->loadImage("battle/selected-battletile-background-back.png");
+		fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+			"icons.tab:%d:xcom3/tacdata/tactical.pal", 188));
 	selectedTileBackgroundImageFront =
-	    fw().data->loadImage("battle/selected-battletile-background-front.png");
+		fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+			"icons.tab:%d:xcom3/tacdata/tactical.pal", 189));
 	selectedTileImageOffset = {23, 42};
 	pal = fw().data->loadPalette("xcom3/tacdata/tactical.pal");
 
@@ -133,6 +146,7 @@ void BattleTileView::eventOccurred(Event *e)
 				    {imageOffset, imageOffset + dpySize}, *this, currentZLevel));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
+			break;
 			case SDLK_F7:
 			{
 				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");

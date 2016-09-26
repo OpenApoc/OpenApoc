@@ -75,6 +75,7 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 	int size = 0;
 
 	StateRef<BattleMapPartType> damaged_map_part;
+	StateRef<BattleMapPartType> alternative_map_part;
 	std::vector<sp<Image>> animation_frames;
 
 	bool transparent = false;

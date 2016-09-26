@@ -180,6 +180,9 @@
     <ClCompile Include="battle\battleunitmission.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="battle\battledoor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agent.h">
@@ -363,6 +366,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="battle\battlecommonsamplelist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\battledoor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

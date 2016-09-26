@@ -25,6 +25,7 @@ class GameState;
 class TileMap;
 class BattleMapPart;
 class BattleUnit;
+class BattleDoor;
 class BattleItem;
 class Projectile;
 class Doodad;
@@ -82,6 +83,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	std::list<sp<BattleUnit>> units;
 	std::list<sp<Doodad>> doodads;
 	std::set<sp<Projectile>> projectiles;
+	std::vector<sp<BattleDoor>> doors;
 
 	up<TileMap> map;
 
@@ -108,7 +110,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	void update(GameState &state, unsigned int ticks);
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
-
+	
 	// Battle Start Functions
 
 	// To be called when battle must be created, before showing battle briefing screen

@@ -34986,6 +34986,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_LW_78</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:98</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:99</entry>
@@ -35351,6 +35352,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_LW_75</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:70</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:71</entry>
@@ -35714,6 +35716,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_LW_76</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:56</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:57</entry>
@@ -36522,6 +36525,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_LW_70</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:1</entry>
@@ -36797,6 +36801,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_LW_72</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:10</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:11</entry>
@@ -37161,6 +37166,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_LW_71</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:5</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:6</entry>
@@ -38858,6 +38864,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_LW_74</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:44</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:45</entry>
@@ -39828,6 +39835,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_LW_73</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:40</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:41</entry>
@@ -42181,6 +42189,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_LW_77</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:92</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:93</entry>
@@ -42902,6 +42911,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_RW_54</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:75</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:76</entry>
@@ -43266,6 +43276,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_RW_53</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:63</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:64</entry>
@@ -43454,6 +43465,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_RW_50</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:35</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:36</entry>
@@ -43996,6 +44008,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_RW_49</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:25</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:26</entry>
@@ -44716,6 +44729,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_RW_47</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:15</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:16</entry>
@@ -44990,6 +45004,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_RW_48</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:20</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:21</entry>
@@ -45354,6 +45369,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_RW_52</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:52</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:53</entry>
@@ -46338,6 +46354,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_RW_51</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:48</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:49</entry>
@@ -47659,6 +47676,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_RW_55</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:80</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:81</entry>
@@ -47757,6 +47775,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_50senso_RW_56</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:86</entry>
             <entry>PCK:xcom3/maps/50senso/mapunits/animate.pck:xcom3/maps/50senso/mapunits/animate.tab:87</entry>

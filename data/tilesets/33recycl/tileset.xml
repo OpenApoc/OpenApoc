@@ -37630,6 +37630,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_33recycl_LW_50</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/33recycl/mapunits/animate.pck:xcom3/maps/33recycl/mapunits/animate.tab:6</entry>
             <entry>PCK:xcom3/maps/33recycl/mapunits/animate.pck:xcom3/maps/33recycl/mapunits/animate.tab:7</entry>
@@ -38172,6 +38173,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_33recycl_LW_51</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/33recycl/mapunits/animate.pck:xcom3/maps/33recycl/mapunits/animate.tab:11</entry>
             <entry>PCK:xcom3/maps/33recycl/mapunits/animate.pck:xcom3/maps/33recycl/mapunits/animate.tab:12</entry>
@@ -41876,6 +41878,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_33recycl_LW_49</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/33recycl/mapunits/animate.pck:xcom3/maps/33recycl/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/33recycl/mapunits/animate.pck:xcom3/maps/33recycl/mapunits/animate.tab:1</entry>
@@ -42775,6 +42778,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_33recycl_RW_38</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/33recycl/mapunits/animate.pck:xcom3/maps/33recycl/mapunits/animate.tab:24</entry>
             <entry>PCK:xcom3/maps/33recycl/mapunits/animate.pck:xcom3/maps/33recycl/mapunits/animate.tab:25</entry>
@@ -43050,6 +43054,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_33recycl_RW_37</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/33recycl/mapunits/animate.pck:xcom3/maps/33recycl/mapunits/animate.tab:29</entry>
             <entry>PCK:xcom3/maps/33recycl/mapunits/animate.pck:xcom3/maps/33recycl/mapunits/animate.tab:30</entry>
@@ -45900,6 +45905,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_33recycl_RW_39</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/33recycl/mapunits/animate.pck:xcom3/maps/33recycl/mapunits/animate.tab:18</entry>
             <entry>PCK:xcom3/maps/33recycl/mapunits/animate.pck:xcom3/maps/33recycl/mapunits/animate.tab:19</entry>

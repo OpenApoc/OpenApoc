@@ -36,7 +36,10 @@ void LoadingScreen::eventOccurred(Event *e) { std::ignore = e; }
 sp<Stage> CreateUiForGame(sp<GameState> gameState)
 {
 	// FIXME load to correct screen based on loaded game state
-	return mksp<CityView>(gameState);
+	if (gameState->current_battle)
+		return mksp<BattleView>(gameState);
+	else
+		return mksp<CityView>(gameState);
 }
 
 void LoadingScreen::update()
@@ -53,9 +56,7 @@ void LoadingScreen::update()
 			auto gameState = loading_task.get();
 			if (gameState != nullptr)
 			{
-				fw().stageQueueCommand({StageCmd::Command::REPLACEALL, mksp<CityView>(gameState)});
-				if (gameState->current_battle)
-					fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BattleView>(gameState)});
+				fw().stageQueueCommand({ StageCmd::Command::REPLACEALL, CreateUiForGame(gameState) });
 			}
 			else
 			{

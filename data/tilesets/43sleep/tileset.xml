@@ -40907,6 +40907,7 @@
           <block_gas>45</block_gas>
           <block_fire>45</block_fire>
           <size>6</size>
+          <alternative_map_part>BATTLEMAPPART_43sleep_LW_6</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/43sleep/mapunits/animate.pck:xcom3/maps/43sleep/mapunits/animate.tab:7</entry>
             <entry>PCK:xcom3/maps/43sleep/mapunits/animate.pck:xcom3/maps/43sleep/mapunits/animate.tab:8</entry>
@@ -43392,6 +43393,7 @@
           <block_gas>45</block_gas>
           <block_fire>45</block_fire>
           <size>6</size>
+          <alternative_map_part>BATTLEMAPPART_43sleep_RW_6</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/43sleep/mapunits/animate.pck:xcom3/maps/43sleep/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/43sleep/mapunits/animate.pck:xcom3/maps/43sleep/mapunits/animate.tab:1</entry>

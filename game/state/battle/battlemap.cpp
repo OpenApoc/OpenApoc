@@ -3,6 +3,7 @@
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart.h"
+#include "game/state/battle/battledoor.h"
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/city/vehicle.h"
@@ -51,9 +52,22 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> orga
                                    std::list<StateRef<Agent>> &player_agents,
                                    StateRef<Vehicle> craft, StateRef<Vehicle> ufo)
 {
-	// FIXME: Generate list of agent types for enemies (and civs)
-	// Then generate agents from agent types
-	// Add them to list of player agents and pass it further
+	// FIXME: Generate list of agent types for enemies (and civs) properly
+	std::list<std::pair<StateRef<Organisation>, StateRef<AgentType>>> otherParticipants;
+	otherParticipants.emplace_back(organisation, StateRef<AgentType>{ &state, "AGENTTYPE_ANTHROPOD" });
+	otherParticipants.emplace_back(organisation, StateRef<AgentType>{ &state, "AGENTTYPE_ANTHROPOD" });
+	otherParticipants.emplace_back(organisation, StateRef<AgentType>{ &state, "AGENTTYPE_ANTHROPOD" });
+	otherParticipants.emplace_back(organisation, StateRef<AgentType>{ &state, "AGENTTYPE_SKELETOID" });
+	otherParticipants.emplace_back(organisation, StateRef<AgentType>{ &state, "AGENTTYPE_SKELETOID" });
+	otherParticipants.emplace_back(organisation, StateRef<AgentType>{ &state, "AGENTTYPE_SKELETOID" });
+	otherParticipants.emplace_back(organisation, StateRef<AgentType>{ &state, "AGENTTYPE_ANTHROPOD" });
+	otherParticipants.emplace_back(organisation, StateRef<AgentType>{ &state, "AGENTTYPE_ANTHROPOD" });
+	otherParticipants.emplace_back(organisation, StateRef<AgentType>{ &state, "AGENTTYPE_ANTHROPOD" });
+
+	for (auto &pair : otherParticipants)
+	{
+		player_agents.push_back(state.agent_generator.createAgent(state, pair.first, pair.second));
+	}
 	return ufo->type->battle_map->createBattle(state, organisation, player_agents, craft,
 	                                           Battle::MissionType::UfoRecovery, ufo.id);
 }
@@ -62,25 +76,99 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> orga
                                    std::list<StateRef<Agent>> &player_agents,
                                    StateRef<Vehicle> craft, StateRef<Building> building)
 {
-	// FIXME: Generate list of agent types for enemies (and civs)
-	// Then generate agents from agent types
-	// Add them to list of player agents and pass it further
+	std::list<std::pair<StateRef<Organisation>, StateRef<AgentType>>> otherParticipants;
+	auto missionType = Battle::MissionType::AlienExtermination;
+
+	// Setup mission type and other participants
 	if (building->owner == state.getPlayer())
 	{
-		return building->battle_map->createBattle(state, organisation, player_agents, craft,
-		                                          Battle::MissionType::BaseDefense, building.id);
+		// Base defense mission
+
+		// FIXME: Generate list of agent types for enemies properly
+		// otherParticipants.emplace_back(organisation, StateRef<AgentType>{ &state, "AGENTTYPE_ANTHROPOD" });
+		// Also add non-combat personell
+	
+		missionType = Battle::MissionType::BaseDefense;
 	}
 	else
 	{
+		// FIXME: Generate list of aliens in the building properly
+		otherParticipants.emplace_back(state.getAliens(), StateRef<AgentType>{ &state, "AGENTTYPE_ANTHROPOD" });
+		otherParticipants.emplace_back(state.getAliens(), StateRef<AgentType>{ &state, "AGENTTYPE_ANTHROPOD" });
+		otherParticipants.emplace_back(state.getAliens(), StateRef<AgentType>{ &state, "AGENTTYPE_ANTHROPOD" });
+		otherParticipants.emplace_back(state.getAliens(), StateRef<AgentType>{ &state, "AGENTTYPE_SKELETOID" });
+		otherParticipants.emplace_back(state.getAliens(), StateRef<AgentType>{ &state, "AGENTTYPE_SKELETOID" });
+		otherParticipants.emplace_back(state.getAliens(), StateRef<AgentType>{ &state, "AGENTTYPE_SKELETOID" });
+		otherParticipants.emplace_back(state.getAliens(), StateRef<AgentType>{ &state, "AGENTTYPE_ANTHROPOD" });
+		otherParticipants.emplace_back(state.getAliens(), StateRef<AgentType>{ &state, "AGENTTYPE_ANTHROPOD" });
+		otherParticipants.emplace_back(state.getAliens(), StateRef<AgentType>{ &state, "AGENTTYPE_ANTHROPOD" });
+
 		if (organisation == state.getAliens())
-			return building->battle_map->createBattle(state, organisation, player_agents, craft,
-			                                          Battle::MissionType::AlienExtermination,
-			                                          building.id);
+		{
+			if (building->owner == state.getAliens())
+			{
+				// Raid Aliens mission
+
+				missionType = Battle::MissionType::RaidAliens;
+			}
+			else
+			{
+				// Alien Extermination mission
+
+				// Add building security if hostile to player
+				if (building->owner->isRelatedTo(state.getPlayer()) == Organisation::Relation::Hostile)
+				{
+					int numGuards = std::min(20, randBoundsInclusive(state.rng, building->owner->average_guards * 75 / 100, building->owner->average_guards * 125 / 100));
+
+					for (int i = 0; i < numGuards;i++)
+					{
+						otherParticipants.emplace_back(organisation, listRandomiser(state.rng, building->owner->guard_types));
+					}
+				}
+
+				// Civilains will not be actually added if there is no spawn points for them
+				{
+					int numGuards = std::min(20, randBoundsInclusive(state.rng, state.getCivilian()->average_guards * 75 / 100, state.getCivilian()->average_guards * 125 / 100));
+
+					for (int i = 0; i < numGuards;i++)
+					{
+						otherParticipants.emplace_back(state.getCivilian(), listRandomiser(state.rng, state.getCivilian()->guard_types));
+					}
+				}
+
+				missionType = Battle::MissionType::AlienExtermination;
+			}
+		}
 		else
-			return building->battle_map->createBattle(state, organisation, player_agents, craft,
-			                                          Battle::MissionType::RaidHumans, building.id);
+		{
+			// Raid humans mission
+
+			// Add building security
+			{
+				int numGuards = std::min(20, randBoundsInclusive(state.rng, building->owner->average_guards * 75 / 100, building->owner->average_guards * 125 / 100));
+
+				for (int i = 0; i < numGuards;i++)
+				{
+					otherParticipants.emplace_back(organisation, listRandomiser(state.rng, building->owner->guard_types));
+				}
+			}
+
+			missionType = Battle::MissionType::RaidHumans;
+		}
 	}
+
+	// Create battle
+
+	for (auto &pair : otherParticipants)
+	{
+		player_agents.push_back(state.agent_generator.createAgent(state, pair.first, pair.second));
+	}
+
+	return building->battle_map->createBattle(state, organisation, player_agents, craft,
+		missionType, building.id);
 }
+
+namespace{
 
 // Checks wether two cubes intersect
 bool doTwoSectorsIntersect(int x1, int y1, int z1, const Vec3<int> &s1, int x2, int y2, int z2,
@@ -239,6 +327,7 @@ bool placeSector(GameState &state,
 	}
 	return false;
 }
+} // anonymous-namespace
 
 sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> target_organisation,
                                    std::list<StateRef<Agent>> &agents,
@@ -412,7 +501,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 					    secRefs[i]->size.z == z)
 						remaining_sectors.push_back(i);
 
-		// Disable sectors that don't fit
+		// Disable sectors that don'pair fit
 		bool mandatorySectorLost = false;
 		bool mandatorySectorRemaining = false;
 		for (int i = (int)remaining_sectors.size() - 1; i >= 0; i--)
@@ -583,6 +672,11 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 		b->player_craft = player_craft;
 		b->loadResources(state);
 
+		bool spawnCivilians = false;
+
+		auto doors = std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>>(2);
+		
+
 		for (int x = 0; x < size.x; x++)
 		{
 			for (int y = 0; y < size.y; y++)
@@ -645,7 +739,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 							s->type = pair.second;
 
 						// Set spawnability and height
-						if (s->type->movement_cost == 255 ||
+						if (s->type->movement_cost == 255 || s->type->height == 39 ||
 						    b->spawnMap[s->initialPosition.x][s->initialPosition.y]
 						               [s->initialPosition.z] == -1)
 						{
@@ -672,6 +766,11 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						s->currentPosition += Vec3<float>(0.5f, 0.5f, 0.0f);
 						s->type = pair.second;
 
+						if (pair.second->door)
+						{
+							doors[0].emplace_back(s->initialPosition, s);
+						}
+
 						b->map_parts.push_back(s);
 					}
 					for (auto &pair : tiles.initial_right_walls)
@@ -682,6 +781,11 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						s->currentPosition = s->initialPosition;
 						s->currentPosition += Vec3<float>(0.5f, 0.5f, 0.0f);
 						s->type = pair.second;
+
+						if (pair.second->door)
+						{
+							doors[1].emplace_back(s->initialPosition, s);
+						}
 
 						b->map_parts.push_back(s);
 					}
@@ -695,7 +799,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						s->type = pair.second;
 
 						// Set spawnability and height
-						if (s->type->movement_cost == 255 ||
+						if (s->type->movement_cost == 255 || s->type->height == 39 ||
 						    b->spawnMap[s->initialPosition.x][s->initialPosition.y]
 						               [s->initialPosition.z] == -1)
 						{
@@ -727,20 +831,65 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						s->item = i;
 						s->position = pair.first + shift;
 
-						int height = 0;
-						if (tiles.initial_grounds.find(pair.first) != tiles.initial_grounds.end())
-							height = std::max(height, tiles.initial_grounds[pair.first]->height);
-						if (tiles.initial_features.find(pair.first) != tiles.initial_features.end())
-							height = std::max(height, tiles.initial_features[pair.first]->height);
-						s->position +=
-						    Vec3<float>{0.5f, 0.5f, ((float)height) / (float)TILE_Z_BATTLE};
-
 						b->items.push_back(s);
 					}
 					for (auto &lb : tiles.los_blocks)
 					{
 						b->los_blocks.push_back(lb->clone(shift));
+						if (lb->spawn_type == BattleMapSector::LineOfSightBlock::SpawnType::Civilian)
+						{
+							spawnCivilians = true;
+						}
 					}
+				}
+			}
+		}
+
+		// Link doors up
+		for (int i = 0; i < 2; i++)
+		{
+			while (doors[i].size() > 0)
+			{
+				std::list<Vec3<int>> locationsToCheck;
+				std::set<Vec3<int>> locationsVisited;
+
+				auto d = mksp<BattleDoor>();
+				d->right = i == 1;
+				d->operational = true;
+				b->doors.push_back(d);
+
+				// Recursively search for doors in a pattern spreading around start location
+				locationsToCheck.push_back(doors[i].front().first);
+				while (locationsToCheck.size() > 0)
+				{
+					auto loc = locationsToCheck.front();
+					locationsToCheck.pop_front();
+					if (locationsVisited.find(loc) != locationsVisited.end())
+						continue;
+					locationsVisited.insert(loc);
+
+					auto it = doors[i].begin();
+					while (it != doors[i].end() && (it->first.x != loc.x || it->first.y != loc.y || it->first.z != loc.z))
+					{
+						it++;
+					}
+					if (it == doors[i].end())
+					{
+						continue;
+					}
+
+					it->second->doorID = b->doors.size() - 1;
+					d->animationFrameCount = std::max(d->animationFrameCount, (int)it->second->type->animation_frames.size());
+					// d->mapParts.push_back(it->second); // <- no need to do it here, we do it in initBattle
+
+					// 0 = left, 1 = right
+					// left search on Y axis, right on X
+					// therefore for i=0 X=0, for i=1 Y=0
+					locationsToCheck.push_back(it->first + Vec3<int>{i * 1, (1 - i) * 1, 0}); 
+					locationsToCheck.push_back(it->first + Vec3<int>{i * -1, (1 - i) * -1, 0}); 
+					locationsToCheck.push_back(it->first + Vec3<int>{0, 0, 1});
+					locationsToCheck.push_back(it->first + Vec3<int>{0, 0, -1});
+					doors[i].erase(it);
 				}
 			}
 		}
@@ -750,19 +899,26 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 		// We will assign their positions and "spawn" them in "BeginBattle" function
 		for (auto &a : agents)
 		{
+			if (b->participants.find(a->owner) == b->participants.end())
+			{
+				b->participants.insert(a->owner);
+			}
+
 			auto u = mksp<BattleUnit>();
 
 			u->agent = a;
 			u->owner = a->owner;
 			u->squadNumber = -1;
 			u->battle = b;
-
+			if (!spawnCivilians && a->owner == state.getCivilian())
+			{
+				u->retreated = true;
+			}
+			
 			b->units.push_back(u);
 		}
 
-		// Fill list of participants and find out number of agents in each org
-		b->participants.insert(state.getPlayer());
-		b->participants.insert(target_organisation);
+		// Find out number of agents in each org
 		std::map<StateRef<Organisation>, int> agentCount;
 		for (auto &o : b->participants)
 		{
@@ -771,6 +927,10 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 		}
 		for (auto &u : b->units)
 		{
+			if (u->retreated)
+			{
+				continue;
+			}
 			agentCount[u->owner]++;
 		}
 
@@ -790,7 +950,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 					{
 						if (b->forces[o].squads[s].getNumUnits() >= 3)
 							break;
-						if (u->owner != o || u->squadNumber != -1)
+						if (u->owner != o || u->squadNumber != -1 || u->retreated)
 							continue;
 						u->assignToSquad(s);
 						agentCount[o]--;

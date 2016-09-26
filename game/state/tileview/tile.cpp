@@ -85,6 +85,11 @@ Vec3<float> Tile::getRestingPosition(bool large)
 	return Vec3<float>{position.x + 0.5, position.y + 0.5, position.z + height};
 }
 
+sp<BattleMapPart> Tile::getItemSupportingObject()
+{
+	return supportProviderForItems;
+}
+
 bool Tile::getSolidGround(bool large)
 {
 	if (large)
@@ -237,6 +242,33 @@ void Tile::updateBattlescapeUIDrawOrder()
 	}
 }
 
+void Tile::updateBattlescapeUnitPresent()
+{
+	firstUnitPresent = nullptr;
+	for (auto o : intersectingObjects)
+	{
+		if (o->getType() == TileObject::Type::Unit)
+		{
+			if (!firstUnitPresent)
+			{
+				firstUnitPresent = std::static_pointer_cast<TileObjectBattleUnit>(o);
+			}
+			auto pos = o->getPosition();
+			auto x = pos.x - position.x;
+			auto y = pos.y - position.y;
+			doorOpeningUnitPresent = doorOpeningUnitPresent || (x > 0.45f && x < 0.55f && y > 0.45f && y < 0.55f);
+			if (firstUnitPresent && doorOpeningUnitPresent)
+			{
+				break;
+			}
+		}
+	}
+	if (!firstUnitPresent)
+	{
+		doorOpeningUnitPresent = false;
+	}
+}
+
 void Tile::updateBattlescapeParameters()
 {
 	height = 0.0f;
@@ -250,12 +282,26 @@ void Tile::updateBattlescapeParameters()
 	hasExit = false;
 	walkSfx = nullptr;
 	objectDropSfx = nullptr;
+	supportProviderForItems = nullptr;
+	closedDoorLeft = false;
+	closedDoorRight = false;
 	for (auto o : ownedObjects)
 	{
 		if (o->getType() == TileObject::Type::Ground || o->getType() == TileObject::Type::Feature)
 		{
 			auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+			if (!mp->isAlive())
+			{
+				continue;
+			}
 			height = std::max(height, (float)mp->type->height);
+			if ((mp->type->floor || o->getType() == TileObject::Type::Feature) && !mp->type->gravlift)
+			{
+				if (!supportProviderForItems || supportProviderForItems->type->height < mp->type->height)
+				{
+					supportProviderForItems = mp;
+				}
+			}
 			solidGround = solidGround || (mp->type->floor && !mp->type->gravlift) ||
 			              (o->getType() == TileObject::Type::Feature && !mp->type->gravlift);
 			hasLift = hasLift || mp->type->gravlift;
@@ -273,15 +319,23 @@ void Tile::updateBattlescapeParameters()
 		}
 		if (o->getType() == TileObject::Type::LeftWall)
 		{
-			movementCostLeft = std::static_pointer_cast<TileObjectBattleMapPart>(o)
-			                       ->getOwner()
-			                       ->type->movement_cost;
+			auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+			if (!mp->isAlive())
+			{
+				continue;
+			}
+			movementCostLeft = mp->type->movement_cost;
+			closedDoorLeft = mp->isDoor() && !mp->getDoor()->open;
 		}
 		if (o->getType() == TileObject::Type::RightWall)
 		{
-			movementCostRight = std::static_pointer_cast<TileObjectBattleMapPart>(o)
-			                        ->getOwner()
-			                        ->type->movement_cost;
+			auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+			if (!mp->isAlive())
+			{
+				continue;
+			}
+			movementCostRight = mp->type->movement_cost;
+			closedDoorRight = mp->isDoor() && !mp->getDoor()->open;
 		}
 	}
 	canStand = solidGround || hasLift;
@@ -318,6 +372,12 @@ void Tile::updateBattlescapeParameters()
 		}
 	}
 	height = height / (float)TILE_Z_BATTLE;
+
+}
+
+sp<TileObjectBattleUnit> Tile::getUnitIfPresent()
+{
+	return firstUnitPresent;
 }
 
 sp<TileObjectBattleUnit> Tile::getUnitIfPresent(bool onlyConscious, bool mustOccupy,

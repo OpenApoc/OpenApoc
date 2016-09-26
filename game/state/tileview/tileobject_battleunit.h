@@ -27,6 +27,7 @@ class TileObjectBattleUnit : public TileObject
 	std::set<Vec3<int>> occupiedTiles;
 
 	void setPosition(Vec3<float> newPosition) override;
+	void removeFromMap() override;
 	void addToDrawnTiles(Tile *tile) override;
 
 	bool hasVoxelMap() override { return true; }

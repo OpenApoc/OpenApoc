@@ -35182,6 +35182,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_LW_72</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:22</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:23</entry>
@@ -35546,6 +35547,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_LW_73</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:27</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:28</entry>
@@ -36001,6 +36003,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_LW_74</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:34</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:35</entry>
@@ -36456,6 +36459,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_LW_70</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:56</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:57</entry>
@@ -37627,6 +37631,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_LW_77</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:41</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:42</entry>
@@ -38800,6 +38805,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_LW_77</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:51</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:52</entry>
@@ -39846,6 +39852,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_LW_69</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:1</entry>
@@ -40809,6 +40816,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_LW_75</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:8</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:9</entry>
@@ -41765,6 +41773,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_LW_76</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:15</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:16</entry>
@@ -42837,6 +42846,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_LW_91</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:41</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:42</entry>
@@ -43821,6 +43831,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_RW_55</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:94</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:95</entry>
@@ -44185,6 +44196,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_RW_56</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:99</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:100</entry>
@@ -44640,6 +44652,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_RW_62</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:113</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:114</entry>
@@ -45006,6 +45019,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_RW_57</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:106</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:107</entry>
@@ -46266,6 +46280,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_RW_61</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:113</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:114</entry>
@@ -46363,6 +46378,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_RW_63</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:118</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:119</entry>
@@ -47350,6 +47366,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_RW_53</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:143</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:144</entry>
@@ -48675,6 +48692,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_RW_60</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:123</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:124</entry>
@@ -48946,6 +48964,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_RW_63</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:133</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:134</entry>
@@ -49123,6 +49142,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_RW_63</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:138</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:139</entry>
@@ -49474,6 +49494,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_RW_53</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:73</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:74</entry>
@@ -50107,6 +50128,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_RW_58</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:81</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:82</entry>
@@ -50204,6 +50226,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_10astro_RW_59</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:88</entry>
             <entry>PCK:xcom3/maps/10astro/mapunits/animate.pck:xcom3/maps/10astro/mapunits/animate.tab:89</entry>

@@ -23,6 +23,7 @@
     <ClCompile Include="base\base.cpp" />
     <ClCompile Include="base\facility.cpp" />
     <ClCompile Include="battle\battle.cpp" />
+    <ClCompile Include="battle\battledoor.cpp" />
     <ClCompile Include="battle\battlemap.cpp" />
     <ClCompile Include="battle\battlemappart.cpp" />
     <ClCompile Include="battle\battlemappart_type.cpp" />
@@ -81,6 +82,7 @@
     <ClInclude Include="base\facility.h" />
     <ClInclude Include="battle\battle.h" />
     <ClInclude Include="battle\battlecommonsamplelist.h" />
+    <ClInclude Include="battle\battledoor.h" />
     <ClInclude Include="battle\battlemap.h" />
     <ClInclude Include="battle\battlemappart.h" />
     <ClInclude Include="battle\battlemapsector.h" />

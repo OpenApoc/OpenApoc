@@ -25,7 +25,7 @@ InitialGameStateExtractor::extractImagePack(GameState &state, const UString &pat
 
 	auto p = mksp<BattleUnitImagePack>();
 
-	p->image_offset = shadow ? Vec2<float>{23, 6} : Vec2<float>{23, 34};
+	p->image_offset = shadow ? BATTLE_SHADOW_OFFSET : BATTLE_IMAGE_OFFSET;
 
 	for (size_t i = 0; i < imageTabFileEntryCount; i++)
 	{
@@ -44,7 +44,7 @@ sp<BattleUnitImagePack> InitialGameStateExtractor::extractItemImagePack(GameStat
 
 	auto p = mksp<BattleUnitImagePack>();
 
-	p->image_offset = {23, 34};
+	p->image_offset = BATTLE_IMAGE_OFFSET;
 
 	for (int j = 0; j < 8; j++)
 		p->images.push_back(

@@ -16,16 +16,26 @@ void TileObjectBattleMapPart::draw(Renderer &r, TileTransform &transform,
 		LogError("Called with no owning scenery object");
 		return;
 	}
-	// FIXME: If damaged use damaged tile sprites?
 	auto &type = map_part->type;
 	sp<Image> sprite;
 	Vec2<float> transformedScreenPos = screenPosition;
 	switch (mode)
 	{
 		case TileViewMode::Isometric:
-			sprite = type->sprite;
+		{
+			int frame = map_part->getAnimationFrame();
+			if (frame == -1)
+			{
+				sprite = type->sprite;
+			}
+			else
+			{
+				auto &curType = map_part->alternative_type ? map_part->alternative_type : map_part->type;
+				sprite = curType->animation_frames[frame];
+			}
 			transformedScreenPos -= type->imageOffset;
 			break;
+		}
 		case TileViewMode::Strategy:
 			sprite = type->strategySprite;
 			// All strategy sprites so far are 8x8 so offset by 4 to draw from the center

@@ -73,6 +73,7 @@ void City::initMap()
 	                            {VOXEL_X_CITY, VOXEL_Y_CITY, VOXEL_Z_CITY}, layerMap));
 	for (auto &s : this->scenery)
 	{
+		// FIXME: Should we really add all scenery to the map? What if it's destroyed?
 		this->map->addObjectToMap(s);
 		if (s->type->isLandingPad)
 		{

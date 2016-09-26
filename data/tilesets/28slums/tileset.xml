@@ -38497,6 +38497,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_LW_86</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:1</entry>
@@ -38772,6 +38773,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_LW_88</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:5</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:6</entry>
@@ -39670,6 +39672,7 @@
           <block_gas>35</block_gas>
           <block_fire>35</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_LW_99</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:132</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:133</entry>
@@ -40034,6 +40037,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_LW_89</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:18</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:19</entry>
@@ -40843,6 +40847,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_LW_91</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:23</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:24</entry>
@@ -40940,6 +40945,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_LW_90</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:29</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:30</entry>
@@ -41393,6 +41399,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_LW_96</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:147</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:148</entry>
@@ -46809,6 +46816,7 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_LW_97</alternative_map_part>
           <sfxIndex>4</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -46898,6 +46906,7 @@
           <block_gas>35</block_gas>
           <block_fire>35</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_LW_97</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:142</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:143</entry>
@@ -46992,6 +47001,7 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_LW_99</alternative_map_part>
           <sfxIndex>4</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -47346,6 +47356,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_RW_57</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:60</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:61</entry>
@@ -47977,6 +47988,7 @@
           <block_gas>35</block_gas>
           <block_fire>35</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_RW_63</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:137</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:138</entry>
@@ -48607,6 +48619,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_RW_59</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:115</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:116</entry>
@@ -48703,6 +48716,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_RW_65</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:73</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:74</entry>
@@ -48800,6 +48814,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_RW_64</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:79</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:80</entry>
@@ -49075,6 +49090,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_RW_66</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:127</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:128</entry>
@@ -49528,6 +49544,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_RW_61</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:85</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:86</entry>
@@ -49892,6 +49909,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_RW_67</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:90</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:91</entry>
@@ -52464,6 +52482,7 @@
           <fire_resist>255</fire_resist>
           <fire_burn_time>255</fire_burn_time>
           <size>1</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_RW_63</alternative_map_part>
           <sfxIndex>4</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -53073,6 +53092,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_RW_56</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:55</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:56</entry>
@@ -53528,6 +53548,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_RW_59</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:119</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:120</entry>
@@ -53624,6 +53645,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_28slums_RW_59</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:123</entry>
             <entry>PCK:xcom3/maps/28slums/mapunits/animate.pck:xcom3/maps/28slums/mapunits/animate.tab:124</entry>

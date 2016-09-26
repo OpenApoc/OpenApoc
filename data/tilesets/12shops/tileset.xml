@@ -33199,6 +33199,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_LW_82</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:28</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:29</entry>
@@ -33296,6 +33297,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_LW_85</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:33</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:34</entry>
@@ -33393,6 +33395,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_LW_82</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:8</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:9</entry>
@@ -33490,6 +33493,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_LW_86</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:23</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:24</entry>
@@ -33587,6 +33591,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_LW_82</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:13</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:14</entry>
@@ -33684,6 +33689,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_LW_85</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:18</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:19</entry>
@@ -34048,6 +34054,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_LW_89</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:45</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:46</entry>
@@ -34322,6 +34329,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_LW_91</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:50</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:51</entry>
@@ -34686,6 +34694,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_LW_92</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:38</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:39</entry>
@@ -35319,6 +35328,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_LW_91</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:55</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:56</entry>
@@ -36128,6 +36138,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_LW_87</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:60</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:61</entry>
@@ -36225,6 +36236,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_LW_88</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:65</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:66</entry>
@@ -36767,6 +36779,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_LW_93</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:71</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:72</entry>
@@ -36865,6 +36878,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_LW_81</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:1</entry>
@@ -41911,6 +41925,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_RW_59</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:105</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:106</entry>
@@ -42008,6 +42023,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_RW_57</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:110</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:111</entry>
@@ -42105,6 +42121,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_RW_59</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:95</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:96</entry>
@@ -42202,6 +42219,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_RW_57</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:85</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:86</entry>
@@ -42299,6 +42317,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_RW_60</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:100</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:101</entry>
@@ -42396,6 +42415,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_RW_58</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:90</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:91</entry>
@@ -42671,6 +42691,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_RW_61</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:115</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:116</entry>
@@ -43035,6 +43056,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_RW_62</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:120</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:121</entry>
@@ -43399,6 +43421,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_RW_63</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:125</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:126</entry>
@@ -43854,6 +43877,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_RW_64</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:132</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:133</entry>
@@ -44574,6 +44598,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_RW_67</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:137</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:138</entry>
@@ -44671,6 +44696,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_RW_66</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:143</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:144</entry>
@@ -45302,6 +45328,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_RW_65</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:148</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:149</entry>
@@ -45845,6 +45872,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_RW_68</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:154</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:155</entry>
@@ -47682,6 +47710,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_12shops_RW_56</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:77</entry>
             <entry>PCK:xcom3/maps/12shops/mapunits/animate.pck:xcom3/maps/12shops/mapunits/animate.tab:78</entry>

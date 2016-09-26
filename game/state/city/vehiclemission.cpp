@@ -27,13 +27,13 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 	bool canEnterTile(Tile *from, Tile *to, bool demandGiveWay = false) const override
 	{
 		float nothing;
-		return canEnterTile(from, to, nothing, demandGiveWay);
+		bool none;
+		return canEnterTile(from, to, nothing, none, demandGiveWay);
 	}
 
 	// Support 'from' being nullptr for if a vehicle is being spawned in the map
-	bool canEnterTile(Tile *from, Tile *to, float &cost, bool demandGiveWay = false) const override
+	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &, bool) const override
 	{
-		std::ignore = demandGiveWay;
 		Vec3<int> fromPos = {0, 0, 0};
 		if (from)
 		{

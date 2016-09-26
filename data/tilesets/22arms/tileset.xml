@@ -30248,6 +30248,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_22arms_LW_58</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:10</entry>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:11</entry>
@@ -30882,6 +30883,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_22arms_LW_66</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:38</entry>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:39</entry>
@@ -30981,6 +30983,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_22arms_LW_66</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:61</entry>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:62</entry>
@@ -31080,6 +31083,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
+          <alternative_map_part>BATTLEMAPPART_22arms_LW_62</alternative_map_part>
           <sfxIndex>0</sfxIndex>
           <movement_cost>255</movement_cost>
           <height>39</height>
@@ -31169,6 +31173,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_22arms_LW_57</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:1</entry>
@@ -31266,6 +31271,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_22arms_LW_55</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:93</entry>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:94</entry>
@@ -34160,6 +34166,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_22arms_LW_68</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:46</entry>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:47</entry>
@@ -34259,6 +34266,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_22arms_LW_68</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:69</entry>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:70</entry>
@@ -34444,6 +34452,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_22arms_LW_68</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:54</entry>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:55</entry>
@@ -34543,6 +34552,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_22arms_LW_68</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:77</entry>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:78</entry>
@@ -36403,6 +36413,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_22arms_LW_59</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:31</entry>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:32</entry>
@@ -36678,6 +36689,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_22arms_RW_46</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:24</entry>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:25</entry>
@@ -37760,6 +37772,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_22arms_RW_45</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:17</entry>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:18</entry>
@@ -38573,6 +38586,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_22arms_RW_44</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:5</entry>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:6</entry>
@@ -38670,6 +38684,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_22arms_RW_47</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:84</entry>
             <entry>PCK:xcom3/maps/22arms/mapunits/animate.pck:xcom3/maps/22arms/mapunits/animate.tab:85</entry>

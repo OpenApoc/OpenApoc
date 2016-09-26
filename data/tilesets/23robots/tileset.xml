@@ -29440,6 +29440,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_23robots_LW_78</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:58</entry>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:59</entry>
@@ -29804,6 +29805,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_23robots_LW_73</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:20</entry>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:21</entry>
@@ -29903,6 +29905,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_23robots_LW_75</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:27</entry>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:28</entry>
@@ -31415,6 +31418,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_23robots_LW_79</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:63</entry>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:64</entry>
@@ -33780,6 +33784,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_23robots_LW_69</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:1</entry>
@@ -33877,6 +33882,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_23robots_LW_70</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:5</entry>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:6</entry>
@@ -33974,6 +33980,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_23robots_LW_71</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:10</entry>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:11</entry>
@@ -34071,6 +34078,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_23robots_LW_71</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:15</entry>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:16</entry>
@@ -34343,6 +34351,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_23robots_LW_75</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:36</entry>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:37</entry>
@@ -37352,6 +37361,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_23robots_RW_51</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:83</entry>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:84</entry>
@@ -37998,6 +38008,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_23robots_RW_50</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:78</entry>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:79</entry>
@@ -38985,6 +38996,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_23robots_RW_52</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:90</entry>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:91</entry>
@@ -41188,6 +41200,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_23robots_RW_53</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/23robots/mapunits/animate.pck:xcom3/maps/23robots/mapunits/animate.tab:1</entry>

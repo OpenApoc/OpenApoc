@@ -42602,6 +42602,7 @@
           <block_psionic>236</block_psionic>
           <size>10</size>
           <damaged_map_part>BATTLEMAPPART_40spawn_LW_255</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_40spawn_LW_255</alternative_map_part>
           <transparent>true</transparent>
           <sfxIndex>7</sfxIndex>
           <los_through_terrain>true</los_through_terrain>
@@ -42698,6 +42699,7 @@
           <block_fire>88</block_fire>
           <block_psionic>46</block_psionic>
           <size>1</size>
+          <alternative_map_part>BATTLEMAPPART_40spawn_LW_255</alternative_map_part>
           <transparent>true</transparent>
           <sfxIndex>7</sfxIndex>
           <door>true</door>
@@ -42793,6 +42795,7 @@
           <block_psionic>235</block_psionic>
           <size>10</size>
           <damaged_map_part>BATTLEMAPPART_40spawn_LW_255</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_40spawn_LW_255</alternative_map_part>
           <transparent>true</transparent>
           <door>true</door>
           <los_through_terrain>true</los_through_terrain>
@@ -42977,6 +42980,7 @@
           <block_gas>45</block_gas>
           <block_fire>45</block_fire>
           <size>6</size>
+          <alternative_map_part>BATTLEMAPPART_40spawn_LW_6</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/40spawn/mapunits/animate.pck:xcom3/maps/40spawn/mapunits/animate.tab:7</entry>
             <entry>PCK:xcom3/maps/40spawn/mapunits/animate.pck:xcom3/maps/40spawn/mapunits/animate.tab:8</entry>
@@ -45554,6 +45558,7 @@
           <block_psionic>236</block_psionic>
           <size>10</size>
           <damaged_map_part>BATTLEMAPPART_40spawn_RW_255</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_40spawn_RW_255</alternative_map_part>
           <transparent>true</transparent>
           <sfxIndex>7</sfxIndex>
           <los_through_terrain>true</los_through_terrain>
@@ -45650,6 +45655,7 @@
           <block_fire>88</block_fire>
           <block_psionic>46</block_psionic>
           <size>1</size>
+          <alternative_map_part>BATTLEMAPPART_40spawn_RW_255</alternative_map_part>
           <transparent>true</transparent>
           <sfxIndex>7</sfxIndex>
           <door>true</door>
@@ -45745,6 +45751,7 @@
           <block_psionic>235</block_psionic>
           <size>10</size>
           <damaged_map_part>BATTLEMAPPART_40spawn_RW_255</damaged_map_part>
+          <alternative_map_part>BATTLEMAPPART_40spawn_RW_255</alternative_map_part>
           <transparent>true</transparent>
           <door>true</door>
           <los_through_terrain>true</los_through_terrain>
@@ -45929,6 +45936,7 @@
           <block_gas>45</block_gas>
           <block_fire>45</block_fire>
           <size>6</size>
+          <alternative_map_part>BATTLEMAPPART_40spawn_RW_6</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/40spawn/mapunits/animate.pck:xcom3/maps/40spawn/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/40spawn/mapunits/animate.pck:xcom3/maps/40spawn/mapunits/animate.tab:1</entry>

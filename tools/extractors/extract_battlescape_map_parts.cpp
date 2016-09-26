@@ -10,7 +10,7 @@
 namespace OpenApoc
 {
 
-static void readBattleMapParts(GameState &state, TACP &data_t, sp<BattleMapTileset> t,
+void InitialGameStateExtractor::readBattleMapParts(GameState &state, TACP &data_t, sp<BattleMapTileset> t,
                                BattleMapPartType::Type type, const UString &idPrefix,
                                const UString &dirName, const UString &datName,
                                const UString &pckName, const UString &stratPckName)
@@ -54,6 +54,10 @@ static void readBattleMapParts(GameState &state, TACP &data_t, sp<BattleMapTiles
 
 		UString id = UString::format("%s%u", idPrefix, i);
 		auto object = mksp<BattleMapPartType>();
+		if (entry.alternative_object_idx != 0)
+		{
+			object->alternative_map_part = { &state,  UString::format("%s%u", idPrefix, entry.alternative_object_idx) };
+		}
 		object->type = type;
 		object->constitution = entry.constitution;
 		object->explosion_power = entry.explosion_power;
@@ -137,7 +141,7 @@ static void readBattleMapParts(GameState &state, TACP &data_t, sp<BattleMapTiles
 		}
 		// It should be {24,34} I guess, since 48/2=24, but 23 gives a little better visual
 		// corellation with the sprites
-		object->imageOffset = {23, 34};
+		object->imageOffset = BATTLE_IMAGE_OFFSET;
 
 		object->transparent = entry.transparent == 1;
 		object->sfxIndex = entry.sfx - 1;

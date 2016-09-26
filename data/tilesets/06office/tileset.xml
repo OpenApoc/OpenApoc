@@ -28616,6 +28616,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_99</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:12</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:13</entry>
@@ -32425,6 +32426,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_109</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:30</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:31</entry>
@@ -33373,6 +33375,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_108</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:24</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:25</entry>
@@ -35401,6 +35404,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_105</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:36</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:37</entry>
@@ -36035,6 +36039,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_111</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:45</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:46</entry>
@@ -36486,6 +36491,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_100</alternative_map_part>
           <sfxIndex>0</sfxIndex>
           <door>true</door>
           <movement_cost>4</movement_cost>
@@ -36666,6 +36672,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_104</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:73</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:74</entry>
@@ -36764,6 +36771,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_103</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:61</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:62</entry>
@@ -37218,6 +37226,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_121</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:0</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:1</entry>
@@ -37316,6 +37325,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_99</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:12</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:13</entry>
@@ -37414,6 +37424,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_115</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:18</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:19</entry>
@@ -38219,6 +38230,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_116</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:6</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:7</entry>
@@ -38584,6 +38596,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_121</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:50</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:51</entry>
@@ -39036,6 +39049,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_119</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:79</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:80</entry>
@@ -39756,6 +39770,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_124</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:84</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:85</entry>
@@ -40030,6 +40045,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>4</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_110</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:89</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:90</entry>
@@ -40396,6 +40412,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_122</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:96</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:97</entry>
@@ -40584,6 +40601,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_124</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:103</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:104</entry>
@@ -40950,6 +40968,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_124</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:103</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:104</entry>
@@ -42194,6 +42213,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_LW_115</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:18</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:19</entry>
@@ -45725,6 +45745,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_RW_86</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:127</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:128</entry>
@@ -45823,6 +45844,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_RW_87</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:133</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:134</entry>
@@ -46543,6 +46565,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_RW_88</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:139</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:140</entry>
@@ -47264,6 +47287,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_RW_96</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:152</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:153</entry>
@@ -47895,6 +47919,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_RW_87</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:163</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:164</entry>
@@ -47993,6 +48018,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_RW_84</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:169</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:170</entry>
@@ -48091,6 +48117,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_RW_84</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:157</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:158</entry>
@@ -48189,6 +48216,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_RW_103</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:110</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:111</entry>
@@ -49177,6 +49205,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_RW_100</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:116</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:117</entry>
@@ -49275,6 +49304,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_RW_103</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:110</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:111</entry>
@@ -49373,6 +49403,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_RW_84</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:116</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:117</entry>
@@ -49560,6 +49591,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_RW_101</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:193</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:194</entry>
@@ -49835,6 +49867,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_RW_97</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:163</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:164</entry>
@@ -50199,6 +50232,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_RW_85</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:122</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:123</entry>
@@ -50296,6 +50330,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_RW_102</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:198</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:199</entry>
@@ -50750,6 +50785,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_RW_84</alternative_map_part>
           <sfxIndex>4</sfxIndex>
           <door>true</door>
           <movement_cost>4</movement_cost>
@@ -50840,6 +50876,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_RW_104</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:211</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:212</entry>
@@ -51384,6 +51421,7 @@
           <block_gas>255</block_gas>
           <block_fire>255</block_fire>
           <size>2</size>
+          <alternative_map_part>BATTLEMAPPART_06office_RW_104</alternative_map_part>
           <animation_frames>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:211</entry>
             <entry>PCK:xcom3/maps/06office/mapunits/animate.pck:xcom3/maps/06office/mapunits/animate.tab:212</entry>

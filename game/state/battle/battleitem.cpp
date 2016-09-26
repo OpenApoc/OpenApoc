@@ -9,6 +9,7 @@
 #include "game/state/tileview/tileobject_battleitem.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_shadow.h"
+#include <cmath>
 
 namespace OpenApoc
 {
@@ -64,7 +65,9 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 	    TileObject::Type::Feature};
 
 	if (supported)
+	{
 		return;
+	}
 
 	velocity.z -= (float)item->type->weight * static_cast<float>(ticks) / TICK_SCALE;
 	// FIXME: Limit velocity after applying gravity?
@@ -78,39 +81,27 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 
 	// Check if new position is valid
 	auto c = tileObject->map.findCollision(previousPosition, newPosition, mapPartSet);
-	// If colliding and moving somewhere other than down, re-try with no sideways movement
-	if (c && (velocity.x != 0.0f || velocity.y != 0.0f))
-	{
-		velocity.x = 0.0f;
-		velocity.y = 0.0f;
-		newPosition =
-		    previousPosition +
-		    ((static_cast<float>(ticks) / TICK_SCALE) * this->velocity) / VELOCITY_SCALE_BATTLE;
-		c = tileObject->map.findCollision(previousPosition, newPosition, mapPartSet);
-	}
-	// If colliding and moving down - totally cancel movement
 	if (c)
 	{
-		// Place object on ground, in correct place, and establish link to it
-		supported = true;
-		velocity.z = 0.0f;
-		newPosition = previousPosition;
-
-		auto tile = tileObject->getOwningTile();
-		auto obj = std::static_pointer_cast<TileObjectBattleMapPart>(c.obj)->getOwner();
-		obj->supportedItems.push_back(shared_from_this());
-		Vec3<float> proper_position = tile->getRestingPosition();
-		if (position != proper_position)
-			setPosition(proper_position);
-
-		// Emit sound
-		if (tile->objectDropSfx)
+		// If colliding and moving somewhere other than down, stop item (it will resume falling shortly)
+		if (velocity.x != 0.0f || velocity.y != 0.0f)
 		{
-			fw().soundBackend->playSample(tile->objectDropSfx, getPosition(), 0.25f);
+			velocity = { 0.0f, 0.0f, 0.0f };
+			newPosition = previousPosition;
+		}
+		// If colliding and moving down
+		else
+		{
+			newPosition = { c.position.x, c.position.y, floorf(c.position.z) };
+			if (!findSupport(true, true))
+			{
+				LogError("WTF? Item collided but did not find support? %f, %f, %f", position.x, position.y, position.z);
+			}
+			return;
 		}
 	}
 
-	// If moved - check if within level bounds
+	// If moved but did not find support - check if within level bounds and set position
 	if (newPosition != previousPosition)
 	{
 		auto mapSize = this->tileObject->map.size;
@@ -124,7 +115,41 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 		else
 		{
 			setPosition(newPosition);
+			findSupport();
 		}
 	}
 }
+
+bool BattleItem::findSupport(bool emitSound, bool forced)
+{
+	if (supported)
+		return true;
+	auto tile = tileObject->getOwningTile();
+	auto obj = tile->getItemSupportingObject();
+	if (!obj)
+	{
+		return false;
+	}
+	auto restingPosition = obj->getPosition() + Vec3<float>{0.0f, 0.0f, (float)obj->type->height / 40.0f};
+	if (!forced && position.z > restingPosition.z)
+	{
+		return false;
+	}
+
+	supported = true;
+	velocity = { 0.0f,0.0f,0.0f };
+	obj->supportedItems.push_back(shared_from_this());
+	if (position != restingPosition)
+	{
+		setPosition(restingPosition);
+	}
+
+	// Emit sound
+	if (emitSound && tile->objectDropSfx)
+	{
+		fw().soundBackend->playSample(tile->objectDropSfx, getPosition(), 0.25f);
+	}
+	return true;
+}
+
 } // namespace OpenApoc

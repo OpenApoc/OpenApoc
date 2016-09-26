@@ -15,7 +15,7 @@
         </dropped_offset>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:78:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -45,7 +45,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:39</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:39:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -73,7 +73,7 @@
         </dropped_offset>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:78:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -142,7 +142,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:26</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:26:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -200,7 +200,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:12</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:12:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -275,7 +275,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:13</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:13:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -350,7 +350,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:14</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:14:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -425,7 +425,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:42</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:42:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -486,7 +486,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:44</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:44:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -518,7 +518,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:56</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:56:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -596,7 +596,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:41</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:41:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -675,7 +675,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:36</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:36:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -706,7 +706,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:52</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:52:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -736,7 +736,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:47</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:47:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -819,7 +819,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:46</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:46:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -851,7 +851,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:40</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:40:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -910,7 +910,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:75</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:75:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -941,7 +941,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:53</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:53:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1020,7 +1020,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:45</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:45:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1051,7 +1051,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:57</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:57:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1134,7 +1134,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:31</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:31:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1166,7 +1166,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:18</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:18:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1249,7 +1249,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:19</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:19:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1332,7 +1332,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:20</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:20:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1413,7 +1413,7 @@
         </dropped_offset>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:80:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1481,7 +1481,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:58</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:58:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1539,7 +1539,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:65</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:65:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1575,7 +1575,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:68</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:68:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1611,7 +1611,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:17</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:17:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1643,7 +1643,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:4</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:4:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1701,7 +1701,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:66</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:66:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1737,7 +1737,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:64</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:64:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1773,7 +1773,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:8</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:8:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1842,7 +1842,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:7</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:7:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1874,7 +1874,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:21</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:21:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1906,7 +1906,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:3</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:3:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -1965,7 +1965,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:67</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:67:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2001,7 +2001,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:54</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:54:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2032,7 +2032,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:0</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:0:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2090,7 +2090,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:11</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:11:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2122,7 +2122,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:60</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:60:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2157,7 +2157,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:63</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:63:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2193,7 +2193,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:10</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:10:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2273,7 +2273,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:9</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:9:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2305,7 +2305,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:5</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:5:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2336,7 +2336,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:6</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:6:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2396,7 +2396,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:61</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:61:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2432,7 +2432,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:59</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:59:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2468,7 +2468,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:15</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:15:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2499,7 +2499,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:16</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:16:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2580,7 +2580,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:62</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:62:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2616,7 +2616,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:2</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:2:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2674,7 +2674,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:25</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:25:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2734,7 +2734,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:1</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:1:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2790,7 +2790,7 @@
         </dropped_offset>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:82:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2864,7 +2864,7 @@
         </dropped_offset>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:83:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2944,7 +2944,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:38</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:38:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -2975,7 +2975,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:37</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:37:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3006,7 +3006,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:22</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:22:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3085,7 +3085,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:23</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:23:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3164,7 +3164,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:24</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:24:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3243,7 +3243,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:55</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:55:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3274,7 +3274,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:29</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:29:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3303,7 +3303,7 @@
         </dropped_offset>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:76:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3380,7 +3380,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:51</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:51:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3411,7 +3411,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:49</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:49:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3444,7 +3444,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:50</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:50:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3475,7 +3475,7 @@
         </dropped_offset>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:81:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3532,7 +3532,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:43</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:43:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3591,7 +3591,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:30</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:30:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3648,7 +3648,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:74</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:74:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3677,7 +3677,7 @@
         </dropped_offset>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:79:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3705,7 +3705,7 @@
         </dropped_offset>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:77:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3780,7 +3780,7 @@
         </dropped_offset>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:77:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3857,7 +3857,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:32</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:32:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3888,7 +3888,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:33</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:33:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -3949,7 +3949,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:34</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:34:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -4010,7 +4010,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:35</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:35:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -4071,7 +4071,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:28</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:28:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -4103,7 +4103,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:27</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:27:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -4161,7 +4161,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:48</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:48:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -4346,7 +4346,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:70</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:70:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -4381,7 +4381,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:73</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:73:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -4417,7 +4417,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:71</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:71:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -4453,7 +4453,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:69</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:69:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
@@ -4489,7 +4489,7 @@
         <dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:72</dropped_shadow_sprite>
         <shadow_offset>
           <x>23</x>
-          <y>-14</y>
+          <y>6</y>
         </shadow_offset>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:72:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>

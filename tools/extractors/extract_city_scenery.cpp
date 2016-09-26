@@ -217,12 +217,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 			tile->minimap_colour = minimap_palette->getColour(palette_index);
 		}
 
-		// FIXME: I /think/ all scenery tiles have an offset of {32,32} to the center {0.5, 0.5, 0}
-		// point
-		// Alexey Andronov: It looks like in older builds, some scenery had invalid voxel maps
-		// And therefore this was determined incorrectly
-		// Actually, 32x24 gives proper display
-		tile->imageOffset = {32, 24};
+		tile->imageOffset = CITY_IMAGE_OFFSET;
 
 		city->tile_types[id] = tile;
 	}
