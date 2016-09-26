@@ -844,7 +844,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				}
 			}
 		}
-
+		
 		// Link doors up
 		for (int i = 0; i < 2; i++)
 		{

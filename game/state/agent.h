@@ -33,6 +33,7 @@ class AgentStats
 	int time_units = 0;
 	void restoreTU() { time_units = speed; }
 	int stamina = 0;
+	int getDisplayStaminaValue() { return stamina / 2; }
 	bool canRun() { return stamina > 0; }
 	int bravery = 0;
 	int strength = 0;

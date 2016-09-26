@@ -287,6 +287,22 @@ BattleView::BattleView(sp<GameState> state)
 		LogWarning("Clicked left hand");
 	};
 
+	std::function<void(FormsEvent *e)> dropRightHand = [this](Event *) {
+		orderDrop(true);
+	};
+
+	std::function<void(FormsEvent *e)> dropLeftHand = [this](Event *) {
+		orderDrop(false);
+	};
+
+	std::function<void(FormsEvent *e)> throwRightHand = [this](Event *) {
+		LogWarning("Throw right hand");
+	};
+
+	std::function<void(FormsEvent *e)> throwLeftHand = [this](Event *) {
+		LogWarning("Throw left hand");
+	};
+
 	this->uiTabsRT[0]
 	    ->findControlTyped<Graphic>("OVERLAY_RIGHT_HAND")
 	    ->addCallback(FormEventType::MouseClick, clickedRightHand);
@@ -299,6 +315,30 @@ BattleView::BattleView(sp<GameState> state)
 	this->uiTabsTB[0]
 	    ->findControlTyped<Graphic>("OVERLAY_LEFT_HAND")
 		->addCallback(FormEventType::MouseClick, clickedLeftHand);
+	this->uiTabsRT[0]
+		->findControlTyped<GraphicButton>("BUTTON_RIGHT_HAND_DROP")
+		->addCallback(FormEventType::MouseClick, dropRightHand);
+	this->uiTabsRT[0]
+		->findControlTyped<GraphicButton>("BUTTON_LEFT_HAND_DROP")
+		->addCallback(FormEventType::MouseClick, dropLeftHand);
+	this->uiTabsTB[0]
+		->findControlTyped<GraphicButton>("BUTTON_RIGHT_HAND_DROP")
+		->addCallback(FormEventType::MouseClick, dropRightHand);
+	this->uiTabsTB[0]
+		->findControlTyped<GraphicButton>("BUTTON_LEFT_HAND_DROP")
+		->addCallback(FormEventType::MouseClick, dropLeftHand);
+	this->uiTabsRT[0]
+		->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND_THROW")
+		->addCallback(FormEventType::MouseClick, throwRightHand);
+	this->uiTabsRT[0]
+		->findControlTyped<CheckBox>("BUTTON_LEFT_HAND_THROW")
+		->addCallback(FormEventType::MouseClick, throwLeftHand);
+	this->uiTabsTB[0]
+		->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND_THROW")
+		->addCallback(FormEventType::MouseClick, throwRightHand);
+	this->uiTabsTB[0]
+		->findControlTyped<CheckBox>("BUTTON_LEFT_HAND_THROW")
+		->addCallback(FormEventType::MouseClick, throwLeftHand);
 
 	switch (state->current_battle->mode)
 	{
@@ -764,6 +804,41 @@ void BattleView::orderTurn(Vec3<int> target)
 			}
 		}
 	}
+}
+
+void BattleView::orderThrow(Vec3<int> target, bool right)
+{
+	if (selectedUnits.size() == 0)
+	{
+		return;
+	}
+	auto unit = selectedUnits.front();
+	auto item = unit->agent->getFirstItemInSlot(right ? AgentEquipmentLayout::EquipmentSlotType::RightHand : AgentEquipmentLayout::EquipmentSlotType::LeftHand);
+	if (!item)
+	{
+		return;
+	}
+	unit->missions.emplace_front(BattleUnitMission::throwItem(*unit, item, target));
+	unit->missions.front()->start(*this->state, *unit);
+	LogWarning("BattleUnit \"%s\" dropping %s hand item", unit->agent->name.cStr(), right ? "right" : "left");
+}
+
+
+void BattleView::orderDrop(bool right)
+{
+	if (selectedUnits.size() == 0)
+	{
+		return;
+	}
+	auto unit = selectedUnits.front();
+	auto item = unit->agent->getFirstItemInSlot(right ? AgentEquipmentLayout::EquipmentSlotType::RightHand : AgentEquipmentLayout::EquipmentSlotType::LeftHand);
+	if (!item)
+	{
+		return;
+	}
+	unit->missions.emplace_front(BattleUnitMission::dropItem(*unit, item));
+	unit->missions.front()->start(*this->state, *unit);
+	LogWarning("BattleUnit \"%s\" dropping %s hand item", unit->agent->name.cStr(), right ? "right" : "left");
 }
 
 void BattleView::orderSelect(sp<BattleUnit> u, bool inverse, bool additive)

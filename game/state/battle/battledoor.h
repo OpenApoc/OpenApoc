@@ -8,6 +8,7 @@
 namespace OpenApoc
 {
 class BattleMapPart;
+class Battle;
 
 class BattleDoor : public std::enable_shared_from_this<BattleDoor>
 {

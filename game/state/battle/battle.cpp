@@ -316,6 +316,8 @@ void Battle::enterBattle(GameState &state)
 
 	auto &b = state.current_battle;
 
+	// FIXME: Spawn units so that hostiles do not have LOS of eacah other
+
 	// Create spawn maps
 	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
 	         std::list<sp<BattleMapSector::LineOfSightBlock>>>

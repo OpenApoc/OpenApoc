@@ -103,6 +103,8 @@ private:
 	// Move, offset 1 means strafing, 2 means move backwards
 	void orderMove(Vec3<int> target, int facingOffset = 0, bool demandGiveWay = false);
 	void orderTurn(Vec3<int> target);
+	void orderDrop(bool right);
+	void orderThrow(Vec3<int> target, bool right);
 	void orderSelect(sp<BattleUnit> u, bool inverse = false, bool additive = false);
 	void attemptToClearCurrentOrders(sp<BattleUnit> u);
 	bool canEmplaceTurnInFront(sp<BattleUnit> u);

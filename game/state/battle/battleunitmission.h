@@ -56,6 +56,7 @@ class BattleUnitMission
 		AcquireTU,
 		ChangeBodyState,
 		ThrowItem,
+		DropItem,
 		Turn,
 		Fall,
 		ReachGoal,
@@ -84,7 +85,8 @@ class BattleUnitMission
 	static BattleUnitMission *restartNextMission(BattleUnit &u);
 	static BattleUnitMission *acquireTU(BattleUnit &u, unsigned int tu);
 	static BattleUnitMission *changeStance(BattleUnit &u, AgentType::BodyState state);
-	static BattleUnitMission *throwItem(BattleUnit &u, sp<AEquipment> item);
+	static BattleUnitMission *throwItem(BattleUnit &u, sp<AEquipment> item, Vec3<int>target);
+	static BattleUnitMission *dropItem(BattleUnit &u, sp<AEquipment> item);
 	static BattleUnitMission *turn(BattleUnit &u, Vec2<int> target);
 	static BattleUnitMission *turn(BattleUnit &u, Vec3<int> target);
 	static BattleUnitMission *turn(BattleUnit &u, Vec3<float> target);
