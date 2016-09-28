@@ -8746,8 +8746,6 @@
         <allowed_movement_states>
           <entry>None</entry>
           <entry>Normal</entry>
-          <entry>Running</entry>
-          <entry>Strafing</entry>
         </allowed_movement_states>
         <allowed_facing>
           <entry>

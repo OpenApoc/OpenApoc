@@ -15,7 +15,7 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 	unsigned int sizeX = 100;
 	unsigned int sizeY = 100;
 	unsigned int sizeZ = 10;
-	Vec3<unsigned int> fullSize(140, 140, 11);
+	Vec3<unsigned int> fullSize(140, 140, 12);
 
 	// We want a predictable RNG state to generate the 'same' random grass each time
 	Xorshift128Plus<uint32_t> rng{};
@@ -60,7 +60,7 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 			auto tileName =
 			    UString::format("%s%s%u", SceneryTileType::getPrefix(), tilePrefix, (unsigned)idx);
 
-			city->initial_tiles[Vec3<int>{x, y, 0}] = {&state, tileName};
+			city->initial_tiles[Vec3<int>{x, y, 1}] = {&state, tileName};
 		}
 	}
 
@@ -78,7 +78,7 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 					auto tileName = UString::format("%s%s%u", SceneryTileType::getPrefix(),
 					                                tilePrefix, (unsigned)idx);
 
-					city->initial_tiles[Vec3<int>{x + 20, y + 20, z}] = {&state, tileName};
+					city->initial_tiles[Vec3<int>{x + 20, y + 20, z + 1}] = {&state, tileName};
 				}
 				tileIndex++;
 			}

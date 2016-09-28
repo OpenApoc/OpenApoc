@@ -4,7 +4,7 @@
     <size>
       <x>140</x>
       <y>140</y>
-      <z>11</z>
+      <z>12</z>
     </size>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="tile_types.xml" />
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="initial_tiles.xml" />

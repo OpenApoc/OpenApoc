@@ -170,7 +170,6 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					}
 					// FIXME: Make 'blocked' tiles cleverer (e.g. don't plan around objects that
 					// will move anyway?)
-					// tile->position.x == 90 && tile->position.y == 40 && tile->position.z == 5
 					float cost = 0.0f;
 					if (!canEnterTile.canEnterTile(nodeToExpand->thisTile, tile, cost,
 						demandGiveWay))

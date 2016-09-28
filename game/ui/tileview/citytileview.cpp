@@ -11,7 +11,7 @@ CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratT
 {
 	selectedTileImageBack = fw().data->loadImage("city/selected-citytile-back.png");
 	selectedTileImageFront = fw().data->loadImage("city/selected-citytile-front.png");
-	selectedTileImageOffset = {0, 0};
+	selectedTileImageOffset = {32, 16};
 	pal = fw().data->loadPalette("xcom3/ufodata/pal_01.dat");
 };
 
@@ -40,7 +40,7 @@ void CityTileView::eventOccurred(Event *e)
 				LogWarning("Writing voxel view to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
 				auto img = std::dynamic_pointer_cast<RGBImage>(
-				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this, 10.0f));
+				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this, 11.0f));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 			break;
@@ -49,7 +49,7 @@ void CityTileView::eventOccurred(Event *e)
 				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
 				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-				    {imageOffset, imageOffset + dpySize}, *this, 10.0f, true));
+				    {imageOffset, imageOffset + dpySize}, *this, 11.0f, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 			break;

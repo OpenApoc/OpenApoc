@@ -282,7 +282,7 @@ void TileObjectBattleUnit::addToDrawnTiles(Tile *tile)
 		// Units are drawn in the topmost tile their head pops into
 		// Otherwise, they can only be drawn in it if it's their owner tile
 		if (maxCoords.z * 1000 + maxCoords.x + maxCoords.y < z * 1000 + x + y &&
-		    getUnit()->position.z + (float)u->getCurrentHeight() / 40.0f >= (float)z)
+			u->position.z + (float)u->getCurrentHeight() / 40.0f >= (float)z)
 		{
 			tile = intersectingTile;
 			maxCoords = {x, y, z};

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checksums>
   <checksum SHA1="de1732555e585509f8077f0c8e03c697f3d20945">gamestate.xml</checksum>
-  <checksum SHA1="21c0cae8b6cf439d47a56b982b6c528716a631fe">gamestate/agent_body_types.xml</checksum>
+  <checksum SHA1="e82ad81e87952471fc9a77dfdaf5c7de0b73340b">gamestate/agent_body_types.xml</checksum>
   <checksum SHA1="79a8ad7d8df48a99dd5332d9c412ab6da8d9c2e3">gamestate/agent_equipment.xml</checksum>
   <checksum SHA1="db87a07c2ad3fe43a082e3143408dc3fd29ee9ff">gamestate/agent_equipment_layouts.xml</checksum>
   <checksum SHA1="282e2b08cda4a9a7094fb16355bd5e58cdc2a224">gamestate/agent_generator.xml</checksum>
@@ -60,12 +60,12 @@
   <checksum SHA1="b3549d3af0dd7809af7114df946a0b342de7515c">gamestate/battle_maps/BATTLEMAP_58ufo8.xml</checksum>
   <checksum SHA1="6927a886dd205daeb94091823ee52c367ce662c4">gamestate/battle_strategy_icon_list.xml</checksum>
   <checksum SHA1="9f859d3887a364db435ca7462c26d9522ffca803">gamestate/cities.xml</checksum>
-  <checksum SHA1="68d4b7ca4e0c43bb89562e3524cb56f618a21fef">gamestate/cities/CITYMAP_ALIEN.xml</checksum>
+  <checksum SHA1="c4253ce036aa559f4479b90cbe74a799d0aeee6d">gamestate/cities/CITYMAP_ALIEN.xml</checksum>
   <checksum SHA1="80295535fa3b21b7e95e298ec631c5052d7b1550">gamestate/cities/CITYMAP_ALIEN/buildings.xml</checksum>
-  <checksum SHA1="e64dd3b05bf6fd0a6b137afa2632b627d635e608">gamestate/cities/CITYMAP_ALIEN/initial_tiles.xml</checksum>
-  <checksum SHA1="9c45249fac3c0393fa76f1db873dd3822d5456ec">gamestate/cities/CITYMAP_HUMAN.xml</checksum>
+  <checksum SHA1="ecc66a67cf6b71463ba29ca7ac3663e3747e61c1">gamestate/cities/CITYMAP_ALIEN/initial_tiles.xml</checksum>
+  <checksum SHA1="77fc86d38915f24013291e8c943db95cf89012bc">gamestate/cities/CITYMAP_HUMAN.xml</checksum>
   <checksum SHA1="0d095253d3fa2f875784b36ee0c65f8801a506b5">gamestate/cities/CITYMAP_HUMAN/buildings.xml</checksum>
-  <checksum SHA1="541643027e1a4b50c899eadb90a6f3123d09381b">gamestate/cities/CITYMAP_HUMAN/initial_tiles.xml</checksum>
+  <checksum SHA1="637e2e097f069ed3e1c4efd5df2cc4ffb887a151">gamestate/cities/CITYMAP_HUMAN/initial_tiles.xml</checksum>
   <checksum SHA1="12532a3e63d5a609f713d9c4232c3541e2899808">gamestate/cities/CITYMAP_HUMAN/tile_types.xml</checksum>
   <checksum SHA1="51b871a260bbfd9fad8d8da5b693b678aa1edbfe">gamestate/damage_modifiers.xml</checksum>
   <checksum SHA1="78dcd090b816ac7c2baad61e0c945cdd6903bab5">gamestate/damage_types.xml</checksum>

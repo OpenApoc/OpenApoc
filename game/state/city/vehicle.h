@@ -51,10 +51,10 @@ class Vehicle : public StateObject<Vehicle>, public std::enable_shared_from_this
 
 	enum class Altitude
 	{
-		Highest = 11,
-		High = 8,
-		Standard = 5,
-		Low = 2
+		Highest = 12,
+		High = 9,
+		Standard = 6,
+		Low = 3
 	};
 	static const std::map<Altitude, UString> AltitudeMap;
 	Altitude altitude;

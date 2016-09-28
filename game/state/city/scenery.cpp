@@ -41,7 +41,7 @@ void Scenery::handleCollision(GameState &state, Collision &c)
 	else
 	{
 		// Don't destroy bottom tiles, else everything will leak out
-		if (this->initialPosition.z != 0)
+		if (this->initialPosition.z != 1)
 		{
 			this->tileObject->removeFromMap();
 			this->tileObject.reset();
@@ -129,7 +129,7 @@ bool Scenery::canRepair() const
 	//(IE it's attached to /something/)
 	if (this->supportedBy.size() == 0)
 	{
-		/* Tiles at z == 0 can get damaged (But not destroyed!) but have no support */
+		/* Tiles at z == 1 can get damaged (But not destroyed!) but have no support */
 		if (this->damaged)
 			return true;
 		LogWarning("Scenery not supported but destroyed?");
@@ -172,5 +172,6 @@ bool Scenery::isAlive() const
 		return false;
 	return true;
 }
+
 
 } // namespace OpenApoc

@@ -75,4 +75,11 @@ Vec3<float> TileObjectScenery::getPosition() const
 	return s->getPosition();
 }
 
+float TileObjectScenery::getZOrder() const
+{
+	// FIXME: Hack to force 'scenery' objects to be half-a-tile down in Z
+	// The formula to calculate "3.5f" is: (tile_x + tile_y + tile_z) / tile_z /2
+	return getCenter().z - 3.5f + (float)getType() / 1000.0f;
+}
+
 } // namespace OpenApoc

@@ -20,6 +20,7 @@ class TileObjectScenery : public TileObject
 	bool hasVoxelMap() override { return true; }
 	sp<VoxelMap> getVoxelMap(Vec3<int> mapIndex) override;
 	Vec3<float> getPosition() const override;
+	float getZOrder() const override;
 
   private:
 	friend class TileMap;
