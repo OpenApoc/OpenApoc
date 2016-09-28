@@ -23,7 +23,6 @@ OpenApocalypse is built leveraging a number of libraries - to provide needed fun
  
 - [SDL2](http://www.libsdl.org)
 - [TinyXML2](http://www.grinninglizard.com/tinyxml2/) (Version 2)
-- [Physfs] (http://icculus.org/physfs/) - though we have patched it to fix some ISO loading bugs on [Github] (https://github.com/JonnyH/physfs-hg-import)- so use that version if you want to use the .iso file as a data source directly
 - [GLM] (http://glm.g-truc.net/)
 - [Libunwind] (http://www.nongnu.org/libunwind/download.html) - debug backtracing on linux
 - [Boost] (http://boost.org) - specifially the 'locale' library, used for localisation
