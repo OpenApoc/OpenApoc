@@ -1066,7 +1066,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state, Difficul
 			case UNIT_TYPE_MULTIWORM:
 				name = "MULTIWORM";
 				break;
-			// Special case: Megaspawn, can strafe
+			// Special case: Megaspawn, large walker
 			case UNIT_TYPE_MEGASPAWN:
 				name = "MEGASPAWN";
 				break;
@@ -1215,14 +1215,12 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state, Difficul
 				voxelInfo[AgentType::BodyState::Downed] = {8, idx};
 				break;
 
-			// Special case: Megaspawn, can strafe
+			// Special case: Megaspawn, large walker
 			case UNIT_TYPE_MEGASPAWN:
 				height = 70;
 				idx = 19;
 				a->allowed_movement_states.insert(AgentType::MovementState::None);
 				a->allowed_movement_states.insert(AgentType::MovementState::Normal);
-				a->allowed_movement_states.insert(AgentType::MovementState::Running);
-				a->allowed_movement_states.insert(AgentType::MovementState::Strafing);
 				a->allowed_body_states.insert(AgentType::BodyState::Standing);
 				a->allowed_body_states.insert(AgentType::BodyState::Downed);
 				voxelInfo[AgentType::BodyState::Standing] = {height, idx};

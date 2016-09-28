@@ -33,7 +33,7 @@ void TileObjectBattleItem::draw(Renderer &r, TileTransform &, Vec2<float> screen
 			auto battle = item->battle.lock();
 			if (!battle)
 				return;
-			sprite = battle->strategy_icon_list->images[480];
+			sprite = battle->common_image_list->strategyImages[480];
 			transformedScreenPos -= Vec2<float>{4, 4};
 			break;
 		}

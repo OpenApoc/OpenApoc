@@ -109,6 +109,11 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 		return 0;
 	}
 
+	float getDistance(Vec3<float> from, Vec3<float> to) const override
+	{
+		return glm::length(to - from);
+	}
+
 	bool canLandOnTile(Tile *to) const
 	{
 		if (!to)
@@ -972,16 +977,16 @@ void VehicleMission::setPathTo(Vehicle &v, Vec3<int> target, int maxIterations)
 	if (vehicleTile)
 	{
 		auto &map = vehicleTile->map;
-		// FIXME: Change findShortestPath to return Vec3<int> positions?
+
 		auto path =
 		    map.findShortestPath(vehicleTile->getOwningTile()->position, target, maxIterations,
 		                         FlyingVehicleTileHelper{map, v}, (float)v.altitude);
 
 		// Always start with the current position
 		this->currentPlannedPath.push_back(vehicleTile->getOwningTile()->position);
-		for (auto *t : path)
+		for (auto &p : path)
 		{
-			this->currentPlannedPath.push_back(t->position);
+			this->currentPlannedPath.push_back(p);
 		}
 	}
 	else

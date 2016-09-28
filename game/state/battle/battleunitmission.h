@@ -22,27 +22,16 @@ class BattleUnitTileHelper : public CanEnterTileHelper
   public:
 	BattleUnitTileHelper(TileMap &map, BattleUnit &u) : map(map), u(u) {}
 
-	bool canEnterTile(Tile *from, Tile *to, bool demandGiveWay = false) const override
-	{
-		float nothing;
-		bool none;
-		return canEnterTile(from, to, nothing, none, false, demandGiveWay);
-	}
+	float getDistance(Vec3<float> from, Vec3<float> to) const override;
 
-	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay, bool demandGiveWay = false) const override
-	{
-		return canEnterTile(from, to, cost, doorInTheWay, false, demandGiveWay);
-	}
-
-	bool canEnterTile(Tile *from, Tile *to, bool ignoreUnits, bool demandGiveWay) const
-	{
-		float nothing;
-		bool none;
-		return canEnterTile(from, to, nothing, none, ignoreUnits, demandGiveWay);
-	}
-
+	bool canEnterTile(Tile *from, Tile *to, bool demandGiveWay = false) const override;
+	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay, bool demandGiveWay = false) const override;
+	
+	bool canEnterTile(Tile *from, Tile *to, bool ignoreUnits, bool demandGiveWay) const;
 	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay, bool ignoreUnits,
 	                  bool demandGiveWay) const;
+
+	float applyPathOverheadAllowance(float cost) const override;
 };
 
 class BattleUnitMission
@@ -67,9 +56,9 @@ class BattleUnitMission
 	void update(GameState &state, BattleUnit &u, unsigned int ticks);
 	bool isFinished(GameState &state, BattleUnit &u);
 	void start(GameState &state, BattleUnit &u);
-	void setPathTo(BattleUnit &u, Vec3<int> target, int maxIterations = 500);
 	bool advanceAlongPath(GameState &state, Vec3<float> &dest, BattleUnit &u);
 	bool getNextFacing(GameState &state, BattleUnit &u, Vec2<int> &dest);
+	void setPathTo(BattleUnit &u, Vec3<int> target, int maxIterations = 1000);
 
 	// TU methods
 	bool spendAgentTUs(GameState &state, BattleUnit &u, int cost);
@@ -99,27 +88,35 @@ class BattleUnitMission
 
 	// GotoLocation, ThrowItem, ReachGoal
 	Vec3<int> targetLocation = {0, 0, 0};
+	
 	// GotoLocation
 	int facingDelta = 0;
 	int giveWayAttemptsRemaining = 0;
 	bool allowRunningAway = false;
+	std::list<Vec3<int>> currentPlannedPath;
 	// Unit will follow its path exactly without trying to skip nodes
 	bool allowSkipNodes = false;
 	// Unit will ignore static non-large units when pathfinding
 	bool demandGiveWay = false;
+	
 	// Turn
 	Vec2<int> targetFacing = {0, 0};
 	bool requireGoal = false;
-	// ThrowItem
+	
+	// ThrowItem, DropItem
 	sp<AEquipment> item;
+	
+	// ThrowItem
+	bool throwFailed = false;
+	
 	// Snooze
 	unsigned int timeToSnooze = 0;
+	
 	// AcquireTU
 	unsigned int timeUnits = 0;
+	
 	// ChangeBodyState
 	AgentType::BodyState bodyState = AgentType::BodyState::Downed;
-
-	std::list<Vec3<int>> currentPlannedPath;
 
   private:
 	static BattleUnitMission *turn(BattleUnit &u, Vec3<float> from, Vec3<float> to,

@@ -92,7 +92,7 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 		// If colliding and moving down
 		else
 		{
-			newPosition = { c.position.x, c.position.y, floorf(c.position.z) };
+			setPosition({ c.position.x, c.position.y, floorf(c.position.z) });
 			if (!findSupport(true, true))
 			{
 				LogError("WTF? Item collided but did not find support? %f, %f, %f", position.x, position.y, position.z);
@@ -106,6 +106,12 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 	{
 		auto mapSize = this->tileObject->map.size;
 
+		// Collision with ceiling
+		if (newPosition.z >= mapSize.z)
+		{
+			newPosition.z = mapSize.z - 0.01f;
+			velocity = { 0.0f, 0.0f, 0.0f };
+		}
 		// Remove if it fell off the end of the world
 		if (newPosition.x < 0 || newPosition.x >= mapSize.x || newPosition.y < 0 ||
 		    newPosition.y >= mapSize.y || newPosition.z < 0 || newPosition.z >= mapSize.z)

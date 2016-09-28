@@ -266,7 +266,7 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 	bool canRun() { return modified_stats.canRun(); }
 
 	StateRef<BattleUnitAnimationPack> getAnimationPack() const;
-	StateRef<AEquipmentType> getItemInHands() const;
+	StateRef<AEquipmentType> getDominantItemInHands() const;
 	sp<AEquipment> getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType type) const;
 	StateRef<BattleUnitImagePack> getImagePack(AgentType::BodyPart bodyPart) const;
 };

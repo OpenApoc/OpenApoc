@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game/state/battle/battlestrategyiconlist.h"
+#include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/tileview/tileobject.h"
 

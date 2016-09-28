@@ -169,8 +169,9 @@ void BattleUnitAnimationPack::drawUnit(
     StateRef<AEquipmentType> heldItem, Vec2<int> facing, AgentType::BodyState currentBody,
     AgentType::BodyState targetBody, AgentType::HandState currentHands,
     AgentType::HandState targetHands, AgentType::MovementState movement, int body_animation_delay,
-    int hands_animation_delay, int distance_travelled)
+    int hands_animation_delay, int distance_travelled, int firingAngle)
 {
+	LogError("Handle firing angle");
 	sp<AnimationEntry> e;
 	sp<AnimationEntry> e_legs;
 	int frame = -1;
@@ -202,10 +203,21 @@ void BattleUnitAnimationPack::drawUnit(
 	}
 	else
 	{
-		e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
-		                                                         : ItemWieldMode::OneHanded)
-		                                 : ItemWieldMode::None][currentHands][movement][currentBody]
-		                       [facing];
+		if (currentHands == AgentType::HandState::Firing 
+			&& hasAlternativeFiringAnimations && firingAngle != 0)
+		{
+			e = alt_fire_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+				: ItemWieldMode::OneHanded)
+				: ItemWieldMode::None][firingAngle][movement][currentBody]
+				[facing];
+		}
+		else
+		{
+			e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+				: ItemWieldMode::OneHanded)
+				: ItemWieldMode::None][currentHands][movement][currentBody]
+				[facing];
+		}
 		if (currentHands == AgentType::HandState::Firing)
 			frame = e->frame_count - hands_animation_delay;
 		else

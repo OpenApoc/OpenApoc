@@ -39,13 +39,17 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 	{
 		case TileViewMode::Isometric:
 		{
+			if (unit->current_hand_state == AgentType::HandState::Firing)
+			{
+				LogError("Implement handling firing angles!");
+			}
 			unit->agent->getAnimationPack()->drawUnit(
 			    r, screenPosition, unit->agent->getImagePack(AgentType::BodyPart::Body),
 			    unit->agent->getImagePack(AgentType::BodyPart::Legs),
 			    unit->agent->getImagePack(AgentType::BodyPart::Helmet),
 			    unit->agent->getImagePack(AgentType::BodyPart::LeftArm),
 			    unit->agent->getImagePack(AgentType::BodyPart::RightArm),
-			    unit->agent->getItemInHands(), unit->facing, unit->current_body_state,
+			    unit->getDisplayedItem(), unit->facing, unit->current_body_state,
 			    unit->target_body_state, unit->current_hand_state, unit->target_hand_state,
 			    unit->usingLift ? AgentType::MovementState::None : unit->current_movement_state,
 			    unit->getBodyAnimationFrame(), unit->getHandAnimationFrame(),
@@ -80,11 +84,11 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 			// Current level offset, 0 = current 1 = above 2 = below
 			int curent_level_offset = currentLevel < 0 ? 2 : (currentLevel > 0 ? 1 : 0);
 
-			auto strategy_icon_list = battle->strategy_icon_list;
+			auto common_image_list = battle->common_image_list;
 			switch (icon_type)
 			{
 				case ICON_STANDART:
-					r.draw(strategy_icon_list->images[side_offset * 120 + curent_level_offset * 40 +
+					r.draw(common_image_list->strategyImages[side_offset * 120 + curent_level_offset * 40 +
 					                                  facing_offset],
 					       screenPosition - Vec2<float>{4, 4});
 					break;
@@ -92,59 +96,59 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 					// Vertical
 					if (facing_offset == 0 || facing_offset == 4)
 					{
-						r.draw(strategy_icon_list
-						           ->images[side_offset * 120 + curent_level_offset * 40 +
+						r.draw(common_image_list
+						           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
 						                    offset_prone_map.at(facing_offset) + 0],
 						       screenPosition - Vec2<float>{4.0f, 8.0f});
-						r.draw(strategy_icon_list
-						           ->images[side_offset * 120 + curent_level_offset * 40 +
+						r.draw(common_image_list
+						           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
 						                    offset_prone_map.at(facing_offset) + 1],
 						       screenPosition - Vec2<float>{4.0f, 0.0f});
 					}
 					// Horizontal
 					else if (facing_offset == 2 || facing_offset == 6)
 					{
-						r.draw(strategy_icon_list
-						           ->images[side_offset * 120 + curent_level_offset * 40 +
+						r.draw(common_image_list
+						           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
 						                    offset_prone_map.at(facing_offset) + 0],
 						       screenPosition - Vec2<float>{8.0f, 4.0f});
-						r.draw(strategy_icon_list
-						           ->images[side_offset * 120 + curent_level_offset * 40 +
+						r.draw(common_image_list
+						           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
 						                    offset_prone_map.at(facing_offset) + 1],
 						       screenPosition - Vec2<float>{0.0f, 4.0f});
 					}
 					// Diagonal
 					else
 					{
-						r.draw(strategy_icon_list
-						           ->images[side_offset * 120 + curent_level_offset * 40 +
+						r.draw(common_image_list
+						           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
 						                    offset_prone_map.at(facing_offset) + 0],
 						       screenPosition - Vec2<float>{8.0f, 8.0f});
-						r.draw(strategy_icon_list
-						           ->images[side_offset * 120 + curent_level_offset * 40 +
+						r.draw(common_image_list
+						           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
 						                    offset_prone_map.at(facing_offset) + 1],
 						       screenPosition - Vec2<float>{0.0f, 8.0f});
-						r.draw(strategy_icon_list
-						           ->images[side_offset * 120 + curent_level_offset * 40 +
+						r.draw(common_image_list
+						           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
 						                    offset_prone_map.at(facing_offset) + 2],
 						       screenPosition - Vec2<float>{8.0f, 0.0f});
-						r.draw(strategy_icon_list
-						           ->images[side_offset * 120 + curent_level_offset * 40 +
+						r.draw(common_image_list
+						           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
 						                    offset_prone_map.at(facing_offset) + 3],
 						       screenPosition - Vec2<float>{0.0f, 0.0f});
 					}
 					break;
 				case ICON_LARGE:
-					r.draw(strategy_icon_list->images[side_offset * 120 + curent_level_offset * 40 +
+					r.draw(common_image_list->strategyImages[side_offset * 120 + curent_level_offset * 40 +
 					                                  offset_large + 0],
 					       screenPosition - Vec2<float>{8.0f, 8.0f});
-					r.draw(strategy_icon_list->images[side_offset * 120 + curent_level_offset * 40 +
+					r.draw(common_image_list->strategyImages[side_offset * 120 + curent_level_offset * 40 +
 					                                  offset_large + 1],
 					       screenPosition - Vec2<float>{0.0f, 8.0f});
-					r.draw(strategy_icon_list->images[side_offset * 120 + curent_level_offset * 40 +
+					r.draw(common_image_list->strategyImages[side_offset * 120 + curent_level_offset * 40 +
 					                                  offset_large + 2],
 					       screenPosition - Vec2<float>{8.0f, 0.0f});
-					r.draw(strategy_icon_list->images[side_offset * 120 + curent_level_offset * 40 +
+					r.draw(common_image_list->strategyImages[side_offset * 120 + curent_level_offset * 40 +
 					                                  offset_large + 3],
 					       screenPosition - Vec2<float>{0.0f, 0.0f});
 					break;

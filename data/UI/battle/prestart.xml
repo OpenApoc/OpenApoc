@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_BATTLE_PRESTART">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="644" height="484"/>
+      <backcolour r="128" g="80" b="80"/>
+      <graphic>
+        <image>xcom3/tacdata/squadpik.pcx</image>
+        <position x="2" y="2"/>
+        <size width="640" height="480"/>
+      </graphic>
+	  <label text="SQUAD ASSIGNMENT">
+        <position x="20" y="0"/>
+        <size width="600" height="40"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>BIGFONT</font>
+      </label>
+      <graphicbutton id="BUTTON_EQUIP">
+        <position x="604" y="42"/>
+        <size width="50" height="48"/>
+		<imagedepressed>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:41:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
+	  <graphicbutton id="BUTTON_OK">
+        <position x="604" y="445"/>
+        <size width="50" height="48"/>
+		<imagedepressed>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:5:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
+    </style>
+  </form>
+</openapoc>

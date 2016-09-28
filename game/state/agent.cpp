@@ -549,15 +549,18 @@ StateRef<BattleUnitAnimationPack> Agent::getAnimationPack() const
 	return type->animation_packs[appearance];
 }
 
-StateRef<AEquipmentType> Agent::getItemInHands() const
+StateRef<AEquipmentType> Agent::getDominantItemInHands() const
 {
-	sp<AEquipment> e;
-	e = getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::RightHand);
-	if (e)
-		return {e->type};
-	e = getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::LeftHand);
-	if (e)
-		return {e->type};
+	sp<AEquipment> e1 = getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::RightHand);
+	sp<AEquipment> e2 = getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::LeftHand);
+	if (e1 && e1->type->two_handed)
+		return {e1->type};
+	if (e2 && e2->type->two_handed)
+		return{ e2->type };
+	if (e1)
+		return e1->type;
+	if (e2)
+		return e2->type;
 	return nullptr;
 }
 

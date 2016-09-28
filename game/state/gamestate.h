@@ -5,11 +5,11 @@
 #include "game/state/agent.h"
 #include "game/state/base/base.h"
 #include "game/state/battle/battle.h"
+#include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battlemap.h"
 #include "game/state/battle/battledoor.h"
 #include "game/state/battle/battlemaptileset.h"
-#include "game/state/battle/battlestrategyiconlist.h"
 #include "game/state/battle/battleunitanimationpack.h"
 #include "game/state/battle/battleunitimagepack.h"
 #include "game/state/city/city.h"
@@ -69,7 +69,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<EquipmentSet> equipment_sets_by_score;
 	StateRefMap<EquipmentSet> equipment_sets_by_level;
 	sp<Battle> current_battle;
-	sp<BattleStrategyIconList> battle_strategy_icon_list;
+	sp<BattleCommonImageList> battle_common_image_list;
 	sp<BattleCommonSampleList> battle_common_sample_list;
 
 	// Loaded temporarily for the duration of the battle

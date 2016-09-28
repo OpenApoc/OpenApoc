@@ -315,9 +315,6 @@ void BattleTileView::render()
 				{
 					if (m->type == BattleUnitMission::MissionType::ReachGoal)
 					{
-						/*auto z = map.getTile(m->targetLocation)->getRestingPosition().z;
-						if (z - m->targetLocation.z > 0.33f)
-						    targetIconLocations[m->targetLocation];*/
 						targetIconLocations.insert(m->targetLocation);
 						break;
 					}
@@ -454,6 +451,12 @@ void BattleTileView::render()
 								       tileToOffsetScreenCoords(selTilePosOnCurLevel) -
 								           selectedTileImageOffset);
 							}
+							#ifdef PATHFINDING_DEBUG
+							if (tile->pathfindingDebugFlag)
+								r.draw(waypointIcons[0],
+									tileToOffsetScreenCoords(Vec3<int>{x, y, z}) -
+									selectedTileImageOffset);
+							#endif
 						}
 					}
 				}

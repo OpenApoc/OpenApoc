@@ -57,7 +57,7 @@ void TileObjectShadow::draw(Renderer &r, TileTransform &transform, Vec2<float> s
 					break;
 				unit->agent->getAnimationPack()->drawShadow(
 				    r, screenPosition, unit->agent->type->shadow_pack,
-				    unit->agent->getItemInHands(), unit->facing, unit->current_body_state,
+				    unit->getDisplayedItem(), unit->facing, unit->current_body_state,
 				    unit->target_body_state, unit->current_hand_state, unit->target_hand_state,
 				    unit->usingLift ? AgentType::MovementState::None : unit->current_movement_state,
 				    unit->getBodyAnimationFrame(), unit->getHandAnimationFrame(),

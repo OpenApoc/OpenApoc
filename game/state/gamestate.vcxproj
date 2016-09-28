@@ -64,6 +64,7 @@
     <ClCompile Include="rules\vequipment_rules.cpp" />
     <ClCompile Include="savemanager.cpp" />
     <ClCompile Include="tileview\collision.cpp" />
+    <ClCompile Include="tileview\pathfinding.cpp" />
     <ClCompile Include="tileview\tile.cpp" />
     <ClCompile Include="tileview\tileobject.cpp" />
     <ClCompile Include="tileview\tileobject_battleitem.cpp" />
@@ -91,7 +92,7 @@
     <ClInclude Include="aequipment.h" />
     <ClInclude Include="battle\battleforces.h" />
     <ClInclude Include="battle\battleitem.h" />
-    <ClInclude Include="battle\battlestrategyiconlist.h" />
+    <ClInclude Include="battle\battlecommonimagelist.h" />
     <ClInclude Include="battle\battleunit.h" />
     <ClInclude Include="battle\battleunitanimationpack.h" />
     <ClInclude Include="battle\battleunitimagepack.h" />

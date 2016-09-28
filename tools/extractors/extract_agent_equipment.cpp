@@ -1,6 +1,6 @@
 #include "framework/framework.h"
 #include "game/state/agent.h"
-#include "game/state/battle/battlestrategyiconlist.h"
+#include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
 #include "tools/extractors/common/tacp.h"

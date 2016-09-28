@@ -78,6 +78,22 @@ void BattleUnit::resetGoal()
 	goalFacing = facing;
 }
 
+StateRef<AEquipmentType> BattleUnit::getDisplayedItem() const
+{
+	if (missions.size() > 0)
+	{
+		for (auto &m : missions)
+		{
+			auto item = m->item;
+			if (item)
+			{
+				return item->type;
+			}
+		}
+	}
+	return agent->getDominantItemInHands();
+}
+
 int BattleUnit::getMaxHealth() const { return this->agent->current_stats.health; }
 
 int BattleUnit::getHealth() const { return this->agent->modified_stats.health; }
@@ -181,7 +197,7 @@ bool BattleUnit::canGoProne() const
 	    (legsPos.z < tileObject->map.size.z))
 	{
 		auto legsTile = tileObject->map.getTile(legsPos);
-		if (legsTile->canStand && legsTile->height <= 0.5f && legsTile->getPassable() &&
+		if (legsTile->canStand && legsTile->height <= 0.5f && legsTile->getPassable(false, agent->type->bodyType->height.at(AgentType::BodyState::Prone)) &&
 		    !legsTile->getUnitIfPresent(true, true))
 		{
 			return true;
@@ -891,7 +907,7 @@ void BattleUnit::tryToRiseUp(GameState &state)
 
 	// Check if we can rise into target state
 	auto targetState = AgentType::BodyState::Standing;
-	while (agent->getAnimationPack()->getFrameCountBody(agent->getItemInHands(), current_body_state,
+	while (agent->getAnimationPack()->getFrameCountBody(getDisplayedItem(), current_body_state,
 	                                                    targetState, current_hand_state,
 	                                                    current_movement_state, facing) == 0)
 	{
@@ -931,7 +947,7 @@ void BattleUnit::dropDown(GameState &state)
 	setBodyState(target_body_state);
 	// Check if we can drop from current state
 	while (agent->getAnimationPack()->getFrameCountBody(
-	           agent->getItemInHands(), current_body_state, AgentType::BodyState::Downed,
+	           getDisplayedItem(), current_body_state, AgentType::BodyState::Downed,
 	           current_hand_state, current_movement_state, facing) == 0)
 	{
 		switch (current_body_state)

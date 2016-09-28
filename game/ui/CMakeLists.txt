@@ -5,6 +5,9 @@ PROJECT(OpenApoc_GameUI CXX C)
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
 set (GAMEUI_SOURCE_FILES
+	battle/battlebriefing.cpp
+	battle/battledebriefing.cpp
+	battle/battleprestart.cpp
 	battle/battleview.cpp
 	base/basegraphics.cpp
 	base/basescreen.cpp
@@ -41,6 +44,9 @@ set (GAMEUI_SOURCE_FILES
 	boot.cpp)
 source_group(gamestate\\sources FILES ${GAMEUI_SOURCE_FILES})
 set (GAMEUI_HEADER_FILES
+	battle/battlebriefing.h
+	battle/battledebriefing.h
+	battle/battleprestart.h
 	battle/battleview.h
 	base/basegraphics.h
 	base/basescreen.h

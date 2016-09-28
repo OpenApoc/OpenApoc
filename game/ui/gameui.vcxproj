@@ -26,6 +26,9 @@
     <ClCompile Include="base\researchselect.cpp" />
     <ClCompile Include="base\vequipscreen.cpp" />
     <ClCompile Include="base\aequipscreen.cpp" />
+    <ClCompile Include="battle\battlebriefing.cpp" />
+    <ClCompile Include="battle\battledebriefing.cpp" />
+    <ClCompile Include="battle\battleprestart.cpp" />
     <ClCompile Include="battle\battleview.cpp" />
     <ClCompile Include="boot.cpp" />
     <ClCompile Include="city\basebuyscreen.cpp" />
@@ -62,6 +65,9 @@
     <ClInclude Include="base\researchselect.h" />
     <ClInclude Include="base\vequipscreen.h" />
     <ClInclude Include="base\aequipscreen.h" />
+    <ClInclude Include="battle\battlebriefing.h" />
+    <ClInclude Include="battle\battledebriefing.h" />
+    <ClInclude Include="battle\battleprestart.h" />
     <ClInclude Include="battle\battleview.h" />
     <ClInclude Include="boot.h" />
     <ClInclude Include="city\basebuyscreen.h" />

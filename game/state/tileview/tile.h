@@ -13,6 +13,10 @@
 #define VELOCITY_SCALE_BATTLE (Vec3<float>{24, 24, 20})
 #define FALLING_SPEED_CAP float(20)
 
+// This enables showing tiles that were tried by the last pathfinding attempt
+// Is only displayed in battlescape right now
+//#define PATHFINDING_DEBUG
+
 namespace OpenApoc
 {
 
@@ -82,7 +86,9 @@ class Tile
 	// Returns the object that provides support (resting position) for items
 	sp<BattleMapPart> getItemSupportingObject();
 	// Returns if the tile is passable (including side tiles for large)
-	bool getPassable(bool large = false);
+	bool getPassable(bool large = false, int height = 0);
+	// Returns if head fits in the tile
+	bool getHeadFits(bool large, int height);
 	// Returns if the tile provides ground for standing (including side tiles for large)
 	bool getCanStand(bool large = false);
 	// Returns if the tile is solid (cannot pop head into it)
@@ -135,6 +141,10 @@ class Tile
 	sp<Sample> objectDropSfx;
 	// Solid tileobject in the tile with the highest height that supports items
 	sp<BattleMapPart> supportProviderForItems;
+
+#ifdef PATHFINDING_DEBUG
+	bool pathfindingDebugFlag = false;
+#endif
 };
 
 class CanEnterTileHelper
@@ -146,7 +156,13 @@ class CanEnterTileHelper
 	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
 	virtual bool canEnterTile(Tile *from, Tile *to, bool demandGiveWay = false) const = 0;
 	virtual float adjustCost(Vec3<int> /*  nextPosition */, int /* z */) const { return 0; }
+	virtual float getDistance(Vec3<float> from, Vec3<float> to) const = 0;
 	virtual ~CanEnterTileHelper() = default;
+	// This allows pathfinding to be biased towards goal. Can generate paths that are not perfect, 
+	// but helps with pathfinding in battlescape where optimal path can be complicated.
+	// Value here defines how much, in percent, can resulting path afford to be unoptimal
+	// For example 1.05 means resulting path can be 5% longer than an optimal one
+	virtual float applyPathOverheadAllowance(float cost) const { return cost / 1.0f; }
 };
 
 class TileMap
@@ -158,22 +174,31 @@ class TileMap
   public:
 	const Tile *getTile(int x, int y, int z) const
 	{
-		LogAssert(x >= 0);
-		LogAssert(x < size.x);
-		LogAssert(y >= 0);
-		LogAssert(y < size.y);
-		LogAssert(z >= 0);
-		LogAssert(z < size.z);
+		
+		if (!((x >= 0)
+			&& (x < size.x)
+			&& (y >= 0)
+			&& (y < size.y)
+			&& (z >= 0)
+			&& (z < size.z)))
+		{
+			LogError("Incorrect tile coordinates %d,%d,%d", x, y, z);
+			return nullptr;
+		}
 		return &this->tiles[z * size.x * size.y + y * size.x + x];
 	}
 	Tile *getTile(int x, int y, int z)
 	{
-		LogAssert(x >= 0);
-		LogAssert(x < size.x);
-		LogAssert(y >= 0);
-		LogAssert(y < size.y);
-		LogAssert(z >= 0);
-		LogAssert(z < size.z);
+		if (!((x >= 0)
+			&& (x < size.x)
+			&& (y >= 0)
+			&& (y < size.y)
+			&& (z >= 0)
+			&& (z < size.z)))
+		{
+			LogError("Incorrect tile coordinates %d,%d,%d", x, y, z);
+			return nullptr;
+		}
 		return &this->tiles[z * size.x * size.y + y * size.x + x];
 	}
 	Tile *getTile(Vec3<int> pos) { return this->getTile(pos.x, pos.y, pos.z); }
@@ -197,7 +222,7 @@ class TileMap
 	        std::vector<std::set<TileObject::Type>> layerMap);
 	~TileMap();
 
-	std::list<Tile *> findShortestPath(Vec3<int> origin, Vec3<int> destination,
+	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destination,
 	                                   unsigned int iterationLimit,
 	                                   const CanEnterTileHelper &canEnterTile,
 	                                   float altitude = 5.0f, bool demandGiveWay = false);

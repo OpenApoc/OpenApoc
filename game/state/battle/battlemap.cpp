@@ -715,28 +715,40 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 
 						// Check wether this is an exit location, and if so,
 						// replace the ground map part with an appropriate exit
-						Vec3<int> exitLocX = s->currentPosition;
-						Vec3<int> exitLocY = s->currentPosition;
-						bool exitFarSideX = false;
-						bool exitFarSideY = false;
-						if (exitLocX.y == 0 || exitLocX.y == size.y * chunk_size.y - 1)
+						bool canExit = s->currentPosition.z >= exit_level_min 
+							&& s->currentPosition.z <= exit_level_max;
+						canExit = canExit 
+							&& (s->currentPosition.x > 0 || allow_exit[Battle::MapBorder::West])
+							&& (s->currentPosition.y > 0 || allow_exit[Battle::MapBorder::North])
+							&& (s->currentPosition.x <  size.x * chunk_size.x - 1 
+													    || allow_exit[Battle::MapBorder::East])
+							&& (s->currentPosition.y <  size.y * chunk_size.y - 1
+														|| allow_exit[Battle::MapBorder::South]);
+						if (canExit)
 						{
-							exitFarSideX = exitLocX.y != 0;
-							exitLocX.y = 0;
-							exitLocX.x = exitLocX.x % chunk_size.x;
+							Vec3<int> exitLocX = s->currentPosition;
+							Vec3<int> exitLocY = s->currentPosition;
+							bool exitFarSideX = false;
+							bool exitFarSideY = false;
+							if (exitLocX.y == 0 || exitLocX.y == size.y * chunk_size.y - 1)
+							{
+								exitFarSideX = exitLocX.y != 0;
+								exitLocX.y = 0;
+								exitLocX.x = exitLocX.x % chunk_size.x;
+							}
+							if (exitLocY.x == 0 || exitLocY.x == size.x * chunk_size.x - 1)
+							{
+								exitFarSideY = exitLocY.x != 0;
+								exitLocY.x = 0;
+								exitLocY.y = exitLocY.y % chunk_size.y;
+							}
+							if (exitsX.find(exitLocX) != exitsX.end())
+								s->type = exit_grounds[exitFarSideX ? 2 : 0];
+							else if (exitsY.find(exitLocY) != exitsY.end())
+								s->type = exit_grounds[exitFarSideY ? 1 : 3];
+							else
+								s->type = pair.second;
 						}
-						if (exitLocY.x == 0 || exitLocY.x == size.x * chunk_size.x - 1)
-						{
-							exitFarSideY = exitLocY.x != 0;
-							exitLocY.x = 0;
-							exitLocY.y = exitLocY.y % chunk_size.y;
-						}
-						if (exitsX.find(exitLocX) != exitsX.end())
-							s->type = exit_grounds[exitFarSideX ? 2 : 0];
-						else if (exitsY.find(exitLocY) != exitsY.end())
-							s->type = exit_grounds[exitFarSideY ? 1 : 3];
-						else
-							s->type = pair.second;
 
 						// Set spawnability and height
 						if (s->type->movement_cost == 255 || s->type->height == 39 ||
@@ -833,12 +845,27 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 
 						b->items.push_back(s);
 					}
-					for (auto &lb : tiles.los_blocks)
+					for (auto &tlb : tiles.los_blocks)
 					{
-						b->los_blocks.push_back(lb->clone(shift));
+						auto lb = tlb->clone(shift);
+						b->los_blocks.push_back(lb);
+						// At least one civilian spawner required for map to spawn civilians
 						if (lb->spawn_type == BattleMapSector::LineOfSightBlock::SpawnType::Civilian)
 						{
 							spawnCivilians = true;
+						} 
+						// Los block must touch map edge, and it's lowest z must be within spawn allowance
+						// in order for it to qualify for spawning X-Com agents
+						else if (lb->spawn_priority > 0 
+							&& lb->spawn_type == BattleMapSector::LineOfSightBlock::SpawnType::Player)
+						{
+							bool canSpawn = lb->start.z >= entrance_level_min && lb->start.z < entrance_level_max;
+							canSpawn = canSpawn && (lb->start.x == 0 || lb->end.x == size.x * chunk_size.x 
+								|| lb->start.y == 0 || lb->end.y == size.y * chunk_size.y);
+							if (!canSpawn)
+							{
+								lb->spawn_priority = 0;
+							}
 						}
 					}
 				}

@@ -30,8 +30,8 @@ enum class BattleSelectionState
 	NormalCtrlAlt,
 	NormalCtrlAltShift,
 	Fire,
-
-	// Throw,
+	ThrowLeft,
+	ThrowRight,
 	// Psi,
 };
 
@@ -70,6 +70,8 @@ private:
 	BattleUpdateSpeed updateSpeed;
 	BattleUpdateSpeed lastSpeed;
 
+	sp<BattleUnit> lastSelectedUnit;
+
 	sp<GameState> state;
 
 	AgentEquipmentInfo leftHandInfo;
@@ -82,12 +84,14 @@ private:
 	sp<Palette> palette;
 
 	BattleSelectionState selectionState;
-	bool ModifierLShift = false;
-	bool ModifierRShift = false;
-	bool ModifierLAlt = false;
-	bool ModifierRAlt = false;
-	bool ModifierLCtrl = false;
-	bool ModifierRCtrl = false;
+	bool modifierLShift = false;
+	bool modifierRShift = false;
+	bool modifierLAlt = false;
+	bool modifierRAlt = false;
+	bool modifierLCtrl = false;
+	bool modifierRCtrl = false;
+	int leftThrowDelay = 0;
+	int rightThrowDelay = 0;
 
 	void updateSelectionMode();
 	void updateSelectedUnits();
@@ -106,7 +110,7 @@ private:
 	void orderDrop(bool right);
 	void orderThrow(Vec3<int> target, bool right);
 	void orderSelect(sp<BattleUnit> u, bool inverse = false, bool additive = false);
-	void attemptToClearCurrentOrders(sp<BattleUnit> u);
+	void attemptToClearCurrentOrders(sp<BattleUnit> u, bool overrideBodyStateChange = false);
 	bool canEmplaceTurnInFront(sp<BattleUnit> u);
 
   public:

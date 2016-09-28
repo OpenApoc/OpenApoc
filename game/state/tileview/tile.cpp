@@ -23,8 +23,8 @@ namespace OpenApoc
 {
 
 TileMap::TileMap(Vec3<int> size, Vec3<float> velocityScale, Vec3<int> voxelMapSize,
-                 std::vector<std::set<TileObject::Type>> layerMap)
-    : layerMap(layerMap), size(size), voxelMapSize(voxelMapSize), velocityScale(velocityScale)
+	std::vector<std::set<TileObject::Type>> layerMap)
+	: layerMap(layerMap), size(size), voxelMapSize(voxelMapSize), velocityScale(velocityScale)
 {
 	tiles.reserve(size.x * size.y * size.z);
 	for (int z = 0; z < size.z; z++)
@@ -56,7 +56,7 @@ TileMap::TileMap(Vec3<int> size, Vec3<float> velocityScale, Vec3<int> voxelMapSi
 TileMap::~TileMap() = default;
 
 Tile::Tile(TileMap &map, Vec3<int> position, int layerCount)
-    : map(map), position(position), drawnObjects(layerCount)
+	: map(map), position(position), drawnObjects(layerCount)
 {
 }
 
@@ -68,17 +68,17 @@ Vec3<float> Tile::getRestingPosition(bool large)
 		if (position.x < 1 || position.y < 1)
 		{
 			LogError(
-			    "Trying to get resting position for a large unit when it can't fit! %d, %d, %d",
-			    position.x, position.y, position.z);
+				"Trying to get resting position for a large unit when it can't fit! %d, %d, %d",
+				position.x, position.y, position.z);
 			return Vec3<float>{position.x + 0.5, position.y + 0.5, position.z};
 		}
 		float maxHeight = height;
 		maxHeight =
-		    std::max(maxHeight, map.getTile(position.x - 1, position.y, position.z)->height);
+			std::max(maxHeight, map.getTile(position.x - 1, position.y, position.z)->height);
 		maxHeight =
-		    std::max(maxHeight, map.getTile(position.x, position.y - 1, position.z)->height);
+			std::max(maxHeight, map.getTile(position.x, position.y - 1, position.z)->height);
 		maxHeight =
-		    std::max(maxHeight, map.getTile(position.x - 1, position.y - 1, position.z)->height);
+			std::max(maxHeight, map.getTile(position.x - 1, position.y - 1, position.z)->height);
 
 		return Vec3<float>{position.x, position.y, position.z + maxHeight};
 	}
@@ -97,17 +97,17 @@ bool Tile::getSolidGround(bool large)
 		if (position.x < 1 || position.y < 1)
 		{
 			LogError("Trying to get solid ground for a large unit when it can't fit! %d, %d, %d",
-			         position.x, position.y, position.z);
+				position.x, position.y, position.z);
 			return false;
 		}
-		if (solidGround 
+		if (solidGround
 			|| map.getTile(position.x - 1, position.y, position.z)->solidGround
 			|| map.getTile(position.x, position.y - 1, position.z)->solidGround
 			|| map.getTile(position.x - 1, position.y - 1, position.z)->solidGround)
 		{
 			return true;
 		}
-	
+
 	}
 	else
 	{
@@ -126,7 +126,7 @@ bool Tile::getCanStand(bool large)
 		if (position.x < 1 || position.y < 1)
 		{
 			LogError("Trying to get standing ability for a large unit when it can't fit! %d, %d, %d",
-			         position.x, position.y, position.z);
+				position.x, position.y, position.z);
 			return false;
 		}
 		if (canStand
@@ -176,41 +176,87 @@ bool Tile::getHasExit(bool large)
 	return false;
 }
 
-bool Tile::getPassable(bool large)
+bool Tile::getPassable(bool large, int height)
 {
+	if (movementCostIn == 255) return false;
+
 	if (large)
 	{
+		if (movementCostLeft == 255) return false;
+		if (movementCostRight == 255) return false;
+
 		if (position.x < 1 || position.y < 1 || position.z >= map.size.z - 1)
 		{
 			return false;
 		}
-		int maxCost = movementCostIn;
-		auto tX = map.getTile(position.x - 1, position.y, position.z);
-		auto tY = map.getTile(position.x, position.y - 1, position.z);
-		auto tXY = map.getTile(position.x - 1, position.y - 1, position.z);
-		auto tZ = map.getTile(position.x, position.y, position.z + 1);
-		auto tXZ = map.getTile(position.x - 1, position.y, position.z + 1);
-		auto tYZ = map.getTile(position.x, position.y - 1, position.z + 1);
-		auto tXYZ = map.getTile(position.x - 1, position.y - 1, position.z + 1);
 
-		maxCost = std::max(maxCost, tX->movementCostIn);
-		maxCost = std::max(maxCost, tY->movementCostIn);
-		maxCost = std::max(maxCost, tXY->movementCostIn);
-		maxCost = std::max(maxCost, tZ->movementCostIn);
-		maxCost = std::max(maxCost, tXZ->movementCostIn);
-		maxCost = std::max(maxCost, tYZ->movementCostIn);
-		maxCost = std::max(maxCost, tXYZ->movementCostIn);
-		maxCost = std::max(maxCost, movementCostLeft);
-		maxCost = std::max(maxCost, movementCostRight);
-		maxCost = std::max(maxCost, tX->movementCostRight);
-		maxCost = std::max(maxCost, tY->movementCostLeft);
-		maxCost = std::max(maxCost, tZ->movementCostLeft);
-		maxCost = std::max(maxCost, tZ->movementCostRight);
-		maxCost = std::max(maxCost, tXZ->movementCostRight);
-		maxCost = std::max(maxCost, tYZ->movementCostLeft);
-		return maxCost != 255;
+		auto tX = map.getTile(position.x - 1, position.y, position.z);
+		if (tX->movementCostIn == 255) return false;
+		if (tX->movementCostRight == 255) return false;
+
+		auto tY = map.getTile(position.x, position.y - 1, position.z);
+		if (tY->movementCostIn == 255) return false;
+		if (tY->movementCostLeft == 255) return false;
+
+		if (map.getTile(position.x - 1, position.y - 1, position.z)
+			->movementCostIn == 255) return false;
+		
+		auto tZ = map.getTile(position.x, position.y, position.z + 1);
+		if (tZ->movementCostIn == 255) return false;
+		if (tZ->movementCostLeft == 255) return false;
+		if (tZ->movementCostRight == 255) return false;
+
+		auto tXZ = map.getTile(position.x - 1, position.y, position.z + 1);
+		if (tXZ->movementCostIn == 255) return false;
+		if (tXZ->movementCostRight == 255) return false;
+
+		auto tYZ = map.getTile(position.x, position.y - 1, position.z + 1);
+		if (tYZ->movementCostIn == 255) return false;
+		if (tYZ->movementCostLeft == 255) return false;
+
+		if (map.getTile(position.x - 1, position.y - 1, position.z + 1)
+			->movementCostIn == 255) return false;
 	}
-	return movementCostIn != 255;
+		
+	return height == 0 || getHeadFits(large, height);
+}
+
+bool Tile::getHeadFits(bool large, int height)
+{
+	if (position.z + (large ? 2 : 1) >= map.size.z)
+		return true;
+	if (large)
+	{
+		// Check four tiles above our "to"'s head
+		if (map.getTile(Vec3<int>{position.x, position.y, position.z + 2})->solidGround ||
+			map.getTile(Vec3<int>{position.x-1, position.y, position.z + 2})->solidGround ||
+			map.getTile(Vec3<int>{position.x, position.y-1, position.z + 2})->solidGround ||
+			map.getTile(Vec3<int>{position.x-1, position.y-1, position.z + 2})->solidGround)
+		{
+			auto toX1 = map.getTile(Vec3<int>{position.x - 1, position.y, position.z});
+			auto toY1 = map.getTile(Vec3<int>{position.x, position.y - 1, position.z});
+			auto toXY1 = map.getTile(Vec3<int>{position.x - 1, position.y - 1, position.z});
+			
+			// If we have solid ground upon arriving - check if we fit
+			float maxHeight = this->height;
+			maxHeight = std::max(maxHeight, toX1->height);
+			maxHeight = std::max(maxHeight, toY1->height);
+			maxHeight = std::max(maxHeight, toXY1->height);
+			if (height + maxHeight * 40 - 1 > 80)
+			{
+				return false;
+			}
+		}
+	}
+	else
+	{
+		if (map.getTile(Vec3<int>{position.x, position.y, position.z + 1})->solidGround &&
+			height + this->height * 40 - 1 > 40)
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
 void Tile::updateBattlescapeUIDrawOrder()
@@ -303,7 +349,7 @@ void Tile::updateBattlescapeParameters()
 				}
 			}
 			solidGround = solidGround || (mp->type->floor && !mp->type->gravlift) ||
-			              (o->getType() == TileObject::Type::Feature && !mp->type->gravlift);
+				(o->getType() == TileObject::Type::Feature && !mp->type->gravlift);
 			hasLift = hasLift || mp->type->gravlift;
 			hasExit = hasExit || mp->type->exit;
 			movementCostIn = std::max(movementCostIn, mp->type->movement_cost);
@@ -381,8 +427,8 @@ sp<TileObjectBattleUnit> Tile::getUnitIfPresent()
 }
 
 sp<TileObjectBattleUnit> Tile::getUnitIfPresent(bool onlyConscious, bool mustOccupy,
-                                                bool mustBeStatic,
-                                                sp<TileObjectBattleUnit> exceptThis, bool onlyLarge)
+	bool mustBeStatic,
+	sp<TileObjectBattleUnit> exceptThis, bool onlyLarge)
 {
 	for (auto o : intersectingObjects)
 	{
@@ -391,10 +437,10 @@ sp<TileObjectBattleUnit> Tile::getUnitIfPresent(bool onlyConscious, bool mustOcc
 			auto unitTileObject = std::static_pointer_cast<TileObjectBattleUnit>(o);
 			auto unit = unitTileObject->getUnit();
 			if ((onlyConscious && !unit->isConscious()) || (exceptThis == unitTileObject) ||
-			    (mustOccupy &&
-			     unitTileObject->occupiedTiles.find(position) ==
-			         unitTileObject->occupiedTiles.end()) ||
-			    (mustBeStatic && !unit->isStatic()) || (onlyLarge && !unit->isLarge()))
+				(mustOccupy &&
+					unitTileObject->occupiedTiles.find(position) ==
+					unitTileObject->occupiedTiles.end()) ||
+					(mustBeStatic && !unit->isStatic()) || (onlyLarge && !unit->isLarge()))
 			{
 				continue;
 			}
@@ -402,208 +448,7 @@ sp<TileObjectBattleUnit> Tile::getUnitIfPresent(bool onlyConscious, bool mustOcc
 		}
 	}
 	return nullptr;
-}
 
-namespace
-{
-class PathNode
-{
-  public:
-	PathNode(float costToGetHere, float distanceToGoal, Tile *parentTile, Tile *thisTile)
-	    : costToGetHere(costToGetHere), parentTile(parentTile), thisTile(thisTile),
-	      distanceToGoal(distanceToGoal)
-	{
-	}
-
-	PathNode(float costToGetHere, Tile *parentTile, Tile *thisTile, const Vec3<float> &goal)
-	    : costToGetHere(costToGetHere), parentTile(parentTile), thisTile(thisTile)
-	{
-		Vec3<float> thisPosition{static_cast<float>(thisTile->position.x),
-		                         static_cast<float>(thisTile->position.y),
-		                         static_cast<float>(thisTile->position.z)};
-		Vec3<float> vectorToGoal = (goal - thisPosition);
-		this->distanceToGoal = glm::length(vectorToGoal);
-	}
-	float costToGetHere;
-	Tile *parentTile;
-	Tile *thisTile;
-
-	float distanceToGoal;
-};
-
-// class PathNodeComparer
-//{
-//  public:
-//	bool operator()(const PathNode &p1, const PathNode &p2)
-//	{
-//		return (p1.costToGetHere + p1.distanceToGoal) < (p2.costToGetHere + p2.distanceToGoal);
-//	}
-//};
-
-} // anonymous namespace
-
-static std::list<Tile *> getPathToNode(std::unordered_map<Tile *, PathNode> nodes, PathNode &end)
-{
-	std::list<Tile *> path;
-	path.push_back(end.thisTile);
-	Tile *t = end.parentTile;
-	while (t)
-	{
-		path.push_front(t);
-		auto nextNodeIt = nodes.find(t);
-		if (nextNodeIt == nodes.end())
-		{
-			LogError("Trying to expand unvisited node?");
-			return {};
-		}
-		auto &nextNode = nextNodeIt->second;
-		if (nextNode.thisTile != t)
-		{
-			LogError("Unexpected parentTile pointer");
-			return {};
-		}
-		t = nextNode.parentTile;
-	}
-
-	return path;
-}
-
-std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination,
-                                            unsigned int iterationLimit,
-                                            const CanEnterTileHelper &canEnterTile, float,
-                                            bool demandGiveWay)
-{
-	TRACE_FN;
-	std::unordered_map<Tile *, PathNode> visitedTiles;
-	std::list<PathNode> fringe;
-	Vec3<float> goalPosition;
-	unsigned int iterationCount = 0;
-
-	LogInfo("Trying to route from {%d,%d,%d} to {%d,%d,%d}", origin.x, origin.y, origin.z,
-	        destination.x, destination.y, destination.z);
-
-	if (origin.x < 0 || origin.x >= this->size.x || origin.y < 0 || origin.y >= this->size.y ||
-	    origin.z < 0 || origin.z >= this->size.z)
-	{
-		LogError("Bad origin {%d,%d,%d}", origin.x, origin.y, origin.z);
-		return {};
-	}
-	if (destination.x < 0 || destination.x >= this->size.x || destination.y < 0 ||
-	    destination.y >= this->size.y || destination.z < 0 || destination.z >= this->size.z)
-	{
-		LogError("Bad destination {%d,%d,%d}", destination.x, destination.y, destination.z);
-		return {};
-	}
-
-	goalPosition = {destination.x, destination.y, destination.z};
-	Tile *goalTile = this->getTile(destination);
-
-	if (!goalTile)
-	{
-		LogError("Failed to get destination tile at {%d,%d,%d}", destination.x, destination.y,
-		         destination.z);
-		return {};
-	}
-	Tile *startTile = this->getTile(origin);
-	if (!startTile)
-	{
-		LogError("Failed to get origin tile at {%d,%d,%d}", origin.x, origin.y, origin.z);
-		return {};
-	}
-
-	if (origin == destination)
-	{
-		LogInfo("Destination == origin {%d,%d,%d}", destination.x, destination.y, destination.z);
-		return {goalTile};
-	}
-
-	PathNode startNode(0.0f, nullptr, startTile, goalPosition);
-	fringe.emplace_back(startNode);
-	visitedTiles.emplace(startTile, startNode);
-
-	auto closestNodeSoFar = *fringe.begin();
-
-	while (iterationCount++ < iterationLimit)
-	{
-		auto first = fringe.begin();
-		if (first == fringe.end())
-		{
-			LogInfo("No more tiles to expand after %d iterations", iterationCount);
-			return {};
-		}
-		auto nodeToExpand = *first;
-		fringe.erase(first);
-
-		// Make it so we always try to move at least one tile
-		if (closestNodeSoFar.parentTile == nullptr)
-			closestNodeSoFar = nodeToExpand;
-
-		Vec3<int> currentPosition = nodeToExpand.thisTile->position;
-		if (currentPosition == destination)
-			return getPathToNode(visitedTiles, nodeToExpand);
-
-		if (nodeToExpand.distanceToGoal < closestNodeSoFar.distanceToGoal)
-		{
-			closestNodeSoFar = nodeToExpand;
-		}
-		for (int z = -1; z <= 1; z++)
-		{
-			for (int y = -1; y <= 1; y++)
-			{
-				for (int x = -1; x <= 1; x++)
-				{
-					if (x == 0 && y == 0 && z == 0)
-					{
-						continue;
-					}
-					auto nextPosition = currentPosition;
-					nextPosition.x += x;
-					nextPosition.y += y;
-					nextPosition.z += z;
-					if (!tileIsValid(nextPosition))
-						continue;
-
-					Tile *tile = this->getTile(nextPosition);
-					// If Skip if we've already expanded this, as in a 3d-grid we know the first
-					// expansion will be the shortest route
-					if (visitedTiles.find(tile) != visitedTiles.end())
-						continue;
-					// FIXME: Make 'blocked' tiles cleverer (e.g. don't plan around objects that
-					// will move anyway?)
-					float cost = 0.0f;
-					if (!canEnterTile.canEnterTile(nodeToExpand.thisTile, tile, cost,
-					                               demandGiveWay))
-						continue;
-					// FIXME: The old code *tried* to disallow diagonal paths that would clip past
-					// scenery but it didn't seem to work, no we should re-add that here
-					float newNodeCost = nodeToExpand.costToGetHere;
-
-					newNodeCost += cost;
-
-					// make pathfinder biased towards vehicle's altitude preference
-					newNodeCost += canEnterTile.adjustCost(nextPosition, z);
-
-					PathNode newNode(newNodeCost, nodeToExpand.thisTile, tile, goalPosition);
-					// Allow entering goal multiple times, so that we can find a faster route
-					if (nextPosition != destination)
-					{
-						visitedTiles.emplace(tile, newNode);
-					}
-					// Put node at appropriate place in the list
-					auto it = fringe.begin();
-					while (it != fringe.end() &&
-					       (it->costToGetHere + it->distanceToGoal) <
-					           (newNode.costToGetHere + newNode.distanceToGoal))
-						it++;
-					fringe.emplace(it, newNode);
-				}
-			}
-		}
-	}
-	LogInfo("No route found after %d iterations, returning closest path {%d,%d,%d}", iterationCount,
-	        closestNodeSoFar.thisTile->position.x, closestNodeSoFar.thisTile->position.y,
-	        closestNodeSoFar.thisTile->position.z);
-	return getPathToNode(visitedTiles, closestNodeSoFar);
 }
 
 void TileMap::addObjectToMap(sp<Projectile> projectile)
@@ -742,13 +587,13 @@ int TileMap::getLayerCount() const { return this->layerMap.size(); }
 bool TileMap::tileIsValid(Vec3<int> tile) const
 {
 	if (tile.z < 0 || tile.z >= this->size.z || tile.y < 0 || tile.y >= this->size.y ||
-	    tile.x < 0 || tile.x >= this->size.x)
+		tile.x < 0 || tile.x >= this->size.x)
 		return false;
 	return true;
 }
 
 sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &transform,
-                                 float maxZ, bool fast) const
+	float maxZ, bool fast) const
 {
 	auto img = mksp<RGBImage>(viewRect.size());
 	std::map<sp<TileObject>, Colour> objectColours;
@@ -759,10 +604,10 @@ sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &
 	RGBImageLock lock(img);
 	int h = viewRect.p1.y - viewRect.p0.y;
 	int w = viewRect.p1.x - viewRect.p0.x;
-	Vec2<float> offset = {viewRect.p0.x, viewRect.p0.y};
+	Vec2<float> offset = { viewRect.p0.x, viewRect.p0.y };
 
 	LogWarning("ViewRect {%d,%d},{%d,%d}", viewRect.p0.x, viewRect.p0.y, viewRect.p1.x,
-	           viewRect.p1.y);
+		viewRect.p1.y);
 
 	LogWarning("Dumping voxels {%d,%d} voxels w/offset {%f,%f}", w, h, offset.x, offset.y);
 
@@ -772,25 +617,25 @@ sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &
 	{
 		for (int x = 0; x < w; x += inc)
 		{
-			auto topPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, maxZ - 0.01f);
-			auto bottomPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, 0.0f);
+			auto topPos = transform.screenToTileCoords(Vec2<float>{x, y} +offset, maxZ - 0.01f);
+			auto bottomPos = transform.screenToTileCoords(Vec2<float>{x, y} +offset, 0.0f);
 
 			auto collision = this->findCollision(topPos, bottomPos, {}, true);
 			if (collision)
 			{
 				if (objectColours.find(collision.obj) == objectColours.end())
 				{
-					Colour c = {static_cast<uint8_t>(colourDist(colourRNG)),
-					            static_cast<uint8_t>(colourDist(colourRNG)),
-					            static_cast<uint8_t>(colourDist(colourRNG)), 255};
+					Colour c = { static_cast<uint8_t>(colourDist(colourRNG)),
+						static_cast<uint8_t>(colourDist(colourRNG)),
+						static_cast<uint8_t>(colourDist(colourRNG)), 255 };
 					objectColours[collision.obj] = c;
 				}
-				lock.set({x, y}, objectColours[collision.obj]);
+				lock.set({ x, y }, objectColours[collision.obj]);
 				if (fast)
 				{
-					lock.set({x + 1, y}, objectColours[collision.obj]);
-					lock.set({x, y + 1}, objectColours[collision.obj]);
-					lock.set({x + 1, y + 1}, objectColours[collision.obj]);
+					lock.set({ x + 1, y }, objectColours[collision.obj]);
+					lock.set({ x, y + 1 }, objectColours[collision.obj]);
+					lock.set({ x + 1, y + 1 }, objectColours[collision.obj]);
 				}
 			}
 		}

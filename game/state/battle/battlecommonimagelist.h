@@ -8,9 +8,10 @@ namespace OpenApoc
 {
 class Image;
 
-class BattleStrategyIconList
+class BattleCommonImageList
 {
   public:
-	std::vector<sp<Image>> images;
+	std::vector<sp<Image>> strategyImages;
+	sp<Image> loadingImage;
 };
 }

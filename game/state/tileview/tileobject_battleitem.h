@@ -1,8 +1,8 @@
 #pragma once
 
 #include "game/state/battle/battleitem.h"
-#include "game/state/battle/battlestrategyiconlist.h"
 #include "game/state/tileview/tileobject.h"
+#include "game/state/battle/battlecommonimagelist.h"
 
 namespace OpenApoc
 {

@@ -183,6 +183,9 @@
     <ClCompile Include="battle\battledoor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tileview\pathfinding.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agent.h">
@@ -353,9 +356,6 @@
     <ClInclude Include="battle\battleunitanimationpack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battle\battlestrategyiconlist.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="tileview\tileobject_battleunit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -369,6 +369,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="battle\battledoor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\battlecommonimagelist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

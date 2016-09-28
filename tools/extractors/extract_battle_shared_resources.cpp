@@ -1,6 +1,6 @@
 #include "framework/framework.h"
 #include "game/state/agent.h"
-#include "game/state/battle/battlestrategyiconlist.h"
+#include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
 #include "tools/extractors/common/tacp.h"
@@ -12,15 +12,8 @@ namespace OpenApoc
 
 void InitialGameStateExtractor::extractSharedBattleResources(GameState &state)
 {
-	static const int SOUND_METAL = 0x01;
-	static const int SOUND_SOFT = 0x02;
-	static const int SOUND_MUD = 0x03;
-	static const int SOUND_SLUDG = 0x04;
-	static const int SOUND_WOOD = 0x05;
-	static const int SOUND_MARB = 0x06;
-	static const int SOUND_CONC = 0x07;
-	static const int SOUND_TUBE = 0x08;
-
+	// Common Images
+	
 	auto gameObjectStrategySpriteTabFileName = UString("xcom3/tacdata/stratico.tab");
 	auto gameObjectStrategySpriteTabFile = fw().data->fs.open(gameObjectStrategySpriteTabFileName);
 	if (!gameObjectStrategySpriteTabFile)
@@ -31,20 +24,34 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state)
 	}
 	size_t gameObjectStrategySpriteCount = gameObjectStrategySpriteTabFile.size() / 4;
 
-	state.battle_strategy_icon_list = mksp<BattleStrategyIconList>();
+	state.battle_common_image_list = mksp<BattleCommonImageList>();
 
 	for (size_t i = 0; i < gameObjectStrategySpriteCount; i++)
 	{
-		state.battle_strategy_icon_list->images.push_back(fw().data->loadImage(
+		state.battle_common_image_list->strategyImages.push_back(fw().data->loadImage(
 		    UString::format("PCKSTRAT:xcom3/tacdata/stratico.pck:xcom3/tacdata/"
 		                    "stratico.tab:%u",
 		                    (unsigned)i)));
 	}
 
+	state.battle_common_image_list->loadingImage = fw().data->loadImage(
+		"xcom3/ufodata/enttact.pcx");
+
+	// Common Sounds
+
+	static const int SOUND_METAL = 0x01;
+	static const int SOUND_SOFT = 0x02;
+	static const int SOUND_MUD = 0x03;
+	static const int SOUND_SLUDG = 0x04;
+	static const int SOUND_WOOD = 0x05;
+	static const int SOUND_MARB = 0x06;
+	static const int SOUND_CONC = 0x07;
+	static const int SOUND_TUBE = 0x08;
+
 	state.battle_common_sample_list = mksp<BattleCommonSampleList>();
 
 	state.battle_common_sample_list->gravlift =
-	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/zextra/gravlift.raw:22050");
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/gravlift.raw:22050");
 	state.battle_common_sample_list->door =
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/terrain/doorwhsh.raw:22050");
 	state.battle_common_sample_list->brainsuckerHatch =

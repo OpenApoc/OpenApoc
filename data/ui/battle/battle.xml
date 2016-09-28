@@ -267,13 +267,13 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <position x="201" y="101"/>
         <size width="26" height="25"/>
         <image/>
-        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:163:xcom3/tacdata/tactical.pal</imagedepressed>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:163:xcom3/tacdata/tactical.pal</imagechecked>
       </graphicbutton>
 	  <checkbox id="BUTTON_RIGHT_HAND_THROW">
         <position x="228" y="101"/>
         <size width="26" height="25"/>
         <image/>
-        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:162:xcom3/tacdata/tactical.pal</imagedepressed>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:162:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
 	  <graphic id = "IMAGE_LEFT_HAND">
 	    <position x="328" y="29"/>
@@ -297,13 +297,13 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <position x="411" y="101"/>
         <size width="26" height="25"/>
         <image/>
-        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:163:xcom3/tacdata/tactical.pal</imagedepressed>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:163:xcom3/tacdata/tactical.pal</imagechecked>
       </graphicbutton>
 	  <checkbox id="BUTTON_LEFT_HAND_THROW">
         <position x="385" y="101"/>
         <size width="26" height="25"/>
         <image/>
-        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:164:xcom3/tacdata/tactical.pal</imagedepressed>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:164:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
 	  </style>
   </form>
@@ -376,13 +376,13 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <position x="201" y="101"/>
         <size width="26" height="25"/>
         <image/>
-        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:163:xcom3/tacdata/tactical.pal</imagedepressed>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:163:xcom3/tacdata/tactical.pal</imagechecked>
       </graphicbutton>
 	  <checkbox id="BUTTON_RIGHT_HAND_THROW">
         <position x="228" y="101"/>
         <size width="26" height="25"/>
         <image/>
-        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:162:xcom3/tacdata/tactical.pal</imagedepressed>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:162:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
 	  <graphic id = "IMAGE_LEFT_HAND">
 	    <position x="328" y="29"/>
@@ -406,13 +406,13 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <position x="411" y="101"/>
         <size width="26" height="25"/>
         <image/>
-        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:163:xcom3/tacdata/tactical.pal</imagedepressed>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:163:xcom3/tacdata/tactical.pal</imagechecked>
       </graphicbutton>
 	  <checkbox id="BUTTON_LEFT_HAND_THROW">
         <position x="385" y="101"/>
         <size width="26" height="25"/>
         <image/>
-        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:164:xcom3/tacdata/tactical.pal</imagedepressed>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:164:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
     </style>
   </form>

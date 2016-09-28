@@ -24,6 +24,9 @@
     <include>ui/city/basebuy.xml</include>
     <include>ui/city/baseselect.xml</include>
     <include>ui/battle/battle.xml</include>
+	<include>ui/battle/briefing.xml</include>
+	<include>ui/battle/prestart.xml</include>
+	<include>ui/battle/debriefing.xml</include>
 	<include>ui/mapselector.xml</include>
 	<include>ui/aequipscreen.xml</include>
   </game>

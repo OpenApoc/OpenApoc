@@ -1,5 +1,7 @@
+#include "framework/framework.h"
 #include "game/state/battle/battleunitmission.h"
 #include "game/state/battle/battleunit.h"
+#include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/gamestate.h"
 #include "game/state/tileview/tileobject_battleitem.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
@@ -7,6 +9,39 @@
 
 namespace OpenApoc
 {
+
+float BattleUnitTileHelper::applyPathOverheadAllowance(float cost) const 
+{ 
+	// If path is close, do not allow for any overhead
+	if (cost < 40.0f)
+		return cost;
+	// Otherwise, gradually go from 2.5% up to 7.5%
+	if (cost < 60.0f)
+		return cost / 1.025f; 
+	if (cost < 80.0f)
+		return cost / 1.050f;
+	return cost / 1.075f;
+}
+
+bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool demandGiveWay) const 
+{
+	float nothing;
+	bool none;
+	return canEnterTile(from, to, nothing, none, false, demandGiveWay);
+}
+
+bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay, bool demandGiveWay) const 
+{
+	return canEnterTile(from, to, cost, doorInTheWay, false, demandGiveWay);
+}
+
+bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool ignoreUnits, bool demandGiveWay) const
+{
+	float nothing;
+	bool none;
+	return canEnterTile(from, to, nothing, none, ignoreUnits, demandGiveWay);
+}
+
 bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay,
 	bool ignoreUnits, bool demandGiveWay) const
 {
@@ -67,7 +102,13 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 	Tile *toXYZ1 = nullptr;  // to (x-1, y-1, z-1)
 	Vec3<int> toXYZ1Pos;     // toPos (x-1, y-1, z-1)
 
-								// STEP 01: Check if "to" is passable (large)
+	// STEP 01: Check if "to" is passable
+	// We could just use Tile::getPassable, however, we need to make some extra calculations
+	// Like store the movement cost, look for units and so on
+	// Therefore, I think it's better to do it all here
+	// Plus, we will re-use some of the tiles we got from the map later down the line
+
+	// STEP 01: Check if "to" is passable (large)
 	if (large)
 	{
 		// Can we fit?
@@ -285,37 +326,8 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 	}
 
 	// STEP 05: Check if we have enough space for our head upon arrival
-	bool haveLayerAboveHead = toPos.z + (large ? 2 : 1) < map.size.z;
-	if (large)
-	{
-		// Check four tiles above our "to"'s head
-		if (haveLayerAboveHead &&
-			map.getTile(Vec3<int>{toPos.x, toPos.y, toPos.z + 2})->solidGround ||
-			map.getTile(Vec3<int>{toX1Pos.x, toX1Pos.y, toX1Pos.z + 2})->solidGround ||
-			map.getTile(Vec3<int>{toY1Pos.x, toY1Pos.y, toY1Pos.z + 2})->solidGround ||
-			map.getTile(Vec3<int>{toXY1Pos.x, toXY1Pos.y, toXY1Pos.z + 2})->solidGround)
-		{
-			// If we have solid ground upon arriving - check if we fit
-			float maxHeight = to->height;
-			maxHeight = std::max(maxHeight, toX1->height);
-			maxHeight = std::max(maxHeight, toY1->height);
-			maxHeight = std::max(maxHeight, toXY1->height);
-			if (u.agent->type->bodyType->maxHeight + maxHeight * 40 - 1 > 80)
-			{
-				return false;
-			}
-		}
-	}
-	else
-	{
-		// If we have solid ground upon arriving - check if we fit
-		if (haveLayerAboveHead &&
-			map.getTile(Vec3<int>{toPos.x, toPos.y, toPos.z + 1})->solidGround &&
-			u.agent->type->bodyType->maxHeight + to->height * 40 - 1 > 40)
-		{
-			return false;
-		}
-	}
+	if (!to->getHeadFits(large, u.agent->type->bodyType->maxHeight))
+		return false;
 
 	// STEP 06: Check how much it costs to pass through walls we intersect with
 	// Check if these walls are passable
@@ -863,10 +875,18 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 		costModifier += 0.5f;
 	}
 	cost *= costModifier;
-	// This cost is in TUs. We should convert it to cost in tiles
-	cost /= 4.0f;
 
 	return true;
+}
+
+
+float BattleUnitTileHelper::getDistance(Vec3<float> from, Vec3<float> to) const
+{
+	auto diff = to - from;
+	auto xDiff = std::abs(diff.x);
+	auto yDiff = std::abs(diff.y);
+	auto zDiff = std::abs(diff.z);
+	return (std::max(std::max(xDiff, yDiff), zDiff) + xDiff + yDiff + zDiff) * 2.0f;
 }
 
 BattleUnitMission *BattleUnitMission::gotoLocation(BattleUnit &u, Vec3<int> target, int facingDelta,
@@ -874,22 +894,15 @@ BattleUnitMission *BattleUnitMission::gotoLocation(BattleUnit &u, Vec3<int> targ
 	bool demandGiveWay, bool allowRunningAway)
 {
 	auto t = u.tileObject->map.getTile(target);
-	if (!t->getPassable(u.isLarge()) && target.z < u.tileObject->map.size.z - 1)
-	{
-		LogInfo("Tried moving to impassable %d %d %d, incrementing once", target.x, target.y,
-			target.z);
-		target.z++;
-	}
-
 	// Check if target tile is valid
-	while (!u.canFly())
+	while (true)
 	{
-		if (!t->getPassable(u.isLarge()))
+		if (!t->getPassable(u.isLarge(), u.agent->type->bodyType->maxHeight))
 		{
 			LogInfo("Cannot move to %d %d %d, impassable", target.x, target.y, target.z);
 			return restartNextMission(u);
 		}
-		if (t->getCanStand(u.isLarge()))
+		if (u.canFly() || t->getCanStand(u.isLarge()))
 		{
 			break;
 		}
@@ -1144,20 +1157,27 @@ bool BattleUnitMission::isFinished(GameState &state, BattleUnit &u)
 		return u.current_body_state == this->bodyState;
 	case MissionType::ThrowItem:
 		// If died or went unconscious while throwing - drop thrown item
-		if (!u.isConscious() && item)
+		if (throwFailed)
 		{
-			auto battle = u.battle.lock();
-			if (!battle)
-				return true;
-			// FIXME: Drop item properly
-			auto bi = mksp<BattleItem>();
-			bi->battle = u.battle;
-			bi->item = item;
-			item = nullptr;
-			bi->position = u.position + Vec3<float>{0.0, 0.0, 0.5f};
-			bi->supported = false;
-			battle->items.push_back(bi);
-			u.tileObject->map.addObjectToMap(bi);
+			return true;
+		}
+		if (!u.isConscious())
+		{
+			if (item)
+			{
+				auto battle = u.battle.lock();
+				if (!battle)
+					return true;
+				// FIXME: Drop item properly
+				auto bi = mksp<BattleItem>();
+				bi->battle = u.battle;
+				bi->item = item;
+				item = nullptr;
+				bi->position = u.position + Vec3<float>{0.0, 0.0, 0.5f};
+				bi->supported = false;
+				battle->items.push_back(bi);
+				u.tileObject->map.addObjectToMap(bi);
+			}
 			return true;
 		}
 		return (u.current_body_state == AgentType::BodyState::Standing && !item);
@@ -1245,11 +1265,11 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 		}
 		bool instant = false;
 		if (u.agent->getAnimationPack()->getFrameCountBody(
-			u.agent->getItemInHands(), u.target_body_state, bodyState, u.current_hand_state,
+			u.getDisplayedItem(), u.target_body_state, bodyState, u.current_hand_state,
 			u.current_movement_state, u.facing) == 0)
 		{
 			if (u.agent->getAnimationPack()->getFrameCountBody(
-				u.agent->getItemInHands(), u.target_body_state, bodyState,
+				u.getDisplayedItem(), u.target_body_state, bodyState,
 				u.current_hand_state, AgentType::MovementState::None, u.facing) != 0)
 			{
 				u.setMovementState(AgentType::MovementState::None);
@@ -1333,17 +1353,29 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 		{
 			u.beginBodyStateChange(
 				bodyState, u.agent->getAnimationPack()->getFrameCountBody(
-					u.agent->getItemInHands(), u.current_body_state, bodyState,
+					u.getDisplayedItem(), u.current_body_state, bodyState,
 					u.current_hand_state, u.current_movement_state, u.facing) *
 				TICKS_PER_FRAME_UNIT);
 		}
 		return;
 	}
 	case MissionType::ThrowItem:
+		// Item disappeared from inventory
+		if (item && item->ownerAgent != u.agent)
+		{
+			item = nullptr;
+			throwFailed = true;
+			return;
+		}
 		// Half way there - throw the item!
 		if (u.current_body_state == AgentType::BodyState::Throwing)
 		{
-			// FIXME: Play throwing sound
+			if (state.battle_common_sample_list->throwSounds.size() > 0)
+			{
+				fw().soundBackend->playSample(listRandomiser(state.rng, state.battle_common_sample_list->throwSounds),
+					u.getPosition(), 0.25f);
+			}
+
 			// FIXME: Throw item properly
 			auto battle = u.battle.lock();
 			if (!battle)
@@ -1351,29 +1383,36 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 			auto bi = mksp<BattleItem>();
 			bi->battle = u.battle;
 			bi->item = item;
-			item->ownerAgent->removeEquipment(item);
 			item = nullptr;
-			bi->position = u.position + Vec3<float>{0.0, 0.0, 0.5f};
-			bi->velocity = ((Vec3<float>)targetLocation - bi->position) / 2.0f +
-				Vec3<float>{0.0, 0.0, 3.0f};
+			bi->position = u.position + Vec3<float>{0.0, 0.0, (float)u.getCurrentHeight() / 40.0f};
+			bi->velocity = ((Vec3<float>)targetLocation - bi->position) * 7.0f +
+				Vec3<float>{0.0, 0.0, 1.0f} * 15.0f;
 			bi->supported = false;
 			battle->items.push_back(bi);
 			u.tileObject->map.addObjectToMap(bi);
 
-			u.missions.emplace_front(changeStance(u, AgentType::BodyState::Standing));
+ 			u.missions.emplace_front(changeStance(u, AgentType::BodyState::Standing));
 			u.missions.front()->start(state, u);
 			return;
 		}
 		// Just starting the throw
 		else if (item)
 		{
+			// Do we need to turn?
+			auto m = turn(u, targetLocation);
 			if (u.current_body_state != AgentType::BodyState::Standing ||
-				u.current_body_state != u.target_body_state)
+				u.current_body_state != u.target_body_state || !m->isFinished(state, u))
 			{
 				// FIXME: actually read the option
 				bool USER_OPTION_ALLOW_INSTANT_THROWS = false;
 				if (!USER_OPTION_ALLOW_INSTANT_THROWS)
 				{
+					if (!m->isFinished(state, u))
+					{
+						u.missions.emplace_front(m);
+						u.missions.front()->start(state, u);
+						return;
+					}
 					if (u.current_body_state != u.target_body_state)
 					{
 						// body state is changing - wait for it to change and then retry
@@ -1392,6 +1431,8 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 					}
 				}
 				u.setBodyState(AgentType::BodyState::Standing);
+				u.facing = m->targetFacing;
+				u.goalFacing = m->targetFacing;
 			}
 			// Calculate cost
 			// I *think* this is correct? 18 TUs at 100 time units
@@ -1402,6 +1443,8 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 					getName().cStr());
 				return;
 			}
+			// Remove item
+			item->ownerAgent->removeEquipment(item);
 			// Start throw animation
 			u.missions.emplace_front(
 				BattleUnitMission::changeStance(u, AgentType::BodyState::Throwing));
@@ -1416,13 +1459,15 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 		return;
 	case MissionType::DropItem:
 		{
+			// Remove item	
+			item->ownerAgent->removeEquipment(item);
+			// Drop item
 			auto battle = u.battle.lock();
 			if (!battle)
 				return;
 			auto bi = mksp<BattleItem>();
 			bi->battle = u.battle;
 			bi->item = item;
-			item->ownerAgent->removeEquipment(item);
 			item = nullptr;
 			bi->position = u.position + Vec3<float>{0.0, 0.0, 0.5f};
 			bi->supported = false;
@@ -1486,7 +1531,7 @@ void BattleUnitMission::setPathTo(BattleUnit &u, Vec3<int> target, int maxIterat
 	if (unitTile)
 	{
 		auto &map = unitTile->map;
-		if (!u.canMove() || !map.getTile(target)->getPassable(u.isLarge()))
+		if (!u.canMove() || !map.getTile(target)->getPassable(u.isLarge(), u.agent->type->bodyType->maxHeight))
 		{
 			return;
 		}
@@ -1496,9 +1541,9 @@ void BattleUnitMission::setPathTo(BattleUnit &u, Vec3<int> target, int maxIterat
 
 		// Always start with the current position
 		this->currentPlannedPath.push_back(u.goalPosition);
-		for (auto *t : path)
+		for (auto &p : path)
 		{
-			this->currentPlannedPath.push_back(t->position);
+			this->currentPlannedPath.push_back(p);
 		}
 		targetLocation = currentPlannedPath.back();
 	}
@@ -1832,7 +1877,7 @@ UString BattleUnitMission::getName()
 		name = "ChangeBodyState " + UString::format("%d", (int)this->bodyState);
 		break;
 	case MissionType::ThrowItem:
-		name = "ThrowItem " + UString::format("%s at %d,%d,%d", this->item->type->name.cStr(), 
+		name = "ThrowItem " + UString::format("%s at %d,%d,%d", item ? this->item->type->name.cStr() : "(item is gone)",
 			this->targetLocation.x, this->targetLocation.y, this->targetLocation.z);
 		break;
 	case MissionType::DropItem:

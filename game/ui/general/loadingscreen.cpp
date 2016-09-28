@@ -4,19 +4,23 @@
 #include "game/ui/battle/battleview.h"
 #include "game/ui/city/cityview.h"
 #include <cmath>
+#include <algorithm>
 
 namespace OpenApoc
 {
 
-LoadingScreen::LoadingScreen(std::future<sp<GameState>> gameStateTask, sp<Image> background)
-    : Stage(), loading_task(std::move(gameStateTask)), backgroundimage(background)
+LoadingScreen::LoadingScreen(std::future<sp<GameState>> gameStateTask, sp<Image> background, int scaleDivisor, bool showRotatingImage)
+    : Stage(), loading_task(std::move(gameStateTask)), backgroundimage(background), showRotatingImage(showRotatingImage), scaleDivisor(scaleDivisor)
 {
 }
 
 void LoadingScreen::begin()
 {
 	// FIXME: This is now useless, as it doesn't actually load anything interesting here
-	loadingimage = fw().data->loadImage("ui/loading.png");
+	if (showRotatingImage)
+	{
+		loadingimage = fw().data->loadImage("ui/loading.png");
+	}
 	if (!backgroundimage)
 	{
 		backgroundimage = fw().data->loadImage("ui/logo.png");
@@ -33,7 +37,7 @@ void LoadingScreen::finish() {}
 
 void LoadingScreen::eventOccurred(Event *e) { std::ignore = e; }
 
-sp<Stage> CreateUiForGame(sp<GameState> gameState)
+sp<Stage> LoadingScreen::createUiForGame(sp<GameState> gameState) const
 {
 	// FIXME load to correct screen based on loaded game state
 	if (gameState->current_battle)
@@ -56,7 +60,7 @@ void LoadingScreen::update()
 			auto gameState = loading_task.get();
 			if (gameState != nullptr)
 			{
-				fw().stageQueueCommand({ StageCmd::Command::REPLACEALL, CreateUiForGame(gameState) });
+				fw().stageQueueCommand({ StageCmd::Command::REPLACEALL, createUiForGame(gameState) });
 			}
 			else
 			{
@@ -72,18 +76,23 @@ void LoadingScreen::update()
 
 void LoadingScreen::render()
 {
-	int logow = fw().displayGetWidth() / 3;
-	float logosc = logow / static_cast<float>(backgroundimage->size.x);
-
+	int logow = fw().displayGetWidth() / scaleDivisor;
+	int logoh = fw().displayGetHeight() / scaleDivisor;
+	float logoscw = logow / static_cast<float>(backgroundimage->size.x);
+	float logosch = logoh / static_cast<float>(backgroundimage->size.y);
+	float logosc = std::min(logoscw, logosch);
+	
 	Vec2<float> logoPosition{fw().displayGetWidth() / 2 - (backgroundimage->size.x * logosc / 2),
 	                         fw().displayGetHeight() / 2 - (backgroundimage->size.y * logosc / 2)};
 	Vec2<float> logoSize{backgroundimage->size.x * logosc, backgroundimage->size.y * logosc};
 
 	fw().renderer->drawScaled(backgroundimage, logoPosition, logoSize);
-
-	fw().renderer->drawRotated(
-	    loadingimage, Vec2<float>{24, 24},
-	    Vec2<float>{fw().displayGetWidth() - 50, fw().displayGetHeight() - 50}, loadingimageangle);
+	if (loadingimage)
+	{
+		fw().renderer->drawRotated(
+			loadingimage, Vec2<float>{24, 24},
+			Vec2<float>{fw().displayGetWidth() - 50, fw().displayGetHeight() - 50}, loadingimageangle);
+	}
 }
 
 bool LoadingScreen::isTransition() { return false; }

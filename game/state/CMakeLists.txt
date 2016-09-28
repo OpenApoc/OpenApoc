@@ -51,6 +51,7 @@ set (GAMESTATE_SOURCE_FILES
 	rules/vehicle_type_rules.cpp
 	rules/vequipment_rules.cpp
 	tileview/collision.cpp
+	tileview/pathfinding.cpp
 	tileview/tile.cpp
 	tileview/tileobject.cpp
 	tileview/tileobject_battlemappart.cpp
@@ -89,7 +90,7 @@ set (GAMESTATE_HEADER_FILES
 	battle/battlemappart_type.h
 	battle/battlemapsector.h
 	battle/battlemaptileset.h
-	battle/battlestrategyiconlist.h
+	battle/battlecommonimagelist.h
 	battle/battleunit.h
 	battle/battleunitanimationpack.h
 	battle/battleunitimagepack.h

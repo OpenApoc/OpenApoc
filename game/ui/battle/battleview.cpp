@@ -295,12 +295,31 @@ BattleView::BattleView(sp<GameState> state)
 		orderDrop(false);
 	};
 
-	std::function<void(FormsEvent *e)> throwRightHand = [this](Event *) {
-		LogWarning("Throw right hand");
+	std::function<void(bool right)> throwItem = [this](bool right) {
+		if (selectedUnits.size() == 0 
+			|| !(selectedUnits.front()->agent->getFirstItemInSlot(right 
+				? AgentEquipmentLayout::EquipmentSlotType::RightHand 
+				: AgentEquipmentLayout::EquipmentSlotType::LeftHand)))
+		{
+			if (right)
+			{
+				this->rightThrowDelay = 5;
+			}
+			else
+			{
+				this->leftThrowDelay = 5;
+			}
+			return;
+		}
+		this->selectionState = right ?  BattleSelectionState::ThrowRight :  BattleSelectionState::ThrowLeft;
 	};
 
-	std::function<void(FormsEvent *e)> throwLeftHand = [this](Event *) {
-		LogWarning("Throw left hand");
+	std::function<void(FormsEvent *e)> throwRightHand = [this, throwItem](Event *) {
+		throwItem(true);
+	};
+
+	std::function<void(FormsEvent *e)> throwLeftHand = [this, throwItem](Event *) {
+		throwItem(false);
 	};
 
 	this->uiTabsRT[0]
@@ -435,6 +454,15 @@ void BattleView::update()
 	updateSelectionMode();
 	updateSoldierButtons();
 
+	if (leftThrowDelay > 0)
+	{
+		leftThrowDelay--;
+	}
+	if (rightThrowDelay > 0)
+	{
+		rightThrowDelay--;
+	}
+
 	unsigned int ticks = 0;
 	switch (this->updateSpeed)
 	{
@@ -526,6 +554,7 @@ void BattleView::update()
 
 void BattleView::updateSelectedUnits()
 {
+	auto prevLSU = lastSelectedUnit;
 	auto it = selectedUnits.begin();
 	while (it != selectedUnits.end())
 	{
@@ -540,18 +569,31 @@ void BattleView::updateSelectedUnits()
 			it++;
 		}
 	}
+	lastSelectedUnit = selectedUnits.size() == 0 ? nullptr : selectedUnits.front();
+	
+	// Cancel stuff that cancels on unit change
+	if (prevLSU != lastSelectedUnit)
+	{
+		if (selectionState == BattleSelectionState::ThrowLeft
+			|| selectionState == BattleSelectionState::ThrowRight)
+		{
+			selectionState = BattleSelectionState::Normal;
+		}
+	}
+
 }
 
 void BattleView::updateSelectionMode()
 {
-	// FIXME: Add Throwing and Psi in the mix
+	// FIXME: Add Psi in the mix
+	// FIXME: Change cursor
 	if (selectedUnits.size() == 0)
 	{
-		if (ModifierRCtrl || ModifierRCtrl)
+		if (modifierRCtrl || modifierRCtrl)
 		{
-			if (ModifierLAlt || ModifierRAlt)
+			if (modifierLAlt || modifierRAlt)
 			{
-				if (ModifierLShift || ModifierRShift)
+				if (modifierLShift || modifierRShift)
 				{
 					selectionState = BattleSelectionState::NormalCtrlAltShift;
 				}
@@ -572,11 +614,17 @@ void BattleView::updateSelectionMode()
 	}
 	else
 	{
-		if (ModifierRCtrl || ModifierRCtrl)
+		// To cancel out of throw, we must switch first agent or cancel throwing
+		if (selectionState == BattleSelectionState::ThrowLeft
+			|| selectionState == BattleSelectionState::ThrowRight)
 		{
-			if (ModifierLAlt || ModifierRAlt)
+			return;
+		}
+		if (modifierRCtrl || modifierRCtrl)
+		{
+			if (modifierLAlt || modifierRAlt)
 			{
-				if (ModifierLShift || ModifierRShift)
+				if (modifierLShift || modifierRShift)
 				{
 					selectionState = BattleSelectionState::NormalCtrlAltShift;
 				}
@@ -590,11 +638,11 @@ void BattleView::updateSelectionMode()
 				selectionState = BattleSelectionState::NormalCtrl;
 			}
 		}
-		else if (ModifierLShift || ModifierRShift)
+		else if (modifierLShift || modifierRShift)
 		{
 			selectionState = BattleSelectionState::Fire;
 		}
-		else if (ModifierLAlt || ModifierRAlt)
+		else if (modifierLAlt || modifierRAlt)
 		{
 			selectionState = BattleSelectionState::NormalAlt;
 		}
@@ -690,9 +738,14 @@ void BattleView::updateSoldierButtons()
 	this->baseForm->findControlTyped<CheckBox>("BUTTON_EVASIVE")->setChecked(evasive);
 	this->baseForm->findControlTyped<CheckBox>("BUTTON_NORMAL")->setChecked(normal);
 	this->baseForm->findControlTyped<CheckBox>("BUTTON_AGGRESSIVE")->setChecked(aggressive);
+
+	this->activeTab->findControlTyped<CheckBox>("BUTTON_LEFT_HAND_THROW")
+		->setChecked(selectionState == BattleSelectionState::ThrowLeft || leftThrowDelay > 0);
+	this->activeTab->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND_THROW")
+		->setChecked(selectionState == BattleSelectionState::ThrowRight || rightThrowDelay > 0);
 }
 
-void BattleView::attemptToClearCurrentOrders(sp<BattleUnit> u)
+void BattleView::attemptToClearCurrentOrders(sp<BattleUnit> u, bool overrideBodyStateChange)
 {
 	bool startRequired = false;
 
@@ -705,9 +758,14 @@ void BattleView::attemptToClearCurrentOrders(sp<BattleUnit> u)
 			// Missions that cannot be cancelled before finished
 			case BattleUnitMission::MissionType::Fall:
 			case BattleUnitMission::MissionType::Snooze:
+			case BattleUnitMission::MissionType::DropItem:
 			case BattleUnitMission::MissionType::ThrowItem:
-			case BattleUnitMission::MissionType::ChangeBodyState:
 				continue;
+			case BattleUnitMission::MissionType::ChangeBodyState:
+				if (overrideBodyStateChange)
+					break;
+				else
+					continue;
 			// Missions that can be cancelled before finished
 			case BattleUnitMission::MissionType::AcquireTU:
 			case BattleUnitMission::MissionType::GotoLocation:
@@ -748,11 +806,11 @@ void BattleView::orderMove(Vec3<int> target, int facingOffset, bool demandGiveWa
 		if (runAway)
 		{
 			// Running away units are impatient!
-			unit->missions.emplace_back(BattleUnitMission::gotoLocation(*unit, target, facingOffset, true, 1, false, true));
+			unit->missions.emplace_back(BattleUnitMission::gotoLocation(*unit, target, facingOffset, true, 1, demandGiveWay, true));
 		}
 		else // not running away
 		{
-			unit->missions.emplace_back(BattleUnitMission::gotoLocation(*unit, target, facingOffset));
+			unit->missions.emplace_back(BattleUnitMission::gotoLocation(*unit, target, facingOffset, true, 10, demandGiveWay));
 		}
 		if (unit->missions.size() == 1)
 		{
@@ -812,15 +870,29 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 	{
 		return;
 	}
+	// FIXME: Check if we can actually throw it!
+
 	auto unit = selectedUnits.front();
 	auto item = unit->agent->getFirstItemInSlot(right ? AgentEquipmentLayout::EquipmentSlotType::RightHand : AgentEquipmentLayout::EquipmentSlotType::LeftHand);
 	if (!item)
 	{
 		return;
 	}
+	
+	// FIXME: actually read the option
+	bool USER_OPTION_ALLOW_INSTANT_THROWS = false;
+	attemptToClearCurrentOrders(unit, USER_OPTION_ALLOW_INSTANT_THROWS);
+	
+	if (unit->missions.size() > 0)
+	{
+		// FIXME: Report unable to throw
+		return;
+	}
+
 	unit->missions.emplace_front(BattleUnitMission::throwItem(*unit, item, target));
 	unit->missions.front()->start(*this->state, *unit);
-	LogWarning("BattleUnit \"%s\" dropping %s hand item", unit->agent->name.cStr(), right ? "right" : "left");
+	LogWarning("BattleUnit \"%s\" throwing %s hand item", unit->agent->name.cStr(), right ? "right" : "left");
+	selectionState = BattleSelectionState::Normal;
 }
 
 
@@ -911,27 +983,27 @@ void BattleView::eventOccurred(Event *e)
 		switch (e->keyboard().KeyCode)
 		{
 			case SDLK_RSHIFT:
-				ModifierRShift = true;
+				modifierRShift = true;
 				updateSelectionMode();
 				break;
 			case SDLK_LSHIFT:
-				ModifierLShift = true;
+				modifierLShift = true;
 				updateSelectionMode();
 				break;
 			case SDLK_RALT:
-				ModifierRAlt = true;
+				modifierRAlt = true;
 				updateSelectionMode();
 				break;
 			case SDLK_LALT:
-				ModifierLAlt = true;
+				modifierLAlt = true;
 				updateSelectionMode();
 				break;
 			case SDLK_RCTRL:
-				ModifierLCtrl = true;
+				modifierLCtrl = true;
 				updateSelectionMode();
 				break;
 			case SDLK_LCTRL:
-				ModifierRCtrl = true;
+				modifierRCtrl = true;
 				updateSelectionMode();
 				break;
 			case SDLK_ESCAPE:
@@ -971,27 +1043,27 @@ void BattleView::eventOccurred(Event *e)
 		switch (e->keyboard().KeyCode)
 		{
 			case SDLK_RSHIFT:
-				ModifierRShift = false;
+				modifierRShift = false;
 				updateSelectionMode();
 				break;
 			case SDLK_LSHIFT:
-				ModifierLShift = false;
+				modifierLShift = false;
 				updateSelectionMode();
 				break;
 			case SDLK_RALT:
-				ModifierRAlt = false;
+				modifierRAlt = false;
 				updateSelectionMode();
 				break;
 			case SDLK_LALT:
-				ModifierLAlt = false;
+				modifierLAlt = false;
 				updateSelectionMode();
 				break;
 			case SDLK_RCTRL:
-				ModifierLCtrl = false;
+				modifierLCtrl = false;
 				updateSelectionMode();
 				break;
 			case SDLK_LCTRL:
-				ModifierRCtrl = false;
+				modifierRCtrl = false;
 				updateSelectionMode();
 				break;
 		}
@@ -1112,6 +1184,22 @@ void BattleView::eventOccurred(Event *e)
 						break;
 					// FIXME: Fire!
 					break;
+				case BattleSelectionState::ThrowRight:
+				case BattleSelectionState::ThrowLeft:
+					switch (e->mouse().Button)
+					{
+					case 1:
+					{
+						bool right = selectionState == BattleSelectionState::ThrowRight;
+						orderThrow(t, right);
+						break;
+					}
+					case 4:
+					{	
+						selectionState = BattleSelectionState::Normal;
+						break;
+					}
+					}
 			}
 			LogWarning("Click at tile %d, %d, %d", t.x, t.y, t.z);
 			LogWarning("Selected units count: %d", (int)selectedUnits.size());

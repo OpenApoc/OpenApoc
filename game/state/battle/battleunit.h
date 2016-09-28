@@ -128,7 +128,6 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 
 	// Successfully retreated from combat
 	bool retreated = false;
-	void retreat(GameState &state);
 	// Died and corpse was destroyed in an explosion
 	bool destroyed = false;
 	// Freefalling
@@ -158,6 +157,8 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	bool canGoProne() const;
 	// Wether unit can kneel in current position and facing
 	bool canKneel() const;
+	
+	// Get unit's height in current situation
 	int getCurrentHeight() const { return agent->type->bodyType->height.at(current_body_state); }
 
 	// If unit is asked to give way, this list will be filled with facings
@@ -172,6 +173,8 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 
 	const Vec3<float> &getPosition() const { return this->position; }
 
+	StateRef<AEquipmentType> getDisplayedItem() const;
+
 	int getMaxHealth() const;
 	int getHealth() const;
 
@@ -183,6 +186,7 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 
 	void update(GameState &state, unsigned int ticks);
 
+	void retreat(GameState &state);
 	void dropDown(GameState &state);
 	void tryToRiseUp(GameState &state);
 	void fallUnconscious(GameState &state);

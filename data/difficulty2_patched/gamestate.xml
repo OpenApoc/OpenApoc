@@ -244,7 +244,7 @@
       <value>20</value>
     </entry>
   </initial_base_agent_equipment>
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="battle_strategy_icon_list.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="battle_common_image_list.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="battle_common_sample_list.xml" />
   <player>ORG_X-COM</player>
   <aliens>ORG_ALIEN</aliens>

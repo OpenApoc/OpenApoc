@@ -72,7 +72,7 @@ Battle::~Battle()
 
 void Battle::initBattle(GameState &state)
 {
-	strategy_icon_list = state.battle_strategy_icon_list;
+	common_image_list = state.battle_common_image_list;
 	common_sample_list = state.battle_common_sample_list;
 	loadResources(state);
 	auto stt = shared_from_this();
@@ -544,6 +544,7 @@ void Battle::enterBattle(GameState &state)
 					if (block)
 						break;
 				}
+				
 				// If there is no block then just spawn anywhere
 				if (!block)
 				{
@@ -606,11 +607,11 @@ void Battle::enterBattle(GameState &state)
 
 					if (unitsToSpawn.size() > 0)
 					{
-						LogWarning("Map has not big enough to spawn all units!?!?!?");
+						LogError("Map has not big enough to spawn all units!?!?!?");
 						return;
 					}
 					continue;
-				}
+				} // end of spawning units anywhere in case we can't find a block
 
 				// Actually spawn units
 				int startX = randBoundsExclusive(state.rng, block->start.x, block->end.x);
@@ -656,8 +657,6 @@ void Battle::enterBattle(GameState &state)
 								b->spawnMap[x - 1][y - 1][z + 1] = -1;
 								u->position = {x + 0.0f, y + 0.0f,
 								               z + ((float)height) / (float)TILE_Z_BATTLE};
-								unitsToSpawn.pop_back();
-								// numSpawned++;
 							}
 							else
 							{
@@ -667,24 +666,27 @@ void Battle::enterBattle(GameState &state)
 								b->spawnMap[x][y][z] = -1;
 								u->position = {x + 0.5f, y + 0.5f,
 								               z + ((float)height) / (float)TILE_Z_BATTLE};
-								unitsToSpawn.pop_back();
-								numSpawned++;
 							}
-							if (unitsToSpawn.size() == 0)
+							unitsToSpawn.pop_back();
+							numSpawned++;
+							if (unitsToSpawn.size() == 0 
+								// This makes us spawn every civilian individually
+								|| (numSpawned > 0 && f.first == state.getCivilian()))
 								break;
 						}
-						if (unitsToSpawn.size() == 0)
+						if (unitsToSpawn.size() == 0
+							|| (numSpawned > 0 && f.first == state.getCivilian()))
 							break;
 					}
-					if (unitsToSpawn.size() == 0)
+					if (unitsToSpawn.size() == 0
+						|| (numSpawned > 0 && f.first == state.getCivilian()))
 						break;
 					offset++;
-				}
+				} // end of spawning within a block cycle
 
 				// If failed to spawn anything, then this block is no longer appropriate
 				if (numSpawned == 0)
 				{
-					// Block is all filled, remove it
 					for (auto l : spawnMapsLargeWalker)
 					{
 						while (true)
@@ -775,14 +777,16 @@ void Battle::enterBattle(GameState &state)
 							l.second.erase(pos);
 						}
 					}
-					while (true)
 					{
-						auto pos = std::find(spawnMapOther.begin(), spawnMapOther.end(), block);
-						if (pos == spawnMapOther.end())
-							break;
-						spawnMapOther.erase(pos);
+						while (true)
+						{
+							auto pos = std::find(spawnMapOther.begin(), spawnMapOther.end(), block);
+							if (pos == spawnMapOther.end())
+								break;
+							spawnMapOther.erase(pos);
+						}
 					}
-				}
+				}// finished erasing filled block
 			}
 		}
 	}

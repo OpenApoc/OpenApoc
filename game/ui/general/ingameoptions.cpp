@@ -1,4 +1,5 @@
 #include "game/ui/general/ingameoptions.h"
+#include "game/ui/battle/battledebriefing.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
@@ -130,9 +131,8 @@ void InGameOptions::eventOccurred(Event *e)
 			if (state->current_battle)
 			{
 				Battle::finishBattle(*state.get());
-				Battle::exitBattle(*state.get());
-
-				fw().stageQueueCommand({ StageCmd::Command::REPLACEALL, mksp<CityView>(state) });
+				
+				fw().stageQueueCommand({ StageCmd::Command::REPLACEALL, mksp<BattleDebriefing>(state) });
 			}
 			else
 			{

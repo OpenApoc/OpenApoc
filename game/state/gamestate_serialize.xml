@@ -28,7 +28,7 @@
 		<member>initial_base_agent_equipment</member>
 		<member>current_city</member>
 		<member>current_base</member>
-		<member type="Section">battle_strategy_icon_list</member>
+		<member type="Section">battle_common_image_list</member>
 		<member type="Section">battle_common_sample_list</member>
 		<member>player</member>
 		<member>aliens</member>
@@ -280,6 +280,7 @@
 		<member>targetFacing</member>
 		<member>requireGoal</member>
 		<member>item</member>
+		<member>throwFailed</member>
 		<member>timeToSnooze</member>
 		<member>timeUnits</member>
 		<member>bodyState</member>
@@ -424,8 +425,9 @@
 		<member>images</member>
 	</object>
 	<object>
-		<name>BattleStrategyIconList</name>
-		<member>images</member>
+		<name>BattleCommonImageList</name>
+		<member>strategyImages</member>
+		<member>loadingImage</member>
 	</object>
 	<object>
 		<name>BattleCommonSampleList</name>
@@ -443,6 +445,8 @@
 		<member type="Section">standart_animations</member>
 		<member type="Section">hand_state_animations</member>
 		<member type="Section">body_state_animations</member>
+		<member>hasAlternativeFiringAnimations</member>
+		<member type="Section">alt_fire_animations</member>
 	</object>
 	<object>
 		<name>BattleUnitAnimationPack::AnimationEntry</name>

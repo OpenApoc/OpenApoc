@@ -38,7 +38,7 @@ sp<BattleUnitAnimationPack::AnimationEntry>
 getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
                   const std::vector<AnimationDataUA> &dataUA, std::vector<AnimationDataUF> &dataUF,
                   int index, Vec2<int> direction, int frames_per_100_units, int split_point,
-                  bool left_side, bool isOverlay = false, Vec2<int> targetOffset = {0, 0},
+                  bool left_side, bool isOverlay = false, bool removeItem = false, Vec2<int> targetOffset = {0, 0},
                   Vec2<int> beginOffset = {0, 0})
 {
 	static const std::map<Vec2<int>, int> offset_dir_map = {
@@ -98,6 +98,8 @@ getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
 				case 6:
 					part_type =
 					    BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Weapon;
+					if (removeItem)
+						continue;
 					break;
 				default:
 					LogError("Impossible part index %d found in UF located at entry %d offset %d",
@@ -127,7 +129,7 @@ getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
                   Vec2<int> beginOffset = {0, 0})
 {
 	return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, frames_per_100_units, 0,
-	                         false, isOverlay, targetOffset, beginOffset);
+	                         false, isOverlay, false, targetOffset, beginOffset);
 }
 
 sp<BattleUnitAnimationPack::AnimationEntry>
@@ -135,7 +137,7 @@ getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
                   const std::vector<AnimationDataUA> &dataUA, std::vector<AnimationDataUF> &dataUF,
                   int index, Vec2<int> direction, Vec2<int> targetOffset, Vec2<int> beginOffset)
 {
-	return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, 10, 0, false, false,
+	return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, 100, 0, false, false, false,
 	                         targetOffset, beginOffset);
 }
 // Get Prone offset for fcing
@@ -636,22 +638,27 @@ void extractAnimationPackUnit(sp<BattleUnitAnimationPack> p,
 		                        [AgentType::HandState::AtEase][AgentType::MovementState::None]
 		                        [AgentType::BodyState::Standing][AgentType::BodyState::Throwing]
 		                        [{x, y}] =
-		    getAnimationEntry(dataAD, dataUA, dataUF, 41, {x, y}, 6, false);
+		    getAnimationEntry(dataAD, dataUA, dataUF, 41, {x, y}, 100, 5, true);
 		p->body_state_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 		                        [AgentType::HandState::AtEase][AgentType::MovementState::None]
 		                        [AgentType::BodyState::Standing][AgentType::BodyState::Throwing]
 		                        [{x, y}] =
-		    getAnimationEntry(dataAD, dataUA, dataUF, 41, {x, y}, 6, false);
+		    getAnimationEntry(dataAD, dataUA, dataUF, 41, {x, y}, 100, 5, true);
+		p->body_state_animations[BattleUnitAnimationPack::ItemWieldMode::None]
+		                        [AgentType::HandState::AtEase][AgentType::MovementState::None]
+		                        [AgentType::BodyState::Throwing][AgentType::BodyState::Standing]
+		                        [{x, y}] =
+		    getAnimationEntry(dataAD, dataUA, dataUF, 41, {x, y}, 100, 5, false, false, true);
 		p->body_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 		                        [AgentType::HandState::AtEase][AgentType::MovementState::None]
 		                        [AgentType::BodyState::Throwing][AgentType::BodyState::Standing]
 		                        [{x, y}] =
-		    getAnimationEntry(dataAD, dataUA, dataUF, 41, {x, y}, 6, true);
+		    getAnimationEntry(dataAD, dataUA, dataUF, 41, {x, y}, 100, 5, false, false, true);
 		p->body_state_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 		                        [AgentType::HandState::AtEase][AgentType::MovementState::None]
 		                        [AgentType::BodyState::Throwing][AgentType::BodyState::Standing]
 		                        [{x, y}] =
-		    getAnimationEntry(dataAD, dataUA, dataUF, 41, {x, y}, 6, true);
+		    getAnimationEntry(dataAD, dataUA, dataUF, 41, {x, y}, 100, 5, false, false, true);
 	}
 
 	// Hand state change animation
@@ -898,6 +905,7 @@ sp<BattleUnitAnimationPack> InitialGameStateExtractor::extractAnimationPack(Game
 	}
 	if (name == "mega")
 	{
+		// Buggy death animations, take last frame from dropping animation
 	}
 	if (name == "micro")
 	{

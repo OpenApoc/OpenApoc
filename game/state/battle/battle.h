@@ -19,7 +19,7 @@ namespace OpenApoc
 #define VOXEL_Y_BATTLE (24)
 #define VOXEL_Z_BATTLE (20)
 
-class BattleStrategyIconList;
+class BattleCommonImageList;
 class BattleCommonSampleList;
 class GameState;
 class TileMap;
@@ -103,7 +103,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	// Following members are not serialized, but rather are set in initBattle method
 
-	sp<BattleStrategyIconList> strategy_icon_list;
+	sp<BattleCommonImageList> common_image_list;
 	sp<BattleCommonSampleList> common_sample_list;
 
 	std::map<StateRef<Organisation>, BattleForces> forces;
