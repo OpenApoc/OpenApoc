@@ -1029,7 +1029,8 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			if (goodPos.z != 0)
 			{
 				goodPos.z = glm::min(goodPos.z + 1, map.size.z - 1);
-				setPathTo(state, v, goodPos);
+				targetLocation = goodPos;
+				setPathTo(state, v, targetLocation);
 			}
 			else
 			{
