@@ -729,11 +729,17 @@ bool VehicleMission::isFinishedInternal(GameState &state, Vehicle &v)
 		case MissionType::GotoPortal:
 		case MissionType::GotoLocation:
 		case MissionType::Crash:
-		case MissionType::Infiltrate:
 		{
 			auto vTile = v.tileObject;
 			if (vTile && this->currentPlannedPath.empty() &&
 			    vTile->getOwningTile()->position == this->targetLocation)
+				return true;
+			return false;
+		}
+		case MissionType::Infiltrate:
+		{
+			auto vTile = v.tileObject;
+			if (vTile && this->currentPlannedPath.empty())
 				return true;
 			return false;
 		}

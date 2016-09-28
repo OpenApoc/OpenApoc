@@ -250,12 +250,12 @@ void TileObjectBattleUnit::setPosition(Vec3<float> newPosition)
 	{
 		// Prone units additionally occupy the tile behind them
 		occupiedTiles.insert(pos);
-		occupiedTiles.insert({pos.x - u->facing.x, pos.y = u->facing.y, pos.z});
+		occupiedTiles.insert({pos.x - u->facing.x, pos.y - u->facing.y, pos.z});
 		if (!u->atGoal)
 		{
 			pos = u->goalPosition;
 			occupiedTiles.insert(pos);
-			occupiedTiles.insert({pos.x - u->facing.x, pos.y = u->facing.y, pos.z});
+			occupiedTiles.insert({pos.x - u->facing.x, pos.y - u->facing.y, pos.z});
 		}
 	}
 	else
