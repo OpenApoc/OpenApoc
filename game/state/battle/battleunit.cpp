@@ -534,6 +534,25 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				    BattleUnitMission::changeStance(*this, AgentType::BodyState::Standing));
 				missions.front()->start(state, *this);
 			}
+			// Stop being prone if legs are no longer supported and we haven't taken a mission yet
+			if (current_body_state == AgentType::BodyState::Prone && missions.empty())
+			{
+				bool hasSupport = true;
+				for (auto t : tileObject->occupiedTiles)
+				{
+					if (!tileObject->map.getTile(t)->getCanStand())
+					{
+						hasSupport = false;
+						break;
+					}
+				}
+				if (!hasSupport)
+				{
+					missions.emplace_front(
+						BattleUnitMission::changeStance(*this, AgentType::BodyState::Kneeling));
+					missions.front()->start(state, *this);
+				}
+			}
 		}
 	} // End of Idling
 
@@ -618,7 +637,16 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					// Check if should fall or start flying
 					if (!canFly() || current_body_state != AgentType::BodyState::Flying)
 					{
-						if (!tileObject->getOwningTile()->getCanStand(isLarge()))
+						bool hasSupport = false;
+						for (auto t : tileObject->occupiedTiles)
+						{
+							if (tileObject->map.getTile(t)->getCanStand())
+							{
+								hasSupport = true;
+								break;
+							}
+						}
+						if (!hasSupport)
 						{
 							if (canFly())
 							{

@@ -171,7 +171,6 @@ void BattleUnitAnimationPack::drawUnit(
     AgentType::HandState targetHands, AgentType::MovementState movement, int body_animation_delay,
     int hands_animation_delay, int distance_travelled, int firingAngle)
 {
-	LogError("Handle firing angle");
 	sp<AnimationEntry> e;
 	sp<AnimationEntry> e_legs;
 	int frame = -1;

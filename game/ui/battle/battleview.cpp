@@ -515,12 +515,12 @@ void BattleView::update()
 	// Blue color, for misc. indicators, pulsates from (0r 3/8g 3/8b) to (0r 8/8g 8/8b)
 	newPal->setColour(
 	    255 - 2, Colour(0, (colorCurrent * 5 + 255 * 3) / 8, (colorCurrent * 5 + 255 * 3) / 8));
-	// Yellow color, for owned indicators, pulsates from (3/8r 3/8g 0b) to (8/8r 8/8g 0b)
-	newPal->setColour(
-	    255 - 1, Colour((colorCurrent * 5 + 255 * 3) / 8, (colorCurrent * 5 + 255 * 3) / 8, 0));
 	// Pink color, for neutral indicators, pulsates from (3/8r 0g 3/8b) to (8/8r 0g 8/8b)
 	newPal->setColour(
-	    255 - 0, Colour((colorCurrent * 5 + 255 * 3) / 8, 0, (colorCurrent * 5 + 255 * 3) / 8));
+		255 - 1, Colour((colorCurrent * 5 + 255 * 3) / 8, 0, (colorCurrent * 5 + 255 * 3) / 8));
+	// Yellow color, for owned indicators, pulsates from (3/8r 3/8g 0b) to (8/8r 8/8g 0b)
+	newPal->setColour(
+	    255 - 0, Colour((colorCurrent * 5 + 255 * 3) / 8, (colorCurrent * 5 + 255 * 3) / 8, 0));
 	this->pal = newPal;
 
 	// Update weapons if required
@@ -589,7 +589,7 @@ void BattleView::updateSelectionMode()
 	// FIXME: Change cursor
 	if (selectedUnits.size() == 0)
 	{
-		if (modifierRCtrl || modifierRCtrl)
+		if (modifierLCtrl || modifierRCtrl)
 		{
 			if (modifierLAlt || modifierRAlt)
 			{

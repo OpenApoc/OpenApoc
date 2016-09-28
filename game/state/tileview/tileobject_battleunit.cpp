@@ -70,8 +70,8 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 			bool hostile = battle->currentPlayer->isRelatedTo(unit->owner) 
 				== Organisation::Relation::Hostile;
 
-			// 0 = enemy, 2 = friendly, 3 = neutral
-			int side_offset = friendly ? 2 : (hostile ? 0 : 3);
+			// 0 = enemy, 3 = friendly, 2 = neutral
+			int side_offset = friendly ? 3 : (hostile ? 0 : 2);
 			// Icon type, 0 = normal, 1 = prone, 2 = large
 			int icon_type = unit->isLarge()
 			                    ? ICON_LARGE

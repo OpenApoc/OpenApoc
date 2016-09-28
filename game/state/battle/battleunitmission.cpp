@@ -12,15 +12,7 @@ namespace OpenApoc
 
 float BattleUnitTileHelper::applyPathOverheadAllowance(float cost) const 
 { 
-	// If path is close, allow only a tiny bit overhead
-	if (cost < 40.0f)
-		return cost / 1.005f;
-	// Otherwise, gradually go from 2.5% up to 7.5%
-	if (cost < 60.0f)
-		return cost / 1.025f; 
-	if (cost < 80.0f)
-		return cost / 1.050f;
-	return cost / 1.075f;
+	return cost / 1.065f;
 }
 
 bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool demandGiveWay) const 
@@ -893,29 +885,6 @@ BattleUnitMission *BattleUnitMission::gotoLocation(BattleUnit &u, Vec3<int> targ
 	bool allowSkipNodes, int giveWayAttempts,
 	bool demandGiveWay, bool allowRunningAway)
 {
-	auto &map = u.tileObject->map;
-	auto to = map.getTile(target);
-	// Check if target tile is valid
-	while (true)
-	{
-		if (!to->getPassable(u.isLarge(), u.agent->type->bodyType->maxHeight))
-		{
-			LogInfo("Cannot move to %d %d %d, impassable", target.x, target.y, target.z);
-			return restartNextMission(u);
-		}
-		if (u.canFly() || to->getCanStand(u.isLarge()))
-		{
-			break;
-		}
-		target.z--;
-		if (target.z == -1)
-		{
-			LogError("Solid ground missing on level 0? Reached %d %d %d", target.x, target.y,
-				target.z);
-			return restartNextMission(u);
-		}
-		to = map.getTile(target);
-	}
 	auto *mission = new BattleUnitMission();
 	mission->type = MissionType::GotoLocation;
 	mission->targetLocation = target;
@@ -1541,11 +1510,30 @@ void BattleUnitMission::setPathTo(BattleUnit &u, Vec3<int> target, int maxIterat
 	auto unitTile = u.tileObject;
 	if (unitTile)
 	{
-		auto &map = unitTile->map;
-		if (!u.canMove() || !map.getTile(target)->getPassable(u.isLarge(), u.agent->type->bodyType->maxHeight))
+		auto &map = u.tileObject->map;
+		auto to = map.getTile(target);
+		// Check if target tile is valid
+		while (true)
 		{
-			return;
+			if (!u.canMove() || !to->getPassable(u.isLarge(), u.agent->type->bodyType->maxHeight))
+			{
+				LogInfo("Cannot move to %d %d %d, impassable", target.x, target.y, target.z);
+				return;
+			}
+			if (u.canFly() || to->getCanStand(u.isLarge()))
+			{
+				break;
+			}
+			target.z--;
+			if (target.z == -1)
+			{
+				LogError("Solid ground missing on level 0? Reached %d %d %d", target.x, target.y,
+					target.z);
+				return;
+			}
+			to = map.getTile(target);
 		}
+
 		// FIXME: Change findShortestPath to return Vec3<int> positions?
 		auto path = map.findShortestPath(u.goalPosition, target, maxIterations,
 			BattleUnitTileHelper{ map, u }, 5.0f, demandGiveWay);

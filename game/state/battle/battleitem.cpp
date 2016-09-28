@@ -95,9 +95,10 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 			setPosition({ c.position.x, c.position.y, floorf(c.position.z) });
 			if (!findSupport(true, true))
 			{
-				LogError("WTF? Item collided but did not find support? %f, %f, %f", position.x, position.y, position.z);
+				return;
 			}
-			return;
+			// Some objects have buggy voxelmaps and items collide with them but no support is given
+			// In this case, jusst ignore the collision
 		}
 	}
 

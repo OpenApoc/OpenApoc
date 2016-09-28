@@ -318,7 +318,7 @@ void BattleTileView::render()
 						targetIconLocations.insert(m->targetLocation);
 						break;
 					}
-					if (m->type == BattleUnitMission::MissionType::GotoLocation)
+					if (m->type == BattleUnitMission::MissionType::GotoLocation && !m->currentPlannedPath.empty())
 					{
 						targetIconLocations.insert(m->targetLocation);
 						if (USER_OPTION_DRAW_WAYPOINTS)
