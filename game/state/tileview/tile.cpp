@@ -23,8 +23,8 @@ namespace OpenApoc
 {
 
 TileMap::TileMap(Vec3<int> size, Vec3<float> velocityScale, Vec3<int> voxelMapSize,
-	std::vector<std::set<TileObject::Type>> layerMap)
-	: layerMap(layerMap), size(size), voxelMapSize(voxelMapSize), velocityScale(velocityScale)
+                 std::vector<std::set<TileObject::Type>> layerMap)
+    : layerMap(layerMap), size(size), voxelMapSize(voxelMapSize), velocityScale(velocityScale)
 {
 	tiles.reserve(size.x * size.y * size.z);
 	for (int z = 0; z < size.z; z++)
@@ -56,7 +56,7 @@ TileMap::TileMap(Vec3<int> size, Vec3<float> velocityScale, Vec3<int> voxelMapSi
 TileMap::~TileMap() = default;
 
 Tile::Tile(TileMap &map, Vec3<int> position, int layerCount)
-	: map(map), position(position), drawnObjects(layerCount)
+    : map(map), position(position), drawnObjects(layerCount)
 {
 }
 
@@ -68,27 +68,24 @@ Vec3<float> Tile::getRestingPosition(bool large)
 		if (position.x < 1 || position.y < 1)
 		{
 			LogError(
-				"Trying to get resting position for a large unit when it can't fit! %d, %d, %d",
-				position.x, position.y, position.z);
+			    "Trying to get resting position for a large unit when it can't fit! %d, %d, %d",
+			    position.x, position.y, position.z);
 			return Vec3<float>{position.x + 0.5, position.y + 0.5, position.z};
 		}
 		float maxHeight = height;
 		maxHeight =
-			std::max(maxHeight, map.getTile(position.x - 1, position.y, position.z)->height);
+		    std::max(maxHeight, map.getTile(position.x - 1, position.y, position.z)->height);
 		maxHeight =
-			std::max(maxHeight, map.getTile(position.x, position.y - 1, position.z)->height);
+		    std::max(maxHeight, map.getTile(position.x, position.y - 1, position.z)->height);
 		maxHeight =
-			std::max(maxHeight, map.getTile(position.x - 1, position.y - 1, position.z)->height);
+		    std::max(maxHeight, map.getTile(position.x - 1, position.y - 1, position.z)->height);
 
 		return Vec3<float>{position.x, position.y, position.z + maxHeight};
 	}
 	return Vec3<float>{position.x + 0.5, position.y + 0.5, position.z + height};
 }
 
-sp<BattleMapPart> Tile::getItemSupportingObject()
-{
-	return supportProviderForItems;
-}
+sp<BattleMapPart> Tile::getItemSupportingObject() { return supportProviderForItems; }
 
 bool Tile::getSolidGround(bool large)
 {
@@ -97,17 +94,15 @@ bool Tile::getSolidGround(bool large)
 		if (position.x < 1 || position.y < 1)
 		{
 			LogError("Trying to get solid ground for a large unit when it can't fit! %d, %d, %d",
-				position.x, position.y, position.z);
+			         position.x, position.y, position.z);
 			return false;
 		}
-		if (solidGround
-			|| map.getTile(position.x - 1, position.y, position.z)->solidGround
-			|| map.getTile(position.x, position.y - 1, position.z)->solidGround
-			|| map.getTile(position.x - 1, position.y - 1, position.z)->solidGround)
+		if (solidGround || map.getTile(position.x - 1, position.y, position.z)->solidGround ||
+		    map.getTile(position.x, position.y - 1, position.z)->solidGround ||
+		    map.getTile(position.x - 1, position.y - 1, position.z)->solidGround)
 		{
 			return true;
 		}
-
 	}
 	else
 	{
@@ -125,14 +120,14 @@ bool Tile::getCanStand(bool large)
 	{
 		if (position.x < 1 || position.y < 1)
 		{
-			LogError("Trying to get standing ability for a large unit when it can't fit! %d, %d, %d",
-				position.x, position.y, position.z);
+			LogError(
+			    "Trying to get standing ability for a large unit when it can't fit! %d, %d, %d",
+			    position.x, position.y, position.z);
 			return false;
 		}
-		if (canStand
-			|| map.getTile(position.x - 1, position.y, position.z)->canStand
-			|| map.getTile(position.x, position.y - 1, position.z)->canStand
-			|| map.getTile(position.x - 1, position.y - 1, position.z)->canStand)
+		if (canStand || map.getTile(position.x - 1, position.y, position.z)->canStand ||
+		    map.getTile(position.x, position.y - 1, position.z)->canStand ||
+		    map.getTile(position.x - 1, position.y - 1, position.z)->canStand)
 		{
 			return true;
 		}
@@ -147,7 +142,6 @@ bool Tile::getCanStand(bool large)
 	return false;
 }
 
-
 bool Tile::getHasExit(bool large)
 {
 	if (large)
@@ -155,13 +149,12 @@ bool Tile::getHasExit(bool large)
 		if (position.x < 1 || position.y < 1)
 		{
 			LogError("Trying to get exit for a large unit when it can't fit! %d, %d, %d",
-				position.x, position.y, position.z);
+			         position.x, position.y, position.z);
 			return false;
 		}
-		if (hasExit
-			|| map.getTile(position.x - 1, position.y, position.z)->hasExit
-			|| map.getTile(position.x, position.y - 1, position.z)->hasExit
-			|| map.getTile(position.x - 1, position.y - 1, position.z)->hasExit)
+		if (hasExit || map.getTile(position.x - 1, position.y, position.z)->hasExit ||
+		    map.getTile(position.x, position.y - 1, position.z)->hasExit ||
+		    map.getTile(position.x - 1, position.y - 1, position.z)->hasExit)
 		{
 			return true;
 		}
@@ -178,12 +171,15 @@ bool Tile::getHasExit(bool large)
 
 bool Tile::getPassable(bool large, int height)
 {
-	if (movementCostIn == 255) return false;
+	if (movementCostIn == 255)
+		return false;
 
 	if (large)
 	{
-		if (movementCostLeft == 255) return false;
-		if (movementCostRight == 255) return false;
+		if (movementCostLeft == 255)
+			return false;
+		if (movementCostRight == 255)
+			return false;
 
 		if (position.x < 1 || position.y < 1 || position.z >= map.size.z - 1)
 		{
@@ -191,33 +187,44 @@ bool Tile::getPassable(bool large, int height)
 		}
 
 		auto tX = map.getTile(position.x - 1, position.y, position.z);
-		if (tX->movementCostIn == 255) return false;
-		if (tX->movementCostRight == 255) return false;
+		if (tX->movementCostIn == 255)
+			return false;
+		if (tX->movementCostRight == 255)
+			return false;
 
 		auto tY = map.getTile(position.x, position.y - 1, position.z);
-		if (tY->movementCostIn == 255) return false;
-		if (tY->movementCostLeft == 255) return false;
+		if (tY->movementCostIn == 255)
+			return false;
+		if (tY->movementCostLeft == 255)
+			return false;
 
-		if (map.getTile(position.x - 1, position.y - 1, position.z)
-			->movementCostIn == 255) return false;
-		
+		if (map.getTile(position.x - 1, position.y - 1, position.z)->movementCostIn == 255)
+			return false;
+
 		auto tZ = map.getTile(position.x, position.y, position.z + 1);
-		if (tZ->movementCostIn == 255) return false;
-		if (tZ->movementCostLeft == 255) return false;
-		if (tZ->movementCostRight == 255) return false;
+		if (tZ->movementCostIn == 255)
+			return false;
+		if (tZ->movementCostLeft == 255)
+			return false;
+		if (tZ->movementCostRight == 255)
+			return false;
 
 		auto tXZ = map.getTile(position.x - 1, position.y, position.z + 1);
-		if (tXZ->movementCostIn == 255) return false;
-		if (tXZ->movementCostRight == 255) return false;
+		if (tXZ->movementCostIn == 255)
+			return false;
+		if (tXZ->movementCostRight == 255)
+			return false;
 
 		auto tYZ = map.getTile(position.x, position.y - 1, position.z + 1);
-		if (tYZ->movementCostIn == 255) return false;
-		if (tYZ->movementCostLeft == 255) return false;
+		if (tYZ->movementCostIn == 255)
+			return false;
+		if (tYZ->movementCostLeft == 255)
+			return false;
 
-		if (map.getTile(position.x - 1, position.y - 1, position.z + 1)
-			->movementCostIn == 255) return false;
+		if (map.getTile(position.x - 1, position.y - 1, position.z + 1)->movementCostIn == 255)
+			return false;
 	}
-		
+
 	return height == 0 || getHeadFits(large, height);
 }
 
@@ -229,14 +236,14 @@ bool Tile::getHeadFits(bool large, int height)
 	{
 		// Check four tiles above our "to"'s head
 		if (map.getTile(Vec3<int>{position.x, position.y, position.z + 2})->solidGround ||
-			map.getTile(Vec3<int>{position.x-1, position.y, position.z + 2})->solidGround ||
-			map.getTile(Vec3<int>{position.x, position.y-1, position.z + 2})->solidGround ||
-			map.getTile(Vec3<int>{position.x-1, position.y-1, position.z + 2})->solidGround)
+		    map.getTile(Vec3<int>{position.x - 1, position.y, position.z + 2})->solidGround ||
+		    map.getTile(Vec3<int>{position.x, position.y - 1, position.z + 2})->solidGround ||
+		    map.getTile(Vec3<int>{position.x - 1, position.y - 1, position.z + 2})->solidGround)
 		{
 			auto toX1 = map.getTile(Vec3<int>{position.x - 1, position.y, position.z});
 			auto toY1 = map.getTile(Vec3<int>{position.x, position.y - 1, position.z});
 			auto toXY1 = map.getTile(Vec3<int>{position.x - 1, position.y - 1, position.z});
-			
+
 			// If we have solid ground upon arriving - check if we fit
 			float maxHeight = this->height;
 			maxHeight = std::max(maxHeight, toX1->height);
@@ -251,7 +258,7 @@ bool Tile::getHeadFits(bool large, int height)
 	else
 	{
 		if (map.getTile(Vec3<int>{position.x, position.y, position.z + 1})->solidGround &&
-			height + this->height * 40 - 1 > 40)
+		    height + this->height * 40 - 1 > 40)
 		{
 			return false;
 		}
@@ -302,7 +309,8 @@ void Tile::updateBattlescapeUnitPresent()
 			auto pos = o->getPosition();
 			auto x = pos.x - position.x;
 			auto y = pos.y - position.y;
-			doorOpeningUnitPresent = doorOpeningUnitPresent || (x > 0.45f && x < 0.55f && y > 0.45f && y < 0.55f);
+			doorOpeningUnitPresent =
+			    doorOpeningUnitPresent || (x > 0.45f && x < 0.55f && y > 0.45f && y < 0.55f);
 			if (firstUnitPresent && doorOpeningUnitPresent)
 			{
 				break;
@@ -341,15 +349,17 @@ void Tile::updateBattlescapeParameters()
 				continue;
 			}
 			height = std::max(height, (float)mp->type->height);
-			if ((mp->type->floor || o->getType() == TileObject::Type::Feature) && !mp->type->gravlift)
+			if ((mp->type->floor || o->getType() == TileObject::Type::Feature) &&
+			    !mp->type->gravlift)
 			{
-				if (!supportProviderForItems || supportProviderForItems->type->height < mp->type->height)
+				if (!supportProviderForItems ||
+				    supportProviderForItems->type->height < mp->type->height)
 				{
 					supportProviderForItems = mp;
 				}
 			}
 			solidGround = solidGround || (mp->type->floor && !mp->type->gravlift) ||
-				(o->getType() == TileObject::Type::Feature && !mp->type->gravlift);
+			              (o->getType() == TileObject::Type::Feature && !mp->type->gravlift);
 			hasLift = hasLift || mp->type->gravlift;
 			hasExit = hasExit || mp->type->exit;
 			movementCostIn = std::max(movementCostIn, mp->type->movement_cost);
@@ -418,17 +428,13 @@ void Tile::updateBattlescapeParameters()
 		}
 	}
 	height = height / (float)TILE_Z_BATTLE;
-
 }
 
-sp<TileObjectBattleUnit> Tile::getUnitIfPresent()
-{
-	return firstUnitPresent;
-}
+sp<TileObjectBattleUnit> Tile::getUnitIfPresent() { return firstUnitPresent; }
 
 sp<TileObjectBattleUnit> Tile::getUnitIfPresent(bool onlyConscious, bool mustOccupy,
-	bool mustBeStatic,
-	sp<TileObjectBattleUnit> exceptThis, bool onlyLarge)
+                                                bool mustBeStatic,
+                                                sp<TileObjectBattleUnit> exceptThis, bool onlyLarge)
 {
 	for (auto o : intersectingObjects)
 	{
@@ -437,10 +443,10 @@ sp<TileObjectBattleUnit> Tile::getUnitIfPresent(bool onlyConscious, bool mustOcc
 			auto unitTileObject = std::static_pointer_cast<TileObjectBattleUnit>(o);
 			auto unit = unitTileObject->getUnit();
 			if ((onlyConscious && !unit->isConscious()) || (exceptThis == unitTileObject) ||
-				(mustOccupy &&
-					unitTileObject->occupiedTiles.find(position) ==
-					unitTileObject->occupiedTiles.end()) ||
-					(mustBeStatic && !unit->isStatic()) || (onlyLarge && !unit->isLarge()))
+			    (mustOccupy &&
+			     unitTileObject->occupiedTiles.find(position) ==
+			         unitTileObject->occupiedTiles.end()) ||
+			    (mustBeStatic && !unit->isStatic()) || (onlyLarge && !unit->isLarge()))
 			{
 				continue;
 			}
@@ -448,7 +454,6 @@ sp<TileObjectBattleUnit> Tile::getUnitIfPresent(bool onlyConscious, bool mustOcc
 		}
 	}
 	return nullptr;
-
 }
 
 void TileMap::addObjectToMap(sp<Projectile> projectile)
@@ -587,13 +592,13 @@ int TileMap::getLayerCount() const { return this->layerMap.size(); }
 bool TileMap::tileIsValid(Vec3<int> tile) const
 {
 	if (tile.z < 0 || tile.z >= this->size.z || tile.y < 0 || tile.y >= this->size.y ||
-		tile.x < 0 || tile.x >= this->size.x)
+	    tile.x < 0 || tile.x >= this->size.x)
 		return false;
 	return true;
 }
 
 sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &transform,
-	float maxZ, bool fast) const
+                                 float maxZ, bool fast) const
 {
 	auto img = mksp<RGBImage>(viewRect.size());
 	std::map<sp<TileObject>, Colour> objectColours;
@@ -604,10 +609,10 @@ sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &
 	RGBImageLock lock(img);
 	int h = viewRect.p1.y - viewRect.p0.y;
 	int w = viewRect.p1.x - viewRect.p0.x;
-	Vec2<float> offset = { viewRect.p0.x, viewRect.p0.y };
+	Vec2<float> offset = {viewRect.p0.x, viewRect.p0.y};
 
 	LogWarning("ViewRect {%d,%d},{%d,%d}", viewRect.p0.x, viewRect.p0.y, viewRect.p1.x,
-		viewRect.p1.y);
+	           viewRect.p1.y);
 
 	LogWarning("Dumping voxels {%d,%d} voxels w/offset {%f,%f}", w, h, offset.x, offset.y);
 
@@ -617,25 +622,25 @@ sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &
 	{
 		for (int x = 0; x < w; x += inc)
 		{
-			auto topPos = transform.screenToTileCoords(Vec2<float>{x, y} +offset, maxZ - 0.01f);
-			auto bottomPos = transform.screenToTileCoords(Vec2<float>{x, y} +offset, 0.0f);
+			auto topPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, maxZ - 0.01f);
+			auto bottomPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, 0.0f);
 
 			auto collision = this->findCollision(topPos, bottomPos, {}, true);
 			if (collision)
 			{
 				if (objectColours.find(collision.obj) == objectColours.end())
 				{
-					Colour c = { static_cast<uint8_t>(colourDist(colourRNG)),
-						static_cast<uint8_t>(colourDist(colourRNG)),
-						static_cast<uint8_t>(colourDist(colourRNG)), 255 };
+					Colour c = {static_cast<uint8_t>(colourDist(colourRNG)),
+					            static_cast<uint8_t>(colourDist(colourRNG)),
+					            static_cast<uint8_t>(colourDist(colourRNG)), 255};
 					objectColours[collision.obj] = c;
 				}
-				lock.set({ x, y }, objectColours[collision.obj]);
+				lock.set({x, y}, objectColours[collision.obj]);
 				if (fast)
 				{
-					lock.set({ x + 1, y }, objectColours[collision.obj]);
-					lock.set({ x, y + 1 }, objectColours[collision.obj]);
-					lock.set({ x + 1, y + 1 }, objectColours[collision.obj]);
+					lock.set({x + 1, y}, objectColours[collision.obj]);
+					lock.set({x, y + 1}, objectColours[collision.obj]);
+					lock.set({x + 1, y + 1}, objectColours[collision.obj]);
 				}
 			}
 		}

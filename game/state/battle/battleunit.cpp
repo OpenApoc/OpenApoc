@@ -197,7 +197,9 @@ bool BattleUnit::canGoProne() const
 	    (legsPos.z < tileObject->map.size.z))
 	{
 		auto legsTile = tileObject->map.getTile(legsPos);
-		if (legsTile->canStand && legsTile->height <= 0.5f && legsTile->getPassable(false, agent->type->bodyType->height.at(AgentType::BodyState::Prone)) &&
+		if (legsTile->canStand && legsTile->height <= 0.5f &&
+		    legsTile->getPassable(false,
+		                          agent->type->bodyType->height.at(AgentType::BodyState::Prone)) &&
 		    !legsTile->getUnitIfPresent(true, true))
 		{
 			return true;
@@ -549,7 +551,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				if (!hasSupport)
 				{
 					missions.emplace_front(
-						BattleUnitMission::changeStance(*this, AgentType::BodyState::Kneeling));
+					    BattleUnitMission::changeStance(*this, AgentType::BodyState::Kneeling));
 					missions.front()->start(state, *this);
 				}
 			}
@@ -715,8 +717,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					}
 
 					Vec3<float> vectorToGoal = goalPosition - getPosition();
-					int distanceToGoal = ceilf(glm::length(
-					    vectorToGoal * VELOCITY_SCALE_BATTLE * (float)TICKS_PER_UNIT_TRAVELLED));
+					int distanceToGoal = ceilf(glm::length(vectorToGoal * VELOCITY_SCALE_BATTLE *
+					                                       (float)TICKS_PER_UNIT_TRAVELLED));
 					int moveTicksConsumeRate =
 					    current_movement_state == AgentType::MovementState::Running ? 1 : 2;
 
@@ -857,11 +859,11 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			{
 				LogWarning("Unit mission \"%s\" finished", missions.front()->getName().cStr());
 				missions.pop_front();
-				
+
 				// We may have retreated as a result of finished mission
 				if (retreated)
 					return;
-				
+
 				if (!missions.empty())
 				{
 					missions.front()->start(state, *this);
@@ -1011,7 +1013,6 @@ void BattleUnit::dropDown(GameState &state)
 	missions.front()->start(state, *this);
 }
 
-
 void BattleUnit::retreat(GameState &state)
 {
 	tileObject->removeFromMap();
@@ -1019,7 +1020,6 @@ void BattleUnit::retreat(GameState &state)
 	removeFromSquad();
 	// FIXME: Trigger retreated event
 }
-
 
 void BattleUnit::die(GameState &state, bool violently)
 {

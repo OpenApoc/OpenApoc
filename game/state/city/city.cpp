@@ -26,7 +26,7 @@ namespace OpenApoc
 // Within the same layer these are ordered by a calculated z based on the 'center' position
 static std::vector<std::set<TileObject::Type>> layerMap = {
     // Draw all scenery first, then put stuff on top of that
-    {TileObject::Type::Scenery, TileObject::Type::Doodad, TileObject::Type::Vehicle },
+    {TileObject::Type::Scenery, TileObject::Type::Doodad, TileObject::Type::Vehicle},
     {TileObject::Type::Projectile, TileObject::Type::Shadow},
 };
 
@@ -158,7 +158,8 @@ void City::update(GameState &state, unsigned int ticks)
 
 				// FIXME: Make snoozetime bounds/distribution readable from serialized GameState
 				std::uniform_int_distribution<unsigned int> snoozeTimeDist(10, 10000);
-				v->missions.emplace_back(VehicleMission::snooze(state, *v, snoozeTimeDist(state.rng)));
+				v->missions.emplace_back(
+				    VehicleMission::snooze(state, *v, snoozeTimeDist(state.rng)));
 			}
 		}
 	}

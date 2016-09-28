@@ -21,7 +21,8 @@ class LoadingScreen : public Stage
 	int scaleDivisor = 0;
 
   public:
-	LoadingScreen(std::future<sp<GameState>> gameStateTask, sp<Image> background = nullptr, int scaleDivisor = 3, bool showRotatingImage = true);
+	LoadingScreen(std::future<sp<GameState>> gameStateTask, sp<Image> background = nullptr,
+	              int scaleDivisor = 3, bool showRotatingImage = true);
 	// can override this in a screen that would load into something else
 	virtual sp<Stage> createUiForGame(sp<GameState> gameState) const;
 	// Stage control

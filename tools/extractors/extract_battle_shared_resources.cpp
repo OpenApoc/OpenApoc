@@ -13,7 +13,7 @@ namespace OpenApoc
 void InitialGameStateExtractor::extractSharedBattleResources(GameState &state)
 {
 	// Common Images
-	
+
 	auto gameObjectStrategySpriteTabFileName = UString("xcom3/tacdata/stratico.tab");
 	auto gameObjectStrategySpriteTabFile = fw().data->fs.open(gameObjectStrategySpriteTabFileName);
 	if (!gameObjectStrategySpriteTabFile)
@@ -34,8 +34,8 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state)
 		                    (unsigned)i)));
 	}
 
-	state.battle_common_image_list->loadingImage = fw().data->loadImage(
-		"xcom3/ufodata/enttact.pcx");
+	state.battle_common_image_list->loadingImage =
+	    fw().data->loadImage("xcom3/ufodata/enttact.pcx");
 
 	// Common Sounds
 

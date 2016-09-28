@@ -28,8 +28,13 @@ int AEquipment::getAccuracy(AgentType::BodyState bodyState, BattleUnit::FireAimi
 	{
 		payload = *type->ammo_types.begin();
 	}
-	return ownerAgent->modified_stats.accuracy * payload->accuracy * ( bodyState == AgentType::BodyState::Flying? 90 : (bodyState == AgentType::BodyState::Kneeling ? 110 : 100))
-		/100 / 100 / ((fireMode == BattleUnit::FireAimingMode::Auto ? 4 : (fireMode == BattleUnit::FireAimingMode::Snap ? 2 : 1)));
+	return ownerAgent->modified_stats.accuracy * payload->accuracy *
+	       (bodyState == AgentType::BodyState::Flying
+	            ? 90
+	            : (bodyState == AgentType::BodyState::Kneeling ? 110 : 100)) /
+	       100 / 100 / ((fireMode == BattleUnit::FireAimingMode::Auto
+	                         ? 4
+	                         : (fireMode == BattleUnit::FireAimingMode::Snap ? 2 : 1)));
 }
 
 void AEquipment::update(int)

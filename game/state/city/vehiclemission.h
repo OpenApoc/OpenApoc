@@ -36,7 +36,8 @@ class VehicleMission
 	void update(GameState &state, Vehicle &v, unsigned int ticks, bool finished = false);
 	bool isFinished(GameState &state, Vehicle &v, bool callUpdateIfFinished = true);
 	void start(GameState &state, Vehicle &v);
-	void setPathTo(GameState &state, Vehicle &v, Vec3<int> target, int maxIterations = 500, bool checkValidity = true);
+	void setPathTo(GameState &state, Vehicle &v, Vec3<int> target, int maxIterations = 500,
+	               bool checkValidity = true);
 	bool advanceAlongPath(GameState &state, Vec3<float> &dest, Vehicle &v);
 	bool isTakingOff(Vehicle &v);
 
@@ -45,7 +46,8 @@ class VehicleMission
 	static VehicleMission *gotoPortal(GameState &state, Vehicle &v);
 	static VehicleMission *gotoPortal(GameState &state, Vehicle &v, Vec3<int> target);
 	static VehicleMission *gotoBuilding(GameState &state, Vehicle &v, StateRef<Building> target);
-	static VehicleMission *infiltrateBuilding(GameState &state, Vehicle &v, StateRef<Building> target);
+	static VehicleMission *infiltrateBuilding(GameState &state, Vehicle &v,
+	                                          StateRef<Building> target);
 	static VehicleMission *attackVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *followVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *snooze(GameState &state, Vehicle &v, unsigned int ticks);

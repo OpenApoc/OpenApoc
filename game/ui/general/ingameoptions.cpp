@@ -1,13 +1,13 @@
 #include "game/ui/general/ingameoptions.h"
-#include "game/ui/battle/battledebriefing.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/gamestate.h"
+#include "game/ui/battle/battledebriefing.h"
+#include "game/ui/city/cityview.h"
 #include "game/ui/general/mainmenu.h"
 #include "game/ui/general/mapselector.h"
 #include "game/ui/general/savemenu.h"
-#include "game/ui/city/cityview.h"
 
 namespace OpenApoc
 {
@@ -131,12 +131,13 @@ void InGameOptions::eventOccurred(Event *e)
 			if (state->current_battle)
 			{
 				Battle::finishBattle(*state.get());
-				
-				fw().stageQueueCommand({ StageCmd::Command::REPLACEALL, mksp<BattleDebriefing>(state) });
+
+				fw().stageQueueCommand(
+				    {StageCmd::Command::REPLACEALL, mksp<BattleDebriefing>(state)});
 			}
 			else
 			{
-				fw().stageQueueCommand({ StageCmd::Command::PUSH, mksp<MapSelector>(state) });
+				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<MapSelector>(state)});
 			}
 		}
 	}

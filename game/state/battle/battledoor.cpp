@@ -1,9 +1,9 @@
+#include "game/state/battle/battledoor.h"
 #include "framework/framework.h"
 #include "game/state/battle/battlemappart.h"
-#include "game/state/battle/battledoor.h"
+#include "game/state/battle/battlemappart_type.h"
 #include "game/state/gamestate.h"
 #include "game/state/tileview/tile.h"
-#include "game/state/battle/battlemappart_type.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 
 namespace OpenApoc
@@ -38,7 +38,7 @@ void BattleDoor::setDoorState(bool open)
 			// did everything already?
 		}
 	}
-	
+
 	// Trigger tile's parameters update
 	for (auto &s : mapParts)
 	{
@@ -48,7 +48,7 @@ void BattleDoor::setDoorState(bool open)
 			continue;
 		}
 		i->tileObject->getOwningTile()->updateBattlescapeParameters();
-		//i->tileObject->setPosition(currentPosition); // <-- don't need to do that?
+		// i->tileObject->setPosition(currentPosition); // <-- don't need to do that?
 	}
 }
 
@@ -74,7 +74,7 @@ void BattleDoor::update(GameState &, unsigned int ticks)
 	{
 		return;
 	}
-	
+
 	// Update animation
 	if (animationTicksRemaining > 0)
 	{
@@ -100,10 +100,11 @@ void BattleDoor::update(GameState &, unsigned int ticks)
 		int xDiff = right ? 0 : 1;
 		int yDiff = right ? 1 : 0;
 		auto tile = i->tileObject->getOwningTile();
-		if (tile->doorOpeningUnitPresent
-			|| (tile->position.x - xDiff > 0 && tile->position.y - yDiff > 0 
-				&& tile->map.getTile(tile->position.x - xDiff, 
-					tile->position.y - yDiff, tile->position.z)->doorOpeningUnitPresent))
+		if (tile->doorOpeningUnitPresent ||
+		    (tile->position.x - xDiff > 0 && tile->position.y - yDiff > 0 &&
+		     tile->map
+		         .getTile(tile->position.x - xDiff, tile->position.y - yDiff, tile->position.z)
+		         ->doorOpeningUnitPresent))
 		{
 			shouldStayOpen = true;
 			break;
@@ -142,13 +143,15 @@ void BattleDoor::update(GameState &, unsigned int ticks)
 }
 
 int BattleDoor::getAnimationFrame()
-{ 
+{
 	if (animationTicksRemaining == 0)
 		return -1;
 	if (open)
-		return (animationTicksRemaining + TICKS_PER_FRAME_MAP_PART - 1) / TICKS_PER_FRAME_MAP_PART - 1;
+		return (animationTicksRemaining + TICKS_PER_FRAME_MAP_PART - 1) / TICKS_PER_FRAME_MAP_PART -
+		       1;
 	else
-		return animationFrameCount - (animationTicksRemaining + TICKS_PER_FRAME_MAP_PART - 1) / TICKS_PER_FRAME_MAP_PART;
+		return animationFrameCount -
+		       (animationTicksRemaining + TICKS_PER_FRAME_MAP_PART - 1) / TICKS_PER_FRAME_MAP_PART;
 }
 
 void BattleDoor::playDoorSound()
@@ -160,8 +163,6 @@ void BattleDoor::playDoorSound()
 		return;
 	}
 
-	fw().soundBackend->playSample(b->common_sample_list->door,
-		position , 0.25f);
+	fw().soundBackend->playSample(b->common_sample_list->door, position, 0.25f);
 }
-
 }

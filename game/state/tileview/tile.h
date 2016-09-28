@@ -107,7 +107,8 @@ class Tile
 	float height = 0.0f;
 	// Movement cost through the tile's ground (or feature)
 	int movementCostIn = 4;
-	// Movement cost to walk on the level above this, if next level is empty and this height is 0.975
+	// Movement cost to walk on the level above this, if next level is empty and this height is
+	// 0.975
 	int movementCostOver = 255;
 	// Movement cost through the tile's left wall
 	int movementCostLeft = 0;
@@ -158,7 +159,7 @@ class CanEnterTileHelper
 	virtual float adjustCost(Vec3<int> /*  nextPosition */, int /* z */) const { return 0; }
 	virtual float getDistance(Vec3<float> from, Vec3<float> to) const = 0;
 	virtual ~CanEnterTileHelper() = default;
-	// This allows pathfinding to be biased towards goal. Can generate paths that are not perfect, 
+	// This allows pathfinding to be biased towards goal. Can generate paths that are not perfect,
 	// but helps with pathfinding in battlescape where optimal path can be complicated.
 	// Value here defines how much, in percent, can resulting path afford to be unoptimal
 	// For example 1.05 means resulting path can be 5% longer than an optimal one
@@ -174,13 +175,8 @@ class TileMap
   public:
 	const Tile *getTile(int x, int y, int z) const
 	{
-		
-		if (!((x >= 0)
-			&& (x < size.x)
-			&& (y >= 0)
-			&& (y < size.y)
-			&& (z >= 0)
-			&& (z < size.z)))
+
+		if (!((x >= 0) && (x < size.x) && (y >= 0) && (y < size.y) && (z >= 0) && (z < size.z)))
 		{
 			LogError("Incorrect tile coordinates %d,%d,%d", x, y, z);
 			return nullptr;
@@ -189,12 +185,7 @@ class TileMap
 	}
 	Tile *getTile(int x, int y, int z)
 	{
-		if (!((x >= 0)
-			&& (x < size.x)
-			&& (y >= 0)
-			&& (y < size.y)
-			&& (z >= 0)
-			&& (z < size.z)))
+		if (!((x >= 0) && (x < size.x) && (y >= 0) && (y < size.y) && (z >= 0) && (z < size.z)))
 		{
 			LogError("Incorrect tile coordinates %d,%d,%d", x, y, z);
 			return nullptr;
@@ -223,9 +214,9 @@ class TileMap
 	~TileMap();
 
 	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destination,
-	                                   unsigned int iterationLimit,
-	                                   const CanEnterTileHelper &canEnterTile,
-	                                   float altitude = 5.0f, bool demandGiveWay = false);
+	                                      unsigned int iterationLimit,
+	                                      const CanEnterTileHelper &canEnterTile,
+	                                      float altitude = 5.0f, bool demandGiveWay = false);
 
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
 	                        std::set<TileObject::Type> validTypes = {},

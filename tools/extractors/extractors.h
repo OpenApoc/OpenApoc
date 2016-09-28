@@ -9,12 +9,13 @@ namespace OpenApoc
 
 class InitialGameStateExtractor
 {
-	// Proper value MUST be 24 on x, because width is 48, but no matter how I look at it, I just can't accept it.
+	// Proper value MUST be 24 on x, because width is 48, but no matter how I look at it, I just
+	// can't accept it.
 	// Voxel Maps ARE better suited for an offest of 23, period!
-	const Vec2<float> BATTLE_IMAGE_OFFSET = { 23, 34 };
-	const Vec2<float> BATTLE_SHADOW_OFFSET = { 23, 6 };
+	const Vec2<float> BATTLE_IMAGE_OFFSET = {23, 34};
+	const Vec2<float> BATTLE_SHADOW_OFFSET = {23, 6};
 
-	const Vec2<float> CITY_IMAGE_OFFSET = { 32, 24 };
+	const Vec2<float> CITY_IMAGE_OFFSET = {32, 24};
 
   private:
 	UFO2P ufo2p;
@@ -75,9 +76,9 @@ class InitialGameStateExtractor
 	void extractBattlescapeMap(GameState &state, const std::vector<OpenApoc::UString> &paths);
 	void extractBattlescapeMapFromPath(GameState &state, const UString dirName, const int index);
 	void readBattleMapParts(GameState &state, TACP &data_t, sp<BattleMapTileset> t,
-		BattleMapPartType::Type type, const UString &idPrefix,
-		const UString &dirName, const UString &datName,
-		const UString &pckName, const UString &stratPckName);
+	                        BattleMapPartType::Type type, const UString &idPrefix,
+	                        const UString &dirName, const UString &datName, const UString &pckName,
+	                        const UString &stratPckName);
 
 	void extractSharedBattleResources(GameState &state);
 };

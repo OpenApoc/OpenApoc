@@ -173,5 +173,4 @@ bool Scenery::isAlive() const
 	return true;
 }
 
-
 } // namespace OpenApoc

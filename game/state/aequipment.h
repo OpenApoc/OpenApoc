@@ -31,7 +31,7 @@ class AEquipment
 	int weapon_fire_ticks_remaining = 0;
 
 	int getAccuracy(AgentType::BodyState bodyState, BattleUnit::FireAimingMode fireMode);
-	
+
 	// Following members are not serialized, but rather are set in initBattle method
 
 	wp<BattleItem> ownerItem;

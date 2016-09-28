@@ -110,7 +110,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	void update(GameState &state, unsigned int ticks);
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
-	
+
 	// Battle Start Functions
 
 	// To be called when battle must be created, before showing battle briefing screen

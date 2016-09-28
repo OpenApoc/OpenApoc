@@ -556,7 +556,7 @@ StateRef<AEquipmentType> Agent::getDominantItemInHands() const
 	if (e1 && e1->type->two_handed)
 		return {e1->type};
 	if (e2 && e2->type->two_handed)
-		return{ e2->type };
+		return {e2->type};
 	if (e1)
 		return e1->type;
 	if (e2)

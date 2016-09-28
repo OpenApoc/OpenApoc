@@ -31,12 +31,12 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	int doorID = -1;
 	bool isDoor() { return battle.lock() && doorID != -1; }
 	sp<BattleDoor> getDoor();
-	
+
 	// Ticks for animation of non-doors
 	int animation_frame_ticks = 0;
 	int getAnimationFrame();
 	int getMaxFrames();
-	
+
 	void handleCollision(GameState &state, Collision &c);
 
 	void update(GameState &state, unsigned int ticks);

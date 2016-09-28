@@ -14,35 +14,43 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
     : TileView(map, isoTileSize, stratTileSize, initialMode), currentZLevel(currentZLevel)
 {
 	layerDrawingMode = LayerDrawingMode::UpToCurrentLevel;
-	selectedTileEmptyImageBack = 
-		fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-			"icons.tab:%d:xcom3/tacdata/tactical.pal", 182));
+	selectedTileEmptyImageBack =
+	    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                         182));
 	selectedTileEmptyImageFront =
-		fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-			"icons.tab:%d:xcom3/tacdata/tactical.pal", 183));
+	    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                         183));
 	selectedTileFilledImageBack =
-		fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-			"icons.tab:%d:xcom3/tacdata/tactical.pal", 184));
+	    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                         184));
 	selectedTileFilledImageFront =
-		fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-			"icons.tab:%d:xcom3/tacdata/tactical.pal", 185));
+	    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                         185));
 	selectedTileFireImageBack =
-		fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-			"icons.tab:%d:xcom3/tacdata/tactical.pal", 186));
+	    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                         186));
 	selectedTileFireImageFront =
-		fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-			"icons.tab:%d:xcom3/tacdata/tactical.pal", 187));
+	    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                         187));
 	selectedTileBackgroundImageBack =
-		fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-			"icons.tab:%d:xcom3/tacdata/tactical.pal", 188));
+	    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                         188));
 	selectedTileBackgroundImageFront =
-		fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-			"icons.tab:%d:xcom3/tacdata/tactical.pal", 189));
+	    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                         189));
 	selectedTileImageOffset = {23, 42};
 	pal = fw().data->loadPalette("xcom3/tacdata/tactical.pal");
 
 	for (int i = 0; i < 6; i++)
-	{ 
+	{
 		activeUnitSelectionArrow.push_back(
 		    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
 		                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
@@ -318,7 +326,8 @@ void BattleTileView::render()
 						targetIconLocations.insert(m->targetLocation);
 						break;
 					}
-					if (m->type == BattleUnitMission::MissionType::GotoLocation && !m->currentPlannedPath.empty())
+					if (m->type == BattleUnitMission::MissionType::GotoLocation &&
+					    !m->currentPlannedPath.empty())
 					{
 						targetIconLocations.insert(m->targetLocation);
 						if (USER_OPTION_DRAW_WAYPOINTS)
@@ -451,12 +460,12 @@ void BattleTileView::render()
 								       tileToOffsetScreenCoords(selTilePosOnCurLevel) -
 								           selectedTileImageOffset);
 							}
-							#ifdef PATHFINDING_DEBUG
+#ifdef PATHFINDING_DEBUG
 							if (tile->pathfindingDebugFlag)
 								r.draw(waypointIcons[0],
-									tileToOffsetScreenCoords(Vec3<int>{x, y, z}) -
-									selectedTileImageOffset);
-							#endif
+								       tileToOffsetScreenCoords(Vec3<int>{x, y, z}) -
+								           selectedTileImageOffset);
+#endif
 						}
 					}
 				}

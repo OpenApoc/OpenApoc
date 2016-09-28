@@ -10,10 +10,12 @@
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::readBattleMapParts(GameState &state, TACP &data_t, sp<BattleMapTileset> t,
-                               BattleMapPartType::Type type, const UString &idPrefix,
-                               const UString &dirName, const UString &datName,
-                               const UString &pckName, const UString &stratPckName)
+void InitialGameStateExtractor::readBattleMapParts(GameState &state, TACP &data_t,
+                                                   sp<BattleMapTileset> t,
+                                                   BattleMapPartType::Type type,
+                                                   const UString &idPrefix, const UString &dirName,
+                                                   const UString &datName, const UString &pckName,
+                                                   const UString &stratPckName)
 {
 	const UString loftempsFile = "xcom3/tacdata/loftemps.dat";
 	const UString loftempsTab = "xcom3/tacdata/loftemps.tab";
@@ -56,7 +58,8 @@ void InitialGameStateExtractor::readBattleMapParts(GameState &state, TACP &data_
 		auto object = mksp<BattleMapPartType>();
 		if (entry.alternative_object_idx != 0)
 		{
-			object->alternative_map_part = { &state,  UString::format("%s%u", idPrefix, entry.alternative_object_idx) };
+			object->alternative_map_part = {
+			    &state, UString::format("%s%u", idPrefix, entry.alternative_object_idx)};
 		}
 		object->type = type;
 		object->constitution = entry.constitution;

@@ -1,11 +1,11 @@
-#include "game/state/tileview/tile.h"
 #include "framework/trace.h"
+#include "game/state/tileview/tile.h"
 #include <algorithm>
 
 // Comments about this at the end of the file
 #define NEW_PATHING_ALGORITHM
 
-#ifdef  NEW_PATHING_ALGORITHM
+#ifdef NEW_PATHING_ALGORITHM
 
 namespace OpenApoc
 {
@@ -14,10 +14,10 @@ namespace
 {
 class PathNode
 {
-public:
+  public:
 	PathNode(float costToGetHere, float distanceToGoal, PathNode *parentNode, Tile *thisTile)
-		: costToGetHere(costToGetHere), parentNode(parentNode), thisTile(thisTile),
-		distanceToGoal(distanceToGoal)
+	    : costToGetHere(costToGetHere), parentNode(parentNode), thisTile(thisTile),
+	      distanceToGoal(distanceToGoal)
 	{
 	}
 
@@ -44,14 +44,14 @@ public:
 } // anonymous namespace
 
 std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination,
-	unsigned int iterationLimit,
-	const CanEnterTileHelper &canEnterTile, float,
-	bool demandGiveWay)
+                                               unsigned int iterationLimit,
+                                               const CanEnterTileHelper &canEnterTile, float,
+                                               bool demandGiveWay)
 {
-	#ifdef PATHFINDING_DEBUG
+#ifdef PATHFINDING_DEBUG
 	for (auto &t : tiles)
 		t.pathfindingDebugFlag = false;
-	#endif
+#endif
 
 	TRACE_FN;
 	// Faster than looking up in a set
@@ -64,44 +64,45 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	unsigned int iterationCount = 0;
 
 	LogInfo("Trying to route from {%d,%d,%d} to {%d,%d,%d}", origin.x, origin.y, origin.z,
-		destination.x, destination.y, destination.z);
+	        destination.x, destination.y, destination.z);
 
 	if (origin.x < 0 || origin.x >= this->size.x || origin.y < 0 || origin.y >= this->size.y ||
-		origin.z < 0 || origin.z >= this->size.z)
+	    origin.z < 0 || origin.z >= this->size.z)
 	{
 		LogError("Bad origin {%d,%d,%d}", origin.x, origin.y, origin.z);
-		return{};
+		return {};
 	}
 	if (destination.x < 0 || destination.x >= this->size.x || destination.y < 0 ||
-		destination.y >= this->size.y || destination.z < 0 || destination.z >= this->size.z)
+	    destination.y >= this->size.y || destination.z < 0 || destination.z >= this->size.z)
 	{
 		LogError("Bad destination {%d,%d,%d}", destination.x, destination.y, destination.z);
-		return{};
+		return {};
 	}
 
-	goalPosition = { destination.x, destination.y, destination.z };
+	goalPosition = {destination.x, destination.y, destination.z};
 	Tile *goalTile = this->getTile(destination);
 
 	if (!goalTile)
 	{
 		LogError("Failed to get destination tile at {%d,%d,%d}", destination.x, destination.y,
-			destination.z);
-		return{};
+		         destination.z);
+		return {};
 	}
 	Tile *startTile = this->getTile(origin);
 	if (!startTile)
 	{
 		LogError("Failed to get origin tile at {%d,%d,%d}", origin.x, origin.y, origin.z);
-		return{};
+		return {};
 	}
 
 	if (origin == destination)
 	{
 		LogInfo("Destination == origin {%d,%d,%d}", destination.x, destination.y, destination.z);
-		return{ goalTile->position };
+		return {goalTile->position};
 	}
 
-	auto startNode = new PathNode(0.0f, canEnterTile.getDistance(origin, goalPosition), nullptr, startTile);
+	auto startNode =
+	    new PathNode(0.0f, canEnterTile.getDistance(origin, goalPosition), nullptr, startTile);
 	nodesToDelete.push_back(startNode);
 	fringe.emplace_back(startNode);
 
@@ -113,23 +114,27 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 		if (first == fringe.end())
 		{
 			LogInfo("No more tiles to expand after %d iterations", iterationCount);
-			return{};
+			return {};
 		}
 		auto nodeToExpand = *first;
 		fringe.erase(first);
 
 		// Skip if we've already expanded this, as in a 3d-grid we know the first
 		// expansion will be the shortest route
-		if (visitedTiles[nodeToExpand->thisTile->position.z * strideZ + nodeToExpand->thisTile->position.y * strideY + nodeToExpand->thisTile->position.x])
+		if (visitedTiles[nodeToExpand->thisTile->position.z * strideZ +
+		                 nodeToExpand->thisTile->position.y * strideY +
+		                 nodeToExpand->thisTile->position.x])
 		{
 			iterationCount--;
 			continue;
 		}
-		visitedTiles[nodeToExpand->thisTile->position.z * strideZ + nodeToExpand->thisTile->position.y * strideY + nodeToExpand->thisTile->position.x] = true;
-		
-		#ifdef PATHFINDING_DEBUG
+		visitedTiles[nodeToExpand->thisTile->position.z * strideZ +
+		             nodeToExpand->thisTile->position.y * strideY +
+		             nodeToExpand->thisTile->position.x] = true;
+
+#ifdef PATHFINDING_DEBUG
 		nodeToExpand->thisTile->pathfindingDebugFlag = true;
-		#endif
+#endif
 
 		// Make it so we always try to move at least one tile
 		if (closestNodeSoFar->parentNode == nullptr)
@@ -141,7 +146,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 			closestNodeSoFar = nodeToExpand;
 			break;
 		}
-		
+
 		if (nodeToExpand->distanceToGoal < closestNodeSoFar->distanceToGoal)
 		{
 			closestNodeSoFar = nodeToExpand;
@@ -164,7 +169,8 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 						continue;
 
 					Tile *tile = this->getTile(nextPosition);
-					if (visitedTiles[tile->position.z * strideZ + tile->position.y * strideY + tile->position.x])
+					if (visitedTiles[tile->position.z * strideZ + tile->position.y * strideY +
+					                 tile->position.x])
 					{
 						continue;
 					}
@@ -172,7 +178,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					// will move anyway?)
 					float cost = 0.0f;
 					if (!canEnterTile.canEnterTile(nodeToExpand->thisTile, tile, cost,
-						demandGiveWay))
+					                               demandGiveWay))
 						continue;
 					// FIXME: The old code *tried* to disallow diagonal paths that would clip past
 					// scenery but it didn't seem to work, no we should re-add that here
@@ -183,14 +189,17 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					// make pathfinder biased towards vehicle's altitude preference
 					newNodeCost += canEnterTile.adjustCost(nextPosition, z);
 
-					auto newNode = new PathNode(newNodeCost, canEnterTile.applyPathOverheadAllowance(canEnterTile.getDistance(nextPosition, goalPosition)), nodeToExpand, tile);
+					auto newNode = new PathNode(
+					    newNodeCost, canEnterTile.applyPathOverheadAllowance(
+					                     canEnterTile.getDistance(nextPosition, goalPosition)),
+					    nodeToExpand, tile);
 					nodesToDelete.push_back(newNode);
 
 					// Put node at appropriate place in the list
 					auto it = fringe.begin();
 					while (it != fringe.end() &&
-						((*it)->costToGetHere + (*it)->distanceToGoal) <
-						(newNode->costToGetHere + newNode->distanceToGoal))
+					       ((*it)->costToGetHere + (*it)->distanceToGoal) <
+					           (newNode->costToGetHere + newNode->distanceToGoal))
 						it++;
 					fringe.emplace(it, newNode);
 				}
@@ -199,10 +208,11 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	}
 	if (iterationCount > iterationLimit)
 	{
-		LogWarning("No route from {%d,%d,%d} to {%d,%d,%d} found after %d iterations, returning closest path {%d,%d,%d}",
-			origin.x, origin.y, origin.z, destination.x, destination.y, destination.z, iterationCount,
-			closestNodeSoFar->thisTile->position.x, closestNodeSoFar->thisTile->position.y,
-			closestNodeSoFar->thisTile->position.z);
+		LogWarning("No route from {%d,%d,%d} to {%d,%d,%d} found after %d iterations, returning "
+		           "closest path {%d,%d,%d}",
+		           origin.x, origin.y, origin.z, destination.x, destination.y, destination.z,
+		           iterationCount, closestNodeSoFar->thisTile->position.x,
+		           closestNodeSoFar->thisTile->position.y, closestNodeSoFar->thisTile->position.z);
 	}
 
 	auto result = closestNodeSoFar->getPathToNode();
@@ -215,7 +225,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 }
 
 // endif NEW_PATHING_ALGORITHM
-#else //OLD_PATHING_ALGORITHM
+#else // OLD_PATHING_ALGORITHM
 
 #include <unordered_map>
 
@@ -223,34 +233,36 @@ namespace OpenApoc
 {
 namespace
 {
-	class PathNode
+class PathNode
+{
+  public:
+	PathNode(float costToGetHere, float distanceToGoal, Tile *parentTile, Tile *thisTile)
+	    : costToGetHere(costToGetHere), parentTile(parentTile), thisTile(thisTile),
+	      distanceToGoal(distanceToGoal)
 	{
-	public:
-		PathNode(float costToGetHere, float distanceToGoal, Tile *parentTile, Tile *thisTile)
-			: costToGetHere(costToGetHere), parentTile(parentTile), thisTile(thisTile),
-			distanceToGoal(distanceToGoal)
-		{
-		}
+	}
 
-		PathNode(float costToGetHere, float distanceToGoal, Tile *parentTile, Tile *thisTile, const Vec3<float> &goal)
-			: costToGetHere(costToGetHere), parentTile(parentTile), thisTile(thisTile), distanceToGoal(distanceToGoal)
-		{
-		}
-		float costToGetHere;
-		Tile *parentTile;
-		Tile *thisTile;
+	PathNode(float costToGetHere, float distanceToGoal, Tile *parentTile, Tile *thisTile,
+	         const Vec3<float> &goal)
+	    : costToGetHere(costToGetHere), parentTile(parentTile), thisTile(thisTile),
+	      distanceToGoal(distanceToGoal)
+	{
+	}
+	float costToGetHere;
+	Tile *parentTile;
+	Tile *thisTile;
 
-		float distanceToGoal;
-	};
+	float distanceToGoal;
+};
 
-	// class PathNodeComparer
-	//{
-	//  public:
-	//	bool operator()(const PathNode &p1, const PathNode &p2)
-	//	{
-	//		return (p1.costToGetHere + p1.distanceToGoal) < (p2.costToGetHere + p2.distanceToGoal);
-	//	}
-	//};
+// class PathNodeComparer
+//{
+//  public:
+//	bool operator()(const PathNode &p1, const PathNode &p2)
+//	{
+//		return (p1.costToGetHere + p1.distanceToGoal) < (p2.costToGetHere + p2.distanceToGoal);
+//	}
+//};
 
 } // anonymous namespace
 
@@ -266,13 +278,13 @@ static std::list<Vec3<int>> getPathToNode(std::unordered_map<Tile *, PathNode> n
 		if (nextNodeIt == nodes.end())
 		{
 			LogError("Trying to expand unvisited node?");
-			return{};
+			return {};
 		}
 		auto &nextNode = nextNodeIt->second;
 		if (nextNode.thisTile != t)
 		{
 			LogError("Unexpected parentTile pointer");
-			return{};
+			return {};
 		}
 		t = nextNode.parentTile;
 	}
@@ -281,9 +293,9 @@ static std::list<Vec3<int>> getPathToNode(std::unordered_map<Tile *, PathNode> n
 }
 
 std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination,
-	unsigned int iterationLimit,
-	const CanEnterTileHelper &canEnterTile, float,
-	bool demandGiveWay)
+                                               unsigned int iterationLimit,
+                                               const CanEnterTileHelper &canEnterTile, float,
+                                               bool demandGiveWay)
 {
 	TRACE_FN;
 	std::unordered_map<Tile *, PathNode> visitedTiles;
@@ -292,44 +304,45 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	unsigned int iterationCount = 0;
 
 	LogInfo("Trying to route from {%d,%d,%d} to {%d,%d,%d}", origin.x, origin.y, origin.z,
-		destination.x, destination.y, destination.z);
+	        destination.x, destination.y, destination.z);
 
 	if (origin.x < 0 || origin.x >= this->size.x || origin.y < 0 || origin.y >= this->size.y ||
-		origin.z < 0 || origin.z >= this->size.z)
+	    origin.z < 0 || origin.z >= this->size.z)
 	{
 		LogError("Bad origin {%d,%d,%d}", origin.x, origin.y, origin.z);
-		return{};
+		return {};
 	}
 	if (destination.x < 0 || destination.x >= this->size.x || destination.y < 0 ||
-		destination.y >= this->size.y || destination.z < 0 || destination.z >= this->size.z)
+	    destination.y >= this->size.y || destination.z < 0 || destination.z >= this->size.z)
 	{
 		LogError("Bad destination {%d,%d,%d}", destination.x, destination.y, destination.z);
-		return{};
+		return {};
 	}
 
-	goalPosition = { destination.x, destination.y, destination.z };
+	goalPosition = {destination.x, destination.y, destination.z};
 	Tile *goalTile = this->getTile(destination);
 
 	if (!goalTile)
 	{
 		LogError("Failed to get destination tile at {%d,%d,%d}", destination.x, destination.y,
-			destination.z);
-		return{};
+		         destination.z);
+		return {};
 	}
 	Tile *startTile = this->getTile(origin);
 	if (!startTile)
 	{
 		LogError("Failed to get origin tile at {%d,%d,%d}", origin.x, origin.y, origin.z);
-		return{};
+		return {};
 	}
 
 	if (origin == destination)
 	{
 		LogInfo("Destination == origin {%d,%d,%d}", destination.x, destination.y, destination.z);
-		return{ goalTile->position };
+		return {goalTile->position};
 	}
 
-	PathNode startNode(0.0f, canEnterTile.getDistance(origin, goalPosition), nullptr, startTile, goalPosition);
+	PathNode startNode(0.0f, canEnterTile.getDistance(origin, goalPosition), nullptr, startTile,
+	                   goalPosition);
 	fringe.emplace_back(startNode);
 	visitedTiles.emplace(startTile, startNode);
 
@@ -341,7 +354,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 		if (first == fringe.end())
 		{
 			LogInfo("No more tiles to expand after %d iterations", iterationCount);
-			return{};
+			return {};
 		}
 		auto nodeToExpand = *first;
 		fringe.erase(first);
@@ -386,7 +399,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					// will move anyway?)
 					float cost = 0.0f;
 					if (!canEnterTile.canEnterTile(nodeToExpand.thisTile, tile, cost,
-						demandGiveWay))
+					                               demandGiveWay))
 						continue;
 					// FIXME: The old code *tried* to disallow diagonal paths that would clip past
 					// scenery but it didn't seem to work, no we should re-add that here
@@ -397,7 +410,10 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					// make pathfinder biased towards vehicle's altitude preference
 					newNodeCost += canEnterTile.adjustCost(nextPosition, z);
 
-					PathNode newNode(newNodeCost, canEnterTile.applyPathOverheadAllowance(canEnterTile.getDistance(nextPosition, goalPosition)), nodeToExpand.thisTile, tile, goalPosition);
+					PathNode newNode(newNodeCost,
+					                 canEnterTile.applyPathOverheadAllowance(
+					                     canEnterTile.getDistance(nextPosition, goalPosition)),
+					                 nodeToExpand.thisTile, tile, goalPosition);
 					// Allow entering goal multiple times, so that we can find a faster route
 					if (nextPosition != destination)
 					{
@@ -406,20 +422,19 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					// Put node at appropriate place in the list
 					auto it = fringe.begin();
 					while (it != fringe.end() &&
-						(it->costToGetHere + it->distanceToGoal) <
-						(newNode.costToGetHere + newNode.distanceToGoal))
+					       (it->costToGetHere + it->distanceToGoal) <
+					           (newNode.costToGetHere + newNode.distanceToGoal))
 						it++;
 					fringe.emplace(it, newNode);
 				}
 			}
 		}
 	}
-	LogWarning("No route found after %d iterations, returning closest path {%d,%d,%d}", iterationCount,
-		closestNodeSoFar.thisTile->position.x, closestNodeSoFar.thisTile->position.y,
-		closestNodeSoFar.thisTile->position.z);
+	LogWarning("No route found after %d iterations, returning closest path {%d,%d,%d}",
+	           iterationCount, closestNodeSoFar.thisTile->position.x,
+	           closestNodeSoFar.thisTile->position.y, closestNodeSoFar.thisTile->position.z);
 	return getPathToNode(visitedTiles, closestNodeSoFar);
 }
-
 }
 
 #endif //  OLD_PATHING_ALGORITHM
@@ -432,12 +447,12 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 // One such problem was that we would add node to list of visited				    /---\
 // at the moment we	first pathfind into it, and instead we should					|+  |
 // do it when we pathfind from it. The way it worked, pathfinding                  2\-*-/
-// would produce unoptimal paths, as demonstrated on the right:					  143**  
-// 
+// would produce unoptimal paths, as demonstrated on the right:					  143**
+//
 //   (legend: "+" is goal, "|/\-" are walls)
 // We find path into 1, and next we try 2, because 2 is closest to goal
 // From 2 we try several tiles including 3. We add 3 to visited tiles.
-// When eventually we try 4, we cannot use path from 4 to 3, because 3 is in visited tiles, 
+// When eventually we try 4, we cannot use path from 4 to 3, because 3 is in visited tiles,
 // even though "1-4-3" is cheaper than "1-2-3".
 //
 // In new algorithm, we add node to visited when we pathfind from it, therefore we can add
@@ -446,9 +461,8 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 // In case I have broken something horribly, I'm including old pathfinding algorithm here
 // However, I'm certain new one should work properly.
 
-
 // Ideas for improved pathfinding for battlescape
-// 
+//
 // I think I know how to improve battlescape pathfinding, and this is something close to what
 // vanilla does with "connecting" LOS blocks.
 // Basically, the game has every sector divided into blocks. And these usually correspond
@@ -456,20 +470,20 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 //
 // This means we can create a graph which connects blocks with adjacent blocks
 //
-// We can then mark blocks that are not passable, defined as "cannot go from one wall to 
+// We can then mark blocks that are not passable, defined as "cannot go from one wall to
 // an opposite one in a reasonable amount of time".
 //
-// We can then check each block-to-block connection, and see if it exists,    
+// We can then check each block-to-block connection, and see if it exists,
 // and if it requires a waypoint.
 // A connection exists if you can go (canEnterTile) between adjacent tiles in adjacent blocks
 // Waypoint is required if this is true only for several tiles, not all of them
 // Waypoint is itself a block that encompasses all passable adjacent blocks
 // (it can be just 1 tile, it can be a group of tiles)
-// 
+//
 // This will provide us with a waypoint graph.
-// When trying to pathfind and unable to do so within reasonable ammount of attempts, 
+// When trying to pathfind and unable to do so within reasonable ammount of attempts,
 // we can check with the graph. We can first pathfind through the graph, and get a list of
 // LOS blocks we must pass from start to goal. We ignore impassable blocks and connections.
-// Then we can take all waypoints we encountered and path through them 
+// Then we can take all waypoints we encountered and path through them
 // (path to closest tile within first waypoint, then closest tile withing second waypoint, etc.
 // until we reach final waypoint, then path to goal)

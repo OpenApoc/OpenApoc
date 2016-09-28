@@ -3,14 +3,16 @@
 #include "framework/framework.h"
 #include "game/ui/battle/battleview.h"
 #include "game/ui/city/cityview.h"
-#include <cmath>
 #include <algorithm>
+#include <cmath>
 
 namespace OpenApoc
 {
 
-LoadingScreen::LoadingScreen(std::future<sp<GameState>> gameStateTask, sp<Image> background, int scaleDivisor, bool showRotatingImage)
-    : Stage(), loading_task(std::move(gameStateTask)), backgroundimage(background), showRotatingImage(showRotatingImage), scaleDivisor(scaleDivisor)
+LoadingScreen::LoadingScreen(std::future<sp<GameState>> gameStateTask, sp<Image> background,
+                             int scaleDivisor, bool showRotatingImage)
+    : Stage(), loading_task(std::move(gameStateTask)), backgroundimage(background),
+      showRotatingImage(showRotatingImage), scaleDivisor(scaleDivisor)
 {
 }
 
@@ -60,7 +62,7 @@ void LoadingScreen::update()
 			auto gameState = loading_task.get();
 			if (gameState != nullptr)
 			{
-				fw().stageQueueCommand({ StageCmd::Command::REPLACEALL, createUiForGame(gameState) });
+				fw().stageQueueCommand({StageCmd::Command::REPLACEALL, createUiForGame(gameState)});
 			}
 			else
 			{
@@ -81,7 +83,7 @@ void LoadingScreen::render()
 	float logoscw = logow / static_cast<float>(backgroundimage->size.x);
 	float logosch = logoh / static_cast<float>(backgroundimage->size.y);
 	float logosc = std::min(logoscw, logosch);
-	
+
 	Vec2<float> logoPosition{fw().displayGetWidth() / 2 - (backgroundimage->size.x * logosc / 2),
 	                         fw().displayGetHeight() / 2 - (backgroundimage->size.y * logosc / 2)};
 	Vec2<float> logoSize{backgroundimage->size.x * logosc, backgroundimage->size.y * logosc};
@@ -90,8 +92,9 @@ void LoadingScreen::render()
 	if (loadingimage)
 	{
 		fw().renderer->drawRotated(
-			loadingimage, Vec2<float>{24, 24},
-			Vec2<float>{fw().displayGetWidth() - 50, fw().displayGetHeight() - 50}, loadingimageangle);
+		    loadingimage, Vec2<float>{24, 24},
+		    Vec2<float>{fw().displayGetWidth() - 50, fw().displayGetHeight() - 50},
+		    loadingimageangle);
 	}
 }
 

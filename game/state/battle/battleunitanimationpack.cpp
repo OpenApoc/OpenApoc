@@ -202,20 +202,20 @@ void BattleUnitAnimationPack::drawUnit(
 	}
 	else
 	{
-		if (currentHands == AgentType::HandState::Firing 
-			&& hasAlternativeFiringAnimations && firingAngle != 0)
+		if (currentHands == AgentType::HandState::Firing && hasAlternativeFiringAnimations &&
+		    firingAngle != 0)
 		{
 			e = alt_fire_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
-				: ItemWieldMode::OneHanded)
-				: ItemWieldMode::None][firingAngle][movement][currentBody]
-				[facing];
+			                                                         : ItemWieldMode::OneHanded)
+			                                 : ItemWieldMode::None][firingAngle][movement]
+			                       [currentBody][facing];
 		}
 		else
 		{
 			e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
-				: ItemWieldMode::OneHanded)
-				: ItemWieldMode::None][currentHands][movement][currentBody]
-				[facing];
+			                                                         : ItemWieldMode::OneHanded)
+			                                 : ItemWieldMode::None][currentHands][movement]
+			                       [currentBody][facing];
 		}
 		if (currentHands == AgentType::HandState::Firing)
 			frame = e->frame_count - hands_animation_delay;

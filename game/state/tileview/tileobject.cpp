@@ -122,7 +122,8 @@ void TileObject::setPosition(Vec3<float> newPosition)
 		{
 			for (int z = minBounds.z; z < maxBounds.z; z++)
 			{
-				if (x < 0 || y < 0 || z < 0 || x >= map.size.x || y >= map.size.y || z >= map.size.z)
+				if (x < 0 || y < 0 || z < 0 || x >= map.size.x || y >= map.size.y ||
+				    z >= map.size.z)
 				{
 					// TODO: Decide if having bounds outside the map are really valid?
 					continue;

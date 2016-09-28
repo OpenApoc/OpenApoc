@@ -11,7 +11,8 @@ namespace OpenApoc
 
 int BattleMapPart::getMaxFrames()
 {
-	return alternative_type ? alternative_type->animation_frames.size() : type->animation_frames.size();
+	return alternative_type ? alternative_type->animation_frames.size()
+	                        : type->animation_frames.size();
 }
 
 int BattleMapPart::getAnimationFrame()
@@ -22,18 +23,19 @@ int BattleMapPart::getAnimationFrame()
 	}
 	else
 	{
-		return type->animation_frames.size() == 0 ? -1 : animation_frame_ticks / TICKS_PER_FRAME_MAP_PART;
+		return type->animation_frames.size() == 0 ? -1 : animation_frame_ticks /
+		                                                     TICKS_PER_FRAME_MAP_PART;
 	}
 }
 
 sp<BattleDoor> BattleMapPart::getDoor()
 {
 	auto b = battle.lock();
-	if (!b ) //|| doorID == -1 ||  b->doors.size() >= doorID // <-- need to check this too?
+	if (!b) //|| doorID == -1 ||  b->doors.size() >= doorID // <-- need to check this too?
 	{
 		LogError("getDoor - Battle disappeared!");
 		return nullptr;
-	} 
+	}
 	return b->doors[doorID];
 }
 
@@ -69,7 +71,7 @@ void BattleMapPart::handleCollision(GameState &state, Collision &c)
 		if (this->initialPosition.z == 0 && this->type->type == BattleMapPartType::Type::Ground)
 		{
 			auto b = battle.lock();
-			if (!b) 
+			if (!b)
 			{
 				LogError("handleCollision - Battle disappeared!");
 				return;
@@ -92,7 +94,7 @@ void BattleMapPart::findSupport()
 	// If it's already falling or destroyed or supported do nothing
 	if (this->falling || !this->tileObject || supported)
 		return;
-	
+
 	supported = false;
 	// FIXME: Implement
 	//
@@ -158,12 +160,12 @@ void BattleMapPart::update(GameState &, unsigned int ticks)
 		{
 			switch (obj->getType())
 			{
-			case TileObject::Type::Ground:
-				// FIXME: do something?
-				break;
-			default:
-				// Ignore other object types?
-				break;
+				case TileObject::Type::Ground:
+					// FIXME: do something?
+					break;
+				default:
+					// Ignore other object types?
+					break;
 			}
 		}
 		return;
@@ -185,5 +187,4 @@ bool BattleMapPart::isAlive() const
 		return false;
 	return true;
 }
-
 }

@@ -1,10 +1,10 @@
 #include "game/state/battle/battle.h"
 #include "framework/framework.h"
 #include "framework/trace.h"
+#include "game/state/battle/battledoor.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemap.h"
 #include "game/state/battle/battlemappart.h"
-#include "game/state/battle/battledoor.h"
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/city/city.h"
@@ -544,7 +544,7 @@ void Battle::enterBattle(GameState &state)
 					if (block)
 						break;
 				}
-				
+
 				// If there is no block then just spawn anywhere
 				if (!block)
 				{
@@ -669,17 +669,17 @@ void Battle::enterBattle(GameState &state)
 							}
 							unitsToSpawn.pop_back();
 							numSpawned++;
-							if (unitsToSpawn.size() == 0 
-								// This makes us spawn every civilian individually
-								|| (numSpawned > 0 && f.first == state.getCivilian()))
+							if (unitsToSpawn.size() == 0
+							    // This makes us spawn every civilian individually
+							    || (numSpawned > 0 && f.first == state.getCivilian()))
 								break;
 						}
-						if (unitsToSpawn.size() == 0
-							|| (numSpawned > 0 && f.first == state.getCivilian()))
+						if (unitsToSpawn.size() == 0 ||
+						    (numSpawned > 0 && f.first == state.getCivilian()))
 							break;
 					}
-					if (unitsToSpawn.size() == 0
-						|| (numSpawned > 0 && f.first == state.getCivilian()))
+					if (unitsToSpawn.size() == 0 ||
+					    (numSpawned > 0 && f.first == state.getCivilian()))
 						break;
 					offset++;
 				} // end of spawning within a block cycle
@@ -786,7 +786,7 @@ void Battle::enterBattle(GameState &state)
 							spawnMapOther.erase(pos);
 						}
 					}
-				}// finished erasing filled block
+				} // finished erasing filled block
 			}
 		}
 	}
@@ -896,7 +896,7 @@ void Battle::finishBattle(GameState &state)
 	}
 	//  - Identify how battle ended(if enemies present then Failure, otherwise Success)
 	//	- (Failure) Determine surviving player agents(kill all player agents that are too far from
-	//exits)
+	// exits)
 	//	- Prepare list of surviving aliens
 	//	- (Success) Prepare list of alien bodies
 	//	- Remove dead player agents and all enemy agents from the game and vehicles

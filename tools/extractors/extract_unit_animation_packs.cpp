@@ -38,8 +38,8 @@ sp<BattleUnitAnimationPack::AnimationEntry>
 getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
                   const std::vector<AnimationDataUA> &dataUA, std::vector<AnimationDataUF> &dataUF,
                   int index, Vec2<int> direction, int frames_per_100_units, int split_point,
-                  bool left_side, bool isOverlay = false, bool removeItem = false, Vec2<int> targetOffset = {0, 0},
-                  Vec2<int> beginOffset = {0, 0})
+                  bool left_side, bool isOverlay = false, bool removeItem = false,
+                  Vec2<int> targetOffset = {0, 0}, Vec2<int> beginOffset = {0, 0})
 {
 	static const std::map<Vec2<int>, int> offset_dir_map = {
 	    {{0, -1}, 0}, {{1, -1}, 1}, {{1, 0}, 2},  {{1, 1}, 3},

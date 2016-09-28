@@ -25,8 +25,9 @@ class BattleUnitTileHelper : public CanEnterTileHelper
 	float getDistance(Vec3<float> from, Vec3<float> to) const override;
 
 	bool canEnterTile(Tile *from, Tile *to, bool demandGiveWay = false) const override;
-	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay, bool demandGiveWay = false) const override;
-	
+	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay,
+	                  bool demandGiveWay = false) const override;
+
 	bool canEnterTile(Tile *from, Tile *to, bool ignoreUnits, bool demandGiveWay) const;
 	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay, bool ignoreUnits,
 	                  bool demandGiveWay) const;
@@ -74,12 +75,13 @@ class BattleUnitMission
 	// Methods to create new missions
 	static BattleUnitMission *gotoLocation(BattleUnit &u, Vec3<int> target, int facingDelta = 0,
 	                                       bool allowSkipNodes = true, int giveWayAttempts = 10,
-	                                       bool demandGiveWay = false, bool allowRunningAway = false);
+	                                       bool demandGiveWay = false,
+	                                       bool allowRunningAway = false);
 	static BattleUnitMission *snooze(BattleUnit &u, unsigned int ticks);
 	static BattleUnitMission *restartNextMission(BattleUnit &u);
 	static BattleUnitMission *acquireTU(BattleUnit &u, unsigned int tu);
 	static BattleUnitMission *changeStance(BattleUnit &u, AgentType::BodyState state);
-	static BattleUnitMission *throwItem(BattleUnit &u, sp<AEquipment> item, Vec3<int>target);
+	static BattleUnitMission *throwItem(BattleUnit &u, sp<AEquipment> item, Vec3<int> target);
 	static BattleUnitMission *dropItem(BattleUnit &u, sp<AEquipment> item);
 	static BattleUnitMission *turn(BattleUnit &u, Vec2<int> target);
 	static BattleUnitMission *turn(BattleUnit &u, Vec3<int> target);
@@ -93,7 +95,7 @@ class BattleUnitMission
 
 	// GotoLocation, ThrowItem, ReachGoal
 	Vec3<int> targetLocation = {0, 0, 0};
-	
+
 	// GotoLocation
 	int facingDelta = 0;
 	int giveWayAttemptsRemaining = 0;
@@ -103,23 +105,23 @@ class BattleUnitMission
 	bool allowSkipNodes = false;
 	// Unit will ignore static non-large units when pathfinding
 	bool demandGiveWay = false;
-	
+
 	// Turn
 	Vec2<int> targetFacing = {0, 0};
 	bool requireGoal = false;
-	
+
 	// ThrowItem, DropItem
 	sp<AEquipment> item;
-	
+
 	// ThrowItem
 	bool throwFailed = false;
-	
+
 	// Snooze
 	unsigned int timeToSnooze = 0;
-	
+
 	// AcquireTU
 	unsigned int timeUnits = 0;
-	
+
 	// ChangeBodyState
 	AgentType::BodyState bodyState = AgentType::BodyState::Downed;
 

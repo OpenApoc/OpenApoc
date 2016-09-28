@@ -22,7 +22,7 @@ class Base : public StateObject<Base>
 	std::vector<sp<Facility>> facilities;
 	// FIXME: Learn to handle ammo
 	// Possible solutions:
-	// - 1) use float 
+	// - 1) use float
 	// - 2) use another map UString to unsigned for ammo in the last clip
 	// - 3) for items of type ammo, use ammo count, not item count
 	std::map<UString, unsigned> inventoryAgentEquipment;

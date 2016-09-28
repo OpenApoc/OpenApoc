@@ -157,7 +157,7 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	bool canGoProne() const;
 	// Wether unit can kneel in current position and facing
 	bool canKneel() const;
-	
+
 	// Get unit's height in current situation
 	int getCurrentHeight() const { return agent->type->bodyType->height.at(current_body_state); }
 

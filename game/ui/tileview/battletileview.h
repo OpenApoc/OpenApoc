@@ -23,7 +23,7 @@ class BattleTileView : public TileView
   private:
 	int currentZLevel;
 	LayerDrawingMode layerDrawingMode;
-	
+
 	sp<Image> selectedTileEmptyImageBack;
 	sp<Image> selectedTileEmptyImageFront;
 	sp<Image> selectedTileFilledImageBack;

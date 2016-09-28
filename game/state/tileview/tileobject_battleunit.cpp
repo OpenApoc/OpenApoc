@@ -48,9 +48,9 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 			    unit->agent->getImagePack(AgentType::BodyPart::Legs),
 			    unit->agent->getImagePack(AgentType::BodyPart::Helmet),
 			    unit->agent->getImagePack(AgentType::BodyPart::LeftArm),
-			    unit->agent->getImagePack(AgentType::BodyPart::RightArm),
-			    unit->getDisplayedItem(), unit->facing, unit->current_body_state,
-			    unit->target_body_state, unit->current_hand_state, unit->target_hand_state,
+			    unit->agent->getImagePack(AgentType::BodyPart::RightArm), unit->getDisplayedItem(),
+			    unit->facing, unit->current_body_state, unit->target_body_state,
+			    unit->current_hand_state, unit->target_hand_state,
 			    unit->usingLift ? AgentType::MovementState::None : unit->current_movement_state,
 			    unit->getBodyAnimationFrame(), unit->getHandAnimationFrame(),
 			    unit->getDistanceTravelled());
@@ -67,8 +67,8 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 				return;
 
 			bool friendly = unit->owner == battle->currentPlayer;
-			bool hostile = battle->currentPlayer->isRelatedTo(unit->owner) 
-				== Organisation::Relation::Hostile;
+			bool hostile =
+			    battle->currentPlayer->isRelatedTo(unit->owner) == Organisation::Relation::Hostile;
 
 			// 0 = enemy, 3 = friendly, 2 = neutral
 			int side_offset = friendly ? 3 : (hostile ? 0 : 2);
@@ -88,9 +88,10 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 			switch (icon_type)
 			{
 				case ICON_STANDART:
-					r.draw(common_image_list->strategyImages[side_offset * 120 + curent_level_offset * 40 +
-					                                  facing_offset],
-					       screenPosition - Vec2<float>{4, 4});
+					r.draw(
+					    common_image_list->strategyImages[side_offset * 120 +
+					                                      curent_level_offset * 40 + facing_offset],
+					    screenPosition - Vec2<float>{4, 4});
 					break;
 				case ICON_PRONE:
 					// Vertical
@@ -98,11 +99,11 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 					{
 						r.draw(common_image_list
 						           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
-						                    offset_prone_map.at(facing_offset) + 0],
+						                            offset_prone_map.at(facing_offset) + 0],
 						       screenPosition - Vec2<float>{4.0f, 8.0f});
 						r.draw(common_image_list
 						           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
-						                    offset_prone_map.at(facing_offset) + 1],
+						                            offset_prone_map.at(facing_offset) + 1],
 						       screenPosition - Vec2<float>{4.0f, 0.0f});
 					}
 					// Horizontal
@@ -110,11 +111,11 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 					{
 						r.draw(common_image_list
 						           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
-						                    offset_prone_map.at(facing_offset) + 0],
+						                            offset_prone_map.at(facing_offset) + 0],
 						       screenPosition - Vec2<float>{8.0f, 4.0f});
 						r.draw(common_image_list
 						           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
-						                    offset_prone_map.at(facing_offset) + 1],
+						                            offset_prone_map.at(facing_offset) + 1],
 						       screenPosition - Vec2<float>{0.0f, 4.0f});
 					}
 					// Diagonal
@@ -122,34 +123,38 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 					{
 						r.draw(common_image_list
 						           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
-						                    offset_prone_map.at(facing_offset) + 0],
+						                            offset_prone_map.at(facing_offset) + 0],
 						       screenPosition - Vec2<float>{8.0f, 8.0f});
 						r.draw(common_image_list
 						           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
-						                    offset_prone_map.at(facing_offset) + 1],
+						                            offset_prone_map.at(facing_offset) + 1],
 						       screenPosition - Vec2<float>{0.0f, 8.0f});
 						r.draw(common_image_list
 						           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
-						                    offset_prone_map.at(facing_offset) + 2],
+						                            offset_prone_map.at(facing_offset) + 2],
 						       screenPosition - Vec2<float>{8.0f, 0.0f});
 						r.draw(common_image_list
 						           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
-						                    offset_prone_map.at(facing_offset) + 3],
+						                            offset_prone_map.at(facing_offset) + 3],
 						       screenPosition - Vec2<float>{0.0f, 0.0f});
 					}
 					break;
 				case ICON_LARGE:
-					r.draw(common_image_list->strategyImages[side_offset * 120 + curent_level_offset * 40 +
-					                                  offset_large + 0],
+					r.draw(common_image_list
+					           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
+					                            offset_large + 0],
 					       screenPosition - Vec2<float>{8.0f, 8.0f});
-					r.draw(common_image_list->strategyImages[side_offset * 120 + curent_level_offset * 40 +
-					                                  offset_large + 1],
+					r.draw(common_image_list
+					           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
+					                            offset_large + 1],
 					       screenPosition - Vec2<float>{0.0f, 8.0f});
-					r.draw(common_image_list->strategyImages[side_offset * 120 + curent_level_offset * 40 +
-					                                  offset_large + 2],
+					r.draw(common_image_list
+					           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
+					                            offset_large + 2],
 					       screenPosition - Vec2<float>{8.0f, 0.0f});
-					r.draw(common_image_list->strategyImages[side_offset * 120 + curent_level_offset * 40 +
-					                                  offset_large + 3],
+					r.draw(common_image_list
+					           ->strategyImages[side_offset * 120 + curent_level_offset * 40 +
+					                            offset_large + 3],
 					       screenPosition - Vec2<float>{0.0f, 0.0f});
 					break;
 			}
@@ -204,7 +209,7 @@ void TileObjectBattleUnit::setPosition(Vec3<float> newPosition)
 	}
 
 	occupiedTiles.clear();
-	
+
 	TileObject::setPosition(newPosition);
 	owningTile->updateBattlescapeUnitPresent();
 
@@ -282,7 +287,7 @@ void TileObjectBattleUnit::addToDrawnTiles(Tile *tile)
 		// Units are drawn in the topmost tile their head pops into
 		// Otherwise, they can only be drawn in it if it's their owner tile
 		if (maxCoords.z * 1000 + maxCoords.x + maxCoords.y < z * 1000 + x + y &&
-			u->position.z + (float)u->getCurrentHeight() / 40.0f >= (float)z)
+		    u->position.z + (float)u->getCurrentHeight() / 40.0f >= (float)z)
 		{
 			tile = intersectingTile;
 			maxCoords = {x, y, z};

@@ -1,11 +1,11 @@
 #include "game/ui/battle/battlebriefing.h"
-#include "game/ui/battle/battleprestart.h"
 #include "forms/ui.h"
-#include "game/state/battle/battlecommonimagelist.h"
+#include "framework/event.h"
 #include "framework/framework.h"
+#include "game/state/battle/battlecommonimagelist.h"
+#include "game/ui/battle/battleprestart.h"
 #include "game/ui/battle/battleview.h"
 #include "game/ui/city/cityview.h"
-#include "framework/event.h"
 #include <cmath>
 
 namespace OpenApoc
@@ -13,7 +13,7 @@ namespace OpenApoc
 
 BattleBriefing::BattleBriefing(sp<GameState> state, std::future<void> gameStateTask)
     : Stage(), menuform(ui().getForm("FORM_BATTLE_BRIEFING")),
-	loading_task(std::move(gameStateTask)), state(state)
+      loading_task(std::move(gameStateTask)), state(state)
 {
 	menuform->findControlTyped<Label>("TEXT_DATE")->setText("Friday, 14th  July, 2084      17:35");
 	menuform->findControlTyped<Label>("TEXT_BRIEFING")->setText("You must lorem ipisum etc.");
@@ -21,21 +21,21 @@ BattleBriefing::BattleBriefing(sp<GameState> state, std::future<void> gameStateT
 	menuform->findControlTyped<GraphicButton>("BUTTON_TURN_BASED")->Visible = false;
 
 	menuform->findControlTyped<GraphicButton>("BUTTON_REAL_TIME")
-		->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		this->state->current_battle->mode = Battle::Mode::RealTime;
-		fw().stageQueueCommand({ StageCmd::Command::REPLACEALL, mksp<BattlePreStart>(this->state)});
-	});
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    this->state->current_battle->mode = Battle::Mode::RealTime;
+		    fw().stageQueueCommand(
+		        {StageCmd::Command::REPLACEALL, mksp<BattlePreStart>(this->state)});
+		});
 
 	menuform->findControlTyped<GraphicButton>("BUTTON_TURN_BASED")
-		->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		this->state->current_battle->mode = Battle::Mode::TurnBased;
-		fw().stageQueueCommand({ StageCmd::Command::REPLACEALL, mksp<BattlePreStart>(this->state) });
-	});
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    this->state->current_battle->mode = Battle::Mode::TurnBased;
+		    fw().stageQueueCommand(
+		        {StageCmd::Command::REPLACEALL, mksp<BattlePreStart>(this->state)});
+		});
 }
 
-void BattleBriefing::begin()
-{
-}
+void BattleBriefing::begin() {}
 
 void BattleBriefing::pause() {}
 
@@ -56,7 +56,6 @@ void BattleBriefing::update()
 		{
 			menuform->findControlTyped<GraphicButton>("BUTTON_REAL_TIME")->Visible = true;
 			menuform->findControlTyped<GraphicButton>("BUTTON_TURN_BASED")->Visible = true;
-
 		}
 			return;
 		default:

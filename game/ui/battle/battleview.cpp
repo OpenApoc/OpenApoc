@@ -279,27 +279,23 @@ BattleView::BattleView(sp<GameState> state)
 	// FIXME: When clicking on items or weapons, activate them or go into fire / teleport mode
 	// accordingly
 
-	std::function<void(FormsEvent *e)> clickedRightHand = [this](Event *) {
+	std::function<void(FormsEvent * e)> clickedRightHand = [this](Event *) {
 		LogWarning("Clicked right hand");
 	};
 
-	std::function<void(FormsEvent *e)> clickedLeftHand = [this](Event *) {
+	std::function<void(FormsEvent * e)> clickedLeftHand = [this](Event *) {
 		LogWarning("Clicked left hand");
 	};
 
-	std::function<void(FormsEvent *e)> dropRightHand = [this](Event *) {
-		orderDrop(true);
-	};
+	std::function<void(FormsEvent * e)> dropRightHand = [this](Event *) { orderDrop(true); };
 
-	std::function<void(FormsEvent *e)> dropLeftHand = [this](Event *) {
-		orderDrop(false);
-	};
+	std::function<void(FormsEvent * e)> dropLeftHand = [this](Event *) { orderDrop(false); };
 
 	std::function<void(bool right)> throwItem = [this](bool right) {
-		if (selectedUnits.size() == 0 
-			|| !(selectedUnits.front()->agent->getFirstItemInSlot(right 
-				? AgentEquipmentLayout::EquipmentSlotType::RightHand 
-				: AgentEquipmentLayout::EquipmentSlotType::LeftHand)))
+		if (selectedUnits.size() == 0 ||
+		    !(selectedUnits.front()->agent->getFirstItemInSlot(
+		        right ? AgentEquipmentLayout::EquipmentSlotType::RightHand
+		              : AgentEquipmentLayout::EquipmentSlotType::LeftHand)))
 		{
 			if (right)
 			{
@@ -311,14 +307,15 @@ BattleView::BattleView(sp<GameState> state)
 			}
 			return;
 		}
-		this->selectionState = right ?  BattleSelectionState::ThrowRight :  BattleSelectionState::ThrowLeft;
+		this->selectionState =
+		    right ? BattleSelectionState::ThrowRight : BattleSelectionState::ThrowLeft;
 	};
 
-	std::function<void(FormsEvent *e)> throwRightHand = [this, throwItem](Event *) {
+	std::function<void(FormsEvent * e)> throwRightHand = [this, throwItem](Event *) {
 		throwItem(true);
 	};
 
-	std::function<void(FormsEvent *e)> throwLeftHand = [this, throwItem](Event *) {
+	std::function<void(FormsEvent * e)> throwLeftHand = [this, throwItem](Event *) {
 		throwItem(false);
 	};
 
@@ -330,34 +327,34 @@ BattleView::BattleView(sp<GameState> state)
 	    ->addCallback(FormEventType::MouseClick, clickedLeftHand);
 	this->uiTabsTB[0]
 	    ->findControlTyped<Graphic>("OVERLAY_RIGHT_HAND")
-		->addCallback(FormEventType::MouseClick, clickedRightHand);
+	    ->addCallback(FormEventType::MouseClick, clickedRightHand);
 	this->uiTabsTB[0]
 	    ->findControlTyped<Graphic>("OVERLAY_LEFT_HAND")
-		->addCallback(FormEventType::MouseClick, clickedLeftHand);
+	    ->addCallback(FormEventType::MouseClick, clickedLeftHand);
 	this->uiTabsRT[0]
-		->findControlTyped<GraphicButton>("BUTTON_RIGHT_HAND_DROP")
-		->addCallback(FormEventType::MouseClick, dropRightHand);
+	    ->findControlTyped<GraphicButton>("BUTTON_RIGHT_HAND_DROP")
+	    ->addCallback(FormEventType::MouseClick, dropRightHand);
 	this->uiTabsRT[0]
-		->findControlTyped<GraphicButton>("BUTTON_LEFT_HAND_DROP")
-		->addCallback(FormEventType::MouseClick, dropLeftHand);
+	    ->findControlTyped<GraphicButton>("BUTTON_LEFT_HAND_DROP")
+	    ->addCallback(FormEventType::MouseClick, dropLeftHand);
 	this->uiTabsTB[0]
-		->findControlTyped<GraphicButton>("BUTTON_RIGHT_HAND_DROP")
-		->addCallback(FormEventType::MouseClick, dropRightHand);
+	    ->findControlTyped<GraphicButton>("BUTTON_RIGHT_HAND_DROP")
+	    ->addCallback(FormEventType::MouseClick, dropRightHand);
 	this->uiTabsTB[0]
-		->findControlTyped<GraphicButton>("BUTTON_LEFT_HAND_DROP")
-		->addCallback(FormEventType::MouseClick, dropLeftHand);
+	    ->findControlTyped<GraphicButton>("BUTTON_LEFT_HAND_DROP")
+	    ->addCallback(FormEventType::MouseClick, dropLeftHand);
 	this->uiTabsRT[0]
-		->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND_THROW")
-		->addCallback(FormEventType::MouseClick, throwRightHand);
+	    ->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND_THROW")
+	    ->addCallback(FormEventType::MouseClick, throwRightHand);
 	this->uiTabsRT[0]
-		->findControlTyped<CheckBox>("BUTTON_LEFT_HAND_THROW")
-		->addCallback(FormEventType::MouseClick, throwLeftHand);
+	    ->findControlTyped<CheckBox>("BUTTON_LEFT_HAND_THROW")
+	    ->addCallback(FormEventType::MouseClick, throwLeftHand);
 	this->uiTabsTB[0]
-		->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND_THROW")
-		->addCallback(FormEventType::MouseClick, throwRightHand);
+	    ->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND_THROW")
+	    ->addCallback(FormEventType::MouseClick, throwRightHand);
 	this->uiTabsTB[0]
-		->findControlTyped<CheckBox>("BUTTON_LEFT_HAND_THROW")
-		->addCallback(FormEventType::MouseClick, throwLeftHand);
+	    ->findControlTyped<CheckBox>("BUTTON_LEFT_HAND_THROW")
+	    ->addCallback(FormEventType::MouseClick, throwLeftHand);
 
 	switch (state->current_battle->mode)
 	{
@@ -517,7 +514,7 @@ void BattleView::update()
 	    255 - 2, Colour(0, (colorCurrent * 5 + 255 * 3) / 8, (colorCurrent * 5 + 255 * 3) / 8));
 	// Pink color, for neutral indicators, pulsates from (3/8r 0g 3/8b) to (8/8r 0g 8/8b)
 	newPal->setColour(
-		255 - 1, Colour((colorCurrent * 5 + 255 * 3) / 8, 0, (colorCurrent * 5 + 255 * 3) / 8));
+	    255 - 1, Colour((colorCurrent * 5 + 255 * 3) / 8, 0, (colorCurrent * 5 + 255 * 3) / 8));
 	// Yellow color, for owned indicators, pulsates from (3/8r 3/8g 0b) to (8/8r 8/8g 0b)
 	newPal->setColour(
 	    255 - 0, Colour((colorCurrent * 5 + 255 * 3) / 8, (colorCurrent * 5 + 255 * 3) / 8, 0));
@@ -525,13 +522,15 @@ void BattleView::update()
 
 	// Update weapons if required
 	auto rightInfo = createItemOverlayInfo(true);
-	if(!(rightInfo == rightHandInfo) && (this->activeTab == uiTabsRT[0] || this->activeTab == uiTabsTB[0]))
+	if (!(rightInfo == rightHandInfo) &&
+	    (this->activeTab == uiTabsRT[0] || this->activeTab == uiTabsTB[0]))
 	{
 		rightHandInfo = rightInfo;
 		updateItemInfo(true);
 	}
 	auto leftInfo = createItemOverlayInfo(false);
-	if (!(leftInfo == leftHandInfo) && (this->activeTab == uiTabsRT[0] || this->activeTab == uiTabsTB[0]))
+	if (!(leftInfo == leftHandInfo) &&
+	    (this->activeTab == uiTabsRT[0] || this->activeTab == uiTabsTB[0]))
 	{
 		leftHandInfo = leftInfo;
 		updateItemInfo(false);
@@ -570,17 +569,16 @@ void BattleView::updateSelectedUnits()
 		}
 	}
 	lastSelectedUnit = selectedUnits.size() == 0 ? nullptr : selectedUnits.front();
-	
+
 	// Cancel stuff that cancels on unit change
 	if (prevLSU != lastSelectedUnit)
 	{
-		if (selectionState == BattleSelectionState::ThrowLeft
-			|| selectionState == BattleSelectionState::ThrowRight)
+		if (selectionState == BattleSelectionState::ThrowLeft ||
+		    selectionState == BattleSelectionState::ThrowRight)
 		{
 			selectionState = BattleSelectionState::Normal;
 		}
 	}
-
 }
 
 void BattleView::updateSelectionMode()
@@ -615,8 +613,8 @@ void BattleView::updateSelectionMode()
 	else
 	{
 		// To cancel out of throw, we must switch first agent or cancel throwing
-		if (selectionState == BattleSelectionState::ThrowLeft
-			|| selectionState == BattleSelectionState::ThrowRight)
+		if (selectionState == BattleSelectionState::ThrowLeft ||
+		    selectionState == BattleSelectionState::ThrowRight)
 		{
 			return;
 		}
@@ -740,9 +738,9 @@ void BattleView::updateSoldierButtons()
 	this->baseForm->findControlTyped<CheckBox>("BUTTON_AGGRESSIVE")->setChecked(aggressive);
 
 	this->activeTab->findControlTyped<CheckBox>("BUTTON_LEFT_HAND_THROW")
-		->setChecked(selectionState == BattleSelectionState::ThrowLeft || leftThrowDelay > 0);
+	    ->setChecked(selectionState == BattleSelectionState::ThrowLeft || leftThrowDelay > 0);
 	this->activeTab->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND_THROW")
-		->setChecked(selectionState == BattleSelectionState::ThrowRight || rightThrowDelay > 0);
+	    ->setChecked(selectionState == BattleSelectionState::ThrowRight || rightThrowDelay > 0);
 }
 
 void BattleView::attemptToClearCurrentOrders(sp<BattleUnit> u, bool overrideBodyStateChange)
@@ -797,7 +795,7 @@ void BattleView::orderMove(Vec3<int> target, int facingOffset, bool demandGiveWa
 {
 	// Check if ordered to exit
 	bool runAway = map.getTile(target)->getHasExit();
-	
+
 	// FIXME: Handle group movement (don't forget to turn it off when running away)
 	for (auto unit : selectedUnits)
 	{
@@ -806,11 +804,13 @@ void BattleView::orderMove(Vec3<int> target, int facingOffset, bool demandGiveWa
 		if (runAway)
 		{
 			// Running away units are impatient!
-			unit->missions.emplace_back(BattleUnitMission::gotoLocation(*unit, target, facingOffset, true, 1, demandGiveWay, true));
+			unit->missions.emplace_back(BattleUnitMission::gotoLocation(
+			    *unit, target, facingOffset, true, 1, demandGiveWay, true));
 		}
 		else // not running away
 		{
-			unit->missions.emplace_back(BattleUnitMission::gotoLocation(*unit, target, facingOffset, true, 10, demandGiveWay));
+			unit->missions.emplace_back(BattleUnitMission::gotoLocation(*unit, target, facingOffset,
+			                                                            true, 10, demandGiveWay));
 		}
 		if (unit->missions.size() == 1)
 		{
@@ -873,16 +873,18 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 	// FIXME: Check if we can actually throw it!
 
 	auto unit = selectedUnits.front();
-	auto item = unit->agent->getFirstItemInSlot(right ? AgentEquipmentLayout::EquipmentSlotType::RightHand : AgentEquipmentLayout::EquipmentSlotType::LeftHand);
+	auto item =
+	    unit->agent->getFirstItemInSlot(right ? AgentEquipmentLayout::EquipmentSlotType::RightHand
+	                                          : AgentEquipmentLayout::EquipmentSlotType::LeftHand);
 	if (!item)
 	{
 		return;
 	}
-	
+
 	// FIXME: actually read the option
 	bool USER_OPTION_ALLOW_INSTANT_THROWS = false;
 	attemptToClearCurrentOrders(unit, USER_OPTION_ALLOW_INSTANT_THROWS);
-	
+
 	if (unit->missions.size() > 0)
 	{
 		// FIXME: Report unable to throw
@@ -891,10 +893,10 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 
 	unit->missions.emplace_front(BattleUnitMission::throwItem(*unit, item, target));
 	unit->missions.front()->start(*this->state, *unit);
-	LogWarning("BattleUnit \"%s\" throwing %s hand item", unit->agent->name.cStr(), right ? "right" : "left");
+	LogWarning("BattleUnit \"%s\" throwing %s hand item", unit->agent->name.cStr(),
+	           right ? "right" : "left");
 	selectionState = BattleSelectionState::Normal;
 }
-
 
 void BattleView::orderDrop(bool right)
 {
@@ -903,14 +905,17 @@ void BattleView::orderDrop(bool right)
 		return;
 	}
 	auto unit = selectedUnits.front();
-	auto item = unit->agent->getFirstItemInSlot(right ? AgentEquipmentLayout::EquipmentSlotType::RightHand : AgentEquipmentLayout::EquipmentSlotType::LeftHand);
+	auto item =
+	    unit->agent->getFirstItemInSlot(right ? AgentEquipmentLayout::EquipmentSlotType::RightHand
+	                                          : AgentEquipmentLayout::EquipmentSlotType::LeftHand);
 	if (!item)
 	{
 		return;
 	}
 	unit->missions.emplace_front(BattleUnitMission::dropItem(*unit, item));
 	unit->missions.front()->start(*this->state, *unit);
-	LogWarning("BattleUnit \"%s\" dropping %s hand item", unit->agent->name.cStr(), right ? "right" : "left");
+	LogWarning("BattleUnit \"%s\" dropping %s hand item", unit->agent->name.cStr(),
+	           right ? "right" : "left");
 }
 
 void BattleView::orderSelect(sp<BattleUnit> u, bool inverse, bool additive)
@@ -1188,17 +1193,17 @@ void BattleView::eventOccurred(Event *e)
 				case BattleSelectionState::ThrowLeft:
 					switch (e->mouse().Button)
 					{
-					case 1:
-					{
-						bool right = selectionState == BattleSelectionState::ThrowRight;
-						orderThrow(t, right);
-						break;
-					}
-					case 4:
-					{	
-						selectionState = BattleSelectionState::Normal;
-						break;
-					}
+						case 1:
+						{
+							bool right = selectionState == BattleSelectionState::ThrowRight;
+							orderThrow(t, right);
+							break;
+						}
+						case 4:
+						{
+							selectionState = BattleSelectionState::Normal;
+							break;
+						}
 					}
 			}
 			LogWarning("Click at tile %d, %d, %d", t.x, t.y, t.z);
@@ -1275,41 +1280,41 @@ void BattleView::updateItemInfo(bool right)
 	if (info.itemType)
 	{
 		this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND")
-			->setImage(info.itemType->equipscreen_sprite);
+		    ->setImage(info.itemType->equipscreen_sprite);
 		if (info.damageType)
 		{
 			this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_DAMAGETYPE")
-				->setImage(info.damageType->icon_sprite);
+			    ->setImage(info.damageType->icon_sprite);
 		}
 		else
 		{
 			this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_DAMAGETYPE")
-				->setImage(nullptr);
+			    ->setImage(nullptr);
 		}
 	}
 	else
 	{
 		this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND")->setImage(nullptr);
 		this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_DAMAGETYPE")
-			->setImage(nullptr);
+		    ->setImage(nullptr);
 	}
-	
+
 	// Selection bracket
 	if (info.selected)
 	{
 		this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND_SELECTED")
-			->setImage(selectedItemOverlay);
+		    ->setImage(selectedItemOverlay);
 	}
 	else
 	{
 		this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND_SELECTED")
-			->setImage(nullptr);
+		    ->setImage(nullptr);
 	}
 
-	auto overlay = mksp<RGBImage>(Vec2<int>{ 50, 95 });
+	auto overlay = mksp<RGBImage>(Vec2<int>{50, 95});
 	{
 		RGBImageLock l(overlay);
-		
+
 		// Draw accuracy
 		if (info.accuracy / 2 > 0)
 		{
@@ -1320,16 +1325,16 @@ void BattleView::updateItemInfo(bool right)
 			{
 				for (int x = 0; x < accuracy; x++)
 				{
-					l.set({ x, y }, accuracyColors[x * colorsCount / accuracy]);
-					l.set({ x, y + 1 }, accuracyColors[x * colorsCount / accuracy]);
+					l.set({x, y}, accuracyColors[x * colorsCount / accuracy]);
+					l.set({x, y + 1}, accuracyColors[x * colorsCount / accuracy]);
 				}
 			}
 			else
 			{
 				for (int x = 0; x < accuracy; x++)
 				{
-					l.set({ 50 - 1 - x, y }, accuracyColors[x * colorsCount / accuracy]);
-					l.set({ 50 - 1 - x, y + 1 }, accuracyColors[x * colorsCount / accuracy]);
+					l.set({50 - 1 - x, y}, accuracyColors[x * colorsCount / accuracy]);
+					l.set({50 - 1 - x, y + 1}, accuracyColors[x * colorsCount / accuracy]);
 				}
 			}
 		}
@@ -1337,7 +1342,7 @@ void BattleView::updateItemInfo(bool right)
 		if (info.maxAmmo > 0 && info.curAmmo > 0)
 		{
 			int ammoDisplaySize = 90;
-			
+
 			int ammoCount = info.curAmmo;
 			int ammoPadding = 1;
 			int ammoSize = ammoDisplaySize / info.maxAmmo - 1;
@@ -1351,10 +1356,11 @@ void BattleView::updateItemInfo(bool right)
 
 			for (int i = 0; i < ammoCount; i++)
 			{
-				for (int j = 0; j < ammoSize;j++)
+				for (int j = 0; j < ammoSize; j++)
 				{
-					l.set({ x, ammoDisplaySize - 1 - i * (ammoSize + ammoPadding) - j }, ammoColour);
-					l.set({ x + 1, ammoDisplaySize - 1 - i * (ammoSize + ammoPadding) - j }, ammoColour);
+					l.set({x, ammoDisplaySize - 1 - i * (ammoSize + ammoPadding) - j}, ammoColour);
+					l.set({x + 1, ammoDisplaySize - 1 - i * (ammoSize + ammoPadding) - j},
+					      ammoColour);
 				}
 			}
 		}
@@ -1393,7 +1399,7 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 					a.maxAmmo = p->max_ammo;
 					a.curAmmo = e->ammo;
 				}
-				//FIXME: Handle selection
+				// FIXME: Handle selection
 				a.selected = false;
 			}
 			// FIXME: Grenade throw accuracy?
@@ -1409,7 +1415,7 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 bool AgentEquipmentInfo::operator==(const AgentEquipmentInfo &other) const
 {
 	return (this->accuracy / 2 == other.accuracy / 2 && this->curAmmo == other.curAmmo &&
-		this->itemType == other.itemType && this->damageType == other.damageType);
+	        this->itemType == other.itemType && this->damageType == other.damageType);
 }
 
 }; // namespace OpenApoc

@@ -1,7 +1,7 @@
-#include "framework/framework.h"
 #include "game/state/battle/battleunitmission.h"
-#include "game/state/battle/battleunit.h"
+#include "framework/framework.h"
 #include "game/state/battle/battlecommonsamplelist.h"
+#include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
 #include "game/state/tileview/tileobject_battleitem.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
@@ -10,24 +10,23 @@
 namespace OpenApoc
 {
 
-float BattleUnitTileHelper::applyPathOverheadAllowance(float cost) const 
-{ 
-	return cost / 1.065f;
-}
+float BattleUnitTileHelper::applyPathOverheadAllowance(float cost) const { return cost / 1.065f; }
 
-bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool demandGiveWay) const 
+bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool demandGiveWay) const
 {
 	float nothing;
 	bool none;
 	return canEnterTile(from, to, nothing, none, false, demandGiveWay);
 }
 
-bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay, bool demandGiveWay) const 
+bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay,
+                                        bool demandGiveWay) const
 {
 	return canEnterTile(from, to, cost, doorInTheWay, false, demandGiveWay);
 }
 
-bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool ignoreUnits, bool demandGiveWay) const
+bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool ignoreUnits,
+                                        bool demandGiveWay) const
 {
 	float nothing;
 	bool none;
@@ -35,7 +34,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool ignoreUnits, 
 }
 
 bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay,
-	bool ignoreUnits, bool demandGiveWay) const
+                                        bool ignoreUnits, bool demandGiveWay) const
 {
 	int costInt = 0;
 	doorInTheWay = false;
@@ -258,7 +257,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 		if (large)
 		{
 			fromHeightSatisfactory = from->height >= 0.675f || fromX1->height >= 0.675f ||
-				fromY1->height >= 0.675f || fromXY1->height >= 0.675f;
+			                         fromY1->height >= 0.675f || fromXY1->height >= 0.675f;
 			fromHasLift = from->hasLift || fromX1->hasLift || fromY1->hasLift || fromXY1->hasLift;
 			toHasLift = to->hasLift || toX1->hasLift || toY1->hasLift || toXY1->hasLift;
 		}
@@ -272,7 +271,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 		// - We stand high enough and target location is not a lift
 		// - We stand on lift, target has lift, and we're moving strictly up
 		if (!(fromHeightSatisfactory && !toHasLift) &&
-			!(fromHasLift && toHasLift && toPos.x == fromPos.x && toPos.y == fromPos.y))
+		    !(fromHasLift && toHasLift && toPos.x == fromPos.x && toPos.y == fromPos.y))
 		{
 			// Non-flyers cannot ascend this way
 			if (!flying)
@@ -299,9 +298,9 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 			// Will we bump our head when leaving current spot?
 			// Check four tiles above our "from"'s head
 			if (map.getTile(Vec3<int>{fromPos.x, fromPos.y, fromPos.z + 2})->solidGround ||
-				map.getTile(Vec3<int>{fromX1Pos.x, fromX1Pos.y, fromX1Pos.z + 2})->solidGround ||
-				map.getTile(Vec3<int>{fromY1Pos.x, fromY1Pos.y, fromY1Pos.z + 2})->solidGround ||
-				map.getTile(Vec3<int>{fromXY1Pos.x, fromXY1Pos.y, fromXY1Pos.z + 2})->solidGround)
+			    map.getTile(Vec3<int>{fromX1Pos.x, fromX1Pos.y, fromX1Pos.z + 2})->solidGround ||
+			    map.getTile(Vec3<int>{fromY1Pos.x, fromY1Pos.y, fromY1Pos.z + 2})->solidGround ||
+			    map.getTile(Vec3<int>{fromXY1Pos.x, fromXY1Pos.y, fromXY1Pos.z + 2})->solidGround)
 			{
 				return false;
 			}
@@ -359,21 +358,21 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 				//	       x---  ----                x***  ****
 
 				Tile *rightTopZ0 =
-					map.getTile(std::max(fromPos.x, toPos.x), std::max(fromPos.y, toPos.y) - 2, z);
+				    map.getTile(std::max(fromPos.x, toPos.x), std::max(fromPos.y, toPos.y) - 2, z);
 				Tile *rightBottomZ0 =
-					map.getTile(std::max(fromPos.x, toPos.x), std::max(fromPos.y, toPos.y) - 1, z);
+				    map.getTile(std::max(fromPos.x, toPos.x), std::max(fromPos.y, toPos.y) - 1, z);
 				Tile *bottomLeftZ0 =
-					map.getTile(std::max(fromPos.x, toPos.x) - 2, std::max(fromPos.y, toPos.y), z);
+				    map.getTile(std::max(fromPos.x, toPos.x) - 2, std::max(fromPos.y, toPos.y), z);
 				Tile *bottomRightZ0 =
-					map.getTile(std::max(fromPos.x, toPos.x) - 1, std::max(fromPos.y, toPos.y), z);
+				    map.getTile(std::max(fromPos.x, toPos.x) - 1, std::max(fromPos.y, toPos.y), z);
 				Tile *rightTopZ1 = map.getTile(std::max(fromPos.x, toPos.x),
-					std::max(fromPos.y, toPos.y) - 2, z + 1);
+				                               std::max(fromPos.y, toPos.y) - 2, z + 1);
 				Tile *rightBottomZ1 = map.getTile(std::max(fromPos.x, toPos.x),
-					std::max(fromPos.y, toPos.y) - 1, z + 1);
+				                                  std::max(fromPos.y, toPos.y) - 1, z + 1);
 				Tile *bottomLeftZ1 = map.getTile(std::max(fromPos.x, toPos.x) - 2,
-					std::max(fromPos.y, toPos.y), z + 1);
+				                                 std::max(fromPos.y, toPos.y), z + 1);
 				Tile *bottomRightZ1 = map.getTile(std::max(fromPos.x, toPos.x) - 1,
-					std::max(fromPos.y, toPos.y), z + 1);
+				                                  std::max(fromPos.y, toPos.y), z + 1);
 
 				// STEP 06: [For large units if moving: down-right or up-left / SE or NW]
 				// Find highest movement cost amongst all walls we intersect
@@ -398,17 +397,17 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 				// STEP 06: [For large units if moving: down-right or up-left / SE or NW]
 				// Diagonally located tiles cannot have impassable scenery or static units
 				if (bottomLeftZ0->movementCostIn == 255 || rightTopZ0->movementCostIn == 255 ||
-					bottomLeftZ1->movementCostIn == 255 || rightTopZ1->movementCostIn == 255)
+				    bottomLeftZ1->movementCostIn == 255 || rightTopZ1->movementCostIn == 255)
 				{
 					return false;
 				}
 				if (!ignoreUnits &&
-					(bottomLeftZ0->getUnitIfPresent(true, true, true, u.tileObject,
-						demandGiveWay) ||
-						rightTopZ0->getUnitIfPresent(true, true, true, u.tileObject, demandGiveWay) ||
-						bottomLeftZ1->getUnitIfPresent(true, true, true, u.tileObject,
-							demandGiveWay) ||
-						rightTopZ1->getUnitIfPresent(true, true, true, u.tileObject, demandGiveWay)))
+				    (bottomLeftZ0->getUnitIfPresent(true, true, true, u.tileObject,
+				                                    demandGiveWay) ||
+				     rightTopZ0->getUnitIfPresent(true, true, true, u.tileObject, demandGiveWay) ||
+				     bottomLeftZ1->getUnitIfPresent(true, true, true, u.tileObject,
+				                                    demandGiveWay) ||
+				     rightTopZ1->getUnitIfPresent(true, true, true, u.tileObject, demandGiveWay)))
 				{
 					return false;
 				}
@@ -428,10 +427,10 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 						//  XX+
 						// Must check 5 tiles above our head, already have 4 of them
 						if (edge->solidGround || edge->hasLift || rightBottomZ1->solidGround ||
-							rightBottomZ1->hasLift || bottomRightZ1->solidGround ||
-							bottomRightZ1->hasLift || rightTopZ1->solidGround ||
-							rightTopZ1->hasLift || bottomLeftZ1->solidGround ||
-							bottomLeftZ1->hasLift)
+						    rightBottomZ1->hasLift || bottomRightZ1->solidGround ||
+						    bottomRightZ1->hasLift || rightTopZ1->solidGround ||
+						    rightTopZ1->hasLift || bottomLeftZ1->solidGround ||
+						    bottomLeftZ1->hasLift)
 						{
 							return false;
 						}
@@ -448,10 +447,10 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 						//  X**
 						// Must check 5 tiles above our head, already have 2 of them
 						if (leftMiddle->solidGround || leftMiddle->hasLift ||
-							leftTop->solidGround || leftTop->hasLift || topMiddle->solidGround ||
-							topMiddle->hasLift || rightTopZ1->solidGround || rightTopZ1->hasLift ||
-							bottomLeftZ1->solidGround || bottomLeftZ1->hasLift || toZ1->hasLift ||
-							toXZ1->hasLift || toYZ1->hasLift || toXYZ1->hasLift)
+						    leftTop->solidGround || leftTop->hasLift || topMiddle->solidGround ||
+						    topMiddle->hasLift || rightTopZ1->solidGround || rightTopZ1->hasLift ||
+						    bottomLeftZ1->solidGround || bottomLeftZ1->hasLift || toZ1->hasLift ||
+						    toXZ1->hasLift || toYZ1->hasLift || toXYZ1->hasLift)
 						{
 							return false;
 						}
@@ -480,21 +479,21 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 				//	----  ----  x            ****  ****  x
 
 				Tile *topLeftZ0 = map.getTile(std::max(fromPos.x, toPos.x) - 2,
-					std::max(fromPos.y, toPos.y) - 2, z);
+				                              std::max(fromPos.y, toPos.y) - 2, z);
 				Tile *topZ0 = map.getTile(std::max(fromPos.x, toPos.x) - 1,
-					std::max(fromPos.y, toPos.y) - 2, z);
+				                          std::max(fromPos.y, toPos.y) - 2, z);
 				Tile *leftZ0 = map.getTile(std::max(fromPos.x, toPos.x) - 2,
-					std::max(fromPos.y, toPos.y) - 1, z);
+				                           std::max(fromPos.y, toPos.y) - 1, z);
 				Tile *bottomRightZ0 =
-					map.getTile(std::max(fromPos.x, toPos.x), std::max(fromPos.y, toPos.y), z);
+				    map.getTile(std::max(fromPos.x, toPos.x), std::max(fromPos.y, toPos.y), z);
 				Tile *topLeftZ1 = map.getTile(std::max(fromPos.x, toPos.x) - 2,
-					std::max(fromPos.y, toPos.y) - 2, z + 1);
+				                              std::max(fromPos.y, toPos.y) - 2, z + 1);
 				Tile *topZ1 = map.getTile(std::max(fromPos.x, toPos.x) - 1,
-					std::max(fromPos.y, toPos.y) - 2, z + 1);
+				                          std::max(fromPos.y, toPos.y) - 2, z + 1);
 				Tile *leftZ1 = map.getTile(std::max(fromPos.x, toPos.x) - 2,
-					std::max(fromPos.y, toPos.y) - 1, z + 1);
+				                           std::max(fromPos.y, toPos.y) - 1, z + 1);
 				Tile *bottomRightZ1 =
-					map.getTile(std::max(fromPos.x, toPos.x), std::max(fromPos.y, toPos.y), z + 1);
+				    map.getTile(std::max(fromPos.x, toPos.x), std::max(fromPos.y, toPos.y), z + 1);
 
 				// STEP 06: [For large units if moving: down-left or up-right / NE or SW]
 				// Find highest movement cost amongst all walls we intersect
@@ -515,21 +514,21 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 				doorInTheWay = doorInTheWay || leftZ1->closedDoorRight;
 				doorInTheWay = doorInTheWay || bottomRightZ1->closedDoorLeft;
 				doorInTheWay = doorInTheWay || bottomRightZ1->closedDoorRight;
-					
+
 				// STEP 06: [For large units if moving: down-left or up-right / NE or SW]
 				// Diagonally located tiles cannot have impassable scenery or static units
 				if (topLeftZ0->movementCostIn == 255 || bottomRightZ0->movementCostIn == 255 ||
-					topLeftZ1->movementCostIn == 255 || bottomRightZ1->movementCostIn == 255)
+				    topLeftZ1->movementCostIn == 255 || bottomRightZ1->movementCostIn == 255)
 				{
 					return false;
 				}
 				if (!ignoreUnits &&
-					(topLeftZ0->getUnitIfPresent(true, true, true, u.tileObject, demandGiveWay) ||
-						bottomRightZ0->getUnitIfPresent(true, true, true, u.tileObject,
-							demandGiveWay) ||
-						topLeftZ1->getUnitIfPresent(true, true, true, u.tileObject, demandGiveWay) ||
-						bottomRightZ1->getUnitIfPresent(true, true, true, u.tileObject,
-							demandGiveWay)))
+				    (topLeftZ0->getUnitIfPresent(true, true, true, u.tileObject, demandGiveWay) ||
+				     bottomRightZ0->getUnitIfPresent(true, true, true, u.tileObject,
+				                                     demandGiveWay) ||
+				     topLeftZ1->getUnitIfPresent(true, true, true, u.tileObject, demandGiveWay) ||
+				     bottomRightZ1->getUnitIfPresent(true, true, true, u.tileObject,
+				                                     demandGiveWay)))
 				{
 					return false;
 				}
@@ -550,10 +549,10 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 						//  **X
 						// Must check 5 tiles above our head, already have 3 of them
 						if (rightMiddle->solidGround || rightMiddle->hasLift ||
-							rightTop->solidGround || rightTop->hasLift || topLeftZ1->solidGround ||
-							topLeftZ1->hasLift || topZ1->solidGround || topZ1->hasLift ||
-							bottomRightZ1->solidGround || bottomRightZ1->hasLift || toZ1->hasLift ||
-							toXZ1->hasLift || toYZ1->hasLift || toXYZ1->hasLift)
+						    rightTop->solidGround || rightTop->hasLift || topLeftZ1->solidGround ||
+						    topLeftZ1->hasLift || topZ1->solidGround || topZ1->hasLift ||
+						    bottomRightZ1->solidGround || bottomRightZ1->hasLift || toZ1->hasLift ||
+						    toXZ1->hasLift || toYZ1->hasLift || toXYZ1->hasLift)
 						{
 							return false;
 						}
@@ -569,11 +568,11 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 						//  x+X
 						// Must check 5 tiles above our head, already have 2 of them
 						if (bottomLeft->solidGround || bottomLeft->hasLift ||
-							bottomMiddle->solidGround || bottomMiddle->hasLift ||
-							topLeftZ1->solidGround || topLeftZ1->hasLift || leftZ1->solidGround ||
-							leftZ1->hasLift || bottomRightZ1->solidGround ||
-							bottomRightZ1->hasLift || toZ1->hasLift || toXZ1->hasLift ||
-							toYZ1->hasLift || toXYZ1->hasLift)
+						    bottomMiddle->solidGround || bottomMiddle->hasLift ||
+						    topLeftZ1->solidGround || topLeftZ1->hasLift || leftZ1->solidGround ||
+						    leftZ1->hasLift || bottomRightZ1->solidGround ||
+						    bottomRightZ1->hasLift || toZ1->hasLift || toXZ1->hasLift ||
+						    toYZ1->hasLift || toXYZ1->hasLift)
 						{
 							return false;
 						}
@@ -616,9 +615,9 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 					auto topOther = map.getTile(toPos.x - 1, toPos.y - 1, toPos.z + 2);
 					auto bottomOther = map.getTile(toPos.x - 1, toPos.y, toPos.z + 2);
 					if (topZ1->solidGround || topZ1->hasLift || bottomZ1->solidGround ||
-						bottomZ1->hasLift || topOther->solidGround || topOther->hasLift ||
-						bottomOther->solidGround || bottomOther->hasLift || toZ1->hasLift ||
-						toXZ1->hasLift || toYZ1->hasLift || toXYZ1->hasLift)
+					    bottomZ1->hasLift || topOther->solidGround || topOther->hasLift ||
+					    bottomOther->solidGround || bottomOther->hasLift || toZ1->hasLift ||
+					    toXZ1->hasLift || toYZ1->hasLift || toXYZ1->hasLift)
 					{
 						return false;
 					}
@@ -656,9 +655,9 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 					auto leftOther = map.getTile(toPos.x - 1, toPos.y - 1, toPos.z + 2);
 					auto rightOther = map.getTile(toPos.x, toPos.y - 1, toPos.z + 2);
 					if (leftZ1->solidGround || leftZ1->hasLift || rightZ1->solidGround ||
-						rightZ1->hasLift || leftOther->solidGround || leftOther->hasLift ||
-						rightOther->solidGround || rightOther->hasLift || toZ1->hasLift ||
-						toXZ1->hasLift || toYZ1->hasLift || toXYZ1->hasLift)
+					    rightZ1->hasLift || leftOther->solidGround || leftOther->hasLift ||
+					    rightOther->solidGround || rightOther->hasLift || toZ1->hasLift ||
+					    toXZ1->hasLift || toYZ1->hasLift || toXYZ1->hasLift)
 					{
 						return false;
 					}
@@ -671,7 +670,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 
 				// Cannot descend if on solid ground
 				if (from->solidGround || fromX1->solidGround || fromY1->solidGround ||
-					fromXY1->solidGround)
+				    fromXY1->solidGround)
 				{
 					return false;
 				}
@@ -708,13 +707,13 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 			//	----  x                    x***
 
 			Tile *topLeft =
-				map.getTile(std::min(fromPos.x, toPos.x), std::min(fromPos.y, toPos.y), z);
+			    map.getTile(std::min(fromPos.x, toPos.x), std::min(fromPos.y, toPos.y), z);
 			Tile *topRight =
-				map.getTile(std::max(fromPos.x, toPos.x), std::min(fromPos.y, toPos.y), z);
+			    map.getTile(std::max(fromPos.x, toPos.x), std::min(fromPos.y, toPos.y), z);
 			Tile *bottomLeft =
-				map.getTile(std::min(fromPos.x, toPos.x), std::max(fromPos.y, toPos.y), z);
+			    map.getTile(std::min(fromPos.x, toPos.x), std::max(fromPos.y, toPos.y), z);
 			Tile *bottomRight =
-				map.getTile(std::max(fromPos.x, toPos.x), std::max(fromPos.y, toPos.y), z);
+			    map.getTile(std::max(fromPos.x, toPos.x), std::max(fromPos.y, toPos.y), z);
 
 			// STEP 06: [For small units if moving diagonally]
 			// Find highest movement cost amongst all walls we intersect
@@ -737,8 +736,8 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 					return false;
 				}
 				if (!ignoreUnits &&
-					(bottomLeft->getUnitIfPresent(true, true, true, u.tileObject, demandGiveWay) ||
-						topRight->getUnitIfPresent(true, true, true, u.tileObject, demandGiveWay)))
+				    (bottomLeft->getUnitIfPresent(true, true, true, u.tileObject, demandGiveWay) ||
+				     topRight->getUnitIfPresent(true, true, true, u.tileObject, demandGiveWay)))
 				{
 					return false;
 				}
@@ -752,8 +751,8 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 					return false;
 				}
 				if (!ignoreUnits &&
-					(topLeft->getUnitIfPresent(true, true, true, u.tileObject, demandGiveWay) ||
-						bottomRight->getUnitIfPresent(true, true, true, u.tileObject, demandGiveWay)))
+				    (topLeft->getUnitIfPresent(true, true, true, u.tileObject, demandGiveWay) ||
+				     bottomRight->getUnitIfPresent(true, true, true, u.tileObject, demandGiveWay)))
 				{
 					return false;
 				}
@@ -764,22 +763,22 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 			{
 				// We cannot have solid ground or lift in any of the three tiles besides ours
 				if (!(toPos.x > fromPos.x && toPos.y > fromPos.y) &&
-					(topLeft->solidGround || topLeft->hasLift))
+				    (topLeft->solidGround || topLeft->hasLift))
 				{
 					return false;
 				}
 				if (!(toPos.x < fromPos.x && toPos.y > fromPos.y) &&
-					(topRight->solidGround || topRight->hasLift))
+				    (topRight->solidGround || topRight->hasLift))
 				{
 					return false;
 				}
 				if (!(toPos.x > fromPos.x && toPos.y < fromPos.y) &&
-					(bottomLeft->solidGround || bottomLeft->hasLift))
+				    (bottomLeft->solidGround || bottomLeft->hasLift))
 				{
 					return false;
 				}
 				if (!(toPos.x < fromPos.x && toPos.y < fromPos.y) &&
-					(bottomRight->solidGround || bottomRight->hasLift))
+				    (bottomRight->solidGround || bottomRight->hasLift))
 				{
 					return false;
 				}
@@ -789,7 +788,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 		else
 		{
 			Tile *bottomRight =
-				map.getTile(std::max(fromPos.x, toPos.x), std::max(fromPos.y, toPos.y), z);
+			    map.getTile(std::max(fromPos.x, toPos.x), std::max(fromPos.y, toPos.y), z);
 
 			// STEP 06: [For small units if moving along X]
 			if (fromPos.x != toPos.x)
@@ -871,7 +870,6 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 	return true;
 }
 
-
 float BattleUnitTileHelper::getDistance(Vec3<float> from, Vec3<float> to) const
 {
 	auto diff = to - from;
@@ -882,8 +880,8 @@ float BattleUnitTileHelper::getDistance(Vec3<float> from, Vec3<float> to) const
 }
 
 BattleUnitMission *BattleUnitMission::gotoLocation(BattleUnit &u, Vec3<int> target, int facingDelta,
-	bool allowSkipNodes, int giveWayAttempts,
-	bool demandGiveWay, bool allowRunningAway)
+                                                   bool allowSkipNodes, int giveWayAttempts,
+                                                   bool demandGiveWay, bool allowRunningAway)
 {
 	auto *mission = new BattleUnitMission();
 	mission->type = MissionType::GotoLocation;
@@ -926,7 +924,8 @@ BattleUnitMission *BattleUnitMission::changeStance(BattleUnit &, AgentType::Body
 	return mission;
 }
 
-BattleUnitMission *BattleUnitMission::throwItem(BattleUnit &u, sp<AEquipment> item, Vec3<int> target)
+BattleUnitMission *BattleUnitMission::throwItem(BattleUnit &u, sp<AEquipment> item,
+                                                Vec3<int> target)
 {
 	auto *mission = new BattleUnitMission();
 	mission->type = MissionType::ThrowItem;
@@ -959,22 +958,22 @@ BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<float> target)
 }
 
 BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<float> from, Vec3<float> to,
-	bool requireGoal)
+                                           bool requireGoal)
 {
 	static const std::list<Vec3<float>> angles = {
-		{ 0, -1, 0 },{ 1, -1, 0 },{ 1, 0, 0 },{ 1, 1, 0 },
-		{ 0, 1, 0 },{ -1, 1, 0 },{ -1, 0, 0 },{ -1, -1, 0 },
+	    {0, -1, 0}, {1, -1, 0}, {1, 0, 0},  {1, 1, 0},
+	    {0, 1, 0},  {-1, 1, 0}, {-1, 0, 0}, {-1, -1, 0},
 	};
 
 	auto *mission = new BattleUnitMission();
 	mission->type = MissionType::Turn;
 	mission->requireGoal = requireGoal;
 	float closestAngle = FLT_MAX;
-	Vec3<int> closestVector = { 0, 0, 0 };
+	Vec3<int> closestVector = {0, 0, 0};
 	Vec3<float> targetFacing = (Vec3<float>)(to - from);
 	if (targetFacing.x == 0.0f && targetFacing.y == 0.0f)
 	{
-		closestVector = { u.facing.x, u.facing.y, 0 };
+		closestVector = {u.facing.x, u.facing.y, 0};
 	}
 	else
 	{
@@ -989,7 +988,7 @@ BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<float> from, Vec3
 			}
 		}
 	}
-	mission->targetFacing = { closestVector.x, closestVector.y };
+	mission->targetFacing = {closestVector.x, closestVector.y};
 	return mission;
 }
 
@@ -1024,25 +1023,25 @@ bool BattleUnitMission::getNextDestination(GameState &state, BattleUnit &u, Vec3
 {
 	switch (this->type)
 	{
-	case MissionType::GotoLocation:
-	{
-		return advanceAlongPath(state, dest, u);
-	}
-	case MissionType::AcquireTU:
-	case MissionType::ReachGoal:
-	case MissionType::Turn:
-	case MissionType::RestartNextMission:
-	case MissionType::Snooze:
-	case MissionType::ChangeBodyState:
-	case MissionType::ThrowItem:
-	case MissionType::DropItem:
-	case MissionType::Fall:
-	{
-		return false;
-	}
-	default:
-		LogWarning("TODO: Implement");
-		return false;
+		case MissionType::GotoLocation:
+		{
+			return advanceAlongPath(state, dest, u);
+		}
+		case MissionType::AcquireTU:
+		case MissionType::ReachGoal:
+		case MissionType::Turn:
+		case MissionType::RestartNextMission:
+		case MissionType::Snooze:
+		case MissionType::ChangeBodyState:
+		case MissionType::ThrowItem:
+		case MissionType::DropItem:
+		case MissionType::Fall:
+		{
+			return false;
+		}
+		default:
+			LogWarning("TODO: Implement");
+			return false;
 	}
 	return false;
 }
@@ -1051,82 +1050,82 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 {
 	switch (this->type)
 	{
-	case MissionType::GotoLocation:
-	{
-		if (finished)
+		case MissionType::GotoLocation:
 		{
-			if (u.current_movement_state != AgentType::MovementState::None)
+			if (finished)
 			{
-				u.setMovementState(AgentType::MovementState::None);
-			}
-			if (allowRunningAway)
-			{
-				if (u.tileObject->getOwningTile()->getHasExit(u.isLarge()))
+				if (u.current_movement_state != AgentType::MovementState::None)
 				{
-					u.retreat(state);
+					u.setMovementState(AgentType::MovementState::None);
+				}
+				if (allowRunningAway)
+				{
+					if (u.tileObject->getOwningTile()->getHasExit(u.isLarge()))
+					{
+						u.retreat(state);
+					}
 				}
 			}
-		}
-		else // = not finished
-		{
-			// Update movement speed if we're already moving
-			if (u.current_movement_state != AgentType::MovementState::None)
+			else // = not finished
 			{
-				makeAgentMove(u);
+				// Update movement speed if we're already moving
+				if (u.current_movement_state != AgentType::MovementState::None)
+				{
+					makeAgentMove(u);
+				}
 			}
+			return;
 		}
-		return;
-	}
-	case MissionType::Snooze:
-	{
-		if (ticks >= this->timeToSnooze)
+		case MissionType::Snooze:
 		{
-			this->timeToSnooze = 0;
-		}
-		else
-		{
-			this->timeToSnooze -= ticks;
-		}
-		return;
-	}
-	case MissionType::ThrowItem:
-		if (finished)
-		{
-			if (item)
+			if (ticks >= this->timeToSnooze)
 			{
-				auto battle = u.battle.lock();
-				if (!battle)
-					return;
-				auto bi = mksp<BattleItem>();
-				bi->battle = u.battle;
-				bi->item = item;
-				item = nullptr;
-				bi->position = u.position + Vec3<float>{0.0, 0.0, 0.5f};
-				bi->supported = false;
-				battle->items.push_back(bi);
-				u.tileObject->map.addObjectToMap(bi);
+				this->timeToSnooze = 0;
 			}
-		}
-		return;
-	case MissionType::ReachGoal:
-		if (finished)
-		{
-			if (u.current_movement_state != AgentType::MovementState::None)
+			else
 			{
-				u.setMovementState(AgentType::MovementState::None);
+				this->timeToSnooze -= ticks;
 			}
+			return;
 		}
-		return;
-	case MissionType::AcquireTU:
-	case MissionType::RestartNextMission:
-	case MissionType::ChangeBodyState:
-	case MissionType::DropItem:
-	case MissionType::Fall:
-	case MissionType::Turn:
-		return;
-	default:
-		LogWarning("TODO: Implement");
-		return;
+		case MissionType::ThrowItem:
+			if (finished)
+			{
+				if (item)
+				{
+					auto battle = u.battle.lock();
+					if (!battle)
+						return;
+					auto bi = mksp<BattleItem>();
+					bi->battle = u.battle;
+					bi->item = item;
+					item = nullptr;
+					bi->position = u.position + Vec3<float>{0.0, 0.0, 0.5f};
+					bi->supported = false;
+					battle->items.push_back(bi);
+					u.tileObject->map.addObjectToMap(bi);
+				}
+			}
+			return;
+		case MissionType::ReachGoal:
+			if (finished)
+			{
+				if (u.current_movement_state != AgentType::MovementState::None)
+				{
+					u.setMovementState(AgentType::MovementState::None);
+				}
+			}
+			return;
+		case MissionType::AcquireTU:
+		case MissionType::RestartNextMission:
+		case MissionType::ChangeBodyState:
+		case MissionType::DropItem:
+		case MissionType::Fall:
+		case MissionType::Turn:
+			return;
+		default:
+			LogWarning("TODO: Implement");
+			return;
 	}
 }
 
@@ -1147,38 +1146,39 @@ bool BattleUnitMission::isFinishedInternal(GameState &state, BattleUnit &u)
 {
 	switch (this->type)
 	{
-	case MissionType::AcquireTU:
-		return u.agent->modified_stats.time_units >= timeUnits;
-	case MissionType::ReachGoal:
-		return u.atGoal || u.falling;
-	case MissionType::GotoLocation:
-		return this->currentPlannedPath.empty() || u.isDead();
-	case MissionType::Snooze:
-		return this->timeToSnooze == 0;
-	case MissionType::ChangeBodyState:
-		return u.current_body_state == this->bodyState;
-	case MissionType::ThrowItem:
-		return throwFailed || !u.isConscious() || (u.current_body_state == AgentType::BodyState::Standing && !item);
-	case MissionType::Turn:
-		if (u.facing == targetFacing || u.isDead())
-		{
+		case MissionType::AcquireTU:
+			return u.agent->modified_stats.time_units >= timeUnits;
+		case MissionType::ReachGoal:
+			return u.atGoal || u.falling;
+		case MissionType::GotoLocation:
+			return this->currentPlannedPath.empty() || u.isDead();
+		case MissionType::Snooze:
+			return this->timeToSnooze == 0;
+		case MissionType::ChangeBodyState:
+			return u.current_body_state == this->bodyState;
+		case MissionType::ThrowItem:
+			return throwFailed || !u.isConscious() ||
+			       (u.current_body_state == AgentType::BodyState::Standing && !item);
+		case MissionType::Turn:
+			if (u.facing == targetFacing || u.isDead())
+			{
+				return true;
+			}
+			return false;
+		case MissionType::Fall:
+			return !u.falling;
+		case MissionType::RestartNextMission:
 			return true;
-		}
-		return false;
-	case MissionType::Fall:
-		return !u.falling;
-	case MissionType::RestartNextMission:
-		return true;
-	case MissionType::DropItem:
-		if (item)
-		{
-			LogError("DropItem's item still present, was isFinished called before its start?");
-			start(state, u);
-		}
-		return true;
-	default:
-		LogWarning("TODO: Implement");
-		return false;
+		case MissionType::DropItem:
+			if (item)
+			{
+				LogError("DropItem's item still present, was isFinished called before its start?");
+				start(state, u);
+			}
+			return true;
+		default:
+			LogWarning("TODO: Implement");
+			return false;
 	}
 }
 
@@ -1188,258 +1188,260 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 
 	switch (this->type)
 	{
-	case MissionType::Turn:
-	{
-		// Already facing properly?
-		if (isFinished(state, u))
+		case MissionType::Turn:
 		{
-			return;
-		}
-		// Go to goal first
-		if (!u.atGoal && requireGoal)
-		{
-			u.missions.emplace_front(reachGoal(u));
-			u.missions.front()->start(state, u);
-			return;
-		}
-		// If we need to turn, do we need to change stance first?
-		if (u.current_body_state == AgentType::BodyState::Prone)
-		{
-			u.missions.emplace_front(changeStance(u, AgentType::BodyState::Kneeling));
-			u.missions.front()->start(state, u);
-			return;
-		}
-		// Get facing
-		Vec2<int> dest;
-		getNextFacing(state, u, dest);
-		// If this is not the final step - create another turning mission 
-		// that will turn us to a point midway
-		if (dest != targetFacing)
-		{
-			u.missions.emplace_front(turn(u, dest));
-			u.missions.front()->start(state, u);
-			return;
-		}
-		// Calculate and spend cost
-		int cost = 1;
-		if (!spendAgentTUs(state, u, cost))
-		{
-			LogWarning("Unit mission \"%s\" could not start: unsufficient TUs",
-				getName().cStr());
-			return;
-		}
-		u.goalFacing = dest;
-		u.turning_animation_ticks_remaining = TICKS_PER_FRAME_UNIT;
-		return;
-	}
-	case MissionType::ChangeBodyState:
-	{
-		if (bodyState == u.target_body_state)
-		{
-			return;
-		}
-		if (u.current_body_state != u.target_body_state)
-		{
-			LogError("Attempting to change body state during another body state change?");
-			u.setBodyState(u.target_body_state);
-		}
-		bool instant = false;
-		if (u.agent->getAnimationPack()->getFrameCountBody(
-			u.getDisplayedItem(), u.target_body_state, bodyState, u.current_hand_state,
-			u.current_movement_state, u.facing) == 0)
-		{
-			if (u.agent->getAnimationPack()->getFrameCountBody(
-				u.getDisplayedItem(), u.target_body_state, bodyState,
-				u.current_hand_state, AgentType::MovementState::None, u.facing) != 0)
+			// Already facing properly?
+			if (isFinished(state, u))
 			{
-				u.setMovementState(AgentType::MovementState::None);
-			}
-			else
-			{
-				instant = true;
-			}
-		}
-		// Transition for stance changes
-		// If trying to fly stand up first
-		if (bodyState == AgentType::BodyState::Flying &&
-			u.current_body_state != AgentType::BodyState::Standing)
-		{
-			u.missions.emplace_front(changeStance(u, AgentType::BodyState::Standing));
-			u.missions.front()->start(state, u);
-			return;
-		}
-		// If trying to stop flying stand up first
-		if (bodyState != AgentType::BodyState::Standing &&
-			u.current_body_state == AgentType::BodyState::Flying &&
-			u.agent->isBodyStateAllowed(AgentType::BodyState::Standing))
-		{
-			u.missions.emplace_front(changeStance(u, AgentType::BodyState::Standing));
-			u.missions.front()->start(state, u);
-			return;
-		}
-		// If trying to stand up from prone go kneel first
-		if (bodyState != AgentType::BodyState::Kneeling &&
-			u.current_body_state == AgentType::BodyState::Prone &&
-			u.agent->isBodyStateAllowed(AgentType::BodyState::Kneeling))
-		{
-			u.missions.emplace_front(changeStance(u, AgentType::BodyState::Kneeling));
-			u.missions.front()->start(state, u);
-			return;
-		}
-		// If trying to go prone from not kneeling then kneel first
-		if (bodyState == AgentType::BodyState::Prone &&
-			u.current_body_state != AgentType::BodyState::Kneeling &&
-			u.agent->isBodyStateAllowed(AgentType::BodyState::Kneeling))
-		{
-			u.missions.emplace_front(changeStance(u, AgentType::BodyState::Kneeling));
-			u.missions.front()->start(state, u);
-			return;
-		}
-		// Calculate and spend cost
-		int cost = 0;
-		switch (bodyState)
-		{
-		case AgentType::BodyState::Flying:
-		case AgentType::BodyState::Standing:
-			if (u.target_body_state == AgentType::BodyState::Prone ||
-				u.target_body_state == AgentType::BodyState::Kneeling)
-				cost = 8;
-			break;
-		case AgentType::BodyState::Kneeling:
-			if (u.target_body_state == AgentType::BodyState::Prone ||
-				u.target_body_state == AgentType::BodyState::Standing ||
-				u.target_body_state == AgentType::BodyState::Flying)
-				cost = 8;
-			break;
-		case AgentType::BodyState::Prone:
-			if (u.target_body_state == AgentType::BodyState::Kneeling ||
-				u.target_body_state == AgentType::BodyState::Standing ||
-				u.target_body_state == AgentType::BodyState::Flying)
-				cost = 8;
-			break;
-		}
-		if (!spendAgentTUs(state, u, cost))
-		{
-			LogWarning("Unit mission \"%s\" could not start: unsufficient TUs",
-				getName().cStr());
-			return;
-		}
-		// Change state actually
-		if (instant)
-		{
-			u.setBodyState(bodyState);
-		}
-		else
-		{
-			u.beginBodyStateChange(
-				bodyState, u.agent->getAnimationPack()->getFrameCountBody(
-					u.getDisplayedItem(), u.current_body_state, bodyState,
-					u.current_hand_state, u.current_movement_state, u.facing) *
-				TICKS_PER_FRAME_UNIT);
-		}
-		return;
-	}
-	case MissionType::ThrowItem:
-		// Item disappeared from inventory
-		if (item && item->ownerAgent != u.agent)
-		{
-			item = nullptr;
-			throwFailed = true;
-			return;
-		}
-		// Half way there - throw the item!
-		if (u.current_body_state == AgentType::BodyState::Throwing)
-		{
-			if (state.battle_common_sample_list->throwSounds.size() > 0)
-			{
-				fw().soundBackend->playSample(listRandomiser(state.rng, state.battle_common_sample_list->throwSounds),
-					u.getPosition(), 0.25f);
-			}
-
-			// FIXME: Throw item properly
-			auto battle = u.battle.lock();
-			if (!battle)
 				return;
-			auto bi = mksp<BattleItem>();
-			bi->battle = u.battle;
-			bi->item = item;
-			item = nullptr;
-			bi->position = u.position + Vec3<float>{0.0, 0.0, (float)u.getCurrentHeight() / 40.0f};
-			bi->velocity = ((Vec3<float>)targetLocation - bi->position) * 7.0f +
-				Vec3<float>{0.0, 0.0, 1.0f} * 15.0f;
-			bi->supported = false;
-			battle->items.push_back(bi);
-			u.tileObject->map.addObjectToMap(bi);
-
- 			u.missions.emplace_front(changeStance(u, AgentType::BodyState::Standing));
-			u.missions.front()->start(state, u);
-			return;
-		}
-		// Just starting the throw
-		else if (item)
-		{
-			// Do we need to turn?
-			auto m = turn(u, targetLocation);
-			if (u.current_body_state != AgentType::BodyState::Standing ||
-				u.current_body_state != u.target_body_state || !m->isFinished(state, u))
-			{
-				// FIXME: actually read the option
-				bool USER_OPTION_ALLOW_INSTANT_THROWS = false;
-				if (!USER_OPTION_ALLOW_INSTANT_THROWS)
-				{
-					if (!m->isFinished(state, u))
-					{
-						u.missions.emplace_front(m);
-						u.missions.front()->start(state, u);
-						return;
-					}
-					if (u.current_body_state != u.target_body_state)
-					{
-						// body state is changing - wait for it to change and then retry
-						u.missions.emplace(++u.missions.begin(),
-							BattleUnitMission::throwItem(u, item, targetLocation));
-						u.missions.pop_front();
-						u.missions.front()->start(state, u);
-						return;
-					}
-					else // body state is static but not standing
-					{
-						u.missions.emplace_front(
-							BattleUnitMission::changeStance(u, AgentType::BodyState::Standing));
-						u.missions.front()->start(state, u);
-						return;
-					}
-				}
-				u.setBodyState(AgentType::BodyState::Standing);
-				u.facing = m->targetFacing;
-				u.goalFacing = m->targetFacing;
 			}
-			// Calculate cost
-			// I *think* this is correct? 18 TUs at 100 time units
-			int cost = 1800 / u.agent->current_stats.time_units;
+			// Go to goal first
+			if (!u.atGoal && requireGoal)
+			{
+				u.missions.emplace_front(reachGoal(u));
+				u.missions.front()->start(state, u);
+				return;
+			}
+			// If we need to turn, do we need to change stance first?
+			if (u.current_body_state == AgentType::BodyState::Prone)
+			{
+				u.missions.emplace_front(changeStance(u, AgentType::BodyState::Kneeling));
+				u.missions.front()->start(state, u);
+				return;
+			}
+			// Get facing
+			Vec2<int> dest;
+			getNextFacing(state, u, dest);
+			// If this is not the final step - create another turning mission
+			// that will turn us to a point midway
+			if (dest != targetFacing)
+			{
+				u.missions.emplace_front(turn(u, dest));
+				u.missions.front()->start(state, u);
+				return;
+			}
+			// Calculate and spend cost
+			int cost = 1;
 			if (!spendAgentTUs(state, u, cost))
 			{
 				LogWarning("Unit mission \"%s\" could not start: unsufficient TUs",
-					getName().cStr());
+				           getName().cStr());
 				return;
 			}
-			// Remove item
-			item->ownerAgent->removeEquipment(item);
-			// Start throw animation
-			u.missions.emplace_front(
-				BattleUnitMission::changeStance(u, AgentType::BodyState::Throwing));
-			u.missions.front()->start(state, u);
+			u.goalFacing = dest;
+			u.turning_animation_ticks_remaining = TICKS_PER_FRAME_UNIT;
 			return;
 		}
-		// Throw finished - nothing else to do
-		else
+		case MissionType::ChangeBodyState:
 		{
-			// Nothing else to do
+			if (bodyState == u.target_body_state)
+			{
+				return;
+			}
+			if (u.current_body_state != u.target_body_state)
+			{
+				LogError("Attempting to change body state during another body state change?");
+				u.setBodyState(u.target_body_state);
+			}
+			bool instant = false;
+			if (u.agent->getAnimationPack()->getFrameCountBody(
+			        u.getDisplayedItem(), u.target_body_state, bodyState, u.current_hand_state,
+			        u.current_movement_state, u.facing) == 0)
+			{
+				if (u.agent->getAnimationPack()->getFrameCountBody(
+				        u.getDisplayedItem(), u.target_body_state, bodyState, u.current_hand_state,
+				        AgentType::MovementState::None, u.facing) != 0)
+				{
+					u.setMovementState(AgentType::MovementState::None);
+				}
+				else
+				{
+					instant = true;
+				}
+			}
+			// Transition for stance changes
+			// If trying to fly stand up first
+			if (bodyState == AgentType::BodyState::Flying &&
+			    u.current_body_state != AgentType::BodyState::Standing)
+			{
+				u.missions.emplace_front(changeStance(u, AgentType::BodyState::Standing));
+				u.missions.front()->start(state, u);
+				return;
+			}
+			// If trying to stop flying stand up first
+			if (bodyState != AgentType::BodyState::Standing &&
+			    u.current_body_state == AgentType::BodyState::Flying &&
+			    u.agent->isBodyStateAllowed(AgentType::BodyState::Standing))
+			{
+				u.missions.emplace_front(changeStance(u, AgentType::BodyState::Standing));
+				u.missions.front()->start(state, u);
+				return;
+			}
+			// If trying to stand up from prone go kneel first
+			if (bodyState != AgentType::BodyState::Kneeling &&
+			    u.current_body_state == AgentType::BodyState::Prone &&
+			    u.agent->isBodyStateAllowed(AgentType::BodyState::Kneeling))
+			{
+				u.missions.emplace_front(changeStance(u, AgentType::BodyState::Kneeling));
+				u.missions.front()->start(state, u);
+				return;
+			}
+			// If trying to go prone from not kneeling then kneel first
+			if (bodyState == AgentType::BodyState::Prone &&
+			    u.current_body_state != AgentType::BodyState::Kneeling &&
+			    u.agent->isBodyStateAllowed(AgentType::BodyState::Kneeling))
+			{
+				u.missions.emplace_front(changeStance(u, AgentType::BodyState::Kneeling));
+				u.missions.front()->start(state, u);
+				return;
+			}
+			// Calculate and spend cost
+			int cost = 0;
+			switch (bodyState)
+			{
+				case AgentType::BodyState::Flying:
+				case AgentType::BodyState::Standing:
+					if (u.target_body_state == AgentType::BodyState::Prone ||
+					    u.target_body_state == AgentType::BodyState::Kneeling)
+						cost = 8;
+					break;
+				case AgentType::BodyState::Kneeling:
+					if (u.target_body_state == AgentType::BodyState::Prone ||
+					    u.target_body_state == AgentType::BodyState::Standing ||
+					    u.target_body_state == AgentType::BodyState::Flying)
+						cost = 8;
+					break;
+				case AgentType::BodyState::Prone:
+					if (u.target_body_state == AgentType::BodyState::Kneeling ||
+					    u.target_body_state == AgentType::BodyState::Standing ||
+					    u.target_body_state == AgentType::BodyState::Flying)
+						cost = 8;
+					break;
+			}
+			if (!spendAgentTUs(state, u, cost))
+			{
+				LogWarning("Unit mission \"%s\" could not start: unsufficient TUs",
+				           getName().cStr());
+				return;
+			}
+			// Change state actually
+			if (instant)
+			{
+				u.setBodyState(bodyState);
+			}
+			else
+			{
+				u.beginBodyStateChange(bodyState, u.agent->getAnimationPack()->getFrameCountBody(
+				                                      u.getDisplayedItem(), u.current_body_state,
+				                                      bodyState, u.current_hand_state,
+				                                      u.current_movement_state, u.facing) *
+				                                      TICKS_PER_FRAME_UNIT);
+			}
+			return;
 		}
-		return;
-	case MissionType::DropItem:
+		case MissionType::ThrowItem:
+			// Item disappeared from inventory
+			if (item && item->ownerAgent != u.agent)
+			{
+				item = nullptr;
+				throwFailed = true;
+				return;
+			}
+			// Half way there - throw the item!
+			if (u.current_body_state == AgentType::BodyState::Throwing)
+			{
+				if (state.battle_common_sample_list->throwSounds.size() > 0)
+				{
+					fw().soundBackend->playSample(
+					    listRandomiser(state.rng, state.battle_common_sample_list->throwSounds),
+					    u.getPosition(), 0.25f);
+				}
+
+				// FIXME: Throw item properly
+				auto battle = u.battle.lock();
+				if (!battle)
+					return;
+				auto bi = mksp<BattleItem>();
+				bi->battle = u.battle;
+				bi->item = item;
+				item = nullptr;
+				bi->position =
+				    u.position + Vec3<float>{0.0, 0.0, (float)u.getCurrentHeight() / 40.0f};
+				bi->velocity = ((Vec3<float>)targetLocation - bi->position) * 7.0f +
+				               Vec3<float>{0.0, 0.0, 1.0f} * 15.0f;
+				bi->supported = false;
+				battle->items.push_back(bi);
+				u.tileObject->map.addObjectToMap(bi);
+
+				u.missions.emplace_front(changeStance(u, AgentType::BodyState::Standing));
+				u.missions.front()->start(state, u);
+				return;
+			}
+			// Just starting the throw
+			else if (item)
+			{
+				// Do we need to turn?
+				auto m = turn(u, targetLocation);
+				if (u.current_body_state != AgentType::BodyState::Standing ||
+				    u.current_body_state != u.target_body_state || !m->isFinished(state, u))
+				{
+					// FIXME: actually read the option
+					bool USER_OPTION_ALLOW_INSTANT_THROWS = false;
+					if (!USER_OPTION_ALLOW_INSTANT_THROWS)
+					{
+						if (!m->isFinished(state, u))
+						{
+							u.missions.emplace_front(m);
+							u.missions.front()->start(state, u);
+							return;
+						}
+						if (u.current_body_state != u.target_body_state)
+						{
+							// body state is changing - wait for it to change and then retry
+							u.missions.emplace(++u.missions.begin(), BattleUnitMission::throwItem(
+							                                             u, item, targetLocation));
+							u.missions.pop_front();
+							u.missions.front()->start(state, u);
+							return;
+						}
+						else // body state is static but not standing
+						{
+							u.missions.emplace_front(
+							    BattleUnitMission::changeStance(u, AgentType::BodyState::Standing));
+							u.missions.front()->start(state, u);
+							return;
+						}
+					}
+					u.setBodyState(AgentType::BodyState::Standing);
+					u.facing = m->targetFacing;
+					u.goalFacing = m->targetFacing;
+				}
+				// Calculate cost
+				// I *think* this is correct? 18 TUs at 100 time units
+				int cost = 1800 / u.agent->current_stats.time_units;
+				if (!spendAgentTUs(state, u, cost))
+				{
+					LogWarning("Unit mission \"%s\" could not start: unsufficient TUs",
+					           getName().cStr());
+					return;
+				}
+				// Remove item
+				item->ownerAgent->removeEquipment(item);
+				// Start throw animation
+				u.missions.emplace_front(
+				    BattleUnitMission::changeStance(u, AgentType::BodyState::Throwing));
+				u.missions.front()->start(state, u);
+				return;
+			}
+			// Throw finished - nothing else to do
+			else
+			{
+				// Nothing else to do
+			}
+			return;
+		case MissionType::DropItem:
 		{
-			// Remove item	
+			// Remove item
 			item->ownerAgent->removeEquipment(item);
 			// Drop item
 			auto battle = u.battle.lock();
@@ -1455,53 +1457,53 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 			u.tileObject->map.addObjectToMap(bi);
 			return;
 		}
-	case MissionType::GotoLocation:
-		// If we have already tried to use this mission, see if path is still valid
-		if (currentPlannedPath.size() > 0)
-		{
-			auto t = u.tileObject->getOwningTile();
-			auto pos = *currentPlannedPath.begin();
-			// If we're not far enough and can enter first tile in path
-			if (t->position == pos)
+		case MissionType::GotoLocation:
+			// If we have already tried to use this mission, see if path is still valid
+			if (currentPlannedPath.size() > 0)
 			{
-				// No need to add our position in
+				auto t = u.tileObject->getOwningTile();
+				auto pos = *currentPlannedPath.begin();
+				// If we're not far enough and can enter first tile in path
+				if (t->position == pos)
+				{
+					// No need to add our position in
+				}
+				else if (std::abs(t->position.x - pos.x) <= 1 &&
+				         std::abs(t->position.y - pos.y) <= 1 &&
+				         std::abs(t->position.z - pos.z) <= 1 &&
+				         BattleUnitTileHelper{t->map, u}.canEnterTile(t, t->map.getTile(pos), true))
+				{
+					// Add our position in
+					currentPlannedPath.push_front(t->position);
+				}
+				else
+				{
+					// Path is invalid
+					currentPlannedPath.clear();
+				}
 			}
-			else if (std::abs(t->position.x - pos.x) <= 1 &&
-				std::abs(t->position.y - pos.y) <= 1 &&
-				std::abs(t->position.z - pos.z) <= 1 &&
-				BattleUnitTileHelper{ t->map, u }.canEnterTile(t, t->map.getTile(pos), true))
+			if (currentPlannedPath.size() == 0)
 			{
-				// Add our position in
-				currentPlannedPath.push_front(t->position);
+				this->setPathTo(u, this->targetLocation);
 			}
-			else
-			{
-				// Path is invalid
-				currentPlannedPath.clear();
-			}
-		}
-		if (currentPlannedPath.size() == 0)
-		{
-			this->setPathTo(u, this->targetLocation);
-		}
-		// Starting GotoLocation mission never costs TU's, instead, getting next path node does
-		return;
-	case MissionType::ReachGoal:
-		// Reaching goal means we already requested this node and paid the price, so no TU cost
-		makeAgentMove(u);
-		return;
-	case MissionType::Fall:
-		// Falling is free :)))
-		u.setMovementState(AgentType::MovementState::None);
-		u.falling = true;
-		return;
-	case MissionType::AcquireTU:
-	case MissionType::RestartNextMission:
-	case MissionType::Snooze:
-		return;
-	default:
-		LogWarning("TODO: Implement");
-		return;
+			// Starting GotoLocation mission never costs TU's, instead, getting next path node does
+			return;
+		case MissionType::ReachGoal:
+			// Reaching goal means we already requested this node and paid the price, so no TU cost
+			makeAgentMove(u);
+			return;
+		case MissionType::Fall:
+			// Falling is free :)))
+			u.setMovementState(AgentType::MovementState::None);
+			u.falling = true;
+			return;
+		case MissionType::AcquireTU:
+		case MissionType::RestartNextMission:
+		case MissionType::Snooze:
+			return;
+		default:
+			LogWarning("TODO: Implement");
+			return;
 	}
 }
 
@@ -1528,7 +1530,7 @@ void BattleUnitMission::setPathTo(BattleUnit &u, Vec3<int> target, int maxIterat
 			if (target.z == -1)
 			{
 				LogError("Solid ground missing on level 0? Reached %d %d %d", target.x, target.y,
-					target.z);
+				         target.z);
 				return;
 			}
 			to = map.getTile(target);
@@ -1536,7 +1538,7 @@ void BattleUnitMission::setPathTo(BattleUnit &u, Vec3<int> target, int maxIterat
 
 		// FIXME: Change findShortestPath to return Vec3<int> positions?
 		auto path = map.findShortestPath(u.goalPosition, target, maxIterations,
-			BattleUnitTileHelper{ map, u }, 5.0f, demandGiveWay);
+		                                 BattleUnitTileHelper{map, u}, 5.0f, demandGiveWay);
 
 		// Always start with the current position
 		this->currentPlannedPath.push_back(u.goalPosition);
@@ -1549,7 +1551,7 @@ void BattleUnitMission::setPathTo(BattleUnit &u, Vec3<int> target, int maxIterat
 	else
 	{
 		LogError("Mission %s: Unit without tileobject attempted pathfinding!",
-			this->getName().cStr());
+		         this->getName().cStr());
 	}
 }
 
@@ -1573,9 +1575,10 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Ba
 	float cost = 0;
 	bool closedDoorInTheWay = false;
 	if (tFrom->position != pos &&
-		(std::abs(tFrom->position.x - pos.x) > 1 || std::abs(tFrom->position.y - pos.y) > 1 ||
-			std::abs(tFrom->position.z - pos.z) > 1 ||
-			!BattleUnitTileHelper{ tFrom->map, u }.canEnterTile(tFrom, tTo, cost, closedDoorInTheWay, true)))
+	    (std::abs(tFrom->position.x - pos.x) > 1 || std::abs(tFrom->position.y - pos.y) > 1 ||
+	     std::abs(tFrom->position.z - pos.z) > 1 ||
+	     !BattleUnitTileHelper{tFrom->map, u}.canEnterTile(tFrom, tTo, cost, closedDoorInTheWay,
+	                                                       true)))
 	{
 		// Next tile became impassable, pick a new path
 		currentPlannedPath.clear();
@@ -1595,11 +1598,11 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Ba
 	float newCost = 0;
 	bool newDoorInWay = false;
 	while (it != currentPlannedPath.end() &&
-		(tFrom->position == *it ||
-		(allowSkipNodes && std::abs(tFrom->position.x - it->x) <= 1 &&
-			std::abs(tFrom->position.y - it->y) <= 1 && std::abs(tFrom->position.z - it->z) <= 1 &&
-			BattleUnitTileHelper{ tFrom->map, u }.canEnterTile(tFrom, tFrom->map.getTile(*it),
-				newCost, newDoorInWay))))
+	       (tFrom->position == *it ||
+	        (allowSkipNodes && std::abs(tFrom->position.x - it->x) <= 1 &&
+	         std::abs(tFrom->position.y - it->y) <= 1 && std::abs(tFrom->position.z - it->z) <= 1 &&
+	         BattleUnitTileHelper{tFrom->map, u}.canEnterTile(tFrom, tFrom->map.getTile(*it),
+	                                                          newCost, newDoorInWay))))
 	{
 		currentPlannedPath.pop_front();
 		poppedPos = pos;
@@ -1623,57 +1626,57 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Ba
 	switch (u.movement_mode)
 	{
 		// If want to move prone but not prone - go prone
-	case BattleUnit::MovementMode::Prone:
-		if (u.current_body_state == AgentType::BodyState::Prone)
-		{
-			break;
-		}
-		if (u.canGoProne())
-		{
-			u.missions.emplace_front(changeStance(u, AgentType::BodyState::Prone));
-			u.missions.front()->start(state, u);
-			return false;
-		}
+		case BattleUnit::MovementMode::Prone:
+			if (u.current_body_state == AgentType::BodyState::Prone)
+			{
+				break;
+			}
+			if (u.canGoProne())
+			{
+				u.missions.emplace_front(changeStance(u, AgentType::BodyState::Prone));
+				u.missions.front()->start(state, u);
+				return false;
+			}
 		// Intentional fall-though, if we want to go prone but cannot go prone,
 		// we should act as if we're told to walk/run
 		// If want to move standing up but not standing/flying - go standing/flying where
 		// appropriate
-	case BattleUnit::MovementMode::Walking:
-	case BattleUnit::MovementMode::Running:
-		auto t = u.tileObject->getOwningTile();
-		if (u.current_body_state != AgentType::BodyState::Standing &&
-			u.current_body_state != AgentType::BodyState::Flying)
-		{
-			if (t->getCanStand(u.isLarge()) && t->map.getTile(pos)->getCanStand(u.isLarge()))
+		case BattleUnit::MovementMode::Walking:
+		case BattleUnit::MovementMode::Running:
+			auto t = u.tileObject->getOwningTile();
+			if (u.current_body_state != AgentType::BodyState::Standing &&
+			    u.current_body_state != AgentType::BodyState::Flying)
+			{
+				if (t->getCanStand(u.isLarge()) && t->map.getTile(pos)->getCanStand(u.isLarge()))
+				{
+					u.missions.emplace_front(changeStance(u, AgentType::BodyState::Standing));
+					u.missions.front()->start(state, u);
+					return false;
+				}
+				else
+				{
+					u.missions.emplace_front(changeStance(u, AgentType::BodyState::Flying));
+					u.missions.front()->start(state, u);
+					return false;
+				}
+			}
+			// Stop flying if we no longer require it
+			if (u.current_body_state == AgentType::BodyState::Flying &&
+			    t->getCanStand(u.isLarge()) && t->map.getTile(pos)->getCanStand(u.isLarge()))
 			{
 				u.missions.emplace_front(changeStance(u, AgentType::BodyState::Standing));
 				u.missions.front()->start(state, u);
 				return false;
 			}
-			else
+			// Start flying if we require it
+			if (u.current_body_state != AgentType::BodyState::Flying && u.canFly() &&
+			    !(t->getCanStand(u.isLarge()) && t->map.getTile(pos)->getCanStand(u.isLarge())))
 			{
 				u.missions.emplace_front(changeStance(u, AgentType::BodyState::Flying));
 				u.missions.front()->start(state, u);
 				return false;
 			}
-		}
-		// Stop flying if we no longer require it
-		if (u.current_body_state == AgentType::BodyState::Flying &&
-			t->getCanStand(u.isLarge()) && t->map.getTile(pos)->getCanStand(u.isLarge()))
-		{
-			u.missions.emplace_front(changeStance(u, AgentType::BodyState::Standing));
-			u.missions.front()->start(state, u);
-			return false;
-		}
-		// Start flying if we require it
-		if (u.current_body_state != AgentType::BodyState::Flying && u.canFly() &&
-			!(t->getCanStand(u.isLarge()) && t->map.getTile(pos)->getCanStand(u.isLarge())))
-		{
-			u.missions.emplace_front(changeStance(u, AgentType::BodyState::Flying));
-			u.missions.front()->start(state, u);
-			return false;
-		}
-		break;
+			break;
 	}
 
 	// Is there a unit in the target tile other than us?
@@ -1684,21 +1687,21 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Ba
 		u.current_movement_state = AgentType::MovementState::None;
 		// If unit is still patient enough, and we can ask to give way
 		if (giveWayAttemptsRemaining-- > 0 && blockingUnit->owner == u.owner
-			// and we're not trying to stay there
-			&& currentPlannedPath.size() > 1
-			// and unit we're asking is not big
-			// (coding giving way for large units is too much of a fuss,
-			// and ain't going to be used a lot anyway, just path around them)
-			&& !blockingUnit->isLarge())
+		    // and we're not trying to stay there
+		    && currentPlannedPath.size() > 1
+		    // and unit we're asking is not big
+		    // (coding giving way for large units is too much of a fuss,
+		    // and ain't going to be used a lot anyway, just path around them)
+		    && !blockingUnit->isLarge())
 		{
 			// Ask unit to give way to us if not asked already
 			if (blockingUnit->giveWayRequest.size() == 0
-				// and it's not busy
-				&& !blockingUnit->isBusy())
+			    // and it's not busy
+			    && !blockingUnit->isBusy())
 			{
 				// If unit is prone and we're trying to go into it's legs
 				if (blockingUnit->current_body_state == AgentType::BodyState::Prone &&
-					blockingUnit->tileObject->getOwningTile()->position != pos)
+				    blockingUnit->tileObject->getOwningTile()->position != pos)
 				{
 					blockingUnit->giveWayRequest.emplace_back(0, 0);
 				}
@@ -1706,29 +1709,29 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Ba
 				else
 				{
 					static const std::map<Vec2<int>, int> facing_dir_map = {
-						{ { 0, -1 }, 0 },{ { 1, -1 }, 1 },{ { 1, 0 }, 2 },{ { 1, 1 }, 3 },
-						{ { 0, 1 }, 4 },{ { -1, 1 }, 5 },{ { -1, 0 }, 6 },{ { -1, -1 }, 7 } };
+					    {{0, -1}, 0}, {{1, -1}, 1}, {{1, 0}, 2},  {{1, 1}, 3},
+					    {{0, 1}, 4},  {{-1, 1}, 5}, {{-1, 0}, 6}, {{-1, -1}, 7}};
 					static const std::map<int, Vec2<int>> dir_facing_map = {
-						{ 0,{ 0, -1 } },{ 1,{ 1, -1 } },{ 2,{ 1, 0 } },{ 3,{ 1, 1 } },
-						{ 4,{ 0, 1 } },{ 5,{ -1, 1 } },{ 6,{ -1, 0 } },{ 7,{ -1, -1 } } };
+					    {0, {0, -1}}, {1, {1, -1}}, {2, {1, 0}},  {3, {1, 1}},
+					    {4, {0, 1}},  {5, {-1, 1}}, {6, {-1, 0}}, {7, {-1, -1}}};
 
 					// Start with unit's facing, and go to the sides, adding facings
 					// if they're not in our path and not our current position.
 					// Next facings: [0] is clockwise, [1] is counter-clockwise from current
-					std::vector<int> nextFacings = { facing_dir_map.at(blockingUnit->facing),
-						facing_dir_map.at(blockingUnit->facing) };
+					std::vector<int> nextFacings = {facing_dir_map.at(blockingUnit->facing),
+					                                facing_dir_map.at(blockingUnit->facing)};
 					for (int i = 0; i <= 4; i++)
 					{
 						int limit = i == 0 || i == 4 ? 0 : 1;
 						for (int j = 0; j <= limit; j++)
 						{
 							auto nextFacing = dir_facing_map.at(nextFacings[j]);
-							Vec3<int> nextPos = { blockingUnit->position.x + nextFacing.x,
-								blockingUnit->position.y + nextFacing.y,
-								blockingUnit->position.z };
+							Vec3<int> nextPos = {blockingUnit->position.x + nextFacing.x,
+							                     blockingUnit->position.y + nextFacing.y,
+							                     blockingUnit->position.z};
 							if (nextPos == (Vec3<int>)u.position ||
-								std::find(currentPlannedPath.begin(), currentPlannedPath.end(),
-									nextPos) != currentPlannedPath.end())
+							    std::find(currentPlannedPath.begin(), currentPlannedPath.end(),
+							              nextPos) != currentPlannedPath.end())
 							{
 								continue;
 							}
@@ -1787,12 +1790,12 @@ void BattleUnitMission::makeAgentMove(BattleUnit &u)
 {
 	// FIXME: Account for different movement ways (strafing, backwards etc.)
 	if (u.movement_mode == BattleUnit::MovementMode::Running &&
-		u.current_body_state != AgentType::BodyState::Prone)
+	    u.current_body_state != AgentType::BodyState::Prone)
 	{
 		u.setMovementState(AgentType::MovementState::Running);
 	}
 	else if (u.current_body_state != AgentType::BodyState::Kneeling &&
-		u.current_body_state != AgentType::BodyState::Throwing)
+	         u.current_body_state != AgentType::BodyState::Throwing)
 	{
 		u.setMovementState(AgentType::MovementState::Normal);
 	}
@@ -1805,11 +1808,11 @@ void BattleUnitMission::makeAgentMove(BattleUnit &u)
 bool BattleUnitMission::getNextFacing(GameState &state, BattleUnit &u, Vec2<int> &dest)
 {
 	static const std::map<Vec2<int>, int> facing_dir_map = {
-		{ { 0, -1 }, 0 },{ { 1, -1 }, 1 },{ { 1, 0 }, 2 },{ { 1, 1 }, 3 },
-		{ { 0, 1 }, 4 },{ { -1, 1 }, 5 },{ { -1, 0 }, 6 },{ { -1, -1 }, 7 } };
+	    {{0, -1}, 0}, {{1, -1}, 1}, {{1, 0}, 2},  {{1, 1}, 3},
+	    {{0, 1}, 4},  {{-1, 1}, 5}, {{-1, 0}, 6}, {{-1, -1}, 7}};
 	static const std::map<int, Vec2<int>> dir_facing_map = {
-		{ 0,{ 0, -1 } },{ 1,{ 1, -1 } },{ 2,{ 1, 0 } },{ 3,{ 1, 1 } },
-		{ 4,{ 0, 1 } },{ 5,{ -1, 1 } },{ 6,{ -1, 0 } },{ 7,{ -1, -1 } } };
+	    {0, {0, -1}}, {1, {1, -1}}, {2, {1, 0}},  {3, {1, 1}},
+	    {4, {0, 1}},  {5, {-1, 1}}, {6, {-1, 0}}, {7, {-1, -1}}};
 
 	if (targetFacing == u.facing)
 		return false;
@@ -1858,40 +1861,43 @@ UString BattleUnitMission::getName()
 	UString name = "UNKNOWN";
 	switch (this->type)
 	{
-	case MissionType::AcquireTU:
-		name = "AcquireTUs %d" + UString::format(" for %u ticks", this->timeUnits);
-		break;
-	case MissionType::GotoLocation:
-		name =
-			"GotoLocation " + UString::format(" {%d,%d,%d}", this->targetLocation.x,
-				this->targetLocation.y, this->targetLocation.z);
-		break;
-	case MissionType::RestartNextMission:
-		name = "Restart next mission";
-		break;
-	case MissionType::Snooze:
-		name = "Snooze " + UString::format(" for %u ticks", this->timeToSnooze);
-		break;
-	case MissionType::ChangeBodyState:
-		name = "ChangeBodyState " + UString::format("%d", (int)this->bodyState);
-		break;
-	case MissionType::ThrowItem:
-		name = "ThrowItem " + UString::format("%s at %d,%d,%d", item ? this->item->type->name.cStr() : "(item is gone)",
-			this->targetLocation.x, this->targetLocation.y, this->targetLocation.z);
-		break;
-	case MissionType::DropItem:
-		name = "DropItem " +  UString::format("%s", item ? this->item->type->name.cStr() : "(item is gone)");
-		break;
-	case MissionType::ReachGoal:
-		name = "ReachGoal";
-		break;
-	case MissionType::Turn:
-		name =
-			"Turn " + UString::format(" {%d,%d}", this->targetFacing.x, this->targetFacing.y);
-		break;
-	case MissionType::Fall:
-		name = "Fall!...FALL!!";
-		break;
+		case MissionType::AcquireTU:
+			name = "AcquireTUs %d" + UString::format(" for %u ticks", this->timeUnits);
+			break;
+		case MissionType::GotoLocation:
+			name =
+			    "GotoLocation " + UString::format(" {%d,%d,%d}", this->targetLocation.x,
+			                                      this->targetLocation.y, this->targetLocation.z);
+			break;
+		case MissionType::RestartNextMission:
+			name = "Restart next mission";
+			break;
+		case MissionType::Snooze:
+			name = "Snooze " + UString::format(" for %u ticks", this->timeToSnooze);
+			break;
+		case MissionType::ChangeBodyState:
+			name = "ChangeBodyState " + UString::format("%d", (int)this->bodyState);
+			break;
+		case MissionType::ThrowItem:
+			name = "ThrowItem " +
+			       UString::format(
+			           "%s at %d,%d,%d", item ? this->item->type->name.cStr() : "(item is gone)",
+			           this->targetLocation.x, this->targetLocation.y, this->targetLocation.z);
+			break;
+		case MissionType::DropItem:
+			name = "DropItem " +
+			       UString::format("%s", item ? this->item->type->name.cStr() : "(item is gone)");
+			break;
+		case MissionType::ReachGoal:
+			name = "ReachGoal";
+			break;
+		case MissionType::Turn:
+			name =
+			    "Turn " + UString::format(" {%d,%d}", this->targetFacing.x, this->targetFacing.y);
+			break;
+		case MissionType::Fall:
+			name = "Fall!...FALL!!";
+			break;
 	}
 	return name;
 }

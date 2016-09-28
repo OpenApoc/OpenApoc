@@ -6,8 +6,8 @@
 #define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 #endif
-#include "physfs_archiver_cue.h"
 #include "framework/logger.h"
+#include "physfs_archiver_cue.h"
 
 #include "library/strings.h"
 #include <boost/filesystem.hpp>

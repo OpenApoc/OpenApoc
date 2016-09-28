@@ -83,22 +83,23 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 	auto c = tileObject->map.findCollision(previousPosition, newPosition, mapPartSet);
 	if (c)
 	{
-		// If colliding and moving somewhere other than down, stop item (it will resume falling shortly)
+		// If colliding and moving somewhere other than down, stop item (it will resume falling
+		// shortly)
 		if (velocity.x != 0.0f || velocity.y != 0.0f)
 		{
-			velocity = { 0.0f, 0.0f, 0.0f };
+			velocity = {0.0f, 0.0f, 0.0f};
 			newPosition = previousPosition;
 		}
 		// If colliding and moving down
 		else
 		{
-			setPosition({ c.position.x, c.position.y, floorf(c.position.z) });
-			if (!findSupport(true, true))
+			setPosition({c.position.x, c.position.y, floorf(c.position.z)});
+			if (findSupport(true, true))
 			{
 				return;
 			}
 			// Some objects have buggy voxelmaps and items collide with them but no support is given
-			// In this case, jusst ignore the collision
+			// In this case, just ignore the collision and let the item fall further
 		}
 	}
 
@@ -111,7 +112,7 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 		if (newPosition.z >= mapSize.z)
 		{
 			newPosition.z = mapSize.z - 0.01f;
-			velocity = { 0.0f, 0.0f, 0.0f };
+			velocity = {0.0f, 0.0f, 0.0f};
 		}
 		// Remove if it fell off the end of the world
 		if (newPosition.x < 0 || newPosition.x >= mapSize.x || newPosition.y < 0 ||
@@ -137,14 +138,15 @@ bool BattleItem::findSupport(bool emitSound, bool forced)
 	{
 		return false;
 	}
-	auto restingPosition = obj->getPosition() + Vec3<float>{0.0f, 0.0f, (float)obj->type->height / 40.0f};
+	auto restingPosition =
+	    obj->getPosition() + Vec3<float>{0.0f, 0.0f, (float)obj->type->height / 40.0f};
 	if (!forced && position.z > restingPosition.z)
 	{
 		return false;
 	}
 
 	supported = true;
-	velocity = { 0.0f,0.0f,0.0f };
+	velocity = {0.0f, 0.0f, 0.0f};
 	obj->supportedItems.push_back(shared_from_this());
 	if (position != restingPosition)
 	{

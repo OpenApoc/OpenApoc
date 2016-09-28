@@ -30,7 +30,8 @@ void TileObjectBattleMapPart::draw(Renderer &r, TileTransform &transform,
 			}
 			else
 			{
-				auto &curType = map_part->alternative_type ? map_part->alternative_type : map_part->type;
+				auto &curType =
+				    map_part->alternative_type ? map_part->alternative_type : map_part->type;
 				sprite = curType->animation_frames[frame];
 			}
 			transformedScreenPos -= type->imageOffset;

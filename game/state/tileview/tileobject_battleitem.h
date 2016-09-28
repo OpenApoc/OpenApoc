@@ -1,8 +1,8 @@
 #pragma once
 
+#include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/tileview/tileobject.h"
-#include "game/state/battle/battlecommonimagelist.h"
 
 namespace OpenApoc
 {
@@ -14,7 +14,7 @@ class TileObjectBattleItem : public TileObject
 	          int) override;
 	~TileObjectBattleItem() override;
 	Vec3<float> getPosition() const override;
-	Vec3<float> getCenterOffset() const override { return{ 0.0f, 0.0f, bounds_div_2.z }; }
+	Vec3<float> getCenterOffset() const override { return {0.0f, 0.0f, bounds_div_2.z}; }
 
   private:
 	friend class TileMap;

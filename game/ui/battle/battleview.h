@@ -1,7 +1,7 @@
 #pragma once
 #include "game/ui/tileview/battletileview.h"
-#include "library/sp.h"
 #include "library/colour.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {
@@ -12,7 +12,6 @@ class GraphicButton;
 class Control;
 class AEquipment;
 class AEquipmentType;
-
 
 enum class BattleUpdateSpeed
 {
@@ -39,7 +38,7 @@ enum class BattleSelectionState
 // track when something has changed and requires a re-draw
 class AgentEquipmentInfo
 {
-public:
+  public:
 	StateRef<AEquipmentType> itemType;
 	StateRef<DamageType> damageType;
 	bool selected = false;
@@ -51,18 +50,12 @@ public:
 
 class BattleView : public BattleTileView
 {
-private:
-	const std::vector<Colour> accuracyColors =
-	{
-		{ 190, 36,36 },
-		{ 203 ,28 ,2},
-		{ 235 ,77 ,4},
-		{ 239 ,125,52},
-		{ 243 ,170,85},
-		{ 247 ,219,117 },
-		{ 235 ,247,138 },
+  private:
+	const std::vector<Colour> accuracyColors = {
+	    {190, 36, 36},  {203, 28, 2},    {235, 77, 4},    {239, 125, 52},
+	    {243, 170, 85}, {247, 219, 117}, {235, 247, 138},
 	};
-	const Colour ammoColour = { 158, 24, 12 };
+	const Colour ammoColour = {158, 24, 12};
 
 	sp<Form> activeTab, baseForm;
 	std::vector<sp<Form>> uiTabsRT;
@@ -102,7 +95,6 @@ private:
 	void updateItemInfo(bool right);
 	sp<Image> selectedItemOverlay;
 
-
 	// Unit orers
 	// Move, offset 1 means strafing, 2 means move backwards
 	void orderMove(Vec3<int> target, int facingOffset = 0, bool demandGiveWay = false);
@@ -124,7 +116,5 @@ private:
 
 	void setUpdateSpeed(BattleUpdateSpeed updateSpeed);
 };
-
-
 
 }; // namespace OpenApoc

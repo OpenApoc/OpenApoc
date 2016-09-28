@@ -24,9 +24,9 @@ class BattleDoor : public std::enable_shared_from_this<BattleDoor>
 	// Amount of ticks until changing to open/closed state
 	int animationTicksRemaining = 0;
 	int getAnimationFrame();
-	
+
 	void update(GameState &state, unsigned int ticks);
-	
+
 	void collapse();
 
 	void playDoorSound();

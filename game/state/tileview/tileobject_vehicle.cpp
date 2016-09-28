@@ -1,6 +1,6 @@
-#include "game/state/city/vehiclemission.h"
 #include "game/state/tileview/tileobject_vehicle.h"
 #include "framework/renderer.h"
+#include "game/state/city/vehiclemission.h"
 #include "game/state/tileview/tile.h"
 #include "library/voxel.h"
 
@@ -191,7 +191,7 @@ void TileObjectVehicle::addToDrawnTiles(Tile *tile)
 	{
 		return;
 	}
-	Vec3<int> maxCoords = { -1, -1, -1 };
+	Vec3<int> maxCoords = {-1, -1, -1};
 	for (auto intersectingTile : intersectingTiles)
 	{
 		int x = intersectingTile->position.x;
@@ -202,10 +202,11 @@ void TileObjectVehicle::addToDrawnTiles(Tile *tile)
 		if (maxCoords.z * 1000 + maxCoords.x + maxCoords.y < z * 1000 + x + y)
 		{
 			tile = intersectingTile;
-			maxCoords = { x, y, z };
+			maxCoords = {x, y, z};
 		}
 	}
-	// Vehicles are also never drawn below level 1, so that when they take off they're drawn above landing pad's scenery
+	// Vehicles are also never drawn below level 1, so that when they take off they're drawn above
+	// landing pad's scenery
 	if (!v->missions.empty() && v->missions.front()->isTakingOff(*v))
 	{
 		tile = map.getTile(tile->position.x, tile->position.y, tile->position.z + 1);
