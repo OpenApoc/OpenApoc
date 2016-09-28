@@ -58,7 +58,6 @@
   <checksum SHA1="8d4403e6075fd725dea9ec1bf70b471a443847cd">gamestate/battle_maps/BATTLEMAP_56ufo6.xml</checksum>
   <checksum SHA1="343c02a6e2af1d8bbd8affb61757b6ad6930790b">gamestate/battle_maps/BATTLEMAP_57ufo7.xml</checksum>
   <checksum SHA1="b3549d3af0dd7809af7114df946a0b342de7515c">gamestate/battle_maps/BATTLEMAP_58ufo8.xml</checksum>
-  <checksum SHA1="6927a886dd205daeb94091823ee52c367ce662c4">gamestate/battle_strategy_icon_list.xml</checksum>
   <checksum SHA1="9f859d3887a364db435ca7462c26d9522ffca803">gamestate/cities.xml</checksum>
   <checksum SHA1="c4253ce036aa559f4479b90cbe74a799d0aeee6d">gamestate/cities/CITYMAP_ALIEN.xml</checksum>
   <checksum SHA1="80295535fa3b21b7e95e298ec631c5052d7b1550">gamestate/cities/CITYMAP_ALIEN/buildings.xml</checksum>
