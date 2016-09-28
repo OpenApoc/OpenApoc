@@ -36,6 +36,11 @@ class BattleUnitTileHelper : public CanEnterTileHelper
 
 class BattleUnitMission
 {
+  private:
+	// INTERNAL: This checks if mission is actually finished. Called by isFinished.
+	// If it is finished, update() is called by isFinished so that any remaining work could be done
+	bool isFinishedInternal(GameState &state, BattleUnit &u);
+
   public:
 	enum class MissionType
 	{
@@ -53,8 +58,8 @@ class BattleUnitMission
 
 	// Methods used in pathfinding etc.
 	bool getNextDestination(GameState &state, BattleUnit &u, Vec3<float> &dest);
-	void update(GameState &state, BattleUnit &u, unsigned int ticks);
-	bool isFinished(GameState &state, BattleUnit &u);
+	void update(GameState &state, BattleUnit &u, unsigned int ticks, bool finished = false);
+	bool isFinished(GameState &state, BattleUnit &u, bool callUpdateIfFinished = true);
 	void start(GameState &state, BattleUnit &u);
 	bool advanceAlongPath(GameState &state, Vec3<float> &dest, BattleUnit &u);
 	bool getNextFacing(GameState &state, BattleUnit &u, Vec2<int> &dest);

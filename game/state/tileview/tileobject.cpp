@@ -96,8 +96,6 @@ void TileObject::setPosition(Vec3<float> newPosition)
 	}
 	this->removeFromMap();
 
-	// This makes sure object for unit is always assigned the bottom-most, right-most tile it
-	// occupies
 	this->owningTile = map.getTile(newPosition);
 	if (!this->owningTile)
 	{

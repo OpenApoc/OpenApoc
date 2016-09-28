@@ -12,9 +12,9 @@ namespace OpenApoc
 
 float BattleUnitTileHelper::applyPathOverheadAllowance(float cost) const 
 { 
-	// If path is close, do not allow for any overhead
+	// If path is close, allow only a tiny bit overhead
 	if (cost < 40.0f)
-		return cost;
+		return cost / 1.005f;
 	// Otherwise, gradually go from 2.5% up to 7.5%
 	if (cost < 60.0f)
 		return cost / 1.025f; 
@@ -893,16 +893,17 @@ BattleUnitMission *BattleUnitMission::gotoLocation(BattleUnit &u, Vec3<int> targ
 	bool allowSkipNodes, int giveWayAttempts,
 	bool demandGiveWay, bool allowRunningAway)
 {
-	auto t = u.tileObject->map.getTile(target);
+	auto &map = u.tileObject->map;
+	auto to = map.getTile(target);
 	// Check if target tile is valid
 	while (true)
 	{
-		if (!t->getPassable(u.isLarge(), u.agent->type->bodyType->maxHeight))
+		if (!to->getPassable(u.isLarge(), u.agent->type->bodyType->maxHeight))
 		{
 			LogInfo("Cannot move to %d %d %d, impassable", target.x, target.y, target.z);
 			return restartNextMission(u);
 		}
-		if (u.canFly() || t->getCanStand(u.isLarge()))
+		if (u.canFly() || to->getCanStand(u.isLarge()))
 		{
 			break;
 		}
@@ -913,7 +914,7 @@ BattleUnitMission *BattleUnitMission::gotoLocation(BattleUnit &u, Vec3<int> targ
 				target.z);
 			return restartNextMission(u);
 		}
-		t = u.tileObject->map.getTile(target);
+		to = map.getTile(target);
 	}
 	auto *mission = new BattleUnitMission();
 	mission->type = MissionType::GotoLocation;
@@ -1077,15 +1078,34 @@ bool BattleUnitMission::getNextDestination(GameState &state, BattleUnit &u, Vec3
 	return false;
 }
 
-void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int ticks)
+void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int ticks, bool finished)
 {
 	switch (this->type)
 	{
 	case MissionType::GotoLocation:
 	{
-		// Update movement speed if we're already moving
-		if (u.current_movement_state != AgentType::MovementState::None)
-			makeAgentMove(u);
+		if (finished)
+		{
+			if (u.current_movement_state != AgentType::MovementState::None)
+			{
+				u.setMovementState(AgentType::MovementState::None);
+			}
+			if (allowRunningAway)
+			{
+				if (u.tileObject->getOwningTile()->getHasExit(u.isLarge()))
+				{
+					u.retreat(state);
+				}
+			}
+		}
+		else // = not finished
+		{
+			// Update movement speed if we're already moving
+			if (u.current_movement_state != AgentType::MovementState::None)
+			{
+				makeAgentMove(u);
+			}
+		}
 		return;
 	}
 	case MissionType::Snooze:
@@ -1100,75 +1120,14 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 		}
 		return;
 	}
-	case MissionType::AcquireTU:
-	case MissionType::RestartNextMission:
-	case MissionType::ChangeBodyState:
 	case MissionType::ThrowItem:
-	case MissionType::DropItem:
-	case MissionType::Fall:
-	case MissionType::ReachGoal:
-	case MissionType::Turn:
-	{
-		return;
-	}
-	default:
-		LogWarning("TODO: Implement");
-		return;
-	}
-}
-
-bool BattleUnitMission::isFinished(GameState &state, BattleUnit &u)
-{
-	switch (this->type)
-	{
-	case MissionType::AcquireTU:
-		return u.agent->modified_stats.time_units >= timeUnits;
-	case MissionType::ReachGoal:
-		if (u.atGoal || u.falling)
-		{
-			if (u.current_movement_state != AgentType::MovementState::None)
-			{
-				u.setMovementState(AgentType::MovementState::None);
-			}
-			return true;
-		}
-		return false;
-	case MissionType::GotoLocation:
-		// If finished moving - stop moving
-		if (this->currentPlannedPath.empty() || u.isDead())
-		{
-			if (u.current_movement_state != AgentType::MovementState::None)
-			{
-				u.setMovementState(AgentType::MovementState::None);
-			}
-			if (allowRunningAway)
-			{
-				if (u.tileObject->getOwningTile()->getHasExit(u.isLarge()))
-				{
-					u.retreat(state);
-				}
-			}
-			return true;
-		}
-		return false;
-	case MissionType::Snooze:
-		return this->timeToSnooze == 0;
-	case MissionType::ChangeBodyState:
-		return u.current_body_state == this->bodyState;
-	case MissionType::ThrowItem:
-		// If died or went unconscious while throwing - drop thrown item
-		if (throwFailed)
-		{
-			return true;
-		}
-		if (!u.isConscious())
+		if (finished)
 		{
 			if (item)
 			{
 				auto battle = u.battle.lock();
 				if (!battle)
-					return true;
-				// FIXME: Drop item properly
+					return;
 				auto bi = mksp<BattleItem>();
 				bi->battle = u.battle;
 				bi->item = item;
@@ -1178,19 +1137,63 @@ bool BattleUnitMission::isFinished(GameState &state, BattleUnit &u)
 				battle->items.push_back(bi);
 				u.tileObject->map.addObjectToMap(bi);
 			}
-			return true;
 		}
-		return (u.current_body_state == AgentType::BodyState::Standing && !item);
+		return;
+	case MissionType::ReachGoal:
+		if (finished)
+		{
+			if (u.current_movement_state != AgentType::MovementState::None)
+			{
+				u.setMovementState(AgentType::MovementState::None);
+			}
+		}
+		return;
+	case MissionType::AcquireTU:
+	case MissionType::RestartNextMission:
+	case MissionType::ChangeBodyState:
+	case MissionType::DropItem:
+	case MissionType::Fall:
+	case MissionType::Turn:
+		return;
+	default:
+		LogWarning("TODO: Implement");
+		return;
+	}
+}
+
+bool BattleUnitMission::isFinished(GameState &state, BattleUnit &u, bool callUpdateIfFinished)
+{
+	if (isFinishedInternal(state, u))
+	{
+		if (callUpdateIfFinished)
+		{
+			update(state, u, 0, true);
+		}
+		return true;
+	}
+	return false;
+}
+
+bool BattleUnitMission::isFinishedInternal(GameState &state, BattleUnit &u)
+{
+	switch (this->type)
+	{
+	case MissionType::AcquireTU:
+		return u.agent->modified_stats.time_units >= timeUnits;
+	case MissionType::ReachGoal:
+		return u.atGoal || u.falling;
+	case MissionType::GotoLocation:
+		return this->currentPlannedPath.empty() || u.isDead();
+	case MissionType::Snooze:
+		return this->timeToSnooze == 0;
+	case MissionType::ChangeBodyState:
+		return u.current_body_state == this->bodyState;
+	case MissionType::ThrowItem:
+		return throwFailed || !u.isConscious() || (u.current_body_state == AgentType::BodyState::Standing && !item);
 	case MissionType::Turn:
 		if (u.facing == targetFacing || u.isDead())
 		{
 			return true;
-		}
-		// Hack to make unit try to turn again
-		if (u.turning_animation_ticks_remaining == 0)
-		{
-			u.missions.emplace_front(restartNextMission(u));
-			u.missions.front()->start(state, u);
 		}
 		return false;
 	case MissionType::Fall:
@@ -1200,7 +1203,7 @@ bool BattleUnitMission::isFinished(GameState &state, BattleUnit &u)
 	case MissionType::DropItem:
 		if (item)
 		{
-			LogError("DropItem's isFinished called before start?");
+			LogError("DropItem's item still present, was isFinished called before its start?");
 			start(state, u);
 		}
 		return true;
@@ -1218,6 +1221,11 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 	{
 	case MissionType::Turn:
 	{
+		// Already facing properly?
+		if (isFinished(state, u))
+		{
+			return;
+		}
 		// Go to goal first
 		if (!u.atGoal && requireGoal)
 		{
@@ -1232,24 +1240,27 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 			u.missions.front()->start(state, u);
 			return;
 		}
-		// Calculate and spend cost
-		int cost = 0;
-		if (targetFacing != u.facing)
+		// Get facing
+		Vec2<int> dest;
+		getNextFacing(state, u, dest);
+		// If this is not the final step - create another turning mission 
+		// that will turn us to a point midway
+		if (dest != targetFacing)
 		{
-			cost = 1;
+			u.missions.emplace_front(turn(u, dest));
+			u.missions.front()->start(state, u);
+			return;
 		}
+		// Calculate and spend cost
+		int cost = 1;
 		if (!spendAgentTUs(state, u, cost))
 		{
 			LogWarning("Unit mission \"%s\" could not start: unsufficient TUs",
 				getName().cStr());
 			return;
 		}
-		Vec2<int> dest;
-		if (getNextFacing(state, u, dest))
-		{
-			u.goalFacing = dest;
-			u.turning_animation_ticks_remaining = TICKS_PER_FRAME_UNIT;
-		}
+		u.goalFacing = dest;
+		u.turning_animation_ticks_remaining = TICKS_PER_FRAME_UNIT;
 		return;
 	}
 	case MissionType::ChangeBodyState:
@@ -1613,7 +1624,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Ba
 
 	// Do we need to turn?
 	auto m = turn(u, pos);
-	if (!m->isFinished(state, u))
+	if (!m->isFinished(state, u, false))
 	{
 		u.missions.emplace_front(m);
 		u.missions.front()->start(state, u);

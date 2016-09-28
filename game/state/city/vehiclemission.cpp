@@ -231,8 +231,93 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 	}
 };
 
-VehicleMission *VehicleMission::gotoLocation(Vehicle &, Vec3<int> target)
+VehicleMission *VehicleMission::gotoLocation(GameState &state, Vehicle &v, Vec3<int> target)
 {
+	auto &map = *state.cities[v.city.id]->map;
+	auto to = map.getTile(target);
+	
+	// Check if target tile has no scenery permanently blocking it
+	// If it does, go up until we've got clear sky
+	while (true)
+	{
+		bool containsScenery = false;
+		for (auto obj : to->ownedObjects)
+		{
+			if (obj->getType() == TileObject::Type::Scenery)
+			{
+				auto sceneryTile = std::static_pointer_cast<TileObjectScenery>(obj);
+				if (sceneryTile->scenery.lock()->type->isLandingPad)
+				{
+					continue;
+				}
+				containsScenery = true;
+				break;
+			}
+		}
+		if (!containsScenery)
+		{
+			break;
+		}
+		LogInfo("Cannot move to %d %d %d, contains scenery that is not a landing pad", target.x, target.y, target.z);
+		target.z++;
+		if (target.z >= map.size.z)
+		{
+			LogError("No space in the sky? Reached %d %d %d", target.x, target.y,
+				target.z);
+			return nullptr;
+		}
+		to = map.getTile(target);
+	}
+
+	// Check if target tile has no vehicle termporarily blocking it
+	// If it does, find a random location around it in a 5x5x5 cube that is not blocked
+	auto newTarget = target;
+	auto newTo = to;
+	bool foundNewTo = false;
+	int iterationCount = 10;
+	for (int i = 0; i < iterationCount; i++)
+	{
+		bool containsVehicle = false;
+		bool containsScenery = false;
+		for (auto obj : newTo->ownedObjects)
+		{
+			if (obj->getType() == TileObject::Type::Vehicle)
+			{
+				containsVehicle = true;
+				break;
+			}
+			if (obj->getType() == TileObject::Type::Scenery)
+			{
+				auto sceneryTile = std::static_pointer_cast<TileObjectScenery>(obj);
+				if (sceneryTile->scenery.lock()->type->isLandingPad)
+				{
+					continue;
+				}
+				containsScenery = true;
+				break;
+			}
+		}
+		if (!containsVehicle && !containsScenery)
+		{
+			foundNewTo = true;
+			break;
+		}
+		newTarget = Vec3<int>{ 
+			target.x + randBoundsInclusive(state.rng, -std::min(2, target.x),
+				std::min(2, map.size.x - 1 - target.x)),
+			target.y + randBoundsInclusive(state.rng, -std::min(2, target.y),
+				std::min(2, map.size.y - 1 - target.y)),
+			randBoundsInclusive(state.rng, std::min(1, (int)v.altitude - 3),
+				std::min(3, map.size.z - 1 - (int)v.altitude))};
+
+		newTo = map.getTile(newTarget);
+	}
+	if (foundNewTo && target != newTarget)
+	{
+		LogWarning("Target %d,%d,%d was unreachable, found new target %d,%d,%d", target.x, target.y, target.z, newTarget.x, newTarget.y, newTarget.z);
+		target = newTarget;
+	}
+
 	// TODO
 	// Pseudocode:
 	// if (in building)
@@ -244,11 +329,9 @@ VehicleMission *VehicleMission::gotoLocation(Vehicle &, Vec3<int> target)
 	return mission;
 }
 
-VehicleMission *VehicleMission::gotoPortal(Vehicle &v)
+VehicleMission *VehicleMission::gotoPortal(GameState &state, Vehicle &v)
 {
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::GotoPortal;
-
+	Vec3<int> target = { 0,0,0 };
 	auto vTile = v.tileObject;
 	if (vTile)
 	{
@@ -259,14 +342,14 @@ VehicleMission *VehicleMission::gotoPortal(Vehicle &v)
 			if (distance < closestPortalRange)
 			{
 				closestPortalRange = distance;
-				mission->targetLocation = p->tileObject->getOwningTile()->position;
+				target = p->tileObject->getOwningTile()->position;
 			}
 		}
 	}
-	return mission;
+	return gotoPortal(state, v, target);
 }
 
-VehicleMission *VehicleMission::gotoPortal(Vehicle &, Vec3<int> target)
+VehicleMission *VehicleMission::gotoPortal(GameState &, Vehicle &, Vec3<int> target)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::GotoPortal;
@@ -274,7 +357,7 @@ VehicleMission *VehicleMission::gotoPortal(Vehicle &, Vec3<int> target)
 	return mission;
 }
 
-VehicleMission *VehicleMission::gotoBuilding(Vehicle &, StateRef<Building> target)
+VehicleMission *VehicleMission::gotoBuilding(GameState &, Vehicle &, StateRef<Building> target)
 {
 	// TODO
 	// Pseudocode:
@@ -296,7 +379,7 @@ VehicleMission *VehicleMission::gotoBuilding(Vehicle &, StateRef<Building> targe
 	return mission;
 }
 
-VehicleMission *VehicleMission::infiltrateBuilding(Vehicle &, StateRef<Building> target)
+VehicleMission *VehicleMission::infiltrateBuilding(GameState &, Vehicle &, StateRef<Building> target)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::Infiltrate;
@@ -304,7 +387,7 @@ VehicleMission *VehicleMission::infiltrateBuilding(Vehicle &, StateRef<Building>
 	return mission;
 }
 
-VehicleMission *VehicleMission::attackVehicle(Vehicle &, StateRef<Vehicle> target)
+VehicleMission *VehicleMission::attackVehicle(GameState &, Vehicle &, StateRef<Vehicle> target)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::AttackVehicle;
@@ -312,7 +395,7 @@ VehicleMission *VehicleMission::attackVehicle(Vehicle &, StateRef<Vehicle> targe
 	return mission;
 }
 
-VehicleMission *VehicleMission::followVehicle(Vehicle &, StateRef<Vehicle> target)
+VehicleMission *VehicleMission::followVehicle(GameState &, Vehicle &, StateRef<Vehicle> target)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::FollowVehicle;
@@ -320,7 +403,7 @@ VehicleMission *VehicleMission::followVehicle(Vehicle &, StateRef<Vehicle> targe
 	return mission;
 }
 
-VehicleMission *VehicleMission::snooze(Vehicle &, unsigned int snoozeTicks)
+VehicleMission *VehicleMission::snooze(GameState &, Vehicle &, unsigned int snoozeTicks)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::Snooze;
@@ -328,14 +411,21 @@ VehicleMission *VehicleMission::snooze(Vehicle &, unsigned int snoozeTicks)
 	return mission;
 }
 
-VehicleMission *VehicleMission::crashLand(Vehicle &)
+VehicleMission *VehicleMission::restartNextMission(GameState &, Vehicle &)
+{
+	auto *mission = new VehicleMission();
+	mission->type = MissionType::RestartNextMission;
+	return mission;
+}
+
+VehicleMission *VehicleMission::crashLand(GameState &, Vehicle &)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::Crash;
 	return mission;
 }
 
-VehicleMission *VehicleMission::patrol(Vehicle &, unsigned int counter)
+VehicleMission *VehicleMission::patrol(GameState &, Vehicle &, unsigned int counter)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::Patrol;
@@ -391,11 +481,10 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 	{
 		case MissionType::TakeOff:      // Fall-through
 		case MissionType::GotoLocation: // Fall-through
-		case MissionType::GotoPortal:
 		case MissionType::Land:
 		case MissionType::Infiltrate:
 		{
-			return advanceAlongPath(dest);
+			return advanceAlongPath(state, dest, v);
 		}
 		case MissionType::Crash:
 		{
@@ -411,7 +500,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 			return true;
 		}
 		case MissionType::Patrol:
-			if (!advanceAlongPath(dest))
+			if (!advanceAlongPath(state, dest, v))
 			{
 				if (missionCounter == 0)
 					return false;
@@ -506,6 +595,8 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 			return false;
 		}
 		case MissionType::Snooze:
+		case MissionType::RestartNextMission:
+		case MissionType::GotoPortal:
 		{
 			return false;
 		}
@@ -516,7 +607,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 	return false;
 }
 
-void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks)
+void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bool finished)
 {
 	switch (this->type)
 	{
@@ -586,7 +677,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks)
 				if (enemy)
 				{
 					StateRef<Vehicle> vehicleRef(&state, enemy->getVehicle());
-					auto attackMission = VehicleMission::attackVehicle(v, vehicleRef);
+					auto attackMission = VehicleMission::attackVehicle(state, v, vehicleRef);
 					v.missions.emplace_front(attackMission);
 					attackMission->start(state, v);
 				}
@@ -596,22 +687,21 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks)
 		case MissionType::Infiltrate:
 		{
 			// this should run before mission is checked and destroyed
-			if (this->isFinished(state, v))
+			if (finished)
 			{
 				auto doodad =
 				    v.city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_INFILTRATION_RAY"},
 				                        v.tileObject->getPosition() - Vec3<float>{0, 0, 0.5f});
 
-				v.missions.emplace_back(VehicleMission::snooze(v, doodad->lifetime * 2));
-				v.missions.emplace_back(VehicleMission::gotoPortal(v));
+				v.missions.emplace_back(VehicleMission::snooze(state, v, doodad->lifetime * 2));
+				v.missions.emplace_back(VehicleMission::gotoPortal(state, v));
 			}
 			return;
 		}
 		case MissionType::GotoPortal:
 		{
 			auto vTile = v.tileObject;
-			if (vTile && this->isFinished(state, v) &&
-			    vTile->getOwningTile()->position == this->targetLocation)
+			if (vTile && finished)
 			{
 				for (auto city : state.cities)
 				{
@@ -630,11 +720,25 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks)
 			return;
 		}
 		case MissionType::Land:
+			if (finished && v.tileObject)
+			{
+				auto b = this->targetBuilding;
+				if (!b)
+				{
+					LogError("Building disappeared");
+					return;
+				}
+				v.land(state, b);
+				LogInfo("Vehicle mission: Landed in %s", b.id.cStr());
+				return;
+			}
+			return;
 		case MissionType::Crash:
 		case MissionType::GotoBuilding:
 		case MissionType::GotoLocation:
 		case MissionType::AttackVehicle:
 		case MissionType::FollowVehicle:
+		case MissionType::RestartNextMission:
 			return;
 		case MissionType::Snooze:
 		{
@@ -650,7 +754,20 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks)
 	}
 }
 
-bool VehicleMission::isFinished(GameState &state, Vehicle &v)
+bool VehicleMission::isFinished(GameState &state, Vehicle &v, bool callUpdateIfFinished)
+{
+	if (isFinishedInternal(state, v))
+	{
+		if (callUpdateIfFinished)
+		{
+			update(state, v, 0, true);
+		}
+		return true;
+	}
+	return false;
+}
+
+bool VehicleMission::isFinishedInternal(GameState &state, Vehicle &v)
 {
 	switch (this->type)
 	{
@@ -664,18 +781,16 @@ bool VehicleMission::isFinished(GameState &state, Vehicle &v)
 				LogError("Building disappeared");
 				return true;
 			}
-			if (this->currentPlannedPath.empty())
-			{
-				/* FIXME: Overloading isFinished() to complete landing action
- * (Should add a ->end() call to mirror ->start()?*/
-				v.land(state, b);
-				LogInfo("Vehicle mission: Landed in %s", b.id.cStr());
+			return currentPlannedPath.empty();
+		}
+		case MissionType::GotoPortal:
+		{	
+			auto vTile = v.tileObject;
+			if (vTile && vTile->getOwningTile()->position == this->targetLocation)
 				return true;
-			}
 			return false;
 		}
 		case MissionType::GotoLocation:
-		case MissionType::GotoPortal:
 		case MissionType::Crash:
 		case MissionType::Infiltrate:
 			return this->currentPlannedPath.empty();
@@ -725,6 +840,8 @@ bool VehicleMission::isFinished(GameState &state, Vehicle &v)
 		}
 		case MissionType::Snooze:
 			return this->timeToSnooze == 0;
+		case MissionType::RestartNextMission:
+			return true;
 		default:
 			LogWarning("TODO: Implement");
 			return false;
@@ -736,6 +853,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 	switch (this->type)
 	{
 		case MissionType::TakeOff: // Fall-through
+		case MissionType::RestartNextMission:
 		case MissionType::Snooze:
 			// No setup
 			return;
@@ -778,10 +896,21 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				         padPosition.x, padPosition.y, padPosition.z + 1, b.id.cStr());
 				return;
 			}
-			this->currentPlannedPath = {padPosition};
+			this->currentPlannedPath = { padPosition, padPosition };
 			return;
 		}
 		case MissionType::GotoPortal:
+		{
+			if (!isFinished(state, v))
+			{
+				LogInfo("Vehicle mission %s: Pathing to portal at {%d,%d,%d}", getName().cStr(),
+					targetLocation.x, targetLocation.y, targetLocation.z);
+				auto *gotoMission = VehicleMission::gotoLocation(state, v, targetLocation);
+				v.missions.emplace_front(gotoMission);
+				gotoMission->start(state, v);
+			}
+			return;
+		}
 		case MissionType::GotoLocation:
 		{
 			auto vehicleTile = v.tileObject;
@@ -918,7 +1047,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 
 			LogInfo("Vehicle mission %s: Pathing to pad at {%d,%d,%d}", name.cStr(),
 			        shortestPathPad.x, shortestPathPad.y, shortestPathPad.z);
-			auto *gotoMission = VehicleMission::gotoLocation(v, shortestPathPad);
+			auto *gotoMission = VehicleMission::gotoLocation(state, v, shortestPathPad);
 			v.missions.emplace_front(gotoMission);
 			gotoMission->start(state, v);
 			return;
@@ -995,7 +1124,7 @@ void VehicleMission::setPathTo(Vehicle &v, Vec3<int> target, int maxIterations)
 	}
 }
 
-bool VehicleMission::advanceAlongPath(Vec3<float> &dest)
+bool VehicleMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Vehicle &v)
 {
 	// Add {0.5,0.5,0.5} to make it route to the center of the tile
 	static const Vec3<float> offset{0.5, 0.5, 0.5};
@@ -1006,6 +1135,49 @@ bool VehicleMission::advanceAlongPath(Vec3<float> &dest)
 	if (currentPlannedPath.empty())
 		return false;
 	auto pos = currentPlannedPath.front();
+
+	// Land mission does not check for collision
+	if (type == MissionType::Land)
+	{
+		dest = Vec3<float>{ pos.x, pos.y, pos.z } +offset;
+		return true;
+	}
+
+	// See if we can actually go there
+	auto tFrom = v.tileObject->getOwningTile();
+	auto tTo = tFrom->map.getTile(pos);
+	if (tFrom->position != pos &&
+		(std::abs(tFrom->position.x - pos.x) > 1 || std::abs(tFrom->position.y - pos.y) > 1 ||
+			std::abs(tFrom->position.z - pos.z) > 1 ||
+			!FlyingVehicleTileHelper{ tFrom->map, v }.canEnterTile(tFrom, tTo)))
+	{
+		// Next tile became impassable, pick a new path
+		currentPlannedPath.clear();
+		v.missions.emplace_front(restartNextMission(state, v));
+		v.missions.front()->start(state, v);
+		return false;
+	}
+
+	// See if we can make a shortcut
+	// When ordering move to vehidle already on the move, we can have a situation
+	// where going directly to 2nd step in the path is faster than going to the first
+	// In this case, we should skip unnesecary steps
+	auto it = ++currentPlannedPath.begin();
+	// Start with position after next
+	// If next position has a node and we can go directly to that node
+	// Then update current position and iterator
+	while (it != currentPlannedPath.end() &&
+		(tFrom->position == *it ||
+		(std::abs(tFrom->position.x - it->x) <= 1 &&
+			std::abs(tFrom->position.y - it->y) <= 1 && std::abs(tFrom->position.z - it->z) <= 1 &&
+			FlyingVehicleTileHelper{ tFrom->map, v }.canEnterTile(tFrom, tFrom->map.getTile(*it)))))
+	{
+		currentPlannedPath.pop_front();
+		pos = currentPlannedPath.front();
+		tTo = tFrom->map.getTile(pos);
+		it = ++currentPlannedPath.begin();
+	}
+
 	dest = Vec3<float>{pos.x, pos.y, pos.z} + offset;
 	return true;
 }
@@ -1065,19 +1237,20 @@ UString VehicleMission::getName()
 }
 
 const std::map<VehicleMission::MissionType, UString> VehicleMission::TypeMap = {
-    {MissionType::GotoLocation, "GotoLocation"},
-    {MissionType::GotoBuilding, "GotoBuilding"},
-    {MissionType::GotoPortal, "GotoBuilding"},
-    {MissionType::FollowVehicle, "FollowVehicle"},
-    {MissionType::AttackVehicle, "AttackVehicle"},
-    {MissionType::AttackBuilding, "AttackBuilding"},
-    {MissionType::Snooze, "Snooze"},
-    {MissionType::TakeOff, "TakeOff"},
-    {MissionType::Land, "Land"},
-    {MissionType::Crash, "Crash"},
-    {MissionType::Patrol, "Patrol"},
-    {MissionType::Infiltrate, "Infiltrate"},
-    {MissionType::Subvert, "Subvert"},
+	{MissionType::GotoLocation, "GotoLocation"},
+	{MissionType::GotoBuilding, "GotoBuilding"},
+	{MissionType::GotoPortal, "GotoBuilding"},
+	{MissionType::FollowVehicle, "FollowVehicle"},
+	{MissionType::AttackVehicle, "AttackVehicle"},
+	{MissionType::AttackBuilding, "AttackBuilding"},
+	{MissionType::Snooze, "Snooze"},
+	{MissionType::TakeOff, "TakeOff"},
+	{MissionType::Land, "Land"},
+	{MissionType::Crash, "Crash"},
+	{MissionType::Patrol, "Patrol"},
+	{MissionType::Infiltrate, "Infiltrate"},
+	{MissionType::Subvert, "Subvert"},
+	{MissionType::RestartNextMission, "RestartNextMission"},
 };
 
 } // namespace OpenApoc

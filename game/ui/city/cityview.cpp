@@ -301,7 +301,7 @@ CityView::CityView(sp<GameState> state)
 			    LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name.cStr(), bld->name.cStr());
 			    // FIXME: Don't clear missions if not replacing current mission
 			    v->missions.clear();
-			    v->missions.emplace_back(VehicleMission::gotoBuilding(*v, bld));
+			    v->missions.emplace_back(VehicleMission::gotoBuilding(*this->state, *v, bld));
 			    v->missions.front()->start(*this->state, *v);
 		    }
 		});
@@ -790,7 +790,7 @@ void CityView::eventOccurred(Event *e)
 				{
 					auto scenery =
 					    std::dynamic_pointer_cast<TileObjectScenery>(collision.obj)->getOwner();
-					LogInfo("Clicked on scenery at {%f,%f,%f}", scenery->currentPosition.x,
+					LogWarning("Clicked on scenery at {%f,%f,%f}", scenery->currentPosition.x,
 					        scenery->currentPosition.y, scenery->currentPosition.z);
 
 					auto building = scenery->building;
@@ -809,7 +809,7 @@ void CityView::eventOccurred(Event *e)
 							                    scenery->currentPosition.y, altitude};
 							// FIXME: Don't clear missions if not replacing current mission
 							v->missions.clear();
-							v->missions.emplace_back(VehicleMission::gotoLocation(*v, targetPos));
+							v->missions.emplace_back(VehicleMission::gotoLocation(*state, *v, targetPos));
 							v->missions.front()->start(*this->state, *v);
 							LogWarning("Vehicle \"%s\" going to location {%d,%d,%d}",
 							           v->name.cStr(), targetPos.x, targetPos.y, targetPos.z);
@@ -829,7 +829,7 @@ void CityView::eventOccurred(Event *e)
 								// FIXME: Don't clear missions if not replacing current mission
 								v->missions.clear();
 								v->missions.emplace_back(
-								    VehicleMission::gotoBuilding(*v, building));
+								    VehicleMission::gotoBuilding(*state, *v, building));
 								v->missions.front()->start(*this->state, *v);
 							}
 							this->selectionState = SelectionState::Normal;
@@ -869,7 +869,7 @@ void CityView::eventOccurred(Event *e)
 						{
 							// FIXME: Don't clear missions if not replacing current mission
 							v->missions.clear();
-							v->missions.emplace_back(VehicleMission::attackVehicle(*v, vehicleRef));
+							v->missions.emplace_back(VehicleMission::attackVehicle(*this->state, *v, vehicleRef));
 							v->missions.front()->start(*this->state, *v);
 						}
 						this->selectionState = SelectionState::Normal;

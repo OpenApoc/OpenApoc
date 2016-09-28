@@ -22,6 +22,9 @@ class VehicleMission
 	static VehicleMission *takeOff(Vehicle &v);
 	// INTERNAL: Not to be used directly (Only works if directly above a pad)
 	static VehicleMission *land(Vehicle &v, StateRef<Building> b);
+	// INTERNAL: This checks if mission is actually finished. Called by isFinished.
+	// If it is finished, update() is called by isFinished so that any remaining work could be done
+	bool isFinishedInternal(GameState &state, Vehicle &v);
 
 	bool takeOffCheck(GameState &state, Vehicle &v, UString mission);
 
@@ -30,23 +33,24 @@ class VehicleMission
 
 	// Methods used in pathfinding etc.
 	bool getNextDestination(GameState &state, Vehicle &v, Vec3<float> &dest);
-	void update(GameState &state, Vehicle &v, unsigned int ticks);
-	bool isFinished(GameState &state, Vehicle &v);
+	void update(GameState &state, Vehicle &v, unsigned int ticks, bool finished = true);
+	bool isFinished(GameState &state, Vehicle &v, bool callUpdateIfFinished = true);
 	void start(GameState &state, Vehicle &v);
 	void setPathTo(Vehicle &v, Vec3<int> target, int maxIterations = 500);
-	bool advanceAlongPath(Vec3<float> &dest);
+	bool advanceAlongPath(GameState &state, Vec3<float> &dest, Vehicle &v);
 
 	// Methods to create new missions
-	static VehicleMission *gotoLocation(Vehicle &v, Vec3<int> target);
-	static VehicleMission *gotoPortal(Vehicle &v);
-	static VehicleMission *gotoPortal(Vehicle &v, Vec3<int> target);
-	static VehicleMission *gotoBuilding(Vehicle &v, StateRef<Building> target);
-	static VehicleMission *infiltrateBuilding(Vehicle &v, StateRef<Building> target);
-	static VehicleMission *attackVehicle(Vehicle &v, StateRef<Vehicle> target);
-	static VehicleMission *followVehicle(Vehicle &v, StateRef<Vehicle> target);
-	static VehicleMission *snooze(Vehicle &v, unsigned int ticks);
-	static VehicleMission *crashLand(Vehicle &v);
-	static VehicleMission *patrol(Vehicle &v, unsigned int counter = 10);
+	static VehicleMission *gotoLocation(GameState &state, Vehicle &v, Vec3<int> target);
+	static VehicleMission *gotoPortal(GameState &state, Vehicle &v);
+	static VehicleMission *gotoPortal(GameState &state, Vehicle &v, Vec3<int> target);
+	static VehicleMission *gotoBuilding(GameState &state, Vehicle &v, StateRef<Building> target);
+	static VehicleMission *infiltrateBuilding(GameState &state, Vehicle &v, StateRef<Building> target);
+	static VehicleMission *attackVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
+	static VehicleMission *followVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
+	static VehicleMission *snooze(GameState &state, Vehicle &v, unsigned int ticks);
+	static VehicleMission *restartNextMission(GameState &state, Vehicle &v);
+	static VehicleMission *crashLand(GameState &state, Vehicle &v);
+	static VehicleMission *patrol(GameState &state, Vehicle &v, unsigned int counter = 10);
 
 	UString getName();
 
@@ -57,6 +61,7 @@ class VehicleMission
 		FollowVehicle,
 		AttackVehicle,
 		AttackBuilding,
+		RestartNextMission,
 		Snooze,
 		TakeOff,
 		Land,

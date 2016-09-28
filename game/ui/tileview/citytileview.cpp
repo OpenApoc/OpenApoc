@@ -99,6 +99,13 @@ void CityTileView::render()
 						Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
 						obj->draw(r, *this, pos, this->viewMode);
 					}
+					#ifdef PATHFINDING_DEBUG
+					if (tile->pathfindingDebugFlag && viewMode ==  TileViewMode::Isometric)
+											r.draw(selectedTileImageFront,
+												tileToOffsetScreenCoords(Vec3<int>{x, y, z}) -
+												selectedTileImageOffset);
+					#endif
+
 				}
 			}
 		}

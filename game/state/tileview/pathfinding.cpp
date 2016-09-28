@@ -54,7 +54,10 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	#endif
 
 	TRACE_FN;
-	std::set<Tile *> visitedTiles;
+	// Faster than looking up in a set
+	std::vector<bool> visitedTiles = std::vector<bool>(size.x * size.y * size.z, false);
+	int strideZ = size.x * size.y;
+	int strideY = size.x;
 	std::list<PathNode *> nodesToDelete;
 	std::list<PathNode *> fringe;
 	Vec3<float> goalPosition;
@@ -117,12 +120,12 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 
 		// Skip if we've already expanded this, as in a 3d-grid we know the first
 		// expansion will be the shortest route
-		if (visitedTiles.find(nodeToExpand->thisTile) != visitedTiles.end())
+		if (visitedTiles[nodeToExpand->thisTile->position.z * strideZ + nodeToExpand->thisTile->position.y * strideY + nodeToExpand->thisTile->position.x])
 		{
 			iterationCount--;
 			continue;
 		}
-		visitedTiles.insert(nodeToExpand->thisTile);
+		visitedTiles[nodeToExpand->thisTile->position.z * strideZ + nodeToExpand->thisTile->position.y * strideY + nodeToExpand->thisTile->position.x] = true;
 		
 		#ifdef PATHFINDING_DEBUG
 		nodeToExpand->thisTile->pathfindingDebugFlag = true;
@@ -138,7 +141,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 			closestNodeSoFar = nodeToExpand;
 			break;
 		}
-
+		
 		if (nodeToExpand->distanceToGoal < closestNodeSoFar->distanceToGoal)
 		{
 			closestNodeSoFar = nodeToExpand;
@@ -161,8 +164,13 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 						continue;
 
 					Tile *tile = this->getTile(nextPosition);
+					if (visitedTiles[tile->position.z * strideZ + tile->position.y * strideY + tile->position.x])
+					{
+						continue;
+					}
 					// FIXME: Make 'blocked' tiles cleverer (e.g. don't plan around objects that
 					// will move anyway?)
+					// tile->position.x == 90 && tile->position.y == 40 && tile->position.z == 5
 					float cost = 0.0f;
 					if (!canEnterTile.canEnterTile(nodeToExpand->thisTile, tile, cost,
 						demandGiveWay))
@@ -192,7 +200,8 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	}
 	if (iterationCount > iterationLimit)
 	{
-		LogWarning("No route found after %d iterations, returning closest path {%d,%d,%d}", iterationCount,
+		LogWarning("No route from {%d,%d,%d} to {%d,%d,%d} found after %d iterations, returning closest path {%d,%d,%d}",
+			origin.x, origin.y, origin.z, destination.x, destination.y, destination.z, iterationCount,
 			closestNodeSoFar->thisTile->position.x, closestNodeSoFar->thisTile->position.y,
 			closestNodeSoFar->thisTile->position.z);
 	}
@@ -419,7 +428,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 // Alexey Andronov (Istrebitel)
 //
 // I have rewritten pathfinding algorithm using pointers instead of list of visited points
-// This allows for about 10% more speed and also makes fixing problems with old algorithm easier
+// This makes fixing problems with old algorithm easier
 //
 // One such problem was that we would add node to list of visited				    /---\
 // at the moment we	first pathfind into it, and instead we should					|+  |
@@ -431,6 +440,9 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 // From 2 we try several tiles including 3. We add 3 to visited tiles.
 // When eventually we try 4, we cannot use path from 4 to 3, because 3 is in visited tiles, 
 // even though "1-4-3" is cheaper than "1-2-3".
+//
+// In new algorithm, we add node to visited when we pathfind from it, therefore we can add
+// tile into fringe multiple times, but this allows us to get better paths
 //
 // In case I have broken something horribly, I'm including old pathfinding algorithm here
 // However, I'm certain new one should work properly.
