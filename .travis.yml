@@ -49,7 +49,6 @@ matrix:
 install:
   - pushd ./dependencies/tinyxml2 && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . > /dev/null && make -j2 > /dev/null && make install > /dev/null && popd;
   - pushd ./dependencies/glm && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . > /dev/null && make -j2 > /dev/null && make install > /dev/null && popd;
-  - pushd ./dependencies/physfs && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . > /dev/null && make -j2 > /dev/null && make install > /dev/null && popd;
 
 before_script:
   - export CFLAGS="-Wall -Wextra" CXXFLAGS="-Wall -Wextra"

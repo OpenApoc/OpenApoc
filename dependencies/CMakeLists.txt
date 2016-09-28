@@ -87,3 +87,5 @@ target_compile_definitions(OpenApoc_LibLodepng PUBLIC PTHREADS_AVAILABLE)
 
 set_property(TARGET OpenApoc_LibLodepng PROPERTY CXX_STANDARD 11)
 set_property(TARGET OpenApoc_LibLodepng PROPERTY CXX_STANDARD_REQUIRED ON)
+
+add_subdirectory(physfs)

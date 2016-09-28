@@ -269,19 +269,8 @@ target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibPugixml)
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibLodepng)
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_Miniz)
 
-# Physfs provides .iso reader & overlays etc.
-pkg_check_modules(PC_PHYSFS REQUIRED physfs>=2.0.0)
+target_link_libraries(OpenApoc_Framework PUBLIC physfs-static)
 
-find_path(PHYSFS_INCLUDE_DIR physfs.h HINTS ${PC_PHYSFS_INCLUDEDIR})
-target_include_directories(OpenApoc_Framework PUBLIC ${PHYFSFS_INCLUDE_DIR})
-
-foreach (PHYSFS_LIBRARY ${PC_PHYSFS_LIBRARIES})
-	find_library(PHYSFS_LIBRARY_PATH ${PHYSFS_LIBRARY} HINTS
-			${PC_PHYSFS_LIBRARY_DIRS})
-	if (NOT PHYSFS_LIBRARY_PATH)
-			message(FATAL_ERROR "Failed to find physfs library ${PHYSFS_LIBRARY} in ${PC_PHYSFS_LIBRARY_DIRS}")
-	endif()
-	target_link_libraries(OpenApoc_Framework PUBLIC ${PHYSFS_LIBRARY_PATH})
-endforeach(PHYSFS_LIBRARY)
-
+target_include_directories(OpenApoc_Framework PRIVATE
+		${CMAKE_SOURCE_DIR}/dependencies/physfs/src)
 target_include_directories(OpenApoc_Framework PUBLIC ${CMAKE_SOURCE_DIR})
