@@ -8,7 +8,7 @@
   <checksum SHA1="665676441df08bedc9cdd1dec8854d5b99a8ed4f">gamestate/agent_types.xml</checksum>
   <checksum SHA1="0b1fc22224d3d4d266780fe20b1db95ee052bba0">gamestate/base_layouts.xml</checksum>
   <checksum SHA1="23e3874d1ed51670e14c492e0ed06b374372fbaf">gamestate/battle_common_image_list.xml</checksum>
-  <checksum SHA1="32af607ea933f85c9ffe8caf807688fa1792196c">gamestate/battle_common_sample_list.xml</checksum>
+  <checksum SHA1="017d5a722c573625e06ed3a236f14b4f7498fda8">gamestate/battle_common_sample_list.xml</checksum>
   <checksum SHA1="dcebd55d2b40ea7b7c117ce16ee71ab23be4e4ef">gamestate/battle_maps.xml</checksum>
   <checksum SHA1="09a0229c616b482ad6f16bdf5f90d879e648fb62">gamestate/battle_maps/BATTLEMAP_01senate.xml</checksum>
   <checksum SHA1="a2febcae82bb3cf12d7502ead958bc85f6ac01dc">gamestate/battle_maps/BATTLEMAP_02police.xml</checksum>

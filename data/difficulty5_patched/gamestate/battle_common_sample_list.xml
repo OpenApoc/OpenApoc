@@ -72,45 +72,45 @@
       <entry>
         <key>DAMAGETYPE_ANTI-ALIEN_GAS</key>
         <value>
-          <entry />
+          <entry>RAWSOUND:xcom3/rawsound/tactical/explosns/gasexpls.raw:22050</entry>
         </value>
       </entry>
       <entry>
         <key>DAMAGETYPE_EXPLOSIVE</key>
         <value>
-          <entry />
-          <entry />
+          <entry>RAWSOUND:xcom3/rawsound/tactical/explosns/explosn1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/explosns/explosn2.raw:22050</entry>
         </value>
       </entry>
       <entry>
         <key>DAMAGETYPE_EXPLOSIVE_1</key>
         <value>
-          <entry />
-          <entry />
+          <entry>RAWSOUND:xcom3/rawsound/tactical/explosns/explosn1.raw:22050</entry>
+          <entry>RAWSOUND:xcom3/rawsound/tactical/explosns/explosn2.raw:22050</entry>
         </value>
       </entry>
       <entry>
         <key>DAMAGETYPE_INCENDIARY</key>
         <value>
-          <entry />
+          <entry>RAWSOUND:xcom3/rawsound/tactical/explosns/firexpls.raw:22050</entry>
         </value>
       </entry>
       <entry>
         <key>DAMAGETYPE_PSIONIC_BLAST</key>
         <value>
-          <entry />
+          <entry>RAWSOUND:xcom3/rawsound/tactical/explosns/psigrnad.raw:22050</entry>
         </value>
       </entry>
       <entry>
         <key>DAMAGETYPE_SMOKE</key>
         <value>
-          <entry />
+          <entry>RAWSOUND:xcom3/rawsound/tactical/explosns/gasexpls.raw:22050</entry>
         </value>
       </entry>
       <entry>
         <key>DAMAGETYPE_STUN_GAS</key>
         <value>
-          <entry />
+          <entry>RAWSOUND:xcom3/rawsound/tactical/explosns/gasexpls.raw:22050</entry>
         </value>
       </entry>
     </explosionSoundMap>
