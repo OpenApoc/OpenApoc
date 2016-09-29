@@ -442,7 +442,7 @@ void GameState::updateEndOfDay()
 			v->equipDefaultEquipment(*this);
 			v->launch(*city->map, *this, (*portal)->getPosition());
 
-			v->missions.emplace_back(VehicleMission::infiltrateBuilding(*this, *v, bld));
+			v->missions.emplace_back(VehicleMission::infiltrateOrSubvertBuilding(*this, *v, bld));
 			v->missions.front()->start(*this, *v);
 
 			fw().pushEvent(new GameVehicleEvent(GameEventType::UfoSpotted, {this, v}));

@@ -42,12 +42,12 @@ class VehicleMission
 	bool isTakingOff(Vehicle &v);
 
 	// Methods to create new missions
-	static VehicleMission *gotoLocation(GameState &state, Vehicle &v, Vec3<int> target);
+	static VehicleMission *gotoLocation(GameState &state, Vehicle &v, Vec3<int> target, bool pickNearest = false);
 	static VehicleMission *gotoPortal(GameState &state, Vehicle &v);
 	static VehicleMission *gotoPortal(GameState &state, Vehicle &v, Vec3<int> target);
 	static VehicleMission *gotoBuilding(GameState &state, Vehicle &v, StateRef<Building> target);
-	static VehicleMission *infiltrateBuilding(GameState &state, Vehicle &v,
-	                                          StateRef<Building> target);
+	static VehicleMission *infiltrateOrSubvertBuilding(GameState &state, Vehicle &v,
+	                                          StateRef<Building> target, bool subvert = false);
 	static VehicleMission *attackVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *followVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *snooze(GameState &state, Vehicle &v, unsigned int ticks);
@@ -71,23 +71,26 @@ class VehicleMission
 		Crash,
 		Patrol,
 		GotoPortal,
-		Infiltrate,
-		Subvert
+		InfiltrateSubvert,
 	};
 	static const std::map<MissionType, UString> TypeMap;
 
 	MissionType type = MissionType::GotoLocation;
 
-	// GotoLocation TakeOff GotoPortal Patrol
+	// GotoLocation InfiltrateSubvert TakeOff GotoPortal Patrol
 	Vec3<int> targetLocation = {0, 0, 0};
+	// GotoLocation - should it pick nearest point or random point if destination unreachable
+	bool pickNearest = false;
 	// GotoBuilding AttackBuilding Land Infiltrate
 	StateRef<Building> targetBuilding;
 	// FollowVehicle AttackVehicle
 	StateRef<Vehicle> targetVehicle;
 	// Snooze
 	unsigned int timeToSnooze = 0;
-	// Patrol: waypoints
+	// InfiltrateSubvert, Patrol: waypoints
 	unsigned int missionCounter = 0;
+	// InfiltrateSubvert: mode
+	bool subvert = false;
 
 	std::list<Vec3<int>> currentPlannedPath;
 };

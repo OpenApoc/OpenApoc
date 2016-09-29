@@ -263,11 +263,13 @@
 		<name>VehicleMission</name>
 		<member>type</member>
 		<member>targetLocation</member>
+		<member>pickNearest</member>
 		<member>targetBuilding</member>
 		<member>targetVehicle</member>
 		<member>timeToSnooze</member>
 		<member>missionCounter</member>
 		<member>currentPlannedPath</member>
+		<member>subvert</member>
 	</object>
 	<object>
 		<name>BattleUnitMission</name>
@@ -926,8 +928,7 @@
 		<value>Crash</value>
 		<value>Patrol</value>
 		<value>GotoPortal</value>
-		<value>Infiltrate</value>
-		<value>Subvert</value>
+		<value>InfiltrateSubvert</value>
 	</enum>
 	<enum>
 		<name>BattleUnitMission::MissionType</name>
