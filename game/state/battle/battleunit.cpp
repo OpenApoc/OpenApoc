@@ -133,6 +133,13 @@ int BattleUnit::getStunDamage() const
 	return stunDamageInTicks / SCALE;
 }
 
+void BattleUnit::dealStunDamage(int damage)
+{
+	// FIXME: Figure out stun damage scale
+	int SCALE = TICKS_PER_SECOND;
+	stunDamageInTicks += damage* SCALE;
+}
+
 bool BattleUnit::isDead() const { return getHealth() == 0 || destroyed; }
 
 bool BattleUnit::isUnconscious() const { return !isDead() && getStunDamage() >= getHealth(); }
@@ -156,6 +163,20 @@ bool BattleUnit::isBusy() const
 	return !isStatic() || false;
 }
 
+bool BattleUnit::isThrowing() const
+{
+	bool throwing = false;
+	for (auto &m : missions)
+	{
+		if (m->type == BattleUnitMission::MissionType::ThrowItem)
+		{
+			throwing = true;
+			break;
+		}
+	}
+	return throwing;
+}
+
 bool BattleUnit::canFly() const
 {
 	return isConscious() && agent->isBodyStateAllowed(AgentType::BodyState::Flying);
@@ -175,7 +196,7 @@ bool BattleUnit::canMove() const
 	return false;
 }
 
-bool BattleUnit::canGoProne(Vec3<int> pos, Vec2<int> fac) const
+bool BattleUnit::canProne(Vec3<int> pos, Vec2<int> fac) const
 {
 	if (isLarge())
 	{
@@ -389,6 +410,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					}
 					else
 					{
+						// FIXME: Deal damage in a unified way so we don't have to check 
+						// for unconscious and dead manually !
 						agent->modified_stats.health -= w.second;
 					}
 				}
@@ -411,7 +434,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	} // End of Fatal Wounds and Healing
 
 	// Idling check
-	if (missions.empty() && !isUnconscious() && !isDead())
+	if (missions.empty() && isConscious())
 	{
 		if (falling)
 		{
@@ -502,7 +525,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			// Go prone if not prone and should stay prone
 			else if (movement_mode == BattleUnit::MovementMode::Prone &&
 			         current_body_state != AgentType::BodyState::Prone &&
-			         kneeling_mode != KneelingMode::Kneeling && canGoProne(position, facing))
+			         kneeling_mode != KneelingMode::Kneeling && canProne(position, facing))
 			{
 				missions.emplace_front(
 				    BattleUnitMission::changeStance(*this, AgentType::BodyState::Prone));
@@ -561,7 +584,6 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 
 	// Movement and Body Animation
 	{
-		atGoal = false;
 		bool wasUsingLift = usingLift;
 		usingLift = false;
 
@@ -571,19 +593,11 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			flyingSpeedModifier = 0;
 		}
 
-		// If not running we will consume this twice as fast
+		// If not running we will consume these twice as fast
 		int moveTicksRemaining = ticks * agent->modified_stats.getActualSpeedValue() * 2;
 		int bodyTicksRemaining = ticks;
 		int handTicksRemaining = ticks;
 		int turnTicksRemaining = ticks;
-
-		// Bodies can only change their body state
-		if (isUnconscious() || isDead())
-		{
-			moveTicksRemaining = 0;
-			handTicksRemaining = 0;
-			turnTicksRemaining = 0;
-		}
 
 		int lastMoveTicksRemaining = 0;
 		int lastBodyTicksRemaining = 0;
@@ -612,6 +626,15 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				{
 					bodyTicksRemaining -= body_animation_ticks_remaining;
 					setBodyState(target_body_state);
+					// Pop body change mission if present
+					if (missions.front()->isFinished(state, *this))
+					{
+						missions.pop_front();
+						if (!missions.empty())
+						{
+							missions.front()->start(state, *this);
+						}
+					}
 				}
 			}
 
@@ -641,27 +664,38 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					if (!canFly() || current_body_state != AgentType::BodyState::Flying)
 					{
 						bool hasSupport = false;
-						for (auto t : tileObject->occupiedTiles)
+						bool fullySupported = true;
+						if (tileObject->getOwningTile()->getCanStand(isLarge()))
 						{
-							if (tileObject->map.getTile(t)->getCanStand())
+							hasSupport = true;
+						}
+						else
+						{
+							fullySupported = false;
+						}
+						if (!atGoal)
+						{
+							if (tileObject->map.getTile(goalPosition)->getCanStand(isLarge()))
 							{
 								hasSupport = true;
-								break;
-							}
-						}
-						if (!hasSupport)
-						{
-							if (canFly())
-							{
-								if (body_animation_ticks_remaining == 0)
-								{
-									setBodyState(AgentType::BodyState::Flying);
-								}
 							}
 							else
 							{
-								missions.emplace_front(BattleUnitMission::fall(*this));
-								missions.front()->start(state, *this);
+								fullySupported = false;
+							}
+						}
+						// If not flying and has no support - fall!
+						if (!hasSupport && !canFly())
+						{
+							missions.emplace_front(BattleUnitMission::fall(*this));
+							missions.front()->start(state, *this);
+						}
+						// If flying and not supported both on current and goal locations - start flying
+						if (!fullySupported && canFly())
+						{
+							if (body_animation_ticks_remaining == 0)
+							{
+								setBodyState(AgentType::BodyState::Flying);
 							}
 						}
 					}
@@ -670,20 +704,32 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				// If falling then process falling
 				if (falling)
 				{
-					// Falling always consumes all our movement ticks
+					// Falling consumes remaining move ticks
+					auto fallTicksRemaining = moveTicksRemaining / (agent->modified_stats.getActualSpeedValue() * 2);
 					moveTicksRemaining = 0;
+
+					// Process falling
+					auto newPosition = position;
+					while (fallTicksRemaining-- > 0)
+					{
+						fallingSpeed += static_cast<float>(FALLING_ACCELERATION) / TICK_SCALE;
+						newPosition -= Vec3<float>{0.0f, 0.0f, (fallingSpeed / TICK_SCALE)} / VELOCITY_SCALE_BATTLE;
+					}
+					// Fell into a unit
+					if (isConscious() && tileObject->map.getTile(newPosition)->getUnitIfPresent(true, true, false, tileObject))
+					{	
+						// FIXME: Proper stun damage (ensure it is!)
+						stunDamageInTicks = 0;
+						dealStunDamage(agent->current_stats.health * 3 / 2);
+						fallUnconscious(state);
+					}
+					setPosition(newPosition);
+
 					// Falling units can always turn
+					goalPosition = position;
 					atGoal = true;
 
-					// Handle falling soldiers
-					fallingSpeed += static_cast<float>(ticks) / TICK_SCALE;
-					fallingSpeed = std::min(fallingSpeed, FALLING_SPEED_CAP);
-
-					setPosition(position -
-					            Vec3<float>{0.0f, 0.0f, ((static_cast<float>(ticks) / TICK_SCALE) *
-					                                     fallingSpeed)} /
-					                VELOCITY_SCALE_BATTLE);
-					goalPosition = position;
+					// Check if reached ground
 					auto restingPosition =
 					    tileObject->getOwningTile()->getRestingPosition(isLarge());
 					if (position.z < restingPosition.z)
@@ -703,9 +749,6 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						// FIXME: Deal fall damage before nullifying this
 						// FIXME: Play falling sound
 						fallingSpeed = 0;
-						// FIXME: Fall unconscious if dropped on another unit!
-						// if (fallen on another unit) then (deal stun damage enough to knock us
-						// down for some time)
 					}
 				}
 				// Not falling and moving
@@ -718,7 +761,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					}
 
 					Vec3<float> vectorToGoal = goalPosition - getPosition();
-					int distanceToGoal = ceilf(glm::length(vectorToGoal * VELOCITY_SCALE_BATTLE *
+					int distanceToGoal = (int)ceilf(glm::length(vectorToGoal * VELOCITY_SCALE_BATTLE *
 					                                       (float)TICKS_PER_UNIT_TRAVELLED));
 					int moveTicksConsumeRate =
 					    current_movement_state == AgentType::MovementState::Running ? 1 : 2;
@@ -774,6 +817,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						newPosition += getPosition();
 						setPosition(newPosition);
 						moveTicksRemaining = moveTicksRemaining % moveTicksConsumeRate;
+						atGoal = false;
 					}
 					// Scale ticks so that animations look proper on isometric sceen
 					// facing down or up on screen
@@ -932,13 +976,10 @@ void BattleUnit::tryToRiseUp(GameState &state)
 	if (tileObject->getOwningTile()->getUnitIfPresent(true, true, false, tileObject))
 		return;
 
-	// Do not rise if out of TUs
-	if (missions.size() > 0 && missions.front()->type == BattleUnitMission::MissionType::AcquireTU)
-		return;
-
-	// Check if we can rise into target state
+	// Find state we can rise into (with animation)
 	auto targetState = AgentType::BodyState::Standing;
-	while (agent->getAnimationPack()->getFrameCountBody(getDisplayedItem(), current_body_state,
+	while (targetState != AgentType::BodyState::Downed
+		&& agent->getAnimationPack()->getFrameCountBody(getDisplayedItem(), current_body_state,
 	                                                    targetState, current_hand_state,
 	                                                    current_movement_state, facing) == 0)
 	{
@@ -959,11 +1000,43 @@ void BattleUnit::tryToRiseUp(GameState &state)
 				}
 			// Intentional fall-through
 			case AgentType::BodyState::Kneeling:
-				targetState = AgentType::BodyState::Prone;
+				if (canProne(position, facing))
+				{
+					targetState = AgentType::BodyState::Prone;
+					continue;
+				}
+			// Intentional fall-through
+			case AgentType::BodyState::Prone:
+				// If we arrived here then we have no animation for standing up
+				targetState = AgentType::BodyState::Downed;
 				continue;
 		}
-		break;
 	}
+	// Find state we can rise into (with no animation)
+	if (targetState == AgentType::BodyState::Downed)
+	{
+		if (agent->isBodyStateAllowed(AgentType::BodyState::Standing))
+		{
+			targetState = AgentType::BodyState::Standing;
+		}
+		else if (agent->isBodyStateAllowed(AgentType::BodyState::Flying))
+		{
+			targetState = AgentType::BodyState::Flying;
+		}
+		else if (agent->isBodyStateAllowed(AgentType::BodyState::Kneeling))
+		{
+			targetState = AgentType::BodyState::Kneeling;
+		}
+		else if (canProne(position, facing))
+		{
+			targetState = AgentType::BodyState::Prone;
+		}
+		else
+		{
+			LogError("Unit cannot stand up???");
+		}
+	}
+
 	missions.clear();
 	missions.emplace_front(BattleUnitMission::changeStance(*this, targetState));
 	missions.front()->start(state, *this);
@@ -1059,6 +1132,8 @@ void BattleUnit::beginBodyStateChange(AgentType::BodyState state, int ticks)
 
 void BattleUnit::setBodyState(AgentType::BodyState state)
 {
+	if (!missions.empty() && missions.front()->type == BattleUnitMission::MissionType::ChangeBodyState && missions.front()->bodyState != state)
+		LogError("Changing state to a state different from current mission's target!");
 	current_body_state = state;
 	target_body_state = state;
 	body_animation_ticks_remaining = 0;

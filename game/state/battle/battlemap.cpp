@@ -944,7 +944,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						continue;
 					}
 
-					it->second->doorID = b->doors.size() - 1;
+					it->second->doorID = (int)b->doors.size() - 1;
 					d->animationFrameCount = std::max(
 					    d->animationFrameCount, (int)it->second->type->animation_frames.size());
 					// d->mapParts.push_back(it->second); // <- no need to do it here, we do it in

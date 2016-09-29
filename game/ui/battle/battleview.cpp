@@ -737,10 +737,11 @@ void BattleView::updateSoldierButtons()
 	this->baseForm->findControlTyped<CheckBox>("BUTTON_NORMAL")->setChecked(normal);
 	this->baseForm->findControlTyped<CheckBox>("BUTTON_AGGRESSIVE")->setChecked(aggressive);
 
+	bool throwing = !selectedUnits.empty() && selectedUnits.front()->isThrowing();
 	this->activeTab->findControlTyped<CheckBox>("BUTTON_LEFT_HAND_THROW")
-	    ->setChecked(selectionState == BattleSelectionState::ThrowLeft || leftThrowDelay > 0);
+	    ->setChecked(selectionState == BattleSelectionState::ThrowLeft || leftThrowDelay > 0 || throwing);
 	this->activeTab->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND_THROW")
-	    ->setChecked(selectionState == BattleSelectionState::ThrowRight || rightThrowDelay > 0);
+	    ->setChecked(selectionState == BattleSelectionState::ThrowRight || rightThrowDelay > 0 || throwing);
 }
 
 void BattleView::attemptToClearCurrentOrders(sp<BattleUnit> u, bool overrideBodyStateChange)
@@ -1085,7 +1086,20 @@ void BattleView::eventOccurred(Event *e)
 			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
 			this->setScreenCenterTile({clickTile.x, clickTile.y});
 		}
-
+		else if (e->type() == EVENT_MOUSE_DOWN &&
+			(Event::isPressed(e->mouse().Button, Event::MouseButton::Middle)))
+		{
+			// CHEAT - move unit to mouse
+			if (!selectedUnits.empty())
+			{
+				Vec3<float> t = this->getSelectedTilePosition();
+				selectedUnits.front()->missions.clear();
+				selectedUnits.front()->setPosition(t + Vec3<float>{0.5f, 0.5f, 0.0f });
+				selectedUnits.front()->resetGoal();
+				selectedUnits.front()->setBodyState(AgentType::BodyState::Standing);
+				selectedUnits.front()->falling = false;
+			}
+		}
 		else if (e->type() == EVENT_MOUSE_DOWN &&
 		         (Event::isPressed(e->mouse().Button, Event::MouseButton::Left) ||
 		          Event::isPressed(e->mouse().Button, Event::MouseButton::Right)))

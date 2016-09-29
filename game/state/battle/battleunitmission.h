@@ -41,6 +41,9 @@ class BattleUnitMission
 	// INTERNAL: This checks if mission is actually finished. Called by isFinished.
 	// If it is finished, update() is called by isFinished so that any remaining work could be done
 	bool isFinishedInternal(GameState &state, BattleUnit &u);
+	// INTERNAL: Never called directly
+	static BattleUnitMission *turn(BattleUnit &u, Vec3<float> from, Vec3<float> to,
+		bool requireGoal);
 
   public:
 	enum class MissionType
@@ -83,9 +86,9 @@ class BattleUnitMission
 	static BattleUnitMission *changeStance(BattleUnit &u, AgentType::BodyState state);
 	static BattleUnitMission *throwItem(BattleUnit &u, sp<AEquipment> item, Vec3<int> target);
 	static BattleUnitMission *dropItem(BattleUnit &u, sp<AEquipment> item);
-	static BattleUnitMission *turn(BattleUnit &u, Vec2<int> target);
-	static BattleUnitMission *turn(BattleUnit &u, Vec3<int> target);
-	static BattleUnitMission *turn(BattleUnit &u, Vec3<float> target);
+	static BattleUnitMission *turn(BattleUnit &u, Vec2<int> target, bool requireGoal = true);
+	static BattleUnitMission *turn(BattleUnit &u, Vec3<int> target, bool requireGoal = true);
+	static BattleUnitMission *turn(BattleUnit &u, Vec3<float> target, bool requireGoal = false);
 	static BattleUnitMission *fall(BattleUnit &u);
 	static BattleUnitMission *reachGoal(BattleUnit &u);
 
@@ -113,9 +116,6 @@ class BattleUnitMission
 	// ThrowItem, DropItem
 	sp<AEquipment> item;
 
-	// ThrowItem
-	bool throwFailed = false;
-
 	// Snooze
 	unsigned int timeToSnooze = 0;
 
@@ -125,8 +125,5 @@ class BattleUnitMission
 	// ChangeBodyState
 	AgentType::BodyState bodyState = AgentType::BodyState::Downed;
 
-  private:
-	static BattleUnitMission *turn(BattleUnit &u, Vec3<float> from, Vec3<float> to,
-	                               bool requireGoal);
 };
 } // namespace OpenApoc

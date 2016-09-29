@@ -125,7 +125,7 @@ void City::update(GameState &state, unsigned int ticks)
 	/* FIXME: Temporary 'get something working' HACK
 	 * Every now and then give a landed vehicle a new 'goto random building' mission, so there's
 	 * some activity in the city*/
-	std::uniform_int_distribution<int> bld_distribution(0, this->buildings.size() - 1);
+	std::uniform_int_distribution<int> bld_distribution(0, (int)this->buildings.size() - 1);
 
 	// Need to use a 'safe' iterator method (IE keep the next it before calling ->update)
 	// as update() calls can erase it's object from the lists

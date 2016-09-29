@@ -25,7 +25,7 @@ bool BattleForces::insertAt(unsigned squad, unsigned position, sp<BattleUnit> un
 	}
 	if (position > squads[squad].units.size())
 	{
-		position = squads[squad].units.size();
+		position = (unsigned)squads[squad].units.size();
 	}
 	squads[squad].units.insert(squads[squad].units.begin() + position, unit);
 	unit->squadNumber = squad;

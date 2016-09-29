@@ -11,8 +11,8 @@ namespace OpenApoc
 
 int BattleMapPart::getMaxFrames()
 {
-	return alternative_type ? alternative_type->animation_frames.size()
-	                        : type->animation_frames.size();
+	return alternative_type ? (int)alternative_type->animation_frames.size()
+	                        : (int)type->animation_frames.size();
 }
 
 int BattleMapPart::getAnimationFrame()

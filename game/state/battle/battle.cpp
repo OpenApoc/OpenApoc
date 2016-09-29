@@ -27,6 +27,11 @@
 #include <limits>
 #include <unordered_map>
 
+#ifdef _MSC_VER
+#pragma warning (push, 1)
+#pragma warning(disable : 4503)
+#endif
+
 namespace OpenApoc
 {
 // An ordered list of the types drawn in each layer
@@ -796,8 +801,8 @@ void Battle::enterBattle(GameState &state)
 	// And stand in a valid pose
 	for (auto u : b->units)
 	{
-		int x_diff = u->position.x - b->size.x / 2;
-		int y_diff = u->position.y - b->size.y / 2;
+		int x_diff = (int)(u->position.x - b->size.x / 2);
+		int y_diff = (int)(u->position.y - b->size.y / 2);
 		if (std::abs(x_diff) > std::abs(y_diff))
 		{
 			if (x_diff > 0)
@@ -875,7 +880,7 @@ void Battle::enterBattle(GameState &state)
 	else
 	{
 		state.current_battle->battleviewScreenCenter = firstPlayerUnit->position;
-		state.current_battle->battleviewZLevel = ceilf(firstPlayerUnit->position.z);
+		state.current_battle->battleviewZLevel = (int)ceilf(firstPlayerUnit->position.z);
 	}
 
 	if (state.current_battle->mission_type == Battle::MissionType::RaidHumans)
@@ -1070,3 +1075,7 @@ void Battle::unloadAnimationPacks(GameState &state)
 }
 
 } // namespace OpenApoc
+
+#ifdef _MSC_VER
+#pragma warning (pop)
+#endif

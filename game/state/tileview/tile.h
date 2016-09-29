@@ -11,7 +11,7 @@
 #define TICK_SCALE (36)
 #define VELOCITY_SCALE_CITY (Vec3<float>{32, 32, 16})
 #define VELOCITY_SCALE_BATTLE (Vec3<float>{24, 24, 20})
-#define FALLING_SPEED_CAP float(20)
+#define FALLING_ACCELERATION 6
 
 // This enables showing tiles that were tried by the last pathfinding attempt
 // Is only displayed in battlescape right now

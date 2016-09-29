@@ -4,6 +4,7 @@
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_projectile.h"
 #include "game/state/tileview/tileobject_vehicle.h"
+#include "game/state/tileview/tileobject_battleunit.h"
 
 namespace OpenApoc
 {
@@ -16,16 +17,16 @@ Projectile::Projectile(StateRef<Vehicle> firer, Vec3<float> position, Vec3<float
                        unsigned int lifetime, int damage, unsigned int tail_length,
                        std::list<sp<Image>> projectile_sprites)
     : type(Type::Beam), position(position), velocity(velocity), age(0), lifetime(lifetime),
-      damage(damage), firer(firer), previousPosition(position), tail_length(tail_length),
+      damage(damage), firerVehicle(firer), previousPosition(position), tail_length(tail_length),
       projectile_sprites(projectile_sprites), velocityScale(VELOCITY_SCALE_CITY)
 {
 }
 // FIXME: Properly add unit projectiles and shit
-Projectile::Projectile(StateRef<BattleUnit>, Vec3<float> position, Vec3<float> velocity,
+Projectile::Projectile(StateRef<Agent> firer, Vec3<float> position, Vec3<float> velocity,
                        unsigned int lifetime, int damage, unsigned int tail_length,
                        std::list<sp<Image>> projectile_sprites)
     : type(Type::Beam), position(position), velocity(velocity), age(0), lifetime(lifetime),
-      damage(damage), /*firer(firer),*/ previousPosition(position), tail_length(tail_length),
+      damage(damage), firerAgent(firer), previousPosition(position), tail_length(tail_length),
       projectile_sprites(projectile_sprites), velocityScale(VELOCITY_SCALE_BATTLE)
 {
 }
@@ -73,8 +74,10 @@ Collision Projectile::checkProjectileCollision(TileMap &map)
 	}
 
 	Collision c = map.findCollision(this->previousPosition, this->position);
-	if (c && c.obj->getType() == TileObject::Type::Vehicle &&
-	    this->firer == std::static_pointer_cast<TileObjectVehicle>(c.obj)->getVehicle())
+	if (c && (c.obj->getType() == TileObject::Type::Vehicle &&
+	    this->firerVehicle == std::static_pointer_cast<TileObjectVehicle>(c.obj)->getVehicle())
+		|| (c.obj->getType() == TileObject::Type::Unit &&
+			this->firerAgent == std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit()->agent))
 	{
 		return {};
 	}

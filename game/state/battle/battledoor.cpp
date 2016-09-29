@@ -78,9 +78,9 @@ void BattleDoor::update(GameState &, unsigned int ticks)
 	// Update animation
 	if (animationTicksRemaining > 0)
 	{
-		if (animationTicksRemaining > ticks)
+		if (animationTicksRemaining > (int)ticks)
 		{
-			animationTicksRemaining -= ticks;
+			animationTicksRemaining -= (int)ticks;
 		}
 		else
 		{

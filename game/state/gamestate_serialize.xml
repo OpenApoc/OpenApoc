@@ -282,7 +282,6 @@
 		<member>targetFacing</member>
 		<member>requireGoal</member>
 		<member>item</member>
-		<member>throwFailed</member>
 		<member>timeToSnooze</member>
 		<member>timeUnits</member>
 		<member>bodyState</member>
@@ -550,7 +549,8 @@
 		<member>age</member>
 		<member>damage</member>
 		<member>lifetime</member>
-		<member>firer</member>
+		<member>firerVehicle</member>
+		<member>firerAgent</member>
 		<member>previousPosition</member>
 		<member>tail_length</member>
 		<member>projectile_sprites</member>
