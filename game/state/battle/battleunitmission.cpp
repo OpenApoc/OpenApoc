@@ -1629,9 +1629,13 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Ba
 		case BattleUnit::MovementMode::Prone:
 			if (u.current_body_state == AgentType::BodyState::Prone)
 			{
-				break;
+				// Ensure we can go prone at target tile
+				if (u.canGoProne(pos, u.facing))
+				{
+					break;
+				}
 			}
-			if (u.canGoProne())
+			else if (u.canGoProne(u.position, u.facing) && u.canGoProne(pos, u.facing))
 			{
 				u.missions.emplace_front(changeStance(u, AgentType::BodyState::Prone));
 				u.missions.front()->start(state, u);

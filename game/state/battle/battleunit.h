@@ -153,8 +153,8 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	bool isStatic() const;
 	// Wether unit is busy - with aiming or firing or otherwise involved
 	bool isBusy() const;
-	// Wether unit can go prone in current position and facing
-	bool canGoProne() const;
+	// Wether unit can go prone in position and facing
+	bool canGoProne(Vec3<int> pos, Vec2<int> fac) const;
 	// Wether unit can kneel in current position and facing
 	bool canKneel() const;
 

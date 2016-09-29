@@ -168,12 +168,23 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 void TileObjectBattleUnit::removeFromMap()
 {
 	bool requireRecalc = owningTile != nullptr;
-	auto prevOwningTile = owningTile;
+	std::set<Tile*> prevIntersectingTiles;
+	for (auto t : intersectingTiles)
+	{
+		prevIntersectingTiles.insert(t);
+	}
 
 	TileObject::removeFromMap();
 	if (requireRecalc)
 	{
-		prevOwningTile->updateBattlescapeUnitPresent();
+		for (auto t : intersectingTiles)
+		{
+			prevIntersectingTiles.erase(t);
+		}
+		for (auto t : prevIntersectingTiles)
+		{
+			t->updateBattlescapeUnitPresent();
+		}
 	}
 }
 
@@ -211,7 +222,10 @@ void TileObjectBattleUnit::setPosition(Vec3<float> newPosition)
 	occupiedTiles.clear();
 
 	TileObject::setPosition(newPosition);
-	owningTile->updateBattlescapeUnitPresent();
+	for (auto t : intersectingTiles)
+	{
+		t->updateBattlescapeUnitPresent();
+	}
 
 	auto pos = owningTile->position;
 

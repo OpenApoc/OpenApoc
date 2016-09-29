@@ -175,7 +175,7 @@ bool BattleUnit::canMove() const
 	return false;
 }
 
-bool BattleUnit::canGoProne() const
+bool BattleUnit::canGoProne(Vec3<int> pos, Vec2<int> fac) const
 {
 	if (isLarge())
 	{
@@ -184,23 +184,24 @@ bool BattleUnit::canGoProne() const
 	}
 	// Check if agent can go prone and stand in its current tile
 	if (!agent->isBodyStateAllowed(AgentType::BodyState::Prone) ||
-	    !tileObject->getOwningTile()->getCanStand(isLarge()))
+	    !tileObject->getOwningTile()->getCanStand())
 		return false;
 	// Check if agent can put legs in the tile behind. Conditions
 	// 1) Target tile provides standing ability
-	// 2) Target tile height is not too big
+	// 2) Target tile height is not too big compared to current tile
 	// 3) Target tile is passable
-	// 4) Target tile has no unit occupying it
-	Vec3<int> legsPos = position - Vec3<float>{facing.x, facing.y, 0};
+	// 4) Target tile has no unit occupying it (other than us)
+	Vec3<int> legsPos = pos - Vec3<int>{fac.x, fac.y, 0};
 	if ((legsPos.x >= 0) && (legsPos.x < tileObject->map.size.x) && (legsPos.y >= 0) &&
 	    (legsPos.y < tileObject->map.size.y) && (legsPos.z >= 0) &&
 	    (legsPos.z < tileObject->map.size.z))
 	{
+		auto bodyTile = tileObject->map.getTile(pos);
 		auto legsTile = tileObject->map.getTile(legsPos);
-		if (legsTile->canStand && legsTile->height <= 0.5f &&
+		if (legsTile->canStand && std::abs(legsTile->height - bodyTile->height) <= 0.25f &&
 		    legsTile->getPassable(false,
-		                          agent->type->bodyType->height.at(AgentType::BodyState::Prone)) &&
-		    !legsTile->getUnitIfPresent(true, true))
+		                          agent->type->bodyType->height.at(AgentType::BodyState::Prone))
+			&& (legsPos == (Vec3<int>)position || !legsTile->getUnitIfPresent(true, true)))
 		{
 			return true;
 		}
@@ -501,7 +502,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			// Go prone if not prone and should stay prone
 			else if (movement_mode == BattleUnit::MovementMode::Prone &&
 			         current_body_state != AgentType::BodyState::Prone &&
-			         kneeling_mode != KneelingMode::Kneeling && canGoProne())
+			         kneeling_mode != KneelingMode::Kneeling && canGoProne(position, facing))
 			{
 				missions.emplace_front(
 				    BattleUnitMission::changeStance(*this, AgentType::BodyState::Prone));
