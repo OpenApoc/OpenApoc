@@ -1,4 +1,5 @@
 #include "framework/trace.h"
+#include "framework/configfile.h"
 #include <fstream>
 #include <memory>
 #include <mutex>
@@ -10,7 +11,20 @@ namespace
 
 using OpenApoc::UString;
 
+OpenApoc::ConfigOptionBool enableTrace("Trace", "enable", "Enable json call/time tracking");
+OpenApoc::ConfigOptionString traceFile("Trace", "outputFile", "File to output trace json to",
+                                       "openapoc.trace");
+
 const unsigned int TRACE_CHUNK_SIZE = 100000;
+
+static bool traceInited = false;
+
+static void initTrace()
+{
+	traceInited = true;
+	if (enableTrace.get())
+		OpenApoc::Trace::enable();
+}
 
 enum class EventType : unsigned char
 {
@@ -116,7 +130,13 @@ void TraceManager::write()
 	LogAssert(OpenApoc::Trace::enabled);
 	OpenApoc::Trace::enabled = false;
 
-	std::ofstream outFile("openapoc_trace.json");
+	auto outPath = traceFile.get();
+	std::ofstream outFile(outPath.str());
+	if (!outFile)
+	{
+		LogError("Failed to open output trace file \"%s\"", outPath.cStr());
+		return;
+	}
 
 	// FIXME: Use proper json parser instead of magically constructing from strings?
 
@@ -186,6 +206,8 @@ bool Trace::enabled = false;
 
 void Trace::enable()
 {
+	if (!traceInited)
+		initTrace();
 	LogWarning("Enabling tracing - sizeof(TraceEvent) = %u", (unsigned)sizeof(TraceEvent));
 	LogAssert(!trace_manager);
 	trace_manager.reset(new TraceManager);
@@ -198,6 +220,8 @@ void Trace::enable()
 
 void Trace::disable()
 {
+	if (!enabled)
+		return;
 	LogAssert(trace_manager);
 	trace_manager->write();
 	trace_manager.reset(nullptr);
@@ -209,6 +233,8 @@ void Trace::disable()
 
 void Trace::setThreadName(const UString &name)
 {
+	if (!traceInited)
+		initTrace();
 #if defined(PTHREADS_AVAILABLE)
 	pthread_setname_np(pthread_self(), name.cStr());
 #endif
@@ -232,6 +258,8 @@ void Trace::setThreadName(const UString &name)
 
 void Trace::start(const UString &name, const std::vector<std::pair<UString, UString>> &args)
 {
+	if (!traceInited)
+		initTrace();
 	if (!enabled)
 		return;
 #if defined(BROKEN_THREAD_LOCAL)

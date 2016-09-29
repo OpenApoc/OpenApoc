@@ -3,30 +3,45 @@
 
 using namespace OpenApoc;
 
-void usage(std::ostream &out, const char *progname)
-{
-	out << "Usage: " << progname << " (image string) (output png file)\n";
-}
-
 int main(int argc, char *argv[])
 {
-	if (argc != 3)
+	config().addPositionalArgument("image_string", "Image string to read");
+	config().addPositionalArgument("output_file", "Output .png file");
+
+	if (config().parseOptions(argc, argv))
 	{
-		usage(std::cerr, argv[0]);
 		return EXIT_FAILURE;
 	}
-	Framework f(UString(argv[0]), {}, false);
 
-	auto img = f.data->loadImage(argv[1]);
+	auto outputFile = config().getString("output_file");
+	auto inputString = config().getString("image_string");
+
+	if (inputString.empty())
+	{
+		std::cerr << "Must provide image_string\n";
+		config().showHelp();
+		return EXIT_FAILURE;
+	}
+
+	if (outputFile.empty())
+	{
+		std::cerr << "Must provide output_file\n";
+		config().showHelp();
+		return EXIT_FAILURE;
+	}
+
+	Framework f(UString(argv[0]), false);
+
+	auto img = f.data->loadImage(inputString);
 	if (!img)
 	{
-		std::cerr << "Failed to load image \"" << argv[1] << "\"\n";
+		std::cerr << "Failed to load image \"" << inputString << "\"\n";
 		return EXIT_FAILURE;
 	}
 
-	if (!f.data->writeImage(argv[2], img))
+	if (!f.data->writeImage(outputFile, img))
 	{
-		std::cerr << "Failed to write output file \"" << argv[2] << "\"\n";
+		std::cerr << "Failed to write output file \"" << outputFile << "\"\n";
 		return EXIT_FAILURE;
 	}
 

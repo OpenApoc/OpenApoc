@@ -1,6 +1,7 @@
 #include "forms/ui.h"
 #include "forms/forms.h"
 #include "framework/apocresources/apocfont.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/trace.h"
 #include "library/sp.h"
@@ -10,6 +11,9 @@
 namespace OpenApoc
 {
 
+ConfigOptionString uiFormsPath("Game", "UIForms", "path to XML containing UI definitions",
+                               "xcomapoc.xml");
+
 up<UI> UI::instance = nullptr;
 
 UI &UI::getInstance()
@@ -17,7 +21,7 @@ UI &UI::getInstance()
 	if (!instance)
 	{
 		instance.reset(new UI);
-		instance->load(fw().Settings->getString("GameRules"));
+		instance->load(uiFormsPath.get());
 	}
 	return *instance;
 }
@@ -223,7 +227,7 @@ void UI::reloadFormsXml()
 {
 	forms.clear();
 	resourceNodeNameFilter = "form";
-	instance->load(fw().Settings->getString("GameRules"));
+	instance->load(config().getString("uiforms"));
 	resourceNodeNameFilter = "";
 }
 

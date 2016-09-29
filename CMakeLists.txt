@@ -13,6 +13,15 @@ INCLUDE(CheckCCompilerFlag)
 option(LTO "Build using link-time-optimisations" OFF)
 option(ENABLE_TESTS "Build some unit tests" ON)
 
+set(CD_PATH ${CMAKE_SOURCE_DIR}/data/cd.iso CACHE STRING "Path to cd.iso (used
+by test and extractor")
+
+if (NOT EXISTS ${CD_PATH})
+		message(FATAL_ERROR "CD_PATH \"${CD_PATH}\" points at non-existant file")
+endif()
+
+message("Using CD at \"${CD_PATH}\"")
+
 set(CMAKE_C_FLAGS_SANITIZE "-O1 -g -fsanitize=address,undefined")
 set(CMAKE_CXX_FLAGS_SANITIZE "-O1 -g -fsanitize=address,undefined")
 

@@ -7,39 +7,18 @@ using namespace OpenApoc;
 
 int main(int argc, char *argv[])
 {
-	bool enable_trace = false;
+	if (config().parseOptions(argc, argv))
+	{
+		return EXIT_FAILURE;
+	}
 	LogInfo("Starting OpenApoc_DataExtractor");
-	std::vector<UString> cmdline;
-
-	for (int i = 1; i < argc; i++)
-	{
-		// Special handling of tracing as we want it to be started before the framework
-		// parses the rest of the options
-		if (UString(argv[i]) == "--enable-tracing")
-		{
-			enable_trace = true;
-			continue;
-		}
-		else if (UString(argv[i]) == "--disable-tracing")
-		{
-			enable_trace = false;
-			continue;
-		}
-		cmdline.emplace_back(UString(argv[i]));
-	}
-
-	if (enable_trace)
-	{
-		Trace::enable();
-		LogInfo("Tracing enabled");
-	}
 
 	{
 
 		Trace::setThreadName("main");
 
 		TraceObj obj("main");
-		Framework *fw = new Framework(UString(argv[0]), cmdline, false);
+		Framework *fw = new Framework(UString(argv[0]), false);
 		InitialGameStateExtractor e;
 
 		{
@@ -239,11 +218,6 @@ int main(int argc, char *argv[])
 		}
 
 		delete fw;
-	}
-
-	if (enable_trace)
-	{
-		Trace::disable();
 	}
 
 	return 0;

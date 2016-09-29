@@ -1,3 +1,4 @@
+#include "framework/configfile.h"
 #include "framework/logger.h"
 #include "library/rect.h"
 
@@ -165,9 +166,10 @@ void test_rect_intersects(Rect<int> r1, Rect<int> r2, bool expected)
 }
 int main(int argc, char **argv)
 {
-	std::ignore = argc;
-	std::ignore = argv;
-
+	if (config().parseOptions(argc, argv))
+	{
+		return EXIT_FAILURE;
+	}
 	test_point_within({0, 0, 1, 1}, {0, 0}, true);
 
 	test_point_within({0, 0, 3, 3}, {1, 0}, true);

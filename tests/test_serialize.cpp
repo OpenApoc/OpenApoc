@@ -48,15 +48,22 @@ bool test_gamestate_serialization(sp<GameState> state)
 
 int main(int argc, char **argv)
 {
-	if (argc != 2)
+	config().addPositionalArgument("gamestate", "Gamestate to load");
+
+	if (config().parseOptions(argc, argv))
 	{
-		LogError("Unexpected args - expect ./test_serialize path/to/gamestate");
 		return EXIT_FAILURE;
 	}
 
-	Framework fw("OpenApoc", {}, false);
+	auto gamestate_name = config().getString("gamestate");
+	if (gamestate_name.empty())
+	{
+		std::cerr << "Must provide gamestate\n";
+		config().showHelp();
+		return EXIT_FAILURE;
+	}
 
-	UString gamestate_name = argv[1];
+	Framework fw("OpenApoc", false);
 
 	LogInfo("Loading \"%s\"", gamestate_name.cStr());
 

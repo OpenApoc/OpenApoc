@@ -60,6 +60,18 @@
 
 namespace OpenApoc
 {
+ConfigOptionInt stderrLogLevelOption(
+    "Logger", "StderrLevel",
+    "Loglevel to output to stderr (0 = nothing, 1 = error, 2 = warning, 3 = info) ", 2);
+ConfigOptionInt
+    fileLogLevelOption("Logger", "FileLevel",
+                       "Loglevel to output to file (0 = nothing, 1 = error, 2 = warning, 3 = info)",
+                       3);
+ConfigOptionInt backtraceLogLevelOption(
+    "Logger", "BacktraceLevel",
+    "Loglevel to print a backtrace on (0 = nothing, 1 = error, 2 = warning, 3 = info)", 1);
+ConfigOptionString logFileOption("Logger", "File", "File to write log to", LOG_PATH LOGFILE);
+ConfigOptionBool showDialogOnErrorOption("Logger", "ShowDialog", "Show dialog on error", true);
 
 #if defined(BACKTRACE_LIBUNWIND)
 static void print_backtrace(FILE *f)
@@ -154,39 +166,74 @@ static void print_backtrace(FILE *f)
 
 static FILE *outFile = nullptr;
 
+// We store options after init as querying every LogInfo() takes a long time
+
+LogLevel stderrLogLevel;
+LogLevel fileLogLevel;
+LogLevel backtraceLogLevel;
+bool showDialogOnError;
+
+bool loggerInited = false;
+
 static std::mutex logMutex;
 static std::chrono::time_point<std::chrono::high_resolution_clock> timeInit =
     std::chrono::high_resolution_clock::now();
 
-void _logAssert(bool show_dialog, UString prefix, UString string, int line, UString file)
+static void initLogger()
 {
-	Log(show_dialog, LogLevel::Error, prefix, "Assertion \"%s\" failed at %s:%d", string.cStr(),
-	    file.cStr(), line);
+	loggerInited = true;
+	outFile = NULL;
+
+	stderrLogLevel = (LogLevel)stderrLogLevelOption.get();
+	fileLogLevel = (LogLevel)fileLogLevelOption.get();
+	backtraceLogLevel = (LogLevel)backtraceLogLevelOption.get();
+	showDialogOnError = showDialogOnErrorOption.get();
+
+	auto logFilePath = logFileOption.get();
+	if (logFilePath.empty())
+	{
+		// No log file set, disabling logging to file
+		fileLogLevel = LogLevel::Nothing;
+		return;
+	}
+	outFile = fopen(logFilePath.cStr(), "w");
+	if (!outFile)
+	{
+		// Failed to open log file, disabling logging to file
+		fileLogLevel = LogLevel::Nothing;
+		return;
+	}
+}
+
+void _logAssert(UString prefix, UString string, int line, UString file)
+{
+	Log(LogLevel::Error, prefix, "Assertion \"%s\" failed at %s:%d", string.cStr(), file.cStr(),
+	    line);
 	exit(EXIT_FAILURE);
 }
 
-void Log(bool show_dialog, LogLevel level, UString prefix, const char *format, ...)
+void Log(LogLevel level, UString prefix, const char *format, ...)
 {
 	bool exit_app = false;
 	const char *level_prefix;
+
+	logMutex.lock();
+	if (!loggerInited)
+	{
+		initLogger();
+	}
+
+	bool writeToFile = (level <= fileLogLevel);
+	bool writeToStderr = (level <= stderrLogLevel);
+	if (!writeToFile && !writeToStderr)
+	{
+		// Nothing to do
+		return;
+	}
+
 	auto timeNow = std::chrono::high_resolution_clock::now();
 	unsigned long long clockns =
 	    std::chrono::duration<unsigned long long, std::nano>(timeNow - timeInit).count();
-
-	logMutex.lock();
-	if (!outFile)
-	{
-#ifndef ANDROID
-		outFile = fopen(LOG_PATH LOGFILE, "w");
-		if (!outFile)
-		{
-			// No log file, have to hope stderr goes somewhere useful
-			fprintf(stderr, "Failed to open logfile \"%s\"\n", LOGFILE);
-			LOGE("Failed to open logfile \"%s\"\n", LOGFILE);
-			return;
-		}
-#endif
-	}
 
 	switch (level)
 	{
@@ -202,36 +249,35 @@ void Log(bool show_dialog, LogLevel level, UString prefix, const char *format, .
 			break;
 	}
 
-	va_list arglist;
-	va_start(arglist, format);
-#ifdef ANDROID
-	LOGD("%s %llu %s: ", level_prefix, clockns, prefix.cStr());
-	LOGDV(format, arglist);
-	va_end(arglist);
-#else
-	fprintf(outFile, "%s %llu %s: ", level_prefix, clockns, prefix.cStr());
-	vfprintf(outFile, format, arglist);
-
-	// On error print a backtrace to the log file
-	if (level == LogLevel::Error)
-		print_backtrace(outFile);
-	fprintf(outFile, "\n");
-	va_end(arglist);
-
-	// If it's a warning or error flush the outfile (in case we crash 'soon') and also print to
-	// stderr
-	if (level != LogLevel::Info)
+	if (writeToFile)
 	{
+		va_list arglist;
+		va_start(arglist, format);
+		fprintf(outFile, "%s %llu %s: ", level_prefix, clockns, prefix.cStr());
+		vfprintf(outFile, format, arglist);
+
+		// On error print a backtrace to the log file
+		if (level <= backtraceLogLevel)
+			print_backtrace(outFile);
+		fprintf(outFile, "\n");
+		va_end(arglist);
 		fflush(outFile);
+	}
+
+	if (writeToStderr)
+	{
+		va_list arglist;
 		va_start(arglist, format);
 		fprintf(stderr, "%s %llu %s: ", level_prefix, clockns, prefix.cStr());
 		vfprintf(stderr, format, arglist);
 		fprintf(stderr, "\n");
 		va_end(arglist);
+		if (level <= backtraceLogLevel)
+			print_backtrace(stderr);
+		fflush(stderr);
 	}
-#endif
 #if defined(ERROR_DIALOG)
-	if (show_dialog && level == LogLevel::Error)
+	if (showDialogOnError && level == LogLevel::Error)
 	{
 		if (!Framework::tryGetInstance())
 		{
@@ -243,6 +289,7 @@ void Log(bool show_dialog, LogLevel level, UString prefix, const char *format, .
 		}
 		else
 		{
+			va_list arglist;
 			// Show dialog
 			/* How big should the string be? */
 			va_start(arglist, format);

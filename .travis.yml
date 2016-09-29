@@ -25,9 +25,6 @@ before_install:
   - wget http://s2.jonnyh.net/pub/cd_minimal.iso.xz -O data/cd.iso.xz
   - xz -d data/cd.iso.xz
 # setup some default settings
-  - mkdir -p ~/.local/share/OpenApoc
-  - echo "Resource.LocalCDPath=${PWD}/data/cd.iso" > ~/.local/share/OpenApoc/settings.cfg
-  - echo "Resource.LocalDataDir=${PWD}/data/" >> ~/.local/share/OpenApoc/settings.cfg
   - export LSAN_OPTIONS="exitcode=0"
   - export NUM_CORES=$(grep '^processor' /proc/cpuinfo|wc -l)
 # Try to ignore hyperthreading

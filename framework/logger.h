@@ -9,14 +9,6 @@
 #define XSTR(s) STR(s)
 #define STR(s) #s
 
-/* If UNIT_TEST is defined don't try to pop up a dialog */
-
-#ifdef UNIT_TEST
-#define LOGGER_SHOW_DIALOG false
-#else
-#define LOGGER_SHOW_DIALOG true
-#endif
-
 #if defined(_MSC_VER)
 #define NORETURN_FUNCTION __declspec(noreturn)
 #else
@@ -39,18 +31,17 @@ namespace OpenApoc
 	__attribute__((format(printf, fmt_string_no, vararg_start_no)))
 #endif
 
-enum class LogLevel
+enum class LogLevel : int
 {
-	Info,
-	Warning,
-	Error,
+	Nothing = 0,
+	Error = 1,
+	Warning = 2,
+	Info = 3,
 };
 // All format strings (%s) are expected to be UTF8
-void Log(bool show_dialog, LogLevel level, UString prefix, const char *format, ...)
-    PRINTF_ATTR(4, 5);
+void Log(LogLevel level, UString prefix, const char *format, ...) PRINTF_ATTR(3, 4);
 
-NORETURN_FUNCTION void _logAssert(bool show_dialog, UString prefix, UString string, int line,
-                                  UString file);
+NORETURN_FUNCTION void _logAssert(UString prefix, UString string, int line, UString file);
 
 // All logger output will be UTF8
 }; // namespace OpenApoc
@@ -59,29 +50,23 @@ NORETURN_FUNCTION void _logAssert(bool show_dialog, UString prefix, UString stri
 	do                                                                                             \
 	{                                                                                              \
 		if (!(X))                                                                                  \
-			OpenApoc::_logAssert(LOGGER_SHOW_DIALOG, LOGGER_PREFIX, STR(X), __LINE__, __FILE__);   \
+			OpenApoc::_logAssert(LOGGER_PREFIX, STR(X), __LINE__, __FILE__);                       \
 	} while (0)
 
 //#ifndef __ANDROID__
 #if defined(__GNUC__)
 // GCC has an extension if __VA_ARGS__ are not supplied to 'remove' the precending comma
 #define LogInfo(f, ...)                                                                            \
-	OpenApoc::Log(LOGGER_SHOW_DIALOG, OpenApoc::LogLevel::Info, OpenApoc::UString(LOGGER_PREFIX),  \
-	              f, ##__VA_ARGS__)
+	OpenApoc::Log(OpenApoc::LogLevel::Info, OpenApoc::UString(LOGGER_PREFIX), f, ##__VA_ARGS__)
 #define LogWarning(f, ...)                                                                         \
-	OpenApoc::Log(LOGGER_SHOW_DIALOG, OpenApoc::LogLevel::Warning,                                 \
-	              OpenApoc::UString(LOGGER_PREFIX), f, ##__VA_ARGS__)
+	OpenApoc::Log(OpenApoc::LogLevel::Warning, OpenApoc::UString(LOGGER_PREFIX), f, ##__VA_ARGS__)
 #define LogError(f, ...)                                                                           \
-	OpenApoc::Log(LOGGER_SHOW_DIALOG, OpenApoc::LogLevel::Error, OpenApoc::UString(LOGGER_PREFIX), \
-	              f, ##__VA_ARGS__)
+	OpenApoc::Log(OpenApoc::LogLevel::Error, OpenApoc::UString(LOGGER_PREFIX), f, ##__VA_ARGS__)
 #else
 // At least msvc automatically removes the comma
-#define LogInfo(f, ...)                                                                            \
-	OpenApoc::Log(LOGGER_SHOW_DIALOG, OpenApoc::LogLevel::Info, LOGGER_PREFIX, f, __VA_ARGS__)
-#define LogWarning(f, ...)                                                                         \
-	OpenApoc::Log(LOGGER_SHOW_DIALOG, OpenApoc::LogLevel::Warning, LOGGER_PREFIX, f, __VA_ARGS__)
-#define LogError(f, ...)                                                                           \
-	OpenApoc::Log(LOGGER_SHOW_DIALOG, OpenApoc::LogLevel::Error, LOGGER_PREFIX, f, __VA_ARGS__)
+#define LogInfo(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Info, LOGGER_PREFIX, f, __VA_ARGS__)
+#define LogWarning(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Warning, LOGGER_PREFIX, f, __VA_ARGS__)
+#define LogError(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Error, LOGGER_PREFIX, f, __VA_ARGS__)
 #endif
 //#else
 #if 0

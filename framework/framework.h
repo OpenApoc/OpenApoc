@@ -37,15 +37,13 @@ class Framework
 
   public:
 	std::unique_ptr<Data> data;
-	std::unique_ptr<ConfigFile> Settings;
 	std::unique_ptr<Renderer> renderer;
 	std::unique_ptr<SoundBackend> soundBackend;
 	std::unique_ptr<JukeBox> jukebox;
 
 	std::unique_ptr<ThreadPool> threadPool;
 
-	Framework(const UString programName, const std::vector<UString> cmdline,
-	          bool createWindow = true);
+	Framework(const UString programName, bool createWindow = true);
 	~Framework();
 
 	static Framework &getInstance();
@@ -62,8 +60,6 @@ class Framework
 	void translateSdlEvents();
 	void shutdownFramework();
 	bool isShuttingDown();
-
-	void saveSettings();
 
 	void displayInitialise();
 	void displayShutdown();
