@@ -396,6 +396,7 @@ CityView::~CityView() = default;
 
 void CityView::begin()
 {
+	// FIXME: Do we do this every time we switch to cityscape???
 	baseForm->findControlTyped<Ticker>("NEWS_TICKER")
 	    ->addMessage(tr("Welcome to X-COM Apocalypse"));
 }
@@ -483,6 +484,8 @@ void CityView::render()
 
 void CityView::update()
 {
+	CityTileView::update();
+
 	unsigned int ticks = 0;
 	bool turbo = false;
 	switch (this->updateSpeed)

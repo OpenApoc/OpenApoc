@@ -10,8 +10,6 @@
 namespace OpenApoc
 {
 
-float BattleUnitTileHelper::applyPathOverheadAllowance(float cost) const { return cost / 1.065f; }
-
 bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool demandGiveWay) const
 {
 	float nothing;
@@ -942,24 +940,27 @@ BattleUnitMission *BattleUnitMission::dropItem(BattleUnit &u, sp<AEquipment> ite
 	return mission;
 }
 
-BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec2<int> target, bool requireGoal)
+BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec2<int> target, bool free, 
+	bool requireGoal)
 {
 	auto pos = u.tileObject->getOwningTile()->position;
-	return turn(u, Vec3<int>{pos.x + target.x, pos.y + target.y, pos.z}, requireGoal);
+	return turn(u, Vec3<int>{pos.x + target.x, pos.y + target.y, pos.z}, free, requireGoal);
 }
 
-BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<int> target, bool requireGoal)
+BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<int> target, bool free, 
+	bool requireGoal)
 {
-	return turn(u, u.tileObject->getOwningTile()->position, target, requireGoal);
+	return turn(u, u.tileObject->getOwningTile()->position, target, free, requireGoal);
 }
 
-BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<float> target, bool requireGoal)
+BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<float> target, bool free, 
+	bool requireGoal)
 {
-	return turn(u, u.position, target, false);
+	return turn(u, u.position, target, free, requireGoal);
 }
 
-BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<float> from, Vec3<float> to,
-                                           bool requireGoal)
+BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<float> from, Vec3<float> to, 
+	bool free, bool requireGoal)
 {
 	static const std::list<Vec3<float>> angles = {
 	    {0, -1, 0}, {1, -1, 0}, {1, 0, 0},  {1, 1, 0},
@@ -969,6 +970,7 @@ BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<float> from, Vec3
 	auto *mission = new BattleUnitMission();
 	mission->type = MissionType::Turn;
 	mission->requireGoal = requireGoal;
+	mission->free = free;
 	float closestAngle = FLT_MAX;
 	Vec3<int> closestVector = {0, 0, 0};
 	Vec3<float> targetFacing = (Vec3<float>)(to - from);
@@ -1216,12 +1218,12 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 			// that will turn us to a point midway
 			if (dest != targetFacing)
 			{
-				u.missions.emplace_front(turn(u, dest, requireGoal));
+				u.missions.emplace_front(turn(u, dest, free, requireGoal));
 				u.missions.front()->start(state, u);
 				return;
 			}
 			// Calculate and spend cost
-			int cost = 1;
+			int cost = free ? 0 : 1;
 			if (!spendAgentTUs(state, u, cost))
 			{
 				LogWarning("Unit mission \"%s\" could not start: unsufficient TUs",
@@ -1544,9 +1546,8 @@ void BattleUnitMission::setPathTo(BattleUnit &u, Vec3<int> target, int maxIterat
 			to = map.getTile(target);
 		}
 
-		// FIXME: Change findShortestPath to return Vec3<int> positions?
 		auto path = map.findShortestPath(u.goalPosition, target, maxIterations,
-		                                 BattleUnitTileHelper{map, u}, 5.0f, demandGiveWay);
+		                                 BattleUnitTileHelper{map, u}, demandGiveWay);
 
 		// Always start with the current position
 		this->currentPlannedPath.push_back(u.goalPosition);
@@ -1622,7 +1623,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Ba
 	}
 
 	// Do we need to turn?
-	auto m = turn(u, pos);
+	auto m = turn(u, pos, true);
 	if (!m->isFinished(state, u, false))
 	{
 		u.missions.emplace_front(m);
@@ -1783,6 +1784,11 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Ba
 	// FIXME: Handle strafing and going backwards influencing TU spent
 	if (u.agent->canRun() && u.movement_mode == BattleUnit::MovementMode::Running)
 	{
+		cost /= 2;
+	}
+	if (u.current_body_state == AgentType::BodyState::Prone)
+	{
+		cost *= 3;
 		cost /= 2;
 	}
 	// See if we can afford doing this move

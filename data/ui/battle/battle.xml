@@ -229,6 +229,13 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <font>SMALFONT</font>
       </label>
 	  <!-- Turn Controls (Disabled in Real Time) -->
+	  <graphicbutton id="BUTTON_ENDTURN">
+        <position x="583" y="99"/>
+        <size width="53" height="21"/>
+        <image/>
+       <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:307:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
+	  
 	  <!-- TBD -->
 	  <!-- TBD -->
 	  <!-- TBD -->

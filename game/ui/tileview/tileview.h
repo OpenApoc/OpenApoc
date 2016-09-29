@@ -53,7 +53,7 @@ class TileView : public Stage, public TileTransform
 	virtual void setScreenCenterTile(Vec3<float> center);
 
 	Vec3<int> getSelectedTilePosition();
-	void setSelectedTilePosition(Vec3<int> newPosition);
+	virtual void setSelectedTilePosition(Vec3<int> newPosition);
 
 	template <typename T> Vec2<T> tileToScreenCoords(Vec3<T> c, TileViewMode v) const
 	{
@@ -139,6 +139,7 @@ class TileView : public Stage, public TileTransform
 	void pause() override;
 	void resume() override;
 	void finish() override;
+	void update() override;
 	void eventOccurred(Event *e) override;
 	bool isTransition() override;
 

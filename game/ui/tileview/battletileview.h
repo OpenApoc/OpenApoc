@@ -1,6 +1,7 @@
 #pragma once
 #include "framework/framework.h"
 #include "game/ui/tileview/tileview.h"
+#include "game/state/battle/battle.h"
 
 namespace OpenApoc
 {
@@ -23,6 +24,7 @@ class BattleTileView : public TileView
   private:
 	int currentZLevel;
 	LayerDrawingMode layerDrawingMode;
+	Battle::Mode battleMode;
 
 	sp<Image> selectedTileEmptyImageBack;
 	sp<Image> selectedTileEmptyImageFront;
@@ -43,16 +45,34 @@ class BattleTileView : public TileView
 	sp<Image> healingIcon;
 	std::vector<sp<Image>> targetLocationIcons;
 	Vec2<float> targetLocationOffset;
+	std::vector<sp<Image>> tuIndicators;
 	// Must have same amount it items as in targetLocationIcons
 	std::vector<sp<Image>> waypointIcons;
+	std::vector<sp<Image>> waypointDarkIcons;
 	int iconAnimationTicksAccumulated = 0;
 
+	
   public:
 	BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
-	               TileViewMode initialMode, int currentZLevel, Vec3<float> screenCenterTile);
+	               TileViewMode initialMode, int currentZLevel, Vec3<float> screenCenterTile, Battle::Mode battleMode);
 	~BattleTileView() override;
 
 	std::list<sp<BattleUnit>> selectedUnits;
+
+	// In turn-based, preview path cost when hovering over same tile for more than set amount of time
+	sp<BattleUnit> lastSelectedUnit;
+	Vec3<int> lastSelectedUnitPosition;
+	sp<Image> pathPreviewTooFar;
+	sp<Image> pathPreviewUnreachable;
+	std::list<Vec3<int>> pathPreview;
+	int pathPreviewTicksAccumulated = 0;
+	// -3 = unreachable
+	// -2 = too far
+	// -1 = no previewed path stored
+	// 0+ = path cost
+	int previewedPathCost = -1;
+	void resetPathPreview();
+	void updatePathPreview();
 
 	void setZLevel(int zLevel);
 	int getZLevel();
@@ -61,6 +81,8 @@ class BattleTileView : public TileView
 	void setScreenCenterTile(Vec3<float> center) override;
 
 	void setLayerDrawingMode(LayerDrawingMode mode);
+
+	void setSelectedTilePosition(Vec3<int> newPosition) override;
 
 	void eventOccurred(Event *e) override;
 	void render() override;

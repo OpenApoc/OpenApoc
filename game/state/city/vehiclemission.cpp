@@ -1243,7 +1243,7 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 
 		auto path =
 		    map.findShortestPath(vehicleTile->getOwningTile()->position, target, maxIterations,
-		                         FlyingVehicleTileHelper{map, v}, (float)v.altitude);
+		                         FlyingVehicleTileHelper{map, v});
 
 		// Always start with the current position
 		this->currentPlannedPath.push_back(vehicleTile->getOwningTile()->position);

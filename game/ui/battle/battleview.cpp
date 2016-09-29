@@ -31,7 +31,8 @@ BattleView::BattleView(sp<GameState> state)
     : BattleTileView(
           *state->current_battle->map, Vec3<int>{TILE_X_BATTLE, TILE_Y_BATTLE, TILE_Z_BATTLE},
           Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric,
-          state->current_battle->battleviewZLevel, state->current_battle->battleviewScreenCenter),
+          state->current_battle->battleviewZLevel, state->current_battle->battleviewScreenCenter,
+		state->current_battle->mode),
       baseForm(ui().getForm("FORM_BATTLE_UI")), state(state), followAgent(false),
       palette(fw().data->loadPalette("xcom3/tacdata/tactical.pal")),
       selectionState(BattleSelectionState::Normal)
@@ -39,6 +40,9 @@ BattleView::BattleView(sp<GameState> state)
 	this->pal = palette;
 
 	selectedItemOverlay = fw().data->loadImage("battle/battle-item-select-icon.png");
+	pauseIcon = fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal",
+		260));
 
 	for (auto &formName : TAB_FORM_NAMES_RT)
 	{
@@ -73,6 +77,7 @@ BattleView::BattleView(sp<GameState> state)
 			break;
 		case Battle::Mode::TurnBased:
 			this->activeTab = this->uiTabsTB[0];
+			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED2")->setChecked(true);
 			updateSpeed = BattleUpdateSpeed::Speed2;
 			lastSpeed = BattleUpdateSpeed::Pause;
 			break;
@@ -356,30 +361,34 @@ BattleView::BattleView(sp<GameState> state)
 	    ->findControlTyped<CheckBox>("BUTTON_LEFT_HAND_THROW")
 	    ->addCallback(FormEventType::MouseClick, throwLeftHand);
 
+	// We need this in TB because we will be able to allow pausing then
+	this->baseForm->findControl("BUTTON_SPEED0")
+		->addCallback(FormEventType::CheckBoxSelected,
+			[this](Event *) { this->updateSpeed = BattleUpdateSpeed::Pause; });
+	this->baseForm->findControl("BUTTON_SPEED1")
+		->addCallback(FormEventType::CheckBoxSelected,
+			[this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed1; });
+	this->baseForm->findControl("BUTTON_SPEED2")
+		->addCallback(FormEventType::CheckBoxSelected,
+			[this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed2; });
+	this->baseForm->findControl("BUTTON_SPEED3")
+		->addCallback(FormEventType::CheckBoxSelected,
+			[this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed3; });
+
 	switch (state->current_battle->mode)
 	{
 		case Battle::Mode::RealTime:
-			this->baseForm->findControl("BUTTON_SPEED0")
-			    ->addCallback(FormEventType::CheckBoxSelected,
-			                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Pause; });
-			this->baseForm->findControl("BUTTON_SPEED1")
-			    ->addCallback(FormEventType::CheckBoxSelected,
-			                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed1; });
-			this->baseForm->findControl("BUTTON_SPEED2")
-			    ->addCallback(FormEventType::CheckBoxSelected,
-			                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed2; });
-			this->baseForm->findControl("BUTTON_SPEED3")
-			    ->addCallback(FormEventType::CheckBoxSelected,
-			                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed3; });
-			// FIXME: Disable TB controls
+			this->baseForm->findControl("BUTTON_ENDTURN")->Visible = false;
 			break;
 		case Battle::Mode::TurnBased:
-			// FIXME: Assign events to TB controls
 			this->baseForm->findControl("BUTTON_SPEED0")->Visible = false;
 			this->baseForm->findControl("BUTTON_SPEED1")->Visible = false;
 			this->baseForm->findControl("BUTTON_SPEED2")->Visible = false;
 			this->baseForm->findControl("BUTTON_SPEED3")->Visible = false;
 			this->baseForm->findControl("CLOCK")->Visible = false;
+			this->baseForm->findControl("BUTTON_ENDTURN")
+				->addCallback(FormEventType::ButtonClick,
+					[this](Event *) { this->state->current_battle->endTurn();});
 			break;
 		default:
 			LogError("Unexpected battle mode \"%d\"", (int)state->current_battle->mode);
@@ -402,6 +411,9 @@ void BattleView::begin()
 	this->baseForm->findControl("BUTTON_LAYER_7")->Visible = maxZDraw >= 7;
 	this->baseForm->findControl("BUTTON_LAYER_8")->Visible = maxZDraw >= 8;
 	this->baseForm->findControl("BUTTON_LAYER_9")->Visible = maxZDraw >= 9;
+
+	if (state->current_battle->mode == Battle::Mode::TurnBased)
+		onNewTurn();
 }
 
 void BattleView::resume() {}
@@ -413,6 +425,18 @@ void BattleView::render()
 	BattleTileView::render();
 	activeTab->render();
 	baseForm->render();
+
+	// Pause icon
+	if (state->current_battle->mode == Battle::Mode::TurnBased)
+	{
+		int PAUSE_ICON_BLINK_TIME = 30;
+		pauseIconTimer++;
+		pauseIconTimer %= PAUSE_ICON_BLINK_TIME * 2;
+		if (updateSpeed == BattleUpdateSpeed::Pause && pauseIconTimer > PAUSE_ICON_BLINK_TIME)
+		{
+			fw().renderer->draw(pauseIcon, { fw().displayGetSize().x - pauseIcon->size.x , 0.0f });
+		}
+	}
 
 	// If there's a modal dialog, darken the screen
 	if (fw().stageGetCurrent() != this->shared_from_this())
@@ -443,6 +467,7 @@ void BattleView::setUpdateSpeed(BattleUpdateSpeed updateSpeed)
 
 void BattleView::update()
 {
+	BattleTileView::update();
 	// FIXME: Is there a more efficient way? But TileView does not know about battle or state!
 	state->current_battle->battleviewScreenCenter = centerPos;
 	state->current_battle->battleviewZLevel = getZLevel();
@@ -450,6 +475,19 @@ void BattleView::update()
 	updateSelectedUnits();
 	updateSelectionMode();
 	updateSoldierButtons();
+
+	if (state->current_battle->mode == Battle::Mode::TurnBased)
+	{
+		if (previewedPathCost == -1)
+		{
+			pathPreviewTicksAccumulated++;
+			// Show path preview if hovering for over half a second
+			if (pathPreviewTicksAccumulated > 30)
+			{
+				updatePathPreview();
+			}
+		}
+	}
 
 	if (leftThrowDelay > 0)
 	{
@@ -579,6 +617,19 @@ void BattleView::updateSelectedUnits()
 			selectionState = BattleSelectionState::Normal;
 		}
 	}
+	if (prevLSU != lastSelectedUnit || !lastSelectedUnit)
+	{
+		resetPathPreview();
+	}
+	else
+	{
+		auto p = lastSelectedUnit->tileObject->getOwningTile()->position;
+		if (lastSelectedUnitPosition != p)
+		{
+			resetPathPreview();
+		}
+		lastSelectedUnitPosition = p;
+	}
 }
 
 void BattleView::updateSelectionMode()
@@ -618,7 +669,7 @@ void BattleView::updateSelectionMode()
 		{
 			return;
 		}
-		if (modifierRCtrl || modifierRCtrl)
+		if (modifierLCtrl || modifierRCtrl)
 		{
 			if (modifierLAlt || modifierRAlt)
 			{
@@ -1005,11 +1056,11 @@ void BattleView::eventOccurred(Event *e)
 				updateSelectionMode();
 				break;
 			case SDLK_RCTRL:
-				modifierLCtrl = true;
+				modifierRCtrl = true;
 				updateSelectionMode();
 				break;
 			case SDLK_LCTRL:
-				modifierRCtrl = true;
+				modifierLCtrl = true;
 				updateSelectionMode();
 				break;
 			case SDLK_ESCAPE:
@@ -1041,6 +1092,15 @@ void BattleView::eventOccurred(Event *e)
 				break;
 		}
 	}
+	else if (e->type() == EVENT_MOUSE_MOVE)
+	{
+		Vec2<float> screenOffset = { this->getScreenOffset().x, this->getScreenOffset().y };
+		// Offset by 4 since ingame 4 is the typical height of the ground, and game displays cursor
+		// on top of the ground
+		setSelectedTilePosition(this->screenToTileCoords(
+			Vec2<float>((float)e->mouse().X, (float)e->mouse().Y + 4) - screenOffset,
+			getZLevel() - 1));
+	}
 	else if (e->type() == EVENT_KEY_UP &&
 	         (e->keyboard().KeyCode == SDLK_RSHIFT || e->keyboard().KeyCode == SDLK_LSHIFT ||
 	          e->keyboard().KeyCode == SDLK_RALT || e->keyboard().KeyCode == SDLK_LALT ||
@@ -1065,11 +1125,11 @@ void BattleView::eventOccurred(Event *e)
 				updateSelectionMode();
 				break;
 			case SDLK_RCTRL:
-				modifierLCtrl = false;
+				modifierRCtrl = false;
 				updateSelectionMode();
 				break;
 			case SDLK_LCTRL:
-				modifierRCtrl = false;
+				modifierLCtrl = false;
 				updateSelectionMode();
 				break;
 		}
@@ -1283,6 +1343,16 @@ void BattleView::updateLayerButtons()
 		case 9:
 			this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_9")->setChecked(true);
 			break;
+	}
+}
+
+void BattleView::onNewTurn()
+{
+	if (state->current_battle->currentActiveOrganisation == state->current_battle->currentPlayer)
+	{
+		baseForm->findControlTyped<Ticker>("NEWS_TICKER")
+			->addMessage(tr("Turn:") +" "+UString::format("%d", state->current_battle->currentTurn)
+			+ "   "+ tr("Side:") +"  " +tr(state->current_battle->currentActiveOrganisation->name));
 	}
 }
 

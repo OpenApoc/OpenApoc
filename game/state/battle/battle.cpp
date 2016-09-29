@@ -276,6 +276,42 @@ void Battle::update(GameState &state, unsigned int ticks)
 	}
 }
 
+void Battle::beginTurn()
+{
+	if (mode != Mode::TurnBased)
+	{
+		LogError("beginTurn called in real time?");
+		return;
+	}
+	
+	LogWarning("Implement beginning turn!");
+
+	for (auto u : units)
+	{
+		if (u->owner != currentActiveOrganisation)
+		{
+			continue;
+		}
+		u->agent->modified_stats.restoreTU();
+	}
+}
+
+void Battle::endTurn()
+{
+	if (mode != Mode::TurnBased)
+	{
+		LogError("endTurn called in real time?");
+		return;
+	}
+
+	LogWarning("Implement ending turn!");
+
+	// Pass turn to next org, if final org - increment turn counter and pass to first org
+
+	currentTurn++;
+	beginTurn();
+}
+
 // To be called when battle must be started, before showing battle briefing screen
 void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organisation,
                          std::list<StateRef<Agent>> &player_agents, StateRef<Vehicle> player_craft,

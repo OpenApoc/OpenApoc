@@ -68,8 +68,6 @@ void CityTileView::render()
 	r.clear();
 	r.setPalette(this->pal);
 
-	applyScrolling();
-
 	// screenOffset.x/screenOffset.y is the 'amount added to the tile coords' - so we want
 	// the inverse to tell which tiles are at the screen bounds
 	auto topLeft = offsetScreenToTileCoords(Vec2<int>{-isoTileSize.x, -isoTileSize.y}, 0);

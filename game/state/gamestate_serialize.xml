@@ -281,6 +281,7 @@
 		<member>allowSkipNodes</member>
 		<member>targetFacing</member>
 		<member>requireGoal</member>
+		<member>free</member>
 		<member>item</member>
 		<member>timeToSnooze</member>
 		<member>timeUnits</member>
@@ -368,6 +369,8 @@
 		<member>projectiles</member>
 		<member>participants</member>
 		<member>currentPlayer</member>
+		<member>currentActiveOrganisation</member>
+		<member>currentTurn</member>
 		<member>battleviewZLevel</member>
 		<member>battleviewScreenCenter</member>
 	</object>

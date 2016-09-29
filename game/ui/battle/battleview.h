@@ -63,14 +63,12 @@ class BattleView : public BattleTileView
 	BattleUpdateSpeed updateSpeed;
 	BattleUpdateSpeed lastSpeed;
 
-	sp<BattleUnit> lastSelectedUnit;
-
 	sp<GameState> state;
 
 	AgentEquipmentInfo leftHandInfo;
 	AgentEquipmentInfo rightHandInfo;
 
-	bool followAgent;
+	bool followAgent = false; 
 
 	bool colorForward = true;
 	int colorCurrent = 0;
@@ -94,6 +92,11 @@ class BattleView : public BattleTileView
 	AgentEquipmentInfo createItemOverlayInfo(bool rightHand);
 	void updateItemInfo(bool right);
 	sp<Image> selectedItemOverlay;
+
+	sp<Image> pauseIcon;
+	int pauseIconTimer = 0;
+
+	void onNewTurn();
 
 	// Unit orers
 	// Move, offset 1 means strafing, 2 means move backwards

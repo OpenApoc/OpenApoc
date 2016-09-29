@@ -1,4 +1,5 @@
 #include "game/ui/tileview/battletileview.h"
+#include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/includes.h"
@@ -10,8 +11,9 @@ namespace OpenApoc
 {
 BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
                                TileViewMode initialMode, int currentZLevel,
-                               Vec3<float> screenCenterTile)
-    : TileView(map, isoTileSize, stratTileSize, initialMode), currentZLevel(currentZLevel)
+                               Vec3<float> screenCenterTile, Battle::Mode battleMode)
+    : TileView(map, isoTileSize, stratTileSize, initialMode), currentZLevel(currentZLevel),
+	battleMode(battleMode)
 {
 	layerDrawingMode = LayerDrawingMode::UpToCurrentLevel;
 	selectedTileEmptyImageBack =
@@ -133,6 +135,21 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 	waypointIcons.push_back(fw().data->loadImage("battle/battle-waypoint-2.png"));
 	waypointIcons.push_back(fw().data->loadImage("battle/battle-waypoint-1.png"));
 
+	waypointDarkIcons.push_back(fw().data->loadImage("battle/battle-waypoint-1-dark.png"));
+	waypointDarkIcons.push_back(fw().data->loadImage("battle/battle-waypoint-2-dark.png"));
+	waypointDarkIcons.push_back(fw().data->loadImage("battle/battle-waypoint-3-dark.png"));
+	waypointDarkIcons.push_back(fw().data->loadImage("battle/battle-waypoint-2-dark.png"));
+	waypointDarkIcons.push_back(fw().data->loadImage("battle/battle-waypoint-1-dark.png"));
+
+	auto font = ui().getFont("SMALLSET");
+
+	for (int i = 0;i <= 99; i++)
+	{
+		tuIndicators.push_back(font->getString(UString::format("%d",i)));
+	}
+	pathPreviewTooFar = font->getString(tr("Too Far"));
+	pathPreviewUnreachable = font->getString(tr("Blocked"));
+
 	// FIXME: Load from save last screen location?
 	setScreenCenterTile(screenCenterTile);
 };
@@ -166,15 +183,6 @@ void BattleTileView::eventOccurred(Event *e)
 			break;
 		}
 	}
-	else if (e->type() == EVENT_MOUSE_MOVE)
-	{
-		Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
-		// Offset by 4 since ingame 4 is the typical height of the ground, and game displays cursor
-		// on top of the ground
-		setSelectedTilePosition(this->screenToTileCoords(
-		    Vec2<float>((float)e->mouse().X, (float)e->mouse().Y + 4) - screenOffset,
-		    currentZLevel - 1));
-	}
 	else
 	{
 		TileView::eventOccurred(e);
@@ -199,8 +207,6 @@ void BattleTileView::render()
 		iconAnimationTicksAccumulated++;
 		iconAnimationTicksAccumulated %= targetLocationIcons.size() * TARGET_ICONS_ANIMATION_DELAY;
 	}
-
-	applyScrolling();
 
 	// screenOffset.x/screenOffset.y is the 'amount added to the tile coords' - so we want
 	// the inverse to tell which tiles are at the screen bounds
@@ -316,7 +322,7 @@ void BattleTileView::render()
 			std::set<Vec3<int>> waypointLocations;
 			// FIXME: Actually read ingame option
 			bool USER_OPTION_DRAW_WAYPOINTS = true;
-
+			bool darkenWaypoints = false;
 			for (auto u : selectedUnits)
 			{
 				for (auto &m : u->missions)
@@ -344,6 +350,15 @@ void BattleTileView::render()
 					}
 				}
 			}
+			if (previewedPathCost != -1 && USER_OPTION_DRAW_WAYPOINTS && waypointLocations.empty())
+			{
+				darkenWaypoints = true;
+				for (auto w : pathPreview)
+				{
+					waypointLocations.insert(w);
+				}
+			}
+			auto &waypointImageSource = darkenWaypoints ? waypointDarkIcons : waypointIcons;
 
 			for (int z = zFrom; z < zTo; z++)
 			{
@@ -354,6 +369,7 @@ void BattleTileView::render()
 				Vec3<int> selTilePosOnCurLevel;
 				sp<Image> selectionImageBack;
 				sp<Image> selectionImageFront;
+				bool drawPathPreview = false;
 
 				if (selectedTilePosition.z >= z && selectedTilePosition.x >= minX &&
 				    selectedTilePosition.x < maxX && selectedTilePosition.y >= minY &&
@@ -367,6 +383,7 @@ void BattleTileView::render()
 					// Yellow if this tile intersects with a unit
 					if (selectedTilePosition.z == z)
 					{
+						drawPathPreview = previewedPathCost != -1;
 						if (selTileOnCurLevel->getUnitIfPresent())
 						{
 							selectionImageBack = selectedTileFilledImageBack;
@@ -418,7 +435,7 @@ void BattleTileView::render()
 									if (waypointLocations.find({x, y, z}) !=
 									    waypointLocations.end())
 									{
-										r.draw(waypointIcons[iconAnimationTicksAccumulated /
+										r.draw(waypointImageSource[iconAnimationTicksAccumulated /
 										                     TARGET_ICONS_ANIMATION_DELAY],
 										       tileToOffsetScreenCoords(Vec3<float>{
 										           x, y, tile->getRestingPosition().z}) -
@@ -434,18 +451,21 @@ void BattleTileView::render()
 								bool hostile = false;
 								if (obj->getType() == TileObject::Type::Unit)
 								{
-									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
-									             ->getUnit();
-									auto selectedPos =
-									    std::find(selectedUnits.begin(), selectedUnits.end(), u);
+									if (!selectedUnits.empty())
+									{
+										auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
+											->getUnit();
+										auto selectedPos =
+											std::find(selectedUnits.begin(), selectedUnits.end(), u);
 
-									if (selectedPos == selectedUnits.begin())
-									{
-										unitsToDraw.push_back({u, true});
-									}
-									else if (selectedPos != selectedUnits.end())
-									{
-										unitsToDraw.push_back({u, false});
+										if (selectedPos == selectedUnits.begin())
+										{
+											unitsToDraw.push_back({ u, true });
+										}
+										else if (selectedPos != selectedUnits.end())
+										{
+											unitsToDraw.push_back({ u, false });
+										}
 									}
 								}
 								Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
@@ -456,9 +476,29 @@ void BattleTileView::render()
 							// When done with all objects, draw the front selection image
 							if (tile == selTileOnCurLevel && layer == 0)
 							{
+								static const Vec2<int> offset = { 0, -50 };
+
 								r.draw(selectionImageFront,
 								       tileToOffsetScreenCoords(selTilePosOnCurLevel) -
 								           selectedTileImageOffset);
+								if (drawPathPreview)
+								{
+									sp<Image> img;
+									switch (previewedPathCost)
+									{ 
+									case -3:
+										img = pathPreviewUnreachable;
+										break;
+									case -2:
+										img = pathPreviewTooFar;
+										break;
+									default:
+										img = tuIndicators[previewedPathCost];
+										break;
+									}
+									r.draw(img, tileToOffsetScreenCoords(selTilePosOnCurLevel)
+										+ offset - Vec2<int>{img->size.x / 2, img->size.y / 2});
+								}
 							}
 #ifdef PATHFINDING_DEBUG
 							if (tile->pathfindingDebugFlag)
@@ -502,16 +542,19 @@ void BattleTileView::render()
 								{
 									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
 									             ->getUnit();
-									auto selectedPos =
-									    std::find(selectedUnits.begin(), selectedUnits.end(), u);
+									if (!selectedUnits.empty())
+									{
+										auto selectedPos =
+											std::find(selectedUnits.begin(), selectedUnits.end(), u);
 
-									if (selectedPos == selectedUnits.begin())
-									{
-										unitsToDraw.push_back({u, true});
-									}
-									else if (selectedPos != selectedUnits.end())
-									{
-										unitsToDraw.push_back({u, false});
+										if (selectedPos == selectedUnits.begin())
+										{
+											unitsToDraw.push_back({ u, true });
+										}
+										else if (selectedPos != selectedUnits.end())
+										{
+											unitsToDraw.push_back({ u, false });
+										}
 									}
 									Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
 									obj->draw(r, *this, pos, this->viewMode, currentLevel);
@@ -525,7 +568,7 @@ void BattleTileView::render()
 			}
 
 			// Draw selected unit arrows
-			if (selectedUnits.size() > 0)
+			if (unitsToDraw.size() > 0)
 			{
 				for (auto obj : unitsToDraw)
 				{
@@ -533,6 +576,7 @@ void BattleTileView::render()
 					static const Vec2<float> offsetRunning = {0.0f, 0.0f};
 					static const Vec2<float> offsetBehavior = {0.0f, 0.0f};
 					static const Vec2<float> offsetBleed = {-5.0f, 0.0f};
+					static const Vec2<float> offsetTU = { 13.0f, -5.0f };
 
 					Vec2<float> pos =
 					    tileToOffsetScreenCoords(
@@ -546,6 +590,12 @@ void BattleTileView::render()
 					       pos);
 					r.draw(behaviorUnitSelectionUnderlay[obj.first->behavior_mode],
 					       pos + offsetBehavior);
+
+					if (battleMode == Battle::Mode::TurnBased)
+					{
+						auto &img = tuIndicators[obj.first->agent->modified_stats.time_units];
+						r.draw(img, pos + offsetTU - Vec2<float>{img->size.x / 2, img->size.y / 2});
+					}
 
 					if (obj.first->movement_mode == BattleUnit::MovementMode::Running)
 					{
@@ -701,4 +751,107 @@ void BattleTileView::setScreenCenterTile(Vec2<float> center)
 {
 	this->setScreenCenterTile(Vec3<float>{center.x, center.y, 1});
 }
+
+void BattleTileView::setSelectedTilePosition(Vec3<int> newPosition)
+{
+	auto oldPosition = selectedTilePosition;
+	TileView::setSelectedTilePosition(newPosition);
+	if (oldPosition != selectedTilePosition)
+	{
+		resetPathPreview();
+	}
+}
+
+void BattleTileView::resetPathPreview()
+{
+	pathPreviewTicksAccumulated = 0;
+	previewedPathCost = -1;
+	lastSelectedUnitPosition = { -1,-1,-1 };
+	pathPreview.clear();
+}
+
+void BattleTileView::updatePathPreview()
+{
+	pathPreviewTicksAccumulated = 0;
+	
+	auto target = selectedTilePosition;
+	if (!lastSelectedUnit)
+	{
+		LogError("Trying to update path preview with no unit selected!?");
+		return;
+	}
+	if (!lastSelectedUnit->canMove())
+		return;
+	auto &map = lastSelectedUnit->tileObject->map;
+	auto to = map.getTile(target);
+	
+	// Standart check for passability
+	while (true)
+	{
+		if (!to->getPassable(lastSelectedUnit->isLarge(), lastSelectedUnit->agent->type->bodyType->maxHeight))
+		{
+			previewedPathCost = -3;
+			return;
+		}
+		if (lastSelectedUnit->canFly() || to->getCanStand(lastSelectedUnit->isLarge()))
+		{
+			break;
+		}
+		target.z--;
+		if (target.z == -1)
+		{
+			LogError("Solid ground missing on level 0? Reached %d %d %d", target.x, target.y,
+				target.z);
+			return;
+		}
+		to = map.getTile(target);
+	}
+
+	// Cost to move is 1.5x if prone and 0.5x if running, to keep things in integer 
+	// we use a value that is then divided by 2
+	float cost = 0.0f;
+	int cost_multiplier_x_2 = 2;
+	if (lastSelectedUnit->agent->canRun() && lastSelectedUnit->movement_mode == BattleUnit::MovementMode::Running)
+	{
+		cost_multiplier_x_2 = 1;
+	}
+	if (lastSelectedUnit->movement_mode == BattleUnit::MovementMode::Prone)
+	{
+		cost_multiplier_x_2 = 3;
+	}
+	
+	// Get path
+	float maxCost = (float)lastSelectedUnit->agent->modified_stats.time_units * 2 / cost_multiplier_x_2;
+	pathPreview = map.findShortestPath(lastSelectedUnit->goalPosition,
+		target, 500, BattleUnitTileHelper{ map,
+		*lastSelectedUnit }, false, &cost, maxCost);
+	if (pathPreview.empty())
+	{
+		LogError("Empty path returned for path preview!?");
+		return;
+	}
+	// If we have not reached the target - then show "Too Far"
+	// Otherwise, show amount of TUs remaining at arrival
+	if (pathPreview.back() != target)
+	{
+		previewedPathCost = -2;
+	}
+	else
+	{
+		previewedPathCost = (int)roundf(cost * cost_multiplier_x_2 / 2);
+		previewedPathCost = lastSelectedUnit->agent->modified_stats.time_units - previewedPathCost;
+		if (previewedPathCost < 0)
+		{
+			// Sometimes it might happen that we barely miss goal after all calculations
+			// In this case, properly display "Too far" and subtract cost
+			previewedPathCost = -2;
+			pathPreview.pop_back();
+		}
+	}
+	if (pathPreview.front() == (Vec3<int>)lastSelectedUnit->position)
+	{
+		pathPreview.pop_front();
+	}
+}
+
 }
