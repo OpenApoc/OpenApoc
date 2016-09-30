@@ -19,13 +19,13 @@ InGameOptions::InGameOptions(sp<GameState> state)
 	/* Initialse all initial values */
 
 	menuform->findControlTyped<ScrollBar>("GLOBAL_GAIN_SLIDER")
-	    ->setValue(fw().Settings->getInt("Audio.GlobalGain"));
+	    ->setValue(config().getInt("Framework.Audio.GlobalGain"));
 
 	menuform->findControlTyped<ScrollBar>("MUSIC_GAIN_SLIDER")
-	    ->setValue(fw().Settings->getInt("Audio.MusicGain"));
+	    ->setValue(config().getInt("Framework.Audio.MusicGain"));
 
 	menuform->findControlTyped<ScrollBar>("SAMPLE_GAIN_SLIDER")
-	    ->setValue(fw().Settings->getInt("Audio.SampleGain"));
+	    ->setValue(config().getInt("Framework.Audio.SampleGain"));
 
 	menuform->findControlTyped<CheckBox>("SHOW_VEHICLE_PATH")->setChecked(state->showVehiclePath);
 	menuform->findControlTyped<CheckBox>("SHOW_TILE_ORIGIN")->setChecked(state->showTileOrigin);
@@ -40,12 +40,12 @@ InGameOptions::~InGameOptions()
 {
 	/* Store persistent options */
 
-	fw().Settings->set("Audio.GlobalGain",
-	                   menuform->findControlTyped<ScrollBar>("GLOBAL_GAIN_SLIDER")->getValue());
-	fw().Settings->set("Audio.MusicGain",
-	                   menuform->findControlTyped<ScrollBar>("MUSIC_GAIN_SLIDER")->getValue());
-	fw().Settings->set("Audio.SampleGain",
-	                   menuform->findControlTyped<ScrollBar>("SAMPLE_GAIN_SLIDER")->getValue());
+	config().set("Framework.Audio.GlobalGain",
+	             menuform->findControlTyped<ScrollBar>("GLOBAL_GAIN_SLIDER")->getValue());
+	config().set("Framework.Audio.MusicGain",
+	             menuform->findControlTyped<ScrollBar>("MUSIC_GAIN_SLIDER")->getValue());
+	config().set("Framework.Audio.SampleGain",
+	             menuform->findControlTyped<ScrollBar>("SAMPLE_GAIN_SLIDER")->getValue());
 }
 
 void InGameOptions::begin()

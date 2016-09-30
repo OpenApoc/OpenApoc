@@ -196,7 +196,8 @@ target_compile_definitions(OpenApoc_Framework PUBLIC
 
 # We use boost::locale for utf conversions and boost::filesystem for
 # serialization
-find_package(Boost REQUIRED COMPONENTS locale filesystem system)
+find_package(Boost REQUIRED COMPONENTS locale filesystem system
+		program_options)
 target_link_libraries(OpenApoc_Framework PUBLIC ${Boost_LIBRARIES})
 target_include_directories(OpenApoc_Framework PUBLIC ${Boost_INCLUDE_DIRS})
 
@@ -268,6 +269,7 @@ target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibSmacker)
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibPugixml)
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibLodepng)
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_Miniz)
+target_link_libraries(OpenApoc_Framework PUBLIC ${CMAKE_DL_LIBS})
 
 target_link_libraries(OpenApoc_Framework PUBLIC physfs-static)
 

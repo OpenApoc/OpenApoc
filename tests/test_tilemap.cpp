@@ -1,3 +1,4 @@
+#include "framework/configfile.h"
 #include "framework/logger.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"
@@ -48,8 +49,12 @@ static void test_collision(const TileMap &map, Vec3<float> line_start, Vec3<floa
 	}
 }
 
-int main(int, char **)
+int main(int argc, char **argv)
 {
+	if (config().parseOptions(argc, argv))
+	{
+		return EXIT_FAILURE;
+	}
 	auto filled_slice_32_32 = mksp<VoxelSlice>(Vec2<int>{32, 32});
 	for (int y = 0; y < 32; y++)
 	{

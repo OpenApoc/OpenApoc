@@ -1,10 +1,15 @@
+#include "framework/configfile.h"
 #include "framework/logger.h"
 #include "library/xorshift.h"
 
 using namespace OpenApoc;
 
-int main(int, char **)
+int main(int argc, char **argv)
 {
+	if (config().parseOptions(argc, argv))
+	{
+		return EXIT_FAILURE;
+	}
 	Xorshift128Plus<uint32_t> rng{};
 
 	uint32_t r1 = rng();

@@ -29,6 +29,7 @@
 #define BOOST_ALL_NO_LIB
 #include <boost/filesystem.hpp>
 #include <boost/locale.hpp>
+#include <boost/program_options.hpp>
 
 using namespace OpenApoc;
 
@@ -48,34 +49,38 @@ namespace
 #define RENDERERS "GLES_3_0:GL_2_0"
 #endif
 
-static std::map<UString, UString> defaultConfig = {
-#ifdef PANDORA
-    {"Visual.ScreenWidth", "800"},
-    {"Visual.ScreenHeight", "480"},
-    {"Visual.FullScreen", "true"},
-#else
-    {"Visual.ScreenWidth", "1600"},
-    {"Visual.ScreenHeight", "900"},
-    {"Visual.FullScreen", "false"},
-#endif
-    {"Language", ""},
-    {"GameRules", "xcomapoc.xml"},
-    {"Resource.LocalDataDir", "./data"},
-    {"Resource.SystemDataDir", DATA_DIRECTORY},
-    {"Resource.LocalCDPath", "./data/cd.iso"},
-    {"Resource.SystemCDPath", DATA_DIRECTORY "/cd.iso"},
-    {"Resource.SaveDataDir", "./saves"},
-    {"Resource.SaveSkipPacking", "0"},
-    {"Visual.Renderers", RENDERERS},
-    {"Audio.Backends", "SDLRaw:null"},
-    {"Audio.GlobalGain", "20"},
-    {"Audio.SampleGain", "20"},
-    {"Audio.MusicGain", "20"},
-    {"Framework.ThreadPoolSize", "0"},
-    {"Visual.ScaleX", "100"},
-    {"Visual.ScaleY", "100"},
-};
-};
+ConfigOptionString dataPathOption("Framework", "Data", "The path containing OpenApod data",
+                                  "./data");
+ConfigOptionString cdPathOption("Framework", "CD", "The path to the XCom:Apocalypse CD",
+                                "./data/cd.iso");
+ConfigOptionInt threadPoolSizeOption(
+    "Framework", "ThreadPoolSize",
+    "The number of threads to spawn for the threadpool (0 = queried num_cores)", 0);
+ConfigOptionString renderersOption("Framework", "Renderers",
+                                   "':' separated list of renderer backends (in preference order)",
+                                   RENDERERS);
+ConfigOptionString audioBackendsOption("Framework", "AudioBackends",
+                                       "':' separated list of audio backends (in preference order)",
+                                       "SDLRaw:null");
+ConfigOptionInt audioGlobalGainOption("Framework.Audio", "GlobalGain", "Global audio gain (0-20)",
+                                      20);
+ConfigOptionInt audioSampleGainOption("Framework.Audio", "SampleGain", "Sample audio gain (0-20)",
+                                      20);
+ConfigOptionInt audioMusicGainOption("Framework.Audio", "MusicGain", "Music audio gain (0-20)", 20);
+ConfigOptionInt screenWidthOption("Framework.Screen", "Width", "Initial screen width (in pixels)",
+                                  1280);
+ConfigOptionInt screenHeightOption("Framework.Screen", "Height",
+                                   "Initial screen height (in pixels)", 720);
+ConfigOptionBool screenFullscreenOption("Framework.Screen", "Fullscreen", "Enable fullscreen mode",
+                                        false);
+ConfigOptionInt screenScaleXOption("Framework.Screen", "ScaleX",
+                                   "Scale screen in X direction by (percent)", 100);
+ConfigOptionInt screenScaleYOption("Framework.Screen", "ScaleY",
+                                   "Scale screen in Y direction by (percent)", 100);
+ConfigOptionString languageOption("Framework", "Language",
+                                  "The language used ingame (empty for system default)", "");
+
+} // anonymous namespace
 
 namespace OpenApoc
 {
@@ -163,8 +168,7 @@ class FrameworkPrivate
 	}
 };
 
-Framework::Framework(const UString programName, const std::vector<UString> cmdline,
-                     bool createWindow)
+Framework::Framework(const UString programName, bool createWindow)
     : p(new FrameworkPrivate), programName(programName), createWindow(createWindow)
 {
 	TRACE_FN;
@@ -177,10 +181,13 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 
 	this->instance = this;
 
-	if (PHYSFS_init(programName.cStr()) == 0)
+	if (!PHYSFS_isInit())
 	{
-		PHYSFS_ErrorCode error = PHYSFS_getLastErrorCode();
-		LogError("Failed to init code %i PHYSFS: %s", (int)error, PHYSFS_getErrorByCode(error));
+		if (PHYSFS_init(programName.cStr()) == 0)
+		{
+			PHYSFS_ErrorCode error = PHYSFS_getLastErrorCode();
+			LogError("Failed to init code %i PHYSFS: %s", (int)error, PHYSFS_getErrorByCode(error));
+		}
 	}
 #ifdef ANDROID
 	SDL_SetHint(SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH, "1");
@@ -197,37 +204,22 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 	p->quitProgram = false;
 	UString settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
 	settingsPath += "/settings.cfg";
-	Settings.reset(new ConfigFile(settingsPath, defaultConfig));
-
-	for (auto &option : cmdline)
-	{
-		auto splitString = option.split('=');
-		if (splitString.size() != 2)
-		{
-			LogError("Failed to parse command line option \"%s\" - ignoring", option.cStr());
-			continue;
-		}
-		else
-		{
-			LogInfo("Setting option \"%s\" to \"%s\" from command line", splitString[0].cStr(),
-			        splitString[1].cStr());
-			Settings->set(splitString[0], splitString[1]);
-		}
-	}
 
 	// This is always set, the default being an empty string (which correctly chooses 'system
 	// langauge')
-	auto desiredLanguageName = Settings->getString("Language");
+	UString desiredLanguageName;
+	if (!languageOption.get().empty())
+	{
+		desiredLanguageName = languageOption.get();
+	}
 
 	LogInfo("Setting up locale \"%s\"", desiredLanguageName.cStr());
 
 	boost::locale::generator gen;
 
 	std::vector<UString> resourcePaths;
-	resourcePaths.push_back(Settings->getString("Resource.SystemCDPath"));
-	resourcePaths.push_back(Settings->getString("Resource.LocalCDPath"));
-	resourcePaths.push_back(Settings->getString("Resource.SystemDataDir"));
-	resourcePaths.push_back(Settings->getString("Resource.LocalDataDir"));
+	resourcePaths.push_back(dataPathOption.get());
+	resourcePaths.push_back(cdPathOption.get());
 
 	for (auto &path : resourcePaths)
 	{
@@ -258,10 +250,7 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 	        localeName.c_str(), localeLang.c_str(), localeCountry.c_str(), localeVariant.c_str(),
 	        localeEncoding.c_str(), isUTF8 ? "true" : "false");
 
-	// Set the language in the config file
-	Settings->set("Language", localeName);
-
-	int threadPoolSize = Settings->getInt("Framework.ThreadPoolSize");
+	int threadPoolSize = threadPoolSizeOption.get();
 	if (threadPoolSize > 0)
 	{
 		LogInfo("Set thread pool size to %d", threadPoolSize);
@@ -310,7 +299,8 @@ Framework::~Framework()
 	LogInfo("Destroying framework");
 	p->ProgramStages.clear();
 	LogInfo("Saving config");
-	saveSettings();
+	if (config().getBool("Config.Save"))
+		config().save();
 
 	LogInfo("Shutdown");
 	if (createWindow)
@@ -712,14 +702,6 @@ void Framework::shutdownFramework()
 	p->quitProgram = true;
 }
 
-void Framework::saveSettings()
-{
-	// Just to keep the filename consistant
-	UString settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
-	settingsPath += "/settings.cfg";
-	Settings->save(settingsPath);
-}
-
 void Framework::displayInitialise()
 {
 	if (!this->createWindow)
@@ -750,9 +732,9 @@ void Framework::displayInitialise()
 	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 1);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-	int scrW = Settings->getInt("Visual.ScreenWidth");
-	int scrH = Settings->getInt("Visual.ScreenHeight");
-	bool scrFS = Settings->getBool("Visual.FullScreen");
+	int scrW = screenWidthOption.get();
+	int scrH = screenHeightOption.get();
+	bool scrFS = screenFullscreenOption.get();
 
 	if (scrW < 640 || scrH < 480)
 	{
@@ -830,7 +812,7 @@ void Framework::displayInitialise()
 	p->registeredRenderers["GL_2_0"].reset(getGL20RendererFactory());
 #endif
 
-	for (auto &rendererName : Settings->getString("Visual.Renderers").split(':'))
+	for (auto &rendererName : renderersOption.get().split(':'))
 	{
 		auto rendererFactory = p->registeredRenderers.find(rendererName);
 		if (rendererFactory == p->registeredRenderers.end())
@@ -860,8 +842,8 @@ void Framework::displayInitialise()
 	p->windowSize = {width, height};
 
 	// FIXME: Scale is currently stored as an integer in 1/100 units (ie 100 is 1.0 == same size)
-	int scaleX = Settings->getInt("Visual.ScaleX");
-	int scaleY = Settings->getInt("Visual.ScaleY");
+	int scaleX = screenScaleXOption.get();
+	int scaleY = screenScaleYOption.get();
 
 	if (scaleX != 100 || scaleY != 100)
 	{
@@ -956,7 +938,7 @@ void Framework::audioInitialise()
 	p->registeredSoundBackends["SDLRaw"].reset(getSDLSoundBackend());
 	p->registeredSoundBackends["null"].reset(getNullSoundBackend());
 
-	for (auto &soundBackendName : Settings->getString("Audio.Backends").split(':'))
+	for (auto &soundBackendName : audioBackendsOption.get().split(':'))
 	{
 		auto backendFactory = p->registeredSoundBackends.find(soundBackendName);
 		if (backendFactory == p->registeredSoundBackends.end())
@@ -982,14 +964,11 @@ void Framework::audioInitialise()
 
 	/* Setup initial gain */
 	this->soundBackend->setGain(SoundBackend::Gain::Global,
-	                            static_cast<float>(this->Settings->getInt("Audio.GlobalGain")) /
-	                                20.0f);
+	                            static_cast<float>(audioGlobalGainOption.get()) / 20.0f);
 	this->soundBackend->setGain(SoundBackend::Gain::Music,
-	                            static_cast<float>(this->Settings->getInt("Audio.MusicGain")) /
-	                                20.0f);
+	                            static_cast<float>(audioMusicGainOption.get()) / 20.0f);
 	this->soundBackend->setGain(SoundBackend::Gain::Sample,
-	                            static_cast<float>(this->Settings->getInt("Audio.SampleGain")) /
-	                                20.0f);
+	                            static_cast<float>(audioSampleGainOption.get()) / 20.0f);
 }
 
 void Framework::audioShutdown()

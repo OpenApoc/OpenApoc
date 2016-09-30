@@ -1,3 +1,4 @@
+#include "framework/configfile.h"
 #include "framework/logger.h"
 #include "library/rect.h"
 #include "library/voxel.h"
@@ -208,8 +209,12 @@ static void test_voxel(Vec3<int> voxel_size)
 	return;
 }
 
-int main(int, char **)
+int main(int argc, char **argv)
 {
+	if (config().parseOptions(argc, argv))
+	{
+		return EXIT_FAILURE;
+	}
 	const std::vector<Vec3<int>> voxel_sizes = {
 	    {1, 1, 1}, {32, 32, 16}, {33, 32, 16}, {77, 75, 2222},
 	};

@@ -4,119 +4,458 @@
 
 #include "framework/configfile.h"
 #include "framework/logger.h"
-
 #include <fstream>
-#include <sstream>
+#include <iostream>
+#include <list>
+#include <physfs.h>
+#include <string>
+
+// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
+// symbols as part of the module that uses it
+#define BOOST_ALL_NO_LIB
+#include <boost/filesystem.hpp>
+#include <boost/program_options.hpp>
+
+namespace po = boost::program_options;
+namespace fs = boost::filesystem;
 
 namespace OpenApoc
 {
 
-ConfigFile::ConfigFile(const UString fileName, std::map<UString, UString> defaults)
-    : values(defaults), defaults(defaults)
+static up<ConfigFile> configInstance;
+
+ConfigFile &ConfigFile::getInstance()
 {
-	std::ifstream inFile{fileName.cStr(), std::ios::in};
-	int lineNo = 0;
-	while (inFile)
+	if (!configInstance)
+		configInstance.reset(new ConfigFile());
+	return *configInstance;
+}
+
+class ConfigFileImpl
+{
+  private:
+	std::map<UString, po::options_description> optionSections;
+	po::variables_map vm;
+	po::positional_options_description posDesc;
+	bool parsed;
+	std::vector<UString> positionalArgNames;
+	UString programName;
+
+	std::map<UString, UString> modifiedOptions;
+
+  public:
+	ConfigFileImpl() : parsed(false), programName("program") {}
+
+	void createSection(const UString sectionName)
 	{
-		lineNo++;
-		std::string line;
-		std::getline(inFile, line);
-		if (!inFile)
-			break;
-		if (line[0] == '#')
-			continue;
-		auto splitPos = line.find_first_of('=');
-		if (splitPos == line.npos)
+		if (optionSections.find(sectionName) != optionSections.end())
+			return;
+		UString sectionDescription = sectionName + " options";
+		optionSections.emplace(sectionName, sectionDescription.str());
+	}
+
+	void set(const UString key, const UString value) { this->modifiedOptions[key] = value; }
+	void set(const UString key, const int value)
+	{
+		this->modifiedOptions[key] = Strings::fromInteger(value);
+	}
+
+	void set(const UString key, const bool value)
+	{
+		this->modifiedOptions[key] = value ? "1" : "0";
+	}
+
+	bool parseOptions(int argc, char *argv[])
+	{
+		if (this->parsed)
 		{
-			LogError("Error reading config \"%s\" line %d", fileName.cStr(), lineNo);
-			continue;
-		}
-		UString key = line.substr(0, splitPos);
-		UString value = line.substr(splitPos + 1);
-		values[key] = value;
-	}
-}
-
-void ConfigFile::save(const UString fileName)
-{
-	std::ofstream outFile{fileName.cStr(), std::ios::out};
-	if (!outFile)
-	{
-		LogError("Failed to open config file \"%s\"", fileName.cStr());
-		return;
-	}
-
-	outFile << "# Lines starting with a '#' are ignored\n";
-
-	for (auto &pair : this->values)
-	{
-		// If the value is the default, print it commented out
-		if (pair.second == defaults[pair.first])
-			outFile << "#";
-		outFile << pair.first << "=" << pair.second << "\n";
-	}
-}
-
-UString ConfigFile::getString(UString key)
-{
-	auto it = this->values.find(key);
-	if (it != this->values.end())
-		return it->second;
-
-	it = this->defaults.find(key);
-	if (it != this->defaults.end())
-		return it->second;
-
-	LogError("Config key \"%s\" not found", key.cStr());
-	return "";
-}
-
-int ConfigFile::getInt(UString key)
-{
-	auto string = this->getString(key);
-	if (string == "")
-	{
-		return 0;
-	}
-	int value = std::atoi(string.cStr());
-	return value;
-}
-
-static const std::vector<UString> falseValues = {
-    "0", "n", "no", "false",
-};
-
-static const std::vector<UString> trueValues = {
-    "1", "y", "yes", "true",
-};
-
-bool ConfigFile::getBool(UString key)
-{
-	auto value = this->getString(key);
-	for (auto &v : trueValues)
-	{
-		if (v == value)
+			LogError("Already parsed options");
 			return true;
+		}
+		fs::path programPath(argv[0]);
+		// Remove extension (if any) and path
+		programName = fs::change_extension(programPath.filename(), "").string();
+		if (!PHYSFS_isInit())
+		{
+			PHYSFS_init(programName.cStr());
+		}
+		UString settingsPath(PHYSFS_getPrefDir("OpenApoc", programName.cStr()));
+		settingsPath += "settings.conf";
+		// Setup some config-related options
+		this->addOption("", "help", "h", "Show help text and exit");
+		this->addOptionString("Config", "File", "", "Path to config file", settingsPath);
+		this->addOptionBool("Config", "Read", "", "Read the config file at startup", true);
+		this->addOptionBool("Config", "Save", "", "Save the config file at exit", true);
+
+		po::options_description allOptions;
+		for (auto &optPair : this->optionSections)
+			allOptions.add(optPair.second);
+
+		try
+		{
+			po::store(
+			    po::command_line_parser(argc, argv).positional(posDesc).options(allOptions).run(),
+			    vm);
+		}
+		catch (po::error &err)
+		{
+			std::cerr << "Failed to parse options: \"" << err.what() << "\"\n";
+			this->showHelp();
+			return true;
+		}
+		po::notify(vm);
+		this->parsed = true;
+
+		if (this->getBool("Config.Read"))
+		{
+			// Keep a variable map of 'only' those settings stored in the config file so we can
+			// write them back to the config again at save()
+			po::variables_map configFileVM;
+			auto configPath = this->getString("Config.File");
+			std::ifstream inConfig(configPath.str());
+			if (inConfig)
+			{
+				try
+				{
+					auto parsedConfig = parse_config_file(inConfig, allOptions);
+					po::store(parsedConfig, vm);
+					for (auto &option : parsedConfig.options)
+					{
+						// FIXME: Options with multiple values would break this
+						this->modifiedOptions[option.string_key] = option.value[0];
+					}
+				}
+				catch (po::error &err)
+				{
+					std::cerr << "Failed to parse config options: \"" << err.what() << "\"\n";
+					this->showHelp();
+					return true;
+				}
+			}
+		}
+
+		if (this->get("help"))
+		{
+			this->showHelp();
+			return true;
+		}
+
+		return false;
 	}
-	for (auto &v : falseValues)
+
+	bool save()
 	{
-		if (v == value)
+		// Don't try to save if we've not successfully loaded anything
+		if (!this->parsed)
 			return false;
+		auto configPathString = this->getString("Config.File");
+
+		if (this->modifiedOptions.empty())
+		{
+			// nothing to do
+			return true;
+		}
+
+		std::map<UString, std::list<UString>> configFileContents;
+
+		for (auto &optionPair : this->modifiedOptions)
+		{
+			auto splitString = optionPair.first.split(".");
+			if (splitString.size() < 1)
+			{
+				LogError("Invalid option string \"%s\"", optionPair.first.cStr());
+				continue;
+			}
+			UString sectionName;
+			for (unsigned i = 0; i < splitString.size() - 1; i++)
+			{
+				if (i != 0)
+					sectionName += ".";
+				sectionName += splitString[i];
+			}
+
+			UString optionName = splitString[splitString.size() - 1];
+			UString configFileLine = optionName + "=" + optionPair.second;
+			configFileContents[sectionName].push_back(configFileLine);
+		}
+
+		try
+		{
+			std::string str = configPathString.str();
+			fs::path configPath(str);
+			auto dir = configPath.parent_path();
+			fs::create_directories(dir);
+			std::ofstream outFile(configPath.string());
+			if (!outFile)
+			{
+				std::cerr << "Failed to open config file \"" << configPath << "\" for writing\n";
+				return false;
+			}
+			for (auto &section : configFileContents)
+			{
+				auto &sectionName = section.first;
+				outFile << "[" << sectionName.str() << "]\n";
+				for (auto &line : section.second)
+				{
+					outFile << line << "\n";
+				}
+			}
+		}
+		catch (fs::filesystem_error &e)
+		{
+			std::cerr << "Failed to write config file \"" << configPathString.str() << "\" : \""
+			          << e.what() << "\"\n";
+			return false;
+		}
+
+		return true;
 	}
-	LogError("Invalid boolean value of \"%s\" in key \"%s\"", value.cStr(), key.cStr());
-	return false;
-}
 
-void ConfigFile::set(const UString key, const UString value) { this->values[key] = value; }
+	bool get(const UString name)
+	{
+		if (!this->parsed)
+		{
+			LogError("Not yet parsed options");
+			return false;
+		}
+		auto it = this->modifiedOptions.find(name);
+		if (it != this->modifiedOptions.end())
+		{
+			return true;
+		}
+		return vm.count(name.str());
+	}
+	UString getString(const UString key)
+	{
+		if (!this->parsed)
+		{
+			LogError("Not yet parsed options");
+			return "";
+		}
+		if (!this->get(key))
+		{
+			LogError("Option \"%s\" not set", key.cStr());
+			return "";
+		}
+		auto it = this->modifiedOptions.find(key);
+		if (it != this->modifiedOptions.end())
+		{
+			return it->second;
+		}
+		return vm[key.str()].as<std::string>();
+	}
+	int getInt(const UString key)
+	{
+		if (!this->parsed)
+		{
+			LogError("Not yet parsed options");
+			return 0;
+		}
+		if (!this->get(key))
+		{
+			LogError("Option \"%s\" not set", key.cStr());
+			return 0;
+		}
+		auto it = this->modifiedOptions.find(key);
+		if (it != this->modifiedOptions.end())
+		{
+			return Strings::toInteger(it->second);
+		}
+		return vm[key.str()].as<int>();
+	}
+	bool getBool(const UString key)
+	{
+		if (!this->parsed)
+		{
+			LogError("Not yet parsed options");
+			return false;
+		}
+		if (!this->get(key))
+		{
+			LogError("Option \"%s\" not set", key.cStr());
+			return false;
+		}
+		auto it = this->modifiedOptions.find(key);
+		if (it != this->modifiedOptions.end())
+		{
+			return it->second != "0";
+		}
+		return vm[key.str()].as<bool>();
+	}
 
-void ConfigFile::set(const UString key, bool value)
+	void addOption(const UString section, const UString longName, const UString shortName,
+	               const UString description)
+	{
+		if (this->parsed)
+		{
+			LogError("Adding option when already parsed");
+		}
+		this->createSection(section);
+		UString combinedOption;
+		if (section.empty())
+			combinedOption = longName;
+		else
+			combinedOption = section + "." + longName;
+		if (!shortName.empty())
+			combinedOption += "," + shortName;
+		this->optionSections[section].add_options()(combinedOption.cStr(), description.cStr());
+	}
+	void addOptionString(const UString section, const UString longName, const UString shortName,
+	                     const UString description, const UString defaultValue)
+	{
+		if (this->parsed)
+		{
+			LogError("Adding option when already parsed");
+		}
+		this->createSection(section);
+		UString combinedOption;
+		if (section.empty())
+			combinedOption = longName;
+		else
+			combinedOption = section + "." + longName;
+		if (!shortName.empty())
+			combinedOption += "," + shortName;
+		this->optionSections[section].add_options()(
+		    combinedOption.cStr(), po::value<std::string>()->default_value(defaultValue.str()),
+		    description.cStr());
+	}
+	void addOptionInt(const UString section, const UString longName, const UString shortName,
+	                  const UString description, const int defaultValue)
+	{
+		if (this->parsed)
+		{
+			LogError("Adding option when already parsed");
+		}
+		this->createSection(section);
+		UString combinedOption;
+		if (section.empty())
+			combinedOption = longName;
+		else
+			combinedOption = section + "." + longName;
+		if (!shortName.empty())
+			combinedOption += "," + shortName;
+		this->optionSections[section].add_options()(combinedOption.cStr(),
+		                                            po::value<int>()->default_value(defaultValue),
+		                                            description.cStr());
+	}
+	void addOptionBool(const UString section, const UString longName, const UString shortName,
+	                   const UString description, const bool defaultValue)
+	{
+		if (this->parsed)
+		{
+			LogError("Adding option when already parsed");
+		}
+		this->createSection(section);
+		UString combinedOption;
+		if (section.empty())
+			combinedOption = longName;
+		else
+			combinedOption = section + "." + longName;
+		if (!shortName.empty())
+			combinedOption += "," + shortName;
+		this->optionSections[section].add_options()(combinedOption.cStr(),
+		                                            po::value<bool>()->default_value(defaultValue),
+		                                            description.cStr());
+	}
+	void addPositionalArgument(const UString name, const UString description)
+	{
+		if (this->parsed)
+		{
+			LogError("Adding option when already parsed");
+		}
+		this->positionalArgNames.push_back(name);
+		this->posDesc.add(name.cStr(), 1);
+		this->addOptionString("", name, "", description, "");
+	}
+
+	void showHelp()
+	{
+		std::cout << "Usage: " << this->programName << " [options]";
+		for (auto &arg : positionalArgNames)
+			std::cout << " " << arg;
+		std::cout << "\n";
+		for (auto &optPair : this->optionSections)
+			std::cout << optPair.second << "\n";
+	}
+};
+
+ConfigFile::ConfigFile() { this->pimpl.reset(new ConfigFileImpl()); }
+ConfigFile::~ConfigFile() {}
+
+bool ConfigFile::save() { return this->pimpl->save(); }
+
+UString ConfigFile::getString(const UString key) { return this->pimpl->getString(key); }
+
+int ConfigFile::getInt(const UString key) { return this->pimpl->getInt(key); }
+
+bool ConfigFile::getBool(const UString key) { return this->pimpl->getBool(key); }
+bool ConfigFile::get(const UString key) { return this->pimpl->get(key); }
+
+void ConfigFile::set(const UString key, const UString value) { this->pimpl->set(key, value); }
+void ConfigFile::set(const UString key, const int value) { this->pimpl->set(key, value); }
+void ConfigFile::set(const UString key, const bool value) { this->pimpl->set(key, value); }
+
+void ConfigFile::addOptionString(const UString section, const UString longName,
+                                 const UString shortName, const UString description,
+                                 const UString defaultValue)
 {
-	if (value)
-		this->set(key, trueValues[0]);
-	else
-		this->set(key, falseValues[0]);
+	this->pimpl->addOptionString(section, longName, shortName, description, defaultValue);
+}
+void ConfigFile::addOptionInt(const UString section, const UString longName,
+                              const UString shortName, const UString description,
+                              const int defaultValue)
+{
+	this->pimpl->addOptionInt(section, longName, shortName, description, defaultValue);
+}
+void ConfigFile::addOptionBool(const UString section, const UString longName,
+                               const UString shortName, const UString description,
+                               const bool defaultValue)
+{
+	this->pimpl->addOptionBool(section, longName, shortName, description, defaultValue);
 }
 
-void ConfigFile::set(const UString key, int value) { this->set(key, Strings::fromInteger(value)); }
+void ConfigFile::addOption(const UString section, const UString longName, const UString shortName,
+                           const UString description)
+{
+	this->pimpl->addOption(section, longName, shortName, description);
+}
 
+void ConfigFile::addPositionalArgument(const UString name, const UString description)
+{
+	this->pimpl->addPositionalArgument(name, description);
+}
+
+bool ConfigFile::parseOptions(int argc, char *argv[])
+{
+	return this->pimpl->parseOptions(argc, argv);
+}
+
+void ConfigFile::showHelp() { this->pimpl->showHelp(); }
+
+ConfigOptionString::ConfigOptionString(const UString section, const UString name,
+                                       const UString description, const UString defaultValue)
+    : section(section), name(name), description(description), defaultValue(defaultValue)
+{
+	config().addOptionString(section, name, "", description, defaultValue);
+}
+
+UString ConfigOptionString::get() const { return config().getString(section + "." + name); }
+
+ConfigOptionInt::ConfigOptionInt(const UString section, const UString name,
+                                 const UString description, const int defaultValue)
+    : section(section), name(name), description(description), defaultValue(defaultValue)
+{
+	config().addOptionInt(section, name, "", description, defaultValue);
+}
+
+int ConfigOptionInt::get() const { return config().getInt(section + "." + name); }
+
+ConfigOptionBool::ConfigOptionBool(const UString section, const UString name,
+                                   const UString description, const bool defaultValue)
+    : section(section), name(name), description(description), defaultValue(defaultValue)
+{
+	config().addOptionBool(section, name, "", description, defaultValue);
+}
+
+bool ConfigOptionBool::get() const { return config().getBool(section + "." + name); }
 }; // namespace OpenApoc

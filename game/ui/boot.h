@@ -10,11 +10,8 @@ class Image;
 
 class BootUp : public Stage
 {
-  private:
-	bool skipIntro;
-
   public:
-	BootUp(bool skipIntro) : Stage(), skipIntro(skipIntro) {}
+	BootUp() : Stage() {}
 	// Stage control
 	void begin() override;
 	void pause() override;

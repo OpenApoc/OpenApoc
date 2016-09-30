@@ -62,8 +62,12 @@ static bool testImage(const UString &imageName, const UString &referenceName)
 	return true;
 }
 
-int main(int, char **)
+int main(int argc, char **argv)
 {
+	if (config().parseOptions(argc, argv))
+	{
+		return EXIT_FAILURE;
+	}
 	std::map<UString, UString> testImages = {
 	    // PCX files:
 	    {"xcom3/ufodata/titles.pcx", "test_images/ufodata_titles.png"},
@@ -99,7 +103,7 @@ int main(int, char **)
 	    {"LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/ufodata/loftemps.tab:151",
 	     "test_images/ufodata_loftemps_151.png"},
 	};
-	Framework fw("OpenApoc", {}, false);
+	Framework fw("OpenApoc", false);
 
 	for (auto &imagePair : testImages)
 	{

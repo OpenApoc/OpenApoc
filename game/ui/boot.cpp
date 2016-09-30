@@ -8,6 +8,7 @@
 
 namespace OpenApoc
 {
+ConfigOptionBool skipIntroOption("Game", "SkipIntro", "Skip intro video", false);
 
 void BootUp::begin() {}
 
@@ -21,6 +22,7 @@ void BootUp::eventOccurred(Event *e) { std::ignore = e; }
 
 void BootUp::update()
 {
+	bool skipIntro = skipIntroOption.get();
 	// The first forms instance causes it to get loaded
 	auto loadTask = fw().threadPool->enqueue([]() {
 		auto &ui_instance = ui();
