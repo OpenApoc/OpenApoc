@@ -1756,8 +1756,8 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Ba
 				}
 			}
 
-			// Snooze for a second and try again
-			u.missions.emplace_front(snooze(u, TICKS_PER_SECOND));
+			// Snooze for a moment and try again
+			u.missions.emplace_front(snooze(u, 15));
 			u.missions.front()->start(state, u);
 			return false;
 		}
@@ -1775,7 +1775,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Ba
 	if (closedDoorInTheWay)
 	{
 		// Snooze for a moment and try again
-		u.missions.emplace_front(snooze(u, 4));
+		u.missions.emplace_front(snooze(u, 5));
 		u.missions.front()->start(state, u);
 		return false;
 	}

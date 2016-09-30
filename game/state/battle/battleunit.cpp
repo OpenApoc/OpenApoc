@@ -369,6 +369,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	auto b = battle.lock();
 	if (!b)
 		return;
+	auto &map = tileObject->map;
+
 
 	if (b->mode == Battle::Mode::RealTime)
 		agent->modified_stats.restoreTU();
@@ -470,17 +472,34 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				{
 					for (int z = -1; z <= 1; z++)
 					{
-						if (z < 0 || z >= tileObject->map.size.z)
+						if (z < 0 || z >= map.size.z)
 						{
 							continue;
 						}
 						// Try the new heading
 						Vec3<int> pos = {position.x + newHeading.x, position.y + newHeading.y,
 						                 position.z + z};
-						auto to = tileObject->map.getTile(pos);
-						// If heading is acceptable
-						if (BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(from, to) &&
-						    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(to, from))
+						auto to = map.getTile(pos);
+						// Check if heading on our level is acceptable
+						bool acceptable = BattleUnitTileHelper{ map, *this }.canEnterTile(from, to) &&
+							BattleUnitTileHelper{ map, *this }.canEnterTile(to, from);
+						// If not, check if we can go down one tile
+						if (!acceptable && pos.z - 1 >= 0)
+						{
+							pos -= Vec3<int>{0, 0, 1};
+							to = map.getTile(pos);
+							acceptable = BattleUnitTileHelper{ map, *this }.canEnterTile(from, to) &&
+								BattleUnitTileHelper{ map, *this }.canEnterTile(to, from);
+						}
+						// If not, check if we can go up one tile
+						if (!acceptable && pos.z +2 < map.size.z)
+						{
+							pos += Vec3<int>{0, 0, 2};
+							to = map.getTile(pos);
+							acceptable = BattleUnitTileHelper{ map, *this }.canEnterTile(from, to) &&
+								BattleUnitTileHelper{ map, *this }.canEnterTile(to, from);
+						}
+						if (acceptable)
 						{
 							// Give way (move 1 off)
 							missions.emplace_back(
@@ -566,7 +585,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				bool hasSupport = true;
 				for (auto t : tileObject->occupiedTiles)
 				{
-					if (!tileObject->map.getTile(t)->getCanStand())
+					if (!map.getTile(t)->getCanStand())
 					{
 						hasSupport = false;
 						break;
@@ -675,7 +694,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						}
 						if (!atGoal)
 						{
-							if (tileObject->map.getTile(goalPosition)->getCanStand(isLarge()))
+							if (map.getTile(goalPosition)->getCanStand(isLarge()))
 							{
 								hasSupport = true;
 							}
@@ -716,7 +735,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						newPosition -= Vec3<float>{0.0f, 0.0f, (fallingSpeed / TICK_SCALE)} / VELOCITY_SCALE_BATTLE;
 					}
 					// Fell into a unit
-					if (isConscious() && tileObject->map.getTile(newPosition)->getUnitIfPresent(true, true, false, tileObject))
+					if (isConscious() && map.getTile(newPosition)->getUnitIfPresent(true, true, false, tileObject))
 					{	
 						// FIXME: Proper stun damage (ensure it is!)
 						stunDamageInTicks = 0;

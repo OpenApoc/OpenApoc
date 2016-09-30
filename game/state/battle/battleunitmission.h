@@ -32,7 +32,7 @@ class BattleUnitTileHelper : public CanEnterTileHelper
 	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay, bool ignoreUnits,
 	                  bool demandGiveWay) const;
 
-	float pathOverheadAlloawnce() const override { return 1.075f; }
+	float pathOverheadAlloawnce() const override { return 1.25f; }
 };
 
 class BattleUnitMission
@@ -77,7 +77,7 @@ class BattleUnitMission
 
 	// Methods to create new missions
 	static BattleUnitMission *gotoLocation(BattleUnit &u, Vec3<int> target, int facingDelta = 0,
-	                                       bool allowSkipNodes = true, int giveWayAttempts = 10,
+	                                       bool allowSkipNodes = true, int giveWayAttempts = 20,
 	                                       bool demandGiveWay = false,
 	                                       bool allowRunningAway = false);
 	static BattleUnitMission *snooze(BattleUnit &u, unsigned int ticks);

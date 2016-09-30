@@ -642,14 +642,7 @@ void BattleView::updateSelectionMode()
 		{
 			if (modifierLAlt || modifierRAlt)
 			{
-				if (modifierLShift || modifierRShift)
-				{
-					selectionState = BattleSelectionState::NormalCtrlAltShift;
-				}
-				else
-				{
-					selectionState = BattleSelectionState::NormalCtrlAlt;
-				}
+				selectionState = BattleSelectionState::NormalCtrlAlt;
 			}
 			else
 			{
@@ -673,14 +666,7 @@ void BattleView::updateSelectionMode()
 		{
 			if (modifierLAlt || modifierRAlt)
 			{
-				if (modifierLShift || modifierRShift)
-				{
-					selectionState = BattleSelectionState::NormalCtrlAltShift;
-				}
-				else
-				{
-					selectionState = BattleSelectionState::NormalCtrlAlt;
-				}
+				selectionState = BattleSelectionState::NormalCtrlAlt;
 			}
 			else
 			{
@@ -843,7 +829,7 @@ void BattleView::attemptToClearCurrentOrders(sp<BattleUnit> u, bool overrideBody
 	}
 }
 
-void BattleView::orderMove(Vec3<int> target, int facingOffset, bool demandGiveWay)
+void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 {
 	// Check if ordered to exit
 	bool runAway = map.getTile(target)->getHasExit();
@@ -852,7 +838,12 @@ void BattleView::orderMove(Vec3<int> target, int facingOffset, bool demandGiveWa
 	for (auto unit : selectedUnits)
 	{
 		attemptToClearCurrentOrders(unit);
-		// FIXME: handle strafe and backwards movement properly
+		int facingOffset = 0;
+		if (strafe)
+		{
+			// FIXME: handle strafe movement
+			LogWarning("Implement strafing!");
+		}
 		if (runAway)
 		{
 			// Running away units are impatient!
@@ -862,7 +853,7 @@ void BattleView::orderMove(Vec3<int> target, int facingOffset, bool demandGiveWa
 		else // not running away
 		{
 			unit->missions.emplace_back(BattleUnitMission::gotoLocation(*unit, target, facingOffset,
-			                                                            true, 10, demandGiveWay));
+			                                                            true, 20, demandGiveWay));
 		}
 		if (unit->missions.size() == 1)
 		{
@@ -1223,7 +1214,6 @@ void BattleView::eventOccurred(Event *e)
 					break;
 				case BattleSelectionState::NormalCtrl:
 				case BattleSelectionState::NormalCtrlAlt:
-				case BattleSelectionState::NormalCtrlAltShift:
 
 					switch (e->mouse().Button)
 					{
@@ -1237,16 +1227,9 @@ void BattleView::eventOccurred(Event *e)
 							else if (!unitOccupying &&
 							         selectionState != BattleSelectionState::NormalCtrl)
 							{
-								// Move backwards
-								if (selectionState == BattleSelectionState::NormalCtrlAlt)
-								{
-									orderMove(t, 2);
-								}
+								//selectionState == BattleSelectionState::NormalCtrlAlt)
 								// Move pathing through
-								else // selectionState == BattleSelectionState::NormalCtrlAltShift
-								{
-									orderMove(t, 0, true);
-								}
+								orderMove(t, 0, true);
 							}
 							break;
 						// RMB = Remove from selection

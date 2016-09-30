@@ -145,13 +145,19 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 		Vec3<int> currentPosition = nodeToExpand->thisTile->position;
 		if (currentPosition == destination)
 		{
-			closestNodeSoFar = nodeToExpand;
+			if (maxCost == 0.0f || nodeToExpand->costToGetHere <= maxCost)
+			{
+				closestNodeSoFar = nodeToExpand;
+			}
 			break;
 		}
 
 		if (nodeToExpand->distanceToGoal < closestNodeSoFar->distanceToGoal)
 		{
-			closestNodeSoFar = nodeToExpand;
+			if (maxCost == 0.0f || nodeToExpand->costToGetHere <= maxCost)
+			{
+				closestNodeSoFar = nodeToExpand;
+			}
 		}
 		for (int z = -1; z <= 1; z++)
 		{
@@ -177,13 +183,11 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 						continue;
 					}
 					float cost = 0.0f;
-					if (!canEnterTile.canEnterTile(nodeToExpand->thisTile, tile, cost,
+					bool unused = false;
+					if (!canEnterTile.canEnterTile(nodeToExpand->thisTile, tile, cost, unused,
 					                               demandGiveWay))
 						continue;
 					float newNodeCost = nodeToExpand->costToGetHere;
-
-					if (maxCost > 0.0f && newNodeCost > maxCost)
-						continue;
 
 					newNodeCost += cost / canEnterTile.pathOverheadAlloawnce();
 
