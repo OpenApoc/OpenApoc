@@ -531,31 +531,33 @@ void BattleView::update()
 	}
 
 	// Pulsate palette colors
+	// Swapping palletes faster than mksp'ing a new one every frame!
 	auto newPal = mksp<Palette>();
+	
 	for (int i = 0; i < 255 - 4; i++)
 	{
 		newPal->setColour(i, palette->getColour(i));
 	}
-	colorCurrent += (colorForward ? 1 : -1) * 16;
-	if (colorCurrent <= 0 || colorCurrent >= 255)
+	colorCurrent += (colorForward ? 1 : -1);
+	if (colorCurrent <= 0 || colorCurrent >= 15)
 	{
-		colorCurrent = clamp(colorCurrent, 0, 255);
+		colorCurrent = clamp(colorCurrent, 0, 15);
 		colorForward = !colorForward;
 	}
 	// Lift color, pulsates from (0r 3/8g 5/8b) to (0r 8/8g 4/8b)
 	newPal->setColour(
-	    255 - 4, Colour(0, (colorCurrent * 5 + 255 * 3) / 8, (colorCurrent * -1 + 255 * 5) / 8));
+	    255 - 4, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8, (colorCurrent * 16 * -1 + 255 * 5) / 8));
 	// Red color, for enemy indicators, pulsates from (3/8r 0g 0b) to (8/8r 0g 0b)
-	newPal->setColour(255 - 3, Colour((colorCurrent * 5 + 255 * 3) / 8, 0, 0));
+	newPal->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
 	// Blue color, for misc. indicators, pulsates from (0r 3/8g 3/8b) to (0r 8/8g 8/8b)
 	newPal->setColour(
-	    255 - 2, Colour(0, (colorCurrent * 5 + 255 * 3) / 8, (colorCurrent * 5 + 255 * 3) / 8));
+	    255 - 2, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8, (colorCurrent * 16 * 5 + 255 * 3) / 8));
 	// Pink color, for neutral indicators, pulsates from (3/8r 0g 3/8b) to (8/8r 0g 8/8b)
 	newPal->setColour(
-	    255 - 1, Colour((colorCurrent * 5 + 255 * 3) / 8, 0, (colorCurrent * 5 + 255 * 3) / 8));
+	    255 - 1, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, (colorCurrent * 16 * 5 + 255 * 3) / 8));
 	// Yellow color, for owned indicators, pulsates from (3/8r 3/8g 0b) to (8/8r 8/8g 0b)
 	newPal->setColour(
-	    255 - 0, Colour((colorCurrent * 5 + 255 * 3) / 8, (colorCurrent * 5 + 255 * 3) / 8, 0));
+	    255 - 0, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, (colorCurrent * 16 * 5 + 255 * 3) / 8, 0));
 	this->pal = newPal;
 
 	// Update weapons if required
@@ -642,14 +644,7 @@ void BattleView::updateSelectionMode()
 		{
 			if (modifierLAlt || modifierRAlt)
 			{
-				if (modifierLShift || modifierRShift)
-				{
-					selectionState = BattleSelectionState::NormalCtrlAltShift;
-				}
-				else
-				{
-					selectionState = BattleSelectionState::NormalCtrlAlt;
-				}
+				selectionState = BattleSelectionState::NormalCtrlAlt;
 			}
 			else
 			{
@@ -673,14 +668,7 @@ void BattleView::updateSelectionMode()
 		{
 			if (modifierLAlt || modifierRAlt)
 			{
-				if (modifierLShift || modifierRShift)
-				{
-					selectionState = BattleSelectionState::NormalCtrlAltShift;
-				}
-				else
-				{
-					selectionState = BattleSelectionState::NormalCtrlAlt;
-				}
+				selectionState = BattleSelectionState::NormalCtrlAlt;
 			}
 			else
 			{
@@ -805,6 +793,20 @@ void BattleView::attemptToClearCurrentOrders(sp<BattleUnit> u, bool overrideBody
 		// See if we can remove the mission
 		switch ((*m)->type)
 		{
+			// Special case: Acquire TUS
+			// Always means we're waiting to start/continue doing next mission
+			// Cancels together with next mission
+			case BattleUnitMission::MissionType::AcquireTU:
+			{
+				if (it == u->missions.end())
+				{
+					LogError("Acquire TUs without any mission after it?");
+					break;
+				}
+				u->missions.erase(m);
+				u->missions.erase(it++);
+				continue;
+			}
 			// Missions that cannot be cancelled before finished
 			case BattleUnitMission::MissionType::Fall:
 			case BattleUnitMission::MissionType::Snooze:
@@ -817,7 +819,6 @@ void BattleView::attemptToClearCurrentOrders(sp<BattleUnit> u, bool overrideBody
 				else
 					continue;
 			// Missions that can be cancelled before finished
-			case BattleUnitMission::MissionType::AcquireTU:
 			case BattleUnitMission::MissionType::GotoLocation:
 			case BattleUnitMission::MissionType::ReachGoal:
 			case BattleUnitMission::MissionType::RestartNextMission:
@@ -843,7 +844,7 @@ void BattleView::attemptToClearCurrentOrders(sp<BattleUnit> u, bool overrideBody
 	}
 }
 
-void BattleView::orderMove(Vec3<int> target, int facingOffset, bool demandGiveWay)
+void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 {
 	// Check if ordered to exit
 	bool runAway = map.getTile(target)->getHasExit();
@@ -852,7 +853,12 @@ void BattleView::orderMove(Vec3<int> target, int facingOffset, bool demandGiveWa
 	for (auto unit : selectedUnits)
 	{
 		attemptToClearCurrentOrders(unit);
-		// FIXME: handle strafe and backwards movement properly
+		int facingOffset = 0;
+		if (strafe)
+		{
+			// FIXME: handle strafe movement
+			LogWarning("Implement strafing!");
+		}
 		if (runAway)
 		{
 			// Running away units are impatient!
@@ -862,7 +868,7 @@ void BattleView::orderMove(Vec3<int> target, int facingOffset, bool demandGiveWa
 		else // not running away
 		{
 			unit->missions.emplace_back(BattleUnitMission::gotoLocation(*unit, target, facingOffset,
-			                                                            true, 10, demandGiveWay));
+			                                                            true, 20, demandGiveWay));
 		}
 		if (unit->missions.size() == 1)
 		{
@@ -1099,7 +1105,7 @@ void BattleView::eventOccurred(Event *e)
 		// on top of the ground
 		setSelectedTilePosition(this->screenToTileCoords(
 			Vec2<float>((float)e->mouse().X, (float)e->mouse().Y + 4) - screenOffset,
-			getZLevel() - 1));
+			(float)getZLevel() - 1.0f));
 	}
 	else if (e->type() == EVENT_KEY_UP &&
 	         (e->keyboard().KeyCode == SDLK_RSHIFT || e->keyboard().KeyCode == SDLK_LSHIFT ||
@@ -1223,7 +1229,6 @@ void BattleView::eventOccurred(Event *e)
 					break;
 				case BattleSelectionState::NormalCtrl:
 				case BattleSelectionState::NormalCtrlAlt:
-				case BattleSelectionState::NormalCtrlAltShift:
 
 					switch (e->mouse().Button)
 					{
@@ -1237,16 +1242,9 @@ void BattleView::eventOccurred(Event *e)
 							else if (!unitOccupying &&
 							         selectionState != BattleSelectionState::NormalCtrl)
 							{
-								// Move backwards
-								if (selectionState == BattleSelectionState::NormalCtrlAlt)
-								{
-									orderMove(t, 2);
-								}
+								//selectionState == BattleSelectionState::NormalCtrlAlt)
 								// Move pathing through
-								else // selectionState == BattleSelectionState::NormalCtrlAltShift
-								{
-									orderMove(t, 0, true);
-								}
+								orderMove(t, 0, true);
 							}
 							break;
 						// RMB = Remove from selection
@@ -1403,7 +1401,7 @@ void BattleView::updateItemInfo(bool right)
 		if (info.accuracy / 2 > 0)
 		{
 			int accuracy = info.accuracy / 2;
-			int colorsCount = accuracyColors.size();
+			int colorsCount = (int)accuracyColors.size();
 			int y = 93;
 			if (right)
 			{

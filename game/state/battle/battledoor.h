@@ -37,6 +37,6 @@ class BattleDoor : public std::enable_shared_from_this<BattleDoor>
 
 	std::list<wp<BattleMapPart>> mapParts;
 	Vec3<float> position;
-	wp<Battle> battle;
+	sp<Battle> battle;
 };
 }

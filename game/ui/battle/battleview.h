@@ -27,7 +27,6 @@ enum class BattleSelectionState
 	NormalAlt,
 	NormalCtrl,
 	NormalCtrlAlt,
-	NormalCtrlAltShift,
 	Fire,
 	ThrowLeft,
 	ThrowRight,
@@ -100,7 +99,7 @@ class BattleView : public BattleTileView
 
 	// Unit orers
 	// Move, offset 1 means strafing, 2 means move backwards
-	void orderMove(Vec3<int> target, int facingOffset = 0, bool demandGiveWay = false);
+	void orderMove(Vec3<int> target, bool strafe = false, bool demandGiveWay = false);
 	void orderTurn(Vec3<int> target);
 	void orderDrop(bool right);
 	void orderThrow(Vec3<int> target, bool right);

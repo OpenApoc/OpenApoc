@@ -278,6 +278,7 @@
 		<member>facingDelta</member>
 		<member>giveWayAttemptsRemaining</member>
 		<member>demandGiveWay</member>
+		<member>costPaidUpFront</member>
 		<member>allowSkipNodes</member>
 		<member>targetFacing</member>
 		<member>requireGoal</member>
@@ -505,6 +506,7 @@
 		<member>retreated</member>
 		<member>destroyed</member>
 		<member>falling</member>
+		<member>fallingQueued</member>
 		<member>fallingSpeed</member>
 	</object>
 	<object>

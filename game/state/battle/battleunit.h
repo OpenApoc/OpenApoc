@@ -91,6 +91,7 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	AgentType::BodyState target_body_state = AgentType::BodyState::Standing;
 	void setBodyState(AgentType::BodyState state);
 	void beginBodyStateChange(AgentType::BodyState state, int ticks);
+	
 	// Time, in game ticks, until hands animation is finished
 	int hand_animation_ticks_remaining = 0;
 	int getHandAnimationFrame() const
@@ -106,16 +107,27 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	{
 		return std::max(0, movement_ticks_passed / TICKS_PER_UNIT_TRAVELLED);
 	}
+	
 	// Movement sounds
 	int movement_sounds_played = 0;
 	bool shouldPlaySoundNow();
 	int getWalkSoundIndex();
 	AgentType::MovementState current_movement_state = AgentType::MovementState::None;
 	void setMovementState(AgentType::MovementState state);
+	
 	// Time, in game ticks, until unit can turn by 1/8th of a circle
 	int turning_animation_ticks_remaining = 0;
 
+	// MIssion logic
+
 	std::list<up<BattleUnitMission>> missions;
+	// Pops all finished missions, returns true if unit retreated and you should return
+	bool popFinishedMissions(GameState &state);
+	bool getNextDestination(GameState &state, Vec3<float> &dest);
+	bool getNextFacing(GameState &state, Vec2<int> &dest, int &ticks);
+	bool getNextBodyState(GameState &state, AgentType::BodyState &dest, int &ticks);
+	bool addMission(GameState &state, BattleUnitMission *mission, bool start = true);
+	bool addMission(GameState &state, BattleUnitMission::MissionType type);
 
 	Vec3<float> position;
 	Vec3<float> goalPosition;
@@ -128,11 +140,15 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 
 	// Successfully retreated from combat
 	bool retreated = false;
+	
 	// Died and corpse was destroyed in an explosion
 	bool destroyed = false;
+	
 	// Freefalling
 	bool falling = false;
+	bool fallingQueued = false;
 	float fallingSpeed = 0.0f;
+	
 	// Stun damage acquired
 	int stunDamageInTicks = 0;
 	int getStunDamage() const;
@@ -165,6 +181,9 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 
 	// Get unit's height in current situation
 	int getCurrentHeight() const { return agent->type->bodyType->height.at(current_body_state); }
+
+	// Wether unit can afford action
+	bool canAfford(int cost) const { return agent->modified_stats.time_units >= cost; }
 
 	// If unit is asked to give way, this list will be filled with facings
 	// in order of priority that should be tried by it

@@ -823,7 +823,7 @@ void BattleTileView::updatePathPreview()
 	// Get path
 	float maxCost = (float)lastSelectedUnit->agent->modified_stats.time_units * 2 / cost_multiplier_x_2;
 	pathPreview = map.findShortestPath(lastSelectedUnit->goalPosition,
-		target, 500, BattleUnitTileHelper{ map,
+		target, 1000, BattleUnitTileHelper{ map,
 		*lastSelectedUnit }, false, &cost, maxCost);
 	if (pathPreview.empty())
 	{

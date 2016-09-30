@@ -62,6 +62,7 @@ Battle::~Battle()
 		if (s->tileObject)
 			s->tileObject->removeFromMap();
 		s->tileObject = nullptr;
+		s->battle = nullptr;
 	}
 	this->map_parts.clear();
 	for (auto &s : this->items)
@@ -73,6 +74,11 @@ Battle::~Battle()
 		s->tileObject = nullptr;
 	}
 	this->items.clear();
+	for (auto &d : this->doors)
+	{
+		d->battle = nullptr;
+	}
+	this->doors.clear();
 }
 
 void Battle::initBattle(GameState &state)
@@ -663,7 +669,7 @@ void Battle::enterBattle(GameState &state)
 				// While we're not completely out of bounds for this block
 				// Keep enlarging the offset and spawning units
 				while (startX - offset >= block->start.x || startY - offset >= block->start.y ||
-				       startX + offset < block->end.x || startY + offset >= block->end.y)
+				       startX + offset < block->end.x || startY + offset < block->end.y)
 				{
 					for (int x = startX - offset; x <= startX + offset; x++)
 					{

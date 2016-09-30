@@ -45,7 +45,7 @@ std::future<void> loadBattleBuilding(sp<Building> building, sp<GameState> state)
 	auto loadTask = fw().threadPool->enqueue([building, state]() -> void {
 		std::list<StateRef<Agent>> agents;
 		for (auto &a : state->agents)
-			if (a.second->type->role == AgentType::Role::Soldier)
+			if (a.second->type->role == AgentType::Role::Soldier && a.second->owner == state->getPlayer())
 				agents.emplace_back(state.get(), a.second);
 
 		StateRef<Organisation> org = building->owner;
@@ -101,7 +101,7 @@ std::future<void> loadBattleVehicle(sp<VehicleType> vehicle, sp<GameState> state
 	auto loadTask = fw().threadPool->enqueue([vehicle, state]() -> void {
 		std::list<StateRef<Agent>> agents;
 		for (auto &a : state->agents)
-			if (a.second->type->role == AgentType::Role::Soldier)
+			if (a.second->type->role == AgentType::Role::Soldier && a.second->owner == state->getPlayer())
 				agents.emplace_back(state.get(), a.second);
 
 		StateRef<Organisation> org = {state.get(), UString("ORG_ALIEN")};
