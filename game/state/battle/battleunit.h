@@ -136,6 +136,8 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	// Stun damage acquired
 	int stunDamageInTicks = 0;
 	int getStunDamage() const;
+	void dealStunDamage(int damage);
+	
 	// Returns true if the unit is dead
 	bool isDead() const;
 	// Returns true if the unit is unconscious and not dead
@@ -143,18 +145,21 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	// Return true if the unit is conscious
 	// and not currently in the dropped state (curent and target)
 	bool isConscious() const;
-	// Returns true if the unit is conscious and can fly
-	bool canFly() const;
-	// Returns true if the unit is conscious and can fly
-	bool canMove() const;
 	// So we can stop going ->isLarge() all the time
 	bool isLarge() const { return agent->type->bodyType->large; }
 	// Wether unit is static - not moving, not falling, not changing body state
 	bool isStatic() const;
 	// Wether unit is busy - with aiming or firing or otherwise involved
 	bool isBusy() const;
-	// Wether unit can go prone in current position and facing
-	bool canGoProne() const;
+	// Wether unit is throwing an item
+	bool isThrowing() const;
+
+	// Returns true if the unit is conscious and can fly
+	bool canFly() const;
+	// Returns true if the unit is conscious and can fly
+	bool canMove() const;
+	// Wether unit can go prone in position and facing
+	bool canProne(Vec3<int> pos, Vec2<int> fac) const;
 	// Wether unit can kneel in current position and facing
 	bool canKneel() const;
 

@@ -92,6 +92,12 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// Current player in control of the interface (will only change if we're going multiplayer)
 	StateRef<Organisation> currentPlayer;
 
+	// Who's turn is it
+	StateRef<Organisation> currentActiveOrganisation;
+
+	// Turn number
+	int currentTurn = 0;
+
 	// Store information about last screen center location, so that when we load a save
 	// we could restore it
 	int battleviewZLevel;
@@ -110,6 +116,14 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	void update(GameState &state, unsigned int ticks);
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
+
+	// Turn based functions
+
+	// Called when new organisation's turn is starting
+	void beginTurn();
+
+	// Called when current active organisation decides to end their turn
+	void endTurn();
 
 	// Battle Start Functions
 

@@ -10,8 +10,6 @@
 namespace OpenApoc
 {
 
-float BattleUnitTileHelper::applyPathOverheadAllowance(float cost) const { return cost / 1.065f; }
-
 bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool demandGiveWay) const
 {
 	float nothing;
@@ -851,7 +849,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 	// It costs 1x to move to adjacent tile, 1.5x to move diagonally,
 	// 2x to move diagonally to another layer.
 	// Also, it costs 0x to fall, but we have checked for that above
-	cost = costInt;
+	cost = (float)costInt;
 	float costModifier = 0.5f;
 	if (fromPos.x != toPos.x)
 	{
@@ -942,23 +940,27 @@ BattleUnitMission *BattleUnitMission::dropItem(BattleUnit &u, sp<AEquipment> ite
 	return mission;
 }
 
-BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec2<int> target)
+BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec2<int> target, bool free, 
+	bool requireGoal)
 {
-	return turn(u, Vec3<int>{u.position.x + target.x, u.position.y + target.y, u.position.z});
+	auto pos = u.tileObject->getOwningTile()->position;
+	return turn(u, Vec3<int>{pos.x + target.x, pos.y + target.y, pos.z}, free, requireGoal);
 }
 
-BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<int> target)
+BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<int> target, bool free, 
+	bool requireGoal)
 {
-	return turn(u, u.tileObject->getOwningTile()->position, target, true);
+	return turn(u, u.tileObject->getOwningTile()->position, target, free, requireGoal);
 }
 
-BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<float> target)
+BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<float> target, bool free, 
+	bool requireGoal)
 {
-	return turn(u, u.position, target, false);
+	return turn(u, u.position, target, free, requireGoal);
 }
 
-BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<float> from, Vec3<float> to,
-                                           bool requireGoal)
+BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<float> from, Vec3<float> to, 
+	bool free, bool requireGoal)
 {
 	static const std::list<Vec3<float>> angles = {
 	    {0, -1, 0}, {1, -1, 0}, {1, 0, 0},  {1, 1, 0},
@@ -968,6 +970,7 @@ BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<float> from, Vec3
 	auto *mission = new BattleUnitMission();
 	mission->type = MissionType::Turn;
 	mission->requireGoal = requireGoal;
+	mission->free = free;
 	float closestAngle = FLT_MAX;
 	Vec3<int> closestVector = {0, 0, 0};
 	Vec3<float> targetFacing = (Vec3<float>)(to - from);
@@ -1147,7 +1150,7 @@ bool BattleUnitMission::isFinishedInternal(GameState &state, BattleUnit &u)
 	switch (this->type)
 	{
 		case MissionType::AcquireTU:
-			return u.agent->modified_stats.time_units >= timeUnits;
+			return u.agent->modified_stats.time_units >= (int)timeUnits;
 		case MissionType::ReachGoal:
 			return u.atGoal || u.falling;
 		case MissionType::GotoLocation:
@@ -1157,8 +1160,7 @@ bool BattleUnitMission::isFinishedInternal(GameState &state, BattleUnit &u)
 		case MissionType::ChangeBodyState:
 			return u.current_body_state == this->bodyState;
 		case MissionType::ThrowItem:
-			return throwFailed || !u.isConscious() ||
-			       (u.current_body_state == AgentType::BodyState::Standing && !item);
+			return !item;
 		case MissionType::Turn:
 			if (u.facing == targetFacing || u.isDead())
 			{
@@ -1216,12 +1218,12 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 			// that will turn us to a point midway
 			if (dest != targetFacing)
 			{
-				u.missions.emplace_front(turn(u, dest));
+				u.missions.emplace_front(turn(u, dest, free, requireGoal));
 				u.missions.front()->start(state, u);
 				return;
 			}
 			// Calculate and spend cost
-			int cost = 1;
+			int cost = free ? 0 : 1;
 			if (!spendAgentTUs(state, u, cost))
 			{
 				LogWarning("Unit mission \"%s\" could not start: unsufficient TUs",
@@ -1297,6 +1299,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 			}
 			// Calculate and spend cost
 			int cost = 0;
+			// If not within these conditions, it costs nothing!
 			switch (bodyState)
 			{
 				case AgentType::BodyState::Flying:
@@ -1344,12 +1347,12 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 			if (item && item->ownerAgent != u.agent)
 			{
 				item = nullptr;
-				throwFailed = true;
 				return;
 			}
 			// Half way there - throw the item!
 			if (u.current_body_state == AgentType::BodyState::Throwing)
 			{
+				LogWarning("Unit in throwing stance: dispatching item!");
 				if (state.battle_common_sample_list->throwSounds.size() > 0)
 				{
 					fw().soundBackend->playSample(
@@ -1380,8 +1383,9 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 			// Just starting the throw
 			else if (item)
 			{
+				LogWarning("Unit starting to throw!");
 				// Do we need to turn?
-				auto m = turn(u, targetLocation);
+				auto m = turn(u, (Vec3<float>)targetLocation + Vec3<float>{0.5f, 0.5f, 0.0f});
 				if (u.current_body_state != AgentType::BodyState::Standing ||
 				    u.current_body_state != u.target_body_state || !m->isFinished(state, u))
 				{
@@ -1391,12 +1395,16 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 					{
 						if (!m->isFinished(state, u))
 						{
+							LogWarning("Unit turning before throwing!");
+
 							u.missions.emplace_front(m);
 							u.missions.front()->start(state, u);
 							return;
 						}
 						if (u.current_body_state != u.target_body_state)
 						{
+							LogWarning("Unit waiting for body stage change before throwing!");
+
 							// body state is changing - wait for it to change and then retry
 							u.missions.emplace(++u.missions.begin(), BattleUnitMission::throwItem(
 							                                             u, item, targetLocation));
@@ -1426,8 +1434,10 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 					return;
 				}
 				// Remove item
+				LogWarning("Removing item from agent inventory!");
 				item->ownerAgent->removeEquipment(item);
 				// Start throw animation
+				LogWarning("Changing stance to throwing!");
 				u.missions.emplace_front(
 				    BattleUnitMission::changeStance(u, AgentType::BodyState::Throwing));
 				u.missions.front()->start(state, u);
@@ -1536,9 +1546,8 @@ void BattleUnitMission::setPathTo(BattleUnit &u, Vec3<int> target, int maxIterat
 			to = map.getTile(target);
 		}
 
-		// FIXME: Change findShortestPath to return Vec3<int> positions?
 		auto path = map.findShortestPath(u.goalPosition, target, maxIterations,
-		                                 BattleUnitTileHelper{map, u}, 5.0f, demandGiveWay);
+		                                 BattleUnitTileHelper{map, u}, demandGiveWay);
 
 		// Always start with the current position
 		this->currentPlannedPath.push_back(u.goalPosition);
@@ -1614,7 +1623,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Ba
 	}
 
 	// Do we need to turn?
-	auto m = turn(u, pos);
+	auto m = turn(u, pos, true);
 	if (!m->isFinished(state, u, false))
 	{
 		u.missions.emplace_front(m);
@@ -1629,9 +1638,13 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Ba
 		case BattleUnit::MovementMode::Prone:
 			if (u.current_body_state == AgentType::BodyState::Prone)
 			{
-				break;
+				// Ensure we can go prone at target tile
+				if (u.canProne(pos, u.facing))
+				{
+					break;
+				}
 			}
-			if (u.canGoProne())
+			else if (u.canProne(u.position, u.facing) && u.canProne(pos, u.facing))
 			{
 				u.missions.emplace_front(changeStance(u, AgentType::BodyState::Prone));
 				u.missions.front()->start(state, u);
@@ -1771,6 +1784,11 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Ba
 	// FIXME: Handle strafing and going backwards influencing TU spent
 	if (u.agent->canRun() && u.movement_mode == BattleUnit::MovementMode::Running)
 	{
+		cost /= 2;
+	}
+	if (u.current_body_state == AgentType::BodyState::Prone)
+	{
+		cost *= 3;
 		cost /= 2;
 	}
 	// See if we can afford doing this move

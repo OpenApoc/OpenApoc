@@ -45,8 +45,9 @@ class PathNode
 
 std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination,
                                                unsigned int iterationLimit,
-                                               const CanEnterTileHelper &canEnterTile, float,
-                                               bool demandGiveWay)
+                                               const CanEnterTileHelper &canEnterTile,
+											   bool demandGiveWay, float *cost, 
+											   float maxCost)
 {
 #ifdef PATHFINDING_DEBUG
 	for (auto &t : tiles)
@@ -54,6 +55,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 #endif
 
 	TRACE_FN;
+	maxCost /= canEnterTile.pathOverheadAlloawnce();
 	// Faster than looking up in a set
 	std::vector<bool> visitedTiles = std::vector<bool>(size.x * size.y * size.z, false);
 	int strideZ = size.x * size.y;
@@ -114,7 +116,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 		if (first == fringe.end())
 		{
 			LogInfo("No more tiles to expand after %d iterations", iterationCount);
-			return {};
+			break;
 		}
 		auto nodeToExpand = *first;
 		fringe.erase(first);
@@ -174,24 +176,22 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					{
 						continue;
 					}
-					// FIXME: Make 'blocked' tiles cleverer (e.g. don't plan around objects that
-					// will move anyway?)
 					float cost = 0.0f;
 					if (!canEnterTile.canEnterTile(nodeToExpand->thisTile, tile, cost,
 					                               demandGiveWay))
 						continue;
-					// FIXME: The old code *tried* to disallow diagonal paths that would clip past
-					// scenery but it didn't seem to work, no we should re-add that here
 					float newNodeCost = nodeToExpand->costToGetHere;
 
-					newNodeCost += cost;
+					if (maxCost > 0.0f && newNodeCost > maxCost)
+						continue;
+
+					newNodeCost += cost / canEnterTile.pathOverheadAlloawnce();
 
 					// make pathfinder biased towards vehicle's altitude preference
 					newNodeCost += canEnterTile.adjustCost(nextPosition, z);
 
 					auto newNode = new PathNode(
-					    newNodeCost, canEnterTile.applyPathOverheadAllowance(
-					                     canEnterTile.getDistance(nextPosition, goalPosition)),
+					    newNodeCost , canEnterTile.getDistance(nextPosition, goalPosition),
 					    nodeToExpand, tile);
 					nodesToDelete.push_back(newNode);
 
@@ -214,8 +214,25 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 		           iterationCount, closestNodeSoFar->thisTile->position.x,
 		           closestNodeSoFar->thisTile->position.y, closestNodeSoFar->thisTile->position.z);
 	}
+	else if (closestNodeSoFar->distanceToGoal > 0)
+	{
+		if (maxCost > 0.0f)
+		{
+			LogInfo("Could not find path within maxPath, returning closest path {%d,%d,%d}", closestNodeSoFar->thisTile->position.x,
+				closestNodeSoFar->thisTile->position.y, closestNodeSoFar->thisTile->position.z);
+		}
+		else
+		{
+			LogError("Surprisingly, no nodes to expand! Closest path {%d,%d,%d}", closestNodeSoFar->thisTile->position.x,
+				closestNodeSoFar->thisTile->position.y, closestNodeSoFar->thisTile->position.z);
+		}
+	}
 
 	auto result = closestNodeSoFar->getPathToNode();
+	if (cost)
+	{
+		*cost = closestNodeSoFar->costToGetHere * canEnterTile.pathOverheadAlloawnce();
+	}
 
 	for (auto &p : nodesToDelete)
 		delete p;

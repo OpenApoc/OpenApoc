@@ -696,6 +696,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 		auto b = mksp<Battle>();
 
 		b->currentPlayer = state.getPlayer();
+		b->currentActiveOrganisation = state.getPlayer();
+		b->currentTurn = 1;
 		b->size = {chunk_size.x * size.x, chunk_size.y * size.y, chunk_size.z * size.z};
 		b->spawnMap = {(unsigned)b->size.x,
 		               {(unsigned)b->size.y, std::vector<int>((unsigned)b->size.z, 0)}};
@@ -944,7 +946,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						continue;
 					}
 
-					it->second->doorID = b->doors.size() - 1;
+					it->second->doorID = (int)b->doors.size() - 1;
 					d->animationFrameCount = std::max(
 					    d->animationFrameCount, (int)it->second->type->animation_frames.size());
 					// d->mapParts.push_back(it->second); // <- no need to do it here, we do it in

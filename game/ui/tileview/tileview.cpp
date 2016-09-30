@@ -273,4 +273,8 @@ void TileView::renderStrategyOverlay(Renderer &r)
 	}
 }
 
+void TileView::update()
+{
+	applyScrolling();
+}
 }; // namespace OpenApoc

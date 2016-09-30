@@ -30,7 +30,7 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	Projectile(StateRef<Vehicle> firer, Vec3<float> position, Vec3<float> velocity,
 	           unsigned int lifetime, int damage, unsigned int tail_length,
 	           std::list<sp<Image>> projectile_sprites);
-	Projectile(StateRef<BattleUnit> firer, Vec3<float> position, Vec3<float> velocity,
+	Projectile(StateRef<Agent> firer, Vec3<float> position, Vec3<float> velocity,
 	           unsigned int lifetime, int damage, unsigned int tail_length,
 	           std::list<sp<Image>> projectile_sprites);
 	Projectile();
@@ -40,7 +40,6 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	unsigned int getLifetime() const { return this->lifetime; }
 	unsigned int getAge() const { return this->age; }
 	int getDamage() const { return this->damage; }
-	sp<Vehicle> getFiredBy() const { return this->firer; }
 	Vec3<float> getPosition() const { return this->position; }
 
 	Collision checkProjectileCollision(TileMap &map);
@@ -55,7 +54,8 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	unsigned int age;
 	unsigned int lifetime;
 	int damage;
-	StateRef<Vehicle> firer;
+	StateRef<Vehicle> firerVehicle;
+	StateRef<Agent> firerAgent;
 	Vec3<float> previousPosition;
 
 	unsigned int tail_length;

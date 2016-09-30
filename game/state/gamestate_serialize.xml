@@ -263,11 +263,13 @@
 		<name>VehicleMission</name>
 		<member>type</member>
 		<member>targetLocation</member>
+		<member>pickNearest</member>
 		<member>targetBuilding</member>
 		<member>targetVehicle</member>
 		<member>timeToSnooze</member>
 		<member>missionCounter</member>
 		<member>currentPlannedPath</member>
+		<member>subvert</member>
 	</object>
 	<object>
 		<name>BattleUnitMission</name>
@@ -279,8 +281,8 @@
 		<member>allowSkipNodes</member>
 		<member>targetFacing</member>
 		<member>requireGoal</member>
+		<member>free</member>
 		<member>item</member>
-		<member>throwFailed</member>
 		<member>timeToSnooze</member>
 		<member>timeUnits</member>
 		<member>bodyState</member>
@@ -367,6 +369,8 @@
 		<member>projectiles</member>
 		<member>participants</member>
 		<member>currentPlayer</member>
+		<member>currentActiveOrganisation</member>
+		<member>currentTurn</member>
 		<member>battleviewZLevel</member>
 		<member>battleviewScreenCenter</member>
 	</object>
@@ -548,7 +552,8 @@
 		<member>age</member>
 		<member>damage</member>
 		<member>lifetime</member>
-		<member>firer</member>
+		<member>firerVehicle</member>
+		<member>firerAgent</member>
 		<member>previousPosition</member>
 		<member>tail_length</member>
 		<member>projectile_sprites</member>
@@ -926,8 +931,7 @@
 		<value>Crash</value>
 		<value>Patrol</value>
 		<value>GotoPortal</value>
-		<value>Infiltrate</value>
-		<value>Subvert</value>
+		<value>InfiltrateSubvert</value>
 	</enum>
 	<enum>
 		<name>BattleUnitMission::MissionType</name>

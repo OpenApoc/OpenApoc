@@ -327,7 +327,7 @@ bool Vehicle::applyDamage(GameState &state, int damage, float armour)
 			}
 		}
 
-		damage -= armour;
+		damage -= (int)armour;
 		if (damage > 0)
 		{
 			this->health -= damage;

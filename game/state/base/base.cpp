@@ -64,7 +64,7 @@ static bool randomlyPlaceFacility(GameState &state, Base &base, StateRef<Facilit
 	{
 		return false;
 	}
-	std::uniform_int_distribution<int> positionDistribution(0, possible_positions.size() - 1);
+	std::uniform_int_distribution<int> positionDistribution(0, (int)possible_positions.size() - 1);
 	auto position = possible_positions[positionDistribution(state.rng)];
 	if (base.canBuildFacility(facility, position, true) == Base::BuildError::NoError)
 	{
@@ -321,7 +321,7 @@ int Base::getCapacityUsed(FacilityType::Capacity type) const
 		{
 			if ((*f)->lab)
 			{
-				total += (*f)->lab->assigned_agents.size();
+				total += (int)(*f)->lab->assigned_agents.size();
 			}
 			else
 			{
@@ -352,13 +352,13 @@ int Base::getUsage(sp<Facility> facility) const
 	{
 		if (facility->lab->current_project)
 		{
-			usage = facility->lab->assigned_agents.size();
+			usage = (float)facility->lab->assigned_agents.size();
 			usage /= facility->type->capacityAmount;
 		}
 	}
 	else
 	{
-		usage = getCapacityUsed(facility->type->capacityType);
+		usage = (float)getCapacityUsed(facility->type->capacityType);
 		usage /= getCapacityTotal(facility->type->capacityType);
 	}
 	return static_cast<int>(usage * 100);

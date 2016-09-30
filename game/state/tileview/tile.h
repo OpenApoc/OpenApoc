@@ -11,7 +11,7 @@
 #define TICK_SCALE (36)
 #define VELOCITY_SCALE_CITY (Vec3<float>{32, 32, 16})
 #define VELOCITY_SCALE_BATTLE (Vec3<float>{24, 24, 20})
-#define FALLING_SPEED_CAP float(20)
+#define FALLING_ACCELERATION 6
 
 // This enables showing tiles that were tried by the last pathfinding attempt
 // Is only displayed in battlescape right now
@@ -163,7 +163,7 @@ class CanEnterTileHelper
 	// but helps with pathfinding in battlescape where optimal path can be complicated.
 	// Value here defines how much, in percent, can resulting path afford to be unoptimal
 	// For example 1.05 means resulting path can be 5% longer than an optimal one
-	virtual float applyPathOverheadAllowance(float cost) const { return cost / 1.0f; }
+	virtual float pathOverheadAlloawnce() const { return 1.0f; }
 };
 
 class TileMap
@@ -216,7 +216,8 @@ class TileMap
 	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destination,
 	                                      unsigned int iterationLimit,
 	                                      const CanEnterTileHelper &canEnterTile,
-	                                      float altitude = 5.0f, bool demandGiveWay = false);
+										  bool demandGiveWay = false, float *cost = nullptr, 
+										  float maxCost = 0.0f);
 
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
 	                        std::set<TileObject::Type> validTypes = {},

@@ -69,16 +69,17 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 		return;
 	}
 
-	velocity.z -= (float)item->type->weight * static_cast<float>(ticks) / TICK_SCALE;
-	// FIXME: Limit velocity after applying gravity?
-	// Disabled until we figure out starting throwing item vectors properly
-	// velocity = std::min(glm::length(velocity), FALLING_SPEED_CAP) * glm::normalize(velocity);
+	int remainingTicks = ticks;
 
 	auto previousPosition = position;
-	auto newPosition =
-	    previousPosition +
-	    ((static_cast<float>(ticks) / TICK_SCALE) * this->velocity) / VELOCITY_SCALE_BATTLE;
+	auto newPosition = position;
 
+	while (remainingTicks-- > 0)
+	{
+		velocity.z -= static_cast<float>(FALLING_ACCELERATION) / TICK_SCALE;
+		newPosition += this->velocity / (float)TICK_SCALE / VELOCITY_SCALE_BATTLE;
+	}
+	
 	// Check if new position is valid
 	auto c = tileObject->map.findCollision(previousPosition, newPosition, mapPartSet);
 	if (c)
