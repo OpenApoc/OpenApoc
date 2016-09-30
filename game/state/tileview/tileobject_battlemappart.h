@@ -12,7 +12,8 @@ class TileObjectBattleMapPart : public TileObject
 	          int) override;
 	~TileObjectBattleMapPart() override;
 
-	wp<BattleMapPart> map_part;
+	// For faster rendering, sp is better than wp
+	sp<BattleMapPart> map_part;
 
 	sp<BattleMapPart> getOwner();
 

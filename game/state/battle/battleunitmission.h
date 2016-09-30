@@ -45,6 +45,11 @@ class BattleUnitMission
 	static BattleUnitMission *turn(BattleUnit &u, Vec3<float> from, Vec3<float> to, bool free,
 		bool requireGoal);
 
+	// Methods that calculate next action
+	bool advanceAlongPath(GameState &state, BattleUnit &u, Vec3<float> &dest);
+	bool advanceFacing(GameState &state, BattleUnit &u, Vec2<int> &dest, int &ticks);
+	bool advanceBodyState(GameState &state, BattleUnit &u, AgentType::BodyState targetState, AgentType::BodyState &dest, int &ticks);
+
   public:
 	enum class MissionType
 	{
@@ -61,16 +66,22 @@ class BattleUnitMission
 	};
 
 	// Methods used in pathfinding etc.
-	bool getNextDestination(GameState &state, BattleUnit &u, Vec3<float> &dest);
 	void update(GameState &state, BattleUnit &u, unsigned int ticks, bool finished = false);
 	bool isFinished(GameState &state, BattleUnit &u, bool callUpdateIfFinished = true);
 	void start(GameState &state, BattleUnit &u);
-	bool advanceAlongPath(GameState &state, Vec3<float> &dest, BattleUnit &u);
-	bool getNextFacing(GameState &state, BattleUnit &u, Vec2<int> &dest);
 	void setPathTo(BattleUnit &u, Vec3<int> target, int maxIterations = 1000);
 
-	// TU methods
-	bool spendAgentTUs(GameState &state, BattleUnit &u, int cost);
+	// Methods to request next action
+	// Request next destination
+	bool getNextDestination(GameState &state, BattleUnit &u, Vec3<float> &dest);
+	// Request next facing
+	bool getNextFacing(GameState &state, BattleUnit &u, Vec2<int> &dest, int &ticks);
+	// Request next body state
+	bool getNextBodyState(GameState &state, BattleUnit &u, AgentType::BodyState &dest, int &ticks);
+
+	// Spend agent TUs or append AcquireTU mission
+	static bool spendAgentTUs(GameState &state, BattleUnit &u, int cost);
+	static int getBodyStateChangeCost(AgentType::BodyState from, AgentType::BodyState to);
 
 	// Other agent control methods
 	void makeAgentMove(BattleUnit &u);
@@ -81,7 +92,6 @@ class BattleUnitMission
 	                                       bool demandGiveWay = false,
 	                                       bool allowRunningAway = false);
 	static BattleUnitMission *snooze(BattleUnit &u, unsigned int ticks);
-	static BattleUnitMission *restartNextMission(BattleUnit &u);
 	static BattleUnitMission *acquireTU(BattleUnit &u, unsigned int tu);
 	static BattleUnitMission *changeStance(BattleUnit &u, AgentType::BodyState state);
 	static BattleUnitMission *throwItem(BattleUnit &u, sp<AEquipment> item, Vec3<int> target);
@@ -89,6 +99,7 @@ class BattleUnitMission
 	static BattleUnitMission *turn(BattleUnit &u, Vec2<int> target, bool free = false, bool requireGoal = true);
 	static BattleUnitMission *turn(BattleUnit &u, Vec3<int> target, bool free = false, bool requireGoal = true);
 	static BattleUnitMission *turn(BattleUnit &u, Vec3<float> target, bool free = false, bool requireGoal = false);
+	static BattleUnitMission *restartNextMission(BattleUnit &u);
 	static BattleUnitMission *fall(BattleUnit &u);
 	static BattleUnitMission *reachGoal(BattleUnit &u);
 
@@ -108,6 +119,8 @@ class BattleUnitMission
 	bool allowSkipNodes = false;
 	// Unit will ignore static non-large units when pathfinding
 	bool demandGiveWay = false;
+	// Unit paid for movement before turning and will be refunded when actually moving
+	int costPaidUpFront = 0;
 
 	// Turn
 	Vec2<int> targetFacing = {0, 0};

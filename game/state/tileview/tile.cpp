@@ -365,7 +365,7 @@ void Tile::updateBattlescapeParameters()
 			movementCostIn = std::max(movementCostIn, mp->type->movement_cost);
 			if (mp->type->sfxIndex != -1)
 			{
-				auto b = mp->battle.lock();
+				auto b = mp->battle;
 				if (b)
 				{
 					walkSfx = b->common_sample_list->walkSounds[mp->type->sfxIndex];

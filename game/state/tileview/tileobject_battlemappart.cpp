@@ -10,12 +10,6 @@ void TileObjectBattleMapPart::draw(Renderer &r, TileTransform &transform,
 {
 	std::ignore = transform;
 	// Mode isn't used as TileView::tileToScreenCoords already transforms according to the mode
-	auto map_part = this->map_part.lock();
-	if (!map_part)
-	{
-		LogError("Called with no owning scenery object");
-		return;
-	}
 	auto &type = map_part->type;
 	sp<Image> sprite;
 	Vec2<float> transformedScreenPos = screenPosition;
@@ -92,7 +86,10 @@ void TileObjectBattleMapPart::removeFromMap()
 		prevDrawOnTile->updateBattlescapeUIDrawOrder();
 	}
 }
-TileObjectBattleMapPart::~TileObjectBattleMapPart() = default;
+TileObjectBattleMapPart::~TileObjectBattleMapPart()
+{
+	map_part = nullptr;
+}
 
 TileObjectBattleMapPart::TileObjectBattleMapPart(TileMap &map, sp<BattleMapPart> map_part)
 
@@ -103,12 +100,7 @@ TileObjectBattleMapPart::TileObjectBattleMapPart(TileMap &map, sp<BattleMapPart>
 
 sp<BattleMapPart> TileObjectBattleMapPart::getOwner()
 {
-	auto s = this->map_part.lock();
-	if (!s)
-	{
-		LogError("Owning map part object disappeared");
-	}
-	return s;
+	return map_part;
 }
 
 sp<VoxelMap> TileObjectBattleMapPart::getVoxelMap(Vec3<int>)
@@ -118,13 +110,7 @@ sp<VoxelMap> TileObjectBattleMapPart::getVoxelMap(Vec3<int>)
 
 Vec3<float> TileObjectBattleMapPart::getPosition() const
 {
-	auto s = this->map_part.lock();
-	if (!s)
-	{
-		LogError("Called with no owning map part object");
-		return {0, 0, 0};
-	}
-	return s->getPosition();
+	return map_part->getPosition();
 }
 
 float TileObjectBattleMapPart::getZOrder() const
@@ -140,10 +126,7 @@ float TileObjectBattleMapPart::getZOrder() const
 			return z - 1.0f;
 		case Type::Feature:
 		{
-			auto mp = map_part.lock();
-			if (!mp)
-				return -1.0f;
-			return z + (float)mp->type->height / 40.0f / 2.0f;
+			return z + (float)map_part->type->height / 40.0f / 2.0f;
 		}
 		default:
 			LogError("Impossible map part type %d", (int)type);

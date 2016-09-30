@@ -31,13 +31,7 @@ int BattleMapPart::getAnimationFrame()
 
 sp<BattleDoor> BattleMapPart::getDoor()
 {
-	auto b = battle.lock();
-	if (!b) //|| doorID == -1 ||  b->doors.size() >= doorID // <-- need to check this too?
-	{
-		LogError("getDoor - Battle disappeared!");
-		return nullptr;
-	}
-	return b->doors[doorID];
+	return battle->doors[doorID];
 }
 
 void BattleMapPart::handleCollision(GameState &state, Collision &c)
@@ -71,13 +65,7 @@ void BattleMapPart::handleCollision(GameState &state, Collision &c)
 		// Don't destroy bottom tiles, else everything will leak out
 		if (this->initialPosition.z == 0 && this->type->type == BattleMapPartType::Type::Ground)
 		{
-			auto b = battle.lock();
-			if (!b)
-			{
-				LogError("handleCollision - Battle disappeared!");
-				return;
-			}
-			this->type = b->battle_map->destroyed_ground_tile;
+			this->type = battle->battle_map->destroyed_ground_tile;
 		}
 		// Destroy map part
 		else

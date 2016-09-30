@@ -29,7 +29,7 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	bool falling = false;
 	bool destroyed = false;
 	int doorID = -1;
-	bool isDoor() { return battle.lock() && doorID != -1; }
+	bool isDoor() { return doorID != -1; }
 	sp<BattleDoor> getDoor();
 
 	// Ticks for animation of non-doors
@@ -57,6 +57,6 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	sp<TileObjectBattleMapPart> tileObject;
 	std::list<wp<BattleItem>> supportedItems;
 	std::list<wp<BattleMapPart>> supportedParts;
-	wp<Battle> battle;
+	sp<Battle> battle;
 };
 }

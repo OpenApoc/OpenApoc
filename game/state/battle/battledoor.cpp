@@ -156,13 +156,6 @@ int BattleDoor::getAnimationFrame()
 
 void BattleDoor::playDoorSound()
 {
-	auto b = battle.lock();
-	if (!b)
-	{
-		LogError("Battle disappeared");
-		return;
-	}
-
-	fw().soundBackend->playSample(b->common_sample_list->door, position, 0.25f);
+	fw().soundBackend->playSample(battle->common_sample_list->door, position, 0.25f);
 }
 }
