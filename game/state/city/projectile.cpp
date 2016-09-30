@@ -74,10 +74,10 @@ Collision Projectile::checkProjectileCollision(TileMap &map)
 	}
 
 	Collision c = map.findCollision(this->previousPosition, this->position);
-	if (c && (c.obj->getType() == TileObject::Type::Vehicle &&
+	if (c && ((c.obj->getType() == TileObject::Type::Vehicle &&
 	    this->firerVehicle == std::static_pointer_cast<TileObjectVehicle>(c.obj)->getVehicle())
 		|| (c.obj->getType() == TileObject::Type::Unit &&
-			this->firerAgent == std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit()->agent))
+			this->firerAgent == std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit()->agent)))
 	{
 		return {};
 	}
