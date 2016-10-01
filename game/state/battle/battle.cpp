@@ -62,7 +62,6 @@ Battle::~Battle()
 		if (s->tileObject)
 			s->tileObject->removeFromMap();
 		s->tileObject = nullptr;
-		s->battle = nullptr;
 	}
 	this->map_parts.clear();
 	for (auto &u : this->units)
@@ -78,10 +77,6 @@ Battle::~Battle()
 		s->tileObject = nullptr;
 	}
 	this->items.clear();
-	for (auto &d : this->doors)
-	{
-		d->battle = nullptr;
-	}
 	this->doors.clear();
 }
 
