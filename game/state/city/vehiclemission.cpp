@@ -231,7 +231,8 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 	}
 };
 
-VehicleMission *VehicleMission::gotoLocation(GameState &state, Vehicle &v, Vec3<int> target, bool pickNearest)
+VehicleMission *VehicleMission::gotoLocation(GameState &state, Vehicle &v, Vec3<int> target,
+                                             bool pickNearest)
 {
 	// TODO
 	// Pseudocode:
@@ -296,7 +297,7 @@ VehicleMission *VehicleMission::gotoBuilding(GameState &, Vehicle &, StateRef<Bu
 }
 
 VehicleMission *VehicleMission::infiltrateOrSubvertBuilding(GameState &, Vehicle &,
-                                                   StateRef<Building> target, bool subvert)
+                                                            StateRef<Building> target, bool subvert)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::InfiltrateSubvert;
@@ -986,118 +987,120 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		{
 			switch (missionCounter)
 			{
-			// Goto location above building, when there, deposit aliens
-			case 0:
-			{
-				auto name = this->getName();
-				auto b = this->targetBuilding;
-				if (!b)
+				// Goto location above building, when there, deposit aliens
+				case 0:
 				{
-					LogError("Building disappeared");
-					return;
-				}
-				auto vehicleTile = v.tileObject;
-				if (takeOffCheck(state, v, name))
-				{
-					return;
-				}
-
-				auto &map = vehicleTile->map;
-
-				auto pos = v.tileObject->getPosition();
-
-				// If not yet above building - goto location above it
-				if (pos.x < b->bounds.p0.x || pos.x >=  b->bounds.p1.x
-					|| pos.y < b->bounds.p0.y || pos.y >=  b->bounds.p1.y)
-				{
-					Vec3<int> goodPos{ 0, 0, 0 };
-					std::set<Vec2<int>> rooftop;
-					// Choose highest layer above building, choose middle tile within that
-					for (int z = map.size.z - 1; z > 0; z--)
+					auto name = this->getName();
+					auto b = this->targetBuilding;
+					if (!b)
 					{
-						bool foundObject = false;
-						for (int x = b->bounds.p0.x; x < b->bounds.p1.x; x++)
-						{
-							for (int y = b->bounds.p0.y; y < b->bounds.p1.y; y++)
-							{
-								auto t = map.getTile(x, y, z);
-								if (!t->ownedObjects.empty())
-								{
-									foundObject = true;
-									rooftop.emplace(x,y);
-								}
-							}
-						}
-						if (foundObject)
-						{
-							int xPos = 0;
-							int yPos = 0;
-							for (auto &vec : rooftop)
-							{
-								xPos += vec.x;
-								yPos += vec.y;
-							}
-							xPos /= rooftop.size();
-							yPos /= rooftop.size();
-							// ensure object is within roof
-							if (rooftop.find({ xPos, yPos }) == rooftop.end())
-							{
-								xPos = (*rooftop.begin()).x;
-								yPos = (*rooftop.begin()).y;
-							}
-
-							goodPos = { xPos,yPos,z };
-							break;
-						}
-					}
-					if (goodPos.z != 0)
-					{
-						goodPos.z = glm::min(goodPos.z + 1, map.size.z - 1);
-
-						LogInfo("Vehicle mission %s: Pathing to infiltration spot {%d,%d,%d}", name.cStr(),
-							goodPos.x, goodPos.y, goodPos.z);
-						auto *gotoMission = VehicleMission::gotoLocation(state, v, goodPos, true);
-						v.missions.emplace_front(gotoMission);
-						gotoMission->start(state, v);
+						LogError("Building disappeared");
 						return;
 					}
-					else
+					auto vehicleTile = v.tileObject;
+					if (takeOffCheck(state, v, name))
 					{
-						LogError("Mission %s: Can't find a spot to infiltrate from", name.cStr());
-						v.missions.emplace_back(VehicleMission::gotoPortal(state, v));
-						missionCounter = 2;
+						return;
 					}
+
+					auto &map = vehicleTile->map;
+
+					auto pos = v.tileObject->getPosition();
+
+					// If not yet above building - goto location above it
+					if (pos.x < b->bounds.p0.x || pos.x >= b->bounds.p1.x ||
+					    pos.y < b->bounds.p0.y || pos.y >= b->bounds.p1.y)
+					{
+						Vec3<int> goodPos{0, 0, 0};
+						std::set<Vec2<int>> rooftop;
+						// Choose highest layer above building, choose middle tile within that
+						for (int z = map.size.z - 1; z > 0; z--)
+						{
+							bool foundObject = false;
+							for (int x = b->bounds.p0.x; x < b->bounds.p1.x; x++)
+							{
+								for (int y = b->bounds.p0.y; y < b->bounds.p1.y; y++)
+								{
+									auto t = map.getTile(x, y, z);
+									if (!t->ownedObjects.empty())
+									{
+										foundObject = true;
+										rooftop.emplace(x, y);
+									}
+								}
+							}
+							if (foundObject)
+							{
+								int xPos = 0;
+								int yPos = 0;
+								for (auto &vec : rooftop)
+								{
+									xPos += vec.x;
+									yPos += vec.y;
+								}
+								xPos /= rooftop.size();
+								yPos /= rooftop.size();
+								// ensure object is within roof
+								if (rooftop.find({xPos, yPos}) == rooftop.end())
+								{
+									xPos = (*rooftop.begin()).x;
+									yPos = (*rooftop.begin()).y;
+								}
+
+								goodPos = {xPos, yPos, z};
+								break;
+							}
+						}
+						if (goodPos.z != 0)
+						{
+							goodPos.z = glm::min(goodPos.z + 1, map.size.z - 1);
+
+							LogInfo("Vehicle mission %s: Pathing to infiltration spot {%d,%d,%d}",
+							        name.cStr(), goodPos.x, goodPos.y, goodPos.z);
+							auto *gotoMission =
+							    VehicleMission::gotoLocation(state, v, goodPos, true);
+							v.missions.emplace_front(gotoMission);
+							gotoMission->start(state, v);
+							return;
+						}
+						else
+						{
+							LogError("Mission %s: Can't find a spot to infiltrate from",
+							         name.cStr());
+							v.missions.emplace_back(VehicleMission::gotoPortal(state, v));
+							missionCounter = 2;
+						}
+					}
+
+					LogInfo("Vehicle mission %s: Infiltrating from {%f,%f,%f}", name.cStr(), pos.x,
+					        pos.y, pos.z);
+
+					// If arrived to a location above building, deposit aliens or subvert
+					// FIXME: Handle subversion
+					if (subvert)
+						LogError("Implement subversion!");
+					auto doodad =
+					    v.city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_INFILTRATION_RAY"},
+					                        v.tileObject->getPosition() - Vec3<float>{0, 0, 0.5f});
+
+					auto *snoozeMission = VehicleMission::snooze(state, v, doodad->lifetime * 2);
+					v.missions.emplace_front(snoozeMission);
+					snoozeMission->start(state, v);
+					missionCounter++;
+					return;
 				}
-
-				LogInfo("Vehicle mission %s: Infiltrating from {%f,%f,%f}", name.cStr(),
-					pos.x, pos.y, pos.z);
-
-				// If arrived to a location above building, deposit aliens or subvert
-				// FIXME: Handle subversion
-				if (subvert) 
-					LogError("Implement subversion!");
-				auto doodad =
-					v.city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_INFILTRATION_RAY"},
-						v.tileObject->getPosition() - Vec3<float>{0, 0, 0.5f});
-
-				auto *snoozeMission = VehicleMission::snooze(state, v, doodad->lifetime * 2);
-				v.missions.emplace_front(snoozeMission);
-				snoozeMission->start(state, v);
-				missionCounter++;
-				return;
-			}
-			// Deposited aliens, place aliens in building and retreat
-			// FIXME: Actually Deposit aliens in building or subvert
-			case 1:
-			{
-				// retreat
-				v.missions.emplace_back(VehicleMission::gotoPortal(state, v));
-				missionCounter++;
-				return;
-			}
-			default:
-				LogError("Starting a completed Infiltration mission?");
-				return;
+				// Deposited aliens, place aliens in building and retreat
+				// FIXME: Actually Deposit aliens in building or subvert
+				case 1:
+				{
+					// retreat
+					v.missions.emplace_back(VehicleMission::gotoPortal(state, v));
+					missionCounter++;
+					return;
+				}
+				default:
+					LogError("Starting a completed Infiltration mission?");
+					return;
 			}
 		}
 		default:
@@ -1169,13 +1172,19 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 				int maxDiff = 2;
 				// Calculate bounds
 				int midX = target.x;
-				int dX = midX + maxDiff + 1 > map.size.x ? map.size.x - maxDiff - 1 : (midX - maxDiff< 0 ? maxDiff - midX : 0);
+				int dX = midX + maxDiff + 1 > map.size.x
+				             ? map.size.x - maxDiff - 1
+				             : (midX - maxDiff < 0 ? maxDiff - midX : 0);
 				midX += dX;
 				int midY = target.y;
-				int dY = midY + maxDiff + 1 > map.size.x ? map.size.x - maxDiff - 1 : (midY - maxDiff < 0 ? maxDiff - midY : 0);
+				int dY = midY + maxDiff + 1 > map.size.x
+				             ? map.size.x - maxDiff - 1
+				             : (midY - maxDiff < 0 ? maxDiff - midY : 0);
 				midY += dY;
 				int midZ = (int)v.altitude;
-				int dZ = midZ + maxDiff + 1 > map.size.x ? map.size.x - maxDiff - 1 : (midZ - maxDiff< 0 ? maxDiff - midZ : 0);
+				int dZ = midZ + maxDiff + 1 > map.size.x
+				             ? map.size.x - maxDiff - 1
+				             : (midZ - maxDiff < 0 ? maxDiff - midZ : 0);
 				midZ += dZ;
 
 				if (pickNearest)
@@ -1191,7 +1200,8 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 								for (int z = midZ - i; z <= midZ + i && !foundNewTarget; z++)
 								{
 									// Only pick points on the edge of each iteration
-									if (x == midX - i || x == midX + i || y == midY - i || y == midY + i || z == midZ - i || z == midZ + i)
+									if (x == midX - i || x == midX + i || y == midY - i ||
+									    y == midY + i || z == midZ - i || z == midZ + i)
 									{
 										auto t = map.getTile(x, y, z);
 										if (t->ownedObjects.empty())
@@ -1207,8 +1217,9 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 					}
 					if (foundNewTarget)
 					{
-						LogWarning("Target %d,%d,%d was unreachable, found new closest target %d,%d,%d",
-							target.x, target.y, target.z, newTarget.x, newTarget.y, newTarget.z);
+						LogWarning(
+						    "Target %d,%d,%d was unreachable, found new closest target %d,%d,%d",
+						    target.x, target.y, target.z, newTarget.x, newTarget.y, newTarget.z);
 						target = newTarget;
 					}
 				}
@@ -1218,9 +1229,9 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 
 					for (int x = midX - maxDiff; x <= midX + maxDiff; x++)
 					{
-						for (int y = midY - maxDiff; y <=  midY + maxDiff; y++)
+						for (int y = midY - maxDiff; y <= midY + maxDiff; y++)
 						{
-							for (int z = midZ - maxDiff; z <=  midZ + maxDiff; z++)
+							for (int z = midZ - maxDiff; z <= midZ + maxDiff; z++)
 							{
 								auto t = map.getTile(x, y, z);
 								if (t->ownedObjects.empty())
@@ -1233,17 +1244,17 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 					if (!sideStepLocations.empty())
 					{
 						auto newTarget = listRandomiser(state.rng, sideStepLocations);
-						LogWarning("Target %d,%d,%d was unreachable, found new random target %d,%d,%d",
-							target.x, target.y, target.z, newTarget.x, newTarget.y, newTarget.z);
+						LogWarning(
+						    "Target %d,%d,%d was unreachable, found new random target %d,%d,%d",
+						    target.x, target.y, target.z, newTarget.x, newTarget.y, newTarget.z);
 						target = newTarget;
 					}
 				}
 			}
 		}
 
-		auto path =
-		    map.findShortestPath(vehicleTile->getOwningTile()->position, target, maxIterations,
-		                         FlyingVehicleTileHelper{map, v});
+		auto path = map.findShortestPath(vehicleTile->getOwningTile()->position, target,
+		                                 maxIterations, FlyingVehicleTileHelper{map, v});
 
 		// Always start with the current position
 		this->currentPlannedPath.push_back(vehicleTile->getOwningTile()->position);

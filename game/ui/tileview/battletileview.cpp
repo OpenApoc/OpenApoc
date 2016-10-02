@@ -1,4 +1,3 @@
-#include "game/state/organisation.h"
 #include "game/ui/tileview/battletileview.h"
 #include "forms/ui.h"
 #include "framework/event.h"
@@ -6,8 +5,9 @@
 #include "framework/includes.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunitmission.h"
-#include "game/state/tileview/tileobject_battleunit.h"
+#include "game/state/organisation.h"
 #include "game/state/tileview/tileobject_battleitem.h"
+#include "game/state/tileview/tileobject_battleunit.h"
 
 namespace OpenApoc
 {
@@ -15,7 +15,7 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
                                TileViewMode initialMode, int currentZLevel,
                                Vec3<float> screenCenterTile, sp<Battle> battle)
     : TileView(map, isoTileSize, stratTileSize, initialMode), currentZLevel(currentZLevel),
-	battle(battle)
+      battle(battle)
 {
 	layerDrawingMode = LayerDrawingMode::UpToCurrentLevel;
 	selectedTileEmptyImageBack =
@@ -145,9 +145,9 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 
 	auto font = ui().getFont("SMALLSET");
 
-	for (int i = 0;i <= 99; i++)
+	for (int i = 0; i <= 99; i++)
 	{
-		tuIndicators.push_back(font->getString(UString::format("%d",i)));
+		tuIndicators.push_back(font->getString(UString::format("%d", i)));
 	}
 	pathPreviewTooFar = font->getString(tr("Too Far"));
 	pathPreviewUnreachable = font->getString(tr("Blocked"));
@@ -208,6 +208,9 @@ void BattleTileView::render()
 
 		iconAnimationTicksAccumulated++;
 		iconAnimationTicksAccumulated %= targetLocationIcons.size() * TARGET_ICONS_ANIMATION_DELAY;
+		focusAnimationTicksAccumulated++;
+		focusAnimationTicksAccumulated %=
+		    (2 * FOCUS_ICONS_ANIMATION_FRAMES - 2) * FOCUS_ICONS_ANIMATION_DELAY;
 	}
 
 	// screenOffset.x/screenOffset.y is the 'amount added to the tile coords' - so we want
@@ -312,8 +315,11 @@ void BattleTileView::render()
 	{
 		case TileViewMode::Isometric:
 		{
-			// List of units that require drawing of an overhead icon
-			std::list<std::pair<sp<BattleUnit>, bool>> unitsToDraw;
+			// List of units that require drawing of an overhead icon (bool = is first)
+			std::list<std::pair<sp<BattleUnit>, bool>> unitsToDrawSelectionArrows;
+
+			// List of units that require drawing of focus arrows (bool = islarge)
+			std::list<std::pair<sp<TileObject>, bool>> unitsToDrawFocusArrows;
 
 			// List of target icons to draw
 			// std::map<Vec3<int>, std::list<Vec3<float>>> targetIconLocations;
@@ -389,7 +395,9 @@ void BattleTileView::render()
 						auto u = selTileOnCurLevel->getUnitIfPresent();
 						if (u)
 						{
-							if (battle->currentPlayer->isRelatedTo(u->getUnit()->owner) == Organisation::Relation::Hostile)
+							// FIXME: Check if player can see unit, if not - do not change cursor!
+							if (battle->currentPlayer->isRelatedTo(u->getUnit()->owner) ==
+							    Organisation::Relation::Hostile)
 							{
 								selectionImageBack = selectedTileFireImageBack;
 								selectionImageFront = selectedTileFireImageFront;
@@ -447,7 +455,7 @@ void BattleTileView::render()
 									    waypointLocations.end())
 									{
 										r.draw(waypointImageSource[iconAnimationTicksAccumulated /
-										                     TARGET_ICONS_ANIMATION_DELAY],
+										                           TARGET_ICONS_ANIMATION_DELAY],
 										       tileToOffsetScreenCoords(Vec3<float>{
 										           x, y, tile->getRestingPosition().z}) -
 										           targetLocationOffset);
@@ -465,17 +473,37 @@ void BattleTileView::render()
 									if (!selectedUnits.empty())
 									{
 										auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
-											->getUnit();
-										auto selectedPos =
-											std::find(selectedUnits.begin(), selectedUnits.end(), u);
+										             ->getUnit();
+										auto selectedPos = std::find(selectedUnits.begin(),
+										                             selectedUnits.end(), u);
 
 										if (selectedPos == selectedUnits.begin())
 										{
-											unitsToDraw.push_back({ u, true });
+											unitsToDrawSelectionArrows.push_back({u, true});
 										}
 										else if (selectedPos != selectedUnits.end())
 										{
-											unitsToDraw.push_back({ u, false });
+											unitsToDrawSelectionArrows.push_back({u, false});
+										}
+										// If visible and focused - draw focus arrows
+										if (true) // FIXME: Check if visible by current player
+										{
+											bool focusedBySelectedUnits = false;
+											for (auto su : selectedUnits)
+											{
+												if (std::find(u->focusedByUnits.begin(),
+												              u->focusedByUnits.end(),
+												              su) != u->focusedByUnits.end())
+												{
+													focusedBySelectedUnits = true;
+													break;
+												}
+											}
+											if (focusedBySelectedUnits)
+											{
+												unitsToDrawFocusArrows.push_back(
+												    {obj, u->isLarge()});
+											}
 										}
 									}
 								}
@@ -487,7 +515,7 @@ void BattleTileView::render()
 							// When done with all objects, draw the front selection image
 							if (tile == selTileOnCurLevel && layer == 0)
 							{
-								static const Vec2<int> offset = { 2, -53 };
+								static const Vec2<int> offset = {2, -53};
 
 								r.draw(selectionImageFront,
 								       tileToOffsetScreenCoords(selTilePosOnCurLevel) -
@@ -496,19 +524,20 @@ void BattleTileView::render()
 								{
 									sp<Image> img;
 									switch (previewedPathCost)
-									{ 
-									case -3:
-										img = pathPreviewUnreachable;
-										break;
-									case -2:
-										img = pathPreviewTooFar;
-										break;
-									default:
-										img = tuIndicators[previewedPathCost];
-										break;
+									{
+										case -3:
+											img = pathPreviewUnreachable;
+											break;
+										case -2:
+											img = pathPreviewTooFar;
+											break;
+										default:
+											img = tuIndicators[previewedPathCost];
+											break;
 									}
-									r.draw(img, tileToOffsetScreenCoords(selTilePosOnCurLevel)
-										+ offset - Vec2<int>{img->size.x / 2, img->size.y / 2});
+									r.draw(img, tileToOffsetScreenCoords(selTilePosOnCurLevel) +
+									                offset -
+									                Vec2<int>{img->size.x / 2, img->size.y / 2});
 								}
 							}
 #ifdef PATHFINDING_DEBUG
@@ -549,30 +578,52 @@ void BattleTileView::render()
 								}
 								auto &obj = tile->drawnObjects[layer][obj_id];
 								bool draw = false;
-								if ((obj->getType() == TileObject::Type::Unit && obj->getPosition().z < zTo) )
+								if ((obj->getType() == TileObject::Type::Unit &&
+								     obj->getPosition().z < zTo))
 								{
 									draw = true;
-									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
-										->getUnit();
 									if (!selectedUnits.empty())
 									{
-										auto selectedPos =
-											std::find(selectedUnits.begin(), selectedUnits.end(), u);
+										auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
+										             ->getUnit();
+										auto selectedPos = std::find(selectedUnits.begin(),
+										                             selectedUnits.end(), u);
 
 										if (selectedPos == selectedUnits.begin())
 										{
-											unitsToDraw.push_back({ u, true });
+											unitsToDrawSelectionArrows.push_back({u, true});
 										}
 										else if (selectedPos != selectedUnits.end())
 										{
-											unitsToDraw.push_back({ u, false });
+											unitsToDrawSelectionArrows.push_back({u, false});
+										}
+										// If visible and focused - draw focus arrows
+										if (true) // FIXME: Check if visible by current player
+										{
+											bool focusedBySelectedUnits = false;
+											for (auto su : selectedUnits)
+											{
+												if (std::find(u->focusedByUnits.begin(),
+												              u->focusedByUnits.end(),
+												              su) != u->focusedByUnits.end())
+												{
+													focusedBySelectedUnits = true;
+													break;
+												}
+											}
+											if (focusedBySelectedUnits)
+											{
+												unitsToDrawFocusArrows.push_back(
+												    {obj, u->isLarge()});
+											}
 										}
 									}
 								}
 								if (obj->getType() == TileObject::Type::Item)
 								{
 									draw = !std::static_pointer_cast<TileObjectBattleItem>(obj)
-										->getItem()->supported;
+									            ->getItem()
+									            ->supported;
 								}
 								if (draw)
 								{
@@ -588,50 +639,83 @@ void BattleTileView::render()
 			}
 
 			// Draw selected unit arrows
-			if (unitsToDraw.size() > 0)
+			for (auto obj : unitsToDrawSelectionArrows)
 			{
-				for (auto obj : unitsToDraw)
+				static const Vec2<float> offset = {-13.0f, -19.0f};
+				static const Vec2<float> offsetRunning = {0.0f, 0.0f};
+				static const Vec2<float> offsetBehavior = {0.0f, 0.0f};
+				static const Vec2<float> offsetBleed = {-5.0f, 0.0f};
+				static const Vec2<float> offsetTU = {13.0f, -5.0f};
+
+				Vec2<float> pos =
+				    tileToOffsetScreenCoords(
+				        obj.first->getPosition() +
+				        Vec3<float>{0.0f, 0.0f, obj.first->getCurrentHeight() * 1.5f / 40.0f}) +
+				    offset;
+
+				// FIXME: Draw hit points
+				r.draw(obj.second ? activeUnitSelectionArrow[obj.first->squadNumber]
+				                  : inactiveUnitSelectionArrow[obj.first->squadNumber],
+				       pos);
+				r.draw(behaviorUnitSelectionUnderlay[obj.first->behavior_mode],
+				       pos + offsetBehavior);
+
+				if (battle->mode == Battle::Mode::TurnBased)
 				{
-					static const Vec2<float> offset = {-13.0f, -19.0f};
-					static const Vec2<float> offsetRunning = {0.0f, 0.0f};
-					static const Vec2<float> offsetBehavior = {0.0f, 0.0f};
-					static const Vec2<float> offsetBleed = {-5.0f, 0.0f};
-					static const Vec2<float> offsetTU = { 13.0f, -5.0f };
+					auto &img = tuIndicators[obj.first->agent->modified_stats.time_units];
+					r.draw(img, pos + offsetTU - Vec2<float>{img->size.x / 2, img->size.y / 2});
+				}
 
-					Vec2<float> pos =
-					    tileToOffsetScreenCoords(
-					        obj.first->getPosition() +
-					        Vec3<float>{0.0f, 0.0f, obj.first->getCurrentHeight() * 1.5f / 40.0f}) +
-					    offset;
-
-					// FIXME: Draw hit points
-					r.draw(obj.second ? activeUnitSelectionArrow[obj.first->squadNumber]
-					                  : inactiveUnitSelectionArrow[obj.first->squadNumber],
-					       pos);
-					r.draw(behaviorUnitSelectionUnderlay[obj.first->behavior_mode],
-					       pos + offsetBehavior);
-
-					if (battle->mode == Battle::Mode::TurnBased)
+				if (obj.first->movement_mode == BattleUnit::MovementMode::Running)
+				{
+					r.draw(runningIcon, pos + offsetRunning);
+				}
+				if (obj.first->isFatallyWounded())
+				{
+					if (obj.first->isHealing)
 					{
-						auto &img = tuIndicators[obj.first->agent->modified_stats.time_units];
-						r.draw(img, pos + offsetTU - Vec2<float>{img->size.x / 2, img->size.y / 2});
+						r.draw(bleedingIcon, pos + offsetBleed);
 					}
+					else
+					{
+						r.draw(healingIcon, pos + offsetBleed);
+					}
+				}
+			}
 
-					if (obj.first->movement_mode == BattleUnit::MovementMode::Running)
-					{
-						r.draw(runningIcon, pos + offsetRunning);
-					}
-					if (obj.first->isFatallyWounded())
-					{
-						if (obj.first->isHealing)
-						{
-							r.draw(bleedingIcon, pos + offsetBleed);
-						}
-						else
-						{
-							r.draw(healingIcon, pos + offsetBleed);
-						}
-					}
+			// Draw unit focus arrows
+			if (!unitsToDrawFocusArrows.empty())
+			{
+				static const Vec2<float> offset1 = {-20.0f, -29.0f};
+				static const Vec2<float> offset2 = {22.0f, -29.0f};
+				static const Vec2<float> offset3 = {-20.0f, 27.0f};
+				static const Vec2<float> offset4 = {22.0f, 27.0f};
+				static const Vec2<float> offsetd14 = {-1.0f, -1.0f};
+				static const Vec2<float> offsetd23 = {1.0f, -1.0f};
+
+				float offset = focusAnimationTicksAccumulated / FOCUS_ICONS_ANIMATION_DELAY;
+				// Offset goes like this: 0 1 2 3 4 3 2 1  (example for 5 frames)
+				// Therefore, if value is >=frames, we do 2*frames -2 -offset
+				// For example, 2*5 - 2 - 5 = 3, that's how we get 3 that's after 4
+				Vec2<float> imgOffset = {
+				    (float)battle->common_image_list->focusArrows[0]->size.x / 2.0f,
+				    (float)battle->common_image_list->focusArrows[0]->size.y / 2.0f};
+				if (offset >= FOCUS_ICONS_ANIMATION_FRAMES)
+					offset = 2 * FOCUS_ICONS_ANIMATION_FRAMES - 2 - offset;
+
+				for (auto &obj : unitsToDrawFocusArrows)
+				{
+					float largeOffset = obj.second ? 2.0f : 1.0f;
+					Vec2<float> pos = tileToOffsetScreenCoords(obj.first->getCenter());
+
+					r.draw(battle->common_image_list->focusArrows[0],
+					       pos - imgOffset + largeOffset * offset1 + offset * offsetd14);
+					r.draw(battle->common_image_list->focusArrows[1],
+					       pos - imgOffset + largeOffset * offset2 + offset * offsetd23);
+					r.draw(battle->common_image_list->focusArrows[2],
+					       pos - imgOffset + largeOffset * offset3 - offset * offsetd23);
+					r.draw(battle->common_image_list->focusArrows[3],
+					       pos - imgOffset + largeOffset * offset4 - offset * offsetd14);
 				}
 			}
 		}
@@ -788,7 +872,7 @@ void BattleTileView::resetPathPreview()
 	{
 		pathPreviewTicksAccumulated = 0;
 		previewedPathCost = -1;
-		lastSelectedUnitPosition = { -1,-1,-1 };
+		lastSelectedUnitPosition = {-1, -1, -1};
 		pathPreview.clear();
 	}
 }
@@ -805,11 +889,12 @@ void BattleTileView::updatePathPreview()
 		return;
 	auto &map = lastSelectedUnit->tileObject->map;
 	auto to = map.getTile(target);
-	
+
 	// Standart check for passability
 	while (true)
 	{
-		if (!to->getPassable(lastSelectedUnit->isLarge(), lastSelectedUnit->agent->type->bodyType->maxHeight))
+		if (!to->getPassable(lastSelectedUnit->isLarge(),
+		                     lastSelectedUnit->agent->type->bodyType->maxHeight))
 		{
 			previewedPathCost = -3;
 			return;
@@ -822,17 +907,18 @@ void BattleTileView::updatePathPreview()
 		if (target.z == -1)
 		{
 			LogError("Solid ground missing on level 0? Reached %d %d %d", target.x, target.y,
-				target.z);
+			         target.z);
 			return;
 		}
 		to = map.getTile(target);
 	}
 
-	// Cost to move is 1.5x if prone and 0.5x if running, to keep things in integer 
+	// Cost to move is 1.5x if prone and 0.5x if running, to keep things in integer
 	// we use a value that is then divided by 2
 	float cost = 0.0f;
 	int cost_multiplier_x_2 = 2;
-	if (lastSelectedUnit->agent->canRun() && lastSelectedUnit->movement_mode == BattleUnit::MovementMode::Running)
+	if (lastSelectedUnit->agent->canRun() &&
+	    lastSelectedUnit->movement_mode == BattleUnit::MovementMode::Running)
 	{
 		cost_multiplier_x_2 = 1;
 	}
@@ -840,12 +926,13 @@ void BattleTileView::updatePathPreview()
 	{
 		cost_multiplier_x_2 = 3;
 	}
-	
+
 	// Get path
-	float maxCost = (float)lastSelectedUnit->agent->modified_stats.time_units * 2 / cost_multiplier_x_2;
-	pathPreview = map.findShortestPath(lastSelectedUnit->goalPosition,
-		target, 1000, BattleUnitTileHelper{ map,
-		*lastSelectedUnit }, false, &cost, maxCost);
+	float maxCost =
+	    (float)lastSelectedUnit->agent->modified_stats.time_units * 2 / cost_multiplier_x_2;
+	pathPreview =
+	    map.findShortestPath(lastSelectedUnit->goalPosition, target, 1000,
+	                         BattleUnitTileHelper{map, *lastSelectedUnit}, false, &cost, maxCost);
 	if (pathPreview.empty())
 	{
 		LogError("Empty path returned for path preview!?");
@@ -874,5 +961,4 @@ void BattleTileView::updatePathPreview()
 		pathPreview.pop_front();
 	}
 }
-
 }

@@ -56,7 +56,6 @@ sp<EquipmentSet> StateObject<EquipmentSet>::get(const GameState &state, const US
 	return it->second;
 }
 
-
 StateRef<AEquipmentType> AEquipment::getPayloadType()
 {
 	if (type->type == AEquipmentType::Type::Weapon && type->ammo_types.size() > 0)

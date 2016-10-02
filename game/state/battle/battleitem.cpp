@@ -6,9 +6,9 @@
 #include "game/state/gamestate.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"
-#include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_battleitem.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
+#include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_shadow.h"
 #include <cmath>
 
@@ -59,6 +59,17 @@ void BattleItem::setPosition(const Vec3<float> &pos)
 	}
 }
 
+Collision BattleItem::checkItemCollision(Vec3<float> previousPosition, Vec3<float> nextPosition)
+{
+	Collision c = tileObject->map.findCollision(previousPosition, nextPosition, {});
+	if (c && ownerInvulnerableTicks > 0 && c.obj->getType() == TileObject::Type::Unit &&
+	    item->ownerAgent->unit == std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit())
+	{
+		return {};
+	}
+	return c;
+}
+
 void BattleItem::update(GameState &state, unsigned int ticks)
 {
 	if (supported)
@@ -66,6 +77,10 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 		return;
 	}
 
+	if (ownerInvulnerableTicks > 0)
+	{
+		ownerInvulnerableTicks -= ticks;
+	}
 	int remainingTicks = ticks;
 
 	auto previousPosition = position;
@@ -76,47 +91,50 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 		velocity.z -= FALLING_ACCELERATION_ITEM;
 		newPosition += this->velocity / (float)TICK_SCALE / VELOCITY_SCALE_BATTLE;
 	}
-	
-	auto prevPrevPos = previousPosition - (float)ticks * this->velocity / (float)TICK_SCALE / VELOCITY_SCALE_BATTLE;
+
+	auto prevPrevPos = previousPosition -
+	                   (float)ticks * this->velocity / (float)TICK_SCALE / VELOCITY_SCALE_BATTLE;
 
 	// Check if new position is valid
 	// FIXME: Collide with units but not with us
 	bool collision = false;
-	auto c = tileObject->map.findCollision(previousPosition, newPosition, {}, item->ownerAgent->unit->tileObject);
+	auto c = checkItemCollision(previousPosition, newPosition);
 	if (c)
 	{
 		collision = true;
 		// If colliding with anything but ground, bounce back once
 		switch (c.obj->getType())
 		{
-		case TileObject::Type::Unit:
-		case TileObject::Type::LeftWall:
-		case TileObject::Type::RightWall:
-		case TileObject::Type::Feature:
-			if (!bounced)
+			case TileObject::Type::Unit:
+			case TileObject::Type::LeftWall:
+			case TileObject::Type::RightWall:
+			case TileObject::Type::Feature:
+				if (!bounced)
+				{
+					// If bounced do not try to find support this time
+					collision = false;
+					bounced = true;
+					newPosition = previousPosition;
+					velocity.x = -velocity.x / 4;
+					velocity.y = -velocity.y / 4;
+					velocity.z = std::abs(velocity.z / 4);
+				}
+				else
+				{
+					// Let item fall so that it can collide with scenery if falling on top of it
+					newPosition = {previousPosition.x, previousPosition.y,
+					               std::min(newPosition.z, previousPosition.z)};
+				}
+				break;
+			case TileObject::Type::Ground:
 			{
-				// If bounced do not try to find support this time
-				collision = false;
-				bounced = true;
-				newPosition = previousPosition;
-				velocity.x = -velocity.x / 4;
-				velocity.y = -velocity.y / 4;
-				velocity.z = std::abs(velocity.z / 4);
-			}
-			else
-			{
-				// Let item fall so that it can collide with scenery if falling on top of it
-				newPosition = { previousPosition.x, previousPosition.y, std::min(newPosition.z, previousPosition.z) };
-			}
-			break;
-		case TileObject::Type::Ground:
-			{
-				setPosition({ c.position.x, c.position.y, c.position.z });
+				setPosition({c.position.x, c.position.y, c.position.z});
 				if (findSupport(true, true))
 				{
 					return;
 				}
-				// Some objects have buggy voxelmaps and items collide with them but no support is given
+				// Some objects have buggy voxelmaps and items collide with them but no support is
+				// given
 				// In this case, just ignore the collision and let the item fall further
 			}
 			break;
@@ -136,7 +154,8 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 			velocity = {0.0f, 0.0f, 0.0f};
 		}
 		// Collision with map edge
-		if (newPosition.x < 0 || newPosition.y < 0 || newPosition.y >= mapSize.y || newPosition.x >= mapSize.x || newPosition.y >= mapSize.y)
+		if (newPosition.x < 0 || newPosition.y < 0 || newPosition.y >= mapSize.y ||
+		    newPosition.x >= mapSize.x || newPosition.y >= mapSize.y)
 		{
 			collision = true;
 			velocity.x = -velocity.x / 4;
@@ -145,7 +164,7 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 			newPosition = previousPosition;
 		}
 		// Fell below 0???
-		if ( newPosition.z < 0)
+		if (newPosition.z < 0)
 		{
 			LogError("Item fell off the end of the world!?");
 			die(state, false);
@@ -153,7 +172,7 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 		}
 		setPosition(newPosition);
 	}
-	
+
 	if (collision)
 	{
 		findSupport();

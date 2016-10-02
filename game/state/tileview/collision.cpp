@@ -11,8 +11,11 @@ namespace OpenApoc
 {
 
 Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
-	const std::set<TileObject::Type> validTypes, const sp<TileObject>  owner, bool check_full_path) const
+                                 const std::set<TileObject::Type> validTypes, bool useLOS,
+                                 bool check_full_path) const
 {
+	if (useLOS)
+		LogError("Handle LOS checks");
 	bool type_checking = validTypes.size() > 0;
 	Collision c;
 	c.obj = nullptr;
@@ -23,11 +26,8 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 	LineSegment<int, true> line{lineSegmentStartVoxel, lineSegmentEndVoxel};
 	// "point" is thee corrdinate measured in voxel scale units, meaning,
 	// voxel point coordinate within map
-	//LogWarning("Collision from %f %f %f to %f %f %f", lineSegmentStart.x, lineSegmentStart.y, lineSegmentStart.z ,lineSegmentEnd.x, lineSegmentEnd.y, lineSegmentEnd.z);
-	//LogWarning("Voxel from %d %d %d to %d %d %d", lineSegmentStartVoxel.x, lineSegmentStartVoxel.y, lineSegmentStartVoxel.z, lineSegmentEndVoxel.x, lineSegmentEndVoxel.y, lineSegmentEndVoxel.z);
 	for (auto &point : line)
 	{
-//		LogWarning("Checking point %d %d %d", point.x, point.y, point.z);
 		auto tile = point / tileSize;
 		if (tile.x < 0 || tile.x >= size.x || tile.y < 0 || tile.y >= size.y || tile.z < 0 ||
 		    tile.z >= size.z)
@@ -41,8 +41,6 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 		const Tile *t = this->getTile(tile);
 		for (auto &obj : t->intersectingObjects)
 		{
-			if (obj == owner)
-				continue;
 			if (!obj->hasVoxelMap())
 				continue;
 			if (type_checking && validTypes.find(obj->type) == validTypes.end())

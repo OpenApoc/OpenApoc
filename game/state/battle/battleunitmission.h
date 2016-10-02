@@ -43,12 +43,13 @@ class BattleUnitMission
 	bool isFinishedInternal(GameState &state, BattleUnit &u);
 	// INTERNAL: Never called directly
 	static BattleUnitMission *turn(BattleUnit &u, Vec3<float> from, Vec3<float> to, bool free,
-		bool requireGoal);
+	                               bool requireGoal);
 
 	// Methods that calculate next action
 	bool advanceAlongPath(GameState &state, BattleUnit &u, Vec3<float> &dest);
-	bool advanceFacing(GameState &state, BattleUnit &u, Vec2<int> &dest, int &ticks);
-	bool advanceBodyState(GameState &state, BattleUnit &u, AgentType::BodyState targetState, AgentType::BodyState &dest, int &ticks);
+	bool advanceFacing(GameState &state, BattleUnit &u, Vec2<int> &dest);
+	bool advanceBodyState(GameState &state, BattleUnit &u, AgentType::BodyState targetState,
+	                      AgentType::BodyState &dest);
 
   public:
 	enum class MissionType
@@ -76,9 +77,9 @@ class BattleUnitMission
 	// Request next destination
 	bool getNextDestination(GameState &state, BattleUnit &u, Vec3<float> &dest);
 	// Request next facing
-	bool getNextFacing(GameState &state, BattleUnit &u, Vec2<int> &dest, int &ticks);
+	bool getNextFacing(GameState &state, BattleUnit &u, Vec2<int> &dest);
 	// Request next body state
-	bool getNextBodyState(GameState &state, BattleUnit &u, AgentType::BodyState &dest, int &ticks);
+	bool getNextBodyState(GameState &state, BattleUnit &u, AgentType::BodyState &dest);
 
 	// Spend agent TUs or append AcquireTU mission
 	static bool spendAgentTUs(GameState &state, BattleUnit &u, int cost);
@@ -95,11 +96,15 @@ class BattleUnitMission
 	static BattleUnitMission *snooze(BattleUnit &u, unsigned int ticks);
 	static BattleUnitMission *acquireTU(BattleUnit &u, unsigned int tu);
 	static BattleUnitMission *changeStance(BattleUnit &u, AgentType::BodyState state);
-	static BattleUnitMission *throwItem(BattleUnit &u, sp<AEquipment> item, Vec3<int> target, float velocityXY, float velocityZ);
+	static BattleUnitMission *throwItem(BattleUnit &u, sp<AEquipment> item, Vec3<int> target,
+	                                    float velocityXY, float velocityZ);
 	static BattleUnitMission *dropItem(BattleUnit &u, sp<AEquipment> item);
-	static BattleUnitMission *turn(BattleUnit &u, Vec2<int> target, bool free = false, bool requireGoal = true);
-	static BattleUnitMission *turn(BattleUnit &u, Vec3<int> target, bool free = false, bool requireGoal = true);
-	static BattleUnitMission *turn(BattleUnit &u, Vec3<float> target, bool free = false, bool requireGoal = false);
+	static BattleUnitMission *turn(BattleUnit &u, Vec2<int> target, bool free = false,
+	                               bool requireGoal = true);
+	static BattleUnitMission *turn(BattleUnit &u, Vec3<int> target, bool free = false,
+	                               bool requireGoal = true);
+	static BattleUnitMission *turn(BattleUnit &u, Vec3<float> target, bool free = false,
+	                               bool requireGoal = false);
 	static BattleUnitMission *restartNextMission(BattleUnit &u);
 	static BattleUnitMission *fall(BattleUnit &u);
 	static BattleUnitMission *reachGoal(BattleUnit &u);
@@ -144,6 +149,5 @@ class BattleUnitMission
 
 	// ChangeBodyState
 	AgentType::BodyState bodyState = AgentType::BodyState::Downed;
-
 };
 } // namespace OpenApoc

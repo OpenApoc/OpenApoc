@@ -23,16 +23,12 @@ int BattleMapPart::getAnimationFrame()
 	}
 	else
 	{
-		return type->animation_frames.size() == 0
-		           ? -1
-		           : animation_frame_ticks / TICKS_PER_FRAME_MAP_PART;
+		return type->animation_frames.size() == 0 ? -1 : animation_frame_ticks /
+		                                                     TICKS_PER_FRAME_MAP_PART;
 	}
 }
 
-sp<BattleDoor> BattleMapPart::getDoor()
-{
-	return battle->doors[doorID];
-}
+sp<BattleDoor> BattleMapPart::getDoor() { return battle->doors[doorID]; }
 
 void BattleMapPart::handleCollision(GameState &state, Collision &c)
 {

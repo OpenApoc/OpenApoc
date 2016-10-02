@@ -96,11 +96,31 @@ class AEquipmentType : public StateObject<AEquipmentType>
 	std::list<sp<Image>> projectile_sprites;
 	int damage = 0;
 	int accuracy = 0;
+
+	/* This is how many ticks it takes to fire a single shot.
+	*
+	* For fire rate displayed ingame (equipment screen), formula is 1000/FEDL
+	* For example:
+	* Ingame Toxigun has 125, in file it has 8, 125*8=1000.
+	* Ingame Minigun has 83, in file it has 12, 83*12=996. (rounding 1000/12 down makes it 83)
+	*
+	* For fire rate displayed ingame (ufopaedia screen), formula is 36/FEDL
+	* For example:
+	* Ingame Toxigun has 4.50r/s, in file it has 8, 36/8 = 4.5
+	* Ingame Minigun has 3.00r/s, in file it has 12, 36/12 = 3
+	*
+	* Fire rate expects game ticks to be 36 per second
+	* since we have 144 ticks per second, when using this multiply it by 4 to get actual amount
+	* of ticks required to fire
+	*/
 	int fire_delay = 0;
 	int tail_size = 0;
 	bool guided = false;
 	int turn_rate = 0;
+	// Ingame displayed value is this divided by 16 rounded down. Range in tiles
 	int range = 0;
+	float getRange() { return (float)range / 16.0f; };
+	// Projectile's Time To Live, in vanilla ticks (36/sec) (multiply by 4 for OpenApoc ticks)
 	int ttl = 0;
 	int explosion_graphic = 0;
 	sp<Sample> fire_sfx;

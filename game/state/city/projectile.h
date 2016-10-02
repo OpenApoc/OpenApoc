@@ -1,4 +1,5 @@
 #pragma once
+#include "game/state/battle/battleunit.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/stateobject.h"
 #include "library/colour.h"
@@ -13,6 +14,7 @@ class GameState;
 class TileObjectProjectile;
 class TileMap;
 class Collision;
+class Sample;
 
 class Projectile : public std::enable_shared_from_this<Projectile>
 {
@@ -29,10 +31,10 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	// FIXME: Width is currently just used for drawing - TODO What is "collision" size of beams?
 	Projectile(StateRef<Vehicle> firer, Vec3<float> position, Vec3<float> velocity,
 	           unsigned int lifetime, int damage, unsigned int tail_length,
-	           std::list<sp<Image>> projectile_sprites);
-	Projectile(StateRef<Agent> firer, Vec3<float> position, Vec3<float> velocity,
+	           std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx);
+	Projectile(StateRef<BattleUnit> firer, Vec3<float> position, Vec3<float> velocity,
 	           unsigned int lifetime, int damage, unsigned int tail_length,
-	           std::list<sp<Image>> projectile_sprites);
+	           std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx);
 	Projectile();
 	virtual void update(GameState &state, unsigned int ticks);
 
@@ -55,11 +57,15 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	unsigned int lifetime;
 	int damage;
 	StateRef<Vehicle> firerVehicle;
-	StateRef<Agent> firerAgent;
+	StateRef<BattleUnit> firerUnit;
 	Vec3<float> previousPosition;
 
 	unsigned int tail_length;
 	std::list<sp<Image>> projectile_sprites;
+
+	sp<Sample> impactSfx;
+
+	int ownerInvulnerableTicks = 0;
 
 	Vec3<float> velocityScale;
 

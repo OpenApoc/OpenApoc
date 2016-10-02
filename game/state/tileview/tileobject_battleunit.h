@@ -17,7 +17,7 @@ class TileObjectBattleUnit : public TileObject
 	sp<BattleUnit> getUnit() const;
 
 	// For aiming at the object
-	Vec3<float> getCentrePosition();
+	Vec3<float> getVoxelCentrePosition();
 	Vec3<float> getCenterOffset() const override { return centerOffset; }
 	Vec3<float> centerOffset = {0.0f, 0.0f, 0.0f};
 

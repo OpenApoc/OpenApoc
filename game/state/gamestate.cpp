@@ -131,6 +131,13 @@ void GameState::initState()
 			w->ammo_types.emplace(this, t.first);
 		}
 	}
+	for (auto &a : this->agents)
+	{
+		a.second->leftHandItem =
+		    a.second->getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::LeftHand, false);
+		a.second->rightHandItem =
+		    a.second->getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::RightHand, false);
+	}
 	// Run nessecary methods for different types
 	research.updateTopicList();
 }
@@ -299,7 +306,7 @@ void GameState::fillPlayerStartingProperty()
 					         t->type == AEquipmentType::Type::Grenade)
 					{
 						agent->addEquipmentByType(*this, {this, t->id},
-						                    AgentEquipmentLayout::EquipmentSlotType::General);
+						                          AgentEquipmentLayout::EquipmentSlotType::General);
 					}
 					else
 					{

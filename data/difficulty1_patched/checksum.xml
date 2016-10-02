@@ -2,12 +2,12 @@
 <checksums>
   <checksum SHA1="de1732555e585509f8077f0c8e03c697f3d20945">gamestate.xml</checksum>
   <checksum SHA1="e82ad81e87952471fc9a77dfdaf5c7de0b73340b">gamestate/agent_body_types.xml</checksum>
-  <checksum SHA1="79a8ad7d8df48a99dd5332d9c412ab6da8d9c2e3">gamestate/agent_equipment.xml</checksum>
+  <checksum SHA1="0c98b18d8eca57f5f1e83f4c9ea28d0967e74bb5">gamestate/agent_equipment.xml</checksum>
   <checksum SHA1="db87a07c2ad3fe43a082e3143408dc3fd29ee9ff">gamestate/agent_equipment_layouts.xml</checksum>
   <checksum SHA1="282e2b08cda4a9a7094fb16355bd5e58cdc2a224">gamestate/agent_generator.xml</checksum>
   <checksum SHA1="665676441df08bedc9cdd1dec8854d5b99a8ed4f">gamestate/agent_types.xml</checksum>
   <checksum SHA1="0b1fc22224d3d4d266780fe20b1db95ee052bba0">gamestate/base_layouts.xml</checksum>
-  <checksum SHA1="23e3874d1ed51670e14c492e0ed06b374372fbaf">gamestate/battle_common_image_list.xml</checksum>
+  <checksum SHA1="06d9d5ee8bcce6c690cefe0cf21fc96c16896f11">gamestate/battle_common_image_list.xml</checksum>
   <checksum SHA1="5fbc9dc088736f547d742fa3ff3da34dc35e1941">gamestate/battle_common_sample_list.xml</checksum>
   <checksum SHA1="dcebd55d2b40ea7b7c117ce16ee71ab23be4e4ef">gamestate/battle_maps.xml</checksum>
   <checksum SHA1="09a0229c616b482ad6f16bdf5f90d879e648fb62">gamestate/battle_maps/BATTLEMAP_01senate.xml</checksum>

@@ -488,5 +488,11 @@
       <entry>PCKSTRAT:xcom3/tacdata/stratico.pck:xcom3/tacdata/stratico.tab:483</entry>
     </strategyImages>
     <loadingImage>xcom3/ufodata/enttact.pcx</loadingImage>
+    <focusArrows>
+      <entry>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:64:xcom3/tacdata/tactical.pal</entry>
+      <entry>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:65:xcom3/tacdata/tactical.pal</entry>
+      <entry>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:66:xcom3/tacdata/tactical.pal</entry>
+      <entry>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:67:xcom3/tacdata/tactical.pal</entry>
+    </focusArrows>
   </sp>
 </battle_common_image_list>

@@ -60,6 +60,7 @@ class AgentEquipmentLayout : public StateObject<AgentEquipmentLayout>
   public:
 	enum class EquipmentSlotType
 	{
+		None, // Used for equipment dropped by agent
 		General,
 		ArmorBody,
 		ArmorLegs,
@@ -253,19 +254,24 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 
 	bool assigned_to_lab = false;
 
+	StateRef<BattleUnit> unit;
+
 	std::list<sp<AEquipment>> equipment;
-	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type) const;
-	Vec2<int> findFirstSlotByType(AgentEquipmentLayout::EquipmentSlotType slotType, StateRef<AEquipmentType> type = nullptr);
+	// Returns None if cannot add
+	AgentEquipmentLayout::EquipmentSlotType canAddEquipment(Vec2<int> pos,
+	                                                        StateRef<AEquipmentType> type) const;
+	Vec2<int> findFirstSlotByType(AgentEquipmentLayout::EquipmentSlotType slotType,
+	                              StateRef<AEquipmentType> type = nullptr);
 	// Add equipment by type to the first available slot of any type
 	void addEquipmentByType(GameState &state, StateRef<AEquipmentType> type);
 	// Add equipment to the first available slot of a specific type
 	void addEquipmentByType(GameState &state, StateRef<AEquipmentType> type,
-	                  AgentEquipmentLayout::EquipmentSlotType slotType);
+	                        AgentEquipmentLayout::EquipmentSlotType slotType);
 	// Add equipment by type to a specific position
 	void addEquipmentByType(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type);
 	// Add equipment to the first available slot of a specific type
 	void addEquipment(GameState &state, sp<AEquipment> object,
-		AgentEquipmentLayout::EquipmentSlotType slotType);
+	                  AgentEquipmentLayout::EquipmentSlotType slotType);
 	// Add equipment to a specific position
 	void addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object);
 	void removeEquipment(sp<AEquipment> object);
@@ -273,12 +279,18 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 	bool canRun() { return modified_stats.canRun(); }
 
 	StateRef<BattleUnitAnimationPack> getAnimationPack() const;
-	StateRef<AEquipmentType> getDominantItemInHands() const;
-	sp<AEquipment> getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType type) const;
+	// If item was fired before, it should be passed here, and it will remain dominant unless it was
+	// removed
+	StateRef<AEquipmentType>
+	getDominantItemInHands(StateRef<AEquipmentType> itemLastFired = nullptr) const;
+	sp<AEquipment> getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType type,
+	                                  bool lazy = true) const;
 	StateRef<BattleUnitImagePack> getImagePack(AgentType::BodyPart bodyPart) const;
 
 	// Following members are not serialized, but rather are set up in the initBattle method
-	sp<BattleUnit> unit;
+
+	sp<AEquipment> leftHandItem;  // Left hand item, frequently accessed so will be stored here
+	sp<AEquipment> rightHandItem; // Left hand item, frequently accessed so will be stored here
 };
 
 class AgentGenerator

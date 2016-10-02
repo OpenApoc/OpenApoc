@@ -217,13 +217,12 @@ class TileMap
 	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destination,
 	                                      unsigned int iterationLimit,
 	                                      const CanEnterTileHelper &canEnterTile,
-										  bool demandGiveWay = false, float *cost = nullptr, 
-										  float maxCost = 0.0f);
+	                                      bool demandGiveWay = false, float *cost = nullptr,
+	                                      float maxCost = 0.0f);
 
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
-					const std::set<TileObject::Type> validTypes = {},
-					const sp<TileObject> owner = nullptr,
-		bool check_full_path = false) const;
+	                        const std::set<TileObject::Type> validTypes = {}, bool useLOS = false,
+	                        bool check_full_path = false) const;
 
 	void addObjectToMap(sp<Projectile>);
 	void addObjectToMap(sp<Vehicle>);

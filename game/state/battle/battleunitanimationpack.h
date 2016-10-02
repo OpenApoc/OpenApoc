@@ -65,11 +65,11 @@ class BattleUnitAnimationPack : public StateObject<BattleUnitAnimationPack>
 	};
 
 	// Animations for cases where current state is equal to target state
-	std::map<ItemWieldMode,
-			  std::map<AgentType::HandState,
-					  std::map<AgentType::MovementState,
-							    std::map<AgentType::BodyState, 
-										std::map<Vec2<int>, sp<AnimationEntry>>>>>>
+	std::map<
+	    ItemWieldMode,
+	    std::map<AgentType::HandState,
+	             std::map<AgentType::MovementState,
+	                      std::map<AgentType::BodyState, std::map<Vec2<int>, sp<AnimationEntry>>>>>>
 	    standart_animations;
 
 	// Animation for changing hand state. First is current, second is target.
@@ -97,11 +97,11 @@ class BattleUnitAnimationPack : public StateObject<BattleUnitAnimationPack>
 	// second parameter is firing angle, which can be +/-1 or +/-2
 	// where + is firing upwards and - is downwards,
 	// 1 is angles 15-30 (degrees) and 2 is 30 and further
-	std::map<ItemWieldMode,
-			  std::map<int,
-					  std::map<AgentType::MovementState,
-								std::map<AgentType::BodyState, 
-										std::map<Vec2<int>, sp<AnimationEntry>>>>>>
+	std::map<
+	    ItemWieldMode,
+	    std::map<int,
+	             std::map<AgentType::MovementState,
+	                      std::map<AgentType::BodyState, std::map<Vec2<int>, sp<AnimationEntry>>>>>>
 	    alt_fire_animations;
 
 	// Animation functions
@@ -115,6 +115,10 @@ class BattleUnitAnimationPack : public StateObject<BattleUnitAnimationPack>
 	int getFrameCountHands(StateRef<AEquipmentType> heldItem, AgentType::BodyState currentBody,
 	                       AgentType::HandState currentHands, AgentType::HandState targetHands,
 	                       AgentType::MovementState movement, Vec2<int> facing);
+
+	// Get frame count for animation of hand change. 0 means there's no animation present
+	int getFrameCountFiring(StateRef<AEquipmentType> heldItem, AgentType::BodyState currentBody,
+	                        AgentType::MovementState movement, Vec2<int> facing);
 
 	// Draw unit's shadow
 	void drawShadow(Renderer &r, Vec2<float> screenPosition, StateRef<BattleUnitImagePack> shadow,

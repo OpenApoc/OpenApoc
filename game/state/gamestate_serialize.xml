@@ -130,10 +130,13 @@
 		<name>AEquipment</name>
 		<member>type</member>
 		<member>equippedPosition</member>
+		<member>equippedSlotType</member>
 		<member>ownerAgent</member>
 		<member>ammo</member>
-		<member>aiming</member>
+		<member>recharge_ticks_accumulated</member>
+		<member>readyToFire</member>
 		<member>weapon_fire_ticks_remaining</member>
+		<member>aimingMode</member>
 	</object>
 	<object>
 		<name>EquipmentSet</name>
@@ -172,6 +175,7 @@
 		<member>home_base</member>
 		<member>owner</member>
 		<member>assigned_to_lab</member>
+		<member>unit</member>
 		<member>equipment</member>
 	</object>
 	<object>
@@ -366,7 +370,7 @@
 		<member>mode</member>
 		<member>player_craft</member>
 		<member type="Section">map_parts</member>
-		<member>units</member>
+		<member type="Section">units</member>
 		<member>items</member>
 		<member>doodads</member>
 		<member>projectiles</member>
@@ -435,6 +439,7 @@
 		<name>BattleCommonImageList</name>
 		<member>strategyImages</member>
 		<member>loadingImage</member>
+		<member>focusArrows</member>
 	</object>
 	<object>
 		<name>BattleCommonSampleList</name>
@@ -478,6 +483,12 @@
 		<member>owner</member>
 		<member>squadNumber</member>
 		<member>squadPosition</member>
+		<member>weaponStatus</member>
+		<member>targetingMode</member>
+		<member>targetTile</member>
+		<member>targetUnit</member>
+		<member>focusUnit</member>
+		<member>ticksTillNextTargetCheck</member>
 		<member>experiencePoints</member>
 		<member>fatalWounds</member>
 		<member>healingBodyPart</member>
@@ -492,6 +503,8 @@
 		<member>current_body_state</member>
 		<member>target_body_state</member>
 		<member>hand_animation_ticks_remaining</member>
+		<member>aiming_ticks_remaining</member>
+		<member>firing_animation_ticks_remaining</member>
 		<member>current_hand_state</member>
 		<member>target_hand_state</member>
 		<member>movement_ticks_passed</member>
@@ -508,8 +521,9 @@
 		<member>retreated</member>
 		<member>destroyed</member>
 		<member>falling</member>
-		<member>fallingQueued</member>
 		<member>fallingSpeed</member>
+		<member>giveWayRequest</member>
+		<member>displayedItem</member>
 	</object>
 	<object>
 		<name>BattleItem</name>
@@ -518,6 +532,7 @@
 		<member>velocity</member>
 		<member>bounced</member>
 		<member>supported</member>
+		<member>ownerInvulnerableTicks</member>
 	</object>
 	<object>
 		<name>BattleMapPart</name>
@@ -559,10 +574,13 @@
 		<member>damage</member>
 		<member>lifetime</member>
 		<member>firerVehicle</member>
-		<member>firerAgent</member>
+		<member>firerUnit</member>
 		<member>previousPosition</member>
 		<member>tail_length</member>
 		<member>projectile_sprites</member>
+		<member>impactSfx</member>
+		<member>ownerInvulnerableTicks</member>
+		<member>velocityScale</member>
 	</object>
 	<object>
 		<name>Doodad</name>
@@ -1027,6 +1045,20 @@
 		<value>Kneeling</value>
 	</enum>
 	<enum>
+		<name>BattleUnit::WeaponStatus</name>
+		<value>NotFiring</value>
+		<value>FiringLeftHand</value>
+		<value>FiringRightHand</value>
+		<value>FiringBothHands</value>
+	</enum>
+	<enum>
+		<name>BattleUnit::TargetingMode</name>
+		<value>NoTarget</value>
+		<value>Unit</value>
+		<value>TileCenter</value>
+		<value>TileGround</value>
+	</enum>
+	<enum>
 		<name>Organisation::LootPriority</name>
 		<value>A</value>
 		<value>B</value>
@@ -1171,6 +1203,7 @@
 	</enum>
 	<enum>
 		<name>AgentEquipmentLayout::EquipmentSlotType</name>
+		<value>None</value>
 		<value>General</value>
 		<value>ArmorBody</value>
 		<value>ArmorLegs</value>

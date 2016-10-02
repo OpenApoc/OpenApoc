@@ -42,12 +42,14 @@ class VehicleMission
 	bool isTakingOff(Vehicle &v);
 
 	// Methods to create new missions
-	static VehicleMission *gotoLocation(GameState &state, Vehicle &v, Vec3<int> target, bool pickNearest = false);
+	static VehicleMission *gotoLocation(GameState &state, Vehicle &v, Vec3<int> target,
+	                                    bool pickNearest = false);
 	static VehicleMission *gotoPortal(GameState &state, Vehicle &v);
 	static VehicleMission *gotoPortal(GameState &state, Vehicle &v, Vec3<int> target);
 	static VehicleMission *gotoBuilding(GameState &state, Vehicle &v, StateRef<Building> target);
 	static VehicleMission *infiltrateOrSubvertBuilding(GameState &state, Vehicle &v,
-	                                          StateRef<Building> target, bool subvert = false);
+	                                                   StateRef<Building> target,
+	                                                   bool subvert = false);
 	static VehicleMission *attackVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *followVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *snooze(GameState &state, Vehicle &v, unsigned int ticks);

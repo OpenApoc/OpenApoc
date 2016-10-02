@@ -1,4 +1,5 @@
 #pragma once
+#include "game/state/battle/battleunit.h"
 #include "game/ui/tileview/battletileview.h"
 #include "library/colour.h"
 #include "library/sp.h"
@@ -29,7 +30,7 @@ enum class BattleSelectionState
 	NormalCtrlAlt,
 	PsiLeft,
 	PsiRight,
-	FireAny, 
+	FireAny,
 	FireLeft,
 	FireRight,
 	ThrowLeft,
@@ -72,7 +73,7 @@ class BattleView : public BattleTileView
 	AgentEquipmentInfo leftHandInfo;
 	AgentEquipmentInfo rightHandInfo;
 
-	bool followAgent = false; 
+	bool followAgent = false;
 
 	bool colorForward = true;
 	int colorCurrent = 0;
@@ -105,13 +106,20 @@ class BattleView : public BattleTileView
 	void onNewTurn();
 
 	// Unit orers
-	// Move, offset 1 means strafing, 2 means move backwards
+
 	void orderMove(Vec3<int> target, bool strafe = false, bool demandGiveWay = false);
 	void orderTurn(Vec3<int> target);
 	void orderDrop(bool right);
 	void orderThrow(Vec3<int> target, bool right);
 	void orderTeleport(Vec3<int> target, bool right);
 	void orderSelect(sp<BattleUnit> u, bool inverse = false, bool additive = false);
+	void orderFire(Vec3<int> target,
+	               BattleUnit::WeaponStatus status = BattleUnit::WeaponStatus::FiringBothHands,
+	               bool modifier = false);
+	void orderFire(StateRef<BattleUnit> u,
+	               BattleUnit::WeaponStatus status = BattleUnit::WeaponStatus::FiringBothHands);
+	void orderFocus(StateRef<BattleUnit> u);
+
 	void attemptToClearCurrentOrders(sp<BattleUnit> u, bool overrideBodyStateChange = false);
 	bool canEmplaceTurnInFront(sp<BattleUnit> u);
 

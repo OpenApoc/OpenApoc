@@ -23,7 +23,7 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 
   public:
 	sp<AEquipment> item;
-	
+
 	Vec3<float> getPosition() const { return this->position; }
 
 	Vec3<float> position;
@@ -34,6 +34,8 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 
 	bool supported = false;
 
+	int ownerInvulnerableTicks = 0;
+
 	void handleCollision(GameState &state, Collision &c);
 	void die(GameState &state, bool violently);
 	void update(GameState &state, unsigned int ticks);
@@ -42,6 +44,8 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 	~BattleItem() = default;
 
 	void setPosition(const Vec3<float> &pos);
+
+	Collision checkItemCollision(Vec3<float> previousPosition, Vec3<float> nextPosition);
 
 	bool findSupport(bool emitSound = true, bool forced = false);
 
