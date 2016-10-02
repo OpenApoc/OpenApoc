@@ -457,7 +457,7 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
                            sp<TileObjectVehicle> enemyTile)
 {
-	auto target = enemyTile->getCentrePosition();
+	auto target = enemyTile->getVoxelCentrePosition();
 	float distance = this->tileObject->getDistanceTo(enemyTile);
 
 	for (auto &equipment : this->equipment)

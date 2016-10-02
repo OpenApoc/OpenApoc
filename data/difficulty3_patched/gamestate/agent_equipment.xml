@@ -120,6 +120,7 @@
         <tail_size>26</tail_size>
         <turn_rate>40</turn_rate>
         <range>180</range>
+        <ttl>440</ttl>
         <explosion_graphic>28</explosion_graphic>
         <damage_type>DAMAGETYPE_ENTROPY_ENZYME</damage_type>
       </sp>
@@ -178,6 +179,7 @@
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
+        <ttl>1000</ttl>
         <damage_type>DAMAGETYPE_ANTI-ALIEN_GAS</damage_type>
         <explosion_depletion_rate>10</explosion_depletion_rate>
       </sp>
@@ -253,6 +255,7 @@
         <fire_delay>34</fire_delay>
         <tail_size>31</tail_size>
         <range>900</range>
+        <ttl>2700</ttl>
         <explosion_graphic>21</explosion_graphic>
         <damage_type>DAMAGETYPE_ARMOR_PIERCING</damage_type>
       </sp>
@@ -328,6 +331,7 @@
         <fire_delay>34</fire_delay>
         <tail_size>31</tail_size>
         <range>900</range>
+        <ttl>2700</ttl>
         <damage_type>DAMAGETYPE_EXPLOSIVE</damage_type>
         <explosion_depletion_rate>4</explosion_depletion_rate>
       </sp>
@@ -403,6 +407,7 @@
         <fire_delay>34</fire_delay>
         <tail_size>31</tail_size>
         <range>900</range>
+        <ttl>2700</ttl>
         <damage_type>DAMAGETYPE_INCENDIARY</damage_type>
         <explosion_depletion_rate>5</explosion_depletion_rate>
       </sp>
@@ -463,6 +468,7 @@
         <guided>true</guided>
         <turn_rate>30</turn_rate>
         <range>400</range>
+        <ttl>1800</ttl>
         <damage_type>DAMAGETYPE_EXPLOSIVE</damage_type>
         <trigger_type>Boomeroid</trigger_type>
         <explosion_depletion_rate>9</explosion_depletion_rate>
@@ -575,6 +581,7 @@
         <fire_delay>64</fire_delay>
         <tail_size>34</tail_size>
         <range>500</range>
+        <ttl>1400</ttl>
         <damage_type>DAMAGETYPE_BRAINSUCKER</damage_type>
       </sp>
     </value>
@@ -653,6 +660,7 @@
         <fire_delay>40</fire_delay>
         <tail_size>35</tail_size>
         <range>1000</range>
+        <ttl>3000</ttl>
         <explosion_graphic>25</explosion_graphic>
         <damage_type>DAMAGETYPE_DISRUPTOR_BEAM</damage_type>
       </sp>
@@ -797,6 +805,7 @@
         <guided>true</guided>
         <turn_rate>25</turn_rate>
         <range>1400</range>
+        <ttl>4200</ttl>
         <damage_type>DAMAGETYPE_EXPLOSIVE</damage_type>
         <explosion_depletion_rate>14</explosion_depletion_rate>
       </sp>
@@ -889,6 +898,7 @@
         <fire_delay>32</fire_delay>
         <tail_size>17</tail_size>
         <range>800</range>
+        <ttl>2400</ttl>
         <explosion_graphic>24</explosion_graphic>
         <damage_type>DAMAGETYPE_DISRUPTOR_BEAM</damage_type>
       </sp>
@@ -998,6 +1008,7 @@
         <fire_delay>40</fire_delay>
         <tail_size>35</tail_size>
         <range>1000</range>
+        <ttl>3000</ttl>
         <explosion_graphic>25</explosion_graphic>
         <damage_type>DAMAGETYPE_DISRUPTOR_BEAM</damage_type>
       </sp>
@@ -1112,6 +1123,7 @@
         <guided>true</guided>
         <turn_rate>18</turn_rate>
         <range>1200</range>
+        <ttl>3600</ttl>
         <explosion_graphic>28</explosion_graphic>
         <damage_type>DAMAGETYPE_ENTROPY_ENZYME</damage_type>
       </sp>
@@ -1227,6 +1239,7 @@
         <guided>true</guided>
         <turn_rate>20</turn_rate>
         <range>1200</range>
+        <ttl>3600</ttl>
         <damage_type>DAMAGETYPE_ANTI-ALIEN_GAS</damage_type>
         <explosion_depletion_rate>11</explosion_depletion_rate>
       </sp>
@@ -1310,6 +1323,7 @@
         <guided>true</guided>
         <turn_rate>20</turn_rate>
         <range>1200</range>
+        <ttl>3600</ttl>
         <damage_type>DAMAGETYPE_EXPLOSIVE</damage_type>
         <explosion_depletion_rate>11</explosion_depletion_rate>
       </sp>
@@ -1393,6 +1407,7 @@
         <guided>true</guided>
         <turn_rate>20</turn_rate>
         <range>1200</range>
+        <ttl>3600</ttl>
         <damage_type>DAMAGETYPE_INCENDIARY</damage_type>
         <explosion_depletion_rate>11</explosion_depletion_rate>
       </sp>
@@ -1460,6 +1475,7 @@
         <tail_size>26</tail_size>
         <turn_rate>40</turn_rate>
         <range>50</range>
+        <ttl>120</ttl>
         <damage_type>DAMAGETYPE_ARMOR_PIERCING</damage_type>
       </sp>
     </value>
@@ -1517,6 +1533,7 @@
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
+        <ttl>1000</ttl>
         <damage_type>DAMAGETYPE_INCENDIARY</damage_type>
         <explosion_depletion_rate>12</explosion_depletion_rate>
       </sp>
@@ -1679,6 +1696,7 @@
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
+        <ttl>1000</ttl>
         <damage_type>DAMAGETYPE_EXPLOSIVE</damage_type>
         <explosion_depletion_rate>15</explosion_depletion_rate>
       </sp>
@@ -1820,6 +1838,7 @@
         <fire_delay>12</fire_delay>
         <tail_size>25</tail_size>
         <range>900</range>
+        <ttl>2700</ttl>
         <explosion_graphic>21</explosion_graphic>
         <damage_type>DAMAGETYPE_ARMOR_PIERCING</damage_type>
       </sp>
@@ -1942,6 +1961,7 @@
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
+        <ttl>1000</ttl>
         <damage_type>DAMAGETYPE_EXPLOSIVE</damage_type>
         <trigger_type>Proximity</trigger_type>
         <explosion_depletion_rate>9</explosion_depletion_rate>
@@ -2068,6 +2088,7 @@
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
+        <ttl>1000</ttl>
         <damage_type>DAMAGETYPE_EXPLOSIVE</damage_type>
         <explosion_depletion_rate>7</explosion_depletion_rate>
       </sp>
@@ -2251,6 +2272,7 @@
         <fire_delay>42</fire_delay>
         <tail_size>36</tail_size>
         <range>1200</range>
+        <ttl>3600</ttl>
         <explosion_graphic>22</explosion_graphic>
         <damage_type>DAMAGETYPE_LASER_BEAM</damage_type>
       </sp>
@@ -2374,6 +2396,7 @@
         <fire_delay>18</fire_delay>
         <tail_size>16</tail_size>
         <range>700</range>
+        <ttl>2200</ttl>
         <explosion_graphic>21</explosion_graphic>
         <damage_type>DAMAGETYPE_ARMOR_PIERCING</damage_type>
       </sp>
@@ -2558,6 +2581,7 @@
         <fire_delay>30</fire_delay>
         <tail_size>36</tail_size>
         <range>900</range>
+        <ttl>2700</ttl>
         <explosion_graphic>23</explosion_graphic>
         <damage_type>DAMAGETYPE_PLASMA</damage_type>
       </sp>
@@ -2652,6 +2676,7 @@
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
+        <ttl>1000</ttl>
         <damage_type>DAMAGETYPE_SMOKE</damage_type>
         <explosion_depletion_rate>11</explosion_depletion_rate>
       </sp>
@@ -2712,6 +2737,7 @@
         <fire_delay>44</fire_delay>
         <tail_size>16</tail_size>
         <range>100</range>
+        <ttl>240</ttl>
         <explosion_graphic>26</explosion_graphic>
         <damage_type>DAMAGETYPE_STUN</damage_type>
       </sp>
@@ -2770,6 +2796,7 @@
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
+        <ttl>1000</ttl>
         <damage_type>DAMAGETYPE_STUN_GAS</damage_type>
         <explosion_depletion_rate>12</explosion_depletion_rate>
       </sp>
@@ -2844,6 +2871,7 @@
         <fire_delay>60</fire_delay>
         <tail_size>35</tail_size>
         <range>1000</range>
+        <ttl>3000</ttl>
         <explosion_graphic>25</explosion_graphic>
         <damage_type>DAMAGETYPE_DISRUPTOR_BEAM</damage_type>
       </sp>
@@ -2922,6 +2950,7 @@
         <guided>true</guided>
         <turn_rate>30</turn_rate>
         <range>1400</range>
+        <ttl>4200</ttl>
         <damage_type>DAMAGETYPE_EXPLOSIVE</damage_type>
         <explosion_depletion_rate>13</explosion_depletion_rate>
       </sp>
@@ -3063,6 +3092,7 @@
         <guided>true</guided>
         <turn_rate>35</turn_rate>
         <range>600</range>
+        <ttl>1800</ttl>
         <damage_type>DAMAGETYPE_ANTI-ALIEN_GAS</damage_type>
         <explosion_depletion_rate>5</explosion_depletion_rate>
       </sp>
@@ -3142,6 +3172,7 @@
         <guided>true</guided>
         <turn_rate>35</turn_rate>
         <range>600</range>
+        <ttl>1800</ttl>
         <damage_type>DAMAGETYPE_EXPLOSIVE</damage_type>
         <explosion_depletion_rate>5</explosion_depletion_rate>
       </sp>
@@ -3221,6 +3252,7 @@
         <guided>true</guided>
         <turn_rate>35</turn_rate>
         <range>600</range>
+        <ttl>1800</ttl>
         <damage_type>DAMAGETYPE_INCENDIARY</damage_type>
         <explosion_depletion_rate>5</explosion_depletion_rate>
       </sp>
@@ -3358,6 +3390,7 @@
         <tail_size>34</tail_size>
         <turn_rate>40</turn_rate>
         <range>260</range>
+        <ttl>600</ttl>
         <explosion_graphic>28</explosion_graphic>
         <damage_type>DAMAGETYPE_ENTROPY_ENZYME</damage_type>
       </sp>
@@ -3510,6 +3543,7 @@
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
+        <ttl>1200</ttl>
         <damage_type>DAMAGETYPE_EXPLOSIVE</damage_type>
         <explosion_depletion_rate>22</explosion_depletion_rate>
       </sp>
@@ -3569,6 +3603,7 @@
         <fire_delay>35</fire_delay>
         <tail_size>16</tail_size>
         <range>40</range>
+        <ttl>100</ttl>
         <explosion_graphic>23</explosion_graphic>
         <damage_type>DAMAGETYPE_PLASMA</damage_type>
       </sp>
@@ -3627,6 +3662,7 @@
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
+        <ttl>1000</ttl>
         <damage_type>DAMAGETYPE_PSIONIC_BLAST</damage_type>
         <explosion_depletion_rate>10</explosion_depletion_rate>
       </sp>
@@ -3760,6 +3796,7 @@
         <tail_size>34</tail_size>
         <turn_rate>40</turn_rate>
         <range>900</range>
+        <ttl>2200</ttl>
         <explosion_graphic>28</explosion_graphic>
         <damage_type>DAMAGETYPE_ENTROPY_ENZYME</damage_type>
       </sp>
@@ -3835,6 +3872,7 @@
         <tail_size>34</tail_size>
         <turn_rate>40</turn_rate>
         <range>384</range>
+        <ttl>900</ttl>
         <explosion_graphic>28</explosion_graphic>
         <damage_type>DAMAGETYPE_ENTROPY_ENZYME</damage_type>
       </sp>
@@ -3927,6 +3965,7 @@
         <fire_delay>8</fire_delay>
         <tail_size>16</tail_size>
         <range>800</range>
+        <ttl>2400</ttl>
         <explosion_graphic>21</explosion_graphic>
         <damage_type>DAMAGETYPE_TOXIN_A</damage_type>
       </sp>
@@ -3988,6 +4027,7 @@
         <fire_delay>8</fire_delay>
         <tail_size>16</tail_size>
         <range>800</range>
+        <ttl>2400</ttl>
         <explosion_graphic>21</explosion_graphic>
         <damage_type>DAMAGETYPE_TOXIN_B</damage_type>
       </sp>
@@ -4049,6 +4089,7 @@
         <fire_delay>8</fire_delay>
         <tail_size>16</tail_size>
         <range>800</range>
+        <ttl>2400</ttl>
         <explosion_graphic>21</explosion_graphic>
         <damage_type>DAMAGETYPE_TOXIN_C</damage_type>
       </sp>
@@ -4140,6 +4181,7 @@
         <fire_delay>36</fire_delay>
         <tail_size>16</tail_size>
         <range>400</range>
+        <ttl>1200</ttl>
         <damage_type>DAMAGETYPE_SMOKE</damage_type>
       </sp>
     </value>
@@ -4197,6 +4239,7 @@
         <fire_delay>60</fire_delay>
         <tail_size>16</tail_size>
         <range>300</range>
+        <ttl>1000</ttl>
         <damage_type>DAMAGETYPE_EXPLOSIVE</damage_type>
         <explosion_depletion_rate>19</explosion_depletion_rate>
       </sp>

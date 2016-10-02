@@ -110,7 +110,7 @@ TileObjectVehicle::TileObjectVehicle(TileMap &map, sp<Vehicle> vehicle)
 	animationFrame = vehicle->type->animation_sprites.begin();
 }
 
-Vec3<float> TileObjectVehicle::getCentrePosition()
+Vec3<float> TileObjectVehicle::getVoxelCentrePosition()
 {
 	auto vtype = this->getVehicle()->type;
 

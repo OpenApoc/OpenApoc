@@ -1,5 +1,6 @@
 #pragma once
 #include "game/state/city/vehicle.h"
+#include "game/state/battle/battleunit.h"
 #include "game/state/stateobject.h"
 #include "library/colour.h"
 #include "library/sp.h"
@@ -30,7 +31,7 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	Projectile(StateRef<Vehicle> firer, Vec3<float> position, Vec3<float> velocity,
 	           unsigned int lifetime, int damage, unsigned int tail_length,
 	           std::list<sp<Image>> projectile_sprites);
-	Projectile(StateRef<Agent> firer, Vec3<float> position, Vec3<float> velocity,
+	Projectile(StateRef<BattleUnit> firer, Vec3<float> position, Vec3<float> velocity,
 	           unsigned int lifetime, int damage, unsigned int tail_length,
 	           std::list<sp<Image>> projectile_sprites);
 	Projectile();
@@ -55,11 +56,13 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	unsigned int lifetime;
 	int damage;
 	StateRef<Vehicle> firerVehicle;
-	StateRef<Agent> firerAgent;
+	StateRef<BattleUnit> firerUnit;
 	Vec3<float> previousPosition;
 
 	unsigned int tail_length;
 	std::list<sp<Image>> projectile_sprites;
+
+	int ownerInvulnerableTicks = 0;
 
 	Vec3<float> velocityScale;
 

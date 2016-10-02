@@ -13,6 +13,12 @@ class BattleTileView : public TileView
 	// Formula: FPS / DESIRED_ANIMATIONS_PER_SECOND
 	static const int TARGET_ICONS_ANIMATION_DELAY = 60 / 4;
 
+	// Total amount of different focus icon states
+	static const int FOCUS_ICONS_ANIMATION_FRAMES = 4;
+
+	// Forrmula: FPS / FOCUS_ICONS_ANIMATION_FRAMES(both ways) / DESIRED_ANIMATIONS_PER_SECOND
+	static const int FOCUS_ICONS_ANIMATION_DELAY = 60 / (2 * FOCUS_ICONS_ANIMATION_FRAMES - 2) / 2;
+
   public:
 	enum class LayerDrawingMode
 	{
@@ -50,8 +56,8 @@ class BattleTileView : public TileView
 	std::vector<sp<Image>> waypointIcons;
 	std::vector<sp<Image>> waypointDarkIcons;
 	int iconAnimationTicksAccumulated = 0;
+	int focusAnimationTicksAccumulated = 0;
 
-	
   public:
 	BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
 	               TileViewMode initialMode, int currentZLevel, Vec3<float> screenCenterTile, sp<Battle> battle);

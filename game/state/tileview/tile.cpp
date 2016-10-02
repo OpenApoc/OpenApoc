@@ -337,6 +337,7 @@ void Tile::updateBattlescapeParameters()
 	walkSfx = nullptr;
 	objectDropSfx = nullptr;
 	supportProviderForItems = nullptr;
+	bool groundEncountered = false;
 	closedDoorLeft = false;
 	closedDoorRight = false;
 	for (auto o : ownedObjects)
@@ -693,7 +694,7 @@ sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &
 			auto topPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, maxZ - 0.01f);
 			auto bottomPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, 0.0f);
 
-			auto collision = this->findCollision(topPos, bottomPos, {}, nullptr, true);
+			auto collision = this->findCollision(topPos, bottomPos, {}, false, true);
 			if (collision)
 			{
 				if (objectColours.find(collision.obj) == objectColours.end())

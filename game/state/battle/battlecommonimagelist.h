@@ -13,5 +13,6 @@ class BattleCommonImageList
   public:
 	std::vector<sp<Image>> strategyImages;
 	sp<Image> loadingImage;
+	std::vector<sp<Image>> focusArrows;
 };
 }

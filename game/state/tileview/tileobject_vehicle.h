@@ -21,7 +21,7 @@ class TileObjectVehicle : public TileObject
 		this->getVehicle()->velocity = dir;
 	}
 
-	Vec3<float> getCentrePosition();
+	Vec3<float> getVoxelCentrePosition();
 	bool hasVoxelMap() override { return true; }
 	sp<VoxelMap> getVoxelMap(Vec3<int> mapIndex) override;
 	Vec3<float> getPosition() const override;

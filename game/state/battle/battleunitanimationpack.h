@@ -116,6 +116,10 @@ class BattleUnitAnimationPack : public StateObject<BattleUnitAnimationPack>
 	                       AgentType::HandState currentHands, AgentType::HandState targetHands,
 	                       AgentType::MovementState movement, Vec2<int> facing);
 
+	// Get frame count for animation of hand change. 0 means there's no animation present
+	int getFrameCountFiring(StateRef<AEquipmentType> heldItem, AgentType::BodyState currentBody,
+						   AgentType::MovementState movement, Vec2<int> facing);
+
 	// Draw unit's shadow
 	void drawShadow(Renderer &r, Vec2<float> screenPosition, StateRef<BattleUnitImagePack> shadow,
 	                StateRef<AEquipmentType> heldItem, Vec2<int> facing,

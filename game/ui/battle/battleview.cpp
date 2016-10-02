@@ -927,7 +927,11 @@ bool checkThrowTrajectoryValid(TileMap &map, const sp<TileObject> thrower, Vec3<
 			velocity.z -= FALLING_ACCELERATION_ITEM;
 			newPos += velocity / (float)TICK_SCALE / VELOCITY_SCALE_BATTLE;
 		}
-		c = map.findCollision(curPos, newPos, {}, thrower);
+		c = map.findCollision(curPos, newPos, {});
+		if (c && c.obj == thrower)
+		{
+			c = {};
+		}
 		curPos = c ? c.position : newPos;
 	} while (!c && ((Vec3<int>)curPos) != end && curPos.z < map.size.z);
 	return (Vec3<int>)curPos == end;
@@ -1051,6 +1055,7 @@ void BattleView::orderTurn(Vec3<int> target)
 {
 	for (auto unit : selectedUnits)
 	{
+		unit->stopAttacking();
 		attemptToClearCurrentOrders(unit);
 		if (canEmplaceTurnInFront(unit))
 		{
@@ -1203,10 +1208,16 @@ void BattleView::orderSelect(sp<BattleUnit> u, bool inverse, bool additive)
 		// Unit is selected
 		else
 		{
-			// Unit in selection  => move unit to front
-			if (additive || selectedUnits.size() > 1)
+			// Unit in selection and additive  => move unit to front
+			if (additive)
 			{
 				selectedUnits.erase(pos);
+				selectedUnits.push_front(u);
+			}
+			// If not additive and in selection - select only this unit
+			else if (selectedUnits.size() > 1)
+			{
+				selectedUnits.clear();
 				selectedUnits.push_front(u);
 			}
 			// If not in additive mode and clicked on selected unit - deselect
@@ -1255,6 +1266,33 @@ void BattleView::orderTeleport(Vec3<int> target, bool right)
 		LogWarning("BattleUnit \"%s\" teleported using item in %s hand ", unit->agent->name.cStr(),
 			right ? "right" : "left");
 		selectionState = BattleSelectionState::Normal;
+	}
+}
+
+void BattleView::orderFire(Vec3<int> target, BattleUnit::WeaponStatus status, bool modifier)
+{
+	// FIXME: If TB ensure enough TUs for turn and fire
+	for (auto unit : selectedUnits)
+	{
+		unit->startFiring(target, status, modifier);
+	}
+}
+
+void BattleView::orderFire(StateRef<BattleUnit> u, BattleUnit::WeaponStatus status)
+{
+	// FIXME: If TB ensure enough TUs for turn and fire
+	for (auto unit : selectedUnits)
+	{
+		unit->startFiring(u, status);
+	}
+}
+
+void BattleView::orderFocus(StateRef<BattleUnit> u)
+{
+	// FIXME: Check if player can see unit
+	for (auto unit : selectedUnits)
+	{
+		unit->setFocus(u);
 	}
 }
 
@@ -1398,6 +1436,9 @@ void BattleView::eventOccurred(Event *e)
 		         (Event::isPressed(e->mouse().Button, Event::MouseButton::Left) ||
 		          Event::isPressed(e->mouse().Button, Event::MouseButton::Right)))
 		{
+			auto buttonPressed = Event::isPressed(e->mouse().Button, Event::MouseButton::Left)
+				? Event::MouseButton::Left : Event::MouseButton::Right;
+
 			// If a click has not been handled by a form it's in the map.
 			auto t = this->getSelectedTilePosition();
 			auto objPresent = map.getTile(t.x, t.y, t.z)->getUnitIfPresent(true);
@@ -1414,9 +1455,9 @@ void BattleView::eventOccurred(Event *e)
 			{
 				case BattleSelectionState::Normal:
 				case BattleSelectionState::NormalAlt:
-					switch (e->mouse().Button)
+					switch (buttonPressed)
 					{
-						case 1:
+						case Event::MouseButton::Left:
 							// If unit is present, priority is to move if not occupied
 							if (unitPresent && unitPresent->owner == state->getPlayer())
 							{
@@ -1439,7 +1480,7 @@ void BattleView::eventOccurred(Event *e)
 								orderMove(t);
 							}
 							break;
-						case 4:
+						case Event::MouseButton::Right:
 							// Turn if no enemy unit present under cursor
 							// or if holding alt
 							if (!unitPresent || unitPresent->owner == state->getPlayer() ||
@@ -1447,21 +1488,34 @@ void BattleView::eventOccurred(Event *e)
 							{
 								orderTurn(t);
 							}
-							// Focus fire / fire in tb if enemy unit present
+							// Focus fire RT / Fire TB
 							else
 							{
-								// FIXME: Focus fire on enemy or fire in turn based
+								switch (state->current_battle->mode)
+								{
+								case Battle::Mode::TurnBased:
+									if (unitOccupying)
+									{
+										orderFire({ &*state, unitOccupying->id });
+									}
+									break;
+								case Battle::Mode::RealTime:
+									if (unitPresent->isConscious())
+									{
+										orderFocus({ &*state, unitPresent->id });
+									}
+									break;
+								}
 							}
 							break;
 					}
 					break;
 				case BattleSelectionState::NormalCtrl:
 				case BattleSelectionState::NormalCtrlAlt:
-
-					switch (e->mouse().Button)
+					switch (buttonPressed)
 					{
 						// LMB = Add to selection
-						case 1:
+						case Event::MouseButton::Left:
 							if (unitPresent && unitPresent->owner == state->getPlayer())
 							{
 								orderSelect(unitPresent, false, true);
@@ -1476,7 +1530,7 @@ void BattleView::eventOccurred(Event *e)
 							}
 							break;
 						// RMB = Remove from selection
-						case 4:
+						case Event::MouseButton::Right:
 							if (unitPresent && unitPresent->owner == state->getPlayer())
 							{
 								orderSelect(unitPresent, true);
@@ -1487,21 +1541,52 @@ void BattleView::eventOccurred(Event *e)
 				case BattleSelectionState::FireAny:
 				case BattleSelectionState::FireLeft:
 				case BattleSelectionState::FireRight:
-					if (e->mouse().Button != 1 && e->mouse().Button != 4)
+					switch (buttonPressed)
+					{
+					case Event::MouseButton::Left:
+					{
+						BattleUnit::WeaponStatus status = BattleUnit::WeaponStatus::FiringBothHands;
+						switch (selectionState)
+						{
+						case BattleSelectionState::FireLeft:
+							status = BattleUnit::WeaponStatus::FiringLeftHand;
+							break;
+						case BattleSelectionState::FireRight:
+							status = BattleUnit::WeaponStatus::FiringRightHand;
+							break;
+						}
+						if (unitOccupying)
+						{
+							orderFire({ &*state, unitPresent->id }, status);
+						}
+						else
+						{
+							bool modified = (modifierLAlt || modifierRAlt);
+							orderFire(t, status, modified);
+						}
 						break;
-					// FIXME: Fire!
+					}
+					case Event::MouseButton::Right:
+					{
+						if (selectionState != BattleSelectionState::FireAny)
+						{
+							selectionState = BattleSelectionState::Normal;
+						}
+						break;
+					}
+					}
 					break;
 				case BattleSelectionState::ThrowRight:
 				case BattleSelectionState::ThrowLeft:
-					switch (e->mouse().Button)
+					switch (buttonPressed)
 					{
-						case 1:
+						case Event::MouseButton::Left:
 						{
 							bool right = selectionState == BattleSelectionState::ThrowRight;
 							orderThrow(t, right);
 							break;
 						}
-						case 4:
+						case Event::MouseButton::Right:
 						{
 							selectionState = BattleSelectionState::Normal;
 							break;
@@ -1510,15 +1595,15 @@ void BattleView::eventOccurred(Event *e)
 					break;
 				case BattleSelectionState::TeleportLeft:
 				case BattleSelectionState::TeleportRight:
-					switch (e->mouse().Button)
+					switch (buttonPressed)
 					{
-					case 1:
+					case Event::MouseButton::Left:
 					{
 						bool right = selectionState == BattleSelectionState::TeleportRight;
 						orderTeleport(t, right);
 						break;
 					}
-					case 4:
+					case Event::MouseButton::Right:
 					{
 						selectionState = BattleSelectionState::Normal;
 						break;

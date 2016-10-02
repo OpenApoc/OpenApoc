@@ -221,9 +221,8 @@ class TileMap
 										  float maxCost = 0.0f);
 
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
-					const std::set<TileObject::Type> validTypes = {},
-					const sp<TileObject> owner = nullptr,
-		bool check_full_path = false) const;
+					const std::set<TileObject::Type> validTypes = {}, bool useLOS = false,
+					bool check_full_path = false) const;
 
 	void addObjectToMap(sp<Projectile>);
 	void addObjectToMap(sp<Vehicle>);

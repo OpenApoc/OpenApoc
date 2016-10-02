@@ -208,6 +208,8 @@ void BattleTileView::render()
 
 		iconAnimationTicksAccumulated++;
 		iconAnimationTicksAccumulated %= targetLocationIcons.size() * TARGET_ICONS_ANIMATION_DELAY;
+		focusAnimationTicksAccumulated++;
+		focusAnimationTicksAccumulated %= (2 * FOCUS_ICONS_ANIMATION_FRAMES - 2) * FOCUS_ICONS_ANIMATION_DELAY;
 	}
 
 	// screenOffset.x/screenOffset.y is the 'amount added to the tile coords' - so we want
@@ -312,8 +314,11 @@ void BattleTileView::render()
 	{
 		case TileViewMode::Isometric:
 		{
-			// List of units that require drawing of an overhead icon
-			std::list<std::pair<sp<BattleUnit>, bool>> unitsToDraw;
+			// List of units that require drawing of an overhead icon (bool = is first)
+			std::list<std::pair<sp<BattleUnit>, bool>> unitsToDrawSelectionArrows;
+
+			// List of units that require drawing of focus arrows (bool = islarge)
+			std::list<std::pair<sp<TileObject>, bool>> unitsToDrawFocusArrows;
 
 			// List of target icons to draw
 			// std::map<Vec3<int>, std::list<Vec3<float>>> targetIconLocations;
@@ -389,6 +394,7 @@ void BattleTileView::render()
 						auto u = selTileOnCurLevel->getUnitIfPresent();
 						if (u)
 						{
+							// FIXME: Check if player can see unit, if not - do not change cursor!
 							if (battle->currentPlayer->isRelatedTo(u->getUnit()->owner) == Organisation::Relation::Hostile)
 							{
 								selectionImageBack = selectedTileFireImageBack;
@@ -471,11 +477,28 @@ void BattleTileView::render()
 
 										if (selectedPos == selectedUnits.begin())
 										{
-											unitsToDraw.push_back({ u, true });
+											unitsToDrawSelectionArrows.push_back({ u, true });
 										}
 										else if (selectedPos != selectedUnits.end())
 										{
-											unitsToDraw.push_back({ u, false });
+											unitsToDrawSelectionArrows.push_back({ u, false });
+										}
+										// If visible and focused - draw focus arrows
+										if (true)// FIXME: Check if visible by current player
+										{
+											bool focusedBySelectedUnits = false;
+											for (auto su : selectedUnits)
+											{
+												if (std::find(u->focusedByUnits.begin(), u->focusedByUnits.end(), su) != u->focusedByUnits.end())
+												{
+													focusedBySelectedUnits = true;
+													break;
+												}
+											}
+											if (focusedBySelectedUnits)
+											{
+												unitsToDrawFocusArrows.push_back({ obj, u->isLarge() });
+											}
 										}
 									}
 								}
@@ -552,20 +575,37 @@ void BattleTileView::render()
 								if ((obj->getType() == TileObject::Type::Unit && obj->getPosition().z < zTo) )
 								{
 									draw = true;
-									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
-										->getUnit();
 									if (!selectedUnits.empty())
 									{
+										auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
+											->getUnit();
 										auto selectedPos =
 											std::find(selectedUnits.begin(), selectedUnits.end(), u);
 
 										if (selectedPos == selectedUnits.begin())
 										{
-											unitsToDraw.push_back({ u, true });
+											unitsToDrawSelectionArrows.push_back({ u, true });
 										}
 										else if (selectedPos != selectedUnits.end())
 										{
-											unitsToDraw.push_back({ u, false });
+											unitsToDrawSelectionArrows.push_back({ u, false });
+										}
+										// If visible and focused - draw focus arrows
+										if (true)// FIXME: Check if visible by current player
+										{
+											bool focusedBySelectedUnits = false;
+											for (auto su : selectedUnits)
+											{
+												if (std::find(u->focusedByUnits.begin(), u->focusedByUnits.end(), su) != u->focusedByUnits.end())
+												{
+													focusedBySelectedUnits = true;
+													break;
+												}
+											}
+											if (focusedBySelectedUnits)
+											{
+												unitsToDrawFocusArrows.push_back({ obj, u->isLarge() });
+											}
 										}
 									}
 								}
@@ -588,50 +628,77 @@ void BattleTileView::render()
 			}
 
 			// Draw selected unit arrows
-			if (unitsToDraw.size() > 0)
+			for (auto obj : unitsToDrawSelectionArrows)
 			{
-				for (auto obj : unitsToDraw)
+				static const Vec2<float> offset = {-13.0f, -19.0f};
+				static const Vec2<float> offsetRunning = {0.0f, 0.0f};
+				static const Vec2<float> offsetBehavior = {0.0f, 0.0f};
+				static const Vec2<float> offsetBleed = {-5.0f, 0.0f};
+				static const Vec2<float> offsetTU = { 13.0f, -5.0f };
+
+				Vec2<float> pos =
+					tileToOffsetScreenCoords(
+					    obj.first->getPosition() +
+					    Vec3<float>{0.0f, 0.0f, obj.first->getCurrentHeight() * 1.5f / 40.0f}) +
+					offset;
+
+				// FIXME: Draw hit points
+				r.draw(obj.second ? activeUnitSelectionArrow[obj.first->squadNumber]
+					                : inactiveUnitSelectionArrow[obj.first->squadNumber],
+					    pos);
+				r.draw(behaviorUnitSelectionUnderlay[obj.first->behavior_mode],
+					    pos + offsetBehavior);
+
+				if (battle->mode == Battle::Mode::TurnBased)
 				{
-					static const Vec2<float> offset = {-13.0f, -19.0f};
-					static const Vec2<float> offsetRunning = {0.0f, 0.0f};
-					static const Vec2<float> offsetBehavior = {0.0f, 0.0f};
-					static const Vec2<float> offsetBleed = {-5.0f, 0.0f};
-					static const Vec2<float> offsetTU = { 13.0f, -5.0f };
+					auto &img = tuIndicators[obj.first->agent->modified_stats.time_units];
+					r.draw(img, pos + offsetTU - Vec2<float>{img->size.x / 2, img->size.y / 2});
+				}
 
-					Vec2<float> pos =
-					    tileToOffsetScreenCoords(
-					        obj.first->getPosition() +
-					        Vec3<float>{0.0f, 0.0f, obj.first->getCurrentHeight() * 1.5f / 40.0f}) +
-					    offset;
-
-					// FIXME: Draw hit points
-					r.draw(obj.second ? activeUnitSelectionArrow[obj.first->squadNumber]
-					                  : inactiveUnitSelectionArrow[obj.first->squadNumber],
-					       pos);
-					r.draw(behaviorUnitSelectionUnderlay[obj.first->behavior_mode],
-					       pos + offsetBehavior);
-
-					if (battle->mode == Battle::Mode::TurnBased)
+				if (obj.first->movement_mode == BattleUnit::MovementMode::Running)
+				{
+					r.draw(runningIcon, pos + offsetRunning);
+				}
+				if (obj.first->isFatallyWounded())
+				{
+					if (obj.first->isHealing)
 					{
-						auto &img = tuIndicators[obj.first->agent->modified_stats.time_units];
-						r.draw(img, pos + offsetTU - Vec2<float>{img->size.x / 2, img->size.y / 2});
+						r.draw(bleedingIcon, pos + offsetBleed);
 					}
+					else
+					{
+						r.draw(healingIcon, pos + offsetBleed);
+					}
+				}
+			}
+			
+			// Draw unit focus arrows
+			if (!unitsToDrawFocusArrows.empty())
+			{
+				static const Vec2<float> offset1 = { -20.0f, -29.0f };
+				static const Vec2<float> offset2 = {  22.0f, -29.0f };
+				static const Vec2<float> offset3 = { -20.0f,  27.0f };
+				static const Vec2<float> offset4 = {  22.0f,  27.0f };
+				static const Vec2<float> offsetd14 = {-1.0f,  -1.0f };
+				static const Vec2<float> offsetd23 = { 1.0f,  -1.0f };
+				
+				float offset = focusAnimationTicksAccumulated / FOCUS_ICONS_ANIMATION_DELAY;
+				// Offset goes like this: 0 1 2 3 4 3 2 1  (example for 5 frames)
+				// Therefore, if value is >=frames, we do 2*frames -2 -offset
+				// For example, 2*5 - 2 - 5 = 3, that's how we get 3 that's after 4
+				Vec2<float> imgOffset = { (float)battle->common_image_list->focusArrows[0]->size.x/2.0f, (float)battle->common_image_list->focusArrows[0]->size.y / 2.0f };
+				if (offset >= FOCUS_ICONS_ANIMATION_FRAMES)
+					offset = 2 * FOCUS_ICONS_ANIMATION_FRAMES - 2 - offset;
+				
+				for (auto &obj : unitsToDrawFocusArrows)
+				{
+					float largeOffset = obj.second ? 2.0f : 1.0f;
+					Vec2<float> pos = tileToOffsetScreenCoords(obj.first->getCenter());
 
-					if (obj.first->movement_mode == BattleUnit::MovementMode::Running)
-					{
-						r.draw(runningIcon, pos + offsetRunning);
-					}
-					if (obj.first->isFatallyWounded())
-					{
-						if (obj.first->isHealing)
-						{
-							r.draw(bleedingIcon, pos + offsetBleed);
-						}
-						else
-						{
-							r.draw(healingIcon, pos + offsetBleed);
-						}
-					}
+					r.draw(battle->common_image_list->focusArrows[0], pos - imgOffset + largeOffset * offset1 + offset * offsetd14);
+					r.draw(battle->common_image_list->focusArrows[1], pos - imgOffset + largeOffset * offset2 + offset *offsetd23);
+					r.draw(battle->common_image_list->focusArrows[2], pos - imgOffset + largeOffset * offset3 - offset *offsetd23);
+					r.draw(battle->common_image_list->focusArrows[3], pos - imgOffset + largeOffset * offset4 - offset *offsetd14);
 				}
 			}
 		}

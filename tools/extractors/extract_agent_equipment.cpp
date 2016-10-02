@@ -387,6 +387,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 			e->fire_delay = pdata.fire_delay;
 			e->guided = pdata.guided != 0 ? true : false;
 			e->turn_rate = pdata.turn_rate;
+			e->ttl = pdata.ttl;
 			e->range = pdata.range;
 			e->explosion_graphic = pdata.explosion_graphic;
 			if (pdata.fire_sfx != 0xffff)

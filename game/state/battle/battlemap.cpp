@@ -977,16 +977,17 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 
 			auto u = mksp<BattleUnit>();
 
+			b->addUnit(u);
 			u->agent = a;
+			u->agent->unit = { &state, u->id };
 			u->owner = a->owner;
 			u->squadNumber = -1;
 			u->battle = b;
+			u->updateDisplayedItem();
 			if (!spawnCivilians && a->owner == state.getCivilian())
 			{
 				u->retreated = true;
 			}
-
-			b->units.push_back(u);
 		}
 
 		// Find out number of agents in each org
@@ -998,11 +999,11 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 		}
 		for (auto &u : b->units)
 		{
-			if (u->retreated)
+			if (u.second->retreated)
 			{
 				continue;
 			}
-			agentCount[u->owner]++;
+			agentCount[u.second->owner]++;
 		}
 
 		// Distribute agents into squads
@@ -1021,9 +1022,9 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 					{
 						if (b->forces[o].squads[s].getNumUnits() >= 3)
 							break;
-						if (u->owner != o || u->squadNumber != -1 || u->retreated)
+						if (u.second->owner != o || u.second->squadNumber != -1 || u.second->retreated)
 							continue;
-						u->assignToSquad(s);
+						u.second->assignToSquad(s);
 						agentCount[o]--;
 						if (agentCount[o] == 0)
 							break;
@@ -1039,9 +1040,9 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				{
 					if (b->forces[o].squads[s].getNumUnits() == 6)
 						break;
-					if (u->owner != o || u->squadNumber != -1)
+					if (u.second->owner != o || u.second->squadNumber != -1)
 						continue;
-					u->assignToSquad(s);
+					u.second->assignToSquad(s);
 					agentCount[o]--;
 					if (agentCount[o] == 0)
 						break;

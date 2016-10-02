@@ -107,6 +107,20 @@ int BattleUnitAnimationPack::getFrameCountHands(StateRef<AEquipmentType> heldIte
 		return 0;
 }
 
+int BattleUnitAnimationPack::getFrameCountFiring(StateRef<AEquipmentType> heldItem, AgentType::BodyState currentBody,
+	AgentType::MovementState movement, Vec2<int> facing)
+{
+	sp<AnimationEntry> e;
+	e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+		: ItemWieldMode::OneHanded)
+		: ItemWieldMode::None][AgentType::HandState::Firing][movement][currentBody]
+		[facing];
+	if (e)
+		return e->frame_count;
+	else
+		return 0;
+}
+
 void BattleUnitAnimationPack::drawShadow(
     Renderer &r, Vec2<float> screenPosition, StateRef<BattleUnitImagePack> shadow,
     StateRef<AEquipmentType> heldItem, Vec2<int> facing, AgentType::BodyState currentBody,
@@ -149,7 +163,7 @@ void BattleUnitAnimationPack::drawShadow(
 
 	if (e->frames.size() <= frame)
 	{
-		LogError("Frame missing?");
+		LogError("drawShadow: Frame missing?");
 		return;
 	}
 
@@ -189,7 +203,7 @@ void BattleUnitAnimationPack::drawUnit(
 			                                                         : ItemWieldMode::OneHanded)
 			                                 : ItemWieldMode::None][AgentType::HandState::AtEase]
 			                       [movement][currentBody][facing];
-			frame_legs = (distance_travelled * 100 / e->frames_per_100_units) % e_legs->frame_count;
+			frame_legs = (distance_travelled * 100 / e_legs->frames_per_100_units) % e_legs->frame_count;
 		}
 	}
 	else if (currentBody != targetBody)
@@ -237,7 +251,7 @@ void BattleUnitAnimationPack::drawUnit(
 
 	if (e->frames.size() <= frame)
 	{
-		LogError("Frame missing?");
+		LogError("drawUnit: body Frame missing?");
 		return;
 	}
 
@@ -256,7 +270,7 @@ void BattleUnitAnimationPack::drawUnit(
 		{
 			if (e_legs->frames.size() <= frame_legs)
 			{
-				LogError("Frame missing?");
+				LogError("drawUnit: legs Frame missing?");
 				return;
 			}
 			b = &e_legs->frames[frame_legs].unit_image_parts[ie];

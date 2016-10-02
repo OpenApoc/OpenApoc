@@ -47,8 +47,8 @@ class BattleUnitMission
 
 	// Methods that calculate next action
 	bool advanceAlongPath(GameState &state, BattleUnit &u, Vec3<float> &dest);
-	bool advanceFacing(GameState &state, BattleUnit &u, Vec2<int> &dest, int &ticks);
-	bool advanceBodyState(GameState &state, BattleUnit &u, AgentType::BodyState targetState, AgentType::BodyState &dest, int &ticks);
+	bool advanceFacing(GameState &state, BattleUnit &u, Vec2<int> &dest);
+	bool advanceBodyState(GameState &state, BattleUnit &u, AgentType::BodyState targetState, AgentType::BodyState &dest);
 
   public:
 	enum class MissionType
@@ -76,9 +76,9 @@ class BattleUnitMission
 	// Request next destination
 	bool getNextDestination(GameState &state, BattleUnit &u, Vec3<float> &dest);
 	// Request next facing
-	bool getNextFacing(GameState &state, BattleUnit &u, Vec2<int> &dest, int &ticks);
+	bool getNextFacing(GameState &state, BattleUnit &u, Vec2<int> &dest);
 	// Request next body state
-	bool getNextBodyState(GameState &state, BattleUnit &u, AgentType::BodyState &dest, int &ticks);
+	bool getNextBodyState(GameState &state, BattleUnit &u, AgentType::BodyState &dest);
 
 	// Spend agent TUs or append AcquireTU mission
 	static bool spendAgentTUs(GameState &state, BattleUnit &u, int cost);

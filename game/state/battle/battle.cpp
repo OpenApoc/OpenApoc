@@ -67,7 +67,7 @@ Battle::~Battle()
 	this->map_parts.clear();
 	for (auto &u : this->units)
 	{
-		u->agent->unit = nullptr;
+		u.second->agent->unit = nullptr;
 	}
 	for (auto &s : this->items)
 	{
@@ -111,8 +111,11 @@ void Battle::initBattle(GameState &state)
 	}
 	for (auto &o : this->units)
 	{
-		o->battle = stt;
-		o->agent->unit = o->shared_from_this();
+		o.second->battle = stt;
+		if (o.second->focusUnit)
+		{
+			o.second->focusUnit->focusedByUnits.push_back(o.second);
+		}
 	}
 	if (forces.size() == 0)
 	{
@@ -128,7 +131,7 @@ void Battle::initBattle(GameState &state)
 		// Place units into squads directly to their positions
 		for (auto &u : this->units)
 		{
-			forces[u->owner].squads[u->squadNumber].units[u->squadPosition] = u;
+			forces[u.second->owner].squads[u.second->squadNumber].units[u.second->squadPosition] = u.second;
 		}
 		// Trim nullptrs from squad units
 		for (auto &o : this->participants)
@@ -185,11 +188,11 @@ void Battle::initMap()
 	}
 	for (auto &u : this->units)
 	{
-		if (u->destroyed || u->retreated)
+		if (u.second->destroyed || u.second->retreated)
 		{
 			continue;
 		}
-		this->map->addObjectToMap(u);
+		this->map->addObjectToMap(u.second);
 	}
 	for (auto &p : this->projectiles)
 	{
@@ -209,6 +212,12 @@ sp<Doodad> Battle::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 	return doodad;
 }
 
+void Battle::addUnit(sp<BattleUnit> unit)
+{
+	unit->id = UString::format("%s%d", BattleUnit::getPrefix(), (int)units.size());
+	units[unit->id] = unit;
+}
+
 void Battle::update(GameState &state, unsigned int ticks)
 {
 	TRACE_FN_ARGS1("ticks", Strings::fromInteger(static_cast<int>(ticks)));
@@ -223,6 +232,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 	{
 		auto &p = *it++;
 		auto c = p->checkProjectileCollision(*map);
+		if (c)
 		{
 			// FIXME: Handle collision
 			this->projectiles.erase(c.projectile);
@@ -280,7 +290,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 	Trace::start("Battle::update::units->update");
 	for (auto &o : this->units)
 	{
-		o->update(state, ticks);
+		o.second->update(state, ticks);
 	}
 	Trace::end("Battle::update::units->update");
 	Trace::start("Battle::update::doodads->update");
@@ -301,13 +311,13 @@ void Battle::beginTurn()
 	
 	LogWarning("Implement beginning turn!");
 
-	for (auto u : units)
+	for (auto &u : units)
 	{
-		if (u->owner != currentActiveOrganisation)
+		if (u.second->owner != currentActiveOrganisation)
 		{
 			continue;
 		}
-		u->agent->modified_stats.restoreTU();
+		u.second->agent->modified_stats.restoreTU();
 	}
 }
 
@@ -850,8 +860,9 @@ void Battle::enterBattle(GameState &state)
 	// Turn units towards map centre
 	// Also make sure they're facing in a valid direction
 	// And stand in a valid pose
-	for (auto u : b->units)
+	for (auto p : b->units)
 	{
+		auto u = p.second;
 		int x_diff = (int)(u->position.x - b->size.x / 2);
 		int y_diff = (int)(u->position.y - b->size.y / 2);
 		if (std::abs(x_diff) > std::abs(y_diff))
@@ -1010,8 +1021,9 @@ void Battle::loadImagePacks(GameState &state)
 	}
 	// Find out all image packs used by map's units and items
 	std::set<UString> imagePacks;
-	for (auto &bu : units)
+	for (auto &p : units)
 	{
+		auto &bu = p.second;
 		{
 			auto packName = BattleUnitImagePack::getNameFromID(bu->agent->type->shadow_pack.id);
 			if (imagePacks.find(packName) == imagePacks.end())
@@ -1089,9 +1101,9 @@ void Battle::loadAnimationPacks(GameState &state)
 	}
 	// Find out all animation packs used by units
 	std::set<UString> animationPacks;
-	for (auto &bu : units)
+	for (auto &u : units)
 	{
-		for (auto &ap : bu->agent->type->animation_packs)
+		for (auto &ap : u.second->agent->type->animation_packs)
 		{
 			auto packName = BattleUnitAnimationPack::getNameFromID(ap.id);
 			if (animationPacks.find(packName) == animationPacks.end())

@@ -59,6 +59,17 @@ void BattleItem::setPosition(const Vec3<float> &pos)
 	}
 }
 
+Collision BattleItem::checkItemCollision(Vec3<float> previousPosition, Vec3<float> nextPosition)
+{
+	Collision c = tileObject->map.findCollision(previousPosition, nextPosition, {});
+	if (c && ownerInvulnerableTicks > 0 && c.obj->getType() == TileObject::Type::Unit &&
+		item->ownerAgent->unit == std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit())
+	{
+		return{};
+	}
+	return c;
+}
+
 void BattleItem::update(GameState &state, unsigned int ticks)
 {
 	if (supported)
@@ -66,6 +77,10 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 		return;
 	}
 
+	if (ownerInvulnerableTicks > 0)
+	{
+		ownerInvulnerableTicks -= ticks;
+	}
 	int remainingTicks = ticks;
 
 	auto previousPosition = position;
@@ -82,7 +97,7 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 	// Check if new position is valid
 	// FIXME: Collide with units but not with us
 	bool collision = false;
-	auto c = tileObject->map.findCollision(previousPosition, newPosition, {}, item->ownerAgent->unit->tileObject);
+	auto c = checkItemCollision(previousPosition, newPosition);
 	if (c)
 	{
 		collision = true;

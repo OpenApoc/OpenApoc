@@ -1061,18 +1061,18 @@ bool BattleUnitMission::getNextDestination(GameState &state, BattleUnit &u, Vec3
 	return advanceAlongPath(state, u, dest);
 }
 
-bool BattleUnitMission::getNextFacing(GameState &state, BattleUnit &u, Vec2<int> &dest, int &ticks)
+bool BattleUnitMission::getNextFacing(GameState &state, BattleUnit &u, Vec2<int> &dest)
 {
 	if (this->type != MissionType::Turn)
 		return false;
-	return advanceFacing(state, u, dest, ticks);
+	return advanceFacing(state, u, dest);
 }
 
-bool BattleUnitMission::getNextBodyState(GameState &state, BattleUnit &u, AgentType::BodyState &dest, int &ticks)
+bool BattleUnitMission::getNextBodyState(GameState &state, BattleUnit &u, AgentType::BodyState &dest)
 {
 	if (this->type != MissionType::ChangeBodyState)
 		return false;
-	return advanceBodyState(state, u, bodyState, dest, ticks);
+	return advanceBodyState(state, u, bodyState, dest);
 }
 
 void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int ticks, bool finished)
@@ -1189,7 +1189,7 @@ bool BattleUnitMission::isFinishedInternal(GameState &state, BattleUnit &u)
 		case MissionType::ThrowItem:
 			return !item;
 		case MissionType::Turn:
-			if (u.facing == targetFacing || u.isDead())
+			if ((u.facing == targetFacing) || u.isDead())
 			{
 				return true;
 			}
@@ -1218,7 +1218,6 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 
 	switch (this->type)
 	{
-		
 		case MissionType::Turn:
 		case MissionType::ChangeBodyState:
 		{
@@ -1253,7 +1252,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 					return;
 				}
 				// Process item
-				item->ammo -= (int)glm::length(Vec3<float>(u.tileObject->getOwningTile()->position - targetLocation));
+				item->ammo = 0;
 				item = nullptr;
 				// Teleport unit
 				u.missions.clear();
@@ -1314,6 +1313,8 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				bi->velocity = (glm::normalize(targetVector) * velocityXY +
 				               Vec3<float>{0.0, 0.0, velocityZ}) * VELOCITY_SCALE_BATTLE;
 				bi->supported = false;
+				// 36 / (velocity length) = enough ticks to pass 1 whole tile
+				bi->ownerInvulnerableTicks = (int)ceilf(36.0f / glm::length(bi->velocity / VELOCITY_SCALE_BATTLE)) + 1;
 				battle->items.push_back(bi);
 				u.tileObject->map.addObjectToMap(bi);
 
@@ -1741,7 +1742,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 	return true;
 }
 
-bool BattleUnitMission::advanceFacing(GameState &state, BattleUnit &u, Vec2<int> &dest, int &ticks)
+bool BattleUnitMission::advanceFacing(GameState &state, BattleUnit &u, Vec2<int> &dest)
 {
 	static const std::map<Vec2<int>, int> facing_dir_map = {
 		{ { 0, -1 }, 0 },{ { 1, -1 }, 1 },{ { 1, 0 }, 2 },{ { 1, 1 }, 3 },
@@ -1809,12 +1810,10 @@ bool BattleUnitMission::advanceFacing(GameState &state, BattleUnit &u, Vec2<int>
 		return false;
 	}
 	
-	// Cost spent, start turning
-	ticks = TICKS_PER_FRAME_UNIT;
 	return true;
 }
 
-bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, AgentType::BodyState targetState, AgentType::BodyState &dest, int &ticks)
+bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, AgentType::BodyState targetState, AgentType::BodyState &dest)
 {
 	if (targetState == u.target_body_state)
 	{
@@ -1825,49 +1824,33 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, AgentT
 		LogError("Requesting to change body state during another body state change?");
 		u.setBodyState(u.target_body_state);
 	}
-	bool instant = false;
-	if (u.agent->getAnimationPack()->getFrameCountBody(
-		u.getDisplayedItem(), u.target_body_state, targetState, u.current_hand_state,
-		u.current_movement_state, u.facing) == 0)
-	{
-		if (u.agent->getAnimationPack()->getFrameCountBody(
-			u.getDisplayedItem(), u.target_body_state, targetState, u.current_hand_state,
-			AgentType::MovementState::None, u.facing) != 0)
-		{
-			u.setMovementState(AgentType::MovementState::None);
-		}
-		else
-		{
-			instant = true;
-		}
-	}
 	// Transition for stance changes
 	// If trying to fly stand up first
 	if (targetState == AgentType::BodyState::Flying &&
 		u.current_body_state != AgentType::BodyState::Standing)
 	{
-		return advanceBodyState(state, u, AgentType::BodyState::Standing, dest, ticks);
+		return advanceBodyState(state, u, AgentType::BodyState::Standing, dest);
 	}
 	// If trying to stop flying stand up first
 	if (targetState != AgentType::BodyState::Standing &&
 		u.current_body_state == AgentType::BodyState::Flying &&
 		u.agent->isBodyStateAllowed(AgentType::BodyState::Standing))
 	{
-		return advanceBodyState(state, u, AgentType::BodyState::Standing, dest, ticks);
+		return advanceBodyState(state, u, AgentType::BodyState::Standing, dest);
 	}
 	// If trying to stand up from prone go kneel first
 	if (targetState != AgentType::BodyState::Kneeling &&
 		u.current_body_state == AgentType::BodyState::Prone &&
 		u.agent->isBodyStateAllowed(AgentType::BodyState::Kneeling))
 	{
-		return advanceBodyState(state, u, AgentType::BodyState::Kneeling, dest, ticks);
+		return advanceBodyState(state, u, AgentType::BodyState::Kneeling, dest);
 	}
 	// If trying to go prone from not kneeling then kneel first
 	if (targetState == AgentType::BodyState::Prone &&
 		u.current_body_state != AgentType::BodyState::Kneeling &&
 		u.agent->isBodyStateAllowed(AgentType::BodyState::Kneeling))
 	{
-		return advanceBodyState(state, u, AgentType::BodyState::Kneeling, dest, ticks);
+		return advanceBodyState(state, u, AgentType::BodyState::Kneeling, dest);
 	}
 	// Calculate and spend cost
 	int cost = getBodyStateChangeCost(u.target_body_state, targetState);
@@ -1880,11 +1863,6 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, AgentT
 	}
 	// Change state actually
 	dest = targetState;
-	ticks = instant ? 0 : u.agent->getAnimationPack()->getFrameCountBody(
-		u.getDisplayedItem(), u.current_body_state,
-		targetState, u.current_hand_state,
-		u.current_movement_state, u.facing) *
-		TICKS_PER_FRAME_UNIT;
 	return true;
 }
 
