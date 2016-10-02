@@ -78,7 +78,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 		TileCenter,
 		TileGround
 	};
-	
+
 	UString id;
 
 	StateRef<Agent> agent;
@@ -91,12 +91,12 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	void moveToSquadPosition(int squadPosition);
 
 	// Weapon state and firing
-	
+
 	WeaponStatus weaponStatus = WeaponStatus::NotFiring;
 	TargetingMode targetingMode = TargetingMode::NoTarget;
 	// Tile we're targeting right now (or tile with unit we're targeting)
 	Vec3<int> targetTile;
-	// Unit we're targeting right now 
+	// Unit we're targeting right now
 	StateRef<BattleUnit> targetUnit;
 	// Unit we're ordered to focus on (in real time)
 	StateRef<BattleUnit> focusUnit;
@@ -105,8 +105,10 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	int ticksTillNextTargetCheck = 0;
 
 	void setFocus(StateRef<BattleUnit> unit);
-	void startAttacking(StateRef<BattleUnit> unit, WeaponStatus status = WeaponStatus::FiringBothHands);
-	void startAttacking(Vec3<int> tile, WeaponStatus status = WeaponStatus::FiringBothHands, bool atGround = false);
+	void startAttacking(StateRef<BattleUnit> unit,
+	                    WeaponStatus status = WeaponStatus::FiringBothHands);
+	void startAttacking(Vec3<int> tile, WeaponStatus status = WeaponStatus::FiringBothHands,
+	                    bool atGround = false);
 	void stopAttacking();
 
 	// Stats
@@ -147,7 +149,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	AgentType::BodyState target_body_state = AgentType::BodyState::Standing;
 	void setBodyState(AgentType::BodyState state);
 	void beginBodyStateChange(AgentType::BodyState state);
-	
+
 	// Time, in game ticks, until hands animation is finished
 	int hand_animation_ticks_remaining = 0;
 	// Time, in game ticks, until unit will lower it's weapon
@@ -157,10 +159,10 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Get hand animation frame to draw
 	int getHandAnimationFrame() const
 	{
-		return ((firing_animation_ticks_remaining > 0 
-			? firing_animation_ticks_remaining 
-			: hand_animation_ticks_remaining) 
-			+ TICKS_PER_FRAME_UNIT - 1) / TICKS_PER_FRAME_UNIT;
+		return ((firing_animation_ticks_remaining > 0 ? firing_animation_ticks_remaining
+		                                              : hand_animation_ticks_remaining) +
+		        TICKS_PER_FRAME_UNIT - 1) /
+		       TICKS_PER_FRAME_UNIT;
 	}
 	AgentType::HandState current_hand_state = AgentType::HandState::AtEase;
 	AgentType::HandState target_hand_state = AgentType::HandState::AtEase;
@@ -173,14 +175,14 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	{
 		return std::max(0, movement_ticks_passed / TICKS_PER_UNIT_TRAVELLED);
 	}
-	
+
 	// Movement sounds
 	int movement_sounds_played = 0;
 	bool shouldPlaySoundNow();
 	int getWalkSoundIndex();
 	AgentType::MovementState current_movement_state = AgentType::MovementState::None;
 	void setMovementState(AgentType::MovementState state);
-	
+
 	// Time, in game ticks, until unit can turn by 1/8th of a circle
 	int turning_animation_ticks_remaining = 0;
 	void beginTurning(Vec2<int> newFacing);
@@ -207,14 +209,14 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 
 	// Successfully retreated from combat
 	bool retreated = false;
-	
+
 	// Died and corpse was destroyed in an explosion
 	bool destroyed = false;
-	
+
 	// Freefalling
 	bool falling = false;
 	float fallingSpeed = 0.0f;
-	
+
 	// If unit is asked to give way, this list will be filled with facings
 	// in order of priority that should be tried by it
 	std::list<Vec2<int>> giveWayRequest;
@@ -254,7 +256,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 
 	// TU functions
 	// Wether unit can afford action
-	bool canAfford(int cost) const; 
+	bool canAfford(int cost) const;
 	// Returns if unit did spend (false if unsufficient TUs)
 	bool spendTU(int cost);
 

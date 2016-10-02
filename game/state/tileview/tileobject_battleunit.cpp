@@ -45,9 +45,13 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 			if (unit->current_hand_state == AgentType::HandState::Firing)
 			{
 				Vec3<float> targetVector = unit->targetTile - owningTile->position;
-				Vec3<float> targetVectorZeroZ = { targetVector.x, targetVector.y , 0.0f};
-				// Firing angle is 0 for -15..15, +-1  for -30..-15 and 15..30, and 2 for everything else
-				firingAngle = (glm::angle(glm::normalize(targetVector), glm::normalize(targetVectorZeroZ)) * 360 / 2 / M_PI) / 15;
+				Vec3<float> targetVectorZeroZ = {targetVector.x, targetVector.y, 0.0f};
+				// Firing angle is 0 for -15..15, +-1  for -30..-15 and 15..30, and 2 for everything
+				// else
+				firingAngle =
+				    (glm::angle(glm::normalize(targetVector), glm::normalize(targetVectorZeroZ)) *
+				     360 / 2 / M_PI) /
+				    15;
 				if (targetVector.z < 0)
 				{
 					firingAngle = -firingAngle;
@@ -179,7 +183,7 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 void TileObjectBattleUnit::removeFromMap()
 {
 	bool requireRecalc = owningTile != nullptr;
-	std::set<Tile*> prevIntersectingTiles;
+	std::set<Tile *> prevIntersectingTiles;
 	for (auto t : intersectingTiles)
 	{
 		prevIntersectingTiles.insert(t);
@@ -206,7 +210,8 @@ void TileObjectBattleUnit::setPosition(Vec3<float> newPosition)
 	// Set appropriate bounds for the unit
 	auto size = std::max(u->agent->type->bodyType->size[u->current_body_state][u->facing],
 	                     u->agent->type->bodyType->size[u->target_body_state][u->facing]);
-	auto maxHeight = std::max(u->agent->type->bodyType->height[u->current_body_state], u->agent->type->bodyType->height[u->target_body_state]);
+	auto maxHeight = std::max(u->agent->type->bodyType->height[u->current_body_state],
+	                          u->agent->type->bodyType->height[u->target_body_state]);
 	setBounds({size.x, size.y, (float)maxHeight / 40.0f});
 	// It would be appropriate to set bounds based on unit height, like this:
 	//   setBounds({ size.x, size.y, (float)u->agent->type->bodyType->maxHeight / 40.0f });
@@ -222,8 +227,7 @@ void TileObjectBattleUnit::setPosition(Vec3<float> newPosition)
 		if (u->current_body_state == AgentType::BodyState::Prone ||
 		    u->target_body_state == AgentType::BodyState::Prone)
 		{
-			centerOffset = {-u->facing.x * bounds.x / 4.0f, -u->facing.y * bounds.y / 4.0f,
-			                0.5f};
+			centerOffset = {-u->facing.x * bounds.x / 4.0f, -u->facing.y * bounds.y / 4.0f, 0.5f};
 		}
 		else
 		{

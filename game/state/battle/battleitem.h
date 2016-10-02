@@ -23,7 +23,7 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 
   public:
 	sp<AEquipment> item;
-	
+
 	Vec3<float> getPosition() const { return this->position; }
 
 	Vec3<float> position;
@@ -44,7 +44,7 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 	~BattleItem() = default;
 
 	void setPosition(const Vec3<float> &pos);
-	
+
 	Collision checkItemCollision(Vec3<float> previousPosition, Vec3<float> nextPosition);
 
 	bool findSupport(bool emitSound = true, bool forced = false);

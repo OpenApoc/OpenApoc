@@ -138,7 +138,7 @@ void BaseSelectScreen::render()
 	// If there's a modal dialog, darken the screen
 	if (fw().stageGetCurrent() != this->shared_from_this())
 	{
-		fw().renderer->drawFilledRect({ 0, 0 }, fw().displayGetSize(), Colour{ 0, 0, 0, 128 });
+		fw().renderer->drawFilledRect({0, 0}, fw().displayGetSize(), Colour{0, 0, 0, 128});
 	}
 }
 

@@ -7,30 +7,30 @@
 #include "tools/extractors/extractors.h"
 #include <limits>
 
-#define E_TRONLAUN 37	 //extra / tronlaun
-#define A_QUEENWHP 97	 //tactical / aliens / attacks / queenwhp
-#define A_SPITTER 98	 //tactical / aliens / attacks / spitter
-#define A_WORMSPIT 99	 //tactical / aliens / attacks / wormspit
-#define A_WRMATTAK  100	 //tactical / aliens / attacks / wrmattak
-#define W_BULLET1 161	 //bullet1
-#define W_BULLET2 162	 //bullet2
-#define W_BULLET3 163	 //bullet3
-#define W_DCANNON1 164	 //dcannon1
-#define W_DIMNMISL 165	 //dimnmisl
-#define W_DISRUPTR 166	 //disruptr
-#define W_ENTROPY 168	 //entropy
-#define W_MARSEC1 169	 //marsec1
-#define W_MARSEC2 170	 //marsec2
-#define W_MEGAPOL 171	 //megapol
-#define W_MEGASTUN 172	 //megastun
-#define W_MEGCANON 173	 //megcanon
-#define W_MEGHIT 174	 //meghit
-#define W_POWERS 175	 //powers
-#define W_SNIPER 177	 //sniper
-#define W_TOXIGUN 181	 //toxigun
-#define W_TRAKGUN 182	 //trakgun
-#define W_TRAKHIT 183	 //trakgun
-#define W_ZAPHIT 184	 //zaphit
+#define E_TRONLAUN 37  // extra / tronlaun
+#define A_QUEENWHP 97  // tactical / aliens / attacks / queenwhp
+#define A_SPITTER 98   // tactical / aliens / attacks / spitter
+#define A_WORMSPIT 99  // tactical / aliens / attacks / wormspit
+#define A_WRMATTAK 100 // tactical / aliens / attacks / wrmattak
+#define W_BULLET1 161  // bullet1
+#define W_BULLET2 162  // bullet2
+#define W_BULLET3 163  // bullet3
+#define W_DCANNON1 164 // dcannon1
+#define W_DIMNMISL 165 // dimnmisl
+#define W_DISRUPTR 166 // disruptr
+#define W_ENTROPY 168  // entropy
+#define W_MARSEC1 169  // marsec1
+#define W_MARSEC2 170  // marsec2
+#define W_MEGAPOL 171  // megapol
+#define W_MEGASTUN 172 // megastun
+#define W_MEGCANON 173 // megcanon
+#define W_MEGHIT 174   // meghit
+#define W_POWERS 175   // powers
+#define W_SNIPER 177   // sniper
+#define W_TOXIGUN 181  // toxigun
+#define W_TRAKGUN 182  // trakgun
+#define W_TRAKHIT 183  // trakgun
+#define W_ZAPHIT 184   // zaphit
 
 namespace OpenApoc
 {
@@ -418,163 +418,165 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 			UString sfx_path = "";
 			switch (pdata.fire_sfx)
 			{
-			case E_TRONLAUN:
-				sfx_path = "extra/tronlaun";
-				break;
-			case A_QUEENWHP:
-				sfx_path = "tactical/aliens/attacks/queenwhp";
-				break;
-			case A_SPITTER:
-				sfx_path = "tactical/aliens/attacks/spitter";
-				break;
-			case A_WORMSPIT:
-				sfx_path = "tactical/aliens/attacks/wormspit";
-				break;
-			case A_WRMATTAK:
-				sfx_path = "tactical/aliens/attacks/wrmattak";
-				break;
-			case W_BULLET1:
-				sfx_path = "tactical/weapons/bullet1";
-				break;
-			case W_BULLET2:
-				sfx_path = "tactical/weapons/bullet2";
-				break;
-			case W_BULLET3:
-				sfx_path = "tactical/weapons/bullet3";
-				break;
-			case W_DCANNON1:
-				sfx_path = "tactical/weapons/dcannon1";
-				break;
-			case W_DIMNMISL:
-				sfx_path = "tactical/weapons/dimnmisl";
-				break;
-			case W_DISRUPTR:
-				sfx_path = "tactical/weapons/disruptr";
-				break;
-			case W_ENTROPY:
-				sfx_path = "tactical/weapons/entropy";
-				break;
-			case W_MARSEC1:
-				sfx_path = "tactical/weapons/marsec1";
-				break;
-			case W_MARSEC2:
-				sfx_path = "tactical/weapons/marsec2";
-				break;
-			case W_MEGAPOL:
-				sfx_path = "tactical/weapons/megapol";
-				break;
-			case W_MEGASTUN:
-				sfx_path = "tactical/weapons/megastun";
-				break;
-			case W_MEGCANON:
-				sfx_path = "tactical/weapons/megcanon";
-				break;
-			case W_MEGHIT:
-				sfx_path = "tactical/weapons/meghit";
-				break;
-			case W_POWERS:
-				sfx_path = "tactical/weapons/powers";
-				break;
-			case W_SNIPER:
-				sfx_path = "tactical/weapons/sniper";
-				break;
-			case W_TOXIGUN:
-				sfx_path = "tactical/weapons/toxigun";
-				break;
-			case W_TRAKGUN:
-				sfx_path = "tactical/weapons/trakgun";
-				break;
-			case W_TRAKHIT:
-				sfx_path = "tactical/weapons/trakhit";
-				break;
-			case W_ZAPHIT:
-				sfx_path = "tactical/weapons/zaphit";
-				break;
+				case E_TRONLAUN:
+					sfx_path = "extra/tronlaun";
+					break;
+				case A_QUEENWHP:
+					sfx_path = "tactical/aliens/attacks/queenwhp";
+					break;
+				case A_SPITTER:
+					sfx_path = "tactical/aliens/attacks/spitter";
+					break;
+				case A_WORMSPIT:
+					sfx_path = "tactical/aliens/attacks/wormspit";
+					break;
+				case A_WRMATTAK:
+					sfx_path = "tactical/aliens/attacks/wrmattak";
+					break;
+				case W_BULLET1:
+					sfx_path = "tactical/weapons/bullet1";
+					break;
+				case W_BULLET2:
+					sfx_path = "tactical/weapons/bullet2";
+					break;
+				case W_BULLET3:
+					sfx_path = "tactical/weapons/bullet3";
+					break;
+				case W_DCANNON1:
+					sfx_path = "tactical/weapons/dcannon1";
+					break;
+				case W_DIMNMISL:
+					sfx_path = "tactical/weapons/dimnmisl";
+					break;
+				case W_DISRUPTR:
+					sfx_path = "tactical/weapons/disruptr";
+					break;
+				case W_ENTROPY:
+					sfx_path = "tactical/weapons/entropy";
+					break;
+				case W_MARSEC1:
+					sfx_path = "tactical/weapons/marsec1";
+					break;
+				case W_MARSEC2:
+					sfx_path = "tactical/weapons/marsec2";
+					break;
+				case W_MEGAPOL:
+					sfx_path = "tactical/weapons/megapol";
+					break;
+				case W_MEGASTUN:
+					sfx_path = "tactical/weapons/megastun";
+					break;
+				case W_MEGCANON:
+					sfx_path = "tactical/weapons/megcanon";
+					break;
+				case W_MEGHIT:
+					sfx_path = "tactical/weapons/meghit";
+					break;
+				case W_POWERS:
+					sfx_path = "tactical/weapons/powers";
+					break;
+				case W_SNIPER:
+					sfx_path = "tactical/weapons/sniper";
+					break;
+				case W_TOXIGUN:
+					sfx_path = "tactical/weapons/toxigun";
+					break;
+				case W_TRAKGUN:
+					sfx_path = "tactical/weapons/trakgun";
+					break;
+				case W_TRAKHIT:
+					sfx_path = "tactical/weapons/trakhit";
+					break;
+				case W_ZAPHIT:
+					sfx_path = "tactical/weapons/zaphit";
+					break;
 			}
 			if (sfx_path != "")
 			{
-				e->fire_sfx = fw().data->loadSample("RAWSOUND:xcom3/rawsound/"+sfx_path+".raw:22050");
+				e->fire_sfx =
+				    fw().data->loadSample("RAWSOUND:xcom3/rawsound/" + sfx_path + ".raw:22050");
 			}
 
 			sfx_path = "";
 			switch (pdata.impact_sfx)
 			{
-			case E_TRONLAUN:
-				sfx_path = "extra/tronlaun";
-				break;
-			case A_QUEENWHP:
-				sfx_path = "tactical/aliens/attacks/queenwhp";
-				break;
-			case A_SPITTER:
-				sfx_path = "tactical/aliens/attacks/spitter";
-				break;
-			case A_WORMSPIT:
-				sfx_path = "tactical/aliens/attacks/wormspit";
-				break;
-			case A_WRMATTAK:
-				sfx_path = "tactical/aliens/attacks/wrmattak";
-				break;
-			case W_BULLET1:
-				sfx_path = "tactical/weapons/bullet1";
-				break;
-			case W_BULLET2:
-				sfx_path = "tactical/weapons/bullet2";
-				break;
-			case W_BULLET3:
-				sfx_path = "tactical/weapons/bullet3";
-				break;
-			case W_DCANNON1:
-				sfx_path = "tactical/weapons/dcannon1";
-				break;
-			case W_DIMNMISL:
-				sfx_path = "tactical/weapons/dimnmisl";
-				break;
-			case W_DISRUPTR:
-				sfx_path = "tactical/weapons/disruptr";
-				break;
-			case W_ENTROPY:
-				sfx_path = "tactical/weapons/entropy";
-				break;
-			case W_MARSEC1:
-				sfx_path = "tactical/weapons/marsec1";
-				break;
-			case W_MARSEC2:
-				sfx_path = "tactical/weapons/marsec2";
-				break;
-			case W_MEGAPOL:
-				sfx_path = "tactical/weapons/megapol";
-				break;
-			case W_MEGASTUN:
-				sfx_path = "tactical/weapons/megastun";
-				break;
-			case W_MEGCANON:
-				sfx_path = "tactical/weapons/megcanon";
-				break;
-			case W_MEGHIT:
-				sfx_path = "tactical/weapons/meghit";
-				break;
-			case W_POWERS:
-				sfx_path = "tactical/weapons/powers";
-				break;
-			case W_SNIPER:
-				sfx_path = "tactical/weapons/sniper";
-				break;
-			case W_TOXIGUN:
-				sfx_path = "tactical/weapons/toxigun";
-				break;
-			case W_TRAKGUN:
-				sfx_path = "tactical/weapons/trakgun";
-				break;
-			case W_TRAKHIT:
-				sfx_path = "tactical/weapons/trakhit";
-				break;
-			case W_ZAPHIT:
-				sfx_path = "tactical/weapons/zaphit";
-				break;
+				case E_TRONLAUN:
+					sfx_path = "extra/tronlaun";
+					break;
+				case A_QUEENWHP:
+					sfx_path = "tactical/aliens/attacks/queenwhp";
+					break;
+				case A_SPITTER:
+					sfx_path = "tactical/aliens/attacks/spitter";
+					break;
+				case A_WORMSPIT:
+					sfx_path = "tactical/aliens/attacks/wormspit";
+					break;
+				case A_WRMATTAK:
+					sfx_path = "tactical/aliens/attacks/wrmattak";
+					break;
+				case W_BULLET1:
+					sfx_path = "tactical/weapons/bullet1";
+					break;
+				case W_BULLET2:
+					sfx_path = "tactical/weapons/bullet2";
+					break;
+				case W_BULLET3:
+					sfx_path = "tactical/weapons/bullet3";
+					break;
+				case W_DCANNON1:
+					sfx_path = "tactical/weapons/dcannon1";
+					break;
+				case W_DIMNMISL:
+					sfx_path = "tactical/weapons/dimnmisl";
+					break;
+				case W_DISRUPTR:
+					sfx_path = "tactical/weapons/disruptr";
+					break;
+				case W_ENTROPY:
+					sfx_path = "tactical/weapons/entropy";
+					break;
+				case W_MARSEC1:
+					sfx_path = "tactical/weapons/marsec1";
+					break;
+				case W_MARSEC2:
+					sfx_path = "tactical/weapons/marsec2";
+					break;
+				case W_MEGAPOL:
+					sfx_path = "tactical/weapons/megapol";
+					break;
+				case W_MEGASTUN:
+					sfx_path = "tactical/weapons/megastun";
+					break;
+				case W_MEGCANON:
+					sfx_path = "tactical/weapons/megcanon";
+					break;
+				case W_MEGHIT:
+					sfx_path = "tactical/weapons/meghit";
+					break;
+				case W_POWERS:
+					sfx_path = "tactical/weapons/powers";
+					break;
+				case W_SNIPER:
+					sfx_path = "tactical/weapons/sniper";
+					break;
+				case W_TOXIGUN:
+					sfx_path = "tactical/weapons/toxigun";
+					break;
+				case W_TRAKGUN:
+					sfx_path = "tactical/weapons/trakgun";
+					break;
+				case W_TRAKHIT:
+					sfx_path = "tactical/weapons/trakhit";
+					break;
+				case W_ZAPHIT:
+					sfx_path = "tactical/weapons/zaphit";
+					break;
 			}
 			if (sfx_path != "")
 			{
-				e->impact_sfx = fw().data->loadSample("RAWSOUND:xcom3/rawsound/" + sfx_path + ".raw:22050");
+				e->impact_sfx =
+				    fw().data->loadSample("RAWSOUND:xcom3/rawsound/" + sfx_path + ".raw:22050");
 			}
 
 			e->damage_type = {&state, data_t.getDTypeId(pdata.damage_type)};

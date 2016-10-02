@@ -1,7 +1,7 @@
 #pragma once
-#include "game/state/gametime.h"
 #include "game/state/agent.h"
 #include "game/state/battle/battleunit.h"
+#include "game/state/gametime.h"
 #include "game/state/rules/aequipment_type.h"
 #include "library/sp.h"
 #include "library/vec.h"
@@ -28,9 +28,10 @@ class AEquipment
 	StateRef<AEquipmentType> getPayloadType();
 
 	Vec2<int> equippedPosition;
-	AgentEquipmentLayout::EquipmentSlotType equippedSlotType = AgentEquipmentLayout::EquipmentSlotType::None;
+	AgentEquipmentLayout::EquipmentSlotType equippedSlotType =
+	    AgentEquipmentLayout::EquipmentSlotType::None;
 	StateRef<Agent> ownerAgent;
-	
+
 	// Ammunition for weapons, protection for armor, charge for items
 	int ammo = 0;
 
@@ -39,14 +40,13 @@ class AEquipment
 	bool readyToFire = false;
 	int weapon_fire_ticks_remaining = 0;
 	BattleUnit::FireAimingMode aimingMode = BattleUnit::FireAimingMode::Aimed;
-	
+
 	int getAccuracy(AgentType::BodyState bodyState, BattleUnit::FireAimingMode fireMode);
 
 	bool isFiring() { return weapon_fire_ticks_remaining > 0 || readyToFire; };
 	bool canFire(float range = 0.0f);
 	void stopFiring();
 	void startFiring(BattleUnit::FireAimingMode fireMode);
-
 
 	// Following members are not serialized, but rather are set in initBattle method
 
@@ -62,6 +62,5 @@ class AEquipment
 	int reload(int ammoAvailable);
 	*/
 	sp<Projectile> fire(Vec3<float> target);
-	
 };
 } // namespace OpenApoc

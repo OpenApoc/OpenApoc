@@ -1,11 +1,11 @@
 #include "game/state/aequipment.h"
 #include "framework/framework.h"
-#include "game/state/city/projectile.h"
 #include "framework/logger.h"
 #include "game/state/agent.h"
+#include "game/state/city/projectile.h"
 #include "game/state/rules/aequipment_type.h"
-#include "library/sp.h"
 #include "game/state/tileview/tileobject_battleunit.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {
@@ -34,7 +34,7 @@ int AEquipment::getAccuracy(AgentType::BodyState bodyState, BattleUnit::FireAimi
 	       (bodyState == AgentType::BodyState::Flying
 	            ? 90
 	            : (bodyState == AgentType::BodyState::Kneeling ? 110 : 100)) /
-	       100 / 100  * (int)fireMode / 4;
+	       100 / 100 * (int)fireMode / 4;
 }
 
 void AEquipment::stopFiring()
@@ -43,7 +43,7 @@ void AEquipment::stopFiring()
 	readyToFire = false;
 }
 
-void  AEquipment::startFiring(BattleUnit::FireAimingMode fireMode)
+void AEquipment::startFiring(BattleUnit::FireAimingMode fireMode)
 {
 	if (ammo == 0)
 		return;
@@ -56,7 +56,8 @@ void AEquipment::update(unsigned int ticks)
 {
 	// Recharge update
 	auto payload = getPayloadType();
-	if (payload->recharge > 0 && ammo < payload->max_ammo);
+	if (payload->recharge > 0 && ammo < payload->max_ammo)
+		;
 	{
 		recharge_ticks_accumulated += ticks;
 	}
@@ -80,41 +81,41 @@ void AEquipment::update(unsigned int ticks)
 			readyToFire = true;
 		}
 	}
-	
+
 	// If firing - confirm we're still in business
 	if (isFiring())
 	{
 		switch (equippedSlotType)
 		{
-		// Check if we're still firing
-		case AgentEquipmentLayout::EquipmentSlotType::LeftHand:
-			if (ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringBothHands
-				&&ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringLeftHand)
-			{
+			// Check if we're still firing
+			case AgentEquipmentLayout::EquipmentSlotType::LeftHand:
+				if (ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringBothHands &&
+				    ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringLeftHand)
+				{
+					stopFiring();
+				}
+				else if (ownerAgent->unit->fire_aiming_mode != aimingMode)
+				{
+					startFiring(ownerAgent->unit->fire_aiming_mode);
+				}
+				break;
+			case AgentEquipmentLayout::EquipmentSlotType::RightHand:
+				if (ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringBothHands &&
+				    ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringRightHand)
+				{
+					stopFiring();
+				}
+				else if (ownerAgent->unit->fire_aiming_mode != aimingMode)
+				{
+					startFiring(ownerAgent->unit->fire_aiming_mode);
+				}
+				break;
+			// If weapon was dropped, we should stop firing
+			case AgentEquipmentLayout::EquipmentSlotType::None:
+			// If weapon was moved to any other slot from hands, stop firing
+			default:
 				stopFiring();
-			}
-			else if (ownerAgent->unit->fire_aiming_mode != aimingMode)
-			{
-				startFiring(ownerAgent->unit->fire_aiming_mode);
-			}
-			break;
-		case AgentEquipmentLayout::EquipmentSlotType::RightHand:
-			if (ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringBothHands
-				&&ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringRightHand)
-			{
-				stopFiring();
-			}
-			else if (ownerAgent->unit->fire_aiming_mode != aimingMode)
-			{
-				startFiring(ownerAgent->unit->fire_aiming_mode);
-			}
-			break;
-		// If weapon was dropped, we should stop firing
-		case AgentEquipmentLayout::EquipmentSlotType::None:
-		// If weapon was moved to any other slot from hands, stop firing
-		default:
-			stopFiring();
-			break;
+				break;
 		}
 	}
 
@@ -133,7 +134,7 @@ sp<Projectile> AEquipment::fire(Vec3<float> target)
 		LogError("fire() called on non-ready Weapon");
 		return nullptr;
 	}
-	
+
 	readyToFire = false;
 	auto unit = ownerAgent->unit;
 	auto payload = getPayloadType();
@@ -146,20 +147,20 @@ sp<Projectile> AEquipment::fire(Vec3<float> target)
 	}
 
 	// FIXME: Apply accuracy
-	auto unitPos = unit->position + Vec3<float>{0.0f, 0.0f, (float)unit->getCurrentHeight() / 40.0f};
+	auto unitPos =
+	    unit->position + Vec3<float>{0.0f, 0.0f, (float)unit->getCurrentHeight() / 40.0f};
 	Vec3<float> velocity = target - unitPos;
 	velocity = glm::normalize(velocity);
-	velocity *= payload->speed * TICK_SCALE / 4;// I believe this is the correct formula
+	velocity *= payload->speed * TICK_SCALE / 4; // I believe this is the correct formula
 
-	return mksp<Projectile>(unit, unitPos, velocity,
-		payload->ttl * 4, payload->damage, payload->tail_size, payload->projectile_sprites, payload->impact_sfx);
+	return mksp<Projectile>(unit, unitPos, velocity, payload->ttl * 4, payload->damage,
+	                        payload->tail_size, payload->projectile_sprites, payload->impact_sfx);
 }
 
 bool AEquipment::canFire(float range)
-{ 
-	return type->type == AEquipmentType::Type::Weapon 
-		&& ammo > 0 
-		&& getPayloadType()->getRange() > range; 
+{
+	return type->type == AEquipmentType::Type::Weapon && ammo > 0 &&
+	       getPayloadType()->getRange() > range;
 };
 
 } // namespace OpenApoc

@@ -979,7 +979,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 
 			b->addUnit(u);
 			u->agent = a;
-			u->agent->unit = { &state, u->id };
+			u->agent->unit = {&state, u->id};
 			u->owner = a->owner;
 			u->squadNumber = -1;
 			u->battle = b;
@@ -1022,7 +1022,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 					{
 						if (b->forces[o].squads[s].getNumUnits() >= 3)
 							break;
-						if (u.second->owner != o || u.second->squadNumber != -1 || u.second->retreated)
+						if (u.second->owner != o || u.second->squadNumber != -1 ||
+						    u.second->retreated)
 							continue;
 						u.second->assignToSquad(s);
 						agentCount[o]--;

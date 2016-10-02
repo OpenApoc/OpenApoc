@@ -17,7 +17,7 @@ class Image;
 class Sample;
 class AEquipmentType : public StateObject<AEquipmentType>
 {
-public:
+  public:
 	enum class Type
 	{
 		Armor,

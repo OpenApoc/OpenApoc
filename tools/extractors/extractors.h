@@ -1,9 +1,9 @@
 #pragma once
 #include "game/state/gamestate.h"
 #include "library/strings.h"
+#include "tools/extractors/common/animation.h"
 #include "tools/extractors/common/tacp.h"
 #include "tools/extractors/common/ufo2p.h"
-#include "tools/extractors/common/animation.h"
 
 namespace OpenApoc
 {
@@ -83,44 +83,42 @@ class InitialGameStateExtractor
 
 	void extractSharedBattleResources(GameState &state);
 
-
 	// Unit animation packs functions
 
-	sp<BattleUnitAnimationPack::AnimationEntry>
-		getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
-			const std::vector<AnimationDataUA> &dataUA, std::vector<AnimationDataUF> &dataUF,
-			int index, Vec2<int> direction, int frames_per_100_units, int split_point,
-			bool left_side, bool isOverlay = false, bool removeItem = false,
-			Vec2<int> targetOffset = { 0, 0 }, Vec2<int> beginOffset = { 0, 0 }, 
-			bool inverse = false, int extraEndFrames = 0);
+	sp<BattleUnitAnimationPack::AnimationEntry> getAnimationEntry(
+	    const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
+	    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
+	    int frames_per_100_units, int split_point, bool left_side, bool isOverlay = false,
+	    bool removeItem = false, Vec2<int> targetOffset = {0, 0}, Vec2<int> beginOffset = {0, 0},
+	    bool inverse = false, int extraEndFrames = 0);
 
 	sp<BattleUnitAnimationPack::AnimationEntry>
-		getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
-			const std::vector<AnimationDataUA> &dataUA, std::vector<AnimationDataUF> &dataUF,
-			int index, Vec2<int> direction, int frames_per_100_units = 100,
-			bool isOverlay = false, Vec2<int> targetOffset = { 0, 0 },
-			Vec2<int> beginOffset = { 0, 0 })
+	getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
+	                  const std::vector<AnimationDataUA> &dataUA,
+	                  std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
+	                  int frames_per_100_units = 100, bool isOverlay = false,
+	                  Vec2<int> targetOffset = {0, 0}, Vec2<int> beginOffset = {0, 0})
 	{
 		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, frames_per_100_units, 0,
-			false, isOverlay, false, targetOffset, beginOffset);
+		                         false, isOverlay, false, targetOffset, beginOffset);
+	}
+
+	sp<BattleUnitAnimationPack::AnimationEntry> getAnimationEntry(
+	    const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
+	    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction, bool inverse)
+	{
+		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, 100, 0, false, false,
+		                         false, {0, 0}, {0, 0}, true);
 	}
 
 	sp<BattleUnitAnimationPack::AnimationEntry>
-		getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
-			const std::vector<AnimationDataUA> &dataUA, std::vector<AnimationDataUF> &dataUF,
-			int index, Vec2<int> direction, bool inverse)
+	getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
+	                  const std::vector<AnimationDataUA> &dataUA,
+	                  std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
+	                  Vec2<int> targetOffset, Vec2<int> beginOffset)
 	{
-		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, 100, 0,
-			false, false, false, { 0,0 }, { 0,0 }, true);
-	}
-
-	sp<BattleUnitAnimationPack::AnimationEntry>
-		getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
-			const std::vector<AnimationDataUA> &dataUA, std::vector<AnimationDataUF> &dataUF,
-			int index, Vec2<int> direction, Vec2<int> targetOffset, Vec2<int> beginOffset)
-	{
-		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, 100, 0, false, false, false,
-			targetOffset, beginOffset);
+		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, 100, 0, false, false,
+		                         false, targetOffset, beginOffset);
 	}
 
 	Vec2<int> gPrOff(Vec2<int> facing);
@@ -128,8 +126,8 @@ class InitialGameStateExtractor
 	// Unit animation pack extractors
 
 	void extractAnimationPackUnit(sp<BattleUnitAnimationPack> p,
-		const std::vector<AnimationDataAD> &dataAD,
-		const std::vector<AnimationDataUA> &dataUA,
-		std::vector<AnimationDataUF> &dataUF, int x, int y);
+	                              const std::vector<AnimationDataAD> &dataAD,
+	                              const std::vector<AnimationDataUA> &dataUA,
+	                              std::vector<AnimationDataUF> &dataUF, int x, int y);
 };
 }

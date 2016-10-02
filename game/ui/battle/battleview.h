@@ -30,7 +30,7 @@ enum class BattleSelectionState
 	NormalCtrlAlt,
 	PsiLeft,
 	PsiRight,
-	FireAny, 
+	FireAny,
 	FireLeft,
 	FireRight,
 	ThrowLeft,
@@ -55,12 +55,12 @@ class AgentEquipmentInfo
 
 class BattleView : public BattleTileView
 {
-private:
+  private:
 	const std::vector<Colour> accuracyColors = {
-		{190, 36, 36},  {203, 28, 2},    {235, 77, 4},    {239, 125, 52},
-		{243, 170, 85}, {247, 219, 117}, {235, 247, 138},
+	    {190, 36, 36},  {203, 28, 2},    {235, 77, 4},    {239, 125, 52},
+	    {243, 170, 85}, {247, 219, 117}, {235, 247, 138},
 	};
-	const Colour ammoColour = { 158, 24, 12 };
+	const Colour ammoColour = {158, 24, 12};
 
 	sp<Form> activeTab, baseForm;
 	std::vector<sp<Form>> uiTabsRT;
@@ -113,8 +113,11 @@ private:
 	void orderThrow(Vec3<int> target, bool right);
 	void orderTeleport(Vec3<int> target, bool right);
 	void orderSelect(sp<BattleUnit> u, bool inverse = false, bool additive = false);
-	void orderFire(Vec3<int> target, BattleUnit::WeaponStatus status = BattleUnit::WeaponStatus::FiringBothHands, bool modifier = false);
-	void orderFire(StateRef<BattleUnit> u, BattleUnit::WeaponStatus status = BattleUnit::WeaponStatus::FiringBothHands);
+	void orderFire(Vec3<int> target,
+	               BattleUnit::WeaponStatus status = BattleUnit::WeaponStatus::FiringBothHands,
+	               bool modifier = false);
+	void orderFire(StateRef<BattleUnit> u,
+	               BattleUnit::WeaponStatus status = BattleUnit::WeaponStatus::FiringBothHands);
 	void orderFocus(StateRef<BattleUnit> u);
 
 	void attemptToClearCurrentOrders(sp<BattleUnit> u, bool overrideBodyStateChange = false);

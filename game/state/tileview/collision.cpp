@@ -11,7 +11,8 @@ namespace OpenApoc
 {
 
 Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
-	const std::set<TileObject::Type> validTypes, bool useLOS, bool check_full_path) const
+                                 const std::set<TileObject::Type> validTypes, bool useLOS,
+                                 bool check_full_path) const
 {
 	if (useLOS)
 		LogError("Handle LOS checks");

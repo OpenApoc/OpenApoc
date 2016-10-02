@@ -46,8 +46,7 @@ class PathNode
 std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination,
                                                unsigned int iterationLimit,
                                                const CanEnterTileHelper &canEnterTile,
-											   bool demandGiveWay, float *cost, 
-											   float maxCost)
+                                               bool demandGiveWay, float *cost, float maxCost)
 {
 #ifdef PATHFINDING_DEBUG
 	for (auto &t : tiles)
@@ -195,7 +194,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					newNodeCost += canEnterTile.adjustCost(nextPosition, z);
 
 					auto newNode = new PathNode(
-					    newNodeCost , canEnterTile.getDistance(nextPosition, goalPosition),
+					    newNodeCost, canEnterTile.getDistance(nextPosition, goalPosition),
 					    nodeToExpand, tile);
 					nodesToDelete.push_back(newNode);
 
@@ -222,13 +221,15 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	{
 		if (maxCost > 0.0f)
 		{
-			LogInfo("Could not find path within maxPath, returning closest path {%d,%d,%d}", closestNodeSoFar->thisTile->position.x,
-				closestNodeSoFar->thisTile->position.y, closestNodeSoFar->thisTile->position.z);
+			LogInfo("Could not find path within maxPath, returning closest path {%d,%d,%d}",
+			        closestNodeSoFar->thisTile->position.x, closestNodeSoFar->thisTile->position.y,
+			        closestNodeSoFar->thisTile->position.z);
 		}
 		else
 		{
-			LogError("Surprisingly, no nodes to expand! Closest path {%d,%d,%d}", closestNodeSoFar->thisTile->position.x,
-				closestNodeSoFar->thisTile->position.y, closestNodeSoFar->thisTile->position.z);
+			LogError("Surprisingly, no nodes to expand! Closest path {%d,%d,%d}",
+			         closestNodeSoFar->thisTile->position.x, closestNodeSoFar->thisTile->position.y,
+			         closestNodeSoFar->thisTile->position.z);
 		}
 	}
 

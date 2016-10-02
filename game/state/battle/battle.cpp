@@ -28,7 +28,7 @@
 #include <unordered_map>
 
 #ifdef _MSC_VER
-#pragma warning (push, 1)
+#pragma warning(push, 1)
 #pragma warning(disable : 4503)
 #endif
 
@@ -131,7 +131,8 @@ void Battle::initBattle(GameState &state)
 		// Place units into squads directly to their positions
 		for (auto &u : this->units)
 		{
-			forces[u.second->owner].squads[u.second->squadNumber].units[u.second->squadPosition] = u.second;
+			forces[u.second->owner].squads[u.second->squadNumber].units[u.second->squadPosition] =
+			    u.second;
 		}
 		// Trim nullptrs from squad units
 		for (auto &o : this->participants)
@@ -240,7 +241,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 			{
 				fw().soundBackend->playSample(c.projectile->impactSfx, c.position);
 			}
-			
+
 			// FIXME: Get doodad from weapon definition?
 			auto doodad = this->placeDoodad({&state, "DOODAD_EXPLOSION_0"}, c.position);
 
@@ -313,7 +314,7 @@ void Battle::beginTurn()
 		LogError("beginTurn called in real time?");
 		return;
 	}
-	
+
 	LogWarning("Implement beginning turn!");
 
 	for (auto &u : units)
@@ -1145,5 +1146,5 @@ void Battle::unloadAnimationPacks(GameState &state)
 } // namespace OpenApoc
 
 #ifdef _MSC_VER
-#pragma warning (pop)
+#pragma warning(pop)
 #endif

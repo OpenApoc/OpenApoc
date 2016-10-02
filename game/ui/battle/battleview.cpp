@@ -1,13 +1,13 @@
 #include "game/ui/battle/battleview.h"
 #include "forms/ui.h"
+#include "framework/apocresources/cursor.h"
 #include "framework/event.h"
 #include "framework/framework.h"
-#include "framework/apocresources/cursor.h"
 #include "game/state/battle/battle.h"
+#include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/battle/battleunit.h"
-#include "game/state/battle/battleitem.h"
 #include "game/state/gameevent.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
@@ -30,18 +30,18 @@ static const std::vector<UString> TAB_FORM_NAMES_TB = {
 } // anonymous namespace
 
 BattleView::BattleView(sp<GameState> state)
-    : BattleTileView(
-          *state->current_battle->map, Vec3<int>{TILE_X_BATTLE, TILE_Y_BATTLE, TILE_Z_BATTLE},
-          Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric,
-          state->current_battle->battleviewZLevel, state->current_battle->battleviewScreenCenter,
-		state->current_battle),
+    : BattleTileView(*state->current_battle->map,
+                     Vec3<int>{TILE_X_BATTLE, TILE_Y_BATTLE, TILE_Z_BATTLE},
+                     Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric,
+                     state->current_battle->battleviewZLevel,
+                     state->current_battle->battleviewScreenCenter, state->current_battle),
       baseForm(ui().getForm("FORM_BATTLE_UI")), state(state), followAgent(false),
       palette(fw().data->loadPalette("xcom3/tacdata/tactical.pal")),
       selectionState(BattleSelectionState::Normal)
 {
 	this->pal = palette;
 
-	for (int j = 0; j<=15; j++)
+	for (int j = 0; j <= 15; j++)
 	{
 		colorCurrent = j;
 		auto newPal = mksp<Palette>();
@@ -51,27 +51,27 @@ BattleView::BattleView(sp<GameState> state)
 			newPal->setColour(i, palette->getColour(i));
 		}
 		// Lift color, pulsates from (0r 3/8g 5/8b) to (0r 8/8g 4/8b)
-		newPal->setColour(
-			255 - 4, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8, (colorCurrent * 16 * -1 + 255 * 5) / 8));
+		newPal->setColour(255 - 4, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
+		                                  (colorCurrent * 16 * -1 + 255 * 5) / 8));
 		// Red color, for enemy indicators, pulsates from (3/8r 0g 0b) to (8/8r 0g 0b)
 		newPal->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
 		// Blue color, for misc. indicators, pulsates from (0r 3/8g 3/8b) to (0r 8/8g 8/8b)
-		newPal->setColour(
-			255 - 2, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8, (colorCurrent * 16 * 5 + 255 * 3) / 8));
+		newPal->setColour(255 - 2, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
+		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8));
 		// Pink color, for neutral indicators, pulsates from (3/8r 0g 3/8b) to (8/8r 0g 8/8b)
-		newPal->setColour(
-			255 - 1, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, (colorCurrent * 16 * 5 + 255 * 3) / 8));
+		newPal->setColour(255 - 1, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0,
+		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8));
 		// Yellow color, for owned indicators, pulsates from (3/8r 3/8g 0b) to (8/8r 8/8g 0b)
-		newPal->setColour(
-			255 - 0, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, (colorCurrent * 16 * 5 + 255 * 3) / 8, 0));
+		newPal->setColour(255 - 0, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8,
+		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8, 0));
 
 		modPalette.push_back(newPal);
 	}
 
 	selectedItemOverlay = fw().data->loadImage("battle/battle-item-select-icon.png");
 	pauseIcon = fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		"icons.tab:%d:xcom3/tacdata/tactical.pal",
-		260));
+	                                                 "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                 260));
 
 	for (auto &formName : TAB_FORM_NAMES_RT)
 	{
@@ -392,17 +392,17 @@ BattleView::BattleView(sp<GameState> state)
 
 	// We need this in TB because we will be able to allow pausing then
 	this->baseForm->findControl("BUTTON_SPEED0")
-		->addCallback(FormEventType::CheckBoxSelected,
-			[this](Event *) { this->updateSpeed = BattleUpdateSpeed::Pause; });
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Pause; });
 	this->baseForm->findControl("BUTTON_SPEED1")
-		->addCallback(FormEventType::CheckBoxSelected,
-			[this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed1; });
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed1; });
 	this->baseForm->findControl("BUTTON_SPEED2")
-		->addCallback(FormEventType::CheckBoxSelected,
-			[this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed2; });
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed2; });
 	this->baseForm->findControl("BUTTON_SPEED3")
-		->addCallback(FormEventType::CheckBoxSelected,
-			[this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed3; });
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed3; });
 
 	switch (state->current_battle->mode)
 	{
@@ -416,8 +416,8 @@ BattleView::BattleView(sp<GameState> state)
 			this->baseForm->findControl("BUTTON_SPEED3")->Visible = false;
 			this->baseForm->findControl("CLOCK")->Visible = false;
 			this->baseForm->findControl("BUTTON_ENDTURN")
-				->addCallback(FormEventType::ButtonClick,
-					[this](Event *) { this->state->current_battle->endTurn();});
+			    ->addCallback(FormEventType::ButtonClick,
+			                  [this](Event *) { this->state->current_battle->endTurn(); });
 			break;
 		default:
 			LogError("Unexpected battle mode \"%d\"", (int)state->current_battle->mode);
@@ -463,7 +463,7 @@ void BattleView::render()
 		pauseIconTimer %= PAUSE_ICON_BLINK_TIME * 2;
 		if (updateSpeed == BattleUpdateSpeed::Pause && pauseIconTimer > PAUSE_ICON_BLINK_TIME)
 		{
-			fw().renderer->draw(pauseIcon, { fw().displayGetSize().x - pauseIcon->size.x , 0.0f });
+			fw().renderer->draw(pauseIcon, {fw().displayGetSize().x - pauseIcon->size.x, 0.0f});
 		}
 	}
 
@@ -661,14 +661,14 @@ void BattleView::updateSelectionMode()
 	}
 	else
 	{
-		if (selectionState == BattleSelectionState::ThrowLeft 
-			|| selectionState == BattleSelectionState::ThrowRight 
-			|| selectionState == BattleSelectionState::TeleportLeft 
-			|| selectionState == BattleSelectionState::TeleportRight 
-			|| selectionState == BattleSelectionState::PsiLeft
-			|| selectionState == BattleSelectionState::PsiRight
-			|| selectionState == BattleSelectionState::FireLeft
-			|| selectionState == BattleSelectionState::FireRight)
+		if (selectionState == BattleSelectionState::ThrowLeft ||
+		    selectionState == BattleSelectionState::ThrowRight ||
+		    selectionState == BattleSelectionState::TeleportLeft ||
+		    selectionState == BattleSelectionState::TeleportRight ||
+		    selectionState == BattleSelectionState::PsiLeft ||
+		    selectionState == BattleSelectionState::PsiRight ||
+		    selectionState == BattleSelectionState::FireLeft ||
+		    selectionState == BattleSelectionState::FireRight)
 		{
 			// Cannot cancel out of action here
 		}
@@ -712,45 +712,45 @@ void BattleView::updateSelectionMode()
 	// Change cursor
 	switch (selectionState)
 	{
-	case BattleSelectionState::FireAny:
-	case BattleSelectionState::FireLeft:
-	case BattleSelectionState::FireRight:
-		fw().getCursor().CurrentType = ApocCursor::CursorType::Shoot;
-		break;
-	case BattleSelectionState::ThrowLeft:
-	case BattleSelectionState::ThrowRight:
-		if (actionImpossibleDelay > 0)
-		{
-			fw().getCursor().CurrentType = ApocCursor::CursorType::NoTarget;
-		}
-		else
-		{
-			fw().getCursor().CurrentType = ApocCursor::CursorType::ThrowTarget;
-		}
-		break;
-	case BattleSelectionState::PsiLeft:
-	case BattleSelectionState::PsiRight:
-		fw().getCursor().CurrentType = ApocCursor::CursorType::PsiTarget;
-		break;
-	case BattleSelectionState::Normal:
-	case BattleSelectionState::NormalAlt:
-		fw().getCursor().CurrentType = ApocCursor::CursorType::Normal;
-		break;
-	case BattleSelectionState::NormalCtrl:
-	case BattleSelectionState::NormalCtrlAlt:
-		fw().getCursor().CurrentType = ApocCursor::CursorType::Add;
-		break;
-	case BattleSelectionState::TeleportLeft:
-	case BattleSelectionState::TeleportRight:
-		if (actionImpossibleDelay > 0)
-		{
-			fw().getCursor().CurrentType = ApocCursor::CursorType::NoTeleport;
-		}
-		else
-		{
-			fw().getCursor().CurrentType = ApocCursor::CursorType::Teleport;
-		}
-		break;
+		case BattleSelectionState::FireAny:
+		case BattleSelectionState::FireLeft:
+		case BattleSelectionState::FireRight:
+			fw().getCursor().CurrentType = ApocCursor::CursorType::Shoot;
+			break;
+		case BattleSelectionState::ThrowLeft:
+		case BattleSelectionState::ThrowRight:
+			if (actionImpossibleDelay > 0)
+			{
+				fw().getCursor().CurrentType = ApocCursor::CursorType::NoTarget;
+			}
+			else
+			{
+				fw().getCursor().CurrentType = ApocCursor::CursorType::ThrowTarget;
+			}
+			break;
+		case BattleSelectionState::PsiLeft:
+		case BattleSelectionState::PsiRight:
+			fw().getCursor().CurrentType = ApocCursor::CursorType::PsiTarget;
+			break;
+		case BattleSelectionState::Normal:
+		case BattleSelectionState::NormalAlt:
+			fw().getCursor().CurrentType = ApocCursor::CursorType::Normal;
+			break;
+		case BattleSelectionState::NormalCtrl:
+		case BattleSelectionState::NormalCtrlAlt:
+			fw().getCursor().CurrentType = ApocCursor::CursorType::Add;
+			break;
+		case BattleSelectionState::TeleportLeft:
+		case BattleSelectionState::TeleportRight:
+			if (actionImpossibleDelay > 0)
+			{
+				fw().getCursor().CurrentType = ApocCursor::CursorType::NoTeleport;
+			}
+			else
+			{
+				fw().getCursor().CurrentType = ApocCursor::CursorType::Teleport;
+			}
+			break;
 	}
 	actionImpossibleDelay--;
 }
@@ -843,11 +843,12 @@ void BattleView::updateSoldierButtons()
 
 	bool throwing = !selectedUnits.empty() && selectedUnits.front()->isThrowing();
 	this->activeTab->findControlTyped<CheckBox>("BUTTON_LEFT_HAND_THROW")
-	    ->setChecked(selectionState == BattleSelectionState::ThrowLeft || leftThrowDelay > 0 || throwing);
+	    ->setChecked(selectionState == BattleSelectionState::ThrowLeft || leftThrowDelay > 0 ||
+	                 throwing);
 	this->activeTab->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND_THROW")
-	    ->setChecked(selectionState == BattleSelectionState::ThrowRight || rightThrowDelay > 0 || throwing);
+	    ->setChecked(selectionState == BattleSelectionState::ThrowRight || rightThrowDelay > 0 ||
+	                 throwing);
 }
-
 
 // Calculate starting velocity among z to reach target
 bool calculateVelocityForThrow(float distanceXY, float diffZ, float &velocityXY, float &velocityZ)
@@ -866,14 +867,14 @@ bool calculateVelocityForThrow(float distanceXY, float diffZ, float &velocityXY,
 	}
 
 	// For simplicity assume moving only along X
-	// 
+	//
 	// t = time, in ticks
 	// VelocityZ(t) = VelocityZ0 - (Falling_Acceleration / VELOCITY_SCALE_Z) * t;
-	// Let:	a = -Faclling_acc / VELOCITY_SCALE_Z/ 2 / TICK_SCALE, 
-	//		b = a + VelocityZ / TICK_SCALE, 
+	// Let:	a = -Faclling_acc / VELOCITY_SCALE_Z/ 2 / TICK_SCALE,
+	//		b = a + VelocityZ / TICK_SCALE,
 	//		c = diffZ
 	// z(t) = a*t^2 + b*t + c
-	// 
+	//
 	// x = coordinate on the tile grid, in tiles
 	// x = t * VelocityX / TICK_SCALE
 	// t = x * TICK_SCALE / VelocityX
@@ -892,12 +893,13 @@ bool calculateVelocityForThrow(float distanceXY, float diffZ, float &velocityXY,
 	float c = diffZ;
 	float t = 0.0f;
 
-	// We will continue reducing velocityXY  until we find such a trajectory that makes the item fall on top of the tile
+	// We will continue reducing velocityXY  until we find such a trajectory that makes the item
+	// fall on top of the tile
 	while (velocityXY > 0.0f)
 	{
 		// FIXME: Should we prevent very high Z-trajectories, unreallistic for heavy items?
 		t = distanceXY * TICK_SCALE / (velocityXY);
-		velocityZ = TICK_SCALE * ((-c - a*t*t) / t - a);
+		velocityZ = TICK_SCALE * ((-c - a * t * t) / t - a);
 		if (velocityZ - (FALLING_ACCELERATION_ITEM / VELOCITY_SCALE_BATTLE.z) * t < -0.5f)
 		{
 			return true;
@@ -910,14 +912,18 @@ bool calculateVelocityForThrow(float distanceXY, float diffZ, float &velocityXY,
 	return false;
 }
 
-// Checks if, while going along the trajectory, we reach target tile or get first collision within it's boundaries
-bool checkThrowTrajectoryValid(TileMap &map, const sp<TileObject> thrower, Vec3<float> start, Vec3<int> end, Vec3<float> targetVector, float velocityXY, float velocityZ)
+// Checks if, while going along the trajectory, we reach target tile or get first collision within
+// it's boundaries
+bool checkThrowTrajectoryValid(TileMap &map, const sp<TileObject> thrower, Vec3<float> start,
+                               Vec3<int> end, Vec3<float> targetVector, float velocityXY,
+                               float velocityZ)
 {
 	int iterationsPerCollision = 10;
 	Vec3<float> curPos = start;
 	Vec3<float> newPos;
-	Vec3<float> velocity = (glm::normalize(targetVector) * velocityXY +
-		Vec3<float>{0.0, 0.0, velocityZ}) * VELOCITY_SCALE_BATTLE;
+	Vec3<float> velocity =
+	    (glm::normalize(targetVector) * velocityXY + Vec3<float>{0.0, 0.0, velocityZ}) *
+	    VELOCITY_SCALE_BATTLE;
 	Collision c;
 	do
 	{
@@ -1090,26 +1096,33 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 	{
 		return;
 	}
-	
+
 	// Check distance to target
 	auto pos = unit->tileObject->getOwningTile()->position;
 	Vec3<float> targetVector = target - pos;
-	targetVector = { targetVector.x, targetVector.y, 0.0f };
+	targetVector = {targetVector.x, targetVector.y, 0.0f};
 	float distance = glm::length(targetVector);
-	if (distance >= unit->getMaxThrowDistance(item->type->weight + (item->payloadType ? item->payloadType->weight : 0), pos.z - target.z))
+	if (distance >= unit->getMaxThrowDistance(
+	                    item->type->weight + (item->payloadType ? item->payloadType->weight : 0),
+	                    pos.z - target.z))
 	{
 		actionImpossibleDelay = 40;
 		return;
 	}
 
 	// Calculate trajectory
-	Vec3<float> startPos = { unit->position.x, unit->position.y, unit->position.z + (float)unit->agent->type->bodyType->height[AgentType::BodyState::Throwing] / 2.0f / 40.0f };
+	Vec3<float> startPos = {
+	    unit->position.x, unit->position.y,
+	    unit->position.z +
+	        (float)unit->agent->type->bodyType->height[AgentType::BodyState::Throwing] / 2.0f /
+	            40.0f};
 	float velXY = 0.0f;
 	float velZ = 0.0f;
 	bool valid = true;
 	while (calculateVelocityForThrow(distance, startPos.z - target.z - 6.0f / 40.0f, velXY, velZ))
 	{
-		valid = checkThrowTrajectoryValid(map, unit->tileObject, startPos, target, targetVector, velXY, velZ);
+		valid = checkThrowTrajectoryValid(map, unit->tileObject, startPos, target, targetVector,
+		                                  velXY, velZ);
 		if (valid)
 		{
 			break;
@@ -1152,7 +1165,7 @@ void BattleView::orderDrop(bool right)
 		unit->missions.emplace_front(BattleUnitMission::dropItem(*unit, item));
 		unit->missions.front()->start(*this->state, *unit);
 		LogWarning("BattleUnit \"%s\" dropping item in %s hand", unit->agent->name.cStr(),
-			right ? "right" : "left");
+		           right ? "right" : "left");
 	}
 	else
 	{
@@ -1168,8 +1181,9 @@ void BattleView::orderDrop(bool right)
 			return;
 		}
 		auto item = items.front();
-		unit->agent->addEquipment(*state, item->item, right ? AgentEquipmentLayout::EquipmentSlotType::RightHand
-			: AgentEquipmentLayout::EquipmentSlotType::LeftHand);
+		unit->agent->addEquipment(*state, item->item,
+		                          right ? AgentEquipmentLayout::EquipmentSlotType::RightHand
+		                                : AgentEquipmentLayout::EquipmentSlotType::LeftHand);
 		item->die(*state, false);
 	}
 }
@@ -1237,13 +1251,13 @@ void BattleView::orderTeleport(Vec3<int> target, bool right)
 	}
 	auto unit = selectedUnits.front();
 	auto item =
-		unit->agent->getFirstItemInSlot(right ? AgentEquipmentLayout::EquipmentSlotType::RightHand
-			: AgentEquipmentLayout::EquipmentSlotType::LeftHand);
+	    unit->agent->getFirstItemInSlot(right ? AgentEquipmentLayout::EquipmentSlotType::RightHand
+	                                          : AgentEquipmentLayout::EquipmentSlotType::LeftHand);
 
 	// FIXME: REMOVE TEMPORARY CHEAT
 	item = mksp<AEquipment>();
 	UString tp = "AEQUIPMENTTYPE_PERSONAL_TELEPORTER";
-	item->type = { &*state, tp };
+	item->type = {&*state, tp};
 	item->ammo = item->type->max_ammo;
 	// FIXME: REMOVE TEMPORARY CHEAT
 
@@ -1258,13 +1272,13 @@ void BattleView::orderTeleport(Vec3<int> target, bool right)
 	if (m->item)
 	{
 		actionImpossibleDelay = 40;
-		LogWarning("BattleUnit \"%s\" could not teleport using item in %s hand ", unit->agent->name.cStr(),
-			right ? "right" : "left");
+		LogWarning("BattleUnit \"%s\" could not teleport using item in %s hand ",
+		           unit->agent->name.cStr(), right ? "right" : "left");
 	}
 	else
 	{
 		LogWarning("BattleUnit \"%s\" teleported using item in %s hand ", unit->agent->name.cStr(),
-			right ? "right" : "left");
+		           right ? "right" : "left");
 		selectionState = BattleSelectionState::Normal;
 	}
 }
@@ -1371,12 +1385,12 @@ void BattleView::eventOccurred(Event *e)
 	}
 	else if (e->type() == EVENT_MOUSE_MOVE)
 	{
-		Vec2<float> screenOffset = { this->getScreenOffset().x, this->getScreenOffset().y };
+		Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
 		// Offset by 4 since ingame 4 is the typical height of the ground, and game displays cursor
 		// on top of the ground
 		setSelectedTilePosition(this->screenToTileCoords(
-			Vec2<float>((float)e->mouse().X, (float)e->mouse().Y + 4) - screenOffset,
-			(float)getZLevel() - 1.0f));
+		    Vec2<float>((float)e->mouse().X, (float)e->mouse().Y + 4) - screenOffset,
+		    (float)getZLevel() - 1.0f));
 	}
 	else if (e->type() == EVENT_KEY_UP &&
 	         (e->keyboard().KeyCode == SDLK_RSHIFT || e->keyboard().KeyCode == SDLK_LSHIFT ||
@@ -1424,7 +1438,7 @@ void BattleView::eventOccurred(Event *e)
 			this->setScreenCenterTile({clickTile.x, clickTile.y});
 		}
 		else if (e->type() == EVENT_MOUSE_DOWN &&
-			(Event::isPressed(e->mouse().Button, Event::MouseButton::Middle)))
+		         (Event::isPressed(e->mouse().Button, Event::MouseButton::Middle)))
 		{
 			// CHEAT - move unit to mouse
 			if (!selectedUnits.empty())
@@ -1437,7 +1451,8 @@ void BattleView::eventOccurred(Event *e)
 		          Event::isPressed(e->mouse().Button, Event::MouseButton::Right)))
 		{
 			auto buttonPressed = Event::isPressed(e->mouse().Button, Event::MouseButton::Left)
-				? Event::MouseButton::Left : Event::MouseButton::Right;
+			                         ? Event::MouseButton::Left
+			                         : Event::MouseButton::Right;
 
 			// If a click has not been handled by a form it's in the map.
 			auto t = this->getSelectedTilePosition();
@@ -1459,7 +1474,8 @@ void BattleView::eventOccurred(Event *e)
 					{
 						case Event::MouseButton::Left:
 							// If unit is present, priority is to move if not occupied
-							if (unitPresent && unitPresent->owner == state->current_battle->currentPlayer)
+							if (unitPresent &&
+							    unitPresent->owner == state->current_battle->currentPlayer)
 							{
 								// Move if units are selected and noone is occupying
 								if (!unitOccupying && selectedUnits.size() > 0)
@@ -1483,7 +1499,8 @@ void BattleView::eventOccurred(Event *e)
 						case Event::MouseButton::Right:
 							// Turn if no enemy unit present under cursor
 							// or if holding alt
-							if (!unitPresent || unitPresent->owner == state->current_battle->currentPlayer ||
+							if (!unitPresent ||
+							    unitPresent->owner == state->current_battle->currentPlayer ||
 							    selectionState == BattleSelectionState::NormalAlt)
 							{
 								orderTurn(t);
@@ -1493,18 +1510,18 @@ void BattleView::eventOccurred(Event *e)
 							{
 								switch (state->current_battle->mode)
 								{
-								case Battle::Mode::TurnBased:
-									if (unitOccupying)
-									{
-										orderFire({ &*state, unitOccupying->id });
-									}
-									break;
-								case Battle::Mode::RealTime:
-									if (unitPresent->isConscious())
-									{
-										orderFocus({ &*state, unitPresent->id });
-									}
-									break;
+									case Battle::Mode::TurnBased:
+										if (unitOccupying)
+										{
+											orderFire({&*state, unitOccupying->id});
+										}
+										break;
+									case Battle::Mode::RealTime:
+										if (unitPresent->isConscious())
+										{
+											orderFocus({&*state, unitPresent->id});
+										}
+										break;
 								}
 							}
 							break;
@@ -1516,7 +1533,8 @@ void BattleView::eventOccurred(Event *e)
 					{
 						// LMB = Add to selection
 						case Event::MouseButton::Left:
-							if (unitPresent && unitPresent->owner == state->current_battle->currentPlayer)
+							if (unitPresent &&
+							    unitPresent->owner == state->current_battle->currentPlayer)
 							{
 								orderSelect(unitPresent, false, true);
 							}
@@ -1524,14 +1542,15 @@ void BattleView::eventOccurred(Event *e)
 							else if (!unitOccupying &&
 							         selectionState != BattleSelectionState::NormalCtrl)
 							{
-								//selectionState == BattleSelectionState::NormalCtrlAlt)
+								// selectionState == BattleSelectionState::NormalCtrlAlt)
 								// Move pathing through
 								orderMove(t, 0, true);
 							}
 							break;
 						// RMB = Remove from selection
 						case Event::MouseButton::Right:
-							if (unitPresent && unitPresent->owner == state->current_battle->currentPlayer)
+							if (unitPresent &&
+							    unitPresent->owner == state->current_battle->currentPlayer)
 							{
 								orderSelect(unitPresent, true);
 							}
@@ -1543,38 +1562,41 @@ void BattleView::eventOccurred(Event *e)
 				case BattleSelectionState::FireRight:
 					switch (buttonPressed)
 					{
-					case Event::MouseButton::Left:
-					{
-						BattleUnit::WeaponStatus status = BattleUnit::WeaponStatus::FiringBothHands;
-						switch (selectionState)
+						case Event::MouseButton::Left:
 						{
-						case BattleSelectionState::FireLeft:
-							status = BattleUnit::WeaponStatus::FiringLeftHand;
+							BattleUnit::WeaponStatus status =
+							    BattleUnit::WeaponStatus::FiringBothHands;
+							switch (selectionState)
+							{
+								case BattleSelectionState::FireLeft:
+									status = BattleUnit::WeaponStatus::FiringLeftHand;
+									break;
+								case BattleSelectionState::FireRight:
+									status = BattleUnit::WeaponStatus::FiringRightHand;
+									break;
+							}
+							// If non-player unit under cursor - fire at unit, otherwise fire at
+							// tile
+							if (unitOccupying &&
+							    unitOccupying->owner != state->current_battle->currentPlayer)
+							{
+								orderFire({&*state, unitOccupying->id}, status);
+							}
+							else
+							{
+								bool modified = (modifierLAlt || modifierRAlt);
+								orderFire(t, status, modified);
+							}
 							break;
-						case BattleSelectionState::FireRight:
-							status = BattleUnit::WeaponStatus::FiringRightHand;
+						}
+						case Event::MouseButton::Right:
+						{
+							if (selectionState != BattleSelectionState::FireAny)
+							{
+								selectionState = BattleSelectionState::Normal;
+							}
 							break;
 						}
-						// If non-player unit under cursor - fire at unit, otherwise fire at tile
-						if (unitOccupying && unitOccupying->owner != state->current_battle->currentPlayer)
-						{
-							orderFire({ &*state, unitOccupying->id }, status);
-						}
-						else
-						{
-							bool modified = (modifierLAlt || modifierRAlt);
-							orderFire(t, status, modified);
-						}
-						break;
-					}
-					case Event::MouseButton::Right:
-					{
-						if (selectionState != BattleSelectionState::FireAny)
-						{
-							selectionState = BattleSelectionState::Normal;
-						}
-						break;
-					}
 					}
 					break;
 				case BattleSelectionState::ThrowRight:
@@ -1598,17 +1620,17 @@ void BattleView::eventOccurred(Event *e)
 				case BattleSelectionState::TeleportRight:
 					switch (buttonPressed)
 					{
-					case Event::MouseButton::Left:
-					{
-						bool right = selectionState == BattleSelectionState::TeleportRight;
-						orderTeleport(t, right);
-						break;
-					}
-					case Event::MouseButton::Right:
-					{
-						selectionState = BattleSelectionState::Normal;
-						break;
-					}
+						case Event::MouseButton::Left:
+						{
+							bool right = selectionState == BattleSelectionState::TeleportRight;
+							orderTeleport(t, right);
+							break;
+						}
+						case Event::MouseButton::Right:
+						{
+							selectionState = BattleSelectionState::Normal;
+							break;
+						}
 					}
 					break;
 			}
@@ -1683,8 +1705,10 @@ void BattleView::onNewTurn()
 	if (state->current_battle->currentActiveOrganisation == state->current_battle->currentPlayer)
 	{
 		baseForm->findControlTyped<Ticker>("NEWS_TICKER")
-			->addMessage(tr("Turn:") +" "+UString::format("%d", state->current_battle->currentTurn)
-			+ "   "+ tr("Side:") +"  " +tr(state->current_battle->currentActiveOrganisation->name));
+		    ->addMessage(tr("Turn:") + " " +
+		                 UString::format("%d", state->current_battle->currentTurn) + "   " +
+		                 tr("Side:") + "  " +
+		                 tr(state->current_battle->currentActiveOrganisation->name));
 	}
 }
 
@@ -1784,10 +1808,7 @@ void BattleView::updateItemInfo(bool right)
 	this->activeTab->findControlTyped<Graphic>("OVERLAY_" + name + "_HAND")->setImage(overlay);
 }
 
-void BattleView::finish()
-{
-	fw().getCursor().CurrentType = ApocCursor::CursorType::Normal;
-}
+void BattleView::finish() { fw().getCursor().CurrentType = ApocCursor::CursorType::Normal; }
 
 AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 {
@@ -1838,6 +1859,5 @@ bool AgentEquipmentInfo::operator==(const AgentEquipmentInfo &other) const
 	return (this->accuracy / 2 == other.accuracy / 2 && this->curAmmo == other.curAmmo &&
 	        this->itemType == other.itemType && this->damageType == other.damageType);
 }
-
 
 }; // namespace OpenApoc

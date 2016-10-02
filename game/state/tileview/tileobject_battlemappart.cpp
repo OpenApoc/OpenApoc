@@ -86,10 +86,7 @@ void TileObjectBattleMapPart::removeFromMap()
 		prevDrawOnTile->updateBattlescapeUIDrawOrder();
 	}
 }
-TileObjectBattleMapPart::~TileObjectBattleMapPart()
-{
-	map_part = nullptr;
-}
+TileObjectBattleMapPart::~TileObjectBattleMapPart() { map_part = nullptr; }
 
 TileObjectBattleMapPart::TileObjectBattleMapPart(TileMap &map, sp<BattleMapPart> map_part)
 
@@ -98,20 +95,14 @@ TileObjectBattleMapPart::TileObjectBattleMapPart(TileMap &map, sp<BattleMapPart>
 {
 }
 
-sp<BattleMapPart> TileObjectBattleMapPart::getOwner()
-{
-	return map_part;
-}
+sp<BattleMapPart> TileObjectBattleMapPart::getOwner() { return map_part; }
 
 sp<VoxelMap> TileObjectBattleMapPart::getVoxelMap(Vec3<int>)
 {
 	return this->getOwner()->type->voxelMapLOF;
 }
 
-Vec3<float> TileObjectBattleMapPart::getPosition() const
-{
-	return map_part->getPosition();
-}
+Vec3<float> TileObjectBattleMapPart::getPosition() const { return map_part->getPosition(); }
 
 float TileObjectBattleMapPart::getZOrder() const
 {

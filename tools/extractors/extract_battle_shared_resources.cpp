@@ -37,14 +37,22 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state)
 	state.battle_common_image_list->loadingImage =
 	    fw().data->loadImage("xcom3/ufodata/enttact.pcx");
 
-	state.battle_common_image_list->focusArrows.push_back(fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		"icons.tab:%d:xcom3/tacdata/tactical.pal", 	64)));
-	state.battle_common_image_list->focusArrows.push_back(fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		"icons.tab:%d:xcom3/tacdata/tactical.pal", 65)));
-	state.battle_common_image_list->focusArrows.push_back(fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		"icons.tab:%d:xcom3/tacdata/tactical.pal", 66)));
-	state.battle_common_image_list->focusArrows.push_back(fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		"icons.tab:%d:xcom3/tacdata/tactical.pal", 67)));
+	state.battle_common_image_list->focusArrows.push_back(
+	    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                         64)));
+	state.battle_common_image_list->focusArrows.push_back(
+	    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                         65)));
+	state.battle_common_image_list->focusArrows.push_back(
+	    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                         66)));
+	state.battle_common_image_list->focusArrows.push_back(
+	    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                         67)));
 
 	// Common Sounds
 

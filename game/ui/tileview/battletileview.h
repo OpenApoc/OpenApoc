@@ -60,12 +60,14 @@ class BattleTileView : public TileView
 
   public:
 	BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
-	               TileViewMode initialMode, int currentZLevel, Vec3<float> screenCenterTile, sp<Battle> battle);
+	               TileViewMode initialMode, int currentZLevel, Vec3<float> screenCenterTile,
+	               sp<Battle> battle);
 	~BattleTileView() override;
 
 	std::list<sp<BattleUnit>> selectedUnits;
 
-	// In turn-based, preview path cost when hovering over same tile for more than set amount of time
+	// In turn-based, preview path cost when hovering over same tile for more than set amount of
+	// time
 	sp<BattleUnit> lastSelectedUnit;
 	Vec3<int> lastSelectedUnitPosition;
 	sp<Image> pathPreviewTooFar;
