@@ -6,6 +6,8 @@
 #include "library/vec.h"
 #include <set>
 
+#define FALLING_ACCELERATION_ITEM 0.14285714f // 1/7th
+
 namespace OpenApoc
 {
 class TileObjectShadow;
@@ -14,17 +16,23 @@ class Collision;
 class GameState;
 class TileMap;
 class Battle;
+class BattleUnit;
 
 class BattleItem : public std::enable_shared_from_this<BattleItem>
 {
 
   public:
 	sp<AEquipment> item;
-
+	
 	Vec3<float> getPosition() const { return this->position; }
 
 	Vec3<float> position;
 	Vec3<float> velocity;
+
+	// Item can bounce once after being thrown
+	bool bounced = false;
+
+	bool supported = false;
 
 	void handleCollision(GameState &state, Collision &c);
 	void die(GameState &state, bool violently);
@@ -39,7 +47,6 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 
 	// Following members are not serialized, but rather are set up in the initBattle method
 
-	bool supported = false;
 	sp<TileObjectBattleItem> tileObject;
 	sp<TileObjectShadow> shadowObject;
 	wp<Battle> battle;

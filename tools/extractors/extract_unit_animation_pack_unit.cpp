@@ -519,17 +519,17 @@ void InitialGameStateExtractor::extractAnimationPackUnit(sp<BattleUnitAnimationP
 			[AgentType::HandState::AtEase][AgentType::MovementState::None]
 			[AgentType::BodyState::Throwing][AgentType::BodyState::Standing]
 			[{x, y}] =
-			getAnimationEntry(dataAD, dataUA, dataUF, 41, { x, y }, 100, 5, false, false, true, { 0,0 }, { 0,0 }, false, 5);
+			getAnimationEntry(dataAD, dataUA, dataUF, 41, { x, y }, 100, 5, false, false, true, { 0,0 }, { 0,0 }, false, 3);
 		p->body_state_animations[BattleUnitAnimationPack::ItemWieldMode::OneHanded]
 			[AgentType::HandState::AtEase][AgentType::MovementState::None]
 			[AgentType::BodyState::Throwing][AgentType::BodyState::Standing]
 			[{x, y}] =
-			getAnimationEntry(dataAD, dataUA, dataUF, 41, { x, y }, 100, 5, false, false, true, { 0,0 }, { 0,0 }, false, 5);
+			getAnimationEntry(dataAD, dataUA, dataUF, 41, { x, y }, 100, 5, false, false, true, { 0,0 }, { 0,0 }, false, 3);
 		p->body_state_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 			[AgentType::HandState::AtEase][AgentType::MovementState::None]
 			[AgentType::BodyState::Throwing][AgentType::BodyState::Standing]
 			[{x, y}] =
-			getAnimationEntry(dataAD, dataUA, dataUF, 41, { x, y }, 100, 5, false, false, true, { 0,0 }, { 0,0 }, false, 5);
+			getAnimationEntry(dataAD, dataUA, dataUF, 41, { x, y }, 100, 5, false, false, true, { 0,0 }, { 0,0 }, false, 3);
 	}
 
 	// Hand state change animation

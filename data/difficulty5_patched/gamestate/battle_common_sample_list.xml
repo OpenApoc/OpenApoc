@@ -4,6 +4,7 @@
     <gravlift>RAWSOUND:xcom3/rawsound/zextra/gravlift.raw:22050</gravlift>
     <door>RAWSOUND:xcom3/rawsound/tactical/terrain/doorwhsh.raw:22050</door>
     <brainsuckerHatch>RAWSOUND:xcom3/rawsound/extra/brhatch.raw:22050</brainsuckerHatch>
+    <teleport>RAWSOUND:xcom3/rawsound/tactical/explosns/teleport.raw:22050</teleport>
     <walkSounds>
       <entry>
         <sp>

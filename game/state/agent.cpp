@@ -268,12 +268,12 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 			continue;
 		if (t->type == AEquipmentType::Type::Ammo)
 		{
-			agent->addEquipment(state, {&state, t->id},
+			agent->addEquipmentByType(state, {&state, t->id},
 			                    AgentEquipmentLayout::EquipmentSlotType::General);
 		}
 		else
 		{
-			agent->addEquipment(state, {&state, t->id});
+			agent->addEquipmentByType(state, {&state, t->id});
 		}
 	}
 
@@ -450,7 +450,21 @@ bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type) const
 	return true;
 }
 
-void Agent::addEquipment(GameState &state, StateRef<AEquipmentType> type)
+Vec2<int> Agent::findFirstSlotByType(AgentEquipmentLayout::EquipmentSlotType slotType, StateRef<AEquipmentType> type)
+{
+	Vec2<int> pos = { -1, 0 };
+	for (auto &slot : this->type->equipment_layout->slots)
+	{
+		if (slot.type == slotType && (!type || canAddEquipment(slot.bounds.p0, type)))
+		{
+			pos = slot.bounds.p0;
+			break;
+		}
+	}
+	return pos;
+}
+
+void Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type)
 {
 	Vec2<int> pos;
 	bool slotFound = false;
@@ -470,21 +484,13 @@ void Agent::addEquipment(GameState &state, StateRef<AEquipmentType> type)
 		return;
 	}
 
-	this->addEquipment(state, pos, type);
+	this->addEquipmentByType(state, pos, type);
 }
 
-void Agent::addEquipment(GameState &state, StateRef<AEquipmentType> type,
+void Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type,
                          AgentEquipmentLayout::EquipmentSlotType slotType)
 {
-	Vec2<int> pos = {-1, 0};
-	for (auto &slot : this->type->equipment_layout->slots)
-	{
-		if (slot.type == slotType && canAddEquipment(slot.bounds.p0, type))
-		{
-			pos = slot.bounds.p0;
-			break;
-		}
-	}
+	Vec2<int> pos = findFirstSlotByType(slotType, type);
 	if (pos.x == -1)
 	{
 		LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id.cStr(),
@@ -492,15 +498,15 @@ void Agent::addEquipment(GameState &state, StateRef<AEquipmentType> type,
 		return;
 	}
 
-	this->addEquipment(state, pos, type);
+	this->addEquipmentByType(state, pos, type);
 }
 
-void Agent::addEquipment(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type)
+void Agent::addEquipmentByType(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type)
 {
 	if (!this->canAddEquipment(pos, type))
 	{
 		LogError("Trying to add \"%s\" at {%d,%d} on agent \"%s\" failed", type.id.cStr(), pos.x,
-		         pos.y, this->name.cStr());
+			pos.y, this->name.cStr());
 	}
 	auto equipment = mksp<AEquipment>();
 	equipment->type = type;
@@ -515,6 +521,21 @@ void Agent::addEquipment(GameState &state, Vec2<int> pos, StateRef<AEquipmentTyp
 	}
 	this->addEquipment(state, pos, equipment);
 }
+
+void Agent::addEquipment(GameState &state, sp<AEquipment> object,
+	AgentEquipmentLayout::EquipmentSlotType slotType)
+{
+	Vec2<int> pos = findFirstSlotByType(slotType, object->type);
+	if (pos.x == -1)
+	{
+		LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id.cStr(),
+			this->name.cStr());
+		return;
+	}
+
+	this->addEquipment(state, pos, object);
+}
+
 
 void Agent::addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object)
 {

@@ -65,6 +65,10 @@ Battle::~Battle()
 		s->battle = nullptr;
 	}
 	this->map_parts.clear();
+	for (auto &u : this->units)
+	{
+		u->agent->unit = nullptr;
+	}
 	for (auto &s : this->items)
 	{
 		if (s->tileObject)
@@ -108,6 +112,7 @@ void Battle::initBattle(GameState &state)
 	for (auto &o : this->units)
 	{
 		o->battle = stt;
+		o->agent->unit = o->shared_from_this();
 	}
 	if (forces.size() == 0)
 	{
@@ -172,7 +177,11 @@ void Battle::initMap()
 	for (auto &o : this->items)
 	{
 		this->map->addObjectToMap(o);
-		o->findSupport(false);
+		if (o->supported)
+		{
+			o->supported = false;
+			o->findSupport(false, true);
+		}
 	}
 	for (auto &u : this->units)
 	{

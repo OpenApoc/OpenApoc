@@ -94,6 +94,41 @@ StateRef<AEquipmentType> BattleUnit::getDisplayedItem() const
 	return agent->getDominantItemInHands();
 }
 
+bool BattleUnit::canAfford(int cost) const
+{ 
+	auto b = battle.lock();
+	if (!b)
+	{
+		LogError("canAfford: Battle disappeared!");
+		return false;
+	}
+	if (b->mode == Battle::Mode::RealTime)
+	{
+		return true;
+	}
+	return agent->modified_stats.time_units >= cost;
+}
+
+bool BattleUnit::spendTU(int cost)
+{
+	auto b = battle.lock();
+	if (!b)
+	{
+		LogError("spendTU: Battle disappeared!");
+		return false;
+	}
+	if (b->mode == Battle::Mode::RealTime)
+	{
+		return true;
+	}
+	if (cost > agent->modified_stats.time_units)
+	{
+		return false;
+	}
+	agent->modified_stats.time_units -= cost;
+	return true;
+}
+
 int BattleUnit::getMaxHealth() const { return this->agent->current_stats.health; }
 
 int BattleUnit::getHealth() const { return this->agent->modified_stats.health; }
@@ -371,9 +406,6 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		return;
 	auto &map = tileObject->map;
 
-
-	if (b->mode == Battle::Mode::RealTime)
-		agent->modified_stats.restoreTU();
 
 	if (!this->missions.empty())
 		this->missions.front()->update(state, *this, ticks);
@@ -729,7 +761,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					auto newPosition = position;
 					while (fallTicksRemaining-- > 0)
 					{
-						fallingSpeed += static_cast<float>(FALLING_ACCELERATION) / TICK_SCALE;
+						fallingSpeed += FALLING_ACCELERATION_UNIT;
 						newPosition -= Vec3<float>{0.0f, 0.0f, (fallingSpeed / TICK_SCALE)} / VELOCITY_SCALE_BATTLE;
 					}
 					// Fell into a unit
@@ -1178,6 +1210,21 @@ int BattleUnit::getWalkSoundIndex()
 	}
 }
 
+// Alexey Andronov: Istrebitel
+// Made up values calculated by trying several throws in game
+// This formula closely resembles results I've gotten
+// But it may be completely wrong
+float BattleUnit::getMaxThrowDistance(int weight, int heightDifference)
+{
+	float max = 30.0f;
+	if (weight <= 2)
+	{
+		return max;
+	}
+	int mod = heightDifference > 0 ? heightDifference : heightDifference * 2;
+	return std::max(0.0f, std::min(max, (float)agent->modified_stats.strength / ((float)weight - 1) - 2 + mod));
+}
+
 bool BattleUnit::shouldPlaySoundNow()
 {
 	bool play = false;
@@ -1270,7 +1317,11 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission::MissionType typ
 		case BattleUnitMission::MissionType::Turn:
 		case BattleUnitMission::MissionType::AcquireTU:
 		case BattleUnitMission::MissionType::GotoLocation:
+		case BattleUnitMission::MissionType::Teleport:
 			LogError("Cannot add mission by type if it requires parameters");
+			break;
+		default:
+			LogError("Unimplemented");
 			break;
 	}
 	return false;
@@ -1305,7 +1356,7 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool s
 			else
 			{
 				auto it = missions.begin();
-				while ((*it)->type != BattleUnitMission::MissionType::ThrowItem && ++it != missions.end()) {}
+				while (it != missions.end() && (*it)->type != BattleUnitMission::MissionType::ThrowItem && ++it != missions.end()) {}
 				if (it == missions.end())
 				{
 					missions.emplace_front(mission);
@@ -1358,7 +1409,7 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool s
 			if (mission->requireGoal)
 			{
 				auto it = missions.begin();
-				while ((*it)->type != BattleUnitMission::MissionType::ReachGoal && ++it != missions.end()) {}
+				while (it != missions.end() && (*it)->type != BattleUnitMission::MissionType::ReachGoal && ++it != missions.end()) {}
 				if (it != missions.end())
 				{
 					return false;
@@ -1368,20 +1419,24 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool s
 			if (start) { missions.front()->start(state, *this); }
 			break;
 		}
-		// Snooze, change body state, acquire TU, restart can be added at any time
+		// Snooze, change body state, acquire TU, restart and teleport can be added at any time
 		case BattleUnitMission::MissionType::Snooze:
 		case BattleUnitMission::MissionType::ChangeBodyState:
 		case BattleUnitMission::MissionType::AcquireTU:
 		case BattleUnitMission::MissionType::RestartNextMission:
+		case BattleUnitMission::MissionType::Teleport:
 			missions.emplace_front(mission);
 			if (start) { missions.front()->start(state, *this); }
 			break;
-		// FIXME: Implement this
+			// FIXME: Implement this
 		case BattleUnitMission::MissionType::ThrowItem:
 		case BattleUnitMission::MissionType::GotoLocation:
 			LogWarning("Adding Throw/GoTo : Ensure implemented correctly!");
 			missions.emplace_front(mission);
 			if (start) { missions.front()->start(state, *this); }
+			break;
+		default:
+			LogError("Unimplemented");
 			break;
 	}
 	return true;

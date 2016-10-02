@@ -11,7 +11,6 @@
 #define TICK_SCALE (36)
 #define VELOCITY_SCALE_CITY (Vec3<float>{32, 32, 16})
 #define VELOCITY_SCALE_BATTLE (Vec3<float>{24, 24, 20})
-#define FALLING_ACCELERATION 6
 
 // This enables showing tiles that were tried by the last pathfinding attempt
 // Is only displayed in battlescape right now
@@ -80,7 +79,9 @@ class Tile
 	sp<TileObjectBattleUnit> getUnitIfPresent(bool onlyConscious, bool mustOccupy = false,
 	                                          bool mustBeStatic = false,
 	                                          sp<TileObjectBattleUnit> exceptThis = nullptr,
-	                                          bool onlyLarge = false);
+	                                          bool onlyLarge = false, bool checkLargeSpace = false);
+	// Returns items that can be collected by standing in this tile)
+	std::list<sp<BattleItem>> getItems();
 	// Returns resting position for items and units in the tile
 	Vec3<float> getRestingPosition(bool large = false);
 	// Returns the object that provides support (resting position) for items
@@ -220,8 +221,9 @@ class TileMap
 										  float maxCost = 0.0f);
 
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
-	                        std::set<TileObject::Type> validTypes = {},
-	                        bool check_full_path = false) const;
+					const std::set<TileObject::Type> validTypes = {},
+					const sp<TileObject> owner = nullptr,
+		bool check_full_path = false) const;
 
 	void addObjectToMap(sp<Projectile>);
 	void addObjectToMap(sp<Vehicle>);

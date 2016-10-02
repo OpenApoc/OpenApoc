@@ -19,6 +19,7 @@ class AEquipmentType;
 class BattleUnitAnimationPack;
 class Sample;
 class AgentBodyType;
+class BattleUnit;
 
 class AgentStats
 {
@@ -254,12 +255,18 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 
 	std::list<sp<AEquipment>> equipment;
 	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type) const;
-	// Add equipment to the first available slot of any type
-	void addEquipment(GameState &state, StateRef<AEquipmentType> type);
+	Vec2<int> findFirstSlotByType(AgentEquipmentLayout::EquipmentSlotType slotType, StateRef<AEquipmentType> type = nullptr);
+	// Add equipment by type to the first available slot of any type
+	void addEquipmentByType(GameState &state, StateRef<AEquipmentType> type);
 	// Add equipment to the first available slot of a specific type
-	void addEquipment(GameState &state, StateRef<AEquipmentType> type,
+	void addEquipmentByType(GameState &state, StateRef<AEquipmentType> type,
 	                  AgentEquipmentLayout::EquipmentSlotType slotType);
-	void addEquipment(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type);
+	// Add equipment by type to a specific position
+	void addEquipmentByType(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type);
+	// Add equipment to the first available slot of a specific type
+	void addEquipment(GameState &state, sp<AEquipment> object,
+		AgentEquipmentLayout::EquipmentSlotType slotType);
+	// Add equipment to a specific position
 	void addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object);
 	void removeEquipment(sp<AEquipment> object);
 	void updateSpeed();
@@ -269,6 +276,9 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 	StateRef<AEquipmentType> getDominantItemInHands() const;
 	sp<AEquipment> getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType type) const;
 	StateRef<BattleUnitImagePack> getImagePack(AgentType::BodyPart bodyPart) const;
+
+	// Following members are not serialized, but rather are set up in the initBattle method
+	sp<BattleUnit> unit;
 };
 
 class AgentGenerator
