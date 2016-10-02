@@ -105,8 +105,8 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	int ticksTillNextTargetCheck = 0;
 
 	void setFocus(StateRef<BattleUnit> unit);
-	void startFiring(StateRef<BattleUnit> unit, WeaponStatus status = WeaponStatus::FiringBothHands);
-	void startFiring(Vec3<int> tile, WeaponStatus status = WeaponStatus::FiringBothHands, bool atGround = false);
+	void startAttacking(StateRef<BattleUnit> unit, WeaponStatus status = WeaponStatus::FiringBothHands);
+	void startAttacking(Vec3<int> tile, WeaponStatus status = WeaponStatus::FiringBothHands, bool atGround = false);
 	void stopAttacking();
 
 	// Stats
@@ -236,7 +236,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Wether unit is busy - with aiming or firing or otherwise involved
 	bool isBusy() const;
 	// Wether unit is firing its weapon (or aiming in preparation of firing)
-	bool isFiring() const;
+	bool isAttacking() const;
 	// Wether unit is throwing an item
 	bool isThrowing() const;
 
@@ -299,6 +299,6 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	- ref. to psi attacker (who is controlling it/...)
 	*/
   private:
-	void startFiring(WeaponStatus status);
+	void startAttacking(WeaponStatus status);
 };
 }

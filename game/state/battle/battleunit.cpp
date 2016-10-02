@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include "game/state/aequipment.h"
 #include "game/state/battle/battleunit.h"
 #include "framework/framework.h"
@@ -132,7 +133,7 @@ void BattleUnit::setFocus(StateRef<BattleUnit> unit)
 	focusUnit->focusedByUnits.push_back(sft);
 }
 
-void BattleUnit::startFiring(WeaponStatus status)
+void BattleUnit::startAttacking(WeaponStatus status)
 {
 	auto b = battle.lock();
 
@@ -146,7 +147,7 @@ void BattleUnit::startFiring(WeaponStatus status)
 	{
 		case Battle::Mode::TurnBased:
 			// In Turn based we cannot override firing
-			if (isFiring())
+			if (isAttacking())
 			{
 				return;
 			}
@@ -181,16 +182,16 @@ void BattleUnit::startFiring(WeaponStatus status)
 	ticksTillNextTargetCheck = 0;
 }
 
-void BattleUnit::startFiring(StateRef<BattleUnit> unit, WeaponStatus status)
+void BattleUnit::startAttacking(StateRef<BattleUnit> unit, WeaponStatus status)
 {
-	startFiring(status);
+	startAttacking(status);
 	targetUnit = unit;
 	targetingMode = TargetingMode::Unit;
 }
 
-void BattleUnit::startFiring(Vec3<int> tile, WeaponStatus status, bool atGround)
+void BattleUnit::startAttacking(Vec3<int> tile, WeaponStatus status, bool atGround)
 {
-	startFiring(status);targetTile = tile;
+	startAttacking(status);targetTile = tile;
 	targetTile = tile;
 	targetingMode = atGround ? TargetingMode::TileGround : TargetingMode::TileCenter;
 }
@@ -301,10 +302,10 @@ bool BattleUnit::isStatic() const
 
 bool BattleUnit::isBusy() const
 {
-	return !isStatic() || isFiring();
+	return !isStatic() || isAttacking();
 }
 
-bool BattleUnit::isFiring() const
+bool BattleUnit::isAttacking() const
 {
 	return weaponStatus != WeaponStatus::NotFiring;
 }
@@ -1114,8 +1115,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 
 	// Firing
 
-	static const Vec3<float> offsetTileCenter = { 0.5f, 0.5f, 0.5f };
-	static const Vec3<float> offsetTileGround = { 0.5f, 0.5f, 0.0f };
+	static const Vec3<float> offsetTile = { 0.5f, 0.5f, 0.0f };
+	static const Vec3<float> offsetTileGround = { 0.5f, 0.5f, 10.0f/40.0f };
 	Vec3<float> targetPosition;
 	switch (targetingMode)
 	{
@@ -1123,8 +1124,12 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		targetPosition = targetUnit->tileObject->getVoxelCentrePosition();
 		break;
 	case TargetingMode::TileCenter:
-		targetPosition = (Vec3<float>)targetTile + offsetTileCenter;
+	{
+		float unitZ = (position + Vec3<float>{0.0f, 0.0f, (float)getCurrentHeight() / 40.0f}).z;
+		unitZ -= (int)unitZ;
+		targetPosition = (Vec3<float>)targetTile + offsetTile + Vec3<float>{0.0f, 0.0f, unitZ};
 		break;
+	}
 	case TargetingMode::TileGround:
 		targetPosition = (Vec3<float>)targetTile + offsetTileGround;
 		break;
@@ -1164,7 +1169,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	}
 
 	// Firing - check if we should stop firing
-	if (isFiring())
+	if (isAttacking())
 	{
 		if (targetingMode == TargetingMode::Unit)
 		{
@@ -1188,7 +1193,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		// Also, at this point we will turn to target tile if targeting tile
 		if (canFire)
 		{
-			// Note: If not targeting a unit, this will only be done once!
+			// Note: If not targeting a unit, this will only be done once after start,
+			// and again once each time unit stops moving
 			if (ticksTillNextTargetCheck == 0)
 			{
 				ticksTillNextTargetCheck = LOS_CHECK_INTERVAL_TRACKING;
@@ -1205,7 +1211,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				// Check if we are in range
 				if (canFire)
 				{
-					float distanceToTarget = glm::length(position - targetPosition);
+					float distanceToTarget = glm::length(position + Vec3<float>{0.0f, 0.0f, (float)getCurrentHeight() / 40.0f} -targetPosition);
 					if (weaponRight && !weaponRight->canFire(distanceToTarget))
 					{
 						weaponRight = nullptr;
@@ -1218,7 +1224,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					canFire = canFire && (weaponLeft || weaponRight);
 				}
 				// Check if we should turn to target tile (only do this if stationary)
-				if (canFire && atGoal)
+				if (canFire && current_movement_state == AgentType::MovementState::None)
 				{
 					auto m = BattleUnitMission::turn(*this, targetTile);
 					if (!m->isFinished(state, *this, false))
@@ -1237,7 +1243,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	}
 	 
 	// Firing - process unit that is firing
-	if (isFiring())
+	if (isAttacking())
 	{
 		// Should we start firing a gun?
 		if (weaponRight && !weaponRight->isFiring())
@@ -1250,37 +1256,47 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		}
 
 		// Is a gun ready to fire?
-		bool fired = false;
+		bool weaponFired = false;
 		if (firing_animation_ticks_remaining == 0 
 			&& hand_animation_ticks_remaining == 0 
 			&& current_hand_state == AgentType::HandState::Aiming)
 		{
+			sp<AEquipment> firingWeapon = nullptr;
 			if (weaponRight && weaponRight->readyToFire)
 			{
-				// FIXME: Fire right weapon
-				auto p = weaponRight->fire(targetPosition);
-				map.addObjectToMap(p);
-				b->projectiles.insert(p);
-				displayedItem = weaponRight->type;
-				setHandState(AgentType::HandState::Firing);
+				firingWeapon = weaponRight;
 				weaponRight = nullptr;
-				fired = true;
 			}
 			else if (weaponLeft && weaponLeft->readyToFire)
 			{
-				// FIXME: Fire left weapon
-				auto p = weaponLeft->fire(targetPosition);
+				firingWeapon = weaponLeft;
+				weaponLeft = nullptr;
+			}
+			// Check if facing the right way
+			if (firingWeapon)
+			{
+				auto targetVector = targetPosition - position;
+				targetVector = { targetVector.x, targetVector.y, 0.0f };
+				// Target must be within frontal arc
+				if (glm::angle(glm::normalize(targetVector), glm::normalize(Vec3<float>{facing.x, facing.y, 0})) >= M_PI / 2)
+				{
+					firingWeapon = nullptr;
+				}
+			}
+			// If still OK - fire!
+			if (firingWeapon)
+			{
+				auto p = firingWeapon->fire(targetPosition);
 				map.addObjectToMap(p);
 				b->projectiles.insert(p);
-				displayedItem = weaponLeft->type;
+				displayedItem = firingWeapon->type;
 				setHandState(AgentType::HandState::Firing);
-				weaponLeft = nullptr;
-				fired = true;
+				weaponFired = true;
 			}
 		}
 
 		// If fired weapon at ground - stop firing that hand
-		if (fired && targetingMode != TargetingMode::Unit)
+		if (weaponFired && targetingMode != TargetingMode::Unit)
 		{
 			switch (weaponStatus)
 			{
@@ -1319,7 +1335,9 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		// Should we start aiming?
 		if (firing_animation_ticks_remaining == 0
 			&& hand_animation_ticks_remaining == 0
-			&& current_hand_state != AgentType::HandState::Aiming)
+			&& current_hand_state != AgentType::HandState::Aiming
+			&& current_movement_state!= AgentType::MovementState::Running
+			&& current_movement_state != AgentType::MovementState::Strafing)
 		{
 			beginHandStateChange(AgentType::HandState::Aiming);
 		}
@@ -1327,7 +1345,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	}// end if Firing - process firing
 
 	// Not Firing (or may have just stopped firing)
-	if (!isFiring())
+	if (!isAttacking())
 	{
 		// Should we stop aiming?
 		if (aiming_ticks_remaining > 0)
@@ -1624,10 +1642,26 @@ void BattleUnit::beginTurning(Vec2<int> newFacing)
 void BattleUnit::setMovementState(AgentType::MovementState state)
 {
 	current_movement_state = state;
-	if (state == AgentType::MovementState::None)
+	switch (state)
 	{
+	case AgentType::MovementState::None:
 		movement_ticks_passed = 0;
 		movement_sounds_played = 0;
+		ticksTillNextTargetCheck = 0;
+		break;
+	case AgentType::MovementState::Running:
+	case AgentType::MovementState::Strafing:
+		if (current_hand_state != AgentType::HandState::AtEase || target_hand_state != AgentType::HandState::AtEase)
+		{
+			setHandState(AgentType::HandState::AtEase);
+		}
+		if (isAttacking())
+		{
+			stopAttacking();
+		}
+		break;
+	default:
+		break;
 	}
 }
 

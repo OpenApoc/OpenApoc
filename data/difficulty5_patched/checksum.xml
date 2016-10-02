@@ -2,7 +2,7 @@
 <checksums>
   <checksum SHA1="de1732555e585509f8077f0c8e03c697f3d20945">gamestate.xml</checksum>
   <checksum SHA1="e82ad81e87952471fc9a77dfdaf5c7de0b73340b">gamestate/agent_body_types.xml</checksum>
-  <checksum SHA1="1cb75ee151d485e8f39310cd9139bc04a1d2ba74">gamestate/agent_equipment.xml</checksum>
+  <checksum SHA1="0c98b18d8eca57f5f1e83f4c9ea28d0967e74bb5">gamestate/agent_equipment.xml</checksum>
   <checksum SHA1="db87a07c2ad3fe43a082e3143408dc3fd29ee9ff">gamestate/agent_equipment_layouts.xml</checksum>
   <checksum SHA1="282e2b08cda4a9a7094fb16355bd5e58cdc2a224">gamestate/agent_generator.xml</checksum>
   <checksum SHA1="665676441df08bedc9cdd1dec8854d5b99a8ed4f">gamestate/agent_types.xml</checksum>

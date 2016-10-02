@@ -146,12 +146,13 @@ sp<Projectile> AEquipment::fire(Vec3<float> target)
 	}
 
 	// FIXME: Apply accuracy
-	Vec3<float> velocity = target - unit->tileObject->getCenter();
-	velocity = glm::normalize(velocity) * VELOCITY_SCALE_BATTLE;
-	velocity *= payload->speed;
+	auto unitPos = unit->position + Vec3<float>{0.0f, 0.0f, (float)unit->getCurrentHeight() / 40.0f};
+	Vec3<float> velocity = target - unitPos;
+	velocity = glm::normalize(velocity);
+	velocity *= payload->speed * TICK_SCALE / 4;// I believe this is the correct formula
 
-	return mksp<Projectile>(unit, unit->tileObject->getCenter(), velocity,
-		payload->ttl * 4, payload->damage, payload->tail_size, payload->projectile_sprites);
+	return mksp<Projectile>(unit, unitPos, velocity,
+		payload->ttl * 4, payload->damage, payload->tail_size, payload->projectile_sprites, payload->impact_sfx);
 }
 
 bool AEquipment::canFire(float range)

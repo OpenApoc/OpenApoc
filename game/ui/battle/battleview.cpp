@@ -601,7 +601,7 @@ void BattleView::updateSelectedUnits()
 	while (it != selectedUnits.end())
 	{
 		auto u = *it;
-		auto o = state->getPlayer();
+		auto o = state->current_battle->currentPlayer;
 		if (!u || u->isDead() || u->isUnconscious() || u->owner != o || u->retreated)
 		{
 			it = selectedUnits.erase(it);
@@ -1107,7 +1107,7 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 	float velXY = 0.0f;
 	float velZ = 0.0f;
 	bool valid = true;
-	while (calculateVelocityForThrow(distance, startPos.z - target.z - 6.0 / 40.0, velXY, velZ))
+	while (calculateVelocityForThrow(distance, startPos.z - target.z - 6.0f / 40.0f, velXY, velZ))
 	{
 		valid = checkThrowTrajectoryValid(map, unit->tileObject, startPos, target, targetVector, velXY, velZ);
 		if (valid)
@@ -1274,7 +1274,7 @@ void BattleView::orderFire(Vec3<int> target, BattleUnit::WeaponStatus status, bo
 	// FIXME: If TB ensure enough TUs for turn and fire
 	for (auto unit : selectedUnits)
 	{
-		unit->startFiring(target, status, modifier);
+		unit->startAttacking(target, status, modifier);
 	}
 }
 
@@ -1283,7 +1283,7 @@ void BattleView::orderFire(StateRef<BattleUnit> u, BattleUnit::WeaponStatus stat
 	// FIXME: If TB ensure enough TUs for turn and fire
 	for (auto unit : selectedUnits)
 	{
-		unit->startFiring(u, status);
+		unit->startAttacking(u, status);
 	}
 }
 
@@ -1445,7 +1445,7 @@ void BattleView::eventOccurred(Event *e)
 			auto unitPresent = objPresent ? objPresent->getUnit() : nullptr;
 			auto objOccupying = map.getTile(t.x, t.y, t.z)->getUnitIfPresent(true, true);
 			auto unitOccupying = objOccupying ? objOccupying->getUnit() : nullptr;
-			if (unitOccupying && unitOccupying->owner == state->getPlayer())
+			if (unitOccupying && unitOccupying->owner == state->current_battle->currentPlayer)
 			{
 				// Give priority to selecting/deselecting occupying units
 				unitPresent = unitOccupying;
@@ -1459,7 +1459,7 @@ void BattleView::eventOccurred(Event *e)
 					{
 						case Event::MouseButton::Left:
 							// If unit is present, priority is to move if not occupied
-							if (unitPresent && unitPresent->owner == state->getPlayer())
+							if (unitPresent && unitPresent->owner == state->current_battle->currentPlayer)
 							{
 								// Move if units are selected and noone is occupying
 								if (!unitOccupying && selectedUnits.size() > 0)
@@ -1483,7 +1483,7 @@ void BattleView::eventOccurred(Event *e)
 						case Event::MouseButton::Right:
 							// Turn if no enemy unit present under cursor
 							// or if holding alt
-							if (!unitPresent || unitPresent->owner == state->getPlayer() ||
+							if (!unitPresent || unitPresent->owner == state->current_battle->currentPlayer ||
 							    selectionState == BattleSelectionState::NormalAlt)
 							{
 								orderTurn(t);
@@ -1516,7 +1516,7 @@ void BattleView::eventOccurred(Event *e)
 					{
 						// LMB = Add to selection
 						case Event::MouseButton::Left:
-							if (unitPresent && unitPresent->owner == state->getPlayer())
+							if (unitPresent && unitPresent->owner == state->current_battle->currentPlayer)
 							{
 								orderSelect(unitPresent, false, true);
 							}
@@ -1531,7 +1531,7 @@ void BattleView::eventOccurred(Event *e)
 							break;
 						// RMB = Remove from selection
 						case Event::MouseButton::Right:
-							if (unitPresent && unitPresent->owner == state->getPlayer())
+							if (unitPresent && unitPresent->owner == state->current_battle->currentPlayer)
 							{
 								orderSelect(unitPresent, true);
 							}
@@ -1555,9 +1555,10 @@ void BattleView::eventOccurred(Event *e)
 							status = BattleUnit::WeaponStatus::FiringRightHand;
 							break;
 						}
-						if (unitOccupying)
+						// If non-player unit under cursor - fire at unit, otherwise fire at tile
+						if (unitOccupying && unitOccupying->owner != state->current_battle->currentPlayer)
 						{
-							orderFire({ &*state, unitPresent->id }, status);
+							orderFire({ &*state, unitOccupying->id }, status);
 						}
 						else
 						{

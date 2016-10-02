@@ -15,10 +15,10 @@ const std::map<Projectile::Type, UString> Projectile::TypeMap = {
 
 Projectile::Projectile(StateRef<Vehicle> firer, Vec3<float> position, Vec3<float> velocity,
                        unsigned int lifetime, int damage, unsigned int tail_length,
-                       std::list<sp<Image>> projectile_sprites)
+                       std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx)
     : type(Type::Beam), position(position), velocity(velocity), age(0), lifetime(lifetime),
       damage(damage), firerVehicle(firer), previousPosition(position), tail_length(tail_length),
-      projectile_sprites(projectile_sprites), velocityScale(VELOCITY_SCALE_CITY)
+      projectile_sprites(projectile_sprites), impactSfx(impactSfx), velocityScale(VELOCITY_SCALE_CITY)
 {
 	// 36 / (velocity length) = enough ticks to pass 1 whole tile
 	ownerInvulnerableTicks = (int)ceilf(36.0f / glm::length(velocity / velocityScale)) + 1;
@@ -26,10 +26,10 @@ Projectile::Projectile(StateRef<Vehicle> firer, Vec3<float> position, Vec3<float
 // FIXME: Properly add unit projectiles and shit
 Projectile::Projectile(StateRef<BattleUnit> firer, Vec3<float> position, Vec3<float> velocity,
                        unsigned int lifetime, int damage, unsigned int tail_length,
-                       std::list<sp<Image>> projectile_sprites)
+                       std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx)
     : type(Type::Beam), position(position), velocity(velocity), age(0), lifetime(lifetime),
       damage(damage), firerUnit(firer), previousPosition(position), tail_length(tail_length),
-      projectile_sprites(projectile_sprites), velocityScale(VELOCITY_SCALE_BATTLE)
+      projectile_sprites(projectile_sprites), impactSfx(impactSfx), velocityScale(VELOCITY_SCALE_BATTLE)
 {
 	// 36 / (velocity length) = enough ticks to pass 1 whole tile
 	ownerInvulnerableTicks = (int)ceilf(36.0f / glm::length(velocity / velocityScale)) + 1;

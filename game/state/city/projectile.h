@@ -14,6 +14,7 @@ class GameState;
 class TileObjectProjectile;
 class TileMap;
 class Collision;
+class Sample;
 
 class Projectile : public std::enable_shared_from_this<Projectile>
 {
@@ -30,10 +31,10 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	// FIXME: Width is currently just used for drawing - TODO What is "collision" size of beams?
 	Projectile(StateRef<Vehicle> firer, Vec3<float> position, Vec3<float> velocity,
 	           unsigned int lifetime, int damage, unsigned int tail_length,
-	           std::list<sp<Image>> projectile_sprites);
+	           std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx);
 	Projectile(StateRef<BattleUnit> firer, Vec3<float> position, Vec3<float> velocity,
 	           unsigned int lifetime, int damage, unsigned int tail_length,
-	           std::list<sp<Image>> projectile_sprites);
+	           std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx);
 	Projectile();
 	virtual void update(GameState &state, unsigned int ticks);
 
@@ -61,6 +62,8 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 
 	unsigned int tail_length;
 	std::list<sp<Image>> projectile_sprites;
+
+	sp<Sample> impactSfx;
 
 	int ownerInvulnerableTicks = 0;
 

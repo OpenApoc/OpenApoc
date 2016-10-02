@@ -236,6 +236,11 @@ void Battle::update(GameState &state, unsigned int ticks)
 		{
 			// FIXME: Handle collision
 			this->projectiles.erase(c.projectile);
+			if (c.projectile->impactSfx)
+			{
+				fw().soundBackend->playSample(c.projectile->impactSfx, c.position);
+			}
+			
 			// FIXME: Get doodad from weapon definition?
 			auto doodad = this->placeDoodad({&state, "DOODAD_EXPLOSION_0"}, c.position);
 
