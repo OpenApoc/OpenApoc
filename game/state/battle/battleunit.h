@@ -16,6 +16,8 @@
 // This defines how fast a flying unit accelerates to full speed
 #define FLYING_ACCELERATION_DIVISOR 2
 
+#define FALLING_ACCELERATION_UNIT 0.16666667f // 1/6th
+
 namespace OpenApoc
 {
 
@@ -182,8 +184,11 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	// Get unit's height in current situation
 	int getCurrentHeight() const { return agent->type->bodyType->height.at(current_body_state); }
 
+	// TU functions
 	// Wether unit can afford action
-	bool canAfford(int cost) const { return agent->modified_stats.time_units >= cost; }
+	bool canAfford(int cost) const; 
+	// Returns if unit did spend (false if unsufficient TUs)
+	bool spendTU(int cost);
 
 	// If unit is asked to give way, this list will be filled with facings
 	// in order of priority that should be tried by it
@@ -198,6 +203,8 @@ class BattleUnit : public std::enable_shared_from_this<BattleUnit>
 	const Vec3<float> &getPosition() const { return this->position; }
 
 	StateRef<AEquipmentType> getDisplayedItem() const;
+
+	float getMaxThrowDistance(int weight, int heightDifference);
 
 	int getMaxHealth() const;
 	int getHealth() const;

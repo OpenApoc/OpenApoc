@@ -1,3 +1,4 @@
+#include "game/state/organisation.h"
 #include "game/ui/tileview/battletileview.h"
 #include "forms/ui.h"
 #include "framework/event.h"
@@ -6,14 +7,15 @@
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunitmission.h"
 #include "game/state/tileview/tileobject_battleunit.h"
+#include "game/state/tileview/tileobject_battleitem.h"
 
 namespace OpenApoc
 {
 BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
                                TileViewMode initialMode, int currentZLevel,
-                               Vec3<float> screenCenterTile, Battle::Mode battleMode)
+                               Vec3<float> screenCenterTile, sp<Battle> battle)
     : TileView(map, isoTileSize, stratTileSize, initialMode), currentZLevel(currentZLevel),
-	battleMode(battleMode)
+	battle(battle)
 {
 	layerDrawingMode = LayerDrawingMode::UpToCurrentLevel;
 	selectedTileEmptyImageBack =
@@ -384,10 +386,19 @@ void BattleTileView::render()
 					if (selectedTilePosition.z == z)
 					{
 						drawPathPreview = previewedPathCost != -1;
-						if (selTileOnCurLevel->getUnitIfPresent())
+						auto u = selTileOnCurLevel->getUnitIfPresent();
+						if (u)
 						{
-							selectionImageBack = selectedTileFilledImageBack;
-							selectionImageFront = selectedTileFilledImageFront;
+							if (battle->currentPlayer->isRelatedTo(u->getUnit()->owner) == Organisation::Relation::Hostile)
+							{
+								selectionImageBack = selectedTileFireImageBack;
+								selectionImageFront = selectedTileFireImageFront;
+							}
+							else
+							{
+								selectionImageBack = selectedTileFilledImageBack;
+								selectionImageFront = selectedTileFilledImageFront;
+							}
 						}
 						else
 						{
@@ -476,7 +487,7 @@ void BattleTileView::render()
 							// When done with all objects, draw the front selection image
 							if (tile == selTileOnCurLevel && layer == 0)
 							{
-								static const Vec2<int> offset = { 0, -50 };
+								static const Vec2<int> offset = { 2, -53 };
 
 								r.draw(selectionImageFront,
 								       tileToOffsetScreenCoords(selTilePosOnCurLevel) -
@@ -511,7 +522,7 @@ void BattleTileView::render()
 				}
 			}
 
-			// Draw next level, units whose "legs" are below "zTo" only
+			// Draw next level, units whose "legs" are below "zTo" and items moving
 			for (int z = zTo; z < maxZDraw && z < zTo + 1; z++)
 			{
 				int currentLevel = z - currentZLevel + 1;
@@ -537,11 +548,12 @@ void BattleTileView::render()
 									break;
 								}
 								auto &obj = tile->drawnObjects[layer][obj_id];
-								if (obj->getType() == TileObject::Type::Unit &&
-								    obj->getPosition().z < zTo)
+								bool draw = false;
+								if ((obj->getType() == TileObject::Type::Unit && obj->getPosition().z < zTo) )
 								{
+									draw = true;
 									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
-									             ->getUnit();
+										->getUnit();
 									if (!selectedUnits.empty())
 									{
 										auto selectedPos =
@@ -556,6 +568,14 @@ void BattleTileView::render()
 											unitsToDraw.push_back({ u, false });
 										}
 									}
+								}
+								if (obj->getType() == TileObject::Type::Item)
+								{
+									draw = !std::static_pointer_cast<TileObjectBattleItem>(obj)
+										->getItem()->supported;
+								}
+								if (draw)
+								{
 									Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
 									obj->draw(r, *this, pos, this->viewMode, currentLevel);
 								}
@@ -591,7 +611,7 @@ void BattleTileView::render()
 					r.draw(behaviorUnitSelectionUnderlay[obj.first->behavior_mode],
 					       pos + offsetBehavior);
 
-					if (battleMode == Battle::Mode::TurnBased)
+					if (battle->mode == Battle::Mode::TurnBased)
 					{
 						auto &img = tuIndicators[obj.first->agent->modified_stats.time_units];
 						r.draw(img, pos + offsetTU - Vec2<float>{img->size.x / 2, img->size.y / 2});
@@ -764,16 +784,17 @@ void BattleTileView::setSelectedTilePosition(Vec3<int> newPosition)
 
 void BattleTileView::resetPathPreview()
 {
-	pathPreviewTicksAccumulated = 0;
-	previewedPathCost = -1;
-	lastSelectedUnitPosition = { -1,-1,-1 };
-	pathPreview.clear();
+	if (pathPreviewTicksAccumulated > 0)
+	{
+		pathPreviewTicksAccumulated = 0;
+		previewedPathCost = -1;
+		lastSelectedUnitPosition = { -1,-1,-1 };
+		pathPreview.clear();
+	}
 }
 
 void BattleTileView::updatePathPreview()
 {
-	pathPreviewTicksAccumulated = 0;
-	
 	auto target = selectedTilePosition;
 	if (!lastSelectedUnit)
 	{

@@ -877,6 +877,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						auto s = mksp<BattleItem>();
 						s->item = i;
 						s->position = pair.first + shift;
+						s->supported = true;
 
 						b->items.push_back(s);
 					}

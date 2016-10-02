@@ -284,6 +284,8 @@
 		<member>requireGoal</member>
 		<member>free</member>
 		<member>item</member>
+		<member>velocityXY</member>
+		<member>velocityZ</member>
 		<member>timeToSnooze</member>
 		<member>timeUnits</member>
 		<member>bodyState</member>
@@ -514,6 +516,8 @@
 		<member>item</member>
 		<member>position</member>
 		<member>velocity</member>
+		<member>bounced</member>
+		<member>supported</member>
 	</object>
 	<object>
 		<name>BattleMapPart</name>

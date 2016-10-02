@@ -57,7 +57,7 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state)
 	state.battle_common_sample_list->brainsuckerHatch =
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/extra/brhatch.raw:22050");
 	state.battle_common_sample_list->teleport =
-	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosions/teleport.raw:22050");
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/teleport.raw:22050");
 
 	UString sfx_name = "";
 	for (int i = 1; i <= 8; i++)

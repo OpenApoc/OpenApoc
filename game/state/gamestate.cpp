@@ -292,18 +292,18 @@ void GameState::fillPlayerStartingProperty()
 								slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorRightHand;
 								break;
 						}
-						agent->addEquipment(*this, {this, t->id}, slotType);
+						agent->addEquipmentByType(*this, {this, t->id}, slotType);
 					}
 					else if (t->type == AEquipmentType::Type::Ammo ||
 					         t->type == AEquipmentType::Type::MediKit ||
 					         t->type == AEquipmentType::Type::Grenade)
 					{
-						agent->addEquipment(*this, {this, t->id},
+						agent->addEquipmentByType(*this, {this, t->id},
 						                    AgentEquipmentLayout::EquipmentSlotType::General);
 					}
 					else
 					{
-						agent->addEquipment(*this, {this, t->id});
+						agent->addEquipmentByType(*this, {this, t->id});
 					}
 				}
 				it++;

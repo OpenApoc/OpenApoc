@@ -63,6 +63,7 @@ class BattleUnitMission
 		Turn,
 		Fall,
 		ReachGoal,
+		Teleport
 	};
 
 	// Methods used in pathfinding etc.
@@ -94,7 +95,7 @@ class BattleUnitMission
 	static BattleUnitMission *snooze(BattleUnit &u, unsigned int ticks);
 	static BattleUnitMission *acquireTU(BattleUnit &u, unsigned int tu);
 	static BattleUnitMission *changeStance(BattleUnit &u, AgentType::BodyState state);
-	static BattleUnitMission *throwItem(BattleUnit &u, sp<AEquipment> item, Vec3<int> target);
+	static BattleUnitMission *throwItem(BattleUnit &u, sp<AEquipment> item, Vec3<int> target, float velocityXY, float velocityZ);
 	static BattleUnitMission *dropItem(BattleUnit &u, sp<AEquipment> item);
 	static BattleUnitMission *turn(BattleUnit &u, Vec2<int> target, bool free = false, bool requireGoal = true);
 	static BattleUnitMission *turn(BattleUnit &u, Vec3<int> target, bool free = false, bool requireGoal = true);
@@ -102,6 +103,7 @@ class BattleUnitMission
 	static BattleUnitMission *restartNextMission(BattleUnit &u);
 	static BattleUnitMission *fall(BattleUnit &u);
 	static BattleUnitMission *reachGoal(BattleUnit &u);
+	static BattleUnitMission *teleport(BattleUnit &u, sp<AEquipment> item, Vec3<int> target);
 
 	UString getName();
 
@@ -127,8 +129,12 @@ class BattleUnitMission
 	bool requireGoal = false;
 	bool free = false;
 
-	// ThrowItem, DropItem
+	// ThrowItem, DropItem, Teleport
 	sp<AEquipment> item;
+
+	// ThrorwItem
+	float velocityXY = 0.0f;
+	float velocityZ = 0.0f;
 
 	// Snooze
 	unsigned int timeToSnooze = 0;

@@ -434,8 +434,34 @@ sp<TileObjectBattleUnit> Tile::getUnitIfPresent() { return firstUnitPresent; }
 
 sp<TileObjectBattleUnit> Tile::getUnitIfPresent(bool onlyConscious, bool mustOccupy,
                                                 bool mustBeStatic,
-                                                sp<TileObjectBattleUnit> exceptThis, bool onlyLarge)
+                                                sp<TileObjectBattleUnit> exceptThis, bool onlyLarge, bool checkLargeSpace)
 {
+	if (checkLargeSpace)
+	{
+		for (int x = -1; x >= 0; x++)
+		{
+			for (int y = -1; y >= 0;y++)
+			{
+				for (int z = 0; z <= 1;z++)
+				{
+					if (x == 0 && y == 0 && z == 0)
+					{
+						continue;
+					}
+					if (position.x + x < 0 || position.y + y < 0 || position.z + z >= map.size.z)
+					{
+						continue;
+					}
+					auto u = map.getTile(position.x + x, position.y + y, position.z + z)->getUnitIfPresent(onlyConscious, mustOccupy, mustBeStatic, exceptThis, onlyLarge, false);
+					if (u)
+					{
+						return u;
+					}
+				}
+			}
+		}
+	}
+
 	for (auto o : intersectingObjects)
 	{
 		if (o->getType() == TileObject::Type::Unit)
@@ -454,6 +480,48 @@ sp<TileObjectBattleUnit> Tile::getUnitIfPresent(bool onlyConscious, bool mustOcc
 		}
 	}
 	return nullptr;
+}
+
+std::list<sp<BattleItem>> Tile::getItems()
+{
+	std::list<sp<BattleItem>> result;
+	for (auto o : ownedObjects)
+	{
+		if (o->getType() == TileObject::Type::Item)
+		{
+			auto item = std::static_pointer_cast<TileObjectBattleItem>(o)->getItem();
+			if (item->supported)
+			{
+				result.push_back(item);
+			}
+		}
+	}
+	for (int x = -1; x <= 1; x++)
+	{
+		for (int y = -1; y <= 1;y++)
+		{
+			if (x == 0 && y == 0)
+			{
+				continue;
+			}
+			auto pos = Vec3<int>{ position.x + x, position.y + y, position.z };
+			if (pos.x < 0 || pos.x >= map.size.x || pos.y < 0 || pos.y >= map.size.y)
+				continue;
+			auto t = map.getTile(pos);
+			for (auto o : t->ownedObjects)
+			{
+				if (o->getType() == TileObject::Type::Item)
+				{
+					auto item = std::static_pointer_cast<TileObjectBattleItem>(o)->getItem();
+					if (item->supported)
+					{
+						result.push_back(item);
+					}
+				}
+			}
+		}
+	}
+	return result;
 }
 
 void TileMap::addObjectToMap(sp<Projectile> projectile)
@@ -625,7 +693,7 @@ sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &
 			auto topPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, maxZ - 0.01f);
 			auto bottomPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, 0.0f);
 
-			auto collision = this->findCollision(topPos, bottomPos, {}, true);
+			auto collision = this->findCollision(topPos, bottomPos, {}, nullptr, true);
 			if (collision)
 			{
 				if (objectColours.find(collision.obj) == objectColours.end())

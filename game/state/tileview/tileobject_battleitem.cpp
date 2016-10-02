@@ -53,6 +53,17 @@ TileObjectBattleItem::TileObjectBattleItem(TileMap &map, sp<BattleItem> item)
 {
 }
 
+sp<BattleItem> TileObjectBattleItem::getItem()
+{
+	auto i = item.lock();
+	if (!i)
+	{
+		LogError("Item disappeared");
+		return nullptr;
+	}
+	return i;
+}
+
 Vec3<float> TileObjectBattleItem::getPosition() const
 {
 	auto p = this->item.lock();

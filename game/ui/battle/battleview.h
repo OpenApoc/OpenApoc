@@ -27,10 +27,15 @@ enum class BattleSelectionState
 	NormalAlt,
 	NormalCtrl,
 	NormalCtrlAlt,
-	Fire,
+	PsiLeft,
+	PsiRight,
+	FireAny, 
+	FireLeft,
+	FireRight,
 	ThrowLeft,
 	ThrowRight,
-	// Psi,
+	TeleportLeft,
+	TeleportRight,
 };
 
 // All the info required to draw a single item info chunk, kept together to make it easier to
@@ -72,6 +77,7 @@ class BattleView : public BattleTileView
 	bool colorForward = true;
 	int colorCurrent = 0;
 	sp<Palette> palette;
+	std::vector<sp<Palette>> modPalette;
 
 	BattleSelectionState selectionState;
 	bool modifierLShift = false;
@@ -82,6 +88,7 @@ class BattleView : public BattleTileView
 	bool modifierRCtrl = false;
 	int leftThrowDelay = 0;
 	int rightThrowDelay = 0;
+	int actionImpossibleDelay = 0;
 
 	void updateSelectionMode();
 	void updateSelectedUnits();
@@ -103,6 +110,7 @@ class BattleView : public BattleTileView
 	void orderTurn(Vec3<int> target);
 	void orderDrop(bool right);
 	void orderThrow(Vec3<int> target, bool right);
+	void orderTeleport(Vec3<int> target, bool right);
 	void orderSelect(sp<BattleUnit> u, bool inverse = false, bool additive = false);
 	void attemptToClearCurrentOrders(sp<BattleUnit> u, bool overrideBodyStateChange = false);
 	bool canEmplaceTurnInFront(sp<BattleUnit> u);
@@ -114,6 +122,7 @@ class BattleView : public BattleTileView
 	void resume() override;
 	void update() override;
 	void render() override;
+	void finish() override;
 	void eventOccurred(Event *e) override;
 
 	void setUpdateSpeed(BattleUpdateSpeed updateSpeed);

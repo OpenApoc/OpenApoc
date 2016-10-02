@@ -13,6 +13,7 @@ class TileObjectBattleItem : public TileObject
 	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition, TileViewMode mode,
 	          int) override;
 	~TileObjectBattleItem() override;
+	sp<BattleItem> getItem();
 	Vec3<float> getPosition() const override;
 	Vec3<float> getCenterOffset() const override { return {0.0f, 0.0f, bounds_div_2.z}; }
 

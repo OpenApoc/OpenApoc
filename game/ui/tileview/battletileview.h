@@ -1,12 +1,12 @@
 #pragma once
 #include "framework/framework.h"
 #include "game/ui/tileview/tileview.h"
-#include "game/state/battle/battle.h"
 
 namespace OpenApoc
 {
 
 class TileObjectBattleUnit;
+class Battle;
 
 class BattleTileView : public TileView
 {
@@ -24,7 +24,7 @@ class BattleTileView : public TileView
   private:
 	int currentZLevel;
 	LayerDrawingMode layerDrawingMode;
-	Battle::Mode battleMode;
+	sp<Battle> battle;
 
 	sp<Image> selectedTileEmptyImageBack;
 	sp<Image> selectedTileEmptyImageFront;
@@ -54,7 +54,7 @@ class BattleTileView : public TileView
 	
   public:
 	BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
-	               TileViewMode initialMode, int currentZLevel, Vec3<float> screenCenterTile, Battle::Mode battleMode);
+	               TileViewMode initialMode, int currentZLevel, Vec3<float> screenCenterTile, sp<Battle> battle);
 	~BattleTileView() override;
 
 	std::list<sp<BattleUnit>> selectedUnits;

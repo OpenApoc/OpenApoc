@@ -195,7 +195,8 @@ void TileObjectBattleUnit::setPosition(Vec3<float> newPosition)
 	// Set appropriate bounds for the unit
 	auto size = std::max(u->agent->type->bodyType->size[u->current_body_state][u->facing],
 	                     u->agent->type->bodyType->size[u->target_body_state][u->facing]);
-	setBounds({size.x, size.y, size.z});
+	auto maxHeight = std::max(u->agent->type->bodyType->height[u->current_body_state], u->agent->type->bodyType->height[u->target_body_state]);
+	setBounds({size.x, size.y, (float)maxHeight / 40.0f});
 	// It would be appropriate to set bounds based on unit height, like this:
 	//   setBounds({ size.x, size.y, (float)u->agent->type->bodyType->maxHeight / 40.0f });
 	// However, this requires re-aligning unit sprites according to their height,
@@ -203,7 +204,7 @@ void TileObjectBattleUnit::setPosition(Vec3<float> newPosition)
 	// Therefore, it's much easier to just leave it this way
 	if (u->isLarge())
 	{
-		centerOffset = {0.0f, 0.0f, bounds_div_2.z};
+		centerOffset = {0.0f, 0.0f, 1.0f};
 	}
 	else // if small
 	{
@@ -211,11 +212,11 @@ void TileObjectBattleUnit::setPosition(Vec3<float> newPosition)
 		    u->target_body_state == AgentType::BodyState::Prone)
 		{
 			centerOffset = {-u->facing.x * bounds.x / 4.0f, -u->facing.y * bounds.y / 4.0f,
-			                bounds_div_2.z};
+			                0.5f};
 		}
 		else
 		{
-			centerOffset = {0.0f, 0.0f, bounds_div_2.z};
+			centerOffset = {0.0f, 0.0f, 0.5f};
 		}
 	}
 
