@@ -67,7 +67,7 @@ Battle::~Battle()
 	this->map_parts.clear();
 	for (auto &u : this->units)
 	{
-		u.second->agent->unit = nullptr;
+		u.second->agent->unit = StateRef<BattleUnit>{};
 	}
 	for (auto &s : this->items)
 	{
