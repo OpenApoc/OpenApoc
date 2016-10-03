@@ -18,39 +18,24 @@ void TileObjectProjectile::draw(Renderer &r, TileTransform &transform, Vec2<floa
 		return;
 	}
 
-	// FIXME: This is unproper and will draw only linear projectiles, while homing projectiles will
-	// look very weird.
-	// Instead we should "spawn" locations every X pixels or something like that,
-	// and such location should draw animated picture until it reaches the end
-	// This would provide for turning projectiles to draw properly
-
-	Vec2<float> headScreenCoords = screenPosition;
-	Vec3<float> tailPosition =
-	    ((float)projectile->tail_length * (-glm::normalize(projectile->velocity)));
-	tailPosition /= map.velocityScale;
-
-	Vec2<float> tailScreenCoords = transform.tileToScreenCoords(tailPosition);
-	tailScreenCoords += screenPosition;
-
-	Vec3<int> projectile_line_start(lrint(headScreenCoords.x), lrint(headScreenCoords.y), 0);
-	Vec3<int> projectile_line_end(lrint(tailScreenCoords.x), lrint(tailScreenCoords.y), 0);
-
-	LineSegment<int, false> line{projectile_line_start, projectile_line_end};
 	auto sprite_it = projectile->projectile_sprites.begin();
-
-	for (auto &point : line)
+	for (auto &point : projectile->spritePositions)
 	{
+		auto pos = screenPosition + transform.tileToScreenCoords(point - projectile->position);
+
 		if (sprite_it == projectile->projectile_sprites.end())
 		{
-			// We've reached the end of the sprite trail
-			break;
+			// Some beams have tails longer than sprite list,
+			// Some missiles too, but they will look buggy if we repeat them
+			if (projectile->type == Projectile::Type::Missile)
+				break;
+			else
+				sprite_it = projectile->projectile_sprites.begin();
 		}
-		if (*sprite_it == nullptr)
+		if (*sprite_it != nullptr)
 		{
-			// A 'gap' in the sprite train
-			continue;
+			r.draw(*sprite_it, pos);
 		}
-		r.draw(*sprite_it, Vec2<float>{point.x, point.y});
 		sprite_it++;
 	}
 }
@@ -71,6 +56,27 @@ Vec3<float> TileObjectProjectile::getPosition() const
 		return {0, 0, 0};
 	}
 	return p->getPosition();
+}
+
+void TileObjectProjectile::addToDrawnTiles(Tile *tile)
+{
+	auto p = this->projectile.lock();
+	if (!p)
+	{
+		LogError("Called with no owning projectile object");
+		return;
+	}
+	Vec3<float> maxCoords = {-1, -1, -1};
+	for (auto &pos : p->spritePositions)
+	{
+
+		// Projectiles are drawn in the tile that containts their point that is closest to camera
+		if (maxCoords.z * 1000 + maxCoords.x + maxCoords.y < pos.z * 1000 + pos.x + pos.y)
+		{
+			maxCoords = {pos.x, pos.y, pos.z};
+		}
+	}
+	TileObject::addToDrawnTiles(map.getTile(maxCoords));
 }
 
 } // namespace OpenApoc

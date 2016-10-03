@@ -8,6 +8,40 @@
 
 namespace OpenApoc
 {
+	
+template <> sp<BattleDoor> StateObject<BattleDoor>::get(const GameState &state, const UString &id)
+{
+	auto it = state.current_battle->doors.find(id);
+	if (it == state.current_battle->doors.end())
+	{
+		LogError("No agent_type matching ID \"%s\"", id.cStr());
+		return nullptr;
+	}
+	return it->second;
+}
+
+template <> const UString &StateObject<BattleDoor>::getPrefix()
+{
+	static UString prefix = "BATTLEDOOR_";
+	return prefix;
+}
+template <> const UString &StateObject<BattleDoor>::getTypeName()
+{
+	static UString name = "BattleDoor";
+	return name;
+}
+template <>
+const UString &StateObject<BattleDoor>::getId(const GameState &state, const sp<BattleDoor> ptr)
+{
+	static const UString emptyString = "";
+	for (auto &a : state.current_battle->doors)
+	{
+		if (a.second == ptr)
+			return a.first;
+	}
+	LogError("No BattleDoor matching pointer %p", ptr.get());
+	return emptyString;
+}
 
 void BattleDoor::setDoorState(bool open)
 {
@@ -156,9 +190,6 @@ int BattleDoor::getAnimationFrame()
 
 void BattleDoor::playDoorSound()
 {
-	auto b = battle.lock();
-	if (!b)
-		return;
-	fw().soundBackend->playSample(b->common_sample_list->door, position, 0.25f);
+	fw().soundBackend->playSample(doorSound, position, 0.25f);
 }
 }

@@ -37,7 +37,9 @@
         <range>350</range>
         <firing_arc_1>2</firing_arc_1>
         <firing_arc_2>2</firing_arc_2>
-        <explosion_graphic>1</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/mcannon.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn1.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_1_AUTOCANNON</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:8</icon>
       </sp>
     </value>
@@ -79,7 +81,9 @@
         <range>300</range>
         <firing_arc_1>8</firing_arc_1>
         <firing_arc_2>8</firing_arc_2>
-        <explosion_graphic>1</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/repeater.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn1.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_1_AUTOCANNON</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:18</icon>
       </sp>
     </value>
@@ -144,7 +148,9 @@
         <range>360</range>
         <firing_arc_1>8</firing_arc_1>
         <firing_arc_2>8</firing_arc_2>
-        <explosion_graphic>2</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/airguard.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn1.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_2_AIRGUARD</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:19</icon>
       </sp>
     </value>
@@ -223,7 +229,9 @@
         <range>400</range>
         <firing_arc_1>2</firing_arc_1>
         <firing_arc_2>2</firing_arc_2>
-        <explosion_graphic>8</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/bolter.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn1.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_8_LASER</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:0</icon>
       </sp>
     </value>
@@ -327,6 +335,9 @@
         <range>900</range>
         <firing_arc_1>6</firing_arc_1>
         <firing_arc_2>6</firing_arc_2>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/dinvrsn1.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn2.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_3_EXPLOSION</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:13</icon>
       </sp>
     </value>
@@ -398,6 +409,9 @@
         <range>500</range>
         <firing_arc_1>6</firing_arc_1>
         <firing_arc_2>6</firing_arc_2>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/ruptmult.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn2.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_3_EXPLOSION</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:15</icon>
       </sp>
     </value>
@@ -469,7 +483,9 @@
         <range>650</range>
         <firing_arc_1>8</firing_arc_1>
         <firing_arc_2>8</firing_arc_2>
-        <explosion_graphic>7</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/marsplas.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn2.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_7_JANITOR</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:22</icon>
       </sp>
     </value>
@@ -525,7 +541,9 @@
         <range>450</range>
         <firing_arc_1>8</firing_arc_1>
         <firing_arc_2>8</firing_arc_2>
-        <explosion_graphic>7</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/gr_missl.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn2.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_7_JANITOR</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:20</icon>
       </sp>
     </value>
@@ -595,7 +613,9 @@
         <range>1200</range>
         <firing_arc_1>4</firing_arc_1>
         <firing_arc_2>4</firing_arc_2>
-        <explosion_graphic>10</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/disrupt3.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn1.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_10_DISRUPTOR</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:7</icon>
       </sp>
     </value>
@@ -674,7 +694,9 @@
         <range>500</range>
         <firing_arc_1>3</firing_arc_1>
         <firing_arc_2>3</firing_arc_2>
-        <explosion_graphic>7</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/janitor.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn2.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_7_JANITOR</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:9</icon>
       </sp>
     </value>
@@ -746,6 +768,9 @@
         <range>2000</range>
         <firing_arc_1>3</firing_arc_1>
         <firing_arc_2>4</firing_arc_2>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/justice.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn2.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_3_EXPLOSION</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:10</icon>
       </sp>
     </value>
@@ -804,7 +829,9 @@
         <range>600</range>
         <firing_arc_1>2</firing_arc_1>
         <firing_arc_2>2</firing_arc_2>
-        <explosion_graphic>8</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/lancer.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn1.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_8_LASER</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:1</icon>
       </sp>
     </value>
@@ -872,7 +899,9 @@
         <firing_arc_1>8</firing_arc_1>
         <firing_arc_2>8</firing_arc_2>
         <point_defence>true</point_defence>
-        <explosion_graphic>8</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/meglaser.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn1.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_8_LASER</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:16</icon>
       </sp>
     </value>
@@ -922,7 +951,9 @@
         <range>300</range>
         <firing_arc_1>4</firing_arc_1>
         <firing_arc_2>4</firing_arc_2>
-        <explosion_graphic>10</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/disrupt1.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn1.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_10_DISRUPTOR</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:5</icon>
       </sp>
     </value>
@@ -1015,7 +1046,9 @@
         <range>800</range>
         <firing_arc_1>2</firing_arc_1>
         <firing_arc_2>2</firing_arc_2>
-        <explosion_graphic>9</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/mplasma2.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn1.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_9_PLASMA</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:3</icon>
       </sp>
     </value>
@@ -1075,7 +1108,9 @@
         <range>600</range>
         <firing_arc_1>4</firing_arc_1>
         <firing_arc_2>4</firing_arc_2>
-        <explosion_graphic>10</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/disrupt2.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn1.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_10_DISRUPTOR</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:6</icon>
       </sp>
     </value>
@@ -1317,7 +1352,9 @@
         <firing_arc_1>8</firing_arc_1>
         <firing_arc_2>8</firing_arc_2>
         <point_defence>true</point_defence>
-        <explosion_graphic>9</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/mars_glm.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn1.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_9_PLASMA</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:17</icon>
       </sp>
     </value>
@@ -1374,7 +1411,9 @@
         <range>350</range>
         <firing_arc_1>4</firing_arc_1>
         <firing_arc_2>4</firing_arc_2>
-        <explosion_graphic>9</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/multplas.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn1.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_9_PLASMA</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:4</icon>
       </sp>
     </value>
@@ -1444,7 +1483,9 @@
         <range>800</range>
         <firing_arc_1>8</firing_arc_1>
         <firing_arc_2>8</firing_arc_2>
-        <explosion_graphic>9</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/marsdef.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn1.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_9_PLASMA</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:21</icon>
       </sp>
     </value>
@@ -1500,7 +1541,9 @@
         <range>700</range>
         <firing_arc_1>6</firing_arc_1>
         <firing_arc_2>7</firing_arc_2>
-        <explosion_graphic>7</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/hellfire.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn2.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_7_JANITOR</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:11</icon>
       </sp>
     </value>
@@ -1557,7 +1600,9 @@
         <range>500</range>
         <firing_arc_1>2</firing_arc_1>
         <firing_arc_2>2</firing_arc_2>
-        <explosion_graphic>9</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/mplasma1.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn1.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_9_PLASMA</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:2</icon>
       </sp>
     </value>
@@ -1629,6 +1674,9 @@
         <range>2300</range>
         <firing_arc_1>3</firing_arc_1>
         <firing_arc_2>4</firing_arc_2>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/retrib.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn2.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_3_EXPLOSION</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:12</icon>
       </sp>
     </value>
@@ -1669,7 +1717,9 @@
         <range>500</range>
         <firing_arc_1>2</firing_arc_1>
         <firing_arc_2>2</firing_arc_2>
-        <explosion_graphic>2</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/tnkcanon.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn1.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_2_AIRGUARD</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:23</icon>
       </sp>
     </value>
@@ -1902,7 +1952,9 @@
         <range>500</range>
         <firing_arc_1>6</firing_arc_1>
         <firing_arc_2>6</firing_arc_2>
-        <explosion_graphic>7</explosion_graphic>
+        <fire_sfx>RAWSOUND:xcom3/rawsound/strategc/weapons/stasis.raw:22050</fire_sfx>
+        <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn2.raw:22050</impact_sfx>
+        <explosion_graphic>DOODAD_7_JANITOR</explosion_graphic>
         <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:14</icon>
       </sp>
     </value>

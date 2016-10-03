@@ -3,6 +3,7 @@
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
+#include "game/state/rules/doodad_type.h"
 #include "tools/extractors/common/tacp.h"
 #include "tools/extractors/extractors.h"
 #include <limits>
@@ -31,6 +32,15 @@
 #define W_TRAKGUN 182  // trakgun
 #define W_TRAKHIT 183  // trakgun
 #define W_ZAPHIT 184   // zaphit
+
+#define TAC_DOODAD_21 21 // tac 115 - 125
+#define TAC_DOODAD_22 22 // tac 126 - 136
+#define TAC_DOODAD_23 23 // tac 137 - 147
+#define TAC_DOODAD_24 24 // tac 148 - 158
+#define TAC_DOODAD_25 25 // tac 159 - 169
+#define TAC_DOODAD_26 26 // tac 170 - 180
+#define TAC_DOODAD_27 27 // tac 181 - 185 shield
+#define TAC_DOODAD_28 28 // tac 186 - 192
 
 namespace OpenApoc
 {
@@ -414,169 +424,201 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 			e->turn_rate = pdata.turn_rate;
 			e->ttl = pdata.ttl;
 			e->range = pdata.range;
-			e->explosion_graphic = pdata.explosion_graphic;
-			UString sfx_path = "";
+			UString doodad_id = "";
+			switch (pdata.explosion_graphic)
+			{
+				case TAC_DOODAD_21: // tac 115 - 125
+					doodad_id = "DOODAD_21_AP";
+					break;
+				case TAC_DOODAD_22: // tac 126 - 136
+					doodad_id = "DOODAD_22_LASER";
+					break;
+				case TAC_DOODAD_23: // tac 137 - 147
+					doodad_id = "DOODAD_23_PLASMA";
+					break;
+				case TAC_DOODAD_24: // tac 148 - 158
+					doodad_id = "DOODAD_24_DISRUPTOR";
+					break;
+				case TAC_DOODAD_25: // tac 159 - 169
+					doodad_id = "DOODAD_25_DEVASTATOR";
+					break;
+				case TAC_DOODAD_26: // tac 170 - 180
+					doodad_id = "DOODAD_26_STUN";
+					break;
+				case TAC_DOODAD_27: // tac 181 - 185 shield
+					doodad_id = "DOODAD_27_SHIELD";
+					break;
+				case TAC_DOODAD_28: // tac 186 - 192
+					doodad_id = "DOODAD_28_ENZYME";
+					break;
+			}
+			if (doodad_id != "")
+			{
+				e->explosion_graphic = {&state, doodad_id};
+			}
+
+			UString fire_sfx_path = "";
 			switch (pdata.fire_sfx)
 			{
 				case E_TRONLAUN:
-					sfx_path = "extra/tronlaun";
+					fire_sfx_path = "extra/tronlaun";
 					break;
 				case A_QUEENWHP:
-					sfx_path = "tactical/aliens/attacks/queenwhp";
+					fire_sfx_path = "tactical/aliens/attacks/queenwhp";
 					break;
 				case A_SPITTER:
-					sfx_path = "tactical/aliens/attacks/spitter";
+					fire_sfx_path = "tactical/aliens/attacks/spitter";
 					break;
 				case A_WORMSPIT:
-					sfx_path = "tactical/aliens/attacks/wormspit";
+					fire_sfx_path = "tactical/aliens/attacks/wormspit";
 					break;
 				case A_WRMATTAK:
-					sfx_path = "tactical/aliens/attacks/wrmattak";
+					fire_sfx_path = "tactical/aliens/attacks/wrmattak";
 					break;
 				case W_BULLET1:
-					sfx_path = "tactical/weapons/bullet1";
+					fire_sfx_path = "tactical/weapons/bullet1";
 					break;
 				case W_BULLET2:
-					sfx_path = "tactical/weapons/bullet2";
+					fire_sfx_path = "tactical/weapons/bullet2";
 					break;
 				case W_BULLET3:
-					sfx_path = "tactical/weapons/bullet3";
+					fire_sfx_path = "tactical/weapons/bullet3";
 					break;
 				case W_DCANNON1:
-					sfx_path = "tactical/weapons/dcannon1";
+					fire_sfx_path = "tactical/weapons/dcannon1";
 					break;
 				case W_DIMNMISL:
-					sfx_path = "tactical/weapons/dimnmisl";
+					fire_sfx_path = "tactical/weapons/dimnmisl";
 					break;
 				case W_DISRUPTR:
-					sfx_path = "tactical/weapons/disruptr";
+					fire_sfx_path = "tactical/weapons/disruptr";
 					break;
 				case W_ENTROPY:
-					sfx_path = "tactical/weapons/entropy";
+					fire_sfx_path = "tactical/weapons/entropy";
 					break;
 				case W_MARSEC1:
-					sfx_path = "tactical/weapons/marsec1";
+					fire_sfx_path = "tactical/weapons/marsec1";
 					break;
 				case W_MARSEC2:
-					sfx_path = "tactical/weapons/marsec2";
+					fire_sfx_path = "tactical/weapons/marsec2";
 					break;
 				case W_MEGAPOL:
-					sfx_path = "tactical/weapons/megapol";
+					fire_sfx_path = "tactical/weapons/megapol";
 					break;
 				case W_MEGASTUN:
-					sfx_path = "tactical/weapons/megastun";
+					fire_sfx_path = "tactical/weapons/megastun";
 					break;
 				case W_MEGCANON:
-					sfx_path = "tactical/weapons/megcanon";
+					fire_sfx_path = "tactical/weapons/megcanon";
 					break;
 				case W_MEGHIT:
-					sfx_path = "tactical/weapons/meghit";
+					fire_sfx_path = "tactical/weapons/meghit";
 					break;
 				case W_POWERS:
-					sfx_path = "tactical/weapons/powers";
+					fire_sfx_path = "tactical/weapons/powers";
 					break;
 				case W_SNIPER:
-					sfx_path = "tactical/weapons/sniper";
+					fire_sfx_path = "tactical/weapons/sniper";
 					break;
 				case W_TOXIGUN:
-					sfx_path = "tactical/weapons/toxigun";
+					fire_sfx_path = "tactical/weapons/toxigun";
 					break;
 				case W_TRAKGUN:
-					sfx_path = "tactical/weapons/trakgun";
+					fire_sfx_path = "tactical/weapons/trakgun";
 					break;
 				case W_TRAKHIT:
-					sfx_path = "tactical/weapons/trakhit";
+					fire_sfx_path = "tactical/weapons/trakhit";
 					break;
 				case W_ZAPHIT:
-					sfx_path = "tactical/weapons/zaphit";
+					fire_sfx_path = "tactical/weapons/zaphit";
 					break;
 			}
-			if (sfx_path != "")
+			if (fire_sfx_path != "")
 			{
-				e->fire_sfx =
-				    fw().data->loadSample("RAWSOUND:xcom3/rawsound/" + sfx_path + ".raw:22050");
+				e->fire_sfx = fw().data->loadSample("RAWSOUND:xcom3/rawsound/" + fire_sfx_path +
+				                                    ".raw:22050");
 			}
 
-			sfx_path = "";
+			UString impact_sfx_path = "";
 			switch (pdata.impact_sfx)
 			{
 				case E_TRONLAUN:
-					sfx_path = "extra/tronlaun";
+					impact_sfx_path = "extra/tronlaun";
 					break;
 				case A_QUEENWHP:
-					sfx_path = "tactical/aliens/attacks/queenwhp";
+					impact_sfx_path = "tactical/aliens/attacks/queenwhp";
 					break;
 				case A_SPITTER:
-					sfx_path = "tactical/aliens/attacks/spitter";
+					impact_sfx_path = "tactical/aliens/attacks/spitter";
 					break;
 				case A_WORMSPIT:
-					sfx_path = "tactical/aliens/attacks/wormspit";
+					impact_sfx_path = "tactical/aliens/attacks/wormspit";
 					break;
 				case A_WRMATTAK:
-					sfx_path = "tactical/aliens/attacks/wrmattak";
+					impact_sfx_path = "tactical/aliens/attacks/wrmattak";
 					break;
 				case W_BULLET1:
-					sfx_path = "tactical/weapons/bullet1";
+					impact_sfx_path = "tactical/weapons/bullet1";
 					break;
 				case W_BULLET2:
-					sfx_path = "tactical/weapons/bullet2";
+					impact_sfx_path = "tactical/weapons/bullet2";
 					break;
 				case W_BULLET3:
-					sfx_path = "tactical/weapons/bullet3";
+					impact_sfx_path = "tactical/weapons/bullet3";
 					break;
 				case W_DCANNON1:
-					sfx_path = "tactical/weapons/dcannon1";
+					impact_sfx_path = "tactical/weapons/dcannon1";
 					break;
 				case W_DIMNMISL:
-					sfx_path = "tactical/weapons/dimnmisl";
+					impact_sfx_path = "tactical/weapons/dimnmisl";
 					break;
 				case W_DISRUPTR:
-					sfx_path = "tactical/weapons/disruptr";
+					impact_sfx_path = "tactical/weapons/disruptr";
 					break;
 				case W_ENTROPY:
-					sfx_path = "tactical/weapons/entropy";
+					impact_sfx_path = "tactical/weapons/entropy";
 					break;
 				case W_MARSEC1:
-					sfx_path = "tactical/weapons/marsec1";
+					impact_sfx_path = "tactical/weapons/marsec1";
 					break;
 				case W_MARSEC2:
-					sfx_path = "tactical/weapons/marsec2";
+					impact_sfx_path = "tactical/weapons/marsec2";
 					break;
 				case W_MEGAPOL:
-					sfx_path = "tactical/weapons/megapol";
+					impact_sfx_path = "tactical/weapons/megapol";
 					break;
 				case W_MEGASTUN:
-					sfx_path = "tactical/weapons/megastun";
+					impact_sfx_path = "tactical/weapons/megastun";
 					break;
 				case W_MEGCANON:
-					sfx_path = "tactical/weapons/megcanon";
+					impact_sfx_path = "tactical/weapons/megcanon";
 					break;
 				case W_MEGHIT:
-					sfx_path = "tactical/weapons/meghit";
+					impact_sfx_path = "tactical/weapons/meghit";
 					break;
 				case W_POWERS:
-					sfx_path = "tactical/weapons/powers";
+					impact_sfx_path = "tactical/weapons/powers";
 					break;
 				case W_SNIPER:
-					sfx_path = "tactical/weapons/sniper";
+					impact_sfx_path = "tactical/weapons/sniper";
 					break;
 				case W_TOXIGUN:
-					sfx_path = "tactical/weapons/toxigun";
+					impact_sfx_path = "tactical/weapons/toxigun";
 					break;
 				case W_TRAKGUN:
-					sfx_path = "tactical/weapons/trakgun";
+					impact_sfx_path = "tactical/weapons/trakgun";
 					break;
 				case W_TRAKHIT:
-					sfx_path = "tactical/weapons/trakhit";
+					impact_sfx_path = "tactical/weapons/trakhit";
 					break;
 				case W_ZAPHIT:
-					sfx_path = "tactical/weapons/zaphit";
+					impact_sfx_path = "tactical/weapons/zaphit";
 					break;
 			}
-			if (sfx_path != "")
+			if (impact_sfx_path != "")
 			{
-				e->impact_sfx =
-				    fw().data->loadSample("RAWSOUND:xcom3/rawsound/" + sfx_path + ".raw:22050");
+				e->impact_sfx = fw().data->loadSample("RAWSOUND:xcom3/rawsound/" + impact_sfx_path +
+				                                      ".raw:22050");
 			}
 
 			e->damage_type = {&state, data_t.getDTypeId(pdata.damage_type)};
@@ -835,6 +877,68 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 
 				state.equipment_sets_by_level[id] = es;
 			}
+		}
+	}
+
+	// DOODADS
+	{
+		static const int frameTTL = 4;
+		static const std::vector<Vec2<int>> doodadTabOffsets = {
+		    {115, 126}, {126, 137}, {137, 148}, {148, 159},
+		    {159, 170}, {170, 181}, {181, 186}, {186, 192},
+		};
+
+		for (int i = 21; i <= 28; i++)
+		{
+			UString id;
+			switch (i)
+			{
+				case TAC_DOODAD_21: // tac 115 - 125
+					id = "DOODAD_21_AP";
+					break;
+				case TAC_DOODAD_22: // tac 126 - 136
+					id = "DOODAD_22_LASER";
+					break;
+				case TAC_DOODAD_23: // tac 137 - 147
+					id = "DOODAD_23_PLASMA";
+					break;
+				case TAC_DOODAD_24: // tac 148 - 158
+					id = "DOODAD_24_DISRUPTOR";
+					break;
+				case TAC_DOODAD_25: // tac 159 - 169
+					id = "DOODAD_25_DEVASTATOR";
+					break;
+				case TAC_DOODAD_26: // tac 170 - 180
+					id = "DOODAD_26_STUN";
+					break;
+				case TAC_DOODAD_27: // tac 181 - 185 shield
+					id = "DOODAD_27_SHIELD";
+					break;
+				case TAC_DOODAD_28: // tac 186 - 192
+					id = "DOODAD_28_ENZYME";
+					break;
+			}
+
+			auto tabOffsets = doodadTabOffsets[i - 21];
+			auto d = mksp<DoodadType>();
+
+			// For some reason, not equal to other offsets, which are 23,34?
+			// d->imageOffset = { 23,32 };
+			// Let's try common one
+			// FIXME: ENSURE CORRECT
+			d->imageOffset = BATTLE_IMAGE_OFFSET;
+			d->lifetime = (tabOffsets.y - tabOffsets.x) * frameTTL;
+			d->repeatable = false;
+			for (int j = tabOffsets.x; j < tabOffsets.y; j++)
+			{
+				d->frames.push_back({fw().data->loadImage(UString::format(
+				                         "PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
+				                         "ptang.tab:%d",
+				                         j)),
+				                     frameTTL});
+			}
+
+			state.doodad_types[id] = d;
 		}
 	}
 }

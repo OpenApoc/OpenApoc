@@ -921,10 +921,11 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				std::list<Vec3<int>> locationsToCheck;
 				std::set<Vec3<int>> locationsVisited;
 
-				auto d = mksp<BattleDoor>();
+				UString doorID = b->addDoor();
+				auto d = b->doors.at(doorID);
 				d->right = i == 1;
 				d->operational = true;
-				b->doors.push_back(d);
+				d->doorSound = state.battle_common_sample_list->door;
 
 				// Recursively search for doors in a pattern spreading around start location
 				locationsToCheck.push_back(doors[i].front().first);
@@ -947,7 +948,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						continue;
 					}
 
-					it->second->doorID = (int)b->doors.size() - 1;
+					it->second->door = { &state, doorID };
 					d->animationFrameCount = std::max(
 					    d->animationFrameCount, (int)it->second->type->animation_frames.size());
 					// d->mapParts.push_back(it->second); // <- no need to do it here, we do it in
@@ -975,11 +976,11 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				b->participants.insert(a->owner);
 			}
 
-			auto u = mksp<BattleUnit>();
+			UString unitID = b->addUnit();
+			auto u = b->units.at(unitID);
 
-			b->addUnit(u);
 			u->agent = a;
-			u->agent->unit = {&state, u->id};
+			u->agent->unit = {&state, unitID };
 			u->owner = a->owner;
 			u->squadNumber = -1;
 			u->battle = b;
@@ -1089,6 +1090,28 @@ void BattleMap::loadTilesets(GameState &state) const
 		{
 			auto &tileName = tilePair.first;
 			auto &tile = tilePair.second;
+			// Assign sounds
+			if (tile->sfxIndex != -1)
+			{
+				tile->walkSounds = state.battle_common_sample_list->walkSounds.at(tile->sfxIndex);
+				tile->objectDropSound = state.battle_common_sample_list->objectDropSounds.at(tile->sfxIndex);
+			}
+			// Assign map marts
+			switch (tile->type)
+			{
+			case BattleMapPartType::Type::Ground:
+				tile->destroyed_map_parts.push_back(destroyed_ground_tile);
+				break;
+			case BattleMapPartType::Type::LeftWall:
+				tile->destroyed_map_parts = rubble_left_wall;
+				break;
+			case BattleMapPartType::Type::RightWall:
+				tile->destroyed_map_parts = rubble_right_wall;
+				break;
+			case BattleMapPartType::Type::Feature:
+				tile->destroyed_map_parts = rubble_feature;
+				break;
+			}
 			// Sanity check
 			if (state.battleMapTiles.find(tileName) != state.battleMapTiles.end())
 			{

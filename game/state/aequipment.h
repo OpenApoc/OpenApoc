@@ -61,6 +61,6 @@ class AEquipment
 	// actually used.
 	int reload(int ammoAvailable);
 	*/
-	sp<Projectile> fire(Vec3<float> target);
+	sp<Projectile> fire(Vec3<float> targetPosition, StateRef<BattleUnit> targetUnit = nullptr);
 };
 } // namespace OpenApoc

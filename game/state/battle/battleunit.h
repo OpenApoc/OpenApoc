@@ -40,9 +40,9 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	};
 	enum class FireAimingMode
 	{
-		Aimed = 4,
+		Aimed = 1,
 		Snap = 2,
-		Auto = 1
+		Auto = 4
 	};
 	enum class FirePermissionMode
 	{

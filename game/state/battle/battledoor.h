@@ -9,8 +9,9 @@ namespace OpenApoc
 {
 class BattleMapPart;
 class Battle;
+class Sample;
 
-class BattleDoor : public std::enable_shared_from_this<BattleDoor>
+class BattleDoor : public StateObject<BattleDoor>, public std::enable_shared_from_this<BattleDoor>
 {
   public:
 	// wether this door is still operational
@@ -24,6 +25,7 @@ class BattleDoor : public std::enable_shared_from_this<BattleDoor>
 	// Amount of ticks until changing to open/closed state
 	int animationTicksRemaining = 0;
 	int getAnimationFrame();
+	sp<Sample> doorSound;
 
 	void update(GameState &state, unsigned int ticks);
 
@@ -36,7 +38,7 @@ class BattleDoor : public std::enable_shared_from_this<BattleDoor>
 	// Following members are not serialized, but rather are set in initBattle method
 
 	std::list<wp<BattleMapPart>> mapParts;
+	// Used to play sound at
 	Vec3<float> position;
-	wp<Battle> battle;
 };
 }

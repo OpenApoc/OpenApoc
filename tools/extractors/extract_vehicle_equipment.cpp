@@ -3,6 +3,23 @@
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
 
+#define UFO_DOODAD_0 0   // bigmissiles	same as 3 ? ? ?
+#define UFO_DOODAD_1 1   // autocannon		0, 4
+#define UFO_DOODAD_2 2   // airguard		4, 8
+#define UFO_DOODAD_3 3   // explosion		8, 28
+#define UFO_DOODAD_4 4   // nothing ?		28, 29
+#define UFO_DOODAD_5 5   // smokeexpl		29, 42
+#define UFO_DOODAD_6 6   // dimensiong		42, 74
+#define UFO_DOODAD_7 7   // janitor etc	74, 84
+#define UFO_DOODAD_8 8   // laser			84, 90
+#define UFO_DOODAD_9 9   // plasma			90, 96
+#define UFO_DOODAD_10 10 // disruptor		96, 102
+#define UFO_DOODAD_11 11 // subvertbig		102, 108
+#define UFO_DOODAD_12 12 // subvertsml		108, 114
+#define UFO_DOODAD_13 13 // smokefume		114, 126
+#define UFO_DOODAD_14 14 // infilbig		126, 143
+#define UFO_DOODAD_15 15 // infilsml		143, 160
+
 namespace OpenApoc
 {
 
@@ -87,9 +104,153 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Diffic
 				e->firing_arc_1 = wData.firing_arc_1;
 				e->firing_arc_2 = wData.firing_arc_2;
 				e->point_defence = wData.point_defence != 0 ? true : false;
-				e->fire_sfx =
-				    fw().data->loadSample(UString::format("RAWSOUND:%d", (int)wData.fire_sfx));
-				e->explosion_graphic = wData.explosion_graphic;
+				UString sfx_path = "";
+				switch (wData.fire_sfx)
+				{
+					case 71:
+						sfx_path = "strategc/weapons/airguard";
+						break;
+					case 72:
+						sfx_path = "strategc/weapons/bolter";
+						break;
+					case 73:
+						sfx_path = "strategc/weapons/dinvrsn1";
+						break;
+					case 74:
+						sfx_path = "strategc/weapons/disrupt1";
+						break;
+					case 75:
+						sfx_path = "strategc/weapons/disrupt2";
+						break;
+					case 76:
+						sfx_path = "strategc/weapons/disrupt3";
+						break;
+					case 77:
+						sfx_path = "strategc/weapons/gr_missl";
+						break;
+					case 78:
+						sfx_path = "strategc/weapons/hellfire";
+						break;
+					case 79:
+						sfx_path = "strategc/weapons/janitor";
+						break;
+					case 80:
+						sfx_path = "strategc/weapons/justice";
+						break;
+					case 81:
+						sfx_path = "strategc/weapons/lancer";
+						break;
+					case 82:
+						sfx_path = "strategc/weapons/mars_glm";
+						break;
+					case 83:
+						sfx_path = "strategc/weapons/marsdef";
+						break;
+					case 84:
+						sfx_path = "strategc/weapons/marsplas";
+						break;
+					case 85:
+						sfx_path = "strategc/weapons/mcannon";
+						break;
+					case 86:
+						sfx_path = "strategc/weapons/meglaser";
+						break;
+					case 87:
+						sfx_path = "strategc/weapons/mplasma1";
+						break;
+					case 88:
+						sfx_path = "strategc/weapons/mplasma2";
+						break;
+					case 89:
+						sfx_path = "strategc/weapons/multplas";
+						break;
+					case 90:
+						sfx_path = "strategc/weapons/repeater";
+						break;
+					case 91:
+						sfx_path = "strategc/weapons/retrib";
+						break;
+					case 92:
+						sfx_path = "strategc/weapons/ruptmult";
+						break;
+					case 93:
+						sfx_path = "strategc/weapons/stasis";
+						break;
+					case 94:
+						sfx_path = "strategc/weapons/tnkcanon";
+						break;
+				}
+				if (sfx_path != "")
+					e->fire_sfx =
+					    fw().data->loadSample("RAWSOUND:xcom3/rawsound/" + sfx_path + ".raw:22050");
+				// FIXME: I think this is correct? All non-guided attacks sound like expl1, all
+				// missiles as expl2? Confirm!
+				if (wData.guided == 0)
+				{
+					e->impact_sfx = fw().data->loadSample(
+					    "RAWSOUND:xcom3/rawsound/strategc/explosns/explosn1.raw:22050");
+				}
+				else
+				{
+					e->impact_sfx = fw().data->loadSample(
+					    "RAWSOUND:xcom3/rawsound/strategc/explosns/explosn2.raw:22050");
+				}
+
+				UString doodad_id = "";
+				switch (wData.explosion_graphic)
+				{
+					case UFO_DOODAD_1:
+						doodad_id = "DOODAD_1_AUTOCANNON";
+						break;
+					case UFO_DOODAD_2:
+						doodad_id = "DOODAD_2_AIRGUARD";
+						break;
+					case UFO_DOODAD_0: // same as 3
+					case UFO_DOODAD_3:
+						doodad_id = "DOODAD_3_EXPLOSION";
+						break;
+					case UFO_DOODAD_4:
+						doodad_id = "DOODAD_4_BLUEDOT";
+						break;
+					case UFO_DOODAD_5:
+						doodad_id = "DOODAD_5_SMOKE_EXPLOSION";
+						break;
+					case UFO_DOODAD_6:
+						doodad_id = "DOODAD_6_DIMENSION_GATE";
+						break;
+					case UFO_DOODAD_7:
+						doodad_id = "DOODAD_7_JANITOR";
+						break;
+					case UFO_DOODAD_8:
+						doodad_id = "DOODAD_8_LASER";
+						break;
+					case UFO_DOODAD_9:
+						doodad_id = "DOODAD_9_PLASMA";
+						break;
+					case UFO_DOODAD_10:
+						doodad_id = "DOODAD_10_DISRUPTOR";
+						break;
+					case UFO_DOODAD_11:
+						doodad_id = "DOODAD_11_SUBVERSION_BIG";
+						break;
+					case UFO_DOODAD_12:
+						doodad_id = "DOODAD_12_SUBVERSION_SMALL";
+						break;
+					case UFO_DOODAD_13:
+						doodad_id = "DOODAD_13_SMOKE_FUME";
+						break;
+					case UFO_DOODAD_14:
+						doodad_id = "DOODAD_14_INFILTRATION_BIG";
+						break;
+					case UFO_DOODAD_15:
+						doodad_id = "DOODAD_15_INFILTRATION_SMALL";
+						break;
+				}
+				if (doodad_id != "")
+				{
+					e->explosion_graphic = {&state, doodad_id};
+				}
+
 				e->icon = fw().data->loadImage(UString::format(
 				    "PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:%d", weapon_count));
 
@@ -136,6 +297,86 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Diffic
 		}
 
 		state.vehicle_equipment[id] = e;
+	}
+
+	// DOODADS
+	{
+		static const int frameTTL = 4;
+		static const std::vector<Vec2<int>> doodadTabOffsets = {
+		    {0, 4},     {4, 8},     {8, 28},    {28, 29},   {29, 42},
+		    {42, 74},   {74, 84},   {84, 90},   {90, 96},   {96, 102},
+		    {102, 108}, {108, 114}, {114, 126}, {126, 143}, {143, 160},
+		};
+
+		for (int i = 1; i <= 15; i++)
+		{
+			UString doodad_id;
+			switch (i)
+			{
+				case UFO_DOODAD_1:
+					doodad_id = "DOODAD_1_AUTOCANNON";
+					break;
+				case UFO_DOODAD_2:
+					doodad_id = "DOODAD_2_AIRGUARD";
+					break;
+				case UFO_DOODAD_3:
+					doodad_id = "DOODAD_3_EXPLOSION";
+					break;
+				case UFO_DOODAD_4:
+					doodad_id = "DOODAD_4_BLUEDOT";
+					break;
+				case UFO_DOODAD_5:
+					doodad_id = "DOODAD_5_SMOKE_EXPLOSION";
+					break;
+				case UFO_DOODAD_6:
+					doodad_id = "DOODAD_6_DIMENSION_GATE";
+					break;
+				case UFO_DOODAD_7:
+					doodad_id = "DOODAD_7_JANITOR";
+					break;
+				case UFO_DOODAD_8:
+					doodad_id = "DOODAD_8_LASER";
+					break;
+				case UFO_DOODAD_9:
+					doodad_id = "DOODAD_9_PLASMA";
+					break;
+				case UFO_DOODAD_10:
+					doodad_id = "DOODAD_10_DISRUPTOR";
+					break;
+				case UFO_DOODAD_11:
+					doodad_id = "DOODAD_11_SUBVERSION_BIG";
+					break;
+				case UFO_DOODAD_12:
+					doodad_id = "DOODAD_12_SUBVERSION_SMALL";
+					break;
+				case UFO_DOODAD_13:
+					doodad_id = "DOODAD_13_SMOKE_FUME";
+					break;
+				case UFO_DOODAD_14:
+					doodad_id = "DOODAD_14_INFILTRATION_BIG";
+					break;
+				case UFO_DOODAD_15:
+					doodad_id = "DOODAD_15_INFILTRATION_SMALL";
+					break;
+			}
+
+			auto tabOffsets = doodadTabOffsets[i - 1];
+			auto d = mksp<DoodadType>();
+
+			d->imageOffset = CITY_IMAGE_OFFSET;
+			d->lifetime = (tabOffsets.y - tabOffsets.x) * frameTTL;
+			d->repeatable = i == UFO_DOODAD_6; // dimension gate
+			for (int j = tabOffsets.x; j < tabOffsets.y; j++)
+			{
+				d->frames.push_back({fw().data->loadImage(UString::format(
+				                         "PCK:xcom3/ufodata/ptang.pck:xcom3/ufodata/"
+				                         "ptang.tab:%d",
+				                         j)),
+				                     frameTTL});
+			}
+
+			state.doodad_types[doodad_id] = d;
+		}
 	}
 }
 

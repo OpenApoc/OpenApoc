@@ -34,7 +34,7 @@ int AEquipment::getAccuracy(AgentType::BodyState bodyState, BattleUnit::FireAimi
 	       (bodyState == AgentType::BodyState::Flying
 	            ? 90
 	            : (bodyState == AgentType::BodyState::Kneeling ? 110 : 100)) /
-	       100 / 100 * (int)fireMode / 4;
+	       100 / 100 / (int)fireMode;
 }
 
 void AEquipment::stopFiring()
@@ -47,7 +47,7 @@ void AEquipment::startFiring(BattleUnit::FireAimingMode fireMode)
 {
 	if (ammo == 0)
 		return;
-	weapon_fire_ticks_remaining = getPayloadType()->fire_delay * (int)fireMode;
+	weapon_fire_ticks_remaining = getPayloadType()->fire_delay * 4 / (int)fireMode;
 	readyToFire = false;
 	aimingMode = fireMode;
 }
@@ -57,7 +57,6 @@ void AEquipment::update(unsigned int ticks)
 	// Recharge update
 	auto payload = getPayloadType();
 	if (payload->recharge > 0 && ammo < payload->max_ammo)
-		;
 	{
 		recharge_ticks_accumulated += ticks;
 	}
@@ -122,7 +121,7 @@ void AEquipment::update(unsigned int ticks)
 	// FIXME: Update equipment (grenades etc.)
 }
 
-sp<Projectile> AEquipment::fire(Vec3<float> target)
+sp<Projectile> AEquipment::fire(Vec3<float> targetPosition, StateRef<BattleUnit> targetUnit)
 {
 	if (this->type->type != AEquipmentType::Type::Weapon)
 	{
@@ -149,12 +148,14 @@ sp<Projectile> AEquipment::fire(Vec3<float> target)
 	// FIXME: Apply accuracy
 	auto unitPos =
 	    unit->position + Vec3<float>{0.0f, 0.0f, (float)unit->getCurrentHeight() / 40.0f};
-	Vec3<float> velocity = target - unitPos;
+	Vec3<float> velocity = targetPosition - unitPos;
 	velocity = glm::normalize(velocity);
 	velocity *= payload->speed * TICK_SCALE / 4; // I believe this is the correct formula
-
-	return mksp<Projectile>(unit, unitPos, velocity, payload->ttl * 4, payload->damage,
-	                        payload->tail_size, payload->projectile_sprites, payload->impact_sfx);
+	return mksp<Projectile>(payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
+	                        unit, targetUnit, unitPos, velocity, payload->turn_rate,
+	                        payload->ttl * 4, payload->damage, payload->tail_size,
+	                        payload->projectile_sprites, payload->impact_sfx,
+	                        payload->explosion_graphic, payload->damage_type);
 }
 
 bool AEquipment::canFire(float range)

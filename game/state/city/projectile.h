@@ -1,19 +1,25 @@
 #pragma once
+#define _USE_MATH_DEFINES
 #include "game/state/battle/battleunit.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/stateobject.h"
 #include "library/colour.h"
 #include "library/sp.h"
 #include "library/vec.h"
+#include <cmath>
+
+// Based on the fact that retribution (tr = 10) turns 90 degrees (PI/2) per second
+#define PROJECTILE_TURN_PER_TICK (float)(M_PI / 2.0f) / 10.0f / TICKS_PER_SECOND
 
 namespace OpenApoc
 {
 
-class Weapon;
 class GameState;
 class TileObjectProjectile;
 class TileMap;
 class Collision;
+class DoodadType;
+class DamageType;
 class Sample;
 
 class Projectile : public std::enable_shared_from_this<Projectile>
@@ -29,12 +35,15 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	// Beams have a width & tail length
 	// FIXME: Make this a non-constant colour?
 	// FIXME: Width is currently just used for drawing - TODO What is "collision" size of beams?
-	Projectile(StateRef<Vehicle> firer, Vec3<float> position, Vec3<float> velocity,
-	           unsigned int lifetime, int damage, unsigned int tail_length,
-	           std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx);
-	Projectile(StateRef<BattleUnit> firer, Vec3<float> position, Vec3<float> velocity,
-	           unsigned int lifetime, int damage, unsigned int tail_length,
-	           std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx);
+	Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> target, Vec3<float> position,
+	           Vec3<float> velocity, int turnRate, unsigned int lifetime, int damage,
+	           unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
+	           sp<Sample> impactSfx, StateRef<DoodadType> doodadType);
+	Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target,
+	           Vec3<float> position, Vec3<float> velocity, int turnRate, unsigned int lifetime,
+	           int damage, unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
+	           sp<Sample> impactSfx, StateRef<DoodadType> doodadType,
+	           StateRef<DamageType> damageType);
 	Projectile();
 	virtual void update(GameState &state, unsigned int ticks);
 
@@ -53,23 +62,31 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	Type type;
 	Vec3<float> position;
 	Vec3<float> velocity;
+	int turnRate = 0;
 	unsigned int age;
 	unsigned int lifetime;
 	int damage;
 	StateRef<Vehicle> firerVehicle;
 	StateRef<BattleUnit> firerUnit;
+	StateRef<Vehicle> trackedVehicle;
+	StateRef<BattleUnit> trackedUnit;
 	Vec3<float> previousPosition;
-
+	std::list<Vec3<float>> spritePositions;
 	unsigned int tail_length;
 	std::list<sp<Image>> projectile_sprites;
+	float sprite_distance = 0.0f;
 
 	sp<Sample> impactSfx;
+	StateRef<DoodadType> doodadType;
+	StateRef<DamageType> damageType;
 
 	int ownerInvulnerableTicks = 0;
 
 	Vec3<float> velocityScale;
 
-	friend class Weapon;
 	friend class TileObjectProjectile;
+
+	// Following members are not serialized, but rather are set in initState / initBattle method
+	sp<TileObject> trackedObject;
 };
 }; // namespace OpenApoc

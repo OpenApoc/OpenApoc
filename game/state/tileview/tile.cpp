@@ -366,12 +366,8 @@ void Tile::updateBattlescapeParameters()
 			movementCostIn = std::max(movementCostIn, mp->type->movement_cost);
 			if (mp->type->sfxIndex != -1)
 			{
-				auto b = mp->battle.lock();
-				if (b)
-				{
-					walkSfx = b->common_sample_list->walkSounds[mp->type->sfxIndex];
-					objectDropSfx = b->common_sample_list->objectDropSounds[mp->type->sfxIndex];
-				}
+				walkSfx = mp->type->walkSounds;
+				objectDropSfx = mp->type->objectDropSound;
 			}
 		}
 		if (o->getType() == TileObject::Type::LeftWall)
@@ -382,7 +378,7 @@ void Tile::updateBattlescapeParameters()
 				continue;
 			}
 			movementCostLeft = mp->type->movement_cost;
-			closedDoorLeft = mp->isDoor() && mp->getDoor() && !mp->getDoor()->open;
+			closedDoorLeft = mp->door && !mp->door->open;
 		}
 		if (o->getType() == TileObject::Type::RightWall)
 		{
@@ -392,7 +388,7 @@ void Tile::updateBattlescapeParameters()
 				continue;
 			}
 			movementCostRight = mp->type->movement_cost;
-			closedDoorLeft = mp->isDoor() && mp->getDoor() && !mp->getDoor()->open;
+			closedDoorRight = mp->door && !mp->door->open;
 		}
 	}
 	canStand = solidGround || hasLift;

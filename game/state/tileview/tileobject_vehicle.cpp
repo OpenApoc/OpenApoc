@@ -110,7 +110,7 @@ TileObjectVehicle::TileObjectVehicle(TileMap &map, sp<Vehicle> vehicle)
 	animationFrame = vehicle->type->animation_sprites.begin();
 }
 
-Vec3<float> TileObjectVehicle::getVoxelCentrePosition()
+Vec3<float> TileObjectVehicle::getVoxelCentrePosition() const
 {
 	auto vtype = this->getVehicle()->type;
 
@@ -129,12 +129,12 @@ Vec3<float> TileObjectVehicle::getVoxelCentrePosition()
 
 	auto objPos = this->getCenter();
 	objPos -= this->getVoxelOffset();
-	return Vec3<float>(objPos.x + voxelCentre.x / map.voxelMapSize.x,
-	                   objPos.y + voxelCentre.y / map.voxelMapSize.y,
-	                   objPos.z + voxelCentre.z / map.voxelMapSize.z);
+	return Vec3<float>(objPos.x + (float)voxelCentre.x / map.voxelMapSize.x,
+	                   objPos.y + (float)voxelCentre.y / map.voxelMapSize.y,
+	                   objPos.z + (float)voxelCentre.z / map.voxelMapSize.z);
 }
 
-sp<VoxelMap> TileObjectVehicle::getVoxelMap(Vec3<int> mapIndex)
+sp<VoxelMap> TileObjectVehicle::getVoxelMap(Vec3<int> mapIndex) const
 {
 	auto vtype = this->getVehicle()->type;
 	if (mapIndex.x >= vtype->size.x || mapIndex.y >= vtype->size.y || mapIndex.z >= vtype->size.z)

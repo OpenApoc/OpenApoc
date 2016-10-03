@@ -54,7 +54,7 @@ struct VehicleWeaponData
 	uint16_t point_defence;
 	uint16_t unknown2;
 	uint16_t fire_sfx;
-	uint16_t idem;              // FIXME: What's this?
+	uint16_t idem;              //  APOC'd says this is duplicated fire_sfx
 	uint16_t explosion_graphic; // FIXME: Find ptang lookup? (how many frames etc.)
 };
 

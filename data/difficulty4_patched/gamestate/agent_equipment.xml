@@ -121,7 +121,7 @@
         <turn_rate>40</turn_rate>
         <range>180</range>
         <ttl>440</ttl>
-        <explosion_graphic>28</explosion_graphic>
+        <explosion_graphic>DOODAD_28_ENZYME</explosion_graphic>
         <damage_type>DAMAGETYPE_ENTROPY_ENZYME</damage_type>
       </sp>
     </value>
@@ -256,7 +256,7 @@
         <tail_size>31</tail_size>
         <range>900</range>
         <ttl>2700</ttl>
-        <explosion_graphic>21</explosion_graphic>
+        <explosion_graphic>DOODAD_21_AP</explosion_graphic>
         <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/megcanon.raw:22050</fire_sfx>
         <impact_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/bullet3.raw:22050</impact_sfx>
         <damage_type>DAMAGETYPE_ARMOR_PIERCING</damage_type>
@@ -668,7 +668,7 @@
         <tail_size>35</tail_size>
         <range>1000</range>
         <ttl>3000</ttl>
-        <explosion_graphic>25</explosion_graphic>
+        <explosion_graphic>DOODAD_25_DEVASTATOR</explosion_graphic>
         <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/dcannon1.raw:22050</fire_sfx>
         <damage_type>DAMAGETYPE_DISRUPTOR_BEAM</damage_type>
       </sp>
@@ -908,7 +908,7 @@
         <tail_size>17</tail_size>
         <range>800</range>
         <ttl>2400</ttl>
-        <explosion_graphic>24</explosion_graphic>
+        <explosion_graphic>DOODAD_24_DISRUPTOR</explosion_graphic>
         <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/disruptr.raw:22050</fire_sfx>
         <damage_type>DAMAGETYPE_DISRUPTOR_BEAM</damage_type>
       </sp>
@@ -1019,7 +1019,7 @@
         <tail_size>35</tail_size>
         <range>1000</range>
         <ttl>3000</ttl>
-        <explosion_graphic>25</explosion_graphic>
+        <explosion_graphic>DOODAD_25_DEVASTATOR</explosion_graphic>
         <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/dcannon1.raw:22050</fire_sfx>
         <damage_type>DAMAGETYPE_DISRUPTOR_BEAM</damage_type>
       </sp>
@@ -1135,7 +1135,7 @@
         <turn_rate>18</turn_rate>
         <range>1200</range>
         <ttl>3600</ttl>
-        <explosion_graphic>28</explosion_graphic>
+        <explosion_graphic>DOODAD_28_ENZYME</explosion_graphic>
         <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/entropy.raw:22050</fire_sfx>
         <damage_type>DAMAGETYPE_ENTROPY_ENZYME</damage_type>
       </sp>
@@ -1855,7 +1855,7 @@
         <tail_size>25</tail_size>
         <range>900</range>
         <ttl>2700</ttl>
-        <explosion_graphic>21</explosion_graphic>
+        <explosion_graphic>DOODAD_21_AP</explosion_graphic>
         <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/bullet1.raw:22050</fire_sfx>
         <impact_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/bullet2.raw:22050</impact_sfx>
         <damage_type>DAMAGETYPE_ARMOR_PIERCING</damage_type>
@@ -2291,7 +2291,7 @@
         <tail_size>36</tail_size>
         <range>1200</range>
         <ttl>3600</ttl>
-        <explosion_graphic>22</explosion_graphic>
+        <explosion_graphic>DOODAD_22_LASER</explosion_graphic>
         <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/sniper.raw:22050</fire_sfx>
         <impact_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/zaphit.raw:22050</impact_sfx>
         <damage_type>DAMAGETYPE_LASER_BEAM</damage_type>
@@ -2417,7 +2417,7 @@
         <tail_size>16</tail_size>
         <range>700</range>
         <ttl>2200</ttl>
-        <explosion_graphic>21</explosion_graphic>
+        <explosion_graphic>DOODAD_21_AP</explosion_graphic>
         <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/bullet1.raw:22050</fire_sfx>
         <impact_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/bullet2.raw:22050</impact_sfx>
         <damage_type>DAMAGETYPE_ARMOR_PIERCING</damage_type>
@@ -2604,7 +2604,7 @@
         <tail_size>36</tail_size>
         <range>900</range>
         <ttl>2700</ttl>
-        <explosion_graphic>23</explosion_graphic>
+        <explosion_graphic>DOODAD_23_PLASMA</explosion_graphic>
         <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/megapol.raw:22050</fire_sfx>
         <impact_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/meghit.raw:22050</impact_sfx>
         <damage_type>DAMAGETYPE_PLASMA</damage_type>
@@ -2762,7 +2762,7 @@
         <tail_size>16</tail_size>
         <range>100</range>
         <ttl>240</ttl>
-        <explosion_graphic>26</explosion_graphic>
+        <explosion_graphic>DOODAD_26_STUN</explosion_graphic>
         <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/megastun.raw:22050</fire_sfx>
         <damage_type>DAMAGETYPE_STUN</damage_type>
       </sp>
@@ -2897,7 +2897,7 @@
         <tail_size>35</tail_size>
         <range>1000</range>
         <ttl>3000</ttl>
-        <explosion_graphic>25</explosion_graphic>
+        <explosion_graphic>DOODAD_25_DEVASTATOR</explosion_graphic>
         <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/disruptr.raw:22050</fire_sfx>
         <damage_type>DAMAGETYPE_DISRUPTOR_BEAM</damage_type>
       </sp>
@@ -3421,7 +3421,7 @@
         <turn_rate>40</turn_rate>
         <range>260</range>
         <ttl>600</ttl>
-        <explosion_graphic>28</explosion_graphic>
+        <explosion_graphic>DOODAD_28_ENZYME</explosion_graphic>
         <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/aliens/attacks/wormspit.raw:22050</fire_sfx>
         <damage_type>DAMAGETYPE_ENTROPY_ENZYME</damage_type>
       </sp>
@@ -3635,7 +3635,7 @@
         <tail_size>16</tail_size>
         <range>40</range>
         <ttl>100</ttl>
-        <explosion_graphic>23</explosion_graphic>
+        <explosion_graphic>DOODAD_23_PLASMA</explosion_graphic>
         <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/powers.raw:22050</fire_sfx>
         <damage_type>DAMAGETYPE_PLASMA</damage_type>
       </sp>
@@ -3829,7 +3829,7 @@
         <turn_rate>40</turn_rate>
         <range>900</range>
         <ttl>2200</ttl>
-        <explosion_graphic>28</explosion_graphic>
+        <explosion_graphic>DOODAD_28_ENZYME</explosion_graphic>
         <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/aliens/attacks/queenwhp.raw:22050</fire_sfx>
         <damage_type>DAMAGETYPE_ENTROPY_ENZYME</damage_type>
       </sp>
@@ -3906,7 +3906,7 @@
         <turn_rate>40</turn_rate>
         <range>384</range>
         <ttl>900</ttl>
-        <explosion_graphic>28</explosion_graphic>
+        <explosion_graphic>DOODAD_28_ENZYME</explosion_graphic>
         <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/aliens/attacks/spitter.raw:22050</fire_sfx>
         <damage_type>DAMAGETYPE_ENTROPY_ENZYME</damage_type>
       </sp>
@@ -4000,7 +4000,7 @@
         <tail_size>16</tail_size>
         <range>800</range>
         <ttl>2400</ttl>
-        <explosion_graphic>21</explosion_graphic>
+        <explosion_graphic>DOODAD_21_AP</explosion_graphic>
         <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/toxigun.raw:22050</fire_sfx>
         <damage_type>DAMAGETYPE_TOXIN_A</damage_type>
       </sp>
@@ -4063,7 +4063,7 @@
         <tail_size>16</tail_size>
         <range>800</range>
         <ttl>2400</ttl>
-        <explosion_graphic>21</explosion_graphic>
+        <explosion_graphic>DOODAD_21_AP</explosion_graphic>
         <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/toxigun.raw:22050</fire_sfx>
         <damage_type>DAMAGETYPE_TOXIN_B</damage_type>
       </sp>
@@ -4126,7 +4126,7 @@
         <tail_size>16</tail_size>
         <range>800</range>
         <ttl>2400</ttl>
-        <explosion_graphic>21</explosion_graphic>
+        <explosion_graphic>DOODAD_21_AP</explosion_graphic>
         <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/toxigun.raw:22050</fire_sfx>
         <damage_type>DAMAGETYPE_TOXIN_C</damage_type>
       </sp>

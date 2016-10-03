@@ -101,6 +101,7 @@ void TileObject::setPosition(Vec3<float> newPosition)
 	{
 		LogError("Failed to get tile for position {%f,%f,%f}", newPosition.x, newPosition.y,
 		         newPosition.z);
+		return;
 	}
 
 	auto inserted = this->owningTile->ownedObjects.insert(thisPtr);

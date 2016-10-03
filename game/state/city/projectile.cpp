@@ -13,28 +13,39 @@ const std::map<Projectile::Type, UString> Projectile::TypeMap = {
     {Type::Beam, "beam"}, {Type::Missile, "missile"},
 };
 
-Projectile::Projectile(StateRef<Vehicle> firer, Vec3<float> position, Vec3<float> velocity,
+Projectile::Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> target,
+                       Vec3<float> position, Vec3<float> velocity, int turnRate,
                        unsigned int lifetime, int damage, unsigned int tail_length,
-                       std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx)
-    : type(Type::Beam), position(position), velocity(velocity), age(0), lifetime(lifetime),
-      damage(damage), firerVehicle(firer), previousPosition(position), tail_length(tail_length),
-      projectile_sprites(projectile_sprites), impactSfx(impactSfx),
-      velocityScale(VELOCITY_SCALE_CITY)
+                       std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
+                       StateRef<DoodadType> doodadType)
+    : type(type), position(position), velocity(velocity), turnRate(turnRate), age(0),
+      lifetime(lifetime), damage(damage), firerVehicle(firer), trackedVehicle(target),
+      previousPosition(position), spritePositions({position}), tail_length(tail_length),
+      projectile_sprites(projectile_sprites), sprite_distance(1.0f / TILE_Y_CITY),
+      impactSfx(impactSfx), doodadType(doodadType), velocityScale(VELOCITY_SCALE_CITY)
 {
 	// 36 / (velocity length) = enough ticks to pass 1 whole tile
 	ownerInvulnerableTicks = (int)ceilf(36.0f / glm::length(velocity / velocityScale)) + 1;
+	if (target)
+		trackedObject = target->tileObject;
 }
 // FIXME: Properly add unit projectiles and shit
-Projectile::Projectile(StateRef<BattleUnit> firer, Vec3<float> position, Vec3<float> velocity,
+Projectile::Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target,
+                       Vec3<float> position, Vec3<float> velocity, int turnRate,
                        unsigned int lifetime, int damage, unsigned int tail_length,
-                       std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx)
-    : type(Type::Beam), position(position), velocity(velocity), age(0), lifetime(lifetime),
-      damage(damage), firerUnit(firer), previousPosition(position), tail_length(tail_length),
-      projectile_sprites(projectile_sprites), impactSfx(impactSfx),
+                       std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
+                       StateRef<DoodadType> doodadType, StateRef<DamageType> damageType)
+    : type(type), position(position), velocity(velocity), turnRate(turnRate), age(0),
+      lifetime(lifetime), damage(damage), firerUnit(firer), trackedUnit(target),
+      previousPosition(position), spritePositions({position}), tail_length(tail_length),
+      projectile_sprites(projectile_sprites), sprite_distance(1.0f / TILE_Y_BATTLE),
+      impactSfx(impactSfx), doodadType(doodadType), damageType(damageType),
       velocityScale(VELOCITY_SCALE_BATTLE)
 {
 	// 36 / (velocity length) = enough ticks to pass 1 whole tile
 	ownerInvulnerableTicks = (int)ceilf(36.0f / glm::length(velocity / velocityScale)) + 1;
+	if (target)
+		trackedObject = target->tileObject;
 }
 
 Projectile::Projectile()
@@ -49,12 +60,37 @@ void Projectile::update(GameState &state, unsigned int ticks)
 		ownerInvulnerableTicks -= ticks;
 	this->age += ticks;
 	this->previousPosition = this->position;
+
+	// Tracking
+	// FIXME: Implement vanilla algorithm
+	// This is a proper tracking algorithm. Turn to target every tick, within our allowance.
+	// Howver, it does not seem to work. If tracking like this, missiles hardly ever miss
+	// It seems that vanilla had some kind of error or latency introduced here, which allowed
+	// missiles to miss if target was trying to dodge. We must implement that otherwise
+	// missile weapons are extremely overpowered
+	if (turnRate > 0 && trackedObject)
+	{
+		auto targetVector = trackedObject->getVoxelCentrePosition() - position;
+		auto cross = glm::cross(velocity, targetVector);
+		// Cross product is 0 if we are moving straight on target
+		if (cross.x != 0.0f || cross.y != 0.0f || cross.z != 0.0f)
+		{
+			float maxAngleToTurn = (float)ticks * turnRate * PROJECTILE_TURN_PER_TICK;
+			float angleToTarget =
+			    clamp(glm::angle(glm::normalize(velocity), glm::normalize(targetVector)),
+			          -maxAngleToTurn, maxAngleToTurn);
+			glm::mat4 rotationMat(1);
+			rotationMat = glm::rotate(rotationMat, angleToTarget, cross);
+			velocity = glm::vec3(rotationMat * glm::vec4(velocity, 1.0));
+		}
+	}
+
+	// Apply velocity
 	auto newPosition = this->position +
 	                   ((static_cast<float>(ticks) / TICK_SCALE) * this->velocity) / velocityScale;
 
-	auto mapSize = this->tileObject->map.size;
-
 	// Remove projectile if it's ran out of life or fell off the end of the world
+	auto mapSize = this->tileObject->map.size;
 	if (newPosition.x < 0 || newPosition.x >= mapSize.x || newPosition.y < 0 ||
 	    newPosition.y >= mapSize.y || newPosition.z < 0 || newPosition.z >= mapSize.z ||
 	    this->age >= this->lifetime)
@@ -65,18 +101,30 @@ void Projectile::update(GameState &state, unsigned int ticks)
 			for (auto &city : state.cities)
 				city.second->projectiles.erase(std::dynamic_pointer_cast<Projectile>(this_shared));
 		}
-		else
+		else // firerUnit
 		{
 			state.current_battle->projectiles.erase(
 			    std::dynamic_pointer_cast<Projectile>(this_shared));
 		}
 		this->tileObject->removeFromMap();
 		this->tileObject.reset();
+		return;
 	}
-	else
+
+	// Move projectile to new position
+	this->position = newPosition;
+	this->tileObject->setPosition(newPosition);
+
+	// Spawn projectile sprite points
+	while (glm::length(spritePositions.front() - position) > sprite_distance)
 	{
-		this->position = newPosition;
-		this->tileObject->setPosition(newPosition);
+		spritePositions.push_front(spritePositions.front() +
+		                           glm::normalize(position - spritePositions.front()) *
+		                               sprite_distance);
+		if (spritePositions.size() > tail_length)
+		{
+			spritePositions.pop_back();
+		}
 	}
 }
 

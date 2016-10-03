@@ -22,7 +22,7 @@ VEquipment::VEquipment()
 {
 }
 
-sp<Projectile> VEquipment::fire(Vec3<float> target)
+sp<Projectile> VEquipment::fire(Vec3<float> targetPosition, StateRef<Vehicle> targetVehicle)
 {
 	if (this->type->type != VEquipmentType::Type::Weapon)
 	{
@@ -48,7 +48,7 @@ sp<Projectile> VEquipment::fire(Vec3<float> target)
 		LogWarning("Trying to fire weapon with no ammo");
 		return nullptr;
 	}
-	this->reloadTime = type->fire_delay * TICK_SCALE;
+	this->reloadTime = type->fire_delay * 2 * 4;
 	this->weaponState = WeaponState::Reloading;
 	if (this->type->max_ammo != 0)
 		this->ammo--;
@@ -63,14 +63,15 @@ sp<Projectile> VEquipment::fire(Vec3<float> target)
 		this->weaponState = WeaponState::OutOfAmmo;
 	}
 
-	Vec3<float> velocity = target - vehicleTile->getPosition();
+	Vec3<float> velocity = targetPosition - vehicleTile->getCenter();
 	velocity = glm::normalize(velocity);
-	velocity *= type->speed;
+	velocity *= type->speed * TICK_SCALE / 4; // I believe this is the correct formula
 
-	// FIXME: Impact sound!
-	return mksp<Projectile>(owner, vehicleTile->getPosition(), velocity,
-	                        static_cast<int>(this->getRange() / type->speed * TICK_SCALE),
-	                        type->damage, type->tail_size, type->projectile_sprites, nullptr);
+	return mksp<Projectile>(type->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
+	                        owner, targetVehicle, vehicleTile->getCenter(), velocity,
+	                        type->turn_rate, static_cast<int>(this->getRange() / type->speed * 4),
+	                        type->damage, type->tail_size, type->projectile_sprites,
+	                        type->impact_sfx, type->explosion_graphic);
 }
 
 void VEquipment::update(int ticks)

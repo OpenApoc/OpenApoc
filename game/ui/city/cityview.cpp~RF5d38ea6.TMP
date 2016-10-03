@@ -733,13 +733,13 @@ void CityView::eventOccurred(Event *e)
 	}
 
 	if (e->type() == EVENT_KEY_DOWN &&
-	    (e->keyboard().KeyCode == SDLK_ESCAPE || e->keyboard().KeyCode == SDLK_SPACE ||
-	     e->keyboard().KeyCode == SDL_SCANCODE_R || e->keyboard().KeyCode == SDLK_TAB))
+		(e->keyboard().KeyCode == SDLK_ESCAPE || e->keyboard().KeyCode == SDLK_SPACE ||
+			e->keyboard().KeyCode == SDL_SCANCODE_R || e->keyboard().KeyCode == SDLK_TAB))
 	{
 		switch (e->keyboard().KeyCode)
 		{
 			case SDLK_ESCAPE:
-				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InGameOptions>(state)});
+				fw().stageQueueCommand({ StageCmd::Command::PUSH, mksp<InGameOptions>(state) });
 				return;
 			case SDL_SCANCODE_R:
 			{
@@ -753,7 +753,7 @@ void CityView::eventOccurred(Event *e)
 					}
 				}
 				LogInfo("Repairing %u tiles out of %u", static_cast<unsigned>(stuffToRepair.size()),
-				        static_cast<unsigned>(state->current_city->scenery.size()));
+					static_cast<unsigned>(state->current_city->scenery.size()));
 
 				for (auto &s : stuffToRepair)
 				{
@@ -763,9 +763,9 @@ void CityView::eventOccurred(Event *e)
 			}
 			case SDLK_TAB:
 				this->baseForm->findControlTyped<CheckBox>("BUTTON_TOGGLE_STRATMAP")
-				    ->setChecked(
-				        !this->baseForm->findControlTyped<CheckBox>("BUTTON_TOGGLE_STRATMAP")
-				             ->isChecked());
+					->setChecked(
+						!this->baseForm->findControlTyped<CheckBox>("BUTTON_TOGGLE_STRATMAP")
+						->isChecked());
 				break;
 			case SDLK_SPACE:
 				if (this->updateSpeed != UpdateSpeed::Pause)
@@ -773,6 +773,7 @@ void CityView::eventOccurred(Event *e)
 				else
 					setUpdateSpeed(this->lastSpeed);
 				break;
+
 		}
 	}
 	// Exclude mouse down events that are over the form
