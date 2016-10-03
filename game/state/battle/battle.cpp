@@ -117,11 +117,6 @@ void Battle::initBattle(GameState &state)
 			o.second->focusUnit->focusedByUnits.push_back(o.second);
 		}
 	}
-	for (auto &p : this->projectiles)
-	{
-		if (p->trackedUnit)
-			p->trackedObject = p->trackedUnit->tileObject;
-	}
 	if (forces.size() == 0)
 	{
 		// Init forces and fill squads with nullptrs so that we have where to place units
@@ -156,6 +151,12 @@ void Battle::initBattle(GameState &state)
 		}
 	}
 	initMap();
+	// Stuff to init after map is ready
+	for (auto &p : this->projectiles)
+	{
+		if (p->trackedUnit)
+			p->trackedObject = p->trackedUnit->tileObject;
+	}
 }
 
 void Battle::initMap()
