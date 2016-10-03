@@ -17,23 +17,15 @@ int BattleMapPart::getMaxFrames()
 
 int BattleMapPart::getAnimationFrame()
 {
-	if (isDoor())
+	if (door)
 	{
-		return std::min(getMaxFrames() - 1, getDoor()->getAnimationFrame());
+		return std::min(getMaxFrames() - 1, door->getAnimationFrame());
 	}
 	else
 	{
 		return type->animation_frames.size() == 0 ? -1 : animation_frame_ticks /
 		                                                     TICKS_PER_FRAME_MAP_PART;
 	}
-}
-
-sp<BattleDoor> BattleMapPart::getDoor()
-{
-	auto b = this->battle.lock();
-	if (!b)
-		return nullptr;
-	return b->doors[doorID];
 }
 
 void BattleMapPart::handleCollision(GameState &state, Collision &c)
@@ -64,12 +56,10 @@ void BattleMapPart::handleCollision(GameState &state, Collision &c)
 	}
 	else
 	{
-		auto b = this->battle.lock();
-		LogAssert(b);
 		// Don't destroy bottom tiles, else everything will leak out
 		if (this->initialPosition.z == 0 && this->type->type == BattleMapPartType::Type::Ground)
 		{
-			this->type = b->battle_map->destroyed_ground_tile;
+			this->type = type->destroyed_map_parts.front();
 		}
 		// Destroy map part
 		else
@@ -128,9 +118,9 @@ void BattleMapPart::tryCollapse(bool force)
 		return;
 	this->falling = true;
 	ceaseSupportProvision();
-	if (isDoor())
+	if (door)
 	{
-		getDoor()->collapse();
+		door->collapse();
 	}
 }
 
@@ -166,7 +156,7 @@ void BattleMapPart::update(GameState &, unsigned int ticks)
 	else // !this -> falling
 	{
 		// Animate non-doors
-		if (!isDoor() && type->animation_frames.size() > 0)
+		if (!door && type->animation_frames.size() > 0)
 		{
 			animation_frame_ticks += ticks;
 			animation_frame_ticks %= TICKS_PER_FRAME_MAP_PART * type->animation_frames.size();

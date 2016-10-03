@@ -129,6 +129,7 @@
 	<object>
 		<name>AEquipment</name>
 		<member>type</member>
+		<member>payloadType</member>
 		<member>equippedPosition</member>
 		<member>equippedSlotType</member>
 		<member>ownerAgent</member>
@@ -480,6 +481,7 @@
 	</object>
 	<object>
 		<name>BattleUnit</name>
+		<member>id</member>
 		<member>agent</member>
 		<member>owner</member>
 		<member>squadNumber</member>
@@ -544,7 +546,7 @@
 		<member>damaged</member>
 		<member>falling</member>
 		<member>destroyed</member>
-		<member>doorID</member>
+		<member>door</member>
 	</object>
 	<object>
 		<name>BattleDoor</name>
@@ -554,6 +556,7 @@
 		<member>animationFrameCount</member>
 		<member>openTicksRemaining</member>
 		<member>animationTicksRemaining</member>
+		<member>doorSound</member>
 	</object>
 	<object>
 		<name>City</name>
@@ -571,6 +574,7 @@
 		<member>type</member>
 		<member>position</member>
 		<member>velocity</member>
+		<member>turnRate</member>
 		<member>age</member>
 		<member>damage</member>
 		<member>lifetime</member>

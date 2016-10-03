@@ -83,7 +83,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	StateRefMap<BattleUnit> units;
 	std::list<sp<Doodad>> doodads;
 	std::set<sp<Projectile>> projectiles;
-	std::vector<sp<BattleDoor>> doors;
+	StateRefMap<BattleDoor> doors;
 
 	up<TileMap> map;
 
@@ -118,7 +118,10 @@ class Battle : public std::enable_shared_from_this<Battle>
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
 
 	// Adds unit, setting it's id
-	void addUnit(sp<BattleUnit> unit);
+	UString addUnit();
+
+	// Adds door, setting it's id
+	UString addDoor();
 
 	// Turn based functions
 

@@ -837,7 +837,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				}
 				else
 				{
-					if (current_body_state != target_body_state)
+					if (body_animation_ticks_remaining > 0)
 					{
 						bodyTicksRemaining -= body_animation_ticks_remaining;
 						setBodyState(target_body_state);
@@ -848,10 +848,13 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						return;
 					}
 					// Try to get new body state change
-					AgentType::BodyState nextState = AgentType::BodyState::Downed;
-					if (getNextBodyState(state, nextState))
+					if (firing_animation_ticks_remaining == 0 && hand_animation_ticks_remaining == 0)
 					{
-						beginBodyStateChange(nextState);
+						AgentType::BodyState nextState = AgentType::BodyState::Downed;
+						if (getNextBodyState(state, nextState))
+						{
+							beginBodyStateChange(nextState);
+						}
 					}
 				}
 			}
@@ -881,7 +884,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					}
 					else
 					{
-						if (current_hand_state != target_hand_state)
+						if (hand_animation_ticks_remaining > 0)
 						{
 							handTicksRemaining -= hand_animation_ticks_remaining;
 							hand_animation_ticks_remaining = 0;
@@ -1361,7 +1364,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		if (firing_animation_ticks_remaining == 0 && hand_animation_ticks_remaining == 0 &&
 		    current_hand_state != AgentType::HandState::Aiming &&
 		    current_movement_state != AgentType::MovementState::Running &&
-		    current_movement_state != AgentType::MovementState::Strafing)
+		    current_movement_state != AgentType::MovementState::Strafing && 
+			!(current_body_state==AgentType::BodyState::Prone && current_movement_state != AgentType::MovementState::None))
 		{
 			beginHandStateChange(AgentType::HandState::Aiming);
 		}

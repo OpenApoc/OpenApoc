@@ -88,16 +88,11 @@ void Battle::initBattle(GameState &state)
 	auto stt = shared_from_this();
 	for (auto &s : this->map_parts)
 	{
-		s->battle = stt;
-		if (s->doorID != -1)
+		if (s->door)
 		{
-			doors[s->doorID]->mapParts.push_back(s);
-			doors[s->doorID]->position = s->getPosition();
+			s->door->mapParts.push_back(s);
+			s->door->position = s->getPosition();
 		}
-	}
-	for (auto &d : this->doors)
-	{
-		d->battle = stt;
 	}
 	for (auto &o : this->items)
 	{
@@ -214,10 +209,21 @@ sp<Doodad> Battle::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 	return doodad;
 }
 
-void Battle::addUnit(sp<BattleUnit> unit)
+UString Battle::addUnit()
 {
-	unit->id = UString::format("%s%d", BattleUnit::getPrefix(), (int)units.size());
-	units[unit->id] = unit;
+	auto unit = mksp<BattleUnit>();
+	UString id = UString::format("%s%d", BattleUnit::getPrefix(), (int)units.size());
+	unit->id = id;
+	units[id] = unit;
+	return id;
+}
+
+UString Battle::addDoor()
+{
+	auto door = mksp<BattleDoor>();
+	UString id = UString::format("%s%d", BattleDoor::getPrefix(), (int)units.size());
+	doors[id] = door;
+	return id;
 }
 
 void Battle::update(GameState &state, unsigned int ticks)
@@ -282,7 +288,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 	Trace::start("Battle::update::doors->update");
 	for (auto &o : this->doors)
 	{
-		o->update(state, ticks);
+		o.second->update(state, ticks);
 	}
 	Trace::end("Battle::update::doors->update");
 	Trace::start("Battle::update::map_parts->update");

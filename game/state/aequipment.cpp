@@ -57,7 +57,6 @@ void AEquipment::update(unsigned int ticks)
 	// Recharge update
 	auto payload = getPayloadType();
 	if (payload->recharge > 0 && ammo < payload->max_ammo)
-		;
 	{
 		recharge_ticks_accumulated += ticks;
 	}

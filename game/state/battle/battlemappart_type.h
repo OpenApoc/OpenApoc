@@ -91,5 +91,13 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 	SupportedByType supported_by = SupportedByType::Below;
 	bool independent_structure = false;
 	bool exit = false;
+
+	// Following members are not serialized, but rather are set up upon being loaded
+
+	sp<std::vector<sp<Sample>>> walkSounds;
+	sp<Sample> objectDropSound;
+	// Destroyed ground replacement for ground at level 0, rubble for other types
+	std::vector<StateRef<BattleMapPartType>> destroyed_map_parts;
+
 };
 }
