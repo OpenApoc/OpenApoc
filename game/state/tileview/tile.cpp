@@ -366,7 +366,7 @@ void Tile::updateBattlescapeParameters()
 			movementCostIn = std::max(movementCostIn, mp->type->movement_cost);
 			if (mp->type->sfxIndex != -1)
 			{
-				auto b = mp->battle;
+				auto b = mp->battle.lock();
 				if (b)
 				{
 					walkSfx = b->common_sample_list->walkSounds[mp->type->sfxIndex];
@@ -382,7 +382,7 @@ void Tile::updateBattlescapeParameters()
 				continue;
 			}
 			movementCostLeft = mp->type->movement_cost;
-			closedDoorLeft = mp->isDoor() && !mp->getDoor()->open;
+			closedDoorLeft = mp->isDoor() && mp->getDoor() && !mp->getDoor()->open;
 		}
 		if (o->getType() == TileObject::Type::RightWall)
 		{
@@ -392,7 +392,7 @@ void Tile::updateBattlescapeParameters()
 				continue;
 			}
 			movementCostRight = mp->type->movement_cost;
-			closedDoorRight = mp->isDoor() && !mp->getDoor()->open;
+			closedDoorLeft = mp->isDoor() && mp->getDoor() && !mp->getDoor()->open;
 		}
 	}
 	canStand = solidGround || hasLift;

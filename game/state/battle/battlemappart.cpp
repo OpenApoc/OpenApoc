@@ -28,7 +28,13 @@ int BattleMapPart::getAnimationFrame()
 	}
 }
 
-sp<BattleDoor> BattleMapPart::getDoor() { return battle->doors[doorID]; }
+sp<BattleDoor> BattleMapPart::getDoor()
+{
+	auto b = this->battle.lock();
+	if (!b)
+		return nullptr;
+	return b->doors[doorID];
+}
 
 void BattleMapPart::handleCollision(GameState &state, Collision &c)
 {
@@ -58,10 +64,12 @@ void BattleMapPart::handleCollision(GameState &state, Collision &c)
 	}
 	else
 	{
+		auto b = this->battle.lock();
+		LogAssert(b);
 		// Don't destroy bottom tiles, else everything will leak out
 		if (this->initialPosition.z == 0 && this->type->type == BattleMapPartType::Type::Ground)
 		{
-			this->type = battle->battle_map->destroyed_ground_tile;
+			this->type = b->battle_map->destroyed_ground_tile;
 		}
 		// Destroy map part
 		else

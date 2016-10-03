@@ -156,6 +156,9 @@ int BattleDoor::getAnimationFrame()
 
 void BattleDoor::playDoorSound()
 {
-	fw().soundBackend->playSample(battle->common_sample_list->door, position, 0.25f);
+	auto b = battle.lock();
+	if (!b)
+		return;
+	fw().soundBackend->playSample(b->common_sample_list->door, position, 0.25f);
 }
 }

@@ -57,6 +57,6 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	sp<TileObjectBattleMapPart> tileObject;
 	std::list<wp<BattleItem>> supportedItems;
 	std::list<wp<BattleMapPart>> supportedParts;
-	sp<Battle> battle;
+	wp<Battle> battle;
 };
 }
