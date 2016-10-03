@@ -15,6 +15,7 @@ namespace OpenApoc
 class Rules;
 class Image;
 class Sample;
+class DoodadType;
 class AEquipmentType : public StateObject<AEquipmentType>
 {
   public:
@@ -122,7 +123,7 @@ class AEquipmentType : public StateObject<AEquipmentType>
 	float getRange() { return (float)range / 16.0f; };
 	// Projectile's Time To Live, in vanilla ticks (36/sec) (multiply by 4 for OpenApoc ticks)
 	int ttl = 0;
-	int explosion_graphic = 0;
+	StateRef<DoodadType> explosion_graphic;
 	sp<Sample> fire_sfx;
 	sp<Sample> impact_sfx;
 	StateRef<DamageType> damage_type;

@@ -52,7 +52,7 @@ TileObjectScenery::TileObjectScenery(TileMap &map, sp<Scenery> scenery)
 {
 }
 
-sp<Scenery> TileObjectScenery::getOwner()
+sp<Scenery> TileObjectScenery::getOwner() const
 {
 	auto s = this->scenery.lock();
 	if (!s)
@@ -62,7 +62,10 @@ sp<Scenery> TileObjectScenery::getOwner()
 	return s;
 }
 
-sp<VoxelMap> TileObjectScenery::getVoxelMap(Vec3<int>) { return this->getOwner()->type->voxelMap; }
+sp<VoxelMap> TileObjectScenery::getVoxelMap(Vec3<int>) const
+{
+	return this->getOwner()->type->voxelMap;
+}
 
 Vec3<float> TileObjectScenery::getPosition() const
 {

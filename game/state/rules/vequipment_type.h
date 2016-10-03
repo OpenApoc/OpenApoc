@@ -12,6 +12,7 @@ namespace OpenApoc
 class Rules;
 class Image;
 class Sample;
+class DoodadType;
 class VEquipmentType : public StateObject<VEquipmentType>
 {
   public:
@@ -53,16 +54,23 @@ class VEquipmentType : public StateObject<VEquipmentType>
 	                                         // 'bullet'/'beam' - 'nullptr' gaps are expected
 	int damage;
 	int accuracy;
+	// Fire delay, in ticks, to fire a shot
+	// For some reason, it is halved in the vanilla data files.
+	// Therefore, to get vanilla ticks, it must be multiplied by 2, and to get OpenApoc ticks, by 8
 	int fire_delay;
 	int tail_size;
 	bool guided;
+	// How much can it turn per tick.
+	// Based on the fact that retribution (tr = 10) turns 90 degrees (PI/2) per second
+	// One point of turn rate is equal to PI/20 turned per second
 	int turn_rate;
 	int range;
 	int firing_arc_1;
 	int firing_arc_2;
 	bool point_defence;
 	sp<Sample> fire_sfx;
-	int explosion_graphic;
+	sp<Sample> impact_sfx;
+	StateRef<DoodadType> explosion_graphic;
 	sp<Image> icon;
 
 	// Engine stuff

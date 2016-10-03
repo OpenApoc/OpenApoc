@@ -50,6 +50,6 @@ class VEquipment
 	// Reload uses up to 'ammoAvailable' to reload the weapon. It returns the amount
 	// actually used.
 	int reload(int ammoAvailable);
-	sp<Projectile> fire(Vec3<float> target);
+	sp<Projectile> fire(Vec3<float> targetPosition, StateRef<Vehicle> targetVehicle = nullptr);
 };
 } // namespace OpenApoc

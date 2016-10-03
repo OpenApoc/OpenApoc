@@ -15,10 +15,10 @@ class TileObjectScenery : public TileObject
 
 	std::weak_ptr<Scenery> scenery;
 
-	sp<Scenery> getOwner();
+	sp<Scenery> getOwner() const;
 
 	bool hasVoxelMap() override { return true; }
-	sp<VoxelMap> getVoxelMap(Vec3<int> mapIndex) override;
+	sp<VoxelMap> getVoxelMap(Vec3<int> mapIndex) const override;
 	Vec3<float> getPosition() const override;
 	float getZOrder() const override;
 

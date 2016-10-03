@@ -15,10 +15,10 @@ class TileObjectBattleMapPart : public TileObject
 	// For faster rendering, sp is better than wp
 	sp<BattleMapPart> map_part;
 
-	sp<BattleMapPart> getOwner();
+	sp<BattleMapPart> getOwner() const;
 
 	bool hasVoxelMap() override { return true; }
-	sp<VoxelMap> getVoxelMap(Vec3<int> mapIndex) override;
+	sp<VoxelMap> getVoxelMap(Vec3<int> mapIndex) const override;
 	Vec3<float> getPosition() const override;
 	float getZOrder() const override;
 	Vec3<float> getCenterOffset() const override { return {0.0f, 0.0f, bounds_div_2.z}; }

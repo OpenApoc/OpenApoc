@@ -6,6 +6,7 @@
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/doodad.h"
+#include "game/state/city/projectile.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
@@ -94,7 +95,11 @@ void GameState::initState()
 				city->map->addObjectToMap(vehicle);
 			}
 		}
-
+		for (auto &p : c.second->projectiles)
+		{
+			if (p->trackedVehicle)
+				p->trackedObject = p->trackedVehicle->tileObject;
+		}
 		if (city->portals.empty())
 		{
 			city->generatePortals(*this);

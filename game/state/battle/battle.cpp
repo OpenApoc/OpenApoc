@@ -117,6 +117,11 @@ void Battle::initBattle(GameState &state)
 			o.second->focusUnit->focusedByUnits.push_back(o.second);
 		}
 	}
+	for (auto &p : this->projectiles)
+	{
+		if (p->trackedUnit)
+			p->trackedObject = p->trackedUnit->tileObject;
+	}
 	if (forces.size() == 0)
 	{
 		// Init forces and fill squads with nullptrs so that we have where to place units
@@ -242,8 +247,11 @@ void Battle::update(GameState &state, unsigned int ticks)
 				fw().soundBackend->playSample(c.projectile->impactSfx, c.position);
 			}
 
-			// FIXME: Get doodad from weapon definition?
-			auto doodad = this->placeDoodad({&state, "DOODAD_EXPLOSION_0"}, c.position);
+			auto doodadType = c.projectile->doodadType;
+			if (doodadType)
+			{
+				auto doodad = this->placeDoodad(doodadType, c.position);
+			}
 
 			switch (c.obj->getType())
 			{
@@ -263,8 +271,9 @@ void Battle::update(GameState &state, unsigned int ticks)
 					// FIXME: Don't just explode mapPart, but damaged tiles/falling stuff? Different
 					// explosion doodads? Not all weapons instantly destory buildings too
 
-					auto doodad =
-					    this->placeDoodad({&state, "DOODAD_EXPLOSION_2"}, mapPartTile->getCenter());
+					// FIXME: Enable back, right now disabled to test weapon doodads
+					// auto doodad = this->placeDoodad({&state, "DOODAD_3_EXPLOSION"},
+					// mapPartTile->getCenter());
 					mapPartTile->getOwner()->handleCollision(state, c);
 					break;
 				}

@@ -7,10 +7,11 @@
 
 namespace OpenApoc
 {
-static const std::array<std::pair<float, float>, 3> positionalAudioLUT = {{
+static const std::array<std::pair<float, float>, 4> positionalAudioLUT = {{
     std::make_pair(3.0f, 1.0f),   // Anything within 3.0f units is at full volume
-    std::make_pair(40.0f, 0.25f), // That then scales linearly down to 25% over the next 40 units
-    std::make_pair(std::numeric_limits<float>::max(), 0.25f) // Which does not decrease any further
+    std::make_pair(30.0f, 0.25f), // That then scales linearly down to 25% over the next 30 units
+    std::make_pair(60.0f, 0.10f), // That then scales linearly down to 10% over the next 30 units
+    std::make_pair(std::numeric_limits<float>::max(), 0.10f) // Which does not decrease any further
 }};
 
 // Position is assumed to be in 'map' units, gainMultiplier within 0 and 1

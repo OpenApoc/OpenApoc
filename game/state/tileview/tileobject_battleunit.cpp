@@ -334,10 +334,10 @@ TileObjectBattleUnit::TileObjectBattleUnit(TileMap &map, sp<BattleUnit> unit)
 {
 }
 
-Vec3<float> TileObjectBattleUnit::getVoxelCentrePosition()
+Vec3<float> TileObjectBattleUnit::getVoxelCentrePosition() const
 {
 	auto u = this->getUnit();
-	auto size = u->agent->type->bodyType->size[u->current_body_state][u->facing];
+	auto size = u->agent->type->bodyType->size.at(u->current_body_state).at(u->facing);
 
 	Vec3<int> voxelCentre = {0, 0, 0};
 	for (int x = 0; x < size.x; x++)
@@ -354,21 +354,21 @@ Vec3<float> TileObjectBattleUnit::getVoxelCentrePosition()
 
 	auto objPos = this->getCenter();
 	objPos -= this->getVoxelOffset();
-	return Vec3<float>(objPos.x + voxelCentre.x / map.voxelMapSize.x,
-	                   objPos.y + voxelCentre.y / map.voxelMapSize.y,
-	                   objPos.z + voxelCentre.z / map.voxelMapSize.z);
+	return Vec3<float>(objPos.x + (float)voxelCentre.x / map.voxelMapSize.x,
+	                   objPos.y + (float)voxelCentre.y / map.voxelMapSize.y,
+	                   objPos.z + (float)voxelCentre.z / map.voxelMapSize.z);
 }
 
-sp<VoxelMap> TileObjectBattleUnit::getVoxelMap(Vec3<int> mapIndex)
+sp<VoxelMap> TileObjectBattleUnit::getVoxelMap(Vec3<int> mapIndex) const
 {
 	auto u = this->getUnit();
-	auto size = u->agent->type->bodyType->size[u->current_body_state][u->facing];
+	auto size = u->agent->type->bodyType->size.at(u->current_body_state).at(u->facing);
 	if (mapIndex.x >= size.x || mapIndex.y >= size.y || mapIndex.z >= size.z)
 		return nullptr;
 
-	return u->agent->type->bodyType
-	    ->voxelMaps[u->current_body_state][u->facing]
-	               [mapIndex.z * size.y * size.x + mapIndex.y * size.x + mapIndex.x];
+	return u->agent->type->bodyType->voxelMaps.at(u->current_body_state)
+	    .at(u->facing)
+	    .at(mapIndex.z * size.y * size.x + mapIndex.y * size.x + mapIndex.x);
 }
 
 sp<BattleUnit> TileObjectBattleUnit::getUnit() const { return this->unit.lock(); }

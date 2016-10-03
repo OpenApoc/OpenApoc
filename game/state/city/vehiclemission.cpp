@@ -1079,9 +1079,9 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					// FIXME: Handle subversion
 					if (subvert)
 						LogError("Implement subversion!");
-					auto doodad =
-					    v.city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_INFILTRATION_RAY"},
-					                        v.tileObject->getPosition() - Vec3<float>{0, 0, 0.5f});
+					auto doodad = v.city->placeDoodad(
+					    StateRef<DoodadType>{&state, "DOODAD_14_INFILTRATION_BIG"},
+					    v.tileObject->getPosition() - Vec3<float>{0, 0, 0.5f});
 
 					auto *snoozeMission = VehicleMission::snooze(state, v, doodad->lifetime * 2);
 					v.missions.emplace_front(snoozeMission);

@@ -437,6 +437,7 @@ bool BattleUnit::applyDamage(GameState &state, int damage, float armour)
 }
 
 // FIXME: Handle unit's collision with projectile
+// SHIELD = DOODAD_27_SHIELD
 void BattleUnit::handleCollision(GameState &state, Collision &c)
 {
 	std::ignore = state;
@@ -487,7 +488,7 @@ void BattleUnit::handleCollision(GameState &state, Collision &c)
 
 		// if (applyDamage(state, projectile->damage, armourValue))
 		//{
-		//	auto doodad = city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_EXPLOSION_2"},
+		//	auto doodad = city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_3_EXPLOSION"},
 		//		this->tileObject->getPosition());
 
 		//	this->shadowObject->removeFromMap();
@@ -1310,7 +1311,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			// If still OK - fire!
 			if (firingWeapon)
 			{
-				auto p = firingWeapon->fire(targetPosition);
+				auto p = firingWeapon->fire(targetPosition, targetUnit);
 				map.addObjectToMap(p);
 				b->projectiles.insert(p);
 				displayedItem = firingWeapon->type;
@@ -1319,8 +1320,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			}
 		}
 
-		// If fired weapon at ground - stop firing that hand
-		if (weaponFired && targetingMode != TargetingMode::Unit)
+		// If fired weapon at ground or ally - stop firing that hand
+		if (weaponFired && (targetingMode != TargetingMode::Unit || targetUnit->owner == owner))
 		{
 			switch (weaponStatus)
 			{

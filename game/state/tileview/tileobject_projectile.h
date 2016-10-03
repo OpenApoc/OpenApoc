@@ -13,6 +13,7 @@ class TileObjectProjectile : public TileObject
 	          int) override;
 	~TileObjectProjectile() override;
 	Vec3<float> getPosition() const override;
+	void addToDrawnTiles(Tile *tile) override;
 
   private:
 	friend class TileMap;

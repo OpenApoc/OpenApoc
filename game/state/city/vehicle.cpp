@@ -400,7 +400,7 @@ void Vehicle::handleCollision(GameState &state, Collision &c)
 
 		if (applyDamage(state, projectile->damage, armourValue))
 		{
-			auto doodad = city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_EXPLOSION_2"},
+			auto doodad = city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_3_EXPLOSION"},
 			                                this->tileObject->getCenter());
 
 			this->shadowObject->removeFromMap();
@@ -457,6 +457,8 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
                            sp<TileObjectVehicle> enemyTile)
 {
+	static const std::set<TileObject::Type> scenerySet = {TileObject::Type::Scenery};
+
 	auto target = enemyTile->getVoxelCentrePosition();
 	float distance = this->tileObject->getDistanceTo(enemyTile);
 
@@ -466,32 +468,34 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 			continue;
 		if (equipment->canFire() == false)
 			continue;
+		// Out of range
+		if (distance > equipment->getRange())
+			continue;
+		// No sight to target
+		if (vehicleTile->map.findCollision(position, target, scenerySet))
+			continue;
+		std::uniform_int_distribution<int> toHit(1, 99);
+		int accuracy = 100 - equipment->type->accuracy + this->getAccuracy();
+		int shotDiff = toHit(state.rng);
 
-		if (distance <= equipment->getRange())
+		if (shotDiff > accuracy)
 		{
-			std::uniform_int_distribution<int> toHit(1, 99);
-			int accuracy = 100 - equipment->type->accuracy + this->getAccuracy();
-			int shotDiff = toHit(state.rng);
+			float offset = (shotDiff - accuracy) / 25.0f;
+			std::uniform_real_distribution<float> offsetRng(-offset, offset);
+			target.x += offsetRng(state.rng);
+			target.y += offsetRng(state.rng);
+			target.z += offsetRng(state.rng) / 2;
+		}
 
-			if (shotDiff > accuracy)
-			{
-				float offset = (shotDiff - accuracy) / 25.0f;
-				std::uniform_real_distribution<float> offsetRng(-offset, offset);
-				target.x += offsetRng(state.rng);
-				target.y += offsetRng(state.rng);
-				target.z += offsetRng(state.rng) / 2;
-			}
-
-			auto projectile = equipment->fire(target);
-			if (projectile)
-			{
-				vehicleTile->map.addObjectToMap(projectile);
-				this->city->projectiles.insert(projectile);
-			}
-			else
-			{
-				LogWarning("Fire() produced no object");
-			}
+		auto projectile = equipment->fire(target, {&state, enemyTile->getVehicle()});
+		if (projectile)
+		{
+			vehicleTile->map.addObjectToMap(projectile);
+			this->city->projectiles.insert(projectile);
+		}
+		else
+		{
+			LogWarning("Fire() produced no object");
 		}
 	}
 }

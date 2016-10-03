@@ -2,7 +2,6 @@
 <gamestate>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="facility_types.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="organisations.xml" />
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="doodad_types.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufopaedia.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_generator.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_types.xml"/>
@@ -75,13 +74,20 @@
   </initial_facilities>
   <initial_agent_equipment>
     <entry>
-      <entry>AEQUIPMENTTYPE_MARSEC_BODY_UNIT</entry>
+      <!-- Megapol body armor! -->
+	  <entry>AEQUIPMENTTYPE_MARSEC_BODY_UNIT</entry>
+	  <!-- Megapol body armor! -->
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_HELMET</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_LEFT_ARM_ARMOR</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_LEG_ARMOR</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_RIGHT_ARM_ARMOR</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_LASER_SNIPER_GUN</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_LASER_POD</entry>
+	  <!-- Remove launcher! -->
+	  <entry>AEQUIPMENTTYPE_MARSEC_MINILAUNCHER</entry>
+	  <entry>AEQUIPMENTTYPE_MINILAUNCHER_IN_MISSILE</entry>
+	  <entry>AEQUIPMENTTYPE_MINILAUNCHER_AG_MISSILE</entry>
+	  <!-- Remove launcher! -->
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_STUN_GRENADE</entry>

@@ -641,25 +641,29 @@ StateRef<AEquipmentType> Agent::getDominantItemInHands(StateRef<AEquipmentType> 
 	}
 	// Calculate item priorities: Two-Handed >> Weapon >> Usable Item >> Others
 	int e1Priority =
-	    e1->type->two_handed ? 3 : (e1->type->type == AEquipmentType::Type::Weapon
-	                                    ? 2
-	                                    : (e1->type->type != AEquipmentType::Type::Ammo &&
-	                                       e1->type->type != AEquipmentType::Type::Armor &&
-	                                       e1->type->type != AEquipmentType::Type::Loot)
-	                                          ? 1
-	                                          : 0);
+	    e1->canFire()
+	        ? 4
+	        : (e1->type->two_handed ? 3 : (e1->type->type == AEquipmentType::Type::Weapon
+	                                           ? 2
+	                                           : (e1->type->type != AEquipmentType::Type::Ammo &&
+	                                              e1->type->type != AEquipmentType::Type::Armor &&
+	                                              e1->type->type != AEquipmentType::Type::Loot)
+	                                                 ? 1
+	                                                 : 0));
 	int e2Priority =
-	    e2->type->two_handed ? 3 : (e2->type->type == AEquipmentType::Type::Weapon
-	                                    ? 2
-	                                    : (e2->type->type != AEquipmentType::Type::Ammo &&
-	                                       e2->type->type != AEquipmentType::Type::Armor &&
-	                                       e2->type->type != AEquipmentType::Type::Loot)
-	                                          ? 1
-	                                          : 0);
+	    e2->canFire()
+	        ? 4
+	        : (e2->type->two_handed ? 3 : (e2->type->type == AEquipmentType::Type::Weapon
+	                                           ? 2
+	                                           : (e2->type->type != AEquipmentType::Type::Ammo &&
+	                                              e2->type->type != AEquipmentType::Type::Armor &&
+	                                              e2->type->type != AEquipmentType::Type::Loot)
+	                                                 ? 1
+	                                                 : 0));
 	// Right hand has priority in case of a tie
 	if (e1Priority >= e2Priority)
-		return e2->type;
-	return e1->type;
+		return e1->type;
+	return e2->type;
 }
 
 sp<AEquipment> Agent::getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType type,

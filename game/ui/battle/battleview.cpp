@@ -476,6 +476,10 @@ void BattleView::render()
 
 void BattleView::setUpdateSpeed(BattleUpdateSpeed updateSpeed)
 {
+	if (this->updateSpeed == updateSpeed)
+	{
+		return;
+	}
 	this->lastSpeed = this->updateSpeed;
 	switch (updateSpeed)
 	{
@@ -1575,10 +1579,7 @@ void BattleView::eventOccurred(Event *e)
 									status = BattleUnit::WeaponStatus::FiringRightHand;
 									break;
 							}
-							// If non-player unit under cursor - fire at unit, otherwise fire at
-							// tile
-							if (unitOccupying &&
-							    unitOccupying->owner != state->current_battle->currentPlayer)
+							if (unitOccupying)
 							{
 								orderFire({&*state, unitOccupying->id}, status);
 							}

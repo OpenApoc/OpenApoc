@@ -182,8 +182,12 @@ void City::update(GameState &state, unsigned int ticks)
 			{
 				fw().soundBackend->playSample(c.projectile->impactSfx, c.position);
 			}
-			// FIXME: Get doodad from weapon definition?
-			auto doodad = this->placeDoodad({&state, "DOODAD_EXPLOSION_0"}, c.position);
+
+			auto doodadType = c.projectile->doodadType;
+			if (doodadType)
+			{
+				auto doodad = this->placeDoodad(doodadType, c.position);
+			}
 
 			switch (c.obj->getType())
 			{
@@ -201,7 +205,7 @@ void City::update(GameState &state, unsigned int ticks)
 					// explosion doodads? Not all weapons instantly destory buildings too
 
 					auto doodad =
-					    this->placeDoodad({&state, "DOODAD_EXPLOSION_2"}, sceneryTile->getCenter());
+					    this->placeDoodad({&state, "DOODAD_3_EXPLOSION"}, sceneryTile->getCenter());
 					sceneryTile->getOwner()->handleCollision(state, c);
 					break;
 				}
@@ -259,7 +263,7 @@ void City::generatePortals(GameState &state)
 			if (map->tileIsValid(pos) && map->getTile(pos)->ownedObjects.empty())
 			{
 				auto doodad =
-				    mksp<Doodad>(pos, StateRef<DoodadType>{&state, "DOODAD_DIMENSION_GATE"});
+				    mksp<Doodad>(pos, StateRef<DoodadType>{&state, "DOODAD_6_DIMENSION_GATE"});
 				map->addObjectToMap(doodad);
 				this->portals.push_back(doodad);
 				break;
