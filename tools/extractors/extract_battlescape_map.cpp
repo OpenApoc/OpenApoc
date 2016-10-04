@@ -106,10 +106,16 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 	{
 		for (int e = 0; e < 14; e++)
 		{
-			if (bdata.exits[0][l].exits[e] != 0xffffffff)
-				m->exitsX.emplace(bdata.exits[0][l].exits[e], 0, l);
-			if (bdata.exits[1][l].exits[e] != 0xffffffff)
-				m->exitsY.emplace(0, bdata.exits[1][l].exits[e], l);
+			/* As the exits array isn't uint32_t aligned, pull it out rather than passing a
+			 * reference directly to the Vec3<> constructor
+			 * Copying it out to the stack here allows the compiler to do whatever lowering is
+			 * necessary to realign the reads*/
+			uint32_t val = bdata.exits[0][l].exits[e];
+			if (val != 0xffffffff)
+				m->exitsX.emplace(val, 0, l);
+			val = bdata.exits[1][l].exits[e];
+			if (val != 0xffffffff)
+				m->exitsY.emplace(0, val, l);
 		}
 	}
 
