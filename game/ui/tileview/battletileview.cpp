@@ -703,7 +703,7 @@ void BattleTileView::render()
 				static const Vec2<float> offsetd14 = {-1.0f, -1.0f};
 				static const Vec2<float> offsetd23 = {1.0f, -1.0f};
 
-				float offset = focusAnimationTicksAccumulated / FOCUS_ICONS_ANIMATION_DELAY;
+				float offset = (float)focusAnimationTicksAccumulated / FOCUS_ICONS_ANIMATION_DELAY;
 				// Offset goes like this: 0 1 2 3 4 3 2 1  (example for 5 frames)
 				// Therefore, if value is >=frames, we do 2*frames -2 -offset
 				// For example, 2*5 - 2 - 5 = 3, that's how we get 3 that's after 4

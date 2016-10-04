@@ -1123,18 +1123,6 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 			return;
 		}
 		case MissionType::ThrowItem:
-			if (finished)
-			{
-				if (item)
-				{
-					auto bi = state.current_battle->addItem(state);
-					bi->item = item;
-					item = nullptr;
-					bi->position = u.position + Vec3<float>{0.0, 0.0, 0.5f};
-					bi->supported = false;
-					state.current_battle->map->addObjectToMap(bi);
-				}
-			}
 			return;
 		case MissionType::ReachGoal:
 			if (finished)
@@ -1385,13 +1373,15 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 		case MissionType::DropItem:
 		{
 			if (item)
-			{ // Remove item
+			{ 
+				// Remove item
 				item->ownerAgent->removeEquipment(item);
 				// Drop item
 				auto bi = state.current_battle->addItem(state);
 				bi->item = item;
 				item = nullptr;
 				bi->supported = false;
+				bi->position = u.position + Vec3<float>{0.0, 0.0, 0.5f};
 				state.current_battle->map->addObjectToMap(bi);
 			}
 			return;

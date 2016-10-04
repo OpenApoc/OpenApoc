@@ -543,6 +543,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	// Idling check
 	if (missions.empty() && isConscious())
 	{
+		// Sanity checks
 		if (falling)
 		{
 			LogError("Unit falling without a mission, wtf?");
@@ -555,9 +556,16 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		{
 			LogError("Unit changing body state without a mission, wtf?");
 		}
+
+		// Reach goal before everything else
+		if (!atGoal)
+		{
+			addMission(state, BattleUnitMission::MissionType::ReachGoal);
+		}
+		
 		// Try giving way if asked to
 		// FIXME: Ensure we're not in a firefight before giving way!
-		if (giveWayRequest.size() > 0)
+		else if (giveWayRequest.size() > 0)
 		{
 			// If we're given a giveWay request 0, 0 it means we're asked to kneel temporarily
 			if (giveWayRequest.size() == 1 && giveWayRequest.front().x == 0 &&
@@ -634,6 +642,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			}
 			giveWayRequest.clear();
 		}
+
 		else // if not giving way
 		{
 			setMovementState(AgentType::MovementState::None);
@@ -810,12 +819,14 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						return;
 					}
 					// Try to get new body state change
+					// Can do it if we're not firing and (either not changing hand state, or starting to aim)
 					if (firing_animation_ticks_remaining == 0 &&
-					    hand_animation_ticks_remaining == 0)
+					    (hand_animation_ticks_remaining == 0 || target_hand_state == AgentType::HandState::Aiming))
 					{
 						AgentType::BodyState nextState = AgentType::BodyState::Downed;
 						if (getNextBodyState(state, nextState))
 						{
+							LogWarning("%d %d", firing_animation_ticks_remaining, hand_animation_ticks_remaining);
 							beginBodyStateChange(nextState);
 						}
 					}
@@ -835,6 +846,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					else
 					{
 						handTicksRemaining -= firing_animation_ticks_remaining;
+						firing_animation_ticks_remaining = 0;
 						setHandState(AgentType::HandState::Aiming);
 					}
 				}
@@ -1245,19 +1257,22 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	if (isAttacking())
 	{
 		// Should we start firing a gun?
-		if (weaponRight && !weaponRight->isFiring())
+		if (target_hand_state == AgentType::HandState::Aiming)
 		{
-			weaponRight->startFiring(fire_aiming_mode);
-		}
-		if (weaponLeft && !weaponLeft->isFiring())
-		{
-			weaponLeft->startFiring(fire_aiming_mode);
+			if (weaponRight && !weaponRight->isFiring())
+			{
+				weaponRight->startFiring(fire_aiming_mode);
+			}
+			if (weaponLeft && !weaponLeft->isFiring())
+			{
+				weaponLeft->startFiring(fire_aiming_mode);
+			}
 		}
 
 		// Is a gun ready to fire?
 		bool weaponFired = false;
-		if (firing_animation_ticks_remaining == 0 && hand_animation_ticks_remaining == 0 &&
-		    current_hand_state == AgentType::HandState::Aiming)
+		if (firing_animation_ticks_remaining == 0 &&
+		    target_hand_state == AgentType::HandState::Aiming)
 		{
 			sp<AEquipment> firingWeapon = nullptr;
 			if (weaponRight && weaponRight->readyToFire)
@@ -1336,6 +1351,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 
 		// Should we start aiming?
 		if (firing_animation_ticks_remaining == 0 && hand_animation_ticks_remaining == 0 &&
+			body_animation_ticks_remaining == 0 &&
 		    current_hand_state != AgentType::HandState::Aiming &&
 		    current_movement_state != AgentType::MovementState::Running &&
 		    current_movement_state != AgentType::MovementState::Strafing &&
@@ -1523,7 +1539,19 @@ void BattleUnit::dropDown(GameState &state)
 		}
 		break;
 	}
+	std::list<sp<AEquipment>> itemsToDrop;
+	for (auto &m : missions)
+	{
+		if (m->item && m->item->equippedSlotType != AgentEquipmentLayout::EquipmentSlotType::None)
+		{
+			itemsToDrop.push_back(m->item);
+		}
+	}
 	missions.clear();
+	for (auto it : itemsToDrop)
+	{
+		addMission(state, BattleUnitMission::dropItem(*this, it));
+	}
 	addMission(state, BattleUnitMission::changeStance(*this, AgentType::BodyState::Downed));
 }
 
@@ -1671,10 +1699,6 @@ void BattleUnit::setMovementState(AgentType::MovementState state)
 			    target_hand_state != AgentType::HandState::AtEase)
 			{
 				setHandState(AgentType::HandState::AtEase);
-			}
-			if (isAttacking())
-			{
-				stopAttacking();
 			}
 			break;
 		default:
@@ -1885,11 +1909,14 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool s
 					case BattleUnitMission::MissionType::Snooze:
 					case BattleUnitMission::MissionType::ThrowItem:
 					case BattleUnitMission::MissionType::ChangeBodyState:
-					case BattleUnitMission::MissionType::Turn:
 					case BattleUnitMission::MissionType::ReachGoal:
 					case BattleUnitMission::MissionType::DropItem:
 					case BattleUnitMission::MissionType::Teleport:
 						shouldMoveToGoal = false;
+						break;
+					// Turn prevents moving to goal if it does not require goal
+					case BattleUnitMission::MissionType::Turn:
+						shouldMoveToGoal = missions.front()->requireGoal;
 						break;
 					// Missions that can be overwritten
 					case BattleUnitMission::MissionType::AcquireTU:
@@ -1940,6 +1967,7 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool s
 		case BattleUnitMission::MissionType::AcquireTU:
 		case BattleUnitMission::MissionType::RestartNextMission:
 		case BattleUnitMission::MissionType::Teleport:
+		case BattleUnitMission::MissionType::DropItem:
 			missions.emplace_front(mission);
 			if (start)
 			{
@@ -1955,9 +1983,6 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool s
 			{
 				mission->start(state, *this);
 			}
-			break;
-		default:
-			LogError("Unimplemented");
 			break;
 	}
 	return true;

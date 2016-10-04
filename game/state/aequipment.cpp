@@ -81,7 +81,22 @@ void AEquipment::update(unsigned int ticks)
 		}
 	}
 
-	// If firing - confirm we're still in business
+	// If firing - confirm we're still aiming
+	if (isFiring())
+	{
+		switch (ownerAgent->unit->target_hand_state)
+		{
+			// If aiming, changing into aiming, or firing, then we're fine
+			case AgentType::HandState::Firing:
+			case AgentType::HandState::Aiming:
+				break;
+			// Otherwise stop firing
+			default:
+				stopFiring();
+		}
+	}
+
+	// If firing - confirm we're still attacking with it and it's in right place
 	if (isFiring())
 	{
 		switch (equippedSlotType)

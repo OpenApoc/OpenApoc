@@ -1174,8 +1174,7 @@ void BattleView::orderDrop(bool right)
 	                                          : AgentEquipmentLayout::EquipmentSlotType::LeftHand);
 	if (item)
 	{
-		unit->missions.emplace_front(BattleUnitMission::dropItem(*unit, item));
-		unit->missions.front()->start(*this->state, *unit);
+		unit->addMission(*state, BattleUnitMission::dropItem(*unit, item));
 		LogWarning("BattleUnit \"%s\" dropping item in %s hand", unit->agent->name.cStr(),
 		           right ? "right" : "left");
 	}

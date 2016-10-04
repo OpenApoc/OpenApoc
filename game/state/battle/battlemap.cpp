@@ -923,8 +923,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				auto d = b->addDoor(state);
 				d->right = i == 1;
 				d->operational = true;
-				d->doorSound = state.battle_common_sample_list->door;
-
+				
 				// Recursively search for doors in a pattern spreading around start location
 				locationsToCheck.push_back(doors[i].front().first);
 				while (locationsToCheck.size() > 0)

@@ -229,6 +229,7 @@ sp<BattleDoor> Battle::addDoor(GameState &state)
 	auto door = mksp<BattleDoor>();
 	UString id = UString::format("%s%d", BattleDoor::getPrefix(), (int)units.size());
 	door->id = id;
+	door->doorSound = state.battle_common_sample_list->door;
 	doors[id] = door;
 	return door;
 }
