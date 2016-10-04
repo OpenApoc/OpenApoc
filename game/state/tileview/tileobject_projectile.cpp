@@ -58,7 +58,7 @@ Vec3<float> TileObjectProjectile::getPosition() const
 	return p->getPosition();
 }
 
-void TileObjectProjectile::addToDrawnTiles(Tile *tile)
+void TileObjectProjectile::addToDrawnTiles(Tile *)
 {
 	auto p = this->projectile.lock();
 	if (!p)

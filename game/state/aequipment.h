@@ -35,10 +35,10 @@ class AEquipment
 	// Ammunition for weapons, protection for armor, charge for items
 	int ammo = 0;
 
-	int recharge_ticks_accumulated = 0;
+	unsigned int recharge_ticks_accumulated = 0;
 
 	bool readyToFire = false;
-	int weapon_fire_ticks_remaining = 0;
+	unsigned int weapon_fire_ticks_remaining = 0;
 	BattleUnit::FireAimingMode aimingMode = BattleUnit::FireAimingMode::Aimed;
 
 	int getAccuracy(AgentType::BodyState bodyState, BattleUnit::FireAimingMode fireMode);

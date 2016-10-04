@@ -966,12 +966,13 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					int moveTicksConsumeRate =
 					    current_movement_state == AgentType::MovementState::Running ? 1 : 2;
 
+					// Quick check, if moving strictly vertical then using lift
 					if (distanceToGoal > 0 && current_body_state != AgentType::BodyState::Flying &&
 					    vectorToGoal.x == 0 && vectorToGoal.y == 0)
 					{
 						// FIXME: Actually read set option
 						bool USER_OPTION_GRAVLIFT_SOUNDS = true;
-						if (!wasUsingLift)
+						if (USER_OPTION_GRAVLIFT_SOUNDS && !wasUsingLift)
 						{
 							fw().soundBackend->playSample(b->common_sample_list->gravlift,
 							                              getPosition(), 0.25f);
@@ -1157,6 +1158,9 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		case TargetingMode::TileGround:
 			targetPosition = (Vec3<float>)targetTile + offsetTileGround;
 			break;
+		case TargetingMode::NoTarget:
+			// Ain't need to do anythin!
+			break;
 	}
 
 	// For simplicity, prepare weapons we can use
@@ -1190,6 +1194,9 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				weaponLeft = nullptr;
 			}
 			weaponRight = nullptr;
+			break;
+		case WeaponStatus::NotFiring
+			// Ain't need to do anythin!
 			break;
 	}
 
@@ -1472,6 +1479,11 @@ void BattleUnit::tryToRiseUp(GameState &state)
 				// If we arrived here then we have no animation for standing up
 				targetState = AgentType::BodyState::Downed;
 				continue;
+			case AgentType::BodyState::Downed:
+			case AgentType::BodyState::Jumping:
+			case AgentType::BodyState::Throwing:
+			// Ain't need to do anythin!
+				break;
 		}
 	}
 	// Find state we can rise into (with no animation)
@@ -1547,6 +1559,7 @@ void BattleUnit::dropDown(GameState &state)
 
 void BattleUnit::retreat(GameState &state)
 {
+	std::ignore = state;
 	tileObject->removeFromMap();
 	retreated = true;
 	removeFromSquad();
@@ -1904,6 +1917,8 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool s
 					case BattleUnitMission::MissionType::ChangeBodyState:
 					case BattleUnitMission::MissionType::Turn:
 					case BattleUnitMission::MissionType::ReachGoal:
+					case BattleUnitMission::MissionType::DropItem:
+					case BattleUnitMission::MissionType::Teleport:
 						shouldMoveToGoal = false;
 						break;
 					// Missions that can be overwritten

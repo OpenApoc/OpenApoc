@@ -33,7 +33,9 @@ void BattleMapPart::handleCollision(GameState &state, Collision &c)
 	// FIXME: Proper damage application
 	//
 	// - if (not enough damage to type) then return
+	// if collapsing make units on our tile fall
 
+	std::ignore = state;
 	std::ignore = c;
 	// If this tile has a damaged tile, replace it with that. If it's already damaged, destroy as
 	// normal

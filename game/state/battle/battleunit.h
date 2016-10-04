@@ -84,8 +84,10 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	StateRef<Agent> agent;
 
 	StateRef<Organisation> owner;
+	// Squad number, -1 = not assigned to any squad
 	int squadNumber = 0;
-	int squadPosition = 0;
+	// Squad position, has no meaning if not in squad
+	unsigned int squadPosition = 0;
 	void removeFromSquad();
 	bool assignToSquad(int squadNumber);
 	void moveToSquadPosition(int squadPosition);

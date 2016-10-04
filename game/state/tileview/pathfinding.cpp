@@ -461,6 +461,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 
 #endif //  OLD_PATHING_ALGORITHM
 
+/*
 // Alexey Andronov (Istrebitel)
 //
 // I have rewritten pathfinding algorithm using pointers instead of list of visited points
@@ -509,3 +510,4 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 // Then we can take all waypoints we encountered and path through them
 // (path to closest tile within first waypoint, then closest tile withing second waypoint, etc.
 // until we reach final waypoint, then path to goal)
+*/

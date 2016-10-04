@@ -52,8 +52,7 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimat
 	int offset_uf = dataUA[offset_ua].offset;
 	int from = left_side ? 0 : split_point;
 	int to = left_side ? split_point : dataUA[offset_ua].frame_count;
-	int inc = 1;
-
+	
 	for (int i = from; i < to; i++)
 	{
 		int k = inverse ? to - i - 1 : i;

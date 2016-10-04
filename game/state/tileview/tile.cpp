@@ -337,7 +337,6 @@ void Tile::updateBattlescapeParameters()
 	walkSfx = nullptr;
 	objectDropSfx = nullptr;
 	supportProviderForItems = nullptr;
-	bool groundEncountered = false;
 	closedDoorLeft = false;
 	closedDoorRight = false;
 	for (auto o : ownedObjects)
