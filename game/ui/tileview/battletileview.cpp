@@ -757,7 +757,7 @@ void BattleTileView::render()
 									bool hostile = battle->currentPlayer->isRelatedTo(u->owner) ==
 										Organisation::Relation::Hostile;
 									
-									unitsToDraw.push_back({ obj, obj->getOwningTile()->position.z - (currentZLevel - 1), friendly, hostile });
+									unitsToDraw.emplace_back( obj, obj->getOwningTile()->position.z - (currentZLevel - 1), friendly, hostile);
 								}
 							}
 						}
@@ -790,14 +790,14 @@ void BattleTileView::render()
 									bool hostile = battle->currentPlayer->isRelatedTo(u->owner) ==
 										Organisation::Relation::Hostile;
 
-									unitsToDraw.push_back({ obj, obj->getOwningTile()->position.z - (currentZLevel - 1), friendly, hostile });
+									unitsToDraw.emplace_back( obj, obj->getOwningTile()->position.z - (currentZLevel - 1), friendly, hostile );
 									continue;
 								}
 								else if (obj->getType() == TileObject::Type::Item)
 								{
 									if (currentLevel == 0)
 									{
-										itemsToDraw.push_back({ obj, obj->getOwningTile()->position.z - (currentZLevel - 1) });
+										itemsToDraw.emplace_back( obj, obj->getOwningTile()->position.z - (currentZLevel - 1) );
 									}
 									continue;
 								}
@@ -832,7 +832,7 @@ void BattleTileView::render()
 									bool hostile = battle->currentPlayer->isRelatedTo(u->owner) ==
 										Organisation::Relation::Hostile;
 
-									unitsToDraw.push_back({ obj, obj->getOwningTile()->position.z - (currentZLevel - 1), friendly, hostile });
+									unitsToDraw.emplace_back( obj, obj->getOwningTile()->position.z - (currentZLevel - 1), friendly, hostile );
 								}
 							}
 						}
