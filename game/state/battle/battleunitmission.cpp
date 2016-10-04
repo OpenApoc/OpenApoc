@@ -1177,7 +1177,7 @@ bool BattleUnitMission::isFinished(GameState &state, BattleUnit &u, bool callUpd
 	return false;
 }
 
-bool BattleUnitMission::isFinishedInternal(GameState &state, BattleUnit &u)
+bool BattleUnitMission::isFinishedInternal(GameState &, BattleUnit &u)
 {
 	switch (this->type)
 	{

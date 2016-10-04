@@ -104,7 +104,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	StateRef<BattleUnit> focusUnit;
 	// Units focusing this unit
 	// Ticks until we check if target is still valid, turn to it etc.
-	int ticksTillNextTargetCheck = 0;
+	unsigned int ticksTillNextTargetCheck = 0;
 
 	void setFocus(StateRef<BattleUnit> unit);
 	void startAttacking(StateRef<BattleUnit> unit,
@@ -142,8 +142,8 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Animation frames and state
 
 	// Time, in game ticks, until body animation is finished
-	int body_animation_ticks_remaining = 0;
-	int getBodyAnimationFrame() const
+	unsigned int body_animation_ticks_remaining = 0;
+	unsigned int getBodyAnimationFrame() const
 	{
 		return (body_animation_ticks_remaining + TICKS_PER_FRAME_UNIT - 1) / TICKS_PER_FRAME_UNIT;
 	}
@@ -153,13 +153,13 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	void beginBodyStateChange(AgentType::BodyState state);
 
 	// Time, in game ticks, until hands animation is finished
-	int hand_animation_ticks_remaining = 0;
+	unsigned int hand_animation_ticks_remaining = 0;
 	// Time, in game ticks, until unit will lower it's weapon
-	int aiming_ticks_remaining = 0;
+	unsigned int aiming_ticks_remaining = 0;
 	// Time, in game ticks, until firing animation is finished
-	int firing_animation_ticks_remaining = 0;
+	unsigned int firing_animation_ticks_remaining = 0;
 	// Get hand animation frame to draw
-	int getHandAnimationFrame() const
+	unsigned int getHandAnimationFrame() const
 	{
 		return ((firing_animation_ticks_remaining > 0 ? firing_animation_ticks_remaining
 		                                              : hand_animation_ticks_remaining) +
@@ -172,21 +172,21 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	void beginHandStateChange(AgentType::HandState state);
 
 	// Distance, in movement ticks, spent since starting to move
-	int movement_ticks_passed = 0;
-	int getDistanceTravelled() const
+	unsigned int movement_ticks_passed = 0;
+	unsigned int getDistanceTravelled() const
 	{
-		return std::max(0, movement_ticks_passed / TICKS_PER_UNIT_TRAVELLED);
+		return movement_ticks_passed / TICKS_PER_UNIT_TRAVELLED;
 	}
 
 	// Movement sounds
-	int movement_sounds_played = 0;
+	unsigned int movement_sounds_played = 0;
 	bool shouldPlaySoundNow();
-	int getWalkSoundIndex();
+	unsigned int getWalkSoundIndex();
 	AgentType::MovementState current_movement_state = AgentType::MovementState::None;
 	void setMovementState(AgentType::MovementState state);
 
 	// Time, in game ticks, until unit can turn by 1/8th of a circle
-	int turning_animation_ticks_remaining = 0;
+	unsigned int turning_animation_ticks_remaining = 0;
 	void beginTurning(Vec2<int> newFacing);
 
 	// Mission logic
@@ -207,7 +207,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	Vec2<int> facing;
 	Vec2<int> goalFacing;
 	// Value 0 - 100, Simulates slow takeoff, when starting to use flight this slowly rises to 1
-	int flyingSpeedModifier = 0;
+	unsigned int flyingSpeedModifier = 0;
 
 	// Successfully retreated from combat
 	bool retreated = false;

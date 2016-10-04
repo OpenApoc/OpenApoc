@@ -268,8 +268,8 @@ bool Tile::getHeadFits(bool large, int height)
 
 void Tile::updateBattlescapeUIDrawOrder()
 {
-	drawBattlescapeSelectionBackAt = -1;
-	drawTargetLocationIconAt = -1;
+	bool backFound = false;
+	bool targetFound = false;
 
 	auto object_count = drawnObjects[0].size();
 	size_t obj_id;
@@ -279,17 +279,19 @@ void Tile::updateBattlescapeUIDrawOrder()
 		if (drawBattlescapeSelectionBackAt == -1 && obj->getType() != TileObject::Type::Ground)
 		{
 			drawBattlescapeSelectionBackAt = obj_id;
+			backFound = true;
 		}
 		if (drawTargetLocationIconAt == -1 && (int)obj->getType() > 3)
 		{
 			drawTargetLocationIconAt = obj_id;
+			targetFound = true;
 		}
 	}
-	if (drawBattlescapeSelectionBackAt == -1)
+	if (!backFound)
 	{
 		drawBattlescapeSelectionBackAt = obj_id;
 	}
-	if (drawTargetLocationIconAt == -1)
+	if (!targetFound)
 	{
 		drawTargetLocationIconAt = obj_id;
 	}

@@ -1662,6 +1662,10 @@ void BattleView::eventOccurred(Event *e)
 							break;
 					}
 					break;
+				case BattleSelectionState::PsiLeft:
+				case BattleSelectionState::PsiRight:
+					LogError("Implement!");
+					break;
 			}
 			LogWarning("Click at tile %d, %d, %d", t.x, t.y, t.z);
 		}

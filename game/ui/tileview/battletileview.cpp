@@ -466,8 +466,6 @@ void BattleTileView::render()
 									break;
 								}
 								auto &obj = tile->drawnObjects[layer][obj_id];
-								bool friendly = false;
-								bool hostile = false;
 								if (obj->getType() == TileObject::Type::Unit)
 								{
 									if (!selectedUnits.empty())
@@ -485,7 +483,7 @@ void BattleTileView::render()
 										{
 											unitsToDrawSelectionArrows.push_back({u, false});
 										}
-										// If visible and focused - draw focus arrows
+										// If visible and focused by selected - draw focus arrows
 										if (true) // FIXME: Check if visible by current player
 										{
 											bool focusedBySelectedUnits = false;

@@ -134,9 +134,9 @@ class Tile
 	// True = unit that qualifies as a door opener present in this tile
 	bool doorOpeningUnitPresent = false;
 	// position in drawnObjects vector to draw back selection bracket at
-	int drawBattlescapeSelectionBackAt = 0;
+	unsigned int drawBattlescapeSelectionBackAt = 0;
 	// position in drawnObjects vector to draw target location at
-	int drawTargetLocationIconAt = 0;
+	unsigned int drawTargetLocationIconAt = 0;
 	// sfx to use when passing through tile
 	sp<std::vector<sp<Sample>>> walkSfx;
 	// sfx to use when object falls on tile

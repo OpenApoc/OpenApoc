@@ -764,15 +764,15 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		}
 
 		// If not running we will consume these twice as fast
-		int moveTicksRemaining = ticks * agent->modified_stats.getActualSpeedValue() * 2;
-		int bodyTicksRemaining = ticks;
-		int handTicksRemaining = ticks;
-		int turnTicksRemaining = ticks;
+		unsigned int moveTicksRemaining = ticks * agent->modified_stats.getActualSpeedValue() * 2;
+		unsigned int bodyTicksRemaining = ticks;
+		unsigned int handTicksRemaining = ticks;
+		unsigned int turnTicksRemaining = ticks;
 
-		int lastMoveTicksRemaining = 0;
-		int lastBodyTicksRemaining = 0;
-		int lastHandTicksRemaining = 0;
-		int lastTurnTicksRemaining = 0;
+		unsigned int lastMoveTicksRemaining = 0;
+		unsigned int lastBodyTicksRemaining = 0;
+		unsigned int lastHandTicksRemaining = 0;
+		unsigned int lastTurnTicksRemaining = 0;
 
 		while (lastMoveTicksRemaining != moveTicksRemaining ||
 		       lastBodyTicksRemaining != bodyTicksRemaining ||
@@ -954,16 +954,16 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				// Not falling and moving
 				else if (current_movement_state != AgentType::MovementState::None)
 				{
-					int speedModifier = 100;
+					unsigned int speedModifier = 100;
 					if (current_body_state == AgentType::BodyState::Flying)
 					{
-						speedModifier = std::max(1, flyingSpeedModifier);
+						speedModifier = std::max((unsigned)1, flyingSpeedModifier);
 					}
 
 					Vec3<float> vectorToGoal = goalPosition - getPosition();
-					int distanceToGoal = (int)ceilf(glm::length(
+					unsigned int distanceToGoal = (unsigned)ceilf(glm::length(
 					    vectorToGoal * VELOCITY_SCALE_BATTLE * (float)TICKS_PER_UNIT_TRAVELLED));
-					int moveTicksConsumeRate =
+					unsigned int moveTicksConsumeRate =
 					    current_movement_state == AgentType::MovementState::Running ? 1 : 2;
 
 					// Quick check, if moving strictly vertical then using lift
@@ -980,14 +980,14 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						usingLift = true;
 						movement_ticks_passed = 0;
 					}
-					int movementTicksAccumulated = 0;
+					unsigned int movementTicksAccumulated = 0;
 					if (distanceToGoal * moveTicksConsumeRate * 100 / speedModifier >
 					    moveTicksRemaining)
 					{
 						if (flyingSpeedModifier != 100)
 						{
 							flyingSpeedModifier =
-							    std::min(100, flyingSpeedModifier +
+							    std::min((unsigned)100, flyingSpeedModifier +
 							                      moveTicksRemaining / moveTicksConsumeRate /
 							                          FLYING_ACCELERATION_DIVISOR);
 						}
@@ -1011,7 +1011,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 							if (flyingSpeedModifier != 100)
 							{
 								flyingSpeedModifier =
-								    std::min(100, flyingSpeedModifier +
+								    std::min((unsigned)100, flyingSpeedModifier +
 								                      distanceToGoal / FLYING_ACCELERATION_DIVISOR);
 							}
 							moveTicksRemaining -= distanceToGoal * moveTicksConsumeRate;
@@ -1037,7 +1037,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					// facing down or up on screen
 					if (facing.x == facing.y)
 					{
-						movement_ticks_passed += movementTicksAccumulated * 2 / 3;
+						movement_ticks_passed += movementTicksAccumulated * 100 / 150;
 					}
 					// facing left or right on screen
 					else if (facing.x == -facing.y)
@@ -1364,6 +1364,9 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						stopAttacking();
 					}
 					break;
+				case WeaponStatus::NotFiring:
+					LogError("Weapon fired while not firing?");
+					break;
 			}
 		}
 
@@ -1482,7 +1485,7 @@ void BattleUnit::tryToRiseUp(GameState &state)
 			case AgentType::BodyState::Downed:
 			case AgentType::BodyState::Jumping:
 			case AgentType::BodyState::Throwing:
-			// Ain't need to do anythin!
+				LogError("Not possible to reach this?");
 				break;
 		}
 	}
@@ -1548,7 +1551,9 @@ void BattleUnit::dropDown(GameState &state)
 			case AgentType::BodyState::Kneeling:
 				setBodyState(AgentType::BodyState::Prone);
 				continue;
+			case AgentType::BodyState::Prone:
 			case AgentType::BodyState::Downed:
+				LogError("Not possible to reach this?");
 				break;
 		}
 		break;
@@ -1712,7 +1717,7 @@ void BattleUnit::setMovementState(AgentType::MovementState state)
 	}
 }
 
-int BattleUnit::getWalkSoundIndex()
+unsigned int BattleUnit::getWalkSoundIndex()
 {
 	if (current_movement_state == AgentType::MovementState::Running)
 	{
