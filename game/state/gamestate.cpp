@@ -334,7 +334,8 @@ bool GameState::canTurbo() const
 	{
 		if (v.second->city == this->current_city && v.second->tileObject != nullptr &&
 		    v.second->type->aggressiveness > 0 &&
-		    v.second->owner->isRelatedTo(this->getPlayer()) == Organisation::Relation::Hostile)
+		    v.second->owner->isRelatedTo(this->getPlayer()) == Organisation::Relation::Hostile &&
+			!v.second->isCrashed())
 		{
 			return false;
 		}

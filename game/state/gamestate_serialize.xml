@@ -268,6 +268,7 @@
 		<name>VehicleMission</name>
 		<member>type</member>
 		<member>targetLocation</member>
+		<member>reRouteAttempts</member>
 		<member>pickNearest</member>
 		<member>targetBuilding</member>
 		<member>targetVehicle</member>
