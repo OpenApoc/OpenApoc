@@ -1,10 +1,12 @@
 #pragma once
+#define _USE_MATH_DEFINES
 #include "game/state/agent.h"
 #include "game/state/battle/battleunitmission.h"
 #include "game/state/tileview/tile.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include <algorithm>
+#include <cmath>
 
 // How many in-game ticks are required to travel one in-game unit
 #define TICKS_PER_UNIT_TRAVELLED 32
@@ -27,6 +29,7 @@ namespace OpenApoc
 class TileObjectBattleUnit;
 class TileObjectShadow;
 class Battle;
+class DamageType;
 
 class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_from_this<BattleUnit>
 {
@@ -266,7 +269,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Returns if unit did spend (false if unsufficient TUs)
 	bool spendTU(int cost);
 
-	bool applyDamage(GameState &state, int damage, float armour);
+	void applyDamage(GameState &state, int damage, StateRef<DamageType> damageType, AgentType::BodyPart bodyPart);
 	void handleCollision(GameState &state, Collision &c);
 	// sp<TileObjectVehicle> findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile);
 	// void attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehicle>

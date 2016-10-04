@@ -352,11 +352,98 @@ bool BattleUnit::canKneel() const
 }
 
 // FIXME: Apply damage to the unit
-bool BattleUnit::applyDamage(GameState &state, int damage, float armour)
+void BattleUnit::applyDamage(GameState &state, int damage, StateRef<DamageType> damageType, AgentType::BodyPart bodyPart)
 {
 	std::ignore = state;
-	std::ignore = damage;
-	std::ignore = armour;
+	
+	// FIXME: Process Disruptor shields!
+	LogWarning("Unit taking damage! Implement disruptor shields!");
+
+	// Calculate damage to armor type
+	auto armor = agent->getArmor(bodyPart);
+	int armorValue = 0;
+	StateRef<DamageModifier> damageModifier;
+	if (armor)
+	{
+		armorValue = armor->ammo;
+		damageModifier = armor->type->damage_modifier;
+	}
+	else
+	{
+		armorValue = agent->type->armor.at(bodyPart);
+		damageModifier = agent->type->damage_modifier;
+	}
+	damage = damageType->dealDamage(damage, damageModifier) - armorValue;
+
+	// No daamge 
+	if (damage <= 0)
+	{
+		return;
+	}
+
+	// FIXME: armor damage only by non-stun
+	LogWarning("Not all damage damages armor!");
+
+	// Armor damage
+	int armorDamage = damage / 10 + 1;
+	armor->ammo -= armorDamage;
+	if (armor->ammo <= 0)
+	{
+		// Armor destroyed
+		agent->removeEquipment(armor);
+	}
+
+	// Health damage
+	LogWarning("Implement health/stun damage properly!");
+	agent->modified_stats.health -= damage;
+
+	
+
+	//dir = glm::round(dir);
+	// auto armourDirection = VehicleType::ArmourDirection::Right;
+	// if (dir.x == 0 && dir.y == 0 && dir.z == 0)
+	//{
+	//	armourDirection = VehicleType::ArmourDirection::Front;
+	//}
+	// else if (dir * 0.5f == vehicleDir)
+	//{
+	//	armourDirection = VehicleType::ArmourDirection::Rear;
+	//}
+	//// FIXME: vehicle Z != 0
+	// else if (dir.z < 0)
+	//{
+	//	armourDirection = VehicleType::ArmourDirection::Top;
+	//}
+	// else if (dir.z > 0)
+	//{
+	//	armourDirection = VehicleType::ArmourDirection::Bottom;
+	//}
+	// else if ((vehicleDir.x == 0 && dir.x != dir.y) || (vehicleDir.y == 0 && dir.x == dir.y))
+	//{
+	//	armourDirection = VehicleType::ArmourDirection::Left;
+	//}
+
+	// float armourValue = 0.0f;
+	// auto armour = this->type->armour.find(armourDirection);
+	// if (armour != this->type->armour.end())
+	//{
+	//	armourValue = armour->second;
+	//}
+
+	// if (applyDamage(state, projectile->damage, armourValue))
+	//{
+	//	auto doodad = city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_3_EXPLOSION"},
+	//		this->tileObject->getPosition());
+
+	//	this->shadowObject->removeFromMap();
+	//	this->tileObject->removeFromMap();
+	//	this->shadowObject.reset();
+	//	this->tileObject.reset();
+	//	state.vehicles.erase(this->getId(state, this->shared_from_this()));
+	//	return;
+	//}
+
+	
 	// if (this->shield <= damage)
 	//{
 	//	if (this->shield > 0)
@@ -401,7 +488,7 @@ bool BattleUnit::applyDamage(GameState &state, int damage, float armour)
 	//{
 	//	this->shield -= damage;
 	//}
-	return false;
+	return;
 }
 
 // FIXME: Handle unit's collision with projectile
@@ -424,62 +511,43 @@ void BattleUnit::handleCollision(GameState &state, Collision &c)
 		bool USER_OPTION_UFO_DAMAGE_MODEL = false;
 		if (USER_OPTION_UFO_DAMAGE_MODEL)
 		{
-			damage = randDamage000200(state.rng, c.projectile->damageType->dealDamage(c.projectile->damage, agent->type->damage_modifier));
+			damage = randDamage000200(state.rng, projectile->damage);
 		}
 		else
 		{
-			damage = randDamage050150(state.rng, c.projectile->damageType->dealDamage(c.projectile->damage, agent->type->damage_modifier));
+			damage = randDamage050150(state.rng, projectile->damage);
 		}
-		// FIXME: Properly apply
-		agent->modified_stats.health -= damage;
+		
+		// Determine body part hit
+		AgentType::BodyPart bodyPartHit = AgentType::BodyPart::Body;
+		// FIXME: Ensure body part determination is correct
+		// Assume top 25% is head, lower 25% is legs, and middle 50% is body/left/right
+		float altitude = (c.position.z - position.z) * 40.0f / (float)getCurrentHeight();
+		if (altitude > 0.75f)
+		{
+			bodyPartHit = AgentType::BodyPart::Helmet;
+		}
+		else if (altitude < 0.25f)
+		{
+			bodyPartHit = AgentType::BodyPart::Legs;
+		}
+		else
+		{
+			auto unitDir = glm::normalize(Vec3<float> { facing.x, facing.y, 0.0f });
+			auto projectileDir = glm::normalize(Vec3<float>{projectile->getVelocity().x, projectile->getVelocity().y, 0.0f});
+			auto cross = glm::cross(unitDir, projectileDir);
+			int angle = (int)((cross.z >= 0 ? -1 : 1) * glm::angle(unitDir, -projectileDir) / M_PI * 180.0f);
+			if (angle > 45 && angle < 135)
+			{
+				bodyPartHit = AgentType::BodyPart::RightArm;
+			}
+			else if (angle < -45 && angle > -135)
+			{
+				bodyPartHit = AgentType::BodyPart::LeftArm;
+			}
+		}
 
-		auto unitDir = glm::normalize((Vec2<float>)this->facing);
-		auto projectileDir = glm::normalize(Vec2<float>{projectile->getVelocity().x, projectile->getVelocity().y});
-		auto dir = unitDir + projectileDir;
-		dir = glm::round(dir);
-
-		// auto armourDirection = VehicleType::ArmourDirection::Right;
-		// if (dir.x == 0 && dir.y == 0 && dir.z == 0)
-		//{
-		//	armourDirection = VehicleType::ArmourDirection::Front;
-		//}
-		// else if (dir * 0.5f == vehicleDir)
-		//{
-		//	armourDirection = VehicleType::ArmourDirection::Rear;
-		//}
-		//// FIXME: vehicle Z != 0
-		// else if (dir.z < 0)
-		//{
-		//	armourDirection = VehicleType::ArmourDirection::Top;
-		//}
-		// else if (dir.z > 0)
-		//{
-		//	armourDirection = VehicleType::ArmourDirection::Bottom;
-		//}
-		// else if ((vehicleDir.x == 0 && dir.x != dir.y) || (vehicleDir.y == 0 && dir.x == dir.y))
-		//{
-		//	armourDirection = VehicleType::ArmourDirection::Left;
-		//}
-
-		// float armourValue = 0.0f;
-		// auto armour = this->type->armour.find(armourDirection);
-		// if (armour != this->type->armour.end())
-		//{
-		//	armourValue = armour->second;
-		//}
-
-		// if (applyDamage(state, projectile->damage, armourValue))
-		//{
-		//	auto doodad = city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_3_EXPLOSION"},
-		//		this->tileObject->getPosition());
-
-		//	this->shadowObject->removeFromMap();
-		//	this->tileObject->removeFromMap();
-		//	this->shadowObject.reset();
-		//	this->tileObject.reset();
-		//	state.vehicles.erase(this->getId(state, this->shared_from_this()));
-		//	return;
-		//}
+		applyDamage(state, damage, projectile->damageType, bodyPartHit);
 	}
 }
 

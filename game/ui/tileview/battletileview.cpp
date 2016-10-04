@@ -159,7 +159,7 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 			RGBImageLock l(healthBar);
 			for (int y = 0; y < 2; y++)
 			{
-				for (int x = 0; x < healthBar->size.x; x++)
+				for (int x = 0; x < (int)healthBar->size.x; x++)
 				{
 					if (x >= i)
 						l.set({ x, y }, { 0, 0, 0, 255 });

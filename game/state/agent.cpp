@@ -146,6 +146,30 @@ template <> const UString &StateObject<Agent>::getId(const GameState &state, con
 	return emptyString;
 }
 
+AgentEquipmentLayout::EquipmentSlotType AgentType::getArmorSlotType(BodyPart bodyPart)
+{
+	switch (bodyPart)
+	{
+	case AgentType::BodyPart::Body:
+		return AgentEquipmentLayout::EquipmentSlotType::ArmorBody;
+		break;
+	case AgentType::BodyPart::Legs:
+		return AgentEquipmentLayout::EquipmentSlotType::ArmorLegs;
+		break;
+	case AgentType::BodyPart::Helmet:
+		return AgentEquipmentLayout::EquipmentSlotType::ArmorHelmet;
+		break;
+	case AgentType::BodyPart::LeftArm:
+		return AgentEquipmentLayout::EquipmentSlotType::ArmorLeftHand;
+		break;
+	case AgentType::BodyPart::RightArm:
+		return AgentEquipmentLayout::EquipmentSlotType::ArmorRightHand;
+		break;
+	}
+	LogError("Unknown body part?");
+	return AgentEquipmentLayout::EquipmentSlotType::None;
+}
+
 AgentEquipmentLayout::EquipmentLayoutSlot *
 AgentType::getFirstSlot(AgentEquipmentLayout::EquipmentSlotType type)
 {
@@ -320,34 +344,14 @@ bool Agent::isFacingAllowed(Vec2<int> facing) const
 	return type->bodyType->allowed_facing.find(facing) != type->bodyType->allowed_facing.end();
 }
 
-int Agent::getArmorValue(AgentType::BodyPart bodyPart) const
+sp<AEquipment> Agent::getArmor(AgentType::BodyPart bodyPart) const
 {
-	AgentEquipmentLayout::EquipmentSlotType slotType =
-	    AgentEquipmentLayout::EquipmentSlotType::General;
-	switch (bodyPart)
-	{
-		case AgentType::BodyPart::Body:
-			slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorBody;
-			break;
-		case AgentType::BodyPart::Legs:
-			slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorLegs;
-			break;
-		case AgentType::BodyPart::Helmet:
-			slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorHelmet;
-			break;
-		case AgentType::BodyPart::LeftArm:
-			slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorLeftHand;
-			break;
-		case AgentType::BodyPart::RightArm:
-			slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorRightHand;
-			break;
-	}
-	auto a = getFirstItemInSlot(slotType);
+	auto a = getFirstItemInSlot(AgentType::getArmorSlotType(bodyPart));
 	if (a)
 	{
-		return a->ammo;
+		return a;
 	}
-	return type->armor.at(bodyPart);
+	return nullptr;
 }
 
 AgentEquipmentLayout::EquipmentSlotType Agent::canAddEquipment(Vec2<int> pos,
@@ -676,25 +680,8 @@ sp<AEquipment> Agent::getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType
 StateRef<BattleUnitImagePack> Agent::getImagePack(AgentType::BodyPart bodyPart) const
 {
 	AgentEquipmentLayout::EquipmentSlotType slotType =
-	    AgentEquipmentLayout::EquipmentSlotType::General;
-	switch (bodyPart)
-	{
-		case AgentType::BodyPart::Body:
-			slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorBody;
-			break;
-		case AgentType::BodyPart::Legs:
-			slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorLegs;
-			break;
-		case AgentType::BodyPart::Helmet:
-			slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorHelmet;
-			break;
-		case AgentType::BodyPart::LeftArm:
-			slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorLeftHand;
-			break;
-		case AgentType::BodyPart::RightArm:
-			slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorRightHand;
-			break;
-	}
+	    AgentType::getArmorSlotType(bodyPart);
+	
 	auto e = getFirstItemInSlot(slotType);
 	if (e)
 		return e->type->body_image_pack;
