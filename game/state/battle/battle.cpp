@@ -286,12 +286,6 @@ void Battle::update(GameState &state, unsigned int ticks)
 				case TileObject::Type::Feature:
 				{
 					auto mapPartTile = std::static_pointer_cast<TileObjectBattleMapPart>(c.obj);
-					// FIXME: Don't just explode mapPart, but damaged tiles/falling stuff? Different
-					// explosion doodads? Not all weapons instantly destory buildings too
-
-					// FIXME: Enable back, right now disabled to test weapon doodads
-					// auto doodad = this->placeDoodad({&state, "DOODAD_3_EXPLOSION"},
-					// mapPartTile->getCenter());
 					mapPartTile->getOwner()->handleCollision(state, c);
 					break;
 				}

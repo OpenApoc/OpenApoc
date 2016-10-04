@@ -153,6 +153,50 @@ template <typename T, typename Generator> T randBoundsInclusive(Generator &g, T 
 	return dist(g);
 }
 
+template <typename T, typename Generator> T randDamage000200(Generator &g, T value)
+{
+	T min = 0;
+	T max = value * (T)2;
+	if (min > max)
+	{
+		LogError("Bounds max < min");
+	}
+	// uniform_int_distribution is apparently undefined if min==max
+	if (min == max)
+		return min;
+	std::uniform_int_distribution<T> dist(min, max);
+	return dist(g);
+}
+
+template <typename T, typename Generator> T randDamage050150(Generator &g, T value)
+{
+	T min = value / (T)2;
+	T max = value * (T)3 / (T)2;
+	if (min > max)
+	{
+		LogError("Bounds max < min");
+	}
+	// uniform_int_distribution is apparently undefined if min==max
+	if (min == max)
+		return min;
+	std::uniform_int_distribution<T> dist(min, max);
+	return dist(g);
+}
+
+template <typename T, typename Generator> T randDamage025075(Generator &g, T value)
+{
+	T min = value / (T)4;
+	T max = value * (T)3 / (T)4;
+	if (min > max)
+	{
+		LogError("Bounds max < min");
+	}
+	// uniform_int_distribution is apparently undefined if min==max
+	if (min == max)
+		return min;
+	std::uniform_int_distribution<T> dist(min, max);
+	return dist(g);
+}
 template <typename T, typename Generator> T listRandomiser(Generator &g, const std::list<T> &list)
 {
 	// we can't do index lookups in a list, so we just have to iterate N times

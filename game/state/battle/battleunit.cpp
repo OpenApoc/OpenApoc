@@ -1,4 +1,7 @@
 #define _USE_MATH_DEFINES
+#include "game/state/tileview/collision.h"
+#include "game/state/city/projectile.h"
+#include "game/state/rules/damage.h"
 #include "game/state/battle/battleunit.h"
 #include "framework/framework.h"
 #include "game/state/aequipment.h"
@@ -416,10 +419,24 @@ void BattleUnit::handleCollision(GameState &state, Collision &c)
 	auto projectile = c.projectile.get();
 	if (projectile)
 	{
-		// auto vehicleDir = glm::round(this->facing);
-		// auto projectileDir = glm::normalize(projectile->getVelocity());
-		// auto dir = vehicleDir + projectileDir;
-		// dir = glm::round(dir);
+		// Calculate damage
+		int damage;
+		bool USER_OPTION_UFO_DAMAGE_MODEL = false;
+		if (USER_OPTION_UFO_DAMAGE_MODEL)
+		{
+			damage = randDamage000200(state.rng, c.projectile->damageType->dealDamage(c.projectile->damage, agent->type->damage_modifier));
+		}
+		else
+		{
+			damage = randDamage050150(state.rng, c.projectile->damageType->dealDamage(c.projectile->damage, agent->type->damage_modifier));
+		}
+		// FIXME: Properly apply
+		agent->modified_stats.health -= damage;
+
+		auto unitDir = glm::normalize((Vec2<float>)this->facing);
+		auto projectileDir = glm::normalize(Vec2<float>{projectile->getVelocity().x, projectile->getVelocity().y});
+		auto dir = unitDir + projectileDir;
+		dir = glm::round(dir);
 
 		// auto armourDirection = VehicleType::ArmourDirection::Right;
 		// if (dir.x == 0 && dir.y == 0 && dir.z == 0)

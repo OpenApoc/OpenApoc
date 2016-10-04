@@ -105,6 +105,9 @@
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_RIGHT_ARM_ARMOR</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_LASER_SNIPER_GUN</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_LASER_POD</entry>
+	  <!-- Remove devastator! -->
+	  <entry>AEQUIPMENTTYPE_DEVASTATOR_CANNON</entry>
+	  <!-- Remove devastator! -->
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_STUN_GRENADE</entry>

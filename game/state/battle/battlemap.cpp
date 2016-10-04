@@ -1108,6 +1108,7 @@ void BattleMap::loadTilesets(GameState &state) const
 					tile->destroyed_map_parts = rubble_feature;
 					break;
 			}
+			tile->damageModifier = { &state, "DAMAGEMODIFIER_TERRAIN_1_" };
 			// Sanity check
 			if (state.battleMapTiles.find(tileName) != state.battleMapTiles.end())
 			{

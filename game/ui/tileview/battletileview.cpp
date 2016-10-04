@@ -152,6 +152,25 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 	pathPreviewTooFar = font->getString(tr("Too Far"));
 	pathPreviewUnreachable = font->getString(tr("Blocked"));
 
+	for (int i = 0; i < 16; i++)
+	{
+		auto healthBar = mksp<RGBImage>(Vec2<int>{15, 2});
+		{
+			RGBImageLock l(healthBar);
+			for (int y = 0; y < 2; y++)
+			{
+				for (int x = 0; x < healthBar->size.x; x++)
+				{
+					if (x >= i)
+						l.set({ x, y }, { 0, 0, 0, 255 });
+					else
+						l.set({ x, y }, { 0, 0, 0, 0 });
+				}
+			}
+		}
+		arrowHealthBars.push_back(healthBar);
+	}
+
 	// FIXME: Load from save last screen location?
 	setScreenCenterTile(screenCenterTile);
 };
@@ -656,6 +675,7 @@ void BattleTileView::render()
 				static const Vec2<float> offsetBehavior = {0.0f, 0.0f};
 				static const Vec2<float> offsetBleed = {-5.0f, 0.0f};
 				static const Vec2<float> offsetTU = {13.0f, -5.0f};
+				static const Vec2<float> offsetHealth = { 6.0f, 2.0f };
 
 				Vec2<float> pos =
 				    tileToOffsetScreenCoords(
@@ -663,10 +683,13 @@ void BattleTileView::render()
 				        Vec3<float>{0.0f, 0.0f, obj.first->getCurrentHeight() * 1.5f / 40.0f}) +
 				    offset;
 
-				// FIXME: Draw hit points
+				// Selection arrow
 				r.draw(obj.second ? activeUnitSelectionArrow[obj.first->squadNumber]
-				                  : inactiveUnitSelectionArrow[obj.first->squadNumber],
-				       pos);
+				                  : inactiveUnitSelectionArrow[obj.first->squadNumber], pos);
+				// Health from 0 to 15, where 15 = 100%, 14 = less than 99.9% and 0 = 0%+
+				int health = obj.first->agent->modified_stats.health * 15 / obj.first->agent->current_stats.health;
+				r.draw(arrowHealthBars[health], pos + offsetHealth);
+				// Behavior
 				r.draw(behaviorUnitSelectionUnderlay[obj.first->behavior_mode],
 				       pos + offsetBehavior);
 

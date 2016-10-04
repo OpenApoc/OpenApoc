@@ -10,6 +10,7 @@ namespace OpenApoc
 {
 class DamageType;
 class Sample;
+class DamageModifier;
 
 class BattleMapPartType : public StateObject<BattleMapPartType>
 {
@@ -94,6 +95,7 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 
 	// Following members are not serialized, but rather are set up upon being loaded
 
+	StateRef<DamageModifier> damageModifier;
 	sp<std::vector<sp<Sample>>> walkSounds;
 	sp<Sample> objectDropSound;
 	// Destroyed ground replacement for ground at level 0, rubble for other types

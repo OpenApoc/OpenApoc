@@ -33,6 +33,7 @@
 #define W_TRAKHIT 183  // trakgun
 #define W_ZAPHIT 184   // zaphit
 
+// Doodads used by tactical weaponry, ids matching vanilla
 #define TAC_DOODAD_21 21 // tac 115 - 125
 #define TAC_DOODAD_22 22 // tac 126 - 136
 #define TAC_DOODAD_23 23 // tac 137 - 147
@@ -41,6 +42,16 @@
 #define TAC_DOODAD_26 26 // tac 170 - 180
 #define TAC_DOODAD_27 27 // tac 181 - 185 shield
 #define TAC_DOODAD_28 28 // tac 186 - 192
+
+// Doodads matching their vanilla indexes
+#define TAC_DOODAD_18 18 // tac 44, 52
+#define TAC_DOODAD_19 19 // tac 52, 60
+#define TAC_DOODAD_20 20 // tac 60, 68
+
+// Doodads defined manually, ids not matching vanilla
+#define CUSTOM_DOODAD_16 16 //tac 28, 32
+#define CUSTOM_DOODAD_17 17// tac 32, 44
+#define CUSTOM_DOODAD_29 29// tac 8, 26
 
 namespace OpenApoc
 {
@@ -884,15 +895,32 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 	{
 		static const int frameTTL = 4;
 		static const std::vector<Vec2<int>> doodadTabOffsets = {
-		    {115, 126}, {126, 137}, {137, 148}, {148, 159},
+			{ 28, 32 },{ 32, 44 },{ 44, 52 },{ 52, 60 }, { 60, 68 },
+			{115, 126}, {126, 137}, {137, 148}, {148, 159},
 		    {159, 170}, {170, 181}, {181, 186}, {186, 192},
+			{ 8, 26 }
 		};
 
-		for (int i = 21; i <= 28; i++)
+		for (int i = 16; i <= 29; i++)
 		{
 			UString id;
 			switch (i)
 			{
+				case CUSTOM_DOODAD_16: //tac 28, 32
+					id = "DOODAD_16_BURNING_OBJECT";
+					break;
+				case CUSTOM_DOODAD_17:// tac 32, 44
+					id = "DOODAD_17_FIRE";
+					break;
+				case TAC_DOODAD_18: // tac 44, 52
+					id = "DOODAD_18_SMOKE";
+					break;
+				case TAC_DOODAD_19: // tac 52, 60
+					id = "DOODAD_19_ALIEN_GAS";
+					break;
+				case TAC_DOODAD_20: // tac 60, 68
+					id = "DOODAD_20_STUN_GAS";
+					break;
 				case TAC_DOODAD_21: // tac 115 - 125
 					id = "DOODAD_21_AP";
 					break;
@@ -917,9 +945,12 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 				case TAC_DOODAD_28: // tac 186 - 192
 					id = "DOODAD_28_ENZYME";
 					break;
+				case CUSTOM_DOODAD_29 :// tac 8, 26
+					id = "DOODAD_29_EXPLODING_TERRAIN";
+					break;
 			}
 
-			auto tabOffsets = doodadTabOffsets[i - 21];
+			auto tabOffsets = doodadTabOffsets[i - 16];
 			auto d = mksp<DoodadType>();
 
 			// For some reason, not equal to other offsets, which are 23,34?
