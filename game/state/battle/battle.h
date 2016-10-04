@@ -125,7 +125,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	sp<BattleDoor> addDoor(GameState &state);
 
 	// Add item, setting links to resources
-	sp<BattleItem> Battle::addItem(GameState &state);
+	sp<BattleItem> addItem(GameState &state);
 
 	// Turn based functions
 
