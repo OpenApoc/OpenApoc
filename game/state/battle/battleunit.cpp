@@ -1750,10 +1750,10 @@ float BattleUnit::getMaxThrowDistance(int weight, int heightDifference)
 bool BattleUnit::shouldPlaySoundNow()
 {
 	bool play = false;
-	int sounds_to_play = getDistanceTravelled() / UNITS_TRAVELLED_PER_SOUND;
+	unsigned int sounds_to_play = getDistanceTravelled() / UNITS_TRAVELLED_PER_SOUND;
 	if (sounds_to_play != movement_sounds_played)
 	{
-		int divisor = (current_movement_state == AgentType::MovementState::Running)
+		unsigned int divisor = (current_movement_state == AgentType::MovementState::Running)
 		                  ? UNITS_TRAVELLED_PER_SOUND_RUNNING_DIVISOR
 		                  : 1;
 		play = ((sounds_to_play + divisor - 1) % divisor) == 0;

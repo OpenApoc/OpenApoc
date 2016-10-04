@@ -276,12 +276,12 @@ void Tile::updateBattlescapeUIDrawOrder()
 	for (obj_id = 0; obj_id < object_count; obj_id++)
 	{
 		auto &obj = drawnObjects[0][obj_id];
-		if (drawBattlescapeSelectionBackAt == -1 && obj->getType() != TileObject::Type::Ground)
+		if (!backFound && obj->getType() != TileObject::Type::Ground)
 		{
 			drawBattlescapeSelectionBackAt = obj_id;
 			backFound = true;
 		}
-		if (drawTargetLocationIconAt == -1 && (int)obj->getType() > 3)
+		if (!targetFound && (int)obj->getType() > 3)
 		{
 			drawTargetLocationIconAt = obj_id;
 			targetFound = true;
