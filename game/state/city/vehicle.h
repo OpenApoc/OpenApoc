@@ -72,7 +72,7 @@ class Vehicle : public StateObject<Vehicle>, public std::enable_shared_from_this
 	StateRef<City> city;
 	int health;
 	int shield;
-	int shieldRecharge;
+	unsigned int shieldRecharge;
 	StateRef<Building> homeBuilding;
 	StateRef<Building> currentlyLandedBuilding;
 

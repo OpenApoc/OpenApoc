@@ -235,7 +235,7 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 	}
 };
 
-VehicleMission *VehicleMission::gotoLocation(GameState &state, Vehicle &v, Vec3<int> target,
+VehicleMission *VehicleMission::gotoLocation(GameState &, Vehicle &, Vec3<int> target,
                                              bool pickNearest, int reRouteAttempts)
 {
 	// TODO
@@ -717,7 +717,7 @@ bool VehicleMission::isFinished(GameState &state, Vehicle &v, bool callUpdateIfF
 	return false;
 }
 
-bool VehicleMission::isFinishedInternal(GameState &state, Vehicle &v)
+bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 {
 	switch (this->type)
 	{
@@ -1194,9 +1194,6 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 			}
 			if (containsVehicle)
 			{
-				auto newTarget = target;
-				auto newTo = to;
-				bool foundNewTo = false;
 				// How far to deviate from target point
 				int maxDiff = 2;
 				// Calculate bounds
@@ -1415,6 +1412,8 @@ UString VehicleMission::getName()
 			break;
 		case MissionType::InfiltrateSubvert:
 			name += " " + this->targetBuilding.id + " " + (subvert ? "subvert" : "infiltrate");
+			break;
+		case MissionType::RestartNextMission:
 			break;
 	}
 	return name;

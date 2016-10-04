@@ -1892,6 +1892,8 @@ int BattleUnitMission::getBodyStateChangeCost(AgentType::BodyState from, AgentTy
 					return 8;
 				case AgentType::BodyState::Prone:
 					return 16;
+				default:
+					return 0;
 			}
 			break;
 		case AgentType::BodyState::Kneeling:
@@ -1901,6 +1903,8 @@ int BattleUnitMission::getBodyStateChangeCost(AgentType::BodyState from, AgentTy
 				case AgentType::BodyState::Standing:
 				case AgentType::BodyState::Flying:
 					return 8;
+				default:
+					return 0;
 			}
 			break;
 		case AgentType::BodyState::Prone:
@@ -1910,6 +1914,8 @@ int BattleUnitMission::getBodyStateChangeCost(AgentType::BodyState from, AgentTy
 				case AgentType::BodyState::Standing:
 				case AgentType::BodyState::Flying:
 					return 8;
+				default:
+					return 0;
 			}
 			break;
 		default:

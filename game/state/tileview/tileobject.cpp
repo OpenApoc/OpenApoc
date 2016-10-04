@@ -27,8 +27,6 @@ void TileObject::removeFromMap()
 	/* owner may be NULL as this can be used to set the initial position after creation */
 	if (this->owningTile)
 	{
-		auto prevOwningTile = owningTile;
-		auto prevDrawOnTile = drawOnTile;
 		auto erased = this->owningTile->ownedObjects.erase(thisPtr);
 		if (erased != 1)
 		{

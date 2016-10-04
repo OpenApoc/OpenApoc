@@ -108,7 +108,7 @@ class InitialGameStateExtractor
 	    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction, bool inverse)
 	{
 		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, 100, 0, false, false,
-		                         false, {0, 0}, {0, 0}, true);
+		                         false, {0, 0}, {0, 0}, inverse);
 	}
 
 	sp<BattleUnitAnimationPack::AnimationEntry>

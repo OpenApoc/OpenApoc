@@ -1195,7 +1195,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			}
 			weaponRight = nullptr;
 			break;
-		case WeaponStatus::NotFiring
+		case WeaponStatus::NotFiring:
 			// Ain't need to do anythin!
 			break;
 	}
