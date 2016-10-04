@@ -39,6 +39,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gamestate_serialize_gen", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_images", "tests\test_images.vcxproj", "{1CA306CD-C11A-4E14-AAAF-2DD282E10652}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "data", "data\data.vcxproj", "{9229D8C6-0499-423D-AB27-CE6403459A84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -183,6 +185,14 @@ Global
 		{1CA306CD-C11A-4E14-AAAF-2DD282E10652}.Release|Win32.Build.0 = Release|Win32
 		{1CA306CD-C11A-4E14-AAAF-2DD282E10652}.Release|x64.ActiveCfg = Release|x64
 		{1CA306CD-C11A-4E14-AAAF-2DD282E10652}.Release|x64.Build.0 = Release|x64
+		{9229D8C6-0499-423D-AB27-CE6403459A84}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9229D8C6-0499-423D-AB27-CE6403459A84}.Debug|Win32.Build.0 = Debug|Win32
+		{9229D8C6-0499-423D-AB27-CE6403459A84}.Debug|x64.ActiveCfg = Debug|x64
+		{9229D8C6-0499-423D-AB27-CE6403459A84}.Debug|x64.Build.0 = Debug|x64
+		{9229D8C6-0499-423D-AB27-CE6403459A84}.Release|Win32.ActiveCfg = Release|Win32
+		{9229D8C6-0499-423D-AB27-CE6403459A84}.Release|Win32.Build.0 = Release|Win32
+		{9229D8C6-0499-423D-AB27-CE6403459A84}.Release|x64.ActiveCfg = Release|x64
+		{9229D8C6-0499-423D-AB27-CE6403459A84}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

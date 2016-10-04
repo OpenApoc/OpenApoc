@@ -40,6 +40,9 @@
     <ProjectReference Include="..\library\library.vcxproj">
       <Project>{832bd75c-0c8c-4d12-a518-7b1aae3dd0ac}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\tools\extractor.vcxproj">
+      <Project>{6b9315dd-3720-4fa4-8906-03dbac1cef49}</Project>
+    </ProjectReference>
     <ProjectReference Include="state\gamestate.vcxproj">
       <Project>{55da5dd0-c503-426e-8322-e8e2d0e1a71b}</Project>
     </ProjectReference>
