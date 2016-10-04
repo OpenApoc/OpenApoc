@@ -134,9 +134,9 @@ class Tile
 	// True = unit that qualifies as a door opener present in this tile
 	bool doorOpeningUnitPresent = false;
 	// position in drawnObjects vector to draw back selection bracket at
-	int drawBattlescapeSelectionBackAt = 0;
+	unsigned int drawBattlescapeSelectionBackAt = 0;
 	// position in drawnObjects vector to draw target location at
-	int drawTargetLocationIconAt = 0;
+	unsigned int drawTargetLocationIconAt = 0;
 	// sfx to use when passing through tile
 	sp<std::vector<sp<Sample>>> walkSfx;
 	// sfx to use when object falls on tile
@@ -232,8 +232,8 @@ class TileMap
 	void addObjectToMap(sp<BattleItem>);
 	void addObjectToMap(sp<BattleUnit>);
 
-	int getLayer(TileObject::Type type) const;
-	int getLayerCount() const;
+	unsigned int getLayer(TileObject::Type type) const;
+	unsigned int getLayerCount() const;
 	bool tileIsValid(Vec3<int> tile) const;
 
 	sp<Image> dumpVoxelView(const Rect<int> viewRect, const TileTransform &transform, float maxZ,

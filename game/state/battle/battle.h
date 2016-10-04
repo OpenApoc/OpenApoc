@@ -75,6 +75,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	MissionType mission_type = MissionType::AlienExtermination;
 	UString mission_location_id;
 	Mode mode = Mode::RealTime;
+	void setMode(Mode mode);
 
 	StateRef<Vehicle> player_craft;
 
@@ -117,11 +118,14 @@ class Battle : public std::enable_shared_from_this<Battle>
 	void update(GameState &state, unsigned int ticks);
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
 
-	// Adds unit, setting it's id
-	UString addUnit();
+	// Adds unit, setting it's id and links to resources
+	sp<BattleUnit> addUnit(GameState &state);
 
 	// Adds door, setting it's id
-	UString addDoor();
+	sp<BattleDoor> addDoor(GameState &state);
+
+	// Add item, setting links to resources
+	sp<BattleItem> addItem(GameState &state);
 
 	// Turn based functions
 

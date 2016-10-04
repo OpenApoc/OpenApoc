@@ -26,9 +26,10 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state)
 
 	state.battle_common_image_list = mksp<BattleCommonImageList>();
 
+	state.battle_common_image_list->strategyImages = mksp<std::vector<sp<Image>>>();
 	for (size_t i = 0; i < gameObjectStrategySpriteCount; i++)
 	{
-		state.battle_common_image_list->strategyImages.push_back(fw().data->loadImage(
+		state.battle_common_image_list->strategyImages->push_back(fw().data->loadImage(
 		    UString::format("PCKSTRAT:xcom3/tacdata/stratico.pck:xcom3/tacdata/"
 		                    "stratico.tab:%u",
 		                    (unsigned)i)));

@@ -30,7 +30,7 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	bool falling = false;
 	bool destroyed = false;
 	StateRef<BattleDoor> door;
-	
+
 	// Ticks for animation of non-doors
 	int animation_frame_ticks = 0;
 	int getAnimationFrame();

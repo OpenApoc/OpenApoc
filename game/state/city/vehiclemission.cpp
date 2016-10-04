@@ -148,6 +148,8 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 	{
 		const int lookupRaduis = 10;
 		auto startPos = vTile->getOwningTile()->position;
+		// Make sure we check from high enough altitude
+		auto startZ = std::max(startPos.z, 4);
 
 		for (int r = 0; r < lookupRaduis; r++)
 		{
@@ -156,7 +158,9 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 				bool middle = y > startPos.y - r && y < startPos.y + r;
 				for (int x = startPos.x - r; x <= startPos.x + r;)
 				{
-					for (int z = startPos.z - 1; z >= 0; z--)
+					// Ensure we're not trying to land into a tile that's blocked
+					bool lastHasScenery = true;
+					for (int z = startZ; z >= 0; z--)
 					{
 						auto tile = map.getTile(x, y, z);
 						bool hasScenery = false;
@@ -168,13 +172,13 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 								break;
 							}
 						}
-
-						if (hasScenery && canLandOnTile(tile))
+						if (hasScenery && !lastHasScenery && canLandOnTile(tile))
 						{
 							auto crashTile = tile->position;
 							crashTile.z++;
 							return crashTile;
 						}
+						lastHasScenery = hasScenery;
 					}
 					if (middle && x == startPos.x - r)
 					{
@@ -231,8 +235,8 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 	}
 };
 
-VehicleMission *VehicleMission::gotoLocation(GameState &state, Vehicle &v, Vec3<int> target,
-                                             bool pickNearest)
+VehicleMission *VehicleMission::gotoLocation(GameState &, Vehicle &, Vec3<int> target,
+                                             bool pickNearest, int reRouteAttempts)
 {
 	// TODO
 	// Pseudocode:
@@ -243,6 +247,7 @@ VehicleMission *VehicleMission::gotoLocation(GameState &state, Vehicle &v, Vec3<
 	mission->type = MissionType::GotoLocation;
 	mission->targetLocation = target;
 	mission->pickNearest = pickNearest;
+	mission->reRouteAttempts = reRouteAttempts;
 	return mission;
 }
 
@@ -400,22 +405,10 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 	{
 		case MissionType::TakeOff:      // Fall-through
 		case MissionType::GotoLocation: // Fall-through
+		case MissionType::Crash:
 		case MissionType::Land:
 		{
 			return advanceAlongPath(state, dest, v);
-		}
-		case MissionType::Crash:
-		{
-			if (currentPlannedPath.empty())
-				return false;
-			currentPlannedPath.pop_front();
-			if (currentPlannedPath.empty())
-				return false;
-			auto pos = currentPlannedPath.front();
-			dest = Vec3<float>{pos.x, pos.y, pos.z}
-			       // Add {0.5,0.5,0.5} to make it route to the center of the tile
-			       + Vec3<float>{0.5, 0.5, 0.0};
-			return true;
 		}
 		case MissionType::Patrol:
 			if (!advanceAlongPath(state, dest, v))
@@ -642,17 +635,38 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 			}
 			if (vTile && !finished && this->currentPlannedPath.empty())
 			{
+				// Forever path to portal, eventually it will work
 				setPathTo(state, v, targetLocation);
 			}
 			return;
 		}
 		case MissionType::Crash:
+		{
+			auto vTile = v.tileObject;
+			if (vTile && !finished && this->currentPlannedPath.empty())
+			{
+				LogWarning("Crash landing failed, restartng...");
+				auto *restartMision = restartNextMission(state, v);
+				v.missions.emplace_front(restartMision);
+				restartMision->start(state, v);
+			}
+			return;
+		}
 		case MissionType::GotoLocation:
 		{
 			auto vTile = v.tileObject;
 			if (vTile && !finished && this->currentPlannedPath.empty())
 			{
-				setPathTo(state, v, targetLocation);
+				if (reRouteAttempts > 0)
+				{
+					reRouteAttempts--;
+					setPathTo(state, v, targetLocation);
+				}
+				else
+				{
+					// Finall attempt, give up if fails
+					setPathTo(state, v, targetLocation, 500, true, true);
+				}
 			}
 			return;
 		}
@@ -703,7 +717,7 @@ bool VehicleMission::isFinished(GameState &state, Vehicle &v, bool callUpdateIfF
 	return false;
 }
 
-bool VehicleMission::isFinishedInternal(GameState &state, Vehicle &v)
+bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 {
 	switch (this->type)
 	{
@@ -869,9 +883,20 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			auto tile = tileHelper.findTileToLandOn(state, vehicleTile);
 			if (tile == vehicleTile->getOwningTile()->position)
 			{
-				// FIXME: Snooze for a while (?)
-				auto name = this->getName();
-				LogError("Vehicle mission %s failed to find a place to land", name.cStr());
+				Vec3<int> randomNearbyPos = {
+				    randBoundsInclusive(state.rng, tile.x - 4, tile.x + 4),
+				    randBoundsInclusive(state.rng, tile.y - 4, tile.y + 4),
+				    randBoundsInclusive(state.rng, tile.z - 2, tile.z + 2)};
+				randomNearbyPos.x = clamp(randomNearbyPos.x, 0, map.size.x - 1);
+				randomNearbyPos.y = clamp(randomNearbyPos.y, 0, map.size.y - 1);
+				randomNearbyPos.z = clamp(randomNearbyPos.z, 0, map.size.z - 1);
+				LogInfo("Vehicle mission %s: Can't find place to land, moving to random location "
+				        "at {%d,%d,%d}",
+				        getName().cStr(), randomNearbyPos.x, randomNearbyPos.y, randomNearbyPos.z);
+				auto *gotoMission =
+				    VehicleMission::gotoLocation(state, v, randomNearbyPos, true, 0);
+				v.missions.emplace_front(gotoMission);
+				gotoMission->start(state, v);
 				return;
 			}
 			this->targetLocation = tile;
@@ -1110,7 +1135,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 }
 
 void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, int maxIterations,
-                               bool checkValidity)
+                               bool checkValidity, bool giveUpIfInvalid)
 {
 	auto vehicleTile = v.tileObject;
 	if (vehicleTile)
@@ -1142,8 +1167,17 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 				{
 					break;
 				}
+				if (giveUpIfInvalid)
+				{
+					targetLocation = vehicleTile->getPosition();
+					return;
+				}
 				LogInfo("Cannot move to %d %d %d, contains scenery that is not a landing pad",
 				        target.x, target.y, target.z);
+				if (type == MissionType::Crash)
+				{
+					LogError("Crashing into inaccessible tile?");
+				}
 				target.z++;
 				if (target.z >= map.size.z)
 				{
@@ -1165,9 +1199,6 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 			}
 			if (containsVehicle)
 			{
-				auto newTarget = target;
-				auto newTo = to;
-				bool foundNewTo = false;
 				// How far to deviate from target point
 				int maxDiff = 2;
 				// Calculate bounds
@@ -1386,6 +1417,8 @@ UString VehicleMission::getName()
 			break;
 		case MissionType::InfiltrateSubvert:
 			name += " " + this->targetBuilding.id + " " + (subvert ? "subvert" : "infiltrate");
+			break;
+		case MissionType::RestartNextMission:
 			break;
 	}
 	return name;

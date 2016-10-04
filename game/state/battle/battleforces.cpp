@@ -37,7 +37,7 @@ void BattleForces::removeAt(unsigned squad, unsigned position)
 {
 	squads[squad].units[position]->squadNumber = -1;
 	squads[squad].units.erase(squads[squad].units.begin() + position);
-	for (int i = 0; i < squads[squad].units.size(); i++)
+	for (unsigned int i = 0; i < squads[squad].units.size(); i++)
 	{
 		squads[squad].units[i]->squadPosition = i;
 	}

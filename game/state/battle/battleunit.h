@@ -1,10 +1,12 @@
 #pragma once
+#define _USE_MATH_DEFINES
 #include "game/state/agent.h"
 #include "game/state/battle/battleunitmission.h"
 #include "game/state/tileview/tile.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include <algorithm>
+#include <cmath>
 
 // How many in-game ticks are required to travel one in-game unit
 #define TICKS_PER_UNIT_TRAVELLED 32
@@ -27,6 +29,7 @@ namespace OpenApoc
 class TileObjectBattleUnit;
 class TileObjectShadow;
 class Battle;
+class DamageType;
 
 class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_from_this<BattleUnit>
 {
@@ -84,11 +87,13 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	StateRef<Agent> agent;
 
 	StateRef<Organisation> owner;
+	// Squad number, -1 = not assigned to any squad
 	int squadNumber = 0;
-	int squadPosition = 0;
-	void removeFromSquad();
-	bool assignToSquad(int squadNumber);
-	void moveToSquadPosition(int squadPosition);
+	// Squad position, has no meaning if not in squad
+	unsigned int squadPosition = 0;
+	void removeFromSquad(Battle &b);
+	bool assignToSquad(Battle &b, int squadNumber);
+	void moveToSquadPosition(Battle &b, int squadPosition);
 
 	// Weapon state and firing
 
@@ -101,10 +106,11 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Unit we're ordered to focus on (in real time)
 	StateRef<BattleUnit> focusUnit;
 	// Units focusing this unit
+	std::list<StateRef<BattleUnit>> focusedByUnits;
 	// Ticks until we check if target is still valid, turn to it etc.
-	int ticksTillNextTargetCheck = 0;
+	unsigned int ticksTillNextTargetCheck = 0;
 
-	void setFocus(StateRef<BattleUnit> unit);
+	void setFocus(GameState &state, StateRef<BattleUnit> unit);
 	void startAttacking(StateRef<BattleUnit> unit,
 	                    WeaponStatus status = WeaponStatus::FiringBothHands);
 	void startAttacking(Vec3<int> tile, WeaponStatus status = WeaponStatus::FiringBothHands,
@@ -140,8 +146,8 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Animation frames and state
 
 	// Time, in game ticks, until body animation is finished
-	int body_animation_ticks_remaining = 0;
-	int getBodyAnimationFrame() const
+	unsigned int body_animation_ticks_remaining = 0;
+	unsigned int getBodyAnimationFrame() const
 	{
 		return (body_animation_ticks_remaining + TICKS_PER_FRAME_UNIT - 1) / TICKS_PER_FRAME_UNIT;
 	}
@@ -151,13 +157,13 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	void beginBodyStateChange(AgentType::BodyState state);
 
 	// Time, in game ticks, until hands animation is finished
-	int hand_animation_ticks_remaining = 0;
+	unsigned int hand_animation_ticks_remaining = 0;
 	// Time, in game ticks, until unit will lower it's weapon
-	int aiming_ticks_remaining = 0;
+	unsigned int aiming_ticks_remaining = 0;
 	// Time, in game ticks, until firing animation is finished
-	int firing_animation_ticks_remaining = 0;
+	unsigned int firing_animation_ticks_remaining = 0;
 	// Get hand animation frame to draw
-	int getHandAnimationFrame() const
+	unsigned int getHandAnimationFrame() const
 	{
 		return ((firing_animation_ticks_remaining > 0 ? firing_animation_ticks_remaining
 		                                              : hand_animation_ticks_remaining) +
@@ -170,21 +176,21 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	void beginHandStateChange(AgentType::HandState state);
 
 	// Distance, in movement ticks, spent since starting to move
-	int movement_ticks_passed = 0;
-	int getDistanceTravelled() const
+	unsigned int movement_ticks_passed = 0;
+	unsigned int getDistanceTravelled() const
 	{
-		return std::max(0, movement_ticks_passed / TICKS_PER_UNIT_TRAVELLED);
+		return movement_ticks_passed / TICKS_PER_UNIT_TRAVELLED;
 	}
 
 	// Movement sounds
-	int movement_sounds_played = 0;
+	unsigned int movement_sounds_played = 0;
 	bool shouldPlaySoundNow();
-	int getWalkSoundIndex();
+	unsigned int getWalkSoundIndex();
 	AgentType::MovementState current_movement_state = AgentType::MovementState::None;
 	void setMovementState(AgentType::MovementState state);
 
 	// Time, in game ticks, until unit can turn by 1/8th of a circle
-	int turning_animation_ticks_remaining = 0;
+	unsigned int turning_animation_ticks_remaining = 0;
 	void beginTurning(Vec2<int> newFacing);
 
 	// Mission logic
@@ -205,7 +211,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	Vec2<int> facing;
 	Vec2<int> goalFacing;
 	// Value 0 - 100, Simulates slow takeoff, when starting to use flight this slowly rises to 1
-	int flyingSpeedModifier = 0;
+	unsigned int flyingSpeedModifier = 0;
 
 	// Successfully retreated from combat
 	bool retreated = false;
@@ -223,6 +229,9 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 
 	StateRef<AEquipmentType> displayedItem;
 	void updateDisplayedItem();
+
+	// Battle parameters
+	Battle::Mode battleMode = Battle::Mode::RealTime;
 
 	// Returns true if the unit is dead
 	bool isDead() const;
@@ -260,7 +269,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Returns if unit did spend (false if unsufficient TUs)
 	bool spendTU(int cost);
 
-	bool applyDamage(GameState &state, int damage, float armour);
+	void applyDamage(GameState &state, int damage, StateRef<DamageType> damageType, AgentType::BodyPart bodyPart);
 	void handleCollision(GameState &state, Collision &c);
 	// sp<TileObjectVehicle> findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile);
 	// void attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehicle>
@@ -290,11 +299,10 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 
 	// Following members are not serialized, but rather are set in initBattle method
 
-	std::list<sp<BattleUnit>> focusedByUnits;
+	sp<std::vector<sp<Image>>> strategyImages;
 
 	sp<TileObjectBattleUnit> tileObject;
 	sp<TileObjectShadow> shadowObject;
-	wp<Battle> battle;
 
 	/*
 	- curr. mind state (controlled/berserk/…)

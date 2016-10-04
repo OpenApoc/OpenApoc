@@ -39,7 +39,8 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 
 	/* 'screenPosition' is where the center of the object should be drawn */
 	virtual void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-	                  TileViewMode mode, int currentLevel = 0) = 0;
+	                  TileViewMode mode, int currentLevel = 0, bool friendly = false,
+	                  bool hostile = false) = 0;
 	const Type &getType() const { return this->type; }
 	virtual Vec3<float> getPosition() const = 0;
 	// Vector from object position to object center
@@ -65,7 +66,7 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	Tile *getOwningTile() const { return this->owningTile; }
 	std::vector<Tile *> getIntersectingTiles() const { return this->intersectingTiles; }
 
-	virtual sp<VoxelMap> getVoxelMap(Vec3<int> mapIndex) const { return nullptr; }
+	virtual sp<VoxelMap> getVoxelMap(Vec3<int> /*mapIndex*/) const { return nullptr; }
 	virtual bool hasVoxelMap() { return false; }
 	// Vector from voxel map top left back corner to object center
 	virtual Vec3<float> getVoxelOffset() const { return bounds_div_2; }

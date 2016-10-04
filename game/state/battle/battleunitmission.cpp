@@ -360,6 +360,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 			// STEP 06: [For large units if moving: down-right or up-left / SE or NW]
 			if (fromPos.x - toPos.x == fromPos.y - toPos.y)
 			{
+				/*
 				//  Legend:
 				//	  * = initial position
 				//	  - = destination
@@ -369,15 +370,15 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 				//	****   ****  x            ----   ----  x
 				//	*  *   *  *  x 0          -  -   -  -  x 0
 				//	****   ****  x            ----   ----  x
-				//	                               \\             
+				//	                               \\
 				//	****   ****  xxxx         ----   ****  xxxx
 				//	*  *   *  *  - 0-         -  -   *  *  * 0*
 				//	****   ****  ----         ----   ****  ****
-				//	           \\                                 
+				//	           \\
 				//	xxxx   x---  ----         xxxx   x***  ****
 				//	  0    x 0-  -  -           0    x 0*  *  *
 				//	       x---  ----                x***  ****
-
+				*/
 				Tile *rightTopZ0 =
 				    map.getTile(std::max(fromPos.x, toPos.x), std::max(fromPos.y, toPos.y) - 2, z);
 				Tile *rightBottomZ0 =
@@ -481,6 +482,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 			// STEP 06: [For large units if moving: down-left or up-right / NE or SW]
 			else
 			{
+				/*
 				//	Legend:
 				//    * = initial position
 				//    - = destination
@@ -498,7 +500,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 				//	----  ----  xxxx         ****  ****  xxxx
 				//	-  -  -  -  x 0          *  *  *  *  x 0
 				//	----  ----  x            ****  ****  x
-
+				*/
 				Tile *topLeftZ0 = map.getTile(std::max(fromPos.x, toPos.x) - 2,
 				                              std::max(fromPos.y, toPos.y) - 2, z);
 				Tile *topZ0 = map.getTile(std::max(fromPos.x, toPos.x) - 1,
@@ -704,6 +706,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 		// STEP 06: [For small units if moving diagonally]
 		if (fromPos.x != toPos.x && fromPos.y != toPos.y)
 		{
+			/*
 			//  Legend:
 			//	  * = initial position
 			//	  - = destination
@@ -713,7 +716,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 			//		    x---           ****  x
 			//		    x 0-           *  *  x 0
 			//		    x---           ****  x
-			//		//                   \\      
+			//		//                   \\
 			//	xxxx  xxxx           xxxx  xxxx
 			//	* 0*  x 0              0   x 0-
 			//	****  x                    x---
@@ -722,11 +725,11 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 			//		    x***           ----  x
 			//		    x 0*           -  -  x 0
 			//		    x***           ----  x
-			//		//                   \\      
+			//		//                   \\
 			//	xxxx  xxxx           xxxx  xxxx
 			//	- 0-  x 0              0   x 0*
 			//	----  x                    x***
-
+			*/
 			Tile *topLeft =
 			    map.getTile(std::min(fromPos.x, toPos.x), std::min(fromPos.y, toPos.y), z);
 			Tile *topRight =
@@ -900,10 +903,11 @@ float BattleUnitTileHelper::getDistance(Vec3<float> from, Vec3<float> to) const
 	return (std::max(std::max(xDiff, yDiff), zDiff) + xDiff + yDiff + zDiff) * 2.0f;
 }
 
-BattleUnitMission *BattleUnitMission::gotoLocation(BattleUnit &u, Vec3<int> target, int facingDelta,
+BattleUnitMission *BattleUnitMission::gotoLocation(BattleUnit &, Vec3<int> target, int facingDelta,
                                                    bool allowSkipNodes, int giveWayAttempts,
                                                    bool demandGiveWay, bool allowRunningAway)
 {
+	std::ignore = facingDelta;
 	auto *mission = new BattleUnitMission();
 	mission->type = MissionType::GotoLocation;
 	mission->targetLocation = target;
@@ -945,8 +949,8 @@ BattleUnitMission *BattleUnitMission::changeStance(BattleUnit &, AgentType::Body
 	return mission;
 }
 
-BattleUnitMission *BattleUnitMission::throwItem(BattleUnit &u, sp<AEquipment> item,
-                                                Vec3<int> target, float velocityXY, float velocityZ)
+BattleUnitMission *BattleUnitMission::throwItem(BattleUnit &, sp<AEquipment> item, Vec3<int> target,
+                                                float velocityXY, float velocityZ)
 {
 	auto *mission = new BattleUnitMission();
 	mission->type = MissionType::ThrowItem;
@@ -957,7 +961,7 @@ BattleUnitMission *BattleUnitMission::throwItem(BattleUnit &u, sp<AEquipment> it
 	return mission;
 }
 
-BattleUnitMission *BattleUnitMission::dropItem(BattleUnit &u, sp<AEquipment> item)
+BattleUnitMission *BattleUnitMission::dropItem(BattleUnit &, sp<AEquipment> item)
 {
 	auto *mission = new BattleUnitMission();
 	mission->type = MissionType::DropItem;
@@ -1020,7 +1024,7 @@ BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<float> from, Vec3
 	return mission;
 }
 
-BattleUnitMission *BattleUnitMission::fall(BattleUnit &u)
+BattleUnitMission *BattleUnitMission::fall(BattleUnit &)
 {
 	auto *mission = new BattleUnitMission();
 	mission->type = MissionType::Fall;
@@ -1035,7 +1039,7 @@ BattleUnitMission *BattleUnitMission::reachGoal(BattleUnit &u)
 	return mission;
 }
 
-BattleUnitMission *BattleUnitMission::teleport(BattleUnit &u, sp<AEquipment> item, Vec3<int> target)
+BattleUnitMission *BattleUnitMission::teleport(BattleUnit &, sp<AEquipment> item, Vec3<int> target)
 {
 	auto *mission = new BattleUnitMission();
 	mission->type = MissionType::Teleport;
@@ -1119,23 +1123,6 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 			return;
 		}
 		case MissionType::ThrowItem:
-			if (finished)
-			{
-				if (item)
-				{
-					auto battle = u.battle.lock();
-					if (!battle)
-						return;
-					auto bi = mksp<BattleItem>();
-					bi->battle = u.battle;
-					bi->item = item;
-					item = nullptr;
-					bi->position = u.position + Vec3<float>{0.0, 0.0, 0.5f};
-					bi->supported = false;
-					battle->items.push_back(bi);
-					u.tileObject->map.addObjectToMap(bi);
-				}
-			}
 			return;
 		case MissionType::ReachGoal:
 			if (finished)
@@ -1173,7 +1160,7 @@ bool BattleUnitMission::isFinished(GameState &state, BattleUnit &u, bool callUpd
 	return false;
 }
 
-bool BattleUnitMission::isFinishedInternal(GameState &state, BattleUnit &u)
+bool BattleUnitMission::isFinishedInternal(GameState &, BattleUnit &u)
 {
 	switch (this->type)
 	{
@@ -1198,12 +1185,13 @@ bool BattleUnitMission::isFinishedInternal(GameState &state, BattleUnit &u)
 		case MissionType::Fall:
 			return !u.falling;
 		case MissionType::DropItem:
+			// Sanity check
 			if (item)
 			{
 				LogError("DropItem's item still present, was isFinished called before its start?");
-				start(state, u);
 			}
 			return true;
+		// Teleport is finished regardless of it's success
 		case MissionType::Teleport:
 		case MissionType::RestartNextMission:
 			return true;
@@ -1262,8 +1250,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				u.setPosition(t->getRestingPosition(u.isLarge()));
 				u.resetGoal();
 				AgentType::BodyState targetBodyState =
-				    canStand ? AgentType::BodyState::Standing : targetBodyState =
-				                                                    AgentType::BodyState::Flying;
+				    canStand ? AgentType::BodyState::Standing : AgentType::BodyState::Flying;
 				if (!u.agent->isBodyStateAllowed(targetBodyState))
 					targetBodyState = AgentType::BodyState::Flying;
 				if (!u.agent->isBodyStateAllowed(targetBodyState))
@@ -1301,14 +1288,10 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 					    u.getPosition(), 0.25f);
 				}
 
-				auto battle = u.battle.lock();
-				if (!battle)
-					return;
-				auto bi = mksp<BattleItem>();
-				bi->battle = u.battle;
+				auto bi = state.current_battle->addItem(state);
 				bi->item = item;
 				item = nullptr;
-
+				
 				// Depart from middle of our body
 				bi->position =
 				    u.position + Vec3<float>{0.0, 0.0, (float)u.getCurrentHeight() / 2.0f / 40.0f};
@@ -1322,9 +1305,8 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				// 36 / (velocity length) = enough ticks to pass 1 whole tile
 				bi->ownerInvulnerableTicks =
 				    (int)ceilf(36.0f / glm::length(bi->velocity / VELOCITY_SCALE_BATTLE)) + 1;
-				battle->items.push_back(bi);
-				u.tileObject->map.addObjectToMap(bi);
-
+				
+				state.current_battle->map->addObjectToMap(bi);
 				u.addMission(state, changeStance(u, AgentType::BodyState::Standing));
 				return;
 			}
@@ -1391,20 +1373,16 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 		case MissionType::DropItem:
 		{
 			if (item)
-			{ // Remove item
+			{ 
+				// Remove item
 				item->ownerAgent->removeEquipment(item);
 				// Drop item
-				auto battle = u.battle.lock();
-				if (!battle)
-					return;
-				auto bi = mksp<BattleItem>();
-				bi->battle = u.battle;
+				auto bi = state.current_battle->addItem(state);
 				bi->item = item;
 				item = nullptr;
-				bi->position = u.position + Vec3<float>{0.0, 0.0, 0.5f};
 				bi->supported = false;
-				battle->items.push_back(bi);
-				u.tileObject->map.addObjectToMap(bi);
+				bi->position = u.position + Vec3<float>{0.0, 0.0, 0.5f};
+				state.current_battle->map->addObjectToMap(bi);
 			}
 			return;
 		}
@@ -1814,7 +1792,7 @@ bool BattleUnitMission::advanceFacing(GameState &state, BattleUnit &u, Vec2<int>
 	int cost = free ? 0 : 1;
 	if (!spendAgentTUs(state, u, cost))
 	{
-		LogWarning("Turning could not start: unsufficient TUs", getName().cStr());
+		LogWarning("Mission %s could not start: unsufficient TUs", getName().cStr());
 		return false;
 	}
 
@@ -1867,7 +1845,7 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u,
 
 	if (!spendAgentTUs(state, u, cost))
 	{
-		LogWarning("Body state changecould not start: unsufficient TUs", getName().cStr());
+		LogWarning("Mission %s could not start: unsufficient TUs", getName().cStr());
 		return false;
 	}
 	// Change state actually
@@ -1888,6 +1866,8 @@ int BattleUnitMission::getBodyStateChangeCost(AgentType::BodyState from, AgentTy
 					return 8;
 				case AgentType::BodyState::Prone:
 					return 16;
+				default:
+					return 0;
 			}
 			break;
 		case AgentType::BodyState::Kneeling:
@@ -1897,6 +1877,8 @@ int BattleUnitMission::getBodyStateChangeCost(AgentType::BodyState from, AgentTy
 				case AgentType::BodyState::Standing:
 				case AgentType::BodyState::Flying:
 					return 8;
+				default:
+					return 0;
 			}
 			break;
 		case AgentType::BodyState::Prone:
@@ -1906,10 +1888,13 @@ int BattleUnitMission::getBodyStateChangeCost(AgentType::BodyState from, AgentTy
 				case AgentType::BodyState::Standing:
 				case AgentType::BodyState::Flying:
 					return 8;
+				default:
+					return 0;
 			}
 			break;
+		default:
+			return 0;
 	}
-	return 0;
 }
 
 void BattleUnitMission::makeAgentMove(BattleUnit &u)

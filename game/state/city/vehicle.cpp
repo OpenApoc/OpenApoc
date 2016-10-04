@@ -302,6 +302,11 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 }
 
 bool Vehicle::isCrashed() const { return this->health < this->type->crash_health; }
+/* // Test code to make UFOs crash immediately upon hit,
+// may be useful in the future as crashing is not yet perfect
+ bool Vehicle::isCrashed() const
+{ return this->health < this->type->health && this->type->crash_health > 0; }
+*/
 
 bool Vehicle::applyDamage(GameState &state, int damage, float armour)
 {
@@ -424,6 +429,11 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 		if (otherVehicle.get() == this)
 		{
 			/* Can't fire at yourself */
+			continue;
+		}
+		if (otherVehicle->isCrashed())
+		{
+			// Can't fire at crashed vehicles
 			continue;
 		}
 		if (otherVehicle->city != this->city)
@@ -637,7 +647,7 @@ int Vehicle::getAccuracy() const
 }
 
 // FIXME: Check int/float speed conversions
-int Vehicle::getTopSpeed() const { return this->getSpeed(); }
+int Vehicle::getTopSpeed() const { return (int)this->getSpeed(); }
 
 int Vehicle::getAcceleration() const
 {

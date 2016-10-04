@@ -121,7 +121,7 @@ class AgentType : public StateObject<AgentType>
 		LeftArm,
 		RightArm,
 	};
-
+	static AgentEquipmentLayout::EquipmentSlotType getArmorSlotType(BodyPart bodyPart);
 	// Enums for animation
 	enum class BodyState
 	{
@@ -200,6 +200,10 @@ class AgentType : public StateObject<AgentType>
 	std::map<Gender, std::list<sp<Sample>>> dieSfx;
 
 	int score = 0;
+
+	// Following members are not serialized, but rather are set in initState method
+
+	sp<Sample> gravLiftSfx;
 };
 
 class AgentBodyType : public StateObject<AgentBodyType>
@@ -244,7 +248,7 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 	AgentStats modified_stats; // Stats after 'temporary' modification (health damage, slowdown due
 	                           // to equipment weight, used stamina etc)
 
-	int getArmorValue(AgentType::BodyPart bodyPart) const;
+	sp<AEquipment> getArmor(AgentType::BodyPart bodyPart) const;
 	bool isBodyStateAllowed(AgentType::BodyState bodyState) const;
 	bool isMovementStateAllowed(AgentType::MovementState movementState) const;
 	bool isFacingAllowed(Vec2<int> facing) const;

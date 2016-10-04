@@ -704,6 +704,8 @@ void BattleView::updateSelectionMode()
 	switch (selectionState)
 	{
 		case BattleSelectionState::FireAny:
+		case BattleSelectionState::FireLeft:
+		case BattleSelectionState::FireRight:
 		case BattleSelectionState::ThrowLeft:
 		case BattleSelectionState::ThrowRight:
 		case BattleSelectionState::PsiLeft:
@@ -711,6 +713,12 @@ void BattleView::updateSelectionMode()
 		case BattleSelectionState::TeleportLeft:
 		case BattleSelectionState::TeleportRight:
 			resetPathPreview();
+			break;
+		case BattleSelectionState::Normal:
+		case BattleSelectionState::NormalAlt:
+		case BattleSelectionState::NormalCtrl:
+		case BattleSelectionState::NormalCtrlAlt:
+			// Fine, don't need to
 			break;
 	}
 	// Change cursor
@@ -1166,8 +1174,7 @@ void BattleView::orderDrop(bool right)
 	                                          : AgentEquipmentLayout::EquipmentSlotType::LeftHand);
 	if (item)
 	{
-		unit->missions.emplace_front(BattleUnitMission::dropItem(*unit, item));
-		unit->missions.front()->start(*this->state, *unit);
+		unit->addMission(*state, BattleUnitMission::dropItem(*unit, item));
 		LogWarning("BattleUnit \"%s\" dropping item in %s hand", unit->agent->name.cStr(),
 		           right ? "right" : "left");
 	}
@@ -1310,7 +1317,7 @@ void BattleView::orderFocus(StateRef<BattleUnit> u)
 	// FIXME: Check if player can see unit
 	for (auto unit : selectedUnits)
 	{
-		unit->setFocus(u);
+		unit->setFocus(*state, u);
 	}
 }
 
@@ -1529,6 +1536,9 @@ void BattleView::eventOccurred(Event *e)
 								}
 							}
 							break;
+						default:
+							LogError("Unhandled mouse button!");
+							break;
 					}
 					break;
 				case BattleSelectionState::NormalCtrl:
@@ -1559,6 +1569,9 @@ void BattleView::eventOccurred(Event *e)
 								orderSelect(unitPresent, true);
 							}
 							break;
+						default:
+							LogError("Unhandled mouse button!");
+							break;
 					}
 					break;
 				case BattleSelectionState::FireAny:
@@ -1577,6 +1590,10 @@ void BattleView::eventOccurred(Event *e)
 									break;
 								case BattleSelectionState::FireRight:
 									status = BattleUnit::WeaponStatus::FiringRightHand;
+									break;
+								case BattleSelectionState::FireAny:
+								default:
+									// Do nothing
 									break;
 							}
 							if (unitOccupying)
@@ -1598,6 +1615,9 @@ void BattleView::eventOccurred(Event *e)
 							}
 							break;
 						}
+						default:
+							LogError("Unhandled mouse button!");
+							break;
 					}
 					break;
 				case BattleSelectionState::ThrowRight:
@@ -1615,6 +1635,9 @@ void BattleView::eventOccurred(Event *e)
 							selectionState = BattleSelectionState::Normal;
 							break;
 						}
+						default:
+							LogError("Unhandled mouse button!");
+							break;
 					}
 					break;
 				case BattleSelectionState::TeleportLeft:
@@ -1632,11 +1655,17 @@ void BattleView::eventOccurred(Event *e)
 							selectionState = BattleSelectionState::Normal;
 							break;
 						}
+						default:
+							LogError("Unhandled mouse button!");
+							break;
 					}
+					break;
+				case BattleSelectionState::PsiLeft:
+				case BattleSelectionState::PsiRight:
+					LogError("Implement!");
 					break;
 			}
 			LogWarning("Click at tile %d, %d, %d", t.x, t.y, t.z);
-			LogWarning("Selected units count: %d", (int)selectedUnits.size());
 		}
 	}
 	else if (e->type() == EVENT_GAME_STATE)

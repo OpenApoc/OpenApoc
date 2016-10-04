@@ -3,6 +3,7 @@
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
 
+// Doodads used by tactical weaponry, ids matching vanilla
 #define UFO_DOODAD_0 0   // bigmissiles	same as 3 ? ? ?
 #define UFO_DOODAD_1 1   // autocannon		0, 4
 #define UFO_DOODAD_2 2   // airguard		4, 8

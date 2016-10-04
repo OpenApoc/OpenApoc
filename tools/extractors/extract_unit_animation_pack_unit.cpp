@@ -108,8 +108,7 @@ void InitialGameStateExtractor::extractAnimationPackUnit(sp<BattleUnitAnimationP
 		p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::TwoHanded]
 		                      [AgentType::HandState::AtEase][AgentType::MovementState::Strafing]
 		                      [AgentType::BodyState::Standing][{x, y}] =
-		    getAnimationEntry(dataAD, dataUA, dataUF, 14, {x, y}),
-		                                                           sFrames;
+		    getAnimationEntry(dataAD, dataUA, dataUF, 14, {x, y}, sFrames);
 
 		// Standing running state: 15
 		p->standart_animations[BattleUnitAnimationPack::ItemWieldMode::None]

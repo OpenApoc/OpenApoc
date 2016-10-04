@@ -10,7 +10,7 @@ class TileObjectProjectile : public TileObject
 {
   public:
 	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition, TileViewMode mode,
-	          int) override;
+	          int, bool, bool) override;
 	~TileObjectProjectile() override;
 	Vec3<float> getPosition() const override;
 	void addToDrawnTiles(Tile *tile) override;

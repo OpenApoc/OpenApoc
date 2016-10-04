@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checksums>
-  <checksum SHA1="7befe90efbf919efb9a8ebbf90d523b4c6dcb921">gamestate.xml</checksum>
+  <checksum SHA1="f939634f961c6bd579fa9082ffb877c87c90a37b">gamestate.xml</checksum>
   <checksum SHA1="e82ad81e87952471fc9a77dfdaf5c7de0b73340b">gamestate/agent_body_types.xml</checksum>
   <checksum SHA1="d2da38dd362fa4e512176d9b8ea2d6f2d29bf9d6">gamestate/agent_equipment.xml</checksum>
   <checksum SHA1="db87a07c2ad3fe43a082e3143408dc3fd29ee9ff">gamestate/agent_equipment_layouts.xml</checksum>
   <checksum SHA1="282e2b08cda4a9a7094fb16355bd5e58cdc2a224">gamestate/agent_generator.xml</checksum>
   <checksum SHA1="665676441df08bedc9cdd1dec8854d5b99a8ed4f">gamestate/agent_types.xml</checksum>
   <checksum SHA1="0b1fc22224d3d4d266780fe20b1db95ee052bba0">gamestate/base_layouts.xml</checksum>
-  <checksum SHA1="06d9d5ee8bcce6c690cefe0cf21fc96c16896f11">gamestate/battle_common_image_list.xml</checksum>
+  <checksum SHA1="cad05d82c099ce5b41e22a04c18cfc63c1d032b5">gamestate/battle_common_image_list.xml</checksum>
   <checksum SHA1="5fbc9dc088736f547d742fa3ff3da34dc35e1941">gamestate/battle_common_sample_list.xml</checksum>
   <checksum SHA1="dcebd55d2b40ea7b7c117ce16ee71ab23be4e4ef">gamestate/battle_maps.xml</checksum>
   <checksum SHA1="09a0229c616b482ad6f16bdf5f90d879e648fb62">gamestate/battle_maps/BATTLEMAP_01senate.xml</checksum>
@@ -68,7 +68,7 @@
   <checksum SHA1="12532a3e63d5a609f713d9c4232c3541e2899808">gamestate/cities/CITYMAP_HUMAN/tile_types.xml</checksum>
   <checksum SHA1="51b871a260bbfd9fad8d8da5b693b678aa1edbfe">gamestate/damage_modifiers.xml</checksum>
   <checksum SHA1="78dcd090b816ac7c2baad61e0c945cdd6903bab5">gamestate/damage_types.xml</checksum>
-  <checksum SHA1="6fa88da326b503519d52a98df807fbe090e41ee7">gamestate/doodad_types.xml</checksum>
+  <checksum SHA1="4bdd380ef7e4b3c9fce8d028d818821320a68e46">gamestate/doodad_types.xml</checksum>
   <checksum SHA1="856efffa1a1b569efe03105d284f356e99b01b9f">gamestate/equipment_sets_by_level.xml</checksum>
   <checksum SHA1="6bffdebea18282acab5318e24e18e76bfdf0a2fc">gamestate/equipment_sets_by_score.xml</checksum>
   <checksum SHA1="a2a7a18c55f3f11e87bd42d4b15989ad9341ede3">gamestate/facility_types.xml</checksum>

@@ -1444,7 +1444,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state, Difficul
 							// Create and fill slices
 							a->voxelMaps[entry.first][pair.first] =
 							    std::vector<sp<VoxelMap>>(pair.second.size());
-							for (int j = 0; j < pair.second.size(); j++)
+							for (unsigned int j = 0; j < pair.second.size(); j++)
 							{
 								a->voxelMaps[entry.first][pair.first][j] =
 								    std::make_shared<VoxelMap>(Vec3<int>{24, 24, 20});

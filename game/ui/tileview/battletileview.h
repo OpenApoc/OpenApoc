@@ -44,6 +44,7 @@ class BattleTileView : public TileView
 
 	std::vector<sp<Image>> activeUnitSelectionArrow;
 	std::vector<sp<Image>> inactiveUnitSelectionArrow;
+	std::vector<sp<Image>> arrowHealthBars;
 	std::map<BattleUnit::BehaviorMode, sp<Image>> behaviorUnitSelectionUnderlay;
 	sp<Image> runningIcon;
 	sp<Image> bleedingIcon;

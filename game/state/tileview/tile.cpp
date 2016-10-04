@@ -268,28 +268,30 @@ bool Tile::getHeadFits(bool large, int height)
 
 void Tile::updateBattlescapeUIDrawOrder()
 {
-	drawBattlescapeSelectionBackAt = -1;
-	drawTargetLocationIconAt = -1;
+	bool backFound = false;
+	bool targetFound = false;
 
-	auto object_count = drawnObjects[0].size();
-	size_t obj_id;
+	unsigned int object_count = (unsigned)drawnObjects[0].size();
+	unsigned int obj_id;
 	for (obj_id = 0; obj_id < object_count; obj_id++)
 	{
 		auto &obj = drawnObjects[0][obj_id];
-		if (drawBattlescapeSelectionBackAt == -1 && obj->getType() != TileObject::Type::Ground)
+		if (!backFound && obj->getType() != TileObject::Type::Ground)
 		{
 			drawBattlescapeSelectionBackAt = obj_id;
+			backFound = true;
 		}
-		if (drawTargetLocationIconAt == -1 && (int)obj->getType() > 3)
+		if (!targetFound && (int)obj->getType() > 3)
 		{
 			drawTargetLocationIconAt = obj_id;
+			targetFound = true;
 		}
 	}
-	if (drawBattlescapeSelectionBackAt == -1)
+	if (!backFound)
 	{
 		drawBattlescapeSelectionBackAt = obj_id;
 	}
-	if (drawTargetLocationIconAt == -1)
+	if (!targetFound)
 	{
 		drawTargetLocationIconAt = obj_id;
 	}
@@ -337,7 +339,6 @@ void Tile::updateBattlescapeParameters()
 	walkSfx = nullptr;
 	objectDropSfx = nullptr;
 	supportProviderForItems = nullptr;
-	bool groundEncountered = false;
 	closedDoorLeft = false;
 	closedDoorRight = false;
 	for (auto o : ownedObjects)
@@ -642,7 +643,7 @@ void TileMap::addObjectToMap(sp<BattleUnit> unit)
 	unit->shadowObject = shadow;
 }
 
-int TileMap::getLayer(TileObject::Type type) const
+unsigned int TileMap::getLayer(TileObject::Type type) const
 {
 	for (unsigned i = 0; i < this->layerMap.size(); i++)
 	{
@@ -655,7 +656,7 @@ int TileMap::getLayer(TileObject::Type type) const
 	return 0;
 }
 
-int TileMap::getLayerCount() const { return this->layerMap.size(); }
+unsigned int TileMap::getLayerCount() const { return this->layerMap.size(); }
 
 bool TileMap::tileIsValid(Vec3<int> tile) const
 {

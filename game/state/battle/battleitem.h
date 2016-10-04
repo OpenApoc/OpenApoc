@@ -51,8 +51,9 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 
 	// Following members are not serialized, but rather are set up in the initBattle method
 
+	sp<Image> strategySprite;
+
 	sp<TileObjectBattleItem> tileObject;
 	sp<TileObjectShadow> shadowObject;
-	wp<Battle> battle;
 };
 } // namespace OpenApoc

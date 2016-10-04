@@ -163,7 +163,7 @@ void BattleUnitAnimationPack::drawShadow(
 			frame = (distance_travelled * 100 / e->frames_per_100_units) % e->frame_count;
 	}
 
-	if (e->frames.size() <= frame)
+	if ((int)e->frames.size() <= frame)
 	{
 		LogError("drawShadow: Frame missing?");
 		return;
@@ -252,7 +252,7 @@ void BattleUnitAnimationPack::drawUnit(
 		}
 	}
 
-	if (e->frames.size() <= frame)
+	if ((int)e->frames.size() <= frame)
 	{
 		LogError("drawUnit: body Frame missing?");
 		return;
@@ -271,7 +271,7 @@ void BattleUnitAnimationPack::drawUnit(
 		AnimationEntry::Frame::InfoBlock *b = &f.unit_image_parts[ie];
 		if (b->index == -1 && ie == AnimationEntry::Frame::UnitImagePart::Legs && frame_legs != -1)
 		{
-			if (e_legs->frames.size() <= frame_legs)
+			if ((int)e_legs->frames.size() <= frame_legs)
 			{
 				LogError("drawUnit: legs Frame missing?");
 				return;

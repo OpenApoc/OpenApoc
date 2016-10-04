@@ -22,5 +22,8 @@ class DamageType : public StateObject<DamageType>
 	bool ignore_shield = false;
 	sp<Image> icon_sprite;
 	std::map<StateRef<DamageModifier>, int> modifiers;
+
+	int dealDamage(int damage, StateRef<DamageModifier> modifier) const;
+
 };
 }

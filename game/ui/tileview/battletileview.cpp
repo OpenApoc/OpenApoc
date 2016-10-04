@@ -152,6 +152,25 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 	pathPreviewTooFar = font->getString(tr("Too Far"));
 	pathPreviewUnreachable = font->getString(tr("Blocked"));
 
+	for (int i = 0; i < 16; i++)
+	{
+		auto healthBar = mksp<RGBImage>(Vec2<int>{15, 2});
+		{
+			RGBImageLock l(healthBar);
+			for (int y = 0; y < 2; y++)
+			{
+				for (int x = 0; x < (int)healthBar->size.x; x++)
+				{
+					if (x >= i)
+						l.set({ x, y }, { 0, 0, 0, 255 });
+					else
+						l.set({ x, y }, { 0, 0, 0, 0 });
+				}
+			}
+		}
+		arrowHealthBars.push_back(healthBar);
+	}
+
 	// FIXME: Load from save last screen location?
 	setScreenCenterTile(screenCenterTile);
 };
@@ -422,7 +441,7 @@ void BattleTileView::render()
 				}
 
 				// Actually draw stuff
-				for (int layer = 0; layer < map.getLayerCount(); layer++)
+				for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
 				{
 					for (int y = minY; y < maxY; y++)
 					{
@@ -470,10 +489,13 @@ void BattleTileView::render()
 								bool hostile = false;
 								if (obj->getType() == TileObject::Type::Unit)
 								{
+									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
+									             ->getUnit();
+									friendly = u->owner == battle->currentPlayer;
+									hostile = battle->currentPlayer->isRelatedTo(u->owner) ==
+									          Organisation::Relation::Hostile;
 									if (!selectedUnits.empty())
 									{
-										auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
-										             ->getUnit();
 										auto selectedPos = std::find(selectedUnits.begin(),
 										                             selectedUnits.end(), u);
 
@@ -485,7 +507,7 @@ void BattleTileView::render()
 										{
 											unitsToDrawSelectionArrows.push_back({u, false});
 										}
-										// If visible and focused - draw focus arrows
+										// If visible and focused by selected - draw focus arrows
 										if (true) // FIXME: Check if visible by current player
 										{
 											bool focusedBySelectedUnits = false;
@@ -508,7 +530,8 @@ void BattleTileView::render()
 									}
 								}
 								Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
-								obj->draw(r, *this, pos, this->viewMode, currentLevel);
+								obj->draw(r, *this, pos, this->viewMode, currentLevel, friendly,
+								          hostile);
 								// Loop ends when "break" is reached above
 								obj_id++;
 							} while (true);
@@ -556,12 +579,12 @@ void BattleTileView::render()
 			{
 				int currentLevel = z - currentZLevel + 1;
 
-				int layer1 = map.getLayer(TileObject::Type::Unit);
-				int layer2 = map.getLayer(TileObject::Type::Shadow);
-				int minLayer = std::min(layer1, layer2);
-				int maxLayer = std::max(layer1, layer2);
+				unsigned int layer1 = map.getLayer(TileObject::Type::Unit);
+				unsigned int layer2 = map.getLayer(TileObject::Type::Shadow);
+				unsigned int minLayer = std::min(layer1, layer2);
+				unsigned int maxLayer = std::max(layer1, layer2);
 
-				for (int layer = minLayer; layer <= maxLayer; layer++)
+				for (unsigned int layer = minLayer; layer <= maxLayer; layer++)
 				{
 					for (int y = minY; y < maxY; y++)
 					{
@@ -577,15 +600,20 @@ void BattleTileView::render()
 									break;
 								}
 								auto &obj = tile->drawnObjects[layer][obj_id];
+								bool friendly = false;
+								bool hostile = false;
 								bool draw = false;
 								if ((obj->getType() == TileObject::Type::Unit &&
 								     obj->getPosition().z < zTo))
 								{
+									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
+									             ->getUnit();
+									friendly = u->owner == battle->currentPlayer;
+									hostile = battle->currentPlayer->isRelatedTo(u->owner) ==
+									          Organisation::Relation::Hostile;
 									draw = true;
 									if (!selectedUnits.empty())
 									{
-										auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
-										             ->getUnit();
 										auto selectedPos = std::find(selectedUnits.begin(),
 										                             selectedUnits.end(), u);
 
@@ -628,7 +656,8 @@ void BattleTileView::render()
 								if (draw)
 								{
 									Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
-									obj->draw(r, *this, pos, this->viewMode, currentLevel);
+									obj->draw(r, *this, pos, this->viewMode, currentLevel, friendly,
+									          hostile);
 								}
 								// Loop ends when "break" is reached above
 								obj_id++;
@@ -646,6 +675,7 @@ void BattleTileView::render()
 				static const Vec2<float> offsetBehavior = {0.0f, 0.0f};
 				static const Vec2<float> offsetBleed = {-5.0f, 0.0f};
 				static const Vec2<float> offsetTU = {13.0f, -5.0f};
+				static const Vec2<float> offsetHealth = { 6.0f, 2.0f };
 
 				Vec2<float> pos =
 				    tileToOffsetScreenCoords(
@@ -653,10 +683,13 @@ void BattleTileView::render()
 				        Vec3<float>{0.0f, 0.0f, obj.first->getCurrentHeight() * 1.5f / 40.0f}) +
 				    offset;
 
-				// FIXME: Draw hit points
+				// Selection arrow
 				r.draw(obj.second ? activeUnitSelectionArrow[obj.first->squadNumber]
-				                  : inactiveUnitSelectionArrow[obj.first->squadNumber],
-				       pos);
+				                  : inactiveUnitSelectionArrow[obj.first->squadNumber], pos);
+				// Health from 0 to 15, where 15 = 100%, 14 = less than 99.9% and 0 = 0%+
+				int health = obj.first->agent->modified_stats.health * 15 / obj.first->agent->current_stats.health;
+				r.draw(arrowHealthBars[health], pos + offsetHealth);
+				// Behavior
 				r.draw(behaviorUnitSelectionUnderlay[obj.first->behavior_mode],
 				       pos + offsetBehavior);
 
@@ -693,7 +726,7 @@ void BattleTileView::render()
 				static const Vec2<float> offsetd14 = {-1.0f, -1.0f};
 				static const Vec2<float> offsetd23 = {1.0f, -1.0f};
 
-				float offset = focusAnimationTicksAccumulated / FOCUS_ICONS_ANIMATION_DELAY;
+				float offset = (float)focusAnimationTicksAccumulated / FOCUS_ICONS_ANIMATION_DELAY;
 				// Offset goes like this: 0 1 2 3 4 3 2 1  (example for 5 frames)
 				// Therefore, if value is >=frames, we do 2*frames -2 -offset
 				// For example, 2*5 - 2 - 5 = 3, that's how we get 3 that's after 4
@@ -722,12 +755,12 @@ void BattleTileView::render()
 		break;
 		case TileViewMode::Strategy:
 		{
-			std::list<sp<TileObject>> unitsToDraw;
-			std::list<sp<TileObject>> itemsToDraw;
+			std::list<std::tuple<sp<TileObject>, int, bool, bool>> unitsToDraw;
+			std::list<std::tuple<sp<TileObject>, int>> itemsToDraw;
 
 			for (int z = 0; z < zFrom; z++)
 			{
-				for (int layer = 0; layer < map.getLayerCount(); layer++)
+				for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
 				{
 					for (int y = minY; y < maxY; y++)
 					{
@@ -741,7 +774,13 @@ void BattleTileView::render()
 								auto &obj = tile->drawnObjects[layer][obj_id];
 								if (obj->getType() == TileObject::Type::Unit)
 								{
-									unitsToDraw.push_back(obj);
+									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
+										->getUnit();
+									bool friendly = u->owner == battle->currentPlayer;
+									bool hostile = battle->currentPlayer->isRelatedTo(u->owner) ==
+										Organisation::Relation::Hostile;
+									
+									unitsToDraw.emplace_back( obj, obj->getOwningTile()->position.z - (currentZLevel - 1), friendly, hostile);
 								}
 							}
 						}
@@ -754,7 +793,7 @@ void BattleTileView::render()
 				// currentZLevel is an upper exclusive boundary, that's why we need to sub 1 here
 				int currentLevel = z - (currentZLevel - 1);
 
-				for (int layer = 0; layer < map.getLayerCount(); layer++)
+				for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
 				{
 					for (int y = minY; y < maxY; y++)
 					{
@@ -768,14 +807,20 @@ void BattleTileView::render()
 								auto &obj = tile->drawnObjects[layer][obj_id];
 								if (obj->getType() == TileObject::Type::Unit)
 								{
-									unitsToDraw.push_back(obj);
+									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
+										->getUnit();
+									bool friendly = u->owner == battle->currentPlayer;
+									bool hostile = battle->currentPlayer->isRelatedTo(u->owner) ==
+										Organisation::Relation::Hostile;
+
+									unitsToDraw.emplace_back( obj, obj->getOwningTile()->position.z - (currentZLevel - 1), friendly, hostile );
 									continue;
 								}
 								else if (obj->getType() == TileObject::Type::Item)
 								{
 									if (currentLevel == 0)
 									{
-										itemsToDraw.push_back(obj);
+										itemsToDraw.emplace_back( obj, obj->getOwningTile()->position.z - (currentZLevel - 1) );
 									}
 									continue;
 								}
@@ -790,7 +835,7 @@ void BattleTileView::render()
 
 			for (int z = zTo; z < maxZDraw; z++)
 			{
-				for (int layer = 0; layer < map.getLayerCount(); layer++)
+				for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
 				{
 					for (int y = minY; y < maxY; y++)
 					{
@@ -804,7 +849,13 @@ void BattleTileView::render()
 								auto &obj = tile->drawnObjects[layer][obj_id];
 								if (obj->getType() == TileObject::Type::Unit)
 								{
-									unitsToDraw.push_back(obj);
+									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
+										->getUnit();
+									bool friendly = u->owner == battle->currentPlayer;
+									bool hostile = battle->currentPlayer->isRelatedTo(u->owner) ==
+										Organisation::Relation::Hostile;
+
+									unitsToDraw.emplace_back( obj, obj->getOwningTile()->position.z - (currentZLevel - 1), friendly, hostile );
 								}
 							}
 						}
@@ -812,18 +863,18 @@ void BattleTileView::render()
 				}
 			}
 
-			for (auto obj : unitsToDraw)
+			for (auto &obj : unitsToDraw)
 			{
-				Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
-				obj->draw(r, *this, pos, this->viewMode,
-				          obj->getOwningTile()->position.z - (currentZLevel - 1));
+				Vec2<float> pos = tileToOffsetScreenCoords(std::get<0>(obj)->getCenter());
+				std::get<0>(obj)->draw(r, *this, pos, this->viewMode,
+					std::get<1>(obj), std::get<2>(obj), std::get<3>(obj));
 			}
 
 			for (auto obj : itemsToDraw)
 			{
-				Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
-				obj->draw(r, *this, pos, this->viewMode,
-				          obj->getOwningTile()->position.z - (currentZLevel - 1));
+				Vec2<float> pos = tileToOffsetScreenCoords(std::get<0>(obj)->getCenter());
+				std::get<0>(obj)->draw(r, *this, pos, this->viewMode,
+				          std::get<1>(obj));
 			}
 
 			renderStrategyOverlay(r);

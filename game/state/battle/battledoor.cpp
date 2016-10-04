@@ -8,7 +8,7 @@
 
 namespace OpenApoc
 {
-	
+
 template <> sp<BattleDoor> StateObject<BattleDoor>::get(const GameState &state, const UString &id)
 {
 	auto it = state.current_battle->doors.find(id);
@@ -188,8 +188,5 @@ int BattleDoor::getAnimationFrame()
 		       (animationTicksRemaining + TICKS_PER_FRAME_MAP_PART - 1) / TICKS_PER_FRAME_MAP_PART;
 }
 
-void BattleDoor::playDoorSound()
-{
-	fw().soundBackend->playSample(doorSound, position, 0.25f);
-}
+void BattleDoor::playDoorSound() { fw().soundBackend->playSample(doorSound, position, 0.25f); }
 }

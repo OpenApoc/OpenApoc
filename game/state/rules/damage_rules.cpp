@@ -50,4 +50,9 @@ template <> sp<DamageType> StateObject<DamageType>::get(const GameState &state, 
 	}
 	return it->second;
 }
+
+int DamageType::dealDamage(int damage, StateRef<DamageModifier> modifier) const
+{
+	return damage * modifiers.at(modifier) / 100;
+}
 }

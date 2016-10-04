@@ -14,16 +14,14 @@
 
 namespace OpenApoc
 {
-void BattleItem::die(GameState &, bool violently)
+void BattleItem::die(GameState &state, bool violently)
 {
 	if (violently)
 	{
 		// FIXME: Explode if nessecary
 	}
 	auto this_shared = shared_from_this();
-	auto b = battle.lock();
-	if (b)
-		b->items.remove(this_shared);
+	state.current_battle->items.remove(this_shared);
 	this->tileObject->removeFromMap();
 	this->shadowObject->removeFromMap();
 	this->tileObject.reset();
@@ -92,9 +90,6 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 		newPosition += this->velocity / (float)TICK_SCALE / VELOCITY_SCALE_BATTLE;
 	}
 
-	auto prevPrevPos = previousPosition -
-	                   (float)ticks * this->velocity / (float)TICK_SCALE / VELOCITY_SCALE_BATTLE;
-
 	// Check if new position is valid
 	// FIXME: Collide with units but not with us
 	bool collision = false;
@@ -138,6 +133,10 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 				// In this case, just ignore the collision and let the item fall further
 			}
 			break;
+			default:
+				LogError("What the hell is this item colliding with? Value %d",
+				         (int)c.obj->getType());
+				break;
 		}
 	}
 
