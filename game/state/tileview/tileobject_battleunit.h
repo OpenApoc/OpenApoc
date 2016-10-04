@@ -11,7 +11,7 @@ class TileObjectBattleUnit : public TileObject
 {
   public:
 	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition, TileViewMode mode,
-	          int currentLevel) override;
+	          int currentLevel, bool friendly, bool hostile) override;
 	~TileObjectBattleUnit() override;
 
 	sp<BattleUnit> getUnit() const;

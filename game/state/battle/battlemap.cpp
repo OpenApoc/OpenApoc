@@ -874,12 +874,11 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 							continue;
 						auto i = mksp<AEquipment>();
 						i->type = l;
-						auto s = mksp<BattleItem>();
-						s->item = i;
-						s->position = pair.first + shift;
-						s->supported = true;
-
-						b->items.push_back(s);
+					
+						auto bi = b->addItem(state);
+						bi->item = i;
+						bi->position = pair.first + shift;
+						bi->supported = true;
 					}
 					for (auto &tlb : tiles.los_blocks)
 					{
@@ -921,8 +920,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				std::list<Vec3<int>> locationsToCheck;
 				std::set<Vec3<int>> locationsVisited;
 
-				UString doorID = b->addDoor();
-				auto d = b->doors.at(doorID);
+				auto d = b->addDoor(state);
 				d->right = i == 1;
 				d->operational = true;
 				d->doorSound = state.battle_common_sample_list->door;
@@ -948,7 +946,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						continue;
 					}
 
-					it->second->door = { &state, doorID };
+					it->second->door = { &state, d->id };
 					d->animationFrameCount = std::max(
 					    d->animationFrameCount, (int)it->second->type->animation_frames.size());
 					// d->mapParts.push_back(it->second); // <- no need to do it here, we do it in
@@ -976,14 +974,12 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				b->participants.insert(a->owner);
 			}
 
-			UString unitID = b->addUnit();
-			auto u = b->units.at(unitID);
+			auto u = b->addUnit(state);
 
 			u->agent = a;
-			u->agent->unit = {&state, unitID };
+			u->agent->unit = { &state, u->id };
 			u->owner = a->owner;
 			u->squadNumber = -1;
-			u->battle = b;
 			u->updateDisplayedItem();
 			if (!spawnCivilians && a->owner == state.getCivilian())
 			{
@@ -1026,7 +1022,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						if (u.second->owner != o || u.second->squadNumber != -1 ||
 						    u.second->retreated)
 							continue;
-						u.second->assignToSquad(s);
+						u.second->assignToSquad(*b, s);
 						agentCount[o]--;
 						if (agentCount[o] == 0)
 							break;
@@ -1044,7 +1040,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						break;
 					if (u.second->owner != o || u.second->squadNumber != -1)
 						continue;
-					u.second->assignToSquad(s);
+					u.second->assignToSquad(*b, s);
 					agentCount[o]--;
 					if (agentCount[o] == 0)
 						break;
@@ -1094,23 +1090,24 @@ void BattleMap::loadTilesets(GameState &state) const
 			if (tile->sfxIndex != -1)
 			{
 				tile->walkSounds = state.battle_common_sample_list->walkSounds.at(tile->sfxIndex);
-				tile->objectDropSound = state.battle_common_sample_list->objectDropSounds.at(tile->sfxIndex);
+				tile->objectDropSound =
+				    state.battle_common_sample_list->objectDropSounds.at(tile->sfxIndex);
 			}
 			// Assign map marts
 			switch (tile->type)
 			{
-			case BattleMapPartType::Type::Ground:
-				tile->destroyed_map_parts.push_back(destroyed_ground_tile);
-				break;
-			case BattleMapPartType::Type::LeftWall:
-				tile->destroyed_map_parts = rubble_left_wall;
-				break;
-			case BattleMapPartType::Type::RightWall:
-				tile->destroyed_map_parts = rubble_right_wall;
-				break;
-			case BattleMapPartType::Type::Feature:
-				tile->destroyed_map_parts = rubble_feature;
-				break;
+				case BattleMapPartType::Type::Ground:
+					tile->destroyed_map_parts.push_back(destroyed_ground_tile);
+					break;
+				case BattleMapPartType::Type::LeftWall:
+					tile->destroyed_map_parts = rubble_left_wall;
+					break;
+				case BattleMapPartType::Type::RightWall:
+					tile->destroyed_map_parts = rubble_right_wall;
+					break;
+				case BattleMapPartType::Type::Feature:
+					tile->destroyed_map_parts = rubble_feature;
+					break;
 			}
 			// Sanity check
 			if (state.battleMapTiles.find(tileName) != state.battleMapTiles.end())

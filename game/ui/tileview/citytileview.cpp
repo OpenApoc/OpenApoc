@@ -83,7 +83,7 @@ void CityTileView::render()
 
 	for (int z = 0; z < maxZDraw; z++)
 	{
-		for (int layer = 0; layer < map.getLayerCount(); layer++)
+		for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
 		{
 			for (int y = minY; y < maxY; y++)
 			{

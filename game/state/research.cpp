@@ -380,7 +380,7 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 										                              base.second->building};
 										v->homeBuilding = {state.get(), base.second->building};
 										v->owner = state->getPlayer();
-										v->health = type->health;
+										v->health = (int)type->health;
 										UString vID = UString::format("%s%d", Vehicle::getPrefix(),
 										                              state->lastVehicle++);
 										state->vehicles[vID] = v;

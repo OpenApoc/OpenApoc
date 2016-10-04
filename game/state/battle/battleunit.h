@@ -88,9 +88,9 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	int squadNumber = 0;
 	// Squad position, has no meaning if not in squad
 	unsigned int squadPosition = 0;
-	void removeFromSquad();
-	bool assignToSquad(int squadNumber);
-	void moveToSquadPosition(int squadPosition);
+	void removeFromSquad(Battle &b);
+	bool assignToSquad(Battle &b, int squadNumber);
+	void moveToSquadPosition(Battle &b, int squadPosition);
 
 	// Weapon state and firing
 
@@ -103,10 +103,11 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Unit we're ordered to focus on (in real time)
 	StateRef<BattleUnit> focusUnit;
 	// Units focusing this unit
+	std::list<StateRef<BattleUnit>> focusedByUnits;
 	// Ticks until we check if target is still valid, turn to it etc.
 	unsigned int ticksTillNextTargetCheck = 0;
 
-	void setFocus(StateRef<BattleUnit> unit);
+	void setFocus(GameState &state, StateRef<BattleUnit> unit);
 	void startAttacking(StateRef<BattleUnit> unit,
 	                    WeaponStatus status = WeaponStatus::FiringBothHands);
 	void startAttacking(Vec3<int> tile, WeaponStatus status = WeaponStatus::FiringBothHands,
@@ -226,6 +227,9 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	StateRef<AEquipmentType> displayedItem;
 	void updateDisplayedItem();
 
+	// Battle parameters
+	Battle::Mode battleMode = Battle::Mode::RealTime;
+
 	// Returns true if the unit is dead
 	bool isDead() const;
 	// Returns true if the unit is unconscious and not dead
@@ -292,11 +296,10 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 
 	// Following members are not serialized, but rather are set in initBattle method
 
-	std::list<sp<BattleUnit>> focusedByUnits;
+	sp<std::vector<sp<Image>>> strategyImages;
 
 	sp<TileObjectBattleUnit> tileObject;
 	sp<TileObjectShadow> shadowObject;
-	wp<Battle> battle;
 
 	/*
 	- curr. mind state (controlled/berserk/…)

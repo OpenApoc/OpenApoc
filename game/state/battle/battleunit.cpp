@@ -47,34 +47,19 @@ const UString &StateObject<BattleUnit>::getId(const GameState &state, const sp<B
 	return emptyString;
 }
 
-void BattleUnit::removeFromSquad()
+void BattleUnit::removeFromSquad(Battle &battle)
 {
-	auto b = battle.lock();
-	if (!b)
-	{
-		LogError("removeFromSquad - Battle disappeared");
-	}
-	b->forces[owner].removeAt(squadNumber, squadPosition);
+	battle.forces[owner].removeAt(squadNumber, squadPosition);
 }
 
-bool BattleUnit::assignToSquad(int squad)
+bool BattleUnit::assignToSquad(Battle &battle, int squad)
 {
-	auto b = battle.lock();
-	if (!b)
-	{
-		LogError("assignToSquad - Battle disappeared");
-	}
-	return b->forces[owner].insert(squad, shared_from_this());
+	return battle.forces[owner].insert(squad, shared_from_this());
 }
 
-void BattleUnit::moveToSquadPosition(int position)
+void BattleUnit::moveToSquadPosition(Battle &battle, int position)
 {
-	auto b = battle.lock();
-	if (!b)
-	{
-		LogError("moveToSquadPosition - Battle disappeared");
-	}
-	b->forces[owner].insertAt(squadNumber, position, shared_from_this());
+	battle.forces[owner].insertAt(squadNumber, position, shared_from_this());
 }
 
 bool BattleUnit::isFatallyWounded()
@@ -114,13 +99,13 @@ void BattleUnit::resetGoal()
 	goalFacing = facing;
 }
 
-void BattleUnit::setFocus(StateRef<BattleUnit> unit)
+void BattleUnit::setFocus(GameState &state, StateRef<BattleUnit> unit)
 {
-	auto sft = shared_from_this();
+	StateRef<BattleUnit> sru = {&state, id};
 	if (focusUnit)
 	{
 		auto it =
-		    std::find(focusUnit->focusedByUnits.begin(), focusUnit->focusedByUnits.end(), sft);
+		    std::find(focusUnit->focusedByUnits.begin(), focusUnit->focusedByUnits.end(), sru);
 		if (it != focusUnit->focusedByUnits.end())
 		{
 			focusUnit->focusedByUnits.erase(it);
@@ -131,20 +116,12 @@ void BattleUnit::setFocus(StateRef<BattleUnit> unit)
 		}
 	}
 	focusUnit = unit;
-	focusUnit->focusedByUnits.push_back(sft);
+	focusUnit->focusedByUnits.push_back(sru);
 }
 
 void BattleUnit::startAttacking(WeaponStatus status)
 {
-	auto b = battle.lock();
-
-	if (!b)
-	{
-		LogError("startFiring: Battle disappeared!?");
-		return;
-	}
-
-	switch (b->mode)
+	switch (battleMode)
 	{
 		case Battle::Mode::TurnBased:
 			// In Turn based we cannot override firing
@@ -209,13 +186,7 @@ void BattleUnit::stopAttacking()
 }
 bool BattleUnit::canAfford(int cost) const
 {
-	auto b = battle.lock();
-	if (!b)
-	{
-		LogError("canAfford: Battle disappeared!");
-		return false;
-	}
-	if (b->mode == Battle::Mode::RealTime)
+	if (battleMode == Battle::Mode::RealTime)
 	{
 		return true;
 	}
@@ -224,13 +195,7 @@ bool BattleUnit::canAfford(int cost) const
 
 bool BattleUnit::spendTU(int cost)
 {
-	auto b = battle.lock();
-	if (!b)
-	{
-		LogError("spendTU: Battle disappeared!");
-		return false;
-	}
-	if (b->mode == Battle::Mode::RealTime)
+	if (battleMode == Battle::Mode::RealTime)
 	{
 		return true;
 	}
@@ -511,9 +476,6 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 
 	// Init
 	//
-	auto b = battle.lock();
-	if (!b)
-		return;
 	auto &map = tileObject->map;
 
 	// Update other classes
@@ -848,7 +810,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						return;
 					}
 					// Try to get new body state change
-					if (firing_animation_ticks_remaining == 0 && hand_animation_ticks_remaining == 0)
+					if (firing_animation_ticks_remaining == 0 &&
+					    hand_animation_ticks_remaining == 0)
 					{
 						AgentType::BodyState nextState = AgentType::BodyState::Downed;
 						if (getNextBodyState(state, nextState))
@@ -974,8 +937,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						bool USER_OPTION_GRAVLIFT_SOUNDS = true;
 						if (USER_OPTION_GRAVLIFT_SOUNDS && !wasUsingLift)
 						{
-							fw().soundBackend->playSample(b->common_sample_list->gravlift,
-							                              getPosition(), 0.25f);
+							fw().soundBackend->playSample(agent->type->gravLiftSfx, getPosition(),
+							                              0.25f);
 						}
 						usingLift = true;
 						movement_ticks_passed = 0;
@@ -986,10 +949,10 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					{
 						if (flyingSpeedModifier != 100)
 						{
-							flyingSpeedModifier =
-							    std::min((unsigned)100, flyingSpeedModifier +
-							                      moveTicksRemaining / moveTicksConsumeRate /
-							                          FLYING_ACCELERATION_DIVISOR);
+							flyingSpeedModifier = std::min(
+							    (unsigned)100, flyingSpeedModifier +
+							                       moveTicksRemaining / moveTicksConsumeRate /
+							                           FLYING_ACCELERATION_DIVISOR);
 						}
 						movementTicksAccumulated = moveTicksRemaining / moveTicksConsumeRate;
 						auto dir = glm::normalize(vectorToGoal);
@@ -1011,8 +974,9 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 							if (flyingSpeedModifier != 100)
 							{
 								flyingSpeedModifier =
-								    std::min((unsigned)100, flyingSpeedModifier +
-								                      distanceToGoal / FLYING_ACCELERATION_DIVISOR);
+								    std::min((unsigned)100,
+								             flyingSpeedModifier +
+								                 distanceToGoal / FLYING_ACCELERATION_DIVISOR);
 							}
 							moveTicksRemaining -= distanceToGoal * moveTicksConsumeRate;
 							setPosition(goalPosition);
@@ -1323,7 +1287,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			{
 				auto p = firingWeapon->fire(targetPosition, targetUnit);
 				map.addObjectToMap(p);
-				b->projectiles.insert(p);
+				state.current_battle->projectiles.insert(p);
 				displayedItem = firingWeapon->type;
 				setHandState(AgentType::HandState::Firing);
 				weaponFired = true;
@@ -1374,8 +1338,9 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		if (firing_animation_ticks_remaining == 0 && hand_animation_ticks_remaining == 0 &&
 		    current_hand_state != AgentType::HandState::Aiming &&
 		    current_movement_state != AgentType::MovementState::Running &&
-		    current_movement_state != AgentType::MovementState::Strafing && 
-			!(current_body_state==AgentType::BodyState::Prone && current_movement_state != AgentType::MovementState::None))
+		    current_movement_state != AgentType::MovementState::Strafing &&
+		    !(current_body_state == AgentType::BodyState::Prone &&
+		      current_movement_state != AgentType::MovementState::None))
 		{
 			beginHandStateChange(AgentType::HandState::Aiming);
 		}
@@ -1567,7 +1532,7 @@ void BattleUnit::retreat(GameState &state)
 	std::ignore = state;
 	tileObject->removeFromMap();
 	retreated = true;
-	removeFromSquad();
+	removeFromSquad(*state.current_battle);
 	// FIXME: Trigger retreated event
 }
 
@@ -1754,8 +1719,8 @@ bool BattleUnit::shouldPlaySoundNow()
 	if (sounds_to_play != movement_sounds_played)
 	{
 		unsigned int divisor = (current_movement_state == AgentType::MovementState::Running)
-		                  ? UNITS_TRAVELLED_PER_SOUND_RUNNING_DIVISOR
-		                  : 1;
+		                           ? UNITS_TRAVELLED_PER_SOUND_RUNNING_DIVISOR
+		                           : 1;
 		play = ((sounds_to_play + divisor - 1) % divisor) == 0;
 		movement_sounds_played = sounds_to_play;
 	}

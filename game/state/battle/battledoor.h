@@ -14,6 +14,9 @@ class Sample;
 class BattleDoor : public StateObject<BattleDoor>, public std::enable_shared_from_this<BattleDoor>
 {
   public:
+
+	UString id;
+
 	// wether this door is still operational
 	bool operational = false;
 	bool right = false;

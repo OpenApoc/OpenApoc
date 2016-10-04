@@ -302,9 +302,9 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 }
 
 bool Vehicle::isCrashed() const { return this->health < this->type->crash_health; }
-/* // Test code to make UFOs crash immediately upon hit, 
+/* // Test code to make UFOs crash immediately upon hit,
 // may be useful in the future as crashing is not yet perfect
- bool Vehicle::isCrashed() const 
+ bool Vehicle::isCrashed() const
 { return this->health < this->type->health && this->type->crash_health > 0; }
 */
 
@@ -647,7 +647,7 @@ int Vehicle::getAccuracy() const
 }
 
 // FIXME: Check int/float speed conversions
-int Vehicle::getTopSpeed() const { return this->getSpeed(); }
+int Vehicle::getTopSpeed() const { return (int)this->getSpeed(); }
 
 int Vehicle::getAcceleration() const
 {

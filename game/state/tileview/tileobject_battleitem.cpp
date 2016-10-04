@@ -7,7 +7,7 @@ namespace OpenApoc
 {
 
 void TileObjectBattleItem::draw(Renderer &r, TileTransform &, Vec2<float> screenPosition,
-                                TileViewMode mode, int)
+                                TileViewMode mode, int, bool, bool)
 {
 	// Mode isn't used as TileView::tileToScreenCoords already transforms according to the mode
 	std::ignore = mode;
@@ -30,10 +30,7 @@ void TileObjectBattleItem::draw(Renderer &r, TileTransform &, Vec2<float> screen
 		{
 			if (!item->supported)
 				break;
-			auto battle = item->battle.lock();
-			if (!battle)
-				return;
-			sprite = battle->common_image_list->strategyImages[480];
+			sprite = item->strategySprite;
 			transformedScreenPos -= Vec2<float>{4, 4};
 			break;
 		}

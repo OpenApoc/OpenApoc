@@ -10,7 +10,7 @@ class TileObjectVehicle : public TileObject
 {
   public:
 	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition, TileViewMode mode,
-	          int currentLevel = 0) override;
+	          int currentLevel, bool friendly, bool hostile) override;
 	~TileObjectVehicle() override;
 
 	sp<Vehicle> getVehicle() const;

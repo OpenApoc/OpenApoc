@@ -718,7 +718,7 @@ void BattleView::updateSelectionMode()
 		case BattleSelectionState::NormalAlt:
 		case BattleSelectionState::NormalCtrl:
 		case BattleSelectionState::NormalCtrlAlt:
-			// Fine, don't need to 
+			// Fine, don't need to
 			break;
 	}
 	// Change cursor
@@ -1318,7 +1318,7 @@ void BattleView::orderFocus(StateRef<BattleUnit> u)
 	// FIXME: Check if player can see unit
 	for (auto unit : selectedUnits)
 	{
-		unit->setFocus(u);
+		unit->setFocus(*state, u);
 	}
 }
 
@@ -1596,7 +1596,6 @@ void BattleView::eventOccurred(Event *e)
 								default:
 									// Do nothing
 									break;
-								
 							}
 							if (unitOccupying)
 							{

@@ -883,13 +883,18 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			auto tile = tileHelper.findTileToLandOn(state, vehicleTile);
 			if (tile == vehicleTile->getOwningTile()->position)
 			{
-				Vec3<int> randomNearbyPos = { randBoundsInclusive(state.rng, tile.x - 4, tile.x + 4), randBoundsInclusive(state.rng, tile.y - 4, tile.y + 4), randBoundsInclusive(state.rng, tile.z - 2, tile.z + 2) };
+				Vec3<int> randomNearbyPos = {
+				    randBoundsInclusive(state.rng, tile.x - 4, tile.x + 4),
+				    randBoundsInclusive(state.rng, tile.y - 4, tile.y + 4),
+				    randBoundsInclusive(state.rng, tile.z - 2, tile.z + 2)};
 				randomNearbyPos.x = clamp(randomNearbyPos.x, 0, map.size.x - 1);
 				randomNearbyPos.y = clamp(randomNearbyPos.y, 0, map.size.y - 1);
 				randomNearbyPos.z = clamp(randomNearbyPos.z, 0, map.size.z - 1);
-				LogInfo("Vehicle mission %s: Can't find place to land, moving to random location at {%d,%d,%d}", getName().cStr(),
-					randomNearbyPos.x, randomNearbyPos.y, randomNearbyPos.z);
-				auto *gotoMission = VehicleMission::gotoLocation(state, v, randomNearbyPos, true, 0);
+				LogInfo("Vehicle mission %s: Can't find place to land, moving to random location "
+				        "at {%d,%d,%d}",
+				        getName().cStr(), randomNearbyPos.x, randomNearbyPos.y, randomNearbyPos.z);
+				auto *gotoMission =
+				    VehicleMission::gotoLocation(state, v, randomNearbyPos, true, 0);
 				v.missions.emplace_front(gotoMission);
 				gotoMission->start(state, v);
 				return;

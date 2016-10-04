@@ -271,8 +271,8 @@ void Tile::updateBattlescapeUIDrawOrder()
 	bool backFound = false;
 	bool targetFound = false;
 
-	auto object_count = drawnObjects[0].size();
-	size_t obj_id;
+	unsigned int object_count = (unsigned)drawnObjects[0].size();
+	unsigned int obj_id;
 	for (obj_id = 0; obj_id < object_count; obj_id++)
 	{
 		auto &obj = drawnObjects[0][obj_id];
@@ -643,7 +643,7 @@ void TileMap::addObjectToMap(sp<BattleUnit> unit)
 	unit->shadowObject = shadow;
 }
 
-int TileMap::getLayer(TileObject::Type type) const
+unsigned int TileMap::getLayer(TileObject::Type type) const
 {
 	for (unsigned i = 0; i < this->layerMap.size(); i++)
 	{
@@ -656,7 +656,7 @@ int TileMap::getLayer(TileObject::Type type) const
 	return 0;
 }
 
-int TileMap::getLayerCount() const { return this->layerMap.size(); }
+unsigned int TileMap::getLayerCount() const { return this->layerMap.size(); }
 
 bool TileMap::tileIsValid(Vec3<int> tile) const
 {

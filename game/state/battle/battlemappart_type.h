@@ -98,6 +98,5 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 	sp<Sample> objectDropSound;
 	// Destroyed ground replacement for ground at level 0, rubble for other types
 	std::vector<StateRef<BattleMapPartType>> destroyed_map_parts;
-
 };
 }

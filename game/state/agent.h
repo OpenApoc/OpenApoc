@@ -200,6 +200,10 @@ class AgentType : public StateObject<AgentType>
 	std::map<Gender, std::list<sp<Sample>>> dieSfx;
 
 	int score = 0;
+
+	// Following members are not serialized, but rather are set in initState method
+
+	sp<Sample> gravLiftSfx;
 };
 
 class AgentBodyType : public StateObject<AgentBodyType>

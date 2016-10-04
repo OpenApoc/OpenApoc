@@ -232,8 +232,8 @@ class TileMap
 	void addObjectToMap(sp<BattleItem>);
 	void addObjectToMap(sp<BattleUnit>);
 
-	int getLayer(TileObject::Type type) const;
-	int getLayerCount() const;
+	unsigned int getLayer(TileObject::Type type) const;
+	unsigned int getLayerCount() const;
 	bool tileIsValid(Vec3<int> tile) const;
 
 	sp<Image> dumpVoxelView(const Rect<int> viewRect, const TileTransform &transform, float maxZ,

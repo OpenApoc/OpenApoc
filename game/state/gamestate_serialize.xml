@@ -492,6 +492,7 @@
 		<member>targetTile</member>
 		<member>targetUnit</member>
 		<member>focusUnit</member>
+		<member>focusedByUnits</member>
 		<member>ticksTillNextTargetCheck</member>
 		<member>experiencePoints</member>
 		<member>fatalWounds</member>
@@ -528,6 +529,7 @@
 		<member>fallingSpeed</member>
 		<member>giveWayRequest</member>
 		<member>displayedItem</member>
+		<member>battleMode</member>
 	</object>
 	<object>
 		<name>BattleItem</name>
@@ -551,6 +553,7 @@
 	</object>
 	<object>
 		<name>BattleDoor</name>
+		<member>id</member>
 		<member>operational</member>
 		<member>right</member>
 		<member>open</member>

@@ -14,16 +14,14 @@
 
 namespace OpenApoc
 {
-void BattleItem::die(GameState &, bool violently)
+void BattleItem::die(GameState &state, bool violently)
 {
 	if (violently)
 	{
 		// FIXME: Explode if nessecary
 	}
 	auto this_shared = shared_from_this();
-	auto b = battle.lock();
-	if (b)
-		b->items.remove(this_shared);
+	state.current_battle->items.remove(this_shared);
 	this->tileObject->removeFromMap();
 	this->shadowObject->removeFromMap();
 	this->tileObject.reset();
@@ -136,7 +134,8 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 			}
 			break;
 			default:
-				LogError("What the hell is this item colliding with? Value %d", (int)c.obj->getType());
+				LogError("What the hell is this item colliding with? Value %d",
+				         (int)c.obj->getType());
 				break;
 		}
 	}

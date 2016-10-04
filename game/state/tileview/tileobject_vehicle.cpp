@@ -8,10 +8,12 @@ namespace OpenApoc
 {
 
 void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-                             TileViewMode mode, int currentLevel)
+                             TileViewMode mode, int currentLevel, bool friendly, bool hostile)
 {
 	std::ignore = transform;
 	std::ignore = currentLevel;
+	std::ignore = friendly;
+	std::ignore = hostile;
 	auto vehicle = this->vehicle.lock();
 	if (!vehicle)
 	{
@@ -142,8 +144,8 @@ sp<VoxelMap> TileObjectVehicle::getVoxelMap(Vec3<int> mapIndex) const
 
 	float closestAngle = FLT_MAX;
 	sp<VoxelMap> closestMap = nullptr;
-	auto it = vtype->voxelMaps[mapIndex.z * vtype->size.y * vtype->size.x +
-	                           mapIndex.y * vtype->size.x + mapIndex.x];
+	auto it = vtype->voxelMaps[mapIndex.z * (int)vtype->size.y * (int)vtype->size.x +
+	                           mapIndex.y * (int)vtype->size.x + mapIndex.x];
 	for (auto &p : it)
 	{
 		float angle = glm::angle(glm::normalize(p.first), glm::normalize(this->getDirection()));

@@ -370,11 +370,11 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 				//	****   ****  x            ----   ----  x
 				//	*  *   *  *  x 0          -  -   -  -  x 0
 				//	****   ****  x            ----   ----  x
-				//	                               \\             
+				//	                               \\
 				//	****   ****  xxxx         ----   ****  xxxx
 				//	*  *   *  *  - 0-         -  -   *  *  * 0*
 				//	****   ****  ----         ----   ****  ****
-				//	           \\                                 
+				//	           \\
 				//	xxxx   x---  ----         xxxx   x***  ****
 				//	  0    x 0-  -  -           0    x 0*  *  *
 				//	       x---  ----                x***  ****
@@ -716,7 +716,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 			//		    x---           ****  x
 			//		    x 0-           *  *  x 0
 			//		    x---           ****  x
-			//		//                   \\      
+			//		//                   \\
 			//	xxxx  xxxx           xxxx  xxxx
 			//	* 0*  x 0              0   x 0-
 			//	****  x                    x---
@@ -725,7 +725,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 			//		    x***           ----  x
 			//		    x 0*           -  -  x 0
 			//		    x***           ----  x
-			//		//                   \\      
+			//		//                   \\
 			//	xxxx  xxxx           xxxx  xxxx
 			//	- 0-  x 0              0   x 0*
 			//	----  x                    x***
@@ -949,8 +949,8 @@ BattleUnitMission *BattleUnitMission::changeStance(BattleUnit &, AgentType::Body
 	return mission;
 }
 
-BattleUnitMission *BattleUnitMission::throwItem(BattleUnit &, sp<AEquipment> item,
-                                                Vec3<int> target, float velocityXY, float velocityZ)
+BattleUnitMission *BattleUnitMission::throwItem(BattleUnit &, sp<AEquipment> item, Vec3<int> target,
+                                                float velocityXY, float velocityZ)
 {
 	auto *mission = new BattleUnitMission();
 	mission->type = MissionType::ThrowItem;
@@ -1127,17 +1127,12 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 			{
 				if (item)
 				{
-					auto battle = u.battle.lock();
-					if (!battle)
-						return;
-					auto bi = mksp<BattleItem>();
-					bi->battle = u.battle;
+					auto bi = state.current_battle->addItem(state);
 					bi->item = item;
 					item = nullptr;
 					bi->position = u.position + Vec3<float>{0.0, 0.0, 0.5f};
 					bi->supported = false;
-					battle->items.push_back(bi);
-					u.tileObject->map.addObjectToMap(bi);
+					state.current_battle->map->addObjectToMap(bi);
 				}
 			}
 			return;
@@ -1305,14 +1300,10 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 					    u.getPosition(), 0.25f);
 				}
 
-				auto battle = u.battle.lock();
-				if (!battle)
-					return;
-				auto bi = mksp<BattleItem>();
-				bi->battle = u.battle;
+				auto bi = state.current_battle->addItem(state);
 				bi->item = item;
 				item = nullptr;
-
+				
 				// Depart from middle of our body
 				bi->position =
 				    u.position + Vec3<float>{0.0, 0.0, (float)u.getCurrentHeight() / 2.0f / 40.0f};
@@ -1326,9 +1317,8 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				// 36 / (velocity length) = enough ticks to pass 1 whole tile
 				bi->ownerInvulnerableTicks =
 				    (int)ceilf(36.0f / glm::length(bi->velocity / VELOCITY_SCALE_BATTLE)) + 1;
-				battle->items.push_back(bi);
-				u.tileObject->map.addObjectToMap(bi);
-
+				
+				state.current_battle->map->addObjectToMap(bi);
 				u.addMission(state, changeStance(u, AgentType::BodyState::Standing));
 				return;
 			}
@@ -1398,17 +1388,11 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 			{ // Remove item
 				item->ownerAgent->removeEquipment(item);
 				// Drop item
-				auto battle = u.battle.lock();
-				if (!battle)
-					return;
-				auto bi = mksp<BattleItem>();
-				bi->battle = u.battle;
+				auto bi = state.current_battle->addItem(state);
 				bi->item = item;
 				item = nullptr;
-				bi->position = u.position + Vec3<float>{0.0, 0.0, 0.5f};
 				bi->supported = false;
-				battle->items.push_back(bi);
-				u.tileObject->map.addObjectToMap(bi);
+				state.current_battle->map->addObjectToMap(bi);
 			}
 			return;
 		}

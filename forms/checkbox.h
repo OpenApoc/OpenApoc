@@ -1,8 +1,6 @@
-
 #pragma once
-#include "library/sp.h"
-
 #include "control.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {

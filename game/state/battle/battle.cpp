@@ -96,16 +96,12 @@ void Battle::initBattle(GameState &state)
 	}
 	for (auto &o : this->items)
 	{
-		o->battle = stt;
 		o->item->ownerItem = o->shared_from_this();
+		o->strategySprite = state.battle_common_image_list->strategyImages->at(480);
 	}
 	for (auto &o : this->units)
 	{
-		o.second->battle = stt;
-		if (o.second->focusUnit)
-		{
-			o.second->focusUnit->focusedByUnits.push_back(o.second);
-		}
+		o.second->strategyImages = state.battle_common_image_list->strategyImages;
 	}
 	if (forces.size() == 0)
 	{
@@ -201,6 +197,15 @@ void Battle::initMap()
 	}
 }
 
+void Battle::setMode(Mode mode)
+{
+	this->mode = mode;
+	for (auto &o : this->units)
+	{
+		o.second->battleMode = mode;
+	}
+}
+
 sp<Doodad> Battle::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 {
 	auto doodad = mksp<Doodad>(position, type);
@@ -209,21 +214,31 @@ sp<Doodad> Battle::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 	return doodad;
 }
 
-UString Battle::addUnit()
+sp<BattleUnit> Battle::addUnit(GameState &state)
 {
 	auto unit = mksp<BattleUnit>();
 	UString id = UString::format("%s%d", BattleUnit::getPrefix(), (int)units.size());
 	unit->id = id;
+	unit->strategyImages = state.battle_common_image_list->strategyImages;
 	units[id] = unit;
-	return id;
+	return unit;
 }
 
-UString Battle::addDoor()
+sp<BattleDoor> Battle::addDoor(GameState &state)
 {
 	auto door = mksp<BattleDoor>();
 	UString id = UString::format("%s%d", BattleDoor::getPrefix(), (int)units.size());
+	door->id = id;
 	doors[id] = door;
-	return id;
+	return door;
+}
+
+sp<BattleItem> Battle::addItem(GameState &state)
+{
+	auto item = mksp<BattleItem>();
+	item->strategySprite = state.battle_common_image_list->strategyImages->at(480);
+	items.push_back(item);
+	return item;
 }
 
 void Battle::update(GameState &state, unsigned int ticks)

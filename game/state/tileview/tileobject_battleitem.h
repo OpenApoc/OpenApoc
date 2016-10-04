@@ -11,7 +11,7 @@ class TileObjectBattleItem : public TileObject
 {
   public:
 	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition, TileViewMode mode,
-	          int) override;
+	          int, bool, bool) override;
 	~TileObjectBattleItem() override;
 	sp<BattleItem> getItem();
 	Vec3<float> getPosition() const override;
