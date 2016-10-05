@@ -1,5 +1,8 @@
 #pragma once
 
+#include "library/vec.h"
+#include <iterator>
+
 namespace OpenApoc
 {
 

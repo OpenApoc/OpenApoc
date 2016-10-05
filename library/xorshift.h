@@ -7,6 +7,8 @@
 #include <map>
 #include <ostream>
 #include <random>
+#include <set>
+#include <stdexcept>
 #include <vector>
 
 namespace OpenApoc
@@ -103,7 +105,7 @@ T probabilityMapRandomizer(Generator &g, const std::map<T, float> &probabilityMa
 {
 	if (probabilityMap.empty())
 	{
-		LogError("Called with empty probabilityMap");
+		throw std::runtime_error("Called with empty probabilityMap");
 	}
 	float total = 0.0f;
 	for (auto &p : probabilityMap)
@@ -144,7 +146,7 @@ template <typename T, typename Generator> T randBoundsInclusive(Generator &g, T 
 {
 	if (min > max)
 	{
-		LogError("Bounds max < min");
+		throw std::runtime_error("Bounds max < min");
 	}
 	// uniform_int_distribution is apparently undefined if min==max
 	if (min == max)
@@ -159,7 +161,7 @@ template <typename T, typename Generator> T randDamage000200(Generator &g, T val
 	T max = value * (T)2;
 	if (min > max)
 	{
-		LogError("Bounds max < min");
+		throw std::runtime_error("Bounds max < min");
 	}
 	// uniform_int_distribution is apparently undefined if min==max
 	if (min == max)
@@ -174,7 +176,7 @@ template <typename T, typename Generator> T randDamage050150(Generator &g, T val
 	T max = value * (T)3 / (T)2;
 	if (min > max)
 	{
-		LogError("Bounds max < min");
+		throw std::runtime_error("Bounds max < min");
 	}
 	// uniform_int_distribution is apparently undefined if min==max
 	if (min == max)
@@ -189,7 +191,7 @@ template <typename T, typename Generator> T randDamage025075(Generator &g, T val
 	T max = value * (T)3 / (T)4;
 	if (min > max)
 	{
-		LogError("Bounds max < min");
+		throw std::runtime_error("Bounds max < min");
 	}
 	// uniform_int_distribution is apparently undefined if min==max
 	if (min == max)
@@ -204,7 +206,7 @@ template <typename T, typename Generator> T listRandomiser(Generator &g, const s
 		return *list.begin();
 	else if (list.empty())
 	{
-		LogError("Trying to randomize within empty list");
+		throw std::runtime_error("Trying to randomize within empty list");
 	}
 	auto count = randBoundsExclusive(g, (unsigned)0, (unsigned)list.size());
 
@@ -225,7 +227,7 @@ T vectorRandomizer(Generator &g, const std::vector<T> &vector)
 		return *vector.begin();
 	else if (vector.empty())
 	{
-		LogError("Trying to randomize within empty vector");
+		throw std::runtime_error("Trying to randomize within empty vector");
 	}
 	auto count = randBoundsExclusive(g, (unsigned)0, (unsigned)vector.size());
 	auto it = vector.begin();
@@ -244,7 +246,7 @@ template <typename T, typename Generator> T setRandomizer(Generator &g, const st
 		return *set.begin();
 	else if (set.empty())
 	{
-		LogError("Trying to randomize within empty vector");
+		throw std::runtime_error("Trying to randomize within empty vector");
 	}
 	auto count = randBoundsExclusive(g, (unsigned)0, (unsigned)set.size());
 	auto it = set.begin();
