@@ -532,9 +532,9 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 			int y2 = delta_y * k2;
 			int z2 = 0;
 
-			int x3 = std::floorf(x1 + x2);
-			int y3 = std::floorf(y1 + y2);
-			int z3 = std::floorf(z1 + z2);
+			int x3 = floorf(x1 + x2);
+			int y3 = floorf(y1 + y2);
+			int z3 = floorf(z1 + z2);
 
 			target.x += x3;
 			target.y += y3;
