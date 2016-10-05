@@ -237,6 +237,6 @@ class TileMap
 	bool tileIsValid(Vec3<int> tile) const;
 
 	sp<Image> dumpVoxelView(const Rect<int> viewRect, const TileTransform &transform, float maxZ,
-	                        bool fast = false) const;
+	                        bool fast = false, bool los = false) const;
 };
 }; // namespace OpenApoc

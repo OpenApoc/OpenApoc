@@ -161,8 +161,7 @@ sp<Projectile> AEquipment::fire(Vec3<float> targetPosition, StateRef<BattleUnit>
 	}
 
 	// FIXME: Apply accuracy
-	auto unitPos =
-	    unit->position + Vec3<float>{0.0f, 0.0f, (float)unit->getCurrentHeight() / 40.0f};
+	auto unitPos = unit->getMuzzleLocation();
 	Vec3<float> velocity = targetPosition - unitPos;
 	velocity = glm::normalize(velocity);
 	velocity *= payload->speed * TICK_SCALE / 4; // I believe this is the correct formula

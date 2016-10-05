@@ -14,8 +14,6 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
                                  const std::set<TileObject::Type> validTypes, bool useLOS,
                                  bool check_full_path) const
 {
-	if (useLOS)
-		LogError("Handle LOS checks");
 	bool type_checking = validTypes.size() > 0;
 	Collision c;
 	c.obj = nullptr;
@@ -53,7 +51,7 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 			Vec3<int> voxelPos = point - Vec3<int>{objPos};
 			// voxel map to use
 			Vec3<int> voxelMapIndex = voxelPos / tileSize;
-			auto voxelMap = obj->getVoxelMap(voxelMapIndex);
+			auto voxelMap = obj->getVoxelMap(voxelMapIndex, useLOS);
 			if (!voxelMap)
 				continue;
 			// coordinate of the voxel within map

@@ -206,6 +206,11 @@ void Vehicle::setupMover()
 	}
 }
 
+Vec3<float> Vehicle::getMuzzleLocation() const 
+{ 
+	return Vec3<float>(position.x, position.y, position.z - tileObject->getVoxelOffset().z + (float)type->height / 16.0f);
+}
+
 void Vehicle::update(GameState &state, unsigned int ticks)
 
 {

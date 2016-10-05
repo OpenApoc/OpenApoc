@@ -66,7 +66,7 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	Tile *getOwningTile() const { return this->owningTile; }
 	std::vector<Tile *> getIntersectingTiles() const { return this->intersectingTiles; }
 
-	virtual sp<VoxelMap> getVoxelMap(Vec3<int> /*mapIndex*/) const { return nullptr; }
+	virtual sp<VoxelMap> getVoxelMap(Vec3<int> /*mapIndex*/, bool los = false) const { return nullptr; }
 	virtual bool hasVoxelMap() { return false; }
 	// Vector from voxel map top left back corner to object center
 	virtual Vec3<float> getVoxelOffset() const { return bounds_div_2; }

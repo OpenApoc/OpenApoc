@@ -31,7 +31,7 @@ class TileObjectBattleUnit : public TileObject
 	void addToDrawnTiles(Tile *tile) override;
 
 	bool hasVoxelMap() override { return true; }
-	sp<VoxelMap> getVoxelMap(Vec3<int> mapIndex) const override;
+	sp<VoxelMap> getVoxelMap(Vec3<int> mapIndex, bool) const override;
 	Vec3<float> getPosition() const override;
 
   private:

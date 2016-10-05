@@ -318,6 +318,11 @@ TileObjectBattleUnit::TileObjectBattleUnit(TileMap &map, sp<BattleUnit> unit)
 
 Vec3<float> TileObjectBattleUnit::getVoxelCentrePosition() const
 {
+	// We could do all the following, but since we always aim at voxelmap's center,
+	// regardless of which bits are filled or not (only accounting for height)
+	// it is enough to just offset center according to voxelmap's height
+	// Leaving the code here though as it may be useful later
+	/*
 	auto u = this->getUnit();
 	auto size = u->agent->type->bodyType->size.at(u->current_body_state).at(u->facing);
 
@@ -339,9 +344,15 @@ Vec3<float> TileObjectBattleUnit::getVoxelCentrePosition() const
 	return Vec3<float>(objPos.x + (float)voxelCentre.x / map.voxelMapSize.x,
 	                   objPos.y + (float)voxelCentre.y / map.voxelMapSize.y,
 	                   objPos.z + (float)voxelCentre.z / map.voxelMapSize.z);
+	*/
+	
+	// Simple version:
+	auto objPos = this->getCenter();
+	return Vec3<float>(objPos.x, objPos.y,
+		objPos.z - getVoxelOffset().z + (float)getUnit()->getCurrentHeight() / 2.0f / 40.0f);
 }
 
-sp<VoxelMap> TileObjectBattleUnit::getVoxelMap(Vec3<int> mapIndex) const
+sp<VoxelMap> TileObjectBattleUnit::getVoxelMap(Vec3<int> mapIndex, bool) const
 {
 	auto u = this->getUnit();
 	auto size = u->agent->type->bodyType->size.at(u->current_body_state).at(u->facing);

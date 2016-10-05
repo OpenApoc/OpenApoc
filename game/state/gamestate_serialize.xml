@@ -813,7 +813,6 @@
 		<member>type</member>
 		<member>name</member>
 		<member>manufacturer</member>
-		<member>size</member>
 		<member>image_offset</member>
 		<member>acceleration</member>
 		<member>top_speed</member>
@@ -835,7 +834,10 @@
 		<member>directional_shadow_sprites</member>
 		<member>animation_sprites</member>
 		<member>crashed_sprite</member>
+		<member>height</member>
+		<member>size</member>
 		<member>voxelMaps</member>
+		<member>voxelMapsLOS</member>
 		<member>equipment_layout_slots</member>
 		<member>initial_equipment_list</member>
 	</object>

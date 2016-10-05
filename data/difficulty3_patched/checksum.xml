@@ -79,5 +79,5 @@
   <checksum SHA1="ae5a083bf0207834bfdc1e3e110de33e79c009ac">gamestate/ufopaedia.xml</checksum>
   <checksum SHA1="8444be52562921e50abea4dda7574d3cedd0bf64">gamestate/vehicle_ammo.xml</checksum>
   <checksum SHA1="f02d1c3cd9357678ad9e67105377221ad248f52e">gamestate/vehicle_equipment.xml</checksum>
-  <checksum SHA1="e8df1e925b45a4e9181f26831a3536d1475f7e90">gamestate/vehicle_types.xml</checksum>
+  <checksum SHA1="54d1243218d8d504070622029ad9d86f230cb1f2">gamestate/vehicle_types.xml</checksum>
 </checksums>

@@ -97,9 +97,16 @@ TileObjectBattleMapPart::TileObjectBattleMapPart(TileMap &map, sp<BattleMapPart>
 
 sp<BattleMapPart> TileObjectBattleMapPart::getOwner() const { return map_part; }
 
-sp<VoxelMap> TileObjectBattleMapPart::getVoxelMap(Vec3<int>) const
+sp<VoxelMap> TileObjectBattleMapPart::getVoxelMap(Vec3<int>, bool los) const
 {
-	return this->getOwner()->type->voxelMapLOF;
+	if (los)
+	{
+		return this->getOwner()->type->voxelMapLOS;
+	}
+	else
+	{
+		return this->getOwner()->type->voxelMapLOF;
+	}
 }
 
 Vec3<float> TileObjectBattleMapPart::getPosition() const { return map_part->getPosition(); }

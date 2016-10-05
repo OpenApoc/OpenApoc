@@ -262,6 +262,8 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 
 	// Get unit's height in current situation
 	int getCurrentHeight() const { return agent->type->bodyType->height.at(current_body_state); }
+	// Get unit's gun muzzle location (where shots come from)
+	Vec3<float> getMuzzleLocation() const { return position + Vec3<float>{0.0f, 0.0f, (float)getCurrentHeight() / 40.0f}; }
 
 	// TU functions
 	// Wether unit can afford action

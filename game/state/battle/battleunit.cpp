@@ -1214,7 +1214,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			break;
 		case TargetingMode::TileCenter:
 		{
-			float unitZ = (position + Vec3<float>{0.0f, 0.0f, (float)getCurrentHeight() / 40.0f}).z;
+			// Shoot parallel to the ground
+			float unitZ = getMuzzleLocation().z;
 			unitZ -= (int)unitZ;
 			targetPosition = (Vec3<float>)targetTile + offsetTile + Vec3<float>{0.0f, 0.0f, unitZ};
 			break;
@@ -1309,7 +1310,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				if (canFire)
 				{
 					float distanceToTarget = glm::length(
-					    position + Vec3<float>{0.0f, 0.0f, (float)getCurrentHeight() / 40.0f} -
+					    getMuzzleLocation() -
 					    targetPosition);
 					if (weaponRight && !weaponRight->canFire(distanceToTarget))
 					{
@@ -1376,7 +1377,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			// Check if facing the right way
 			if (firingWeapon)
 			{
-				auto targetVector = targetPosition - position;
+				auto targetVector = targetPosition - getMuzzleLocation();
 				targetVector = {targetVector.x, targetVector.y, 0.0f};
 				// Target must be within frontal arc
 				if (glm::angle(glm::normalize(targetVector),
