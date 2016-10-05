@@ -76,8 +76,8 @@
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <CustomBuildStep>
-      <Command>cd /D $(SolutionDir)
-$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe --Framework.CD=$(SolutionDir)\data\cd.iso --Framework.Data=$(SolutionDir)\data</Command>
+      <Command>cd /D "$(SolutionDir)"
+"$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe" --Framework.CD="$(SolutionDir)\data\cd.iso" --Framework.Data="$(SolutionDir)\data"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>Generating data</Message>
@@ -91,8 +91,8 @@ $(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe --Framework.CD=$(S
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <CustomBuildStep>
-      <Command>cd /D $(SolutionDir)
-$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe --Framework.CD=$(SolutionDir)\data\cd.iso --Framework.Data=$(SolutionDir)\data</Command>
+      <Command>cd /D "$(SolutionDir)"
+"$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe" --Framework.CD="$(SolutionDir)\data\cd.iso" --Framework.Data="$(SolutionDir)\data"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>Generating data</Message>
@@ -112,8 +112,8 @@ $(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe --Framework.CD=$(S
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <CustomBuildStep>
-      <Command>cd /D $(SolutionDir)
-$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe --Framework.CD=$(SolutionDir)\data\cd.iso --Framework.Data=$(SolutionDir)\data</Command>
+      <Command>cd /D "$(SolutionDir)"
+"$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe" --Framework.CD="$(SolutionDir)\data\cd.iso" --Framework.Data="$(SolutionDir)\data"</Command>
       <Message>Generating data</Message>
       <Outputs>$(SolutionDir)\data\difficulty1_patched</Outputs>
     </CustomBuildStep>
@@ -131,8 +131,8 @@ $(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe --Framework.CD=$(S
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <CustomBuildStep>
-      <Command>cd /D $(SolutionDir)
-$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe --Framework.CD=$(SolutionDir)\data\cd.iso --Framework.Data=$(SolutionDir)\data</Command>
+      <Command>cd /D "$(SolutionDir)"
+"$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe" --Framework.CD="$(SolutionDir)\data\cd.iso" --Framework.Data="$(SolutionDir)\data"</Command>
       <Message>Generating data</Message>
       <Outputs>$(SolutionDir)\data\difficulty1_patched</Outputs>
     </CustomBuildStep>
