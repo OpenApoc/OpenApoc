@@ -1868,22 +1868,22 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 				a.damageType = p->damage_type;
 				switch (a.itemType->type)
 				{
-				case AEquipmentType::Type::Weapon:
-				case AEquipmentType::Type::Ammo:
-					a.maxAmmo = p->max_ammo;
-					a.curAmmo = e->ammo;
-					break;
-				case AEquipmentType::Type::Armor:
-				case AEquipmentType::Type::DisruptorShield:
-					a.maxAmmo = 30;
-					a.curAmmo = e->ammo * 30 / p->max_ammo;
-					break;
-				case AEquipmentType::Type::Teleporter:
-					a.maxAmmo = 3;
-					a.curAmmo = e->ammo * 3 / p->max_ammo;
-					break;
-				default:
-					break;
+					case AEquipmentType::Type::Weapon:
+					case AEquipmentType::Type::Ammo:
+						a.maxAmmo = p->max_ammo;
+						a.curAmmo = e->ammo;
+						break;
+					case AEquipmentType::Type::Armor:
+					case AEquipmentType::Type::DisruptorShield:
+						a.maxAmmo = 30;
+						a.curAmmo = e->ammo * 30 / p->max_ammo;
+						break;
+					case AEquipmentType::Type::Teleporter:
+						a.maxAmmo = 3;
+						a.curAmmo = e->ammo * 3 / p->max_ammo;
+						break;
+					default:
+						break;
 				}
 				// FIXME: Handle selection
 				a.selected = false;

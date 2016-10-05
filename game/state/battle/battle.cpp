@@ -271,7 +271,6 @@ void Battle::update(GameState &state, unsigned int ticks)
 					auto unit = std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit();
 					displayDoodad = !unit->handleCollision(state, c);
 					playSound = false;
-					LogWarning("Unit collision. Unit at %f %f %f, collision %f %f %f", unit->position.x, unit->position.y, unit->position.z, c.position.z, c.position.y, c.position.z);
 					break;
 				}
 				case TileObject::Type::Ground:

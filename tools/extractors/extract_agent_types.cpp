@@ -1325,7 +1325,8 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state, Difficul
 
 		for (auto entry : voxelInfo)
 		{
-			a->height[entry.first] = entry.first == AgentType::BodyState::Downed ? entry.second.x : entry.second.x + 4;
+			a->height[entry.first] =
+			    entry.first == AgentType::BodyState::Downed ? entry.second.x : entry.second.x + 4;
 			a->muzzleZPosition[entry.first] = entry.second.x;
 
 			if (a->large)
@@ -1366,7 +1367,8 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state, Difficul
 										             y * a->size[entry.first][pair.first].x + x] =
 										    std::make_shared<VoxelMap>(Vec3<int>{24, 24, 20});
 										// Fill slices
-										int limit = std::max(20, (a->height[entry.first] - 40 * z) / 2);
+										int limit =
+										    std::max(20, (a->height[entry.first] - 40 * z) / 2);
 										for (int i = 0; i < limit; i++)
 										{
 											a->voxelMaps[entry.first][pair.first]

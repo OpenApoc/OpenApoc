@@ -350,21 +350,21 @@ void BattleUnit::addFatalWound(GameState &state)
 {
 	switch (randBoundsInclusive(state.rng, 0, 4))
 	{
-	case 0:
-		fatalWounds[AgentType::BodyPart::Body]++;
-		break;
-	case 1:
-		fatalWounds[AgentType::BodyPart::Helmet]++;
-		break;
-	case 2:
-		fatalWounds[AgentType::BodyPart::LeftArm]++;
-		break;
-	case 3:
-		fatalWounds[AgentType::BodyPart::RightArm]++;
-		break;
-	case 4:
-		fatalWounds[AgentType::BodyPart::Helmet]++;
-		break;
+		case 0:
+			fatalWounds[AgentType::BodyPart::Body]++;
+			break;
+		case 1:
+			fatalWounds[AgentType::BodyPart::Helmet]++;
+			break;
+		case 2:
+			fatalWounds[AgentType::BodyPart::LeftArm]++;
+			break;
+		case 3:
+			fatalWounds[AgentType::BodyPart::RightArm]++;
+			break;
+		case 4:
+			fatalWounds[AgentType::BodyPart::Helmet]++;
+			break;
 	}
 }
 
@@ -379,9 +379,10 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 		// FIXME: Figure out stun damage scale
 		int SCALE = TICKS_PER_SECOND;
 
-		stunDamageInTicks += clamp(damage * SCALE, 0, std::max(0, stunPower * SCALE - stunDamageInTicks));
+		stunDamageInTicks +=
+		    clamp(damage * SCALE, 0, std::max(0, stunPower * SCALE - stunDamageInTicks));
 	}
-	
+
 	// Generate fatal wounds
 	if (generateFatalWounds)
 	{
@@ -393,7 +394,7 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 			fatal = true;
 		}
 		if (randBoundsExclusive(state.rng, 0, 10) < woundDamageRemaining)
-		{ 
+		{
 			addFatalWound(state);
 			fatal = true;
 		}
@@ -417,16 +418,20 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 	// Emit sound
 	if (fatal)
 	{
-		if (agent->type->fatalWoundSfx.find(agent->gender) != agent->type->fatalWoundSfx.end() && !agent->type->fatalWoundSfx.at(agent->gender).empty())
+		if (agent->type->fatalWoundSfx.find(agent->gender) != agent->type->fatalWoundSfx.end() &&
+		    !agent->type->fatalWoundSfx.at(agent->gender).empty())
 		{
-			fw().soundBackend->playSample(listRandomiser(state.rng, agent->type->fatalWoundSfx.at(agent->gender)), position);
+			fw().soundBackend->playSample(
+			    listRandomiser(state.rng, agent->type->fatalWoundSfx.at(agent->gender)), position);
 		}
 	}
 	else
 	{
-		if (agent->type->damageSfx.find(agent->gender) != agent->type->damageSfx.end() && !agent->type->damageSfx.at(agent->gender).empty())
+		if (agent->type->damageSfx.find(agent->gender) != agent->type->damageSfx.end() &&
+		    !agent->type->damageSfx.at(agent->gender).empty())
 		{
-			fw().soundBackend->playSample(listRandomiser(state.rng, agent->type->damageSfx.at(agent->gender)), position);
+			fw().soundBackend->playSample(
+			    listRandomiser(state.rng, agent->type->damageSfx.at(agent->gender)), position);
 		}
 	}
 
@@ -471,7 +476,8 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 			{
 				agent->removeEquipment(shield);
 			}
-			state.current_battle->placeDoodad({ &state, "DOODAD_27_SHIELD" }, tileObject->getCenter());
+			state.current_battle->placeDoodad({&state, "DOODAD_27_SHIELD"},
+			                                  tileObject->getCenter());
 			return true;
 		}
 	}
@@ -521,10 +527,11 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	{
 		dealDamage(state, damage, false, 9001);
 	}
-	else {
+	else
+	{
 		dealDamage(state, damage, true, damageType->stun ? power : 0);
 	}
-	
+
 	return false;
 }
 
@@ -1343,9 +1350,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				// Check if we are in range
 				if (canFire)
 				{
-					float distanceToTarget = glm::length(
-					    getMuzzleLocation() -
-					    targetPosition);
+					float distanceToTarget = glm::length(getMuzzleLocation() - targetPosition);
 					if (weaponRight && !weaponRight->canFire(distanceToTarget))
 					{
 						weaponRight = nullptr;
@@ -1707,9 +1712,11 @@ void BattleUnit::die(GameState &state, bool violently, bool bledToDeath)
 	}
 	focusedByUnits.clear();
 	// Emit sound
-	if (agent->type->dieSfx.find(agent->gender) != agent->type->dieSfx.end() && !agent->type->dieSfx.at(agent->gender).empty())
+	if (agent->type->dieSfx.find(agent->gender) != agent->type->dieSfx.end() &&
+	    !agent->type->dieSfx.at(agent->gender).empty())
 	{
-		fw().soundBackend->playSample(listRandomiser(state.rng, agent->type->dieSfx.at(agent->gender)), position);
+		fw().soundBackend->playSample(
+		    listRandomiser(state.rng, agent->type->dieSfx.at(agent->gender)), position);
 	}
 	// FIXME: do what has to be done when unit dies
 	LogWarning("Implement a UNIT DIED notification!");
@@ -1861,9 +1868,12 @@ unsigned int BattleUnit::getWalkSoundIndex()
 	}
 }
 
-Vec3<float> BattleUnit::getMuzzleLocation() const 
-{ 
-	return position + Vec3<float>{0.0f, 0.0f, ((float)agent->type->bodyType->muzzleZPosition.at(current_body_state)) / 40.0f}; 
+Vec3<float> BattleUnit::getMuzzleLocation() const
+{
+	return position +
+	       Vec3<float>{0.0f, 0.0f,
+	                   ((float)agent->type->bodyType->muzzleZPosition.at(current_body_state)) /
+	                       40.0f};
 }
 
 // Alexey Andronov: Istrebitel

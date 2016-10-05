@@ -145,8 +145,8 @@ Vec3<float> TileObjectVehicle::getVoxelCentrePosition() const
 
 	// Simple version:
 	auto objPos = this->getCenter();
-	return Vec3<float>(objPos.x, objPos.y,
-	                   objPos.z - getVoxelOffset().z + (float)getVehicle()->type->height / 2.0f / 16.0f);
+	return Vec3<float>(objPos.x, objPos.y, objPos.z - getVoxelOffset().z +
+	                                           (float)getVehicle()->type->height / 2.0f / 16.0f);
 }
 
 sp<VoxelMap> TileObjectVehicle::getVoxelMap(Vec3<int> mapIndex, bool los) const
@@ -158,13 +158,13 @@ sp<VoxelMap> TileObjectVehicle::getVoxelMap(Vec3<int> mapIndex, bool los) const
 		return nullptr;
 	if (los)
 	{
-		return vtype->voxelMapsLOS.at(facing).at(mapIndex.z * size.y * size.x + mapIndex.y * size.x +
-			mapIndex.x);
+		return vtype->voxelMapsLOS.at(facing).at(mapIndex.z * size.y * size.x +
+		                                         mapIndex.y * size.x + mapIndex.x);
 	}
 	else
 	{
 		return vtype->voxelMaps.at(facing).at(mapIndex.z * size.y * size.x + mapIndex.y * size.x +
-			mapIndex.x);
+		                                      mapIndex.x);
 	}
 }
 

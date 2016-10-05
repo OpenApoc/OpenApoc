@@ -16,7 +16,10 @@ class TileObjectBattleUnit : public TileObject
 
 	sp<BattleUnit> getUnit() const;
 
-	Vec3<float> getVoxelOffset() const override { return{ bounds_div_2.x, bounds_div_2.y, centerOffset.z }; }
+	Vec3<float> getVoxelOffset() const override
+	{
+		return {bounds_div_2.x, bounds_div_2.y, centerOffset.z};
+	}
 	// For aiming at the object
 	Vec3<float> getVoxelCentrePosition() const override;
 	Vec3<float> getCenterOffset() const override { return centerOffset; }

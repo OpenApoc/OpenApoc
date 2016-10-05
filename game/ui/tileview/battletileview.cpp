@@ -180,8 +180,8 @@ BattleTileView::~BattleTileView() = default;
 void BattleTileView::eventOccurred(Event *e)
 {
 	if (e->type() == EVENT_KEY_DOWN &&
-		(e->keyboard().KeyCode == SDLK_F6 || e->keyboard().KeyCode == SDLK_F7 
-			|| e->keyboard().KeyCode == SDLK_F8 || e->keyboard().KeyCode == SDLK_F9))
+	    (e->keyboard().KeyCode == SDLK_F6 || e->keyboard().KeyCode == SDLK_F7 ||
+	     e->keyboard().KeyCode == SDLK_F8 || e->keyboard().KeyCode == SDLK_F9))
 	{
 		switch (e->keyboard().KeyCode)
 		{
@@ -207,7 +207,7 @@ void BattleTileView::eventOccurred(Event *e)
 				LogWarning("Writing voxel view to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
 				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-				{ imageOffset, imageOffset + dpySize }, *this, currentZLevel, false, true));
+				    {imageOffset, imageOffset + dpySize}, *this, currentZLevel, false, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 			break;
@@ -216,7 +216,7 @@ void BattleTileView::eventOccurred(Event *e)
 				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
 				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-				{ imageOffset, imageOffset + dpySize }, *this, currentZLevel, true, true));
+				    {imageOffset, imageOffset + dpySize}, *this, currentZLevel, true, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 			break;
@@ -698,7 +698,8 @@ void BattleTileView::render()
 				Vec2<float> pos =
 				    tileToOffsetScreenCoords(
 				        obj.first->getPosition() +
-						Vec3<float>{0.0f, 0.0f, (obj.first->getCurrentHeight() - 4.0f) * 1.5f / 40.0f }) +
+				        Vec3<float>{0.0f, 0.0f,
+				                    (obj.first->getCurrentHeight() - 4.0f) * 1.5f / 40.0f}) +
 				    offset;
 
 				// Selection arrow

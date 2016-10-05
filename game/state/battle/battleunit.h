@@ -279,7 +279,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	                 AgentType::BodyPart bodyPart);
 	// Returns true if sound and doodad were handled by it
 	bool handleCollision(GameState &state, Collision &c);
-	
+
 	// sp<TileObjectVehicle> findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile);
 	// void attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehicle>
 	// enemyTile);

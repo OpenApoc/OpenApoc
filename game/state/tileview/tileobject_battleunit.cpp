@@ -331,13 +331,13 @@ Vec3<float> TileObjectBattleUnit::getVoxelCentrePosition() const
 	Vec3<int> voxelCentre = {0, 0, 0};
 	for (int x = 0; x < size.x; x++)
 	{
-		for (int y = 0; y < size.y; y++)
-		{
-			for (int z = 0; z < size.z; z++)
-			{
-				voxelCentre += getVoxelMap({x, y, z})->centre;
-			}
-		}
+	    for (int y = 0; y < size.y; y++)
+	    {
+	        for (int z = 0; z < size.z; z++)
+	        {
+	            voxelCentre += getVoxelMap({x, y, z})->centre;
+	        }
+	    }
 	}
 	voxelCentre /= size.x * size.y * size.z;
 
@@ -347,11 +347,11 @@ Vec3<float> TileObjectBattleUnit::getVoxelCentrePosition() const
 	                   objPos.y + (float)voxelCentre.y / map.voxelMapSize.y,
 	                   objPos.z + (float)voxelCentre.z / map.voxelMapSize.z);
 	*/
-	
+
 	// Simple version:
 	auto objPos = this->getCenter();
-	return Vec3<float>(objPos.x, objPos.y,
-		objPos.z - getVoxelOffset().z + (float)getUnit()->getCurrentHeight() / 2.0f / 40.0f);
+	return Vec3<float>(objPos.x, objPos.y, objPos.z - getVoxelOffset().z +
+	                                           (float)getUnit()->getCurrentHeight() / 2.0f / 40.0f);
 }
 
 sp<VoxelMap> TileObjectBattleUnit::getVoxelMap(Vec3<int> mapIndex, bool) const

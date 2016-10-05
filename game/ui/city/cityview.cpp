@@ -796,7 +796,8 @@ void CityView::eventOccurred(Event *e)
 			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 9.99f);
 			auto clickBottom = this->screenToTileCoords(
 			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
-			auto collision = state->current_city->map->findCollision(clickTop, clickBottom, {}, true);
+			auto collision =
+			    state->current_city->map->findCollision(clickTop, clickBottom, {}, true);
 			if (collision)
 			{
 				if (collision.obj->getType() == TileObject::Type::Scenery)

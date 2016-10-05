@@ -121,39 +121,39 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 		                                         (int)i + 14));
 		switch (i)
 		{
-		case DT_SMOKE:
-			d->explosive = true;
-			d->gas = true;
-			d->smoke = true;
-			d->doodadType = { &state, "DOODAD_18_SMOKE" };
-			break;
-		case DT_AG:
-			d->explosive = true;
-			d->gas = true;
-			d->doodadType = { &state, "DOODAD_19_ALIEN_GAS" };
-			break;
-		case DT_INCENDARY:
-			d->explosive = true;
-			d->flame = true;
-			d->doodadType = { &state, "DOODAD_17_FIRE" };
-			break;
-		case DT_STUNGAS:
-			d->explosive = true;
-			d->gas = true;
-			d->stun = true;
-			d->doodadType = { &state, "DOODAD_20_STUN_GAS" };
-			break;
-		case DT_EXPLOSIVE:
-			d->explosive = true;
-			break;
-		case DT_STUNGUN:
-			d->stun = true;
-			break;
-		case DT_EXPLOSIVE2:
-			d->explosive = true;
-			break;
+			case DT_SMOKE:
+				d->explosive = true;
+				d->gas = true;
+				d->smoke = true;
+				d->doodadType = {&state, "DOODAD_18_SMOKE"};
+				break;
+			case DT_AG:
+				d->explosive = true;
+				d->gas = true;
+				d->doodadType = {&state, "DOODAD_19_ALIEN_GAS"};
+				break;
+			case DT_INCENDARY:
+				d->explosive = true;
+				d->flame = true;
+				d->doodadType = {&state, "DOODAD_17_FIRE"};
+				break;
+			case DT_STUNGAS:
+				d->explosive = true;
+				d->gas = true;
+				d->stun = true;
+				d->doodadType = {&state, "DOODAD_20_STUN_GAS"};
+				break;
+			case DT_EXPLOSIVE:
+				d->explosive = true;
+				break;
+			case DT_STUNGUN:
+				d->stun = true;
+				break;
+			case DT_EXPLOSIVE2:
+				d->explosive = true;
+				break;
 		}
-		
+
 		state.damage_types[id] = d;
 	}
 
@@ -397,7 +397,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 						break;
 					case AGENT_GENERAL_TYPE_DISRUPTOR_SHIELD:
 						e->type = AEquipmentType::Type::DisruptorShield;
-						e->damage_modifier = { &state, data_t.getDModId(16) };
+						e->damage_modifier = {&state, data_t.getDModId(16)};
 						e->max_ammo = 100;
 						e->recharge = 1;
 						break;
@@ -1022,16 +1022,16 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 			d->imageOffset = BATTLE_IMAGE_OFFSET;
 			d->lifetime = (2) * frameTTL;
 			d->repeatable = false;
-			d->frames.push_back({ fw().data->loadImage(UString::format(
-				"PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
-				"ptang.tab:%d",
-				78)),
-				frameTTL });
-			d->frames.push_back({ fw().data->loadImage(UString::format(
-				"PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
-				"ptang.tab:%d",
-				77)),
-				frameTTL });
+			d->frames.push_back(
+			    {fw().data->loadImage(UString::format("PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
+			                                          "ptang.tab:%d",
+			                                          78)),
+			     frameTTL});
+			d->frames.push_back(
+			    {fw().data->loadImage(UString::format("PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
+			                                          "ptang.tab:%d",
+			                                          77)),
+			     frameTTL});
 			state.doodad_types[id] = d;
 		}
 	}
