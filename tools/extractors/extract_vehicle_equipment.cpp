@@ -96,7 +96,7 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Diffic
 				e->type = VEquipmentType::Type::Weapon;
 				e->speed = wData.speed;
 				e->damage = wData.damage;
-				e->accuracy = wData.accuracy;
+				e->accuracy = 100 - wData.accuracy;
 				e->fire_delay = wData.fire_delay;
 				e->tail_size = wData.tail_size;
 				e->guided = wData.guided != 0 ? true : false;

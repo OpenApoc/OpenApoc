@@ -11,11 +11,11 @@
             <align_y>Centre</align_y>
             <bounds>
               <p0>
-                <x>0</x>
+                <x>1024</x>
                 <y>6</y>
               </p0>
               <p1>
-                <x>3</x>
+                <x>1027</x>
                 <y>11</y>
               </p1>
             </bounds>
@@ -26,11 +26,11 @@
             <align_y>Centre</align_y>
             <bounds>
               <p0>
-                <x>12</x>
+                <x>1024</x>
                 <y>6</y>
               </p0>
               <p1>
-                <x>15</x>
+                <x>1027</x>
                 <y>11</y>
               </p1>
             </bounds>
@@ -561,6 +561,12 @@
           </entry>
         </slots>
       </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AGENTEQUIPMENTLAYOUT_NONE</key>
+    <value>
+      <sp />
     </value>
   </entry>
 </agent_equipment_layouts>

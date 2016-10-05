@@ -1291,7 +1291,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				auto bi = state.current_battle->addItem(state);
 				bi->item = item;
 				item = nullptr;
-				
+
 				// Depart from middle of our body
 				bi->position =
 				    u.position + Vec3<float>{0.0, 0.0, (float)u.getCurrentHeight() / 2.0f / 40.0f};
@@ -1305,7 +1305,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				// 36 / (velocity length) = enough ticks to pass 1 whole tile
 				bi->ownerInvulnerableTicks =
 				    (int)ceilf(36.0f / glm::length(bi->velocity / VELOCITY_SCALE_BATTLE)) + 1;
-				
+
 				state.current_battle->map->addObjectToMap(bi);
 				u.addMission(state, changeStance(u, AgentType::BodyState::Standing));
 				return;
@@ -1373,7 +1373,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 		case MissionType::DropItem:
 		{
 			if (item)
-			{ 
+			{
 				// Remove item
 				item->ownerAgent->removeEquipment(item);
 				// Drop item

@@ -874,7 +874,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 							continue;
 						auto i = mksp<AEquipment>();
 						i->type = l;
-					
+
 						auto bi = b->addItem(state);
 						bi->item = i;
 						bi->position = pair.first + shift;
@@ -923,7 +923,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				auto d = b->addDoor(state);
 				d->right = i == 1;
 				d->operational = true;
-				
+
 				// Recursively search for doors in a pattern spreading around start location
 				locationsToCheck.push_back(doors[i].front().first);
 				while (locationsToCheck.size() > 0)
@@ -945,7 +945,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						continue;
 					}
 
-					it->second->door = { &state, d->id };
+					it->second->door = {&state, d->id};
 					d->animationFrameCount = std::max(
 					    d->animationFrameCount, (int)it->second->type->animation_frames.size());
 					// d->mapParts.push_back(it->second); // <- no need to do it here, we do it in
@@ -976,7 +976,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 			auto u = b->addUnit(state);
 
 			u->agent = a;
-			u->agent->unit = { &state, u->id };
+			u->agent->unit = {&state, u->id};
 			u->owner = a->owner;
 			u->squadNumber = -1;
 			u->updateDisplayedItem();
@@ -1108,7 +1108,7 @@ void BattleMap::loadTilesets(GameState &state) const
 					tile->destroyed_map_parts = rubble_feature;
 					break;
 			}
-			tile->damageModifier = { &state, "DAMAGEMODIFIER_TERRAIN_1_" };
+			tile->damageModifier = {&state, "DAMAGEMODIFIER_TERRAIN_1_"};
 			// Sanity check
 			if (state.battleMapTiles.find(tileName) != state.battleMapTiles.end())
 			{

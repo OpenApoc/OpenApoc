@@ -269,7 +269,8 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Returns if unit did spend (false if unsufficient TUs)
 	bool spendTU(int cost);
 
-	void applyDamage(GameState &state, int damage, StateRef<DamageType> damageType, AgentType::BodyPart bodyPart);
+	void applyDamage(GameState &state, int damage, StateRef<DamageType> damageType,
+	                 AgentType::BodyPart bodyPart);
 	void handleCollision(GameState &state, Collision &c);
 	// sp<TileObjectVehicle> findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile);
 	// void attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehicle>

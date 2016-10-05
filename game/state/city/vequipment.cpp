@@ -62,16 +62,16 @@ sp<Projectile> VEquipment::fire(Vec3<float> targetPosition, StateRef<Vehicle> ta
 	{
 		this->weaponState = WeaponState::OutOfAmmo;
 	}
-
-	Vec3<float> velocity = targetPosition - vehicleTile->getCenter();
+	auto vehicleCenter = vehicleTile->getVoxelCentrePosition();
+	Vec3<float> velocity = targetPosition - vehicleCenter;
 	velocity = glm::normalize(velocity);
 	velocity *= type->speed * TICK_SCALE / 4; // I believe this is the correct formula
 
 	return mksp<Projectile>(type->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
-	                        owner, targetVehicle, vehicleTile->getCenter(), velocity,
-	                        type->turn_rate, static_cast<int>(this->getRange() / type->speed * 4),
-	                        type->damage, type->tail_size, type->projectile_sprites,
-	                        type->impact_sfx, type->explosion_graphic);
+	                        owner, targetVehicle, vehicleCenter, velocity, type->turn_rate,
+	                        static_cast<int>(this->getRange() / type->speed * 4), type->damage,
+	                        type->tail_size, type->projectile_sprites, type->impact_sfx,
+	                        type->explosion_graphic);
 }
 
 void VEquipment::update(int ticks)

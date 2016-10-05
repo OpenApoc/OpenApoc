@@ -107,55 +107,58 @@ void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 TileObjectVehicle::~TileObjectVehicle() = default;
 
 TileObjectVehicle::TileObjectVehicle(TileMap &map, sp<Vehicle> vehicle)
-    : TileObject(map, Type::Vehicle, vehicle->type->size), vehicle(vehicle), animationDelay(0)
+    : TileObject(map, Type::Vehicle, {0.0f, 0.0f, 0.0f}), vehicle(vehicle), animationDelay(0)
 {
 	animationFrame = vehicle->type->animation_sprites.begin();
 }
 
 Vec3<float> TileObjectVehicle::getVoxelCentrePosition() const
 {
+	// We could do all the following, but since we always aim at voxelmap's center,
+	// regardless of which bits are filled or not (only accounting for height)
+	// it is enough to just offset center according to voxelmap's height
+	// Leaving the code here though as it may be useful later
+	/*
 	auto vtype = this->getVehicle()->type;
+	auto facing = vtype->getVoxelMapFacing(getDirection());
+	auto size = vtype->size.at(facing);
 
 	Vec3<int> voxelCentre = {0, 0, 0};
-	for (int x = 0; x < vtype->size.x; x++)
+	for (int x = 0; x < size.x; x++)
 	{
-		for (int y = 0; y < vtype->size.y; y++)
-		{
-			for (int z = 0; z < vtype->size.z; z++)
-			{
-				voxelCentre += getVoxelMap({x, y, z})->centre;
-			}
-		}
+	    for (int y = 0; y < size.y; y++)
+	    {
+	        for (int z = 0; z < size.z; z++)
+	        {
+	            voxelCentre += getVoxelMap({x, y, z})->centre;
+	        }
+	    }
 	}
-	voxelCentre /= vtype->size.x * vtype->size.y * vtype->size.z;
+	voxelCentre /= size.x * size.y * size.z;
 
 	auto objPos = this->getCenter();
 	objPos -= this->getVoxelOffset();
 	return Vec3<float>(objPos.x + (float)voxelCentre.x / map.voxelMapSize.x,
 	                   objPos.y + (float)voxelCentre.y / map.voxelMapSize.y,
 	                   objPos.z + (float)voxelCentre.z / map.voxelMapSize.z);
+	*/
+
+	// Simple version:
+	auto objPos = this->getCenter();
+	return Vec3<float>(objPos.x, objPos.y,
+	                   objPos.z - getVoxelOffset().z + (float)getVehicle()->type->height / 16.0f);
 }
 
 sp<VoxelMap> TileObjectVehicle::getVoxelMap(Vec3<int> mapIndex) const
 {
 	auto vtype = this->getVehicle()->type;
-	if (mapIndex.x >= vtype->size.x || mapIndex.y >= vtype->size.y || mapIndex.z >= vtype->size.z)
+	auto facing = vtype->getVoxelMapFacing(getDirection());
+	auto size = vtype->size.at(facing);
+	if (mapIndex.x >= size.x || mapIndex.y >= size.y || mapIndex.z >= size.z)
 		return nullptr;
 
-	float closestAngle = FLT_MAX;
-	sp<VoxelMap> closestMap = nullptr;
-	auto it = vtype->voxelMaps[mapIndex.z * (int)vtype->size.y * (int)vtype->size.x +
-	                           mapIndex.y * (int)vtype->size.x + mapIndex.x];
-	for (auto &p : it)
-	{
-		float angle = glm::angle(glm::normalize(p.first), glm::normalize(this->getDirection()));
-		if (angle < closestAngle)
-		{
-			closestAngle = angle;
-			closestMap = p.second;
-		}
-	}
-	return closestMap;
+	return vtype->voxelMaps.at(facing).at(mapIndex.z * size.y * size.x + mapIndex.y * size.x +
+	                                      mapIndex.x);
 }
 
 sp<Vehicle> TileObjectVehicle::getVehicle() const { return this->vehicle.lock(); }
@@ -184,6 +187,17 @@ void TileObjectVehicle::nextFrame(int ticks)
 			animationFrame = v->type->animation_sprites.begin();
 		}
 	}
+}
+
+void TileObjectVehicle::setPosition(Vec3<float> newPosition)
+{
+	auto vtype = this->getVehicle()->type;
+	auto facing = vtype->getVoxelMapFacing(getDirection());
+	auto size = vtype->size.at(facing);
+
+	setBounds({size.x, size.y, size.z});
+
+	TileObject::setPosition(newPosition);
 }
 
 void TileObjectVehicle::addToDrawnTiles(Tile *tile)

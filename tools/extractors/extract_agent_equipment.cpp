@@ -49,9 +49,9 @@
 #define TAC_DOODAD_20 20 // tac 60, 68
 
 // Doodads defined manually, ids not matching vanilla
-#define CUSTOM_DOODAD_16 16 //tac 28, 32
-#define CUSTOM_DOODAD_17 17// tac 32, 44
-#define CUSTOM_DOODAD_29 29// tac 8, 26
+#define CUSTOM_DOODAD_16 16 // tac 28, 32
+#define CUSTOM_DOODAD_17 17 // tac 32, 44
+#define CUSTOM_DOODAD_29 29 // tac 8, 26
 
 namespace OpenApoc
 {
@@ -895,21 +895,18 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 	{
 		static const int frameTTL = 4;
 		static const std::vector<Vec2<int>> doodadTabOffsets = {
-			{ 28, 32 },{ 32, 44 },{ 44, 52 },{ 52, 60 }, { 60, 68 },
-			{115, 126}, {126, 137}, {137, 148}, {148, 159},
-		    {159, 170}, {170, 181}, {181, 186}, {186, 192},
-			{ 8, 26 }
-		};
+		    {28, 32},   {32, 44},   {44, 52},   {52, 60},   {60, 68},   {115, 126}, {126, 137},
+		    {137, 148}, {148, 159}, {159, 170}, {170, 181}, {181, 186}, {186, 192}, {8, 26}};
 
 		for (int i = 16; i <= 29; i++)
 		{
 			UString id;
 			switch (i)
 			{
-				case CUSTOM_DOODAD_16: //tac 28, 32
+				case CUSTOM_DOODAD_16: // tac 28, 32
 					id = "DOODAD_16_BURNING_OBJECT";
 					break;
-				case CUSTOM_DOODAD_17:// tac 32, 44
+				case CUSTOM_DOODAD_17: // tac 32, 44
 					id = "DOODAD_17_FIRE";
 					break;
 				case TAC_DOODAD_18: // tac 44, 52
@@ -945,7 +942,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 				case TAC_DOODAD_28: // tac 186 - 192
 					id = "DOODAD_28_ENZYME";
 					break;
-				case CUSTOM_DOODAD_29 :// tac 8, 26
+				case CUSTOM_DOODAD_29: // tac 8, 26
 					id = "DOODAD_29_EXPLODING_TERRAIN";
 					break;
 			}

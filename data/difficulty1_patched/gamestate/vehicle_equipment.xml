@@ -31,7 +31,7 @@
           <entry />
         </projectile_sprites>
         <damage>10</damage>
-        <accuracy>30</accuracy>
+        <accuracy>70</accuracy>
         <fire_delay>6</fire_delay>
         <tail_size>7</tail_size>
         <range>350</range>
@@ -75,7 +75,7 @@
           <entry />
         </projectile_sprites>
         <damage>14</damage>
-        <accuracy>30</accuracy>
+        <accuracy>70</accuracy>
         <fire_delay>6</fire_delay>
         <tail_size>7</tail_size>
         <range>300</range>
@@ -142,7 +142,7 @@
           <entry />
         </projectile_sprites>
         <damage>16</damage>
-        <accuracy>28</accuracy>
+        <accuracy>72</accuracy>
         <fire_delay>18</fire_delay>
         <tail_size>7</tail_size>
         <range>360</range>
@@ -223,7 +223,7 @@
           <entry>bulletsprites/city/04.png</entry>
         </projectile_sprites>
         <damage>12</damage>
-        <accuracy>45</accuracy>
+        <accuracy>55</accuracy>
         <fire_delay>12</fire_delay>
         <tail_size>22</tail_size>
         <range>400</range>
@@ -327,7 +327,7 @@
           <entry />
         </projectile_sprites>
         <damage>94</damage>
-        <accuracy>18</accuracy>
+        <accuracy>82</accuracy>
         <fire_delay>90</fire_delay>
         <tail_size>20</tail_size>
         <guided>true</guided>
@@ -401,7 +401,7 @@
           <entry />
         </projectile_sprites>
         <damage>98</damage>
-        <accuracy>16</accuracy>
+        <accuracy>84</accuracy>
         <fire_delay>120</fire_delay>
         <tail_size>35</tail_size>
         <guided>true</guided>
@@ -475,7 +475,7 @@
           <entry />
         </projectile_sprites>
         <damage>28</damage>
-        <accuracy>25</accuracy>
+        <accuracy>75</accuracy>
         <fire_delay>34</fire_delay>
         <tail_size>35</tail_size>
         <guided>true</guided>
@@ -533,7 +533,7 @@
           <entry />
         </projectile_sprites>
         <damage>26</damage>
-        <accuracy>24</accuracy>
+        <accuracy>76</accuracy>
         <fire_delay>24</fire_delay>
         <tail_size>19</tail_size>
         <guided>true</guided>
@@ -607,7 +607,7 @@
           <entry />
         </projectile_sprites>
         <damage>80</damage>
-        <accuracy>30</accuracy>
+        <accuracy>70</accuracy>
         <fire_delay>20</fire_delay>
         <tail_size>35</tail_size>
         <range>1200</range>
@@ -686,7 +686,7 @@
           <entry />
         </projectile_sprites>
         <damage>22</damage>
-        <accuracy>24</accuracy>
+        <accuracy>76</accuracy>
         <fire_delay>36</fire_delay>
         <tail_size>19</tail_size>
         <guided>true</guided>
@@ -760,7 +760,7 @@
           <entry />
         </projectile_sprites>
         <damage>50</damage>
-        <accuracy>26</accuracy>
+        <accuracy>74</accuracy>
         <fire_delay>70</fire_delay>
         <tail_size>35</tail_size>
         <guided>true</guided>
@@ -823,7 +823,7 @@
           <entry>bulletsprites/city/02.png</entry>
         </projectile_sprites>
         <damage>16</damage>
-        <accuracy>40</accuracy>
+        <accuracy>60</accuracy>
         <fire_delay>12</fire_delay>
         <tail_size>25</tail_size>
         <range>600</range>
@@ -892,7 +892,7 @@
           <entry>bulletsprites/city/04.png</entry>
         </projectile_sprites>
         <damage>8</damage>
-        <accuracy>12</accuracy>
+        <accuracy>88</accuracy>
         <fire_delay>4</fire_delay>
         <tail_size>10</tail_size>
         <range>128</range>
@@ -1040,7 +1040,7 @@
           <entry>bulletsprites/city/27.png</entry>
         </projectile_sprites>
         <damage>25</damage>
-        <accuracy>34</accuracy>
+        <accuracy>66</accuracy>
         <fire_delay>12</fire_delay>
         <tail_size>35</tail_size>
         <range>800</range>
@@ -1102,7 +1102,7 @@
           <entry />
         </projectile_sprites>
         <damage>40</damage>
-        <accuracy>40</accuracy>
+        <accuracy>60</accuracy>
         <fire_delay>17</fire_delay>
         <tail_size>25</tail_size>
         <range>600</range>
@@ -1345,7 +1345,7 @@
           <entry>bulletsprites/city/27.png</entry>
         </projectile_sprites>
         <damage>12</damage>
-        <accuracy>8</accuracy>
+        <accuracy>92</accuracy>
         <fire_delay>4</fire_delay>
         <tail_size>12</tail_size>
         <range>168</range>
@@ -1405,7 +1405,7 @@
           <entry>bulletsprites/city/27.png</entry>
         </projectile_sprites>
         <damage>14</damage>
-        <accuracy>38</accuracy>
+        <accuracy>62</accuracy>
         <fire_delay>6</fire_delay>
         <tail_size>22</tail_size>
         <range>350</range>
@@ -1477,7 +1477,7 @@
           <entry>bulletsprites/city/27.png</entry>
         </projectile_sprites>
         <damage>30</damage>
-        <accuracy>15</accuracy>
+        <accuracy>85</accuracy>
         <fire_delay>8</fire_delay>
         <tail_size>35</tail_size>
         <range>800</range>
@@ -1533,7 +1533,7 @@
           <entry />
         </projectile_sprites>
         <damage>26</damage>
-        <accuracy>24</accuracy>
+        <accuracy>76</accuracy>
         <fire_delay>42</fire_delay>
         <tail_size>19</tail_size>
         <guided>true</guided>
@@ -1594,7 +1594,7 @@
           <entry>bulletsprites/city/27.png</entry>
         </projectile_sprites>
         <damage>20</damage>
-        <accuracy>36</accuracy>
+        <accuracy>64</accuracy>
         <fire_delay>12</fire_delay>
         <tail_size>22</tail_size>
         <range>500</range>
@@ -1666,7 +1666,7 @@
           <entry />
         </projectile_sprites>
         <damage>68</damage>
-        <accuracy>22</accuracy>
+        <accuracy>78</accuracy>
         <fire_delay>90</fire_delay>
         <tail_size>35</tail_size>
         <guided>true</guided>
@@ -1711,7 +1711,7 @@
           <entry />
         </projectile_sprites>
         <damage>34</damage>
-        <accuracy>25</accuracy>
+        <accuracy>75</accuracy>
         <fire_delay>7</fire_delay>
         <tail_size>7</tail_size>
         <range>500</range>
@@ -1944,7 +1944,7 @@
           <entry />
           <entry />
         </projectile_sprites>
-        <accuracy>20</accuracy>
+        <accuracy>80</accuracy>
         <fire_delay>90</fire_delay>
         <tail_size>24</tail_size>
         <guided>true</guided>

@@ -469,6 +469,7 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 {
 	static const std::set<TileObject::Type> scenerySet = {TileObject::Type::Scenery};
 
+	auto firePosition = vehicleTile->getVoxelCentrePosition();
 	auto target = enemyTile->getVoxelCentrePosition();
 	float distance = this->tileObject->getDistanceTo(enemyTile);
 
@@ -482,19 +483,57 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 		if (distance > equipment->getRange())
 			continue;
 		// No sight to target
-		if (vehicleTile->map.findCollision(position, target, scenerySet))
+		if (vehicleTile->map.findCollision(firePosition, target, scenerySet))
 			continue;
-		std::uniform_int_distribution<int> toHit(1, 99);
-		int accuracy = 100 - equipment->type->accuracy + this->getAccuracy();
-		int shotDiff = toHit(state.rng);
 
-		if (shotDiff > accuracy)
+		// Accuracy (according to Skin36)
+		// FIXME: Prettify this code
 		{
-			float offset = (shotDiff - accuracy) / 25.0f;
-			std::uniform_real_distribution<float> offsetRng(-offset, offset);
-			target.x += offsetRng(state.rng);
-			target.y += offsetRng(state.rng);
-			target.z += offsetRng(state.rng) / 2;
+			int projx = firePosition.x;
+			int projy = firePosition.y;
+			int projz = firePosition.z;
+			int vehx = target.x;
+			int vehy = target.y;
+			int vehz = target.z;
+			int accuracy = 100 - (equipment->type->accuracy + this->getAccuracy());
+
+			int delta_x = -(projx - vehx) * accuracy / 1000;
+			int delta_y = (projy - vehy) * accuracy / 1000;
+			int delta_z = (projz - vehz) * accuracy / 1000;
+
+			int length_vector =
+			    1.0f / std::sqrt(delta_x * delta_x * delta_y * delta_y + delta_z * delta_z);
+
+			std::vector<float> rnd(3);
+			while (true)
+			{
+				rnd[1] = (float)randBoundsExclusive(state.rng, 0, 100000) / 100000.0f;
+				rnd[2] = (float)randBoundsExclusive(state.rng, 0, 100000) / 100000.0f;
+				rnd[0] = rnd[1] * rnd[1] + rnd[2] * rnd[2];
+				if (rnd[0] > 0.0f && rnd[0] < 1.0f)
+				{
+					break;
+				}
+			}
+
+			int k1 = rnd[1] * std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
+			int k2 = rnd[2] * std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
+
+			int x1 = length_vector * delta_x * delta_z * k1;
+			int y1 = -length_vector * delta_y * delta_z * k1;
+			int z1 = length_vector * (delta_x * delta_x + delta_y * delta_y) * k1;
+
+			int x2 = delta_x * k2;
+			int y2 = delta_y * k2;
+			int z2 = 0;
+
+			int x3 = std::floorf(x1 + x2);
+			int y3 = std::floorf(y1 + y2);
+			int z3 = std::floorf(z1 + z2);
+
+			target.x += x3;
+			target.y += y3;
+			target.z += z3;
 		}
 
 		auto projectile = equipment->fire(target, {&state, enemyTile->getVehicle()});

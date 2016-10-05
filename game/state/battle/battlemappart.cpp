@@ -1,11 +1,11 @@
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battledoor.h"
-#include "game/state/city/projectile.h"
-#include "game/state/tileview/collision.h"
-#include "game/state/rules/damage.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart_type.h"
+#include "game/state/city/projectile.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/damage.h"
+#include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 
@@ -45,17 +45,19 @@ void BattleMapPart::handleCollision(GameState &state, Collision &c)
 		// Already falling, just continue
 		return;
 	}
-	
-	// Calculate damage (hmm, apparently Apoc uses 50-150 damage model for terrain, unlike UFO1&2 which used 25-75
-	int damage = randDamage050150(state.rng, c.projectile->damageType->dealDamage(c.projectile->damage, type->damageModifier));
+
+	// Calculate damage (hmm, apparently Apoc uses 50-150 damage model for terrain, unlike UFO1&2
+	// which used 25-75
+	int damage = randDamage050150(state.rng, c.projectile->damageType->dealDamage(
+	                                             c.projectile->damage, type->damageModifier));
 	if (damage <= type->constitution)
 	{
 		return;
 	}
-	
+
 	// If we came this far, map part has been damaged and must cease to be
 	auto doodad = state.current_battle->placeDoodad({&state, "DOODAD_29_EXPLODING_TERRAIN"},
-	tileObject->getCenter());
+	                                                tileObject->getCenter());
 	// Replace with damaged
 	if (!this->damaged && type->damaged_map_part)
 	{

@@ -1,13 +1,13 @@
 #define _USE_MATH_DEFINES
-#include "game/state/tileview/collision.h"
-#include "game/state/city/projectile.h"
-#include "game/state/rules/damage.h"
 #include "game/state/battle/battleunit.h"
 #include "framework/framework.h"
 #include "game/state/aequipment.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunitanimationpack.h"
+#include "game/state/city/projectile.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/damage.h"
+#include "game/state/tileview/collision.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_shadow.h"
@@ -352,10 +352,11 @@ bool BattleUnit::canKneel() const
 }
 
 // FIXME: Apply damage to the unit
-void BattleUnit::applyDamage(GameState &state, int damage, StateRef<DamageType> damageType, AgentType::BodyPart bodyPart)
+void BattleUnit::applyDamage(GameState &state, int damage, StateRef<DamageType> damageType,
+                             AgentType::BodyPart bodyPart)
 {
 	std::ignore = state;
-	
+
 	// FIXME: Process Disruptor shields!
 	LogWarning("Unit taking damage! Implement disruptor shields!");
 
@@ -375,7 +376,7 @@ void BattleUnit::applyDamage(GameState &state, int damage, StateRef<DamageType> 
 	}
 	damage = damageType->dealDamage(damage, damageModifier) - armorValue;
 
-	// No daamge 
+	// No daamge
 	if (damage <= 0)
 	{
 		return;
@@ -397,9 +398,7 @@ void BattleUnit::applyDamage(GameState &state, int damage, StateRef<DamageType> 
 	LogWarning("Implement health/stun damage properly!");
 	agent->modified_stats.health -= damage;
 
-	
-
-	//dir = glm::round(dir);
+	// dir = glm::round(dir);
 	// auto armourDirection = VehicleType::ArmourDirection::Right;
 	// if (dir.x == 0 && dir.y == 0 && dir.z == 0)
 	//{
@@ -443,7 +442,6 @@ void BattleUnit::applyDamage(GameState &state, int damage, StateRef<DamageType> 
 	//	return;
 	//}
 
-	
 	// if (this->shield <= damage)
 	//{
 	//	if (this->shield > 0)
@@ -517,7 +515,7 @@ void BattleUnit::handleCollision(GameState &state, Collision &c)
 		{
 			damage = randDamage050150(state.rng, projectile->damage);
 		}
-		
+
 		// Determine body part hit
 		AgentType::BodyPart bodyPartHit = AgentType::BodyPart::Body;
 		// FIXME: Ensure body part determination is correct
@@ -533,10 +531,12 @@ void BattleUnit::handleCollision(GameState &state, Collision &c)
 		}
 		else
 		{
-			auto unitDir = glm::normalize(Vec3<float> { facing.x, facing.y, 0.0f });
-			auto projectileDir = glm::normalize(Vec3<float>{projectile->getVelocity().x, projectile->getVelocity().y, 0.0f});
+			auto unitDir = glm::normalize(Vec3<float>{facing.x, facing.y, 0.0f});
+			auto projectileDir = glm::normalize(
+			    Vec3<float>{projectile->getVelocity().x, projectile->getVelocity().y, 0.0f});
 			auto cross = glm::cross(unitDir, projectileDir);
-			int angle = (int)((cross.z >= 0 ? -1 : 1) * glm::angle(unitDir, -projectileDir) / M_PI * 180.0f);
+			int angle = (int)((cross.z >= 0 ? -1 : 1) * glm::angle(unitDir, -projectileDir) / M_PI *
+			                  180.0f);
 			if (angle > 45 && angle < 135)
 			{
 				bodyPartHit = AgentType::BodyPart::RightArm;
@@ -647,7 +647,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		{
 			addMission(state, BattleUnitMission::MissionType::ReachGoal);
 		}
-		
+
 		// Try giving way if asked to
 		// FIXME: Ensure we're not in a firefight before giving way!
 		else if (giveWayRequest.size() > 0)
@@ -904,14 +904,17 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						return;
 					}
 					// Try to get new body state change
-					// Can do it if we're not firing and (either not changing hand state, or starting to aim)
+					// Can do it if we're not firing and (either not changing hand state, or
+					// starting to aim)
 					if (firing_animation_ticks_remaining == 0 &&
-					    (hand_animation_ticks_remaining == 0 || target_hand_state == AgentType::HandState::Aiming))
+					    (hand_animation_ticks_remaining == 0 ||
+					     target_hand_state == AgentType::HandState::Aiming))
 					{
 						AgentType::BodyState nextState = AgentType::BodyState::Downed;
 						if (getNextBodyState(state, nextState))
 						{
-							LogWarning("%d %d", firing_animation_ticks_remaining, hand_animation_ticks_remaining);
+							LogWarning("%d %d", firing_animation_ticks_remaining,
+							           hand_animation_ticks_remaining);
 							beginBodyStateChange(nextState);
 						}
 					}
@@ -1436,7 +1439,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 
 		// Should we start aiming?
 		if (firing_animation_ticks_remaining == 0 && hand_animation_ticks_remaining == 0 &&
-			body_animation_ticks_remaining == 0 &&
+		    body_animation_ticks_remaining == 0 &&
 		    current_hand_state != AgentType::HandState::Aiming &&
 		    current_movement_state != AgentType::MovementState::Running &&
 		    current_movement_state != AgentType::MovementState::Strafing &&

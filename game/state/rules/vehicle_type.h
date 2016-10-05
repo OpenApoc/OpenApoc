@@ -92,7 +92,6 @@ class VehicleType : public StateObject<VehicleType>
 	UString name;
 	StateRef<Organisation> manufacturer;
 
-	Vec3<float> size = {0, 0, 0};
 	Vec2<float> image_offset = {0, 0};
 	float acceleration = 0;
 	float top_speed = 0;
@@ -129,7 +128,14 @@ class VehicleType : public StateObject<VehicleType>
 	// UFOs also have a 'crashed' sprite
 	sp<Image> crashed_sprite;
 
-	std::vector<std::map<Vec3<float>, sp<VoxelMap>>> voxelMaps;
+	int height = 0;
+	// Vehicle size, depending on facing
+	std::map<Vec3<float>, Vec3<int>> size;
+	// Vehicle voxel map vector, depending on facing
+	std::map<Vec3<float>, std::vector<sp<VoxelMap>>> voxelMaps;
+
+	// Gets current facing for purpose of determining size and voxel map
+	Vec3<float> getVoxelMapFacing(Vec3<float> direction) const;
 
 	class EquipmentLayoutSlot
 	{

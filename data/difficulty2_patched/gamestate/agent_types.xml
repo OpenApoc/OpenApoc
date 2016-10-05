@@ -118,7 +118,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -325,7 +325,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -584,7 +584,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_BRAINSUCKER</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>4</score>
         <walkSfx>
           <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/scuttle.raw:22050</entry>
@@ -1873,7 +1873,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_CRYSALIS</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>3</score>
         <crySfx>
           <entry>RAWSOUND:xcom3/rawsound/tactical/aliens/cries/saliscry.raw:22050</entry>
@@ -2181,7 +2181,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -2529,7 +2529,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -2877,7 +2877,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -3225,7 +3225,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -3573,7 +3573,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -3921,7 +3921,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -4264,7 +4264,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_GUN_EMPLACEMENT</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <damageSfx>
           <entry>
             <key>Male</key>
@@ -7664,7 +7664,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -8012,7 +8012,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -8360,7 +8360,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -8708,7 +8708,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -9056,7 +9056,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -9404,7 +9404,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -11892,7 +11892,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -12240,7 +12240,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -12588,7 +12588,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -12936,7 +12936,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -13284,7 +13284,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -13632,7 +13632,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <score>10</score>
         <damageSfx>
           <entry>
@@ -15399,7 +15399,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <playable>true</playable>
         <score>10</score>
         <damageSfx>
@@ -15974,7 +15974,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <playable>true</playable>
         <score>10</score>
         <damageSfx>
@@ -16551,7 +16551,7 @@
           </entry>
         </armor>
         <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
-        <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+        <equipment_layout>AGENTEQUIPMENTLAYOUT_NONE</equipment_layout>
         <playable>true</playable>
         <score>10</score>
         <damageSfx>
