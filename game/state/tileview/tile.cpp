@@ -656,7 +656,7 @@ unsigned int TileMap::getLayer(TileObject::Type type) const
 	return 0;
 }
 
-unsigned int TileMap::getLayerCount() const { return this->layerMap.size(); }
+unsigned int TileMap::getLayerCount() const { return (unsigned) this->layerMap.size(); }
 
 bool TileMap::tileIsValid(Vec3<int> tile) const
 {

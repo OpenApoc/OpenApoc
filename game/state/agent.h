@@ -221,6 +221,8 @@ class AgentBodyType : public StateObject<AgentBodyType>
 	int maxHeight = 0;
 	// Unit's height in each body state, used when displaying unit selection arrows
 	std::map<AgentType::BodyState, int> height;
+	// Unit's mullzle location in each body state, used when firing
+	std::map<AgentType::BodyState, int> muzzleZPosition;
 
 	// Voxel maps (x,y,z) for each body state and facing of the agent
 	std::map<AgentType::BodyState, std::map<Vec2<int>, Vec3<int>>> size;
@@ -289,6 +291,7 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 	getDominantItemInHands(StateRef<AEquipmentType> itemLastFired = nullptr) const;
 	sp<AEquipment> getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType type,
 	                                  bool lazy = true) const;
+	sp<AEquipment> getFirstShield() const;
 	StateRef<BattleUnitImagePack> getImagePack(AgentType::BodyPart bodyPart) const;
 
 	// Following members are not serialized, but rather are set up in the initBattle method

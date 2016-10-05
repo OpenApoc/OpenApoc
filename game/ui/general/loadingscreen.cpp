@@ -1,4 +1,6 @@
+#ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
+#endif
 #include "game/ui/general/loadingscreen.h"
 #include "framework/framework.h"
 #include "game/ui/battle/battleview.h"

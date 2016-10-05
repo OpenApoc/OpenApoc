@@ -1,5 +1,7 @@
 #pragma once
+#ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
+#endif
 #include "game/state/agent.h"
 #include "game/state/battle/battleunitmission.h"
 #include "game/state/tileview/tile.h"
@@ -133,7 +135,8 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Stun damage acquired
 	int stunDamageInTicks = 0;
 	int getStunDamage() const;
-	void dealStunDamage(int damage);
+	void addFatalWound(GameState &state);
+	void dealDamage(GameState &state, int damage, bool generateFatalWounds, int stunPower);
 
 	// User set modes
 
@@ -263,7 +266,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Get unit's height in current situation
 	int getCurrentHeight() const { return agent->type->bodyType->height.at(current_body_state); }
 	// Get unit's gun muzzle location (where shots come from)
-	Vec3<float> getMuzzleLocation() const { return position + Vec3<float>{0.0f, 0.0f, (float)getCurrentHeight() / 40.0f}; }
+	Vec3<float> getMuzzleLocation() const;
 
 	// TU functions
 	// Wether unit can afford action
@@ -271,9 +274,12 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Returns if unit did spend (false if unsufficient TUs)
 	bool spendTU(int cost);
 
-	void applyDamage(GameState &state, int damage, StateRef<DamageType> damageType,
+	// Returns true if sound and doodad were handled by it
+	bool applyDamage(GameState &state, int power, StateRef<DamageType> damageType,
 	                 AgentType::BodyPart bodyPart);
-	void handleCollision(GameState &state, Collision &c);
+	// Returns true if sound and doodad were handled by it
+	bool handleCollision(GameState &state, Collision &c);
+	
 	// sp<TileObjectVehicle> findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile);
 	// void attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehicle>
 	// enemyTile);
@@ -297,13 +303,13 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	void dropDown(GameState &state);
 	void tryToRiseUp(GameState &state);
 	void fallUnconscious(GameState &state);
-	void die(GameState &state, bool violently);
+	void die(GameState &state, bool violently, bool bledToDeath = false);
 	void destroy(GameState &state);
 
 	// Following members are not serialized, but rather are set in initBattle method
 
 	sp<std::vector<sp<Image>>> strategyImages;
-
+	sp<std::list<sp<Sample>>> genericHitSounds;
 	sp<TileObjectBattleUnit> tileObject;
 	sp<TileObjectShadow> shadowObject;
 

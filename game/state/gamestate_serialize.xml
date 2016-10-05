@@ -82,6 +82,7 @@
 		<member>large</member>
 		<member>maxHeight</member>
 		<member>height</member>
+		<member>muzzleZPosition</member>
 		<member>size</member>
 		<member>voxelMaps</member>
 	</object>
@@ -450,6 +451,7 @@
 		<member>door</member>
 		<member>brainsuckerHatch</member>
 		<member>teleport</member>
+		<member>genericHitSounds</member>
 		<member>walkSounds</member>
 		<member>objectDropSounds</member>
 		<member>throwSounds</member>
@@ -692,6 +694,12 @@
 		<member>icon_sprite</member>
 		<member>ignore_shield</member>
 		<member>modifiers</member>
+		<member>explosive</member>
+		<member>gas</member>
+		<member>flame</member>
+		<member>stun</member>
+		<member>smoke</member>
+		<member>doodadType</member>
 	</object>
 	<object>
 		<name>AEquipmentType</name>

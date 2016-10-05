@@ -31,19 +31,19 @@ int BattleMapPart::getAnimationFrame()
 	}
 }
 
-void BattleMapPart::handleCollision(GameState &state, Collision &c)
+bool BattleMapPart::handleCollision(GameState &state, Collision &c)
 {
 	if (!this->tileObject)
 	{
 		// It's possible multiple projectiles hit the same tile in the same
 		// tick, so if the object has already been destroyed just NOP this.
 		// The projectile will still 'hit' this tile though.
-		return;
+		return false;
 	}
 	if (this->falling)
 	{
 		// Already falling, just continue
-		return;
+		return false;
 	}
 
 	// Calculate damage (hmm, apparently Apoc uses 50-150 damage model for terrain, unlike UFO1&2
@@ -52,7 +52,7 @@ void BattleMapPart::handleCollision(GameState &state, Collision &c)
 	                                             c.projectile->damage, type->damageModifier));
 	if (damage <= type->constitution)
 	{
-		return;
+		return false;
 	}
 
 	// If we came this far, map part has been damaged and must cease to be
@@ -81,6 +81,7 @@ void BattleMapPart::handleCollision(GameState &state, Collision &c)
 			ceaseSupportProvision();
 		}
 	}
+	return false;
 }
 
 void BattleMapPart::findSupport()

@@ -72,4 +72,9 @@ Vec3<float> TileObjectBattleItem::getPosition() const
 	return p->getPosition();
 }
 
+float TileObjectBattleItem::getZOrder() const
+{
+	return getPosition().z - 1.0f;
+}
+
 } // namespace OpenApoc

@@ -62,7 +62,7 @@ sp<Projectile> VEquipment::fire(Vec3<float> targetPosition, StateRef<Vehicle> ta
 	{
 		this->weaponState = WeaponState::OutOfAmmo;
 	}
-	auto vehicleMuzzle = vehicleTile->getVehicle()->getMuzzleLocation();
+ 	auto vehicleMuzzle = vehicleTile->getVehicle()->getMuzzleLocation();
 	Vec3<float> velocity = targetPosition - vehicleMuzzle;
 	velocity = glm::normalize(velocity);
 	velocity *= type->speed * TICK_SCALE / 4; // I believe this is the correct formula

@@ -102,6 +102,7 @@ void Battle::initBattle(GameState &state)
 	for (auto &o : this->units)
 	{
 		o.second->strategyImages = state.battle_common_image_list->strategyImages;
+		o.second->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
 	}
 	if (forces.size() == 0)
 	{
@@ -220,6 +221,7 @@ sp<BattleUnit> Battle::addUnit(GameState &state)
 	UString id = UString::format("%s%d", BattleUnit::getPrefix(), (int)units.size());
 	unit->id = id;
 	unit->strategyImages = state.battle_common_image_list->strategyImages;
+	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
 	units[id] = unit;
 	return unit;
 }
@@ -260,24 +262,16 @@ void Battle::update(GameState &state, unsigned int ticks)
 		{
 			// FIXME: Handle collision
 			this->projectiles.erase(c.projectile);
-			if (c.projectile->impactSfx)
-			{
-				fw().soundBackend->playSample(c.projectile->impactSfx, c.position);
-			}
-
-			auto doodadType = c.projectile->doodadType;
-			if (doodadType)
-			{
-				auto doodad = this->placeDoodad(doodadType, c.position);
-			}
-
+			bool playSound = true;
+			bool displayDoodad = true;
 			switch (c.obj->getType())
 			{
 				case TileObject::Type::Unit:
 				{
 					auto unit = std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit();
-					unit->handleCollision(state, c);
-					LogWarning("Unit collision");
+					displayDoodad = !unit->handleCollision(state, c);
+					playSound = false;
+					LogWarning("Unit collision. Unit at %f %f %f, collision %f %f %f", unit->position.x, unit->position.y, unit->position.z, c.position.z, c.position.y, c.position.z);
 					break;
 				}
 				case TileObject::Type::Ground:
@@ -286,11 +280,27 @@ void Battle::update(GameState &state, unsigned int ticks)
 				case TileObject::Type::Feature:
 				{
 					auto mapPartTile = std::static_pointer_cast<TileObjectBattleMapPart>(c.obj);
-					mapPartTile->getOwner()->handleCollision(state, c);
+					displayDoodad = !mapPartTile->getOwner()->handleCollision(state, c);
+					playSound = displayDoodad;
 					break;
 				}
 				default:
 					LogError("Collision with non-collidable object");
+			}
+			if (displayDoodad)
+			{
+				auto doodadType = c.projectile->doodadType;
+				if (doodadType)
+				{
+					auto doodad = this->placeDoodad(doodadType, c.position);
+				}
+			}
+			if (playSound)
+			{
+				if (c.projectile->impactSfx)
+				{
+					fw().soundBackend->playSample(c.projectile->impactSfx, c.position);
+				}
 			}
 		}
 	}

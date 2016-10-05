@@ -15,6 +15,7 @@ class TileObjectBattleItem : public TileObject
 	~TileObjectBattleItem() override;
 	sp<BattleItem> getItem();
 	Vec3<float> getPosition() const override;
+	float getZOrder() const override;
 	Vec3<float> getCenterOffset() const override { return {0.0f, 0.0f, bounds_div_2.z}; }
 
   private:

@@ -699,6 +699,18 @@ sp<AEquipment> Agent::getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType
 	return nullptr;
 }
 
+sp<AEquipment> Agent::getFirstShield() const
+{
+	for (auto e : equipment)
+	{
+		if (e->type->type == AEquipmentType::Type::DisruptorShield)
+		{
+			return e;
+		}
+	}
+	return nullptr;
+}
+
 StateRef<BattleUnitImagePack> Agent::getImagePack(AgentType::BodyPart bodyPart) const
 {
 	AgentEquipmentLayout::EquipmentSlotType slotType = AgentType::getArmorSlotType(bodyPart);

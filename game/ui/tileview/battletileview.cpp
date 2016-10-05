@@ -429,7 +429,7 @@ void BattleTileView::render()
 					if (selectedTilePosition.z == z)
 					{
 						drawPathPreview = previewedPathCost != -1;
-						auto u = selTileOnCurLevel->getUnitIfPresent();
+						auto u = selTileOnCurLevel->getUnitIfPresent(true);
 						if (u)
 						{
 							// FIXME: Check if player can see unit, if not - do not change cursor!
@@ -691,14 +691,14 @@ void BattleTileView::render()
 				static const Vec2<float> offset = {-13.0f, -19.0f};
 				static const Vec2<float> offsetRunning = {0.0f, 0.0f};
 				static const Vec2<float> offsetBehavior = {0.0f, 0.0f};
-				static const Vec2<float> offsetBleed = {-5.0f, 0.0f};
+				static const Vec2<float> offsetBleed = {0.0f, 0.0f};
 				static const Vec2<float> offsetTU = {13.0f, -5.0f};
 				static const Vec2<float> offsetHealth = {6.0f, 2.0f};
 
 				Vec2<float> pos =
 				    tileToOffsetScreenCoords(
 				        obj.first->getPosition() +
-				        Vec3<float>{0.0f, 0.0f, obj.first->getCurrentHeight() * 1.5f / 40.0f}) +
+						Vec3<float>{0.0f, 0.0f, (obj.first->getCurrentHeight() - 4.0f) * 1.5f / 40.0f }) +
 				    offset;
 
 				// Selection arrow
@@ -727,11 +727,11 @@ void BattleTileView::render()
 				{
 					if (obj.first->isHealing)
 					{
-						r.draw(bleedingIcon, pos + offsetBleed);
+						r.draw(healingIcon, pos + offsetBleed);
 					}
 					else
 					{
-						r.draw(healingIcon, pos + offsetBleed);
+						r.draw(bleedingIcon, pos + offsetBleed);
 					}
 				}
 			}

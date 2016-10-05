@@ -3486,6 +3486,7 @@
         <store_space>30</store_space>
         <armor>30</armor>
         <score>9</score>
+        <damage_modifier>DAMAGEMODIFIER_DISRUPTOR_SHIELD</damage_modifier>
         <max_ammo>100</max_ammo>
         <recharge>1</recharge>
       </sp>

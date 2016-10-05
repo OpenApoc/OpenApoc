@@ -117,14 +117,14 @@ float TileObjectBattleMapPart::getZOrder() const
 	switch (type)
 	{
 		case Type::Ground:
-			return z - 3.0f;
+			return z - 5.0f;
 		case Type::LeftWall:
-			return z - 2.0f;
+			return z - 4.0f;
 		case Type::RightWall:
-			return z - 1.0f;
+			return z - 3.0f;
 		case Type::Feature:
 		{
-			return z + (float)map_part->type->height / 40.0f / 2.0f;
+			return z + (float)map_part->type->height / 40.0f / 2.0f - 2.0f;
 		}
 		default:
 			LogError("Impossible map part type %d", (int)type);

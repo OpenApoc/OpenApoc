@@ -1137,6 +1137,28 @@
     </value>
   </entry>
   <entry>
+    <key>DOODAD_30_EXPLODING_PAYLOAD</key>
+    <value>
+      <sp>
+        <lifetime>8</lifetime>
+        <imageOffset>
+          <x>23</x>
+          <y>34</y>
+        </imageOffset>
+        <frames>
+          <entry>
+            <image>PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/ptang.tab:78</image>
+            <time>4</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/ptang.tab:77</image>
+            <time>4</time>
+          </entry>
+        </frames>
+      </sp>
+    </value>
+  </entry>
+  <entry>
     <key>DOODAD_3_EXPLOSION</key>
     <value>
       <sp>

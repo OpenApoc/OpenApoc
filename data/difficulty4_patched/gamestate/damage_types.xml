@@ -102,6 +102,9 @@
             <value>0</value>
           </entry>
         </modifiers>
+        <explosive>true</explosive>
+        <gas>true</gas>
+        <doodadType>DOODAD_19_ALIEN_GAS</doodadType>
       </sp>
     </value>
   </entry>
@@ -632,6 +635,7 @@
             <value>60</value>
           </entry>
         </modifiers>
+        <explosive>true</explosive>
       </sp>
     </value>
   </entry>
@@ -736,6 +740,7 @@
             <value>50</value>
           </entry>
         </modifiers>
+        <explosive>true</explosive>
       </sp>
     </value>
   </entry>
@@ -945,6 +950,9 @@
             <value>10</value>
           </entry>
         </modifiers>
+        <explosive>true</explosive>
+        <flame>true</flame>
+        <doodadType>DOODAD_17_FIRE</doodadType>
       </sp>
     </value>
   </entry>
@@ -1363,6 +1371,10 @@
             <value>0</value>
           </entry>
         </modifiers>
+        <explosive>true</explosive>
+        <gas>true</gas>
+        <smoke>true</smoke>
+        <doodadType>DOODAD_18_SMOKE</doodadType>
       </sp>
     </value>
   </entry>
@@ -1467,6 +1479,7 @@
             <value>10</value>
           </entry>
         </modifiers>
+        <stun>true</stun>
       </sp>
     </value>
   </entry>
@@ -1572,6 +1585,10 @@
             <value>100</value>
           </entry>
         </modifiers>
+        <explosive>true</explosive>
+        <gas>true</gas>
+        <stun>true</stun>
+        <doodadType>DOODAD_20_STUN_GAS</doodadType>
       </sp>
     </value>
   </entry>

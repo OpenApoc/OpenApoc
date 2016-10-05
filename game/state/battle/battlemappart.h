@@ -36,7 +36,8 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	int getAnimationFrame();
 	int getMaxFrames();
 
-	void handleCollision(GameState &state, Collision &c);
+	// Returns true if sound and doodad were handled by it
+	bool handleCollision(GameState &state, Collision &c);
 
 	void update(GameState &state, unsigned int ticks);
 	// Check if we are still supported, and collapse if not

@@ -1,5 +1,7 @@
 #pragma once
+#ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
+#endif
 #include "game/state/battle/battleunit.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/stateobject.h"

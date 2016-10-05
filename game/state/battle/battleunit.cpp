@@ -1,4 +1,6 @@
+#ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
+#endif
 #include "game/state/battle/battleunit.h"
 #include "framework/framework.h"
 #include "game/state/aequipment.h"
@@ -249,14 +251,7 @@ int BattleUnit::getStunDamage() const
 	return stunDamageInTicks / SCALE;
 }
 
-void BattleUnit::dealStunDamage(int damage)
-{
-	// FIXME: Figure out stun damage scale
-	int SCALE = TICKS_PER_SECOND;
-	stunDamageInTicks += damage * SCALE;
-}
-
-bool BattleUnit::isDead() const { return getHealth() == 0 || destroyed; }
+bool BattleUnit::isDead() const { return getHealth() <= 0 || destroyed; }
 
 bool BattleUnit::isUnconscious() const { return !isDead() && getStunDamage() >= getHealth(); }
 
@@ -351,14 +346,135 @@ bool BattleUnit::canKneel() const
 	return true;
 }
 
-// FIXME: Apply damage to the unit
-void BattleUnit::applyDamage(GameState &state, int damage, StateRef<DamageType> damageType,
+void BattleUnit::addFatalWound(GameState &state)
+{
+	switch (randBoundsInclusive(state.rng, 0, 4))
+	{
+	case 0:
+		fatalWounds[AgentType::BodyPart::Body]++;
+		break;
+	case 1:
+		fatalWounds[AgentType::BodyPart::Helmet]++;
+		break;
+	case 2:
+		fatalWounds[AgentType::BodyPart::LeftArm]++;
+		break;
+	case 3:
+		fatalWounds[AgentType::BodyPart::RightArm]++;
+		break;
+	case 4:
+		fatalWounds[AgentType::BodyPart::Helmet]++;
+		break;
+	}
+}
+
+void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWounds, int stunPower)
+{
+	bool wasConscious = isConscious();
+	bool fatal = false;
+
+	// Deal stun damage
+	if (stunPower > 0)
+	{
+		// FIXME: Figure out stun damage scale
+		int SCALE = TICKS_PER_SECOND;
+
+		stunDamageInTicks += clamp(damage * SCALE, 0, std::max(0, stunPower * SCALE - stunDamageInTicks));
+	}
+	
+	// Generate fatal wounds
+	if (generateFatalWounds)
+	{
+		int woundDamageRemaining = damage;
+		while (woundDamageRemaining > 10)
+		{
+			woundDamageRemaining -= 10;
+			addFatalWound(state);
+			fatal = true;
+		}
+		if (randBoundsExclusive(state.rng, 0, 10) < woundDamageRemaining)
+		{ 
+			addFatalWound(state);
+			fatal = true;
+		}
+	}
+
+	// Deal damage
+	agent->modified_stats.health -= damage;
+
+	// Die or go unconscious
+	if (isDead())
+	{
+		LogWarning("Handle violent deaths");
+		die(state, true);
+		return;
+	}
+	else if (!isConscious() && wasConscious)
+	{
+		fallUnconscious(state);
+	}
+
+	// Emit sound
+	if (fatal)
+	{
+		if (agent->type->fatalWoundSfx.find(agent->gender) != agent->type->fatalWoundSfx.end() && !agent->type->fatalWoundSfx.at(agent->gender).empty())
+		{
+			fw().soundBackend->playSample(listRandomiser(state.rng, agent->type->fatalWoundSfx.at(agent->gender)), position);
+		}
+	}
+	else
+	{
+		if (agent->type->damageSfx.find(agent->gender) != agent->type->damageSfx.end() && !agent->type->damageSfx.at(agent->gender).empty())
+		{
+			fw().soundBackend->playSample(listRandomiser(state.rng, agent->type->damageSfx.at(agent->gender)), position);
+		}
+	}
+
+	return;
+}
+
+bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> damageType,
                              AgentType::BodyPart bodyPart)
 {
-	std::ignore = state;
+	fw().soundBackend->playSample(listRandomiser(state.rng, *genericHitSounds), position);
 
-	// FIXME: Process Disruptor shields!
-	LogWarning("Unit taking damage! Implement disruptor shields!");
+	// Calculate damage
+	int damage;
+	bool USER_OPTION_UFO_DAMAGE_MODEL = false;
+	if (damageType->explosive) // explosives deal no direct damage
+	{
+		damage = 0;
+	}
+	if (damageType->smoke) // smoke deals 1-3 stun damage
+	{
+		damage = randDamage050150(state.rng, 2);
+	}
+	else if (USER_OPTION_UFO_DAMAGE_MODEL)
+	{
+		damage = randDamage000200(state.rng, power);
+	}
+	else
+	{
+		damage = randDamage050150(state.rng, power);
+	}
+
+	// Hit shield if present
+	if (!damageType->ignore_shield)
+	{
+		auto shield = agent->getFirstShield();
+		if (shield)
+		{
+			damage = damageType->dealDamage(damage, shield->type->damage_modifier);
+			shield->ammo -= damage;
+			// Shield destroyed
+			if (shield->ammo <= 0)
+			{
+				agent->removeEquipment(shield);
+			}
+			state.current_battle->placeDoodad({ &state, "DOODAD_27_SHIELD" }, tileObject->getCenter());
+			return true;
+		}
+	}
 
 	// Calculate damage to armor type
 	auto armor = agent->getArmor(bodyPart);
@@ -374,154 +490,71 @@ void BattleUnit::applyDamage(GameState &state, int damage, StateRef<DamageType> 
 		armorValue = agent->type->armor.at(bodyPart);
 		damageModifier = agent->type->damage_modifier;
 	}
-	damage = damageType->dealDamage(damage, damageModifier) - armorValue;
+	// Smoke ignores armor value but does not ignore damage modifier
+	damage = damageType->dealDamage(damage, damageModifier) - (damageType->smoke ? 0 : armorValue);
 
 	// No daamge
 	if (damage <= 0)
 	{
-		return;
+		return false;
 	}
 
-	// FIXME: armor damage only by non-stun
-	LogWarning("Not all damage damages armor!");
-
-	// Armor damage
-	int armorDamage = damage / 10 + 1;
-	armor->ammo -= armorDamage;
-	if (armor->ammo <= 0)
+	// Smoke, fire and stun damage does not damage armor
+	if (!damageType->smoke && !damageType->stun && !damageType->flame && armor)
 	{
+		// Armor damage
+		int armorDamage = damage / 10 + 1;
+		armor->ammo -= armorDamage;
 		// Armor destroyed
-		agent->removeEquipment(armor);
+		if (armor->ammo <= 0)
+		{
+			agent->removeEquipment(armor);
+		}
 	}
 
-	// Health damage
-	LogWarning("Implement health/stun damage properly!");
-	agent->modified_stats.health -= damage;
-
-	// dir = glm::round(dir);
-	// auto armourDirection = VehicleType::ArmourDirection::Right;
-	// if (dir.x == 0 && dir.y == 0 && dir.z == 0)
-	//{
-	//	armourDirection = VehicleType::ArmourDirection::Front;
-	//}
-	// else if (dir * 0.5f == vehicleDir)
-	//{
-	//	armourDirection = VehicleType::ArmourDirection::Rear;
-	//}
-	//// FIXME: vehicle Z != 0
-	// else if (dir.z < 0)
-	//{
-	//	armourDirection = VehicleType::ArmourDirection::Top;
-	//}
-	// else if (dir.z > 0)
-	//{
-	//	armourDirection = VehicleType::ArmourDirection::Bottom;
-	//}
-	// else if ((vehicleDir.x == 0 && dir.x != dir.y) || (vehicleDir.y == 0 && dir.x == dir.y))
-	//{
-	//	armourDirection = VehicleType::ArmourDirection::Left;
-	//}
-
-	// float armourValue = 0.0f;
-	// auto armour = this->type->armour.find(armourDirection);
-	// if (armour != this->type->armour.end())
-	//{
-	//	armourValue = armour->second;
-	//}
-
-	// if (applyDamage(state, projectile->damage, armourValue))
-	//{
-	//	auto doodad = city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_3_EXPLOSION"},
-	//		this->tileObject->getPosition());
-
-	//	this->shadowObject->removeFromMap();
-	//	this->tileObject->removeFromMap();
-	//	this->shadowObject.reset();
-	//	this->tileObject.reset();
-	//	state.vehicles.erase(this->getId(state, this->shared_from_this()));
-	//	return;
-	//}
-
-	// if (this->shield <= damage)
-	//{
-	//	if (this->shield > 0)
-	//	{
-	//		damage -= this->shield;
-	//		this->shield = 0;
-
-	//		// destroy the shield modules
-	//		for (auto it = this->equipment.begin(); it != this->equipment.end();)
-	//		{
-	//			if ((*it)->type->type == VEquipmentType::Type::General &&
-	//				(*it)->type->shielding > 0)
-	//			{
-	//				it = this->equipment.erase(it);
-	//			}
-	//			else
-	//			{
-	//				++it;
-	//			}
-	//		}
-	//	}
-
-	//	damage -= armour;
-	//	if (damage > 0)
-	//	{
-	//		this->health -= damage;
-	//		if (this->health <= 0)
-	//		{
-	//			this->health = 0;
-	//			return true;
-	//		}
-	//		else if (isCrashed())
-	//		{
-	//			this->missions.clear();
-	//			this->missions.emplace_back(VehicleMission::crashLand(*this));
-	//			this->missions.front()->start(state, *this);
-	//			return false;
-	//		}
-	//	}
-	//}
-	// else
-	//{
-	//	this->shield -= damage;
-	//}
-	return;
+	// Apply damage according to type
+	if (damageType->flame)
+	{
+		LogWarning("Handle fire damage properly!");
+	}
+	else if (damageType->smoke)
+	{
+		dealDamage(state, damage, false, 9001);
+	}
+	else {
+		dealDamage(state, damage, true, damageType->stun ? power : 0);
+	}
+	
+	return false;
 }
 
-// FIXME: Handle unit's collision with projectile
-// SHIELD = DOODAD_27_SHIELD
-void BattleUnit::handleCollision(GameState &state, Collision &c)
+bool BattleUnit::handleCollision(GameState &state, Collision &c)
 {
 	std::ignore = state;
+
+	// Corpses do not handle collision
+	if (isDead())
+		return false;
 
 	if (!this->tileObject)
 	{
 		LogError("It's possible multiple projectiles hit the same tile in the same tick (?)");
-		return;
+		return false;
 	}
 
 	auto projectile = c.projectile.get();
 	if (projectile)
 	{
-		// Calculate damage
-		int damage;
-		bool USER_OPTION_UFO_DAMAGE_MODEL = false;
-		if (USER_OPTION_UFO_DAMAGE_MODEL)
-		{
-			damage = randDamage000200(state.rng, projectile->damage);
-		}
-		else
-		{
-			damage = randDamage050150(state.rng, projectile->damage);
-		}
-
 		// Determine body part hit
 		AgentType::BodyPart bodyPartHit = AgentType::BodyPart::Body;
 		// FIXME: Ensure body part determination is correct
 		// Assume top 25% is head, lower 25% is legs, and middle 50% is body/left/right
 		float altitude = (c.position.z - position.z) * 40.0f / (float)getCurrentHeight();
-		if (altitude > 0.75f)
+		if (projectile->damageType->gas) // gas deals damage to the head
+		{
+			bodyPartHit = AgentType::BodyPart::Helmet;
+		}
+		else if (altitude > 0.75f)
 		{
 			bodyPartHit = AgentType::BodyPart::Helmet;
 		}
@@ -547,8 +580,9 @@ void BattleUnit::handleCollision(GameState &state, Collision &c)
 			}
 		}
 
-		applyDamage(state, damage, projectile->damageType, bodyPartHit);
+		return applyDamage(state, projectile->damage, projectile->damageType, bodyPartHit);
 	}
+	return false;
 }
 
 void BattleUnit::update(GameState &state, unsigned int ticks)
@@ -617,7 +651,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		// If died or went unconscious
 		if (isDead())
 		{
-			die(state, true);
+			die(state, true, true);
 		}
 		if (!unconscious && isUnconscious())
 		{
@@ -982,7 +1016,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					{
 						// FIXME: Proper stun damage (ensure it is!)
 						stunDamageInTicks = 0;
-						dealStunDamage(agent->current_stats.health * 3 / 2);
+						dealDamage(state, agent->current_stats.health * 3 / 2, false, 9001);
 						fallUnconscious(state);
 					}
 					setPosition(newPosition);
@@ -1299,7 +1333,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				if (targetingMode == TargetingMode::Unit)
 				{
 					canFire = canFire && targetUnit->isConscious();
-					LogWarning("Implement checking LOS to targetUnit");
+					// FIXME: IMPLEMENT LOS CHECKING
 					canFire = canFire && true; // Here we check if target is visible
 					if (canFire)
 					{
@@ -1628,6 +1662,12 @@ void BattleUnit::dropDown(GameState &state)
 		}
 		break;
 	}
+	// Drop all gear
+	while (!agent->equipment.empty())
+	{
+		addMission(state, BattleUnitMission::dropItem(*this, agent->equipment.front()));
+	}
+	// Drop gear used by missions
 	std::list<sp<AEquipment>> itemsToDrop;
 	for (auto &m : missions)
 	{
@@ -1653,14 +1693,26 @@ void BattleUnit::retreat(GameState &state)
 	// FIXME: Trigger retreated event
 }
 
-void BattleUnit::die(GameState &state, bool violently)
+void BattleUnit::die(GameState &state, bool violently, bool bledToDeath)
 {
 	if (violently)
 	{
 		// FIXME: Explode if nessecary, or spawn shit
+		LogWarning("Implement violent deaths!");
+	}
+	// Clear focus
+	for (auto u : focusedByUnits)
+	{
+		u->focusUnit.clear();
+	}
+	focusedByUnits.clear();
+	// Emit sound
+	if (agent->type->dieSfx.find(agent->gender) != agent->type->dieSfx.end() && !agent->type->dieSfx.at(agent->gender).empty())
+	{
+		fw().soundBackend->playSample(listRandomiser(state.rng, agent->type->dieSfx.at(agent->gender)), position);
 	}
 	// FIXME: do what has to be done when unit dies
-	// Drop equipment, make notification,...
+	LogWarning("Implement a UNIT DIED notification!");
 	dropDown(state);
 }
 
@@ -1807,6 +1859,11 @@ unsigned int BattleUnit::getWalkSoundIndex()
 	{
 		return movement_sounds_played % 2;
 	}
+}
+
+Vec3<float> BattleUnit::getMuzzleLocation() const 
+{ 
+	return position + Vec3<float>{0.0f, 0.0f, ((float)agent->type->bodyType->muzzleZPosition.at(current_body_state)) / 40.0f}; 
 }
 
 // Alexey Andronov: Istrebitel

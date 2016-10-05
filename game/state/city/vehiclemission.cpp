@@ -1072,8 +1072,8 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 									xPos += vec.x;
 									yPos += vec.y;
 								}
-								xPos /= rooftop.size();
-								yPos /= rooftop.size();
+								xPos /= (int)rooftop.size();
+								yPos /= (int)rooftop.size();
 								// ensure object is within roof
 								if (rooftop.find({xPos, yPos}) == rooftop.end())
 								{
