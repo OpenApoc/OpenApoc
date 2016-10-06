@@ -11,6 +11,7 @@
 #include "game/state/tileview/tileobject_shadow.h"
 #include "game/state/tileview/tileobject_vehicle.h"
 #include "library/sp.h"
+#include <glm/glm.hpp>
 #include <limits>
 #include <queue>
 #include <random>

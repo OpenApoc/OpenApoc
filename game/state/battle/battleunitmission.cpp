@@ -6,6 +6,8 @@
 #include "game/state/tileview/tileobject_battleitem.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"
+#include <glm/glm.hpp>
+#include <glm/gtx/vector_angle.hpp>
 
 namespace OpenApoc
 {

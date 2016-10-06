@@ -5,6 +5,8 @@
 #include "game/state/tileview/tile.h"
 #include "library/voxel.h"
 #include <cmath>
+#include <glm/glm.hpp>
+#include <glm/gtx/vector_angle.hpp>
 
 namespace OpenApoc
 {

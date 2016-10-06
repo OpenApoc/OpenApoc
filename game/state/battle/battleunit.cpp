@@ -12,6 +12,8 @@
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_shadow.h"
 #include <cmath>
+#include <glm/glm.hpp>
+#include <glm/gtx/vector_angle.hpp>
 
 namespace OpenApoc
 {

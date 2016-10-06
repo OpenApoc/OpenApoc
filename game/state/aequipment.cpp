@@ -6,6 +6,7 @@
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "library/sp.h"
+#include <glm/glm.hpp>
 
 namespace OpenApoc
 {

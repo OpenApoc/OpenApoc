@@ -11,6 +11,7 @@
 #include "game/state/tileview/tileobject_scenery.h"
 #include "game/state/tileview/tileobject_shadow.h"
 #include "game/state/tileview/tileobject_vehicle.h"
+#include <glm/glm.hpp>
 
 namespace OpenApoc
 {

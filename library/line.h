@@ -1,6 +1,7 @@
 #pragma once
 
 #include "library/vec.h"
+#include <glm/glm.hpp>
 #include <iterator>
 
 namespace OpenApoc

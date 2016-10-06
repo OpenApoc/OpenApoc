@@ -29,6 +29,7 @@
 #include "game/ui/ufopaedia/ufopaediacategoryview.h"
 #include "game/ui/ufopaedia/ufopaediaview.h"
 #include "library/sp.h"
+#include <glm/glm.hpp>
 
 namespace OpenApoc
 {

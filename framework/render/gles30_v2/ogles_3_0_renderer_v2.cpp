@@ -4,6 +4,7 @@
 #include "framework/renderer_interface.h"
 #include "framework/trace.h"
 #include <cstdint>
+#include <glm/gtx/rotate_vector.hpp>
 
 #define GLESWRAP_GLES3
 #include "framework/render/gles30_v2/gleswrap.h"

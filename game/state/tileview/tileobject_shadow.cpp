@@ -5,6 +5,8 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battleunit.h"
+#include <glm/glm.hpp>
+#include <glm/gtx/vector_angle.hpp>
 
 namespace OpenApoc
 {

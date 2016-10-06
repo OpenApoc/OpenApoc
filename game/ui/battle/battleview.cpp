@@ -16,6 +16,7 @@
 #include "game/ui/base/basescreen.h"
 #include "game/ui/general/ingameoptions.h"
 #include "library/sp.h"
+#include <glm/glm.hpp>
 
 namespace OpenApoc
 {

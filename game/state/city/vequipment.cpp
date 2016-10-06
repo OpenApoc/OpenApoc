@@ -6,6 +6,7 @@
 #include "game/state/rules/vequipment_type.h"
 #include "game/state/tileview/tileobject_vehicle.h"
 #include "library/sp.h"
+#include <glm/glm.hpp>
 
 namespace OpenApoc
 {

@@ -3,6 +3,7 @@
 #include "game/state/tileview/tile.h"
 #include <algorithm>
 #include <cmath>
+#include <glm/glm.hpp>
 
 namespace OpenApoc
 {
