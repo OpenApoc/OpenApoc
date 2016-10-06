@@ -9,6 +9,7 @@
 #include "game/ui/general/messagebox.h"
 #include "library/sp.h"
 #include <iomanip>
+#include <sstream>
 
 #ifdef _MSC_VER
 // msvs reports level 3 warning 4996 - std::localtime is unsafe

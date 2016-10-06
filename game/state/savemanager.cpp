@@ -3,6 +3,7 @@
 #include "framework/framework.h"
 #include "framework/trace.h"
 #include <algorithm>
+#include <sstream>
 
 // Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
 // symbols as part of the module that uses it

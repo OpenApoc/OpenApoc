@@ -2,12 +2,6 @@
 
 #include "library/strings.h"
 
-// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
-// symbols as part of the module that uses it
-#define BOOST_ALL_NO_LIB
-#include <boost/date_time.hpp>
-#include <locale>
-
 namespace OpenApoc
 {
 
@@ -20,16 +14,8 @@ static const unsigned TURBO_TICKS = 5 * 60 * TICKS_PER_SECOND;
 class GameTime
 {
   private:
-	static const boost::posix_time::ptime GAME_START;
-	// needs some fancy initialization
-	static /*const*/ std::locale *TIME_FORMAT, *DATE_LONG_FORMAT, *DATE_SHORT_FORMAT;
-
-	boost::posix_time::ptime getPtime() const;
-
 	bool dayPassedFlag = false;
 	bool weekPassedFlag = false;
-
-	static boost::posix_time::time_duration ticksToPosix(int64_t ticks);
 
   public:
 	uint64_t ticks = 0;
