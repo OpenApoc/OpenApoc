@@ -24,6 +24,5 @@ class DamageType : public StateObject<DamageType>
 	std::map<StateRef<DamageModifier>, int> modifiers;
 
 	int dealDamage(int damage, StateRef<DamageModifier> modifier) const;
-
 };
 }

@@ -78,21 +78,20 @@ void Projectile::update(GameState &state, unsigned int ticks)
 			float maxAngleToTurn = (float)ticks * turnRate * PROJECTILE_TURN_PER_TICK;
 			// angle is always > 0, turning direction determined by cross product
 			float angleToTarget =
-				clamp(glm::angle(glm::normalize(velocity), glm::normalize(targetVector)),
-						0.0f, maxAngleToTurn);
+			    clamp(glm::angle(glm::normalize(velocity), glm::normalize(targetVector)), 0.0f,
+			          maxAngleToTurn);
 			glm::mat4 rotationMat(1);
 			rotationMat = glm::rotate(rotationMat, angleToTarget, cross);
 			velocity = glm::vec3(rotationMat * glm::vec4(velocity, 1.0));
 		}
 
-	
-		
 		/*
 		// FIXME: Won't work, ignore for now, but in the future we must implement vanilla algorithm
 		// Attempt to recreate vanilla algorithm
-		// Vanilla algorithm only turns if projectile is not within a 45 degree arc containing target
+		// Vanilla algorithm only turns if projectile is not within a 45 degree arc containing
+		target
 		// Implement properly, for now implementing only XY
-		
+
 		// Vector to target
 		auto targetVector = trackedObject->getVoxelCentrePosition() - position;
 		// Vector to target with Z=0
@@ -101,24 +100,26 @@ void Projectile::update(GameState &state, unsigned int ticks)
 		Vec3<float> velocityXY = { velocity.x, velocity.y, 0.0f };
 
 		// Step 01: Turn fully on Z
-		
+
 		// Target vector's Z angle
-		auto targetVectorAngleZ = (targetVector.z >=0 ? 1 : -1) * glm::angle(glm::normalize(targetVector), glm::normalize(targetVectorXY));
+		auto targetVectorAngleZ = (targetVector.z >=0 ? 1 : -1) *
+		glm::angle(glm::normalize(targetVector), glm::normalize(targetVectorXY));
 		// Velocity's Z angle
-		auto velocityAngleZ = (velocity.z >= 0 ? 1 : -1) * glm::angle(glm::normalize(velocity), glm::normalize(velocityXY));
+		auto velocityAngleZ = (velocity.z >= 0 ? 1 : -1) * glm::angle(glm::normalize(velocity),
+		glm::normalize(velocityXY));
 
 		// Turning on Z, full angle
 		auto angleDiffZ = targetVectorAngleZ - velocityAngleZ;
 		auto crossDiffZ = glm::cross(velocity, velocityXY);
 		if (crossDiffZ.x != 0 || crossDiffZ.y != 0 || crossDiffZ.z != 0)
 		{
-			glm::mat4 rotationMat(1);
-			rotationMat = glm::rotate(rotationMat, angleDiffZ, crossDiffZ);
-			velocity = glm::vec3(rotationMat * glm::vec4(velocity, 1.0));
+		    glm::mat4 rotationMat(1);
+		    rotationMat = glm::rotate(rotationMat, angleDiffZ, crossDiffZ);
+		    velocity = glm::vec3(rotationMat * glm::vec4(velocity, 1.0));
 		}
 
 		// Step 02: Turn on XY
-		
+
 		// Reference vector
 		Vec3<float> south = { 0.0f, 1.0f, 0.0f };
 		// Determine target's facing relative to south
@@ -129,27 +130,31 @@ void Projectile::update(GameState &state, unsigned int ticks)
 		// would look like this:		 -2			2
 		//							 		-1   1
 		// Since angle returned is always positive, we add sign using cross product's Z
-		auto targetArcXY = (targetCrossXY.z >= 0 ? -1 : 1 ) * (int)(glm::angle(glm::normalize(targetVectorXY), south) * 180.0f / M_PI / 45.0f + 1);
+		auto targetArcXY = (targetCrossXY.z >= 0 ? -1 : 1 ) *
+		(int)(glm::angle(glm::normalize(targetVectorXY), south) * 180.0f / M_PI / 45.0f + 1);
 		// Same as above but for velocity
 		auto velocityCrossXY = glm::cross(velocityXY, south);
-		auto velocityArcXY = (targetCrossXY.z >= 0 ? -1 : 1) * (int)(glm::angle(glm::normalize(velocityXY), south) * 180.0f / M_PI / 45.0f + 1);
+		auto velocityArcXY = (targetCrossXY.z >= 0 ? -1 : 1) *
+		(int)(glm::angle(glm::normalize(velocityXY), south) * 180.0f / M_PI / 45.0f + 1);
 
 		// Turning on XY, vanilla turned always by full value
 		float angleDiffXY = (float)ticks * turnRate * PROJECTILE_TURN_PER_TICK;
 		auto crossDiffXY = glm::cross(velocityXY, targetVectorXY);
 		if (crossDiffXY.x != 0 || crossDiffXY.y != 0 || crossDiffXY.z != 0)
 		{
-			// Vanilla only turned if arcs don't match
-			if (velocityArcXY == targetArcXY)
-			{
-				LogWarning("(%f %f) (%f %f) %f %f",targetVectorXY.x, targetVectorXY.y, velocityXY.x, velocityXY.y,
-					glm::angle(glm::normalize(targetVectorXY), south)* 180.0f / M_PI, glm::angle(glm::normalize(velocityXY), south)* 180.0f / M_PI);
- 				angleDiffXY = 0.0f;  
-			}
+		    // Vanilla only turned if arcs don't match
+		    if (velocityArcXY == targetArcXY)
+		    {
+		        LogWarning("(%f %f) (%f %f) %f %f",targetVectorXY.x, targetVectorXY.y, velocityXY.x,
+		velocityXY.y,
+		            glm::angle(glm::normalize(targetVectorXY), south)* 180.0f / M_PI,
+		glm::angle(glm::normalize(velocityXY), south)* 180.0f / M_PI);
+		        angleDiffXY = 0.0f;
+		    }
 
-			glm::mat4 rotationMat(1);
-			rotationMat = glm::rotate(rotationMat, angleDiffXY, crossDiffXY);
-			velocity = glm::vec3(rotationMat * glm::vec4(velocity, 1.0));
+		    glm::mat4 rotationMat(1);
+		    rotationMat = glm::rotate(rotationMat, angleDiffXY, crossDiffXY);
+		    velocity = glm::vec3(rotationMat * glm::vec4(velocity, 1.0));
 		}
 		*/
 	}

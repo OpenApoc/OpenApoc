@@ -48,10 +48,10 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 				Vec3<float> targetVectorZeroZ = {targetVector.x, targetVector.y, 0.0f};
 				// Firing angle is 0 for -15..15, +-1  for -30..-15 and 15..30, and 2 for everything
 				// else
-				firingAngle = 
-				    (int)((glm::angle(glm::normalize(targetVector), glm::normalize(targetVectorZeroZ)) *
-				     360.0f / 2.0f / M_PI) /
-				    15.0f);
+				firingAngle = (int)((glm::angle(glm::normalize(targetVector),
+				                                glm::normalize(targetVectorZeroZ)) *
+				                     360.0f / 2.0f / M_PI) /
+				                    15.0f);
 				if (targetVector.z < 0)
 				{
 					firingAngle = -firingAngle;
