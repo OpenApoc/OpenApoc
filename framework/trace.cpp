@@ -93,6 +93,17 @@ class TraceManager
 		return list;
 	}
 	~TraceManager();
+	std::ofstream outFile;
+	TraceManager()
+	{
+		auto outPath = traceFile.get();
+		outFile = std::ofstream(outPath.str());
+		if (!outFile)
+		{
+			LogError("Failed to open trace file \"%s\"", outPath.cStr());
+			return;
+		}
+	}
 	void write();
 };
 
@@ -129,14 +140,6 @@ void TraceManager::write()
 {
 	LogAssert(OpenApoc::Trace::enabled);
 	OpenApoc::Trace::enabled = false;
-
-	auto outPath = traceFile.get();
-	std::ofstream outFile(outPath.str());
-	if (!outFile)
-	{
-		LogError("Failed to open output trace file \"%s\"", outPath.cStr());
-		return;
-	}
 
 	// FIXME: Use proper json parser instead of magically constructing from strings?
 
