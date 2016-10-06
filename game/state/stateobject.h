@@ -6,6 +6,10 @@
 #include <exception>
 #include <map>
 
+#ifndef NDEBUG
+#include "library/strings_format.h"
+#endif
+
 namespace OpenApoc
 {
 class GameState;
