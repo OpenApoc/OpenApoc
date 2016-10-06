@@ -1,4 +1,5 @@
 #include "framework/framework.h"
+#include "library/strings_format.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
 
@@ -83,9 +84,9 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state, Difficult
 					else
 					{
 						o->loot[priority].emplace_back(
-						    &state, UString::format("%s%s", AEquipmentType::getPrefix(),
-						                            canon_string(data.agent_equipment_names->get(
-						                                ldata.loot_idx[k][j]))));
+						    &state, format("%s%s", AEquipmentType::getPrefix(),
+						                   canon_string(data.agent_equipment_names->get(
+						                       ldata.loot_idx[k][j]))));
 					}
 				}
 			}

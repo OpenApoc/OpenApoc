@@ -1,5 +1,6 @@
 #include "framework/framework.h"
 #include "game/state/rules/vequipment_type.h"
+#include "library/strings_format.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
 
@@ -40,7 +41,7 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Diffic
 		auto edata = data.vehicle_equipment->get(i);
 
 		e->name = data.vehicle_equipment_names->get(i);
-		UString id = UString::format("%s%s", VEquipmentType::getPrefix(), canon_string(e->name));
+		UString id = format("%s%s", VEquipmentType::getPrefix(), canon_string(e->name));
 
 		e->id = id;
 
@@ -69,10 +70,10 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Diffic
 		// FIXME: max_ammo 0xffff is used for 'no ammo' (IE automatically-recharging stuff)
 
 		e->max_ammo = edata.max_ammo;
-		e->ammo_type = UString::format("%d", (int)edata.ammo_type);
+		e->ammo_type = format("%d", (int)edata.ammo_type);
 		// Force all sprites into the correct palette by using A_RANDOM_VEHICLES_BACKGROUND pcx
 		//(I assume the parts of the palette used for this are the same on all?)
-		e->equipscreen_sprite = fw().data->loadImage(UString::format(
+		e->equipscreen_sprite = fw().data->loadImage(format(
 		    "PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:%d:xcom3/ufodata/vhawk.pcx",
 		    (int)edata.sprite_idx));
 		e->equipscreen_size = {edata.size_x, edata.size_y};
@@ -252,7 +253,7 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Diffic
 					e->explosion_graphic = {&state, doodad_id};
 				}
 
-				e->icon = fw().data->loadImage(UString::format(
+				e->icon = fw().data->loadImage(format(
 				    "PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:%d", weapon_count));
 
 				auto projectile_sprites = data.projectile_sprites->get(wData.projectile_image);
@@ -261,8 +262,8 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Diffic
 					UString sprite_path = "";
 					if (projectile_sprites.sprites[i] != 255)
 					{
-						sprite_path = UString::format("bulletsprites/city/%02u.png",
-						                              (unsigned)projectile_sprites.sprites[i]);
+						sprite_path = format("bulletsprites/city/%02u.png",
+						                     (unsigned)projectile_sprites.sprites[i]);
 					}
 					else
 					{
@@ -369,11 +370,11 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Diffic
 			d->repeatable = i == UFO_DOODAD_6; // dimension gate
 			for (int j = tabOffsets.x; j < tabOffsets.y; j++)
 			{
-				d->frames.push_back({fw().data->loadImage(UString::format(
-				                         "PCK:xcom3/ufodata/ptang.pck:xcom3/ufodata/"
-				                         "ptang.tab:%d",
-				                         j)),
-				                     frameTTL});
+				d->frames.push_back(
+				    {fw().data->loadImage(format("PCK:xcom3/ufodata/ptang.pck:xcom3/ufodata/"
+				                                 "ptang.tab:%d",
+				                                 j)),
+				     frameTTL});
 			}
 
 			state.doodad_types[doodad_id] = d;

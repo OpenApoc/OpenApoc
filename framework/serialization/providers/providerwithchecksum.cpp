@@ -1,7 +1,9 @@
 #include "framework/serialization/providers/providerwithchecksum.h"
 #include "framework/logger.h"
 #include "library/strings.h"
+#include "library/strings_format.h"
 #include <boost/filesystem.hpp>
+#include <sstream>
 namespace fs = boost::filesystem;
 
 #include "dependencies/pugixml/src/pugixml.hpp"
@@ -26,7 +28,7 @@ static UString calculate_checksum(const std::string &str)
 			// FIXME: Probably need to do the reverse for big endian?
 			unsigned int byteHex = v & 0xff000000;
 			byteHex >>= 24;
-			hashString += UString::format("%02x", byteHex).str();
+			hashString += format("%02x", byteHex).str();
 			v <<= 8;
 		}
 	}

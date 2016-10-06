@@ -2,6 +2,7 @@
 #include "framework/framework.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlemap.h"
+#include "library/strings_format.h"
 #include "tools/extractors/common/battlemap.h"
 #include "tools/extractors/extractors.h"
 
@@ -14,7 +15,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
                                                               const UString dirName,
                                                               const int index)
 {
-	UString tilePrefix = UString::format("%s_", dirName);
+	UString tilePrefix = format("%s_", dirName);
 	UString map_prefix = "xcom3/maps/";
 	UString mapunits_suffix = "/mapunits/";
 
@@ -76,7 +77,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 
 	auto m = mksp<BattleMap>();
 
-	UString id = UString::format("%s%s", BattleMap::getPrefix(), this->battleMapPaths[index]);
+	UString id = format("%s%s", BattleMap::getPrefix(), this->battleMapPaths[index]);
 
 	m->id = id;
 	m->chunk_size = {bdata.chunk_x, bdata.chunk_y, bdata.chunk_z};
@@ -120,46 +121,45 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 	}
 
 	if (bdata.destroyed_ground_idx != 0)
-		m->destroyed_ground_tile = {
-		    &state, UString::format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix, "GD_",
-		                            (unsigned)bdata.destroyed_ground_idx)};
+		m->destroyed_ground_tile = {&state,
+		                            format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix,
+		                                   "GD_", (unsigned)bdata.destroyed_ground_idx)};
 
 	for (int i = 0; i < 5; i++)
 	{
 		if (rdata.left_wall[i] != 0)
 		{
 			m->rubble_left_wall.emplace_back(
-			    &state, UString::format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix,
-			                            "LW_", (unsigned)rdata.left_wall[i]));
+			    &state, format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix, "LW_",
+			                   (unsigned)rdata.left_wall[i]));
 		}
 		if (rdata.right_wall[i] != 0)
 		{
 			m->rubble_right_wall.emplace_back(
-			    &state, UString::format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix,
-			                            "RW_", (unsigned)rdata.right_wall[i]));
+			    &state, format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix, "RW_",
+			                   (unsigned)rdata.right_wall[i]));
 		}
 		if (rdata.feature[i] != 0)
 		{
-			m->rubble_feature.emplace_back(
-			    &state, UString::format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix,
-			                            "FT_", (unsigned)rdata.feature[i]));
+			m->rubble_feature.emplace_back(&state,
+			                               format("%s%s%s%u", BattleMapPartType::getPrefix(),
+			                                      tilePrefix, "FT_", (unsigned)rdata.feature[i]));
 		}
 	}
 
 	for (int i = 0; i < 4; i++)
 	{
-		m->exit_grounds.emplace_back(
-		    &state, UString::format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix, "GD_",
-		                            (unsigned)firstExitIdx + i));
+		m->exit_grounds.emplace_back(&state, format("%s%s%s%u", BattleMapPartType::getPrefix(),
+		                                            tilePrefix, "GD_", (unsigned)firstExitIdx + i));
 	}
 
 	// Trying all possible names, because game actually has some maps missing sectors in the middle
 	// (like, 05RESCUE has no SEC04 but has SEC05 and on)
 	for (int sector = 1; sector < 100; sector++)
 	{
-		UString secName = UString::format("%02d", sector);
+		UString secName = format("%02d", sector);
 
-		UString tilesName = UString::format("%s_%02d", dirName, sector);
+		UString tilesName = format("%s_%02d", dirName, sector);
 
 		SecSdtStructure sdata;
 		{
@@ -193,9 +193,9 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 	}
 
 	if (bdata.destroyed_ground_idx != 0)
-		m->destroyed_ground_tile = {
-		    &state, UString::format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix, "GD_",
-		                            (unsigned)bdata.destroyed_ground_idx)};
+		m->destroyed_ground_tile = {&state,
+		                            format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix,
+		                                   "GD_", (unsigned)bdata.destroyed_ground_idx)};
 
 	state.battle_maps[id] = m;
 }
@@ -206,7 +206,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 	std::map<UString, up<BattleMapSectorTiles>> sectors;
 	UString map_prefix = "xcom3/maps/";
 	UString dirName = mapRootName;
-	UString tilePrefix = UString::format("%s_", dirName);
+	UString tilePrefix = format("%s_", dirName);
 	BuildingDatStructure bdata;
 	{
 		auto fileName = dirName + UString("/building.dat");
@@ -230,8 +230,8 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 	// (like, 05RESCUE has no SEC04 but has SEC05 and on)
 	for (int sector = 1; sector < 100; sector++)
 	{
-		UString secName = UString::format("%02d", sector);
-		UString tilesName = UString::format("%s_%02d", dirName, sector);
+		UString secName = format("%02d", sector);
+		UString tilesName = format("%s_%02d", dirName, sector);
 		up<BattleMapSectorTiles> tiles(new BattleMapSectorTiles());
 
 		SecSdtStructure sdata;
@@ -418,36 +418,32 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 						// read ground
 						if (tdata.GD != 0)
 						{
-							auto tileName =
-							    UString::format("%s%s%s%u", BattleMapPartType::getPrefix(),
-							                    tilePrefix, "GD_", (unsigned)tdata.GD);
+							auto tileName = format("%s%s%s%u", BattleMapPartType::getPrefix(),
+							                       tilePrefix, "GD_", (unsigned)tdata.GD);
 
 							tiles->initial_grounds[Vec3<int>{x, y, z}] = {&state, tileName};
 						}
 						// read left wall
 						if (tdata.LW != 0)
 						{
-							auto tileName =
-							    UString::format("%s%s%s%u", BattleMapPartType::getPrefix(),
-							                    tilePrefix, "LW_", (unsigned)tdata.LW);
+							auto tileName = format("%s%s%s%u", BattleMapPartType::getPrefix(),
+							                       tilePrefix, "LW_", (unsigned)tdata.LW);
 
 							tiles->initial_left_walls[Vec3<int>{x, y, z}] = {&state, tileName};
 						}
 						// read right wall
 						if (tdata.RW != 0)
 						{
-							auto tileName =
-							    UString::format("%s%s%s%u", BattleMapPartType::getPrefix(),
-							                    tilePrefix, "RW_", (unsigned)tdata.RW);
+							auto tileName = format("%s%s%s%u", BattleMapPartType::getPrefix(),
+							                       tilePrefix, "RW_", (unsigned)tdata.RW);
 
 							tiles->initial_right_walls[Vec3<int>{x, y, z}] = {&state, tileName};
 						}
 						// read scenery
 						if (tdata.FT != 0)
 						{
-							auto tileName =
-							    UString::format("%s%s%s%u", BattleMapPartType::getPrefix(),
-							                    tilePrefix, "FT_", (unsigned)tdata.FT);
+							auto tileName = format("%s%s%s%u", BattleMapPartType::getPrefix(),
+							                       tilePrefix, "FT_", (unsigned)tdata.FT);
 
 							tiles->initial_features[Vec3<int>{x, y, z}] = {&state, tileName};
 						}

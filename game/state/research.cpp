@@ -5,6 +5,7 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "gameevent.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -373,16 +374,15 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 
 										auto v = mksp<Vehicle>();
 										v->type = {state.get(), type};
-										v->name = UString::format("%s %d", type->name,
-										                          ++type->numCreated);
+										v->name = format("%s %d", type->name, ++type->numCreated);
 										v->city = {state.get(), "CITYMAP_HUMAN"};
 										v->currentlyLandedBuilding = {state.get(),
 										                              base.second->building};
 										v->homeBuilding = {state.get(), base.second->building};
 										v->owner = state->getPlayer();
 										v->health = (int)type->health;
-										UString vID = UString::format("%s%d", Vehicle::getPrefix(),
-										                              state->lastVehicle++);
+										UString vID = format("%s%d", Vehicle::getPrefix(),
+										                     state->lastVehicle++);
 										state->vehicles[vID] = v;
 										v->currentlyLandedBuilding->landed_vehicles.insert(
 										    {state.get(), vID});

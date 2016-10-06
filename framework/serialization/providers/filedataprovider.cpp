@@ -3,6 +3,7 @@
 #include "library/strings.h"
 #include <boost/filesystem.hpp>
 #include <fstream>
+#include <sstream>
 
 namespace fs = boost::filesystem;
 

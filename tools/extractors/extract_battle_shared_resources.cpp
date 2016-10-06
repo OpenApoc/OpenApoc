@@ -3,6 +3,7 @@
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
+#include "library/strings_format.h"
 #include "tools/extractors/common/tacp.h"
 #include "tools/extractors/extractors.h"
 #include <limits>
@@ -29,31 +30,31 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state)
 	state.battle_common_image_list->strategyImages = mksp<std::vector<sp<Image>>>();
 	for (size_t i = 0; i < gameObjectStrategySpriteCount; i++)
 	{
-		state.battle_common_image_list->strategyImages->push_back(fw().data->loadImage(
-		    UString::format("PCKSTRAT:xcom3/tacdata/stratico.pck:xcom3/tacdata/"
-		                    "stratico.tab:%u",
-		                    (unsigned)i)));
+		state.battle_common_image_list->strategyImages->push_back(
+		    fw().data->loadImage(format("PCKSTRAT:xcom3/tacdata/stratico.pck:xcom3/tacdata/"
+		                                "stratico.tab:%u",
+		                                (unsigned)i)));
 	}
 
 	state.battle_common_image_list->loadingImage =
 	    fw().data->loadImage("xcom3/ufodata/enttact.pcx");
 
 	state.battle_common_image_list->focusArrows.push_back(
-	    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
-	                                         64)));
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                64)));
 	state.battle_common_image_list->focusArrows.push_back(
-	    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
-	                                         65)));
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                65)));
 	state.battle_common_image_list->focusArrows.push_back(
-	    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
-	                                         66)));
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                66)));
 	state.battle_common_image_list->focusArrows.push_back(
-	    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
-	                                         67)));
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                67)));
 
 	// Common Sounds
 
@@ -110,12 +111,12 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state)
 
 		state.battle_common_sample_list->walkSounds.push_back(mksp<std::vector<sp<Sample>>>());
 		state.battle_common_sample_list->walkSounds[i - 1]->push_back(fw().data->loadSample(
-		    UString::format("RAWSOUND:xcom3/rawsound/extra/ft%s%d.raw:22050", sfx_name.cStr(), 1)));
+		    format("RAWSOUND:xcom3/rawsound/extra/ft%s%d.raw:22050", sfx_name.cStr(), 1)));
 		state.battle_common_sample_list->walkSounds[i - 1]->push_back(fw().data->loadSample(
-		    UString::format("RAWSOUND:xcom3/rawsound/extra/ft%s%d.raw:22050", sfx_name.cStr(), 2)));
+		    format("RAWSOUND:xcom3/rawsound/extra/ft%s%d.raw:22050", sfx_name.cStr(), 2)));
 
 		state.battle_common_sample_list->objectDropSounds.push_back(fw().data->loadSample(
-		    UString::format("RAWSOUND:xcom3/rawsound/extra/ob%s.raw:22050", sfx_name.cStr())));
+		    format("RAWSOUND:xcom3/rawsound/extra/ob%s.raw:22050", sfx_name.cStr())));
 	}
 
 	state.battle_common_sample_list->throwSounds.push_back(

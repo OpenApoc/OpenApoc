@@ -6,6 +6,7 @@
 #include "game/state/tileview/tileobject_battleitem.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"
+#include "library/strings_format.h"
 #include <glm/glm.hpp>
 #include <glm/gtx/vector_angle.hpp>
 
@@ -1924,42 +1925,39 @@ UString BattleUnitMission::getName()
 	switch (this->type)
 	{
 		case MissionType::AcquireTU:
-			name = "AcquireTUs " + UString::format(" %u", this->timeUnits);
+			name = "AcquireTUs " + format(" %u", this->timeUnits);
 			break;
 		case MissionType::GotoLocation:
-			name =
-			    "GotoLocation " + UString::format(" {%d,%d,%d}", this->targetLocation.x,
-			                                      this->targetLocation.y, this->targetLocation.z);
+			name = "GotoLocation " + format(" {%d,%d,%d}", this->targetLocation.x,
+			                                this->targetLocation.y, this->targetLocation.z);
 			break;
 		case MissionType::Teleport:
-			name = "Teleport to " + UString::format(" {%d,%d,%d}", this->targetLocation.x,
-			                                        this->targetLocation.y, this->targetLocation.z);
+			name = "Teleport to " + format(" {%d,%d,%d}", this->targetLocation.x,
+			                               this->targetLocation.y, this->targetLocation.z);
 			break;
 		case MissionType::RestartNextMission:
 			name = "Restart next mission";
 			break;
 		case MissionType::Snooze:
-			name = "Snooze " + UString::format(" for %u ticks", this->timeToSnooze);
+			name = "Snooze " + format(" for %u ticks", this->timeToSnooze);
 			break;
 		case MissionType::ChangeBodyState:
-			name = "ChangeBodyState " + UString::format("%d", (int)this->bodyState);
+			name = "ChangeBodyState " + format("%d", (int)this->bodyState);
 			break;
 		case MissionType::ThrowItem:
 			name = "ThrowItem " +
-			       UString::format(
-			           "%s at %d,%d,%d", item ? this->item->type->name.cStr() : "(item is gone)",
-			           this->targetLocation.x, this->targetLocation.y, this->targetLocation.z);
+			       format("%s at %d,%d,%d", item ? this->item->type->name.cStr() : "(item is gone)",
+			              this->targetLocation.x, this->targetLocation.y, this->targetLocation.z);
 			break;
 		case MissionType::DropItem:
-			name = "DropItem " +
-			       UString::format("%s", item ? this->item->type->name.cStr() : "(item is gone)");
+			name =
+			    "DropItem " + format("%s", item ? this->item->type->name.cStr() : "(item is gone)");
 			break;
 		case MissionType::ReachGoal:
 			name = "ReachGoal";
 			break;
 		case MissionType::Turn:
-			name =
-			    "Turn " + UString::format(" {%d,%d}", this->targetFacing.x, this->targetFacing.y);
+			name = "Turn " + format(" {%d,%d}", this->targetFacing.x, this->targetFacing.y);
 			break;
 		case MissionType::Fall:
 			name = "Fall!...FALL!!";

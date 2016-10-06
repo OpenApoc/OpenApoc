@@ -11,6 +11,7 @@
 #include "game/state/tileview/tileobject_scenery.h"
 #include "game/state/tileview/tileobject_shadow.h"
 #include "game/state/tileview/tileobject_vehicle.h"
+#include "library/strings_format.h"
 #include <glm/glm.hpp>
 
 namespace OpenApoc
@@ -1380,8 +1381,8 @@ UString VehicleMission::getName()
 	switch (this->type)
 	{
 		case MissionType::GotoLocation:
-			name += UString::format(" {%d,%d,%d}", this->targetLocation.x, this->targetLocation.y,
-			                        this->targetLocation.z);
+			name += format(" {%d,%d,%d}", this->targetLocation.x, this->targetLocation.y,
+			               this->targetLocation.z);
 			break;
 		case MissionType::GotoBuilding:
 			name += " " + this->targetBuilding.id;
@@ -1393,7 +1394,7 @@ UString VehicleMission::getName()
 			name += " " + this->targetBuilding.id;
 			break;
 		case MissionType::Snooze:
-			name += UString::format(" for %u ticks", this->timeToSnooze);
+			name += format(" for %u ticks", this->timeToSnooze);
 			break;
 		case MissionType::TakeOff:
 			name += " from " + this->targetBuilding.id;
@@ -1402,19 +1403,19 @@ UString VehicleMission::getName()
 			name += " in " + this->targetBuilding.id;
 			break;
 		case MissionType::Crash:
-			name += UString::format(" landing on {%d,%d,%d}", this->targetLocation.x,
-			                        this->targetLocation.y, this->targetLocation.z);
+			name += format(" landing on {%d,%d,%d}", this->targetLocation.x, this->targetLocation.y,
+			               this->targetLocation.z);
 			break;
 		case MissionType::AttackVehicle:
-			name += UString::format(" target \"%s\"", this->targetVehicle.id);
+			name += format(" target \"%s\"", this->targetVehicle.id);
 			break;
 		case MissionType::Patrol:
-			name += UString::format(" {%d,%d,%d}", this->targetLocation.x, this->targetLocation.y,
-			                        this->targetLocation.z);
+			name += format(" {%d,%d,%d}", this->targetLocation.x, this->targetLocation.y,
+			               this->targetLocation.z);
 			break;
 		case MissionType::GotoPortal:
-			name += UString::format(" {%d,%d,%d}", this->targetLocation.x, this->targetLocation.y,
-			                        this->targetLocation.z);
+			name += format(" {%d,%d,%d}", this->targetLocation.x, this->targetLocation.y,
+			               this->targetLocation.z);
 			break;
 		case MissionType::InfiltrateSubvert:
 			name += " " + this->targetBuilding.id + " " + (subvert ? "subvert" : "infiltrate");

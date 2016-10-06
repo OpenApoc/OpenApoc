@@ -7,6 +7,7 @@
 #include "game/state/stateobject.h"
 #include "library/strings.h"
 #include "library/vec.h"
+#include <limits>
 #include <map>
 #include <set>
 

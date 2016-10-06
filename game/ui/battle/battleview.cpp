@@ -16,6 +16,7 @@
 #include "game/ui/base/basescreen.h"
 #include "game/ui/general/ingameoptions.h"
 #include "library/sp.h"
+#include "library/strings_format.h"
 #include <glm/glm.hpp>
 
 namespace OpenApoc
@@ -71,9 +72,9 @@ BattleView::BattleView(sp<GameState> state)
 	}
 
 	selectedItemOverlay = fw().data->loadImage("battle/battle-item-select-icon.png");
-	pauseIcon = fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                                 "icons.tab:%d:xcom3/tacdata/tactical.pal",
-	                                                 260));
+	pauseIcon = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                        "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                        260));
 
 	for (auto &formName : TAB_FORM_NAMES_RT)
 	{
@@ -1737,9 +1738,8 @@ void BattleView::onNewTurn()
 	if (state->current_battle->currentActiveOrganisation == state->current_battle->currentPlayer)
 	{
 		baseForm->findControlTyped<Ticker>("NEWS_TICKER")
-		    ->addMessage(tr("Turn:") + " " +
-		                 UString::format("%d", state->current_battle->currentTurn) + "   " +
-		                 tr("Side:") + "  " +
+		    ->addMessage(tr("Turn:") + " " + format("%d", state->current_battle->currentTurn) +
+		                 "   " + tr("Side:") + "  " +
 		                 tr(state->current_battle->currentActiveOrganisation->name));
 	}
 }

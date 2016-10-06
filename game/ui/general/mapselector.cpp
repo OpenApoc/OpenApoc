@@ -9,6 +9,7 @@
 #include "game/ui/battle/battlebriefing.h"
 #include "game/ui/battle/battleview.h"
 #include "game/ui/city/cityview.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -110,7 +111,7 @@ std::future<void> loadBattleVehicle(sp<VehicleType> vehicle, sp<GameState> state
 		auto v = mksp<Vehicle>();
 
 		v->type = {state.get(), vehicle};
-		v->name = UString::format("%s %d", v->type->name, ++v->type->numCreated);
+		v->name = format("%s %d", v->type->name, ++v->type->numCreated);
 
 		state->vehicles[v->name] = v;
 		StateRef<Vehicle> ufo = {state.get(), v->name};

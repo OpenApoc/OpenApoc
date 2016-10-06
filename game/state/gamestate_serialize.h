@@ -25,6 +25,7 @@
 #include "game/state/rules/scenery_tile_type.h"
 #include "game/state/rules/vammo_type.h"
 #include "game/state/rules/vequipment_type.h"
+#include "library/strings_format.h"
 #include "library/voxel.h"
 
 namespace OpenApoc
@@ -178,8 +179,8 @@ void serializeIn(const GameState *, sp<SerializationNode> node, T &val,
 			return;
 		}
 	}
-	throw SerializationException(
-	    UString::format("Invalid enum value for %s: \"%s\"", typeid(T).name(), str), node);
+	throw SerializationException(format("Invalid enum value for %s: \"%s\"", typeid(T).name(), str),
+	                             node);
 }
 
 template <typename Key, typename Value>

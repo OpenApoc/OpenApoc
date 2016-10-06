@@ -1,6 +1,7 @@
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "game/state/rules/scenery_tile_type.h"
+#include "library/strings_format.h"
 #include "tools/extractors/extractors.h"
 
 #include <map>
@@ -58,7 +59,7 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 			}
 
 			auto tileName =
-			    UString::format("%s%s%u", SceneryTileType::getPrefix(), tilePrefix, (unsigned)idx);
+			    format("%s%s%u", SceneryTileType::getPrefix(), tilePrefix, (unsigned)idx);
 
 			city->initial_tiles[Vec3<int>{x, y, 1}] = {&state, tileName};
 		}
@@ -75,8 +76,8 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 
 				if (idx != 0)
 				{
-					auto tileName = UString::format("%s%s%u", SceneryTileType::getPrefix(),
-					                                tilePrefix, (unsigned)idx);
+					auto tileName =
+					    format("%s%s%u", SceneryTileType::getPrefix(), tilePrefix, (unsigned)idx);
 
 					city->initial_tiles[Vec3<int>{x + 20, y + 20, z + 1}] = {&state, tileName};
 				}

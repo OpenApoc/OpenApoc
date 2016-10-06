@@ -1070,15 +1070,15 @@ static void dumpLofTemps(fs::path basePath, const UString &prefix)
 
 	for (size_t i = 0; i < count; i++)
 	{
-		auto imgPath = UString::format("LOFTEMPS:%s:%s:%u", datFileName.cStr(), tabFileName.cStr(),
-		                               (unsigned)i);
+		auto imgPath =
+		    format("LOFTEMPS:%s:%s:%u", datFileName.cStr(), tabFileName.cStr(), (unsigned)i);
 		auto img = fw().data->loadImage(imgPath);
 		if (!img)
 		{
 			LogError("Failed to load \"%s\"", imgPath.cStr());
 			return;
 		}
-		auto outName = UString::format("%u.png", (unsigned)i);
+		auto outName = format("%u.png", (unsigned)i);
 		auto filePath = outPath / outName.str();
 		fw().data->writeImage(filePath.native(), img);
 	}
@@ -1090,7 +1090,7 @@ static void dumpRaw(fs::path outDir, const RawImage &i)
 	auto fileName = i.prefix + ".png";
 	auto outPath = outDir / fileName.str();
 	auto imageString =
-	    UString::format("RAW:%s:%u:%u:%s", inName.cStr(), i.size.x, i.size.y, i.palette.cStr());
+	    format("RAW:%s:%u:%u:%s", inName.cStr(), i.size.x, i.size.y, i.palette.cStr());
 	LogWarning("Reading \"%s\"", imageString.cStr());
 
 	auto img = fw().data->loadImage(imageString);
@@ -1128,7 +1128,7 @@ static void dumpPck(fs::path outDir, const UString &prefix, const UString &palet
 	for (auto &img : imgSet->images)
 	{
 		auto fullPath = basePath;
-		auto imgName = UString::format("%d.png", count);
+		auto imgName = format("%d.png", count);
 		fullPath /= imgName.str();
 		if (img)
 			fw().data->writeImage(fullPath.native(), img, palette);

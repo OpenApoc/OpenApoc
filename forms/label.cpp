@@ -3,6 +3,7 @@
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "library/sp.h"
+#include "library/strings_format.h"
 #include <tinyxml2.h>
 
 namespace OpenApoc

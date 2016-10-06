@@ -4,6 +4,7 @@
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
 #include "game/state/rules/doodad_type.h"
+#include "library/strings_format.h"
 #include "tools/extractors/common/tacp.h"
 #include "tools/extractors/extractors.h"
 #include <limits>
@@ -106,10 +107,9 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 		    (i < data_t.damage_types->count()) && (data_t.damage_types->get(i).ignore_shield == 1);
 
 		// Damage icons are located in tacdata icons, starting with id 14 and on
-		d->icon_sprite =
-		    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
-		                                         (int)i + 14));
+		d->icon_sprite = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		                                             "icons.tab:%d:xcom3/tacdata/tactical.pal",
+		                                             (int)i + 14));
 
 		state.damage_types[id] = d;
 	}
@@ -139,7 +139,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 		auto edata = data_t.agent_equipment->get(i);
 
 		e->name = data_u.agent_equipment_names->get(i);
-		UString id = UString::format("%s%s", AEquipmentType::getPrefix(), canon_string(e->name));
+		UString id = format("%s%s", AEquipmentType::getPrefix(), canon_string(e->name));
 
 		e->id = id;
 
@@ -239,16 +239,15 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 						         (int)adata.damage_modifier, id.cStr());
 						break;
 				}
-				e->body_image_pack = {&state,
-				                      UString::format("%s%s%d%s", BattleUnitImagePack::getPrefix(),
-				                                      "xcom", armoredUnitPicIndex, bodyPartLetter)};
+				e->body_image_pack = {&state, format("%s%s%d%s", BattleUnitImagePack::getPrefix(),
+				                                     "xcom", armoredUnitPicIndex, bodyPartLetter)};
 				// Body sprites are stored in armour.pck file, in head-left-body-right-legs order
 				// Since armor damage modifier values start with 17, we can subtract that to get
 				// armor index
 				e->body_sprite = fw().data->loadImage(
-				    UString::format("PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/"
-				                    "armour.tab:%d:xcom3/tacdata/equip.pal",
-				                    (int)((adata.damage_modifier - 17) * 5 + armorBodyPicIndex)));
+				    format("PCK:xcom3/ufodata/armour.pck:xcom3/ufodata/"
+				           "armour.tab:%d:xcom3/tacdata/equip.pal",
+				           (int)((adata.damage_modifier - 17) * 5 + armorBodyPicIndex)));
 			}
 			break;
 			case AGENT_EQUIPMENT_TYPE_WEAPON:
@@ -389,25 +388,25 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 
 		if (edata.sprite_idx < gameObjectSpriteCount)
 			e->dropped_sprite =
-			    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/"
-			                                         "gameobj.tab:%d",
-			                                         (int)edata.sprite_idx));
+			    fw().data->loadImage(format("PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/"
+			                                "gameobj.tab:%d",
+			                                (int)edata.sprite_idx));
 
 		if (edata.sprite_idx < gameObjectShadowSpriteCount)
-			e->dropped_shadow_sprite = fw().data->loadImage(
-			    UString::format("PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/"
-			                    "oshadow.tab:%d",
-			                    (int)edata.sprite_idx));
+			e->dropped_shadow_sprite =
+			    fw().data->loadImage(format("PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/"
+			                                "oshadow.tab:%d",
+			                                (int)edata.sprite_idx));
 
 		// Held sprites begin from 0, which corresponds to item 1, Megapol AP Grenade
 		// Armor pieces go last, and held sprites for every single item after the first armor piece
 		// are identical
 		// There is a total 60 of them
 		int held_sprite_index = std::min((int)edata.sprite_idx, (int)heldSpriteCount - 1);
-		e->held_image_pack = {&state, UString::format("%s%s%d", BattleUnitImagePack::getPrefix(),
-		                                              "item", held_sprite_index)};
+		e->held_image_pack = {
+		    &state, format("%s%s%d", BattleUnitImagePack::getPrefix(), "item", held_sprite_index)};
 
-		e->equipscreen_sprite = fw().data->loadImage(UString::format(
+		e->equipscreen_sprite = fw().data->loadImage(format(
 		    "PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:%d:xcom3/tacdata/tactical.pal",
 		    (int)edata.sprite_idx));
 		e->equipscreen_size = {edata.size_x, edata.size_y};
@@ -666,8 +665,8 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 				UString sprite_path = "";
 				if (projectile_sprites.sprites[i] != 255)
 				{
-					sprite_path = UString::format("bulletsprites/battle/%02u.png",
-					                              (unsigned)projectile_sprites.sprites[i]);
+					sprite_path = format("bulletsprites/battle/%02u.png",
+					                     (unsigned)projectile_sprites.sprites[i]);
 				}
 				else
 				{
@@ -700,7 +699,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 		{
 			auto es = mksp<EquipmentSet>();
 
-			UString id = UString::format("%sALIEN_%d", EquipmentSet::getPrefix(), (int)i + 1);
+			UString id = format("%sALIEN_%d", EquipmentSet::getPrefix(), (int)i + 1);
 			es->id = id;
 
 			for (unsigned j = 0; j < 10; j++)
@@ -710,31 +709,28 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 					if (data.weapons[j][i].clip_idx > 0)
 					{
 						es->weapons.push_back(
-						    {{&state,
-						      UString::format("%s%s", AEquipmentType::getPrefix(),
-						                      canon_string(data_u.agent_equipment_names->get(
-						                          data.weapons[j][i].weapon_idx)))},
-						     {&state,
-						      UString::format("%s%s", AEquipmentType::getPrefix(),
-						                      canon_string(data_u.agent_equipment_names->get(
-						                          data.weapons[j][i].clip_idx)))},
+						    {{&state, format("%s%s", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.weapons[j][i].weapon_idx)))},
+						     {&state, format("%s%s", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.weapons[j][i].clip_idx)))},
 						     std::max((int)data.weapons[j][i].clip_amount, 1)});
 					}
 					else
 					{
 						es->weapons.push_back(
-						    {{&state,
-						      UString::format("%s%s", AEquipmentType::getPrefix(),
-						                      canon_string(data_u.agent_equipment_names->get(
-						                          data.weapons[j][i].weapon_idx)))}});
+						    {{&state, format("%s%s", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.weapons[j][i].weapon_idx)))}});
 					}
 				}
 				if (data.grenades[j][i].grenade_idx > 0 && data.grenades[j][i].grenade_amount > 0)
 				{
 					es->grenades.push_back(
-					    {{&state, UString::format("%s%s", AEquipmentType::getPrefix(),
-					                              canon_string(data_u.agent_equipment_names->get(
-					                                  data.grenades[j][i].grenade_idx)))},
+					    {{&state, format("%s%s", AEquipmentType::getPrefix(),
+					                     canon_string(data_u.agent_equipment_names->get(
+					                         data.grenades[j][i].grenade_idx)))},
 					     data.grenades[j][i].grenade_amount});
 				}
 				if (data.equipment[j][i][0] > 0 || data.equipment[j][i][1] > 0)
@@ -742,30 +738,26 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 					if (data.equipment[j][i][0] > 0 && data.equipment[j][i][1] > 0)
 					{
 						es->equipment.push_back(
-						    {{&state,
-						      UString::format("%s%s", AEquipmentType::getPrefix(),
-						                      canon_string(data_u.agent_equipment_names->get(
-						                          data.equipment[j][i][0])))},
-						     {&state,
-						      UString::format("%s%s", AEquipmentType::getPrefix(),
-						                      canon_string(data_u.agent_equipment_names->get(
-						                          data.equipment[j][i][1])))}});
+						    {{&state, format("%s%s", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.equipment[j][i][0])))},
+						     {&state, format("%s%s", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.equipment[j][i][1])))}});
 					}
 					else if (data.equipment[j][i][0] > 0)
 					{
 						es->equipment.push_back(
-						    {{&state,
-						      UString::format("%s%s", AEquipmentType::getPrefix(),
-						                      canon_string(data_u.agent_equipment_names->get(
-						                          data.equipment[j][i][0])))}});
+						    {{&state, format("%s%s", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.equipment[j][i][0])))}});
 					}
 					else
 					{
 						es->equipment.push_back(
-						    {{&state,
-						      UString::format("%s%s", AEquipmentType::getPrefix(),
-						                      canon_string(data_u.agent_equipment_names->get(
-						                          data.equipment[j][i][1])))}});
+						    {{&state, format("%s%s", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.equipment[j][i][1])))}});
 					}
 				}
 			}
@@ -811,7 +803,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 			{
 				auto es = mksp<EquipmentSet>();
 
-				UString id = UString::format("%sHUMAN_%d", EquipmentSet::getPrefix(), (int)i + 1);
+				UString id = format("%sHUMAN_%d", EquipmentSet::getPrefix(), (int)i + 1);
 				es->id = id;
 
 				for (unsigned j = 0; j < 10; j++)
@@ -821,33 +813,29 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 						if (data.weapons[j][i].clip_idx > 0)
 						{
 							es->weapons.push_back(
-							    {{&state,
-							      UString::format("%s%s", AEquipmentType::getPrefix(),
-							                      canon_string(data_u.agent_equipment_names->get(
-							                          data.weapons[j][i].weapon_idx)))},
-							     {&state,
-							      UString::format("%s%s", AEquipmentType::getPrefix(),
-							                      canon_string(data_u.agent_equipment_names->get(
-							                          data.weapons[j][i].clip_idx)))},
+							    {{&state, format("%s%s", AEquipmentType::getPrefix(),
+							                     canon_string(data_u.agent_equipment_names->get(
+							                         data.weapons[j][i].weapon_idx)))},
+							     {&state, format("%s%s", AEquipmentType::getPrefix(),
+							                     canon_string(data_u.agent_equipment_names->get(
+							                         data.weapons[j][i].clip_idx)))},
 							     std::max((int)data.weapons[j][i].clip_amount, 1)});
 						}
 						else
 						{
 							es->weapons.push_back(
-							    {{&state,
-							      UString::format("%s%s", AEquipmentType::getPrefix(),
-							                      canon_string(data_u.agent_equipment_names->get(
-							                          data.weapons[j][i].weapon_idx)))}});
+							    {{&state, format("%s%s", AEquipmentType::getPrefix(),
+							                     canon_string(data_u.agent_equipment_names->get(
+							                         data.weapons[j][i].weapon_idx)))}});
 						}
 					}
 					if (data.grenades[j][i].grenade_idx > 0 &&
 					    data.grenades[j][i].grenade_amount > 0)
 					{
 						es->grenades.push_back(
-						    {{&state,
-						      UString::format("%s%s", AEquipmentType::getPrefix(),
-						                      canon_string(data_u.agent_equipment_names->get(
-						                          data.grenades[j][i].grenade_idx)))},
+						    {{&state, format("%s%s", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.grenades[j][i].grenade_idx)))},
 						     data.grenades[j][i].grenade_amount});
 					}
 					if (data.equipment[j][i][0] > 0 || data.equipment[j][i][1] > 0)
@@ -855,30 +843,26 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 						if (data.equipment[j][i][0] > 0 && data.equipment[j][i][1] > 0)
 						{
 							es->equipment.push_back(
-							    {{&state,
-							      UString::format("%s%s", AEquipmentType::getPrefix(),
-							                      canon_string(data_u.agent_equipment_names->get(
-							                          data.equipment[j][i][0])))},
-							     {&state,
-							      UString::format("%s%s", AEquipmentType::getPrefix(),
-							                      canon_string(data_u.agent_equipment_names->get(
-							                          data.equipment[j][i][1])))}});
+							    {{&state, format("%s%s", AEquipmentType::getPrefix(),
+							                     canon_string(data_u.agent_equipment_names->get(
+							                         data.equipment[j][i][0])))},
+							     {&state, format("%s%s", AEquipmentType::getPrefix(),
+							                     canon_string(data_u.agent_equipment_names->get(
+							                         data.equipment[j][i][1])))}});
 						}
 						else if (data.equipment[j][i][0] > 0)
 						{
 							es->equipment.push_back(
-							    {{&state,
-							      UString::format("%s%s", AEquipmentType::getPrefix(),
-							                      canon_string(data_u.agent_equipment_names->get(
-							                          data.equipment[j][i][0])))}});
+							    {{&state, format("%s%s", AEquipmentType::getPrefix(),
+							                     canon_string(data_u.agent_equipment_names->get(
+							                         data.equipment[j][i][0])))}});
 						}
 						else
 						{
 							es->equipment.push_back(
-							    {{&state,
-							      UString::format("%s%s", AEquipmentType::getPrefix(),
-							                      canon_string(data_u.agent_equipment_names->get(
-							                          data.equipment[j][i][1])))}});
+							    {{&state, format("%s%s", AEquipmentType::getPrefix(),
+							                     canon_string(data_u.agent_equipment_names->get(
+							                         data.equipment[j][i][1])))}});
 						}
 					}
 				}
@@ -959,11 +943,11 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 			d->repeatable = false;
 			for (int j = tabOffsets.x; j < tabOffsets.y; j++)
 			{
-				d->frames.push_back({fw().data->loadImage(UString::format(
-				                         "PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
-				                         "ptang.tab:%d",
-				                         j)),
-				                     frameTTL});
+				d->frames.push_back(
+				    {fw().data->loadImage(format("PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
+				                                 "ptang.tab:%d",
+				                                 j)),
+				     frameTTL});
 			}
 
 			state.doodad_types[id] = d;

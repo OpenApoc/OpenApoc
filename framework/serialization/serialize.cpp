@@ -1,13 +1,13 @@
+#include "framework/serialization/serialize.h"
 #include "dependencies/pugixml/src/pugixml.hpp"
-
 #include "framework/logger.h"
-#include "library/sp.h"
-#include "library/strings.h"
-
 #include "framework/serialization/providers/filedataprovider.h"
 #include "framework/serialization/providers/providerwithchecksum.h"
 #include "framework/serialization/providers/zipdataprovider.h"
-#include "framework/serialization/serialize.h"
+#include "library/sp.h"
+#include "library/strings.h"
+#include "library/strings_format.h"
+#include <sstream>
 
 // Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
 // symbols as part of the module that uses it
@@ -312,9 +312,8 @@ unsigned char XMLSerializationNode::getValueUChar()
 	auto uint = node.text().as_uint();
 	if (uint > std::numeric_limits<unsigned char>::max())
 	{
-		throw SerializationException(
-		    UString::format("Value %u is out of range of unsigned char type", uint),
-		    shared_from_this());
+		throw SerializationException(format("Value %u is out of range of unsigned char type", uint),
+		                             shared_from_this());
 	}
 	return static_cast<unsigned char>(uint);
 }
@@ -355,7 +354,7 @@ std::vector<bool> XMLSerializationNode::getValueBoolVector()
 		else if (c == '0')
 			vec[i] = false;
 		else
-			throw SerializationException(UString::format("Unknown char '%c' in bool vector", c),
+			throw SerializationException(format("Unknown char '%c' in bool vector", c),
 			                             shared_from_this());
 	}
 	return vec;

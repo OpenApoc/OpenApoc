@@ -2,6 +2,7 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/base/base.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -39,7 +40,7 @@ void BaseStage::begin()
 	for (auto &pair : state->player_bases)
 	{
 		auto &viewBase = pair.second;
-		auto viewName = UString::format("BUTTON_BASE_%d", ++b);
+		auto viewName = format("BUTTON_BASE_%d", ++b);
 		auto view = form->findControlTyped<GraphicButton>(viewName);
 		if (!view)
 		{

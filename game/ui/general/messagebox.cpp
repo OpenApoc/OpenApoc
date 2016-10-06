@@ -2,6 +2,7 @@
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {

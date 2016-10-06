@@ -1,5 +1,6 @@
 #include "game/state/gametime.h"
 #include "game/state/gametime_facet.h"
+#include "library/strings_format.h"
 #include <sstream>
 
 // for my sake
@@ -107,7 +108,7 @@ UString GameTime::getShortDateString() const
 	return ss.str();
 }
 
-UString GameTime::getWeekString() const { return UString::format("%s %d", tr("Week"), getWeek()); }
+UString GameTime::getWeekString() const { return format("%s %d", tr("Week"), getWeek()); }
 
 unsigned int GameTime::getWeek() const
 {

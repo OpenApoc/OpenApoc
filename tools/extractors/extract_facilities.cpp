@@ -1,4 +1,5 @@
 #include "framework/framework.h"
+#include "library/strings_format.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
 
@@ -31,9 +32,9 @@ void InitialGameStateExtractor::extractFacilities(GameState &state, Difficulty)
 		facilityType->weeklyCost = f.maintainance_cost;
 		facilityType->capacityAmount = f.capacity;
 		facilityType->size = f.size;
-		facilityType->sprite = fw().data->loadImage(UString::format(
-		    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:%d:xcom3/ufodata/base.pcx",
-		    (int)f.image_offset));
+		facilityType->sprite = fw().data->loadImage(
+		    format("PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:%d:xcom3/ufodata/base.pcx",
+		           (int)f.image_offset));
 
 		state.facility_types[id] = facilityType;
 	}

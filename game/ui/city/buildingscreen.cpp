@@ -4,6 +4,7 @@
 #include "framework/framework.h"
 #include "game/state/city/building.h"
 #include "game/state/gamestate.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
