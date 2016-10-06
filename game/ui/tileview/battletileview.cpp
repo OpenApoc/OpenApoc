@@ -3,6 +3,7 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/includes.h"
+#include "framework/trace.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunitmission.h"
 #include "game/state/organisation.h"

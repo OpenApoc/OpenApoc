@@ -27,7 +27,7 @@ void DifficultyMenu::finish() {}
 
 std::future<sp<GameState>> loadGame(const UString &path)
 {
-	auto loadTask = fw().threadPool->enqueue([path]() -> sp<GameState> {
+	auto loadTask = fw().threadPoolEnqueue([path]() -> sp<GameState> {
 
 		auto state = mksp<GameState>();
 		if (!state->loadGame(path))

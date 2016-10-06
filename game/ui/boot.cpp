@@ -24,7 +24,7 @@ void BootUp::update()
 {
 	bool skipIntro = skipIntroOption.get();
 	// The first forms instance causes it to get loaded
-	auto loadTask = fw().threadPool->enqueue([]() {
+	auto loadTask = fw().threadPoolEnqueue([]() {
 		auto &ui_instance = ui();
 		std::ignore = ui_instance;
 	});

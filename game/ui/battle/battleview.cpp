@@ -3,6 +3,7 @@
 #include "framework/apocresources/cursor.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/trace.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart.h"

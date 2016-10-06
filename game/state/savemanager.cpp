@@ -1,5 +1,6 @@
 ﻿#include "game/state/savemanager.h"
 #include "framework/framework.h"
+#include "framework/trace.h"
 #include <algorithm>
 #include <boost/filesystem.hpp>
 
@@ -43,7 +44,7 @@ std::future<sp<GameState>> SaveManager::loadGame(const SaveMetadata &metadata) c
 std::future<sp<GameState>> SaveManager::loadGame(const UString &savePath) const
 {
 	UString saveArchiveLocation = savePath;
-	auto loadTask = fw().threadPool->enqueue([saveArchiveLocation]() -> sp<GameState> {
+	auto loadTask = fw().threadPoolEnqueue([saveArchiveLocation]() -> sp<GameState> {
 		auto state = mksp<GameState>();
 		if (!state->loadGame(saveArchiveLocation))
 		{

@@ -2,6 +2,7 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/includes.h"
+#include "framework/trace.h"
 
 namespace OpenApoc
 {

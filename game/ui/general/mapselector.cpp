@@ -42,7 +42,7 @@ MapSelector::~MapSelector() = default;
 std::future<void> loadBattleBuilding(sp<Building> building, sp<GameState> state)
 {
 
-	auto loadTask = fw().threadPool->enqueue([building, state]() -> void {
+	auto loadTask = fw().threadPoolEnqueue([building, state]() -> void {
 		std::list<StateRef<Agent>> agents;
 		for (auto &a : state->agents)
 			if (a.second->type->role == AgentType::Role::Soldier &&
@@ -99,7 +99,7 @@ sp<Control> MapSelector::createMapRowBuilding(sp<Building> building, sp<GameStat
 std::future<void> loadBattleVehicle(sp<VehicleType> vehicle, sp<GameState> state)
 {
 
-	auto loadTask = fw().threadPool->enqueue([vehicle, state]() -> void {
+	auto loadTask = fw().threadPoolEnqueue([vehicle, state]() -> void {
 		std::list<StateRef<Agent>> agents;
 		for (auto &a : state->agents)
 			if (a.second->type->role == AgentType::Role::Soldier &&

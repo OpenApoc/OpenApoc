@@ -1,4 +1,5 @@
 #include "framework/framework.h"
+#include "framework/ThreadPool/ThreadPool.h"
 #include "framework/apocresources/cursor.h"
 #include "framework/event.h"
 #include "framework/image.h"
@@ -162,10 +163,28 @@ class FrameworkPrivate
 	Vec2<int> windowSize;
 
 	sp<Surface> scaleSurface;
+	up<ThreadPool> threadPool;
 
 	FrameworkPrivate()
 	    : quitProgram(false), window(nullptr), context(0), displaySize(0, 0), windowSize(0, 0)
 	{
+		int threadPoolSize = threadPoolSizeOption.get();
+		if (threadPoolSize > 0)
+		{
+			LogInfo("Set thread pool size to %d", threadPoolSize);
+		}
+		else if (std::thread::hardware_concurrency() != 0)
+		{
+			threadPoolSize = std::thread::hardware_concurrency();
+			LogInfo("Set thread pool size to reported HW concurrency of %d", threadPoolSize);
+		}
+		else
+		{
+			threadPoolSize = 2;
+			LogInfo("Failed to get HW concurrency, falling back to pool size %d", threadPoolSize);
+		}
+
+		this->threadPool.reset(new ThreadPool(threadPoolSize));
 	}
 };
 
@@ -250,24 +269,6 @@ Framework::Framework(const UString programName, bool createWindow)
 	        "\"%s\" utf8:%s",
 	        localeName.c_str(), localeLang.c_str(), localeCountry.c_str(), localeVariant.c_str(),
 	        localeEncoding.c_str(), isUTF8 ? "true" : "false");
-
-	int threadPoolSize = threadPoolSizeOption.get();
-	if (threadPoolSize > 0)
-	{
-		LogInfo("Set thread pool size to %d", threadPoolSize);
-	}
-	else if (std::thread::hardware_concurrency() != 0)
-	{
-		threadPoolSize = std::thread::hardware_concurrency();
-		LogInfo("Set thread pool size to reported HW concurrency of %d", threadPoolSize);
-	}
-	else
-	{
-		threadPoolSize = 2;
-		LogInfo("Failed to get HW concurrency, falling back to pool size %d", threadPoolSize);
-	}
-
-	this->threadPool.reset(new ThreadPool(threadPoolSize));
 
 	LogInfo("Current working directory: \"%s\"", boost::filesystem::current_path().c_str());
 	this->data.reset(Data::createData(resourcePaths));
@@ -1005,5 +1006,7 @@ UString Framework::textGetClipboard()
 	}
 	return str;
 }
+
+void Framework::threadPoolTaskEnqueue(std::function<void()> task) { p->threadPool->enqueue(task); }
 
 }; // namespace OpenApoc
