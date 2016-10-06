@@ -4,6 +4,7 @@
 #include "framework/logger.h"
 #include "library/colour.h"
 #include "library/sp.h"
+#include "library/vec.h"
 #include <functional>
 #include <list>
 #include <map>

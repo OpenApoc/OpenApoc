@@ -40,7 +40,6 @@ set (FRAMEWORK_HEADER_FILES
 	fs.h
 	image.h
 	imageloader_interface.h
-	includes.h
 	logger.h
 	musicloader_interface.h
 	palette.h

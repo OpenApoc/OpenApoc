@@ -1,11 +1,8 @@
-
 #pragma once
+
 #include "library/sp.h"
-
-#include "framework/includes.h"
 #include "library/strings.h"
-
-#include <list>
+#include <map>
 
 namespace OpenApoc
 {

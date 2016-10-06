@@ -1,12 +1,14 @@
-
 #pragma once
 
-#include "framework/includes.h"
 #include "framework/logger.h"
-#include "renderer.h"
+#include "library/colour.h"
+#include "library/sp.h"
+#include <vector>
 
 namespace OpenApoc
 {
+
+class RendererImageData;
 
 class Palette
 {

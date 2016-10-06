@@ -1,6 +1,5 @@
 #pragma once
 #include "framework/image.h"
-#include "framework/includes.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
