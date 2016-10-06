@@ -1,7 +1,9 @@
 #include "forms/graphic.h"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/image.h"
+#include "framework/renderer.h"
 #include "library/sp.h"
 #include <tinyxml2.h>
 

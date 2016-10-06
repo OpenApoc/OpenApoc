@@ -1,3 +1,4 @@
+#include "framework/data.h"
 #include "framework/framework.h"
 #include "library/strings_format.h"
 #include "tools/extractors/common/ufo2p.h"

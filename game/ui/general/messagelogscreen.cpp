@@ -1,7 +1,9 @@
 #include "game/ui/general/messagelogscreen.h"
 #include "forms/ui.h"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/keycodes.h"
 #include "game/state/gamestate.h"
 #include "game/ui/city/cityview.h"
 

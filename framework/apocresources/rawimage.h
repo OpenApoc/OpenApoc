@@ -1,6 +1,6 @@
 #pragma once
-#include "library/sp.h"
 
+#include "library/sp.h"
 #include "library/vec.h"
 
 namespace OpenApoc

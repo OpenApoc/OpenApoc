@@ -1,8 +1,10 @@
 #include "game/ui/debugtools/imagepreview.h"
 #include "forms/ui.h"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/image.h"
+#include "framework/keycodes.h"
 
 namespace OpenApoc
 {

@@ -1,6 +1,8 @@
 #include "framework/apocresources/loftemps.h"
+#include "framework/fs.h"
 #include "framework/logger.h"
 #include "library/sp.h"
+#include "library/voxel.h"
 
 namespace OpenApoc
 {

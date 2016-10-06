@@ -1,4 +1,5 @@
 #pragma once
+
 #include "library/colour.h"
 #include "library/sp.h"
 #include "library/strings.h"

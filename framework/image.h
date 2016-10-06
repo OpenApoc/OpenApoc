@@ -1,4 +1,5 @@
 #pragma once
+
 #include "framework/logger.h"
 #include "library/colour.h"
 #include "library/rect.h"
@@ -61,7 +62,7 @@ class PaletteImage : public Image
 {
   private:
 	friend class PaletteImageLock;
-	std::unique_ptr<uint8_t[]> indices;
+	up<uint8_t[]> indices;
 
   public:
 	PaletteImage(Vec2<unsigned int> size, uint8_t initialIndex = 0);
@@ -107,7 +108,7 @@ class RGBImage : public Image
 {
   private:
 	friend class RGBImageLock;
-	std::unique_ptr<Colour[]> pixels;
+	up<Colour[]> pixels;
 
   public:
 	RGBImage(Vec2<unsigned int> size, Colour initialColour = Colour(0, 0, 0, 0));

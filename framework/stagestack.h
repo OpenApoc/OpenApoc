@@ -1,9 +1,7 @@
-
 #pragma once
+
 #include "library/sp.h"
-
 #include "stage.h"
-
 #include <vector>
 
 namespace OpenApoc

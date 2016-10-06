@@ -3,6 +3,7 @@
 #include "framework/event.h"
 #include "framework/font.h"
 #include "framework/framework.h"
+#include "framework/renderer.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc

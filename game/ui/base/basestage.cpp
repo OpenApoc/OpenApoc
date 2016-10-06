@@ -1,6 +1,7 @@
 #include "game/ui/base/basestage.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/renderer.h"
 #include "game/state/base/base.h"
 #include "library/strings_format.h"
 

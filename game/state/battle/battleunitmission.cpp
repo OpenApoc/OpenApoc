@@ -1,5 +1,6 @@
 #include "game/state/battle/battleunitmission.h"
 #include "framework/framework.h"
+#include "framework/sound.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"

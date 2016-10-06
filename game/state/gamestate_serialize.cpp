@@ -1,4 +1,5 @@
 #include "game/state/gamestate_serialize.h"
+#include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "framework/serialization/serialize.h"

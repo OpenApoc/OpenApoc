@@ -1,8 +1,12 @@
 #define _USE_MATH_DEFINES
 #include "game/ui/general/videoscreen.h"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/image.h"
+#include "framework/keycodes.h"
+#include "framework/renderer.h"
+#include "framework/sound.h"
 #include "framework/trace.h"
 #include "framework/video.h"
 #include <chrono>

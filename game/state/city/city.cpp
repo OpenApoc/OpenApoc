@@ -1,5 +1,6 @@
 #include "game/state/city/city.h"
 #include "framework/framework.h"
+#include "framework/sound.h"
 #include "framework/trace.h"
 #include "game/state/city/building.h"
 #include "game/state/city/doodad.h"

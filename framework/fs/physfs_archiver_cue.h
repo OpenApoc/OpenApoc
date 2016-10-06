@@ -10,4 +10,4 @@ namespace OpenApoc
 {
 void parseCueFile(UString fileName);
 PHYSFS_Archiver *getCueArchiver();
-}
+} // namespace OpenApoc

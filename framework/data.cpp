@@ -3,6 +3,7 @@
 #include "framework/apocresources/loftemps.h"
 #include "framework/apocresources/pck.h"
 #include "framework/apocresources/rawimage.h"
+#include "framework/image.h"
 #include "framework/imageloader_interface.h"
 #include "framework/logger.h"
 #include "framework/musicloader_interface.h"
@@ -14,6 +15,7 @@
 #include "game/state/rules/resource_aliases.h"
 #include "library/sp.h"
 #include "library/strings.h"
+#include "library/voxel.h"
 #include <fstream>
 #include <mutex>
 #include <queue>

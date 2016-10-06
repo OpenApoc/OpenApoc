@@ -4,6 +4,7 @@
 #include "framework/event.h"
 #include "framework/font.h"
 #include "framework/framework.h"
+#include "framework/keycodes.h"
 #include "game/state/gamestate.h"
 #include "library/sp.h"
 #include "library/strings_format.h"

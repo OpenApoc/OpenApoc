@@ -2,7 +2,7 @@
 
 #include "framework/fs.h"
 #include "library/sp.h"
-#include <list>
+#include <vector>
 
 namespace OpenApoc
 {

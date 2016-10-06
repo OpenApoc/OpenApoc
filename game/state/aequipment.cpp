@@ -1,6 +1,7 @@
 #include "game/state/aequipment.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
+#include "framework/sound.h"
 #include "game/state/agent.h"
 #include "game/state/city/projectile.h"
 #include "game/state/rules/aequipment_type.h"

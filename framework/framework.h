@@ -1,12 +1,8 @@
 #pragma once
 
-#include "framework/configfile.h"
-#include "framework/data.h"
-#include "framework/renderer.h"
-#include "framework/sound.h"
-#include "framework/stagestack.h"
 #include "library/sp.h"
 #include "library/strings.h"
+#include "library/vec.h"
 #include <future>
 
 namespace OpenApoc
@@ -17,13 +13,19 @@ class GameCore;
 class FrameworkPrivate;
 class ApocCursor;
 class Event;
+class Data;
+class Renderer;
+class SoundBackend;
+class JukeBox;
+class StageCmd;
+class Stage;
 
 #define FRAMES_PER_SECOND 100
 
 class Framework
 {
   private:
-	std::unique_ptr<FrameworkPrivate> p;
+	up<FrameworkPrivate> p;
 	UString programName;
 	bool createWindow;
 	void audioInitialise();

@@ -1,5 +1,5 @@
 #pragma once
-#include "framework/font.h"
+
 #include "library/sp.h"
 
 namespace tinyxml2
@@ -10,8 +10,7 @@ class XMLElement;
 namespace OpenApoc
 {
 
-class Image;
-class Renderer;
+class BitmapFont;
 
 class ApocalypseFont
 {

@@ -1,11 +1,17 @@
 #pragma once
-#include "framework/fs.h"
-#include "image.h"
+
 #include "library/sp.h"
 #include "library/strings.h"
+#include <ostream>
 
 namespace OpenApoc
 {
+
+class IFile;
+class RGBImage;
+class PaletteImage;
+class Palette;
+class Image;
 
 class ImageLoader
 {

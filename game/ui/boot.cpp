@@ -1,6 +1,7 @@
 #define _USE_MATH_DEFINES
 #include "game/ui/boot.h"
 #include "forms/ui.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "game/ui/general/mainmenu.h"
 #include "game/ui/general/videoscreen.h"

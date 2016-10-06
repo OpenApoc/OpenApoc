@@ -1,4 +1,5 @@
 ﻿#include "game/state/savemanager.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/trace.h"
 #include <algorithm>

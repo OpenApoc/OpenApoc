@@ -1,12 +1,13 @@
 #pragma once
+
 #include "library/sp.h"
 #include "library/strings.h"
-#include "sound.h"
 
 namespace OpenApoc
 {
 
 class Data;
+class Sample;
 
 class SampleLoader
 {

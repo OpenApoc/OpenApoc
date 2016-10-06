@@ -1,3 +1,4 @@
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "game/state/gamestate.h"

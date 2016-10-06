@@ -1,5 +1,5 @@
-
 #pragma once
+
 #include "framework/logger.h"
 #include "library/sp.h"
 

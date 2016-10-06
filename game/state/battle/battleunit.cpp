@@ -1,6 +1,7 @@
 #define _USE_MATH_DEFINES
 #include "game/state/battle/battleunit.h"
 #include "framework/framework.h"
+#include "framework/sound.h"
 #include "game/state/aequipment.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunitanimationpack.h"

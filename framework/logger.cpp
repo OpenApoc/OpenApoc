@@ -5,6 +5,7 @@
 #endif
 
 #include "framework/logger.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include <chrono>
 #include <cstdarg>

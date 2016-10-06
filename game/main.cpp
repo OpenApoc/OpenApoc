@@ -1,4 +1,5 @@
 #include "forms/ui.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/trace.h"
 #include "game/ui/boot.h"

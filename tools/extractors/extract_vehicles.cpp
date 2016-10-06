@@ -1,3 +1,4 @@
+#include "framework/data.h"
 #include "framework/framework.h"
 #include "library/strings_format.h"
 #include "library/voxel.h"

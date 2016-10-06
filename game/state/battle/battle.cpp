@@ -1,5 +1,6 @@
 #include "game/state/battle/battle.h"
 #include "framework/framework.h"
+#include "framework/sound.h"
 #include "framework/trace.h"
 #include "game/state/battle/battledoor.h"
 #include "game/state/battle/battleitem.h"

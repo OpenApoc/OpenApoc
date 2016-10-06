@@ -3,6 +3,7 @@
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "framework/serialization/serialize.h"
+#include "framework/sound.h"
 #include "framework/trace.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"

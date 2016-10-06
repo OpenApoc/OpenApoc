@@ -1,3 +1,4 @@
+#include "framework/data.h"
 #include "framework/framework.h"
 #include "game/state/agent.h"
 #include "game/state/rules/aequipment_type.h"

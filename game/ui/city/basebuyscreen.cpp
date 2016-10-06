@@ -2,6 +2,7 @@
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/keycodes.h"
 #include "game/state/city/building.h"
 #include "game/state/gamestate.h"
 #include "game/ui/base/basegraphics.h"

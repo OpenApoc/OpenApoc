@@ -1,3 +1,5 @@
+#include "framework/configfile.h"
+#include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/trace.h"
 #include "library/strings_format.h"

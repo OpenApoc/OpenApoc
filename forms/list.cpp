@@ -2,6 +2,7 @@
 #include "forms/scrollbar.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/renderer.h"
 #include <tinyxml2.h>
 
 namespace OpenApoc

@@ -1,6 +1,7 @@
 #include "framework/data.h"
 #include "framework/logger.h"
 #include "framework/musicloader_interface.h"
+#include "framework/sound.h"
 #include "library/sp.h"
 #include <algorithm>
 #include <memory>

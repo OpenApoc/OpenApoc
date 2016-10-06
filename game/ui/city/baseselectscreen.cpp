@@ -2,6 +2,8 @@
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/keycodes.h"
+#include "framework/renderer.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_scenery.h"
