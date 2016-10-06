@@ -94,13 +94,11 @@ class TraceManager
 	}
 	~TraceManager();
 	std::ofstream outFile;
-	TraceManager()
+	TraceManager() : outFile(traceFile.get().str())
 	{
-		auto outPath = traceFile.get();
-		outFile = std::ofstream(outPath.str());
 		if (!outFile)
 		{
-			LogError("Failed to open trace file \"%s\"", outPath.cStr());
+			LogError("Failed to open trace file \"%s\"", traceFile.get().cStr());
 			return;
 		}
 	}
