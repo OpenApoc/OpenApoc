@@ -2,6 +2,10 @@
 #include "framework/logger.h"
 #include "game/state/gamestate.h"
 #include "game/state/gamestate_serialize.h"
+
+// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
+// symbols as part of the module that uses it
+#define BOOST_ALL_NO_LIB
 #include <boost/filesystem.hpp>
 
 using namespace OpenApoc;

@@ -1,6 +1,10 @@
 #include "framework/serialization/providers/zipdataprovider.h"
 #include "framework/logger.h"
 #include "library/sp.h"
+
+// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
+// symbols as part of the module that uses it
+#define BOOST_ALL_NO_LIB
 #include "library/strings.h"
 #include <boost/filesystem.hpp>
 #include <iostream>
