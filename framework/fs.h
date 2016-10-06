@@ -1,11 +1,9 @@
 #pragma once
 
-#include <cstdint>
-#include <map>
-#include <mutex>
-
 #include "library/sp.h"
 #include "library/strings.h"
+#include <cstdint>
+#include <istream>
 
 #define PROGRAM_NAME "OpenApoc"
 #define PROGRAM_ORGANISATION "OpenApoc"

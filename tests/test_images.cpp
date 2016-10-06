@@ -1,4 +1,5 @@
 #include "framework/framework.h"
+#include "framework/image.h"
 #include "framework/logger.h"
 
 using namespace OpenApoc;

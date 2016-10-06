@@ -1,6 +1,7 @@
 #include "framework/framework.h"
 #include "framework/apocresources/cursor.h"
 #include "framework/event.h"
+#include "framework/image.h"
 #include "framework/renderer.h"
 #include "framework/renderer_interface.h"
 #include "framework/sound.h"
@@ -269,7 +270,7 @@ Framework::Framework(const UString programName, bool createWindow)
 	this->threadPool.reset(new ThreadPool(threadPoolSize));
 
 	LogInfo("Current working directory: \"%s\"", boost::filesystem::current_path().c_str());
-	this->data.reset(new Data(resourcePaths));
+	this->data.reset(Data::createData(resourcePaths));
 
 	auto testFile = this->data->fs.open("music");
 	if (!testFile)

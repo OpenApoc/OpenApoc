@@ -1,6 +1,7 @@
 #include "forms/ticker.h"
 #include "forms/ui.h"
 #include "framework/framework.h"
+#include "framework/image.h"
 #include "library/sp.h"
 #include <tinyxml2.h>
 

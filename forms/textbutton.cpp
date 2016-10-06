@@ -3,6 +3,7 @@
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/image.h"
 #include "library/sp.h"
 #include <tinyxml2.h>
 

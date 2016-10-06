@@ -2,6 +2,7 @@
 #include "game/ui/general/videoscreen.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/image.h"
 #include "framework/trace.h"
 #include "framework/video.h"
 #include <chrono>
