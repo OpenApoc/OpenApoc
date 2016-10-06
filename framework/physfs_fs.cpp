@@ -5,8 +5,8 @@
 #include "framework/fs.h"
 #include "framework/logger.h"
 #include "framework/trace.h"
-
 #include <physfs.h>
+#include <tuple>
 
 #ifndef _WIN32
 #define _CRT_SECURE_NO_WARNINGS

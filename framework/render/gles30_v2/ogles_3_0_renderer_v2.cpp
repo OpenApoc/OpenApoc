@@ -3,6 +3,7 @@
 #include "framework/palette.h"
 #include "framework/renderer_interface.h"
 #include "framework/trace.h"
+#include <algorithm>
 #include <cstdint>
 #include <glm/gtx/rotate_vector.hpp>
 
