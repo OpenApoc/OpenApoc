@@ -2,7 +2,9 @@
 #include "framework/renderer.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battleunit.h"
+#include "game/state/battle/battleunitanimationpack.h"
 #include "game/state/city/vehicle.h"
+#include "game/state/rules/aequipment_type.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battleunit.h"
 #include <glm/glm.hpp>

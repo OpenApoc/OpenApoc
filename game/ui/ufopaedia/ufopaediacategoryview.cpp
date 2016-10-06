@@ -6,6 +6,10 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "game/state/gamestate.h"
+#include "game/state/organisation.h"
+#include "game/state/rules/facility_type.h"
+#include "game/state/rules/vehicle_type.h"
+#include "game/state/rules/vequipment_type.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
 

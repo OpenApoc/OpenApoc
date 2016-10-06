@@ -13,6 +13,7 @@
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gameevent.h"
+#include "game/state/rules/aequipment_type.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"

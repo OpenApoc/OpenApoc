@@ -4,6 +4,7 @@
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/aequipment_type.h"
 #include "game/state/tileview/tileobject_battleitem.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"

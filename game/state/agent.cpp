@@ -2,6 +2,7 @@
 #include "game/state/aequipment.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
+#include "game/state/rules/aequipment_type.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc

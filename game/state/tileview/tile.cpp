@@ -1,6 +1,7 @@
 #include "game/state/tileview/tile.h"
 #include "framework/image.h"
 #include "framework/trace.h"
+#include "game/state/battle/battledoor.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/projectile.h"
 #include "game/state/city/scenery.h"

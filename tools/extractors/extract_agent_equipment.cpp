@@ -2,6 +2,7 @@
 #include "framework/framework.h"
 #include "game/state/agent.h"
 #include "game/state/battle/battlecommonimagelist.h"
+#include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
 #include "game/state/rules/doodad_type.h"
@@ -785,8 +786,9 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 					LogError("Unknown difficulty");
 			}
 
-			es->min_score = i == 0 ? INT_MIN : (int)sdata.score[diff][i - 1];
-			es->max_score = i == 7 ? INT_MAX : (int)sdata.score[diff][i];
+			es->min_score =
+			    i == 0 ? std::numeric_limits<int>::min() : (int)sdata.score[diff][i - 1];
+			es->max_score = i == 7 ? std::numeric_limits<int>::max() : (int)sdata.score[diff][i];
 
 			state.equipment_sets_by_score[id] = es;
 		}
@@ -868,8 +870,8 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 					}
 				}
 
-				es->min_score = i == 0 ? INT_MIN : i;
-				es->max_score = i == 12 ? INT_MAX : i + 1;
+				es->min_score = i == 0 ? std::numeric_limits<int>::min() : i;
+				es->max_score = i == 12 ? std::numeric_limits<int>::max() : i + 1;
 
 				state.equipment_sets_by_level[id] = es;
 			}

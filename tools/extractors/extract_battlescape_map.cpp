@@ -2,6 +2,7 @@
 #include "framework/framework.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlemap.h"
+#include "game/state/gamestate.h"
 #include "library/strings_format.h"
 #include "tools/extractors/common/battlemap.h"
 #include "tools/extractors/extractors.h"

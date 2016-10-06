@@ -2,7 +2,6 @@
 #include "game/state/agent.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gametime.h"
-#include "game/state/rules/aequipment_type.h"
 #include "library/sp.h"
 #include "library/vec.h"
 
@@ -13,7 +12,8 @@ namespace OpenApoc
 {
 
 class BattleItem;
-// class Projectile;
+class Projectile;
+class AEquipmentType;
 
 class AEquipment
 {

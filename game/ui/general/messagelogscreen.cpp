@@ -5,6 +5,7 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "game/state/gamestate.h"
+#include "game/state/message.h"
 #include "game/ui/city/cityview.h"
 
 namespace OpenApoc

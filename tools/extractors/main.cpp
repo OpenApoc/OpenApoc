@@ -2,6 +2,8 @@
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/trace.h"
+#include "game/state/battle/battlemaptileset.h"
+#include "game/state/gamestate.h"
 #include "library/strings_format.h"
 #include "tools/extractors/extractors.h"
 #include <SDL_main.h>

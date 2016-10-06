@@ -4,6 +4,8 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
+#include "game/state/city/building.h"
+#include "game/state/city/city.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_scenery.h"

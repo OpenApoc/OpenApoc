@@ -1,7 +1,9 @@
 #include "framework/data.h"
 #include "framework/framework.h"
+#include "game/state/city/city.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "library/strings_format.h"
+#include "library/xorshift.h"
 #include "tools/extractors/extractors.h"
 
 #include <map>

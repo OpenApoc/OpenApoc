@@ -2,6 +2,8 @@
 #include "framework/framework.h"
 #include "game/state/agent.h"
 #include "game/state/battle/battlecommonimagelist.h"
+#include "game/state/battle/battlecommonsamplelist.h"
+#include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
 #include "library/strings_format.h"

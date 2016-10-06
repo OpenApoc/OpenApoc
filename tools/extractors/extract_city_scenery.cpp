@@ -1,6 +1,7 @@
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/palette.h"
+#include "game/state/city/city.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "library/strings_format.h"
 #include "library/voxel.h"

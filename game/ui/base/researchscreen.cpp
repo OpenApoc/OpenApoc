@@ -5,6 +5,7 @@
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
+#include "game/state/base/base.h"
 #include "game/state/base/facility.h"
 #include "game/state/gamestate.h"
 #include "game/ui/base/researchselect.h"

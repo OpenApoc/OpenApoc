@@ -8,6 +8,7 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
+#include "game/state/base/base.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vequipment.h"
 #include "game/state/gamestate.h"

@@ -1,5 +1,6 @@
 #include "game/state/tileview/tileobject_battleitem.h"
 #include "framework/renderer.h"
+#include "game/state/rules/aequipment_type.h"
 #include "game/state/tileview/tile.h"
 #include "library/line.h"
 

@@ -1,6 +1,7 @@
 #include "game/state/city/vehiclemission.h"
 #include "framework/logger.h"
 #include "game/state/city/building.h"
+#include "game/state/city/city.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"

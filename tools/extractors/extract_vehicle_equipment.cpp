@@ -1,5 +1,8 @@
 #include "framework/data.h"
 #include "framework/framework.h"
+#include "game/state/gamestate.h"
+#include "game/state/gamestate.h"
+#include "game/state/rules/doodad_type.h"
 #include "game/state/rules/vequipment_type.h"
 #include "library/strings_format.h"
 #include "tools/extractors/common/ufo2p.h"

@@ -1,5 +1,6 @@
 #pragma once
 #include "framework/framework.h"
+#include "game/state/battle/battleunit.h"
 #include "game/ui/tileview/tileview.h"
 
 namespace OpenApoc

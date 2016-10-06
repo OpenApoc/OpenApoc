@@ -1,5 +1,6 @@
 #include "framework/data.h"
 #include "framework/framework.h"
+#include "game/state/gamestate.h"
 #include "library/strings_format.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
