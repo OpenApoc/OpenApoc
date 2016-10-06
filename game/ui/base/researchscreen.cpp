@@ -1,6 +1,7 @@
 #include "game/ui/base/researchscreen.h"
 #include "forms/ui.h"
 #include "framework/event.h"
+#include "framework/font.h"
 #include "framework/framework.h"
 #include "game/state/base/facility.h"
 #include "game/state/gamestate.h"

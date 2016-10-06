@@ -1,13 +1,15 @@
-
 #pragma once
-#include "control.h"
-#include "forms_enums.h"
-#include "framework/font.h"
+
+#include "forms/control.h"
+#include "forms/forms_enums.h"
 #include "library/sp.h"
+#include "library/strings.h"
 #include <queue>
 
 namespace OpenApoc
 {
+
+class BitmapFont;
 
 class Ticker : public Control
 {

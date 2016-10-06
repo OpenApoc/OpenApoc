@@ -1,6 +1,7 @@
 #include "forms/textedit.h"
 #include "forms/ui.h"
 #include "framework/event.h"
+#include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "library/sp.h"

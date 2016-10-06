@@ -1,5 +1,6 @@
 #pragma once
-#include "control.h"
+
+#include "forms/control.h"
 #include "library/sp.h"
 
 namespace OpenApoc

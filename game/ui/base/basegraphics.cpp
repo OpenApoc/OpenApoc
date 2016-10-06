@@ -1,5 +1,6 @@
 #include "game/ui/base/basegraphics.h"
 #include "forms/ui.h"
+#include "framework/font.h"
 #include "framework/framework.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"

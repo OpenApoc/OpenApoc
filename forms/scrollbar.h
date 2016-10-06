@@ -1,8 +1,7 @@
-
 #pragma once
 
-#include "control.h"
-#include "forms_enums.h"
+#include "forms/control.h"
+#include "forms/forms_enums.h"
 #include "library/sp.h"
 
 namespace OpenApoc

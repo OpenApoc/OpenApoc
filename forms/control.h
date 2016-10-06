@@ -1,6 +1,6 @@
 #pragma once
+
 #include "forms/forms_enums.h"
-#include "framework/font.h"
 #include "framework/logger.h"
 #include "library/colour.h"
 #include "library/sp.h"

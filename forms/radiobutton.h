@@ -1,6 +1,8 @@
 #pragma once
 
-#include "checkbox.h"
+#include "forms/checkbox.h"
+#include "library/sp.h"
+#include "library/strings.h"
 #include <list>
 
 namespace OpenApoc

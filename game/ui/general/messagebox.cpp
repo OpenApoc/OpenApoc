@@ -1,6 +1,7 @@
 #include "game/ui/general/messagebox.h"
 #include "forms/ui.h"
 #include "framework/event.h"
+#include "framework/font.h"
 #include "framework/framework.h"
 #include "library/strings_format.h"
 

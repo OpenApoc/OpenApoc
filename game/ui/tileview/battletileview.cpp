@@ -1,6 +1,7 @@
 #include "game/ui/tileview/battletileview.h"
 #include "forms/ui.h"
 #include "framework/event.h"
+#include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/trace.h"
 #include "game/state/battle/battle.h"
