@@ -9,7 +9,6 @@
 #include "framework/musicloader_interface.h"
 #include "framework/palette.h"
 #include "framework/sampleloader_interface.h"
-#include "framework/sound.h"
 #include "framework/trace.h"
 #include "framework/video.h"
 #include "game/state/rules/resource_aliases.h"

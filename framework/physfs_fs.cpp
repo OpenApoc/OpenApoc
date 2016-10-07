@@ -6,7 +6,6 @@
 #include "framework/logger.h"
 #include "framework/trace.h"
 #include <physfs.h>
-#include <tuple>
 
 #ifndef _WIN32
 #define _CRT_SECURE_NO_WARNINGS
@@ -127,11 +126,10 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 		return PHYSFS_tell(file);
 	}
 
-	int_type overflow(int_type c = traits_type::eof()) override
+	int_type overflow(int_type) override
 	{
 		LogError("overflow called on read-only IFile \"%s\"", this->systemPath.cStr());
 		LogAssert(0);
-		std::ignore = c;
 		return 0;
 	}
 };

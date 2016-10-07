@@ -4,10 +4,7 @@
 #include "framework/logger.h"
 #include "framework/palette.h"
 #include "library/sp.h"
-
-// Use physfs for RGBImage::saveBitmap directory creation
-#include <SDL_surface.h>
-#include <physfs.h>
+#include <cstring>
 
 namespace OpenApoc
 {
@@ -104,52 +101,6 @@ void RGBImage::blit(sp<RGBImage> src, sp<RGBImage> dst, Vec2<unsigned int> srcOf
 			writer.set(writePos, reader.get(readPos));
 		}
 	}
-}
-
-void RGBImage::saveBitmap(const UString &filename)
-{
-	// TODO: Check file's path exists
-	std::vector<UString> segs = filename.split('/');
-	UString workingdir("");
-
-	for (unsigned int pidx = 0; segs.size() > 1 && pidx < segs.size() - 1; pidx++)
-	{
-		workingdir += segs.at(pidx);
-
-		if (!PHYSFS_exists(workingdir.cStr()))
-		{
-			LogInfo("Building %s", workingdir.cStr());
-			PHYSFS_mkdir(workingdir.cStr());
-		}
-		if (workingdir.substr(workingdir.length() - 1, 1) != "/")
-		{
-			workingdir += "/";
-		}
-	}
-
-	SDL_Surface *bmp =
-	    SDL_CreateRGBSurface(0, size.x, size.y, 32, 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
-	SDL_LockSurface(bmp);
-
-	for (unsigned int y = 0; y < size.y; y++)
-	{
-		for (unsigned int x = 0; x < size.x; x++)
-		{
-			int offset = (y * bmp->pitch) + (x * 4);
-			uint8_t *bytedata = reinterpret_cast<uint8_t *>(bmp->pixels);
-			ColourArgB8888Le *pxdata = reinterpret_cast<ColourArgB8888Le *>(bytedata + offset);
-			Colour c = pixels[(y * size.x) + x];
-
-			pxdata->r = c.r;
-			pxdata->g = c.g;
-			pxdata->b = c.b;
-			pxdata->a = c.a;
-		}
-	}
-
-	SDL_UnlockSurface(bmp);
-	SDL_SaveBMP(bmp, filename.cStr());
-	SDL_FreeSurface(bmp);
 }
 
 RGBImage::~RGBImage() = default;

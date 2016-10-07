@@ -113,7 +113,6 @@ class RGBImage : public Image
   public:
 	RGBImage(Vec2<unsigned int> size, Colour initialColour = Colour(0, 0, 0, 0));
 	~RGBImage() override;
-	void saveBitmap(const UString &filename);
 	static void blit(sp<RGBImage> src, sp<RGBImage> dst, Vec2<unsigned int> srcOffset = {0, 0},
 	                 Vec2<unsigned int> dstOffset = {0, 0});
 };

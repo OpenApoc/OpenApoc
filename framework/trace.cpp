@@ -1,10 +1,14 @@
 #include "framework/trace.h"
 #include "framework/configfile.h"
+#include <chrono>
 #include <fstream>
+#include <list>
 #include <memory>
 #include <mutex>
 #include <sstream>
 #include <thread>
+#include <utility>
+#include <vector>
 
 namespace
 {

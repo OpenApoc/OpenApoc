@@ -3,7 +3,6 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/image.h"
-#include "framework/palette.h"
 #include "framework/renderer.h"
 #include "library/sp.h"
 

@@ -6,8 +6,8 @@
 #define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 #endif
+#include "framework/fs/physfs_archiver_cue.h"
 #include "framework/logger.h"
-#include "physfs_archiver_cue.h"
 
 #include "library/strings.h"
 
@@ -17,13 +17,12 @@
 #include <boost/filesystem.hpp>
 
 #include <fstream>
-#include <mutex>
 #include <physfs.h>
 // for std::memcmp
+#include "library/sp.h"
 #include <cstddef>
 #include <cstring>
 #include <inttypes.h>
-#include <library/sp.h>
 // endianness check
 #include <SDL_endian.h>
 #include <map>

@@ -11,6 +11,7 @@
 #include "framework/palette.h"
 #include "library/sp.h"
 #include "library/vec.h"
+#include <ostream>
 #include <vector>
 
 using namespace OpenApoc;

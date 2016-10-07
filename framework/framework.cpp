@@ -7,14 +7,15 @@
 #include "framework/image.h"
 #include "framework/renderer.h"
 #include "framework/renderer_interface.h"
-#include "framework/sound.h"
 #include "framework/sound_interface.h"
 #include "framework/stagestack.h"
 #include "framework/trace.h"
 #include "library/sp.h"
 #include <SDL.h>
-#include <iostream>
-#include <string>
+#include <algorithm>
+#include <list>
+#include <map>
+#include <vector>
 
 // SDL_syswm includes windows.h on windows, which does all kinds of polluting
 // defines/namespace stuff, so try to avoid that
@@ -32,9 +33,7 @@
 // Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
 // symbols as part of the module that uses it
 #define BOOST_ALL_NO_LIB
-#include <boost/filesystem.hpp>
 #include <boost/locale.hpp>
-#include <boost/program_options.hpp>
 
 using namespace OpenApoc;
 
@@ -273,7 +272,6 @@ Framework::Framework(const UString programName, bool createWindow)
 	        localeName.c_str(), localeLang.c_str(), localeCountry.c_str(), localeVariant.c_str(),
 	        localeEncoding.c_str(), isUTF8 ? "true" : "false");
 
-	LogInfo("Current working directory: \"%s\"", boost::filesystem::current_path().c_str());
 	this->data.reset(Data::createData(resourcePaths));
 
 	auto testFile = this->data->fs.open("music");

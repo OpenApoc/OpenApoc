@@ -6,9 +6,12 @@
 #include "library/vec.h"
 #include <SDL.h>
 #include <SDL_audio.h>
+#include <algorithm>
+#include <functional>
 #include <list>
 #include <mutex>
 #include <queue>
+#include <vector>
 
 namespace
 {

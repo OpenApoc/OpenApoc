@@ -1,6 +1,5 @@
-#include "library/sp.h"
-
 #include "framework/stagestack.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {

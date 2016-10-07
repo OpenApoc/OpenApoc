@@ -5,6 +5,8 @@
 #include "framework/logger.h"
 #include "framework/trace.h"
 #include "library/sp.h"
+#include <istream>
+#include <vector>
 
 namespace OpenApoc
 {
