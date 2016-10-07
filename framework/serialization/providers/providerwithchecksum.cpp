@@ -1,5 +1,7 @@
+#define SHA1_CHECKSUM
 #include "framework/serialization/providers/providerwithchecksum.h"
 #include "framework/logger.h"
+#include "framework/trace.h"
 #include "library/strings.h"
 #include "library/strings_format.h"
 
@@ -12,12 +14,20 @@ namespace fs = boost::filesystem;
 
 #include "dependencies/pugixml/src/pugixml.hpp"
 
+#if defined(SHA1_CHECKSUM)
 #include <boost/uuid/sha1.hpp>
+#include <boost/uuid/uuid.hpp>
+#else
+#include <boost/crc.hpp>
+#endif
 
 namespace OpenApoc
 {
+
+#if defined(SHA1_CHECKSUM)
 static UString calculate_checksum(const std::string &str)
 {
+	TRACE_FN;
 	UString hashString;
 
 	boost::uuids::detail::sha1 sha;
@@ -39,6 +49,19 @@ static UString calculate_checksum(const std::string &str)
 
 	return hashString;
 }
+#else
+static UString calculate_checksum(const std::string &str)
+{
+	TRACE_FN;
+	UString hashString;
+
+	boost::crc_32_type crc;
+	crc.process_bytes(str.c_str(), str.size());
+	auto hash = crc.checksum();
+	hashString = format("%08x", hash);
+	return hashString;
+}
+#endif
 std::string ProviderWithChecksum::serializeManifest()
 {
 	pugi::xml_document manifestDoc;
