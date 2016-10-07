@@ -121,7 +121,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 
 		// Damage icons are located in tacdata icons, starting with id 14 and on
 		d->icon_sprite =
-		    fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
 		                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
 		                                         (int)i + 14));
 		switch (i)
@@ -1016,12 +1016,12 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 			d->lifetime = (2) * frameTTL;
 			d->repeatable = false;
 			d->frames.push_back(
-			    {fw().data->loadImage(UString::format("PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
+			    {fw().data->loadImage(format("PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
 			                                          "ptang.tab:%d",
 			                                          78)),
 			     frameTTL});
 			d->frames.push_back(
-			    {fw().data->loadImage(UString::format("PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
+			    {fw().data->loadImage(format("PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
 			                                          "ptang.tab:%d",
 			                                          77)),
 			     frameTTL});

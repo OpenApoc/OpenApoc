@@ -268,12 +268,12 @@ bool AEquipment::isLauncher()
 	if (this->type->type != AEquipmentType::Type::Weapon)
 	{
 		LogError("isLauncher() called on non-Weapon");
-		return nullptr;
+		return false;
 	}
 	if (!readyToFire)
 	{
 		LogError("isLauncher() called on non-ready Weapon");
-		return nullptr;
+		return false;
 	}
 	return getPayloadType()->damage_type->launcher;
 }

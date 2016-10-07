@@ -916,7 +916,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state, Difficulty)
 				if (es_data.weapons[1].weapon_idx != 0xffffffff)
 					a->built_in_weapon_left = {
 
-					    &state, UString::format("%s%s", AEquipmentType::getPrefix(),
+					    &state, format("%s%s", AEquipmentType::getPrefix(),
 					                            canon_string(data_u.agent_equipment_names->get(
 					                                es_data.weapons[1].weapon_idx)))};
 				name = "BUILTIN";
@@ -938,7 +938,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state, Difficulty)
 	// None layout slot
 	{
 		UString name = "NONE";
-		UString id = UString::format("%s%s", AgentEquipmentLayout::getPrefix(), canon_string(name));
+		UString id = format("%s%s", AgentEquipmentLayout::getPrefix(), canon_string(name));
 
 		auto a = mksp<AgentEquipmentLayout>();
 
