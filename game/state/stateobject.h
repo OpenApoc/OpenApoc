@@ -1,12 +1,12 @@
 #pragma once
 
-#include "framework/logger.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include <exception>
 #include <map>
 
 #ifndef NDEBUG
+#include "framework/logger.h"
 #include "library/strings_format.h"
 #endif
 

@@ -1,6 +1,7 @@
 #include "game/state/battle/battledoor.h"
 #include "framework/framework.h"
 #include "framework/sound.h"
+#include "game/state/battle/battle.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/gamestate.h"

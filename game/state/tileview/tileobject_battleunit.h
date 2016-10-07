@@ -1,11 +1,15 @@
 #pragma once
 
-#include "game/state/battle/battlecommonimagelist.h"
-#include "game/state/battle/battleunit.h"
 #include "game/state/tileview/tileobject.h"
+#include "library/sp.h"
+#include "library/vec.h"
+#include <set>
 
 namespace OpenApoc
 {
+
+class BattleUnit;
+class Image;
 
 class TileObjectBattleUnit : public TileObject
 {

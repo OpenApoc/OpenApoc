@@ -1,5 +1,7 @@
 #include "game/state/gameevent.h"
 #include "city/vehicle.h"
+#include "framework/logger.h"
+#include "game/state/rules/vehicle_type.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc

@@ -5,6 +5,7 @@
 #include "framework/keycodes.h"
 #include "game/state/city/building.h"
 #include "game/state/gamestate.h"
+#include "game/state/organisation.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc

@@ -1,10 +1,11 @@
 #pragma once
 
-#include "game/state/gamestate.h"
-#include "game/state/organisation.h"
-#include "game/state/rules/vehicle_type.h"
-#include "game/state/tileview/tile.h"
+#include "game/state/stateobject.h"
+#include "library/sp.h"
+#include "library/strings.h"
+#include "library/vec.h"
 #include <list>
+#include <map>
 
 namespace OpenApoc
 {
@@ -21,7 +22,10 @@ class GameState;
 class VEquipment;
 class VEquipmentType;
 class Base;
+class VehicleType;
 class City;
+class TileMap;
+class Collision;
 
 class VehicleMover
 {
@@ -78,7 +82,7 @@ class Vehicle : public StateObject<Vehicle>, public std::enable_shared_from_this
 	sp<TileObjectVehicle> tileObject;
 	sp<TileObjectShadow> shadowObject;
 
-	std::unique_ptr<VehicleMover> mover;
+	up<VehicleMover> mover;
 
 	/* 'launch' the vehicle into the city */
 	void launch(TileMap &map, GameState &state, Vec3<float> initialPosition);

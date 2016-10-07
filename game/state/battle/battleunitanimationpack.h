@@ -1,11 +1,13 @@
 #pragma once
+
 #include "game/state/agent.h"
-#include "game/state/battle/battleunit.h"
-#include "game/state/battle/battleunitimagepack.h"
 #include "game/state/rules/aequipment_type.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
+#include <list>
+#include <map>
+#include <vector>
 
 namespace OpenApoc
 {
@@ -13,6 +15,7 @@ namespace OpenApoc
 class Renderer;
 enum class TileViewMode;
 class TileTransform;
+class BattleUnitImagePack;
 
 class BattleUnitAnimationPack : public StateObject<BattleUnitAnimationPack>
 {

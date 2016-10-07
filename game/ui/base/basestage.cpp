@@ -3,6 +3,7 @@
 #include "framework/framework.h"
 #include "framework/renderer.h"
 #include "game/state/base/base.h"
+#include "game/state/gamestate.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc

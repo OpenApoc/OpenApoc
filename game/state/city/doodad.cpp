@@ -1,7 +1,9 @@
 #include "game/state/city/doodad.h"
 #include "framework/framework.h"
+#include "game/state/battle/battle.h"
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/doodad_type.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_doodad.h"
 

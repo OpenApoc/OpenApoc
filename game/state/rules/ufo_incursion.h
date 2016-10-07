@@ -1,7 +1,10 @@
 #pragma once
+
 #include "game/state/stateobject.h"
 #include "library/strings.h"
 #include <map>
+#include <utility>
+#include <vector>
 
 namespace OpenApoc
 {

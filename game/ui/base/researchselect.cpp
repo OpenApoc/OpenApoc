@@ -5,6 +5,7 @@
 #include "framework/keycodes.h"
 #include "game/state/base/base.h"
 #include "game/state/gamestate.h"
+#include "game/state/organisation.h"
 #include "game/state/research.h"
 #include "game/ui/general/messagebox.h"
 #include "library/strings_format.h"

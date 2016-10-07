@@ -9,6 +9,8 @@
 #include "framework/sound.h"
 #include "framework/trace.h"
 #include "game/state/battle/battle.h"
+#include "game/state/battle/battlecommonimagelist.h"
+#include "game/state/battle/battleitem.h"
 #include "game/state/battle/battleunitmission.h"
 #include "game/state/organisation.h"
 #include "game/state/tileview/tileobject_battleitem.h"

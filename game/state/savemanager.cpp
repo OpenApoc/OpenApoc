@@ -1,7 +1,9 @@
 ﻿#include "game/state/savemanager.h"
 #include "framework/configfile.h"
 #include "framework/framework.h"
+#include "framework/serialization/serialize.h"
 #include "framework/trace.h"
+#include "game/state/gamestate.h"
 #include <algorithm>
 #include <sstream>
 

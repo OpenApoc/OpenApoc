@@ -5,6 +5,7 @@
 #include "game/state/city/projectile.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/rules/vequipment_type.h"
+#include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_vehicle.h"
 #include "library/sp.h"
 #include <glm/glm.hpp>

@@ -1,4 +1,5 @@
 #include "game/state/battle/battlemap.h"
+#include "game/state/aequipment.h"
 #include "game/state/agent.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonsamplelist.h"
@@ -13,6 +14,8 @@
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
 #include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/vehicle_type.h"
+#include <algorithm>
 
 namespace OpenApoc
 {

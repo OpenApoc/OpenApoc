@@ -6,6 +6,7 @@
 #include "game/state/base/base.h"
 #include "game/state/city/building.h"
 #include "game/state/gamestate.h"
+#include "game/state/organisation.h"
 #include "game/ui/base/basegraphics.h"
 #include "game/ui/city/cityview.h"
 #include "game/ui/general/messagebox.h"

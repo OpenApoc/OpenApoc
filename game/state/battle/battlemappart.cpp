@@ -1,4 +1,5 @@
 #include "game/state/battle/battlemappart.h"
+#include "game/state/battle/battle.h"
 #include "game/state/battle/battledoor.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart_type.h"
@@ -8,6 +9,7 @@
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
+#include <algorithm>
 
 namespace OpenApoc
 {

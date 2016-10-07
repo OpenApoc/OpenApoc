@@ -9,6 +9,7 @@
 #include "game/state/city/city.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/vehicle_type.h"
 #include "game/ui/battle/battlebriefing.h"
 #include "game/ui/battle/battleview.h"
 #include "game/ui/city/cityview.h"

@@ -1,5 +1,5 @@
 #pragma once
-#include "game/state/battle/battlemap.h"
+
 #include "game/state/rules/vequipment_type.h"
 #include "game/state/stateobject.h"
 #include "library/rect.h"
@@ -16,6 +16,7 @@ namespace OpenApoc
 class RulesLoader;
 class Image;
 class VoxelMap;
+class BattleMap;
 
 class VehicleType : public StateObject<VehicleType>
 {

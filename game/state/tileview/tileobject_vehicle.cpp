@@ -1,6 +1,8 @@
 #include "game/state/tileview/tileobject_vehicle.h"
 #include "framework/renderer.h"
+#include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
+#include "game/state/rules/vehicle_type.h"
 #include "game/state/tileview/tile.h"
 #include "library/voxel.h"
 #include <glm/glm.hpp>
@@ -217,5 +219,13 @@ void TileObjectVehicle::addToDrawnTiles(Tile *tile)
 	}
 
 	TileObject::addToDrawnTiles(tile);
+}
+
+const Vec3<float> &TileObjectVehicle::getDirection() const { return this->getVehicle()->velocity; }
+
+void TileObjectVehicle::setDirection(const Vec3<float> &dir)
+{
+	this->getVehicle()->facing = dir;
+	this->getVehicle()->velocity = dir;
 }
 } // namespace OpenApoc

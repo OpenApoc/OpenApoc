@@ -1,9 +1,14 @@
 #pragma once
-#include "game/state/battle/battlemappart_type.h"
+
 #include "game/state/stateobject.h"
+#include "library/sp.h"
+#include "library/strings.h"
+#include <map>
 
 namespace OpenApoc
 {
+
+class BattleMapPartType;
 
 class BattleMapTileset
 {

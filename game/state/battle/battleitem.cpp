@@ -4,6 +4,7 @@
 #include "framework/sound.h"
 #include "game/state/aequipment.h"
 #include "game/state/battle/battle.h"
+#include "game/state/battle/battlemappart.h"
 #include "game/state/gamestate.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"

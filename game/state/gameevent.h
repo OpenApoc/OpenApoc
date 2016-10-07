@@ -1,7 +1,10 @@
 #pragma once
+
 #include "framework/event.h"
 #include "game/state/gameevent_types.h"
 #include "game/state/stateobject.h"
+#include "library/sp.h"
+#include "library/strings.h"
 
 namespace OpenApoc
 {

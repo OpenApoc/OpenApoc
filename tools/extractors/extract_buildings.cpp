@@ -1,5 +1,6 @@
 #include "framework/data.h"
 #include "framework/framework.h"
+#include "game/state/battle/battlemap.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "library/strings_format.h"

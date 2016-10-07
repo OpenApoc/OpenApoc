@@ -1,5 +1,6 @@
 #pragma once
-#include "game/state/rules/doodad_type.h"
+
+#include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
 

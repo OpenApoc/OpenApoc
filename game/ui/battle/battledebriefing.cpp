@@ -2,6 +2,7 @@
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/ui/city/cityview.h"
 #include <cmath>

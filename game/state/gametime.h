@@ -1,6 +1,7 @@
 #pragma once
 
 #include "library/strings.h"
+#include <cstdint>
 
 namespace OpenApoc
 {

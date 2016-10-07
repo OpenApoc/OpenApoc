@@ -12,6 +12,7 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vequipment.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/vehicle_type.h"
 #include "library/strings_format.h"
 #include <cmath>
 

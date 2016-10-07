@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game/state/city/building.h"
+#include "game/state/stateobject.h"
 #include "library/strings.h"
 #include "library/vec.h"
 #include <list>

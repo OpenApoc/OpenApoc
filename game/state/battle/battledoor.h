@@ -1,11 +1,12 @@
 #pragma once
+
+#include "game/state/gametime.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
-#include "library/strings.h"
 #include "library/vec.h"
 #include <list>
 
-#define TICKS_TO_STAY_OPEN TICKS_PER_SECOND * 4
+#define TICKS_TO_STAY_OPEN (TICKS_PER_SECOND * 4)
 
 namespace OpenApoc
 {

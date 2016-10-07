@@ -6,6 +6,8 @@
 #include "game/state/city/building.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
+#include "game/state/organisation.h"
+#include "game/state/rules/vehicle_type.h"
 #include "gameevent.h"
 #include "library/strings_format.h"
 

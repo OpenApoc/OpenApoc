@@ -1,12 +1,15 @@
 #pragma once
-#include "framework/serialization/serialize.h"
-#include "game/state/gamestate.h"
-#include <future>
 
-class SerializationNode;
-class GameState;
+#include "library/sp.h"
+#include "library/strings.h"
+#include <cstdint>
+#include <future>
+#include <vector>
+
 namespace OpenApoc
 {
+class SerializationArchive;
+class GameState;
 
 enum class SaveType : unsigned
 {

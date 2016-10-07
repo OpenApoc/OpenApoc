@@ -5,6 +5,7 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "framework/sound.h"
+#include "game/state/battle/battle.h"
 #include "game/state/gamestate.h"
 #include "game/ui/battle/battledebriefing.h"
 #include "game/ui/city/cityview.h"

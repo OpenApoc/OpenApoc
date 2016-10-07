@@ -1,6 +1,8 @@
 #pragma once
 
 #include "game/state/stateobject.h"
+#include "library/sp.h"
+#include "library/strings.h"
 #include <list>
 #include <map>
 #include <set>
@@ -14,6 +16,7 @@ class ResearchDependency;
 class ItemDependency;
 class Agent;
 class Lab;
+class GameState;
 
 class ProjectDependencies
 {

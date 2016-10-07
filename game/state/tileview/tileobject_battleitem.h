@@ -1,11 +1,13 @@
 #pragma once
 
-#include "game/state/battle/battlecommonimagelist.h"
-#include "game/state/battle/battleitem.h"
 #include "game/state/tileview/tileobject.h"
+#include "library/sp.h"
+#include "library/vec.h"
 
 namespace OpenApoc
 {
+
+class BattleItem;
 
 class TileObjectBattleItem : public TileObject
 {
@@ -19,7 +21,7 @@ class TileObjectBattleItem : public TileObject
 
   private:
 	friend class TileMap;
-	std::weak_ptr<BattleItem> item;
+	wp<BattleItem> item;
 	TileObjectBattleItem(TileMap &map, sp<BattleItem> item);
 };
 

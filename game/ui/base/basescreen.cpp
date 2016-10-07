@@ -8,6 +8,8 @@
 #include "framework/renderer.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
+#include "game/state/city/building.h"
+#include "game/state/gamestate.h"
 #include "game/ui/base/aequipscreen.h"
 #include "game/ui/base/basegraphics.h"
 #include "game/ui/base/researchscreen.h"

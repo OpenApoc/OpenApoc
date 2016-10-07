@@ -1,15 +1,15 @@
 #pragma once
-#define _USE_MATH_DEFINES
-#include "game/state/battle/battleunit.h"
-#include "game/state/city/vehicle.h"
+
+#include "game/state/gametime.h"
 #include "game/state/stateobject.h"
-#include "library/colour.h"
 #include "library/sp.h"
+#include "library/strings.h"
 #include "library/vec.h"
-#include <cmath>
+#include <list>
+#include <map>
 
 // Based on the fact that retribution (tr = 10) turns 90 degrees (PI/2) per second
-#define PROJECTILE_TURN_PER_TICK (float)(M_PI / 2.0f) / 10.0f / TICKS_PER_SECOND
+#define PROJECTILE_TURN_PER_TICK ((float)(M_PI / 2.0f) / 10.0f / TICKS_PER_SECOND)
 
 namespace OpenApoc
 {
@@ -21,6 +21,10 @@ class Collision;
 class DoodadType;
 class DamageType;
 class Sample;
+class Vehicle;
+class BattleUnit;
+class TileObject;
+class Image;
 
 class Projectile : public std::enable_shared_from_this<Projectile>
 {

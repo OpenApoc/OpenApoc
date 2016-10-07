@@ -1,10 +1,9 @@
 #pragma once
+
 #include "game/state/agent.h"
-#include "game/state/battle/battleunitimagepack.h"
-#include "game/state/organisation.h"
 #include "game/state/research.h"
-#include "game/state/rules/damage.h"
 #include "game/state/stateobject.h"
+#include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
 #include <limits>
@@ -17,6 +16,11 @@ class Rules;
 class Image;
 class Sample;
 class DoodadType;
+class BattleUnitImagePack;
+class Organisation;
+class DamageType;
+class DamageModifier;
+
 class AEquipmentType : public StateObject<AEquipmentType>
 {
   public:

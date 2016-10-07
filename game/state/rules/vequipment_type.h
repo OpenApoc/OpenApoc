@@ -1,8 +1,10 @@
 #pragma once
-#include "game/state/organisation.h"
+
 #include "game/state/stateobject.h"
+#include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
+#include <list>
 #include <map>
 #include <set>
 
@@ -13,6 +15,8 @@ class Rules;
 class Image;
 class Sample;
 class DoodadType;
+class Organisation;
+
 class VEquipmentType : public StateObject<VEquipmentType>
 {
   public:

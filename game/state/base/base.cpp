@@ -1,9 +1,11 @@
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
+#include "game/state/city/baselayout.h"
 #include "game/state/city/building.h"
+#include "game/state/gamestate.h"
 #include "game/state/organisation.h"
+#include "game/state/rules/facility_type.h"
 #include "library/strings_format.h"
-
 #include <random>
 
 namespace OpenApoc

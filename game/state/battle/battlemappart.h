@@ -1,7 +1,9 @@
 #pragma once
+
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
+#include <list>
 
 #define TICKS_PER_FRAME_MAP_PART 8
 

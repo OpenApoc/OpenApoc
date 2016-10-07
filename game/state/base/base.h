@@ -1,12 +1,11 @@
 #pragma once
 
-#include "game/state/city/building.h"
-#include "game/state/gamestate.h"
 #include "game/state/rules/facility_type.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
+#include <map>
 #include <vector>
 
 namespace OpenApoc
@@ -14,6 +13,7 @@ namespace OpenApoc
 
 class Building;
 class Facility;
+class GameState;
 
 class Base : public StateObject<Base>
 {

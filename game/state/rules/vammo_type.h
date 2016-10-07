@@ -1,10 +1,7 @@
 #pragma once
-#include "game/state/organisation.h"
+
 #include "game/state/stateobject.h"
 #include "library/strings.h"
-#include "library/vec.h"
-#include <map>
-#include <set>
 
 namespace OpenApoc
 {
@@ -12,6 +9,8 @@ namespace OpenApoc
 class Rules;
 class Image;
 class Sample;
+class Organisation;
+
 class VAmmoType : public StateObject<VAmmoType>
 {
   public:

@@ -1,4 +1,6 @@
 #pragma once
+
+#include "game/state/battle/battlemappart_type.h"
 #include "game/state/battle/battleunitanimationpack.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -6,7 +8,6 @@
 #include "tools/extractors/common/animation.h"
 #include "tools/extractors/common/tacp.h"
 #include "tools/extractors/common/ufo2p.h"
-
 #include <map>
 #include <vector>
 
@@ -17,6 +18,7 @@ class BattleMapTileset;
 class BattleUnitAnimationPack;
 class GameState;
 class City;
+class BattleMapSectorTiles;
 
 class InitialGameStateExtractor
 {

@@ -1,12 +1,15 @@
 #pragma once
-#include "library/sp.h"
 
 #include "game/state/agent.h"
 #include "game/state/gametime.h"
 #include "game/state/research.h"
+#include "game/state/stateobject.h"
+#include "library/sp.h"
 #include "library/strings.h"
 #include "library/xorshift.h"
-#include <random>
+#include <cstdint>
+#include <list>
+#include <map>
 
 namespace OpenApoc
 {
@@ -33,6 +36,7 @@ class BattleCommonImageList;
 class BattleCommonSampleList;
 class BattleMapPartType;
 class EventMessage;
+class DamageType;
 
 static const int MAX_MESSAGES = 50;
 static const unsigned ORIGINAL_TICKS = 36;

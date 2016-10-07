@@ -1,5 +1,6 @@
 #include "game/state/battle/battleunitanimationpack.h"
 #include "framework/renderer.h"
+#include "game/state/battle/battleunitimagepack.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc

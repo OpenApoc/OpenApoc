@@ -3,7 +3,9 @@
 #include "framework/trace.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
+#include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonsamplelist.h"
+#include "game/state/city/baselayout.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/doodad.h"
@@ -17,6 +19,8 @@
 #include "game/state/organisation.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/ufo_growth.h"
+#include "game/state/rules/vehicle_type.h"
+#include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_vehicle.h"
 #include "library/strings_format.h"
 #include <random>

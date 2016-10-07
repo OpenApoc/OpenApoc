@@ -1,12 +1,14 @@
 #pragma once
-#include "game/state/agent.h"
+
 #include "game/state/battle/battleforces.h"
-#include "game/state/battle/battlemappart_type.h"
 #include "game/state/battle/battlemapsector.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
-#include "library/voxel.h"
+#include <list>
+#include <map>
+#include <set>
+#include <vector>
 
 namespace OpenApoc
 {
@@ -32,6 +34,7 @@ class DoodadType;
 class BattleMap;
 class Vehicle;
 class Building;
+class Agent;
 
 class Battle : public std::enable_shared_from_this<Battle>
 {

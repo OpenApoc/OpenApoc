@@ -1,6 +1,5 @@
 #pragma once
 
-#include "framework/image.h"
 #include "game/state/research.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
@@ -11,6 +10,7 @@ namespace OpenApoc
 {
 
 class ResearchTopic;
+class LazyImage;
 
 class UfopaediaEntry : public StateObject<UfopaediaEntry>
 {

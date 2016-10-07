@@ -18,6 +18,7 @@
 #include "game/state/research.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/vammo_type.h"
+#include "game/state/rules/vehicle_type.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_scenery.h"
 #include "game/state/tileview/tileobject_vehicle.h"

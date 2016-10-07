@@ -2,7 +2,9 @@
 
 #include "game/state/stateobject.h"
 #include "library/strings.h"
+#include <list>
 #include <map>
+#include <vector>
 
 namespace OpenApoc
 {
@@ -10,7 +12,6 @@ namespace OpenApoc
 class Vehicle;
 class AgentType;
 class AEquipmentType;
-template <typename T> class StateObject;
 
 class Organisation : public StateObject<Organisation>
 {
