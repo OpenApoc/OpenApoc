@@ -609,42 +609,24 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 							{
 								// Facing north
 								vehicle
-<<<<<<< HEAD
 								    ->voxelMaps[FACING_NORTH]
 								               [z * v.size_y * v.size_x + y * v.size_x + x]
 								    ->setSlice(i, fw().data->loadVoxelSlice(format(
-=======
-								    ->voxelMaps[z * v.size_y * v.size_x + y * v.size_x + x]
-								               [{0.0f, -1.0f, 0.0f}]
-								    ->setSlice(i, fw().data->loadVoxelSlice(format(
->>>>>>> refs/remotes/pmprog/master
 								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
 								                      "ufodata/loftemps.tab:%d",
 								                      verticalVoxelMapIdx)));
 								vehicle
-<<<<<<< HEAD
 								    ->voxelMapsLOS[FACING_NORTH]
 								                  [z * v.size_y * v.size_x + y * v.size_x + x]
 								    ->setSlice(i, fw().data->loadVoxelSlice(format(
-=======
-								    ->voxelMaps[z * v.size_y * v.size_x + y * v.size_x + x]
-								               [{0.0f, 1.0f, 0.0f}]
-								    ->setSlice(i, fw().data->loadVoxelSlice(format(
->>>>>>> refs/remotes/pmprog/master
 								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
 								                      "ufodata/loftemps.tab:%d",
 								                      losVoxelMapIndex)));
 								// Facing east
 								vehicle
-<<<<<<< HEAD
 								    ->voxelMaps[FACING_EAST]
 								               [z * v.size_y * v.size_x + y * v.size_x + x]
 								    ->setSlice(i, fw().data->loadVoxelSlice(format(
-=======
-								    ->voxelMaps[z * v.size_y * v.size_x + y * v.size_x + x]
-								               [{1.0f, 0.0f, 0.0f}]
-								    ->setSlice(i, fw().data->loadVoxelSlice(format(
->>>>>>> refs/remotes/pmprog/master
 								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
 								                      "ufodata/loftemps.tab:%d",
 								                      horizontalVoxelMapIndex)));
@@ -672,15 +654,9 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 								                      losVoxelMapIndex)));
 								// Facing west
 								vehicle
-<<<<<<< HEAD
 								    ->voxelMaps[FACING_WEST]
 								               [z * v.size_y * v.size_x + y * v.size_x + x]
 								    ->setSlice(i, fw().data->loadVoxelSlice(format(
-=======
-								    ->voxelMaps[z * v.size_y * v.size_x + y * v.size_x + x]
-								               [{-1.0f, 0.0f, 0.0f}]
-								    ->setSlice(i, fw().data->loadVoxelSlice(format(
->>>>>>> refs/remotes/pmprog/master
 								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
 								                      "ufodata/loftemps.tab:%d",
 								                      horizontalVoxelMapIndex)));
@@ -863,15 +839,9 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 						for (int i = 0; i < limit; i++)
 						{
 							vehicle
-<<<<<<< HEAD
 							    ->voxelMaps[FACING_NORTH][z * v.size_y * v.size_x +
 							                              pair.first.y * v.size_x + pair.first.x]
 							    ->setSlice(i, fw().data->loadVoxelSlice(format(
-=======
-							    ->voxelMaps[z * v.size_y * v.size_x + pair.first.y * v.size_x +
-							                pair.first.x][{0.0f, -1.0f, 0.0f}]
-							    ->setSlice(i, fw().data->loadVoxelSlice(format(
->>>>>>> refs/remotes/pmprog/master
 							                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
 							                      "ufodata/loftemps.tab:%d",
 							                      pair.second)));
