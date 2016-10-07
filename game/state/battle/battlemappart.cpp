@@ -115,9 +115,10 @@ void BattleMapPart::ceaseDoorFunction()
 
 bool BattleMapPart::findSupport()
 {
-	// There are three ways battle map part can get supported:
-	// 1) It has adjacent supporting map parts
-
+	// There are two ways battle map part can get supported:
+	// 1) It's "Supported by" condition is satisfied 
+	// 2) It has adjacent supporting map parts on two sides
+	
 
 	// FIXME: Implement
 	//
