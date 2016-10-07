@@ -1,8 +1,11 @@
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
+#include "game/state/city/baselayout.h"
 #include "game/state/city/building.h"
+#include "game/state/gamestate.h"
 #include "game/state/organisation.h"
-
+#include "game/state/rules/facility_type.h"
+#include "library/strings_format.h"
 #include <random>
 
 namespace OpenApoc
@@ -205,8 +208,7 @@ void Base::buildFacility(GameState &state, StateRef<FacilityType> type, Vec2<int
 					auto lab = mksp<Lab>();
 					lab->size = size;
 					lab->type = ResearchTopic::Type::BioChem;
-					auto id = UString::format("%s%u", Lab::getPrefix(),
-					                          state.research.num_labs_created++);
+					auto id = format("%s%u", Lab::getPrefix(), state.research.num_labs_created++);
 					state.research.labs[id] = lab;
 					facility->lab = {&state, id};
 					break;
@@ -216,8 +218,7 @@ void Base::buildFacility(GameState &state, StateRef<FacilityType> type, Vec2<int
 					auto lab = mksp<Lab>();
 					lab->size = size;
 					lab->type = ResearchTopic::Type::Physics;
-					auto id = UString::format("%s%u", Lab::getPrefix(),
-					                          state.research.num_labs_created++);
+					auto id = format("%s%u", Lab::getPrefix(), state.research.num_labs_created++);
 					state.research.labs[id] = lab;
 					facility->lab = {&state, id};
 					break;
@@ -227,8 +228,7 @@ void Base::buildFacility(GameState &state, StateRef<FacilityType> type, Vec2<int
 					auto lab = mksp<Lab>();
 					lab->size = size;
 					lab->type = ResearchTopic::Type::Engineering;
-					auto id = UString::format("%s%u", Lab::getPrefix(),
-					                          state.research.num_labs_created++);
+					auto id = format("%s%u", Lab::getPrefix(), state.research.num_labs_created++);
 					state.research.labs[id] = lab;
 					facility->lab = {&state, id};
 					break;

@@ -1,5 +1,8 @@
 #include "game/state/gameevent.h"
 #include "city/vehicle.h"
+#include "framework/logger.h"
+#include "game/state/rules/vehicle_type.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -18,32 +21,31 @@ UString GameVehicleEvent::message()
 		case GameEventType::UfoSpotted:
 			return tr("UFO spotted.");
 		case GameEventType::UfoCrashed:
-			return UString::format("%s %s", tr("UFO crash landed:"), vehicle->name);
+			return format("%s %s", tr("UFO crash landed:"), vehicle->name);
 		case GameEventType::UfoRecovered:
-			return UString::format("%s %s", tr("Unmanned UFO recovered:"), vehicle->name);
+			return format("%s %s", tr("Unmanned UFO recovered:"), vehicle->name);
 		case GameEventType::VehicleLightDamage:
-			return UString::format("%s %s", tr("Vehicle lightly damaged:"), vehicle->name);
+			return format("%s %s", tr("Vehicle lightly damaged:"), vehicle->name);
 		case GameEventType::VehicleModerateDamage:
-			return UString::format("%s %s", tr("Vehicle moderately damaged:"), vehicle->name);
+			return format("%s %s", tr("Vehicle moderately damaged:"), vehicle->name);
 		case GameEventType::VehicleHeavyDamage:
-			return UString::format("%s %s", tr("Vehicle heavily damaged:"), vehicle->name);
+			return format("%s %s", tr("Vehicle heavily damaged:"), vehicle->name);
 		case GameEventType::VehicleDestroyed:
-			return UString::format("%s %s", tr("Vehicle destroyed:"), vehicle->name);
+			return format("%s %s", tr("Vehicle destroyed:"), vehicle->name);
 		case GameEventType::VehicleEscaping:
-			return UString::format("%s %s", tr("Vehicle returning to base as damaged:"),
-			                       vehicle->name);
+			return format("%s %s", tr("Vehicle returning to base as damaged:"), vehicle->name);
 		case GameEventType::VehicleNoAmmo:
-			return UString::format("%s %s", vehicle->name, tr(": Weapon out of ammo:"));
+			return format("%s %s", vehicle->name, tr(": Weapon out of ammo:"));
 		case GameEventType::VehicleLowFuel:
-			return UString::format("%s %s", tr("Vehicle low on fuel:"), vehicle->name);
+			return format("%s %s", tr("Vehicle low on fuel:"), vehicle->name);
 		case GameEventType::VehicleRepaired:
-			return UString::format("%s %s", tr("Vehicle Repaired:"), vehicle->name);
+			return format("%s %s", tr("Vehicle Repaired:"), vehicle->name);
 		case GameEventType::VehicleRearmed:
-			return UString::format("%s %s", tr("Vehicle Rearmed:"), vehicle->name);
+			return format("%s %s", tr("Vehicle Rearmed:"), vehicle->name);
 		case GameEventType::VehicleRefuelled:
-			return UString::format("%s %s", tr("Vehicle Refuelled:"), vehicle->name);
+			return format("%s %s", tr("Vehicle Refuelled:"), vehicle->name);
 		case GameEventType::VehicleNoEngine:
-			return UString::format("%s %s", tr("Vehicle has no engine:"), vehicle->name);
+			return format("%s %s", tr("Vehicle has no engine:"), vehicle->name);
 		case GameEventType::UnauthorizedVehicle:
 			if (vehicle->type->type == VehicleType::Type::Ground)
 			{

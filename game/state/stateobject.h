@@ -1,10 +1,14 @@
 #pragma once
 
-#include "framework/logger.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include <exception>
 #include <map>
+
+#ifndef NDEBUG
+#include "framework/logger.h"
+#include "library/strings_format.h"
+#endif
 
 namespace OpenApoc
 {
@@ -50,8 +54,8 @@ template <typename T> class StateRef
 			LogError("%s object has invalid prefix - expected \"%s\" ID \"%s\"",
 			         T::getTypeName().cStr(), T::getPrefix().cStr(), id.cStr());
 			throw std::runtime_error(
-			    UString::format("%s object has invalid prefix - expected \"%s\" ID \"%s\"",
-			                    T::getTypeName(), T::getPrefix(), id)
+			    format("%s object has invalid prefix - expected \"%s\" ID \"%s\"", T::getTypeName(),
+			           T::getPrefix(), id)
 			        .str());
 		}
 #endif
@@ -61,7 +65,7 @@ template <typename T> class StateRef
 		{
 			LogError("No %s object matching ID \"%s\" found", T::getTypeName().cStr(), id.cStr());
 			throw std::runtime_error(
-			    UString::format("No %s object matching ID \"%s\"", T::getTypeName(), id).str());
+			    format("No %s object matching ID \"%s\"", T::getTypeName(), id).str());
 		}
 #endif
 	}

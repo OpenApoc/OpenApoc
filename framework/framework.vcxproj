@@ -74,7 +74,6 @@
     <ClInclude Include="fs\physfs_archiver_cue.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageloader_interface.h" />
-    <ClInclude Include="includes.h" />
     <ClInclude Include="logger.h" />
     <ClInclude Include="musicloader_interface.h" />
     <ClInclude Include="palette.h" />

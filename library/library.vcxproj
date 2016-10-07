@@ -25,6 +25,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="sp.h" />
     <ClInclude Include="strings.h" />
+    <ClInclude Include="strings_format.h" />
     <ClInclude Include="vec.h" />
     <ClInclude Include="voxel.h" />
     <ClInclude Include="xorshift.h" />

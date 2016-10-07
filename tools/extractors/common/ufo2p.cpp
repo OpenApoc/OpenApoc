@@ -1,5 +1,6 @@
 #include "ufo2p.h"
 #include "crc32.h"
+#include "framework/data.h"
 #include "framework/framework.h"
 
 #include <iomanip>

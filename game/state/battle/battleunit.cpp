@@ -3,6 +3,7 @@
 #endif
 #include "game/state/battle/battleunit.h"
 #include "framework/framework.h"
+#include "framework/sound.h"
 #include "game/state/aequipment.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunitanimationpack.h"
@@ -13,7 +14,10 @@
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_shadow.h"
+#include <algorithm>
 #include <cmath>
+#include <glm/glm.hpp>
+#include <glm/gtx/vector_angle.hpp>
 
 namespace OpenApoc
 {

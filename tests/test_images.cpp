@@ -1,5 +1,9 @@
+#include "framework/configfile.h"
+#include "framework/data.h"
 #include "framework/framework.h"
+#include "framework/image.h"
 #include "framework/logger.h"
+#include <map>
 
 using namespace OpenApoc;
 

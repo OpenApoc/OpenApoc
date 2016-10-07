@@ -2,7 +2,9 @@
 #define _USE_MATH_DEFINES
 #endif
 #include "game/ui/general/loadingscreen.h"
+#include "framework/data.h"
 #include "framework/framework.h"
+#include "framework/renderer.h"
 #include "game/ui/battle/battleview.h"
 #include "game/ui/city/cityview.h"
 #include <algorithm>

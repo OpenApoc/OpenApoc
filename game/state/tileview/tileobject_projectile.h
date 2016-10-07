@@ -1,10 +1,12 @@
 #pragma once
 
-#include "game/state/city/projectile.h"
 #include "game/state/tileview/tileobject.h"
+#include "library/sp.h"
+#include "library/vec.h"
 
 namespace OpenApoc
 {
+class Projectile;
 
 class TileObjectProjectile : public TileObject
 {
@@ -17,7 +19,7 @@ class TileObjectProjectile : public TileObject
 
   private:
 	friend class TileMap;
-	std::weak_ptr<Projectile> projectile;
+	wp<Projectile> projectile;
 	TileObjectProjectile(TileMap &map, sp<Projectile> projectile);
 };
 

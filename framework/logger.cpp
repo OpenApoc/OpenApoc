@@ -5,7 +5,9 @@
 #endif
 
 #include "framework/logger.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
+#include "library/sp.h"
 #include <chrono>
 #include <cstdarg>
 #include <mutex>
@@ -295,7 +297,7 @@ void Log(LogLevel level, UString prefix, const char *format, ...)
 			va_start(arglist, format);
 			auto strSize = vsnprintf(NULL, 0, format, arglist);
 			strSize += 1; // NULL terminator
-			std::unique_ptr<char[]> string(new char[strSize]);
+			up<char[]> string(new char[strSize]);
 			va_end(arglist);
 
 			/* Now format the string */

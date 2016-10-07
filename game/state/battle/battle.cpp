@@ -1,17 +1,25 @@
 #include "game/state/battle/battle.h"
 #include "framework/framework.h"
+#include "framework/sound.h"
 #include "framework/trace.h"
+#include "game/state/aequipment.h"
+#include "game/state/battle/battlecommonimagelist.h"
+#include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battledoor.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemap.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/battle/battleunit.h"
+#include "game/state/battle/battleunitanimationpack.h"
+#include "game/state/battle/battleunitimagepack.h"
 #include "game/state/city/city.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/projectile.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/doodad_type.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_battleitem.h"
@@ -20,12 +28,10 @@
 #include "game/state/tileview/tileobject_doodad.h"
 #include "game/state/tileview/tileobject_projectile.h"
 #include "game/state/tileview/tileobject_shadow.h"
+#include "library/strings_format.h"
 #include "library/xorshift.h"
 #include <algorithm>
-#include <functional>
-#include <future>
 #include <limits>
-#include <unordered_map>
 
 #ifdef _MSC_VER
 #pragma warning(push, 1)
@@ -218,7 +224,7 @@ sp<Doodad> Battle::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 sp<BattleUnit> Battle::addUnit(GameState &state)
 {
 	auto unit = mksp<BattleUnit>();
-	UString id = UString::format("%s%d", BattleUnit::getPrefix(), (int)units.size());
+	UString id = format("%s%d", BattleUnit::getPrefix(), (int)units.size());
 	unit->id = id;
 	unit->strategyImages = state.battle_common_image_list->strategyImages;
 	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
@@ -229,7 +235,7 @@ sp<BattleUnit> Battle::addUnit(GameState &state)
 sp<BattleDoor> Battle::addDoor(GameState &state)
 {
 	auto door = mksp<BattleDoor>();
-	UString id = UString::format("%s%d", BattleDoor::getPrefix(), (int)units.size());
+	UString id = format("%s%d", BattleDoor::getPrefix(), (int)units.size());
 	door->id = id;
 	door->doorSound = state.battle_common_sample_list->door;
 	doors[id] = door;
@@ -1150,8 +1156,8 @@ void Battle::loadImagePacks(GameState &state)
 			         imagePackPath.cStr());
 			continue;
 		}
-		state.battle_unit_image_packs[UString::format("%s%s", BattleUnitImagePack::getPrefix(),
-		                                              imagePackName)] = imagePack;
+		state.battle_unit_image_packs[format("%s%s", BattleUnitImagePack::getPrefix(),
+		                                     imagePackName)] = imagePack;
 		LogInfo("Loaded image pack \"%s\" from \"%s\"", imagePackName.cStr(), imagePackPath.cStr());
 	}
 }
@@ -1194,8 +1200,8 @@ void Battle::loadAnimationPacks(GameState &state)
 			         animationPackPath.cStr());
 			continue;
 		}
-		state.battle_unit_animation_packs[UString::format(
-		    "%s%s", BattleUnitAnimationPack::getPrefix(), animationPackName)] = animationPack;
+		state.battle_unit_animation_packs[format("%s%s", BattleUnitAnimationPack::getPrefix(),
+		                                         animationPackName)] = animationPack;
 		LogInfo("Loaded animation pack \"%s\" from \"%s\"", animationPackName.cStr(),
 		        animationPackPath.cStr());
 	}

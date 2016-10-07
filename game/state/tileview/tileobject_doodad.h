@@ -1,10 +1,13 @@
 #pragma once
 
-#include "game/state/city/doodad.h"
 #include "game/state/tileview/tileobject.h"
+#include "library/sp.h"
+#include "library/vec.h"
 
 namespace OpenApoc
 {
+
+class Doodad;
 
 class TileObjectDoodad : public TileObject
 {
@@ -13,7 +16,7 @@ class TileObjectDoodad : public TileObject
 	          int, bool, bool) override;
 	~TileObjectDoodad() override;
 
-	std::weak_ptr<Doodad> doodad;
+	wp<Doodad> doodad;
 
 	Vec3<float> getPosition() const override;
 	float getZOrder() const override;

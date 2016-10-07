@@ -1,10 +1,19 @@
+#define _USE_MATH_DEFINES
 #include "game/state/city/projectile.h"
+#include "game/state/battle/battle.h"
+#include "game/state/battle/battleunit.h"
 #include "game/state/city/city.h"
+#include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/tileview/collision.h"
+#include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_projectile.h"
 #include "game/state/tileview/tileobject_vehicle.h"
+#include <cmath>
+#include <glm/glm.hpp>
+#include <glm/gtx/rotate_vector.hpp>
+#include <glm/gtx/vector_angle.hpp>
 
 namespace OpenApoc
 {
@@ -78,6 +87,7 @@ void Projectile::update(GameState &state, unsigned int ticks)
 			rotationMat = glm::rotate(rotationMat, angleToTarget, cross);
 			velocity = glm::vec3(rotationMat * glm::vec4(velocity, 1.0));
 		}
+
 	}
 
 	// Apply velocity

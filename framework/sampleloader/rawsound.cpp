@@ -1,8 +1,8 @@
 #include "framework/data.h"
 #include "framework/logger.h"
 #include "framework/sampleloader_interface.h"
+#include "framework/sound.h"
 #include "library/sp.h"
-
 #include <set>
 
 namespace

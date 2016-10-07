@@ -1,7 +1,12 @@
 #include "game/ui/city/cityview.h"
 #include "forms/ui.h"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/keycodes.h"
+#include "framework/renderer.h"
+#include "framework/trace.h"
+#include "game/state/base/base.h"
 #include "game/state/base/facility.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
@@ -9,7 +14,11 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gameevent.h"
+#include "game/state/message.h"
 #include "game/state/research.h"
+#include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/vammo_type.h"
+#include "game/state/rules/vehicle_type.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_scenery.h"
 #include "game/state/tileview/tileobject_vehicle.h"
@@ -28,6 +37,8 @@
 #include "game/ui/ufopaedia/ufopaediacategoryview.h"
 #include "game/ui/ufopaedia/ufopaediaview.h"
 #include "library/sp.h"
+#include "library/strings_format.h"
+#include <glm/glm.hpp>
 
 namespace OpenApoc
 {
@@ -409,7 +420,7 @@ void CityView::resume()
 	for (auto &pair : state->player_bases)
 	{
 		auto &viewBase = pair.second;
-		auto viewName = UString::format("BUTTON_BASE_%d", ++b);
+		auto viewName = format("BUTTON_BASE_%d", ++b);
 		auto view = this->uiTabs[0]->findControlTyped<GraphicButton>(viewName);
 		if (!view)
 		{
@@ -964,9 +975,8 @@ void CityView::eventOccurred(Event *e)
 				}
 				auto message_box = mksp<MessageBox>(
 				    tr("RESEARCH COMPLETE"),
-				    UString::format("%s\n%s\n%s", tr("Research project completed:"),
-				                    ev->topic->name,
-				                    tr("Do you wish to view the UFOpaedia report?")),
+				    format("%s\n%s\n%s", tr("Research project completed:"), ev->topic->name,
+				           tr("Do you wish to view the UFOpaedia report?")),
 				    MessageBox::ButtonOptions::YesNo,
 				    // Yes callback
 				    [game_state, lab_facility, ufopaedia_category, ufopaedia_entry]() {
@@ -1035,9 +1045,8 @@ void CityView::eventOccurred(Event *e)
 				}
 				auto message_box = mksp<MessageBox>(
 				    tr("MANUFACTURE COMPLETED"),
-				    UString::format("%s\n%s\n%s %d\n%d", lab_base->name, tr(item_name.cStr()),
-				                    tr("Quantity:"), ev->goal,
-				                    tr("Do you wish to reasign the Workshop?")),
+				    format("%s\n%s\n%s %d\n%d", lab_base->name, tr(item_name.cStr()),
+				           tr("Quantity:"), ev->goal, tr("Do you wish to reasign the Workshop?")),
 				    MessageBox::ButtonOptions::YesNo,
 				    // Yes callback
 				    [game_state, lab_facility]() {
@@ -1094,9 +1103,9 @@ void CityView::eventOccurred(Event *e)
 				}
 				auto message_box = mksp<MessageBox>(
 				    tr("MANUFACTURING HALTED"),
-				    UString::format("%s\n%s\n%s %d/%d\n%d", lab_base->name, tr(item_name.cStr()),
-				                    tr("Completion status:"), ev->done, ev->goal,
-				                    tr("Production costs exceed your available funds.")),
+				    format("%s\n%s\n%s %d/%d\n%d", lab_base->name, tr(item_name.cStr()),
+				           tr("Completion status:"), ev->done, ev->goal,
+				           tr("Production costs exceed your available funds.")),
 				    MessageBox::ButtonOptions::Ok);
 				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 			}
@@ -1109,10 +1118,10 @@ void CityView::eventOccurred(Event *e)
 					LogError("Invalid facility event");
 					return;
 				}
-				auto message_box = mksp<MessageBox>(
-				    tr("FACILITY COMPLETED"),
-				    UString::format("%s\n%s", ev->base->name, tr(ev->facility->type->name)),
-				    MessageBox::ButtonOptions::Ok);
+				auto message_box =
+				    mksp<MessageBox>(tr("FACILITY COMPLETED"),
+				                     format("%s\n%s", ev->base->name, tr(ev->facility->type->name)),
+				                     MessageBox::ButtonOptions::Ok);
 				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 			}
 			break;

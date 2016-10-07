@@ -1,4 +1,7 @@
 #include "tools/extractors/extractors.h"
+#include "game/state/city/city.h"
+#include "game/state/gamestate.h"
+#include "game/state/tileview/tile.h"
 
 namespace OpenApoc
 { // clang-format off

@@ -1,5 +1,12 @@
+#include "framework/configfile.h"
+#include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/trace.h"
+#include "game/state/battle/battlemapsector.h"
+#include "game/state/battle/battlemaptileset.h"
+#include "game/state/battle/battleunitimagepack.h"
+#include "game/state/gamestate.h"
+#include "library/strings_format.h"
 #include "tools/extractors/extractors.h"
 #include <SDL_main.h>
 
@@ -112,8 +119,7 @@ int main(int argc, char *argv[])
 			else
 			{
 				if (!imagePack->saveImagePack(
-				        UString::format("%s%s%d", BattleUnitImagePack::imagePackPath, "/item", i),
-				        false))
+				        format("%s%s%d", BattleUnitImagePack::imagePackPath, "/item", i), false))
 				{
 					LogError("Failed to save  item image pack \"%d\"", i);
 				}

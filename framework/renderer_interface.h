@@ -1,8 +1,9 @@
 #pragma once
-#include "renderer.h"
 
 namespace OpenApoc
 {
+
+class Renderer;
 
 class RendererFactory
 {

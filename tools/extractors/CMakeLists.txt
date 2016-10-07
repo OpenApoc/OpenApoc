@@ -70,3 +70,14 @@ target_link_libraries(OpenApoc_DataExtractor OpenApoc_GameState)
 
 set_property(TARGET OpenApoc_DataExtractor PROPERTY CXX_STANDARD 11)
 set_property(TARGET OpenApoc_DataExtractor PROPERTY CXX_STANDARD_REQUIRED ON)
+
+option(EXTRACT_DATA "Run the DataExtractor during build" ON)
+if (EXTRACT_DATA)
+		add_custom_command(TARGET OpenApoc_DataExtractor POST_BUILD
+				COMMAND
+				${CMAKE_BINARY_DIR}/bin/OpenApoc_DataExtractor
+				--Framework.CD=${CD_PATH}
+				--Framework.Data=${CMAKE_SOURCE_DIR}/data
+				WORKING_DIRECTORY
+				${CMAKE_SOURCE_DIR})
+endif()

@@ -1,8 +1,13 @@
 #include "forms/textedit.h"
 #include "forms/ui.h"
 #include "framework/event.h"
+#include "framework/font.h"
 #include "framework/framework.h"
+#include "framework/image.h"
+#include "framework/keycodes.h"
+#include "framework/renderer.h"
 #include "library/sp.h"
+#include "library/strings_format.h"
 #include <tinyxml2.h>
 
 namespace OpenApoc

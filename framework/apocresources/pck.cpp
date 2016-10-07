@@ -5,6 +5,8 @@
 #include "framework/logger.h"
 #include "framework/trace.h"
 #include "library/sp.h"
+#include <istream>
+#include <vector>
 
 namespace OpenApoc
 {
@@ -456,7 +458,7 @@ static sp<PaletteImage> loadShadowImage(IFile &file, uint8_t shadedIdx)
 }
 
 sp<ImageSet> PCKLoader::loadShadow(Data &data, UString PckFilename, UString TabFilename,
-                                   uint8_t shadedIdx)
+                                   unsigned shadedIdx)
 {
 	TRACE_FN;
 	auto imageSet = mksp<ImageSet>();

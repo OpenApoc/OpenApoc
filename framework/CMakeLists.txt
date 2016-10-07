@@ -40,7 +40,7 @@ set (FRAMEWORK_HEADER_FILES
 	fs.h
 	image.h
 	imageloader_interface.h
-	includes.h
+	keycodes.h
 	logger.h
 	musicloader_interface.h
 	palette.h
@@ -78,7 +78,6 @@ list(APPEND ALL_SOURCE_FILES ${APOCRESOURCES_SOURCE_FILES})
 set (APOCRESOURCES_HEADER_FILES
 	apocresources/apocfont.h
 	apocresources/apocpalette.h
-	apocresources/apocresource.h
 	apocresources/cursor.h
 	apocresources/loftemps.h
 	apocresources/pck.h

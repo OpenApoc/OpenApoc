@@ -1,7 +1,9 @@
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/palette.h"
+#include "game/state/city/city.h"
 #include "game/state/rules/scenery_tile_type.h"
+#include "library/strings_format.h"
 #include "library/voxel.h"
 #include "tools/extractors/extractors.h"
 
@@ -88,7 +90,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		struct citymap_tile_entry entry;
 		inFile.read((char *)&entry, sizeof(entry));
 
-		UString id = UString::format("%s%s%u", SceneryTileType::getPrefix(), tilePrefix, i);
+		UString id = format("%s%s%u", SceneryTileType::getPrefix(), tilePrefix, i);
 
 		auto tile = mksp<SceneryTileType>();
 
@@ -162,11 +164,11 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 
 		if (entry.damagedtile_idx)
 		{
-			tile->damagedTile = {&state, UString::format("%s%s%u", SceneryTileType::getPrefix(),
-			                                             tilePrefix, entry.damagedtile_idx)};
+			tile->damagedTile = {&state, format("%s%s%u", SceneryTileType::getPrefix(), tilePrefix,
+			                                    entry.damagedtile_idx)};
 		}
 
-		auto imageString = UString::format(
+		auto imageString = format(
 		    "PCK:xcom3/ufodata/" + spriteFile + ".pck:xcom3/ufodata/" + spriteFile + ".tab:%u", i);
 
 		tile->sprite = fw().data->loadImage(imageString);
@@ -177,18 +179,17 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		{
 			if (entry.voxelIdx[z] == 0)
 				continue;
-			auto lofString = UString::format("LOFTEMPS:xcom3/ufodata/" + lofFile +
-			                                     ".dat:xcom3/ufodata/" + lofFile + ".tab:%d",
-			                                 (int)entry.voxelIdx[z]);
+			auto lofString = format("LOFTEMPS:xcom3/ufodata/" + lofFile + ".dat:xcom3/ufodata/" +
+			                            lofFile + ".tab:%d",
+			                        (int)entry.voxelIdx[z]);
 			tile->voxelMap->slices[z] = fw().data->loadVoxelSlice(lofString);
 		}
 
 		if (entry.stratmap_idx != 0)
 		{
-			auto stratmapString =
-			    UString::format("PCKSTRAT:xcom3/ufodata/" + stratmapFile + ".pck:xcom3/ufodata/" +
-			                        stratmapFile + ".tab:%d",
-			                    (int)entry.stratmap_idx);
+			auto stratmapString = format("PCKSTRAT:xcom3/ufodata/" + stratmapFile +
+			                                 ".pck:xcom3/ufodata/" + stratmapFile + ".tab:%d",
+			                             (int)entry.stratmap_idx);
 			tile->strategySprite = fw().data->loadImage(stratmapString);
 		}
 
@@ -203,9 +204,9 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 
 		if (entry.overlaytile_idx != 0xff)
 		{
-			auto overlayString = UString::format("PCK:xcom3/ufodata/" + ovrFile +
-			                                         ".pck:xcom3/ufodata/" + ovrFile + ".tab:%d",
-			                                     (int)entry.overlaytile_idx);
+			auto overlayString =
+			    format("PCK:xcom3/ufodata/" + ovrFile + ".pck:xcom3/ufodata/" + ovrFile + ".tab:%d",
+			           (int)entry.overlaytile_idx);
 			tile->overlaySprite = fw().data->loadImage(overlayString);
 		}
 

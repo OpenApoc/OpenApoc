@@ -1,14 +1,21 @@
 #include "game/state/battle/battlemap.h"
+#include "game/state/aequipment.h"
 #include "game/state/agent.h"
 #include "game/state/battle/battle.h"
+#include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battledoor.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
+#include "game/state/battle/battlemaptileset.h"
 #include "game/state/battle/battleunit.h"
+#include "game/state/city/building.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
+#include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/vehicle_type.h"
+#include <algorithm>
 
 namespace OpenApoc
 {

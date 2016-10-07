@@ -1,12 +1,6 @@
 #pragma once
 
-// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
-// symbols as part of the module that uses it
-#define BOOST_ALL_NO_LIB
-#include <boost/format.hpp>
-#include <boost/locale/format.hpp>
 #include <iterator>
-#include <limits>
 #include <list>
 #include <string>
 #include <vector>
@@ -20,14 +14,6 @@ class UString
 {
   private:
 	std::string u8Str;
-
-	static boost::format &format(boost::format &f) { return f; }
-
-	template <typename T, typename... Args>
-	static boost::format &format(boost::format &f, T const &arg, Args &&... args)
-	{
-		return format(f % arg, std::forward<Args>(args)...);
-	}
 
   public:
 	// ASSUMPTIONS:
@@ -48,12 +34,6 @@ class UString
 
 	UString(const UString &other);
 	UString &operator=(const UString &other);
-
-	template <typename... Args> static UString format(const UString &fmt, Args &&... args)
-	{
-		boost::format f(fmt.str());
-		return format(f, std::forward<Args>(args)...).str();
-	}
 
 	std::string str() const;
 	std::wstring wstr() const;
@@ -109,15 +89,6 @@ class UString
 	ConstIterator end() const;
 
 	static UniChar u8Char(char c);
-
-	//_lFormat shouldn't be used directly, instead use OpenApoc::tr()
-	static boost::locale::format &lFormat(boost::locale::format &f) { return f; }
-
-	template <typename T, typename... Args>
-	static boost::locale::format &lFormat(boost::locale::format &f, T const &arg, Args &&... args)
-	{
-		return lFormat(f % arg, std::forward<Args>(args)...);
-	}
 };
 
 UString operator+(const UString &lhs, const UString &rhs);
@@ -136,21 +107,6 @@ class Strings
 	static UString fromFloat(float f);
 	static bool isWhiteSpace(UniChar c);
 };
-
-UString tr(const UString &str, const UString domain = "ufo_string");
-
-template <typename... Args> static UString tr(const UString &fmt, Args &&... args)
-{
-	boost::locale::format f(boost::locale::translate(fmt.str()).str("ufo_string"));
-	return UString::lFormat(f, std::forward<Args>(args)...).str();
-}
-
-template <typename... Args>
-static UString tr(const UString &fmt, const UString domain, Args &&... args)
-{
-	boost::locale::format f(boost::locale::translate(fmt.str()).str(domain.str()));
-	return UString::lFormat(f, std::forward<Args>(args)...).str();
-}
 
 #ifdef DUMP_TRANSLATION_STRINGS
 void dumpStrings();

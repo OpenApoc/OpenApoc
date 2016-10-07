@@ -2,6 +2,7 @@
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/keycodes.h"
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"
 #include "game/ui/city/cityview.h"
@@ -27,7 +28,7 @@ void DifficultyMenu::finish() {}
 
 std::future<sp<GameState>> loadGame(const UString &path)
 {
-	auto loadTask = fw().threadPool->enqueue([path]() -> sp<GameState> {
+	auto loadTask = fw().threadPoolEnqueue([path]() -> sp<GameState> {
 
 		auto state = mksp<GameState>();
 		if (!state->loadGame(path))

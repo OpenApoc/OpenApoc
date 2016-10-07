@@ -2,7 +2,7 @@
 
 #include "library/sp.h"
 #include "library/strings.h"
-#include <iterator>
+#include <stdexcept>
 #include <vector>
 
 namespace OpenApoc

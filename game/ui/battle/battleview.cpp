@@ -1,14 +1,21 @@
 #include "game/ui/battle/battleview.h"
 #include "forms/ui.h"
 #include "framework/apocresources/cursor.h"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/keycodes.h"
+#include "framework/renderer.h"
+#include "framework/trace.h"
+#include "game/state/aequipment.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gameevent.h"
+#include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/damage.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"
@@ -16,6 +23,8 @@
 #include "game/ui/general/ingameoptions.h"
 #include "library/sp.h"
 #include <cmath>
+#include "library/strings_format.h"
+#include <glm/glm.hpp>
 
 namespace OpenApoc
 {
@@ -70,9 +79,9 @@ BattleView::BattleView(sp<GameState> state)
 	}
 
 	selectedItemOverlay = fw().data->loadImage("battle/battle-item-select-icon.png");
-	pauseIcon = fw().data->loadImage(UString::format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                                 "icons.tab:%d:xcom3/tacdata/tactical.pal",
-	                                                 260));
+	pauseIcon = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                        "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                        260));
 
 	for (auto &formName : TAB_FORM_NAMES_RT)
 	{
@@ -1820,9 +1829,8 @@ void BattleView::onNewTurn()
 	if (state->current_battle->currentActiveOrganisation == state->current_battle->currentPlayer)
 	{
 		baseForm->findControlTyped<Ticker>("NEWS_TICKER")
-		    ->addMessage(tr("Turn:") + " " +
-		                 UString::format("%d", state->current_battle->currentTurn) + "   " +
-		                 tr("Side:") + "  " +
+		    ->addMessage(tr("Turn:") + " " + format("%d", state->current_battle->currentTurn) +
+		                 "   " + tr("Side:") + "  " +
 		                 tr(state->current_battle->currentActiveOrganisation->name));
 	}
 }

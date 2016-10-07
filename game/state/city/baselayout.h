@@ -1,8 +1,8 @@
 #pragma once
+
 #include "game/state/stateobject.h"
 #include "library/rect.h"
 #include "library/vec.h"
-
 #include <set>
 
 namespace OpenApoc

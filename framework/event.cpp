@@ -1,4 +1,5 @@
 #include "framework/event.h"
+#include <SDL_mouse.h>
 
 namespace OpenApoc
 {

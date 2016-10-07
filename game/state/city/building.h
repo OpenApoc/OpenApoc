@@ -1,7 +1,7 @@
 #pragma once
-#include "game/state/battle/battlemap.h"
-#include "game/state/city/baselayout.h"
-#include "game/state/organisation.h"
+
+#include "game/state/stateobject.h"
+#include "library/rect.h"
 #include "library/vec.h"
 #include <set>
 #include <vector>
@@ -14,6 +14,7 @@ class Organisation;
 class Vehicle;
 class Base;
 class BattleMap;
+class BaseLayout;
 
 class Building : public StateObject<Building>
 {

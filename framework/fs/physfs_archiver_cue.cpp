@@ -6,20 +6,23 @@
 #define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 #endif
+#include "framework/fs/physfs_archiver_cue.h"
 #include "framework/logger.h"
-#include "physfs_archiver_cue.h"
 
 #include "library/strings.h"
+
+// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
+// symbols as part of the module that uses it
+#define BOOST_ALL_NO_LIB
 #include <boost/filesystem.hpp>
 
 #include <fstream>
-#include <mutex>
 #include <physfs.h>
 // for std::memcmp
+#include "library/sp.h"
 #include <cstddef>
 #include <cstring>
 #include <inttypes.h>
-#include <library/sp.h>
 // endianness check
 #include <SDL_endian.h>
 #include <map>

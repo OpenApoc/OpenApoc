@@ -1,4 +1,5 @@
 #include "game/state/battle/battlemappart.h"
+#include "game/state/battle/battle.h"
 #include "game/state/battle/battledoor.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart_type.h"
@@ -8,6 +9,7 @@
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
+#include <algorithm>
 
 namespace OpenApoc
 {
@@ -26,8 +28,9 @@ int BattleMapPart::getAnimationFrame()
 	}
 	else
 	{
-		return type->animation_frames.size() == 0 ? -1 : animation_frame_ticks /
-		                                                     TICKS_PER_FRAME_MAP_PART;
+		return type->animation_frames.size() == 0
+		           ? -1
+		           : animation_frame_ticks / TICKS_PER_FRAME_MAP_PART;
 	}
 }
 

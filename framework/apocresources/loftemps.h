@@ -1,13 +1,13 @@
 #pragma once
-#include "framework/fs.h"
+
 #include "library/sp.h"
-#include "library/voxel.h"
 #include <vector>
 
 namespace OpenApoc
 {
 
 class IFile;
+class VoxelSlice;
 
 class LOFTemps
 {

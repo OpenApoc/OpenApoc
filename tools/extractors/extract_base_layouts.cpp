@@ -1,5 +1,7 @@
 #include "framework/framework.h"
 #include "game/state/city/baselayout.h"
+#include "game/state/gamestate.h"
+#include "library/strings_format.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
 
@@ -11,7 +13,7 @@ void InitialGameStateExtractor::extractBaseLayouts(GameState &state, Difficulty)
 	auto &data = this->ufo2p;
 	for (unsigned i = 0; i < data.baselayouts->count(); i++)
 	{
-		UString id = UString::format("%s%d", BaseLayout::getPrefix().cStr(), i);
+		UString id = format("%s%d", BaseLayout::getPrefix().cStr(), i);
 		auto layout = mksp<BaseLayout>();
 		auto b = data.baselayouts->get(i);
 		bool foundLift = false;

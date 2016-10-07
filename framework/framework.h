@@ -1,13 +1,9 @@
 #pragma once
 
-#include "framework/ThreadPool/ThreadPool.h"
-#include "framework/configfile.h"
-#include "framework/data.h"
-#include "framework/renderer.h"
-#include "framework/sound.h"
-#include "framework/stagestack.h"
 #include "library/sp.h"
 #include "library/strings.h"
+#include "library/vec.h"
+#include <future>
 
 namespace OpenApoc
 {
@@ -17,13 +13,19 @@ class GameCore;
 class FrameworkPrivate;
 class ApocCursor;
 class Event;
+class Data;
+class Renderer;
+class SoundBackend;
+class JukeBox;
+class StageCmd;
+class Stage;
 
 #define FRAMES_PER_SECOND 100
 
 class Framework
 {
   private:
-	std::unique_ptr<FrameworkPrivate> p;
+	up<FrameworkPrivate> p;
 	UString programName;
 	bool createWindow;
 	void audioInitialise();
@@ -40,8 +42,6 @@ class Framework
 	std::unique_ptr<Renderer> renderer;
 	std::unique_ptr<SoundBackend> soundBackend;
 	std::unique_ptr<JukeBox> jukebox;
-
-	std::unique_ptr<ThreadPool> threadPool;
 
 	Framework(const UString programName, bool createWindow = true);
 	~Framework();
@@ -84,6 +84,22 @@ class Framework
 	void textStartInput();
 	void textStopInput();
 	UString textGetClipboard();
+
+	void threadPoolTaskEnqueue(std::function<void()> task);
+	// add new work item to the pool
+	template <class F, class... Args>
+	auto threadPoolEnqueue(F &&f, Args &&... args)
+	    -> std::future<typename std::result_of<F(Args...)>::type>
+	{
+		using return_type = typename std::result_of<F(Args...)>::type;
+
+		auto task = std::make_shared<std::packaged_task<return_type()>>(
+		    std::bind(std::forward<F>(f), std::forward<Args>(args)...));
+
+		std::future<return_type> res = task->get_future();
+		this->threadPoolTaskEnqueue([task]() { (*task)(); });
+		return res;
+	}
 };
 
 static inline Framework &fw() { return Framework::getInstance(); }

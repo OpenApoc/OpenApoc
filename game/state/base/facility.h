@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game/state/rules/facility_type.h"
+#include "game/state/stateobject.h"
 #include "library/vec.h"
 
 namespace OpenApoc
@@ -8,6 +8,7 @@ namespace OpenApoc
 
 class Agent;
 class Lab;
+class FacilityType;
 
 class Facility
 {

@@ -1,4 +1,8 @@
+#include "framework/data.h"
 #include "framework/framework.h"
+#include "game/state/battle/battlemap.h"
+#include "game/state/gamestate.h"
+#include "library/strings_format.h"
 #include "library/voxel.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
@@ -134,9 +138,8 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 			auto bank = VehicleType::Banking::Flat;
 			for (auto &dir : directions)
 			{
-				auto str =
-				    UString::format("PCK:xcom3/ufodata/vehicle.pck:xcom3/ufodata/vehicle.tab:%d",
-				                    (int)(v.graphic_frame + image_offset++));
+				auto str = format("PCK:xcom3/ufodata/vehicle.pck:xcom3/ufodata/vehicle.tab:%d",
+				                  (int)(v.graphic_frame + image_offset++));
 				;
 				vehicle->directional_sprites[bank][VehicleType::directionToVector(dir)] =
 				    fw().data->loadImage(str);
@@ -151,17 +154,16 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 			{
 				for (auto &dir : directions)
 				{
-					auto str = UString::format(
-					    "PCK:xcom3/ufodata/vehicle.pck:xcom3/ufodata/vehicle.tab:%d",
-					    (int)(v.graphic_frame + image_offset++));
+					auto str = format("PCK:xcom3/ufodata/vehicle.pck:xcom3/ufodata/vehicle.tab:%d",
+					                  (int)(v.graphic_frame + image_offset++));
 					vehicle->directional_sprites[bank][VehicleType::directionToVector(dir)] =
 					    fw().data->loadImage(str);
 				}
 			}
 			// Give ground vehicles non-directional stratmap stuff for now
 			// FIXME: How to select hostile/friendly/neutral stratmap sprites?
-			auto str = UString::format(
-			    "PCKSTRAT:xcom3/ufodata/stratmaP.pck:xcom3/ufodata/stratmaP.tab:%d", 572);
+			auto str =
+			    format("PCKSTRAT:xcom3/ufodata/stratmaP.pck:xcom3/ufodata/stratmaP.tab:%d", 572);
 			vehicle->directional_strategy_sprites[Vec3<float>{1, 0, 0}] = fw().data->loadImage(str);
 		}
 		else if (v.movement_type == 1)
@@ -177,7 +179,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 				vehicle->type = VehicleType::Type::UFO;
 				if (v.size_x == 1 && v.size_y == 1)
 				{
-					auto str = UString::format(
+					auto str = format(
 					    "PCKSTRAT:xcom3/ufodata/stratmap.pck:xcom3/ufodata/stratmap.tab:%d", 572);
 					vehicle->directional_strategy_sprites[Vec3<float>{1, 0, 0}] =
 					    fw().data->loadImage(str);
@@ -185,7 +187,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 				else if (v.size_x == 2 && v.size_y == 2)
 				{
 					// FIXME: Support 'large' strategy sprites?
-					auto str = UString::format(
+					auto str = format(
 					    "PCKSTRAT:xcom3/ufodata/stratmap.pck:xcom3/ufodata/stratmap.tab:%d", 572);
 					vehicle->directional_strategy_sprites[Vec3<float>{1, 0, 0}] =
 					    fw().data->loadImage(str);
@@ -211,28 +213,25 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 
 				for (int i = 0; i < animFrames; i++)
 				{
-					auto str =
-					    UString::format("PCK:xcom3/ufodata/saucer.pck:xcom3/ufodata/saucer.tab:%d",
-					                    (int)(v.graphic_frame + i));
+					auto str = format("PCK:xcom3/ufodata/saucer.pck:xcom3/ufodata/saucer.tab:%d",
+					                  (int)(v.graphic_frame + i));
 					vehicle->animation_sprites.push_back(fw().data->loadImage(str));
 				}
 
-				auto str =
-				    UString::format("PCK:xcom3/ufodata/saucer.pck:xcom3/ufodata/saucer.tab:%d",
-				                    (int)(v.graphic_frame + animFrames));
+				auto str = format("PCK:xcom3/ufodata/saucer.pck:xcom3/ufodata/saucer.tab:%d",
+				                  (int)(v.graphic_frame + animFrames));
 
 				vehicle->crashed_sprite = fw().data->loadImage(str);
 
-				str = UString::format(
-				    "PCKSHADOW:xcom3/ufodata/shadow.pck:xcom3/ufodata/shadow.tab:%d",
-				    (int)(v.shadow_graphic));
+				str = format("PCKSHADOW:xcom3/ufodata/shadow.pck:xcom3/ufodata/shadow.tab:%d",
+				             (int)(v.shadow_graphic));
 				vehicle->directional_shadow_sprites[{1, 0, 0}] = fw().data->loadImage(str);
 
 				// UFOs starting with trans (id = 2) up to mship (id = 9) have maps from 51 to 58
 				// Therefore 49 + id gives map index for the ufo
 				if (i > 1)
-					vehicle->battle_map = {&state, UString::format("%s%s", BattleMap::getPrefix(),
-					                                               this->battleMapPaths[48 + i])};
+					vehicle->battle_map = {&state, format("%s%s", BattleMap::getPrefix(),
+					                                      this->battleMapPaths[48 + i])};
 			}
 			else
 			{
@@ -261,9 +260,9 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 				int image_offset = 577; // stratmap.pck:577 is the first directional sprite
 				for (auto &dir : directions)
 				{
-					auto str = UString::format(
-					    "PCKSTRAT:xcom3/ufodata/stratmap.pck:xcom3/ufodata/stratmap.tab:%d",
-					    image_offset++);
+					auto str =
+					    format("PCKSTRAT:xcom3/ufodata/stratmap.pck:xcom3/ufodata/stratmap.tab:%d",
+					           image_offset++);
 					vehicle->directional_strategy_sprites[VehicleType::directionToVector(dir)] =
 					    fw().data->loadImage(str);
 				}
@@ -276,9 +275,9 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 						directionsForThisBanking = bankingDirections;
 					for (auto &dir : directionsForThisBanking)
 					{
-						auto str = UString::format(
-						    "PCK:xcom3/ufodata/saucer.pck:xcom3/ufodata/saucer.tab:%d",
-						    (int)(v.graphic_frame + image_offset++));
+						auto str =
+						    format("PCK:xcom3/ufodata/saucer.pck:xcom3/ufodata/saucer.tab:%d",
+						           (int)(v.graphic_frame + image_offset++));
 						vehicle->directional_sprites[bank][VehicleType::directionToVector(dir)] =
 						    fw().data->loadImage(str);
 					}
@@ -291,9 +290,9 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 				image_offset = 0;
 				for (auto &dir : directions)
 				{
-					auto str = UString::format(
-					    "PCKSHADOW:xcom3/ufodata/shadow.pck:xcom3/ufodata/shadow.tab:%d",
-					    (int)(v.shadow_graphic + image_offset++));
+					auto str =
+					    format("PCKSHADOW:xcom3/ufodata/shadow.pck:xcom3/ufodata/shadow.tab:%d",
+					           (int)(v.shadow_graphic + image_offset++));
 					vehicle->directional_shadow_sprites[VehicleType::directionToVector(dir)] =
 					    fw().data->loadImage(str);
 				}
@@ -350,7 +349,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 
 		// The icons seem to be in index order starting at 4 (with 3 weird 'troop' icons and a
 		// megaspawn first?)
-		auto str = UString::format(
+		auto str = format(
 		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
 		    i + 4);
 		vehicle->icon = fw().data->loadImage(str);
@@ -358,12 +357,12 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 		auto it = EquipscreenSprite.find(id);
 		if (it != EquipscreenSprite.end())
 		{
-			auto str = UString::format("PCK:xcom3/ufodata/bigveh.pck:xcom3/ufodata/bigveh.tab:%d",
-			                           (int)it->second);
+			auto str =
+			    format("PCK:xcom3/ufodata/bigveh.pck:xcom3/ufodata/bigveh.tab:%d", (int)it->second);
 			vehicle->equip_icon_big = fw().data->loadImage(str);
 
-			str = UString::format("PCK:xcom3/ufodata/smalveh.pck:xcom3/ufodata/smalveh.tab:%d",
-			                      (int)it->second);
+			str = format("PCK:xcom3/ufodata/smalveh.pck:xcom3/ufodata/smalveh.tab:%d",
+			             (int)it->second);
 			vehicle->equip_icon_small = fw().data->loadImage(str);
 		}
 
@@ -610,24 +609,42 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 							{
 								// Facing north
 								vehicle
+<<<<<<< HEAD
 								    ->voxelMaps[FACING_NORTH]
 								               [z * v.size_y * v.size_x + y * v.size_x + x]
 								    ->setSlice(i, fw().data->loadVoxelSlice(UString::format(
+=======
+								    ->voxelMaps[z * v.size_y * v.size_x + y * v.size_x + x]
+								               [{0.0f, -1.0f, 0.0f}]
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+>>>>>>> refs/remotes/pmprog/master
 								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
 								                      "ufodata/loftemps.tab:%d",
 								                      verticalVoxelMapIdx)));
 								vehicle
+<<<<<<< HEAD
 								    ->voxelMapsLOS[FACING_NORTH]
 								                  [z * v.size_y * v.size_x + y * v.size_x + x]
 								    ->setSlice(i, fw().data->loadVoxelSlice(UString::format(
+=======
+								    ->voxelMaps[z * v.size_y * v.size_x + y * v.size_x + x]
+								               [{0.0f, 1.0f, 0.0f}]
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+>>>>>>> refs/remotes/pmprog/master
 								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
 								                      "ufodata/loftemps.tab:%d",
 								                      losVoxelMapIndex)));
 								// Facing east
 								vehicle
+<<<<<<< HEAD
 								    ->voxelMaps[FACING_EAST]
 								               [z * v.size_y * v.size_x + y * v.size_x + x]
 								    ->setSlice(i, fw().data->loadVoxelSlice(UString::format(
+=======
+								    ->voxelMaps[z * v.size_y * v.size_x + y * v.size_x + x]
+								               [{1.0f, 0.0f, 0.0f}]
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+>>>>>>> refs/remotes/pmprog/master
 								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
 								                      "ufodata/loftemps.tab:%d",
 								                      horizontalVoxelMapIndex)));
@@ -655,9 +672,15 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 								                      losVoxelMapIndex)));
 								// Facing west
 								vehicle
+<<<<<<< HEAD
 								    ->voxelMaps[FACING_WEST]
 								               [z * v.size_y * v.size_x + y * v.size_x + x]
 								    ->setSlice(i, fw().data->loadVoxelSlice(UString::format(
+=======
+								    ->voxelMaps[z * v.size_y * v.size_x + y * v.size_x + x]
+								               [{-1.0f, 0.0f, 0.0f}]
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+>>>>>>> refs/remotes/pmprog/master
 								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
 								                      "ufodata/loftemps.tab:%d",
 								                      horizontalVoxelMapIndex)));
@@ -840,9 +863,15 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 						for (int i = 0; i < limit; i++)
 						{
 							vehicle
+<<<<<<< HEAD
 							    ->voxelMaps[FACING_NORTH][z * v.size_y * v.size_x +
 							                              pair.first.y * v.size_x + pair.first.x]
 							    ->setSlice(i, fw().data->loadVoxelSlice(UString::format(
+=======
+							    ->voxelMaps[z * v.size_y * v.size_x + pair.first.y * v.size_x +
+							                pair.first.x][{0.0f, -1.0f, 0.0f}]
+							    ->setSlice(i, fw().data->loadVoxelSlice(format(
+>>>>>>> refs/remotes/pmprog/master
 							                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
 							                      "ufodata/loftemps.tab:%d",
 							                      pair.second)));

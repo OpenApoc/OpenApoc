@@ -3,12 +3,13 @@
 #define _USE_MATH_DEFINES
 #endif
 #include "game/state/agent.h"
+#include "game/state/battle/battle.h"
 #include "game/state/battle/battleunitmission.h"
-#include "game/state/tileview/tile.h"
 #include "library/sp.h"
 #include "library/strings.h"
-#include <algorithm>
-#include <cmath>
+#include <list>
+#include <map>
+#include <vector>
 
 // How many in-game ticks are required to travel one in-game unit
 #define TICKS_PER_UNIT_TRAVELLED 32

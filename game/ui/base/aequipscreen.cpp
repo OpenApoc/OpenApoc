@@ -1,8 +1,11 @@
 #include "game/ui/base/aequipscreen.h"
 #include "forms/forms.h"
 #include "forms/ui.h"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/keycodes.h"
+#include "framework/renderer.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc

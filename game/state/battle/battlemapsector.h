@@ -1,14 +1,18 @@
 #pragma once
-#include "game/state/battle/battlemappart_type.h"
+
 #include "game/state/organisation.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
-#include <vector>
+#include "library/strings.h"
+#include "library/vec.h"
+#include <list>
+#include <map>
 
 namespace OpenApoc
 {
 
 class BattleMapSectorTiles;
+class BattleMapPartType;
 
 class BattleMapSector
 {

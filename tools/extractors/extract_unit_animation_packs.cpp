@@ -4,6 +4,7 @@
 #include "game/state/agent.h"
 #include "game/state/battle/battleunitanimationpack.h"
 #include "game/state/gamestate.h"
+#include "library/strings_format.h"
 #include "tools/extractors/common/animation.h"
 #include "tools/extractors/extractors.h"
 
@@ -144,7 +145,7 @@ sp<BattleUnitAnimationPack> InitialGameStateExtractor::extractAnimationPack(Game
 
 	std::vector<AnimationDataAD> dataAD;
 	{
-		auto fileName = UString::format("%s%s%s", dirName, path, ".ad");
+		auto fileName = format("%s%s%s", dirName, path, ".ad");
 
 		auto inFile = fw().data->fs.open(fileName);
 		if (inFile)
@@ -168,7 +169,7 @@ sp<BattleUnitAnimationPack> InitialGameStateExtractor::extractAnimationPack(Game
 
 	std::vector<AnimationDataUA> dataUA;
 	{
-		auto fileName = UString::format("%s%s%s", dirName, path, ".ua");
+		auto fileName = format("%s%s%s", dirName, path, ".ua");
 
 		auto inFile = fw().data->fs.open(fileName);
 		if (inFile)
@@ -192,7 +193,7 @@ sp<BattleUnitAnimationPack> InitialGameStateExtractor::extractAnimationPack(Game
 
 	std::vector<AnimationDataUF> dataUF;
 	{
-		auto fileName = UString::format("%s%s%s", dirName, path, ".uf");
+		auto fileName = format("%s%s%s", dirName, path, ".uf");
 
 		auto inFile = fw().data->fs.open(fileName);
 		if (inFile)

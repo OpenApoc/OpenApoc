@@ -1,5 +1,6 @@
 #pragma once
-#include "sound.h"
+
+#include "framework/sound.h"
 
 namespace OpenApoc
 {

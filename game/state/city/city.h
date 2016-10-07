@@ -1,10 +1,11 @@
 #pragma once
-#include "framework/includes.h"
-#include "game/state/rules/scenery_tile_type.h"
+
 #include "game/state/stateobject.h"
-#include "game/state/tileview/tile.h"
 #include "library/sp.h"
 #include "library/vec.h"
+#include <list>
+#include <map>
+#include <set>
 
 namespace OpenApoc
 {
@@ -26,6 +27,7 @@ class Doodad;
 class DoodadType;
 class SceneryTileType;
 class BaseLayout;
+class TileMap;
 
 class City : public StateObject<City>
 {

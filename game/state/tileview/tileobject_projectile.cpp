@@ -1,5 +1,6 @@
 #include "game/state/tileview/tileobject_projectile.h"
 #include "framework/renderer.h"
+#include "game/state/city/projectile.h"
 #include "game/state/tileview/tile.h"
 #include "library/line.h"
 

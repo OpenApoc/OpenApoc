@@ -6,9 +6,12 @@
 #include "library/vec.h"
 #include <SDL.h>
 #include <SDL_audio.h>
+#include <algorithm>
+#include <functional>
 #include <list>
 #include <mutex>
 #include <queue>
+#include <vector>
 
 namespace
 {
@@ -198,7 +201,7 @@ class SDLRawBackend : public SoundBackend
 				if (!this->current_music_data)
 				{
 					this->get_music_future =
-					    fw().threadPool->enqueue(std::mem_fn(&SDLRawBackend::getMoreMusic), this);
+					    fw().threadPoolEnqueue(std::mem_fn(&SDLRawBackend::getMoreMusic), this);
 					if (this->music_queue.empty())
 					{
 						LogWarning("Music underrun!");
@@ -322,7 +325,7 @@ class SDLRawBackend : public SoundBackend
 		music_callback_data = callbackData;
 		music_playing = true;
 		this->get_music_future =
-		    fw().threadPool->enqueue(std::mem_fn(&SDLRawBackend::getMoreMusic), this);
+		    fw().threadPoolEnqueue(std::mem_fn(&SDLRawBackend::getMoreMusic), this);
 		LogInfo("Playing music on SDL backend");
 	}
 

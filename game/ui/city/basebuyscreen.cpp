@@ -2,11 +2,15 @@
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/keycodes.h"
+#include "game/state/base/base.h"
 #include "game/state/city/building.h"
 #include "game/state/gamestate.h"
+#include "game/state/organisation.h"
 #include "game/ui/base/basegraphics.h"
 #include "game/ui/city/cityview.h"
 #include "game/ui/general/messagebox.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -28,7 +32,7 @@ void BaseBuyScreen::begin()
 	form->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 
 	auto text = form->findControlTyped<Label>("TEXT_PRICE");
-	text->setText(UString::format(tr("This Building will cost $%d"), price));
+	text->setText(format(tr("This Building will cost $%d"), price));
 
 	form->findControlTyped<Graphic>("GRAPHIC_MINIMAP")
 	    ->setImage(BaseGraphics::drawMinimap(state, base->building));

@@ -1,14 +1,19 @@
 #include "game/ui/general/mapselector.h"
 #include "forms/ui.h"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/keycodes.h"
 #include "game/state/battle/battlemap.h"
 #include "game/state/city/building.h"
+#include "game/state/city/city.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/vehicle_type.h"
 #include "game/ui/battle/battlebriefing.h"
 #include "game/ui/battle/battleview.h"
 #include "game/ui/city/cityview.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -42,7 +47,7 @@ MapSelector::~MapSelector() = default;
 std::future<void> loadBattleBuilding(sp<Building> building, sp<GameState> state)
 {
 
-	auto loadTask = fw().threadPool->enqueue([building, state]() -> void {
+	auto loadTask = fw().threadPoolEnqueue([building, state]() -> void {
 		std::list<StateRef<Agent>> agents;
 		for (auto &a : state->agents)
 			if (a.second->type->role == AgentType::Role::Soldier &&
@@ -99,7 +104,7 @@ sp<Control> MapSelector::createMapRowBuilding(sp<Building> building, sp<GameStat
 std::future<void> loadBattleVehicle(sp<VehicleType> vehicle, sp<GameState> state)
 {
 
-	auto loadTask = fw().threadPool->enqueue([vehicle, state]() -> void {
+	auto loadTask = fw().threadPoolEnqueue([vehicle, state]() -> void {
 		std::list<StateRef<Agent>> agents;
 		for (auto &a : state->agents)
 			if (a.second->type->role == AgentType::Role::Soldier &&
@@ -110,7 +115,7 @@ std::future<void> loadBattleVehicle(sp<VehicleType> vehicle, sp<GameState> state
 		auto v = mksp<Vehicle>();
 
 		v->type = {state.get(), vehicle};
-		v->name = UString::format("%s %d", v->type->name, ++v->type->numCreated);
+		v->name = format("%s %d", v->type->name, ++v->type->numCreated);
 
 		state->vehicles[v->name] = v;
 		StateRef<Vehicle> ufo = {state.get(), v->name};

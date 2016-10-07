@@ -5,6 +5,7 @@
 #include "framework/sound.h"
 #include "framework/trace.h"
 #include "framework/video.h"
+#include <cstring>
 #include <mutex>
 #include <queue>
 

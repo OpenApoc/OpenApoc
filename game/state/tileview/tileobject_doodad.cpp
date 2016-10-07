@@ -1,5 +1,6 @@
 #include "game/state/tileview/tileobject_doodad.h"
 #include "framework/renderer.h"
+#include "game/state/city/doodad.h"
 #include "game/state/tileview/tile.h"
 
 namespace OpenApoc

@@ -2,6 +2,8 @@
 #include "game/state/aequipment.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
+#include "game/state/rules/aequipment_type.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -198,7 +200,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisation> org,
                                             StateRef<AgentType> type) const
 {
-	UString ID = UString::format("%s%u", Agent::getPrefix().cStr(), this->num_created);
+	UString ID = format("%s%u", Agent::getPrefix().cStr(), this->num_created);
 
 	auto agent = mksp<Agent>();
 
@@ -215,7 +217,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 
 	auto firstName = listRandomiser(state.rng, firstNameList->second);
 	auto secondName = listRandomiser(state.rng, this->second_names);
-	agent->name = UString::format("%s %s", firstName, secondName);
+	agent->name = format("%s %s", firstName, secondName);
 
 	agent->appearance = randBoundsExclusive(state.rng, 0, type->appearance_count);
 
@@ -643,7 +645,6 @@ StateRef<AEquipmentType> Agent::getDominantItemInHands(StateRef<AEquipmentType> 
 		if (e2 && e2->type == itemLastFired)
 			return e2->type;
 	}
-
 	// Calculate item priorities:
 	// - Firing (whichever fires sooner)
 	// - CanFire >> Two-Handed >> Weapon >> Usable Item >> Others

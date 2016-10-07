@@ -1,16 +1,17 @@
 #pragma once
-#include "framework/image.h"
-#include "framework/includes.h"
+
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
-#include "library/voxel.h"
+#include <vector>
 
 namespace OpenApoc
 {
 class DamageType;
 class Sample;
 class DamageModifier;
+class Image;
+class VoxelMap;
 
 class BattleMapPartType : public StateObject<BattleMapPartType>
 {

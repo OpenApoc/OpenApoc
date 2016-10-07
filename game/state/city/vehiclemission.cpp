@@ -1,16 +1,20 @@
 #include "game/state/city/vehiclemission.h"
 #include "framework/logger.h"
 #include "game/state/city/building.h"
+#include "game/state/city/city.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/scenery_tile_type.h"
+#include "game/state/rules/vehicle_type.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_doodad.h"
 #include "game/state/tileview/tileobject_scenery.h"
 #include "game/state/tileview/tileobject_shadow.h"
 #include "game/state/tileview/tileobject_vehicle.h"
+#include "library/strings_format.h"
+#include <glm/glm.hpp>
 
 namespace OpenApoc
 {
@@ -1388,8 +1392,8 @@ UString VehicleMission::getName()
 	switch (this->type)
 	{
 		case MissionType::GotoLocation:
-			name += UString::format(" {%d,%d,%d}", this->targetLocation.x, this->targetLocation.y,
-			                        this->targetLocation.z);
+			name += format(" {%d,%d,%d}", this->targetLocation.x, this->targetLocation.y,
+			               this->targetLocation.z);
 			break;
 		case MissionType::GotoBuilding:
 			name += " " + this->targetBuilding.id;
@@ -1401,7 +1405,7 @@ UString VehicleMission::getName()
 			name += " " + this->targetBuilding.id;
 			break;
 		case MissionType::Snooze:
-			name += UString::format(" for %u ticks", this->timeToSnooze);
+			name += format(" for %u ticks", this->timeToSnooze);
 			break;
 		case MissionType::TakeOff:
 			name += " from " + this->targetBuilding.id;
@@ -1410,19 +1414,19 @@ UString VehicleMission::getName()
 			name += " in " + this->targetBuilding.id;
 			break;
 		case MissionType::Crash:
-			name += UString::format(" landing on {%d,%d,%d}", this->targetLocation.x,
-			                        this->targetLocation.y, this->targetLocation.z);
+			name += format(" landing on {%d,%d,%d}", this->targetLocation.x, this->targetLocation.y,
+			               this->targetLocation.z);
 			break;
 		case MissionType::AttackVehicle:
-			name += UString::format(" target \"%s\"", this->targetVehicle.id);
+			name += format(" target \"%s\"", this->targetVehicle.id);
 			break;
 		case MissionType::Patrol:
-			name += UString::format(" {%d,%d,%d}", this->targetLocation.x, this->targetLocation.y,
-			                        this->targetLocation.z);
+			name += format(" {%d,%d,%d}", this->targetLocation.x, this->targetLocation.y,
+			               this->targetLocation.z);
 			break;
 		case MissionType::GotoPortal:
-			name += UString::format(" {%d,%d,%d}", this->targetLocation.x, this->targetLocation.y,
-			                        this->targetLocation.z);
+			name += format(" {%d,%d,%d}", this->targetLocation.x, this->targetLocation.y,
+			               this->targetLocation.z);
 			break;
 		case MissionType::InfiltrateSubvert:
 			name += " " + this->targetBuilding.id + " " + (subvert ? "subvert" : "infiltrate");

@@ -1,6 +1,13 @@
 #include "game/state/gametime.h"
 #include "game/state/gametime_facet.h"
+#include "library/strings_format.h"
+#include <locale>
 #include <sstream>
+
+// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
+// symbols as part of the module that uses it
+#define BOOST_ALL_NO_LIB
+#include <boost/date_time.hpp>
 
 // for my sake
 using namespace boost::gregorian;
@@ -9,13 +16,13 @@ using namespace boost::posix_time;
 namespace OpenApoc
 {
 
-const ptime GameTime::GAME_START = ptime(date(2084, Mar, 7), time_duration(0, 0, 0));
-std::locale *GameTime::TIME_FORMAT = nullptr;
-std::locale *GameTime::DATE_LONG_FORMAT = nullptr;
-std::locale *GameTime::DATE_SHORT_FORMAT = nullptr;
+static const ptime GAME_START = ptime(date(2084, Mar, 7), time_duration(0, 0, 0));
+static std::locale *TIME_FORMAT = nullptr;
+static std::locale *DATE_LONG_FORMAT = nullptr;
+static std::locale *DATE_SHORT_FORMAT = nullptr;
 
 // FIXME: Refactor to always use ptime instead of ticks?
-time_duration GameTime::ticksToPosix(int64_t ticks)
+static time_duration ticksToPosix(int64_t ticks)
 {
 	int64_t tickTotal = std::round(static_cast<double>(ticks * time_duration::ticks_per_second()) /
 	                               TICKS_PER_SECOND);
@@ -24,7 +31,10 @@ time_duration GameTime::ticksToPosix(int64_t ticks)
 
 GameTime::GameTime(uint64_t ticks) : ticks(ticks){};
 
-boost::posix_time::ptime GameTime::getPtime() const { return GAME_START + ticksToPosix(ticks); }
+static boost::posix_time::ptime getPtime(uint64_t ticks)
+{
+	return GAME_START + ticksToPosix(ticks);
+}
 
 UString GameTime::getTimeString() const
 {
@@ -36,7 +46,7 @@ UString GameTime::getTimeString() const
 		TIME_FORMAT = new std::locale(std::locale::classic(), timeFacet);
 	}
 	ss.imbue(*TIME_FORMAT);
-	ss << this->getPtime();
+	ss << getPtime(this->ticks);
 	return ss.str();
 }
 
@@ -72,7 +82,7 @@ UString GameTime::getLongDateString() const
 		dateFacet->longDayNames(days);
 	}
 	ss.imbue(*DATE_LONG_FORMAT);
-	ss << this->getPtime().date();
+	ss << getPtime(this->ticks).date();
 	return ss.str();
 }
 
@@ -103,25 +113,25 @@ UString GameTime::getShortDateString() const
 		dateFacet->longDayNames(days);
 	}
 	ss.imbue(*DATE_SHORT_FORMAT);
-	ss << this->getPtime().date();
+	ss << getPtime(this->ticks).date();
 	return ss.str();
 }
 
-UString GameTime::getWeekString() const { return UString::format("%s %d", tr("Week"), getWeek()); }
+UString GameTime::getWeekString() const { return format("%s %d", tr("Week"), getWeek()); }
 
 unsigned int GameTime::getWeek() const
 {
 	date firstMonday = previous_weekday(GAME_START.date(), greg_weekday(Monday));
-	date lastMonday = previous_weekday(this->getPtime().date(), greg_weekday(Monday));
+	date lastMonday = previous_weekday(getPtime(this->ticks).date(), greg_weekday(Monday));
 	date_duration duration = lastMonday - firstMonday;
 	return duration.days() / 7 + 1;
 }
 
-unsigned int GameTime::getDay() const { return this->getPtime().date().day(); }
+unsigned int GameTime::getDay() const { return getPtime(this->ticks).date().day(); }
 
-unsigned int GameTime::getHours() const { return this->getPtime().time_of_day().hours(); }
+unsigned int GameTime::getHours() const { return getPtime(this->ticks).time_of_day().hours(); }
 
-unsigned int GameTime::getMinutes() const { return this->getPtime().time_of_day().minutes(); }
+unsigned int GameTime::getMinutes() const { return getPtime(this->ticks).time_of_day().minutes(); }
 
 uint64_t GameTime::getTicks() const { return ticks; }
 

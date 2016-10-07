@@ -1,4 +1,5 @@
 #include "library/strings.h"
+#include "library/strings_format.h"
 // Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
 // symbols as part of the module that uses it
 #define BOOST_ALL_NO_LIB
@@ -225,9 +226,9 @@ bool Strings::isFloat(const UString &s)
 	return (endpos != u8str.c_str());
 }
 
-UString Strings::fromInteger(int i) { return UString::format("%d", i); }
+UString Strings::fromInteger(int i) { return format("%d", i); }
 
-UString Strings::fromFloat(float f) { return UString::format("%f", f); }
+UString Strings::fromFloat(float f) { return format("%f", f); }
 
 bool Strings::isWhiteSpace(UniChar c)
 {

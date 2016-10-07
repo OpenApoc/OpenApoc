@@ -1,5 +1,6 @@
 #include "game/state/tileview/tileobject_scenery.h"
 #include "framework/renderer.h"
+#include "game/state/city/scenery.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "game/state/tileview/tile.h"
 

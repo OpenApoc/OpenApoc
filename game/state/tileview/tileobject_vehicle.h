@@ -1,10 +1,15 @@
 #pragma once
 
-#include "game/state/city/vehicle.h"
 #include "game/state/tileview/tileobject.h"
+#include "library/sp.h"
+#include "library/vec.h"
+#include <list>
 
 namespace OpenApoc
 {
+
+class Vehicle;
+class Image;
 
 class TileObjectVehicle : public TileObject
 {
@@ -14,12 +19,8 @@ class TileObjectVehicle : public TileObject
 	~TileObjectVehicle() override;
 
 	sp<Vehicle> getVehicle() const;
-	const Vec3<float> &getDirection() const { return this->getVehicle()->velocity; }
-	void setDirection(const Vec3<float> &dir)
-	{
-		this->getVehicle()->facing = dir;
-		this->getVehicle()->velocity = dir;
-	}
+	const Vec3<float> &getDirection() const;
+	void setDirection(const Vec3<float> &dir);
 
 	Vec3<float> getVoxelCentrePosition() const override;
 	bool hasVoxelMap() override { return true; }
@@ -31,7 +32,7 @@ class TileObjectVehicle : public TileObject
 
   private:
 	friend class TileMap;
-	std::weak_ptr<Vehicle> vehicle;
+	wp<Vehicle> vehicle;
 	std::list<sp<Image>>::iterator animationFrame;
 	int animationDelay;
 

@@ -3,28 +3,99 @@
 #include "framework/apocresources/loftemps.h"
 #include "framework/apocresources/pck.h"
 #include "framework/apocresources/rawimage.h"
+#include "framework/image.h"
+#include "framework/imageloader_interface.h"
 #include "framework/logger.h"
+#include "framework/musicloader_interface.h"
 #include "framework/palette.h"
+#include "framework/sampleloader_interface.h"
 #include "framework/trace.h"
 #include "framework/video.h"
 #include "game/state/rules/resource_aliases.h"
 #include "library/sp.h"
 #include "library/strings.h"
-
-#include "framework/imageloader_interface.h"
-#include "framework/musicloader_interface.h"
-#include "framework/sampleloader_interface.h"
-
+#include "library/voxel.h"
 #include <fstream>
+#include <mutex>
+#include <queue>
 
 using namespace OpenApoc;
 
 namespace OpenApoc
 {
 
-Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize,
-           int voxelCacheSize, int fontStringCacheSize, int paletteCacheSize)
-    : fs(paths)
+class DataImpl final : public Data
+{
+
+  private:
+	std::map<UString, std::weak_ptr<Image>> imageCache;
+	std::map<UString, std::weak_ptr<Image>> imageCacheLazy;
+	std::recursive_mutex imageCacheLock;
+	std::map<UString, std::weak_ptr<ImageSet>> imageSetCache;
+	std::recursive_mutex imageSetCacheLock;
+
+	std::map<UString, std::weak_ptr<Sample>> sampleCache;
+	std::recursive_mutex sampleCacheLock;
+	std::map<UString, std::weak_ptr<MusicTrack>> musicCache;
+	std::recursive_mutex musicCacheLock;
+	std::map<UString, std::weak_ptr<LOFTemps>> LOFVoxelCache;
+	std::recursive_mutex voxelCacheLock;
+
+	std::map<UString, std::weak_ptr<Palette>> paletteCache;
+	std::recursive_mutex paletteCacheLock;
+
+	// The cache is organised in <font name , <text, image>>
+	std::map<UString, std::map<UString, std::weak_ptr<PaletteImage>>> fontStringCache;
+	std::recursive_mutex fontStringCacheLock;
+
+	// Pin open 'imageCacheSize' images
+	std::queue<sp<Image>> pinnedImages;
+	// Pin open 'imageSetCacheSize' image sets
+	std::queue<sp<ImageSet>> pinnedImageSets;
+	std::queue<sp<LOFTemps>> pinnedLOFVoxels;
+	std::queue<sp<PaletteImage>> pinnedFontStrings;
+	std::queue<sp<Palette>> pinnedPalettes;
+	std::list<std::unique_ptr<ImageLoader>> imageLoaders;
+	std::list<std::unique_ptr<SampleLoader>> sampleLoaders;
+	std::list<std::unique_ptr<MusicLoader>> musicLoaders;
+	std::list<std::unique_ptr<ImageWriter>> imageWriters;
+
+	std::map<UString, std::unique_ptr<ImageLoaderFactory>> registeredImageBackends;
+	std::map<UString, std::unique_ptr<ImageWriterFactory>> registeredImageWriters;
+	std::map<UString, std::unique_ptr<SampleLoaderFactory>> registeredSampleLoaders;
+	std::map<UString, std::unique_ptr<MusicLoaderFactory>> registeredMusicLoaders;
+
+  public:
+	DataImpl(std::vector<UString> paths, int imageCacheSize = 100, int imageSetCacheSize = 10,
+	         int voxelCacheSize = 1, int fontStringCacheSize = 100, int paletteCacheSize = 10);
+	virtual ~DataImpl() = default;
+
+	sp<Sample> loadSample(UString path) override;
+	sp<MusicTrack> loadMusic(const UString &path) override;
+	sp<Image> loadImage(const UString &path, bool lazy = false) override;
+	sp<ImageSet> loadImageSet(const UString &path) override;
+	sp<Palette> loadPalette(const UString &path) override;
+	sp<VoxelSlice> loadVoxelSlice(const UString &path) override;
+	sp<Video> loadVideo(const UString &path) override;
+
+	sp<PaletteImage> getFontStringCacheEntry(const UString &font_name,
+	                                         const UString &text) override;
+	void putFontStringCacheEntry(const UString &font_name, const UString &text,
+	                             sp<PaletteImage> &img) override;
+
+	bool writeImage(UString systemPath, sp<Image> image, sp<Palette> palette = nullptr) override;
+};
+
+Data *Data::createData(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize,
+                       int voxelCacheSize, int fontStringCacheSize, int paletteCacheSize)
+{
+	return new DataImpl(paths, imageCacheSize, imageSetCacheSize, voxelCacheSize,
+	                    fontStringCacheSize, paletteCacheSize);
+}
+
+DataImpl::DataImpl(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize,
+                   int voxelCacheSize, int fontStringCacheSize, int paletteCacheSize)
+    : Data(paths)
 {
 	registeredImageBackends["lodepng"].reset(getLodePNGImageLoaderFactory());
 	registeredImageBackends["pcx"].reset(getPCXImageLoaderFactory());
@@ -95,9 +166,7 @@ Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize
 		pinnedPalettes.push(nullptr);
 }
 
-Data::~Data() = default;
-
-sp<VoxelSlice> Data::loadVoxelSlice(const UString &path)
+sp<VoxelSlice> DataImpl::loadVoxelSlice(const UString &path)
 {
 	std::lock_guard<std::recursive_mutex> l(this->voxelCacheLock);
 	if (path == "")
@@ -155,7 +224,7 @@ sp<VoxelSlice> Data::loadVoxelSlice(const UString &path)
 	return slice;
 }
 
-sp<ImageSet> Data::loadImageSet(const UString &path)
+sp<ImageSet> DataImpl::loadImageSet(const UString &path)
 {
 	std::lock_guard<std::recursive_mutex> l(this->imageSetCacheLock);
 	UString cacheKey = path.toUpper();
@@ -205,7 +274,7 @@ sp<ImageSet> Data::loadImageSet(const UString &path)
 	return imgSet;
 }
 
-sp<Sample> Data::loadSample(UString path)
+sp<Sample> DataImpl::loadSample(UString path)
 {
 	std::lock_guard<std::recursive_mutex> l(this->sampleCacheLock);
 	auto aliasMap = this->aliases.lock();
@@ -240,7 +309,7 @@ sp<Sample> Data::loadSample(UString path)
 	return sample;
 }
 
-sp<MusicTrack> Data::loadMusic(const UString &path)
+sp<MusicTrack> DataImpl::loadMusic(const UString &path)
 {
 	std::lock_guard<std::recursive_mutex> l(this->musicCacheLock);
 	TRACE_FN_ARGS1("path", path);
@@ -258,7 +327,7 @@ sp<MusicTrack> Data::loadMusic(const UString &path)
 	return nullptr;
 }
 
-sp<Image> Data::loadImage(const UString &path, bool lazy)
+sp<Image> DataImpl::loadImage(const UString &path, bool lazy)
 {
 	std::lock_guard<std::recursive_mutex> l(this->imageCacheLock);
 	if (path == "")
@@ -527,7 +596,7 @@ sp<Image> Data::loadImage(const UString &path, bool lazy)
 	return img;
 }
 
-sp<Palette> Data::loadPalette(const UString &path)
+sp<Palette> DataImpl::loadPalette(const UString &path)
 {
 	std::lock_guard<std::recursive_mutex> l(this->paletteCacheLock);
 	if (path == "")
@@ -598,7 +667,7 @@ sp<Palette> Data::loadPalette(const UString &path)
 	return nullptr;
 }
 
-sp<Video> Data::loadVideo(const UString &path)
+sp<Video> DataImpl::loadVideo(const UString &path)
 {
 
 	if (path.substr(0, 4) == "SMK:")
@@ -621,7 +690,7 @@ sp<Video> Data::loadVideo(const UString &path)
 	return nullptr;
 }
 
-bool Data::writeImage(UString systemPath, sp<Image> image, sp<Palette> palette)
+bool DataImpl::writeImage(UString systemPath, sp<Image> image, sp<Palette> palette)
 {
 	std::ofstream outFile(systemPath.str(), std::ios::binary);
 	if (!outFile)
@@ -687,7 +756,7 @@ bool Data::writeImage(UString systemPath, sp<Image> image, sp<Palette> palette)
 	return false;
 }
 
-sp<PaletteImage> Data::getFontStringCacheEntry(const UString &font_name, const UString &string)
+sp<PaletteImage> DataImpl::getFontStringCacheEntry(const UString &font_name, const UString &string)
 {
 	std::lock_guard<std::recursive_mutex> l(this->fontStringCacheLock);
 	if (font_name == "")
@@ -704,8 +773,8 @@ sp<PaletteImage> Data::getFontStringCacheEntry(const UString &font_name, const U
 	return img;
 }
 
-void Data::putFontStringCacheEntry(const UString &font_name, const UString &string,
-                                   sp<PaletteImage> &img)
+void DataImpl::putFontStringCacheEntry(const UString &font_name, const UString &string,
+                                       sp<PaletteImage> &img)
 {
 	std::lock_guard<std::recursive_mutex> l(this->fontStringCacheLock);
 	if (font_name == "")

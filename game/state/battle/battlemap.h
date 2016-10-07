@@ -1,10 +1,12 @@
 #pragma once
+
 #include "game/state/battle/battle.h"
-#include "game/state/battle/battlemappart_type.h"
-#include "game/state/battle/battlemapsector.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
+#include <list>
 #include <map>
+#include <set>
+#include <vector>
 
 namespace OpenApoc
 {
@@ -13,6 +15,8 @@ class Building;
 class Agent;
 class Organisation;
 class Vehicle;
+class BattleMapPartType;
+class BattleMapSector;
 
 class BattleMap : public StateObject<BattleMap>
 {

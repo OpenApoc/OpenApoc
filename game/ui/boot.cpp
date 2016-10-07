@@ -3,6 +3,7 @@
 #endif
 #include "game/ui/boot.h"
 #include "forms/ui.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "game/ui/general/mainmenu.h"
 #include "game/ui/general/videoscreen.h"
@@ -26,7 +27,7 @@ void BootUp::update()
 {
 	bool skipIntro = skipIntroOption.get();
 	// The first forms instance causes it to get loaded
-	auto loadTask = fw().threadPool->enqueue([]() {
+	auto loadTask = fw().threadPoolEnqueue([]() {
 		auto &ui_instance = ui();
 		std::ignore = ui_instance;
 	});

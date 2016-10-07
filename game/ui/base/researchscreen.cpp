@@ -1,10 +1,15 @@
 #include "game/ui/base/researchscreen.h"
 #include "forms/ui.h"
+#include "framework/data.h"
 #include "framework/event.h"
+#include "framework/font.h"
 #include "framework/framework.h"
+#include "framework/keycodes.h"
+#include "game/state/base/base.h"
 #include "game/state/base/facility.h"
 #include "game/state/gamestate.h"
 #include "game/ui/base/researchselect.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -229,7 +234,7 @@ void ResearchScreen::setCurrentLabInfo()
 		assignedAgentList->clear();
 		form->findControlTyped<Label>("TEXT_LAB_TYPE")->setText("");
 		auto totalSkillLabel = form->findControlTyped<Label>("TEXT_TOTAL_SKILL");
-		totalSkillLabel->setText(UString::format(tr("Total Skill: %d"), 0));
+		totalSkillLabel->setText(format(tr("Total Skill: %d"), 0));
 		return;
 	}
 	this->assigned_agent_count = 0;
@@ -312,7 +317,7 @@ void ResearchScreen::setCurrentLabInfo()
 
 	auto totalSkillLabel = form->findControlTyped<Label>("TEXT_TOTAL_SKILL");
 	totalSkillLabel->setText(
-	    UString::format(tr("Total Skill: %d"), this->selected_lab->lab->getTotalSkill()));
+	    format(tr("Total Skill: %d"), this->selected_lab->lab->getTotalSkill()));
 
 	updateProgressInfo();
 }
@@ -361,7 +366,7 @@ void ResearchScreen::updateProgressInfo()
 		auto topicTitle = form->findControlTyped<Label>("TEXT_CURRENT_PROJECT");
 		topicTitle->setText(tr(topic->name));
 		auto completionPercent = form->findControlTyped<Label>("TEXT_PROJECT_COMPLETION");
-		auto completionText = UString::format(tr("%d%%"), (int)(projectProgress * 100.0f));
+		auto completionText = format(tr("%d%%"), (int)(projectProgress * 100.0f));
 		completionPercent->setText(completionText);
 	}
 	else
@@ -389,8 +394,7 @@ void ResearchScreen::updateProgressInfo()
 		manufacturing_scroll_left->Visible = true;
 		manufacturing_scroll_right->Visible = true;
 		manufacturing_scrollbar->setValue(this->selected_lab->lab->getQuantity());
-		manufacturing_quantity->setText(
-		    UString::format(tr("%d"), this->selected_lab->lab->getQuantity()));
+		manufacturing_quantity->setText(format(tr("%d"), this->selected_lab->lab->getQuantity()));
 	}
 	else
 	{
@@ -461,7 +465,7 @@ sp<Control> ResearchScreen::createAgentControl(Vec2<int> size, StateRef<Agent> a
 		LogError("Trying to show non-scientist agent %s (%s)", agent.id.cStr(), agent->name.cStr());
 	}
 
-	auto skillLabel = baseControl->createChild<Label>(UString::format(tr("Skill %s"), skill), font);
+	auto skillLabel = baseControl->createChild<Label>(format(tr("Skill %s"), skill), font);
 	skillLabel->Size = {100, font->getFontHeight()};
 	skillLabel->Location = {40, font->getFontHeight() * 2};
 

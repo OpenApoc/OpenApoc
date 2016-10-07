@@ -1,11 +1,17 @@
 #include "game/ui/base/basegraphics.h"
 #include "forms/ui.h"
+#include "framework/data.h"
+#include "framework/font.h"
 #include "framework/framework.h"
+#include "framework/renderer.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/scenery_tile_type.h"
+#include "game/state/tileview/tile.h"
+#include "library/strings_format.h"
 #include <unordered_map>
 
 namespace OpenApoc
@@ -60,7 +66,7 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 			if (sprite != 0)
 			{
 				Vec2<int> pos = renderPos + i * TILE_SIZE;
-				auto image = UString::format(
+				auto image = format(
 				    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:%d:xcom3/ufodata/base.pcx",
 				    sprite);
 				fw().renderer->draw(fw().data->loadImage(image), pos);
@@ -150,8 +156,8 @@ sp<RGBImage> BaseGraphics::drawMiniBase(sp<Base> base, FacilityHighlight highlig
 				sprite -= 3;
 			}
 			Vec2<int> pos = i * MINI_SIZE;
-			auto image = UString::format(
-			    "RAW:xcom3/ufodata/minibase.dat:4:4:%d:xcom3/ufodata/base.pcx", sprite);
+			auto image =
+			    format("RAW:xcom3/ufodata/minibase.dat:4:4:%d:xcom3/ufodata/base.pcx", sprite);
 			RGBImage::blit(std::dynamic_pointer_cast<RGBImage>(fw().data->loadImage(image)),
 			               minibase, {0, 0}, pos);
 		}

@@ -2,6 +2,7 @@
 #include "forms/forms.h"
 #include "framework/apocresources/apocfont.h"
 #include "framework/configfile.h"
+#include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/trace.h"
 #include "library/sp.h"

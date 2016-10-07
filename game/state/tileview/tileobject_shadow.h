@@ -1,6 +1,8 @@
 #pragma once
 
 #include "game/state/tileview/tileobject.h"
+#include "library/sp.h"
+#include "library/vec.h"
 
 namespace OpenApoc
 {
@@ -21,9 +23,9 @@ class TileObjectShadow : public TileObject
 
   private:
 	friend class TileMap;
-	std::weak_ptr<Vehicle> ownerVehicle;
-	std::weak_ptr<BattleUnit> ownerBattleUnit;
-	std::weak_ptr<BattleItem> ownerBattleItem;
+	wp<Vehicle> ownerVehicle;
+	wp<BattleUnit> ownerBattleUnit;
+	wp<BattleItem> ownerBattleItem;
 	TileObjectShadow(TileMap &map, sp<Vehicle> owner);
 	TileObjectShadow(TileMap &map, sp<BattleUnit> owner);
 	TileObjectShadow(TileMap &map, sp<BattleItem> item);

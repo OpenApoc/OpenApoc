@@ -5,11 +5,13 @@
 #include "dependencies/lodepng/lodepng.h"
 #include "framework/apocresources/apocpalette.h"
 #include "framework/data.h"
+#include "framework/image.h"
 #include "framework/imageloader_interface.h"
 #include "framework/logger.h"
 #include "framework/palette.h"
 #include "library/sp.h"
 #include "library/vec.h"
+#include <ostream>
 #include <vector>
 
 using namespace OpenApoc;

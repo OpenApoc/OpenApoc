@@ -1,6 +1,7 @@
 #include "framework/sound.h"
 #include "framework/logger.h"
 #include <array>
+#include <glm/glm.hpp>
 #include <limits>
 #include <memory>
 #include <utility>

@@ -1,11 +1,9 @@
 #pragma once
 
-#include <cstdint>
-#include <map>
-#include <mutex>
-
 #include "library/sp.h"
 #include "library/strings.h"
+#include <cstdint>
+#include <istream>
 
 #define PROGRAM_NAME "OpenApoc"
 #define PROGRAM_ORGANISATION "OpenApoc"
@@ -22,14 +20,14 @@ class IFileImpl
 class IFile : public std::istream
 {
   private:
-	std::unique_ptr<IFileImpl> f;
+	up<IFileImpl> f;
 	IFile();
 	friend class FileSystem;
 
   public:
 	~IFile() override;
 	size_t size() const;
-	std::unique_ptr<char[]> readAll();
+	up<char[]> readAll();
 	bool readule16(uint16_t &val);
 	bool readule32(uint32_t &val);
 	const UString &fileName() const;

@@ -1,10 +1,14 @@
 #include "framework/trace.h"
 #include "framework/configfile.h"
+#include <chrono>
 #include <fstream>
+#include <list>
 #include <memory>
 #include <mutex>
 #include <sstream>
 #include <thread>
+#include <utility>
+#include <vector>
 
 namespace
 {
@@ -93,6 +97,15 @@ class TraceManager
 		return list;
 	}
 	~TraceManager();
+	std::ofstream outFile;
+	TraceManager() : outFile(traceFile.get().str())
+	{
+		if (!outFile)
+		{
+			LogError("Failed to open trace file \"%s\"", traceFile.get().cStr());
+			return;
+		}
+	}
 	void write();
 };
 
@@ -129,14 +142,6 @@ void TraceManager::write()
 {
 	LogAssert(OpenApoc::Trace::enabled);
 	OpenApoc::Trace::enabled = false;
-
-	auto outPath = traceFile.get();
-	std::ofstream outFile(outPath.str());
-	if (!outFile)
-	{
-		LogError("Failed to open output trace file \"%s\"", outPath.cStr());
-		return;
-	}
 
 	// FIXME: Use proper json parser instead of magically constructing from strings?
 

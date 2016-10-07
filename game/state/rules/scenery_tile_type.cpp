@@ -1,4 +1,5 @@
 #include "game/state/rules/scenery_tile_type.h"
+#include "game/state/city/city.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc

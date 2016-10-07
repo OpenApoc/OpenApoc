@@ -1,10 +1,9 @@
 #pragma once
-#include "framework/includes.h"
+
 #include "framework/logger.h"
-#include "game/state/battle/battle.h"
 #include "game/state/tileview/tileobject.h"
+#include "library/rect.h"
 #include "library/sp.h"
-#include <functional>
 #include <set>
 #include <vector>
 

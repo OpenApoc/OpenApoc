@@ -1,7 +1,11 @@
 #include "game/ui/debugtools/debugmenu.h"
 #include "forms/ui.h"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/image.h"
+#include "framework/keycodes.h"
+#include "framework/renderer.h"
 #include "game/ui/debugtools/formpreview.h"
 #include "game/ui/debugtools/imagepreview.h"
 #include "library/sp.h"
@@ -147,13 +151,13 @@ void DebugMenu::bulkExportPcks()
 				                     Strings::fromInteger(idx) + UString(".png");
 				sp<Image> curimg = pckset->images.at(idx);
 
-				if (RGBImage *bi = dynamic_cast<RGBImage *>(curimg.get()))
+				if (sp<RGBImage> bi = std::dynamic_pointer_cast<RGBImage>(curimg))
 				{
 
 					LogInfo("Saving %s", outputname.cStr());
-					bi->saveBitmap(outputname);
+					fw().data->writeImage(outputname, bi);
 				}
-				else if (PaletteImage *pi = dynamic_cast<PaletteImage *>(curimg.get()))
+				else if (sp<PaletteImage> pi = std::dynamic_pointer_cast<PaletteImage>(curimg))
 				{
 
 					for (unsigned int palidx = 0; palidx < PaletteList.size(); palidx++)
@@ -162,7 +166,7 @@ void DebugMenu::bulkExportPcks()
 						             Strings::fromInteger(idx) + UString(".#") +
 						             Strings::fromInteger(palidx) + UString(".png");
 						LogInfo("Saving %s", outputname.cStr());
-						pi->toRGBImage(PaletteList.at(palidx))->saveBitmap(outputname);
+						fw().data->writeImage(outputname, pi, PaletteList.at(palidx));
 					}
 				}
 			}

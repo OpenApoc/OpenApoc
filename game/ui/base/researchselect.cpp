@@ -2,10 +2,13 @@
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/keycodes.h"
 #include "game/state/base/base.h"
 #include "game/state/gamestate.h"
+#include "game/state/organisation.h"
 #include "game/state/research.h"
 #include "game/ui/general/messagebox.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -170,7 +173,7 @@ void ResearchSelect::populateResearchList()
 		{
 			UString progress_text;
 			if (this->lab->type == ResearchTopic::Type::Engineering)
-				progress_text = UString::format("$%d", t->cost);
+				progress_text = format("$%d", t->cost);
 			else
 				progress_text = tr("Complete");
 			auto progress_label =
@@ -232,8 +235,8 @@ void ResearchSelect::populateResearchList()
 				break;
 		}
 
-		auto skill_total_label = control->createChild<Label>(UString::format("%d", skill_total),
-		                                                     ui().getFont("SMALFONT"));
+		auto skill_total_label =
+		    control->createChild<Label>(format("%d", skill_total), ui().getFont("SMALFONT"));
 		skill_total_label->Size = {50, 20};
 		skill_total_label->Location = {328, 0};
 		skill_total_label->TextHAlign = HorizontalAlignment::Right;

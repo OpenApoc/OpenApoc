@@ -1,6 +1,8 @@
 #pragma once
-#include "framework/font.h"
+
 #include "library/sp.h"
+#include "library/strings.h"
+#include <map>
 
 namespace tinyxml2
 {
@@ -11,6 +13,7 @@ namespace OpenApoc
 {
 
 class Form;
+class BitmapFont;
 
 class UI
 {

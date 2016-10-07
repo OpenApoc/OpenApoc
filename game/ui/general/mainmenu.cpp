@@ -2,6 +2,8 @@
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/keycodes.h"
+#include "framework/sound.h"
 #include "game/ui/city/cityview.h"
 #include "game/ui/debugtools/debugmenu.h"
 #include "game/ui/general/difficultymenu.h"

@@ -1,3 +1,5 @@
+#include "framework/fs.h"
+#include "framework/image.h"
 #include "framework/imageloader_interface.h"
 #include "framework/logger.h"
 #include "framework/palette.h"

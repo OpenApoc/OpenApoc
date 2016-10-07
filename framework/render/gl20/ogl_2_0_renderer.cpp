@@ -1,9 +1,11 @@
 #include "framework/image.h"
 #include "framework/logger.h"
 #include "framework/palette.h"
+#include "framework/renderer.h"
 #include "framework/renderer_interface.h"
 #include "library/sp.h"
 #include <array>
+#include <glm/gtx/rotate_vector.hpp>
 #include <memory>
 
 /* Workaround MSVC not liking int64_t being defined here and in allegro */

@@ -1,10 +1,14 @@
 #pragma once
-#include "game/state/battle/battlemappart.h"
+
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/tileview/tileobject.h"
+#include "library/sp.h"
+#include "library/vec.h"
 
 namespace OpenApoc
 {
+class BattleMapPart;
+
 class TileObjectBattleMapPart : public TileObject
 {
   public:

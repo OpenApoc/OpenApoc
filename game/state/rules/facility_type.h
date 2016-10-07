@@ -1,13 +1,15 @@
 #pragma once
-#include "framework/image.h"
+
 #include "game/state/research.h"
 #include "game/state/stateobject.h"
-#include "game/state/ufopaedia.h"
+#include "library/sp.h"
 #include "library/strings.h"
 #include <map>
 
 namespace OpenApoc
 {
+class Image;
+class UfopaediaEntry;
 class FacilityType : public StateObject<FacilityType>
 {
   public:

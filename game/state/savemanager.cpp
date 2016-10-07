@@ -1,6 +1,15 @@
 ﻿#include "game/state/savemanager.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
+#include "framework/serialization/serialize.h"
+#include "framework/trace.h"
+#include "game/state/gamestate.h"
 #include <algorithm>
+#include <sstream>
+
+// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
+// symbols as part of the module that uses it
+#define BOOST_ALL_NO_LIB
 #include <boost/filesystem.hpp>
 
 // boost uuid for generating temporary identifier for new save
@@ -43,7 +52,7 @@ std::future<sp<GameState>> SaveManager::loadGame(const SaveMetadata &metadata) c
 std::future<sp<GameState>> SaveManager::loadGame(const UString &savePath) const
 {
 	UString saveArchiveLocation = savePath;
-	auto loadTask = fw().threadPool->enqueue([saveArchiveLocation]() -> sp<GameState> {
+	auto loadTask = fw().threadPoolEnqueue([saveArchiveLocation]() -> sp<GameState> {
 		auto state = mksp<GameState>();
 		if (!state->loadGame(saveArchiveLocation))
 		{

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "framework/fs.h"
+#include "framework/sound.h"
 #include "library/sp.h"
 #include <chrono>
 
@@ -10,6 +10,7 @@ namespace OpenApoc
 class Image;
 class Palette;
 class AudioFormat;
+class IFile;
 
 class FrameImage
 {

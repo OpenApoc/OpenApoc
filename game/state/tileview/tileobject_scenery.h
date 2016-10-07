@@ -1,10 +1,13 @@
 #pragma once
 
-#include "game/state/city/scenery.h"
 #include "game/state/tileview/tileobject.h"
+#include "library/sp.h"
+#include "library/vec.h"
 
 namespace OpenApoc
 {
+
+class Scenery;
 
 class TileObjectScenery : public TileObject
 {
@@ -13,7 +16,7 @@ class TileObjectScenery : public TileObject
 	          int, bool, bool) override;
 	~TileObjectScenery() override;
 
-	std::weak_ptr<Scenery> scenery;
+	wp<Scenery> scenery;
 
 	sp<Scenery> getOwner() const;
 

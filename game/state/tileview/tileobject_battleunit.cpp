@@ -3,10 +3,14 @@
 #endif
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "framework/renderer.h"
+#include "game/state/battle/battleunit.h"
 #include "game/state/battle/battleunitanimationpack.h"
 #include "game/state/tileview/tile.h"
 #include "library/voxel.h"
+#include <algorithm>
 #include <cmath>
+#include <glm/glm.hpp>
+#include <glm/gtx/vector_angle.hpp>
 
 namespace OpenApoc
 {

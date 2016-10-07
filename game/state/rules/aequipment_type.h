@@ -1,12 +1,12 @@
 #pragma once
+
 #include "game/state/agent.h"
-#include "game/state/battle/battleunitimagepack.h"
-#include "game/state/organisation.h"
 #include "game/state/research.h"
-#include "game/state/rules/damage.h"
 #include "game/state/stateobject.h"
+#include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
+#include <limits>
 #include <map>
 #include <set>
 
@@ -16,6 +16,11 @@ class Rules;
 class Image;
 class Sample;
 class DoodadType;
+class BattleUnitImagePack;
+class Organisation;
+class DamageType;
+class DamageModifier;
+
 class AEquipmentType : public StateObject<AEquipmentType>
 {
   public:
@@ -176,8 +181,8 @@ class EquipmentSet : public StateObject<EquipmentSet>
 	};
 	UString id;
 
-	int min_score = INT_MIN;
-	int max_score = INT_MAX;
+	int min_score = std::numeric_limits<int>::min();
+	int max_score = std::numeric_limits<int>::max();
 	bool is_appropriate(int score) { return score >= min_score && score < max_score; };
 
 	std::vector<WeaponData> weapons;

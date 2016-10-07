@@ -1,7 +1,13 @@
 #include "framework/serialization/providers/providerwithchecksum.h"
 #include "framework/logger.h"
 #include "library/strings.h"
+#include "library/strings_format.h"
+
+// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
+// symbols as part of the module that uses it
+#define BOOST_ALL_NO_LIB
 #include <boost/filesystem.hpp>
+#include <sstream>
 namespace fs = boost::filesystem;
 
 #include "dependencies/pugixml/src/pugixml.hpp"
@@ -26,7 +32,7 @@ static UString calculate_checksum(const std::string &str)
 			// FIXME: Probably need to do the reverse for big endian?
 			unsigned int byteHex = v & 0xff000000;
 			byteHex >>= 24;
-			hashString += UString::format("%02x", byteHex).str();
+			hashString += format("%02x", byteHex).str();
 			v <<= 8;
 		}
 	}

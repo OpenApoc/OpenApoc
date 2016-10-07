@@ -18,6 +18,7 @@ set (LIBRARY_HEADER_FILES
 	rect.h
 	sp.h
 	strings.h
+	strings_format.h
 	vec.h
 	resource.h
 	voxel.h

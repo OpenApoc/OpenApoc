@@ -1,13 +1,13 @@
 #pragma once
+
 #include "framework/image.h"
-#include "game/state/battle/battleunitimagepack.h"
-#include "game/state/rules/damage.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
-#include "library/voxel.h"
+#include <list>
 #include <map>
+#include <set>
 
 namespace OpenApoc
 {
@@ -17,9 +17,12 @@ class Organisation;
 class AEquipment;
 class AEquipmentType;
 class BattleUnitAnimationPack;
+class BattleUnitImagePack;
 class Sample;
 class AgentBodyType;
 class BattleUnit;
+class DamageModifier;
+class VoxelMap;
 
 class AgentStats
 {

@@ -1,10 +1,8 @@
 #pragma once
 
-#include "game/state/aequipment.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
-#include <set>
 
 #define FALLING_ACCELERATION_ITEM 0.14285714f // 1/7th
 
@@ -17,6 +15,8 @@ class GameState;
 class TileMap;
 class Battle;
 class BattleUnit;
+class AEquipment;
+class Image;
 
 class BattleItem : public std::enable_shared_from_this<BattleItem>
 {

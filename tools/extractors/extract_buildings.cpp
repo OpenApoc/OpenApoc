@@ -1,6 +1,9 @@
 #include "framework/data.h"
 #include "framework/framework.h"
+#include "game/state/battle/battlemap.h"
 #include "game/state/city/building.h"
+#include "game/state/city/city.h"
+#include "library/strings_format.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
 
@@ -80,13 +83,13 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 				battle_map_index = 10; // 11 Procreation Park
 				break;
 		}
-		b->battle_map = {&state, UString::format("%s%s", BattleMap::getPrefix(),
-		                                         this->battleMapPaths[battle_map_index])};
+		b->battle_map = {
+		    &state, format("%s%s", BattleMap::getPrefix(), this->battleMapPaths[battle_map_index])};
 		b->owner = {&state, data.getOrgId(entry.owner_idx)};
 		// Our rects are exclusive of p2
 		// Shift position by 20 tiles
 		b->bounds = {entry.x0 + 20, entry.y0 + 20, entry.x1 + 21, entry.y1 + 21};
-		auto id = UString::format("%s%s", Building::getPrefix(), canon_string(b->name));
+		auto id = format("%s%s", Building::getPrefix(), canon_string(b->name));
 
 		city->buildings[id] = b;
 	}

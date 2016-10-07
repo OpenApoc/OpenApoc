@@ -1,15 +1,21 @@
 #include "framework/framework.h"
+#include "framework/ThreadPool/ThreadPool.h"
 #include "framework/apocresources/cursor.h"
+#include "framework/configfile.h"
+#include "framework/data.h"
 #include "framework/event.h"
+#include "framework/image.h"
 #include "framework/renderer.h"
 #include "framework/renderer_interface.h"
-#include "framework/sound.h"
 #include "framework/sound_interface.h"
+#include "framework/stagestack.h"
 #include "framework/trace.h"
 #include "library/sp.h"
 #include <SDL.h>
-#include <iostream>
-#include <string>
+#include <algorithm>
+#include <list>
+#include <map>
+#include <vector>
 
 // SDL_syswm includes windows.h on windows, which does all kinds of polluting
 // defines/namespace stuff, so try to avoid that
@@ -27,9 +33,7 @@
 // Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
 // symbols as part of the module that uses it
 #define BOOST_ALL_NO_LIB
-#include <boost/filesystem.hpp>
 #include <boost/locale.hpp>
-#include <boost/program_options.hpp>
 
 using namespace OpenApoc;
 
@@ -161,10 +165,28 @@ class FrameworkPrivate
 	Vec2<int> windowSize;
 
 	sp<Surface> scaleSurface;
+	up<ThreadPool> threadPool;
 
 	FrameworkPrivate()
 	    : quitProgram(false), window(nullptr), context(0), displaySize(0, 0), windowSize(0, 0)
 	{
+		int threadPoolSize = threadPoolSizeOption.get();
+		if (threadPoolSize > 0)
+		{
+			LogInfo("Set thread pool size to %d", threadPoolSize);
+		}
+		else if (std::thread::hardware_concurrency() != 0)
+		{
+			threadPoolSize = std::thread::hardware_concurrency();
+			LogInfo("Set thread pool size to reported HW concurrency of %d", threadPoolSize);
+		}
+		else
+		{
+			threadPoolSize = 2;
+			LogInfo("Failed to get HW concurrency, falling back to pool size %d", threadPoolSize);
+		}
+
+		this->threadPool.reset(new ThreadPool(threadPoolSize));
 	}
 };
 
@@ -250,26 +272,7 @@ Framework::Framework(const UString programName, bool createWindow)
 	        localeName.c_str(), localeLang.c_str(), localeCountry.c_str(), localeVariant.c_str(),
 	        localeEncoding.c_str(), isUTF8 ? "true" : "false");
 
-	int threadPoolSize = threadPoolSizeOption.get();
-	if (threadPoolSize > 0)
-	{
-		LogInfo("Set thread pool size to %d", threadPoolSize);
-	}
-	else if (std::thread::hardware_concurrency() != 0)
-	{
-		threadPoolSize = std::thread::hardware_concurrency();
-		LogInfo("Set thread pool size to reported HW concurrency of %d", threadPoolSize);
-	}
-	else
-	{
-		threadPoolSize = 2;
-		LogInfo("Failed to get HW concurrency, falling back to pool size %d", threadPoolSize);
-	}
-
-	this->threadPool.reset(new ThreadPool(threadPoolSize));
-
-	LogInfo("Current working directory: \"%s\"", boost::filesystem::current_path().c_str());
-	this->data.reset(new Data(resourcePaths));
+	this->data.reset(Data::createData(resourcePaths));
 
 	auto testFile = this->data->fs.open("music");
 	if (!testFile)
@@ -1004,5 +1007,7 @@ UString Framework::textGetClipboard()
 	}
 	return str;
 }
+
+void Framework::threadPoolTaskEnqueue(std::function<void()> task) { p->threadPool->enqueue(task); }
 
 }; // namespace OpenApoc

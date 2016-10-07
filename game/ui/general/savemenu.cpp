@@ -2,11 +2,14 @@
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/keycodes.h"
+#include "framework/renderer.h"
 #include "game/state/gamestate.h"
 #include "game/ui/general/loadingscreen.h"
 #include "game/ui/general/messagebox.h"
 #include "library/sp.h"
 #include <iomanip>
+#include <sstream>
 
 #ifdef _MSC_VER
 // msvs reports level 3 warning 4996 - std::localtime is unsafe

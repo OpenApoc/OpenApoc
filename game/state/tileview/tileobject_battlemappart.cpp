@@ -1,5 +1,6 @@
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "framework/renderer.h"
+#include "game/state/battle/battlemappart.h"
 #include "game/state/tileview/tile.h"
 
 namespace OpenApoc
