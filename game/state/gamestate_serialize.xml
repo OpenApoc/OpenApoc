@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_gamestate>
-	<object>
+	<object external="true">
 		<name>GameState</name>
 		<member type="Section">vehicle_types</member>
 		<member type="Section">organisations</member>
@@ -48,7 +48,7 @@
 		<member type="Section">equipment_sets_by_level</member>
 		<member>messages</member>
 	</object>
-	<object>
+	<object external="true">
 		<name>BattleMapTileset</name>
 		<member>map_part_types</member>
 	</object>
@@ -411,7 +411,7 @@
 		<member>sectorTilesName</member>
 		<member>tiles</member>
 	</object>
-	<object>
+	<object external="true">
 		<name>BattleMapSectorTiles</name>
 		<member>los_blocks</member>
 		<member>loot_locations</member>
@@ -431,7 +431,7 @@
 		<member>spawn_large_units</member>
 		<member>spawn_walking_units</member>
 	</object>
-	<object>
+	<object external="true">
 		<name>BattleUnitImagePack</name>
 		<member>image_offset</member>
 		<member>images</member>
@@ -453,7 +453,7 @@
 		<member>throwSounds</member>
 		<member>explosionSoundMap</member>
 	</object>
-	<object>
+	<object external="true">
 		<name>BattleUnitAnimationPack</name>
 		<member type="Section">standart_animations</member>
 		<member type="Section">hand_state_animations</member>
