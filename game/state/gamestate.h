@@ -10,6 +10,7 @@
 #include <cstdint>
 #include <list>
 #include <map>
+#include <mutex>
 
 namespace OpenApoc
 {
@@ -77,8 +78,6 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	std::list<EventMessage> messages;
 
-	mutable unsigned lastVehicle = 0;
-
 	StateRefMap<AgentType> agent_types;
 	StateRefMap<AgentBodyType> agent_body_types;
 	StateRefMap<AgentEquipmentLayout> agent_equipment_layouts;
@@ -96,6 +95,11 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	StateRef<City> current_city;
 	StateRef<Base> current_base;
+
+	// Used to generate unique names, an incrementing ID for each object type (keyed by StateObject
+	// prefix)
+	std::mutex objectIdCountLock;
+	std::map<UString, uint64_t> objectIdCount;
 
 	GameState();
 	~GameState();

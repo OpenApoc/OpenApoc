@@ -114,11 +114,13 @@ std::future<void> loadBattleVehicle(sp<VehicleType> vehicle, sp<GameState> state
 		StateRef<Organisation> org = {state.get(), UString("ORG_ALIEN")};
 		auto v = mksp<Vehicle>();
 
+		auto vID = Vehicle::generateObjectID(*state);
+
 		v->type = {state.get(), vehicle};
 		v->name = format("%s %d", v->type->name, ++v->type->numCreated);
 
-		state->vehicles[v->name] = v;
-		StateRef<Vehicle> ufo = {state.get(), v->name};
+		state->vehicles[vID] = v;
+		StateRef<Vehicle> ufo = {state.get(), vID};
 		StateRef<Vehicle> veh = {};
 
 		Battle::beginBattle(*state.get(), org, agents, veh, ufo);

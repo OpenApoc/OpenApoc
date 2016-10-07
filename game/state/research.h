@@ -146,7 +146,6 @@ class ResearchState
 {
   public:
 	ResearchState() = default;
-	unsigned int num_labs_created = 0;
 	StateRefMap<ResearchTopic> topics;
 	// Is not serialized
 	std::list<sp<ResearchTopic>> topic_list;

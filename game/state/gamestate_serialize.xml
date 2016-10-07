@@ -2,7 +2,6 @@
 <openapoc_gamestate>
 	<object>
 		<name>GameState</name>
-		<member>lastVehicle</member>
 		<member type="Section">vehicle_types</member>
 		<member type="Section">organisations</member>
 		<member type="Section">facility_types</member>
@@ -28,6 +27,7 @@
 		<member>initial_base_agent_equipment</member>
 		<member>current_city</member>
 		<member>current_base</member>
+		<member>objectIdCount</member>
 		<member type="Section">battle_common_image_list</member>
 		<member type="Section">battle_common_sample_list</member>
 		<member>player</member>
@@ -66,11 +66,9 @@
 		<name>ResearchState</name>
 		<member>topics</member>
 		<member>labs</member>
-		<member>num_labs_created</member>
 	</object>
 	<object>
 		<name>AgentGenerator</name>
-		<member>num_created</member>
 		<member>first_names</member>
 		<member>second_names</member>
 	</object>

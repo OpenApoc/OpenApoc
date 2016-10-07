@@ -104,6 +104,7 @@ class Strings
 	static uint8_t toU8(const UString &s);
 	static float toFloat(const UString &s);
 	static UString fromInteger(int i);
+	static UString fromU64(uint64_t i);
 	static UString fromFloat(float f);
 	static bool isWhiteSpace(UniChar c);
 };
