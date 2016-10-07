@@ -83,11 +83,12 @@
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_RIGHT_ARM_ARMOR</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_LASER_SNIPER_GUN</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_LASER_POD</entry>
-	  <!-- Remove launcher! -->
+	  <!-- Remove launcher and shield! -->
 	  <entry>AEQUIPMENTTYPE_MARSEC_MINILAUNCHER</entry>
 	  <entry>AEQUIPMENTTYPE_MINILAUNCHER_IN_MISSILE</entry>
 	  <entry>AEQUIPMENTTYPE_MINILAUNCHER_AG_MISSILE</entry>
-	  <!-- Remove launcher! -->
+	  <entry>AEQUIPMENTTYPE_PERSONAL_DISRUPTOR_SHIELD</entry>
+	  <!-- Remove launcher and shield! -->
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_STUN_GRENADE</entry>

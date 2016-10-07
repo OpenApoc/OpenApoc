@@ -14,7 +14,7 @@ class FakeSceneryTileObject : public TileObject
 
 	Vec3<float> getPosition() const override { return this->position; }
 	bool hasVoxelMap() override { return true; }
-	sp<VoxelMap> getVoxelMap(Vec3<int>) const override { return this->voxel; }
+	sp<VoxelMap> getVoxelMap(Vec3<int>, bool) const override { return this->voxel; }
 
 	FakeSceneryTileObject(TileMap &map, Vec3<float> bounds, sp<VoxelMap> voxelMap)
 	    : TileObject(map, Type::Scenery, bounds), position(0, 0, 0), voxel(voxelMap)

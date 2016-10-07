@@ -108,6 +108,7 @@ void Battle::initBattle(GameState &state)
 	for (auto &o : this->units)
 	{
 		o.second->strategyImages = state.battle_common_image_list->strategyImages;
+		o.second->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
 	}
 	if (forces.size() == 0)
 	{
@@ -149,6 +150,21 @@ void Battle::initBattle(GameState &state)
 		if (p->trackedUnit)
 			p->trackedObject = p->trackedUnit->tileObject;
 	}
+	for (auto &s : this->map_parts)
+	{
+		if (s->ticksUntilTryCollapse == 0)
+		{
+			s->tryCollapse();
+		}
+	}
+	for (auto &o : this->items)
+	{
+		if (o->ticksUntilTryCollapse == 0)
+		{
+			o->tryCollapse();
+		}
+	}
+
 }
 
 void Battle::initMap()
@@ -168,22 +184,9 @@ void Battle::initMap()
 		}
 		this->map->addObjectToMap(s);
 	}
-	for (auto &s : this->map_parts)
-	{
-		s->findSupport();
-	}
-	for (auto &s : this->map_parts)
-	{
-		s->tryCollapse();
-	}
 	for (auto &o : this->items)
 	{
 		this->map->addObjectToMap(o);
-		if (o->supported)
-		{
-			o->supported = false;
-			o->findSupport(false, true);
-		}
 	}
 	for (auto &u : this->units)
 	{
@@ -226,6 +229,7 @@ sp<BattleUnit> Battle::addUnit(GameState &state)
 	UString id = BattleUnit::generateObjectID(state);
 	unit->id = id;
 	unit->strategyImages = state.battle_common_image_list->strategyImages;
+	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
 	units[id] = unit;
 	return unit;
 }
@@ -266,24 +270,15 @@ void Battle::update(GameState &state, unsigned int ticks)
 		{
 			// FIXME: Handle collision
 			this->projectiles.erase(c.projectile);
-			if (c.projectile->impactSfx)
-			{
-				fw().soundBackend->playSample(c.projectile->impactSfx, c.position);
-			}
-
-			auto doodadType = c.projectile->doodadType;
-			if (doodadType)
-			{
-				auto doodad = this->placeDoodad(doodadType, c.position);
-			}
-
+			bool playSound = true;
+			bool displayDoodad = true;
 			switch (c.obj->getType())
 			{
 				case TileObject::Type::Unit:
 				{
 					auto unit = std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit();
-					unit->handleCollision(state, c);
-					LogWarning("Unit collision");
+					displayDoodad = !unit->handleCollision(state, c);
+					playSound = false;
 					break;
 				}
 				case TileObject::Type::Ground:
@@ -292,11 +287,27 @@ void Battle::update(GameState &state, unsigned int ticks)
 				case TileObject::Type::Feature:
 				{
 					auto mapPartTile = std::static_pointer_cast<TileObjectBattleMapPart>(c.obj);
-					mapPartTile->getOwner()->handleCollision(state, c);
+					displayDoodad = !mapPartTile->getOwner()->handleCollision(state, c);
+					playSound = displayDoodad;
 					break;
 				}
 				default:
 					LogError("Collision with non-collidable object");
+			}
+			if (displayDoodad)
+			{
+				auto doodadType = c.projectile->doodadType;
+				if (doodadType)
+				{
+					auto doodad = this->placeDoodad(doodadType, c.position);
+				}
+			}
+			if (playSound)
+			{
+				if (c.projectile->impactSfx)
+				{
+					fw().soundBackend->playSample(c.projectile->impactSfx, c.position);
+				}
 			}
 		}
 	}
@@ -332,6 +343,40 @@ void Battle::update(GameState &state, unsigned int ticks)
 		auto d = *it++;
 		d->update(state, ticks);
 	}
+}
+
+
+void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition, Vec3<float> &target, int accuracy, bool thrown)
+{
+	auto dispersion = (float)(100 - accuracy);
+	auto delta = (target - firePosition) * dispersion / 1000.0f;
+
+	float length_vector = 1.0f /
+		std::sqrt(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z);
+
+	std::vector<float> rnd(3);
+	while (true)
+	{
+		rnd[1] = (float)randBoundsExclusive(state.rng, 0, 100000) / 100000.0f;
+		rnd[2] = (float)randBoundsExclusive(state.rng, 0, 100000) / 100000.0f;
+		rnd[0] = rnd[1] * rnd[1] + rnd[2] * rnd[2];
+		if (rnd[0] > 0.0f && rnd[0] < 1.0f)
+		{
+			break;
+		}
+	}
+
+	// Vertical misses always go down
+	float k1 = rnd[1] * std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
+	// Horizontal misses go left or right randomly
+	float k2 = (2 * randBoundsInclusive(state.rng, 0, 1) - 1)* rnd[2] * std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
+
+	auto diffVertical = Vec3<float>{ length_vector * delta.x * delta.z, length_vector * delta.y * delta.z, -length_vector * (delta.x * delta.x + delta.y * delta.y) } * k1;
+	auto diffHorizontal = Vec3<float>{ -delta.y, delta.x, 0.0f } *k2;
+	
+	auto diff = (diffVertical + diffHorizontal) * (thrown ? Vec3<float>{3.0f, 3.0f, 0.0f} : Vec3<float>{1.0f, 1.0f, 0.33f});
+	
+	target += diff;
 }
 
 void Battle::beginTurn()

@@ -56,6 +56,16 @@
 #define CUSTOM_DOODAD_16 16 // tac 28, 32
 #define CUSTOM_DOODAD_17 17 // tac 32, 44
 #define CUSTOM_DOODAD_29 29 // tac 8, 26
+#define CUSTOM_DOODAD_30 30 // tac 78, 77
+
+#define DT_SMOKE 0
+#define DT_AG 1
+#define DT_INCENDARY 2
+#define DT_STUNGAS 3
+#define DT_EXPLOSIVE 4
+#define DT_STUNGUN 5
+#define DT_EXPLOSIVE2 15
+#define DT_BRAINSUCKER 18
 
 namespace OpenApoc
 {
@@ -110,9 +120,47 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 		    (i < data_t.damage_types->count()) && (data_t.damage_types->get(i).ignore_shield == 1);
 
 		// Damage icons are located in tacdata icons, starting with id 14 and on
-		d->icon_sprite = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		                                             "icons.tab:%d:xcom3/tacdata/tactical.pal",
-		                                             (int)i + 14));
+		d->icon_sprite =
+		    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
+		                                         (int)i + 14));
+		switch (i)
+		{
+			case DT_SMOKE:
+				d->explosive = true;
+				d->gas = true;
+				d->smoke = true;
+				d->doodadType = {&state, "DOODAD_18_SMOKE"};
+				break;
+			case DT_AG:
+				d->explosive = true;
+				d->gas = true;
+				d->doodadType = {&state, "DOODAD_19_ALIEN_GAS"};
+				break;
+			case DT_INCENDARY:
+				d->explosive = true;
+				d->flame = true;
+				d->doodadType = {&state, "DOODAD_17_FIRE"};
+				break;
+			case DT_STUNGAS:
+				d->explosive = true;
+				d->gas = true;
+				d->stun = true;
+				d->doodadType = {&state, "DOODAD_20_STUN_GAS"};
+				break;
+			case DT_EXPLOSIVE:
+				d->explosive = true;
+				break;
+			case DT_STUNGUN:
+				d->stun = true;
+				break;
+			case DT_EXPLOSIVE2:
+				d->explosive = true;
+				break;
+			case DT_BRAINSUCKER:
+				d->launcher = true;
+				break;
+		}
 
 		state.damage_types[id] = d;
 	}
@@ -356,6 +404,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 						break;
 					case AGENT_GENERAL_TYPE_DISRUPTOR_SHIELD:
 						e->type = AEquipmentType::Type::DisruptorShield;
+						e->damage_modifier = {&state, data_t.getDModId(16)};
 						e->max_ammo = 100;
 						e->recharge = 1;
 						break;
@@ -954,6 +1003,28 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 				     frameTTL});
 			}
 
+			state.doodad_types[id] = d;
+		}
+
+		// CUSTOM_DOODAD_30 30 // tac 78, 77
+		{
+			UString id = "DOODAD_30_EXPLODING_PAYLOAD";
+			auto d = mksp<DoodadType>();
+
+			// FIXME: ENSURE CORRECT
+			d->imageOffset = BATTLE_IMAGE_OFFSET;
+			d->lifetime = (2) * frameTTL;
+			d->repeatable = false;
+			d->frames.push_back(
+			    {fw().data->loadImage(format("PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
+			                                          "ptang.tab:%d",
+			                                          78)),
+			     frameTTL});
+			d->frames.push_back(
+			    {fw().data->loadImage(format("PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
+			                                          "ptang.tab:%d",
+			                                          77)),
+			     frameTTL});
 			state.doodad_types[id] = d;
 		}
 	}

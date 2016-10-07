@@ -394,7 +394,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state, Difficulty)
 				bodyTypeName = "MEGASPAWN";
 				break;
 
-			// Special case: Psimorph, non-humanoid that can fly
+			// Special case: Psimorph, non-humanoid that can only fly
 			case UNIT_TYPE_PSIMORPH:
 				a->animation_packs.emplace_back(
 				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "psi"));
@@ -892,7 +892,12 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state, Difficulty)
 
 		if (!data.inventory)
 		{
-			if (data.equipment_sets[0] != 0xff)
+			if (data.equipment_sets[0] == 0xff)
+			{
+				// Units with no inventory and no built-in equipment sets do not have any slots
+				name = "NONE";
+			}
+			else
 			{
 				// Equipment sets (built-in) have complex structure with several possible items and
 				// weapons and clips defined, and unit types have 5 equipment sets to choose from.
@@ -910,11 +915,12 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state, Difficulty)
 					                       es_data.weapons[0].weapon_idx)))};
 				if (es_data.weapons[1].weapon_idx != 0xffffffff)
 					a->built_in_weapon_left = {
+
 					    &state, format("%s%s", AEquipmentType::getPrefix(),
-					                   canon_string(data_u.agent_equipment_names->get(
-					                       es_data.weapons[1].weapon_idx)))};
+					                            canon_string(data_u.agent_equipment_names->get(
+					                                es_data.weapons[1].weapon_idx)))};
+				name = "BUILTIN";
 			}
-			name = "BUILTIN";
 		}
 		else
 		{
@@ -929,16 +935,27 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state, Difficulty)
 		state.agent_types[id] = a;
 	}
 
+	// None layout slot
+	{
+		UString name = "NONE";
+		UString id = format("%s%s", AgentEquipmentLayout::getPrefix(), canon_string(name));
+
+		auto a = mksp<AgentEquipmentLayout>();
+
+		state.agent_equipment_layouts[id] = a;
+	}
+
 	// Builtin layout slot
 	{
 		UString name = "BUILTIN";
 		UString id = format("%s%s", AgentEquipmentLayout::getPrefix(), canon_string(name));
 
 		auto a = mksp<AgentEquipmentLayout>();
-		pushEquipmentSlot(a, 0, 6, 3, 5, AgentEquipmentLayout::EquipmentSlotType::RightHand,
+		// Located off-screen, invisible in inventory
+		pushEquipmentSlot(a, 1024, 6, 3, 5, AgentEquipmentLayout::EquipmentSlotType::RightHand,
 		                  AgentEquipmentLayout::AlignmentX::Centre,
 		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 12, 6, 3, 5, AgentEquipmentLayout::EquipmentSlotType::LeftHand,
+		pushEquipmentSlot(a, 1024, 6, 3, 5, AgentEquipmentLayout::EquipmentSlotType::LeftHand,
 		                  AgentEquipmentLayout::AlignmentX::Centre,
 		                  AgentEquipmentLayout::AlignmentY::Centre);
 
@@ -1063,7 +1080,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state, Difficul
 			case UNIT_TYPE_MEGASPAWN:
 				name = "MEGASPAWN";
 				break;
-			// Special case: Psimorph, non-humanoid that can fly
+			// Special case: Psimorph, non-humanoid that can only fly
 			case UNIT_TYPE_PSIMORPH:
 				name = "PSIMORPH";
 				break;
@@ -1220,17 +1237,15 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state, Difficul
 				voxelInfo[AgentType::BodyState::Downed] = {16, idx};
 				break;
 
-			// Special case: Psimorph, non-humanoid that can fly
+			// Special case: Psimorph, non-humanoid that can only fly
 			case UNIT_TYPE_PSIMORPH:
 				height = 70;
 				idx = 19;
 				a->allowed_movement_states.insert(AgentType::MovementState::None);
 				a->allowed_movement_states.insert(AgentType::MovementState::Normal);
 				a->allowed_movement_states.insert(AgentType::MovementState::Running);
-				a->allowed_body_states.insert(AgentType::BodyState::Standing);
 				a->allowed_body_states.insert(AgentType::BodyState::Flying);
 				a->allowed_body_states.insert(AgentType::BodyState::Downed);
-				voxelInfo[AgentType::BodyState::Standing] = {height, idx};
 				voxelInfo[AgentType::BodyState::Flying] = {height, idx};
 				voxelInfo[AgentType::BodyState::Downed] = {16, idx};
 				break;
@@ -1304,7 +1319,9 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state, Difficul
 
 		for (auto entry : voxelInfo)
 		{
-			a->height[entry.first] = entry.second.x;
+			a->height[entry.first] =
+			    entry.first == AgentType::BodyState::Downed ? entry.second.x : entry.second.x + 4;
+			a->muzzleZPosition[entry.first] = entry.second.x;
 
 			if (a->large)
 			{
@@ -1344,7 +1361,8 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state, Difficul
 										             y * a->size[entry.first][pair.first].x + x] =
 										    std::make_shared<VoxelMap>(Vec3<int>{24, 24, 20});
 										// Fill slices
-										int limit = std::max(20, (entry.second.x - 40 * z) / 2);
+										int limit =
+										    std::max(20, (a->height[entry.first] - 40 * z) / 2);
 										for (int i = 0; i < limit; i++)
 										{
 											a->voxelMaps[entry.first][pair.first]
@@ -1398,7 +1416,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state, Difficul
 								a->voxelMaps[entry.first][facing][0] =
 								    std::make_shared<VoxelMap>(Vec3<int>{24, 24, 20});
 								// Fill slices
-								for (int i = 0; i < (entry.second.x) / 2; i++)
+								for (int i = 0; i < (a->height[entry.first]) / 2; i++)
 								{
 									a->voxelMaps[entry.first][facing][0]->setSlice(
 									    i, fw().data->loadVoxelSlice(format(
@@ -1439,7 +1457,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state, Difficul
 							{
 								a->voxelMaps[entry.first][pair.first][j] =
 								    std::make_shared<VoxelMap>(Vec3<int>{24, 24, 20});
-								for (int i = 0; i < entry.second.x / 2; i++)
+								for (int i = 0; i < a->height[entry.first] / 2; i++)
 								{
 									a->voxelMaps[entry.first][pair.first][j]->setSlice(
 									    i, fw().data->loadVoxelSlice(format(

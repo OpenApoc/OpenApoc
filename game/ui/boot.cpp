@@ -1,4 +1,6 @@
+#ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
+#endif
 #include "game/ui/boot.h"
 #include "forms/ui.h"
 #include "framework/configfile.h"

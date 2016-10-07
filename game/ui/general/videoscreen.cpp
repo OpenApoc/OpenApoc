@@ -1,4 +1,6 @@
+#ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
+#endif
 #include "game/ui/general/videoscreen.h"
 #include "framework/data.h"
 #include "framework/event.h"

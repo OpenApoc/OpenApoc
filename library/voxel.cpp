@@ -58,20 +58,58 @@ void VoxelMap::setSlice(int z, sp<VoxelSlice> slice)
 
 void VoxelMap::calculateCentre()
 {
-	// This calcualtes the 'centre' of the voxel map by finding the average position of all 'filled'
-	// voxels
-	// An 'int' should be more than enough to keep the sum of even the largest completely filled
-	// voxel map
+
+	// This calcualtes the 'centre' of the voxel map by finding
+	// the average position of all 'filled' voxels
+	// An 'int' should be more than enough to keep the sum
+	// of even the largest completely filled voxel map
 	Vec3<int> sum = {0, 0, 0};
 	int numFilled = 0;
 
 	for (int z = 0; z < this->size.z; z++)
 	{
+		// The following would figure out wether a pixel is filled or not
+		// However, vanilla always aims at map's centre
+		// This provides for small vehicles to "dodge shots", which actually
+		// are just misaligned voxelmaps assigned to them
+		// Therefore, we should not check this to recreate vanilla behavior
+		/*
+		for (int y = 0; y < this->size.y; y++)
+		{
+		    for (int x = 0; x < this->size.x; x++)
+		    {
+
+		        if (this->getBit({x, y, z}))
+		        {
+		            sum += Vec3<int>{x, y, z};
+		            numFilled++;
+		        }
+		    }
+		}
+		*/
+		// Instead, we consider layer filled if one bit is
+		bool bitFound = false;
 		for (int y = 0; y < this->size.y; y++)
 		{
 			for (int x = 0; x < this->size.x; x++)
 			{
 				if (this->getBit({x, y, z}))
+				{
+					bitFound = true;
+					break;
+				}
+				if (bitFound)
+					break;
+			}
+			if (bitFound)
+				break;
+		}
+
+		if (bitFound)
+		{
+			for (int y = 0; y < this->size.y; y++)
+			{
+				for (int x = 0; x < this->size.x; x++)
 				{
 					sum += Vec3<int>{x, y, z};
 					numFilled++;

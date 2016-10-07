@@ -98,9 +98,16 @@ TileObjectBattleMapPart::TileObjectBattleMapPart(TileMap &map, sp<BattleMapPart>
 
 sp<BattleMapPart> TileObjectBattleMapPart::getOwner() const { return map_part; }
 
-sp<VoxelMap> TileObjectBattleMapPart::getVoxelMap(Vec3<int>) const
+sp<VoxelMap> TileObjectBattleMapPart::getVoxelMap(Vec3<int>, bool los) const
 {
-	return this->getOwner()->type->voxelMapLOF;
+	if (los)
+	{
+		return this->getOwner()->type->voxelMapLOS;
+	}
+	else
+	{
+		return this->getOwner()->type->voxelMapLOF;
+	}
 }
 
 Vec3<float> TileObjectBattleMapPart::getPosition() const { return map_part->getPosition(); }
@@ -111,14 +118,14 @@ float TileObjectBattleMapPart::getZOrder() const
 	switch (type)
 	{
 		case Type::Ground:
-			return z - 3.0f;
+			return z - 5.0f;
 		case Type::LeftWall:
-			return z - 2.0f;
+			return z - 4.0f;
 		case Type::RightWall:
-			return z - 1.0f;
+			return z - 3.0f;
 		case Type::Feature:
 		{
-			return z + (float)map_part->type->height / 40.0f / 2.0f;
+			return z + (float)map_part->type->height / 40.0f / 2.0f - 2.0f;
 		}
 		default:
 			LogError("Impossible map part type %d", (int)type);

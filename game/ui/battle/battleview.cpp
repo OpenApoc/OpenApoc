@@ -22,6 +22,7 @@
 #include "game/ui/base/basescreen.h"
 #include "game/ui/general/ingameoptions.h"
 #include "library/sp.h"
+#include <cmath>
 #include "library/strings_format.h"
 #include <glm/glm.hpp>
 
@@ -322,12 +323,18 @@ BattleView::BattleView(sp<GameState> state)
 	// FIXME: When clicking on items or weapons, activate them or go into fire / teleport mode
 	// accordingly
 
-	std::function<void(FormsEvent * e)> clickedRightHand = [this](Event *) {
-		LogWarning("Clicked right hand");
+	std::function<void(FormsEvent * e)> clickedRightHand = [this](FormsEvent *e) {
+		if (Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right))
+			orderUse(true, true);
+		else if (Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Left))
+			orderUse(true, false);
 	};
 
-	std::function<void(FormsEvent * e)> clickedLeftHand = [this](Event *) {
-		LogWarning("Clicked left hand");
+	std::function<void(FormsEvent * e)> clickedLeftHand = [this](FormsEvent *e) {
+		if (Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right))
+			orderUse(false, true);
+		else if (Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Left))
+			orderUse(false, false);
 	};
 
 	std::function<void(FormsEvent * e)> dropRightHand = [this](Event *) { orderDrop(true); };
@@ -364,16 +371,16 @@ BattleView::BattleView(sp<GameState> state)
 
 	this->uiTabsRT[0]
 	    ->findControlTyped<Graphic>("OVERLAY_RIGHT_HAND")
-	    ->addCallback(FormEventType::MouseClick, clickedRightHand);
+	    ->addCallback(FormEventType::MouseDown, clickedRightHand);
 	this->uiTabsRT[0]
 	    ->findControlTyped<Graphic>("OVERLAY_LEFT_HAND")
-	    ->addCallback(FormEventType::MouseClick, clickedLeftHand);
+	    ->addCallback(FormEventType::MouseDown, clickedLeftHand);
 	this->uiTabsTB[0]
 	    ->findControlTyped<Graphic>("OVERLAY_RIGHT_HAND")
-	    ->addCallback(FormEventType::MouseClick, clickedRightHand);
+	    ->addCallback(FormEventType::MouseDown, clickedRightHand);
 	this->uiTabsTB[0]
 	    ->findControlTyped<Graphic>("OVERLAY_LEFT_HAND")
-	    ->addCallback(FormEventType::MouseClick, clickedLeftHand);
+	    ->addCallback(FormEventType::MouseDown, clickedLeftHand);
 	this->uiTabsRT[0]
 	    ->findControlTyped<GraphicButton>("BUTTON_RIGHT_HAND_DROP")
 	    ->addCallback(FormEventType::MouseClick, dropRightHand);
@@ -914,14 +921,14 @@ bool calculateVelocityForThrow(float distanceXY, float diffZ, float &velocityXY,
 	float c = diffZ;
 	float t = 0.0f;
 
-	// We will continue reducing velocityXY  until we find such a trajectory that makes the item
-	// fall on top of the tile
+	// We will continue reducing velocityXY  until we find such a trajectory 
+	// that makes the item fall on top of the tile
 	while (velocityXY > 0.0f)
 	{
 		// FIXME: Should we prevent very high Z-trajectories, unreallistic for heavy items?
 		t = distanceXY * TICK_SCALE / (velocityXY);
 		velocityZ = TICK_SCALE * ((-c - a * t * t) / t - a);
-		if (velocityZ - (FALLING_ACCELERATION_ITEM / VELOCITY_SCALE_BATTLE.z) * t < -0.5f)
+		if (velocityZ - (FALLING_ACCELERATION_ITEM / VELOCITY_SCALE_BATTLE.z) * t < -0.125f)
 		{
 			return true;
 		}
@@ -936,14 +943,14 @@ bool calculateVelocityForThrow(float distanceXY, float diffZ, float &velocityXY,
 // Checks if, while going along the trajectory, we reach target tile or get first collision within
 // it's boundaries
 bool checkThrowTrajectoryValid(TileMap &map, const sp<TileObject> thrower, Vec3<float> start,
-                               Vec3<int> end, Vec3<float> targetVector, float velocityXY,
+                               Vec3<int> end, Vec3<float> targetVectorXY, float velocityXY,
                                float velocityZ)
 {
 	int iterationsPerCollision = 10;
 	Vec3<float> curPos = start;
 	Vec3<float> newPos;
 	Vec3<float> velocity =
-	    (glm::normalize(targetVector) * velocityXY + Vec3<float>{0.0, 0.0, velocityZ}) *
+	    (glm::normalize(targetVectorXY) * velocityXY + Vec3<float>{0.0, 0.0, velocityZ}) *
 	    VELOCITY_SCALE_BATTLE;
 	Collision c;
 	do
@@ -1120,9 +1127,9 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 
 	// Check distance to target
 	auto pos = unit->tileObject->getOwningTile()->position;
-	Vec3<float> targetVector = target - pos;
-	targetVector = {targetVector.x, targetVector.y, 0.0f};
-	float distance = glm::length(targetVector);
+	Vec3<float> targetVectorXY = target - pos;
+	targetVectorXY = {targetVectorXY.x, targetVectorXY.y, 0.0f};
+	float distance = glm::length(targetVectorXY);
 	if (distance >= unit->getMaxThrowDistance(
 	                    item->type->weight + (item->payloadType ? item->payloadType->weight : 0),
 	                    pos.z - target.z))
@@ -1135,14 +1142,14 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 	Vec3<float> startPos = {
 	    unit->position.x, unit->position.y,
 	    unit->position.z +
-	        (float)unit->agent->type->bodyType->height[AgentType::BodyState::Throwing] / 2.0f /
+	        ((float)unit->agent->type->bodyType->height[AgentType::BodyState::Throwing] - 4.0f) / 2.0f /
 	            40.0f};
 	float velXY = 0.0f;
 	float velZ = 0.0f;
 	bool valid = true;
 	while (calculateVelocityForThrow(distance, startPos.z - target.z - 6.0f / 40.0f, velXY, velZ))
 	{
-		valid = checkThrowTrajectoryValid(map, unit->tileObject, startPos, target, targetVector,
+		valid = checkThrowTrajectoryValid(map, unit->tileObject, startPos, target, targetVectorXY,
 		                                  velXY, velZ);
 		if (valid)
 		{
@@ -1169,6 +1176,84 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 	LogWarning("BattleUnit \"%s\" throwing item in %s hand", unit->agent->name.cStr(),
 	           right ? "right" : "left");
 	selectionState = BattleSelectionState::Normal;
+}
+
+void BattleView::orderUse(bool right, bool automatic)
+{
+	if (selectedUnits.size() == 0)
+	{
+		return;
+	}
+	auto unit = selectedUnits.front();
+	auto item =
+		unit->agent->getFirstItemInSlot(right ? AgentEquipmentLayout::EquipmentSlotType::RightHand
+			: AgentEquipmentLayout::EquipmentSlotType::LeftHand);
+
+	if (!item)
+		return;
+
+	switch (item->type->type)
+	{
+		case AEquipmentType::Type::Weapon:
+			// Weapon has no automatic mode
+			if (!item->canFire() || automatic)
+			{
+				break;
+			}
+			selectionState = right ? BattleSelectionState::FireRight : BattleSelectionState::FireLeft;
+			break;
+		case AEquipmentType::Type::Grenade:
+			if (item->primed)
+			{
+				break;
+			}
+			if (automatic)
+			{
+				LogError("Implement auto-priming to detonate on impact and throwing grenade!");
+			}
+			else
+			{
+				LogError("Implement priming interface!");
+			}
+			break;
+		case AEquipmentType::Type::MindBender:
+			// Mind bender does not care for automatic mode
+			LogError("Implement psi interface!");
+			break;
+		case AEquipmentType::Type::MotionScanner:
+			// Motion scanner has no automatic mode
+			if (automatic)
+			{
+				break;
+			}
+			LogError("Implement motion scanner");
+			break;
+		case AEquipmentType::Type::MediKit:
+			// Medikit has no automatic mode
+			if (automatic)
+			{
+				break;
+			}
+			LogError("Implement medikit");
+			break;
+		case AEquipmentType::Type::Teleporter:
+			// Teleporter does not care for automatic mode
+			selectionState = right ? BattleSelectionState::TeleportRight : BattleSelectionState::TeleportLeft;
+			break;
+		// Items that do nothing
+		case AEquipmentType::Type::AlienDetector:
+		case AEquipmentType::Type::Ammo:
+		case AEquipmentType::Type::Armor:
+		case AEquipmentType::Type::CloakingField:
+		case AEquipmentType::Type::DimensionForceField:
+		case AEquipmentType::Type::DisruptorShield:
+		case AEquipmentType::Type::Loot:
+		case AEquipmentType::Type::MindShield:
+		case AEquipmentType::Type::MultiTracker:
+		case AEquipmentType::Type::StructureProbe:
+		case AEquipmentType::Type::VortexAnalyzer:
+			break;
+	}
 }
 
 void BattleView::orderDrop(bool right)
@@ -1796,7 +1881,7 @@ void BattleView::updateItemInfo(bool right)
 		// Draw accuracy
 		if (info.accuracy / 2 > 0)
 		{
-			int accuracy = info.accuracy / 2;
+			int accuracy = info.accuracy;
 			int colorsCount = (int)accuracyColors.size();
 			int y = 93;
 			if (right)
@@ -1874,19 +1959,37 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 			if (p)
 			{
 				a.damageType = p->damage_type;
-				if (a.itemType->type == AEquipmentType::Type::Weapon)
+				switch (a.itemType->type)
 				{
-					a.maxAmmo = p->max_ammo;
-					a.curAmmo = e->ammo;
+					case AEquipmentType::Type::Weapon:
+					case AEquipmentType::Type::Ammo:
+						a.maxAmmo = p->max_ammo;
+						a.curAmmo = e->ammo;
+						break;
+					case AEquipmentType::Type::Armor:
+					case AEquipmentType::Type::DisruptorShield:
+						a.maxAmmo = 30;
+						a.curAmmo = e->ammo * 30 / p->max_ammo;
+						break;
+					case AEquipmentType::Type::Teleporter:
+						a.maxAmmo = 3;
+						a.curAmmo = e->ammo * 3 / p->max_ammo;
+						break;
+					default:
+						break;
 				}
-				// FIXME: Handle selection
-				a.selected = false;
+				a.selected = e->primed 
+					|| (selectionState == BattleSelectionState::FireRight && rightHand)
+					|| (selectionState == BattleSelectionState::FireLeft && !rightHand)
+					|| (selectionState == BattleSelectionState::TeleportRight && rightHand)
+					|| (selectionState == BattleSelectionState::TeleportLeft && !rightHand);
 			}
-			// FIXME: Grenade throw accuracy?
-			if (a.itemType->type == AEquipmentType::Type::Weapon)
-			{
-				a.accuracy = e->getAccuracy(u->current_body_state, u->fire_aiming_mode);
-			}
+			
+			auto accuracy = (float)e->getAccuracy(u->current_body_state, u->current_movement_state, u->fire_aiming_mode, a.itemType->type != AEquipmentType::Type::Weapon) / 100.0f;
+			// erf takes values -2 to 2 and returns -1 to 1, 
+			// we need it to take values 0 to 1 and return 0 to 1
+			// val -> val * 4 - 2, result -> result /2 + 0,5
+			a.accuracy = (int)(((erf(accuracy * 4.0f - 2.0f)) / 2.0f + 0.5f) * 50.0f);
 		}
 	}
 	return a;
@@ -1894,8 +1997,8 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 
 bool AgentEquipmentInfo::operator==(const AgentEquipmentInfo &other) const
 {
-	return (this->accuracy / 2 == other.accuracy / 2 && this->curAmmo == other.curAmmo &&
-	        this->itemType == other.itemType && this->damageType == other.damageType);
+	return (this->accuracy == other.accuracy && this->curAmmo == other.curAmmo &&
+	        this->itemType == other.itemType && this->damageType == other.damageType && this->selected == other.selected);
 }
 
 }; // namespace OpenApoc

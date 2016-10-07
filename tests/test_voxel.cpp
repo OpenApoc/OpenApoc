@@ -3,6 +3,11 @@
 #include "library/rect.h"
 #include "library/voxel.h"
 
+// Vanilla did not use voxel map centres properly, just used
+// voxelmap centre without checking bits
+// Therefore, we should not do it 
+//#define CHECK_VOXELMAP_CENTRE
+
 using namespace OpenApoc;
 
 static void check_voxel(Vec3<int> position, VoxelMap &v, bool expected)
@@ -119,6 +124,7 @@ static void test_voxel(Vec3<int> voxel_size)
 	}
 
 	// The centre of a voxelmap with a single bit should be the same as that bit position
+#ifdef CHECK_VOXELMAP_CENTRE
 	v.calculateCentre();
 	if (v.centre != bit_voxel_position)
 	{
@@ -127,7 +133,8 @@ static void test_voxel(Vec3<int> voxel_size)
 		         bit_voxel_position.z);
 		exit(EXIT_FAILURE);
 	}
-
+#endif
+	
 	// Unset the bit and make sure it's empty again
 	slice->setBit(bit_position, false);
 	for (int z = -16; z < voxel_size.z + 32; z++)
@@ -140,6 +147,8 @@ static void test_voxel(Vec3<int> voxel_size)
 			}
 		}
 	}
+	
+#ifdef CHECK_VOXELMAP_CENTRE
 	v.calculateCentre();
 	if (v.centre != v.size / 2)
 	{
@@ -147,6 +156,7 @@ static void test_voxel(Vec3<int> voxel_size)
 		         v.centre.z);
 		exit(EXIT_FAILURE);
 	}
+#endif
 	// and set the bit again to get back to single-bit-set state
 	slice->setBit(bit_position, true);
 
@@ -196,6 +206,7 @@ static void test_voxel(Vec3<int> voxel_size)
 	}
 
 	// Now check the centre
+#ifdef CHECK_VOXELMAP_CENTRE
 	auto expected_centre = (bit_voxel_position + bit_2_voxel_position) / 2;
 	v.calculateCentre();
 	if (v.centre != expected_centre)
@@ -204,7 +215,7 @@ static void test_voxel(Vec3<int> voxel_size)
 		         v.centre.y, v.centre.z, expected_centre.x, expected_centre.y, expected_centre.z);
 		exit(EXIT_FAILURE);
 	}
-
+#endif
 	// Everything looks good
 	return;
 }

@@ -25,7 +25,8 @@ void CityTileView::eventOccurred(Event *e)
 	if (e->type() == EVENT_KEY_DOWN &&
 	    (e->keyboard().KeyCode == SDLK_1 || e->keyboard().KeyCode == SDLK_2 ||
 	     e->keyboard().KeyCode == SDLK_3 || e->keyboard().KeyCode == SDLK_F6 ||
-	     e->keyboard().KeyCode == SDLK_F7))
+	     e->keyboard().KeyCode == SDLK_F7 || e->keyboard().KeyCode == SDLK_F8 ||
+	     e->keyboard().KeyCode == SDLK_F9))
 	{
 		switch (e->keyboard().KeyCode)
 		{
@@ -53,6 +54,23 @@ void CityTileView::eventOccurred(Event *e)
 				auto imageOffset = -this->getScreenOffset();
 				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
 				    {imageOffset, imageOffset + dpySize}, *this, 11.0f, true));
+				fw().data->writeImage("tileviewvoxels.png", img);
+			}
+			case SDLK_F8:
+			{
+				LogWarning("Writing voxel view to tileviewvoxels.png");
+				auto imageOffset = -this->getScreenOffset();
+				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
+				    {imageOffset, imageOffset + dpySize}, *this, 11.0f, false, true));
+				fw().data->writeImage("tileviewvoxels.png", img);
+			}
+			break;
+			case SDLK_F9:
+			{
+				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
+				auto imageOffset = -this->getScreenOffset();
+				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
+				    {imageOffset, imageOffset + dpySize}, *this, 11.0f, true, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 			break;

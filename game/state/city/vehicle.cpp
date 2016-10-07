@@ -210,6 +210,12 @@ void Vehicle::setupMover()
 	}
 }
 
+Vec3<float> Vehicle::getMuzzleLocation() const
+{
+	return Vec3<float>(position.x, position.y,
+	                   position.z - tileObject->getVoxelOffset().z + (float)type->height / 16.0f);
+}
+
 void Vehicle::update(GameState &state, unsigned int ticks)
 
 {
@@ -468,11 +474,14 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 	return closestEnemy;
 }
 
+
+
 void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
                            sp<TileObjectVehicle> enemyTile)
 {
 	static const std::set<TileObject::Type> scenerySet = {TileObject::Type::Scenery};
 
+	auto firePosition = vehicleTile->getVoxelCentrePosition();
 	auto target = enemyTile->getVoxelCentrePosition();
 	float distance = this->tileObject->getDistanceTo(enemyTile);
 
@@ -486,20 +495,10 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 		if (distance > equipment->getRange())
 			continue;
 		// No sight to target
-		if (vehicleTile->map.findCollision(position, target, scenerySet))
+		if (vehicleTile->map.findCollision(firePosition, target, scenerySet))
 			continue;
-		std::uniform_int_distribution<int> toHit(1, 99);
-		int accuracy = 100 - equipment->type->accuracy + this->getAccuracy();
-		int shotDiff = toHit(state.rng);
 
-		if (shotDiff > accuracy)
-		{
-			float offset = (shotDiff - accuracy) / 25.0f;
-			std::uniform_real_distribution<float> offsetRng(-offset, offset);
-			target.x += offsetRng(state.rng);
-			target.y += offsetRng(state.rng);
-			target.z += offsetRng(state.rng) / 2;
-		}
+		City::accuracyAlgorithmCity(state, firePosition, target, equipment->type->accuracy + this->getAccuracy());
 
 		auto projectile = equipment->fire(target, {&state, enemyTile->getVehicle()});
 		if (projectile)

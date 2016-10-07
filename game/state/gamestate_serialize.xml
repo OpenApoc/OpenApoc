@@ -80,6 +80,7 @@
 		<member>large</member>
 		<member>maxHeight</member>
 		<member>height</member>
+		<member>muzzleZPosition</member>
 		<member>size</member>
 		<member>voxelMaps</member>
 	</object>
@@ -132,6 +133,7 @@
 		<member>equippedSlotType</member>
 		<member>ownerAgent</member>
 		<member>ammo</member>
+		<member>primed</member>
 		<member>recharge_ticks_accumulated</member>
 		<member>readyToFire</member>
 		<member>weapon_fire_ticks_remaining</member>
@@ -448,6 +450,7 @@
 		<member>door</member>
 		<member>brainsuckerHatch</member>
 		<member>teleport</member>
+		<member>genericHitSounds</member>
 		<member>walkSounds</member>
 		<member>objectDropSounds</member>
 		<member>throwSounds</member>
@@ -535,8 +538,9 @@
 		<member>position</member>
 		<member>velocity</member>
 		<member>bounced</member>
-		<member>supported</member>
+		<member>falling</member>
 		<member>ownerInvulnerableTicks</member>
+		<member>ticksUntilTryCollapse</member>
 	</object>
 	<object>
 		<name>BattleMapPart</name>
@@ -544,6 +548,7 @@
 		<member>alternative_type</member>
 		<member>initialPosition</member>
 		<member>currentPosition</member>
+		<member>ticksUntilTryCollapse</member>
 		<member>damaged</member>
 		<member>falling</member>
 		<member>destroyed</member>
@@ -690,6 +695,13 @@
 		<member>icon_sprite</member>
 		<member>ignore_shield</member>
 		<member>modifiers</member>
+		<member>explosive</member>
+		<member>gas</member>
+		<member>flame</member>
+		<member>stun</member>
+		<member>smoke</member>
+		<member>launcher</member>
+		<member>doodadType</member>
 	</object>
 	<object>
 		<name>AEquipmentType</name>
@@ -811,7 +823,6 @@
 		<member>type</member>
 		<member>name</member>
 		<member>manufacturer</member>
-		<member>size</member>
 		<member>image_offset</member>
 		<member>acceleration</member>
 		<member>top_speed</member>
@@ -833,7 +844,10 @@
 		<member>directional_shadow_sprites</member>
 		<member>animation_sprites</member>
 		<member>crashed_sprite</member>
+		<member>height</member>
+		<member>size</member>
 		<member>voxelMaps</member>
+		<member>voxelMapsLOS</member>
 		<member>equipment_layout_slots</member>
 		<member>initial_equipment_list</member>
 	</object>

@@ -2,7 +2,7 @@
 #include "game/state/rules/vehicle_type.h"
 #include "library/sp.h"
 #include "library/strings.h"
-
+#include <glm/gtx/vector_angle.hpp>
 #include <glm/glm.hpp>
 #include <map>
 
@@ -114,4 +114,22 @@ const UString &StateObject<VehicleType>::getId(const GameState &state, const sp<
 	LogError("No vehicle type matching pointer %p", ptr.get());
 	return emptyString;
 }
+
+Vec3<float> VehicleType::getVoxelMapFacing(Vec3<float> direction) const
+{
+
+	float closestAngle = FLT_MAX;
+	Vec3<float> closestFacing;
+	for (auto &p : size)
+	{
+		float angle = glm::angle(glm::normalize(p.first), glm::normalize(direction));
+		if (angle < closestAngle)
+		{
+			closestAngle = angle;
+			closestFacing = p.first;
+		}
+	}
+	return closestFacing;
+}
+
 }; // namespace OpenApoc

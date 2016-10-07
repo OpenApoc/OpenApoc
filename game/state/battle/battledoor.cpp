@@ -1,4 +1,7 @@
 #include "game/state/battle/battledoor.h"
+
+#include "game/state/tileview/tileobject_battleunit.h"
+#include "game/state/battle/battleunit.h"
 #include "framework/framework.h"
 #include "framework/sound.h"
 #include "game/state/battle/battle.h"
@@ -85,22 +88,6 @@ void BattleDoor::setDoorState(bool open)
 		}
 		i->tileObject->getOwningTile()->updateBattlescapeParameters();
 		// i->tileObject->setPosition(currentPosition); // <-- don't need to do that?
-	}
-}
-
-void BattleDoor::collapse()
-{
-	if (!operational)
-	{
-		return;
-	}
-	for (auto &s : mapParts)
-	{
-		auto i = s.lock();
-		if (i)
-		{
-			i->tryCollapse(true);
-		}
 	}
 }
 

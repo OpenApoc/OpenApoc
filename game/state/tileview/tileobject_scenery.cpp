@@ -63,7 +63,7 @@ sp<Scenery> TileObjectScenery::getOwner() const
 	return s;
 }
 
-sp<VoxelMap> TileObjectScenery::getVoxelMap(Vec3<int>) const
+sp<VoxelMap> TileObjectScenery::getVoxelMap(Vec3<int>, bool) const
 {
 	return this->getOwner()->type->voxelMap;
 }

@@ -496,7 +496,7 @@ std::list<sp<BattleItem>> Tile::getItems()
 		if (o->getType() == TileObject::Type::Item)
 		{
 			auto item = std::static_pointer_cast<TileObjectBattleItem>(o)->getItem();
-			if (item->supported)
+			if (!item->falling)
 			{
 				result.push_back(item);
 			}
@@ -519,7 +519,7 @@ std::list<sp<BattleItem>> Tile::getItems()
 				if (o->getType() == TileObject::Type::Item)
 				{
 					auto item = std::static_pointer_cast<TileObjectBattleItem>(o)->getItem();
-					if (item->supported)
+					if (!item->falling)
 					{
 						result.push_back(item);
 					}
@@ -661,7 +661,7 @@ unsigned int TileMap::getLayer(TileObject::Type type) const
 	return 0;
 }
 
-unsigned int TileMap::getLayerCount() const { return this->layerMap.size(); }
+unsigned int TileMap::getLayerCount() const { return (unsigned)this->layerMap.size(); }
 
 bool TileMap::tileIsValid(Vec3<int> tile) const
 {
@@ -672,7 +672,7 @@ bool TileMap::tileIsValid(Vec3<int> tile) const
 }
 
 sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &transform,
-                                 float maxZ, bool fast) const
+                                 float maxZ, bool fast, bool los) const
 {
 	auto img = mksp<RGBImage>(viewRect.size());
 	std::map<sp<TileObject>, Colour> objectColours;
@@ -699,7 +699,7 @@ sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &
 			auto topPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, maxZ - 0.01f);
 			auto bottomPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, 0.0f);
 
-			auto collision = this->findCollision(topPos, bottomPos, {}, false, true);
+			auto collision = this->findCollision(topPos, bottomPos, {}, los, true);
 			if (collision)
 			{
 				if (objectColours.find(collision.obj) == objectColours.end())

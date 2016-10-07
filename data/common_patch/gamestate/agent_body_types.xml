@@ -49,13 +49,23 @@
         <height>
           <entry>
             <key>Standing</key>
-            <value>32</value>
+            <value>40</value>
           </entry>
           <entry>
             <key>Downed</key>
             <value>8</value>
           </entry>
         </height>
+		<muzzleZPosition>
+          <entry>
+            <key>Standing</key>
+            <value>32</value>
+          </entry>
+          <entry>
+            <key>Downed</key>
+            <value>8</value>
+          </entry>
+        </muzzleZPosition>
         <size>
           <entry>
             <key>Standing</key>

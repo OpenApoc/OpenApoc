@@ -1,6 +1,10 @@
 #pragma once
-
+#ifndef _USE_MATH_DEFINES
+#define _USE_MATH_DEFINES
+#endif
 #include "game/state/gametime.h"
+#include "game/state/battle/battleunit.h"
+#include "game/state/city/vehicle.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -84,7 +88,7 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	StateRef<DoodadType> doodadType;
 	StateRef<DamageType> damageType;
 
-	int ownerInvulnerableTicks = 0;
+	unsigned int ownerInvulnerableTicks = 0;
 
 	Vec3<float> velocityScale;
 

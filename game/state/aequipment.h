@@ -35,13 +35,22 @@ class AEquipment
 	// Ammunition for weapons, protection for armor, charge for items
 	int ammo = 0;
 
+	// Explosives parameters
+	bool primed = false;
+
+	// Ticks until recharge rate is added to ammo for anything that recharges
 	unsigned int recharge_ticks_accumulated = 0;
 
+	// Weapon parameters
+
+	// Weapon is ready to fire now
 	bool readyToFire = false;
+	// Ticks until weapon is ready to fire
 	unsigned int weapon_fire_ticks_remaining = 0;
+	// Aiming mode for the weapon
 	BattleUnit::FireAimingMode aimingMode = BattleUnit::FireAimingMode::Aimed;
 
-	int getAccuracy(AgentType::BodyState bodyState, BattleUnit::FireAimingMode fireMode);
+	int getAccuracy(AgentType::BodyState bodyState, AgentType::MovementState movementState, BattleUnit::FireAimingMode fireMode, bool thrown = false);
 
 	bool isFiring() { return weapon_fire_ticks_remaining > 0 || readyToFire; };
 	bool canFire(float range = 0.0f);
@@ -61,6 +70,9 @@ class AEquipment
 	// actually used.
 	int reload(int ammoAvailable);
 	*/
+	// Wether this weapon works like brainsucker launcher, throwing it's ammunition instead of firing a projectile
+	bool isLauncher();
 	sp<Projectile> fire(Vec3<float> targetPosition, StateRef<BattleUnit> targetUnit = nullptr);
+	void launch(Vec3<float> &targetPosition, Vec3<float> &velocity);
 };
 } // namespace OpenApoc

@@ -60,9 +60,10 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 			return false;
 		}
 
-		if (v.type->size.x > 1)
-		{
-		}
+		// FIXME: Check for big vehicles
+		// if (v.type->size.x > 1)
+		//{
+		//}
 
 		for (auto obj : to->ownedObjects)
 		{
@@ -127,9 +128,17 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 		}
 		Vec3<int> toPos = to->position;
 
-		for (int y = 0; y < v.type->size.y; y++)
+		int xMax = 0;
+		int yMax = 0;
+		for (auto &s : v.type->size)
 		{
-			for (int x = 0; x < v.type->size.x; x++)
+			xMax = std::max(xMax, s.second.x);
+			yMax = std::max(yMax, s.second.y);
+		}
+
+		for (int y = 0; y < yMax; y++)
+		{
+			for (int x = 0; x < xMax; x++)
 			{
 				for (auto obj : map.getTile(x + toPos.x, y + toPos.y, toPos.z)->ownedObjects)
 				{
@@ -1067,8 +1076,8 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 									xPos += vec.x;
 									yPos += vec.y;
 								}
-								xPos /= rooftop.size();
-								yPos /= rooftop.size();
+								xPos /= (int)rooftop.size();
+								yPos /= (int)rooftop.size();
 								// ensure object is within roof
 								if (rooftop.find({xPos, yPos}) == rooftop.end())
 								{

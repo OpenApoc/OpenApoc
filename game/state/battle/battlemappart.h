@@ -28,6 +28,7 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	Vec3<int> initialPosition;
 	Vec3<float> currentPosition;
 
+	unsigned int ticksUntilTryCollapse = 0;
 	bool damaged = false;
 	bool falling = false;
 	bool destroyed = false;
@@ -38,15 +39,16 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	int getAnimationFrame();
 	int getMaxFrames();
 
-	void handleCollision(GameState &state, Collision &c);
+	// Returns true if sound and doodad were handled by it
+	bool handleCollision(GameState &state, Collision &c);
+	// Check if we are still supported, and collapse if not
+	void tryCollapse();
+
+	void ceaseDoorFunction();
 
 	void update(GameState &state, unsigned int ticks);
-	// Check if we are still supported, and collapse if not
-	void tryCollapse(bool force = false);
-	// Cease providing or requiring support
-	void ceaseSupportProvision();
-	// Find map parts that support this one and set "supported" flag
-	void findSupport();
+	// Queue attempt to collapse
+	void queueTryCollapse();
 
 	bool isAlive() const;
 
@@ -54,9 +56,15 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 
 	// Following members are not serialized, but rather are set in initBattle method
 
-	bool supported = false;
 	sp<TileObjectBattleMapPart> tileObject;
 	std::list<wp<BattleItem>> supportedItems;
 	std::list<wp<BattleMapPart>> supportedParts;
+
+  private:
+	// Find map parts that support this one and set "supported" flag
+	bool findSupport();
+	// Cease providing or requiring support
+	void ceaseSupportProvision();
+
 };
 }

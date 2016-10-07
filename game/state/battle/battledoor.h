@@ -34,8 +34,6 @@ class BattleDoor : public StateObject<BattleDoor>, public std::enable_shared_fro
 
 	void update(GameState &state, unsigned int ticks);
 
-	void collapse();
-
 	void playDoorSound();
 
 	~BattleDoor() = default;

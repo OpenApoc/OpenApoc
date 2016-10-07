@@ -1,4 +1,6 @@
+#ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
+#endif
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "framework/renderer.h"
 #include "game/state/battle/battleunit.h"
@@ -203,11 +205,7 @@ void TileObjectBattleUnit::setPosition(Vec3<float> newPosition)
 	auto maxHeight = std::max(u->agent->type->bodyType->height[u->current_body_state],
 	                          u->agent->type->bodyType->height[u->target_body_state]);
 	setBounds({size.x, size.y, (float)maxHeight / 40.0f});
-	// It would be appropriate to set bounds based on unit height, like this:
-	//   setBounds({ size.x, size.y, (float)u->agent->type->bodyType->maxHeight / 40.0f });
-	// However, this requires re-aligning unit sprites according to their height,
-	// because vanilla has same offsets for all units regardless of their height
-	// Therefore, it's much easier to just leave it this way
+
 	if (u->isLarge())
 	{
 		centerOffset = {0.0f, 0.0f, 1.0f};
@@ -307,7 +305,7 @@ void TileObjectBattleUnit::addToDrawnTiles(Tile *tile)
 		// Units are drawn in the topmost tile their head pops into
 		// Otherwise, they can only be drawn in it if it's their owner tile
 		if (maxCoords.z * 1000 + maxCoords.x + maxCoords.y < z * 1000 + x + y &&
-		    u->position.z + (float)u->getCurrentHeight() / 40.0f >= (float)z)
+		    u->position.z + (float)u->getCurrentHeight() / 40.0f >= (float)z + 0.25f)
 		{
 			tile = intersectingTile;
 			maxCoords = {x, y, z};
@@ -326,19 +324,24 @@ TileObjectBattleUnit::TileObjectBattleUnit(TileMap &map, sp<BattleUnit> unit)
 
 Vec3<float> TileObjectBattleUnit::getVoxelCentrePosition() const
 {
+	// We could do all the following, but since we always aim at voxelmap's center,
+	// regardless of which bits are filled or not (only accounting for height)
+	// it is enough to just offset center according to voxelmap's height
+	// Leaving the code here though as it may be useful later
+	/*
 	auto u = this->getUnit();
 	auto size = u->agent->type->bodyType->size.at(u->current_body_state).at(u->facing);
 
 	Vec3<int> voxelCentre = {0, 0, 0};
 	for (int x = 0; x < size.x; x++)
 	{
-		for (int y = 0; y < size.y; y++)
-		{
-			for (int z = 0; z < size.z; z++)
-			{
-				voxelCentre += getVoxelMap({x, y, z})->centre;
-			}
-		}
+	    for (int y = 0; y < size.y; y++)
+	    {
+	        for (int z = 0; z < size.z; z++)
+	        {
+	            voxelCentre += getVoxelMap({x, y, z})->centre;
+	        }
+	    }
 	}
 	voxelCentre /= size.x * size.y * size.z;
 
@@ -347,9 +350,15 @@ Vec3<float> TileObjectBattleUnit::getVoxelCentrePosition() const
 	return Vec3<float>(objPos.x + (float)voxelCentre.x / map.voxelMapSize.x,
 	                   objPos.y + (float)voxelCentre.y / map.voxelMapSize.y,
 	                   objPos.z + (float)voxelCentre.z / map.voxelMapSize.z);
+	*/
+
+	// Simple version:
+	auto objPos = this->getCenter();
+	return Vec3<float>(objPos.x, objPos.y, objPos.z - getVoxelOffset().z +
+	                                           (float)getUnit()->getCurrentHeight() / 2.0f / 40.0f);
 }
 
-sp<VoxelMap> TileObjectBattleUnit::getVoxelMap(Vec3<int> mapIndex) const
+sp<VoxelMap> TileObjectBattleUnit::getVoxelMap(Vec3<int> mapIndex, bool) const
 {
 	auto u = this->getUnit();
 	auto size = u->agent->type->bodyType->size.at(u->current_body_state).at(u->facing);

@@ -21,7 +21,7 @@ class TileObjectScenery : public TileObject
 	sp<Scenery> getOwner() const;
 
 	bool hasVoxelMap() override { return true; }
-	sp<VoxelMap> getVoxelMap(Vec3<int> mapIndex) const override;
+	sp<VoxelMap> getVoxelMap(Vec3<int> mapIndex, bool) const override;
 	Vec3<float> getPosition() const override;
 	float getZOrder() const override;
 

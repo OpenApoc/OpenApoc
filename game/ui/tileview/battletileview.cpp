@@ -188,7 +188,8 @@ BattleTileView::~BattleTileView() = default;
 void BattleTileView::eventOccurred(Event *e)
 {
 	if (e->type() == EVENT_KEY_DOWN &&
-	    (e->keyboard().KeyCode == SDLK_F6 || e->keyboard().KeyCode == SDLK_F7))
+	    (e->keyboard().KeyCode == SDLK_F6 || e->keyboard().KeyCode == SDLK_F7 ||
+	     e->keyboard().KeyCode == SDLK_F8 || e->keyboard().KeyCode == SDLK_F9))
 	{
 		switch (e->keyboard().KeyCode)
 		{
@@ -207,6 +208,23 @@ void BattleTileView::eventOccurred(Event *e)
 				auto imageOffset = -this->getScreenOffset();
 				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
 				    {imageOffset, imageOffset + dpySize}, *this, currentZLevel, true));
+				fw().data->writeImage("tileviewvoxels.png", img);
+			}
+			case SDLK_F8:
+			{
+				LogWarning("Writing voxel view to tileviewvoxels.png");
+				auto imageOffset = -this->getScreenOffset();
+				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
+				    {imageOffset, imageOffset + dpySize}, *this, currentZLevel, false, true));
+				fw().data->writeImage("tileviewvoxels.png", img);
+			}
+			break;
+			case SDLK_F9:
+			{
+				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
+				auto imageOffset = -this->getScreenOffset();
+				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
+				    {imageOffset, imageOffset + dpySize}, *this, currentZLevel, true, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 			break;
@@ -419,7 +437,7 @@ void BattleTileView::render()
 					if (selectedTilePosition.z == z)
 					{
 						drawPathPreview = previewedPathCost != -1;
-						auto u = selTileOnCurLevel->getUnitIfPresent();
+						auto u = selTileOnCurLevel->getUnitIfPresent(true);
 						if (u)
 						{
 							// FIXME: Check if player can see unit, if not - do not change cursor!
@@ -582,7 +600,7 @@ void BattleTileView::render()
 				}
 			}
 
-			// Draw next level, units whose "legs" are below "zTo" and items moving
+			// Draw next level, units whose "legs" are below "zTo", projectiles and items moving
 			for (int z = zTo; z < maxZDraw && z < zTo + 1; z++)
 			{
 				int currentLevel = z - currentZLevel + 1;
@@ -657,9 +675,13 @@ void BattleTileView::render()
 								}
 								if (obj->getType() == TileObject::Type::Item)
 								{
-									draw = !std::static_pointer_cast<TileObjectBattleItem>(obj)
+									draw = std::static_pointer_cast<TileObjectBattleItem>(obj)
 									            ->getItem()
-									            ->supported;
+									            ->falling;
+								}
+								if (obj->getType() == TileObject::Type::Projectile)
+								{
+									draw = true;
 								}
 								if (draw)
 								{
@@ -681,23 +703,28 @@ void BattleTileView::render()
 				static const Vec2<float> offset = {-13.0f, -19.0f};
 				static const Vec2<float> offsetRunning = {0.0f, 0.0f};
 				static const Vec2<float> offsetBehavior = {0.0f, 0.0f};
-				static const Vec2<float> offsetBleed = {-5.0f, 0.0f};
+				static const Vec2<float> offsetBleed = {0.0f, 0.0f};
 				static const Vec2<float> offsetTU = {13.0f, -5.0f};
 				static const Vec2<float> offsetHealth = {6.0f, 2.0f};
+
+				// Health from 0 to 15, where 15 = 100%, 14 = less than 99.9% and 0 = 0%+
+				int health = obj.first->agent->modified_stats.health * 15 /
+					obj.first->agent->current_stats.health;
+
+				if (health < 0)
+					continue;
 
 				Vec2<float> pos =
 				    tileToOffsetScreenCoords(
 				        obj.first->getPosition() +
-				        Vec3<float>{0.0f, 0.0f, obj.first->getCurrentHeight() * 1.5f / 40.0f}) +
+				        Vec3<float>{0.0f, 0.0f,
+				                    (obj.first->getCurrentHeight() - 4.0f) * 1.5f / 40.0f}) +
 				    offset;
 
 				// Selection arrow
 				r.draw(obj.second ? activeUnitSelectionArrow[obj.first->squadNumber]
 				                  : inactiveUnitSelectionArrow[obj.first->squadNumber],
 				       pos);
-				// Health from 0 to 15, where 15 = 100%, 14 = less than 99.9% and 0 = 0%+
-				int health = obj.first->agent->modified_stats.health * 15 /
-				             obj.first->agent->current_stats.health;
 				r.draw(arrowHealthBars[health], pos + offsetHealth);
 				// Behavior
 				r.draw(behaviorUnitSelectionUnderlay[obj.first->behavior_mode],
@@ -717,11 +744,11 @@ void BattleTileView::render()
 				{
 					if (obj.first->isHealing)
 					{
-						r.draw(bleedingIcon, pos + offsetBleed);
+						r.draw(healingIcon, pos + offsetBleed);
 					}
 					else
 					{
-						r.draw(healingIcon, pos + offsetBleed);
+						r.draw(bleedingIcon, pos + offsetBleed);
 					}
 				}
 			}
