@@ -200,7 +200,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisation> org,
                                             StateRef<AgentType> type) const
 {
-	UString ID = format("%s%u", Agent::getPrefix().cStr(), this->num_created);
+	UString ID = Agent::generateObjectID(state);
 
 	auto agent = mksp<Agent>();
 
@@ -254,7 +254,6 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	agent->modified_stats = s;
 
 	// Everything worked, add agent to state (before we add his equipment)
-	this->num_created++;
 	state.agents[ID] = agent;
 
 	// Fill initial equipment list

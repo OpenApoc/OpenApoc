@@ -226,7 +226,7 @@ sp<Doodad> Battle::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 sp<BattleUnit> Battle::addUnit(GameState &state)
 {
 	auto unit = mksp<BattleUnit>();
-	UString id = format("%s%d", BattleUnit::getPrefix(), (int)units.size());
+	UString id = BattleUnit::generateObjectID(state);
 	unit->id = id;
 	unit->strategyImages = state.battle_common_image_list->strategyImages;
 	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
@@ -237,7 +237,7 @@ sp<BattleUnit> Battle::addUnit(GameState &state)
 sp<BattleDoor> Battle::addDoor(GameState &state)
 {
 	auto door = mksp<BattleDoor>();
-	UString id = format("%s%d", BattleDoor::getPrefix(), (int)doors.size());
+	UString id = BattleDoor::generateObjectID(state);
 	door->id = id;
 	door->doorSound = state.battle_common_sample_list->door;
 	doors[id] = door;

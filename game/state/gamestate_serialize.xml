@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_gamestate>
-	<object>
+	<object external="true">
 		<name>GameState</name>
-		<member>lastVehicle</member>
 		<member type="Section">vehicle_types</member>
 		<member type="Section">organisations</member>
 		<member type="Section">facility_types</member>
@@ -28,6 +27,7 @@
 		<member>initial_base_agent_equipment</member>
 		<member>current_city</member>
 		<member>current_base</member>
+		<member>objectIdCount</member>
 		<member type="Section">battle_common_image_list</member>
 		<member type="Section">battle_common_sample_list</member>
 		<member>player</member>
@@ -48,7 +48,7 @@
 		<member type="Section">equipment_sets_by_level</member>
 		<member>messages</member>
 	</object>
-	<object>
+	<object external="true">
 		<name>BattleMapTileset</name>
 		<member>map_part_types</member>
 	</object>
@@ -66,11 +66,9 @@
 		<name>ResearchState</name>
 		<member>topics</member>
 		<member>labs</member>
-		<member>num_labs_created</member>
 	</object>
 	<object>
 		<name>AgentGenerator</name>
-		<member>num_created</member>
 		<member>first_names</member>
 		<member>second_names</member>
 	</object>
@@ -415,7 +413,7 @@
 		<member>sectorTilesName</member>
 		<member>tiles</member>
 	</object>
-	<object>
+	<object external="true">
 		<name>BattleMapSectorTiles</name>
 		<member>los_blocks</member>
 		<member>loot_locations</member>
@@ -435,7 +433,7 @@
 		<member>spawn_large_units</member>
 		<member>spawn_walking_units</member>
 	</object>
-	<object>
+	<object external="true">
 		<name>BattleUnitImagePack</name>
 		<member>image_offset</member>
 		<member>images</member>
@@ -458,7 +456,7 @@
 		<member>throwSounds</member>
 		<member>explosionSoundMap</member>
 	</object>
-	<object>
+	<object external="true">
 		<name>BattleUnitAnimationPack</name>
 		<member type="Section">standart_animations</member>
 		<member type="Section">hand_state_animations</member>

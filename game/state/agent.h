@@ -307,8 +307,6 @@ class AgentGenerator
 {
   public:
 	AgentGenerator() = default;
-	// Magic number to make unique agent IDs
-	mutable unsigned int num_created = 0;
 	// FIXME: I think there should be some kind of 'nationality' stuff going on here
 	std::map<AgentType::Gender, std::list<UString>> first_names;
 	std::list<UString> second_names;

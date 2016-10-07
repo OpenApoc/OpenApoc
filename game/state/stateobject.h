@@ -14,6 +14,8 @@ namespace OpenApoc
 {
 class GameState;
 
+uint64_t getNextObjectID(GameState &state, const UString &objectPrefix);
+
 template <typename T> class StateRefMap : public std::map<UString, sp<T>>
 {
 };
@@ -29,6 +31,11 @@ template <typename T> class StateObject
 
 	static const UString &getPrefix();
 	static const UString &getTypeName();
+	static UString generateObjectID(GameState &state)
+	{
+		auto id = getNextObjectID(state, getPrefix());
+		return getPrefix() + Strings::fromU64(id);
+	}
 };
 
 template <typename T> class StateRef

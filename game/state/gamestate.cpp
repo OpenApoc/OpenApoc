@@ -204,7 +204,7 @@ void GameState::startGame()
 
 			// Vehicle::equipDefaultEquipment uses the state reference from itself, so make sure the
 			// vehicle table has the entry before calling it
-			UString vID = format("%s%d", Vehicle::getPrefix(), lastVehicle++);
+			UString vID = Vehicle::generateObjectID(*this);
 			this->vehicles[vID] = v;
 
 			v->currentlyLandedBuilding->landed_vehicles.insert({this, vID});
@@ -262,7 +262,7 @@ void GameState::fillPlayerStartingProperty()
 		v->homeBuilding = {this, bld};
 		v->owner = this->getPlayer();
 		v->health = type->health;
-		UString vID = format("%s%d", Vehicle::getPrefix(), lastVehicle++);
+		UString vID = Vehicle::generateObjectID(*this);
 		this->vehicles[vID] = v;
 		v->currentlyLandedBuilding->landed_vehicles.insert({this, vID});
 		v->equipDefaultEquipment(*this);
@@ -461,7 +461,7 @@ void GameState::updateEndOfDay()
 
 			// Vehicle::equipDefaultEquipment uses the state reference from itself, so make sure the
 			// vehicle table has the entry before calling it
-			UString vID = format("%s%d", Vehicle::getPrefix(), lastVehicle++);
+			UString vID = Vehicle::generateObjectID(*this);
 			this->vehicles[vID] = v;
 
 			v->equipDefaultEquipment(*this);
@@ -509,7 +509,7 @@ void GameState::updateEndOfWeek()
 					// Vehicle::equipDefaultEquipment uses the state reference from itself, so make
 					// sure the
 					// vehicle table has the entry before calling it
-					UString vID = format("%s%d", Vehicle::getPrefix(), lastVehicle++);
+					UString vID = Vehicle::generateObjectID(*this);
 					this->vehicles[vID] = v;
 
 					v->equipDefaultEquipment(*this);
@@ -552,6 +552,12 @@ void GameState::logEvent(GameEvent *ev)
 	}
 	// TODO: Other event types
 	messages.emplace_back(EventMessage{gameTime, ev->message(), location});
+}
+
+uint64_t getNextObjectID(GameState &state, const UString &objectPrefix)
+{
+	std::lock_guard<std::mutex> l(state.objectIdCountLock);
+	return state.objectIdCount[objectPrefix]++;
 }
 
 }; // namespace OpenApoc

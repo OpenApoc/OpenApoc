@@ -385,8 +385,7 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 										v->homeBuilding = {state.get(), base.second->building};
 										v->owner = state->getPlayer();
 										v->health = (int)type->health;
-										UString vID = format("%s%d", Vehicle::getPrefix(),
-										                     state->lastVehicle++);
+										UString vID = Vehicle::generateObjectID(*state);
 										state->vehicles[vID] = v;
 										v->currentlyLandedBuilding->landed_vehicles.insert(
 										    {state.get(), vID});
