@@ -316,4 +316,58 @@ template <> const UString &StateObject<City>::getId(const GameState &state, cons
 	return emptyString;
 }
 
+void City::accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition, Vec3<float> &target, int accuracy)
+{
+	// FIXME: Prettify this code
+	int projx = firePosition.x;
+	int projy = firePosition.y;
+	int projz = firePosition.z;
+	int vehx = target.x;
+	int vehy = target.y;
+	int vehz = target.z;
+	int inverseAccuracy = 100 - accuracy;
+
+	float delta_x = (float)(vehx - projx)* inverseAccuracy / 1000.0f;
+	float delta_y = (float)(vehy - projy)* inverseAccuracy / 1000.0f;
+	float delta_z = (float)(vehz - projz) * inverseAccuracy / 1000.0f;
+
+	float length_vector = 1.0f /
+		std::sqrt(delta_x * delta_x + delta_y * delta_y + delta_z * delta_z);
+
+	std::vector<float> rnd(3);
+	while (true)
+	{
+		rnd[1] = (float)randBoundsExclusive(state.rng, 0, 100000) / 100000.0f;
+		rnd[2] = (float)randBoundsExclusive(state.rng, 0, 100000) / 100000.0f;
+		rnd[0] = rnd[1] * rnd[1] + rnd[2] * rnd[2];
+		if (rnd[0] > 0.0f && rnd[0] < 1.0f)
+		{
+			break;
+		}
+	}
+
+	// Misses can go both ways on the axis
+	float k1 = (2 * randBoundsInclusive(state.rng, 0, 1) - 1) * rnd[1] * std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
+	float k2 = (2 * randBoundsInclusive(state.rng, 0, 1) - 1) * rnd[2] * std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
+
+	float x1 = length_vector*delta_x*delta_z*k1;
+	float y1 = length_vector*delta_y*delta_z*k1;
+	float z1 = -length_vector*(delta_x*delta_x + delta_y*delta_y)*k1;
+
+	float x2 = -delta_y*k2;
+	float y2 = delta_x*k2;
+	float z2 = 0;
+
+	float x3 = (x1 + x2);
+	float y3 = (y1 + y2);
+	float z3 = ((z1 + z2) / 3.0f);
+	x3 = x3 < 0 ? ceilf(x3) : floorf(x3);
+	y3 = y3 < 0 ? ceilf(y3) : floorf(y3);
+	z3 = z3 < 0 ? ceilf(z3) : floorf(z3);
+	
+	target.x += x3;
+	target.y += y3;
+	target.z += z3;
+}
+
 } // namespace OpenApoc

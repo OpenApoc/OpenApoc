@@ -695,6 +695,13 @@ void BattleTileView::render()
 				static const Vec2<float> offsetTU = {13.0f, -5.0f};
 				static const Vec2<float> offsetHealth = {6.0f, 2.0f};
 
+				// Health from 0 to 15, where 15 = 100%, 14 = less than 99.9% and 0 = 0%+
+				int health = obj.first->agent->modified_stats.health * 15 /
+					obj.first->agent->current_stats.health;
+
+				if (health < 0)
+					continue;
+
 				Vec2<float> pos =
 				    tileToOffsetScreenCoords(
 				        obj.first->getPosition() +
@@ -706,9 +713,6 @@ void BattleTileView::render()
 				r.draw(obj.second ? activeUnitSelectionArrow[obj.first->squadNumber]
 				                  : inactiveUnitSelectionArrow[obj.first->squadNumber],
 				       pos);
-				// Health from 0 to 15, where 15 = 100%, 14 = less than 99.9% and 0 = 0%+
-				int health = obj.first->agent->modified_stats.health * 15 /
-				             obj.first->agent->current_stats.health;
 				r.draw(arrowHealthBars[health], pos + offsetHealth);
 				// Behavior
 				r.draw(behaviorUnitSelectionUnderlay[obj.first->behavior_mode],

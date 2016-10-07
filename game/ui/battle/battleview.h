@@ -109,6 +109,7 @@ class BattleView : public BattleTileView
 
 	void orderMove(Vec3<int> target, bool strafe = false, bool demandGiveWay = false);
 	void orderTurn(Vec3<int> target);
+	void orderUse(bool right, bool automatic);
 	void orderDrop(bool right);
 	void orderThrow(Vec3<int> target, bool right);
 	void orderTeleport(Vec3<int> target, bool right);

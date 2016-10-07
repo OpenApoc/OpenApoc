@@ -61,6 +61,7 @@
 #define DT_EXPLOSIVE 4
 #define DT_STUNGUN 5
 #define DT_EXPLOSIVE2 15
+#define DT_BRAINSUCKER 18
 
 namespace OpenApoc
 {
@@ -151,6 +152,9 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 				break;
 			case DT_EXPLOSIVE2:
 				d->explosive = true;
+				break;
+			case DT_BRAINSUCKER:
+				d->launcher = true;
 				break;
 		}
 

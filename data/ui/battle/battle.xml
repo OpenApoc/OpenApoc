@@ -274,7 +274,7 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <position x="201" y="101"/>
         <size width="26" height="25"/>
         <image/>
-        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:163:xcom3/tacdata/tactical.pal</imagechecked>
+        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:163:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
 	  <checkbox id="BUTTON_RIGHT_HAND_THROW">
         <position x="228" y="101"/>
@@ -304,7 +304,7 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <position x="411" y="101"/>
         <size width="26" height="25"/>
         <image/>
-        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:163:xcom3/tacdata/tactical.pal</imagechecked>
+        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:163:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
 	  <checkbox id="BUTTON_LEFT_HAND_THROW">
         <position x="385" y="101"/>

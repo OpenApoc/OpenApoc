@@ -135,6 +135,7 @@
 		<member>equippedSlotType</member>
 		<member>ownerAgent</member>
 		<member>ammo</member>
+		<member>primed</member>
 		<member>recharge_ticks_accumulated</member>
 		<member>readyToFire</member>
 		<member>weapon_fire_ticks_remaining</member>
@@ -699,6 +700,7 @@
 		<member>flame</member>
 		<member>stun</member>
 		<member>smoke</member>
+		<member>launcher</member>
 		<member>doodadType</member>
 	</object>
 	<object>

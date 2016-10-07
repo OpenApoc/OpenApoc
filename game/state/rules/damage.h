@@ -36,6 +36,8 @@ class DamageType : public StateObject<DamageType>
 	// True = deals no health damage, but stun damage instead, which is fixed value of 2
 	// also, blocks vision
 	bool smoke = false;
+	// True = when fired from weapon will throw ammunition to target location instead of firing properly	
+	bool launcher = false;
 
 	// stun lasts 1 to 2
 	// smoke lasts 6 to 10

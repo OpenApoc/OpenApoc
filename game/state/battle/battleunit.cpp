@@ -627,8 +627,6 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	if (isFatallyWounded() && !isDead())
 	{
 		bool unconscious = isUnconscious();
-		// FIXME: Get a proper fatal wound scale
-		int TICKS_PER_FATAL_WOUND_DAMAGE = TICKS_PER_SECOND;
 		woundTicksAccumulated += ticks;
 		while (woundTicksAccumulated > TICKS_PER_FATAL_WOUND_DAMAGE)
 		{
@@ -866,6 +864,14 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		unsigned int handTicksRemaining = ticks;
 		unsigned int turnTicksRemaining = ticks;
 
+		// Unconscious units cannot move their bodies, hands or turn, they can only animate body
+		if (!isConscious())
+		{
+			moveTicksRemaining = 0;
+			handTicksRemaining = 0;
+			turnTicksRemaining = 0;
+		}
+
 		unsigned int lastMoveTicksRemaining = 0;
 		unsigned int lastBodyTicksRemaining = 0;
 		unsigned int lastHandTicksRemaining = 0;
@@ -954,8 +960,6 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						AgentType::BodyState nextState = AgentType::BodyState::Downed;
 						if (getNextBodyState(state, nextState))
 						{
-							LogWarning("%d %d", firing_animation_ticks_remaining,
-							           hand_animation_ticks_remaining);
 							beginBodyStateChange(nextState);
 						}
 					}
@@ -1247,6 +1251,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 
 	static const Vec3<float> offsetTile = {0.5f, 0.5f, 0.0f};
 	static const Vec3<float> offsetTileGround = {0.5f, 0.5f, 10.0f / 40.0f};
+	Vec3<float> muzzleLocation = getMuzzleLocation();
 	Vec3<float> targetPosition;
 	switch (targetingMode)
 	{
@@ -1256,7 +1261,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		case TargetingMode::TileCenter:
 		{
 			// Shoot parallel to the ground
-			float unitZ = getMuzzleLocation().z;
+			float unitZ = muzzleLocation.z;
 			unitZ -= (int)unitZ;
 			targetPosition = (Vec3<float>)targetTile + offsetTile + Vec3<float>{0.0f, 0.0f, unitZ};
 			break;
@@ -1350,7 +1355,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				// Check if we are in range
 				if (canFire)
 				{
-					float distanceToTarget = glm::length(getMuzzleLocation() - targetPosition);
+					float distanceToTarget = glm::length(muzzleLocation - targetPosition);
 					if (weaponRight && !weaponRight->canFire(distanceToTarget))
 					{
 						weaponRight = nullptr;
@@ -1416,7 +1421,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			// Check if facing the right way
 			if (firingWeapon)
 			{
-				auto targetVector = targetPosition - getMuzzleLocation();
+				auto targetVector = targetPosition - muzzleLocation;
 				targetVector = {targetVector.x, targetVector.y, 0.0f};
 				// Target must be within frontal arc
 				if (glm::angle(glm::normalize(targetVector),
@@ -1428,9 +1433,17 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			// If still OK - fire!
 			if (firingWeapon)
 			{
-				auto p = firingWeapon->fire(targetPosition, targetUnit);
-				map.addObjectToMap(p);
-				state.current_battle->projectiles.insert(p);
+				if (firingWeapon->isLauncher())
+				{
+					LogError("Implement launchers");
+				}
+				else
+				{
+					Battle::accuracyAlgorithmBattle(state, muzzleLocation, targetPosition, firingWeapon->getAccuracy(current_body_state, current_movement_state, fire_aiming_mode));
+					auto p = firingWeapon->fire(targetPosition, targetUnit);
+					map.addObjectToMap(p);
+					state.current_battle->projectiles.insert(p);
+				}
 				displayedItem = firingWeapon->type;
 				setHandState(AgentType::HandState::Firing);
 				weaponFired = true;

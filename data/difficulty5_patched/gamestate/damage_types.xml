@@ -219,6 +219,7 @@
         <id>DAMAGETYPE_BRAINSUCKER</id>
         <name>Brainsucker</name>
         <icon_sprite>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:32:xcom3/tacdata/tactical.pal</icon_sprite>
+        <launcher>true</launcher>
       </sp>
     </value>
   </entry>

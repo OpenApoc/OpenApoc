@@ -643,6 +643,7 @@ StateRef<AEquipmentType> Agent::getDominantItemInHands(StateRef<AEquipmentType> 
 		if (e2 && e2->type == itemLastFired)
 			return e2->type;
 	}
+
 	// Calculate item priorities:
 	// - Firing (whichever fires sooner)
 	// - CanFire >> Two-Handed >> Weapon >> Usable Item >> Others

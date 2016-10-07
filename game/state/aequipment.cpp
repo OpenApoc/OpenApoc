@@ -12,29 +12,80 @@ namespace OpenApoc
 
 AEquipment::AEquipment() : equippedPosition(0, 0), ammo(0) {}
 
-int AEquipment::getAccuracy(AgentType::BodyState bodyState, BattleUnit::FireAimingMode fireMode)
+int AEquipment::getAccuracy(AgentType::BodyState bodyState, AgentType::MovementState movementState, BattleUnit::FireAimingMode fireMode, bool thrown)
 {
 	if (!ownerAgent)
 	{
 		LogError("getAccuracy called on item not in agent's inventory!");
 		return 0;
 	}
-	if (type->type != AEquipmentType::Type::Weapon)
-	{
-		LogError("getAccuracy called on non-weapon!");
-		return 0;
-	}
-	// FIXME: Proper algorithm for calcualting weapon's accuracy
 	StateRef<AEquipmentType> payload = getPayloadType();
 	if (!payload)
 	{
 		payload = *type->ammo_types.begin();
 	}
-	return ownerAgent->modified_stats.accuracy * payload->accuracy *
-	       (bodyState == AgentType::BodyState::Flying
-	            ? 90
-	            : (bodyState == AgentType::BodyState::Kneeling ? 110 : 100)) /
-	       100 / 100 / (int)fireMode;
+
+	if (this->type->type != AEquipmentType::Type::Weapon && !thrown)
+	{
+		LogError("getAccuracy (non-thrown) called on non-weapon");
+		return 0;
+	}
+
+	// Accuracy calculation algorithm
+
+	// Take agent and weapon's accuracy
+
+	auto agentAccuracy = (float)ownerAgent->modified_stats.accuracy;
+	auto payloadAccuracy = type->type == AEquipmentType::Type::Weapon ? (float)payload->accuracy : 100.0f;
+
+	// Calculate dispersion, the inverse of accuracy, and scale values to 0-1 for simplicity
+
+	float agentDispersion = 1.0f - agentAccuracy / 100.0f;
+	float weaponDispersion = 1.0f - payloadAccuracy / 100.0f;
+	
+	if (thrown)
+	{
+		return agentAccuracy;
+		// Throwing accuracy is unaffected by movement, stance or mode of fire
+	}
+	else
+	{
+		// Snap and Auto increase agent's dispersion by 2x and 4x respectively
+		agentDispersion *= (float)fireMode;
+
+		// Moving also increase it: Moving or flying by 1,35x running by 1,70x
+		agentDispersion *= movementState == AgentType::MovementState::None
+			&& bodyState != AgentType::BodyState::Flying ? 1.00f
+			: (movementState == AgentType::MovementState::Running ? 1.70f : 1.35f);
+
+		// Having both hands busy also increases it by another 1,5x
+		if (ownerAgent->getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::LeftHand) && ownerAgent->getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::RightHand))
+		{
+			agentDispersion *= 1.5f;
+		}
+
+		// Kneeling decreases agent's and weapon's dispersion, multiplying it by 0,8x
+		if (bodyState == AgentType::BodyState::Kneeling)
+		{
+			agentDispersion *= 0.8f;
+			weaponDispersion *= 0.8f;
+		}
+	}
+
+	// Calculate total dispersion based on agent and weapon dispersion
+	// Let:
+	// * qrt(x) = qube root of x
+	// * aD = sqrt(agentDispersion / 5)
+	// * pD = qrt(weaponDispersion / 10)
+	//
+	// Then formula of total dispersion would be:
+	//   tD = qrt(ad^3 + pd^3)
+	// which can be further simplified to:
+	//   tD = qrt((agentDispersion / 5) ^ 3/2 + weaponDispersion / 10)
+	float totalDispersion = powf(powf(agentDispersion / 5.0f, 3.0f / 2.0f) + weaponDispersion / 10.0f, 1.0f / 3.0f);
+
+	return std::max(0, (int)(100.0f - totalDispersion * 100.0f));
+	
 }
 
 void AEquipment::stopFiring()
@@ -149,10 +200,16 @@ sp<Projectile> AEquipment::fire(Vec3<float> targetPosition, StateRef<BattleUnit>
 		return nullptr;
 	}
 
-	readyToFire = false;
 	auto unit = ownerAgent->unit;
 	auto payload = getPayloadType();
 
+	if (payload->damage_type->launcher)
+	{
+		LogError("fire() called on launcher Weapon");
+		return nullptr;
+	}
+
+	readyToFire = false;
 	ammo--;
 
 	if (payload->fire_sfx)
@@ -160,7 +217,6 @@ sp<Projectile> AEquipment::fire(Vec3<float> targetPosition, StateRef<BattleUnit>
 		fw().soundBackend->playSample(payload->fire_sfx, unit->position);
 	}
 
-	// FIXME: Apply accuracy
 	auto unitPos = unit->getMuzzleLocation();
 	Vec3<float> velocity = targetPosition - unitPos;
 	velocity = glm::normalize(velocity);
@@ -170,6 +226,54 @@ sp<Projectile> AEquipment::fire(Vec3<float> targetPosition, StateRef<BattleUnit>
 	                        payload->ttl * 4, payload->damage, payload->tail_size,
 	                        payload->projectile_sprites, payload->impact_sfx,
 	                        payload->explosion_graphic, payload->damage_type);
+}
+
+void AEquipment::launch(Vec3<float> &targetPosition, Vec3<float> &velocity)
+{
+	if (this->type->type != AEquipmentType::Type::Weapon)
+	{
+		LogError("fire() called on non-Weapon");
+		return;
+	}
+	if (!readyToFire)
+	{
+		LogError("fire() called on non-ready Weapon");
+		return;
+	}
+
+	auto unit = ownerAgent->unit;
+	auto payload = getPayloadType();
+
+	if (!payload->damage_type->launcher)
+	{
+		LogError("launch() called on non-launcher Weapon");
+		return;
+	}
+
+	readyToFire = false;
+	ammo--;
+
+	if (payload->fire_sfx)
+	{
+		fw().soundBackend->playSample(payload->fire_sfx, unit->position);
+	}
+
+	LogError("Implement launchers!");
+}
+
+bool AEquipment::isLauncher()
+{
+	if (this->type->type != AEquipmentType::Type::Weapon)
+	{
+		LogError("isLauncher() called on non-Weapon");
+		return nullptr;
+	}
+	if (!readyToFire)
+	{
+		LogError("isLauncher() called on non-ready Weapon");
+		return nullptr;
+	}
+	return getPayloadType()->damage_type->launcher;
 }
 
 bool AEquipment::canFire(float range)

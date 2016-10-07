@@ -53,6 +53,12 @@ template <> sp<DamageType> StateObject<DamageType>::get(const GameState &state, 
 
 int DamageType::dealDamage(int damage, StateRef<DamageModifier> modifier) const
 {
-	return damage * modifiers.at(modifier) / 100;
+	if (modifiers.find(modifier) == modifiers.end())
+	{
+		LogError("Do not know how to deal damage type %s to modifier %s!", id.cStr(), modifier.id.cStr());
+		return damage;
+	}
+	else
+		return damage * modifiers.at(modifier) / 100;
 }
 }

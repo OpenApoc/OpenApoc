@@ -127,6 +127,8 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// Add item, setting links to resources
 	sp<BattleItem> addItem(GameState &state);
 
+	static void accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition, Vec3<float> &target, int accuracy, bool thrown = false);
+
 	// Turn based functions
 
 	// Called when new organisation's turn is starting
