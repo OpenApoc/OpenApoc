@@ -540,8 +540,9 @@
 		<member>position</member>
 		<member>velocity</member>
 		<member>bounced</member>
-		<member>supported</member>
+		<member>falling</member>
 		<member>ownerInvulnerableTicks</member>
+		<member>ticksUntilTryCollapse</member>
 	</object>
 	<object>
 		<name>BattleMapPart</name>
@@ -549,6 +550,7 @@
 		<member>alternative_type</member>
 		<member>initialPosition</member>
 		<member>currentPosition</member>
+		<member>ticksUntilTryCollapse</member>
 		<member>damaged</member>
 		<member>falling</member>
 		<member>destroyed</member>

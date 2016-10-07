@@ -600,7 +600,7 @@ void BattleTileView::render()
 				}
 			}
 
-			// Draw next level, units whose "legs" are below "zTo" and items moving
+			// Draw next level, units whose "legs" are below "zTo", projectiles and items moving
 			for (int z = zTo; z < maxZDraw && z < zTo + 1; z++)
 			{
 				int currentLevel = z - currentZLevel + 1;
@@ -675,9 +675,13 @@ void BattleTileView::render()
 								}
 								if (obj->getType() == TileObject::Type::Item)
 								{
-									draw = !std::static_pointer_cast<TileObjectBattleItem>(obj)
+									draw = std::static_pointer_cast<TileObjectBattleItem>(obj)
 									            ->getItem()
-									            ->supported;
+									            ->falling;
+								}
+								if (obj->getType() == TileObject::Type::Projectile)
+								{
+									draw = true;
 								}
 								if (draw)
 								{

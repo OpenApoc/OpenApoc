@@ -31,7 +31,7 @@ void TileObjectBattleItem::draw(Renderer &r, TileTransform &, Vec2<float> screen
 			break;
 		case TileViewMode::Strategy:
 		{
-			if (!item->supported)
+			if (item->falling)
 				break;
 			sprite = item->strategySprite;
 			transformedScreenPos -= Vec2<float>{4, 4};

@@ -496,7 +496,7 @@ std::list<sp<BattleItem>> Tile::getItems()
 		if (o->getType() == TileObject::Type::Item)
 		{
 			auto item = std::static_pointer_cast<TileObjectBattleItem>(o)->getItem();
-			if (item->supported)
+			if (!item->falling)
 			{
 				result.push_back(item);
 			}
@@ -519,7 +519,7 @@ std::list<sp<BattleItem>> Tile::getItems()
 				if (o->getType() == TileObject::Type::Item)
 				{
 					auto item = std::static_pointer_cast<TileObjectBattleItem>(o)->getItem();
-					if (item->supported)
+					if (!item->falling)
 					{
 						result.push_back(item);
 					}

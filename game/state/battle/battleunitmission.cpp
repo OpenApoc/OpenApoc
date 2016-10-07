@@ -1322,7 +1322,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				bi->velocity =
 				    (glm::normalize(Vec3<float>{targetVectorModified.x, targetVectorModified.y, 0.0f}) * targetVectorDifference * velocityXY + Vec3<float>{0.0f, 0.0f, velocityZ}) * targetVectorDifference
 				    * VELOCITY_SCALE_BATTLE;
-				bi->supported = false;
+				bi->falling = true;
 				// 36 / (velocity length) = enough ticks to pass 1 whole tile
 				bi->ownerInvulnerableTicks =
 				    (int)ceilf(36.0f / glm::length(bi->velocity / VELOCITY_SCALE_BATTLE)) + 1;
@@ -1401,7 +1401,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				auto bi = state.current_battle->addItem(state);
 				bi->item = item;
 				item = nullptr;
-				bi->supported = false;
+				bi->falling = true;
 				bi->position = u.position + Vec3<float>{0.0, 0.0, 0.5f};
 				state.current_battle->map->addObjectToMap(bi);
 			}

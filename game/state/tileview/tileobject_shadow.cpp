@@ -72,7 +72,7 @@ void TileObjectShadow::draw(Renderer &r, TileTransform &transform, Vec2<float> s
 			if (item)
 			{
 				// Items on the ground give no shadows
-				if (item->supported)
+				if (!item->falling)
 					break;
 				if (item->item->type->dropped_shadow_sprite)
 					r.draw(item->item->type->dropped_shadow_sprite,

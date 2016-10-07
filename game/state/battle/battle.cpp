@@ -150,6 +150,21 @@ void Battle::initBattle(GameState &state)
 		if (p->trackedUnit)
 			p->trackedObject = p->trackedUnit->tileObject;
 	}
+	for (auto &s : this->map_parts)
+	{
+		if (s->ticksUntilTryCollapse == 0)
+		{
+			s->tryCollapse();
+		}
+	}
+	for (auto &o : this->items)
+	{
+		if (o->ticksUntilTryCollapse == 0)
+		{
+			o->tryCollapse();
+		}
+	}
+
 }
 
 void Battle::initMap()
@@ -169,22 +184,9 @@ void Battle::initMap()
 		}
 		this->map->addObjectToMap(s);
 	}
-	for (auto &s : this->map_parts)
-	{
-		s->findSupport();
-	}
-	for (auto &s : this->map_parts)
-	{
-		s->tryCollapse();
-	}
 	for (auto &o : this->items)
 	{
 		this->map->addObjectToMap(o);
-		if (o->supported)
-		{
-			o->supported = false;
-			o->findSupport(false, true);
-		}
 	}
 	for (auto &u : this->units)
 	{
@@ -235,7 +237,7 @@ sp<BattleUnit> Battle::addUnit(GameState &state)
 sp<BattleDoor> Battle::addDoor(GameState &state)
 {
 	auto door = mksp<BattleDoor>();
-	UString id = format("%s%d", BattleDoor::getPrefix(), (int)units.size());
+	UString id = format("%s%d", BattleDoor::getPrefix(), (int)doors.size());
 	door->id = id;
 	door->doorSound = state.battle_common_sample_list->door;
 	doors[id] = door;

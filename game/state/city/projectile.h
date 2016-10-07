@@ -88,7 +88,7 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	StateRef<DoodadType> doodadType;
 	StateRef<DamageType> damageType;
 
-	int ownerInvulnerableTicks = 0;
+	unsigned int ownerInvulnerableTicks = 0;
 
 	Vec3<float> velocityScale;
 

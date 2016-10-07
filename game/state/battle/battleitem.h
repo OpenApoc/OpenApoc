@@ -31,10 +31,17 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 
 	// Item can bounce once after being thrown
 	bool bounced = false;
+	
+	bool falling = false;
 
-	bool supported = false;
+	unsigned int ownerInvulnerableTicks = 0;
 
-	int ownerInvulnerableTicks = 0;
+	unsigned int ticksUntilTryCollapse = 0;
+
+	// Queue attempt to collapse
+	void queueTryCollapse();
+	// Check if we are still supported, and collapse if not
+	void tryCollapse();
 
 	void handleCollision(GameState &state, Collision &c);
 	void die(GameState &state, bool violently);
@@ -47,13 +54,15 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 
 	Collision checkItemCollision(Vec3<float> previousPosition, Vec3<float> nextPosition);
 
-	bool findSupport(bool emitSound = true, bool forced = false);
-
 	// Following members are not serialized, but rather are set up in the initBattle method
 
 	sp<Image> strategySprite;
 
 	sp<TileObjectBattleItem> tileObject;
 	sp<TileObjectShadow> shadowObject;
+
+  private:
+	bool findSupport();
+
 };
 } // namespace OpenApoc

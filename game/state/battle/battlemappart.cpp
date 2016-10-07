@@ -61,21 +61,7 @@ bool BattleMapPart::handleCollision(GameState &state, Collision &c)
 	// If we came this far, map part has been damaged and must cease to be
 	
 	// Cease functioning if door
-	if (door)
-	{
-		if (alternative_type)
-			type = alternative_type;
-		// Remove from door's map parts
-		wp<BattleMapPart> sft = shared_from_this();
-		door->mapParts.remove_if([sft](wp<BattleMapPart> p) {
-			auto swp = sft.lock();
-			auto sp = p.lock();
-			if (swp && sp)
-				return swp == sp;
-			return false;
-		});
-		door.clear();
-	}
+	ceaseDoorFunction();
 	
 	// Doodad
 	auto doodad = state.current_battle->placeDoodad({&state, "DOODAD_29_EXPLODING_TERRAIN"},
@@ -106,19 +92,41 @@ bool BattleMapPart::handleCollision(GameState &state, Collision &c)
 	return false;
 }
 
-void BattleMapPart::findSupport()
+void BattleMapPart::ceaseDoorFunction()
 {
-	// If it's already falling or destroyed or supported do nothing
-	if (this->falling || !this->tileObject || supported)
+	if (!door)
+	{
 		return;
+	}
 
-	supported = false;
+	if (alternative_type)
+		type = alternative_type;
+	// Remove from door's map parts
+	wp<BattleMapPart> sft = shared_from_this();
+	door->mapParts.remove_if([sft](wp<BattleMapPart> p) {
+		auto swp = sft.lock();
+		auto sp = p.lock();
+		if (swp && sp)
+			return swp == sp;
+		return false;
+	});
+	door.clear();
+}
+
+bool BattleMapPart::findSupport()
+{
+	// There are three ways battle map part can get supported:
+	// 1) It has adjacent supporting map parts
+
+
 	// FIXME: Implement
 	//
 	// - Check every neighbouring map part of our type
 	//		- If map part fits our supportedBy criteria then add it to a temp list
 	// - If our temp list fits our criteria then we are supported
-	supported = true;
+	falling = false;
+
+	return !falling;
 }
 
 void BattleMapPart::ceaseSupportProvision()
@@ -128,8 +136,7 @@ void BattleMapPart::ceaseSupportProvision()
 		auto i = s.lock();
 		if (i)
 		{
-			i->findSupport();
-			i->tryCollapse();
+			i->queueTryCollapse();
 		}
 	}
 	this->supportedParts.clear();
@@ -138,28 +145,47 @@ void BattleMapPart::ceaseSupportProvision()
 		auto i = s.lock();
 		if (i)
 		{
-			i->supported = false;
-			i->findSupport(false);
+			i->queueTryCollapse();
 		}
 	}
 	this->supportedItems.clear();
 }
 
-void BattleMapPart::tryCollapse(bool force)
+void BattleMapPart::queueTryCollapse()
+{
+	ticksUntilTryCollapse = 4;
+}
+
+void BattleMapPart::tryCollapse()
 {
 	// If it's already falling or destroyed or supported do nothing
-	if (this->falling || !this->tileObject || (!force && supported))
-		return;
-	this->falling = true;
-	ceaseSupportProvision();
-	if (door)
+	if (this->falling || !this->tileObject)
 	{
-		door->collapse();
+		return;
 	}
+	if (findSupport())
+	{
+		return;
+	}
+	ceaseSupportProvision();
+	ceaseDoorFunction();
 }
 
 void BattleMapPart::update(GameState &, unsigned int ticks)
 {
+	if (ticksUntilTryCollapse > 0)
+	{
+		if (ticksUntilTryCollapse > ticks)
+		{
+			ticksUntilTryCollapse -= ticks;
+		}
+		else
+		{
+			ticksUntilTryCollapse = 0;
+			tryCollapse();
+		}
+	}
+
 	// Process falling
 	if (this->falling)
 	{

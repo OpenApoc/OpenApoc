@@ -65,8 +65,14 @@ Projectile::Projectile()
 
 void Projectile::update(GameState &state, unsigned int ticks)
 {
-	if (ownerInvulnerableTicks > 0)
+	if (ownerInvulnerableTicks > ticks)
+	{
 		ownerInvulnerableTicks -= ticks;
+	}
+	else
+	{
+		ownerInvulnerableTicks = 0;
+	}
 	this->age += ticks;
 	this->previousPosition = this->position;
 
