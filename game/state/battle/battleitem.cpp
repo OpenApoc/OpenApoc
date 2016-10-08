@@ -16,6 +16,7 @@
 
 namespace OpenApoc
 {
+
 void BattleItem::die(GameState &state, bool violently)
 {
 	if (violently)
@@ -34,7 +35,7 @@ void BattleItem::handleCollision(GameState &state, Collision &c)
 {
 	// FIXME: Proper damage
 	std::ignore = c;
-	die(state, true);
+	die(state);
 }
 
 void BattleItem::setPosition(const Vec3<float> &pos)
@@ -207,6 +208,11 @@ bool BattleItem::findSupport()
 	auto restingPosition =
 	    obj->getPosition() + Vec3<float>{0.0f, 0.0f, (float)obj->type->height / 40.0f};
 	
+	if (position.z > restingPosition.z)
+	{
+		return false;
+	}
+
 	bounced = false;
 	velocity = {0.0f, 0.0f, 0.0f};
 	obj->supportedItems.push_back(shared_from_this());
@@ -215,6 +221,7 @@ bool BattleItem::findSupport()
 		setPosition(restingPosition);
 	}
 
+	falling = false;
 	return true;
 }
 
