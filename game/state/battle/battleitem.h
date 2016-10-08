@@ -44,7 +44,7 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 	void tryCollapse();
 
 	void handleCollision(GameState &state, Collision &c);
-	void die(GameState &state, bool violently);
+	void die(GameState &state, bool violently = true);
 	void update(GameState &state, unsigned int ticks);
 
 	BattleItem() = default;
