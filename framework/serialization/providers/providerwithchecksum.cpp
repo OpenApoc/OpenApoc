@@ -127,13 +127,16 @@ bool ProviderWithChecksum::openArchive(const UString &path, bool write)
 		return false;
 	}
 
-	UString result;
-	if (!inner->readDocument("checksum.xml", result))
+	if (!write)
 	{
-		LogInfo("Missing manifest file in \"%s\"", path.cStr());
-		return true;
+		UString result;
+		if (!inner->readDocument("checksum.xml", result))
+		{
+			LogInfo("Missing manifest file in \"%s\"", path.cStr());
+			return true;
+		}
+		parseManifest(result.str());
 	}
-	parseManifest(result.str());
 	return true;
 }
 bool ProviderWithChecksum::readDocument(const UString &path, UString &result)
