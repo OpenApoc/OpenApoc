@@ -486,32 +486,49 @@ Gets support from. Handles how objects stay in place or fall, as well as objects
 
 Possible values (as well as values encountered):
  0  = Down (object is supported by an object below).
- 1  = Top-Right (can "latch" in a top-right direction to another object and stay) 
- 2  = Bottom-Right
- 3  = Bottom-Left
- 4  = Top-Left
+ 
+ Standart: (can get support from same type at this direction)
+		   (feature can also cling to a wall in this direction)
+ 1  = North
+ 2  = East
+ 3  = South
+ 4  = West
+ 
  5  = Up (object can be supported by an object above it)
- 7  = unknown
- 11 = Top-Right Below (can "latch" in a top-right direction to another object one layer below
- 12 = Bottom-Right Below
- 13 = Bottom-Left Below
- 14 = Top-Left Below
- 20 = unknown
- 21 = Top-Right Above (can "latch" in a top-right direction to another object one layer below
- 22 = Bottom-Right Above
- 23 = Bottom-Left Above
- 24 = Top-Left Above
- 30 = unknown
- 32 = unknown
- 36 = unknown
- 41 = unknown
- 42 = unknown
- 43 = unknown
- 44 = unknown
- 51 = unknown
- 52 = unknown
- 53 = unknown
- 54 = unknown
+ 
+ 7  = unknown (only present on brick walls of 52UFO02)
+ 
+ Ground: (can get support from ground at this direction)
+		 (also has all Standart properties)
+ 11 = North
+ 12 = East
+ 13 = South
+ 14 = West
+ 
+ 20 = unknown (abundant on blocky scenery)
+ 
+ Feature: (can get support from feature at this direction below)
+		  (also has all Standart properties)
+ 21 = North
+ 22 = East
+ 23 = South
+ 24 = West
+ 
+ 30 = TYPO? Seems like it should read "1"
+ 
+ 32 = TYPO? Seems like it should read "0"
+ 
+ 36 = Top Walls (Top-Right's Left wall and Top-Left's Right wall)
+ 
+ 41 = 1
+ 42 = 2
+ 43 = 3
+ 44 = 4
+ 
+ 51 = 11 (or feature below)
+ 52 = 12
+ 53 = 13
+ 54 = 14
  
 55/85[1]: 
 --------

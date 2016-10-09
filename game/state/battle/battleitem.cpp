@@ -62,27 +62,22 @@ void BattleItem::setPosition(const Vec3<float> &pos)
 
 Collision BattleItem::checkItemCollision(Vec3<float> previousPosition, Vec3<float> nextPosition)
 {
-	Collision c = tileObject->map.findCollision(previousPosition, nextPosition, {});
-	if (c && ownerInvulnerableTicks > 0 && c.obj->getType() == TileObject::Type::Unit &&
-	    item->ownerAgent->unit == std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit())
-	{
-		return {};
-	}
+	Collision c = tileObject->map.findCollision(previousPosition, nextPosition, {}, ownerInvulnerableTicks > 0 ? item->ownerAgent->unit->tileObject : nullptr);
 	return c;
 }
 
 void BattleItem::update(GameState &state, unsigned int ticks)
 {
-	if (ticksUntilTryCollapse > 0)
+	if (ticksUntilCollapse > 0)
 	{
-		if (ticksUntilTryCollapse > ticks)
+		if (ticksUntilCollapse > ticks)
 		{
-			ticksUntilTryCollapse -= ticks;
+			ticksUntilCollapse -= ticks;
 		}
 		else
 		{
-			ticksUntilTryCollapse = 0;
-			tryCollapse();
+			ticksUntilCollapse = 0;
+			collapse();
 		}
 	}
 	
@@ -176,7 +171,7 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 		// Fell below 0???
 		if (newPosition.z < 0)
 		{
-			LogError("Item fell off the end of the world!?");
+			LogError("Item at %f %f fell off the end of the world!?", newPosition.x, newPosition.y);
 			die(state, false);
 			return;
 		}
@@ -187,6 +182,7 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 	{
 		if (findSupport())
 		{
+			getSupport();
 			auto tile = tileObject->getOwningTile();
 			if (tile->objectDropSfx)
 			{
@@ -196,13 +192,30 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 	}
 }
 
+void BattleItem::getSupport()
+{
+	auto tile = tileObject->getOwningTile();
+	auto obj = tile->getItemSupportingObject();
+	auto restingPosition =
+		obj->getPosition() + Vec3<float>{0.0f, 0.0f, (float)obj->type->height / 40.0f};
+
+	bounced = false;
+	falling = false;
+	velocity = { 0.0f, 0.0f, 0.0f };
+	obj->supportedItems = true;
+	if (position != restingPosition)
+	{
+		setPosition(restingPosition);
+	}
+
+}
+
 bool BattleItem::findSupport()
 {
 	auto tile = tileObject->getOwningTile();
 	auto obj = tile->getItemSupportingObject();
 	if (!obj)
 	{
-		falling = true;
 		return false;
 	}
 	auto restingPosition =
@@ -212,22 +225,8 @@ bool BattleItem::findSupport()
 	{
 		return false;
 	}
-
-	bounced = false;
-	velocity = {0.0f, 0.0f, 0.0f};
-	obj->supportedItems.push_back(shared_from_this());
-	if (position != restingPosition)
-	{
-		setPosition(restingPosition);
-	}
-
-	falling = false;
+		
 	return true;
-}
-
-void BattleItem::queueTryCollapse()
-{
-	ticksUntilTryCollapse = 4;
 }
 
 void BattleItem::tryCollapse()
@@ -236,6 +235,15 @@ void BattleItem::tryCollapse()
 	{
 		return;
 	}
-	findSupport();
+	if (!findSupport())
+	{
+		ticksUntilCollapse = 4;
+	}
 }
+
+void BattleItem::collapse()
+{
+	falling = true;
+}
+
 } // namespace OpenApoc

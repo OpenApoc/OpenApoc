@@ -25,33 +25,40 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 	};
 	enum class SupportedByType
 	{
-		Below,
-		North,
-		East,
-		South,
-		West,
-		Above,
-		Unknown07,
-		NorthBelow,
-		EastBelow,
-		SouthBelow,
-		WestBelow,
-		Unknown20,
-		NorthAbove,
-		EastAbove,
-		SouthAbove,
-		WestAbove,
-		Unknown30,
-		Unknown32,
-		Unknown36,
-		Unknown41,
-		Unknown42,
-		Unknown43,
-		Unknown44,
-		Unknown51,
-		Unknown52,
-		Unknown53,
-		Unknown54,
+		Below = 0,
+		
+		North = 1,
+		East = 2,
+		South = 3,
+		West = 4,
+		
+		Above = 5,
+		
+		Unknown07 = 7,
+		
+		NorthBelow = 11,
+		EastBelow = 12,
+		SouthBelow = 13,
+		WestBelow = 14,
+		
+		Unknown20 = 20,
+		
+		NorthAbove = 21,
+		EastAbove = 22,
+		SouthAbove = 23,
+		WestAbove = 24,
+		
+		WallsNorthWest = 36,
+		
+		AnotherNorth = 41,
+		AnotherEast = 42,
+		AnotherSouth = 43,
+		AnotherWest = 44,
+		
+		AnotherNorthBelow = 51,
+		AnotherEastBelow = 52,
+		AnotherSouthBelow = 53,
+		AnotherWestBelow = 54,
 	};
 
 	Type type = Type::Ground;
@@ -88,6 +95,7 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 	bool gravlift = false;
 	int movement_cost = 0;
 	int height = 0;
+	// Does not require support
 	bool floating = false;
 	bool provides_support = false;
 	SupportedByType supported_by = SupportedByType::Below;
@@ -99,7 +107,9 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 	StateRef<DamageModifier> damageModifier;
 	sp<std::vector<sp<Sample>>> walkSounds;
 	sp<Sample> objectDropSound;
-	// Destroyed ground replacement for ground at level 0, rubble for other types
-	std::vector<StateRef<BattleMapPartType>> destroyed_map_parts;
+	// Object list spawned when this one falls 
+	std::vector<StateRef<BattleMapPartType>> rubble;
+	// Destroyed ground replacement for level 0 grounds
+	StateRef<BattleMapPartType> destroyed_ground_tile;
 };
 }

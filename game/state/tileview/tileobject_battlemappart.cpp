@@ -66,12 +66,8 @@ TileObject::Type TileObjectBattleMapPart::convertType(BattleMapPartType::Type ty
 void TileObjectBattleMapPart::setPosition(Vec3<float> newPosition)
 {
 	TileObject::setPosition(newPosition);
-	if (type == Type::Ground || type == Type::LeftWall || type == Type::RightWall ||
-	    type == Type::Feature)
-	{
-		owningTile->updateBattlescapeParameters();
-		drawOnTile->updateBattlescapeUIDrawOrder();
-	}
+	owningTile->updateBattlescapeParameters();
+	drawOnTile->updateBattlescapeUIDrawOrder();
 }
 
 void TileObjectBattleMapPart::removeFromMap()
@@ -118,18 +114,41 @@ float TileObjectBattleMapPart::getZOrder() const
 	switch (type)
 	{
 		case Type::Ground:
-			return z - 5.0f;
+			return z - 14.0f;
 		case Type::LeftWall:
-			return z - 4.0f;
+			return z - 14.0f;
 		case Type::RightWall:
-			return z - 3.0f;
+			return z - 14.0f;
 		case Type::Feature:
 		{
-			return z + (float)map_part->type->height / 40.0f / 2.0f - 2.0f;
+			return z + (float)map_part->type->height / 40.0f / 2.0f - 14.0f;
 		}
 		default:
 			LogError("Impossible map part type %d", (int)type);
 			return 0.0f;
 	}
 }
+
+void TileObjectBattleMapPart::addToDrawnTiles(Tile *tile)
+{
+	Vec3<int> maxCoords = { -1, -1, -1 };
+	for (auto intersectingTile : intersectingTiles)
+	{
+		int x = intersectingTile->position.x;
+		int y = intersectingTile->position.y;
+		int z = intersectingTile->position.z;
+
+		// Map parts are drawn in the topmost tile their head pops into
+		// Otherwise, they can only be drawn in it if it's their owner tile
+		if (maxCoords.z * 1000 + maxCoords.x + maxCoords.y < z * 1000 + x + y &&
+			map_part->position.z + (float) map_part->type->height / 40.0f >= (float)z )
+		{
+			tile = intersectingTile;
+			maxCoords = { x, y, z };
+		}
+	}
+
+	TileObject::addToDrawnTiles(tile);
+}
+
 }

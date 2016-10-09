@@ -134,8 +134,6 @@ void InGameOptions::eventOccurred(Event *e)
 		{
 			if (state->current_battle)
 			{
-				Battle::finishBattle(*state.get());
-
 				fw().stageQueueCommand(
 				    {StageCmd::Command::REPLACEALL, mksp<BattleDebriefing>(state)});
 			}

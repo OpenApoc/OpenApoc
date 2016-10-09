@@ -1,21 +1,23 @@
 #pragma once
 
+#include "game/state/battle/battlemappart_type.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
 #include <list>
+#include <set>
 
 #define TICKS_PER_FRAME_MAP_PART 8
+
+#define FALLING_ACCELERATION_MAP_PART 0.16666667f // 1/6th
 
 namespace OpenApoc
 {
 class Battle;
 class Collision;
 class TileObjectBattleMapPart;
-class BattleMapPartType;
 class BattleItem;
 class BattleDoor;
-class BattleMap;
 
 class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 {
@@ -23,16 +25,20 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	StateRef<BattleMapPartType> type;
 	StateRef<BattleMapPartType> alternative_type;
 
-	Vec3<float> getPosition() const { return currentPosition; }
+	const Vec3<float> &getPosition() const { return this->position; }
+	Vec3<float> position;
+	void setPosition(const Vec3<float> &pos);
 
-	Vec3<int> initialPosition;
-	Vec3<float> currentPosition;
-
-	unsigned int ticksUntilTryCollapse = 0;
+	unsigned int ticksUntilCollapse = 0;
 	bool damaged = false;
 	bool falling = false;
+	float fallingSpeed = 0.0f;
 	bool destroyed = false;
+	bool providesHardSupport = false;
 	StateRef<BattleDoor> door;
+	
+	bool supportedItems = false;
+	std::list<std::pair<Vec3<int>, BattleMapPartType::Type>> supportedParts;
 
 	// Ticks for animation of non-doors
 	int animation_frame_ticks = 0;
@@ -41,15 +47,16 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 
 	// Returns true if sound and doodad were handled by it
 	bool handleCollision(GameState &state, Collision &c);
-	// Check if we are still supported, and collapse if not
-	void tryCollapse();
+	void die(GameState &state, bool violently = true);
+	void collapse();
+
+	sp<std::set<BattleMapPart*>> getSupportedParts();
+	static void attemptReLinkSupports(sp<std::set<BattleMapPart*>> set);
 
 	void ceaseDoorFunction();
 
 	void update(GameState &state, unsigned int ticks);
-	// Queue attempt to collapse
-	void queueTryCollapse();
-
+	
 	bool isAlive() const;
 
 	~BattleMapPart() = default;
@@ -57,14 +64,13 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	// Following members are not serialized, but rather are set in initBattle method
 
 	sp<TileObjectBattleMapPart> tileObject;
-	std::list<wp<BattleItem>> supportedItems;
-	std::list<wp<BattleMapPart>> supportedParts;
 
   private:
+	friend class Battle;
+
 	// Find map parts that support this one and set "supported" flag
 	bool findSupport();
 	// Cease providing or requiring support
 	void ceaseSupportProvision();
-
 };
 }

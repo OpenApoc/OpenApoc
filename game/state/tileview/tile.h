@@ -220,7 +220,7 @@ class TileMap
 	                                      float maxCost = 0.0f);
 
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
-	                        const std::set<TileObject::Type> validTypes = {}, bool useLOS = false,
+	                        const std::set<TileObject::Type> validTypes = {}, sp<TileObject> ignoredObject = nullptr, bool useLOS = false,
 	                        bool check_full_path = false) const;
 
 	void addObjectToMap(sp<Projectile>);
@@ -237,5 +237,7 @@ class TileMap
 
 	sp<Image> dumpVoxelView(const Rect<int> viewRect, const TileTransform &transform, float maxZ,
 	                        bool fast = false, bool los = false) const;
+
+	void updateAllBattlescapeInfo();
 };
 }; // namespace OpenApoc

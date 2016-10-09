@@ -204,38 +204,40 @@ void InitialGameStateExtractor::readBattleMapParts(GameState &state, TACP &data_
 			case 24:
 				object->supported_by = BattleMapPartType::SupportedByType::WestAbove;
 				break;
+			// 30 is a mistake, it should read "1"
 			case 30:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown30;
+				object->supported_by = BattleMapPartType::SupportedByType::North;
 				break;
+			// 32 is a mistake, it should read "0"
 			case 32:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown32;
+				object->supported_by = BattleMapPartType::SupportedByType::Below;
 				break;
 			case 36:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown36;
+				object->supported_by = BattleMapPartType::SupportedByType::WallsNorthWest;
 				break;
 			case 41:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown41;
+				object->supported_by = BattleMapPartType::SupportedByType::AnotherNorth;
 				break;
 			case 42:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown42;
+				object->supported_by = BattleMapPartType::SupportedByType::AnotherEast;
 				break;
 			case 43:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown43;
+				object->supported_by = BattleMapPartType::SupportedByType::AnotherSouth;
 				break;
 			case 44:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown44;
+				object->supported_by = BattleMapPartType::SupportedByType::AnotherWest;
 				break;
 			case 51:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown51;
+				object->supported_by = BattleMapPartType::SupportedByType::AnotherNorthBelow;
 				break;
 			case 52:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown52;
+				object->supported_by = BattleMapPartType::SupportedByType::AnotherEastBelow;
 				break;
 			case 53:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown53;
+				object->supported_by = BattleMapPartType::SupportedByType::AnotherSouthBelow;
 				break;
 			case 54:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown54;
+				object->supported_by = BattleMapPartType::SupportedByType::AnotherWestBelow;
 				break;
 			default:
 				LogError("Invalid gets_support_from value %d for ID %s", entry.gets_support_from,

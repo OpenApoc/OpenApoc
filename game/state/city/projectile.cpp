@@ -145,19 +145,25 @@ Collision Projectile::checkProjectileCollision(TileMap &map)
 	{
 		// It's possible the projectile reached the end of it's lifetime this frame
 		// so ignore stuff without a tile
-		return {};
+		return{};
 	}
 
-	Collision c = map.findCollision(this->previousPosition, this->position);
-	if (c && ownerInvulnerableTicks > 0 &&
-	    ((c.obj->getType() == TileObject::Type::Vehicle &&
-	      this->firerVehicle == std::static_pointer_cast<TileObjectVehicle>(c.obj)->getVehicle()) ||
-	     (c.obj->getType() == TileObject::Type::Unit &&
-	      this->firerUnit == std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit())))
+	sp<TileObject> ignoredObject = nullptr;
+	if (ownerInvulnerableTicks > 0)
 	{
-		return {};
+		if (firerVehicle)
+		{
+			ignoredObject = firerVehicle->tileObject;
+		}
+		else if (firerUnit)
+		{
+			ignoredObject = firerUnit->tileObject;
+		}
 	}
-
+	Collision c = map.findCollision(this->previousPosition, this->position, {}, ignoredObject);
+	if (!c)
+		return{};
+	
 	c.projectile = shared_from_this();
 	return c;
 }

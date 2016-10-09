@@ -48,7 +48,7 @@ int AEquipment::getAccuracy(AgentType::BodyState bodyState, AgentType::MovementS
 	
 	if (thrown)
 	{
-		return agentAccuracy;
+		return (int)agentAccuracy;
 		// Throwing accuracy is unaffected by movement, stance or mode of fire
 	}
 	else

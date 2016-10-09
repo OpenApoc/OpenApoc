@@ -86,7 +86,7 @@ Battle::~Battle()
 	this->doors.clear();
 }
 
-void Battle::initBattle(GameState &state)
+void Battle::initBattle(GameState &state, bool first)
 {
 	common_image_list = state.battle_common_image_list;
 	common_sample_list = state.battle_common_sample_list;
@@ -144,27 +144,21 @@ void Battle::initBattle(GameState &state)
 		}
 	}
 	initMap();
-	// Stuff to init after map is ready
+	// From here on, do what needs to be done after map was init
 	for (auto &p : this->projectiles)
 	{
 		if (p->trackedUnit)
 			p->trackedObject = p->trackedUnit->tileObject;
 	}
-	for (auto &s : this->map_parts)
+	// On first run, init support links and items
+	if (first)
 	{
-		if (s->ticksUntilTryCollapse == 0)
-		{
-			s->tryCollapse();
-		}
-	}
-	for (auto &o : this->items)
-	{
-		if (o->ticksUntilTryCollapse == 0)
+		initialMapPartLinkUp();
+		for (auto &o : this->items)
 		{
 			o->tryCollapse();
 		}
 	}
-
 }
 
 void Battle::initMap()
@@ -206,6 +200,409 @@ void Battle::initMap()
 	}
 }
 
+void linkUpList(std::list<BattleMapPart*> list)
+{
+	auto next = list.begin();
+	auto prev = next++;
+	auto cur = next++;
+
+	// In case we are linking to map edge, first map part may be falling and must be linked
+	if ((*prev)->ticksUntilCollapse > 0)
+	{
+		(*prev)->ticksUntilCollapse = 0;
+		(*cur)->supportedParts.emplace_back((*prev)->position, (*prev)->type->type);
+	}
+	// Link middle
+	while (next != list.end())
+	{
+		(*cur)->ticksUntilCollapse = 0;
+		(*prev)->supportedParts.emplace_back((*cur)->position, (*cur)->type->type);
+		(*next)->supportedParts.emplace_back((*cur)->position, (*cur)->type->type);
+
+		prev++;
+		cur++;
+		next++;
+	}
+	// In case we are linking to map edge, last map part may be falling and must be linked
+	if ((*cur)->ticksUntilCollapse > 0)
+	{
+		(*cur)->ticksUntilCollapse = 0;
+		(*prev)->supportedParts.emplace_back((*cur)->position, (*cur)->type->type);
+	}
+}
+
+
+void Battle::initialMapPartLinkUp()
+{
+	LogWarning("Begun initial map parts link up!");
+	auto &mapref = *map;
+
+	for (int z = 0; z < mapref.size.z; z++)
+	{
+		for (auto &s : this->map_parts)
+		{
+			if ((int)s->position.z == z && s->findSupport())
+			{
+				s->ticksUntilCollapse = 0;
+			}
+		}
+	}
+	LogWarning("Begun map parts link up cycle!");
+	bool foundSupport;
+	// Establish support based on existing supported map parts
+	do
+	{
+		foundSupport = false;
+		for (auto &s : this->map_parts)
+		{
+			if (s->ticksUntilCollapse == 0)
+			{
+				continue;
+			}
+			if (s->findSupport())
+			{
+				s->ticksUntilCollapse = 0;
+				foundSupport = true;
+			}
+		}
+	} while (foundSupport);
+
+	for (auto &mp : this->map_parts)
+	{
+		if (mp->ticksUntilCollapse > 0)
+		{
+			auto pos = mp->tileObject->getOwningTile()->position;
+			LogWarning("Map part with supported by type %d at %d %d %d is going to fall", (int)mp->type->supported_by, pos.x, pos.y, pos.z);
+		}
+	}
+
+	mapref.updateAllBattlescapeInfo();
+	LogWarning("Link up finished!");
+}
+
+
+/*
+void Battle::initialMapPartLinkUp()
+{
+	LogWarning("Begun initial map parts link up!");
+	auto &mapref = *map;
+	
+	for (int z = 0; z < mapref.size.z; z++)
+	{
+		for (auto &s : this->map_parts)
+		{
+			if ((int)s->position.z == z && s->findSupport())
+			{
+				s->ticksUntilCollapse = 0;
+			}
+		}
+	}
+	LogWarning("Begun map parts link up cycle!");
+	// Two-step cycle
+	// First we establish support based on existing supported map parts
+	// Repeat as long as new map parts are gaining support
+	// Then we link together map parts in straight lines
+	// Repeat as long as new map parts are gaining support
+	// Then repeat cycle as long as at least one support was gained total
+	bool foundSupportOuter;
+	do
+	{
+		foundSupportOuter = false;
+		bool foundSupport;
+		// First we establish support based on existing supported map parts
+		do
+		{
+			foundSupport = false;
+			for (auto &s : this->map_parts)
+			{
+				if (s->ticksUntilCollapse == 0)
+				{
+					continue;
+				}
+				if (s->findSupport())
+				{
+					s->ticksUntilCollapse = 0;
+					foundSupport = true;
+					foundSupportOuter = true;
+				}
+			}
+		} while (foundSupport);
+		// Then we link together map parts in straight lines
+		do
+		{
+			foundSupport = false;
+			for (int z = 0; z < mapref.size.z; z++)
+			{
+				// Scan lines on Y axis
+				for (int x = 0; x < mapref.size.x; x++)
+				{
+					std::list<BattleMapPart*> linkedGrounds;
+					std::list<BattleMapPart*> linkedLeftWalls;
+					std::list<BattleMapPart*> linkedFeatures;
+
+					for (int y = 0; y < mapref.size.y; y++)
+					{
+						BattleMapPart *thisGround = nullptr;
+						BattleMapPart *thisLeftWall = nullptr;
+						BattleMapPart *thisFeature = nullptr;
+
+						auto tile = mapref.getTile(x, y, z);
+						for (auto &o : tile->ownedObjects)
+						{
+							switch (o->getType())
+							{
+							case TileObject::Type::Ground:
+								thisGround = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner().get();
+								break;
+							case TileObject::Type::LeftWall:
+								thisLeftWall = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner().get();
+								break;
+							case TileObject::Type::Feature:
+								thisFeature = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner().get();
+								break;
+							}
+						}
+
+						// Logic is the same for all map parts:
+						//
+						// If no map part found - clear list
+						// If map part found:
+						//   If found map part is not falling:
+						//	   If list is not empty then all list is supported
+						//	   In any case, clear list, add it to the list
+						//   If found map part is falling:
+						//     If list is not empty then add it to the list
+						//
+						// Additionally, first and last map parts can use map edge
+						// as one of the supports, therefore, they are always added
+						// to the list at 0, and linked in the end
+
+						if (!thisGround)
+						{
+							linkedGrounds.clear();
+						}
+						else
+						{
+							if (thisGround->ticksUntilCollapse == 0 || y == mapref.size.y - 1)
+							{
+								if (linkedGrounds.size() > 1)
+								{
+									linkedGrounds.push_back(thisGround);
+									linkUpList(linkedGrounds);
+									foundSupport = true;
+									foundSupportOuter = true;
+								}
+								linkedGrounds.clear();
+								linkedGrounds.push_back(thisGround);
+							}
+							else
+							{
+								if (!linkedGrounds.empty() || y == 0)
+								{
+									linkedGrounds.push_back(thisGround);
+								}
+							}
+						}
+
+						if (!thisLeftWall)
+						{
+							linkedLeftWalls.clear();
+						}
+						else
+						{
+							if (thisLeftWall->ticksUntilCollapse == 0 || y == mapref.size.y - 1)
+							{
+								if (linkedLeftWalls.size() > 1)
+								{
+									linkedLeftWalls.push_back(thisLeftWall);
+									linkUpList(linkedLeftWalls);
+									foundSupport = true;
+									foundSupportOuter = true;
+								}
+								linkedLeftWalls.clear();
+								linkedLeftWalls.push_back(thisLeftWall);
+							}
+							else
+							{
+								if (!linkedLeftWalls.empty() || y == 0)
+								{
+									linkedLeftWalls.push_back(thisLeftWall);
+								}
+							}
+						}
+
+						if (!thisFeature)
+						{
+							linkedFeatures.clear();
+						}
+						else
+						{
+							if (thisFeature->ticksUntilCollapse == 0 || y == mapref.size.y - 1)
+							{
+								if (linkedFeatures.size() > 1)
+								{
+									linkedFeatures.push_back(thisFeature);
+									linkUpList(linkedFeatures);
+									foundSupport = true;
+									foundSupportOuter = true;
+								}
+								linkedFeatures.clear();
+								linkedFeatures.push_back(thisFeature);
+							}
+							else
+							{
+								if (!linkedFeatures.empty() || y == 0)
+								{
+									linkedFeatures.push_back(thisFeature);
+								}
+							}
+						}
+					}
+				}
+
+				// Scan lines on X axis
+				for (int y = 0; y < mapref.size.y;y++)
+				{
+					std::list<BattleMapPart*> linkedGrounds;
+					std::list<BattleMapPart*> linkedRightWalls;
+					std::list<BattleMapPart*> linkedFeatures;
+
+					for (int x = 0; x < mapref.size.x; x++)
+					{
+						BattleMapPart *thisGround = nullptr;
+						BattleMapPart *thisRightWall = nullptr;
+						BattleMapPart *thisFeature = nullptr;
+
+						auto tile = mapref.getTile(x, y, z);
+						for (auto &o : tile->ownedObjects)
+						{
+							switch (o->getType())
+							{
+							case TileObject::Type::Ground:
+								thisGround = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner().get();
+								break;
+							case TileObject::Type::RightWall:
+								thisRightWall = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner().get();
+								break;
+							case TileObject::Type::Feature:
+								thisFeature = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner().get();
+								break;
+							}
+						}
+
+						// Logic is the same for all map parts:
+						//
+						// If no map part found - clear list
+						// If map part found:
+						//   If found map part is not falling:
+						//	   If list is not empty then all list is supported
+						//	   In any case, clear list, add it to the list
+						//   If found map part is falling:
+						//     If list is not empty then add it to the list
+						//
+						// Additionally, first and last map parts can use map edge
+						// as one of the supports, therefore, they are always added
+						// to the list at 0, and linked in the end
+
+						if (!thisGround)
+						{
+							linkedGrounds.clear();
+						}
+						else
+						{
+							if (thisGround->ticksUntilCollapse == 0 || x == mapref.size.x - 1)
+							{
+								if (linkedGrounds.size() > 1)
+								{
+									linkedGrounds.push_back(thisGround);
+									linkUpList(linkedGrounds);
+									foundSupport = true;
+									foundSupportOuter = true;
+								}
+								linkedGrounds.clear();
+								linkedGrounds.push_back(thisGround);
+							}
+							else
+							{
+								if (!linkedGrounds.empty() || x == 0)
+								{
+									linkedGrounds.push_back(thisGround);
+								}
+							}
+						}
+
+						if (!thisRightWall)
+						{
+							linkedRightWalls.clear();
+						}
+						else
+						{
+							if (thisRightWall->ticksUntilCollapse == 0 || x == mapref.size.x - 1)
+							{
+								if (linkedRightWalls.size() > 1)
+								{
+									linkedRightWalls.push_back(thisRightWall);
+									linkUpList(linkedRightWalls);
+									foundSupport = true;
+									foundSupportOuter = true;
+								}
+								linkedRightWalls.clear();
+								linkedRightWalls.push_back(thisRightWall);
+							}
+							else
+							{
+								if (!linkedRightWalls.empty() || x == 0)
+								{
+									linkedRightWalls.push_back(thisRightWall);
+								}
+							}
+						}
+
+						if (!thisFeature)
+						{
+							linkedFeatures.clear();
+						}
+						else
+						{
+							if (thisFeature->ticksUntilCollapse == 0 || x == mapref.size.x - 1)
+							{
+								if (linkedFeatures.size() > 1)
+								{
+									linkedFeatures.push_back(thisFeature);
+									linkUpList(linkedFeatures);
+									foundSupport = true;
+									foundSupportOuter = true;
+								}
+								linkedFeatures.clear();
+								linkedFeatures.push_back(thisFeature);
+							}
+							else
+							{
+								if (!linkedFeatures.empty() || x == 0)
+								{
+									linkedFeatures.push_back(thisFeature);
+								}
+							}
+						}
+					}
+				}
+			}
+		} while (foundSupport);
+	} while (foundSupportOuter);
+
+	for (auto &mp : this->map_parts)
+	{
+		if (mp->ticksUntilCollapse > 0)
+		{
+			auto pos = mp->tileObject->getOwningTile()->position;
+			LogWarning("Map part with supported by type %d at %d %d %d is going to fall", (int)mp->type->supported_by, pos.x, pos.y, pos.z);
+		}
+	}
+
+	mapref.updateAllBattlescapeInfo();
+	LogWarning("Link up finished!");
+}
+*/
 void Battle::setMode(Mode mode)
 {
 	this->mode = mode;
@@ -1028,7 +1425,7 @@ void Battle::enterBattle(GameState &state)
 		// FIXME: Make X-COM hostile to target org for the duration of this mission
 	}
 
-	state.current_battle->initBattle(state);
+	state.current_battle->initBattle(state, true);
 }
 
 // To be called when battle must be finished and before showing score screen
@@ -1039,6 +1436,8 @@ void Battle::finishBattle(GameState &state)
 		LogError("Battle::FinishBattle called with no battle!");
 		return;
 	}
+	
+	state.current_battle->unloadResources(state);
 	//  - Identify how battle ended(if enemies present then Failure, otherwise Success)
 	//	- (Failure) Determine surviving player agents(kill all player agents that are too far from
 	// exits)
@@ -1065,7 +1464,6 @@ void Battle::exitBattle(GameState &state)
 		return;
 	}
 
-	state.current_battle->unloadResources(state);
 	//  - Apply score
 	//	- (UFO mission) Clear UFO crash
 	//	- Load loot into vehicles

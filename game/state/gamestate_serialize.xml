@@ -36,9 +36,6 @@
 		<member>rng</member>
 		<member>gameTime</member>
 		<member>gameTimeBeforeBattle</member>
-		<member type="SectionMap">battle_unit_image_packs</member>
-		<member type="SectionMap">battle_unit_animation_packs</member>
-		<member type="Section">battleMapTiles</member>
 		<member type="SectionMap">battle_maps</member>
 		<member type="Section">current_battle</member>
 		<member type="Section">damage_modifiers</member>
@@ -540,19 +537,22 @@
 		<member>bounced</member>
 		<member>falling</member>
 		<member>ownerInvulnerableTicks</member>
-		<member>ticksUntilTryCollapse</member>
+		<member>ticksUntilCollapse</member>
 	</object>
 	<object>
 		<name>BattleMapPart</name>
 		<member>type</member>
 		<member>alternative_type</member>
-		<member>initialPosition</member>
-		<member>currentPosition</member>
-		<member>ticksUntilTryCollapse</member>
+		<member>position</member>
+		<member>ticksUntilCollapse</member>
 		<member>damaged</member>
 		<member>falling</member>
+		<member>fallingSpeed</member>
 		<member>destroyed</member>
+		<member>providesHardSupport</member>
 		<member>door</member>
+		<member>supportedItems</member>
+		<member>supportedParts</member>
 	</object>
 	<object>
 		<name>BattleDoor</name>
@@ -1117,17 +1117,15 @@
 		<value>EastAbove</value>
 		<value>SouthAbove</value>
 		<value>WestAbove</value>
-		<value>Unknown30</value>
-		<value>Unknown32</value>
-		<value>Unknown36</value>
-		<value>Unknown41</value>
-		<value>Unknown42</value>
-		<value>Unknown43</value>
-		<value>Unknown44</value>
-		<value>Unknown51</value>
-		<value>Unknown52</value>
-		<value>Unknown53</value>
-		<value>Unknown54</value>
+		<value>WallsNorthWest</value>
+		<value>AnotherNorth</value>
+		<value>AnotherEast</value>
+		<value>AnotherSouth</value>
+		<value>AnotherWest</value>
+		<value>AnotherNorthBelow</value>
+		<value>AnotherEastBelow</value>
+		<value>AnotherSouthBelow</value>
+		<value>AnotherWestBelow</value>
 	</enum>
 	<enum>
 		<name>Projectile::Type</name>
