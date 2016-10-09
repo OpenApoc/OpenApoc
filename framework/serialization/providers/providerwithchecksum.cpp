@@ -1,5 +1,6 @@
 #define SHA1_CHECKSUM
 #include "framework/serialization/providers/providerwithchecksum.h"
+#include "framework/configfile.h"
 #include "framework/logger.h"
 #include "framework/trace.h"
 #include "library/strings.h"
@@ -14,18 +15,18 @@ namespace fs = boost::filesystem;
 
 #include "dependencies/pugixml/src/pugixml.hpp"
 
-#if defined(SHA1_CHECKSUM)
+#include <boost/crc.hpp>
 #include <boost/uuid/sha1.hpp>
 #include <boost/uuid/uuid.hpp>
-#else
-#include <boost/crc.hpp>
-#endif
 
 namespace OpenApoc
 {
+ConfigOptionBool useCRCChecksum("Framework.Serialization", "CRC",
+                                "use a CRC checksum when saving files", true);
+ConfigOptionBool useSHA1Checksum("Framework.Serialization", "SHA1",
+                                 "use a SHA1 checksum when saving files", false);
 
-#if defined(SHA1_CHECKSUM)
-static UString calculate_checksum(const std::string &str)
+static UString calculateSHA1Checksum(const std::string &str)
 {
 	TRACE_FN;
 	UString hashString;
@@ -49,8 +50,7 @@ static UString calculate_checksum(const std::string &str)
 
 	return hashString;
 }
-#else
-static UString calculate_checksum(const std::string &str)
+static UString calculateCRCChecksum(const std::string &str)
 {
 	TRACE_FN;
 	UString hashString;
@@ -61,7 +61,24 @@ static UString calculate_checksum(const std::string &str)
 	hashString = format("%08x", hash);
 	return hashString;
 }
-#endif
+
+static UString calculateChecksum(const UString &type, const std::string &str)
+{
+	if (type == "CRC")
+	{
+		return calculateCRCChecksum(str);
+	}
+	else if (type == "SHA1")
+	{
+		return calculateSHA1Checksum(str);
+	}
+	else
+	{
+		LogWarning("Unknown checksum type \"%s\"", type.cStr());
+		return "";
+	}
+}
+
 std::string ProviderWithChecksum::serializeManifest()
 {
 	pugi::xml_document manifestDoc;
@@ -70,12 +87,17 @@ std::string ProviderWithChecksum::serializeManifest()
 	decl.append_attribute("encoding") = "UTF-8";
 	auto root = manifestDoc.root().append_child();
 	root.set_name("checksums");
-	for (auto &p : contents)
+	for (auto &p : checksums)
 	{
 		auto node = root.append_child();
-		node.set_name("checksum");
+		node.set_name("file");
 		node.text().set(p.first.cStr());
-		node.append_attribute("SHA1") = p.second.c_str();
+		for (auto &csum : p.second)
+		{
+			auto checksumNode = node.append_child();
+			checksumNode.set_name(csum.first.cStr());
+			checksumNode.text().set(csum.second.cStr());
+		}
 	}
 	std::stringstream ss;
 	manifestDoc.save(ss, "  ");
@@ -99,22 +121,29 @@ bool ProviderWithChecksum::parseManifest(const std::string &manifestData)
 		LogWarning("checksum.xml has invalid root node");
 		return false;
 	}
-	auto checksumNode = rootNode.child("checksum");
-	while (checksumNode)
+	auto fileNode = rootNode.child("file");
+	while (fileNode)
 	{
-		UString fileName = checksumNode.text().get();
-		auto shaAttribute = checksumNode.attribute("SHA1");
-		if (!shaAttribute)
+		UString fileName = fileNode.text().get();
+
+		if (this->checksums.find(fileName) != this->checksums.end())
 		{
-			LogWarning("checksum.xml checksum node \"%s\" has no SHA1 attribute", fileName.cStr());
-			contents[fileName] = "";
+			LogWarning("Multiple manifest entries for path \"%s\"", fileName.cStr());
 		}
-		else
+
+		this->checksums[fileName] = {};
+
+		auto checksumNode = fileNode.first_child();
+		while (checksumNode)
 		{
-			contents[fileName] = shaAttribute.value();
+			if (checksumNode.type() == pugi::xml_node_type::node_element)
+			{
+				UString checksumType = checksumNode.name();
+				this->checksums[fileName][checksumType] = checksumNode.text().get();
+			}
+			checksumNode = checksumNode.next_sibling();
 		}
-		LogInfo("Manifest \"%s\" sha1=\"%s\"", fileName.cStr(), shaAttribute.value());
-		checksumNode = checksumNode.next_sibling("checksum");
+		fileNode = fileNode.next_sibling("file");
 	}
 
 	return true;
@@ -143,19 +172,21 @@ bool ProviderWithChecksum::readDocument(const UString &path, UString &result)
 {
 	if (inner->readDocument(path, result))
 	{
-		auto sha1Sum = calculate_checksum(result.str());
-		auto expectedSha1Sum = contents[path.str()];
-		if (expectedSha1Sum != "")
+		for (auto &csum : checksums[path.str()])
 		{
-			if (sha1Sum != expectedSha1Sum)
+			auto expectedCSum = csum.second;
+			auto calculatedCSum = calculateChecksum(csum.first, result.str());
+			if (expectedCSum != calculatedCSum)
 			{
-				LogWarning("File \"%s\" has incorrect checksum \"%s\", expected \"%s\"",
-				           path.cStr(), sha1Sum.cStr(), expectedSha1Sum.c_str());
+				LogWarning("File \"%s\" has incorrect \"%s\" checksum \"%s\", expected \"%s\"",
+				           path.cStr(), csum.first.cStr(), calculatedCSum.cStr(),
+				           expectedCSum.cStr());
 			}
-		}
-		else
-		{
-			LogInfo("Skipping missing checksum for file \"%s\"", path.cStr());
+			else
+			{
+				LogDebug("File \"%s\" matches \"%s\" checksum \"%s\"", path.cStr(),
+				         csum.first.cStr(), calculatedCSum.cStr());
+			}
 		}
 		return true;
 	}
@@ -164,9 +195,18 @@ bool ProviderWithChecksum::readDocument(const UString &path, UString &result)
 }
 bool ProviderWithChecksum::saveDocument(const UString &path, UString contents)
 {
+
 	if (inner->saveDocument(path, contents))
 	{
-		this->contents[path.str()] = calculate_checksum(contents.str()).str();
+		if (this->checksums.find(path) != this->checksums.end())
+		{
+			LogWarning("Multiple document entries for path \"%s\"", path.cStr());
+		}
+		this->checksums[path.str()] = {};
+		if (useCRCChecksum.get())
+			this->checksums[path.str()]["CRC"] = calculateChecksum("CRC", contents.str()).str();
+		if (useSHA1Checksum.get())
+			this->checksums[path.str()]["SHA1"] = calculateChecksum("SHA1", contents.str()).str();
 		return true;
 	}
 	return false;

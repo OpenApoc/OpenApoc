@@ -11,7 +11,9 @@ namespace OpenApoc
 class ProviderWithChecksum : public SerializationDataProvider
 {
   private:
-	std::map<UString, std::string> contents;
+	// checksums is a map of {"file/path", { {"CHECKSUM1_TYPE", "CHECKSUM1_VALUE"},
+	// {"CHECKSUM2_TYPE", "CHECKSUM2_VALUE"}}}
+	std::map<UString, std::map<UString, UString>> checksums;
 	sp<SerializationDataProvider> inner;
 	std::string serializeManifest();
 	bool parseManifest(const std::string &manifestData);
