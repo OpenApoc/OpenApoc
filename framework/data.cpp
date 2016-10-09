@@ -19,6 +19,11 @@
 #include <mutex>
 #include <queue>
 
+#define BOOST_ALL_NO_LIB
+// boost::fs used to create directories in writeImage
+#include <boost/filesystem.hpp>
+namespace fs = boost::filesystem;
+
 using namespace OpenApoc;
 
 namespace OpenApoc
@@ -692,6 +697,9 @@ sp<Video> DataImpl::loadVideo(const UString &path)
 
 bool DataImpl::writeImage(UString systemPath, sp<Image> image, sp<Palette> palette)
 {
+	auto outPath = fs::path(systemPath.str());
+	auto outDir = outPath.parent_path();
+	fs::create_directories(outDir);
 	std::ofstream outFile(systemPath.str(), std::ios::binary);
 	if (!outFile)
 	{
