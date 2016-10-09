@@ -113,4 +113,5 @@ data/difficulty5_patched
 data/imagepacks
 data/maps
 data/tilesets
+data/bulletsprites
 *.xml
