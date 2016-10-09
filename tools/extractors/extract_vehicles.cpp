@@ -108,7 +108,7 @@ static void extract_equipment_layout(GameState &state, sp<VehicleType> vehicle, 
 	}
 }
 
-void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
+void InitialGameStateExtractor::extractVehicles(GameState &state)
 {
 	auto &data = this->ufo2p;
 	LogInfo("Number of vehicle strings: %zu", data.vehicle_names->readStrings.size());

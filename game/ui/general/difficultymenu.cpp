@@ -31,6 +31,11 @@ std::future<sp<GameState>> loadGame(const UString &path)
 	auto loadTask = fw().threadPoolEnqueue([path]() -> sp<GameState> {
 
 		auto state = mksp<GameState>();
+		if (!state->loadGame("data/gamestate_common"))
+		{
+			LogError("Failed to load common gamestate");
+			return nullptr;
+		}
 		if (!state->loadGame(path))
 		{
 			LogError("Failed to load '%s'", path.cStr());

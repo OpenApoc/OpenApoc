@@ -7,7 +7,7 @@
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::extractResearch(GameState &state, Difficulty)
+void InitialGameStateExtractor::extractResearch(GameState &state)
 {
 	auto &data = this->ufo2p;
 	for (unsigned i = 0; i < data.research_data->count(); i++)
