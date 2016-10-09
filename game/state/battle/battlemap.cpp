@@ -926,7 +926,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 			{
 				std::list<Vec3<int>> locationsToCheck;
 				std::set<Vec3<int>> locationsVisited;
-				
+
 				auto d = b->addDoor(state);
 				d->right = i == 1;
 				d->operational = true;

@@ -474,8 +474,6 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 	return closestEnemy;
 }
 
-
-
 void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
                            sp<TileObjectVehicle> enemyTile)
 {
@@ -498,7 +496,8 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 		if (vehicleTile->map.findCollision(firePosition, target, scenerySet))
 			continue;
 
-		City::accuracyAlgorithmCity(state, firePosition, target, equipment->type->accuracy + this->getAccuracy());
+		City::accuracyAlgorithmCity(state, firePosition, target,
+		                            equipment->type->accuracy + this->getAccuracy());
 
 		auto projectile = equipment->fire(target, {&state, enemyTile->getVehicle()});
 		if (projectile)

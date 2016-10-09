@@ -2,8 +2,8 @@
 #include "game/state/rules/vehicle_type.h"
 #include "library/sp.h"
 #include "library/strings.h"
-#include <glm/gtx/vector_angle.hpp>
 #include <glm/glm.hpp>
+#include <glm/gtx/vector_angle.hpp>
 #include <map>
 
 namespace OpenApoc

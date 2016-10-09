@@ -15,7 +15,8 @@ namespace OpenApoc
 
 AEquipment::AEquipment() : equippedPosition(0, 0), ammo(0) {}
 
-int AEquipment::getAccuracy(AgentType::BodyState bodyState, AgentType::MovementState movementState, BattleUnit::FireAimingMode fireMode, bool thrown)
+int AEquipment::getAccuracy(AgentType::BodyState bodyState, AgentType::MovementState movementState,
+                            BattleUnit::FireAimingMode fireMode, bool thrown)
 {
 	if (!ownerAgent)
 	{
@@ -39,13 +40,14 @@ int AEquipment::getAccuracy(AgentType::BodyState bodyState, AgentType::MovementS
 	// Take agent and weapon's accuracy
 
 	auto agentAccuracy = (float)ownerAgent->modified_stats.accuracy;
-	auto payloadAccuracy = type->type == AEquipmentType::Type::Weapon ? (float)payload->accuracy : 100.0f;
+	auto payloadAccuracy =
+	    type->type == AEquipmentType::Type::Weapon ? (float)payload->accuracy : 100.0f;
 
 	// Calculate dispersion, the inverse of accuracy, and scale values to 0-1 for simplicity
 
 	float agentDispersion = 1.0f - agentAccuracy / 100.0f;
 	float weaponDispersion = 1.0f - payloadAccuracy / 100.0f;
-	
+
 	if (thrown)
 	{
 		return agentAccuracy;
@@ -57,12 +59,15 @@ int AEquipment::getAccuracy(AgentType::BodyState bodyState, AgentType::MovementS
 		agentDispersion *= (float)fireMode;
 
 		// Moving also increase it: Moving or flying by 1,35x running by 1,70x
-		agentDispersion *= movementState == AgentType::MovementState::None
-			&& bodyState != AgentType::BodyState::Flying ? 1.00f
-			: (movementState == AgentType::MovementState::Running ? 1.70f : 1.35f);
+		agentDispersion *=
+		    movementState == AgentType::MovementState::None &&
+		            bodyState != AgentType::BodyState::Flying
+		        ? 1.00f
+		        : (movementState == AgentType::MovementState::Running ? 1.70f : 1.35f);
 
 		// Having both hands busy also increases it by another 1,5x
-		if (ownerAgent->getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::LeftHand) && ownerAgent->getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::RightHand))
+		if (ownerAgent->getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::LeftHand) &&
+		    ownerAgent->getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::RightHand))
 		{
 			agentDispersion *= 1.5f;
 		}
@@ -85,10 +90,10 @@ int AEquipment::getAccuracy(AgentType::BodyState bodyState, AgentType::MovementS
 	//   tD = qrt(ad^3 + pd^3)
 	// which can be further simplified to:
 	//   tD = qrt((agentDispersion / 5) ^ 3/2 + weaponDispersion / 10)
-	float totalDispersion = powf(powf(agentDispersion / 5.0f, 3.0f / 2.0f) + weaponDispersion / 10.0f, 1.0f / 3.0f);
+	float totalDispersion =
+	    powf(powf(agentDispersion / 5.0f, 3.0f / 2.0f) + weaponDispersion / 10.0f, 1.0f / 3.0f);
 
 	return std::max(0, (int)(100.0f - totalDispersion * 100.0f));
-	
 }
 
 void AEquipment::stopFiring()

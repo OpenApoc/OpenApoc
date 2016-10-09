@@ -31,7 +31,7 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 
 	// Item can bounce once after being thrown
 	bool bounced = false;
-	
+
 	bool falling = false;
 
 	unsigned int ownerInvulnerableTicks = 0;
@@ -63,6 +63,5 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 
   private:
 	bool findSupport();
-
 };
 } // namespace OpenApoc

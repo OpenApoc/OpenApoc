@@ -112,9 +112,10 @@ void TileObject::setPosition(Vec3<float> newPosition)
 	Vec3<int> minBounds = {floorf(newPosition.x + getCenterOffset().x - getVoxelOffset().x),
 	                       floorf(newPosition.y + getCenterOffset().y - getVoxelOffset().y),
 	                       floorf(newPosition.z + getCenterOffset().z - getVoxelOffset().z)};
-	Vec3<int> maxBounds = {ceilf(newPosition.x + getCenterOffset().x - getVoxelOffset().x + this->bounds.x),
-	                       ceilf(newPosition.y + getCenterOffset().y - getVoxelOffset().y + this->bounds.y),
-	                       ceilf(newPosition.z + getCenterOffset().z - getVoxelOffset().z + this->bounds.z)};
+	Vec3<int> maxBounds = {
+	    ceilf(newPosition.x + getCenterOffset().x - getVoxelOffset().x + this->bounds.x),
+	    ceilf(newPosition.y + getCenterOffset().y - getVoxelOffset().y + this->bounds.y),
+	    ceilf(newPosition.z + getCenterOffset().z - getVoxelOffset().z + this->bounds.z)};
 
 	for (int x = minBounds.x; x < maxBounds.x; x++)
 	{

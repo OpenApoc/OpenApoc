@@ -1443,7 +1443,10 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				}
 				else
 				{
-					Battle::accuracyAlgorithmBattle(state, muzzleLocation, targetPosition, firingWeapon->getAccuracy(current_body_state, current_movement_state, fire_aiming_mode));
+					Battle::accuracyAlgorithmBattle(
+					    state, muzzleLocation, targetPosition,
+					    firingWeapon->getAccuracy(current_body_state, current_movement_state,
+					                              fire_aiming_mode));
 					auto p = firingWeapon->fire(targetPosition, targetUnit);
 					map.addObjectToMap(p);
 					state.current_battle->projectiles.insert(p);

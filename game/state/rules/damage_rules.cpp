@@ -55,7 +55,8 @@ int DamageType::dealDamage(int damage, StateRef<DamageModifier> modifier) const
 {
 	if (modifiers.find(modifier) == modifiers.end())
 	{
-		LogError("Do not know how to deal damage type %s to modifier %s!", id.cStr(), modifier.id.cStr());
+		LogError("Do not know how to deal damage type %s to modifier %s!", id.cStr(),
+		         modifier.id.cStr());
 		return damage;
 	}
 	else

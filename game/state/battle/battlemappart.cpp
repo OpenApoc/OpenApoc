@@ -59,10 +59,10 @@ bool BattleMapPart::handleCollision(GameState &state, Collision &c)
 	}
 
 	// If we came this far, map part has been damaged and must cease to be
-	
+
 	// Cease functioning if door
 	ceaseDoorFunction();
-	
+
 	// Doodad
 	auto doodad = state.current_battle->placeDoodad({&state, "DOODAD_29_EXPLODING_TERRAIN"},
 	                                                tileObject->getCenter());
@@ -116,9 +116,8 @@ void BattleMapPart::ceaseDoorFunction()
 bool BattleMapPart::findSupport()
 {
 	// There are two ways battle map part can get supported:
-	// 1) It's "Supported by" condition is satisfied 
+	// 1) It's "Supported by" condition is satisfied
 	// 2) It has adjacent supporting map parts on two sides
-	
 
 	// FIXME: Implement
 	//
@@ -152,10 +151,7 @@ void BattleMapPart::ceaseSupportProvision()
 	this->supportedItems.clear();
 }
 
-void BattleMapPart::queueTryCollapse()
-{
-	ticksUntilTryCollapse = 4;
-}
+void BattleMapPart::queueTryCollapse() { ticksUntilTryCollapse = 4; }
 
 void BattleMapPart::tryCollapse()
 {

@@ -917,8 +917,8 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state, Difficulty)
 					a->built_in_weapon_left = {
 
 					    &state, format("%s%s", AEquipmentType::getPrefix(),
-					                            canon_string(data_u.agent_equipment_names->get(
-					                                es_data.weapons[1].weapon_idx)))};
+					                   canon_string(data_u.agent_equipment_names->get(
+					                       es_data.weapons[1].weapon_idx)))};
 				name = "BUILTIN";
 			}
 		}

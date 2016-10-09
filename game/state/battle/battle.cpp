@@ -164,7 +164,6 @@ void Battle::initBattle(GameState &state)
 			o->tryCollapse();
 		}
 	}
-
 }
 
 void Battle::initMap()
@@ -345,14 +344,14 @@ void Battle::update(GameState &state, unsigned int ticks)
 	}
 }
 
-
-void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition, Vec3<float> &target, int accuracy, bool thrown)
+void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
+                                     Vec3<float> &target, int accuracy, bool thrown)
 {
 	auto dispersion = (float)(100 - accuracy);
 	auto delta = (target - firePosition) * dispersion / 1000.0f;
 
-	float length_vector = 1.0f /
-		std::sqrt(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z);
+	float length_vector =
+	    1.0f / std::sqrt(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z);
 
 	std::vector<float> rnd(3);
 	while (true)
@@ -369,13 +368,18 @@ void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
 	// Vertical misses always go down
 	float k1 = rnd[1] * std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
 	// Horizontal misses go left or right randomly
-	float k2 = (2 * randBoundsInclusive(state.rng, 0, 1) - 1)* rnd[2] * std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
+	float k2 = (2 * randBoundsInclusive(state.rng, 0, 1) - 1) * rnd[2] *
+	           std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
 
-	auto diffVertical = Vec3<float>{ length_vector * delta.x * delta.z, length_vector * delta.y * delta.z, -length_vector * (delta.x * delta.x + delta.y * delta.y) } * k1;
-	auto diffHorizontal = Vec3<float>{ -delta.y, delta.x, 0.0f } *k2;
-	
-	auto diff = (diffVertical + diffHorizontal) * (thrown ? Vec3<float>{3.0f, 3.0f, 0.0f} : Vec3<float>{1.0f, 1.0f, 0.33f});
-	
+	auto diffVertical =
+	    Vec3<float>{length_vector * delta.x * delta.z, length_vector * delta.y * delta.z,
+	                -length_vector * (delta.x * delta.x + delta.y * delta.y)} *
+	    k1;
+	auto diffHorizontal = Vec3<float>{-delta.y, delta.x, 0.0f} * k2;
+
+	auto diff = (diffVertical + diffHorizontal) *
+	            (thrown ? Vec3<float>{3.0f, 3.0f, 0.0f} : Vec3<float>{1.0f, 1.0f, 0.33f});
+
 	target += diff;
 }
 

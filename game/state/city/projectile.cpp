@@ -93,7 +93,6 @@ void Projectile::update(GameState &state, unsigned int ticks)
 			rotationMat = glm::rotate(rotationMat, angleToTarget, cross);
 			velocity = glm::vec3(rotationMat * glm::vec4(velocity, 1.0));
 		}
-
 	}
 
 	// Apply velocity

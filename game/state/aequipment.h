@@ -50,7 +50,8 @@ class AEquipment
 	// Aiming mode for the weapon
 	BattleUnit::FireAimingMode aimingMode = BattleUnit::FireAimingMode::Aimed;
 
-	int getAccuracy(AgentType::BodyState bodyState, AgentType::MovementState movementState, BattleUnit::FireAimingMode fireMode, bool thrown = false);
+	int getAccuracy(AgentType::BodyState bodyState, AgentType::MovementState movementState,
+	                BattleUnit::FireAimingMode fireMode, bool thrown = false);
 
 	bool isFiring() { return weapon_fire_ticks_remaining > 0 || readyToFire; };
 	bool canFire(float range = 0.0f);
@@ -70,7 +71,8 @@ class AEquipment
 	// actually used.
 	int reload(int ammoAvailable);
 	*/
-	// Wether this weapon works like brainsucker launcher, throwing it's ammunition instead of firing a projectile
+	// Wether this weapon works like brainsucker launcher, throwing it's ammunition instead of
+	// firing a projectile
 	bool isLauncher();
 	sp<Projectile> fire(Vec3<float> targetPosition, StateRef<BattleUnit> targetUnit = nullptr);
 	void launch(Vec3<float> &targetPosition, Vec3<float> &velocity);

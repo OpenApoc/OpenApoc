@@ -1,15 +1,15 @@
 #include "game/state/battle/battledoor.h"
 
-#include "game/state/tileview/tileobject_battleunit.h"
-#include "game/state/battle/battleunit.h"
 #include "framework/framework.h"
 #include "framework/sound.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
+#include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
+#include "game/state/tileview/tileobject_battleunit.h"
 
 namespace OpenApoc
 {
