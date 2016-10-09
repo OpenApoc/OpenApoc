@@ -64,14 +64,14 @@ namespace OpenApoc
 {
 ConfigOptionInt stderrLogLevelOption(
     "Logger", "StderrLevel",
-    "Loglevel to output to stderr (0 = nothing, 1 = error, 2 = warning, 3 = info) ", 2);
-ConfigOptionInt
-    fileLogLevelOption("Logger", "FileLevel",
-                       "Loglevel to output to file (0 = nothing, 1 = error, 2 = warning, 3 = info)",
-                       3);
+    "Loglevel to output to stderr (0 = nothing, 1 = error, 2 = warning, 3 = info, 4 = debug) ", 2);
+ConfigOptionInt fileLogLevelOption(
+    "Logger", "FileLevel",
+    "Loglevel to output to file (0 = nothing, 1 = error, 2 = warning, 3 = info, 4 = debug)", 3);
 ConfigOptionInt backtraceLogLevelOption(
     "Logger", "BacktraceLevel",
-    "Loglevel to print a backtrace on (0 = nothing, 1 = error, 2 = warning, 3 = info)", 1);
+    "Loglevel to print a backtrace on (0 = nothing, 1 = error, 2 = warning, 3 = info, 4 = debug)",
+    1);
 ConfigOptionString logFileOption("Logger", "File", "File to write log to", LOG_PATH LOGFILE);
 ConfigOptionBool showDialogOnErrorOption("Logger", "ShowDialog", "Show dialog on error", true);
 
