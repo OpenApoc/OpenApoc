@@ -33,6 +33,9 @@ bool ZipDataProvider::openArchive(const UString &path, bool write)
 	writing = write;
 	if (write)
 	{
+		auto outPath = fs::path(path.str());
+		auto outDir = outPath.parent_path();
+		fs::create_directories(outDir);
 		if (!mz_zip_writer_init_file(&archive, path.cStr(), 0))
 		{
 			LogWarning("Failed to init zip file \"%s\" for writing", path.cStr());

@@ -56,11 +56,17 @@ int main(int argc, char *argv[])
 		    {"data/difficulty5", InitialGameStateExtractor::Difficulty::DIFFICULTY_5},
 		};
 
-		/*
-		auto dpair = std::pair<UString,
-		InitialGameStateExtractor::Difficulty>("data/difficulty1",
-		InitialGameStateExtractor::Difficulty::DIFFICULTY_1);
-		*/
+		{
+			GameState s;
+			LogWarning("Extracting common gamestate");
+			e.extractCommon(s);
+			LogWarning("Importing common patch");
+			s.loadGame("data/common_patch");
+			LogWarning("Saving common gamestate");
+			s.saveGame("data/gamestate_common", false);
+			LogWarning("Saved common gamestate");
+		}
+
 		for (auto &dpair : difficultyOutputFiles)
 		{
 			GameState s;

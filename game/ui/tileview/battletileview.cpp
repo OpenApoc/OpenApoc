@@ -678,8 +678,8 @@ void BattleTileView::render()
 								if (obj->getType() == TileObject::Type::Item)
 								{
 									draw = std::static_pointer_cast<TileObjectBattleItem>(obj)
-									            ->getItem()
-									            ->falling;
+									           ->getItem()
+									           ->falling;
 								}
 								if (obj->getType() == TileObject::Type::Projectile)
 								{
@@ -720,7 +720,7 @@ void BattleTileView::render()
 
 				// Health from 0 to 15, where 15 = 100%, 14 = less than 99.9% and 0 = 0%+
 				int health = obj.first->agent->modified_stats.health * 15 /
-					obj.first->agent->current_stats.health;
+				             obj.first->agent->current_stats.health;
 
 				if (health < 0)
 					continue;

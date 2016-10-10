@@ -54,6 +54,7 @@ bool test_gamestate_serialization(sp<GameState> state)
 
 int main(int argc, char **argv)
 {
+	config().addPositionalArgument("common", "Common gamestate to load");
 	config().addPositionalArgument("gamestate", "Gamestate to load");
 
 	if (config().parseOptions(argc, argv))
@@ -65,6 +66,13 @@ int main(int argc, char **argv)
 	if (gamestate_name.empty())
 	{
 		std::cerr << "Must provide gamestate\n";
+		config().showHelp();
+		return EXIT_FAILURE;
+	}
+	auto common_name = config().getString("common");
+	if (common_name.empty())
+	{
+		std::cerr << "Must provide common gamestate\n";
 		config().showHelp();
 		return EXIT_FAILURE;
 	}
@@ -83,10 +91,15 @@ int main(int argc, char **argv)
 			return EXIT_FAILURE;
 		}
 	}
+	if (!state->loadGame(common_name))
+	{
+		LogError("Failed to load gamestate_common");
+		return EXIT_FAILURE;
+	}
 
 	if (!state->loadGame(gamestate_name))
 	{
-		LogError("Failed to load difficulty1_patched");
+		LogError("Failed to load supplied gamestate");
 		return EXIT_FAILURE;
 	}
 	LogInfo("Testing non-started non-inited state");

@@ -68,7 +68,22 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -81,7 +96,8 @@
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>Generating data</Message>
-      <Outputs>$(SolutionDir)\data\difficulty1_patched</Outputs>
+      <Outputs>difficulty1_patched\gamestate.xml</Outputs>
+      <Inputs>"$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe"</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -96,7 +112,8 @@
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>Generating data</Message>
-      <Outputs>$(SolutionDir)\data\difficulty1_patched</Outputs>
+      <Outputs>difficulty1_patched\gamestate.xml</Outputs>
+      <Inputs>"$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe"</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -115,7 +132,8 @@
       <Command>cd /D "$(SolutionDir)"
 "$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe" --Framework.CD="$(SolutionDir)\data\cd.iso" --Framework.Data="$(SolutionDir)\data"</Command>
       <Message>Generating data</Message>
-      <Outputs>$(SolutionDir)\data\difficulty1_patched</Outputs>
+      <Outputs>difficulty1_patched\gamestate.xml</Outputs>
+      <Inputs>"$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe"</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -134,7 +152,8 @@
       <Command>cd /D "$(SolutionDir)"
 "$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe" --Framework.CD="$(SolutionDir)\data\cd.iso" --Framework.Data="$(SolutionDir)\data"</Command>
       <Message>Generating data</Message>
-      <Outputs>$(SolutionDir)\data\difficulty1_patched</Outputs>
+      <Outputs>difficulty1_patched\gamestate.xml</Outputs>
+      <Inputs>"$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe"</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -145,4 +164,17 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <Target Name="AfterClean">
+    <RemoveDir Directories="$(SolutionDir)\data\difficulty1_patched" ContinueOnError="true" />
+    <RemoveDir Directories="$(SolutionDir)\data\difficulty2_patched" ContinueOnError="true" />
+    <RemoveDir Directories="$(SolutionDir)\data\difficulty3_patched" ContinueOnError="true" />
+    <RemoveDir Directories="$(SolutionDir)\data\difficulty4_patched" ContinueOnError="true" />
+    <RemoveDir Directories="$(SolutionDir)\data\difficulty5_patched" ContinueOnError="true" />
+    <RemoveDir Directories="$(SolutionDir)\data\gamestate_common" ContinueOnError="true" />
+    <RemoveDir Directories="$(SolutionDir)\data\animationpacks" ContinueOnError="true" />
+    <RemoveDir Directories="$(SolutionDir)\data\bulletsprites" ContinueOnError="true" />
+    <RemoveDir Directories="$(SolutionDir)\data\imagepacks" ContinueOnError="true" />
+    <RemoveDir Directories="$(SolutionDir)\data\maps" ContinueOnError="true" />
+    <RemoveDir Directories="$(SolutionDir)\data\tilesets" ContinueOnError="true" />
+  </Target>
 </Project>

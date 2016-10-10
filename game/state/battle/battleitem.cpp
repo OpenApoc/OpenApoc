@@ -80,7 +80,7 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 			collapse();
 		}
 	}
-	
+
 	if (!falling)
 	{
 		return;
@@ -135,10 +135,11 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 				}
 			// Intentional fall-through
 			case TileObject::Type::Ground:
-				// Let item fall so that it can collide with scenery or ground if falling on top of it
-				newPosition = { previousPosition.x, previousPosition.y,
-					std::min(newPosition.z, previousPosition.z) };
-			break;
+				// Let item fall so that it can collide with scenery or ground if falling on top of
+				// it
+				newPosition = {previousPosition.x, previousPosition.y,
+				               std::min(newPosition.z, previousPosition.z)};
+				break;
 			default:
 				LogError("What the hell is this item colliding with? Type is %d",
 				         (int)c.obj->getType());
@@ -220,7 +221,7 @@ bool BattleItem::findSupport()
 	}
 	auto restingPosition =
 	    obj->getPosition() + Vec3<float>{0.0f, 0.0f, (float)obj->type->height / 40.0f};
-	
+
 	if (position.z > restingPosition.z)
 	{
 		return false;

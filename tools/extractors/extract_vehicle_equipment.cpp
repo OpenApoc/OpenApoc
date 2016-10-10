@@ -29,7 +29,7 @@
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Difficulty)
+void InitialGameStateExtractor::extractVehicleEquipment(GameState &state)
 {
 	auto &data = this->ufo2p;
 

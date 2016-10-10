@@ -22,8 +22,8 @@
 #include "game/ui/base/basescreen.h"
 #include "game/ui/general/ingameoptions.h"
 #include "library/sp.h"
-#include <cmath>
 #include "library/strings_format.h"
+#include <cmath>
 #include <glm/glm.hpp>
 
 namespace OpenApoc
@@ -921,7 +921,7 @@ bool calculateVelocityForThrow(float distanceXY, float diffZ, float &velocityXY,
 	float c = diffZ;
 	float t = 0.0f;
 
-	// We will continue reducing velocityXY  until we find such a trajectory 
+	// We will continue reducing velocityXY  until we find such a trajectory
 	// that makes the item fall on top of the tile
 	while (velocityXY > 0.0f)
 	{
@@ -1142,8 +1142,8 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 	Vec3<float> startPos = {
 	    unit->position.x, unit->position.y,
 	    unit->position.z +
-	        ((float)unit->agent->type->bodyType->height[AgentType::BodyState::Throwing] - 4.0f) / 2.0f /
-	            40.0f};
+	        ((float)unit->agent->type->bodyType->height[AgentType::BodyState::Throwing] - 4.0f) /
+	            2.0f / 40.0f};
 	float velXY = 0.0f;
 	float velZ = 0.0f;
 	bool valid = true;
@@ -1186,8 +1186,8 @@ void BattleView::orderUse(bool right, bool automatic)
 	}
 	auto unit = selectedUnits.front();
 	auto item =
-		unit->agent->getFirstItemInSlot(right ? AgentEquipmentLayout::EquipmentSlotType::RightHand
-			: AgentEquipmentLayout::EquipmentSlotType::LeftHand);
+	    unit->agent->getFirstItemInSlot(right ? AgentEquipmentLayout::EquipmentSlotType::RightHand
+	                                          : AgentEquipmentLayout::EquipmentSlotType::LeftHand);
 
 	if (!item)
 		return;
@@ -1200,7 +1200,8 @@ void BattleView::orderUse(bool right, bool automatic)
 			{
 				break;
 			}
-			selectionState = right ? BattleSelectionState::FireRight : BattleSelectionState::FireLeft;
+			selectionState =
+			    right ? BattleSelectionState::FireRight : BattleSelectionState::FireLeft;
 			break;
 		case AEquipmentType::Type::Grenade:
 			if (item->primed)
@@ -1238,7 +1239,8 @@ void BattleView::orderUse(bool right, bool automatic)
 			break;
 		case AEquipmentType::Type::Teleporter:
 			// Teleporter does not care for automatic mode
-			selectionState = right ? BattleSelectionState::TeleportRight : BattleSelectionState::TeleportLeft;
+			selectionState =
+			    right ? BattleSelectionState::TeleportRight : BattleSelectionState::TeleportLeft;
 			break;
 		// Items that do nothing
 		case AEquipmentType::Type::AlienDetector:
@@ -2032,15 +2034,19 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 					default:
 						break;
 				}
-				a.selected = e->primed 
-					|| (selectionState == BattleSelectionState::FireRight && rightHand)
-					|| (selectionState == BattleSelectionState::FireLeft && !rightHand)
-					|| (selectionState == BattleSelectionState::TeleportRight && rightHand)
-					|| (selectionState == BattleSelectionState::TeleportLeft && !rightHand);
+				a.selected = e->primed ||
+				             (selectionState == BattleSelectionState::FireRight && rightHand) ||
+				             (selectionState == BattleSelectionState::FireLeft && !rightHand) ||
+				             (selectionState == BattleSelectionState::TeleportRight && rightHand) ||
+				             (selectionState == BattleSelectionState::TeleportLeft && !rightHand);
 			}
-			
-			auto accuracy = (float)e->getAccuracy(u->current_body_state, u->current_movement_state, u->fire_aiming_mode, a.itemType->type != AEquipmentType::Type::Weapon) / 100.0f;
-			// erf takes values -2 to 2 and returns -1 to 1, 
+
+			auto accuracy =
+			    (float)e->getAccuracy(u->current_body_state, u->current_movement_state,
+			                          u->fire_aiming_mode,
+			                          a.itemType->type != AEquipmentType::Type::Weapon) /
+			    100.0f;
+			// erf takes values -2 to 2 and returns -1 to 1,
 			// we need it to take values 0 to 1 and return 0 to 1
 			// val -> val * 4 - 2, result -> result /2 + 0,5
 			a.accuracy = (int)(((erf(accuracy * 4.0f - 2.0f)) / 2.0f + 0.5f) * 50.0f);
@@ -2052,7 +2058,8 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 bool AgentEquipmentInfo::operator==(const AgentEquipmentInfo &other) const
 {
 	return (this->accuracy == other.accuracy && this->curAmmo == other.curAmmo &&
-	        this->itemType == other.itemType && this->damageType == other.damageType && this->selected == other.selected);
+	        this->itemType == other.itemType && this->damageType == other.damageType &&
+	        this->selected == other.selected);
 }
 
 }; // namespace OpenApoc

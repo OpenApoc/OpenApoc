@@ -319,7 +319,8 @@ template <> const UString &StateObject<City>::getId(const GameState &state, cons
 	return emptyString;
 }
 
-void City::accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition, Vec3<float> &target, int accuracy)
+void City::accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition, Vec3<float> &target,
+                                 int accuracy)
 {
 	// FIXME: Prettify this code
 	int projx = firePosition.x;
@@ -330,12 +331,12 @@ void City::accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition, Vec
 	int vehz = target.z;
 	int inverseAccuracy = 100 - accuracy;
 
-	float delta_x = (float)(vehx - projx)* inverseAccuracy / 1000.0f;
-	float delta_y = (float)(vehy - projy)* inverseAccuracy / 1000.0f;
+	float delta_x = (float)(vehx - projx) * inverseAccuracy / 1000.0f;
+	float delta_y = (float)(vehy - projy) * inverseAccuracy / 1000.0f;
 	float delta_z = (float)(vehz - projz) * inverseAccuracy / 1000.0f;
 
-	float length_vector = 1.0f /
-		std::sqrt(delta_x * delta_x + delta_y * delta_y + delta_z * delta_z);
+	float length_vector =
+	    1.0f / std::sqrt(delta_x * delta_x + delta_y * delta_y + delta_z * delta_z);
 
 	std::vector<float> rnd(3);
 	while (true)
@@ -350,15 +351,17 @@ void City::accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition, Vec
 	}
 
 	// Misses can go both ways on the axis
-	float k1 = (2 * randBoundsInclusive(state.rng, 0, 1) - 1) * rnd[1] * std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
-	float k2 = (2 * randBoundsInclusive(state.rng, 0, 1) - 1) * rnd[2] * std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
+	float k1 = (2 * randBoundsInclusive(state.rng, 0, 1) - 1) * rnd[1] *
+	           std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
+	float k2 = (2 * randBoundsInclusive(state.rng, 0, 1) - 1) * rnd[2] *
+	           std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
 
-	float x1 = length_vector*delta_x*delta_z*k1;
-	float y1 = length_vector*delta_y*delta_z*k1;
-	float z1 = -length_vector*(delta_x*delta_x + delta_y*delta_y)*k1;
+	float x1 = length_vector * delta_x * delta_z * k1;
+	float y1 = length_vector * delta_y * delta_z * k1;
+	float z1 = -length_vector * (delta_x * delta_x + delta_y * delta_y) * k1;
 
-	float x2 = -delta_y*k2;
-	float y2 = delta_x*k2;
+	float x2 = -delta_y * k2;
+	float y2 = delta_x * k2;
 	float z2 = 0;
 
 	float x3 = (x1 + x2);
@@ -367,7 +370,7 @@ void City::accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition, Vec
 	x3 = x3 < 0 ? ceilf(x3) : floorf(x3);
 	y3 = y3 < 0 ? ceilf(y3) : floorf(y3);
 	z3 = z3 < 0 ? ceilf(z3) : floorf(z3);
-	
+
 	target.x += x3;
 	target.y += y3;
 	target.z += z3;

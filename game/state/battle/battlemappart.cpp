@@ -117,7 +117,6 @@ bool BattleMapPart::handleCollision(GameState &state, Collision &c)
 	}
 
 	// If we came this far, map part has been damaged and must cease to be
-	
 	die(state);
 	return false;
 }

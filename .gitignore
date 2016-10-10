@@ -105,6 +105,7 @@ tileviewvoxels.png
 
 # Generated data files
 data/animationpacks
+data/gamestate_common
 data/difficulty1_patched
 data/difficulty2_patched
 data/difficulty3_patched
@@ -113,4 +114,5 @@ data/difficulty5_patched
 data/imagepacks
 data/maps
 data/tilesets
+data/bulletsprites
 *.xml

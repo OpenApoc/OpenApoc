@@ -21,10 +21,15 @@ OpenApoc::ConfigOptionString traceFile("Trace", "outputFile", "File to output tr
 
 const unsigned int TRACE_CHUNK_SIZE = 100000;
 
+std::mutex initTraceLock;
 static bool traceInited = false;
 
 static void initTrace()
 {
+	std::lock_guard<std::mutex> l(initTraceLock);
+	// Something might have enabled this in the time between check and lock
+	if (traceInited)
+		return;
 	traceInited = true;
 	if (enableTrace.get())
 		OpenApoc::Trace::enable();

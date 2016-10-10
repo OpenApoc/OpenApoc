@@ -44,6 +44,7 @@ class InitialGameStateExtractor
 		DIFFICULTY_5,
 	};
 	InitialGameStateExtractor() = default;
+	void extractCommon(GameState &state);
 	void extract(GameState &state, Difficulty difficulty);
 	/* extractBulletSprites() returns a list of images, so doesn't affect a GameState */
 	std::map<UString, sp<Image>> extractBulletSpritesCity();
@@ -69,22 +70,15 @@ class InitialGameStateExtractor
 	static const std::map<OpenApoc::UString, OpenApoc::UString> unitAnimationPackPaths;
 
   private:
-	void extractVehicles(GameState &state, Difficulty difficulty);
-	void extractOrganisations(GameState &state, Difficulty difficulty);
-	void extractFacilities(GameState &state, Difficulty difficulty);
-	void extractBaseLayouts(GameState &state, Difficulty difficulty);
-	void extractVehicleEquipment(GameState &state, Difficulty difficulty);
-	void extractAgentEquipment(GameState &state, Difficulty difficulty);
-	void extractAgentTypes(GameState &state, Difficulty difficulty);
-	void extractAgentBodyTypes(GameState &state, Difficulty difficulty);
-	void extractResearch(GameState &state, Difficulty difficulty);
-
-	void extractBuildings(GameState &state, UString bldFileName, sp<City> city,
-	                      bool alienBuilding = false);
-	void extractCityMap(GameState &state, UString fileName, UString tilePrefix, sp<City> city);
-	void extractCityScenery(GameState &state, UString tilePrefix, UString datFile,
-	                        UString spriteFile, UString stratmapFile, UString lofFile,
-	                        UString ovrFile, sp<City> city);
+	// 'common' state doesn't rely on difficulty
+	void extractAgentTypes(GameState &state);
+	void extractAgentBodyTypes(GameState &state);
+	void extractVehicles(GameState &state);
+	void extractOrganisations(GameState &state);
+	void extractFacilities(GameState &state);
+	void extractBaseLayouts(GameState &state);
+	void extractVehicleEquipment(GameState &state);
+	void extractResearch(GameState &state);
 
 	void extractBattlescapeMap(GameState &state, const std::vector<OpenApoc::UString> &paths);
 	void extractBattlescapeMapFromPath(GameState &state, const UString dirName, const int index);
@@ -94,6 +88,17 @@ class InitialGameStateExtractor
 	                        const UString &stratPckName);
 
 	void extractSharedBattleResources(GameState &state);
+
+	// Then things that change on difficulty
+
+	void extractAgentEquipment(GameState &state, Difficulty difficulty);
+
+	void extractBuildings(GameState &state, UString bldFileName, sp<City> city,
+	                      bool alienBuilding = false);
+	void extractCityMap(GameState &state, UString fileName, UString tilePrefix, sp<City> city);
+	void extractCityScenery(GameState &state, UString tilePrefix, UString datFile,
+	                        UString spriteFile, UString stratmapFile, UString lofFile,
+	                        UString ovrFile, sp<City> city);
 
 	// Unit animation packs functions
 

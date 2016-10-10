@@ -120,10 +120,9 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 		    (i < data_t.damage_types->count()) && (data_t.damage_types->get(i).ignore_shield == 1);
 
 		// Damage icons are located in tacdata icons, starting with id 14 and on
-		d->icon_sprite =
-		    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
-		                                         (int)i + 14));
+		d->icon_sprite = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		                                             "icons.tab:%d:xcom3/tacdata/tactical.pal",
+		                                             (int)i + 14));
 		switch (i)
 		{
 			case DT_SMOKE:
@@ -1017,13 +1016,13 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 			d->repeatable = false;
 			d->frames.push_back(
 			    {fw().data->loadImage(format("PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
-			                                          "ptang.tab:%d",
-			                                          78)),
+			                                 "ptang.tab:%d",
+			                                 78)),
 			     frameTTL});
 			d->frames.push_back(
 			    {fw().data->loadImage(format("PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
-			                                          "ptang.tab:%d",
-			                                          77)),
+			                                 "ptang.tab:%d",
+			                                 77)),
 			     frameTTL});
 			state.doodad_types[id] = d;
 		}
