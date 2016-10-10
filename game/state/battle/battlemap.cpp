@@ -555,7 +555,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				// as vanilla had some maps where only stacked sectors are mandatory,
 				// yet it never actually did stacking!
 				// If, however, we are losing a stacked sector while stacking, then we do care!
-				if (secRefs[remaining_sectors[i]]->occurrence_min > 0 && secRefs[remaining_sectors[i]]->size.z <= size.z)
+				if (secRefs[remaining_sectors[i]]->occurrence_min > 0 &&
+				    secRefs[remaining_sectors[i]]->size.z <= size.z)
 				{
 					mandatorySectorLost = true;
 				}
@@ -763,16 +764,15 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 
 						// Check wether this is an exit location, and if so,
 						// replace the ground map part with an appropriate exit
-						bool canExit = s->position.z >= exit_level_min &&
-						               s->position.z <= exit_level_max;
-						canExit =
-						    canExit &&
-						    (s->position.x > 0 || allow_exit[MapDirection::West]) &&
-						    (s->position.y > 0 || allow_exit[MapDirection::North]) &&
-						    (s->position.x < size.x * chunk_size.x - 1 ||
-						     allow_exit[MapDirection::East]) &&
-						    (s->position.y < size.y * chunk_size.y - 1 ||
-						     allow_exit[MapDirection::South]);
+						bool canExit =
+						    s->position.z >= exit_level_min && s->position.z <= exit_level_max;
+						canExit = canExit &&
+						          (s->position.x > 0 || allow_exit[MapDirection::West]) &&
+						          (s->position.y > 0 || allow_exit[MapDirection::North]) &&
+						          (s->position.x < size.x * chunk_size.x - 1 ||
+						           allow_exit[MapDirection::East]) &&
+						          (s->position.y < size.y * chunk_size.y - 1 ||
+						           allow_exit[MapDirection::South]);
 						if (canExit)
 						{
 							Vec3<int> exitLocX = s->position;
@@ -801,16 +801,15 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 
 						// Set spawnability and height
 						if (s->type->movement_cost == 255 || s->type->height == 39 ||
-						    b->spawnMap[initialPosition.x][initialPosition.y]
-						               [initialPosition.z] == -1)
+						    b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] ==
+						        -1)
 						{
-							b->spawnMap[initialPosition.x][initialPosition.y]
-							           [initialPosition.z] = -1;
+							b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] =
+							    -1;
 						}
 						else
 						{
-							b->spawnMap[initialPosition.x][initialPosition.y]
-							           [initialPosition.z] =
+							b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] =
 							    std::max(b->spawnMap[initialPosition.x][initialPosition.y]
 							                        [initialPosition.z],
 							             s->type->height);
@@ -864,16 +863,15 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 
 						// Set spawnability and height
 						if (s->type->movement_cost == 255 || s->type->height == 39 ||
-						    b->spawnMap[initialPosition.x][initialPosition.y]
-						               [initialPosition.z] == -1)
+						    b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] ==
+						        -1)
 						{
-							b->spawnMap[initialPosition.x][initialPosition.y]
-							           [initialPosition.z] = -1;
+							b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] =
+							    -1;
 						}
 						else
 						{
-							b->spawnMap[initialPosition.x][initialPosition.y]
-							           [initialPosition.z] =
+							b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] =
 							    std::max(b->spawnMap[initialPosition.x][initialPosition.y]
 							                        [initialPosition.z],
 							             s->type->height);

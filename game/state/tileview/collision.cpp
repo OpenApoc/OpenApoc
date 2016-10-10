@@ -11,7 +11,8 @@ namespace OpenApoc
 {
 
 Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
-                                 const std::set<TileObject::Type> validTypes, sp<TileObject> ignoredObject,  bool useLOS,
+                                 const std::set<TileObject::Type> validTypes,
+                                 sp<TileObject> ignoredObject, bool useLOS,
                                  bool check_full_path) const
 {
 	bool type_checking = validTypes.size() > 0;
@@ -39,9 +40,9 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 		const Tile *t = this->getTile(tile);
 		for (auto &obj : t->intersectingObjects)
 		{
-			if ((!obj->hasVoxelMap()) 
-				|| (type_checking && validTypes.find(obj->type) == validTypes.end())
-				|| (obj == ignoredObject))
+			if ((!obj->hasVoxelMap()) ||
+			    (type_checking && validTypes.find(obj->type) == validTypes.end()) ||
+			    (obj == ignoredObject))
 				continue;
 			// coordinate of the object's voxelmap's min point
 			auto objPos = obj->getCenter();

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "game/state/tileview/tile.h"
 #include "game/state/stateobject.h"
+#include "game/state/tileview/tile.h"
 #include "library/sp.h"
 #include "library/vec.h"
-#include <vector>
 #include <set>
+#include <vector>
 
 namespace OpenApoc
 {
@@ -79,7 +79,10 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 	//  - Wall will get support from the same type of Wall
 	//	  (provided the Wall's type matches direction: Left for N/S, Right for E/W)
 	std::set<MapDirection> supportedByDirections;
-	bool isSupportedByDirection(MapDirection direction) { return supportedByDirections.find(direction) != supportedByDirections.end(); }
+	bool isSupportedByDirection(MapDirection direction)
+	{
+		return supportedByDirections.find(direction) != supportedByDirections.end();
+	}
 
 	// Additional types objects can get directional support from.
 	// Directions must be also set for this to work.
@@ -94,14 +97,19 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 	int vanillaSupportedById = 0;
 	// Debug output to ensure our collapsible map system is working properly
 	// Expects only combinations found in vanilla files
-	int getVanillaSupportedById() 
+	int getVanillaSupportedById()
 	{
-		if (vanillaSupportedById) return vanillaSupportedById;
-		if (supportedByDirections.empty() && supportedByTypes.empty()) return 0;
-		if (supportedByDirections.size() == 2 && supportedByTypes.size() == 3) return 36;
+		if (vanillaSupportedById)
+			return vanillaSupportedById;
+		if (supportedByDirections.empty() && supportedByTypes.empty())
+			return 0;
+		if (supportedByDirections.size() == 2 && supportedByTypes.size() == 3)
+			return 36;
 		int result = (int)*supportedByDirections.begin();
-		if (supportedByTypes.empty()) return result;
-		if (supportedByTypes.size() == 1) return (*supportedByTypes.begin() == Type::Ground ? 10 : 20) + result;
+		if (supportedByTypes.empty())
+			return result;
+		if (supportedByTypes.size() == 1)
+			return (*supportedByTypes.begin() == Type::Ground ? 10 : 20) + result;
 		return (supportedByTypes.find(Type::Feature) == supportedByTypes.end() ? 40 : 50) + result;
 	}
 
@@ -110,7 +118,7 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 	StateRef<DamageModifier> damageModifier;
 	sp<std::vector<sp<Sample>>> walkSounds;
 	sp<Sample> objectDropSound;
-	// Object list spawned when this one falls 
+	// Object list spawned when this one falls
 	std::vector<StateRef<BattleMapPartType>> rubble;
 	// Destroyed ground replacement for level 0 grounds
 	StateRef<BattleMapPartType> destroyed_ground_tile;

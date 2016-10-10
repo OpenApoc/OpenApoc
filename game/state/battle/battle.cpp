@@ -195,7 +195,7 @@ void Battle::initMap()
 	}
 }
 
-void linkUpList(std::list<BattleMapPart*> list)
+void linkUpList(std::list<BattleMapPart *> list)
 {
 	auto next = list.begin();
 	auto prev = next++;
@@ -225,7 +225,6 @@ void linkUpList(std::list<BattleMapPart*> list)
 		(*prev)->supportedParts.emplace_back((*cur)->position, (*cur)->type->type);
 	}
 }
-
 
 void Battle::initialMapPartLinkUp()
 {
@@ -268,7 +267,8 @@ void Battle::initialMapPartLinkUp()
 		if (mp->willCollapse())
 		{
 			auto pos = mp->tileObject->getOwningTile()->position;
-			LogWarning("MP %s SBT %d at %d %d %d is UNLINKED", mp->type.id.cStr(), (int)mp->type->getVanillaSupportedById(), pos.x, pos.y, pos.z);
+			LogWarning("MP %s SBT %d at %d %d %d is UNLINKED", mp->type.id.cStr(),
+			           (int)mp->type->getVanillaSupportedById(), pos.x, pos.y, pos.z);
 		}
 	}
 
@@ -293,17 +293,18 @@ void Battle::initialMapPartLinkUp()
 			}
 		} while (foundSupport);
 	}
-	
+
 	// Report unlinked parts
 	for (auto &mp : this->map_parts)
 	{
 		if (mp->willCollapse())
 		{
 			auto pos = mp->tileObject->getOwningTile()->position;
-			LogWarning("MP %s SBT %d at %d %d %d is going to fall", mp->type.id.cStr(), (int)mp->type->getVanillaSupportedById(), pos.x, pos.y, pos.z);
+			LogWarning("MP %s SBT %d at %d %d %d is going to fall", mp->type.id.cStr(),
+			           (int)mp->type->getVanillaSupportedById(), pos.x, pos.y, pos.z);
 		}
 	}
-	
+
 	mapref.updateAllBattlescapeInfo();
 	LogWarning("Link up finished!");
 }
@@ -1147,7 +1148,7 @@ void Battle::finishBattle(GameState &state)
 		LogError("Battle::FinishBattle called with no battle!");
 		return;
 	}
-	
+
 	state.current_battle->unloadResources(state);
 	//  - Identify how battle ended(if enemies present then Failure, otherwise Success)
 	//	- (Failure) Determine surviving player agents(kill all player agents that are too far from

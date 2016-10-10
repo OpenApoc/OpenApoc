@@ -36,7 +36,7 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	bool destroyed = false;
 	bool providesHardSupport = false;
 	StateRef<BattleDoor> door;
-	
+
 	bool supportedItems = false;
 	std::list<std::pair<Vec3<int>, BattleMapPartType::Type>> supportedParts;
 
@@ -59,13 +59,13 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	// Wether mappart is queued to collapse
 	bool willCollapse() const { return ticksUntilCollapse > 0; }
 
-	sp<std::set<BattleMapPart*>> getSupportedParts();
-	static void attemptReLinkSupports(sp<std::set<BattleMapPart*>> set);
+	sp<std::set<BattleMapPart *>> getSupportedParts();
+	static void attemptReLinkSupports(sp<std::set<BattleMapPart *>> set);
 
 	void ceaseDoorFunction();
 
 	void update(GameState &state, unsigned int ticks);
-	
+
 	bool isAlive() const;
 
 	~BattleMapPart() = default;

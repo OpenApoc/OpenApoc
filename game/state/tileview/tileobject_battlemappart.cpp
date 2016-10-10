@@ -131,7 +131,7 @@ float TileObjectBattleMapPart::getZOrder() const
 
 void TileObjectBattleMapPart::addToDrawnTiles(Tile *tile)
 {
-	Vec3<int> maxCoords = { -1, -1, -1 };
+	Vec3<int> maxCoords = {-1, -1, -1};
 	for (auto intersectingTile : intersectingTiles)
 	{
 		int x = intersectingTile->position.x;
@@ -141,13 +141,12 @@ void TileObjectBattleMapPart::addToDrawnTiles(Tile *tile)
 		// Map parts are drawn in the topmost tile their head pops into
 		// Otherwise, they can only be drawn in it if it's their owner tile
 		if (maxCoords.z * 1000 + maxCoords.x + maxCoords.y < z * 1000 + x + y &&
-			map_part->position.z + (float) map_part->type->height / 40.0f >= (float)z )
+		    map_part->position.z + (float)map_part->type->height / 40.0f >= (float)z)
 		{
 			tile = intersectingTile;
-			maxCoords = { x, y, z };
+			maxCoords = {x, y, z};
 		}
 	}
 	TileObject::addToDrawnTiles(tile);
 }
-
 }

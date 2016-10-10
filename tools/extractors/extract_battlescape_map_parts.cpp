@@ -1,9 +1,9 @@
-#include "game/state/tileview/tile.h"
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/palette.h"
 #include "game/state/battle/battlemap.h"
 #include "game/state/battle/battlemaptileset.h"
+#include "game/state/tileview/tile.h"
 #include "library/strings_format.h"
 #include "library/voxel.h"
 #include "tools/extractors/common/battlemap.h"
@@ -155,7 +155,7 @@ void InitialGameStateExtractor::readBattleMapParts(GameState &state, TACP &data_
 		object->height = entry.height;
 		object->floating = entry.is_floating;
 		object->provides_support = entry.provides_support;
-		
+
 		int gets_support_from = 0;
 		switch (entry.gets_support_from)
 		{
@@ -196,28 +196,28 @@ void InitialGameStateExtractor::readBattleMapParts(GameState &state, TACP &data_
 			object->supportedByDirections.insert((MapDirection)(gets_support_from % 10));
 			switch (gets_support_from / 10)
 			{
-			case 0:
-				break;
-			case 1:
-				object->supportedByTypes.insert(BattleMapPartType::Type::Ground);
-				break;
-			case 2:
-				object->supportedByTypes.insert(BattleMapPartType::Type::Feature);
-				break;
-			case 4:
-				object->supportedByTypes.insert(object->type);
-				if (object->type != BattleMapPartType::Type::Ground)
-				{
+				case 0:
+					break;
+				case 1:
 					object->supportedByTypes.insert(BattleMapPartType::Type::Ground);
-				}
-				break;
-			case 5:
-				object->supportedByTypes.insert(BattleMapPartType::Type::Ground);
-				object->supportedByTypes.insert(BattleMapPartType::Type::Feature);
-				break;
-			default:
-				LogError("Unrecognized support by id %d", (int)entry.gets_support_from);
-				return;
+					break;
+				case 2:
+					object->supportedByTypes.insert(BattleMapPartType::Type::Feature);
+					break;
+				case 4:
+					object->supportedByTypes.insert(object->type);
+					if (object->type != BattleMapPartType::Type::Ground)
+					{
+						object->supportedByTypes.insert(BattleMapPartType::Type::Ground);
+					}
+					break;
+				case 5:
+					object->supportedByTypes.insert(BattleMapPartType::Type::Ground);
+					object->supportedByTypes.insert(BattleMapPartType::Type::Feature);
+					break;
+				default:
+					LogError("Unrecognized support by id %d", (int)entry.gets_support_from);
+					return;
 			}
 		}
 

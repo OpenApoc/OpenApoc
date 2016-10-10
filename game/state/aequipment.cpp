@@ -1,16 +1,16 @@
-#include "game/state/battle/battleitem.h"
 #include "game/state/aequipment.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "framework/sound.h"
 #include "game/state/agent.h"
+#include "game/state/battle/battleitem.h"
 #include "game/state/city/projectile.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "library/sp.h"
-#include <glm/glm.hpp>
 #include <algorithm>
+#include <glm/glm.hpp>
 #include <list>
 
 namespace OpenApoc
@@ -146,11 +146,12 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 		return;
 	}
 	// Cannot load if inappropriate type
-	if (std::find(type->ammo_types.begin(), type->ammo_types.end(), ammoItem->type) == type->ammo_types.end())
+	if (std::find(type->ammo_types.begin(), type->ammo_types.end(), ammoItem->type) ==
+	    type->ammo_types.end())
 	{
 		return;
 	}
-	
+
 	// If this has ammo then swap
 	if (payloadType)
 	{
@@ -192,7 +193,7 @@ void AEquipment::update(unsigned int ticks)
 			ammo = std::min(payload->max_ammo, ammo);
 		}
 	}
-	
+
 	// Firing update
 	if (weapon_fire_ticks_remaining > 0)
 	{

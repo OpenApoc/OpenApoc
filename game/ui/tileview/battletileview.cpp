@@ -685,14 +685,14 @@ void BattleTileView::render()
 								{
 									draw = true;
 								}
-								if (obj->getType() == TileObject::Type::Ground 
-									|| obj->getType() == TileObject::Type::LeftWall
-									|| obj->getType() == TileObject::Type::RightWall
-									|| obj->getType() == TileObject::Type::Feature)
+								if (obj->getType() == TileObject::Type::Ground ||
+								    obj->getType() == TileObject::Type::LeftWall ||
+								    obj->getType() == TileObject::Type::RightWall ||
+								    obj->getType() == TileObject::Type::Feature)
 								{
 									draw = std::static_pointer_cast<TileObjectBattleMapPart>(obj)
-										->getOwner()
-										->falling;
+									           ->getOwner()
+									           ->falling;
 								}
 								if (draw)
 								{

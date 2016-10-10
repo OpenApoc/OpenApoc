@@ -1367,7 +1367,7 @@ void BattleView::orderTeleport(Vec3<int> target, bool right)
 		LogWarning("Using teleporter cheat!");
 		item = mksp<AEquipment>();
 		UString tp = "AEQUIPMENTTYPE_PERSONAL_TELEPORTER";
-		item->type = { &*state, tp };
+		item->type = {&*state, tp};
 		item->ammo = item->type->max_ammo;
 	}
 
@@ -1486,26 +1486,26 @@ void BattleView::eventOccurred(Event *e)
 					setUpdateSpeed(this->lastSpeed);
 				break;
 			case SDLK_f:
+			{
+				auto t = this->getSelectedTilePosition();
+				auto &map = *state->current_battle->map;
+				auto tile = map.getTile(t);
+				for (auto &o : tile->ownedObjects)
 				{
-					auto t = this->getSelectedTilePosition();
-					auto &map = *state->current_battle->map;
-					auto tile = map.getTile(t);
-					for (auto &o : tile->ownedObjects)
+					if (o->getType() == TileObject::Type::Ground ||
+					    o->getType() == TileObject::Type::Feature ||
+					    o->getType() == TileObject::Type::LeftWall ||
+					    o->getType() == TileObject::Type::RightWall)
 					{
-						if (o->getType() == TileObject::Type::Ground
-							|| o->getType() == TileObject::Type::Feature
-							|| o->getType() == TileObject::Type::LeftWall
-							|| o->getType() == TileObject::Type::RightWall)
-						{
-							auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
-							auto set = mksp<std::set<BattleMapPart*>>();
-							set->insert(mp.get());
-							mp->queueCollapse();
-							BattleMapPart::attemptReLinkSupports(set);
-						}
+						auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+						auto set = mksp<std::set<BattleMapPart *>>();
+						set->insert(mp.get());
+						mp->queueCollapse();
+						BattleMapPart::attemptReLinkSupports(set);
 					}
 				}
-				break;
+			}
+			break;
 		}
 	}
 	else if (e->type() == EVENT_MOUSE_MOVE)
@@ -1686,42 +1686,55 @@ void BattleView::eventOccurred(Event *e)
 						UString debug = "";
 						debug += format("\nDEBUG INFORMATION ABOUT TILE %d, %d, %d", t.x, t.y, t.z);
 						auto &map = *state->current_battle->map;
-						auto tile =map.getTile(t);
+						auto tile = map.getTile(t);
 						for (auto &o : tile->ownedObjects)
 						{
-							if (o->getType() == TileObject::Type::Ground 
-								|| o->getType() == TileObject::Type::Feature
-								|| o->getType() == TileObject::Type::LeftWall
-								|| o->getType() == TileObject::Type::RightWall)
+							if (o->getType() == TileObject::Type::Ground ||
+							    o->getType() == TileObject::Type::Feature ||
+							    o->getType() == TileObject::Type::LeftWall ||
+							    o->getType() == TileObject::Type::RightWall)
 							{
-								auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
-								debug += format("\n[%s] SBT %d STATUS %s", mp->type.id, mp->type->getVanillaSupportedById(), !mp->isAlive()? "DEAD " :(mp->damaged ? "DAMAGED" : (mp->providesHardSupport ? "HARD " : "SOFT ")));
+								auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)
+								              ->getOwner();
+								debug += format(
+								    "\n[%s] SBT %d STATUS %s", mp->type.id,
+								    mp->type->getVanillaSupportedById(),
+								    !mp->isAlive()
+								        ? "DEAD "
+								        : (mp->damaged
+								               ? "DAMAGED"
+								               : (mp->providesHardSupport ? "HARD " : "SOFT ")));
 								for (int x = t.x - 1; x <= t.x + 1; x++)
 								{
 									for (int y = t.y - 1; y <= t.y + 1; y++)
 									{
 										for (int z = t.z - 1; z <= t.z + 1; z++)
 										{
-											if (x < 0 || x >= map.size.x
-												|| y < 0 || y >= map.size.y
-												|| z < 0 || z >= map.size.z)
+											if (x < 0 || x >= map.size.x || y < 0 ||
+											    y >= map.size.y || z < 0 || z >= map.size.z)
 											{
 												continue;
 											}
 											auto tile2 = map.getTile(x, y, z);
 											for (auto &o2 : tile2->ownedObjects)
 											{
-												if (o2->getType() == TileObject::Type::Ground
-													|| o2->getType() == TileObject::Type::Feature
-													|| o2->getType() == TileObject::Type::LeftWall
-													|| o2->getType() == TileObject::Type::RightWall)
+												if (o2->getType() == TileObject::Type::Ground ||
+												    o2->getType() == TileObject::Type::Feature ||
+												    o2->getType() == TileObject::Type::LeftWall ||
+												    o2->getType() == TileObject::Type::RightWall)
 												{
-													auto mp2 = std::static_pointer_cast<TileObjectBattleMapPart>(o2)->getOwner();
+													auto mp2 = std::static_pointer_cast<
+													               TileObjectBattleMapPart>(o2)
+													               ->getOwner();
 													for (auto &p : mp2->supportedParts)
 													{
-														if (p.first == t && p.second == mp->type->type)
+														if (p.first == t &&
+														    p.second == mp->type->type)
 														{
-															debug += format("\nSupported by %s at %d %d %d", mp2->type.id, x-t.x, y-t.y, z-t.z);
+															debug += format(
+															    "\nSupported by %s at %d %d %d",
+															    mp2->type.id, x - t.x, y - t.y,
+															    z - t.z);
 														}
 													}
 												}
@@ -1996,7 +2009,11 @@ void BattleView::updateItemInfo(bool right)
 	this->activeTab->findControlTyped<Graphic>("OVERLAY_" + name + "_HAND")->setImage(overlay);
 }
 
-void BattleView::finish() { fw().getCursor().CurrentType = ApocCursor::CursorType::Normal; Battle::finishBattle(*state.get());}
+void BattleView::finish()
+{
+	fw().getCursor().CurrentType = ApocCursor::CursorType::Normal;
+	Battle::finishBattle(*state.get());
+}
 
 AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 {

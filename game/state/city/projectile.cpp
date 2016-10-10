@@ -144,7 +144,7 @@ Collision Projectile::checkProjectileCollision(TileMap &map)
 	{
 		// It's possible the projectile reached the end of it's lifetime this frame
 		// so ignore stuff without a tile
-		return{};
+		return {};
 	}
 
 	sp<TileObject> ignoredObject = nullptr;
@@ -161,8 +161,8 @@ Collision Projectile::checkProjectileCollision(TileMap &map)
 	}
 	Collision c = map.findCollision(this->previousPosition, this->position, {}, ignoredObject);
 	if (!c)
-		return{};
-	
+		return {};
+
 	c.projectile = shared_from_this();
 	return c;
 }
