@@ -1695,7 +1695,7 @@ void BattleView::eventOccurred(Event *e)
 								|| o->getType() == TileObject::Type::RightWall)
 							{
 								auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
-								debug += format("\n[%s] SBT %d STATUS %s", mp->type.id, mp->type->getVanillaSupportedById(), !mp->isAlive()? "DEAD" :( mp->providesHardSupport ? "HARD" : "SOFT"));
+								debug += format("\n[%s] SBT %d STATUS %s", mp->type.id, mp->type->getVanillaSupportedById(), !mp->isAlive()? "DEAD " :(mp->damaged ? "DAMAGED" : (mp->providesHardSupport ? "HARD " : "SOFT ")));
 								for (int x = t.x - 1; x <= t.x + 1; x++)
 								{
 									for (int y = t.y - 1; y <= t.y + 1; y++)
@@ -1975,7 +1975,7 @@ void BattleView::updateItemInfo(bool right)
 			int ammoPadding = 1;
 			int ammoSize = ammoDisplaySize / info.maxAmmo - 1;
 			int x = right ? 1 : 47;
-			if (ammoSize == 0)
+			if (ammoSize <= 0)
 			{
 				ammoSize = 1;
 				ammoPadding = 0;

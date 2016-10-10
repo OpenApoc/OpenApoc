@@ -10,6 +10,8 @@
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "library/sp.h"
 #include <glm/glm.hpp>
+#include <algorithm>
+#include <list>
 
 namespace OpenApoc
 {

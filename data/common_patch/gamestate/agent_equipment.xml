@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <agent_equipment>
   <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL_CLIP</key>
+    <value>
+      <sp>
+		<max_ammo>9001</max_ammo>
+        <damage>9001</damage>
+      </sp>
+    </value>
+  </entry>
+  <entry>
     <key>AEQUIPMENTTYPE_X-COM_BASE_TURRET_LASER</key>
     <value>
       <sp>

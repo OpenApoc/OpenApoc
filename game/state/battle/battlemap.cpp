@@ -541,7 +541,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 					    secRefs[i]->size.z == z)
 						remaining_sectors.push_back(i);
 
-		// Disable sectors that don'pair fit
+		// Disable sectors that don't fit
 		bool mandatorySectorLost = false;
 		bool mandatorySectorRemaining = false;
 		for (int i = (int)remaining_sectors.size() - 1; i >= 0; i--)
@@ -551,8 +551,14 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 			    secRefs[remaining_sectors[i]]->size.y > size.y ||
 			    secRefs[remaining_sectors[i]]->size.z > size.z)
 			{
-				mandatorySectorLost =
-				    mandatorySectorLost || (secRefs[remaining_sectors[i]]->occurrence_min > 0);
+				// We only care about losing non-vertically-stacked sectors,
+				// as vanilla had some maps where only stacked sectors are mandatory,
+				// yet it never actually did stacking!
+				// If, however, we are losing a stacked sector while stacking, then we do care!
+				if (secRefs[remaining_sectors[i]]->occurrence_min > 0 && secRefs[remaining_sectors[i]]->size.z <= size.z)
+				{
+					mandatorySectorLost = true;
+				}
 				remaining_sectors.erase(remaining_sectors.begin() + i);
 			}
 			else

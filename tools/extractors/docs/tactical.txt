@@ -507,7 +507,7 @@ Values encountered:
  23 = South
  24 = West
  
- Wall: (Standart + can get support from wall at this direction)
+ Ground + Wall: (Standart + Ground + can get support from wall at this direction)
  41 = North
  42 = East
  43 = South

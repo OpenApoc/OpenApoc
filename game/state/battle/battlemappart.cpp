@@ -152,8 +152,14 @@ void BattleMapPart::ceaseDoorFunction()
 
 bool BattleMapPart::attachToSomething(bool checkType)
 {
+	providesHardSupport = false;
 	auto pos = tileObject->getOwningTile()->position;
 	auto &map = tileObject->map;
+	// Cling to ceiling
+	if (pos.z == map.size.z - 1)
+	{
+		return true;
+	}
 	auto tileType = tileObject->getType();
 	auto sft = shared_from_this();
 
@@ -175,6 +181,8 @@ bool BattleMapPart::attachToSomething(bool checkType)
 		{ 0, -1, 0 },
 		{ 0, 1, 0 },
 		{ 0, 0, 1 },
+		{ -1, 0, 0 },
+		{ 0, 0, 0 },
 	};
 
 	// List of directions for right wall
@@ -184,6 +192,8 @@ bool BattleMapPart::attachToSomething(bool checkType)
 		{ 1, 0, 0 },
 		{ -1, 0, 0 },
 		{ 0, 0, 1 },
+		{ 0, -1, 0 },
+		{ 0, 0, 0 },
 	};
 
 	auto &directionList = tileType == TileObject::Type::LeftWall
@@ -207,19 +217,35 @@ bool BattleMapPart::attachToSomething(bool checkType)
 		auto tile = map.getTile(x, y, z);
 		for (auto &o : tile->ownedObjects)
 		{
-			// Even if we're not doing type checking, we cannot allow for walls to cling to other type of walls
-			if (o->getType() == tileType || (!checkType 
-				&& (o->getType() == TileObject::Type::Ground
+			if (o->getType() != tileType && checkType)
+			{
+				continue;
+			}
+			// Even if we're not doing type checking, we cannot allow for walls to cling to other type of walls through gaps
+			if (tileType == TileObject::Type::RightWall)
+			{
+				if ((o->getType() == TileObject::Type::LeftWall && x < pos.x) ||  (o->getType() == TileObject::Type::RightWall && y < pos.y))
+				{
+					continue;
+				}
+			}
+			if (tileType == TileObject::Type::LeftWall)
+			{
+				if ((o->getType() == TileObject::Type::RightWall && y < pos.y) || (o->getType() == TileObject::Type::LeftWall && x < pos.x))
+				{
+					continue;
+				}
+			}
+			if (o->getType() == TileObject::Type::Ground
 				|| o->getType() == TileObject::Type::Feature
-				|| (o->getType() == TileObject::Type::LeftWall && tileType != TileObject::Type::RightWall)
-				|| (o->getType() == TileObject::Type::RightWall && tileType != TileObject::Type::LeftWall))))
+				|| o->getType() == TileObject::Type::LeftWall
+				|| o->getType() == TileObject::Type::RightWall)
 			{
 				auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
 				if (mp != sft && mp->isAlive())
 				{
 					bool canSupport = !mp->damaged
-						&& (mp->type->type != BattleMapPartType::Type::Ground || z == pos.z)
-						&& (mp->type->provides_support || z <= pos.z);
+						&& (mp->type->type != BattleMapPartType::Type::Ground || z == pos.z);
 					if (canSupport)
 					{
 						mp->supportedParts.emplace_back(position, type->type);
@@ -246,6 +272,10 @@ bool BattleMapPart::findSupport()
 		return true;
 	}
 	auto &map = tileObject->map;
+	if (pos.z == map.size.z - 1 && type->supportedByAbove)
+	{
+		return true;
+	}
 	auto tileType = tileObject->getType();
 	auto sft = shared_from_this();
 
@@ -328,7 +358,7 @@ bool BattleMapPart::findSupport()
 	//  - Ground and Feature can cling to objects of the same type
 	//  - Walls can cling to walls of their type or a Feature
 	//
-	// Finally, every map part can be supported if it has established support lines
+	// Finally, every UNDAMAGED map part can be supported if it has established support lines
 	// on both sides that connect to an object providing "hard" support
 	//  - Object "shoots" a line in both directions and as long as there is an object on every tile
 	//    the line continues, and if an object providing hard support is reached, 
@@ -465,18 +495,6 @@ bool BattleMapPart::findSupport()
 			}
 		}
 	}
-
-	// Then, there is a specified "Supported By Direction" condition:
-	//  - Ground will get support from a Ground only
-	//  - Feature will get support from a Feature or a matching perpendicular Wall
-	//    (Right if N/S, Left if E/W)
-	//  - Wall will get support from the same type of Wall
-	//	  (provided the Wall's type matches direction: Left for N/S, Right for E/W)
-	//
-	// If "Supported By Type: is also specified, then:
-	//  - Ground/Wall allows support from Ground/Wall on a current level
-	//  - Feature allows support from Feature on a level below  
-	//
 
 	// Step 02: Check "supported by direction" condition
 	if (!type->supportedByDirections.empty())
@@ -742,7 +760,7 @@ bool BattleMapPart::findSupport()
 	// Step 04: Shoot "support lines" and try to find something
 
 	// Scan on X
-	if (type->type != BattleMapPartType::Type::LeftWall)
+	if (type->type != BattleMapPartType::Type::LeftWall && !damaged)
 	{
 		int y = pos.y;
 		int z = pos.z;
@@ -821,7 +839,7 @@ bool BattleMapPart::findSupport()
 	}
 
 	// Scan on Y
-	if (type->type != BattleMapPartType::Type::RightWall)
+	if (type->type != BattleMapPartType::Type::RightWall && !damaged)
 	{
 		int x = pos.x;
 		int z = pos.z;
@@ -914,6 +932,10 @@ sp<std::set<BattleMapPart*>> BattleMapPart::getSupportedParts()
 			if (obj->getType() == TileObjectBattleMapPart::convertType(p.second))
 			{
 				auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(obj)->getOwner();
+				if (mp->destroyed)
+				{
+					continue;
+				}
 				collapseList->insert(mp.get());
 			}
 		}
@@ -1046,14 +1068,6 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart*>> set)
 	} while (listChanged);
 
 	LogWarning("%s", log.cStr());
-
-	// At this point only those that should fall are left
-	// They will fall when their time comes
-	for (auto mp : *set)
-	{
-		auto pos = mp->tileObject->getOwningTile()->position;
-		LogWarning("MP %s SBT %d at %d %d %d is going to fall", mp->type.id.cStr(), (int)mp->type->getVanillaSupportedById(), pos.x, pos.y, pos.z);
-	}
 }
 
 void BattleMapPart::collapse()
@@ -1103,6 +1117,7 @@ void BattleMapPart::update(GameState &state, unsigned int ticks)
 		// Collision with this tile happens when map part moves from this tile to the next
 		if (newPosition.z < 0 || floorf(newPosition.z) != floorf(position.z))
 		{
+			LogWarning("Implement smoke when rubble falls through tile");
 			sp<BattleMapPart> rubble;
 			for (auto &obj : tileObject->getOwningTile()->ownedObjects)
 			{
@@ -1152,12 +1167,12 @@ void BattleMapPart::update(GameState &state, unsigned int ticks)
 						// If no rubble present - spawn rubble
 						auto rubble = mksp<BattleMapPart>();
 						Vec3<int> initialPosition = position;
+						rubble->damaged = true;
 						rubble->position = initialPosition;
 						rubble->position += Vec3<float>(0.5f, 0.5f, 0.0f);
 						rubble->type = type->rubble.front();
 						state.current_battle->map_parts.push_back(rubble);
 						state.current_battle->map->addObjectToMap(rubble);
-						LogWarning("Implement smoke when rubble falls");
 					}
 					else
 					{
@@ -1167,7 +1182,6 @@ void BattleMapPart::update(GameState &state, unsigned int ticks)
 						{
 							rubble->type = *it;
 							rubble->setPosition(rubble->position);
-							LogWarning("Implement smoke when rubble falls");
 						}
 					}
 				}

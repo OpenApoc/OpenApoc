@@ -101,22 +101,8 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 		if (supportedByDirections.size() == 2 && supportedByTypes.size() == 3) return 36;
 		int result = (int)*supportedByDirections.begin();
 		if (supportedByTypes.empty()) return result;
-		switch (*supportedByTypes.begin())
-		{
-			case Type::Ground:
-				if (supportedByTypes.size() > 1)
-					return 50 + result;
-				else
-					return 10 + result;
-			case Type::Feature:
-				if (supportedByTypes.size() > 1)
-					return 50 + result;
-				else
-					return 20 + result;
-			case Type::LeftWall:
-			case Type::RightWall:
-				return 40 + result;
-		}
+		if (supportedByTypes.size() == 1) return (*supportedByTypes.begin() == Type::Ground ? 10 : 20) + result;
+		return (supportedByTypes.find(Type::Feature) == supportedByTypes.end() ? 40 : 50) + result;
 	}
 
 	// Following members are not serialized, but rather are set up upon being loaded

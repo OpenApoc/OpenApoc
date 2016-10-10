@@ -78,9 +78,6 @@
     <ClCompile Include="rules\vehicle_type_rules.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="rules\vequipment_rules.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="tileview\tile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -184,6 +181,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tileview\pathfinding.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\vequipment_rules.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

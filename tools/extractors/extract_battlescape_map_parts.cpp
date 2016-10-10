@@ -206,6 +206,10 @@ void InitialGameStateExtractor::readBattleMapParts(GameState &state, TACP &data_
 				break;
 			case 4:
 				object->supportedByTypes.insert(object->type);
+				if (object->type != BattleMapPartType::Type::Ground)
+				{
+					object->supportedByTypes.insert(BattleMapPartType::Type::Ground);
+				}
 				break;
 			case 5:
 				object->supportedByTypes.insert(BattleMapPartType::Type::Ground);

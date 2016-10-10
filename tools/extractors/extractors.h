@@ -79,6 +79,7 @@ class InitialGameStateExtractor
 	void extractBaseLayouts(GameState &state);
 	void extractVehicleEquipment(GameState &state);
 	void extractResearch(GameState &state);
+	void extractAgentEquipment(GameState &state);
 
 	void extractBattlescapeMap(GameState &state, const std::vector<OpenApoc::UString> &paths);
 	void extractBattlescapeMapFromPath(GameState &state, const UString dirName, const int index);
@@ -91,7 +92,7 @@ class InitialGameStateExtractor
 
 	// Then things that change on difficulty
 
-	void extractAgentEquipment(GameState &state, Difficulty difficulty);
+	void extractAlienEquipmentSets(GameState &state, Difficulty difficulty);
 
 	void extractBuildings(GameState &state, UString bldFileName, sp<City> city,
 	                      bool alienBuilding = false);

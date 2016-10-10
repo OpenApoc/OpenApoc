@@ -173,9 +173,9 @@ class EquipmentSet : public StateObject<EquipmentSet>
 		EquipmentData(StateRef<AEquipmentType> item) : EquipmentData(item, nullptr) {}
 		EquipmentData(StateRef<AEquipmentType> item1, StateRef<AEquipmentType> item2)
 		{
-			if (item1)
+			if (item1.id.length() > 0)
 				equipment.push_back(item1);
-			if (item2)
+			if (item2.id.length() > 0)
 				equipment.push_back(item2);
 		}
 	};
