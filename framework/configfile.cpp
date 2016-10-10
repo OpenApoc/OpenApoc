@@ -380,7 +380,7 @@ class ConfigFileImpl
 };
 
 ConfigFile::ConfigFile() { this->pimpl.reset(new ConfigFileImpl()); }
-ConfigFile::~ConfigFile() {}
+ConfigFile::~ConfigFile() = default;
 
 bool ConfigFile::save() { return this->pimpl->save(); }
 

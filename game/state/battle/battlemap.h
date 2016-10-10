@@ -23,7 +23,7 @@ class BattleMap : public StateObject<BattleMap>
 {
   public:
 	BattleMap();
-	~BattleMap() = default;
+	~BattleMap() override = default;
 
 	UString id;
 
