@@ -700,6 +700,18 @@ sp<AEquipment> Agent::getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType
 	return nullptr;
 }
 
+sp<AEquipment> Agent::getFirstItemByType(StateRef<AEquipmentType> type) const
+{
+	for (auto e : equipment)
+	{
+		if (e->type == type)
+		{
+			return e;
+		}
+	}
+	return nullptr;
+}
+
 sp<AEquipment> Agent::getFirstShield() const
 {
 	for (auto e : equipment)

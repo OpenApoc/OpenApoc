@@ -36,13 +36,12 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 
 	unsigned int ownerInvulnerableTicks = 0;
 
-	unsigned int ticksUntilTryCollapse = 0;
+	unsigned int ticksUntilCollapse = 0;
 
-	// Queue attempt to collapse
-	void queueTryCollapse();
 	// Check if we are still supported, and collapse if not
 	void tryCollapse();
-
+	void collapse();
+	
 	void handleCollision(GameState &state, Collision &c);
 	void die(GameState &state, bool violently = true);
 	void update(GameState &state, unsigned int ticks);
@@ -63,5 +62,7 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 
   private:
 	bool findSupport();
+	void getSupport();
+
 };
 } // namespace OpenApoc

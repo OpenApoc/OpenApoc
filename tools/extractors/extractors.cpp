@@ -221,6 +221,7 @@ void InitialGameStateExtractor::extractCommon(GameState &state)
 	this->extractFacilities(state);
 	this->extractBaseLayouts(state);
 	this->extractResearch(state);
+	this->extractAgentEquipment(state);
 
 	// The alien map doesn't change
 	UString alienMapId = City::getPrefix() + "ALIEN";
@@ -236,7 +237,7 @@ void InitialGameStateExtractor::extractCommon(GameState &state)
 
 void InitialGameStateExtractor::extract(GameState &state, Difficulty difficulty)
 {
-	this->extractAgentEquipment(state, difficulty);
+	this->extractAlienEquipmentSets(state, difficulty);
 
 	std::map<Difficulty, UString> humanMapNames = {
 	    {Difficulty::DIFFICULTY_1, "citymap1"}, {Difficulty::DIFFICULTY_2, "citymap2"},

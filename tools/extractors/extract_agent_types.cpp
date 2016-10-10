@@ -511,7 +511,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 				fillAgentImagePacksByDefault(state, a, "xcom1");
 				break;
 			case UNIT_TYPE_POLICE:
-				fillAgentImagePacksByDefault(state, a, "police");
+				fillAgentImagePacksByDefault(state, a, "polic");
 				break;
 			case UNIT_TYPE_GANGSTER:
 				fillAgentImagePacksByDefault(state, a, "gang");

@@ -1,3 +1,4 @@
+#include "game/state/tileview/tile.h"
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/palette.h"
@@ -154,94 +155,72 @@ void InitialGameStateExtractor::readBattleMapParts(GameState &state, TACP &data_
 		object->height = entry.height;
 		object->floating = entry.is_floating;
 		object->provides_support = entry.provides_support;
+		
+		int gets_support_from = 0;
 		switch (entry.gets_support_from)
 		{
+			// 32 is a mistake, it should read "0"
+			case 32:
 			case 0:
-				object->supported_by = BattleMapPartType::SupportedByType::Below;
-				break;
-			case 1:
-				object->supported_by = BattleMapPartType::SupportedByType::North;
-				break;
-			case 2:
-				object->supported_by = BattleMapPartType::SupportedByType::East;
-				break;
-			case 3:
-				object->supported_by = BattleMapPartType::SupportedByType::South;
-				break;
-			case 4:
-				object->supported_by = BattleMapPartType::SupportedByType::West;
-				break;
-			case 5:
-				object->supported_by = BattleMapPartType::SupportedByType::Above;
 				break;
 			case 7:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown07;
-				break;
-			case 11:
-				object->supported_by = BattleMapPartType::SupportedByType::NorthBelow;
-				break;
-			case 12:
-				object->supported_by = BattleMapPartType::SupportedByType::EastBelow;
-				break;
-			case 13:
-				object->supported_by = BattleMapPartType::SupportedByType::SouthBelow;
-				break;
-			case 14:
-				object->supported_by = BattleMapPartType::SupportedByType::WestBelow;
-				break;
 			case 20:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown20;
+				object->vanillaSupportedById = entry.gets_support_from;
 				break;
-			case 21:
-				object->supported_by = BattleMapPartType::SupportedByType::NorthAbove;
-				break;
-			case 22:
-				object->supported_by = BattleMapPartType::SupportedByType::EastAbove;
-				break;
-			case 23:
-				object->supported_by = BattleMapPartType::SupportedByType::SouthAbove;
-				break;
-			case 24:
-				object->supported_by = BattleMapPartType::SupportedByType::WestAbove;
-				break;
+			// 30 is a mistake, it should read "1"
 			case 30:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown30;
-				break;
-			case 32:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown32;
-				break;
-			case 36:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown36;
-				break;
-			case 41:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown41;
-				break;
-			case 42:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown42;
-				break;
-			case 43:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown43;
-				break;
-			case 44:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown44;
-				break;
-			case 51:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown51;
-				break;
-			case 52:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown52;
-				break;
-			case 53:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown53;
-				break;
-			case 54:
-				object->supported_by = BattleMapPartType::SupportedByType::Unknown54;
+				gets_support_from = 1;
 				break;
 			default:
-				LogError("Invalid gets_support_from value %d for ID %s", entry.gets_support_from,
-				         id.cStr());
-				return;
+				gets_support_from = entry.gets_support_from;
 		}
+		if (gets_support_from == 36)
+		{
+			object->supportedByDirections.insert(MapDirection::North);
+			object->supportedByDirections.insert(MapDirection::West);
+			object->supportedByTypes.insert(BattleMapPartType::Type::LeftWall);
+			object->supportedByTypes.insert(BattleMapPartType::Type::RightWall);
+			object->supportedByTypes.insert(BattleMapPartType::Type::Feature);
+		}
+		else if (gets_support_from == 5)
+		{
+			object->supportedByAbove = true;
+		}
+		else if (gets_support_from)
+		{
+			if (gets_support_from % 10 < 1 || gets_support_from % 10 > 4)
+			{
+				LogError("Unrecognized support by id %d", (int)entry.gets_support_from);
+				return;
+			}
+			object->supportedByDirections.insert((MapDirection)(gets_support_from % 10));
+			switch (gets_support_from / 10)
+			{
+			case 0:
+				break;
+			case 1:
+				object->supportedByTypes.insert(BattleMapPartType::Type::Ground);
+				break;
+			case 2:
+				object->supportedByTypes.insert(BattleMapPartType::Type::Feature);
+				break;
+			case 4:
+				object->supportedByTypes.insert(object->type);
+				if (object->type != BattleMapPartType::Type::Ground)
+				{
+					object->supportedByTypes.insert(BattleMapPartType::Type::Ground);
+				}
+				break;
+			case 5:
+				object->supportedByTypes.insert(BattleMapPartType::Type::Ground);
+				object->supportedByTypes.insert(BattleMapPartType::Type::Feature);
+				break;
+			default:
+				LogError("Unrecognized support by id %d", (int)entry.gets_support_from);
+				return;
+			}
+		}
+
 		object->independent_structure = entry.independent_structure;
 
 		if (type == BattleMapPartType::Type::Ground && i >= firstExitIdx)

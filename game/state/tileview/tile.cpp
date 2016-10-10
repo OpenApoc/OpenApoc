@@ -699,7 +699,7 @@ sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &
 			auto topPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, maxZ - 0.01f);
 			auto bottomPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, 0.0f);
 
-			auto collision = this->findCollision(topPos, bottomPos, {}, los, true);
+			auto collision = this->findCollision(topPos, bottomPos, {}, nullptr, los, true);
 			if (collision)
 			{
 				if (objectColours.find(collision.obj) == objectColours.end())
@@ -721,6 +721,16 @@ sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &
 	}
 
 	return img;
+}
+
+void TileMap::updateAllBattlescapeInfo()
+{
+	for (auto &t : tiles)
+	{
+		t.updateBattlescapeParameters();
+		t.updateBattlescapeUIDrawOrder();
+		t.updateBattlescapeUnitPresent();
+	}
 }
 
 }; // namespace OpenApoc

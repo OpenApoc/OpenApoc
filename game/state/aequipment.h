@@ -55,8 +55,12 @@ class AEquipment
 
 	bool isFiring() { return weapon_fire_ticks_remaining > 0 || readyToFire; };
 	bool canFire(float range = 0.0f);
+	bool needsReload();
 	void stopFiring();
 	void startFiring(BattleUnit::FireAimingMode fireMode);
+
+	// Support nullptr ammoItem for auto-reloading
+	void loadAmmo(GameState &state, sp<AEquipment> ammoItem = nullptr);
 
 	// Following members are not serialized, but rather are set in initBattle method
 

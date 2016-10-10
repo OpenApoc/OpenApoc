@@ -15,7 +15,6 @@ class TileObjectVehicle;
 class TileObjectShadow;
 class Vehicle;
 class Organisation;
-class Weapon;
 class VehicleMission;
 class Building;
 class GameState;

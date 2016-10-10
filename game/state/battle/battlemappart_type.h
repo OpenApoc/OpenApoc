@@ -1,9 +1,11 @@
 #pragma once
 
+#include "game/state/tileview/tile.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
 #include <vector>
+#include <set>
 
 namespace OpenApoc
 {
@@ -23,37 +25,6 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 		RightWall,
 		Feature
 	};
-	enum class SupportedByType
-	{
-		Below,
-		North,
-		East,
-		South,
-		West,
-		Above,
-		Unknown07,
-		NorthBelow,
-		EastBelow,
-		SouthBelow,
-		WestBelow,
-		Unknown20,
-		NorthAbove,
-		EastAbove,
-		SouthAbove,
-		WestAbove,
-		Unknown30,
-		Unknown32,
-		Unknown36,
-		Unknown41,
-		Unknown42,
-		Unknown43,
-		Unknown44,
-		Unknown51,
-		Unknown52,
-		Unknown53,
-		Unknown54,
-	};
-
 	Type type = Type::Ground;
 
 	sp<Image> sprite;
@@ -88,18 +59,60 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 	bool gravlift = false;
 	int movement_cost = 0;
 	int height = 0;
+	// Does not require support
 	bool floating = false;
 	bool provides_support = false;
-	SupportedByType supported_by = SupportedByType::Below;
 	bool independent_structure = false;
 	bool exit = false;
+
+	// Support parameters
+	// (rules for support are explained in depth in BattleMapPart::findSupport() definition)
+
+	bool supportedByAbove = false;
+
+	// Directions in which objects can "cling to" other objects and stay afloat.
+	// If set, object can get support from another object in this direction.
+	// Rules for different types:
+	//  - Ground will get support from a Ground only
+	//  - Feature will get support from a Feature or a matching perpendicular Wall
+	//	  (Right if N/S, Left if E/W)
+	//  - Wall will get support from the same type of Wall
+	//	  (provided the Wall's type matches direction: Left for N/S, Right for E/W)
+	std::set<MapDirection> supportedByDirections;
+	bool isSupportedByDirection(MapDirection direction) { return supportedByDirections.find(direction) != supportedByDirections.end(); }
+
+	// Additional types objects can get directional support from.
+	// Directions must be also set for this to work.
+	// If set, objects can additionally get support from this type of object in their direction.
+	//
+	// Rules for different types:
+	//  - Ground/Wall on a current level
+	//  - Feature on a level below
+	std::set<Type> supportedByTypes;
+
+	// Unknowns from vanilla, can be 7 or 20
+	int vanillaSupportedById = 0;
+	// Debug output to ensure our collapsible map system is working properly
+	// Expects only combinations found in vanilla files
+	int getVanillaSupportedById() 
+	{
+		if (vanillaSupportedById) return vanillaSupportedById;
+		if (supportedByDirections.empty() && supportedByTypes.empty()) return 0;
+		if (supportedByDirections.size() == 2 && supportedByTypes.size() == 3) return 36;
+		int result = (int)*supportedByDirections.begin();
+		if (supportedByTypes.empty()) return result;
+		if (supportedByTypes.size() == 1) return (*supportedByTypes.begin() == Type::Ground ? 10 : 20) + result;
+		return (supportedByTypes.find(Type::Feature) == supportedByTypes.end() ? 40 : 50) + result;
+	}
 
 	// Following members are not serialized, but rather are set up upon being loaded
 
 	StateRef<DamageModifier> damageModifier;
 	sp<std::vector<sp<Sample>>> walkSounds;
 	sp<Sample> objectDropSound;
-	// Destroyed ground replacement for ground at level 0, rubble for other types
-	std::vector<StateRef<BattleMapPartType>> destroyed_map_parts;
+	// Object list spawned when this one falls 
+	std::vector<StateRef<BattleMapPartType>> rubble;
+	// Destroyed ground replacement for level 0 grounds
+	StateRef<BattleMapPartType> destroyed_ground_tile;
 };
 }

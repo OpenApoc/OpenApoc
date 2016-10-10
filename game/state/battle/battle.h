@@ -39,14 +39,6 @@ class Agent;
 class Battle : public std::enable_shared_from_this<Battle>
 {
   public:
-	enum class MapBorder
-	{
-		North,
-		East,
-		South,
-		West
-	};
-
 	enum class MissionType
 	{
 		AlienExtermination,
@@ -65,8 +57,9 @@ class Battle : public std::enable_shared_from_this<Battle>
 	Battle() = default;
 	~Battle();
 
-	void initBattle(GameState &state);
+	void initBattle(GameState &state, bool first = false);
 	void initMap();
+	void initialMapPartLinkUp();
 
 	Vec3<int> size;
 

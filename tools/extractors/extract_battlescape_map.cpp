@@ -89,14 +89,14 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 	uint8_t south_flag = 0b0100;
 	uint8_t west_flag = 0b1000;
 
-	m->allow_entrance[Battle::MapBorder::North] = bdata.allow_entrance_from & north_flag;
-	m->allow_entrance[Battle::MapBorder::East] = bdata.allow_entrance_from & east_flag;
-	m->allow_entrance[Battle::MapBorder::South] = bdata.allow_entrance_from & south_flag;
-	m->allow_entrance[Battle::MapBorder::West] = bdata.allow_entrance_from & west_flag;
-	m->allow_exit[Battle::MapBorder::North] = bdata.allow_exit_from & north_flag;
-	m->allow_exit[Battle::MapBorder::East] = bdata.allow_exit_from & east_flag;
-	m->allow_exit[Battle::MapBorder::South] = bdata.allow_exit_from & south_flag;
-	m->allow_exit[Battle::MapBorder::West] = bdata.allow_exit_from & west_flag;
+	m->allow_entrance[MapDirection::North] = bdata.allow_entrance_from & north_flag;
+	m->allow_entrance[MapDirection::East] = bdata.allow_entrance_from & east_flag;
+	m->allow_entrance[MapDirection::South] = bdata.allow_entrance_from & south_flag;
+	m->allow_entrance[MapDirection::West] = bdata.allow_entrance_from & west_flag;
+	m->allow_exit[MapDirection::North] = bdata.allow_exit_from & north_flag;
+	m->allow_exit[MapDirection::East] = bdata.allow_exit_from & east_flag;
+	m->allow_exit[MapDirection::South] = bdata.allow_exit_from & south_flag;
+	m->allow_exit[MapDirection::West] = bdata.allow_exit_from & west_flag;
 	m->entrance_level_min = bdata.entrance_min_level;
 	m->entrance_level_max = bdata.entrance_max_level;
 	m->exit_level_min = bdata.exit_min_level;

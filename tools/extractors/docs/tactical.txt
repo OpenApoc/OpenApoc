@@ -484,35 +484,48 @@ Provides support. Wether or not other objects can rely on this to stay in place 
 --------
 Gets support from. Handles how objects stay in place or fall, as well as objects "latching" to neighbours.
 
-Possible values (as well as values encountered):
- 0  = Down (object is supported by an object below).
- 1  = Top-Right (can "latch" in a top-right direction to another object and stay) 
- 2  = Bottom-Right
- 3  = Bottom-Left
- 4  = Top-Left
+Values encountered:
+ 0  = Down (object is supported by an object below)
  5  = Up (object can be supported by an object above it)
- 7  = unknown
- 11 = Top-Right Below (can "latch" in a top-right direction to another object one layer below
- 12 = Bottom-Right Below
- 13 = Bottom-Left Below
- 14 = Top-Left Below
- 20 = unknown
- 21 = Top-Right Above (can "latch" in a top-right direction to another object one layer below
- 22 = Bottom-Right Above
- 23 = Bottom-Left Above
- 24 = Top-Left Above
- 30 = unknown
- 32 = unknown
- 36 = unknown
- 41 = unknown
- 42 = unknown
- 43 = unknown
- 44 = unknown
- 51 = unknown
- 52 = unknown
- 53 = unknown
- 54 = unknown
  
+ Standart: (can get support from same type at this direction)
+		   (feature can also cling to a wall in this direction)
+ 1  = North
+ 2  = East
+ 3  = South
+ 4  = West
+ 
+ Ground: (Standart + can get support from ground at this direction)
+ 11 = North
+ 12 = East
+ 13 = South
+ 14 = West
+ 
+ Feature: (Standart + can get support from feature at this direction at z-1)
+ 21 = North
+ 22 = East
+ 23 = South
+ 24 = West
+ 
+ Ground + Wall: (Standart + Ground + can get support from wall at this direction)
+ 41 = North
+ 42 = East
+ 43 = South
+ 44 = West
+ 
+ Ground + Feature: Standart + Ground + Feature properties all in one
+ 51 = 1 + 11 + 21
+ 52 = 2 + 12 + 22
+ 53 = 3 + 13 + 23
+ 54 = 4 + 14 + 24
+ 
+ 36 = North or West Walls (North's Right and West's Left)
+ 
+ 7  = unknown (only present on brick walls of 52UFO02)
+ 20 = unknown (abundant on blocky scenery)
+ 30 = TYPO? Seems like it should read "1"
+ 32 = TYPO? Seems like it should read "0"
+  
 55/85[1]: 
 --------
 "Independent structure". Uncertain what this means.

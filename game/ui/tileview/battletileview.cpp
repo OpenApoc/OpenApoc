@@ -11,9 +11,11 @@
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/battle/battleitem.h"
+#include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battleunitmission.h"
 #include "game/state/organisation.h"
 #include "game/state/tileview/tileobject_battleitem.h"
+#include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "library/strings_format.h"
 
@@ -682,6 +684,15 @@ void BattleTileView::render()
 								if (obj->getType() == TileObject::Type::Projectile)
 								{
 									draw = true;
+								}
+								if (obj->getType() == TileObject::Type::Ground 
+									|| obj->getType() == TileObject::Type::LeftWall
+									|| obj->getType() == TileObject::Type::RightWall
+									|| obj->getType() == TileObject::Type::Feature)
+								{
+									draw = std::static_pointer_cast<TileObjectBattleMapPart>(obj)
+										->getOwner()
+										->falling;
 								}
 								if (draw)
 								{

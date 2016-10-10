@@ -33,11 +33,6 @@
 #include <algorithm>
 #include <limits>
 
-#ifdef _MSC_VER
-#pragma warning(push, 1)
-#pragma warning(disable : 4503)
-#endif
-
 namespace OpenApoc
 {
 // An ordered list of the types drawn in each layer
@@ -86,7 +81,7 @@ Battle::~Battle()
 	this->doors.clear();
 }
 
-void Battle::initBattle(GameState &state)
+void Battle::initBattle(GameState &state, bool first)
 {
 	common_image_list = state.battle_common_image_list;
 	common_sample_list = state.battle_common_sample_list;
@@ -144,22 +139,17 @@ void Battle::initBattle(GameState &state)
 		}
 	}
 	initMap();
-	// Stuff to init after map is ready
+	// From here on, do what needs to be done after map was init
 	for (auto &p : this->projectiles)
 	{
 		if (p->trackedUnit)
 			p->trackedObject = p->trackedUnit->tileObject;
 	}
-	for (auto &s : this->map_parts)
+	// On first run, init support links and items
+	if (first)
 	{
-		if (s->ticksUntilTryCollapse == 0)
-		{
-			s->tryCollapse();
-		}
-	}
-	for (auto &o : this->items)
-	{
-		if (o->ticksUntilTryCollapse == 0)
+		initialMapPartLinkUp();
+		for (auto &o : this->items)
 		{
 			o->tryCollapse();
 		}
@@ -205,6 +195,119 @@ void Battle::initMap()
 	}
 }
 
+void linkUpList(std::list<BattleMapPart*> list)
+{
+	auto next = list.begin();
+	auto prev = next++;
+	auto cur = next++;
+
+	// In case we are linking to map edge, first map part may be falling and must be linked
+	if ((*prev)->willCollapse())
+	{
+		(*prev)->cancelCollapse();
+		(*cur)->supportedParts.emplace_back((*prev)->position, (*prev)->type->type);
+	}
+	// Link middle
+	while (next != list.end())
+	{
+		(*cur)->cancelCollapse();
+		(*prev)->supportedParts.emplace_back((*cur)->position, (*cur)->type->type);
+		(*next)->supportedParts.emplace_back((*cur)->position, (*cur)->type->type);
+
+		prev++;
+		cur++;
+		next++;
+	}
+	// In case we are linking to map edge, last map part may be falling and must be linked
+	if ((*cur)->willCollapse())
+	{
+		(*cur)->cancelCollapse();
+		(*prev)->supportedParts.emplace_back((*cur)->position, (*cur)->type->type);
+	}
+}
+
+
+void Battle::initialMapPartLinkUp()
+{
+	LogWarning("Begun initial map parts link up!");
+	auto &mapref = *map;
+
+	for (int z = 0; z < mapref.size.z; z++)
+	{
+		for (auto &s : this->map_parts)
+		{
+			if ((int)s->position.z == z && s->findSupport())
+			{
+				s->cancelCollapse();
+			}
+		}
+	}
+	LogWarning("Begun map parts link up cycle!");
+	bool foundSupport;
+	// Establish support based on existing supported map parts
+	do
+	{
+		foundSupport = false;
+		for (auto &s : this->map_parts)
+		{
+			if (!s->willCollapse())
+			{
+				continue;
+			}
+			if (s->findSupport())
+			{
+				s->cancelCollapse();
+				foundSupport = true;
+			}
+		}
+	} while (foundSupport);
+
+	// Report unlinked parts
+	for (auto &mp : this->map_parts)
+	{
+		if (mp->willCollapse())
+		{
+			auto pos = mp->tileObject->getOwningTile()->position;
+			LogWarning("MP %s SBT %d at %d %d %d is UNLINKED", mp->type.id.cStr(), (int)mp->type->getVanillaSupportedById(), pos.x, pos.y, pos.z);
+		}
+	}
+
+	LogWarning("Attempting link up of unlinked parts");
+	// Try to link to objects of same type first, then to anything
+	for (int skipTypeCheck = 0; skipTypeCheck <= 1; skipTypeCheck++)
+	{
+		do
+		{
+			foundSupport = false;
+			for (auto &s : this->map_parts)
+			{
+				if (!s->willCollapse())
+				{
+					continue;
+				}
+				if (s->attachToSomething(!skipTypeCheck))
+				{
+					s->cancelCollapse();
+					foundSupport = true;
+				}
+			}
+		} while (foundSupport);
+	}
+	
+	// Report unlinked parts
+	for (auto &mp : this->map_parts)
+	{
+		if (mp->willCollapse())
+		{
+			auto pos = mp->tileObject->getOwningTile()->position;
+			LogWarning("MP %s SBT %d at %d %d %d is going to fall", mp->type.id.cStr(), (int)mp->type->getVanillaSupportedById(), pos.x, pos.y, pos.z);
+		}
+	}
+	
+	mapref.updateAllBattlescapeInfo();
+	LogWarning("Link up finished!");
+}
+
 void Battle::setMode(Mode mode)
 {
 	this->mode = mode;
@@ -229,6 +332,7 @@ sp<BattleUnit> Battle::addUnit(GameState &state)
 	unit->id = id;
 	unit->strategyImages = state.battle_common_image_list->strategyImages;
 	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
+	unit->squadNumber = -1;
 	units[id] = unit;
 	return unit;
 }
@@ -426,7 +530,7 @@ void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organis
 {
 	if (state.current_battle)
 	{
-		LogError("Battle::EnterBattle called while another battle is in progress!");
+		LogError("Battle::beginBattle called while another battle is in progress!");
 		return;
 	}
 	auto b = BattleMap::createBattle(state, target_organisation, player_agents, player_craft,
@@ -443,7 +547,7 @@ void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organis
 {
 	if (state.current_battle)
 	{
-		LogError("Battle::EnterBattle called while another battle is in progress!");
+		LogError("Battle::beginBattle called while another battle is in progress!");
 		return;
 	}
 	auto b = BattleMap::createBattle(state, target_organisation, player_agents, player_craft,
@@ -458,7 +562,7 @@ void Battle::enterBattle(GameState &state)
 {
 	if (!state.current_battle)
 	{
-		LogError("Battle::BeginBattle called with no battle!");
+		LogError("Battle::enterBattle called with no battle!");
 		return;
 	}
 
@@ -1032,7 +1136,7 @@ void Battle::enterBattle(GameState &state)
 		// FIXME: Make X-COM hostile to target org for the duration of this mission
 	}
 
-	state.current_battle->initBattle(state);
+	state.current_battle->initBattle(state, true);
 }
 
 // To be called when battle must be finished and before showing score screen
@@ -1043,6 +1147,8 @@ void Battle::finishBattle(GameState &state)
 		LogError("Battle::FinishBattle called with no battle!");
 		return;
 	}
+	
+	state.current_battle->unloadResources(state);
 	//  - Identify how battle ended(if enemies present then Failure, otherwise Success)
 	//	- (Failure) Determine surviving player agents(kill all player agents that are too far from
 	// exits)
@@ -1069,7 +1175,6 @@ void Battle::exitBattle(GameState &state)
 		return;
 	}
 
-	state.current_battle->unloadResources(state);
 	//  - Apply score
 	//	- (UFO mission) Clear UFO crash
 	//	- Load loot into vehicles
@@ -1220,7 +1325,3 @@ void Battle::unloadAnimationPacks(GameState &state)
 }
 
 } // namespace OpenApoc
-
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif

@@ -1362,11 +1362,14 @@ void BattleView::orderTeleport(Vec3<int> target, bool right)
 	                                          : AgentEquipmentLayout::EquipmentSlotType::LeftHand);
 
 	// FIXME: REMOVE TEMPORARY CHEAT
-	item = mksp<AEquipment>();
-	UString tp = "AEQUIPMENTTYPE_PERSONAL_TELEPORTER";
-	item->type = {&*state, tp};
-	item->ammo = item->type->max_ammo;
-	// FIXME: REMOVE TEMPORARY CHEAT
+	if (!item || item->type->type != AEquipmentType::Type::Teleporter)
+	{
+		LogWarning("Using teleporter cheat!");
+		item = mksp<AEquipment>();
+		UString tp = "AEQUIPMENTTYPE_PERSONAL_TELEPORTER";
+		item->type = { &*state, tp };
+		item->ammo = item->type->max_ammo;
+	}
 
 	if (!item)
 	{
@@ -1433,33 +1436,27 @@ void BattleView::eventOccurred(Event *e)
 	     e->keyboard().KeyCode == SDLK_SPACE || e->keyboard().KeyCode == SDLK_RSHIFT ||
 	     e->keyboard().KeyCode == SDLK_LSHIFT || e->keyboard().KeyCode == SDLK_RALT ||
 	     e->keyboard().KeyCode == SDLK_LALT || e->keyboard().KeyCode == SDLK_RCTRL ||
-	     e->keyboard().KeyCode == SDLK_LCTRL))
+	     e->keyboard().KeyCode == SDLK_LCTRL || e->keyboard().KeyCode == SDLK_f))
 	{
 		switch (e->keyboard().KeyCode)
 		{
 			case SDLK_RSHIFT:
 				modifierRShift = true;
-				updateSelectionMode();
 				break;
 			case SDLK_LSHIFT:
 				modifierLShift = true;
-				updateSelectionMode();
 				break;
 			case SDLK_RALT:
 				modifierRAlt = true;
-				updateSelectionMode();
 				break;
 			case SDLK_LALT:
 				modifierLAlt = true;
-				updateSelectionMode();
 				break;
 			case SDLK_RCTRL:
 				modifierRCtrl = true;
-				updateSelectionMode();
 				break;
 			case SDLK_LCTRL:
 				modifierLCtrl = true;
-				updateSelectionMode();
 				break;
 			case SDLK_ESCAPE:
 				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InGameOptions>(state)});
@@ -1488,6 +1485,27 @@ void BattleView::eventOccurred(Event *e)
 				else
 					setUpdateSpeed(this->lastSpeed);
 				break;
+			case SDLK_f:
+				{
+					auto t = this->getSelectedTilePosition();
+					auto &map = *state->current_battle->map;
+					auto tile = map.getTile(t);
+					for (auto &o : tile->ownedObjects)
+					{
+						if (o->getType() == TileObject::Type::Ground
+							|| o->getType() == TileObject::Type::Feature
+							|| o->getType() == TileObject::Type::LeftWall
+							|| o->getType() == TileObject::Type::RightWall)
+						{
+							auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+							auto set = mksp<std::set<BattleMapPart*>>();
+							set->insert(mp.get());
+							mp->queueCollapse();
+							BattleMapPart::attemptReLinkSupports(set);
+						}
+					}
+				}
+				break;
 		}
 	}
 	else if (e->type() == EVENT_MOUSE_MOVE)
@@ -1508,27 +1526,21 @@ void BattleView::eventOccurred(Event *e)
 		{
 			case SDLK_RSHIFT:
 				modifierRShift = false;
-				updateSelectionMode();
 				break;
 			case SDLK_LSHIFT:
 				modifierLShift = false;
-				updateSelectionMode();
 				break;
 			case SDLK_RALT:
 				modifierRAlt = false;
-				updateSelectionMode();
 				break;
 			case SDLK_LALT:
 				modifierLAlt = false;
-				updateSelectionMode();
 				break;
 			case SDLK_RCTRL:
 				modifierRCtrl = false;
-				updateSelectionMode();
 				break;
 			case SDLK_LCTRL:
 				modifierLCtrl = false;
-				updateSelectionMode();
 				break;
 		}
 	}
@@ -1573,6 +1585,7 @@ void BattleView::eventOccurred(Event *e)
 				unitPresent = unitOccupying;
 			}
 
+			LogWarning("Click at tile %d, %d, %d", t.x, t.y, t.z);
 			switch (selectionState)
 			{
 				case BattleSelectionState::Normal:
@@ -1669,6 +1682,57 @@ void BattleView::eventOccurred(Event *e)
 							LogError("Unhandled mouse button!");
 							break;
 					}
+					{
+						UString debug = "";
+						debug += format("\nDEBUG INFORMATION ABOUT TILE %d, %d, %d", t.x, t.y, t.z);
+						auto &map = *state->current_battle->map;
+						auto tile =map.getTile(t);
+						for (auto &o : tile->ownedObjects)
+						{
+							if (o->getType() == TileObject::Type::Ground 
+								|| o->getType() == TileObject::Type::Feature
+								|| o->getType() == TileObject::Type::LeftWall
+								|| o->getType() == TileObject::Type::RightWall)
+							{
+								auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+								debug += format("\n[%s] SBT %d STATUS %s", mp->type.id, mp->type->getVanillaSupportedById(), !mp->isAlive()? "DEAD " :(mp->damaged ? "DAMAGED" : (mp->providesHardSupport ? "HARD " : "SOFT ")));
+								for (int x = t.x - 1; x <= t.x + 1; x++)
+								{
+									for (int y = t.y - 1; y <= t.y + 1; y++)
+									{
+										for (int z = t.z - 1; z <= t.z + 1; z++)
+										{
+											if (x < 0 || x >= map.size.x
+												|| y < 0 || y >= map.size.y
+												|| z < 0 || z >= map.size.z)
+											{
+												continue;
+											}
+											auto tile2 = map.getTile(x, y, z);
+											for (auto &o2 : tile2->ownedObjects)
+											{
+												if (o2->getType() == TileObject::Type::Ground
+													|| o2->getType() == TileObject::Type::Feature
+													|| o2->getType() == TileObject::Type::LeftWall
+													|| o2->getType() == TileObject::Type::RightWall)
+												{
+													auto mp2 = std::static_pointer_cast<TileObjectBattleMapPart>(o2)->getOwner();
+													for (auto &p : mp2->supportedParts)
+													{
+														if (p.first == t && p.second == mp->type->type)
+														{
+															debug += format("\nSupported by %s at %d %d %d", mp2->type.id, x-t.x, y-t.y, z-t.z);
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+						LogWarning("%s", debug.cStr());
+					}
 					break;
 				case BattleSelectionState::FireAny:
 				case BattleSelectionState::FireLeft:
@@ -1761,7 +1825,6 @@ void BattleView::eventOccurred(Event *e)
 					LogError("Implement!");
 					break;
 			}
-			LogWarning("Click at tile %d, %d, %d", t.x, t.y, t.z);
 		}
 	}
 	else if (e->type() == EVENT_GAME_STATE)
@@ -1912,7 +1975,7 @@ void BattleView::updateItemInfo(bool right)
 			int ammoPadding = 1;
 			int ammoSize = ammoDisplaySize / info.maxAmmo - 1;
 			int x = right ? 1 : 47;
-			if (ammoSize == 0)
+			if (ammoSize <= 0)
 			{
 				ammoSize = 1;
 				ammoPadding = 0;
@@ -1933,7 +1996,7 @@ void BattleView::updateItemInfo(bool right)
 	this->activeTab->findControlTyped<Graphic>("OVERLAY_" + name + "_HAND")->setImage(overlay);
 }
 
-void BattleView::finish() { fw().getCursor().CurrentType = ApocCursor::CursorType::Normal; }
+void BattleView::finish() { fw().getCursor().CurrentType = ApocCursor::CursorType::Normal; Battle::finishBattle(*state.get());}
 
 AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 {

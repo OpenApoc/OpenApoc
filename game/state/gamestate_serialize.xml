@@ -36,9 +36,6 @@
 		<member>rng</member>
 		<member>gameTime</member>
 		<member>gameTimeBeforeBattle</member>
-		<member type="SectionMap">battle_unit_image_packs</member>
-		<member type="SectionMap">battle_unit_animation_packs</member>
-		<member type="Section">battleMapTiles</member>
 		<member type="SectionMap">battle_maps</member>
 		<member type="Section">current_battle</member>
 		<member type="Section">damage_modifiers</member>
@@ -358,7 +355,10 @@
 		<member>height</member>
 		<member>floating</member>
 		<member>provides_support</member>
-		<member>supported_by</member>
+		<member>supportedByAbove</member>
+		<member>supportedByDirections</member>
+		<member>supportedByTypes</member>
+		<member>vanillaSupportedById</member>
 		<member>independent_structure</member>
 		<member>exit</member>
 	</object>
@@ -540,19 +540,22 @@
 		<member>bounced</member>
 		<member>falling</member>
 		<member>ownerInvulnerableTicks</member>
-		<member>ticksUntilTryCollapse</member>
+		<member>ticksUntilCollapse</member>
 	</object>
 	<object>
 		<name>BattleMapPart</name>
 		<member>type</member>
 		<member>alternative_type</member>
-		<member>initialPosition</member>
-		<member>currentPosition</member>
-		<member>ticksUntilTryCollapse</member>
+		<member>position</member>
+		<member>ticksUntilCollapse</member>
 		<member>damaged</member>
 		<member>falling</member>
+		<member>fallingSpeed</member>
 		<member>destroyed</member>
+		<member>providesHardSupport</member>
 		<member>door</member>
+		<member>supportedItems</member>
+		<member>supportedParts</member>
 	</object>
 	<object>
 		<name>BattleDoor</name>
@@ -1011,7 +1014,7 @@
 		<value>UfoRecovery</value>
 	</enum>
 	<enum>
-		<name>Battle::MapBorder</name>
+		<name>MapDirection</name>
 		<value>North</value>
 		<value>East</value>
 		<value>South</value>
@@ -1098,36 +1101,6 @@
 		<value>LeftWall</value>
 		<value>RightWall</value>
 		<value>Feature</value>
-	</enum>
-	<enum>
-		<name>BattleMapPartType::SupportedByType</name>
-		<value>Below</value>
-		<value>North</value>
-		<value>East</value>
-		<value>South</value>
-		<value>West</value>
-		<value>Above</value>
-		<value>Unknown07</value>
-		<value>NorthBelow</value>
-		<value>EastBelow</value>
-		<value>SouthBelow</value>
-		<value>WestBelow</value>
-		<value>Unknown20</value>
-		<value>NorthAbove</value>
-		<value>EastAbove</value>
-		<value>SouthAbove</value>
-		<value>WestAbove</value>
-		<value>Unknown30</value>
-		<value>Unknown32</value>
-		<value>Unknown36</value>
-		<value>Unknown41</value>
-		<value>Unknown42</value>
-		<value>Unknown43</value>
-		<value>Unknown44</value>
-		<value>Unknown51</value>
-		<value>Unknown52</value>
-		<value>Unknown53</value>
-		<value>Unknown54</value>
 	</enum>
 	<enum>
 		<name>Projectile::Type</name>

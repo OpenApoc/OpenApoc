@@ -29,6 +29,7 @@ class TileObjectBattleMapPart : public TileObject
 
 	void setPosition(Vec3<float> newPosition) override;
 	void removeFromMap() override;
+	void addToDrawnTiles(Tile *tile) override;
 
 	static TileObject::Type convertType(BattleMapPartType::Type type);
 

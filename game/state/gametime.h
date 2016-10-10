@@ -6,7 +6,9 @@
 namespace OpenApoc
 {
 
-static const unsigned TICKS_PER_SECOND = 144;
+static const unsigned VANILLA_TICKS_PER_SECOND = 36;
+static const unsigned TICKS_MULTIPLIER = 4;
+static const unsigned TICKS_PER_SECOND = VANILLA_TICKS_PER_SECOND * TICKS_MULTIPLIER;
 static const unsigned TICKS_PER_MINUTE = TICKS_PER_SECOND * 60;
 static const unsigned TICKS_PER_HOUR = TICKS_PER_MINUTE * 60;
 static const unsigned TICKS_PER_DAY = TICKS_PER_HOUR * 24;

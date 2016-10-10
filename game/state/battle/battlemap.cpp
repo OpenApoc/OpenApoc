@@ -541,7 +541,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 					    secRefs[i]->size.z == z)
 						remaining_sectors.push_back(i);
 
-		// Disable sectors that don'pair fit
+		// Disable sectors that don't fit
 		bool mandatorySectorLost = false;
 		bool mandatorySectorRemaining = false;
 		for (int i = (int)remaining_sectors.size() - 1; i >= 0; i--)
@@ -551,8 +551,14 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 			    secRefs[remaining_sectors[i]]->size.y > size.y ||
 			    secRefs[remaining_sectors[i]]->size.z > size.z)
 			{
-				mandatorySectorLost =
-				    mandatorySectorLost || (secRefs[remaining_sectors[i]]->occurrence_min > 0);
+				// We only care about losing non-vertically-stacked sectors,
+				// as vanilla had some maps where only stacked sectors are mandatory,
+				// yet it never actually did stacking!
+				// If, however, we are losing a stacked sector while stacking, then we do care!
+				if (secRefs[remaining_sectors[i]]->occurrence_min > 0 && secRefs[remaining_sectors[i]]->size.z <= size.z)
+				{
+					mandatorySectorLost = true;
+				}
 				remaining_sectors.erase(remaining_sectors.begin() + i);
 			}
 			else
@@ -750,26 +756,27 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 					{
 						auto s = mksp<BattleMapPart>();
 
-						s->initialPosition = pair.first + shift;
-						s->currentPosition = s->initialPosition;
-						s->currentPosition += Vec3<float>(0.5f, 0.5f, 0.0f);
+						auto initialPosition = pair.first + shift;
+						s->position = initialPosition;
+						s->queueCollapse();
+						s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
 
 						// Check wether this is an exit location, and if so,
 						// replace the ground map part with an appropriate exit
-						bool canExit = s->currentPosition.z >= exit_level_min &&
-						               s->currentPosition.z <= exit_level_max;
+						bool canExit = s->position.z >= exit_level_min &&
+						               s->position.z <= exit_level_max;
 						canExit =
 						    canExit &&
-						    (s->currentPosition.x > 0 || allow_exit[Battle::MapBorder::West]) &&
-						    (s->currentPosition.y > 0 || allow_exit[Battle::MapBorder::North]) &&
-						    (s->currentPosition.x < size.x * chunk_size.x - 1 ||
-						     allow_exit[Battle::MapBorder::East]) &&
-						    (s->currentPosition.y < size.y * chunk_size.y - 1 ||
-						     allow_exit[Battle::MapBorder::South]);
+						    (s->position.x > 0 || allow_exit[MapDirection::West]) &&
+						    (s->position.y > 0 || allow_exit[MapDirection::North]) &&
+						    (s->position.x < size.x * chunk_size.x - 1 ||
+						     allow_exit[MapDirection::East]) &&
+						    (s->position.y < size.y * chunk_size.y - 1 ||
+						     allow_exit[MapDirection::South]);
 						if (canExit)
 						{
-							Vec3<int> exitLocX = s->currentPosition;
-							Vec3<int> exitLocY = s->currentPosition;
+							Vec3<int> exitLocX = s->position;
+							Vec3<int> exitLocY = s->position;
 							bool exitFarSideX = false;
 							bool exitFarSideY = false;
 							if (exitLocX.y == 0 || exitLocX.y == size.y * chunk_size.y - 1)
@@ -794,18 +801,18 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 
 						// Set spawnability and height
 						if (s->type->movement_cost == 255 || s->type->height == 39 ||
-						    b->spawnMap[s->initialPosition.x][s->initialPosition.y]
-						               [s->initialPosition.z] == -1)
+						    b->spawnMap[initialPosition.x][initialPosition.y]
+						               [initialPosition.z] == -1)
 						{
-							b->spawnMap[s->initialPosition.x][s->initialPosition.y]
-							           [s->initialPosition.z] = -1;
+							b->spawnMap[initialPosition.x][initialPosition.y]
+							           [initialPosition.z] = -1;
 						}
 						else
 						{
-							b->spawnMap[s->initialPosition.x][s->initialPosition.y]
-							           [s->initialPosition.z] =
-							    std::max(b->spawnMap[s->initialPosition.x][s->initialPosition.y]
-							                        [s->initialPosition.z],
+							b->spawnMap[initialPosition.x][initialPosition.y]
+							           [initialPosition.z] =
+							    std::max(b->spawnMap[initialPosition.x][initialPosition.y]
+							                        [initialPosition.z],
 							             s->type->height);
 						}
 
@@ -815,14 +822,15 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 					{
 						auto s = mksp<BattleMapPart>();
 
-						s->initialPosition = pair.first + shift;
-						s->currentPosition = s->initialPosition;
-						s->currentPosition += Vec3<float>(0.5f, 0.5f, 0.0f);
+						auto initialPosition = pair.first + shift;
+						s->position = initialPosition;
+						s->queueCollapse();
+						s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
 						s->type = pair.second;
 
 						if (pair.second->door)
 						{
-							doors[0].emplace_back(s->initialPosition, s);
+							doors[0].emplace_back(initialPosition, s);
 						}
 
 						b->map_parts.push_back(s);
@@ -831,14 +839,15 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 					{
 						auto s = mksp<BattleMapPart>();
 
-						s->initialPosition = pair.first + shift;
-						s->currentPosition = s->initialPosition;
-						s->currentPosition += Vec3<float>(0.5f, 0.5f, 0.0f);
+						auto initialPosition = pair.first + shift;
+						s->position = initialPosition;
+						s->queueCollapse();
+						s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
 						s->type = pair.second;
 
 						if (pair.second->door)
 						{
-							doors[1].emplace_back(s->initialPosition, s);
+							doors[1].emplace_back(initialPosition, s);
 						}
 
 						b->map_parts.push_back(s);
@@ -847,25 +856,26 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 					{
 						auto s = mksp<BattleMapPart>();
 
-						s->initialPosition = pair.first + shift;
-						s->currentPosition = s->initialPosition;
-						s->currentPosition += Vec3<float>(0.5f, 0.5f, 0.0f);
+						auto initialPosition = pair.first + shift;
+						s->position = initialPosition;
+						s->queueCollapse();
+						s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
 						s->type = pair.second;
 
 						// Set spawnability and height
 						if (s->type->movement_cost == 255 || s->type->height == 39 ||
-						    b->spawnMap[s->initialPosition.x][s->initialPosition.y]
-						               [s->initialPosition.z] == -1)
+						    b->spawnMap[initialPosition.x][initialPosition.y]
+						               [initialPosition.z] == -1)
 						{
-							b->spawnMap[s->initialPosition.x][s->initialPosition.y]
-							           [s->initialPosition.z] = -1;
+							b->spawnMap[initialPosition.x][initialPosition.y]
+							           [initialPosition.z] = -1;
 						}
 						else
 						{
-							b->spawnMap[s->initialPosition.x][s->initialPosition.y]
-							           [s->initialPosition.z] =
-							    std::max(b->spawnMap[s->initialPosition.x][s->initialPosition.y]
-							                        [s->initialPosition.z],
+							b->spawnMap[initialPosition.x][initialPosition.y]
+							           [initialPosition.z] =
+							    std::max(b->spawnMap[initialPosition.x][initialPosition.y]
+							                        [initialPosition.z],
 							             s->type->height);
 						}
 
@@ -885,7 +895,6 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						auto bi = b->addItem(state);
 						bi->item = i;
 						bi->position = pair.first + shift;
-						bi->falling = false;
 					}
 					for (auto &tlb : tiles.los_blocks)
 					{
@@ -986,7 +995,6 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 			u->agent = a;
 			u->agent->unit = {&state, u->id};
 			u->owner = a->owner;
-			u->squadNumber = -1;
 			u->updateDisplayedItem();
 			if (!spawnCivilians && a->owner == state.getCivilian())
 			{
@@ -1104,16 +1112,17 @@ void BattleMap::loadTilesets(GameState &state) const
 			switch (tile->type)
 			{
 				case BattleMapPartType::Type::Ground:
-					tile->destroyed_map_parts.push_back(destroyed_ground_tile);
+					tile->rubble = rubble_feature;
+					tile->destroyed_ground_tile = destroyed_ground_tile;
 					break;
 				case BattleMapPartType::Type::LeftWall:
-					tile->destroyed_map_parts = rubble_left_wall;
+					tile->rubble = rubble_left_wall;
 					break;
 				case BattleMapPartType::Type::RightWall:
-					tile->destroyed_map_parts = rubble_right_wall;
+					tile->rubble = rubble_right_wall;
 					break;
 				case BattleMapPartType::Type::Feature:
-					tile->destroyed_map_parts = rubble_feature;
+					tile->rubble = rubble_feature;
 					break;
 			}
 			tile->damageModifier = {&state, "DAMAGEMODIFIER_TERRAIN_1_"};
