@@ -752,7 +752,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 
 						auto initialPosition = pair.first + shift;
 						s->position = initialPosition;
-						s->ticksUntilCollapse = 4;
+						s->queueCollapse();
 						s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
 
 						// Check wether this is an exit location, and if so,
@@ -818,7 +818,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 
 						auto initialPosition = pair.first + shift;
 						s->position = initialPosition;
-						s->ticksUntilCollapse = 4;
+						s->queueCollapse();
 						s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
 						s->type = pair.second;
 
@@ -835,7 +835,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 
 						auto initialPosition = pair.first + shift;
 						s->position = initialPosition;
-						s->ticksUntilCollapse = 4;
+						s->queueCollapse();
 						s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
 						s->type = pair.second;
 
@@ -852,7 +852,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 
 						auto initialPosition = pair.first + shift;
 						s->position = initialPosition;
-						s->ticksUntilCollapse = 4;
+						s->queueCollapse();
 						s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
 						s->type = pair.second;
 

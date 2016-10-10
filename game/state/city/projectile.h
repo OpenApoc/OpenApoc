@@ -15,6 +15,13 @@
 // Based on the fact that retribution (tr = 10) turns 90 degrees (PI/2) per second
 #define PROJECTILE_TURN_PER_TICK ((float)(M_PI / 2.0f) / 10.0f / TICKS_PER_SECOND)
 
+// Alexey Andronov (Istrebitel): 
+// It was observed that progressing projectile's velocity using TICK_SCALE 
+// produces projectiles that are too slow. 
+// Approximately this multiplier brings them back to speeds matching vanilla
+// However, this may be wrong
+#define PROJECTILE_VELOCITY_MULTIPLIER 8
+
 namespace OpenApoc
 {
 

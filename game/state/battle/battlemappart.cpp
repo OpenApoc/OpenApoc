@@ -24,14 +24,14 @@ void BattleMapPart::die(GameState &state, bool violently)
 		// FIXME: Explode if nessecary
 	}
 
-	// If falling just cease to be, do damage and add rubble
+	// If falling just cease to be, do damage
 	if (falling)
 	{
 		this->tileObject->removeFromMap();
 		this->tileObject.reset();
 		destroyed = true;
 
-		LogWarning("Deal damage!");
+		LogWarning("Deal falling damage to units!");
 		return;
 	}
 
@@ -40,10 +40,17 @@ void BattleMapPart::die(GameState &state, bool violently)
 		tileObject->getCenter());
 
 	// Replace with damaged / destroyed
-	if (!this->damaged && type->damaged_map_part)
+	if (type->damaged_map_part)
 	{
-		this->damaged = true;
 		this->type = type->damaged_map_part;
+		if (findSupport())
+		{
+			this->damaged = true;
+		}
+		else
+		{
+			queueCollapse();
+		}
 	}
 	else
 	{
@@ -64,6 +71,7 @@ void BattleMapPart::die(GameState &state, bool violently)
 	ceaseDoorFunction();
 	ceaseSupportProvision();
 
+	// Destroy if destroyed
 	if (destroyed)
 	{
 		this->tileObject->removeFromMap();
@@ -1020,8 +1028,7 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart*>> set)
 	// First mark all those in list as about to fall
 	for (auto mp : *set)
 	{
-		mp->ticksUntilCollapse = 4;
-		mp->providesHardSupport = false;
+		mp->queueCollapse();
 	}
 
 	// Then try to re-establish support links
@@ -1045,7 +1052,7 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart*>> set)
 			auto supportedByThisMp = mp->getSupportedParts();
 			for (auto newmp : *supportedByThisMp)
 			{
-				newmp->ticksUntilCollapse = mp->ticksUntilCollapse + 4;
+				newmp->queueCollapse(mp->ticksUntilCollapse);
 				newmp->providesHardSupport = false;
 			}
 			auto pos = mp->tileObject->getOwningTile()->position;
@@ -1090,10 +1097,10 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart*>> set)
 					}
 
 				}
-				mp->ticksUntilCollapse = 0;
+				mp->cancelCollapse();
 				for (auto newmp : *supportedByThisMp)
 				{
-					newmp->ticksUntilCollapse = 0;
+					newmp->cancelCollapse();
 				}
 				listChanged = true;
 			}
@@ -1276,8 +1283,19 @@ void BattleMapPart::setPosition(const Vec3<float> &pos)
 
 bool BattleMapPart::isAlive() const
 {
-	if (this->falling || this->destroyed || ticksUntilCollapse > 0)
+	if (falling || destroyed || willCollapse())
 		return false;
 	return true;
+}
+
+void BattleMapPart::queueCollapse(unsigned additionalDelay = 0)
+{
+	ticksUntilCollapse = TICKS_MULTIPLIER + additionalDelay;
+	providesHardSupport = false;
+}
+
+void BattleMapPart::cancelCollapse()
+{
+	ticksUntilCollapse = 0;
 }
 }

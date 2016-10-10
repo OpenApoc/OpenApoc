@@ -484,8 +484,9 @@ Provides support. Wether or not other objects can rely on this to stay in place 
 --------
 Gets support from. Handles how objects stay in place or fall, as well as objects "latching" to neighbours.
 
-Possible values (as well as values encountered):
- 0  = Down (object is supported by an object below).
+Values encountered:
+ 0  = Down (object is supported by an object below)
+ 5  = Up (object can be supported by an object above it)
  
  Standart: (can get support from same type at this direction)
 		   (feature can also cling to a wall in this direction)
@@ -494,42 +495,37 @@ Possible values (as well as values encountered):
  3  = South
  4  = West
  
- 5  = Up (object can be supported by an object above it)
- 
- 7  = unknown (only present on brick walls of 52UFO02)
- 
- Ground: (can get support from ground at this direction)
-		 (also has all Standart properties)
+ Ground: (Standart + can get support from ground at this direction)
  11 = North
  12 = East
  13 = South
  14 = West
  
- 20 = unknown (abundant on blocky scenery)
- 
- Feature: (can get support from feature at this direction below)
-		  (also has all Standart properties)
+ Feature: (Standart + can get support from feature at this direction at z-1)
  21 = North
  22 = East
  23 = South
  24 = West
  
+ Wall: (Standart + can get support from wall at this direction)
+ 41 = North
+ 42 = East
+ 43 = South
+ 44 = West
+ 
+ Ground + Feature: Standart + Ground + Feature properties all in one
+ 51 = 1 + 11 + 21
+ 52 = 2 + 12 + 22
+ 53 = 3 + 13 + 23
+ 54 = 4 + 14 + 24
+ 
+ 36 = North or West Walls (North's Right and West's Left)
+ 
+ 7  = unknown (only present on brick walls of 52UFO02)
+ 20 = unknown (abundant on blocky scenery)
  30 = TYPO? Seems like it should read "1"
- 
  32 = TYPO? Seems like it should read "0"
- 
- 36 = Top Walls (Top-Right's Left wall and Top-Left's Right wall)
- 
- 41 = 1
- 42 = 2
- 43 = 3
- 44 = 4
- 
- 51 = 11 (or feature below)
- 52 = 12
- 53 = 13
- 54 = 14
- 
+  
 55/85[1]: 
 --------
 "Independent structure". Uncertain what this means.

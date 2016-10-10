@@ -47,8 +47,17 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 
 	// Returns true if sound and doodad were handled by it
 	bool handleCollision(GameState &state, Collision &c);
+	// Handles mappart ceasing to exist (fatal damage or fell on something)
 	void die(GameState &state, bool violently = true);
+	// Collapses mappart immediately
 	void collapse();
+
+	// Makes mappart stop being valid for support and collapse in 1 vanilla tick
+	void queueCollapse(unsigned additionalDelay = 0);
+	// Cancels queued collapse
+	void cancelCollapse();
+	// Wether mappart is queued to collapse
+	bool willCollapse() const { return ticksUntilCollapse > 0; }
 
 	sp<std::set<BattleMapPart*>> getSupportedParts();
 	static void attemptReLinkSupports(sp<std::set<BattleMapPart*>> set);

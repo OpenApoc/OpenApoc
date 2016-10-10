@@ -51,7 +51,7 @@ sp<Projectile> VEquipment::fire(Vec3<float> targetPosition, StateRef<Vehicle> ta
 		LogWarning("Trying to fire weapon with no ammo");
 		return nullptr;
 	}
-	this->reloadTime = type->fire_delay * 2 * 4;
+	this->reloadTime = type->fire_delay * VEQUIPMENT_RELOAD_TIME_MULTIPLIER * TICKS_MULTIPLIER;
 	this->weaponState = WeaponState::Reloading;
 	if (this->type->max_ammo != 0)
 		this->ammo--;
@@ -68,11 +68,11 @@ sp<Projectile> VEquipment::fire(Vec3<float> targetPosition, StateRef<Vehicle> ta
 	auto vehicleMuzzle = vehicleTile->getVehicle()->getMuzzleLocation();
 	Vec3<float> velocity = targetPosition - vehicleMuzzle;
 	velocity = glm::normalize(velocity);
-	velocity *= type->speed * TICK_SCALE / 4; // I believe this is the correct formula
+	velocity *= type->speed * PROJECTILE_VELOCITY_MULTIPLIER; // I believe this is the correct formula
 
 	return mksp<Projectile>(type->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
 	                        owner, targetVehicle, vehicleMuzzle, velocity, type->turn_rate,
-	                        static_cast<int>(this->getRange() / type->speed * 4), type->damage,
+	                        static_cast<int>(this->getRange() / type->speed * TICKS_MULTIPLIER), type->damage,
 	                        type->tail_size, type->projectile_sprites, type->impact_sfx,
 	                        type->explosion_graphic);
 }

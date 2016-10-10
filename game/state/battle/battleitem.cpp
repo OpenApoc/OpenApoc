@@ -238,7 +238,7 @@ void BattleItem::tryCollapse()
 	}
 	if (!findSupport())
 	{
-		ticksUntilCollapse = 4;
+		ticksUntilCollapse = TICKS_MULTIPLIER;
 	}
 }
 

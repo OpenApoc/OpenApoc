@@ -228,10 +228,10 @@ sp<Projectile> AEquipment::fire(Vec3<float> targetPosition, StateRef<BattleUnit>
 	auto unitPos = unit->getMuzzleLocation();
 	Vec3<float> velocity = targetPosition - unitPos;
 	velocity = glm::normalize(velocity);
-	velocity *= payload->speed * TICK_SCALE / 4; // I believe this is the correct formula
+	velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 	return mksp<Projectile>(payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
 	                        unit, targetUnit, unitPos, velocity, payload->turn_rate,
-	                        payload->ttl * 4, payload->damage, payload->tail_size,
+	                        payload->ttl * TICKS_MULTIPLIER, payload->damage, payload->tail_size,
 	                        payload->projectile_sprites, payload->impact_sfx,
 	                        payload->explosion_graphic, payload->damage_type);
 }

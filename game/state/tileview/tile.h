@@ -7,7 +7,6 @@
 #include <set>
 #include <vector>
 
-#define TICK_SCALE (36)
 #define VELOCITY_SCALE_CITY (Vec3<float>{32, 32, 16})
 #define VELOCITY_SCALE_BATTLE (Vec3<float>{24, 24, 20})
 
@@ -17,6 +16,8 @@
 
 namespace OpenApoc
 {
+
+static const unsigned TICK_SCALE = TICKS_PER_SECOND / 4;
 
 class Image;
 class TileMap;
