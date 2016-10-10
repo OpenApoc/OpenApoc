@@ -1436,33 +1436,27 @@ void BattleView::eventOccurred(Event *e)
 	     e->keyboard().KeyCode == SDLK_SPACE || e->keyboard().KeyCode == SDLK_RSHIFT ||
 	     e->keyboard().KeyCode == SDLK_LSHIFT || e->keyboard().KeyCode == SDLK_RALT ||
 	     e->keyboard().KeyCode == SDLK_LALT || e->keyboard().KeyCode == SDLK_RCTRL ||
-	     e->keyboard().KeyCode == SDLK_LCTRL))
+	     e->keyboard().KeyCode == SDLK_LCTRL || e->keyboard().KeyCode == SDLK_f))
 	{
 		switch (e->keyboard().KeyCode)
 		{
 			case SDLK_RSHIFT:
 				modifierRShift = true;
-				updateSelectionMode();
 				break;
 			case SDLK_LSHIFT:
 				modifierLShift = true;
-				updateSelectionMode();
 				break;
 			case SDLK_RALT:
 				modifierRAlt = true;
-				updateSelectionMode();
 				break;
 			case SDLK_LALT:
 				modifierLAlt = true;
-				updateSelectionMode();
 				break;
 			case SDLK_RCTRL:
 				modifierRCtrl = true;
-				updateSelectionMode();
 				break;
 			case SDLK_LCTRL:
 				modifierLCtrl = true;
-				updateSelectionMode();
 				break;
 			case SDLK_ESCAPE:
 				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InGameOptions>(state)});
@@ -1491,6 +1485,27 @@ void BattleView::eventOccurred(Event *e)
 				else
 					setUpdateSpeed(this->lastSpeed);
 				break;
+			case SDLK_f:
+				{
+					auto t = this->getSelectedTilePosition();
+					auto &map = *state->current_battle->map;
+					auto tile = map.getTile(t);
+					for (auto &o : tile->ownedObjects)
+					{
+						if (o->getType() == TileObject::Type::Ground
+							|| o->getType() == TileObject::Type::Feature
+							|| o->getType() == TileObject::Type::LeftWall
+							|| o->getType() == TileObject::Type::RightWall)
+						{
+							auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+							auto set = mksp<std::set<BattleMapPart*>>();
+							set->insert(mp.get());
+							mp->queueCollapse();
+							BattleMapPart::attemptReLinkSupports(set);
+						}
+					}
+				}
+				break;
 		}
 	}
 	else if (e->type() == EVENT_MOUSE_MOVE)
@@ -1511,27 +1526,21 @@ void BattleView::eventOccurred(Event *e)
 		{
 			case SDLK_RSHIFT:
 				modifierRShift = false;
-				updateSelectionMode();
 				break;
 			case SDLK_LSHIFT:
 				modifierLShift = false;
-				updateSelectionMode();
 				break;
 			case SDLK_RALT:
 				modifierRAlt = false;
-				updateSelectionMode();
 				break;
 			case SDLK_LALT:
 				modifierLAlt = false;
-				updateSelectionMode();
 				break;
 			case SDLK_RCTRL:
 				modifierRCtrl = false;
-				updateSelectionMode();
 				break;
 			case SDLK_LCTRL:
 				modifierLCtrl = false;
-				updateSelectionMode();
 				break;
 		}
 	}
@@ -1686,7 +1695,7 @@ void BattleView::eventOccurred(Event *e)
 								|| o->getType() == TileObject::Type::RightWall)
 							{
 								auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
-								debug += format("\n[%s] %s", mp->type.id, !mp->isAlive()? "DEAD" :( mp->providesHardSupport ? "HARD" : "SOFT"));
+								debug += format("\n[%s] SBT %d STATUS %s", mp->type.id, mp->type->getVanillaSupportedById(), !mp->isAlive()? "DEAD" :( mp->providesHardSupport ? "HARD" : "SOFT"));
 								for (int x = t.x - 1; x <= t.x + 1; x++)
 								{
 									for (int y = t.y - 1; y <= t.y + 1; y++)

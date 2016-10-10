@@ -761,12 +761,12 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						               s->position.z <= exit_level_max;
 						canExit =
 						    canExit &&
-						    (s->position.x > 0 || allow_exit[Battle::MapBorder::West]) &&
-						    (s->position.y > 0 || allow_exit[Battle::MapBorder::North]) &&
+						    (s->position.x > 0 || allow_exit[MapDirection::West]) &&
+						    (s->position.y > 0 || allow_exit[MapDirection::North]) &&
 						    (s->position.x < size.x * chunk_size.x - 1 ||
-						     allow_exit[Battle::MapBorder::East]) &&
+						     allow_exit[MapDirection::East]) &&
 						    (s->position.y < size.y * chunk_size.y - 1 ||
-						     allow_exit[Battle::MapBorder::South]);
+						     allow_exit[MapDirection::South]);
 						if (canExit)
 						{
 							Vec3<int> exitLocX = s->position;
@@ -989,7 +989,6 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 			u->agent = a;
 			u->agent->unit = {&state, u->id};
 			u->owner = a->owner;
-			u->squadNumber = -1;
 			u->updateDisplayedItem();
 			if (!spawnCivilians && a->owner == state.getCivilian())
 			{

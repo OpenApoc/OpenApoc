@@ -262,15 +262,48 @@ void Battle::initialMapPartLinkUp()
 		}
 	} while (foundSupport);
 
+	// Report unlinked parts
 	for (auto &mp : this->map_parts)
 	{
 		if (mp->willCollapse())
 		{
 			auto pos = mp->tileObject->getOwningTile()->position;
-			LogWarning("Map part with supported by type %d at %d %d %d is going to fall", (int)mp->type->supported_by, pos.x, pos.y, pos.z);
+			LogWarning("MP %s SBT %d at %d %d %d is UNLINKED", mp->type.id.cStr(), (int)mp->type->getVanillaSupportedById(), pos.x, pos.y, pos.z);
 		}
 	}
 
+	LogWarning("Attempting link up of unlinked parts");
+	// Try to link to objects of same type first, then to anything
+	for (int skipTypeCheck = 0; skipTypeCheck <= 1; skipTypeCheck++)
+	{
+		do
+		{
+			foundSupport = false;
+			for (auto &s : this->map_parts)
+			{
+				if (!s->willCollapse())
+				{
+					continue;
+				}
+				if (s->attachToSomething(!skipTypeCheck))
+				{
+					s->cancelCollapse();
+					foundSupport = true;
+				}
+			}
+		} while (foundSupport);
+	}
+	
+	// Report unlinked parts
+	for (auto &mp : this->map_parts)
+	{
+		if (mp->willCollapse())
+		{
+			auto pos = mp->tileObject->getOwningTile()->position;
+			LogWarning("MP %s SBT %d at %d %d %d is going to fall", mp->type.id.cStr(), (int)mp->type->getVanillaSupportedById(), pos.x, pos.y, pos.z);
+		}
+	}
+	
 	mapref.updateAllBattlescapeInfo();
 	LogWarning("Link up finished!");
 }
@@ -299,6 +332,7 @@ sp<BattleUnit> Battle::addUnit(GameState &state)
 	unit->id = id;
 	unit->strategyImages = state.battle_common_image_list->strategyImages;
 	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
+	unit->squadNumber = -1;
 	units[id] = unit;
 	return unit;
 }
@@ -496,7 +530,7 @@ void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organis
 {
 	if (state.current_battle)
 	{
-		LogError("Battle::EnterBattle called while another battle is in progress!");
+		LogError("Battle::beginBattle called while another battle is in progress!");
 		return;
 	}
 	auto b = BattleMap::createBattle(state, target_organisation, player_agents, player_craft,
@@ -513,7 +547,7 @@ void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organis
 {
 	if (state.current_battle)
 	{
-		LogError("Battle::EnterBattle called while another battle is in progress!");
+		LogError("Battle::beginBattle called while another battle is in progress!");
 		return;
 	}
 	auto b = BattleMap::createBattle(state, target_organisation, player_agents, player_craft,
@@ -528,7 +562,7 @@ void Battle::enterBattle(GameState &state)
 {
 	if (!state.current_battle)
 	{
-		LogError("Battle::BeginBattle called with no battle!");
+		LogError("Battle::enterBattle called with no battle!");
 		return;
 	}
 

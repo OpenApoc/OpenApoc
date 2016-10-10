@@ -147,7 +147,6 @@ void TileObjectBattleMapPart::addToDrawnTiles(Tile *tile)
 			maxCoords = { x, y, z };
 		}
 	}
-
 	TileObject::addToDrawnTiles(tile);
 }
 

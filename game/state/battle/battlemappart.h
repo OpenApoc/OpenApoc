@@ -77,8 +77,12 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
   private:
 	friend class Battle;
 
-	// Find map parts that support this one and set "supported" flag
+	// Find map parts that support this one and set "hard supported" flag where appropriate
 	bool findSupport();
+
+	// Try to attach to at least something, called for unlinked map parts when map starts
+	bool attachToSomething(bool checkType);
+
 	// Cease providing or requiring support
 	void ceaseSupportProvision();
 };

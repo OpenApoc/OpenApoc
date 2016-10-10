@@ -2,6 +2,7 @@
 
 #include "framework/logger.h"
 #include "game/state/tileview/tileobject.h"
+#include "game/state/gametime.h"
 #include "library/rect.h"
 #include "library/sp.h"
 #include <set>
@@ -53,6 +54,14 @@ enum class TileViewMode
 {
 	Isometric,
 	Strategy,
+};
+
+enum class MapDirection
+{
+	North = 1,
+	East = 2,
+	South = 3,
+	West = 4
 };
 
 class Tile

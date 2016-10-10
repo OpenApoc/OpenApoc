@@ -1,5 +1,6 @@
 #pragma once
 
+#include "game/state/tileview/tile.h"
 #include "game/state/battle/battle.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
@@ -29,8 +30,8 @@ class BattleMap : public StateObject<BattleMap>
 	Vec3<int> chunk_size;
 	Vec3<int> max_battle_size;
 
-	std::map<Battle::MapBorder, bool> allow_entrance;
-	std::map<Battle::MapBorder, bool> allow_exit;
+	std::map<MapDirection, bool> allow_entrance;
+	std::map<MapDirection, bool> allow_exit;
 	int entrance_level_min = 0;
 	int entrance_level_max = 0;
 	int exit_level_min = 0;

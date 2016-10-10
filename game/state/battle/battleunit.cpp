@@ -106,6 +106,7 @@ void BattleUnit::resetGoal()
 {
 	goalPosition = position;
 	goalFacing = facing;
+	atGoal = true;
 }
 
 void BattleUnit::setFocus(GameState &state, StateRef<BattleUnit> unit)

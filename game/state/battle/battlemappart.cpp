@@ -150,6 +150,88 @@ void BattleMapPart::ceaseDoorFunction()
 	door.clear();
 }
 
+bool BattleMapPart::attachToSomething(bool checkType)
+{
+	auto pos = tileObject->getOwningTile()->position;
+	auto &map = tileObject->map;
+	auto tileType = tileObject->getType();
+	auto sft = shared_from_this();
+
+	// List of directions (for ground and feature)
+	static const std::list<Vec3<int>> directionGDFTList =
+	{
+		{ 0, 0, -1 },
+		{ 0, -1, 0 },
+		{ 1, 0, 0 },
+		{ 0, 1, 0 },
+		{ -1, 0, 0 },
+		{ 0, 0, 1 },
+	};
+
+	// List of directions for left wall
+	static const std::list<Vec3<int>> directionLWList =
+	{
+		{ 0, 0, -1 },
+		{ 0, -1, 0 },
+		{ 0, 1, 0 },
+		{ 0, 0, 1 },
+	};
+
+	// List of directions for right wall
+	static const std::list<Vec3<int>> directionRWList =
+	{
+		{ 0, 0, -1 },
+		{ 1, 0, 0 },
+		{ -1, 0, 0 },
+		{ 0, 0, 1 },
+	};
+
+	auto &directionList = tileType == TileObject::Type::LeftWall
+		? directionLWList
+		: (tileType == TileObject::Type::RightWall
+			? directionRWList
+			: directionGDFTList);
+
+	// Search for map parts
+	for (auto &dir : directionList)
+	{
+		int x = pos.x + dir.x;
+		int y = pos.y + dir.y;
+		int z = pos.z + dir.z;
+		if (x < 0 || x >= map.size.x
+			|| y < 0 || y >= map.size.y
+			|| z < 0 || z >= map.size.z)
+		{
+			continue;
+		}
+		auto tile = map.getTile(x, y, z);
+		for (auto &o : tile->ownedObjects)
+		{
+			// Even if we're not doing type checking, we cannot allow for walls to cling to other type of walls
+			if (o->getType() == tileType || (!checkType 
+				&& (o->getType() == TileObject::Type::Ground
+				|| o->getType() == TileObject::Type::Feature
+				|| (o->getType() == TileObject::Type::LeftWall && tileType != TileObject::Type::RightWall)
+				|| (o->getType() == TileObject::Type::RightWall && tileType != TileObject::Type::LeftWall))))
+			{
+				auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+				if (mp != sft && mp->isAlive())
+				{
+					bool canSupport = !mp->damaged
+						&& (mp->type->type != BattleMapPartType::Type::Ground || z == pos.z)
+						&& (mp->type->provides_support || z <= pos.z);
+					if (canSupport)
+					{
+						mp->supportedParts.emplace_back(position, type->type);
+						return true;
+					}
+				}
+			}
+		}
+	}
+	return false;
+}
+
 bool BattleMapPart::findSupport()
 {
 	// Initial setup and quick checks
@@ -165,6 +247,7 @@ bool BattleMapPart::findSupport()
 	}
 	auto &map = tileObject->map;
 	auto tileType = tileObject->getType();
+	auto sft = shared_from_this();
 
 	// Clean support providers for this map part
 	for (int x = pos.x - 1; x <= pos.x + 1; x++)
@@ -207,12 +290,14 @@ bool BattleMapPart::findSupport()
 		}
 	}
 
-	// TODO: FIGURE OUT WHICH OF THESE ARE NOT HARD SUPPORTS
 	// There are several ways battle map part can get supported:
 	//
+	// (following conditions provide "hard" support)
+	//
 	// Ground:
-	//  - G1: Feature Below
+	//  - G1: Feature Current/Below
 	//  - G2: Wall Adjacent Below
+	//  - G3: Feature Adjacent Below
 	//
 	// Feature:
 	//  - F1: Ground Current
@@ -226,28 +311,37 @@ bool BattleMapPart::findSupport()
 	//  - W4: Wall Below
 	//  - W5: Wall Above (if "Above" supported by) 
 	// 
-	// Then, there is a specified "Supported By" condition:
-	//  - Below condition has no meaning, as every map part can be supported by it
-	//  - Above condition is kinda unique, and was described above where appropriate
-	//  - Other conditions all basically mean that instead of 2 supports, only 1 support is enough,
-	//    provided it comes from the right direction and elevation
+	// Then, there is a specified "Supported By Direction" condition:
+	//  - Ground will get support from a Ground only
+	//  - Feature will get support from a Feature or a matching perpendicular Wall
+	//    (Right if N/S, Left if E/W)
+	//  - Wall will get support from the same type of Wall
+	//	  (provided the Wall's type matches direction: Left for N/S, Right for E/W)
 	//
-	// Then, every object can cling to two adjacent objects of the same type
-	//  - This does not provide hard support
+	// If "Supported By Type: is also specified, then:
+	//  - Ground/Wall allows support from Ground/Wall on a current level
+	//  - Feature allows support from Feature on a level below  
+	//
+	// (following conditions provide "soft" support)
+	//
+	// Then, object with no direction specified can cling to two adjacent objects:
+	//  - Ground and Feature can cling to objects of the same type
+	//  - Walls can cling to walls of their type or a Feature
 	//
 	// Finally, every map part can be supported if it has established support lines
-	// on both sides to a supported object
+	// on both sides that connect to an object providing "hard" support
 	//  - Object "shoots" a line in both directions and as long as there is an object on every tile
 	//    the line continues, and if an object providing hard support is reached, 
-	//	  then it can be supported
-	//  - Objects supported this way cannot provide hard support to other objects
+	//	  then "soft" support can be attained
 	//
-	// Therefore, it makes sense to first check special conditions, and then check
-	// adjacency and "supported by" conditions
-	std::map<Vec3<int>, sp<BattleMapPart>> supports;
-	auto sft = shared_from_this();
-
+	// Implementation:
+	//  - We will first check for special conditions
+	//  - Then we will gather information about adjacent map parts and check for "Supported By" 
+	//  - Finally we will try to cling to two objects of the same type
+	//  - If all fails, we will scan on axes in search of distant support
+	
 	// Step 01: Check for special conditions
+	
 	// Bounds to check for special conditions in
 	int startX = pos.x - 1;
 	int endX = pos.x + 1;
@@ -281,8 +375,6 @@ bool BattleMapPart::findSupport()
 			endX = startX;
 			break;
 	}
-
-	// Step 01: Check for special conditions
 	// Do the check
 	for (int x = startX; x <= endX; x++)
 	{
@@ -306,11 +398,16 @@ bool BattleMapPart::findSupport()
 					case BattleMapPartType::Type::Ground:
 						//  - G1: Feature Current/Below
 						canSupport = canSupport || (x == pos.x && y == pos.y && o->getType() == TileObject::Type::Feature);
-						//  - G3: Wall Adjacent Below
+						//  - G2: Wall Adjacent Below
 						if ((x >= pos.x || y >= pos.y) && z < pos.z)
 						{
 							canSupport = canSupport || (x >= pos.x && o->getType() == TileObject::Type::LeftWall);
 							canSupport = canSupport || (y >= pos.y && o->getType() == TileObject::Type::RightWall);
+						}
+						//  - G3: Feature Adjacent Below
+						if ((x == pos.x || y == pos.y) && z < pos.z)
+						{
+							canSupport = canSupport || (o->getType() == TileObject::Type::Feature);
 						}
 						break;
 					case BattleMapPartType::Type::Feature:
@@ -320,7 +417,7 @@ bool BattleMapPart::findSupport()
 						canSupport = canSupport || (z < pos.z && o->getType() == TileObject::Type::Feature);
 						//  - F3: Feature Above (if "Above" supported by) 
 						canSupport = canSupport || (z > pos.z && o->getType() == TileObject::Type::Feature 
-							&& type->supported_by == BattleMapPartType::SupportedByType::Above);
+							&& type->supportedByAbove);
 						break;
 					case BattleMapPartType::Type::LeftWall:
 						//  - W1: Feature Current
@@ -335,7 +432,7 @@ bool BattleMapPart::findSupport()
 						//  - W5: Wall Above (if "Above" supported by) 
 						canSupport = canSupport || (x == pos.x && z > pos.z 
 							&& o->getType() == TileObject::Type::LeftWall
-							&& type->supported_by == BattleMapPartType::SupportedByType::Above);
+							&& type->supportedByAbove);
 						break;
 					case BattleMapPartType::Type::RightWall:
 						//  - W1: Feature Current
@@ -350,15 +447,195 @@ bool BattleMapPart::findSupport()
 						//  - W5: Wall Above (if "Above" supported by) 
 						canSupport = canSupport || (y == pos.y && z > pos.z 
 							&& o->getType() == TileObject::Type::RightWall
-							&& type->supported_by == BattleMapPartType::SupportedByType::Above);
+							&& type->supportedByAbove);
 						break;
 					}
 					
 					if (canSupport)
 					{
 						auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
-						// Vanilla seems to completely ignore "provides support" flag 
-						if (mp != sft && mp->isAlive() && !mp->damaged/*&& (mp->type->provides_support || mp->type->type == BattleMapPartType::Type::Ground || z >= pos.z)*/)
+						// Seems that "provide support" flag only matters for providing support upwards
+						if (mp != sft && mp->isAlive() && !mp->damaged && (mp->type->provides_support || mp->type->type == BattleMapPartType::Type::Ground || z <= pos.z))
+						{
+							mp->supportedParts.emplace_back(position, type->type);
+							return true;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// Then, there is a specified "Supported By Direction" condition:
+	//  - Ground will get support from a Ground only
+	//  - Feature will get support from a Feature or a matching perpendicular Wall
+	//    (Right if N/S, Left if E/W)
+	//  - Wall will get support from the same type of Wall
+	//	  (provided the Wall's type matches direction: Left for N/S, Right for E/W)
+	//
+	// If "Supported By Type: is also specified, then:
+	//  - Ground/Wall allows support from Ground/Wall on a current level
+	//  - Feature allows support from Feature on a level below  
+	//
+
+	// Step 02: Check "supported by direction" condition
+	if (!type->supportedByDirections.empty())
+	{
+		// List of types to search for and locations where
+		std::list<std::pair<Vec3<int>, TileObject::Type>> partList;
+		// List for types to search for and z-where
+		std::list<std::pair<int, TileObject::Type>> typeList;
+		// Every type is supported by it's type on the same level
+		typeList.emplace_back(0, tileType);
+		// Add other supported by types
+		for (auto t : type->supportedByTypes)
+		{
+			switch (t)
+			{
+				case BattleMapPartType::Type::Ground:
+					typeList.emplace_back(0, TileObject::Type::Ground);
+					break;
+				case BattleMapPartType::Type::LeftWall:
+					typeList.emplace_back(0, TileObject::Type::LeftWall);
+					break;
+				case BattleMapPartType::Type::RightWall:
+					typeList.emplace_back(0, TileObject::Type::RightWall);
+					break;
+				case BattleMapPartType::Type::Feature:
+					typeList.emplace_back(-1, TileObject::Type::Feature);
+					break;
+			
+			}
+		}
+		// Fill parts list based on direction
+		for (auto d : type->supportedByDirections)
+		{
+			for (auto p : typeList)
+			{
+				// Feature to feature on the same level also allows for a matching wall
+				if (type->type == BattleMapPartType::Type::Feature && p.first == 0 && p.second == TileObject::Type::Feature)
+				{
+					switch (d)
+					{
+					case MapDirection::North:
+						partList.emplace_back(Vec3<int>{ pos.x, pos.y, pos.z + p.first}, TileObject::Type::RightWall);
+						break;
+					case MapDirection::East:
+						partList.emplace_back(Vec3<int>{ pos.x + 1, pos.y, pos.z + p.first}, TileObject::Type::LeftWall);
+						break;
+					case MapDirection::South:
+						partList.emplace_back(Vec3<int>{ pos.x, pos.y + 1, pos.z + p.first}, TileObject::Type::RightWall);
+						break;
+					case MapDirection::West:
+						partList.emplace_back(Vec3<int>{ pos.x, pos.y, pos.z + p.first}, TileObject::Type::LeftWall);
+						break;
+					}
+				}
+
+				// Going N/S for Right Wall or E/W for Left Wall is impossible for same type walls
+				if ((p.second == TileObject::Type::RightWall && tileType == TileObject::Type::RightWall
+					&& (d == MapDirection::North || d == MapDirection::South))
+					||(p.second == TileObject::Type::LeftWall && tileType == TileObject::Type::LeftWall
+					&& (d == MapDirection::East || d == MapDirection::West)))
+				{
+					continue;
+				}
+				// Going North into Right Wall and West into Left Wall means checking our own tile
+				// (South for Right and East for Left is fine))
+				int negInc = -1;
+				if ((d == MapDirection::North && p.second == TileObject::Type::RightWall)
+					|| (d == MapDirection::West && p.second == TileObject::Type::LeftWall))
+				{
+					negInc = 0;
+				}
+
+				// Get part in this direction
+				int dx = 0;
+				int dy = 0;
+				switch (d)
+				{
+					case MapDirection::North:
+						dy = negInc;
+						break;
+					case MapDirection::East:
+						dx = 1;
+						break;
+					case MapDirection::South:
+						dy = 1;
+						break;
+					case MapDirection::West:
+						dx = negInc;
+						break;
+				}
+				partList.emplace_back(Vec3<int>{ pos.x + dx, pos.y + dy, pos.z + p.first }, p.second);
+					
+				// Get diagonal directions
+				for (auto d2 : type->supportedByDirections)
+				{
+					if (d2 == d || p.second == TileObject::Type::LeftWall || p.second == TileObject::Type::RightWall)
+					{
+						continue;
+					}
+					switch (d)
+					{
+					case MapDirection::North:
+					case MapDirection::South:
+						switch (d)
+						{
+						case MapDirection::East:
+							dx = 1;
+							break;
+						case MapDirection::West:
+							dx = -1;
+							break;
+						case MapDirection::North:
+						case MapDirection::South:
+							continue;
+						}
+						break;
+					case MapDirection::East:
+					case MapDirection::West:
+						switch (d)
+						{
+						case MapDirection::North:
+							dy = -1;
+							break;
+						case MapDirection::South:
+							dy = 1;
+							break;
+						case MapDirection::East:
+						case MapDirection::West:
+							continue;
+						}
+						break;
+					}
+					partList.emplace_back(Vec3<int>{ pos.x + dx, pos.y + dy, pos.z + p.first }, p.second);
+				}
+			}
+		}
+		// Look for parts
+		for (auto pair : partList)
+		{
+			if (pair.first.x < 0 || pair.first.x >= map.size.x
+				|| pair.first.y < 0 || pair.first.y >= map.size.y
+				|| pair.first.z < 0 || pair.first.z >= map.size.z)
+			{
+				continue;
+			}
+			auto tile = map.getTile(pair.first.x, pair.first.y, pair.first.z);
+			for (auto &o : tile->ownedObjects)
+			{
+				// Matching battle map parts that fit the criteria of axis differences
+				// Also must provide support
+				if (o->getType() == pair.second)
+				{
+					auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+					if (mp != sft && mp->isAlive())
+					{
+						bool canSupport = !mp->damaged 
+							&& (mp->type->type != BattleMapPartType::Type::Ground || pair.first.z == pos.z) 
+							&& (mp->type->provides_support || pair.first.z <= pos.z);
+						if (canSupport)
 						{
 							mp->supportedParts.emplace_back(position, type->type);
 							return true;
@@ -369,454 +646,100 @@ bool BattleMapPart::findSupport()
 		}
 	}
 	
-	// Step 02: Find all map parts that can support this
+	// If we reached this - we can not provide hard support
+	providesHardSupport = false;
 
-	// Search pattern for ground
-	static const std::list<std::pair<Vec2<int>, TileObject::Type>> groundList =
+	// Step 03: Try to cling to two adjacent objects of the same type
+	// (wall can also cling to feature)
+
+	// List of four directions (for ground and feature)
+	static const std::list<Vec3<int>> directionGDFTList =
 	{
-		{ { -1,0 },TileObject::Type::Ground },
-		{ { 1,0 },TileObject::Type::Ground },
-		{ { 0,-1 },TileObject::Type::Ground },
-		{ { 0,1 },TileObject::Type::Ground },
+		{ 0, -1, 0 },
+		{ 1, 0, 0 },
+		{ 0, 1, 0 },
+		{ -1, 0, 0 },
 	};
 
-	// Search pattern for left wall
-	static const std::list<std::pair<Vec2<int>, TileObject::Type>> leftWallList =
+	// List of directions for left wall
+	static const std::list<Vec3<int>> directionLWList =
 	{
-		{ { 0,-1 },TileObject::Type::LeftWall },
-		{ { 0,1 },TileObject::Type::LeftWall },
-		{ { 0,-1 },TileObject::Type::Feature },
-		{ { 0,1 },TileObject::Type::Feature },
+		{ 0, -1, 0 },
+		{ 0, 1, 0 },
 	};
 
-	// Search pattern for right wall
-	static const std::list<std::pair<Vec2<int>, TileObject::Type>> rightWallList =
+	// List of directions for right wall
+	static const std::list<Vec3<int>> directionRWList =
 	{
-		{ { -1,0 },TileObject::Type::RightWall },
-		{ { 1,0 },TileObject::Type::RightWall },
-		{ { -1,0 },TileObject::Type::Feature },
-		{ { 1,0 },TileObject::Type::Feature },
+		{ 1, 0, 0 },
+		{ -1, 0, 0 },
 	};
 
-	// Search pattern for "WallsNorthWest" SupportedBy type
-	static const std::list<std::pair<Vec2<int>, TileObject::Type>> wallsNorthWestList =
-	{
-		{ { 0, -1 },TileObject::Type::LeftWall },
-		{ { -1,0 },TileObject::Type::RightWall },
-	};
+	auto &directionList = tileType == TileObject::Type::LeftWall 
+		? directionLWList 
+		: (tileType == TileObject::Type::RightWall
+			? directionRWList 
+			: directionGDFTList);
 
-	// Search pattern for features
-	static const std::list<std::pair<Vec2<int>, TileObject::Type>> featureList =
-	{
-		{ { -1,0 },TileObject::Type::Feature },
-		{ { 1,0 },TileObject::Type::Feature },
-		{ { 0,-1 },TileObject::Type::Feature },
-		{ { 0,1 },TileObject::Type::Feature },
-	};
-
-	// Search pattern for features of AnotherBelow type
-	static const std::list<std::pair<Vec2<int>, TileObject::Type>> anotherNorthBelowList =
-	{
-		{ { 0,-1 },TileObject::Type::Feature },
-		{ { 0,-1 },TileObject::Type::Ground },
-	};
-
-	// Search pattern for features of AnotherBelow type
-	static const std::list<std::pair<Vec2<int>, TileObject::Type>> anotherEastBelowList =
-	{
-		{ { 1,0 },TileObject::Type::Feature },
-		{ { 1,0 },TileObject::Type::Ground },
-	};
-
-	// Search pattern for features of AnotherBelow type
-	static const std::list<std::pair<Vec2<int>, TileObject::Type>> anotherSouthBelowList =
-	{
-		{ { 0,1 },TileObject::Type::Feature },
-		{ { 0,1 },TileObject::Type::Ground },
-	};
-	
-	// Search pattern for features of AnotherBelow type
-	static const std::list<std::pair<Vec2<int>, TileObject::Type>> anotherWestBelowList =
-	{
-		{ { -1,0 },TileObject::Type::Feature },
-		{ { -1,0 },TileObject::Type::Ground },
-	};
-
-	// Search pattern for north type
-	static const std::list<std::pair<Vec2<int>, TileObject::Type>> northList =
-	{
-		{ { 0,-1 },TileObject::Type::Feature },
-		{ { 0,0 },TileObject::Type::RightWall },
-	};
-
-	// Search pattern for east type
-	static const std::list<std::pair<Vec2<int>, TileObject::Type>> eastList =
-	{
-		{ { 1,0 },TileObject::Type::Feature },
-		{ { 1,0 },TileObject::Type::LeftWall },
-	};
-
-	// Search pattern for south type
-	static const std::list<std::pair<Vec2<int>, TileObject::Type>> southList =
-	{
-		{ { 0,1 },TileObject::Type::Feature },
-		{ { 0,1 },TileObject::Type::RightWall },
-	};
-
-	// Search pattern for west type
-	static const std::list<std::pair<Vec2<int>, TileObject::Type>> westList =
-	{
-		{ { -1,0 },TileObject::Type::Feature },
-		{ { 0,0 },TileObject::Type::LeftWall },
-	};
-
-	std::list<std::pair<Vec2<int>, TileObject::Type>> specialList;
-
-	// Assign search pattern
-	std::list<std::pair<Vec2<int>, TileObject::Type>> const * currentList = nullptr;
-	switch (type->supported_by)
-	{
-		case BattleMapPartType::SupportedByType::North:
-		case BattleMapPartType::SupportedByType::AnotherNorth:
-		case BattleMapPartType::SupportedByType::NorthAbove:
-		case BattleMapPartType::SupportedByType::NorthBelow:
-			currentList = &specialList;
-			specialList = northList;
-			specialList.push_back({ { 0,-1 }, tileType });
-			break;
-		case BattleMapPartType::SupportedByType::SouthAbove:
-		case BattleMapPartType::SupportedByType::SouthBelow:
-		case BattleMapPartType::SupportedByType::South:
-		case BattleMapPartType::SupportedByType::AnotherSouth:
-			currentList = &specialList;
-			specialList = southList;
-			specialList.push_back({ { 0,1 }, tileType });
-			break;
-		case BattleMapPartType::SupportedByType::EastAbove:
-		case BattleMapPartType::SupportedByType::EastBelow:
-		case BattleMapPartType::SupportedByType::East:
-		case BattleMapPartType::SupportedByType::AnotherEast:
-			currentList = &specialList;
-			specialList = eastList;
-			specialList.push_back({ { 1, 0}, tileType });
-			break;
-		case BattleMapPartType::SupportedByType::WestAbove:
-		case BattleMapPartType::SupportedByType::WestBelow:
-		case BattleMapPartType::SupportedByType::West:
-		case BattleMapPartType::SupportedByType::AnotherWest:
-			currentList = &specialList;
-			specialList = westList;
-			specialList.push_back({ { -1, 0 }, tileType });
-			break;
-		case BattleMapPartType::SupportedByType::WallsNorthWest:
-			currentList = &wallsNorthWestList;
-			break;
-		case BattleMapPartType::SupportedByType::AnotherNorthBelow:
-			currentList = &anotherNorthBelowList;
-			break;
-		case BattleMapPartType::SupportedByType::AnotherEastBelow:
-			currentList = &anotherEastBelowList;
-			break;
-		case BattleMapPartType::SupportedByType::AnotherSouthBelow:
-			currentList = &anotherSouthBelowList;
-			break;
-		case BattleMapPartType::SupportedByType::AnotherWestBelow:
-			currentList = &anotherWestBelowList;
-			break;
-		case BattleMapPartType::SupportedByType::Below:
-		case BattleMapPartType::SupportedByType::Above:
-		case BattleMapPartType::SupportedByType::Unknown20:
-		case BattleMapPartType::SupportedByType::Unknown07:
-			switch (type->type)
-			{
-			case BattleMapPartType::Type::Ground:
-				currentList = &groundList;
-				break;
-			case BattleMapPartType::Type::Feature:
-				currentList = &featureList;
-				break;
-			case BattleMapPartType::Type::LeftWall:
-				currentList = &leftWallList;
-				break;
-			case BattleMapPartType::Type::RightWall:
-				currentList = &rightWallList;
-				break;
-			}
-			break;
-	}
-
-	// Select z level
-	startZ = pos.z - 1;
-	endZ = pos.z + 1;
-	switch (type->supported_by)
-	{
-	// Look on our level
-	case BattleMapPartType::SupportedByType::North:
-	case BattleMapPartType::SupportedByType::AnotherNorth:
-	case BattleMapPartType::SupportedByType::South:
-	case BattleMapPartType::SupportedByType::AnotherSouth:
-	case BattleMapPartType::SupportedByType::East:
-	case BattleMapPartType::SupportedByType::AnotherEast:
-	case BattleMapPartType::SupportedByType::West:
-	case BattleMapPartType::SupportedByType::AnotherWest:
-	case BattleMapPartType::SupportedByType::WallsNorthWest:
-		startZ = pos.z;
-		endZ = pos.z;
-		break;
-	// Look on level above
-	case BattleMapPartType::SupportedByType::NorthAbove:
-	case BattleMapPartType::SupportedByType::SouthAbove:
-	case BattleMapPartType::SupportedByType::EastAbove:
-	case BattleMapPartType::SupportedByType::WestAbove:
-		//startZ = pos.z;
-		endZ = pos.z;
-		break;
-	// Look on level below
-	case BattleMapPartType::SupportedByType::Below:
-	case BattleMapPartType::SupportedByType::NorthBelow:
-	case BattleMapPartType::SupportedByType::EastBelow:
-	case BattleMapPartType::SupportedByType::SouthBelow:
-	case BattleMapPartType::SupportedByType::WestBelow:
-		//		endZ = pos.z;
-		startZ = pos.z;
-		endZ = pos.z;
-		break;
-	case BattleMapPartType::SupportedByType::AnotherNorthBelow:
-	case BattleMapPartType::SupportedByType::AnotherEastBelow:
-	case BattleMapPartType::SupportedByType::AnotherSouthBelow:
-	case BattleMapPartType::SupportedByType::AnotherWestBelow:
-		endZ = pos.z;
-		break;
-	}
-
+	// List of found map parts to cling on to
+	std::list<sp<BattleMapPart>> supports;
 	// Search for map parts
-	for (auto &p : *currentList)
+	for (auto &dir : directionList)
 	{
-		int x = pos.x + p.first.x;
-		int y = pos.y + p.first.y;
-		for (int z = startZ; z <= endZ; z++)
+		int x = pos.x + dir.x;
+		int y = pos.y + dir.y;
+		int z = pos.z + dir.z;
+		if (x < 0 || x >= map.size.x
+			|| y < 0 || y >= map.size.y
+			|| z < 0 || z >= map.size.z)
 		{
-			if (x < 0 || x >= map.size.x
-				|| y < 0 || y >= map.size.y
-				|| z < 0 || z >= map.size.z)
+			continue;
+		}
+		auto tile = map.getTile(x, y, z);
+		for (auto &o : tile->ownedObjects)
+		{
+			if (o->getType() == tileType 
+				||( o->getType() == TileObject::Type::Feature 
+					&& (tileType == TileObject::Type::LeftWall 
+						|| tileType == TileObject::Type::RightWall)))
 			{
-				continue;
-			}
-			auto tile = map.getTile(x, y, z);
-			for (auto &o : tile->ownedObjects)
-			{
-				// Matching battle map parts that fit the criteria of axis differences
-				// Also must not be equal to us and be alive
-				// Also must provide support
-				if (o->getType() == p.second)
+				auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+				if (mp != sft && mp->isAlive())
 				{
-					auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
-					if (mp != sft && mp->isAlive())
+					bool canSupport = !mp->damaged
+						&& (mp->type->type != BattleMapPartType::Type::Ground || z == pos.z)
+						&& (mp->type->provides_support || z <= pos.z);
+					if (canSupport)
 					{
-						// Support provision condition:
-						// a) Provides support flag
-						// b) Is ground (ground has no provide support flag, but still does provide it)
-						// c) Map part that satisfies its condition has same supported by type
-						
-						// Vanilla seems to completely ignore "provides_support" flag
-						// However, ground still cannot give support to anything on a different level than it
-						bool canSupport = !mp->damaged && (z == pos.z || mp->type->type != BattleMapPartType::Type::Ground)/* && mp->type->provides_support || tileType == TileObject::Type::Ground || z  >= pos.z*/;
-						if (!canSupport)
-						{
-							switch (type->supported_by)
-							{
-							case BattleMapPartType::SupportedByType::North:
-							case BattleMapPartType::SupportedByType::AnotherNorth:
-							case BattleMapPartType::SupportedByType::NorthAbove:
-							case BattleMapPartType::SupportedByType::NorthBelow:
-							case BattleMapPartType::SupportedByType::AnotherNorthBelow:
-								canSupport = x == pos.x && y < pos.y && mp->type->supported_by == type->supported_by;
-								break;
-							case BattleMapPartType::SupportedByType::South:
-							case BattleMapPartType::SupportedByType::AnotherSouth:
-							case BattleMapPartType::SupportedByType::SouthAbove:
-							case BattleMapPartType::SupportedByType::SouthBelow:
-							case BattleMapPartType::SupportedByType::AnotherSouthBelow:
-								canSupport = x == pos.x && y > pos.y&& mp->type->supported_by == type->supported_by;
-								break;
-							case BattleMapPartType::SupportedByType::East:
-							case BattleMapPartType::SupportedByType::AnotherEast:
-							case BattleMapPartType::SupportedByType::EastAbove:
-							case BattleMapPartType::SupportedByType::EastBelow:
-							case BattleMapPartType::SupportedByType::AnotherEastBelow:
-								canSupport = y == pos.y && x > pos.x && mp->type->supported_by == type->supported_by;
-								break;
-							case BattleMapPartType::SupportedByType::West:
-							case BattleMapPartType::SupportedByType::AnotherWest:
-							case BattleMapPartType::SupportedByType::WestAbove:
-							case BattleMapPartType::SupportedByType::WestBelow:
-							case BattleMapPartType::SupportedByType::AnotherWestBelow:
-								canSupport = y == pos.y && x < pos.x && mp->type->supported_by == type->supported_by;
-								break;
-							}
-						}
-						if (canSupport)
-						{
-							supports[Vec3<int>(x - pos.x, y - pos.y, z - pos.z)] = mp;
-							// No need to further look in this area
-							break;
-						}
+						supports.emplace_back(mp);
+						// No need to further look in this area
+						break;
 					}
 				}
 			}
 		}
 	}
-	
-	// Step 04: Check if "supported by" condition is satisfied
-
-	sp<BattleMapPart> supporter;
-	switch (type->supported_by)
+	// Calculate if we have enough supports (map edge counts as support)
+	auto supportCount = supports.size();
+	if (pos.x == 0 || pos.x == map.size.x - 1)
 	{
-	// We have already checked theese two
-	case BattleMapPartType::SupportedByType::Below:
-	case BattleMapPartType::SupportedByType::Above:
-		break;
-		break;
-	case BattleMapPartType::SupportedByType::North:
-	case BattleMapPartType::SupportedByType::AnotherNorth:
-		supporter = supports[{ 0, -1, 0 }];
-		if (!supporter)
-		{
-			supporter = supports[{ 0, 0, 0 }];
-		}
-		break;
-	case BattleMapPartType::SupportedByType::East:
-	case BattleMapPartType::SupportedByType::AnotherEast:
-		supporter = supports[{ 1, 0, 0 }];
-		break;
-	case BattleMapPartType::SupportedByType::South:
-	case BattleMapPartType::SupportedByType::AnotherSouth:
-		supporter = supports[{ 0, 1, 0 }];
-		break;
-	case BattleMapPartType::SupportedByType::West:
-	case BattleMapPartType::SupportedByType::AnotherWest:
-		supporter = supports[{ -1, 0, 0 }];
-		if (!supporter)
-		{
-			supporter = supports[{ 0, 0, 0 }];
-		}
-		break;
-	case BattleMapPartType::SupportedByType::NorthBelow:
-		//supporter = supports[{ 0, -1, -1 }];
-		supporter = supports[{ 0, -1,0 }];
-		break;
-	case BattleMapPartType::SupportedByType::EastBelow:
-		//supporter = supports[{ 1, 0, -1 }];
-		supporter = supports[{ 1, 0, 0 }];
-		break;
-	case BattleMapPartType::SupportedByType::SouthBelow:
-		//supporter = supports[{ 0, 1, -1 }];
-		supporter = supports[{ 0, 1, 0 }];
-		break;
-	case BattleMapPartType::SupportedByType::WestBelow:
-		//supporter = supports[{ -1, 0, -1 }];
-		supporter = supports[{ -1, 0, 0 }];
-		break;
-	case BattleMapPartType::SupportedByType::WallsNorthWest:
-		supporter = supports[{ 0, -1, 0 }];
-		if (!supporter)
-		{
-			supporter = supports[{ -1, 0, 0 }];
-		}
-		break;
-	case BattleMapPartType::SupportedByType::AnotherNorthBelow:
-		supporter = supports[{ 0, -1, -1 }];
-		if (!supporter)
-		{
-			supporter = supports[{ 0, -1, 0 }];
-		}
-		break;
-	case BattleMapPartType::SupportedByType::AnotherEastBelow:
-		supporter = supports[{ 1, 0, -1 }];
-		if (!supporter)
-		{
-			supporter = supports[{ 1, 0, 0 }];
-		}
-		break;
-	case BattleMapPartType::SupportedByType::AnotherSouthBelow:
-		supporter = supports[{ 0, 1, -1 }];
-		if (!supporter)
-		{
-			supporter = supports[{ 0, 1, 0 }];
-		}
-		break;
-	case BattleMapPartType::SupportedByType::AnotherWestBelow:
-		supporter = supports[{ -1, 0, -1 }];
-		if (!supporter)
-		{
-			supporter = supports[{ -1, 0, 0 }];
-		}
-		break;
-	case BattleMapPartType::SupportedByType::NorthAbove:
-		//supporter = supports[{ 0, -1, 1 }];
-		supporter = supports[{ 0, -1, -1 }];
-		if (!supporter)
-		{
-			supporter = supports[{ 0, -1, 0 }];
-		}
-		break;
-	case BattleMapPartType::SupportedByType::EastAbove:
-		//supporter = supports[{ 1, 0, 1 }];
-		supporter = supports[{ 1, 0, -1 }];
-		if (!supporter)
-		{
-			supporter = supports[{ 1, 0, 0 }];
-		}
-		break;
-	case BattleMapPartType::SupportedByType::SouthAbove:
-		//supporter = supports[{ 0, 1, 1 }];
-		supporter = supports[{ 0, 1, -1 }];
-		if (!supporter)
-		{
-			supporter = supports[{ 0, 1, 0 }];
-		}
-		break;
-	case BattleMapPartType::SupportedByType::WestAbove:
-		//supporter = supports[{ -1, 0, 1 }];
-		supporter = supports[{ -1, 0, -1 }];
-		if (!supporter)
-		{
-			supporter = supports[{-1,0, 0 }];
-		}
-		break;
-	default:
-		break;
+		supportCount++;
 	}
-	if (supporter)
+	if (pos.y == 0 || pos.y == map.size.y - 1)
 	{
-		supporter->supportedParts.emplace_back(position, type->type);
-		return true;
+		supportCount++;
 	}
-	
-	// If we reached this - we can not provide hard support
-	providesHardSupport = false;
-
-	// Step 05: Cling to two adjacent objects
-
-	int countSupportsOnSides = (supports[{ -1, 0, 0 }] ? 1 : 0) + (supports[{ 1, 0, 0 }] ? 1 : 0) + (supports[{ 0, -1, 0 }] ? 1 : 0) + (supports[{ 0, 1, 0 }] ? 1 : 0);
-	if (pos.x == 0 || pos.y == 0 || pos.x == map.size.x - 1 || pos.y == map.size.y - 1)
+	// Get support if we have enough
+	if (supportCount >= 2)
 	{
-		countSupportsOnSides++;
-	}
-	if (countSupportsOnSides >= 2)
-	{
-		if (supports[{ -1, 0, 0 }])
-			supports[{ -1, 0, 0 }]->supportedParts.emplace_back(position, type->type);
-		if (supports[{ 1, 0, 0 }])
-			supports[{ 1, 0, 0 }]->supportedParts.emplace_back(position, type->type);
-		if (supports[{ 0, -1, 0 }])
-			supports[{ 0, -1, 0 }]->supportedParts.emplace_back(position, type->type);
-		if (supports[{ 0, 1, 0 }])
-			supports[{ 0, 1, 0 }]->supportedParts.emplace_back(position, type->type);
+		for (auto mp : supports)
+		{
+			mp->supportedParts.emplace_back(position, type->type);
+		}
 		return true;
 	}
 
-	// Step 06: Shoot "support lines" and try to find something
+	// Step 04: Shoot "support lines" and try to find something
 
 	// Scan on X
 	if (type->type != BattleMapPartType::Type::LeftWall)
@@ -1129,7 +1052,7 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart*>> set)
 	for (auto mp : *set)
 	{
 		auto pos = mp->tileObject->getOwningTile()->position;
-		LogWarning("Map part with supported by type %d at %d %d %d is going to fall", (int)mp->type->supported_by, pos.x, pos.y, pos.z);
+		LogWarning("MP %s SBT %d at %d %d %d is going to fall", mp->type.id.cStr(), (int)mp->type->getVanillaSupportedById(), pos.x, pos.y, pos.z);
 	}
 }
 
@@ -1288,7 +1211,7 @@ bool BattleMapPart::isAlive() const
 	return true;
 }
 
-void BattleMapPart::queueCollapse(unsigned additionalDelay = 0)
+void BattleMapPart::queueCollapse(unsigned additionalDelay)
 {
 	ticksUntilCollapse = TICKS_MULTIPLIER + additionalDelay;
 	providesHardSupport = false;

@@ -39,14 +39,6 @@ class Agent;
 class Battle : public std::enable_shared_from_this<Battle>
 {
   public:
-	enum class MapBorder
-	{
-		North,
-		East,
-		South,
-		West
-	};
-
 	enum class MissionType
 	{
 		AlienExtermination,
