@@ -141,7 +141,7 @@ void GameState::initState()
 	{
 		for (auto w : t.second->weapon_types)
 		{
-			w->ammo_types.emplace(this, t.first);
+			w->ammo_types.emplace_back(this, t.first);
 		}
 	}
 	for (auto &a : this->agent_types)

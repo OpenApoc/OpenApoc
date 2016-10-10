@@ -1288,9 +1288,17 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	switch (weaponStatus)
 	{
 		case WeaponStatus::FiringBothHands:
+			if (weaponRight && weaponRight->needsReload())
+			{
+				weaponRight->loadAmmo(state);
+			}
 			if (weaponRight && !weaponRight->canFire())
 			{
 				weaponRight = nullptr;
+			}
+			if (weaponLeft && weaponLeft->needsReload())
+			{
+				weaponLeft->loadAmmo(state);
 			}
 			if (weaponLeft && !weaponLeft->canFire())
 			{
@@ -1298,6 +1306,10 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			}
 			break;
 		case WeaponStatus::FiringRightHand:
+			if (weaponRight && weaponRight->needsReload())
+			{
+				weaponRight->loadAmmo(state);
+			}
 			if (weaponRight && !weaponRight->canFire())
 			{
 				weaponRight = nullptr;
@@ -1305,6 +1317,10 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			weaponLeft = nullptr;
 			break;
 		case WeaponStatus::FiringLeftHand:
+			if (weaponLeft && weaponLeft->needsReload())
+			{
+				weaponLeft->loadAmmo(state);
+			}
 			if (weaponLeft && !weaponLeft->canFire())
 			{
 				weaponLeft = nullptr;

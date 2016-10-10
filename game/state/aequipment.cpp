@@ -1,3 +1,4 @@
+#include "game/state/battle/battleitem.h"
 #include "game/state/aequipment.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
@@ -111,21 +112,85 @@ void AEquipment::startFiring(BattleUnit::FireAimingMode fireMode)
 	aimingMode = fireMode;
 }
 
+void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
+{
+	// Cannot load if this is using itself for payload or is not a weapon
+	if (type->type != AEquipmentType::Type::Weapon || getPayloadType() == type)
+	{
+		return;
+	}
+	// If no ammoItem is supplied then look in the agent's inventory
+	if (!ammoItem)
+	{
+		if (equippedSlotType == AgentEquipmentLayout::EquipmentSlotType::None)
+		{
+			LogError("Trying to reload a weapon not in agent inventory!?");
+			return;
+		}
+		auto it = type->ammo_types.rbegin();
+		while (it != type->ammo_types.rend())
+		{
+			ammoItem = ownerAgent->getFirstItemByType(*it);
+			if (ammoItem)
+			{
+				break;
+			}
+			it++;
+		}
+	}
+	// Cannot load non-ammo or if no ammo was found in the inventory
+	if (!ammoItem || ammoItem->type->type != AEquipmentType::Type::Ammo)
+	{
+		return;
+	}
+	// Cannot load if inappropriate type
+	if (std::find(type->ammo_types.begin(), type->ammo_types.end(), ammoItem->type) == type->ammo_types.end())
+	{
+		return;
+	}
+	
+	// If this has ammo then swap
+	if (payloadType)
+	{
+		auto ejectedType = payloadType;
+		auto ejectedAmmo = ammo;
+		payloadType = ammoItem->type;
+		ammo = ammoItem->ammo;
+		ammoItem->type = ejectedType;
+		ammoItem->ammo = ejectedAmmo;
+	}
+	else
+	{
+		payloadType = ammoItem->type;
+		ammo = ammoItem->ammo;
+		// Remove item from battle/agent
+		auto ownerItem = ammoItem->ownerItem.lock();
+		if (ownerItem)
+		{
+			ownerItem->die(state, false);
+		}
+		else if (ownerAgent && equippedSlotType != AgentEquipmentLayout::EquipmentSlotType::None)
+		{
+			ownerAgent->removeEquipment(ammoItem);
+		}
+	}
+}
+
 void AEquipment::update(unsigned int ticks)
 {
 	// Recharge update
 	auto payload = getPayloadType();
-	if (payload->recharge > 0 && ammo < payload->max_ammo)
+	if (payload && payload->recharge > 0 && ammo < payload->max_ammo)
 	{
 		recharge_ticks_accumulated += ticks;
+		if (recharge_ticks_accumulated > TICKS_PER_RECHARGE)
+		{
+			recharge_ticks_accumulated = 0;
+			ammo += payload->recharge;
+			ammo = std::min(payload->max_ammo, ammo);
+		}
 	}
-	if (recharge_ticks_accumulated > TICKS_PER_RECHARGE)
-	{
-		recharge_ticks_accumulated = 0;
-		ammo += payload->recharge;
-		ammo = std::min(payload->max_ammo, ammo);
-	}
-
+	
 	// Firing update
 	if (weapon_fire_ticks_remaining > 0)
 	{
@@ -219,6 +284,10 @@ sp<Projectile> AEquipment::fire(Vec3<float> targetPosition, StateRef<BattleUnit>
 
 	readyToFire = false;
 	ammo--;
+	if (ammo == 0 && payload != type)
+	{
+		payloadType.clear();
+	}
 
 	if (payload->fire_sfx)
 	{
@@ -284,10 +353,24 @@ bool AEquipment::isLauncher()
 	return getPayloadType()->damage_type->launcher;
 }
 
+StateRef<AEquipmentType> AEquipment::getPayloadType()
+{
+	if (type->type == AEquipmentType::Type::Weapon && type->ammo_types.size() > 0)
+	{
+		return payloadType;
+	}
+	return type;
+}
+
 bool AEquipment::canFire(float range)
 {
 	return type->type == AEquipmentType::Type::Weapon && ammo > 0 &&
 	       getPayloadType()->getRange() > range;
 };
+
+bool AEquipment::needsReload()
+{
+	return type->type == AEquipmentType::Type::Weapon && ammo == 0 && !type->ammo_types.empty();
+}
 
 } // namespace OpenApoc

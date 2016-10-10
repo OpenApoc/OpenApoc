@@ -87,10 +87,10 @@ class AEquipmentType : public StateObject<AEquipmentType>
 	// This is not stored in files, but rather filled in gamestate inint
 	// In files we only store ammo's link to the weapon
 	// This way, modders can introduce ammunition for existing weapons without having mod conflicts
-	std::set<StateRef<AEquipmentType>> ammo_types;
+	std::list<StateRef<AEquipmentType>> ammo_types;
 
 	// Ammo only
-	std::set<StateRef<AEquipmentType>> weapon_types;
+	std::list<StateRef<AEquipmentType>> weapon_types;
 
 	// Ammo, Weapons & Grenades with built-in ammo, General with charge
 	int max_ammo = 0;

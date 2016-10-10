@@ -57,15 +57,6 @@ sp<EquipmentSet> StateObject<EquipmentSet>::get(const GameState &state, const US
 	return it->second;
 }
 
-StateRef<AEquipmentType> AEquipment::getPayloadType()
-{
-	if (type->type == AEquipmentType::Type::Weapon && type->ammo_types.size() > 0)
-	{
-		return payloadType;
-	}
-	return type;
-}
-
 std::list<sp<AEquipmentType>> EquipmentSet::generateEquipmentList(GameState &state)
 {
 	std::list<sp<AEquipmentType>> output;

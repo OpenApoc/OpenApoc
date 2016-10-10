@@ -373,7 +373,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 								tracker_gun_clip_id = id;
 							else
 								// Behave normally
-								e->weapon_types.emplace(
+								e->weapon_types.emplace_back(
 								    &state,
 								    weapons[gdata.ammo_type != 0xffff ? gdata.ammo_type
 								                                      : gdata.ammo_type_duplicate]
@@ -731,7 +731,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state, Difficul
 	}
 
 	// Fix the tracker gun ammo
-	state.agent_equipment[tracker_gun_clip_id]->weapon_types.emplace(&state, weapons[8]->id);
+	state.agent_equipment[tracker_gun_clip_id]->weapon_types.emplace_back(&state, weapons[8]->id);
 
 	// Equipment sets - score - alien
 	{

@@ -295,6 +295,8 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 	sp<AEquipment> getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType type,
 	                                  bool lazy = true) const;
 	sp<AEquipment> getFirstShield() const;
+	sp<AEquipment> getFirstItemByType(StateRef<AEquipmentType> type) const;
+
 	StateRef<BattleUnitImagePack> getImagePack(AgentType::BodyPart bodyPart) const;
 
 	// Following members are not serialized, but rather are set up in the initBattle method
