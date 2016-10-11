@@ -52,9 +52,10 @@ static void test_voxel(Vec3<int> voxel_size)
 
 	// An empty map should have a center in the 'middle'
 	v.calculateCentre();
-	if (v.centre != v.size / 2)
+	if (v.getCentre() != v.size / 2)
 	{
-		LogError("Unexpected centre {%d,%d,%d} for empty map", v.centre.x, v.centre.y, v.centre.z);
+		LogError("Unexpected centre {%d,%d,%d} for empty map", v.getCentre().x, v.getCentre().y,
+		         v.getCentre().z);
 		exit(EXIT_FAILURE);
 	}
 
@@ -126,11 +127,11 @@ static void test_voxel(Vec3<int> voxel_size)
 // The centre of a voxelmap with a single bit should be the same as that bit position
 #ifdef CHECK_VOXELMAP_CENTRE
 	v.calculateCentre();
-	if (v.centre != bit_voxel_position)
+	if (v.getCentre() != bit_voxel_position)
 	{
-		LogError("Unexpected centre {%d,%d,%d} for single-bit map, expected {%d,%d,%d}", v.centre.x,
-		         v.centre.y, v.centre.z, bit_voxel_position.x, bit_voxel_position.y,
-		         bit_voxel_position.z);
+		LogError("Unexpected centre {%d,%d,%d} for single-bit map, expected {%d,%d,%d}",
+		         v.getCentre().x, v.getCentre().y, v.getCentre().z, bit_voxel_position.x,
+		         bit_voxel_position.y, bit_voxel_position.z);
 		exit(EXIT_FAILURE);
 	}
 #endif
@@ -150,10 +151,10 @@ static void test_voxel(Vec3<int> voxel_size)
 
 #ifdef CHECK_VOXELMAP_CENTRE
 	v.calculateCentre();
-	if (v.centre != v.size / 2)
+	if (v.getCentre() != v.size / 2)
 	{
-		LogError("Unexpected centre {%d,%d,%d} for reset-to-empty map", v.centre.x, v.centre.y,
-		         v.centre.z);
+		LogError("Unexpected centre {%d,%d,%d} for reset-to-empty map", v.getCentre().x,
+		         v.getCentre().y, v.getCentre().z);
 		exit(EXIT_FAILURE);
 	}
 #endif
@@ -209,10 +210,11 @@ static void test_voxel(Vec3<int> voxel_size)
 #ifdef CHECK_VOXELMAP_CENTRE
 	auto expected_centre = (bit_voxel_position + bit_2_voxel_position) / 2;
 	v.calculateCentre();
-	if (v.centre != expected_centre)
+	if (v.getCentre() != expected_centre)
 	{
-		LogError("Unexpected centre {%d,%d,%d} for 2 bit map, expected {%d,%d,%d}", v.centre.x,
-		         v.centre.y, v.centre.z, expected_centre.x, expected_centre.y, expected_centre.z);
+		LogError("Unexpected centre {%d,%d,%d} for 2 bit map, expected {%d,%d,%d}", v.getCentre().x,
+		         v.getCentre().y, v.getCentre().z, expected_centre.x, expected_centre.y,
+		         expected_centre.z);
 		exit(EXIT_FAILURE);
 	}
 #endif

@@ -44,6 +44,7 @@ bool VoxelMap::getBit(Vec3<int> pos) const
 
 void VoxelMap::setSlice(int z, sp<VoxelSlice> slice)
 {
+	this->centreChanged = true;
 	if (z < 0 || static_cast<unsigned>(z) >= this->slices.size())
 	{
 		return;
@@ -58,6 +59,7 @@ void VoxelMap::setSlice(int z, sp<VoxelSlice> slice)
 
 void VoxelMap::calculateCentre()
 {
+	this->centreChanged = false;
 
 	// This calcualtes the 'centre' of the voxel map by finding
 	// the average position of all 'filled' voxels
@@ -88,33 +90,10 @@ void VoxelMap::calculateCentre()
 		}
 		*/
 		// Instead, we consider layer filled if one bit is
-		bool bitFound = false;
-		for (int y = 0; y < this->size.y; y++)
+		if (this->slices[z] && !this->slices[z]->isEmpty())
 		{
-			for (int x = 0; x < this->size.x; x++)
-			{
-				if (this->getBit({x, y, z}))
-				{
-					bitFound = true;
-					break;
-				}
-				if (bitFound)
-					break;
-			}
-			if (bitFound)
-				break;
-		}
-
-		if (bitFound)
-		{
-			for (int y = 0; y < this->size.y; y++)
-			{
-				for (int x = 0; x < this->size.x; x++)
-				{
-					sum += Vec3<int>{x, y, z};
-					numFilled++;
-				}
-			}
+			sum += Vec3<int>{this->size.x / 2, this->size.y / 2, z};
+			numFilled++;
 		}
 	}
 	if (numFilled == 0)
@@ -154,6 +133,15 @@ bool VoxelMap::operator==(const VoxelMap &other) const
 
 bool VoxelMap::operator!=(const VoxelMap &other) const { return !(*this == other); }
 
+const Vec3<int> &VoxelMap::getCentre()
+{
+	if (this->centreChanged)
+	{
+		this->calculateCentre();
+	}
+	return this->centre;
+}
+
 bool VoxelSlice::operator==(const VoxelSlice &other) const
 {
 	if (this->size != other.size)
@@ -168,5 +156,15 @@ bool VoxelSlice::operator==(const VoxelSlice &other) const
 }
 
 bool VoxelSlice::operator!=(const VoxelSlice &other) const { return !(*this == other); }
+
+bool VoxelSlice::isEmpty() const
+{
+	for (const auto &bit : this->bits)
+	{
+		if (bit)
+			return false;
+	}
+	return true;
+}
 
 } // namesapce OpenApoc

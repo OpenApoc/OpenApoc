@@ -118,7 +118,6 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, VoxelMap &m
 		return;
 	serializeIn(state, node->getNode("size"), map.size);
 	serializeIn(state, node->getNode("slices"), map.slices);
-	map.calculateCentre();
 }
 
 void serializeIn(const GameState *state, sp<SerializationNode> node, Colour &c)
