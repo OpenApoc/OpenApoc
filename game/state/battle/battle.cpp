@@ -6,6 +6,7 @@
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battledoor.h"
+#include "game/state/battle/battleexplosion.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemap.h"
 #include "game/state/battle/battlemappart.h"
@@ -20,6 +21,7 @@
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/doodad_type.h"
+#include "game/state/rules/damage.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_battleitem.h"
@@ -43,7 +45,7 @@ static std::vector<std::set<TileObject::Type>> layerMap = {
     // the unit type
     {TileObject::Type::Ground, TileObject::Type::LeftWall, TileObject::Type::RightWall,
      TileObject::Type::Feature, TileObject::Type::Doodad, TileObject::Type::Projectile,
-     TileObject::Type::Unit, TileObject::Type::Shadow, TileObject::Type::Item},
+     TileObject::Type::Unit, TileObject::Type::Shadow, TileObject::Type::Item, TileObject::Type::Hazard },
 };
 
 Battle::~Battle()
@@ -326,6 +328,19 @@ sp<Doodad> Battle::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 	return doodad;
 }
 
+sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position, StateRef<DoodadType> doodadType, StateRef<DamageType> damageType, int power, int depletionRate, StateRef<BattleUnit> ownerUnit)
+{
+	if (!doodadType)
+	{
+		doodadType = {&state, "DOODAD_30_EXPLODING_PAYLOAD"};
+	}
+	placeDoodad(doodadType, position);
+	
+	auto explosion = mksp<BattleExplosion>(position, damageType, power, depletionRate, ownerUnit);
+	explosions.insert(explosion);
+	return explosion;
+}
+
 sp<BattleUnit> Battle::addUnit(GameState &state)
 {
 	auto unit = mksp<BattleUnit>();
@@ -376,8 +391,15 @@ void Battle::update(GameState &state, unsigned int ticks)
 			this->projectiles.erase(c.projectile);
 			bool playSound = true;
 			bool displayDoodad = true;
-			switch (c.obj->getType())
+			if (c.projectile->damageType->explosive)
 			{
+				auto explosion = addExplosion(state, c.position, c.projectile->doodadType, c.projectile->damageType, c.projectile->damage, c.projectile->depletionRate, c.projectile->firerUnit);
+				displayDoodad = false;
+			}
+			else
+			{
+				switch (c.obj->getType())
+				{
 				case TileObject::Type::Unit:
 				{
 					auto unit = std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit();
@@ -397,6 +419,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 				}
 				default:
 					LogError("Collision with non-collidable object");
+				}
 			}
 			if (displayDoodad)
 			{

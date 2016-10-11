@@ -80,6 +80,7 @@ class InitialGameStateExtractor
 	void extractVehicleEquipment(GameState &state);
 	void extractResearch(GameState &state);
 	void extractAgentEquipment(GameState &state);
+	void extractDoodads(GameState &state);
 
 	void extractBattlescapeMap(GameState &state, const std::vector<OpenApoc::UString> &paths);
 	void extractBattlescapeMapFromPath(GameState &state, const UString dirName, const int index);

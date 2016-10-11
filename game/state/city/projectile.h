@@ -56,7 +56,7 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	           sp<Sample> impactSfx, StateRef<DoodadType> doodadType);
 	Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target,
 	           Vec3<float> position, Vec3<float> velocity, int turnRate, unsigned int lifetime,
-	           int damage, unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
+	           int damage, int depletionRate, unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
 	           sp<Sample> impactSfx, StateRef<DoodadType> doodadType,
 	           StateRef<DamageType> damageType);
 	Projectile();
@@ -78,16 +78,17 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	Vec3<float> position;
 	Vec3<float> velocity;
 	int turnRate = 0;
-	unsigned int age;
-	unsigned int lifetime;
-	int damage;
+	unsigned int age = 0;
+	unsigned int lifetime = 0;
+	int damage = 0;
+	int depletionRate = 0;
 	StateRef<Vehicle> firerVehicle;
 	StateRef<BattleUnit> firerUnit;
 	StateRef<Vehicle> trackedVehicle;
 	StateRef<BattleUnit> trackedUnit;
 	Vec3<float> previousPosition;
 	std::list<Vec3<float>> spritePositions;
-	unsigned int tail_length;
+	unsigned int tail_length = 0;
 	std::list<sp<Image>> projectile_sprites;
 	float sprite_distance = 0.0f;
 

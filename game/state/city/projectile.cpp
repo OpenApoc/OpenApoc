@@ -38,14 +38,13 @@ Projectile::Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> tar
 	if (target)
 		trackedObject = target->tileObject;
 }
-// FIXME: Properly add unit projectiles and shit
 Projectile::Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target,
                        Vec3<float> position, Vec3<float> velocity, int turnRate,
-                       unsigned int lifetime, int damage, unsigned int tail_length,
+                       unsigned int lifetime, int damage, int depletionRate, unsigned int tail_length,
                        std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
                        StateRef<DoodadType> doodadType, StateRef<DamageType> damageType)
     : type(type), position(position), velocity(velocity), turnRate(turnRate), age(0),
-      lifetime(lifetime), damage(damage), firerUnit(firer), trackedUnit(target),
+      lifetime(lifetime), damage(damage), depletionRate(depletionRate), firerUnit(firer), trackedUnit(target),
       previousPosition(position), spritePositions({position}), tail_length(tail_length),
       projectile_sprites(projectile_sprites), sprite_distance(1.0f / TILE_Y_BATTLE),
       impactSfx(impactSfx), doodadType(doodadType), damageType(damageType),
@@ -58,8 +57,8 @@ Projectile::Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUni
 }
 
 Projectile::Projectile()
-    : type(Type::Beam), position(0, 0, 0), velocity(0, 0, 0), age(0), lifetime(0), damage(0),
-      previousPosition(0, 0, 0), tail_length(0), velocityScale(1, 1, 1)
+    : type(Type::Beam), position(0, 0, 0), velocity(0, 0, 0),
+      previousPosition(0, 0, 0), velocityScale(1, 1, 1)
 {
 }
 

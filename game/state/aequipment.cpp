@@ -303,8 +303,9 @@ sp<Projectile> AEquipment::fire(Vec3<float> targetPosition, StateRef<BattleUnit>
 	velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 	return mksp<Projectile>(payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
 	                        unit, targetUnit, unitPos, velocity, payload->turn_rate,
-	                        payload->ttl * TICKS_MULTIPLIER, payload->damage, payload->tail_size,
-	                        payload->projectile_sprites, payload->impact_sfx,
+	                        payload->ttl * TICKS_MULTIPLIER, payload->damage, 
+							payload->explosion_depletion_rate, payload->tail_size, 
+							payload->projectile_sprites, payload->impact_sfx,
 	                        payload->explosion_graphic, payload->damage_type);
 }
 

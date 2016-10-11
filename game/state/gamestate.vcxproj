@@ -24,6 +24,8 @@
     <ClCompile Include="base\facility.cpp" />
     <ClCompile Include="battle\battle.cpp" />
     <ClCompile Include="battle\battledoor.cpp" />
+    <ClCompile Include="battle\battleexplosion.cpp" />
+    <ClCompile Include="battle\battlehazard.cpp" />
     <ClCompile Include="battle\battlemap.cpp" />
     <ClCompile Include="battle\battlemappart.cpp" />
     <ClCompile Include="battle\battlemappart_type.cpp" />
@@ -67,6 +69,7 @@
     <ClCompile Include="tileview\pathfinding.cpp" />
     <ClCompile Include="tileview\tile.cpp" />
     <ClCompile Include="tileview\tileobject.cpp" />
+    <ClCompile Include="tileview\tileobject_battlehazard.cpp" />
     <ClCompile Include="tileview\tileobject_battleitem.cpp" />
     <ClCompile Include="tileview\tileobject_battlemappart.cpp" />
     <ClCompile Include="tileview\tileobject_battleunit.cpp" />
@@ -84,6 +87,8 @@
     <ClInclude Include="battle\battle.h" />
     <ClInclude Include="battle\battlecommonsamplelist.h" />
     <ClInclude Include="battle\battledoor.h" />
+    <ClInclude Include="battle\battleexplosion.h" />
+    <ClInclude Include="battle\battlehazard.h" />
     <ClInclude Include="battle\battlemap.h" />
     <ClInclude Include="battle\battlemappart.h" />
     <ClInclude Include="battle\battlemapsector.h" />
@@ -109,6 +114,7 @@
     <ClInclude Include="gameevent.h" />
     <ClInclude Include="gameevent_types.h" />
     <ClInclude Include="gamestate.h" />
+    <ClInclude Include="gamestate_serialize.h" />
     <ClInclude Include="gamestate_serialize_generated.h" />
     <ClInclude Include="gametime.h" />
     <ClInclude Include="gametime_facet.h" />
@@ -131,6 +137,7 @@
     <ClInclude Include="tileview\collision.h" />
     <ClInclude Include="tileview\tile.h" />
     <ClInclude Include="tileview\tileobject.h" />
+    <ClInclude Include="tileview\tileobject_battlehazard.h" />
     <ClInclude Include="tileview\tileobject_battleitem.h" />
     <ClInclude Include="tileview\tileobject_battlemappart.h" />
     <ClInclude Include="tileview\tileobject_battleunit.h" />

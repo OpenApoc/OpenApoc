@@ -377,6 +377,8 @@
 		<member>doodads</member>
 		<member>projectiles</member>
 		<member>doors</member>
+		<member>explosions</member>
+		<member>hazards</member>
 		<member>participants</member>
 		<member>currentPlayer</member>
 		<member>currentActiveOrganisation</member>
@@ -543,6 +545,24 @@
 		<member>ticksUntilCollapse</member>
 	</object>
 	<object>
+		<name>BattleHazard</name>
+		<member>position</member>
+		<member>doodadType</member>
+		<member>lifetime</member>
+		<member>age</member>
+	</object>
+	<object>
+		<name>BattleExplosion</name>
+		<member>position</member>
+		<member>ticksUntilExpansion</member>
+		<member>locationsToExpand</member>
+		<member>damageType</member>
+		<member>power</member>
+		<member>depletionRate</member>
+		<member>ownerUnit</member>
+		<member>affectedUnits</member>
+	</object>
+	<object>
 		<name>BattleMapPart</name>
 		<member>type</member>
 		<member>alternative_type</member>
@@ -587,6 +607,7 @@
 		<member>turnRate</member>
 		<member>age</member>
 		<member>damage</member>
+		<member>depletionRate</member>
 		<member>lifetime</member>
 		<member>firerVehicle</member>
 		<member>firerUnit</member>
