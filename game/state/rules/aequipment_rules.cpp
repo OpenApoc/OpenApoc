@@ -91,7 +91,7 @@ sp<EquipmentSet> EquipmentSet::getByScore(const GameState &state, const int scor
 {
 	for (auto &es : state.equipment_sets_by_score)
 	{
-		if (es.second->is_appropriate(score))
+		if (es.second->isAppropriate(score))
 			return es.second;
 	}
 	LogError("No equipment set matching score %d", score);
@@ -102,7 +102,7 @@ sp<EquipmentSet> EquipmentSet::getByLevel(const GameState &state, const int leve
 {
 	for (auto &es : state.equipment_sets_by_level)
 	{
-		if (es.second->is_appropriate(level))
+		if (es.second->isAppropriate(level))
 			return es.second;
 	}
 	LogError("No equipment set matching level %d", level);

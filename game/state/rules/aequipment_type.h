@@ -183,7 +183,7 @@ class EquipmentSet : public StateObject<EquipmentSet>
 
 	int min_score = std::numeric_limits<int>::min();
 	int max_score = std::numeric_limits<int>::max();
-	bool is_appropriate(int score) { return score >= min_score && score < max_score; };
+	bool isAppropriate(int score) { return score >= min_score && score < max_score; };
 
 	std::vector<WeaponData> weapons;
 	std::vector<GrenadeData> grenades;

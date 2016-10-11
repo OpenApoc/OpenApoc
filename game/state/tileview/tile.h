@@ -1,8 +1,8 @@
 #pragma once
 
 #include "framework/logger.h"
-#include "game/state/tileview/tileobject.h"
 #include "game/state/gametime.h"
+#include "game/state/tileview/tileobject.h"
 #include "library/rect.h"
 #include "library/sp.h"
 #include <set>
@@ -230,7 +230,8 @@ class TileMap
 	                                      float maxCost = 0.0f);
 
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
-	                        const std::set<TileObject::Type> validTypes = {}, sp<TileObject> ignoredObject = nullptr, bool useLOS = false,
+	                        const std::set<TileObject::Type> validTypes = {},
+	                        sp<TileObject> ignoredObject = nullptr, bool useLOS = false,
 	                        bool check_full_path = false) const;
 
 	void addObjectToMap(sp<Projectile>);

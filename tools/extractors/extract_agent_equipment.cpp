@@ -79,14 +79,14 @@ void InitialGameStateExtractor::extractAlienEquipmentSets(GameState &state, Diff
 	{
 		if (data_t.agent_equipment_set_score_requirement->count() != 1)
 			LogError("Incorrect amount of alien score requirement structures: encountered %u, "
-				"expected 1",
-				(unsigned)data_t.agent_equipment_set_score_requirement->count());
+			         "expected 1",
+			         (unsigned)data_t.agent_equipment_set_score_requirement->count());
 		auto sdata = data_t.agent_equipment_set_score_requirement->get(0);
 
 		if (data_t.agent_equipment_set_score_alien->count() != 1)
 			LogError("Incorrect amount of alien score equipment set structures: encountered %u, "
-				"expected 1",
-				(unsigned)data_t.agent_equipment_set_score_alien->count());
+			         "expected 1",
+			         (unsigned)data_t.agent_equipment_set_score_alien->count());
 		auto data = data_t.agent_equipment_set_score_alien->get(0);
 		for (unsigned i = 0; i < 8; i++)
 		{
@@ -102,55 +102,55 @@ void InitialGameStateExtractor::extractAlienEquipmentSets(GameState &state, Diff
 					if (data.weapons[j][i].clip_idx > 0)
 					{
 						es->weapons.push_back(
-						{ { &state, format("%s%s", AEquipmentType::getPrefix(),
-							canon_string(data_u.agent_equipment_names->get(
-								data.weapons[j][i].weapon_idx))) },
-								{ &state, format("%s%s", AEquipmentType::getPrefix(),
-									canon_string(data_u.agent_equipment_names->get(
-										data.weapons[j][i].clip_idx))) },
-							std::max((int)data.weapons[j][i].clip_amount, 1) });
+						    {{&state, format("%s%s", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.weapons[j][i].weapon_idx)))},
+						     {&state, format("%s%s", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.weapons[j][i].clip_idx)))},
+						     std::max((int)data.weapons[j][i].clip_amount, 1)});
 					}
 					else
 					{
 						es->weapons.push_back(
-						{ { &state, format("%s%s", AEquipmentType::getPrefix(),
-							canon_string(data_u.agent_equipment_names->get(
-								data.weapons[j][i].weapon_idx))) } });
+						    {{&state, format("%s%s", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.weapons[j][i].weapon_idx)))}});
 					}
 				}
 				if (data.grenades[j][i].grenade_idx > 0 && data.grenades[j][i].grenade_amount > 0)
 				{
 					es->grenades.push_back(
-					{ { &state, format("%s%s", AEquipmentType::getPrefix(),
-						canon_string(data_u.agent_equipment_names->get(
-							data.grenades[j][i].grenade_idx))) },
-						data.grenades[j][i].grenade_amount });
+					    {{&state, format("%s%s", AEquipmentType::getPrefix(),
+					                     canon_string(data_u.agent_equipment_names->get(
+					                         data.grenades[j][i].grenade_idx)))},
+					     data.grenades[j][i].grenade_amount});
 				}
 				if (data.equipment[j][i][0] > 0 || data.equipment[j][i][1] > 0)
 				{
 					if (data.equipment[j][i][0] > 0 && data.equipment[j][i][1] > 0)
 					{
 						es->equipment.push_back(
-						{ { &state, format("%s%s", AEquipmentType::getPrefix(),
-							canon_string(data_u.agent_equipment_names->get(
-								data.equipment[j][i][0]))) },
-								{ &state, format("%s%s", AEquipmentType::getPrefix(),
-									canon_string(data_u.agent_equipment_names->get(
-										data.equipment[j][i][1]))) } });
+						    {{&state, format("%s%s", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.equipment[j][i][0])))},
+						     {&state, format("%s%s", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.equipment[j][i][1])))}});
 					}
 					else if (data.equipment[j][i][0] > 0)
 					{
 						es->equipment.push_back(
-						{ { &state, format("%s%s", AEquipmentType::getPrefix(),
-							canon_string(data_u.agent_equipment_names->get(
-								data.equipment[j][i][0]))) } });
+						    {{&state, format("%s%s", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.equipment[j][i][0])))}});
 					}
 					else
 					{
 						es->equipment.push_back(
-						{ { &state, format("%s%s", AEquipmentType::getPrefix(),
-							canon_string(data_u.agent_equipment_names->get(
-								data.equipment[j][i][1]))) } });
+						    {{&state, format("%s%s", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.equipment[j][i][1])))}});
 					}
 				}
 			}
@@ -158,27 +158,27 @@ void InitialGameStateExtractor::extractAlienEquipmentSets(GameState &state, Diff
 			int diff = 0;
 			switch (difficulty)
 			{
-			case Difficulty::DIFFICULTY_1:
-				diff = 0;
-				break;
-			case Difficulty::DIFFICULTY_2:
-				diff = 1;
-				break;
-			case Difficulty::DIFFICULTY_3:
-				diff = 2;
-				break;
-			case Difficulty::DIFFICULTY_4:
-				diff = 3;
-				break;
-			case Difficulty::DIFFICULTY_5:
-				diff = 4;
-				break;
-			default:
-				LogError("Unknown difficulty");
+				case Difficulty::DIFFICULTY_1:
+					diff = 0;
+					break;
+				case Difficulty::DIFFICULTY_2:
+					diff = 1;
+					break;
+				case Difficulty::DIFFICULTY_3:
+					diff = 2;
+					break;
+				case Difficulty::DIFFICULTY_4:
+					diff = 3;
+					break;
+				case Difficulty::DIFFICULTY_5:
+					diff = 4;
+					break;
+				default:
+					LogError("Unknown difficulty");
 			}
 
 			es->min_score =
-				i == 0 ? std::numeric_limits<int>::min() : (int)sdata.score[diff][i - 1];
+			    i == 0 ? std::numeric_limits<int>::min() : (int)sdata.score[diff][i - 1];
 			es->max_score = i == 7 ? std::numeric_limits<int>::max() : (int)sdata.score[diff][i];
 
 			state.equipment_sets_by_score[id] = es;
@@ -849,7 +849,6 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 	// Fix the tracker gun ammo
 	state.agent_equipment[tracker_gun_clip_id]->weapon_types.emplace_back(&state, weapons[8]->id);
 
-	
 	// Equipment sets - score (level) - human
 	{
 		if (data_t.agent_equipment_set_score_human->count() != 1)

@@ -36,7 +36,7 @@ class BattleDoor : public StateObject<BattleDoor>, public std::enable_shared_fro
 
 	void playDoorSound();
 
-	~BattleDoor() = default;
+	~BattleDoor() override = default;
 
 	// Following members are not serialized, but rather are set in initBattle method
 

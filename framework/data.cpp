@@ -73,7 +73,7 @@ class DataImpl final : public Data
   public:
 	DataImpl(std::vector<UString> paths, int imageCacheSize = 100, int imageSetCacheSize = 10,
 	         int voxelCacheSize = 1, int fontStringCacheSize = 100, int paletteCacheSize = 10);
-	virtual ~DataImpl() = default;
+	~DataImpl() override = default;
 
 	sp<Sample> loadSample(UString path) override;
 	sp<MusicTrack> loadMusic(const UString &path) override;

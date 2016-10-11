@@ -1,8 +1,8 @@
 #pragma once
 
-#include "game/state/tileview/tile.h"
 #include "game/state/battle/battle.h"
 #include "game/state/stateobject.h"
+#include "game/state/tileview/tile.h"
 #include "library/sp.h"
 #include <list>
 #include <map>
@@ -23,7 +23,7 @@ class BattleMap : public StateObject<BattleMap>
 {
   public:
 	BattleMap();
-	~BattleMap() = default;
+	~BattleMap() override = default;
 
 	UString id;
 

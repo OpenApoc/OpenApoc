@@ -62,7 +62,9 @@ void BattleItem::setPosition(const Vec3<float> &pos)
 
 Collision BattleItem::checkItemCollision(Vec3<float> previousPosition, Vec3<float> nextPosition)
 {
-	Collision c = tileObject->map.findCollision(previousPosition, nextPosition, {}, ownerInvulnerableTicks > 0 ? item->ownerAgent->unit->tileObject : nullptr);
+	Collision c = tileObject->map.findCollision(
+	    previousPosition, nextPosition, {},
+	    ownerInvulnerableTicks > 0 ? item->ownerAgent->unit->tileObject : nullptr);
 	return c;
 }
 
@@ -198,17 +200,16 @@ void BattleItem::getSupport()
 	auto tile = tileObject->getOwningTile();
 	auto obj = tile->getItemSupportingObject();
 	auto restingPosition =
-		obj->getPosition() + Vec3<float>{0.0f, 0.0f, (float)obj->type->height / 40.0f};
+	    obj->getPosition() + Vec3<float>{0.0f, 0.0f, (float)obj->type->height / 40.0f};
 
 	bounced = false;
 	falling = false;
-	velocity = { 0.0f, 0.0f, 0.0f };
+	velocity = {0.0f, 0.0f, 0.0f};
 	obj->supportedItems = true;
 	if (position != restingPosition)
 	{
 		setPosition(restingPosition);
 	}
-
 }
 
 bool BattleItem::findSupport()
@@ -226,7 +227,7 @@ bool BattleItem::findSupport()
 	{
 		return false;
 	}
-		
+
 	return true;
 }
 
@@ -242,9 +243,6 @@ void BattleItem::tryCollapse()
 	}
 }
 
-void BattleItem::collapse()
-{
-	falling = true;
-}
+void BattleItem::collapse() { falling = true; }
 
 } // namespace OpenApoc
