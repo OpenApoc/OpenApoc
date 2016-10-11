@@ -37,6 +37,18 @@ class TileObjectShadow;
 class Battle;
 class DamageType;
 
+enum class MovementMode
+{
+	Running,
+	Walking,
+	Prone
+};
+enum class KneelingMode
+{
+	None,
+	Kneeling
+};
+
 class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_from_this<BattleUnit>
 {
   public:
@@ -58,18 +70,6 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 		AtWill,
 		CeaseFire
 	};
-	enum class MovementMode
-	{
-		Running,
-		Walking,
-		Prone
-	};
-	enum class KneelingMode
-	{
-		None,
-		Kneeling
-	};
-
 	// Enum for tracking unit's weapon state
 	enum class WeaponStatus
 	{
@@ -128,10 +128,10 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Accumulated xp points for each stat
 	AgentStats experiencePoints;
 	// Fatal wounds for each body part
-	std::map<AgentType::BodyPart, int> fatalWounds;
+	std::map<BodyPart, int> fatalWounds;
 	bool isFatallyWounded();
 	// Which body part is medikit used on
-	AgentType::BodyPart healingBodyPart = AgentType::BodyPart::Body;
+	BodyPart healingBodyPart = BodyPart::Body;
 	// Is using a medikit
 	bool isHealing = false;
 	// Ticks until next wound damage or medikit heal is applied
@@ -158,10 +158,10 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	{
 		return (body_animation_ticks_remaining + TICKS_PER_FRAME_UNIT - 1) / TICKS_PER_FRAME_UNIT;
 	}
-	AgentType::BodyState current_body_state = AgentType::BodyState::Standing;
-	AgentType::BodyState target_body_state = AgentType::BodyState::Standing;
-	void setBodyState(AgentType::BodyState state);
-	void beginBodyStateChange(AgentType::BodyState state);
+	BodyState current_body_state = BodyState::Standing;
+	BodyState target_body_state = BodyState::Standing;
+	void setBodyState(BodyState state);
+	void beginBodyStateChange(BodyState state);
 
 	// Time, in game ticks, until hands animation is finished
 	unsigned int hand_animation_ticks_remaining = 0;
@@ -177,10 +177,10 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 		        TICKS_PER_FRAME_UNIT - 1) /
 		       TICKS_PER_FRAME_UNIT;
 	}
-	AgentType::HandState current_hand_state = AgentType::HandState::AtEase;
-	AgentType::HandState target_hand_state = AgentType::HandState::AtEase;
-	void setHandState(AgentType::HandState state);
-	void beginHandStateChange(AgentType::HandState state);
+	HandState current_hand_state = HandState::AtEase;
+	HandState target_hand_state = HandState::AtEase;
+	void setHandState(HandState state);
+	void beginHandStateChange(HandState state);
 
 	// Distance, in movement ticks, spent since starting to move
 	unsigned int movement_ticks_passed = 0;
@@ -193,8 +193,8 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	unsigned int movement_sounds_played = 0;
 	bool shouldPlaySoundNow();
 	unsigned int getWalkSoundIndex();
-	AgentType::MovementState current_movement_state = AgentType::MovementState::None;
-	void setMovementState(AgentType::MovementState state);
+	MovementState current_movement_state = MovementState::None;
+	void setMovementState(MovementState state);
 
 	// Time, in game ticks, until unit can turn by 1/8th of a circle
 	unsigned int turning_animation_ticks_remaining = 0;
@@ -207,7 +207,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	bool popFinishedMissions(GameState &state);
 	bool getNextDestination(GameState &state, Vec3<float> &dest);
 	bool getNextFacing(GameState &state, Vec2<int> &dest);
-	bool getNextBodyState(GameState &state, AgentType::BodyState &dest);
+	bool getNextBodyState(GameState &state, BodyState &dest);
 	bool addMission(GameState &state, BattleUnitMission *mission, bool start = true);
 	bool addMission(GameState &state, BattleUnitMission::MissionType type);
 
@@ -278,9 +278,11 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Returns if unit did spend (false if unsufficient TUs)
 	bool spendTU(int cost);
 
+	BodyPart determineBodyPartHit(StateRef<DamageType> damageType, Vec3<float> cposition, Vec3<float> direction);
+
 	// Returns true if sound and doodad were handled by it
 	bool applyDamage(GameState &state, int power, StateRef<DamageType> damageType,
-	                 AgentType::BodyPart bodyPart);
+	                 BodyPart bodyPart);
 	// Returns true if sound and doodad were handled by it
 	bool handleCollision(GameState &state, Collision &c);
 

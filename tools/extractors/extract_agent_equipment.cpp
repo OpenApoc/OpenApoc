@@ -43,6 +43,7 @@
 #define DT_STUNGAS 3
 #define DT_EXPLOSIVE 4
 #define DT_STUNGUN 5
+#define DT_PSIBLAST 6
 #define DT_EXPLOSIVE2 15
 #define DT_BRAINSUCKER 18
 
@@ -248,6 +249,10 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 			case DT_STUNGUN:
 				d->stun = true;
 				break;
+			case DT_PSIBLAST:
+				d->explosive = true;
+				d->psionic = true;
+				break;
 			case DT_EXPLOSIVE2:
 				d->explosive = true;
 				break;
@@ -257,6 +262,33 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 		}
 
 		state.damage_types[id] = d;
+	}
+	
+	// Explosion sounds for damage types
+	{
+		state.damage_types["DAMAGETYPE_ANTI-ALIEN_GAS"]->explosionSounds
+			.push_back(
+				fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/gasexpls.raw:22050"));
+		state.damage_types["DAMAGETYPE_EXPLOSIVE"]->explosionSounds.push_back(
+			fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/explosn1.raw:22050"));
+		state.damage_types["DAMAGETYPE_EXPLOSIVE"]->explosionSounds.push_back(
+			fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/explosn2.raw:22050"));
+		state.damage_types["DAMAGETYPE_EXPLOSIVE_1"]->explosionSounds
+			.push_back(
+				fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/explosn1.raw:22050"));
+		state.damage_types["DAMAGETYPE_EXPLOSIVE_1"]->explosionSounds
+			.push_back(
+				fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/explosn2.raw:22050"));
+		state.damage_types["DAMAGETYPE_INCENDIARY"]->explosionSounds.push_back(
+			fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/firexpls.raw:22050"));
+		state.damage_types["DAMAGETYPE_PSIONIC_BLAST"]->explosionSounds
+			.push_back(
+				fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/psigrnad.raw:22050"));
+		state.damage_types["DAMAGETYPE_SMOKE"]->explosionSounds.push_back(
+			fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/gasexpls.raw:22050"));
+		state.damage_types["DAMAGETYPE_STUN_GAS"]->explosionSounds.push_back(
+			fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/gasexpls.raw:22050"));
+
 	}
 
 	for (unsigned i = 0; i < data_t.damage_modifiers->count(); i++)
@@ -338,12 +370,12 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 					case AGENT_ARMOR_BODY_PART_LEGS:
 						bodyPartLetter = "b";
 						armorBodyPicIndex = 4;
-						e->body_part = AgentType::BodyPart::Legs;
+						e->body_part = BodyPart::Legs;
 						break;
 					case AGENT_ARMOR_BODY_PART_BODY:
 						bodyPartLetter = "a";
 						armorBodyPicIndex = 2;
-						e->body_part = AgentType::BodyPart::Body;
+						e->body_part = BodyPart::Body;
 						// Vanilla decides if flight is enabled by checking if a "marsec" damage mod
 						// body armor is equipped
 						if (adata.damage_modifier == 18)
@@ -352,17 +384,17 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 					case AGENT_ARMOR_BODY_PART_LEFT_ARM:
 						bodyPartLetter = "d";
 						armorBodyPicIndex = 1;
-						e->body_part = AgentType::BodyPart::LeftArm;
+						e->body_part = BodyPart::LeftArm;
 						break;
 					case AGENT_ARMOR_BODY_PART_RIGHT_ARM:
 						bodyPartLetter = "e";
 						armorBodyPicIndex = 3;
-						e->body_part = AgentType::BodyPart::RightArm;
+						e->body_part = BodyPart::RightArm;
 						break;
 					case AGENT_ARMOR_BODY_PART_HELMET:
 						bodyPartLetter = "c";
 						armorBodyPicIndex = 0;
-						e->body_part = AgentType::BodyPart::Helmet;
+						e->body_part = BodyPart::Helmet;
 						break;
 					default:
 						LogError("Unexpected body part type %d for ID %s", (int)adata.body_part,

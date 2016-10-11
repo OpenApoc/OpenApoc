@@ -48,7 +48,7 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 		case TileViewMode::Isometric:
 		{
 			int firingAngle = 0;
-			if (unit->current_hand_state == AgentType::HandState::Firing)
+			if (unit->current_hand_state == HandState::Firing)
 			{
 				Vec3<float> targetVector = unit->targetTile - owningTile->position;
 				Vec3<float> targetVectorZeroZ = {targetVector.x, targetVector.y, 0.0f};
@@ -65,14 +65,14 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 				firingAngle = clamp(firingAngle, -2, 2);
 			}
 			unit->agent->getAnimationPack()->drawUnit(
-			    r, screenPosition, unit->agent->getImagePack(AgentType::BodyPart::Body),
-			    unit->agent->getImagePack(AgentType::BodyPart::Legs),
-			    unit->agent->getImagePack(AgentType::BodyPart::Helmet),
-			    unit->agent->getImagePack(AgentType::BodyPart::LeftArm),
-			    unit->agent->getImagePack(AgentType::BodyPart::RightArm), unit->displayedItem,
+			    r, screenPosition, unit->agent->getImagePack(BodyPart::Body),
+			    unit->agent->getImagePack(BodyPart::Legs),
+			    unit->agent->getImagePack(BodyPart::Helmet),
+			    unit->agent->getImagePack(BodyPart::LeftArm),
+			    unit->agent->getImagePack(BodyPart::RightArm), unit->displayedItem,
 			    unit->facing, unit->current_body_state, unit->target_body_state,
 			    unit->current_hand_state, unit->target_hand_state,
-			    unit->usingLift ? AgentType::MovementState::None : unit->current_movement_state,
+			    unit->usingLift ? MovementState::None : unit->current_movement_state,
 			    unit->getBodyAnimationFrame(), unit->getHandAnimationFrame(),
 			    unit->getDistanceTravelled(), firingAngle);
 			break;
@@ -88,8 +88,8 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 			// Icon type, 0 = normal, 1 = prone, 2 = large
 			int icon_type = unit->isLarge()
 			                    ? ICON_LARGE
-			                    : ((unit->current_body_state == AgentType::BodyState::Prone ||
-			                        unit->target_body_state == AgentType::BodyState::Prone)
+			                    : ((unit->current_body_state == BodyState::Prone ||
+			                        unit->target_body_state == BodyState::Prone)
 			                           ? ICON_PRONE
 			                           : ICON_STANDART);
 			// Unit facing, in game starts with north (0,-1) and goes clockwise, from 0 to 7
@@ -212,8 +212,8 @@ void TileObjectBattleUnit::setPosition(Vec3<float> newPosition)
 	}
 	else // if small
 	{
-		if (u->current_body_state == AgentType::BodyState::Prone ||
-		    u->target_body_state == AgentType::BodyState::Prone)
+		if (u->current_body_state == BodyState::Prone ||
+		    u->target_body_state == BodyState::Prone)
 		{
 			centerOffset = {-u->facing.x * bounds.x / 4.0f, -u->facing.y * bounds.y / 4.0f, 0.5f};
 		}
@@ -264,7 +264,7 @@ void TileObjectBattleUnit::setPosition(Vec3<float> newPosition)
 			occupiedTiles.insert({pos.x - 1, pos.y - 1, pos.z + 1});
 		}
 	}
-	else if (u->current_body_state == AgentType::BodyState::Prone)
+	else if (u->current_body_state == BodyState::Prone)
 	{
 		// Prone units additionally occupy the tile behind them
 		occupiedTiles.insert(pos);

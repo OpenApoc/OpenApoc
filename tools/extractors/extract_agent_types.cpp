@@ -76,21 +76,21 @@ namespace OpenApoc
 
 void fillAgentImagePacksByDefault(GameState &state, sp<AgentType> a, UString imagePackName)
 {
-	a->image_packs[a->image_packs.size() - 1][AgentType::BodyPart::Body] = {
+	a->image_packs[a->image_packs.size() - 1][BodyPart::Body] = {
 	    &state, format("%s%s%s", BattleUnitImagePack::getPrefix(), imagePackName, "a")};
-	a->image_packs[a->image_packs.size() - 1][AgentType::BodyPart::Legs] = {
+	a->image_packs[a->image_packs.size() - 1][BodyPart::Legs] = {
 	    &state, format("%s%s%s", BattleUnitImagePack::getPrefix(), imagePackName, "b")};
-	a->image_packs[a->image_packs.size() - 1][AgentType::BodyPart::Helmet] = {
+	a->image_packs[a->image_packs.size() - 1][BodyPart::Helmet] = {
 	    &state, format("%s%s%s", BattleUnitImagePack::getPrefix(), imagePackName, "c")};
-	a->image_packs[a->image_packs.size() - 1][AgentType::BodyPart::LeftArm] = {
+	a->image_packs[a->image_packs.size() - 1][BodyPart::LeftArm] = {
 	    &state, format("%s%s%s", BattleUnitImagePack::getPrefix(), imagePackName, "d")};
-	a->image_packs[a->image_packs.size() - 1][AgentType::BodyPart::RightArm] = {
+	a->image_packs[a->image_packs.size() - 1][BodyPart::RightArm] = {
 	    &state, format("%s%s%s", BattleUnitImagePack::getPrefix(), imagePackName, "e")};
 }
 
 void pushEquipmentSlot(
     sp<AgentEquipmentLayout> a, int x, int y, int w = 1, int h = 1,
-    AgentEquipmentLayout::EquipmentSlotType type = AgentEquipmentLayout::EquipmentSlotType::General,
+    AEquipmentSlotType type = AEquipmentSlotType::General,
     AgentEquipmentLayout::AlignmentX align_x = AgentEquipmentLayout::AlignmentX::Left,
     AgentEquipmentLayout::AlignmentY align_y = AgentEquipmentLayout::AlignmentY::Top)
 {
@@ -472,13 +472,13 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 		}
 
 		// Used image packs
-		a->image_packs.push_back(std::map<AgentType::BodyPart, StateRef<BattleUnitImagePack>>());
+		a->image_packs.push_back(std::map<BodyPart, StateRef<BattleUnitImagePack>>());
 		switch (i)
 		{
 			case UNIT_TYPE_BIOCHEMIST:
 			case UNIT_TYPE_ENGINEER:
 			case UNIT_TYPE_QUANTUM_PHYSIST:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "scntst")};
 				break;
 			case UNIT_TYPE_GANG_LEADER:
@@ -487,7 +487,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 			case UNIT_TYPE_CORPORATE_BOSS:
 				// Game has no picture for this unit.
 				// I think rm1 (upper class male) fits him best.
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "rm1")};
 				break;
 			case UNIT_TYPE_CULT_LEADER:
@@ -516,7 +516,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 			case UNIT_TYPE_GANGSTER:
 				fillAgentImagePacksByDefault(state, a, "gang");
 				a->image_packs.push_back(
-				    std::map<AgentType::BodyPart, StateRef<BattleUnitImagePack>>());
+				    std::map<BodyPart, StateRef<BattleUnitImagePack>>());
 				fillAgentImagePacksByDefault(state, a, "gang2");
 				break;
 			case UNIT_TYPE_CULTIST:
@@ -526,139 +526,139 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 				fillAgentImagePacksByDefault(state, a, "sec");
 				break;
 			case UNIT_TYPE_ANDROID:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robot")};
-				a->image_packs[0][AgentType::BodyPart::Helmet] = {
+				a->image_packs[0][BodyPart::Helmet] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robo1")};
 				a->image_packs.push_back(
-				    std::map<AgentType::BodyPart, StateRef<BattleUnitImagePack>>());
-				a->image_packs[1][AgentType::BodyPart::Body] = {
+				    std::map<BodyPart, StateRef<BattleUnitImagePack>>());
+				a->image_packs[1][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robot")};
-				a->image_packs[1][AgentType::BodyPart::Helmet] = {
+				a->image_packs[1][BodyPart::Helmet] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robo2")};
 				a->image_packs.push_back(
-				    std::map<AgentType::BodyPart, StateRef<BattleUnitImagePack>>());
-				a->image_packs[2][AgentType::BodyPart::Body] = {
+				    std::map<BodyPart, StateRef<BattleUnitImagePack>>());
+				a->image_packs[2][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robot")};
-				a->image_packs[2][AgentType::BodyPart::Helmet] = {
+				a->image_packs[2][BodyPart::Helmet] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robo3")};
 				a->image_packs.push_back(
-				    std::map<AgentType::BodyPart, StateRef<BattleUnitImagePack>>());
-				a->image_packs[3][AgentType::BodyPart::Body] = {
+				    std::map<BodyPart, StateRef<BattleUnitImagePack>>());
+				a->image_packs[3][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robot")};
-				a->image_packs[3][AgentType::BodyPart::Helmet] = {
+				a->image_packs[3][BodyPart::Helmet] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robo4")};
 				break;
 			case UNIT_TYPE_GREY:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "grey")};
 				break;
 			case UNIT_TYPE_UPPER_CLASS_FEMALE_1:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "rw1")};
 				break;
 			case UNIT_TYPE_UPPER_CLASS_FEMALE_2:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "rw2")};
 				break;
 			case UNIT_TYPE_UPPER_CLASS_FEMALE_3:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "rw3")};
 				break;
 			case UNIT_TYPE_UPPER_CLASS_MALE_1:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "rm1")};
 				break;
 			case UNIT_TYPE_UPPER_CLASS_MALE_2:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "rm2")};
 				break;
 			case UNIT_TYPE_UPPER_CLASS_MALE_3:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "rm3")};
 				break;
 			case UNIT_TYPE_CIVILIAN_FEMALE_1:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "nw1")};
 				break;
 			case UNIT_TYPE_CIVILIAN_FEMALE_2:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "nw2")};
 				break;
 			case UNIT_TYPE_CIVILIAN_FEMALE_3:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "nw3")};
 				break;
 			case UNIT_TYPE_CIVILIAN_MALE_1:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "nm1")};
 				break;
 			case UNIT_TYPE_CIVILIAN_MALE_2:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "nm2")};
 				break;
 			case UNIT_TYPE_CIVILIAN_MALE_3:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "nm3")};
 				break;
 			case UNIT_TYPE_LOWER_CLASS_MALE_1:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "sm1")};
 				break;
 			case UNIT_TYPE_LOWER_CLASS_MALE_2:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "sm2")};
 				break;
 			case UNIT_TYPE_LOWER_CLASS_MALE_3:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "sm3")};
 				break;
 			case UNIT_TYPE_LOWER_CLASS_FEMALE_1:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "sw1")};
 				break;
 			case UNIT_TYPE_LOWER_CLASS_FEMALE_2:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "sw2")};
 				break;
 			case UNIT_TYPE_LOWER_CLASS_FEMALE_3:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "sw3")};
 				break;
 			case UNIT_TYPE_MULTIWORM_EGG:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "mwegga")};
-				a->image_packs[0][AgentType::BodyPart::Helmet] = {
+				a->image_packs[0][BodyPart::Helmet] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "mweggb")};
 				a->image_packs.push_back(
-				    std::map<AgentType::BodyPart, StateRef<BattleUnitImagePack>>());
-				a->image_packs[1][AgentType::BodyPart::Body] = {
+				    std::map<BodyPart, StateRef<BattleUnitImagePack>>());
+				a->image_packs[1][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "mwegga")};
-				a->image_packs[1][AgentType::BodyPart::Helmet] = {
+				a->image_packs[1][BodyPart::Helmet] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "mweggb")};
 				break;
 			case UNIT_TYPE_BRAINSUCKER:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "bsk")};
 				break;
 			case UNIT_TYPE_MULTIWORM:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "multi")};
 				break;
 			case UNIT_TYPE_HYPERWORM:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "hypr")};
 				break;
 			case UNIT_TYPE_CRYSALIS:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "chrysa")};
-				a->image_packs[0][AgentType::BodyPart::Helmet] = {
+				a->image_packs[0][BodyPart::Helmet] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "chrysb")};
 				a->image_packs.push_back(
-				    std::map<AgentType::BodyPart, StateRef<BattleUnitImagePack>>());
-				a->image_packs[1][AgentType::BodyPart::Body] = {
+				    std::map<BodyPart, StateRef<BattleUnitImagePack>>());
+				a->image_packs[1][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "chrysa")};
-				a->image_packs[1][AgentType::BodyPart::Helmet] = {
+				a->image_packs[1][BodyPart::Helmet] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "chrysb")};
 				break;
 			case UNIT_TYPE_ANTHROPOD:
@@ -668,28 +668,28 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 				fillAgentImagePacksByDefault(state, a, "skel");
 				break;
 			case UNIT_TYPE_SPITTER:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "spitr")};
 				break;
 			case UNIT_TYPE_POPPER:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "popper")};
 				break;
 			case UNIT_TYPE_MEGASPAWN:
 				fillAgentImagePacksByDefault(state, a, "mega");
 				break;
 			case UNIT_TYPE_PSIMORPH:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "psi")};
 				break;
 			case UNIT_TYPE_QUEENSPAWN:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "queena")};
-				a->image_packs[0][AgentType::BodyPart::Legs] = {
+				a->image_packs[0][BodyPart::Legs] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "queenb")};
 				break;
 			case UNIT_TYPE_MICRONOID:
-				a->image_packs[0][AgentType::BodyPart::Body] = {
+				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "micro")};
 				break;
 		}
@@ -878,11 +878,11 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 		a->min_stats.strength = data.strength_base;
 		a->max_stats.strength = data.strength_base + data.strength_inc;
 
-		a->armor[AgentType::BodyPart::Body] = data.armor_body;
-		a->armor[AgentType::BodyPart::Helmet] = data.armor_head;
-		a->armor[AgentType::BodyPart::LeftArm] = data.armor_left;
-		a->armor[AgentType::BodyPart::Legs] = data.armor_leg;
-		a->armor[AgentType::BodyPart::RightArm] = data.armor_right;
+		a->armor[BodyPart::Body] = data.armor_body;
+		a->armor[BodyPart::Helmet] = data.armor_head;
+		a->armor[BodyPart::LeftArm] = data.armor_left;
+		a->armor[BodyPart::Legs] = data.armor_leg;
+		a->armor[BodyPart::RightArm] = data.armor_right;
 		a->damage_modifier = {
 		    &state, format("%s%s", DamageModifier::getPrefix(),
 		                   canon_string(data_t.damage_modifier_names->get(data.damage_modifier)))};
@@ -952,10 +952,10 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 
 		auto a = mksp<AgentEquipmentLayout>();
 		// Located off-screen, invisible in inventory
-		pushEquipmentSlot(a, 1024, 6, 3, 5, AgentEquipmentLayout::EquipmentSlotType::RightHand,
+		pushEquipmentSlot(a, 1024, 6, 3, 5, AEquipmentSlotType::RightHand,
 		                  AgentEquipmentLayout::AlignmentX::Centre,
 		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 1024, 6, 3, 5, AgentEquipmentLayout::EquipmentSlotType::LeftHand,
+		pushEquipmentSlot(a, 1024, 6, 3, 5, AEquipmentSlotType::LeftHand,
 		                  AgentEquipmentLayout::AlignmentX::Centre,
 		                  AgentEquipmentLayout::AlignmentY::Centre);
 
@@ -968,10 +968,10 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 		UString id = format("%s%s", AgentEquipmentLayout::getPrefix(), canon_string(name));
 
 		auto a = mksp<AgentEquipmentLayout>();
-		pushEquipmentSlot(a, 0, 6, 3, 5, AgentEquipmentLayout::EquipmentSlotType::RightHand,
+		pushEquipmentSlot(a, 0, 6, 3, 5, AEquipmentSlotType::RightHand,
 		                  AgentEquipmentLayout::AlignmentX::Centre,
 		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 12, 6, 3, 5, AgentEquipmentLayout::EquipmentSlotType::LeftHand,
+		pushEquipmentSlot(a, 12, 6, 3, 5, AEquipmentSlotType::LeftHand,
 		                  AgentEquipmentLayout::AlignmentX::Centre,
 		                  AgentEquipmentLayout::AlignmentY::Centre);
 
@@ -979,19 +979,19 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 		// But why not let them for fun? :)))) Armored flying anthropod FTW!
 
 		// Armor
-		pushEquipmentSlot(a, 6, 3, 2, 2, AgentEquipmentLayout::EquipmentSlotType::ArmorHelmet,
+		pushEquipmentSlot(a, 6, 3, 2, 2, AEquipmentSlotType::ArmorHelmet,
 		                  AgentEquipmentLayout::AlignmentX::Centre,
 		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 4, 5, 2, 6, AgentEquipmentLayout::EquipmentSlotType::ArmorRightHand,
+		pushEquipmentSlot(a, 4, 5, 2, 6, AEquipmentSlotType::ArmorRightHand,
 		                  AgentEquipmentLayout::AlignmentX::Right,
 		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 6, 5, 2, 6, AgentEquipmentLayout::EquipmentSlotType::ArmorBody,
+		pushEquipmentSlot(a, 6, 5, 2, 6, AEquipmentSlotType::ArmorBody,
 		                  AgentEquipmentLayout::AlignmentX::Centre,
 		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 8, 5, 2, 6, AgentEquipmentLayout::EquipmentSlotType::ArmorLeftHand,
+		pushEquipmentSlot(a, 8, 5, 2, 6, AEquipmentSlotType::ArmorLeftHand,
 		                  AgentEquipmentLayout::AlignmentX::Left,
 		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 4, 11, 6, 5, AgentEquipmentLayout::EquipmentSlotType::ArmorLegs,
+		pushEquipmentSlot(a, 4, 11, 6, 5, AEquipmentSlotType::ArmorLegs,
 		                  AgentEquipmentLayout::AlignmentX::Centre,
 		                  AgentEquipmentLayout::AlignmentY::Top);
 		// Belt #1
@@ -1001,10 +1001,10 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 		}
 		pushEquipmentSlot(a, 0, 13);
 		// Special
-		pushEquipmentSlot(a, 2, 14, 2, 2, AgentEquipmentLayout::EquipmentSlotType::General,
+		pushEquipmentSlot(a, 2, 14, 2, 2, AEquipmentSlotType::General,
 		                  AgentEquipmentLayout::AlignmentX::Centre,
 		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 11, 14, 2, 2, AgentEquipmentLayout::EquipmentSlotType::General,
+		pushEquipmentSlot(a, 11, 14, 2, 2, AEquipmentSlotType::General,
 		                  AgentEquipmentLayout::AlignmentX::Centre,
 		                  AgentEquipmentLayout::AlignmentY::Centre);
 		// Belt #2
@@ -1127,7 +1127,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state)
 		// Allowed body states, voxel maps and animations
 		// Contains information about each body state: how high it is,
 		// and what voxel map idx is specified in the game files
-		std::map<AgentType::BodyState, Vec2<int>> voxelInfo;
+		std::map<BodyState, Vec2<int>> voxelInfo;
 		int height = 0;
 		int idx = 0;
 		switch (i)
@@ -1137,13 +1137,13 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state)
 			case UNIT_TYPE_GREY:
 				height = i == UNIT_TYPE_ANDROID ? 32 : 24;
 				idx = 5;
-				a->allowed_movement_states.insert(AgentType::MovementState::None);
-				a->allowed_movement_states.insert(AgentType::MovementState::Normal);
-				a->allowed_movement_states.insert(AgentType::MovementState::Running);
-				a->allowed_body_states.insert(AgentType::BodyState::Standing);
-				a->allowed_body_states.insert(AgentType::BodyState::Downed);
-				voxelInfo[AgentType::BodyState::Standing] = {height, idx};
-				voxelInfo[AgentType::BodyState::Downed] = {8, idx};
+				a->allowed_movement_states.insert(MovementState::None);
+				a->allowed_movement_states.insert(MovementState::Normal);
+				a->allowed_movement_states.insert(MovementState::Running);
+				a->allowed_body_states.insert(BodyState::Standing);
+				a->allowed_body_states.insert(BodyState::Downed);
+				voxelInfo[BodyState::Standing] = {height, idx};
+				voxelInfo[BodyState::Downed] = {8, idx};
 				break;
 
 			// Stationary aliens
@@ -1165,11 +1165,11 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state)
 						idx = 20;
 						break;
 				}
-				a->allowed_movement_states.insert(AgentType::MovementState::None);
-				a->allowed_body_states.insert(AgentType::BodyState::Standing);
-				a->allowed_body_states.insert(AgentType::BodyState::Downed);
-				voxelInfo[AgentType::BodyState::Standing] = {height, idx};
-				voxelInfo[AgentType::BodyState::Downed] = {(i == UNIT_TYPE_QUEENSPAWN) ? 16 : 8,
+				a->allowed_movement_states.insert(MovementState::None);
+				a->allowed_body_states.insert(BodyState::Standing);
+				a->allowed_body_states.insert(BodyState::Downed);
+				voxelInfo[BodyState::Standing] = {height, idx};
+				voxelInfo[BodyState::Downed] = {(i == UNIT_TYPE_QUEENSPAWN) ? 16 : 8,
 				                                           idx};
 				break;
 
@@ -1202,52 +1202,52 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state)
 						idx = 5;
 						break;
 				}
-				a->allowed_movement_states.insert(AgentType::MovementState::None);
-				a->allowed_movement_states.insert(AgentType::MovementState::Normal);
-				a->allowed_movement_states.insert(AgentType::MovementState::Running);
-				a->allowed_body_states.insert(AgentType::BodyState::Standing);
-				a->allowed_body_states.insert(AgentType::BodyState::Downed);
-				voxelInfo[AgentType::BodyState::Standing] = {height, idx};
-				voxelInfo[AgentType::BodyState::Downed] = {8, idx};
+				a->allowed_movement_states.insert(MovementState::None);
+				a->allowed_movement_states.insert(MovementState::Normal);
+				a->allowed_movement_states.insert(MovementState::Running);
+				a->allowed_body_states.insert(BodyState::Standing);
+				a->allowed_body_states.insert(BodyState::Downed);
+				voxelInfo[BodyState::Standing] = {height, idx};
+				voxelInfo[BodyState::Downed] = {8, idx};
 				break;
 
 			// Special case: Multiworm, can only crawl
 			case UNIT_TYPE_MULTIWORM:
 				height = 16;
 				idx = 10;
-				a->allowed_movement_states.insert(AgentType::MovementState::None);
-				a->allowed_movement_states.insert(AgentType::MovementState::Normal);
-				a->allowed_body_states.insert(AgentType::BodyState::Kneeling);
-				a->allowed_body_states.insert(AgentType::BodyState::Prone);
-				a->allowed_body_states.insert(AgentType::BodyState::Downed);
-				voxelInfo[AgentType::BodyState::Kneeling] = {height, idx};
-				voxelInfo[AgentType::BodyState::Prone] = {height, idx};
-				voxelInfo[AgentType::BodyState::Downed] = {8, idx};
+				a->allowed_movement_states.insert(MovementState::None);
+				a->allowed_movement_states.insert(MovementState::Normal);
+				a->allowed_body_states.insert(BodyState::Kneeling);
+				a->allowed_body_states.insert(BodyState::Prone);
+				a->allowed_body_states.insert(BodyState::Downed);
+				voxelInfo[BodyState::Kneeling] = {height, idx};
+				voxelInfo[BodyState::Prone] = {height, idx};
+				voxelInfo[BodyState::Downed] = {8, idx};
 				break;
 
 			// Special case: Megaspawn, large walker
 			case UNIT_TYPE_MEGASPAWN:
 				height = 70;
 				idx = 19;
-				a->allowed_movement_states.insert(AgentType::MovementState::None);
-				a->allowed_movement_states.insert(AgentType::MovementState::Normal);
-				a->allowed_body_states.insert(AgentType::BodyState::Standing);
-				a->allowed_body_states.insert(AgentType::BodyState::Downed);
-				voxelInfo[AgentType::BodyState::Standing] = {height, idx};
-				voxelInfo[AgentType::BodyState::Downed] = {16, idx};
+				a->allowed_movement_states.insert(MovementState::None);
+				a->allowed_movement_states.insert(MovementState::Normal);
+				a->allowed_body_states.insert(BodyState::Standing);
+				a->allowed_body_states.insert(BodyState::Downed);
+				voxelInfo[BodyState::Standing] = {height, idx};
+				voxelInfo[BodyState::Downed] = {16, idx};
 				break;
 
 			// Special case: Psimorph, non-humanoid that can only fly
 			case UNIT_TYPE_PSIMORPH:
 				height = 70;
 				idx = 19;
-				a->allowed_movement_states.insert(AgentType::MovementState::None);
-				a->allowed_movement_states.insert(AgentType::MovementState::Normal);
-				a->allowed_movement_states.insert(AgentType::MovementState::Running);
-				a->allowed_body_states.insert(AgentType::BodyState::Flying);
-				a->allowed_body_states.insert(AgentType::BodyState::Downed);
-				voxelInfo[AgentType::BodyState::Flying] = {height, idx};
-				voxelInfo[AgentType::BodyState::Downed] = {16, idx};
+				a->allowed_movement_states.insert(MovementState::None);
+				a->allowed_movement_states.insert(MovementState::Normal);
+				a->allowed_movement_states.insert(MovementState::Running);
+				a->allowed_body_states.insert(BodyState::Flying);
+				a->allowed_body_states.insert(BodyState::Downed);
+				voxelInfo[BodyState::Flying] = {height, idx};
+				voxelInfo[BodyState::Downed] = {16, idx};
 				break;
 
 			// Skeletoid and Anthropod are both humanoids
@@ -1259,26 +1259,26 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state)
 				// Skeletoid only differs from other humanods by having built-in flight capabilities
 				if (i == UNIT_TYPE_SKELETOID)
 				{
-					a->allowed_body_states.insert(AgentType::BodyState::Flying);
+					a->allowed_body_states.insert(BodyState::Flying);
 				}
-				a->allowed_movement_states.insert(AgentType::MovementState::None);
-				a->allowed_movement_states.insert(AgentType::MovementState::Normal);
-				a->allowed_movement_states.insert(AgentType::MovementState::Running);
-				a->allowed_movement_states.insert(AgentType::MovementState::Strafing);
-				a->allowed_body_states.insert(AgentType::BodyState::Standing);
-				a->allowed_body_states.insert(AgentType::BodyState::Kneeling);
-				a->allowed_body_states.insert(AgentType::BodyState::Prone);
-				a->allowed_body_states.insert(AgentType::BodyState::Jumping);
-				a->allowed_body_states.insert(AgentType::BodyState::Throwing);
-				a->allowed_body_states.insert(AgentType::BodyState::Downed);
-				voxelInfo[AgentType::BodyState::Standing] = {height, idx};
-				voxelInfo[AgentType::BodyState::Kneeling] = {std::max(8, height - 10), idx};
-				voxelInfo[AgentType::BodyState::Prone] = {16, 10};
-				voxelInfo[AgentType::BodyState::Jumping] = {std::max(8, height - 10), idx};
-				voxelInfo[AgentType::BodyState::Throwing] = {height, idx};
-				voxelInfo[AgentType::BodyState::Downed] = {8, idx};
+				a->allowed_movement_states.insert(MovementState::None);
+				a->allowed_movement_states.insert(MovementState::Normal);
+				a->allowed_movement_states.insert(MovementState::Running);
+				a->allowed_movement_states.insert(MovementState::Strafing);
+				a->allowed_body_states.insert(BodyState::Standing);
+				a->allowed_body_states.insert(BodyState::Kneeling);
+				a->allowed_body_states.insert(BodyState::Prone);
+				a->allowed_body_states.insert(BodyState::Jumping);
+				a->allowed_body_states.insert(BodyState::Throwing);
+				a->allowed_body_states.insert(BodyState::Downed);
+				voxelInfo[BodyState::Standing] = {height, idx};
+				voxelInfo[BodyState::Kneeling] = {std::max(8, height - 10), idx};
+				voxelInfo[BodyState::Prone] = {16, 10};
+				voxelInfo[BodyState::Jumping] = {std::max(8, height - 10), idx};
+				voxelInfo[BodyState::Throwing] = {height, idx};
+				voxelInfo[BodyState::Downed] = {8, idx};
 				// Humanoids can possibly attain flight by use of armor, therefore include this here
-				voxelInfo[AgentType::BodyState::Flying] = {height, idx};
+				voxelInfo[BodyState::Flying] = {height, idx};
 				break;
 		}
 		a->maxHeight = height;
@@ -1320,12 +1320,12 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state)
 		for (auto entry : voxelInfo)
 		{
 			a->height[entry.first] =
-			    entry.first == AgentType::BodyState::Downed ? entry.second.x : entry.second.x + 4;
+			    entry.first == BodyState::Downed ? entry.second.x : entry.second.x + 4;
 			a->muzzleZPosition[entry.first] = entry.second.x;
 
 			if (a->large)
 			{
-				if (entry.first == AgentType::BodyState::Prone)
+				if (entry.first == BodyState::Prone)
 				{
 					LogError("Large units cannot go prone!");
 				}
@@ -1393,12 +1393,12 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state)
 			{
 				switch (entry.first)
 				{
-					case AgentType::BodyState::Downed:
-					case AgentType::BodyState::Flying:
-					case AgentType::BodyState::Jumping:
-					case AgentType::BodyState::Kneeling:
-					case AgentType::BodyState::Standing:
-					case AgentType::BodyState::Throwing:
+					case BodyState::Downed:
+					case BodyState::Flying:
+					case BodyState::Jumping:
+					case BodyState::Kneeling:
+					case BodyState::Standing:
+					case BodyState::Throwing:
 						// For each facing
 						for (int fx = -1; fx <= 1; fx++)
 						{
@@ -1427,7 +1427,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state)
 							}
 						}
 						break;
-					case AgentType::BodyState::Prone:
+					case BodyState::Prone:
 					{
 						// Map of facings to loftemps indexes, as described above
 						static const std::map<Vec2<int>, std::vector<int>> facingToLoftemps = {

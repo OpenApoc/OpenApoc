@@ -63,10 +63,10 @@ BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock::InfoBlock(int index, 
 }
 
 int BattleUnitAnimationPack::getFrameCountBody(StateRef<AEquipmentType> heldItem,
-                                               AgentType::BodyState currentBody,
-                                               AgentType::BodyState targetBody,
-                                               AgentType::HandState currentHands,
-                                               AgentType::MovementState movement, Vec2<int> facing)
+                                               BodyState currentBody,
+                                               BodyState targetBody,
+                                               HandState currentHands,
+                                               MovementState movement, Vec2<int> facing)
 {
 	sp<AnimationEntry> e;
 	if (currentBody == targetBody)
@@ -86,10 +86,10 @@ int BattleUnitAnimationPack::getFrameCountBody(StateRef<AEquipmentType> heldItem
 }
 
 int BattleUnitAnimationPack::getFrameCountHands(StateRef<AEquipmentType> heldItem,
-                                                AgentType::BodyState currentBody,
-                                                AgentType::HandState currentHands,
-                                                AgentType::HandState targetHands,
-                                                AgentType::MovementState movement, Vec2<int> facing)
+                                                BodyState currentBody,
+                                                HandState currentHands,
+                                                HandState targetHands,
+                                                MovementState movement, Vec2<int> facing)
 {
 	sp<AnimationEntry> e;
 	if (currentHands == targetHands)
@@ -109,14 +109,14 @@ int BattleUnitAnimationPack::getFrameCountHands(StateRef<AEquipmentType> heldIte
 }
 
 int BattleUnitAnimationPack::getFrameCountFiring(StateRef<AEquipmentType> heldItem,
-                                                 AgentType::BodyState currentBody,
-                                                 AgentType::MovementState movement,
+                                                 BodyState currentBody,
+                                                 MovementState movement,
                                                  Vec2<int> facing)
 {
 	sp<AnimationEntry> e;
 	e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
 	                                                         : ItemWieldMode::OneHanded)
-	                                 : ItemWieldMode::None][AgentType::HandState::Firing][movement]
+	                                 : ItemWieldMode::None][HandState::Firing][movement]
 	                       [currentBody][facing];
 	if (e)
 		return e->frame_count;
@@ -126,9 +126,9 @@ int BattleUnitAnimationPack::getFrameCountFiring(StateRef<AEquipmentType> heldIt
 
 void BattleUnitAnimationPack::drawShadow(
     Renderer &r, Vec2<float> screenPosition, StateRef<BattleUnitImagePack> shadow,
-    StateRef<AEquipmentType> heldItem, Vec2<int> facing, AgentType::BodyState currentBody,
-    AgentType::BodyState targetBody, AgentType::HandState currentHands,
-    AgentType::HandState targetHands, AgentType::MovementState movement, int body_animation_delay,
+    StateRef<AEquipmentType> heldItem, Vec2<int> facing, BodyState currentBody,
+    BodyState targetBody, HandState currentHands,
+    HandState targetHands, MovementState movement, int body_animation_delay,
     int hands_animation_delay, int distance_travelled)
 {
 	// If we are calling this, then we have already ensured that object has shadows,
@@ -158,7 +158,7 @@ void BattleUnitAnimationPack::drawShadow(
 		                                                         : ItemWieldMode::OneHanded)
 		                                 : ItemWieldMode::None][currentHands][movement][currentBody]
 		                       [facing];
-		if (currentHands == AgentType::HandState::Firing)
+		if (currentHands == HandState::Firing)
 			frame = e->frame_count - hands_animation_delay;
 		else
 			frame = (distance_travelled * 100 / e->frames_per_100_units) % e->frame_count;
@@ -183,9 +183,9 @@ void BattleUnitAnimationPack::drawUnit(
     Renderer &r, Vec2<float> screenPosition, StateRef<BattleUnitImagePack> body,
     StateRef<BattleUnitImagePack> legs, StateRef<BattleUnitImagePack> helmet,
     StateRef<BattleUnitImagePack> leftHand, StateRef<BattleUnitImagePack> rightHand,
-    StateRef<AEquipmentType> heldItem, Vec2<int> facing, AgentType::BodyState currentBody,
-    AgentType::BodyState targetBody, AgentType::HandState currentHands,
-    AgentType::HandState targetHands, AgentType::MovementState movement, int body_animation_delay,
+    StateRef<AEquipmentType> heldItem, Vec2<int> facing, BodyState currentBody,
+    BodyState targetBody, HandState currentHands,
+    HandState targetHands, MovementState movement, int body_animation_delay,
     int hands_animation_delay, int distance_travelled, int firingAngle)
 {
 	sp<AnimationEntry> e;
@@ -204,7 +204,7 @@ void BattleUnitAnimationPack::drawUnit(
 			e_legs =
 			    standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
 			                                                         : ItemWieldMode::OneHanded)
-			                                 : ItemWieldMode::None][AgentType::HandState::AtEase]
+			                                 : ItemWieldMode::None][HandState::AtEase]
 			                       [movement][currentBody][facing];
 			frame_legs =
 			    (distance_travelled * 100 / e_legs->frames_per_100_units) % e_legs->frame_count;
@@ -220,7 +220,7 @@ void BattleUnitAnimationPack::drawUnit(
 	}
 	else
 	{
-		if (currentHands == AgentType::HandState::Firing && hasAlternativeFiringAnimations &&
+		if (currentHands == HandState::Firing && hasAlternativeFiringAnimations &&
 		    firingAngle != 0)
 		{
 			e = alt_fire_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
@@ -235,7 +235,7 @@ void BattleUnitAnimationPack::drawUnit(
 			                                 : ItemWieldMode::None][currentHands][movement]
 			                       [currentBody][facing];
 		}
-		if (currentHands == AgentType::HandState::Firing)
+		if (currentHands == HandState::Firing)
 			frame = e->frame_count - hands_animation_delay;
 		else
 			frame = (distance_travelled * 100 / e->frames_per_100_units) % e->frame_count;
@@ -246,7 +246,7 @@ void BattleUnitAnimationPack::drawUnit(
 			e_legs =
 			    standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
 			                                                         : ItemWieldMode::OneHanded)
-			                                 : ItemWieldMode::None][AgentType::HandState::AtEase]
+			                                 : ItemWieldMode::None][HandState::AtEase]
 			                       [movement][currentBody][facing];
 			frame_legs =
 			    (distance_travelled * 100 / e_legs->frames_per_100_units) % e_legs->frame_count;

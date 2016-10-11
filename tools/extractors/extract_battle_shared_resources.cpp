@@ -135,27 +135,5 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state)
 	state.battle_common_sample_list->throwSounds.push_back(
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/throw2.raw:22050"));
 
-	state.battle_common_sample_list->explosionSoundMap[{&state, "DAMAGETYPE_ANTI-ALIEN_GAS"}]
-	    .push_back(
-	        fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/gasexpls.raw:22050"));
-	state.battle_common_sample_list->explosionSoundMap[{&state, "DAMAGETYPE_EXPLOSIVE"}].push_back(
-	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/explosn1.raw:22050"));
-	state.battle_common_sample_list->explosionSoundMap[{&state, "DAMAGETYPE_EXPLOSIVE"}].push_back(
-	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/explosn2.raw:22050"));
-	state.battle_common_sample_list->explosionSoundMap[{&state, "DAMAGETYPE_EXPLOSIVE_1"}]
-	    .push_back(
-	        fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/explosn1.raw:22050"));
-	state.battle_common_sample_list->explosionSoundMap[{&state, "DAMAGETYPE_EXPLOSIVE_1"}]
-	    .push_back(
-	        fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/explosn2.raw:22050"));
-	state.battle_common_sample_list->explosionSoundMap[{&state, "DAMAGETYPE_INCENDIARY"}].push_back(
-	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/firexpls.raw:22050"));
-	state.battle_common_sample_list->explosionSoundMap[{&state, "DAMAGETYPE_PSIONIC_BLAST"}]
-	    .push_back(
-	        fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/psigrnad.raw:22050"));
-	state.battle_common_sample_list->explosionSoundMap[{&state, "DAMAGETYPE_SMOKE"}].push_back(
-	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/gasexpls.raw:22050"));
-	state.battle_common_sample_list->explosionSoundMap[{&state, "DAMAGETYPE_STUN_GAS"}].push_back(
-	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/gasexpls.raw:22050"));
-}
+	}
 }

@@ -108,6 +108,7 @@ void InitialGameStateExtractor::extractDoodads(GameState &state)
 		for (int i = 16; i <= 29; i++)
 		{
 			UString id;
+			int ttlmult = 1;
 			switch (i)
 			{
 			case CUSTOM_DOODAD_16: // tac 28, 32
@@ -115,15 +116,19 @@ void InitialGameStateExtractor::extractDoodads(GameState &state)
 				break;
 			case CUSTOM_DOODAD_17: // tac 32, 44
 				id = "DOODAD_17_FIRE";
+				ttlmult = 2;
 				break;
 			case TAC_DOODAD_18: // tac 44, 52
 				id = "DOODAD_18_SMOKE";
+				ttlmult = 2;
 				break;
 			case TAC_DOODAD_19: // tac 52, 60
 				id = "DOODAD_19_ALIEN_GAS";
+				ttlmult = 2;
 				break;
 			case TAC_DOODAD_20: // tac 60, 68
 				id = "DOODAD_20_STUN_GAS";
+				ttlmult = 2;
 				break;
 			case TAC_DOODAD_21: // tac 115 - 125
 				id = "DOODAD_21_AP";
@@ -162,7 +167,7 @@ void InitialGameStateExtractor::extractDoodads(GameState &state)
 			// Let's try common one
 			// FIXME: ENSURE CORRECT
 			d->imageOffset = BATTLE_IMAGE_OFFSET;
-			d->lifetime = (tabOffsets.y - tabOffsets.x) * frameTTL;
+			d->lifetime = (tabOffsets.y - tabOffsets.x) * frameTTL * ttlmult;
 			d->repeatable = false;
 			for (int j = tabOffsets.x; j < tabOffsets.y; j++)
 			{
@@ -170,7 +175,7 @@ void InitialGameStateExtractor::extractDoodads(GameState &state)
 				{ fw().data->loadImage(format("PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
 					"ptang.tab:%d",
 					j)),
-					frameTTL });
+					frameTTL * ttlmult });
 			}
 
 			state.doodad_types[id] = d;
@@ -200,7 +205,8 @@ void InitialGameStateExtractor::extractDoodads(GameState &state)
 
 		// CUSTOM EXPLOSION DOODADS
 		{
-			static const std::vector<int> indexes = { 68, 79, 88, 97 };
+			int  ttlmult = 2;
+			static const std::vector<int> indexes = { 68, 79, 88, 97, 106 };
 
 			static const std::map<int, UString> facingMap = {
 				{ 0, "00"},// North West
@@ -224,7 +230,7 @@ void InitialGameStateExtractor::extractDoodads(GameState &state)
 
 				// FIXME: ENSURE CORRECT
 				d->imageOffset = BATTLE_IMAGE_OFFSET;
-				d->lifetime = (int)indexes.size() * frameTTL;
+				d->lifetime = (int)indexes.size() * frameTTL * ttlmult;
 				d->repeatable = false;
 
 				for (int frame = 0; frame < indexes.size(); frame++)
@@ -235,7 +241,7 @@ void InitialGameStateExtractor::extractDoodads(GameState &state)
 					{ fw().data->loadImage(format("PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
 						"ptang.tab:%d",
 						idx)),
-						frameTTL });
+						frameTTL * ttlmult });
 				}
 
 				state.doodad_types[id] = d;

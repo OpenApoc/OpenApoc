@@ -24,6 +24,51 @@ class BattleUnit;
 class DamageModifier;
 class VoxelMap;
 
+enum class BodyPart
+{
+	Body,
+	Legs,
+	Helmet,
+	LeftArm,
+	RightArm,
+};
+enum class BodyState
+{
+	Standing,
+	Flying,
+	Kneeling,
+	Prone,
+	Jumping,
+	Throwing,
+	Downed,
+};
+enum class HandState
+{
+	AtEase,
+	Aiming,
+	Firing
+};
+enum class MovementState
+{
+	None,
+	Normal,
+	Running,
+	Strafing
+};
+enum class AEquipmentSlotType
+{
+	None, // Used for equipment dropped by agent
+	General,
+	ArmorBody,
+	ArmorLegs,
+	ArmorHelmet,
+	ArmorLeftHand,
+	ArmorRightHand,
+	LeftHand,
+	RightHand
+};
+
+
 class AgentStats
 {
   public:
@@ -61,18 +106,6 @@ class AgentPortrait
 class AgentEquipmentLayout : public StateObject<AgentEquipmentLayout>
 {
   public:
-	enum class EquipmentSlotType
-	{
-		None, // Used for equipment dropped by agent
-		General,
-		ArmorBody,
-		ArmorLegs,
-		ArmorHelmet,
-		ArmorLeftHand,
-		ArmorRightHand,
-		LeftHand,
-		RightHand
-	};
 	enum class AlignmentX
 	{
 		Left,
@@ -88,7 +121,7 @@ class AgentEquipmentLayout : public StateObject<AgentEquipmentLayout>
 	class EquipmentLayoutSlot
 	{
 	  public:
-		EquipmentSlotType type = EquipmentSlotType::General;
+		AEquipmentSlotType type = AEquipmentSlotType::General;
 		AlignmentX align_x = AlignmentX::Left;
 		AlignmentY align_y = AlignmentY::Top;
 		Rect<int> bounds;
@@ -116,40 +149,9 @@ class AgentType : public StateObject<AgentType>
 		Male,
 		Female,
 	};
-	enum class BodyPart
-	{
-		Body,
-		Legs,
-		Helmet,
-		LeftArm,
-		RightArm,
-	};
-	static AgentEquipmentLayout::EquipmentSlotType getArmorSlotType(BodyPart bodyPart);
+	static AEquipmentSlotType getArmorSlotType(BodyPart bodyPart);
 	// Enums for animation
-	enum class BodyState
-	{
-		Standing,
-		Flying,
-		Kneeling,
-		Prone,
-		Jumping,
-		Throwing,
-		Downed,
-	};
-	enum class HandState
-	{
-		AtEase,
-		Aiming,
-		Firing
-	};
-	enum class MovementState
-	{
-		None,
-		Normal,
-		Running,
-		Strafing
-	};
-
+	
 	UString id;
 	UString name;
 	Role role = Role::Soldier;
@@ -186,7 +188,7 @@ class AgentType : public StateObject<AgentType>
 	StateRef<AgentEquipmentLayout> equipment_layout;
 
 	AgentEquipmentLayout::EquipmentLayoutSlot *
-	getFirstSlot(AgentEquipmentLayout::EquipmentSlotType type);
+	getFirstSlot(AEquipmentSlotType type);
 
 	bool can_improve = false;
 	// Can this be generated for the player
@@ -214,8 +216,8 @@ class AgentBodyType : public StateObject<AgentBodyType>
   public:
 	// This, among others, determines wether unit has built-in hover capability, can can be
 	// overriden by use of certain armor
-	std::set<AgentType::BodyState> allowed_body_states;
-	std::set<AgentType::MovementState> allowed_movement_states;
+	std::set<BodyState> allowed_body_states;
+	std::set<MovementState> allowed_movement_states;
 	std::set<Vec2<int>> allowed_facing;
 
 	// Unit is large and will be treated accordingly
@@ -223,14 +225,14 @@ class AgentBodyType : public StateObject<AgentBodyType>
 	// Unit's height, used in pathfinding
 	int maxHeight = 0;
 	// Unit's height in each body state, used when displaying unit selection arrows
-	std::map<AgentType::BodyState, int> height;
+	std::map<BodyState, int> height;
 	// Unit's mullzle location in each body state, used when firing
-	std::map<AgentType::BodyState, int> muzzleZPosition;
+	std::map<BodyState, int> muzzleZPosition;
 
 	// Voxel maps (x,y,z) for each body state and facing of the agent
-	std::map<AgentType::BodyState, std::map<Vec2<int>, Vec3<int>>> size;
+	std::map<BodyState, std::map<Vec2<int>, Vec3<int>>> size;
 	// Voxel maps for each body state and facing of the agent
-	std::map<AgentType::BodyState, std::map<Vec2<int>, std::vector<sp<VoxelMap>>>> voxelMaps;
+	std::map<BodyState, std::map<Vec2<int>, std::vector<sp<VoxelMap>>>> voxelMaps;
 };
 
 class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Agent>
@@ -253,9 +255,9 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 	AgentStats modified_stats; // Stats after 'temporary' modification (health damage, slowdown due
 	                           // to equipment weight, used stamina etc)
 
-	sp<AEquipment> getArmor(AgentType::BodyPart bodyPart) const;
-	bool isBodyStateAllowed(AgentType::BodyState bodyState) const;
-	bool isMovementStateAllowed(AgentType::MovementState movementState) const;
+	sp<AEquipment> getArmor(BodyPart bodyPart) const;
+	bool isBodyStateAllowed(BodyState bodyState) const;
+	bool isMovementStateAllowed(MovementState movementState) const;
 	bool isFacingAllowed(Vec2<int> facing) const;
 
 	StateRef<Base> home_base;
@@ -267,20 +269,20 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 
 	std::list<sp<AEquipment>> equipment;
 	// Returns None if cannot add
-	AgentEquipmentLayout::EquipmentSlotType canAddEquipment(Vec2<int> pos,
+	AEquipmentSlotType canAddEquipment(Vec2<int> pos,
 	                                                        StateRef<AEquipmentType> type) const;
-	Vec2<int> findFirstSlotByType(AgentEquipmentLayout::EquipmentSlotType slotType,
+	Vec2<int> findFirstSlotByType(AEquipmentSlotType slotType,
 	                              StateRef<AEquipmentType> type = nullptr);
 	// Add equipment by type to the first available slot of any type
 	void addEquipmentByType(GameState &state, StateRef<AEquipmentType> type);
 	// Add equipment to the first available slot of a specific type
 	void addEquipmentByType(GameState &state, StateRef<AEquipmentType> type,
-	                        AgentEquipmentLayout::EquipmentSlotType slotType);
+	                        AEquipmentSlotType slotType);
 	// Add equipment by type to a specific position
 	void addEquipmentByType(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type);
 	// Add equipment to the first available slot of a specific type
 	void addEquipment(GameState &state, sp<AEquipment> object,
-	                  AgentEquipmentLayout::EquipmentSlotType slotType);
+	                  AEquipmentSlotType slotType);
 	// Add equipment to a specific position
 	void addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object);
 	void removeEquipment(sp<AEquipment> object);
@@ -292,12 +294,12 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 	// removed
 	StateRef<AEquipmentType>
 	getDominantItemInHands(StateRef<AEquipmentType> itemLastFired = nullptr) const;
-	sp<AEquipment> getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType type,
+	sp<AEquipment> getFirstItemInSlot(AEquipmentSlotType type,
 	                                  bool lazy = true) const;
 	sp<AEquipment> getFirstShield() const;
 	sp<AEquipment> getFirstItemByType(StateRef<AEquipmentType> type) const;
 
-	StateRef<BattleUnitImagePack> getImagePack(AgentType::BodyPart bodyPart) const;
+	StateRef<BattleUnitImagePack> getImagePack(BodyPart bodyPart) const;
 
 	// Following members are not serialized, but rather are set up in the initBattle method
 

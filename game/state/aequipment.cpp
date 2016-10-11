@@ -3,6 +3,8 @@
 #include "framework/logger.h"
 #include "framework/sound.h"
 #include "game/state/agent.h"
+#include "game/state/battle/battle.h"
+#include "game/state/gamestate.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/city/projectile.h"
 #include "game/state/rules/aequipment_type.h"
@@ -18,7 +20,7 @@ namespace OpenApoc
 
 AEquipment::AEquipment() : equippedPosition(0, 0), ammo(0) {}
 
-int AEquipment::getAccuracy(AgentType::BodyState bodyState, AgentType::MovementState movementState,
+int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
                             BattleUnit::FireAimingMode fireMode, bool thrown)
 {
 	if (!ownerAgent)
@@ -63,20 +65,20 @@ int AEquipment::getAccuracy(AgentType::BodyState bodyState, AgentType::MovementS
 
 		// Moving also increase it: Moving or flying by 1,35x running by 1,70x
 		agentDispersion *=
-		    movementState == AgentType::MovementState::None &&
-		            bodyState != AgentType::BodyState::Flying
+		    movementState == MovementState::None &&
+		            bodyState != BodyState::Flying
 		        ? 1.00f
-		        : (movementState == AgentType::MovementState::Running ? 1.70f : 1.35f);
+		        : (movementState == MovementState::Running ? 1.70f : 1.35f);
 
 		// Having both hands busy also increases it by another 1,5x
-		if (ownerAgent->getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::LeftHand) &&
-		    ownerAgent->getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::RightHand))
+		if (ownerAgent->getFirstItemInSlot(AEquipmentSlotType::LeftHand) &&
+		    ownerAgent->getFirstItemInSlot(AEquipmentSlotType::RightHand))
 		{
 			agentDispersion *= 1.5f;
 		}
 
 		// Kneeling decreases agent's and weapon's dispersion, multiplying it by 0,8x
-		if (bodyState == AgentType::BodyState::Kneeling)
+		if (bodyState == BodyState::Kneeling)
 		{
 			agentDispersion *= 0.8f;
 			weaponDispersion *= 0.8f;
@@ -124,7 +126,7 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 	// If no ammoItem is supplied then look in the agent's inventory
 	if (!ammoItem)
 	{
-		if (equippedSlotType == AgentEquipmentLayout::EquipmentSlotType::None)
+		if (equippedSlotType == AEquipmentSlotType::None)
 		{
 			LogError("Trying to reload a weapon not in agent inventory!?");
 			return;
@@ -172,14 +174,14 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 		{
 			ownerItem->die(state, false);
 		}
-		else if (ownerAgent && equippedSlotType != AgentEquipmentLayout::EquipmentSlotType::None)
+		else if (ownerAgent && equippedSlotType != AEquipmentSlotType::None)
 		{
 			ownerAgent->removeEquipment(ammoItem);
 		}
 	}
 }
 
-void AEquipment::update(unsigned int ticks)
+void AEquipment::update(GameState &state, unsigned int ticks)
 {
 	// Recharge update
 	auto payload = getPayloadType();
@@ -214,8 +216,8 @@ void AEquipment::update(unsigned int ticks)
 		switch (ownerAgent->unit->target_hand_state)
 		{
 			// If aiming, changing into aiming, or firing, then we're fine
-			case AgentType::HandState::Firing:
-			case AgentType::HandState::Aiming:
+			case HandState::Firing:
+			case HandState::Aiming:
 				break;
 			// Otherwise stop firing
 			default:
@@ -229,7 +231,7 @@ void AEquipment::update(unsigned int ticks)
 		switch (equippedSlotType)
 		{
 			// Check if we're still firing
-			case AgentEquipmentLayout::EquipmentSlotType::LeftHand:
+			case AEquipmentSlotType::LeftHand:
 				if (ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringBothHands &&
 				    ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringLeftHand)
 				{
@@ -240,7 +242,7 @@ void AEquipment::update(unsigned int ticks)
 					startFiring(ownerAgent->unit->fire_aiming_mode);
 				}
 				break;
-			case AgentEquipmentLayout::EquipmentSlotType::RightHand:
+			case AEquipmentSlotType::RightHand:
 				if (ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringBothHands &&
 				    ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringRightHand)
 				{
@@ -252,7 +254,7 @@ void AEquipment::update(unsigned int ticks)
 				}
 				break;
 			// If weapon was dropped, we should stop firing
-			case AgentEquipmentLayout::EquipmentSlotType::None:
+			case AEquipmentSlotType::None:
 			// If weapon was moved to any other slot from hands, stop firing
 			default:
 				stopFiring();
@@ -260,10 +262,131 @@ void AEquipment::update(unsigned int ticks)
 		}
 	}
 
-	// FIXME: Update equipment (grenades etc.)
+	// Process primed explosives
+	if (primed)
+	{
+		if (!activated && equippedSlotType == AEquipmentSlotType::None)
+		{
+			activated = true;
+		}
+
+		if (activated)
+		{
+			if (triggerDelay > ticks)
+			{
+				triggerDelay -= ticks;
+			}
+			else
+			{
+				triggerDelay = 0;
+			}
+
+			if (triggerDelay == 0)
+			{
+				switch (triggerType)
+				{
+					case TriggerType::None:
+						LogError("Primed activated item with no trigger?");
+						break;
+					case TriggerType::Contact:
+					{
+						auto item = ownerItem.lock();
+						if (item)
+						{
+							if (!item->falling)
+							{
+								item->die(state);
+							}
+						}
+						else
+						{
+							// Contact trigger in inventory? Blow up!
+							explode(state);
+						}
+						break;
+					}
+					case TriggerType::Proximity:
+					case TriggerType::Boomeroid:
+						LogWarning("Implement proximity/boomeroid triggers!");
+						// Intentional fall-through for now
+					case TriggerType::Timed:
+					{
+						auto item = ownerItem.lock();
+						if (item)
+						{
+							item->die(state);
+						}
+						else
+						{
+							explode(state);
+						}
+						break;
+					}
+				}
+			}
+		}
+	}
 }
 
-sp<Projectile> AEquipment::fire(Vec3<float> targetPosition, StateRef<BattleUnit> targetUnit)
+void AEquipment::prime(bool onImpact, int triggerDelay, float triggerRange)
+{
+	if (type->type != AEquipmentType::Type::Grenade)
+	{
+		return;
+	}
+
+	if (onImpact)
+	{
+		triggerType = TriggerType::Contact;
+	}
+	else
+	{
+		switch (type->trigger_type)
+		{
+			case AEquipmentType::TriggerType::Normal:
+				triggerType = TriggerType::Timed;
+				break;
+			case AEquipmentType::TriggerType::Proximity:
+				triggerType = TriggerType::Proximity;
+				break;
+			case AEquipmentType::TriggerType::Boomeroid:
+				triggerType = TriggerType::Boomeroid;
+				break;
+		}
+	}
+	this->triggerDelay = triggerDelay;
+	this->triggerRange = triggerRange;
+	this->primed = true;
+}
+
+void AEquipment::explode(GameState &state)
+{
+	Vec3<float> position;
+	auto item = ownerItem.lock();
+	if (item)
+	{
+		position = item->position;
+	}
+	else
+	{
+		position = ownerAgent->unit->position;
+	}
+	if (equippedSlotType != AEquipmentSlotType::None)
+	{
+		ownerAgent->removeEquipment(shared_from_this());
+	}
+	switch (type->type)
+	{
+		case AEquipmentType::Type::Grenade:
+			state.current_battle->addExplosion(state, position, type->damage_type->doodadType, type->damage_type, type->damage, type->explosion_depletion_rate, ownerAgent->unit);
+			break;
+		default:
+			LogWarning("Implement blown up payload firing in all directions etc.");
+			break;
+	}
+}
+
+sp<Projectile> AEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> originalTarget, StateRef<BattleUnit> targetUnit)
 {
 	if (this->type->type != AEquipmentType::Type::Weapon)
 	{
@@ -290,6 +413,7 @@ sp<Projectile> AEquipment::fire(Vec3<float> targetPosition, StateRef<BattleUnit>
 	if (ammo == 0 && payload != type)
 	{
 		payloadType.clear();
+		loadAmmo(state);
 	}
 
 	if (payload->fire_sfx)
@@ -302,7 +426,7 @@ sp<Projectile> AEquipment::fire(Vec3<float> targetPosition, StateRef<BattleUnit>
 	velocity = glm::normalize(velocity);
 	velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 	return mksp<Projectile>(payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
-	                        unit, targetUnit, unitPos, velocity, payload->turn_rate,
+	                        unit, targetUnit, originalTarget, unitPos, velocity, payload->turn_rate,
 	                        payload->ttl * TICKS_MULTIPLIER, payload->damage, 
 							payload->explosion_depletion_rate, payload->tail_size, 
 							payload->projectile_sprites, payload->impact_sfx,

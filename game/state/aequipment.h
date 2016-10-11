@@ -15,9 +15,18 @@ class BattleItem;
 class Projectile;
 class AEquipmentType;
 
-class AEquipment
+class AEquipment : public std::enable_shared_from_this<AEquipment>
 {
   public:
+	enum class TriggerType
+	{
+		None,
+		Timed,
+		Contact,
+		Proximity,
+		Boomeroid,
+	};
+
 	AEquipment();
 	~AEquipment() = default;
 
@@ -28,15 +37,27 @@ class AEquipment
 	StateRef<AEquipmentType> getPayloadType();
 
 	Vec2<int> equippedPosition;
-	AgentEquipmentLayout::EquipmentSlotType equippedSlotType =
-	    AgentEquipmentLayout::EquipmentSlotType::None;
+	AEquipmentSlotType equippedSlotType = AEquipmentSlotType::None;
 	StateRef<Agent> ownerAgent;
 
 	// Ammunition for weapons, protection for armor, charge for items
 	int ammo = 0;
 
 	// Explosives parameters
+	
+	// If set, will activate upon leaving agent inventory
 	bool primed = false;
+	// If set, will count down timer and go off when trigger condition is satisfied
+	bool activated = false;
+	// Delay until trigger is activated
+	unsigned int triggerDelay = 0;
+	// Range for proximity
+	float triggerRange = 0.0f;
+	// Type of trigger used
+	TriggerType triggerType = TriggerType::None;
+	
+	void prime(bool onImpact = true, int triggerDelay = 0, float triggerRange = 0.0f);
+	void explode(GameState &state);
 
 	// Ticks until recharge rate is added to ammo for anything that recharges
 	unsigned int recharge_ticks_accumulated = 0;
@@ -50,7 +71,7 @@ class AEquipment
 	// Aiming mode for the weapon
 	BattleUnit::FireAimingMode aimingMode = BattleUnit::FireAimingMode::Aimed;
 
-	int getAccuracy(AgentType::BodyState bodyState, AgentType::MovementState movementState,
+	int getAccuracy(BodyState bodyState, MovementState movementState,
 	                BattleUnit::FireAimingMode fireMode, bool thrown = false);
 
 	bool isFiring() { return weapon_fire_ticks_remaining > 0 || readyToFire; };
@@ -66,7 +87,7 @@ class AEquipment
 
 	wp<BattleItem> ownerItem;
 
-	void update(unsigned int ticks);
+	void update(GameState &state, unsigned int ticks);
 	/*
 	float getRange() const;
 	bool canFire() const;
@@ -78,7 +99,7 @@ class AEquipment
 	// Wether this weapon works like brainsucker launcher, throwing it's ammunition instead of
 	// firing a projectile
 	bool isLauncher();
-	sp<Projectile> fire(Vec3<float> targetPosition, StateRef<BattleUnit> targetUnit = nullptr);
+	sp<Projectile> fire(GameState &state, Vec3<float> targetPosition, Vec3<float> originalTarget, StateRef<BattleUnit> targetUnit = nullptr);
 	void launch(Vec3<float> &targetPosition, Vec3<float> &velocity);
 };
 } // namespace OpenApoc

@@ -1,7 +1,7 @@
-#include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battledoor.h"
 #include "game/state/battle/battleitem.h"
+#include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/city/projectile.h"
 #include "game/state/gamestate.h"
@@ -99,7 +99,7 @@ int BattleMapPart::getAnimationFrame()
 	}
 }
 
-bool BattleMapPart::handleCollision(GameState &state, Collision &c)
+bool BattleMapPart::applyDamage(GameState &state, int power, StateRef<DamageType> damageType)
 {
 	if (!this->tileObject)
 	{
@@ -114,10 +114,18 @@ bool BattleMapPart::handleCollision(GameState &state, Collision &c)
 		return false;
 	}
 
-	// Calculate damage (hmm, apparently Apoc uses 50-150 damage model for terrain, unlike UFO1&2
-	// which used 25-75
-	int damage = randDamage050150(state.rng, c.projectile->damageType->dealDamage(
-	                                             c.projectile->damage, type->damageModifier));
+	int damage;
+	if (damageType->explosive)
+	{
+		damage = damageType->dealDamage(power, type->damageModifier) / 2;
+	}
+	else
+	{
+		// Hmm, apparently Apoc uses 50-150 damage model for shots vs terrain, 
+		// unlike UFO1&2, which used 25-75
+		damage = randDamage050150(state.rng, damageType->dealDamage(
+			power, type->damageModifier));
+	}
 	if (damage <= type->constitution)
 	{
 		return false;
@@ -126,6 +134,11 @@ bool BattleMapPart::handleCollision(GameState &state, Collision &c)
 	// If we came this far, map part has been damaged and must cease to be
 	die(state);
 	return false;
+}
+
+bool BattleMapPart::handleCollision(GameState &state, Collision &c)
+{
+	return applyDamage(state, c.projectile->damage, c.projectile->damageType);
 }
 
 void BattleMapPart::ceaseDoorFunction()

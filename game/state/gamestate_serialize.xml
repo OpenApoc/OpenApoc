@@ -131,6 +131,10 @@
 		<member>ownerAgent</member>
 		<member>ammo</member>
 		<member>primed</member>
+		<member>activated</member>
+		<member>triggerDelay</member>
+		<member>triggerRange</member>
+		<member>triggerType</member>
 		<member>recharge_ticks_accumulated</member>
 		<member>readyToFire</member>
 		<member>weapon_fire_ticks_remaining</member>
@@ -456,7 +460,6 @@
 		<member>walkSounds</member>
 		<member>objectDropSounds</member>
 		<member>throwSounds</member>
-		<member>explosionSoundMap</member>
 	</object>
 	<object external="true">
 		<name>BattleUnitAnimationPack</name>
@@ -556,8 +559,8 @@
 		<member>position</member>
 		<member>ticksUntilExpansion</member>
 		<member>locationsToExpand</member>
+		<member>locationsVisited</member>
 		<member>damageType</member>
-		<member>power</member>
 		<member>depletionRate</member>
 		<member>ownerUnit</member>
 		<member>affectedUnits</member>
@@ -613,6 +616,7 @@
 		<member>firerUnit</member>
 		<member>trackedVehicle</member>
 		<member>trackedUnit</member>
+		<member>targetPosition</member>
 		<member>previousPosition</member>
 		<member>spritePositions</member>
 		<member>tail_length</member>
@@ -720,12 +724,14 @@
 		<member>ignore_shield</member>
 		<member>modifiers</member>
 		<member>explosive</member>
+		<member>psionic</member>
 		<member>gas</member>
 		<member>flame</member>
 		<member>stun</member>
 		<member>smoke</member>
 		<member>launcher</member>
 		<member>doodadType</member>
+		<member>explosionSounds</member>
 	</object>
 	<object>
 		<name>AEquipmentType</name>
@@ -1053,7 +1059,7 @@
 		<value>Civilian</value>
 	</enum>
 	<enum>
-		<name>BattleUnitAnimationPack::ItemWieldMode</name>
+		<name>ItemWieldMode</name>
 		<value>None</value>
 		<value>OneHanded</value>
 		<value>TwoHanded</value>
@@ -1086,13 +1092,13 @@
 		<value>CeaseFire</value>
 	</enum>
 	<enum>
-		<name>BattleUnit::MovementMode</name>
+		<name>MovementMode</name>
 		<value>Prone</value>
 		<value>Walking</value>
 		<value>Running</value>
 	</enum>
 	<enum>
-		<name>BattleUnit::KneelingMode</name>
+		<name>KneelingMode</name>
 		<value>None</value>
 		<value>Kneeling</value>
 	</enum>
@@ -1224,7 +1230,7 @@
 		<value>Female</value>
 	</enum>
 	<enum>
-		<name>AgentEquipmentLayout::EquipmentSlotType</name>
+		<name>AEquipmentSlotType</name>
 		<value>None</value>
 		<value>General</value>
 		<value>ArmorBody</value>
@@ -1234,6 +1240,14 @@
 		<value>ArmorRightHand</value>
 		<value>LeftHand</value>
 		<value>RightHand</value>
+	</enum>
+	<enum>
+		<name>AEquipment::TriggerType</name>
+		<value>None</value>
+		<value>Timed</value>
+		<value>Contact</value>
+		<value>Proximity</value>
+		<value>Boomeroid</value>
 	</enum>
 	<enum>
 		<name>AgentEquipmentLayout::AlignmentX</name>
@@ -1248,7 +1262,7 @@
 		<value>Centre</value>
 	</enum>
 	<enum>
-		<name>AgentType::BodyPart</name>
+		<name>BodyPart</name>
 		<value>Body</value>
 		<value>Legs</value>
 		<value>Helmet</value>
@@ -1256,7 +1270,7 @@
 		<value>RightArm</value>
 	</enum>
 	<enum>
-		<name>AgentType::BodyState</name>
+		<name>BodyState</name>
 		<value>Standing</value>
 		<value>Flying</value>
 		<value>Kneeling</value>
@@ -1266,13 +1280,13 @@
 		<value>Downed</value>
 	</enum>
 	<enum>
-		<name>AgentType::HandState</name>
+		<name>HandState</name>
 		<value>AtEase</value>
 		<value>Aiming</value>
 		<value>Firing</value>
 	</enum>
 	<enum>
-		<name>AgentType::MovementState</name>
+		<name>MovementState</name>
 		<value>None</value>
 		<value>Normal</value>
 		<value>Running</value>

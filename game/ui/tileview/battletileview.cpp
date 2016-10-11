@@ -747,7 +747,7 @@ void BattleTileView::render()
 					r.draw(img, pos + offsetTU - Vec2<float>{img->size.x / 2, img->size.y / 2});
 				}
 
-				if (obj.first->movement_mode == BattleUnit::MovementMode::Running)
+				if (obj.first->movement_mode == MovementMode::Running)
 				{
 					r.draw(runningIcon, pos + offsetRunning);
 				}
@@ -1024,11 +1024,11 @@ void BattleTileView::updatePathPreview()
 	float cost = 0.0f;
 	int cost_multiplier_x_2 = 2;
 	if (lastSelectedUnit->agent->canRun() &&
-	    lastSelectedUnit->movement_mode == BattleUnit::MovementMode::Running)
+	    lastSelectedUnit->movement_mode == MovementMode::Running)
 	{
 		cost_multiplier_x_2 = 1;
 	}
-	if (lastSelectedUnit->movement_mode == BattleUnit::MovementMode::Prone)
+	if (lastSelectedUnit->movement_mode == MovementMode::Prone)
 	{
 		cost_multiplier_x_2 = 3;
 	}

@@ -54,7 +54,7 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	           Vec3<float> velocity, int turnRate, unsigned int lifetime, int damage,
 	           unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
 	           sp<Sample> impactSfx, StateRef<DoodadType> doodadType);
-	Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target,
+	Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target, Vec3<float> targetPosition,
 	           Vec3<float> position, Vec3<float> velocity, int turnRate, unsigned int lifetime,
 	           int damage, int depletionRate, unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
 	           sp<Sample> impactSfx, StateRef<DoodadType> doodadType,
@@ -86,6 +86,7 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	StateRef<BattleUnit> firerUnit;
 	StateRef<Vehicle> trackedVehicle;
 	StateRef<BattleUnit> trackedUnit;
+	Vec3<float> targetPosition;
 	Vec3<float> previousPosition;
 	std::list<Vec3<float>> spritePositions;
 	unsigned int tail_length = 0;

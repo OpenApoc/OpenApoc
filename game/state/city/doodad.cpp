@@ -67,7 +67,7 @@ sp<Image> Doodad::getSprite()
 	{
 		sprite = f.image;
 		animTime += f.time * TICKS_MULTIPLIER;
-		if (animTime >= age)
+		if (animTime > age)
 			return sprite;
 	}
 	LogWarning("Doodad reached age %d with no frame", age);

@@ -205,8 +205,8 @@ BattleView::BattleView(sp<GameState> state)
 
 		    for (auto u : selectedUnits)
 		    {
-			    if (u->kneeling_mode == BattleUnit::KneelingMode::None &&
-			        u->agent->isBodyStateAllowed(AgentType::BodyState::Kneeling))
+			    if (u->kneeling_mode == KneelingMode::None &&
+			        u->agent->isBodyStateAllowed(BodyState::Kneeling))
 			    {
 				    not_kneeling = true;
 			    }
@@ -215,11 +215,11 @@ BattleView::BattleView(sp<GameState> state)
 		    {
 			    if (not_kneeling)
 			    {
-				    u->kneeling_mode = BattleUnit::KneelingMode::Kneeling;
+				    u->kneeling_mode = KneelingMode::Kneeling;
 			    }
 			    else
 			    {
-				    u->kneeling_mode = BattleUnit::KneelingMode::None;
+				    u->kneeling_mode = KneelingMode::None;
 			    }
 		    }
 		});
@@ -227,9 +227,9 @@ BattleView::BattleView(sp<GameState> state)
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
 		    for (auto u : selectedUnits)
 		    {
-			    if (u->agent->isBodyStateAllowed(AgentType::BodyState::Prone))
+			    if (u->agent->isBodyStateAllowed(BodyState::Prone))
 			    {
-				    u->movement_mode = BattleUnit::MovementMode::Prone;
+				    u->movement_mode = MovementMode::Prone;
 			    }
 		    }
 		});
@@ -237,10 +237,10 @@ BattleView::BattleView(sp<GameState> state)
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
 		    for (auto u : selectedUnits)
 		    {
-			    if (u->agent->isBodyStateAllowed(AgentType::BodyState::Standing) ||
-			        u->agent->isBodyStateAllowed(AgentType::BodyState::Flying))
+			    if (u->agent->isBodyStateAllowed(BodyState::Standing) ||
+			        u->agent->isBodyStateAllowed(BodyState::Flying))
 			    {
-				    u->movement_mode = BattleUnit::MovementMode::Walking;
+				    u->movement_mode = MovementMode::Walking;
 			    }
 		    }
 		});
@@ -248,10 +248,10 @@ BattleView::BattleView(sp<GameState> state)
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
 		    for (auto u : selectedUnits)
 		    {
-			    if (u->agent->isBodyStateAllowed(AgentType::BodyState::Standing) ||
-			        u->agent->isBodyStateAllowed(AgentType::BodyState::Flying))
+			    if (u->agent->isBodyStateAllowed(BodyState::Standing) ||
+			        u->agent->isBodyStateAllowed(BodyState::Flying))
 			    {
-				    u->movement_mode = BattleUnit::MovementMode::Running;
+				    u->movement_mode = MovementMode::Running;
 			    }
 		    }
 		});
@@ -344,8 +344,8 @@ BattleView::BattleView(sp<GameState> state)
 	std::function<void(bool right)> throwItem = [this](bool right) {
 		if (selectedUnits.size() == 0 ||
 		    !(selectedUnits.front()->agent->getFirstItemInSlot(
-		        right ? AgentEquipmentLayout::EquipmentSlotType::RightHand
-		              : AgentEquipmentLayout::EquipmentSlotType::LeftHand)))
+		        right ? AEquipmentSlotType::RightHand
+		              : AEquipmentSlotType::LeftHand)))
 		{
 			if (right)
 			{
@@ -835,17 +835,17 @@ void BattleView::updateSoldierButtons()
 		}
 		switch (u->movement_mode)
 		{
-			case BattleUnit::MovementMode::Prone:
+			case MovementMode::Prone:
 				prone = true;
 				break;
-			case BattleUnit::MovementMode::Walking:
+			case MovementMode::Walking:
 				walk = true;
 				break;
-			case BattleUnit::MovementMode::Running:
+			case MovementMode::Running:
 				run = true;
 				break;
 		}
-		if (u->kneeling_mode == BattleUnit::KneelingMode::Kneeling)
+		if (u->kneeling_mode == KneelingMode::Kneeling)
 		{
 			kneeling = true;
 		}
@@ -974,6 +974,12 @@ bool checkThrowTrajectoryValid(TileMap &map, const sp<TileObject> thrower, Vec3<
 void BattleView::attemptToClearCurrentOrders(sp<BattleUnit> u, bool overrideBodyStateChange)
 {
 	bool startRequired = false;
+
+	for (auto &m : u->missions)
+	{
+		if (m->type == BattleUnitMission::MissionType::ThrowItem)
+			return;
+	}
 
 	for (auto it = u->missions.begin(); it != u->missions.end();)
 	{
@@ -1118,8 +1124,8 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 	}
 	auto unit = selectedUnits.front();
 	auto item =
-	    unit->agent->getFirstItemInSlot(right ? AgentEquipmentLayout::EquipmentSlotType::RightHand
-	                                          : AgentEquipmentLayout::EquipmentSlotType::LeftHand);
+	    unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
+	                                          : AEquipmentSlotType::LeftHand);
 	if (!item)
 	{
 		return;
@@ -1142,7 +1148,7 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 	Vec3<float> startPos = {
 	    unit->position.x, unit->position.y,
 	    unit->position.z +
-	        ((float)unit->agent->type->bodyType->height[AgentType::BodyState::Throwing] - 4.0f) /
+	        ((float)unit->agent->type->bodyType->height[BodyState::Throwing] - 4.0f) /
 	            2.0f / 40.0f};
 	float velXY = 0.0f;
 	float velZ = 0.0f;
@@ -1186,8 +1192,8 @@ void BattleView::orderUse(bool right, bool automatic)
 	}
 	auto unit = selectedUnits.front();
 	auto item =
-	    unit->agent->getFirstItemInSlot(right ? AgentEquipmentLayout::EquipmentSlotType::RightHand
-	                                          : AgentEquipmentLayout::EquipmentSlotType::LeftHand);
+	    unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
+	                                          : AEquipmentSlotType::LeftHand);
 
 	if (!item)
 		return;
@@ -1204,16 +1210,21 @@ void BattleView::orderUse(bool right, bool automatic)
 			    right ? BattleSelectionState::FireRight : BattleSelectionState::FireLeft;
 			break;
 		case AEquipmentType::Type::Grenade:
-			if (item->primed)
-			{
-				break;
-			}
 			if (automatic)
 			{
-				LogError("Implement auto-priming to detonate on impact and throwing grenade!");
+				if (!item->primed)
+				{
+					item->prime();
+				}
+				this->selectionState =
+					right ? BattleSelectionState::ThrowRight : BattleSelectionState::ThrowLeft;
 			}
 			else
 			{
+				if (item->primed)
+				{
+					break;
+				}
 				LogError("Implement priming interface!");
 			}
 			break;
@@ -1266,8 +1277,8 @@ void BattleView::orderDrop(bool right)
 	}
 	auto unit = selectedUnits.front();
 	auto item =
-	    unit->agent->getFirstItemInSlot(right ? AgentEquipmentLayout::EquipmentSlotType::RightHand
-	                                          : AgentEquipmentLayout::EquipmentSlotType::LeftHand);
+	    unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
+	                                          : AEquipmentSlotType::LeftHand);
 	if (item)
 	{
 		unit->addMission(*state, BattleUnitMission::dropItem(*unit, item));
@@ -1289,8 +1300,8 @@ void BattleView::orderDrop(bool right)
 		}
 		auto item = items.front();
 		unit->agent->addEquipment(*state, item->item,
-		                          right ? AgentEquipmentLayout::EquipmentSlotType::RightHand
-		                                : AgentEquipmentLayout::EquipmentSlotType::LeftHand);
+		                          right ? AEquipmentSlotType::RightHand
+		                                : AEquipmentSlotType::LeftHand);
 		item->die(*state, false);
 	}
 }
@@ -1358,8 +1369,8 @@ void BattleView::orderTeleport(Vec3<int> target, bool right)
 	}
 	auto unit = selectedUnits.front();
 	auto item =
-	    unit->agent->getFirstItemInSlot(right ? AgentEquipmentLayout::EquipmentSlotType::RightHand
-	                                          : AgentEquipmentLayout::EquipmentSlotType::LeftHand);
+	    unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
+	                                          : AEquipmentSlotType::LeftHand);
 
 	// FIXME: REMOVE TEMPORARY CHEAT
 	if (!item || item->type->type != AEquipmentType::Type::Teleporter)
@@ -2026,11 +2037,11 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 	sp<AEquipment> e = nullptr;
 	if (rightHand)
 	{
-		e = u->agent->getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::RightHand);
+		e = u->agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
 	}
 	else
 	{
-		e = u->agent->getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::LeftHand);
+		e = u->agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
 	}
 	if (e)
 	{

@@ -78,7 +78,7 @@ class AEquipmentType : public StateObject<AEquipmentType>
 	// Armor only
 	sp<Image> body_sprite;
 	StateRef<DamageModifier> damage_modifier;
-	AgentType::BodyPart body_part = AgentType::BodyPart::Body;
+	BodyPart body_part = BodyPart::Body;
 	StateRef<BattleUnitImagePack> body_image_pack;
 	bool provides_flight = false;
 

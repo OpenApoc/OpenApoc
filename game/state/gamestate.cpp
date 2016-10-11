@@ -151,9 +151,9 @@ void GameState::initState()
 	for (auto &a : this->agents)
 	{
 		a.second->leftHandItem =
-		    a.second->getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::LeftHand, false);
+		    a.second->getFirstItemInSlot(AEquipmentSlotType::LeftHand, false);
 		a.second->rightHandItem =
-		    a.second->getFirstItemInSlot(AgentEquipmentLayout::EquipmentSlotType::RightHand, false);
+		    a.second->getFirstItemInSlot(AEquipmentSlotType::RightHand, false);
 	}
 	// Run nessecary methods for different types
 	research.updateTopicList();
@@ -296,24 +296,24 @@ void GameState::fillPlayerStartingProperty()
 				{
 					if (t->type == AEquipmentType::Type::Armor)
 					{
-						AgentEquipmentLayout::EquipmentSlotType slotType =
-						    AgentEquipmentLayout::EquipmentSlotType::General;
+						AEquipmentSlotType slotType =
+						    AEquipmentSlotType::General;
 						switch (t->body_part)
 						{
-							case AgentType::BodyPart::Body:
-								slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorBody;
+							case BodyPart::Body:
+								slotType = AEquipmentSlotType::ArmorBody;
 								break;
-							case AgentType::BodyPart::Legs:
-								slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorLegs;
+							case BodyPart::Legs:
+								slotType = AEquipmentSlotType::ArmorLegs;
 								break;
-							case AgentType::BodyPart::Helmet:
-								slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorHelmet;
+							case BodyPart::Helmet:
+								slotType = AEquipmentSlotType::ArmorHelmet;
 								break;
-							case AgentType::BodyPart::LeftArm:
-								slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorLeftHand;
+							case BodyPart::LeftArm:
+								slotType = AEquipmentSlotType::ArmorLeftHand;
 								break;
-							case AgentType::BodyPart::RightArm:
-								slotType = AgentEquipmentLayout::EquipmentSlotType::ArmorRightHand;
+							case BodyPart::RightArm:
+								slotType = AEquipmentSlotType::ArmorRightHand;
 								break;
 						}
 						agent->addEquipmentByType(*this, {this, t->id}, slotType);
@@ -323,7 +323,7 @@ void GameState::fillPlayerStartingProperty()
 					         t->type == AEquipmentType::Type::Grenade)
 					{
 						agent->addEquipmentByType(*this, {this, t->id},
-						                          AgentEquipmentLayout::EquipmentSlotType::General);
+						                          AEquipmentSlotType::General);
 					}
 					else
 					{

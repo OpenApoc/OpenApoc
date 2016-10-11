@@ -6,8 +6,9 @@
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battledoor.h"
-#include "game/state/battle/battleexplosion.h"
 #include "game/state/battle/battleitem.h"
+#include "game/state/battle/battleexplosion.h"
+#include "game/state/battle/battlehazard.h"
 #include "game/state/battle/battlemap.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
@@ -330,12 +331,20 @@ sp<Doodad> Battle::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 
 sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position, StateRef<DoodadType> doodadType, StateRef<DamageType> damageType, int power, int depletionRate, StateRef<BattleUnit> ownerUnit)
 {
+	// Doodad
 	if (!doodadType)
 	{
-		doodadType = {&state, "DOODAD_30_EXPLODING_PAYLOAD"};
+		doodadType = { &state, "DOODAD_30_EXPLODING_PAYLOAD" };
 	}
 	placeDoodad(doodadType, position);
 	
+	// Sound
+	if (!damageType->explosionSounds.empty())
+	{
+		fw().soundBackend->playSample(listRandomiser(state.rng, damageType->explosionSounds), position, 0.25f);
+	}
+	
+	// Explosion
 	auto explosion = mksp<BattleExplosion>(position, damageType, power, depletionRate, ownerUnit);
 	explosions.insert(explosion);
 	return explosion;
@@ -445,6 +454,18 @@ void Battle::update(GameState &state, unsigned int ticks)
 		o.second->update(state, ticks);
 	}
 	Trace::end("Battle::update::doors->update");
+	Trace::start("Battle::update::explosions->update");
+	for (auto &o : this->explosions)
+	{
+		o->update(state, ticks);
+	}
+	Trace::end("Battle::update::explosions->update");
+	Trace::start("Battle::update::hazards->update");
+	for (auto &o : this->hazards)
+	{
+		o->update(state, ticks);
+	}
+	Trace::end("Battle::update::hazards->update");
 	Trace::start("Battle::update::map_parts->update");
 	for (auto &o : this->map_parts)
 	{
@@ -470,6 +491,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 		auto d = *it++;
 		d->update(state, ticks);
 	}
+	Trace::end("Battle::update::doodads->update");
 }
 
 void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
@@ -1103,21 +1125,21 @@ void Battle::enterBattle(GameState &state)
 			u->facing = setRandomizer(state.rng, u->agent->type->bodyType->allowed_facing);
 		}
 		// Stance
-		if (u->agent->isBodyStateAllowed(AgentType::BodyState::Standing))
+		if (u->agent->isBodyStateAllowed(BodyState::Standing))
 		{
-			u->setBodyState(AgentType::BodyState::Standing);
+			u->setBodyState(BodyState::Standing);
 		}
-		else if (u->agent->isBodyStateAllowed(AgentType::BodyState::Flying))
+		else if (u->agent->isBodyStateAllowed(BodyState::Flying))
 		{
-			u->setBodyState(AgentType::BodyState::Flying);
+			u->setBodyState(BodyState::Flying);
 		}
-		else if (u->agent->isBodyStateAllowed(AgentType::BodyState::Kneeling))
+		else if (u->agent->isBodyStateAllowed(BodyState::Kneeling))
 		{
-			u->setBodyState(AgentType::BodyState::Kneeling);
+			u->setBodyState(BodyState::Kneeling);
 		}
-		else if (u->agent->isBodyStateAllowed(AgentType::BodyState::Prone))
+		else if (u->agent->isBodyStateAllowed(BodyState::Prone))
 		{
-			u->setBodyState(AgentType::BodyState::Prone);
+			u->setBodyState(BodyState::Prone);
 			if (u->canMove() && u->agent->type->bodyType->allowed_facing.size() > 1)
 			{
 				LogError("Unit %s cannot Stand, Fly or Kneel, but can turn!",
