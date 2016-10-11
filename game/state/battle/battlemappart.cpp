@@ -21,7 +21,12 @@ void BattleMapPart::die(GameState &state, bool violently)
 {
 	if (violently)
 	{
-		// FIXME: Explode if nessecary
+		if (type->explosion_power > 0)
+		{
+			state.current_battle->addExplosion(state, position, type->explosion_type->doodadType,
+			                                   type->explosion_type, type->explosion_power,
+			                                   type->explosion_depletion_rate);
+		}
 	}
 
 	// If falling just cease to be, do damage
@@ -116,11 +121,12 @@ bool BattleMapPart::applyDamage(GameState &state, int power, StateRef<DamageType
 	int damage;
 	if (damageType->explosive)
 	{
-		damage = damageType->dealDamage(power, type->damageModifier) / 2;
+		// Apparently Apoc uses 100% explosive damgage instead of 50% like in UFO1&2
+		damage = damageType->dealDamage(power, type->damageModifier);
 	}
 	else
 	{
-		// Hmm, apparently Apoc uses 50-150 damage model for shots vs terrain,
+		// Apparently Apoc uses 50-150 damage model for shots vs terrain,
 		// unlike UFO1&2, which used 25-75
 		damage = randDamage050150(state.rng, damageType->dealDamage(power, type->damageModifier));
 	}
@@ -130,7 +136,14 @@ bool BattleMapPart::applyDamage(GameState &state, int power, StateRef<DamageType
 	}
 
 	// If we came this far, map part has been damaged and must cease to be
-	die(state);
+	if (damageType->explosive)
+	{
+		queueCollapse();
+	}
+	else
+	{
+		die(state);
+	}
 	return false;
 }
 

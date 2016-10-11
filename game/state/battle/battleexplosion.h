@@ -24,7 +24,10 @@ class BattleExplosion : public std::enable_shared_from_this<BattleExplosion>
 
 	bool nextExpandLimited = true;
 	int ticksUntilExpansion = 0;
-	std::set<std::pair<Vec3<int>, int>> locationsToExpand;
+	std::set<std::pair<Vec3<int>, Vec2<int>>> locationsToExpand;
+	bool damageInTheEnd = false;
+	std::set<std::pair<Vec3<int>, int>> locationsToDamage;
+
 	std::set<Vec3<int>> locationsVisited;
 
 	StateRef<DamageType> damageType;
@@ -41,7 +44,8 @@ class BattleExplosion : public std::enable_shared_from_this<BattleExplosion>
 	void update(GameState &state, unsigned int ticks);
 
 	BattleExplosion(Vec3<int> position, StateRef<DamageType> damageType, int power,
-	                int depletionRate, StateRef<BattleUnit> ownerUnit = nullptr);
+	                int depletionRate, bool damageInTheEnd,
+	                StateRef<BattleUnit> ownerUnit = nullptr);
 	BattleExplosion() = default;
 	~BattleExplosion() = default;
 };

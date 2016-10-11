@@ -20,15 +20,25 @@
 namespace OpenApoc
 {
 BattleExplosion::BattleExplosion(Vec3<int> position, StateRef<DamageType> damageType, int power,
-                                 int depletionRate, StateRef<BattleUnit> ownerUnit)
+                                 int depletionRate, bool damageInTheEnd,
+                                 StateRef<BattleUnit> ownerUnit)
     : position(position), ticksUntilExpansion(TICKS_MULTIPLIER * 2),
-      locationsToExpand({{position, power}}), locationsVisited({position}), damageType(damageType),
-      depletionRate(depletionRate), ownerUnit(ownerUnit)
+      locationsToExpand({{position, {power, power}}}), locationsVisited({position}),
+      damageType(damageType), depletionRate(depletionRate), damageInTheEnd(damageInTheEnd),
+      ownerUnit(ownerUnit)
 {
 }
 
 void BattleExplosion::die(GameState &state)
 {
+	if (damageInTheEnd)
+	{
+		auto &map = *state.current_battle->map;
+		for (auto &pos : locationsToDamage)
+		{
+			damage(state, map, pos.first, pos.second);
+		}
+	}
 	auto this_shared = shared_from_this();
 	state.current_battle->explosions.erase(this_shared);
 }
@@ -200,43 +210,56 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 	    };
 
 	if (to.x < 0 || to.x >= map.size.x || to.y < 0 || to.y >= map.size.y || to.z < 0 ||
-	    to.z >= map.size.z || locationsVisited.find(to) != locationsVisited.end())
+	    to.z >= map.size.z || power <= 0 || locationsVisited.find(to) != locationsVisited.end())
 	{
 		return;
 	}
 	locationsVisited.insert(to);
 	auto dir = to - from;
-	int depletion = 0;
+	int depletionThis = 0;
+	int depletionNext = 0;
 
 	// Deplete explosion according to map parts encountered
 	for (auto &pair : searchPattern.at(dir))
 	{
-		auto tile = map.getTile(pair.first + from);
+		auto pos = pair.first + from;
+		auto tile = map.getTile(pos);
 		for (auto obj : tile->ownedObjects)
 		{
 			if (pair.second.find(obj->getType()) != pair.second.end())
 			{
 				auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(obj)->getOwner();
 
+				int depletion = 0;
 				if (damageType->psionic)
-					depletion = std::max(depletion, 2 * mp->type->block_psionic);
+					depletion = 2 * mp->type->block_psionic;
 				else if (damageType->gas)
-					depletion = std::max(depletion, 2 * mp->type->block_gas);
+					depletion = 2 * mp->type->block_gas;
 				else if (damageType->flame)
-					depletion = std::max(depletion, 2 * mp->type->block_fire);
+					depletion = 2 * mp->type->block_fire;
 				else
-					depletion = std::max(depletion, 2 * mp->type->block_physical);
+					depletion = 2 * mp->type->block_physical;
+
+				depletionNext = std::max(depletionNext, depletion);
+				if (!(pos == to && obj->getType() == TileObject::Type::Feature) &&
+				    !(dir.x == 0 && dir.y == 0 && obj->getType() == TileObject::Type::Ground))
+				{
+					depletionThis = std::max(depletionThis, depletion);
+				}
 			}
 		}
 	}
-	depletion += depletionRate *
-	             (1 + (dir.x != 0 ? 1 : 0) + (dir.y != 0 ? 1 : 0) + (dir.z != 0 ? 1 : 0)) / 2;
-
-	power -= depletion;
-	if (power > 0)
+	int thisPower = power -
+	                depletionRate *
+	                    (1 + (dir.x != 0 ? 1 : 0) + (dir.y != 0 ? 1 : 0) + (dir.z != 0 ? 1 : 0)) /
+	                    2;
+	int nextPower = thisPower;
+	nextPower -= depletionNext;
+	thisPower -= depletionThis;
+	if (thisPower > 0)
 	{
 		// Queue damage application
-		locationsToExpand.emplace(to, power);
+		locationsToExpand.emplace(to, Vec2<int>{thisPower, nextPower});
 		// Spawn doodad
 		auto doodadType = damageType->doodadType;
 		if (damageType->explosive && !damageType->gas)
@@ -251,21 +274,36 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 
 void BattleExplosion::grow(GameState &state)
 {
-	std::set<std::pair<Vec3<int>, int>> locationsToExpandNow = locationsToExpand;
+	std::set<std::pair<Vec3<int>, Vec2<int>>> locationsToExpandNow = locationsToExpand;
 	locationsToExpand.clear();
 	auto &map = *state.current_battle->map;
 
 	// Deal damage and expand in four straight directions
 	for (auto pos : locationsToExpandNow)
 	{
-		damage(state, map, pos.first, pos.second);
-		for (int x = pos.first.x - 1; x <= pos.first.x + 1; x++)
+		if (damageInTheEnd)
 		{
-			expand(state, map, pos.first, {x, pos.first.y, pos.first.z}, pos.second);
+			locationsToDamage.emplace(pos.first, pos.second.x);
 		}
-		for (int y = pos.first.y - 1; y <= pos.first.y + 1; y++)
+		else
 		{
-			expand(state, map, pos.first, {pos.first.x, y, pos.first.z}, pos.second);
+			damage(state, map, pos.first, pos.second.x);
+		}
+		auto dir = pos.first - position;
+		int minX = dir.x <= 0 ? -1 : 0;
+		int maxX = dir.x >= 0 ? 1 : 0;
+		int minY = dir.y <= 0 ? -1 : 0;
+		int maxY = dir.y >= 0 ? 1 : 0;
+
+		for (int x = minX; x <= maxX; x++)
+		{
+			expand(state, map, pos.first, {pos.first.x + x, pos.first.y, pos.first.z},
+			       pos.second.y);
+		}
+		for (int y = minY; y <= maxY; y++)
+		{
+			expand(state, map, pos.first, {pos.first.x, pos.first.y + y, pos.first.z},
+			       pos.second.y);
 		}
 	}
 	// Expand in diagonal directions that were left, as well as vertically
@@ -273,15 +311,23 @@ void BattleExplosion::grow(GameState &state)
 	{
 		for (auto pos : locationsToExpandNow)
 		{
-			for (int z = pos.first.z - 1; z <= pos.first.z + 1; z++)
+			auto dir = pos.first - position;
+			int minX = dir.x <= 0 ? -1 : 0;
+			int maxX = dir.x >= 0 ? 1 : 0;
+			int minY = dir.y <= 0 ? -1 : 0;
+			int maxY = dir.y >= 0 ? 1 : 0;
+
+			for (int z = -1; z <= 1; z++)
 			{
-				expand(state, map, pos.first, {pos.first.x, pos.first.y, z}, pos.second);
+				expand(state, map, pos.first, {pos.first.x, pos.first.y, pos.first.z + z},
+				       pos.second.y);
 			}
-			for (int x = pos.first.x - 1; x <= pos.first.x + 1; x++)
+			for (int x = minX; x <= maxX; x++)
 			{
-				for (int y = pos.first.y - 1; y <= pos.first.y + 1; y++)
+				for (int y = minY; y <= maxY; y++)
 				{
-					expand(state, map, pos.first, {x, y, pos.first.z}, pos.second);
+					expand(state, map, pos.first, {pos.first.x + x, pos.first.y + y, pos.first.z},
+					       pos.second.y);
 				}
 			}
 		}

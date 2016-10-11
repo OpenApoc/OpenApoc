@@ -335,6 +335,9 @@ sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position,
                                          StateRef<DamageType> damageType, int power,
                                          int depletionRate, StateRef<BattleUnit> ownerUnit)
 {
+	// FIXME: Actually read this option
+	bool USER_OPTION_EXPLOSIONS_DAMAGE_IN_THE_END = true;
+
 	// Doodad
 	if (!doodadType)
 	{
@@ -350,7 +353,8 @@ sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position,
 	}
 
 	// Explosion
-	auto explosion = mksp<BattleExplosion>(position, damageType, power, depletionRate, ownerUnit);
+	auto explosion = mksp<BattleExplosion>(position, damageType, power, depletionRate,
+	                                       USER_OPTION_EXPLOSIONS_DAMAGE_IN_THE_END, ownerUnit);
 	explosions.insert(explosion);
 	return explosion;
 }

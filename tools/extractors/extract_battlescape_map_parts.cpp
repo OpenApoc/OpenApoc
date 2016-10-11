@@ -67,7 +67,7 @@ void InitialGameStateExtractor::readBattleMapParts(GameState &state, TACP &data_
 		object->constitution = entry.constitution;
 		object->explosion_power = entry.explosion_power;
 		object->explosion_depletion_rate = entry.explosion_depletion_rate;
-		object->explosion_type = {&state, data_t.getDModId(entry.explosion_type)};
+		object->explosion_type = {&state, data_t.getDTypeId(entry.explosion_type)};
 
 		object->fire_resist = entry.fire_resist;
 		object->fire_burn_time = entry.fire_burn_time;
