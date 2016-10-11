@@ -557,9 +557,12 @@
 	<object>
 		<name>BattleExplosion</name>
 		<member>position</member>
+		<member>nextExpandLimited</member>
 		<member>ticksUntilExpansion</member>
 		<member>locationsToExpand</member>
 		<member>locationsVisited</member>
+		<member>damageInTheEnd</member>
+		<member>locationsToDamage</member>
 		<member>damageType</member>
 		<member>depletionRate</member>
 		<member>ownerUnit</member>
