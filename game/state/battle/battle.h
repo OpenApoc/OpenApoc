@@ -116,10 +116,13 @@ class Battle : public std::enable_shared_from_this<Battle>
 	std::map<StateRef<Organisation>, BattleForces> forces;
 
 	void update(GameState &state, unsigned int ticks);
-	
+
 	// Adding objects to battle
 
-	sp<BattleExplosion> addExplosion(GameState &state, Vec3<int> position, StateRef<DoodadType> doodadType, StateRef<DamageType> damageType, int power, int depletionRate, StateRef<BattleUnit> ownerUnit = nullptr);
+	sp<BattleExplosion> addExplosion(GameState &state, Vec3<int> position,
+	                                 StateRef<DoodadType> doodadType,
+	                                 StateRef<DamageType> damageType, int power, int depletionRate,
+	                                 StateRef<BattleUnit> ownerUnit = nullptr);
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
 	sp<BattleUnit> addUnit(GameState &state);
 	sp<BattleDoor> addDoor(GameState &state);

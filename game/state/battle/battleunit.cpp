@@ -143,8 +143,7 @@ void BattleUnit::startAttacking(WeaponStatus status)
 			if (status == WeaponStatus::FiringBothHands)
 			{
 				// Right hand has priority
-				auto rhItem =
-				    agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+				auto rhItem = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
 				if (rhItem && rhItem->canFire())
 				{
 					status = WeaponStatus::FiringRightHand;
@@ -264,8 +263,7 @@ bool BattleUnit::isUnconscious() const { return !isDead() && getStunDamage() >= 
 bool BattleUnit::isConscious() const
 {
 	return !isDead() && getStunDamage() < getHealth() &&
-	       (current_body_state != BodyState::Downed ||
-	        target_body_state != BodyState::Downed);
+	       (current_body_state != BodyState::Downed || target_body_state != BodyState::Downed);
 }
 
 bool BattleUnit::isStatic() const
@@ -318,8 +316,7 @@ bool BattleUnit::canProne(Vec3<int> pos, Vec2<int> fac) const
 		return false;
 	}
 	// Check if agent can go prone and stand in its current tile
-	if (!agent->isBodyStateAllowed(BodyState::Prone) ||
-	    !tileObject->getOwningTile()->getCanStand())
+	if (!agent->isBodyStateAllowed(BodyState::Prone) || !tileObject->getOwningTile()->getCanStand())
 		return false;
 	// Check if agent can put legs in the tile behind. Conditions
 	// 1) Target tile provides standing ability
@@ -334,8 +331,7 @@ bool BattleUnit::canProne(Vec3<int> pos, Vec2<int> fac) const
 		auto bodyTile = tileObject->map.getTile(pos);
 		auto legsTile = tileObject->map.getTile(legsPos);
 		if (legsTile->canStand && std::abs(legsTile->height - bodyTile->height) <= 0.25f &&
-		    legsTile->getPassable(false,
-		                          agent->type->bodyType->height.at(BodyState::Prone)) &&
+		    legsTile->getPassable(false, agent->type->bodyType->height.at(BodyState::Prone)) &&
 		    (legsPos == (Vec3<int>)position || !legsTile->getUnitIfPresent(true, true)))
 		{
 			return true;
@@ -541,7 +537,8 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	return false;
 }
 
-BodyPart BattleUnit::determineBodyPartHit(StateRef<DamageType> damageType, Vec3<float> cposition, Vec3<float> direction)
+BodyPart BattleUnit::determineBodyPartHit(StateRef<DamageType> damageType, Vec3<float> cposition,
+                                          Vec3<float> direction)
 {
 	BodyPart bodyPartHit = BodyPart::Body;
 
@@ -563,11 +560,10 @@ BodyPart BattleUnit::determineBodyPartHit(StateRef<DamageType> damageType, Vec3<
 	else
 	{
 		auto unitDir = glm::normalize(Vec3<float>{facing.x, facing.y, 0.0f});
-		auto projectileDir = glm::normalize(
-			Vec3<float>{direction.x, direction.y, 0.0f});
+		auto projectileDir = glm::normalize(Vec3<float>{direction.x, direction.y, 0.0f});
 		auto cross = glm::cross(unitDir, projectileDir);
-		int angle = (int)((cross.z >= 0 ? -1 : 1) * glm::angle(unitDir, -projectileDir) / M_PI *
-			180.0f);
+		int angle =
+		    (int)((cross.z >= 0 ? -1 : 1) * glm::angle(unitDir, -projectileDir) / M_PI * 180.0f);
 		if (angle > 45 && angle < 135)
 		{
 			bodyPartHit = BodyPart::RightArm;
@@ -597,7 +593,9 @@ bool BattleUnit::handleCollision(GameState &state, Collision &c)
 	auto projectile = c.projectile.get();
 	if (projectile)
 	{
-		return applyDamage(state, projectile->damage, projectile->damageType, determineBodyPartHit(projectile->damageType, c.position, projectile->getVelocity()));
+		return applyDamage(
+		    state, projectile->damage, projectile->damageType,
+		    determineBodyPartHit(projectile->damageType, c.position, projectile->getVelocity()));
 	}
 	return false;
 }
@@ -704,14 +702,13 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			// If we're given a giveWay request 0, 0 it means we're asked to kneel temporarily
 			if (giveWayRequest.size() == 1 && giveWayRequest.front().x == 0 &&
 			    giveWayRequest.front().y == 0 &&
-			    canAfford(BattleUnitMission::getBodyStateChangeCost(
-			        target_body_state, BodyState::Kneeling)))
+			    canAfford(BattleUnitMission::getBodyStateChangeCost(target_body_state,
+			                                                        BodyState::Kneeling)))
 			{
 				// Give time for that unit to pass
 				addMission(state, BattleUnitMission::snooze(*this, TICKS_PER_SECOND), false);
 				// Give way
-				addMission(state,
-				           BattleUnitMission::changeStance(*this, BodyState::Kneeling));
+				addMission(state, BattleUnitMission::changeStance(*this, BodyState::Kneeling));
 			}
 			else
 			{
@@ -783,21 +780,19 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			// Kneel if not kneeling and should kneel
 			if (kneeling_mode == KneelingMode::Kneeling &&
 			    current_body_state != BodyState::Kneeling && canKneel() &&
-			    canAfford(BattleUnitMission::getBodyStateChangeCost(
-			        target_body_state, BodyState::Kneeling)))
+			    canAfford(BattleUnitMission::getBodyStateChangeCost(target_body_state,
+			                                                        BodyState::Kneeling)))
 			{
-				addMission(state,
-				           BattleUnitMission::changeStance(*this, BodyState::Kneeling));
+				addMission(state, BattleUnitMission::changeStance(*this, BodyState::Kneeling));
 			}
 			// Go prone if not prone and should stay prone
 			else if (movement_mode == MovementMode::Prone &&
 			         current_body_state != BodyState::Prone &&
 			         kneeling_mode != KneelingMode::Kneeling && canProne(position, facing) &&
-			         canAfford(BattleUnitMission::getBodyStateChangeCost(
-			             target_body_state, BodyState::Prone)))
+			         canAfford(BattleUnitMission::getBodyStateChangeCost(target_body_state,
+			                                                             BodyState::Prone)))
 			{
-				addMission(state,
-				           BattleUnitMission::changeStance(*this, BodyState::Prone));
+				addMission(state, BattleUnitMission::changeStance(*this, BodyState::Prone));
 			}
 			// Stand up if not standing up and should stand up
 			else if ((movement_mode == MovementMode::Walking ||
@@ -808,20 +803,20 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			{
 				if (agent->isBodyStateAllowed(BodyState::Standing))
 				{
-					if (canAfford(BattleUnitMission::getBodyStateChangeCost(
-					        target_body_state, BodyState::Standing)))
+					if (canAfford(BattleUnitMission::getBodyStateChangeCost(target_body_state,
+					                                                        BodyState::Standing)))
 					{
-						addMission(state, BattleUnitMission::changeStance(
-						                      *this, BodyState::Standing));
+						addMission(state,
+						           BattleUnitMission::changeStance(*this, BodyState::Standing));
 					}
 				}
 				else
 				{
-					if (canAfford(BattleUnitMission::getBodyStateChangeCost(
-					        target_body_state, BodyState::Flying)))
+					if (canAfford(BattleUnitMission::getBodyStateChangeCost(target_body_state,
+					                                                        BodyState::Flying)))
 					{
-						addMission(state, BattleUnitMission::changeStance(
-						                      *this, BodyState::Flying));
+						addMission(state,
+						           BattleUnitMission::changeStance(*this, BodyState::Flying));
 					}
 				}
 			}
@@ -829,11 +824,10 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			else if (current_body_state == BodyState::Flying &&
 			         tileObject->getOwningTile()->getCanStand(isLarge()) &&
 			         agent->isBodyStateAllowed(BodyState::Standing) &&
-			         canAfford(BattleUnitMission::getBodyStateChangeCost(
-			             target_body_state, BodyState::Standing)))
+			         canAfford(BattleUnitMission::getBodyStateChangeCost(target_body_state,
+			                                                             BodyState::Standing)))
 			{
-				addMission(state,
-				           BattleUnitMission::changeStance(*this, BodyState::Standing));
+				addMission(state, BattleUnitMission::changeStance(*this, BodyState::Standing));
 			}
 			// Stop being prone if legs are no longer supported and we haven't taken a mission yet
 			if (current_body_state == BodyState::Prone && missions.empty())
@@ -850,8 +844,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				if (!hasSupport && canAfford(BattleUnitMission::getBodyStateChangeCost(
 				                       target_body_state, BodyState::Kneeling)))
 				{
-					addMission(state, BattleUnitMission::changeStance(
-					                      *this, BodyState::Kneeling));
+					addMission(state, BattleUnitMission::changeStance(*this, BodyState::Kneeling));
 				}
 			}
 		}
@@ -1287,8 +1280,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	// For simplicity, prepare weapons we can use
 	// We can use a weapon if we're set to fire this hand, and it's a weapon that can be fired
 
-	auto weaponRight =
-	    agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+	auto weaponRight = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
 	auto weaponLeft = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
 	switch (weaponStatus)
 	{
@@ -1430,8 +1422,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 
 		// Is a gun ready to fire?
 		bool weaponFired = false;
-		if (firing_animation_ticks_remaining == 0 &&
-		    target_hand_state == HandState::Aiming)
+		if (firing_animation_ticks_remaining == 0 && target_hand_state == HandState::Aiming)
 		{
 			sp<AEquipment> firingWeapon = nullptr;
 			if (weaponRight && weaponRight->readyToFire)
@@ -1470,7 +1461,9 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					    state, muzzleLocation, targetPosition,
 					    firingWeapon->getAccuracy(current_body_state, current_movement_state,
 					                              fire_aiming_mode));
-					auto p = firingWeapon->fire(state, targetPosition, originalTarget, targetingMode == TargetingMode::Unit ? targetUnit : nullptr);
+					auto p = firingWeapon->fire(state, targetPosition, originalTarget,
+					                            targetingMode == TargetingMode::Unit ? targetUnit
+					                                                                 : nullptr);
 					map.addObjectToMap(p);
 					state.current_battle->projectiles.insert(p);
 				}
@@ -1522,8 +1515,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 
 		// Should we start aiming?
 		if (firing_animation_ticks_remaining == 0 && hand_animation_ticks_remaining == 0 &&
-		    body_animation_ticks_remaining == 0 &&
-		    current_hand_state != HandState::Aiming &&
+		    body_animation_ticks_remaining == 0 && current_hand_state != HandState::Aiming &&
 		    current_movement_state != MovementState::Running &&
 		    current_movement_state != MovementState::Strafing &&
 		    !(current_body_state == BodyState::Prone &&
@@ -1578,8 +1570,7 @@ void BattleUnit::updateDisplayedItem()
 	// If displayed item changed or we are throwing - bring hands into "AtEase" state immediately
 	if (foundThrownItem || displayedItem != lastDisplayedItem)
 	{
-		if (hand_animation_ticks_remaining > 0 ||
-		    current_hand_state != HandState::AtEase)
+		if (hand_animation_ticks_remaining > 0 || current_hand_state != HandState::AtEase)
 		{
 			setHandState(HandState::AtEase);
 		}
@@ -1678,9 +1669,9 @@ void BattleUnit::dropDown(GameState &state)
 	setHandState(HandState::AtEase);
 	setBodyState(target_body_state);
 	// Check if we can drop from current state
-	while (agent->getAnimationPack()->getFrameCountBody(
-	           displayedItem, current_body_state, BodyState::Downed, current_hand_state,
-	           current_movement_state, facing) == 0)
+	while (agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
+	                                                    BodyState::Downed, current_hand_state,
+	                                                    current_movement_state, facing) == 0)
 	{
 		switch (current_body_state)
 		{
@@ -1786,9 +1777,9 @@ void BattleUnit::beginBodyStateChange(BodyState state)
 	// Try stopping movement
 	if (frameCount == 0 && current_movement_state != MovementState::None)
 	{
-		frameCount = agent->getAnimationPack()->getFrameCountBody(
-		    displayedItem, current_body_state, state, current_hand_state,
-		    MovementState::None, facing);
+		frameCount = agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
+		                                                          state, current_hand_state,
+		                                                          MovementState::None, facing);
 		if (frameCount != 0)
 		{
 			setMovementState(MovementState::None);
@@ -1797,9 +1788,9 @@ void BattleUnit::beginBodyStateChange(BodyState state)
 	// Try stopping aiming
 	if (frameCount == 0 && current_hand_state != HandState::AtEase)
 	{
-		frameCount = agent->getAnimationPack()->getFrameCountBody(
-		    displayedItem, current_body_state, state, HandState::AtEase,
-		    current_movement_state, facing);
+		frameCount = agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
+		                                                          state, HandState::AtEase,
+		                                                          current_movement_state, facing);
 		if (frameCount != 0)
 		{
 			setHandState(HandState::AtEase);
@@ -1886,8 +1877,7 @@ void BattleUnit::setMovementState(MovementState state)
 			break;
 		case MovementState::Running:
 		case MovementState::Strafing:
-			if (current_hand_state != HandState::AtEase ||
-			    target_hand_state != HandState::AtEase)
+			if (current_hand_state != HandState::AtEase || target_hand_state != HandState::AtEase)
 			{
 				setHandState(HandState::AtEase);
 			}

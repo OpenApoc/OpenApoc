@@ -69,9 +69,9 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 			    unit->agent->getImagePack(BodyPart::Legs),
 			    unit->agent->getImagePack(BodyPart::Helmet),
 			    unit->agent->getImagePack(BodyPart::LeftArm),
-			    unit->agent->getImagePack(BodyPart::RightArm), unit->displayedItem,
-			    unit->facing, unit->current_body_state, unit->target_body_state,
-			    unit->current_hand_state, unit->target_hand_state,
+			    unit->agent->getImagePack(BodyPart::RightArm), unit->displayedItem, unit->facing,
+			    unit->current_body_state, unit->target_body_state, unit->current_hand_state,
+			    unit->target_hand_state,
 			    unit->usingLift ? MovementState::None : unit->current_movement_state,
 			    unit->getBodyAnimationFrame(), unit->getHandAnimationFrame(),
 			    unit->getDistanceTravelled(), firingAngle);
@@ -86,12 +86,11 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 			// 0 = enemy, 3 = friendly, 2 = neutral
 			int side_offset = friendly ? 3 : (hostile ? 0 : 2);
 			// Icon type, 0 = normal, 1 = prone, 2 = large
-			int icon_type = unit->isLarge()
-			                    ? ICON_LARGE
-			                    : ((unit->current_body_state == BodyState::Prone ||
-			                        unit->target_body_state == BodyState::Prone)
-			                           ? ICON_PRONE
-			                           : ICON_STANDART);
+			int icon_type =
+			    unit->isLarge() ? ICON_LARGE : ((unit->current_body_state == BodyState::Prone ||
+			                                     unit->target_body_state == BodyState::Prone)
+			                                        ? ICON_PRONE
+			                                        : ICON_STANDART);
 			// Unit facing, in game starts with north (0,-1) and goes clockwise, from 0 to 7
 			int facing_offset = offset_dir_map.at(unit->facing);
 			// Current level offset, 0 = current 1 = above 2 = below
@@ -212,8 +211,7 @@ void TileObjectBattleUnit::setPosition(Vec3<float> newPosition)
 	}
 	else // if small
 	{
-		if (u->current_body_state == BodyState::Prone ||
-		    u->target_body_state == BodyState::Prone)
+		if (u->current_body_state == BodyState::Prone || u->target_body_state == BodyState::Prone)
 		{
 			centerOffset = {-u->facing.x * bounds.x / 4.0f, -u->facing.y * bounds.y / 4.0f, 0.5f};
 		}

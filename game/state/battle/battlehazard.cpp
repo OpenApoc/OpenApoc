@@ -11,10 +11,6 @@
 namespace OpenApoc
 {
 
-void BattleHazard::update(GameState &state, unsigned int ticks)
-{
-	
-
-}
+void BattleHazard::update(GameState &state, unsigned int ticks) {}
 
 } // namespace OpenApoc

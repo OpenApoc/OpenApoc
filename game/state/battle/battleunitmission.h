@@ -48,8 +48,7 @@ class BattleUnitMission
 	// Methods that calculate next action
 	bool advanceAlongPath(GameState &state, BattleUnit &u, Vec3<float> &dest);
 	bool advanceFacing(GameState &state, BattleUnit &u, Vec2<int> &dest);
-	bool advanceBodyState(GameState &state, BattleUnit &u, BodyState targetState,
-	                      BodyState &dest);
+	bool advanceBodyState(GameState &state, BattleUnit &u, BodyState targetState, BodyState &dest);
 
   public:
 	enum class MissionType

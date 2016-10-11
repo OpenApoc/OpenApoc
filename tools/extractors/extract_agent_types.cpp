@@ -515,8 +515,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 				break;
 			case UNIT_TYPE_GANGSTER:
 				fillAgentImagePacksByDefault(state, a, "gang");
-				a->image_packs.push_back(
-				    std::map<BodyPart, StateRef<BattleUnitImagePack>>());
+				a->image_packs.push_back(std::map<BodyPart, StateRef<BattleUnitImagePack>>());
 				fillAgentImagePacksByDefault(state, a, "gang2");
 				break;
 			case UNIT_TYPE_CULTIST:
@@ -530,20 +529,17 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robot")};
 				a->image_packs[0][BodyPart::Helmet] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robo1")};
-				a->image_packs.push_back(
-				    std::map<BodyPart, StateRef<BattleUnitImagePack>>());
+				a->image_packs.push_back(std::map<BodyPart, StateRef<BattleUnitImagePack>>());
 				a->image_packs[1][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robot")};
 				a->image_packs[1][BodyPart::Helmet] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robo2")};
-				a->image_packs.push_back(
-				    std::map<BodyPart, StateRef<BattleUnitImagePack>>());
+				a->image_packs.push_back(std::map<BodyPart, StateRef<BattleUnitImagePack>>());
 				a->image_packs[2][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robot")};
 				a->image_packs[2][BodyPart::Helmet] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robo3")};
-				a->image_packs.push_back(
-				    std::map<BodyPart, StateRef<BattleUnitImagePack>>());
+				a->image_packs.push_back(std::map<BodyPart, StateRef<BattleUnitImagePack>>());
 				a->image_packs[3][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robot")};
 				a->image_packs[3][BodyPart::Helmet] = {
@@ -630,8 +626,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "mwegga")};
 				a->image_packs[0][BodyPart::Helmet] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "mweggb")};
-				a->image_packs.push_back(
-				    std::map<BodyPart, StateRef<BattleUnitImagePack>>());
+				a->image_packs.push_back(std::map<BodyPart, StateRef<BattleUnitImagePack>>());
 				a->image_packs[1][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "mwegga")};
 				a->image_packs[1][BodyPart::Helmet] = {
@@ -654,8 +649,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "chrysa")};
 				a->image_packs[0][BodyPart::Helmet] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "chrysb")};
-				a->image_packs.push_back(
-				    std::map<BodyPart, StateRef<BattleUnitImagePack>>());
+				a->image_packs.push_back(std::map<BodyPart, StateRef<BattleUnitImagePack>>());
 				a->image_packs[1][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "chrysa")};
 				a->image_packs[1][BodyPart::Helmet] = {
@@ -1169,8 +1163,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state)
 				a->allowed_body_states.insert(BodyState::Standing);
 				a->allowed_body_states.insert(BodyState::Downed);
 				voxelInfo[BodyState::Standing] = {height, idx};
-				voxelInfo[BodyState::Downed] = {(i == UNIT_TYPE_QUEENSPAWN) ? 16 : 8,
-				                                           idx};
+				voxelInfo[BodyState::Downed] = {(i == UNIT_TYPE_QUEENSPAWN) ? 16 : 8, idx};
 				break;
 
 			// Non-humanoid aliens

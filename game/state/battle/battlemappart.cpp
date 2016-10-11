@@ -93,9 +93,8 @@ int BattleMapPart::getAnimationFrame()
 	}
 	else
 	{
-		return type->animation_frames.size() == 0
-		           ? -1
-		           : animation_frame_ticks / TICKS_PER_FRAME_MAP_PART;
+		return type->animation_frames.size() == 0 ? -1 : animation_frame_ticks /
+		                                                     TICKS_PER_FRAME_MAP_PART;
 	}
 }
 
@@ -121,10 +120,9 @@ bool BattleMapPart::applyDamage(GameState &state, int power, StateRef<DamageType
 	}
 	else
 	{
-		// Hmm, apparently Apoc uses 50-150 damage model for shots vs terrain, 
+		// Hmm, apparently Apoc uses 50-150 damage model for shots vs terrain,
 		// unlike UFO1&2, which used 25-75
-		damage = randDamage050150(state.rng, damageType->dealDamage(
-			power, type->damageModifier));
+		damage = randDamage050150(state.rng, damageType->dealDamage(power, type->damageModifier));
 	}
 	if (damage <= type->constitution)
 	{

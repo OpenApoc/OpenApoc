@@ -38,19 +38,18 @@ Projectile::Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> tar
 	if (target)
 		trackedObject = target->tileObject;
 }
-Projectile::Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target, 
-	Vec3<float> targetPosition,
-                       Vec3<float> position, Vec3<float> velocity, int turnRate,
-                       unsigned int lifetime, int damage, int depletionRate, unsigned int tail_length,
-                       std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
-                       StateRef<DoodadType> doodadType, StateRef<DamageType> damageType)
+Projectile::Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target,
+                       Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity,
+                       int turnRate, unsigned int lifetime, int damage, int depletionRate,
+                       unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
+                       sp<Sample> impactSfx, StateRef<DoodadType> doodadType,
+                       StateRef<DamageType> damageType)
     : type(type), position(position), velocity(velocity), turnRate(turnRate), age(0),
-      lifetime(lifetime), damage(damage), depletionRate(depletionRate), firerUnit(firer), trackedUnit(target),
-	targetPosition(targetPosition),
-	previousPosition(position), spritePositions({position}), tail_length(tail_length),
-      projectile_sprites(projectile_sprites), sprite_distance(1.0f / TILE_Y_BATTLE),
-      impactSfx(impactSfx), doodadType(doodadType), damageType(damageType),
-      velocityScale(VELOCITY_SCALE_BATTLE)
+      lifetime(lifetime), damage(damage), depletionRate(depletionRate), firerUnit(firer),
+      trackedUnit(target), targetPosition(targetPosition), previousPosition(position),
+      spritePositions({position}), tail_length(tail_length), projectile_sprites(projectile_sprites),
+      sprite_distance(1.0f / TILE_Y_BATTLE), impactSfx(impactSfx), doodadType(doodadType),
+      damageType(damageType), velocityScale(VELOCITY_SCALE_BATTLE)
 {
 	// 36 / (velocity length) = enough ticks to pass 1 whole tile
 	ownerInvulnerableTicks = (int)ceilf(36.0f / glm::length(velocity / velocityScale)) + 1;
@@ -59,8 +58,8 @@ Projectile::Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUni
 }
 
 Projectile::Projectile()
-    : type(Type::Beam), position(0, 0, 0), velocity(0, 0, 0),
-      previousPosition(0, 0, 0), velocityScale(1, 1, 1)
+    : type(Type::Beam), position(0, 0, 0), velocity(0, 0, 0), previousPosition(0, 0, 0),
+      velocityScale(1, 1, 1)
 {
 }
 

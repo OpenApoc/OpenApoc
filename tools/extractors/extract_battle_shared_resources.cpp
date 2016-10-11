@@ -134,6 +134,5 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state)
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/throw1.raw:22050"));
 	state.battle_common_sample_list->throwSounds.push_back(
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/throw2.raw:22050"));
-
-	}
+}
 }

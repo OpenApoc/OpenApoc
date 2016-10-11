@@ -44,7 +44,7 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	int ammo = 0;
 
 	// Explosives parameters
-	
+
 	// If set, will activate upon leaving agent inventory
 	bool primed = false;
 	// If set, will count down timer and go off when trigger condition is satisfied
@@ -55,7 +55,7 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	float triggerRange = 0.0f;
 	// Type of trigger used
 	TriggerType triggerType = TriggerType::None;
-	
+
 	void prime(bool onImpact = true, int triggerDelay = 0, float triggerRange = 0.0f);
 	void explode(GameState &state);
 
@@ -99,7 +99,8 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	// Wether this weapon works like brainsucker launcher, throwing it's ammunition instead of
 	// firing a projectile
 	bool isLauncher();
-	sp<Projectile> fire(GameState &state, Vec3<float> targetPosition, Vec3<float> originalTarget, StateRef<BattleUnit> targetUnit = nullptr);
+	sp<Projectile> fire(GameState &state, Vec3<float> targetPosition, Vec3<float> originalTarget,
+	                    StateRef<BattleUnit> targetUnit = nullptr);
 	void launch(Vec3<float> &targetPosition, Vec3<float> &velocity);
 };
 } // namespace OpenApoc

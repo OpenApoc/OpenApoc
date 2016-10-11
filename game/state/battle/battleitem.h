@@ -45,7 +45,7 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 
 	// Returns true if sound and doodad were handled by it
 	bool applyDamage(GameState &state, int power, StateRef<DamageType> damageType);
-	
+
 	void die(GameState &state, bool violently = true);
 	void update(GameState &state, unsigned int ticks);
 

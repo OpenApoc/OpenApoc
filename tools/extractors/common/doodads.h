@@ -1,6 +1,5 @@
 #pragma once
 
-
 // Doodads used by tactical weaponry, ids matching vanilla
 #define UFO_DOODAD_0 0   // bigmissiles	same as 3 ? ? ?
 #define UFO_DOODAD_1 1   // autocannon		0, 4
@@ -41,5 +40,3 @@
 // More custom doodads
 #define CUSTOM_DOODAD_29 29 // tac 8, 26
 #define CUSTOM_DOODAD_30 30 // tac 78, 77
-
-

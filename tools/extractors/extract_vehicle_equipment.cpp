@@ -4,9 +4,9 @@
 #include "game/state/gamestate.h"
 #include "game/state/rules/vequipment_type.h"
 #include "library/strings_format.h"
+#include "tools/extractors/common/doodads.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
-#include "tools/extractors/common/doodads.h"
 
 namespace OpenApoc
 {

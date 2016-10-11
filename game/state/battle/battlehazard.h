@@ -4,7 +4,6 @@
 #include "library/sp.h"
 #include "library/vec.h"
 
-
 namespace OpenApoc
 {
 class TileObjectBattleHazard;
@@ -31,6 +30,5 @@ class BattleHazard
 	// Following members are not serialized, but rather are set up in the initBattle method
 
 	sp<TileObjectBattleHazard> tileObject;
-
 };
 } // namespace OpenApoc

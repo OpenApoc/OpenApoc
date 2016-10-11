@@ -68,7 +68,6 @@ enum class AEquipmentSlotType
 	RightHand
 };
 
-
 class AgentStats
 {
   public:
@@ -151,7 +150,7 @@ class AgentType : public StateObject<AgentType>
 	};
 	static AEquipmentSlotType getArmorSlotType(BodyPart bodyPart);
 	// Enums for animation
-	
+
 	UString id;
 	UString name;
 	Role role = Role::Soldier;
@@ -187,8 +186,7 @@ class AgentType : public StateObject<AgentType>
 
 	StateRef<AgentEquipmentLayout> equipment_layout;
 
-	AgentEquipmentLayout::EquipmentLayoutSlot *
-	getFirstSlot(AEquipmentSlotType type);
+	AgentEquipmentLayout::EquipmentLayoutSlot *getFirstSlot(AEquipmentSlotType type);
 
 	bool can_improve = false;
 	// Can this be generated for the player
@@ -269,8 +267,7 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 
 	std::list<sp<AEquipment>> equipment;
 	// Returns None if cannot add
-	AEquipmentSlotType canAddEquipment(Vec2<int> pos,
-	                                                        StateRef<AEquipmentType> type) const;
+	AEquipmentSlotType canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type) const;
 	Vec2<int> findFirstSlotByType(AEquipmentSlotType slotType,
 	                              StateRef<AEquipmentType> type = nullptr);
 	// Add equipment by type to the first available slot of any type
@@ -281,8 +278,7 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 	// Add equipment by type to a specific position
 	void addEquipmentByType(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type);
 	// Add equipment to the first available slot of a specific type
-	void addEquipment(GameState &state, sp<AEquipment> object,
-	                  AEquipmentSlotType slotType);
+	void addEquipment(GameState &state, sp<AEquipment> object, AEquipmentSlotType slotType);
 	// Add equipment to a specific position
 	void addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object);
 	void removeEquipment(sp<AEquipment> object);
@@ -294,8 +290,7 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 	// removed
 	StateRef<AEquipmentType>
 	getDominantItemInHands(StateRef<AEquipmentType> itemLastFired = nullptr) const;
-	sp<AEquipment> getFirstItemInSlot(AEquipmentSlotType type,
-	                                  bool lazy = true) const;
+	sp<AEquipment> getFirstItemInSlot(AEquipmentSlotType type, bool lazy = true) const;
 	sp<AEquipment> getFirstShield() const;
 	sp<AEquipment> getFirstItemByType(StateRef<AEquipmentType> type) const;
 

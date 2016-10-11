@@ -344,8 +344,7 @@ BattleView::BattleView(sp<GameState> state)
 	std::function<void(bool right)> throwItem = [this](bool right) {
 		if (selectedUnits.size() == 0 ||
 		    !(selectedUnits.front()->agent->getFirstItemInSlot(
-		        right ? AEquipmentSlotType::RightHand
-		              : AEquipmentSlotType::LeftHand)))
+		        right ? AEquipmentSlotType::RightHand : AEquipmentSlotType::LeftHand)))
 		{
 			if (right)
 			{
@@ -1123,9 +1122,8 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 		return;
 	}
 	auto unit = selectedUnits.front();
-	auto item =
-	    unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-	                                          : AEquipmentSlotType::LeftHand);
+	auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
+	                                                  : AEquipmentSlotType::LeftHand);
 	if (!item)
 	{
 		return;
@@ -1148,8 +1146,8 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 	Vec3<float> startPos = {
 	    unit->position.x, unit->position.y,
 	    unit->position.z +
-	        ((float)unit->agent->type->bodyType->height[BodyState::Throwing] - 4.0f) /
-	            2.0f / 40.0f};
+	        ((float)unit->agent->type->bodyType->height[BodyState::Throwing] - 4.0f) / 2.0f /
+	            40.0f};
 	float velXY = 0.0f;
 	float velZ = 0.0f;
 	bool valid = true;
@@ -1191,9 +1189,8 @@ void BattleView::orderUse(bool right, bool automatic)
 		return;
 	}
 	auto unit = selectedUnits.front();
-	auto item =
-	    unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-	                                          : AEquipmentSlotType::LeftHand);
+	auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
+	                                                  : AEquipmentSlotType::LeftHand);
 
 	if (!item)
 		return;
@@ -1217,7 +1214,7 @@ void BattleView::orderUse(bool right, bool automatic)
 					item->prime();
 				}
 				this->selectionState =
-					right ? BattleSelectionState::ThrowRight : BattleSelectionState::ThrowLeft;
+				    right ? BattleSelectionState::ThrowRight : BattleSelectionState::ThrowLeft;
 			}
 			else
 			{
@@ -1276,9 +1273,8 @@ void BattleView::orderDrop(bool right)
 		return;
 	}
 	auto unit = selectedUnits.front();
-	auto item =
-	    unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-	                                          : AEquipmentSlotType::LeftHand);
+	auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
+	                                                  : AEquipmentSlotType::LeftHand);
 	if (item)
 	{
 		unit->addMission(*state, BattleUnitMission::dropItem(*unit, item));
@@ -1299,9 +1295,8 @@ void BattleView::orderDrop(bool right)
 			return;
 		}
 		auto item = items.front();
-		unit->agent->addEquipment(*state, item->item,
-		                          right ? AEquipmentSlotType::RightHand
-		                                : AEquipmentSlotType::LeftHand);
+		unit->agent->addEquipment(*state, item->item, right ? AEquipmentSlotType::RightHand
+		                                                    : AEquipmentSlotType::LeftHand);
 		item->die(*state, false);
 	}
 }
@@ -1368,9 +1363,8 @@ void BattleView::orderTeleport(Vec3<int> target, bool right)
 		return;
 	}
 	auto unit = selectedUnits.front();
-	auto item =
-	    unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-	                                          : AEquipmentSlotType::LeftHand);
+	auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
+	                                                  : AEquipmentSlotType::LeftHand);
 
 	// FIXME: REMOVE TEMPORARY CHEAT
 	if (!item || item->type->type != AEquipmentType::Type::Teleporter)

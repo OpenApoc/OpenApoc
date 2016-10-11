@@ -278,7 +278,8 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Returns if unit did spend (false if unsufficient TUs)
 	bool spendTU(int cost);
 
-	BodyPart determineBodyPartHit(StateRef<DamageType> damageType, Vec3<float> cposition, Vec3<float> direction);
+	BodyPart determineBodyPartHit(StateRef<DamageType> damageType, Vec3<float> cposition,
+	                              Vec3<float> direction);
 
 	// Returns true if sound and doodad were handled by it
 	bool applyDamage(GameState &state, int power, StateRef<DamageType> damageType,

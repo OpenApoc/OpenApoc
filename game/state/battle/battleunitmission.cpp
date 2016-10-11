@@ -1079,8 +1079,7 @@ bool BattleUnitMission::getNextFacing(GameState &state, BattleUnit &u, Vec2<int>
 	return advanceFacing(state, u, dest);
 }
 
-bool BattleUnitMission::getNextBodyState(GameState &state, BattleUnit &u,
-                                         BodyState &dest)
+bool BattleUnitMission::getNextBodyState(GameState &state, BattleUnit &u, BodyState &dest)
 {
 	if (this->type != MissionType::ChangeBodyState)
 		return false;
@@ -1256,8 +1255,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				u.missions.clear();
 				u.setPosition(t->getRestingPosition(u.isLarge()));
 				u.resetGoal();
-				BodyState targetBodyState =
-				    canStand ? BodyState::Standing : BodyState::Flying;
+				BodyState targetBodyState = canStand ? BodyState::Standing : BodyState::Flying;
 				if (!u.agent->isBodyStateAllowed(targetBodyState))
 					targetBodyState = BodyState::Flying;
 				if (!u.agent->isBodyStateAllowed(targetBodyState))
@@ -1371,8 +1369,8 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 						}
 						else // body state is static but not standing
 						{
-							u.addMission(state, BattleUnitMission::changeStance(
-							                        u, BodyState::Standing));
+							u.addMission(state,
+							             BattleUnitMission::changeStance(u, BodyState::Standing));
 							return;
 						}
 					}
@@ -1392,8 +1390,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				// Remove item
 				item->ownerAgent->removeEquipment(item);
 				// Start throw animation
-				u.addMission(state,
-				             BattleUnitMission::changeStance(u, BodyState::Throwing));
+				u.addMission(state, BattleUnitMission::changeStance(u, BodyState::Throwing));
 				return;
 			}
 			// Throw finished - nothing else to do
@@ -1611,8 +1608,8 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 				}
 			}
 			// Stop flying if we no longer require it
-			if (u.current_body_state == BodyState::Flying &&
-			    t->getCanStand(u.isLarge()) && t->map.getTile(pos)->getCanStand(u.isLarge()))
+			if (u.current_body_state == BodyState::Flying && t->getCanStand(u.isLarge()) &&
+			    t->map.getTile(pos)->getCanStand(u.isLarge()))
 			{
 				u.addMission(state, changeStance(u, BodyState::Standing));
 				return false;
@@ -1831,8 +1828,7 @@ bool BattleUnitMission::advanceFacing(GameState &state, BattleUnit &u, Vec2<int>
 	return true;
 }
 
-bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u,
-                                         BodyState targetState,
+bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodyState targetState,
                                          BodyState &dest)
 {
 	if (targetState == u.target_body_state)
@@ -1846,28 +1842,24 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u,
 	}
 	// Transition for stance changes
 	// If trying to fly stand up first
-	if (targetState == BodyState::Flying &&
-	    u.current_body_state != BodyState::Standing)
+	if (targetState == BodyState::Flying && u.current_body_state != BodyState::Standing)
 	{
 		return advanceBodyState(state, u, BodyState::Standing, dest);
 	}
 	// If trying to stop flying stand up first
-	if (targetState != BodyState::Standing &&
-	    u.current_body_state == BodyState::Flying &&
+	if (targetState != BodyState::Standing && u.current_body_state == BodyState::Flying &&
 	    u.agent->isBodyStateAllowed(BodyState::Standing))
 	{
 		return advanceBodyState(state, u, BodyState::Standing, dest);
 	}
 	// If trying to stand up from prone go kneel first
-	if (targetState != BodyState::Kneeling &&
-	    u.current_body_state == BodyState::Prone &&
+	if (targetState != BodyState::Kneeling && u.current_body_state == BodyState::Prone &&
 	    u.agent->isBodyStateAllowed(BodyState::Kneeling))
 	{
 		return advanceBodyState(state, u, BodyState::Kneeling, dest);
 	}
 	// If trying to go prone from not kneeling then kneel first
-	if (targetState == BodyState::Prone &&
-	    u.current_body_state != BodyState::Kneeling &&
+	if (targetState == BodyState::Prone && u.current_body_state != BodyState::Kneeling &&
 	    u.agent->isBodyStateAllowed(BodyState::Kneeling))
 	{
 		return advanceBodyState(state, u, BodyState::Kneeling, dest);
@@ -1932,8 +1924,7 @@ int BattleUnitMission::getBodyStateChangeCost(BodyState from, BodyState to)
 void BattleUnitMission::makeAgentMove(BattleUnit &u)
 {
 	// FIXME: Account for different movement ways (strafing, backwards etc.)
-	if (u.movement_mode == MovementMode::Running &&
-	    u.current_body_state != BodyState::Prone)
+	if (u.movement_mode == MovementMode::Running && u.current_body_state != BodyState::Prone)
 	{
 		u.setMovementState(MovementState::Running);
 	}

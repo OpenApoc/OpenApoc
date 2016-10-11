@@ -4,9 +4,9 @@
 #include "framework/sound.h"
 #include "game/state/agent.h"
 #include "game/state/battle/battle.h"
-#include "game/state/gamestate.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/city/projectile.h"
+#include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
 #include "game/state/tileview/tileobject_battleunit.h"
@@ -64,11 +64,9 @@ int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
 		agentDispersion *= (float)fireMode;
 
 		// Moving also increase it: Moving or flying by 1,35x running by 1,70x
-		agentDispersion *=
-		    movementState == MovementState::None &&
-		            bodyState != BodyState::Flying
-		        ? 1.00f
-		        : (movementState == MovementState::Running ? 1.70f : 1.35f);
+		agentDispersion *= movementState == MovementState::None && bodyState != BodyState::Flying
+		                       ? 1.00f
+		                       : (movementState == MovementState::Running ? 1.70f : 1.35f);
 
 		// Having both hands busy also increases it by another 1,5x
 		if (ownerAgent->getFirstItemInSlot(AEquipmentSlotType::LeftHand) &&
@@ -308,7 +306,7 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 					case TriggerType::Proximity:
 					case TriggerType::Boomeroid:
 						LogWarning("Implement proximity/boomeroid triggers!");
-						// Intentional fall-through for now
+					// Intentional fall-through for now
 					case TriggerType::Timed:
 					{
 						auto item = ownerItem.lock();
@@ -378,7 +376,9 @@ void AEquipment::explode(GameState &state)
 	switch (type->type)
 	{
 		case AEquipmentType::Type::Grenade:
-			state.current_battle->addExplosion(state, position, type->damage_type->doodadType, type->damage_type, type->damage, type->explosion_depletion_rate, ownerAgent->unit);
+			state.current_battle->addExplosion(state, position, type->damage_type->doodadType,
+			                                   type->damage_type, type->damage,
+			                                   type->explosion_depletion_rate, ownerAgent->unit);
 			break;
 		default:
 			LogWarning("Implement blown up payload firing in all directions etc.");
@@ -386,7 +386,8 @@ void AEquipment::explode(GameState &state)
 	}
 }
 
-sp<Projectile> AEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> originalTarget, StateRef<BattleUnit> targetUnit)
+sp<Projectile> AEquipment::fire(GameState &state, Vec3<float> targetPosition,
+                                Vec3<float> originalTarget, StateRef<BattleUnit> targetUnit)
 {
 	if (this->type->type != AEquipmentType::Type::Weapon)
 	{
@@ -427,9 +428,9 @@ sp<Projectile> AEquipment::fire(GameState &state, Vec3<float> targetPosition, Ve
 	velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 	return mksp<Projectile>(payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
 	                        unit, targetUnit, originalTarget, unitPos, velocity, payload->turn_rate,
-	                        payload->ttl * TICKS_MULTIPLIER, payload->damage, 
-							payload->explosion_depletion_rate, payload->tail_size, 
-							payload->projectile_sprites, payload->impact_sfx,
+	                        payload->ttl * TICKS_MULTIPLIER, payload->damage,
+	                        payload->explosion_depletion_rate, payload->tail_size,
+	                        payload->projectile_sprites, payload->impact_sfx,
 	                        payload->explosion_graphic, payload->damage_type);
 }
 

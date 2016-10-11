@@ -9,7 +9,7 @@ namespace OpenApoc
 {
 
 void TileObjectBattleHazard::draw(Renderer &r, TileTransform &, Vec2<float> screenPosition,
-                                TileViewMode mode, int, bool, bool)
+                                  TileViewMode mode, int, bool, bool)
 {
 	// Mode isn't used as TileView::tileToScreenCoords already transforms according to the mode
 	std::ignore = mode;
@@ -19,13 +19,13 @@ void TileObjectBattleHazard::draw(Renderer &r, TileTransform &, Vec2<float> scre
 	switch (mode)
 	{
 		case TileViewMode::Isometric:
-			//sprite = item->item->type->dropped_sprite;
-			//transformedScreenPos -= item->item->type->dropped_offset;
+			// sprite = item->item->type->dropped_sprite;
+			// transformedScreenPos -= item->item->type->dropped_offset;
 			break;
 		case TileViewMode::Strategy:
 		{
-			//sprite = item->strategySprite;
-			//transformedScreenPos -= Vec2<float>{4, 4};
+			// sprite = item->strategySprite;
+			// transformedScreenPos -= Vec2<float>{4, 4};
 			break;
 		}
 		default:
@@ -38,8 +38,7 @@ void TileObjectBattleHazard::draw(Renderer &r, TileTransform &, Vec2<float> scre
 TileObjectBattleHazard::~TileObjectBattleHazard() = default;
 
 TileObjectBattleHazard::TileObjectBattleHazard(TileMap &map, sp<BattleHazard> hazard)
-    : TileObject(map, Type::Hazard, Vec3<float>{0.0f, 0.0f, 0.0f}),
-      hazard(hazard)
+    : TileObject(map, Type::Hazard, Vec3<float>{0.0f, 0.0f, 0.0f}), hazard(hazard)
 {
 }
 

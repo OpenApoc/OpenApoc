@@ -6,9 +6,9 @@
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battledoor.h"
-#include "game/state/battle/battleitem.h"
 #include "game/state/battle/battleexplosion.h"
 #include "game/state/battle/battlehazard.h"
+#include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemap.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
@@ -21,8 +21,8 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
-#include "game/state/rules/doodad_type.h"
 #include "game/state/rules/damage.h"
+#include "game/state/rules/doodad_type.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_battleitem.h"
@@ -46,7 +46,8 @@ static std::vector<std::set<TileObject::Type>> layerMap = {
     // the unit type
     {TileObject::Type::Ground, TileObject::Type::LeftWall, TileObject::Type::RightWall,
      TileObject::Type::Feature, TileObject::Type::Doodad, TileObject::Type::Projectile,
-     TileObject::Type::Unit, TileObject::Type::Shadow, TileObject::Type::Item, TileObject::Type::Hazard },
+     TileObject::Type::Unit, TileObject::Type::Shadow, TileObject::Type::Item,
+     TileObject::Type::Hazard},
 };
 
 Battle::~Battle()
@@ -329,21 +330,25 @@ sp<Doodad> Battle::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 	return doodad;
 }
 
-sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position, StateRef<DoodadType> doodadType, StateRef<DamageType> damageType, int power, int depletionRate, StateRef<BattleUnit> ownerUnit)
+sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position,
+                                         StateRef<DoodadType> doodadType,
+                                         StateRef<DamageType> damageType, int power,
+                                         int depletionRate, StateRef<BattleUnit> ownerUnit)
 {
 	// Doodad
 	if (!doodadType)
 	{
-		doodadType = { &state, "DOODAD_30_EXPLODING_PAYLOAD" };
+		doodadType = {&state, "DOODAD_30_EXPLODING_PAYLOAD"};
 	}
 	placeDoodad(doodadType, position);
-	
+
 	// Sound
 	if (!damageType->explosionSounds.empty())
 	{
-		fw().soundBackend->playSample(listRandomiser(state.rng, damageType->explosionSounds), position, 0.25f);
+		fw().soundBackend->playSample(listRandomiser(state.rng, damageType->explosionSounds),
+		                              position, 0.25f);
 	}
-	
+
 	// Explosion
 	auto explosion = mksp<BattleExplosion>(position, damageType, power, depletionRate, ownerUnit);
 	explosions.insert(explosion);
@@ -402,32 +407,35 @@ void Battle::update(GameState &state, unsigned int ticks)
 			bool displayDoodad = true;
 			if (c.projectile->damageType->explosive)
 			{
-				auto explosion = addExplosion(state, c.position, c.projectile->doodadType, c.projectile->damageType, c.projectile->damage, c.projectile->depletionRate, c.projectile->firerUnit);
+				auto explosion = addExplosion(state, c.position, c.projectile->doodadType,
+				                              c.projectile->damageType, c.projectile->damage,
+				                              c.projectile->depletionRate, c.projectile->firerUnit);
 				displayDoodad = false;
 			}
 			else
 			{
 				switch (c.obj->getType())
 				{
-				case TileObject::Type::Unit:
-				{
-					auto unit = std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit();
-					displayDoodad = !unit->handleCollision(state, c);
-					playSound = false;
-					break;
-				}
-				case TileObject::Type::Ground:
-				case TileObject::Type::LeftWall:
-				case TileObject::Type::RightWall:
-				case TileObject::Type::Feature:
-				{
-					auto mapPartTile = std::static_pointer_cast<TileObjectBattleMapPart>(c.obj);
-					displayDoodad = !mapPartTile->getOwner()->handleCollision(state, c);
-					playSound = displayDoodad;
-					break;
-				}
-				default:
-					LogError("Collision with non-collidable object");
+					case TileObject::Type::Unit:
+					{
+						auto unit =
+						    std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit();
+						displayDoodad = !unit->handleCollision(state, c);
+						playSound = false;
+						break;
+					}
+					case TileObject::Type::Ground:
+					case TileObject::Type::LeftWall:
+					case TileObject::Type::RightWall:
+					case TileObject::Type::Feature:
+					{
+						auto mapPartTile = std::static_pointer_cast<TileObjectBattleMapPart>(c.obj);
+						displayDoodad = !mapPartTile->getOwner()->handleCollision(state, c);
+						playSound = displayDoodad;
+						break;
+					}
+					default:
+						LogError("Collision with non-collidable object");
 				}
 			}
 			if (displayDoodad)

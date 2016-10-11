@@ -150,8 +150,7 @@ void GameState::initState()
 	}
 	for (auto &a : this->agents)
 	{
-		a.second->leftHandItem =
-		    a.second->getFirstItemInSlot(AEquipmentSlotType::LeftHand, false);
+		a.second->leftHandItem = a.second->getFirstItemInSlot(AEquipmentSlotType::LeftHand, false);
 		a.second->rightHandItem =
 		    a.second->getFirstItemInSlot(AEquipmentSlotType::RightHand, false);
 	}
@@ -296,8 +295,7 @@ void GameState::fillPlayerStartingProperty()
 				{
 					if (t->type == AEquipmentType::Type::Armor)
 					{
-						AEquipmentSlotType slotType =
-						    AEquipmentSlotType::General;
+						AEquipmentSlotType slotType = AEquipmentSlotType::General;
 						switch (t->body_part)
 						{
 							case BodyPart::Body:
