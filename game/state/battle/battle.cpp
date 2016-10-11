@@ -6,6 +6,8 @@
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battledoor.h"
+#include "game/state/battle/battleexplosion.h"
+#include "game/state/battle/battlehazard.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemap.h"
 #include "game/state/battle/battlemappart.h"
@@ -19,6 +21,7 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/damage.h"
 #include "game/state/rules/doodad_type.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"
@@ -43,7 +46,8 @@ static std::vector<std::set<TileObject::Type>> layerMap = {
     // the unit type
     {TileObject::Type::Ground, TileObject::Type::LeftWall, TileObject::Type::RightWall,
      TileObject::Type::Feature, TileObject::Type::Doodad, TileObject::Type::Projectile,
-     TileObject::Type::Unit, TileObject::Type::Shadow, TileObject::Type::Item},
+     TileObject::Type::Unit, TileObject::Type::Shadow, TileObject::Type::Item,
+     TileObject::Type::Hazard},
 };
 
 Battle::~Battle()
@@ -326,6 +330,35 @@ sp<Doodad> Battle::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 	return doodad;
 }
 
+sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position,
+                                         StateRef<DoodadType> doodadType,
+                                         StateRef<DamageType> damageType, int power,
+                                         int depletionRate, StateRef<BattleUnit> ownerUnit)
+{
+	// FIXME: Actually read this option
+	bool USER_OPTION_EXPLOSIONS_DAMAGE_IN_THE_END = true;
+
+	// Doodad
+	if (!doodadType)
+	{
+		doodadType = {&state, "DOODAD_30_EXPLODING_PAYLOAD"};
+	}
+	placeDoodad(doodadType, position);
+
+	// Sound
+	if (!damageType->explosionSounds.empty())
+	{
+		fw().soundBackend->playSample(listRandomiser(state.rng, damageType->explosionSounds),
+		                              position, 0.25f);
+	}
+
+	// Explosion
+	auto explosion = mksp<BattleExplosion>(position, damageType, power, depletionRate,
+	                                       USER_OPTION_EXPLOSIONS_DAMAGE_IN_THE_END, ownerUnit);
+	explosions.insert(explosion);
+	return explosion;
+}
+
 sp<BattleUnit> Battle::addUnit(GameState &state)
 {
 	auto unit = mksp<BattleUnit>();
@@ -376,27 +409,38 @@ void Battle::update(GameState &state, unsigned int ticks)
 			this->projectiles.erase(c.projectile);
 			bool playSound = true;
 			bool displayDoodad = true;
-			switch (c.obj->getType())
+			if (c.projectile->damageType->explosive)
 			{
-				case TileObject::Type::Unit:
+				auto explosion = addExplosion(state, c.position, c.projectile->doodadType,
+				                              c.projectile->damageType, c.projectile->damage,
+				                              c.projectile->depletionRate, c.projectile->firerUnit);
+				displayDoodad = false;
+			}
+			else
+			{
+				switch (c.obj->getType())
 				{
-					auto unit = std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit();
-					displayDoodad = !unit->handleCollision(state, c);
-					playSound = false;
-					break;
+					case TileObject::Type::Unit:
+					{
+						auto unit =
+						    std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit();
+						displayDoodad = !unit->handleCollision(state, c);
+						playSound = false;
+						break;
+					}
+					case TileObject::Type::Ground:
+					case TileObject::Type::LeftWall:
+					case TileObject::Type::RightWall:
+					case TileObject::Type::Feature:
+					{
+						auto mapPartTile = std::static_pointer_cast<TileObjectBattleMapPart>(c.obj);
+						displayDoodad = !mapPartTile->getOwner()->handleCollision(state, c);
+						playSound = displayDoodad;
+						break;
+					}
+					default:
+						LogError("Collision with non-collidable object");
 				}
-				case TileObject::Type::Ground:
-				case TileObject::Type::LeftWall:
-				case TileObject::Type::RightWall:
-				case TileObject::Type::Feature:
-				{
-					auto mapPartTile = std::static_pointer_cast<TileObjectBattleMapPart>(c.obj);
-					displayDoodad = !mapPartTile->getOwner()->handleCollision(state, c);
-					playSound = displayDoodad;
-					break;
-				}
-				default:
-					LogError("Collision with non-collidable object");
 			}
 			if (displayDoodad)
 			{
@@ -422,6 +466,18 @@ void Battle::update(GameState &state, unsigned int ticks)
 		o.second->update(state, ticks);
 	}
 	Trace::end("Battle::update::doors->update");
+	Trace::start("Battle::update::explosions->update");
+	for (auto &o : this->explosions)
+	{
+		o->update(state, ticks);
+	}
+	Trace::end("Battle::update::explosions->update");
+	Trace::start("Battle::update::hazards->update");
+	for (auto &o : this->hazards)
+	{
+		o->update(state, ticks);
+	}
+	Trace::end("Battle::update::hazards->update");
 	Trace::start("Battle::update::map_parts->update");
 	for (auto &o : this->map_parts)
 	{
@@ -447,6 +503,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 		auto d = *it++;
 		d->update(state, ticks);
 	}
+	Trace::end("Battle::update::doodads->update");
 }
 
 void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
@@ -1080,21 +1137,21 @@ void Battle::enterBattle(GameState &state)
 			u->facing = setRandomizer(state.rng, u->agent->type->bodyType->allowed_facing);
 		}
 		// Stance
-		if (u->agent->isBodyStateAllowed(AgentType::BodyState::Standing))
+		if (u->agent->isBodyStateAllowed(BodyState::Standing))
 		{
-			u->setBodyState(AgentType::BodyState::Standing);
+			u->setBodyState(BodyState::Standing);
 		}
-		else if (u->agent->isBodyStateAllowed(AgentType::BodyState::Flying))
+		else if (u->agent->isBodyStateAllowed(BodyState::Flying))
 		{
-			u->setBodyState(AgentType::BodyState::Flying);
+			u->setBodyState(BodyState::Flying);
 		}
-		else if (u->agent->isBodyStateAllowed(AgentType::BodyState::Kneeling))
+		else if (u->agent->isBodyStateAllowed(BodyState::Kneeling))
 		{
-			u->setBodyState(AgentType::BodyState::Kneeling);
+			u->setBodyState(BodyState::Kneeling);
 		}
-		else if (u->agent->isBodyStateAllowed(AgentType::BodyState::Prone))
+		else if (u->agent->isBodyStateAllowed(BodyState::Prone))
 		{
-			u->setBodyState(AgentType::BodyState::Prone);
+			u->setBodyState(BodyState::Prone);
 			if (u->canMove() && u->agent->type->bodyType->allowed_facing.size() > 1)
 			{
 				LogError("Unit %s cannot Stand, Fly or Kneel, but can turn!",

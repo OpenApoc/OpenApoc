@@ -8,6 +8,7 @@ set (DATAEXTRACTOR_SOURCE_FILES
 	common/tacp.cpp
 	common/strtab.cpp
 	common/ufo2p.cpp
+	extract_doodads.cpp
 	extract_agent_equipment.cpp
 	extract_agent_types.cpp
 	extract_battlescape_map.cpp
@@ -35,6 +36,7 @@ set (DATAEXTRACTOR_HEADER_FILES
 	common/aequipment.h
 	common/audio.h
 	common/baselayout.h
+	common/doodads.h
 	common/facilities.h
 	common/organisations.h
 	common/ufopaedia.h

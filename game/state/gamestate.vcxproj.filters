@@ -186,6 +186,15 @@
     <ClCompile Include="rules\vequipment_rules.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="battle\battlehazard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battle\battleexplosion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tileview\tileobject_battlehazard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agent.h">
@@ -372,6 +381,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="battle\battlecommonimagelist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\battleexplosion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\battlehazard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tileview\tileobject_battlehazard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gamestate_serialize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,7 @@
-#include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battledoor.h"
 #include "game/state/battle/battleitem.h"
+#include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/city/projectile.h"
 #include "game/state/gamestate.h"
@@ -21,7 +21,12 @@ void BattleMapPart::die(GameState &state, bool violently)
 {
 	if (violently)
 	{
-		// FIXME: Explode if nessecary
+		if (type->explosion_power > 0)
+		{
+			state.current_battle->addExplosion(state, position, type->explosion_type->doodadType,
+			                                   type->explosion_type, type->explosion_power,
+			                                   type->explosion_depletion_rate);
+		}
 	}
 
 	// If falling just cease to be, do damage
@@ -93,13 +98,12 @@ int BattleMapPart::getAnimationFrame()
 	}
 	else
 	{
-		return type->animation_frames.size() == 0
-		           ? -1
-		           : animation_frame_ticks / TICKS_PER_FRAME_MAP_PART;
+		return type->animation_frames.size() == 0 ? -1 : animation_frame_ticks /
+		                                                     TICKS_PER_FRAME_MAP_PART;
 	}
 }
 
-bool BattleMapPart::handleCollision(GameState &state, Collision &c)
+bool BattleMapPart::applyDamage(GameState &state, int power, StateRef<DamageType> damageType)
 {
 	if (!this->tileObject)
 	{
@@ -114,18 +118,38 @@ bool BattleMapPart::handleCollision(GameState &state, Collision &c)
 		return false;
 	}
 
-	// Calculate damage (hmm, apparently Apoc uses 50-150 damage model for terrain, unlike UFO1&2
-	// which used 25-75
-	int damage = randDamage050150(state.rng, c.projectile->damageType->dealDamage(
-	                                             c.projectile->damage, type->damageModifier));
+	int damage;
+	if (damageType->explosive)
+	{
+		// Apparently Apoc uses 100% explosive damgage instead of 50% like in UFO1&2
+		damage = damageType->dealDamage(power, type->damageModifier);
+	}
+	else
+	{
+		// Apparently Apoc uses 50-150 damage model for shots vs terrain,
+		// unlike UFO1&2, which used 25-75
+		damage = randDamage050150(state.rng, damageType->dealDamage(power, type->damageModifier));
+	}
 	if (damage <= type->constitution)
 	{
 		return false;
 	}
 
 	// If we came this far, map part has been damaged and must cease to be
-	die(state);
+	if (damageType->explosive)
+	{
+		queueCollapse();
+	}
+	else
+	{
+		die(state);
+	}
 	return false;
+}
+
+bool BattleMapPart::handleCollision(GameState &state, Collision &c)
+{
+	return applyDamage(state, c.projectile->damage, c.projectile->damageType);
 }
 
 void BattleMapPart::ceaseDoorFunction()

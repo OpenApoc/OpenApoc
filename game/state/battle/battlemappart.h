@@ -46,6 +46,8 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	int getMaxFrames();
 
 	// Returns true if sound and doodad were handled by it
+	bool applyDamage(GameState &state, int power, StateRef<DamageType> damageType);
+	// Returns true if sound and doodad were handled by it
 	bool handleCollision(GameState &state, Collision &c);
 	// Handles mappart ceasing to exist (fatal damage or fell on something)
 	void die(GameState &state, bool violently = true);

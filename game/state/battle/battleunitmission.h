@@ -48,8 +48,7 @@ class BattleUnitMission
 	// Methods that calculate next action
 	bool advanceAlongPath(GameState &state, BattleUnit &u, Vec3<float> &dest);
 	bool advanceFacing(GameState &state, BattleUnit &u, Vec2<int> &dest);
-	bool advanceBodyState(GameState &state, BattleUnit &u, AgentType::BodyState targetState,
-	                      AgentType::BodyState &dest);
+	bool advanceBodyState(GameState &state, BattleUnit &u, BodyState targetState, BodyState &dest);
 
   public:
 	enum class MissionType
@@ -79,11 +78,11 @@ class BattleUnitMission
 	// Request next facing
 	bool getNextFacing(GameState &state, BattleUnit &u, Vec2<int> &dest);
 	// Request next body state
-	bool getNextBodyState(GameState &state, BattleUnit &u, AgentType::BodyState &dest);
+	bool getNextBodyState(GameState &state, BattleUnit &u, BodyState &dest);
 
 	// Spend agent TUs or append AcquireTU mission
 	static bool spendAgentTUs(GameState &state, BattleUnit &u, int cost);
-	static int getBodyStateChangeCost(AgentType::BodyState from, AgentType::BodyState to);
+	static int getBodyStateChangeCost(BodyState from, BodyState to);
 
 	// Other agent control methods
 	void makeAgentMove(BattleUnit &u);
@@ -95,7 +94,7 @@ class BattleUnitMission
 	                                       bool allowRunningAway = false);
 	static BattleUnitMission *snooze(BattleUnit &u, unsigned int ticks);
 	static BattleUnitMission *acquireTU(BattleUnit &u, unsigned int tu);
-	static BattleUnitMission *changeStance(BattleUnit &u, AgentType::BodyState state);
+	static BattleUnitMission *changeStance(BattleUnit &u, BodyState state);
 	static BattleUnitMission *throwItem(BattleUnit &u, sp<AEquipment> item, Vec3<int> target,
 	                                    float velocityXY, float velocityZ);
 	static BattleUnitMission *dropItem(BattleUnit &u, sp<AEquipment> item);
@@ -148,6 +147,6 @@ class BattleUnitMission
 	unsigned int timeUnits = 0;
 
 	// ChangeBodyState
-	AgentType::BodyState bodyState = AgentType::BodyState::Downed;
+	BodyState bodyState = BodyState::Downed;
 };
 } // namespace OpenApoc

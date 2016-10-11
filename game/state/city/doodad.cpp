@@ -19,7 +19,7 @@ Doodad::Doodad(Vec3<float> position, Vec2<int> imageOffset, bool temporary, int 
 
 Doodad::Doodad(Vec3<float> position, StateRef<DoodadType> type)
     : position(position), imageOffset(type->imageOffset), temporary(true), age(0),
-      lifetime(type->lifetime), type(type)
+      lifetime(type->lifetime * TICKS_MULTIPLIER), type(type)
 {
 }
 
@@ -66,8 +66,8 @@ sp<Image> Doodad::getSprite()
 	for (auto &f : type->frames)
 	{
 		sprite = f.image;
-		animTime += f.time;
-		if (animTime >= age)
+		animTime += f.time * TICKS_MULTIPLIER;
+		if (animTime > age)
 			return sprite;
 	}
 	LogWarning("Doodad reached age %d with no frame", age);

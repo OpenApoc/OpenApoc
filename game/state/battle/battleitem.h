@@ -17,6 +17,7 @@ class Battle;
 class BattleUnit;
 class AEquipment;
 class Image;
+class DamageType;
 
 class BattleItem : public std::enable_shared_from_this<BattleItem>
 {
@@ -42,7 +43,9 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 	void tryCollapse();
 	void collapse();
 
-	void handleCollision(GameState &state, Collision &c);
+	// Returns true if sound and doodad were handled by it
+	bool applyDamage(GameState &state, int power, StateRef<DamageType> damageType);
+
 	void die(GameState &state, bool violently = true);
 	void update(GameState &state, unsigned int ticks);
 

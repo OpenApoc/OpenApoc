@@ -28,6 +28,9 @@ class BattleMapPart;
 class BattleUnit;
 class BattleDoor;
 class BattleItem;
+class BattleExplosion;
+class BattleHazard;
+class DamageType;
 class Projectile;
 class Doodad;
 class DoodadType;
@@ -80,6 +83,8 @@ class Battle : public std::enable_shared_from_this<Battle>
 	std::list<sp<Doodad>> doodads;
 	std::set<sp<Projectile>> projectiles;
 	StateRefMap<BattleDoor> doors;
+	std::set<sp<BattleExplosion>> explosions;
+	std::set<sp<BattleHazard>> hazards;
 
 	up<TileMap> map;
 
@@ -111,15 +116,16 @@ class Battle : public std::enable_shared_from_this<Battle>
 	std::map<StateRef<Organisation>, BattleForces> forces;
 
 	void update(GameState &state, unsigned int ticks);
+
+	// Adding objects to battle
+
+	sp<BattleExplosion> addExplosion(GameState &state, Vec3<int> position,
+	                                 StateRef<DoodadType> doodadType,
+	                                 StateRef<DamageType> damageType, int power, int depletionRate,
+	                                 StateRef<BattleUnit> ownerUnit = nullptr);
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
-
-	// Adds unit, setting it's id and links to resources
 	sp<BattleUnit> addUnit(GameState &state);
-
-	// Adds door, setting it's id
 	sp<BattleDoor> addDoor(GameState &state);
-
-	// Add item, setting links to resources
 	sp<BattleItem> addItem(GameState &state);
 
 	static void accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,

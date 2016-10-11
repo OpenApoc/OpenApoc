@@ -15,7 +15,8 @@
   <initial_agents>
     <entry>
       <key>Soldier</key>
-      <value>10</value>
+      <!-- Should be 10 -->
+	  <value>12</value>
     </entry>
     <entry>
       <key>Physicist</key>
@@ -73,22 +74,35 @@
     </entry>
   </initial_facilities>
   <initial_agent_equipment>
-    <entry>
-      <!-- Megapol body armor! -->
-	  <entry>AEQUIPMENTTYPE_MARSEC_BODY_UNIT</entry>
-	  <!-- Megapol body armor! -->
-	  <entry>AEQUIPMENTTYPE_MEGAPOL_HELMET</entry>
-	  <entry>AEQUIPMENTTYPE_MEGAPOL_LEFT_ARM_ARMOR</entry>
-	  <entry>AEQUIPMENTTYPE_MEGAPOL_LEG_ARMOR</entry>
-	  <entry>AEQUIPMENTTYPE_MEGAPOL_RIGHT_ARM_ARMOR</entry>
-	  <entry>AEQUIPMENTTYPE_MEGAPOL_LASER_SNIPER_GUN</entry>
-	  <entry>AEQUIPMENTTYPE_MEGAPOL_LASER_POD</entry>
-	  <!-- Remove launcher and shield! -->
+    <!-- Two Entries for testing the map -->
+	<entry>
+      <entry>AEQUIPMENTTYPE_MARSEC_BODY_UNIT</entry>
+	  <entry>AEQUIPMENTTYPE_MARSEC_HEAD_UNIT</entry>
+	  <entry>AEQUIPMENTTYPE_MARSEC_LEFT_ARM_UNIT</entry>
+	  <entry>AEQUIPMENTTYPE_MARSEC_LEG_UNITS</entry>
+	  <entry>AEQUIPMENTTYPE_MARSEC_RIGHT_ARM_UNIT</entry>
 	  <entry>AEQUIPMENTTYPE_MARSEC_MINILAUNCHER</entry>
 	  <entry>AEQUIPMENTTYPE_MINILAUNCHER_IN_MISSILE</entry>
 	  <entry>AEQUIPMENTTYPE_MINILAUNCHER_AG_MISSILE</entry>
+	  <entry>AEQUIPMENTTYPE_MINILAUNCHER_HE_MISSILE</entry>
 	  <entry>AEQUIPMENTTYPE_PERSONAL_DISRUPTOR_SHIELD</entry>
-	  <!-- Remove launcher and shield! -->
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</entry>
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</entry>
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_STUN_GRENADE</entry>
+	  <entry>AEQUIPMENTTYPE_MEDI-KIT</entry>
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_STUN_GRENADE</entry>
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_SMOKE_GRENADE</entry>
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_SMOKE_GRENADE</entry>
+    </entry>
+	<!-- Two Entries for testing the map -->
+	<entry>
+      <entry>AEQUIPMENTTYPE_MARSEC_BODY_UNIT</entry>
+	  <entry>AEQUIPMENTTYPE_MARSEC_HEAD_UNIT</entry>
+	  <entry>AEQUIPMENTTYPE_MARSEC_LEFT_ARM_UNIT</entry>
+	  <entry>AEQUIPMENTTYPE_MARSEC_LEG_UNITS</entry>
+	  <entry>AEQUIPMENTTYPE_MARSEC_RIGHT_ARM_UNIT</entry>
+	  <entry>AEQUIPMENTTYPE_DEVASTATOR_CANNON</entry>
+	  <entry>AEQUIPMENTTYPE_DISRUPTOR_GUN</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_STUN_GRENADE</entry>
@@ -106,9 +120,23 @@
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_RIGHT_ARM_ARMOR</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_LASER_SNIPER_GUN</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_LASER_POD</entry>
-	  <!-- Remove devastator! -->
-	  <entry>AEQUIPMENTTYPE_DEVASTATOR_CANNON</entry>
-	  <!-- Remove devastator! -->
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</entry>
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</entry>
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_STUN_GRENADE</entry>
+	  <entry>AEQUIPMENTTYPE_MEDI-KIT</entry>
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_LASER_POD</entry>
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_STUN_GRENADE</entry>
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_SMOKE_GRENADE</entry>
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_SMOKE_GRENADE</entry>
+    </entry>
+	<entry>
+      <entry>AEQUIPMENTTYPE_MEGAPOL_BODY_ARMOR</entry>
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_HELMET</entry>
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_LEFT_ARM_ARMOR</entry>
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_LEG_ARMOR</entry>
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_RIGHT_ARM_ARMOR</entry>
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_LASER_SNIPER_GUN</entry>
+	  <entry>AEQUIPMENTTYPE_MEGAPOL_LASER_POD</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</entry>
 	  <entry>AEQUIPMENTTYPE_MEGAPOL_STUN_GRENADE</entry>

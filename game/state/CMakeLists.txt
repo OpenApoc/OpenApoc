@@ -20,13 +20,15 @@ set (GAMESTATE_SOURCE_FILES
 	base/base.cpp
 	base/facility.cpp
 	battle/battle.cpp
-	battle/battlemap.cpp
-	battle/battleforces.cpp
 	battle/battledoor.cpp
+	battle/battleexplosion.cpp
+	battle/battleforces.cpp
+	battle/battlehazard.cpp
+	battle/battleitem.cpp
+	battle/battlemap.cpp
 	battle/battlemappart.cpp
 	battle/battlemappart_type.cpp
 	battle/battlemapsector.cpp
-	battle/battleitem.cpp
 	battle/battleunit.cpp
 	battle/battleunitanimationpack.cpp
 	battle/battleunitimagepack.cpp
@@ -54,6 +56,7 @@ set (GAMESTATE_SOURCE_FILES
 	tileview/pathfinding.cpp
 	tileview/tile.cpp
 	tileview/tileobject.cpp
+	tileview/tileobject_battlehazard.cpp
 	tileview/tileobject_battlemappart.cpp
 	tileview/tileobject_battleitem.cpp
 	tileview/tileobject_battleunit.cpp
@@ -81,16 +84,18 @@ set (GAMESTATE_HEADER_FILES
 	base/base.h
 	base/facility.h
 	battle/battle.h
+	battle/battlecommonimagelist.h
 	battle/battlecommonsamplelist.h
-	battle/battleitem.h
-	battle/battleforces.h
-	battle/battlemap.h
 	battle/battledoor.h
+	battle/battleexplosion.h
+	battle/battleforces.h
+	battle/battlehazard.h
+	battle/battleitem.h
+	battle/battlemap.h
 	battle/battlemappart.h
 	battle/battlemappart_type.h
 	battle/battlemapsector.h
 	battle/battlemaptileset.h
-	battle/battlecommonimagelist.h
 	battle/battleunit.h
 	battle/battleunitanimationpack.h
 	battle/battleunitimagepack.h
@@ -118,6 +123,7 @@ set (GAMESTATE_HEADER_FILES
 	tileview/collision.h
 	tileview/tile.h
 	tileview/tileobject.h
+	tileview/tileobject_battlehazard.h
 	tileview/tileobject_battlemappart.h
 	tileview/tileobject_battleitem.h
 	tileview/tileobject_battleunit.h

@@ -33,6 +33,7 @@
     <ClCompile Include="extractors\extract_bulletsprites.cpp" />
     <ClCompile Include="extractors\extract_city_map.cpp" />
     <ClCompile Include="extractors\extract_city_scenery.cpp" />
+    <ClCompile Include="extractors\extract_doodads.cpp" />
     <ClCompile Include="extractors\extract_facilities.cpp" />
     <ClCompile Include="extractors\extract_organisations.cpp" />
     <ClCompile Include="extractors\extract_research.cpp" />
@@ -55,6 +56,7 @@
     <ClInclude Include="extractors\common\canonstring.h" />
     <ClInclude Include="extractors\common\crc32.h" />
     <ClInclude Include="extractors\common\datachunk.h" />
+    <ClInclude Include="extractors\common\doodads.h" />
     <ClInclude Include="extractors\common\facilities.h" />
     <ClInclude Include="extractors\common\organisations.h" />
     <ClInclude Include="extractors\common\research.h" />

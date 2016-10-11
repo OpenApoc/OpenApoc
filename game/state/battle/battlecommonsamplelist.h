@@ -22,6 +22,5 @@ class BattleCommonSampleList
 	std::vector<sp<std::vector<sp<Sample>>>> walkSounds;
 	std::vector<sp<Sample>> objectDropSounds;
 	std::list<sp<Sample>> throwSounds;
-	std::map<StateRef<DamageType>, std::list<sp<Sample>>> explosionSoundMap;
 };
 }

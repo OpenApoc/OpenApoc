@@ -27,6 +27,8 @@ class DamageType : public StateObject<DamageType>
 
 	// Wether this damage type produces explosion on hit
 	bool explosive = false;
+	// True = will use psionic block when checking for explosion block
+	bool psionic = false;
 	// True = explosion will spawn gas and animate as such
 	bool gas = false;
 	// True = deals no health damage, but sets on fire
@@ -51,6 +53,9 @@ class DamageType : public StateObject<DamageType>
 
 	// Doodad type spawned by this
 	StateRef<DoodadType> doodadType;
+
+	// Sounds when this explodes
+	std::list<sp<Sample>> explosionSounds;
 
 	int dealDamage(int damage, StateRef<DamageModifier> modifier) const;
 };

@@ -224,7 +224,7 @@ Related to the tile blocking other effects. Mechanics are not yet clear.
 --------
 Physical blocking.
 
-0C/11[1]: 
+0C/12[1]: 
 --------
 Gas blocking.
 

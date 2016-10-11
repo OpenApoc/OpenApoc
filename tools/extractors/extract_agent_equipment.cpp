@@ -6,8 +6,8 @@
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
-#include "game/state/rules/doodad_type.h"
 #include "library/strings_format.h"
+#include "tools/extractors/common/doodads.h"
 #include "tools/extractors/common/tacp.h"
 #include "tools/extractors/extractors.h"
 #include <limits>
@@ -37,33 +37,13 @@
 #define W_TRAKHIT 183  // trakgun
 #define W_ZAPHIT 184   // zaphit
 
-// Doodads used by tactical weaponry, ids matching vanilla
-#define TAC_DOODAD_21 21 // tac 115 - 125
-#define TAC_DOODAD_22 22 // tac 126 - 136
-#define TAC_DOODAD_23 23 // tac 137 - 147
-#define TAC_DOODAD_24 24 // tac 148 - 158
-#define TAC_DOODAD_25 25 // tac 159 - 169
-#define TAC_DOODAD_26 26 // tac 170 - 180
-#define TAC_DOODAD_27 27 // tac 181 - 185 shield
-#define TAC_DOODAD_28 28 // tac 186 - 192
-
-// Doodads matching their vanilla indexes
-#define TAC_DOODAD_18 18 // tac 44, 52
-#define TAC_DOODAD_19 19 // tac 52, 60
-#define TAC_DOODAD_20 20 // tac 60, 68
-
-// Doodads defined manually, ids not matching vanilla
-#define CUSTOM_DOODAD_16 16 // tac 28, 32
-#define CUSTOM_DOODAD_17 17 // tac 32, 44
-#define CUSTOM_DOODAD_29 29 // tac 8, 26
-#define CUSTOM_DOODAD_30 30 // tac 78, 77
-
 #define DT_SMOKE 0
 #define DT_AG 1
 #define DT_INCENDARY 2
 #define DT_STUNGAS 3
 #define DT_EXPLOSIVE 4
 #define DT_STUNGUN 5
+#define DT_PSIBLAST 6
 #define DT_EXPLOSIVE2 15
 #define DT_BRAINSUCKER 18
 
@@ -269,6 +249,10 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 			case DT_STUNGUN:
 				d->stun = true;
 				break;
+			case DT_PSIBLAST:
+				d->explosive = true;
+				d->psionic = true;
+				break;
 			case DT_EXPLOSIVE2:
 				d->explosive = true;
 				break;
@@ -278,6 +262,28 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 		}
 
 		state.damage_types[id] = d;
+	}
+
+	// Explosion sounds for damage types
+	{
+		state.damage_types["DAMAGETYPE_ANTI-ALIEN_GAS"]->explosionSounds.push_back(
+		    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/gasexpls.raw:22050"));
+		state.damage_types["DAMAGETYPE_EXPLOSIVE"]->explosionSounds.push_back(
+		    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/explosn1.raw:22050"));
+		state.damage_types["DAMAGETYPE_EXPLOSIVE"]->explosionSounds.push_back(
+		    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/explosn2.raw:22050"));
+		state.damage_types["DAMAGETYPE_EXPLOSIVE_1"]->explosionSounds.push_back(
+		    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/explosn1.raw:22050"));
+		state.damage_types["DAMAGETYPE_EXPLOSIVE_1"]->explosionSounds.push_back(
+		    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/explosn2.raw:22050"));
+		state.damage_types["DAMAGETYPE_INCENDIARY"]->explosionSounds.push_back(
+		    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/firexpls.raw:22050"));
+		state.damage_types["DAMAGETYPE_PSIONIC_BLAST"]->explosionSounds.push_back(
+		    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/psigrnad.raw:22050"));
+		state.damage_types["DAMAGETYPE_SMOKE"]->explosionSounds.push_back(
+		    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/gasexpls.raw:22050"));
+		state.damage_types["DAMAGETYPE_STUN_GAS"]->explosionSounds.push_back(
+		    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/gasexpls.raw:22050"));
 	}
 
 	for (unsigned i = 0; i < data_t.damage_modifiers->count(); i++)
@@ -359,12 +365,12 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 					case AGENT_ARMOR_BODY_PART_LEGS:
 						bodyPartLetter = "b";
 						armorBodyPicIndex = 4;
-						e->body_part = AgentType::BodyPart::Legs;
+						e->body_part = BodyPart::Legs;
 						break;
 					case AGENT_ARMOR_BODY_PART_BODY:
 						bodyPartLetter = "a";
 						armorBodyPicIndex = 2;
-						e->body_part = AgentType::BodyPart::Body;
+						e->body_part = BodyPart::Body;
 						// Vanilla decides if flight is enabled by checking if a "marsec" damage mod
 						// body armor is equipped
 						if (adata.damage_modifier == 18)
@@ -373,17 +379,17 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 					case AGENT_ARMOR_BODY_PART_LEFT_ARM:
 						bodyPartLetter = "d";
 						armorBodyPicIndex = 1;
-						e->body_part = AgentType::BodyPart::LeftArm;
+						e->body_part = BodyPart::LeftArm;
 						break;
 					case AGENT_ARMOR_BODY_PART_RIGHT_ARM:
 						bodyPartLetter = "e";
 						armorBodyPicIndex = 3;
-						e->body_part = AgentType::BodyPart::RightArm;
+						e->body_part = BodyPart::RightArm;
 						break;
 					case AGENT_ARMOR_BODY_PART_HELMET:
 						bodyPartLetter = "c";
 						armorBodyPicIndex = 0;
-						e->body_part = AgentType::BodyPart::Helmet;
+						e->body_part = BodyPart::Helmet;
 						break;
 					default:
 						LogError("Unexpected body part type %d for ID %s", (int)adata.body_part,
@@ -931,107 +937,6 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 
 				state.equipment_sets_by_level[id] = es;
 			}
-		}
-	}
-
-	// DOODADS
-	{
-		static const int frameTTL = 4;
-		static const std::vector<Vec2<int>> doodadTabOffsets = {
-		    {28, 32},   {32, 44},   {44, 52},   {52, 60},   {60, 68},   {115, 126}, {126, 137},
-		    {137, 148}, {148, 159}, {159, 170}, {170, 181}, {181, 186}, {186, 192}, {8, 26}};
-
-		for (int i = 16; i <= 29; i++)
-		{
-			UString id;
-			switch (i)
-			{
-				case CUSTOM_DOODAD_16: // tac 28, 32
-					id = "DOODAD_16_BURNING_OBJECT";
-					break;
-				case CUSTOM_DOODAD_17: // tac 32, 44
-					id = "DOODAD_17_FIRE";
-					break;
-				case TAC_DOODAD_18: // tac 44, 52
-					id = "DOODAD_18_SMOKE";
-					break;
-				case TAC_DOODAD_19: // tac 52, 60
-					id = "DOODAD_19_ALIEN_GAS";
-					break;
-				case TAC_DOODAD_20: // tac 60, 68
-					id = "DOODAD_20_STUN_GAS";
-					break;
-				case TAC_DOODAD_21: // tac 115 - 125
-					id = "DOODAD_21_AP";
-					break;
-				case TAC_DOODAD_22: // tac 126 - 136
-					id = "DOODAD_22_LASER";
-					break;
-				case TAC_DOODAD_23: // tac 137 - 147
-					id = "DOODAD_23_PLASMA";
-					break;
-				case TAC_DOODAD_24: // tac 148 - 158
-					id = "DOODAD_24_DISRUPTOR";
-					break;
-				case TAC_DOODAD_25: // tac 159 - 169
-					id = "DOODAD_25_DEVASTATOR";
-					break;
-				case TAC_DOODAD_26: // tac 170 - 180
-					id = "DOODAD_26_STUN";
-					break;
-				case TAC_DOODAD_27: // tac 181 - 185 shield
-					id = "DOODAD_27_SHIELD";
-					break;
-				case TAC_DOODAD_28: // tac 186 - 192
-					id = "DOODAD_28_ENZYME";
-					break;
-				case CUSTOM_DOODAD_29: // tac 8, 26
-					id = "DOODAD_29_EXPLODING_TERRAIN";
-					break;
-			}
-
-			auto tabOffsets = doodadTabOffsets[i - 16];
-			auto d = mksp<DoodadType>();
-
-			// For some reason, not equal to other offsets, which are 23,34?
-			// d->imageOffset = { 23,32 };
-			// Let's try common one
-			// FIXME: ENSURE CORRECT
-			d->imageOffset = BATTLE_IMAGE_OFFSET;
-			d->lifetime = (tabOffsets.y - tabOffsets.x) * frameTTL;
-			d->repeatable = false;
-			for (int j = tabOffsets.x; j < tabOffsets.y; j++)
-			{
-				d->frames.push_back(
-				    {fw().data->loadImage(format("PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
-				                                 "ptang.tab:%d",
-				                                 j)),
-				     frameTTL});
-			}
-
-			state.doodad_types[id] = d;
-		}
-
-		// CUSTOM_DOODAD_30 30 // tac 78, 77
-		{
-			UString id = "DOODAD_30_EXPLODING_PAYLOAD";
-			auto d = mksp<DoodadType>();
-
-			// FIXME: ENSURE CORRECT
-			d->imageOffset = BATTLE_IMAGE_OFFSET;
-			d->lifetime = (2) * frameTTL;
-			d->repeatable = false;
-			d->frames.push_back(
-			    {fw().data->loadImage(format("PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
-			                                 "ptang.tab:%d",
-			                                 78)),
-			     frameTTL});
-			d->frames.push_back(
-			    {fw().data->loadImage(format("PCK:xcom3/tacdata/ptang.pck:xcom3/tacdata/"
-			                                 "ptang.tab:%d",
-			                                 77)),
-			     frameTTL});
-			state.doodad_types[id] = d;
 		}
 	}
 }

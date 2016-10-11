@@ -6,6 +6,8 @@
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/damage.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_battleitem.h"
@@ -21,7 +23,7 @@ void BattleItem::die(GameState &state, bool violently)
 {
 	if (violently)
 	{
-		// FIXME: Explode if nessecary
+		item->explode(state);
 	}
 	auto this_shared = shared_from_this();
 	state.current_battle->items.remove(this_shared);
@@ -31,11 +33,18 @@ void BattleItem::die(GameState &state, bool violently)
 	this->shadowObject.reset();
 }
 
-void BattleItem::handleCollision(GameState &state, Collision &c)
+// Returns true if sound and doodad were handled by it
+bool BattleItem::applyDamage(GameState &state, int power, StateRef<DamageType> damageType)
 {
-	// FIXME: Proper damage
-	std::ignore = c;
-	die(state);
+	if (!damageType->explosive || damageType->gas || damageType->flame)
+	{
+		return false;
+	}
+	if (item->type->armor <= power)
+	{
+		die(state);
+	}
+	return false;
 }
 
 void BattleItem::setPosition(const Vec3<float> &pos)
@@ -70,6 +79,8 @@ Collision BattleItem::checkItemCollision(Vec3<float> previousPosition, Vec3<floa
 
 void BattleItem::update(GameState &state, unsigned int ticks)
 {
+	item->update(state, ticks);
+
 	if (ticksUntilCollapse > 0)
 	{
 		if (ticksUntilCollapse > ticks)

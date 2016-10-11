@@ -222,6 +222,7 @@ void InitialGameStateExtractor::extractCommon(GameState &state)
 	this->extractBaseLayouts(state);
 	this->extractResearch(state);
 	this->extractAgentEquipment(state);
+	this->extractDoodads(state);
 
 	// The alien map doesn't change
 	UString alienMapId = City::getPrefix() + "ALIEN";
