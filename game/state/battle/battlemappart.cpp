@@ -1,7 +1,7 @@
+#include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battledoor.h"
 #include "game/state/battle/battleitem.h"
-#include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/city/projectile.h"
 #include "game/state/gamestate.h"
@@ -98,8 +98,9 @@ int BattleMapPart::getAnimationFrame()
 	}
 	else
 	{
-		return type->animation_frames.size() == 0 ? -1 : animation_frame_ticks /
-		                                                     TICKS_PER_FRAME_MAP_PART;
+		return type->animation_frames.size() == 0
+		           ? -1
+		           : animation_frame_ticks / TICKS_PER_FRAME_MAP_PART;
 	}
 }
 
