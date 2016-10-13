@@ -154,7 +154,7 @@ bool BattleHazard::expand(GameState &state, const TileMap &map,
 	// FIXME: Made up, ensure this fits vanilla behavior
 	if (power <= block)
 	{
-		return;
+		return false;
 	}
 	
 	// If reached here try place hazard

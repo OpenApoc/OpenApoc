@@ -24,7 +24,7 @@
 
 #define FALLING_ACCELERATION_UNIT 0.16666667f // 1/6th
 
-// Made up value, must ensure it corresponds to ingame value
+// FIXME: Seems to correspond to vanilla behavior, but ensure it's right
 #define TICKS_PER_FATAL_WOUND_DAMAGE TICKS_PER_SECOND * 4
 
 #define LOS_CHECK_INTERVAL_TRACKING 36
