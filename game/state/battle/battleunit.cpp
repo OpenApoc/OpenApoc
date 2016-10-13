@@ -634,9 +634,9 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	{
 		bool unconscious = isUnconscious();
 		woundTicksAccumulated += ticks;
-		while (woundTicksAccumulated > TICKS_PER_FATAL_WOUND_DAMAGE)
+		while (woundTicksAccumulated > TICKS_PER_UNIT_EFFECT)
 		{
-			woundTicksAccumulated -= TICKS_PER_FATAL_WOUND_DAMAGE;
+			woundTicksAccumulated -= TICKS_PER_UNIT_EFFECT;
 			for (auto &w : fatalWounds)
 			{
 				if (w.second > 0)

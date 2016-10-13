@@ -3,6 +3,7 @@
 #include "game/state/battle/battleforces.h"
 #include "game/state/battle/battlemapsector.h"
 #include "game/state/stateobject.h"
+#include "game/state/gametime.h"
 #include "library/sp.h"
 #include "library/vec.h"
 #include <list>
@@ -19,6 +20,8 @@ namespace OpenApoc
 #define VOXEL_X_BATTLE (24)
 #define VOXEL_Y_BATTLE (24)
 #define VOXEL_Z_BATTLE (20)
+
+static const unsigned TICKS_PER_TURN = TICKS_PER_SECOND * 4;
 
 class BattleCommonImageList;
 class BattleCommonSampleList;

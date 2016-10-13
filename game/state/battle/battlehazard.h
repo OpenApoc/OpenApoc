@@ -1,11 +1,11 @@
 #pragma once
 
 #include "game/state/gametime.h"
+#include "game/state/battle/battle.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
 
-#define TICKS_PER_HAZARD_EFFECT 4 * TICKS_PER_SECOND
 #define HAZARD_FRAME_COUNT 3
 // FIXME: This is a MADE UP VALUE!
 // Study the algorithm of spreading the hazards
@@ -13,6 +13,8 @@
 
 namespace OpenApoc
 {
+static const unsigned TICKS_PER_HAZARD_EFFECT = TICKS_PER_TURN;
+
 class TileObjectBattleHazard;
 class DamageType;
 class HazardType;
