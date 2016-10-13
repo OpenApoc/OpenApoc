@@ -1,32 +1,24 @@
 #pragma once
 #include "game/state/agent.h"
+#include "game/state/battle/battle.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gametime.h"
 #include "library/sp.h"
 #include "library/vec.h"
 
-// Items recharge their recharge rate of ammo every 4 seconds
-#define TICKS_PER_RECHARGE 4 * TICKS_PER_SECOND
-
 namespace OpenApoc
 {
+// Items recharge their recharge rate of ammo every 4 seconds (or fully recharge every turn in TB)
+static const unsigned TICKS_PER_RECHARGE = TICKS_PER_TURN;
 
 class BattleItem;
 class Projectile;
 class AEquipmentType;
+enum class TriggerType;
 
 class AEquipment : public std::enable_shared_from_this<AEquipment>
 {
   public:
-	enum class TriggerType
-	{
-		None,
-		Timed,
-		Contact,
-		Proximity,
-		Boomeroid,
-	};
-
 	AEquipment();
 	~AEquipment() = default;
 
@@ -54,7 +46,7 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	// Range for proximity
 	float triggerRange = 0.0f;
 	// Type of trigger used
-	TriggerType triggerType = TriggerType::None;
+	TriggerType triggerType;
 
 	void prime(bool onImpact = true, int triggerDelay = 0, float triggerRange = 0.0f);
 	void explode(GameState &state);

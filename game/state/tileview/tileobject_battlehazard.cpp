@@ -1,6 +1,7 @@
 #include "game/state/tileview/tileobject_battlehazard.h"
 #include "framework/renderer.h"
 #include "game/state/battle/battlehazard.h"
+#include "game/state/rules/damage.h"
 #include "game/state/rules/doodad_type.h"
 #include "game/state/tileview/tile.h"
 #include "library/line.h"
@@ -14,18 +15,24 @@ void TileObjectBattleHazard::draw(Renderer &r, TileTransform &, Vec2<float> scre
 	// Mode isn't used as TileView::tileToScreenCoords already transforms according to the mode
 	std::ignore = mode;
 
+	auto h = hazard.lock();
+
+	if (h->ticksUntilVisible > 0)
+	{
+		return;
+	}
+
 	Vec2<float> transformedScreenPos = screenPosition;
 	sp<Image> sprite;
 	switch (mode)
 	{
 		case TileViewMode::Isometric:
-			// sprite = item->item->type->dropped_sprite;
-			// transformedScreenPos -= item->item->type->dropped_offset;
+			sprite = h->hazardType->getFrame(h->age, h->frame);
+			transformedScreenPos -= h->hazardType->doodadType->imageOffset;
 			break;
 		case TileViewMode::Strategy:
 		{
-			// sprite = item->strategySprite;
-			// transformedScreenPos -= Vec2<float>{4, 4};
+			// No Hazards in strategy?
 			break;
 		}
 		default:

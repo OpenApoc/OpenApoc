@@ -2,6 +2,7 @@
 #include "framework/image.h"
 #include "framework/trace.h"
 #include "game/state/battle/battledoor.h"
+#include "game/state/battle/battlehazard.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battleunit.h"
@@ -11,6 +12,7 @@
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/tileview/collision.h"
+#include "game/state/tileview/tileobject_battlehazard.h"
 #include "game/state/tileview/tileobject_battleitem.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"
@@ -646,6 +648,19 @@ void TileMap::addObjectToMap(sp<BattleUnit> unit)
 	sp<TileObjectShadow> shadow(new TileObjectShadow(*this, unit));
 	shadow->setPosition(unit->getPosition());
 	unit->shadowObject = shadow;
+}
+
+void TileMap::addObjectToMap(sp<BattleHazard> hazard)
+{
+	if (hazard->tileObject)
+	{
+		LogError("Hazard already has tile object");
+	}
+	// FIXME: mksp<> doesn't work for private (but accessible due to friend)
+	// constructors?
+	sp<TileObjectBattleHazard> obj(new TileObjectBattleHazard(*this, hazard));
+	obj->setPosition(hazard->getPosition());
+	hazard->tileObject = obj;
 }
 
 unsigned int TileMap::getLayer(TileObject::Type type) const

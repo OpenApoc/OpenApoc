@@ -10,7 +10,9 @@
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/damage.h"
+#include "game/state/rules/doodad_type.h"
 #include "game/state/tileview/tile.h"
+#include "game/state/tileview/tileobject_battlehazard.h"
 #include "game/state/tileview/tileobject_battleitem.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"
@@ -22,8 +24,8 @@ namespace OpenApoc
 BattleExplosion::BattleExplosion(Vec3<int> position, StateRef<DamageType> damageType, int power,
                                  int depletionRate, bool damageInTheEnd,
                                  StateRef<BattleUnit> ownerUnit)
-    : position(position), ticksUntilExpansion(TICKS_MULTIPLIER * 2),
-      locationsToExpand({{position, {power, power}}}), locationsVisited({position}),
+    : position(position), power(power), ticksUntilExpansion(TICKS_MULTIPLIER * 2),
+      locationsToExpand({{{position, {power, power}}}, {}, {}}), locationsVisited({position}),
       damageType(damageType), depletionRate(depletionRate), damageInTheEnd(damageInTheEnd),
       ownerUnit(ownerUnit)
 {
@@ -31,6 +33,9 @@ BattleExplosion::BattleExplosion(Vec3<int> position, StateRef<DamageType> damage
 
 void BattleExplosion::die(GameState &state)
 {
+	auto this_shared = shared_from_this();
+	state.current_battle->explosions.erase(this_shared);
+	// Deal damage
 	if (damageInTheEnd)
 	{
 		auto &map = *state.current_battle->map;
@@ -39,8 +44,25 @@ void BattleExplosion::die(GameState &state)
 			damage(state, map, pos.first, pos.second);
 		}
 	}
-	auto this_shared = shared_from_this();
-	state.current_battle->explosions.erase(this_shared);
+	// Hack to make all hazards update at once
+	auto &map = *state.current_battle->map;
+	for (auto pos : locationsVisited)
+	{
+		auto tile = map.getTile(pos.x, pos.y, pos.z);
+		sp<BattleHazard> existingHazard;
+		for (auto obj : tile->ownedObjects)
+		{
+			if (obj->getType() == TileObject::Type::Hazard)
+			{
+				existingHazard = std::static_pointer_cast<TileObjectBattleHazard>(obj)->getHazard();
+				break;
+			}
+		}
+		if (existingHazard)
+		{
+			existingHazard->ticksUntilNextEffect = TICKS_PER_HAZARD_EFFECT;
+		}
+	}
 }
 
 void BattleExplosion::update(GameState &state, unsigned int ticks)
@@ -49,9 +71,9 @@ void BattleExplosion::update(GameState &state, unsigned int ticks)
 	while (ticksUntilExpansion <= 0)
 	{
 		ticksUntilExpansion += TICKS_MULTIPLIER * 2;
-		nextExpandLimited = !nextExpandLimited;
 		grow(state);
-		if (locationsToExpand.empty())
+		if (locationsToExpand[0].empty() && locationsToExpand[1].empty() &&
+		    locationsToExpand[2].empty())
 		{
 			die(state);
 			return;
@@ -59,31 +81,43 @@ void BattleExplosion::update(GameState &state, unsigned int ticks)
 	}
 }
 
-void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos, int power)
+void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos, int damage)
 {
 	auto tile = map.getTile(pos);
-	if (damageType->gas || damageType->flame)
+	// Explosions with no hazard spawn smoke with half ttl
+	if (!damageType->hazardType)
 	{
-		// Spawn hazards
+		StateRef<DamageType> dtSmoke = {&state, "DAMAGETYPE_SMOKE"};
+		auto hazard = state.current_battle->placeHazard(
+		    state, dtSmoke, pos, dtSmoke->hazardType->getLifetime(state), damage, 2);
+		if (hazard)
+		{
+			hazard->ticksUntilVisible = 0;
+		}
 	}
 	// Gas does no direct damage
-	if (!damageType->gas)
+	if (damageType->hasImpact())
 	{
-		for (auto obj : tile->ownedObjects)
+		for (auto it = tile->ownedObjects.begin(); it != tile->ownedObjects.end();)
 		{
+			auto obj = *it++;
 			if (obj->getType() == TileObject::Type::Ground ||
 			    obj->getType() == TileObject::Type::Feature ||
 			    obj->getType() == TileObject::Type::LeftWall ||
 			    obj->getType() == TileObject::Type::RightWall)
 			{
 				auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(obj)->getOwner();
-				if (damageType->flame)
+				switch (damageType->effectType)
 				{
-					LogWarning("Set map part on fire!");
+					case DamageType::EffectType::Fire:
+						LogWarning("Set map part on fire!");
+						break;
+					default:
+						break;
 				}
-				else
+				if (damageType->doesImpactDamage())
 				{
-					mp->applyDamage(state, power, damageType);
+					mp->applyDamage(state, damage, damageType);
 				}
 			}
 			else if (obj->getType() == TileObject::Type::Unit)
@@ -95,11 +129,15 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 					continue;
 				}
 				affectedUnits.insert(u);
-				if (damageType->flame)
+				switch (damageType->effectType)
 				{
-					LogWarning("Set unit on fire!");
+					case DamageType::EffectType::Fire:
+						LogWarning("Set unit on fire!");
+						break;
+					default:
+						break;
 				}
-				else
+				if (damageType->doesImpactDamage())
 				{
 					// Determine direction of hit
 					Vec3<float> velocity = -position;
@@ -128,21 +166,21 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 					}
 					// Apply
 					// FIXME: Give experience
-					u->applyDamage(state, power, damageType,
+					u->applyDamage(state, damage, damageType,
 					               u->determineBodyPartHit(damageType, cposition, velocity));
 				}
 			}
 			else if (obj->getType() == TileObject::Type::Item)
 			{
 				auto i = std::static_pointer_cast<TileObjectBattleItem>(obj)->getItem();
-				i->applyDamage(state, power, damageType);
+				i->applyDamage(state, damage, damageType);
 			}
 		}
 	}
 }
 
 void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<int> &from,
-                             const Vec3<int> &to, int power)
+                             const Vec3<int> &to, int nextPower)
 {
 	// list of coordinates to check
 	static const std::map<Vec3<int>, std::list<std::pair<Vec3<int>, std::set<TileObject::Type>>>>
@@ -210,7 +248,7 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 	    };
 
 	if (to.x < 0 || to.x >= map.size.x || to.y < 0 || to.y >= map.size.y || to.z < 0 ||
-	    to.z >= map.size.z || power <= 0 || locationsVisited.find(to) != locationsVisited.end())
+	    to.z >= map.size.z || nextPower <= 0 || locationsVisited.find(to) != locationsVisited.end())
 	{
 		return;
 	}
@@ -230,41 +268,57 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 			{
 				auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(obj)->getOwner();
 
-				int depletion = 0;
-				if (damageType->psionic)
-					depletion = 2 * mp->type->block_psionic;
-				else if (damageType->gas)
-					depletion = 2 * mp->type->block_gas;
-				else if (damageType->flame)
-					depletion = 2 * mp->type->block_fire;
-				else
-					depletion = 2 * mp->type->block_physical;
+				int depletion = 2 * mp->type->block[damageType->blockType];
 
 				depletionNext = std::max(depletionNext, depletion);
-				if (!(pos == to && obj->getType() == TileObject::Type::Feature) &&
-				    !(dir.x == 0 && dir.y == 0 && obj->getType() == TileObject::Type::Ground))
+				// Feature in target tile does not block damage to the tile
+				if (!(pos == to && obj->getType() == TileObject::Type::Feature))
 				{
 					depletionThis = std::max(depletionThis, depletion);
 				}
 			}
 		}
 	}
-	int thisPower = power -
-	                depletionRate *
-	                    (1 + (dir.x != 0 ? 1 : 0) + (dir.y != 0 ? 1 : 0) + (dir.z != 0 ? 1 : 0)) /
-	                    2;
-	int nextPower = thisPower;
+	int distance = (1 + (dir.x != 0 ? 1 : 0) + (dir.y != 0 ? 1 : 0) + (dir.z != 0 ? 1 : 0));
+	nextPower -= depletionRate * distance / 2;
+	
+	// If we reach the tile, and our type has no range dissipation, just apply power
+	int thisPower = nextPower - depletionThis;
+	if (thisPower > 0 && !damageType->hasDamageDissipation())
+	{
+		thisPower = power;
+	}
 	nextPower -= depletionNext;
-	thisPower -= depletionThis;
+	
+	// Add this tile to those which will be visited in the future
 	if (thisPower > 0)
 	{
 		// Queue damage application
-		locationsToExpand.emplace(to, Vec2<int>{thisPower, nextPower});
+		locationsToExpand[distance].emplace(to, Vec2<int>{thisPower, nextPower});
 		// Spawn doodad
-		auto doodadType = damageType->doodadType;
-		if (damageType->explosive && !damageType->gas)
+		auto doodadType = damageType->explosionDoodad;
+		if (!doodadType)
 		{
-			doodadType = {&state, format("DOODAD_BATTLE_EXPLOSION_%d%d", dir.x + 1, dir.y + 1)};
+			auto velocity = to - position;
+			auto absx = std::abs(velocity.x);
+			velocity.x /= std::max(1, absx);
+			auto absy = std::abs(velocity.y);
+			velocity.y /= std::max(1, absy);
+			if (velocity.x != 0 && velocity.y != 0)
+			{
+				// Determine sprite direction
+				// If within +-22.5 degrees of an axis, which has a tan of ~0.414,
+				// we use four-directional sprite, else diagonal sprite
+				if ((float)std::min(absx, absy) / std::max(absx, absy) < 0.414)
+				{
+					if (absx > absy)
+						velocity.y = 0;
+					else
+						velocity.x = 0;
+				}
+			}
+			doodadType = {&state,
+			              format("DOODAD_BATTLE_EXPLOSION_%d%d", velocity.x + 1, velocity.y + 1)};
 		}
 		Vec3<float> doodadPos = to;
 		doodadPos += Vec3<float>{0.5f, 0.5f, 0.5f};
@@ -274,42 +328,47 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 
 void BattleExplosion::grow(GameState &state)
 {
-	std::set<std::pair<Vec3<int>, Vec2<int>>> locationsToExpandNow = locationsToExpand;
-	locationsToExpand.clear();
 	auto &map = *state.current_battle->map;
 
-	// Deal damage and expand in four straight directions
-	for (auto pos : locationsToExpandNow)
+	for (int i = 0; i < 2; i++)
 	{
-		if (damageInTheEnd)
+		locationsToExpand.emplace_back();
+		// Deal damage and expand in four straight directions
+		for (auto pos : locationsToExpand[0])
 		{
-			locationsToDamage.emplace(pos.first, pos.second.x);
-		}
-		else
-		{
-			damage(state, map, pos.first, pos.second.x);
-		}
-		auto dir = pos.first - position;
-		int minX = dir.x <= 0 ? -1 : 0;
-		int maxX = dir.x >= 0 ? 1 : 0;
-		int minY = dir.y <= 0 ? -1 : 0;
-		int maxY = dir.y >= 0 ? 1 : 0;
+			if (damageType->hazardType)
+			{
+				state.current_battle->placeHazard(state, damageType, pos.first,
+				                                  damageType->hazardType->getLifetime(state),
+				                                  pos.second.x);
+			}
+			if (damageInTheEnd)
+			{
+				locationsToDamage.emplace(pos.first, pos.second.x);
+			}
+			else
+			{
+				damage(state, map, pos.first, pos.second.x);
+			}
+			auto dir = pos.first - position;
+			int minX = dir.x <= 0 ? -1 : 0;
+			int maxX = dir.x >= 0 ? 1 : 0;
+			int minY = dir.y <= 0 ? -1 : 0;
+			int maxY = dir.y >= 0 ? 1 : 0;
 
-		for (int x = minX; x <= maxX; x++)
-		{
-			expand(state, map, pos.first, {pos.first.x + x, pos.first.y, pos.first.z},
-			       pos.second.y);
+			for (int x = minX; x <= maxX; x++)
+			{
+				expand(state, map, pos.first, {pos.first.x + x, pos.first.y, pos.first.z},
+				       pos.second.y);
+			}
+			for (int y = minY; y <= maxY; y++)
+			{
+				expand(state, map, pos.first, {pos.first.x, pos.first.y + y, pos.first.z},
+				       pos.second.y);
+			}
 		}
-		for (int y = minY; y <= maxY; y++)
-		{
-			expand(state, map, pos.first, {pos.first.x, pos.first.y + y, pos.first.z},
-			       pos.second.y);
-		}
-	}
-	// Expand in diagonal directions that were left, as well as vertically
-	if (!nextExpandLimited)
-	{
-		for (auto pos : locationsToExpandNow)
+		// Expand in diagonal directions that were left, as well as vertically
+		for (auto pos : locationsToExpand[0])
 		{
 			auto dir = pos.first - position;
 			int minX = dir.x <= 0 ? -1 : 0;
@@ -331,6 +390,8 @@ void BattleExplosion::grow(GameState &state)
 				}
 			}
 		}
+		// Current entry is processed now
+		locationsToExpand.erase(locationsToExpand.begin());
 	}
 }
 

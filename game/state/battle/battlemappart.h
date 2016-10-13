@@ -50,7 +50,7 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	// Returns true if sound and doodad were handled by it
 	bool handleCollision(GameState &state, Collision &c);
 	// Handles mappart ceasing to exist (fatal damage or fell on something)
-	void die(GameState &state, bool violently = true);
+	void die(GameState &state, bool explosive = false, bool violently = true);
 	// Collapses mappart immediately
 	void collapse();
 

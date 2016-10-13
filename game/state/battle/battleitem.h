@@ -47,6 +47,7 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 	bool applyDamage(GameState &state, int power, StateRef<DamageType> damageType);
 
 	void die(GameState &state, bool violently = true);
+
 	void update(GameState &state, unsigned int ticks);
 
 	BattleItem() = default;

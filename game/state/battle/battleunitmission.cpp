@@ -1293,8 +1293,10 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 					    u.getPosition(), 0.25f);
 				}
 
-				auto bi = state.current_battle->addItem(state);
-				bi->item = item;
+				auto bi = state.current_battle->placeItem(
+				    state, item,
+				    u.position +
+				        Vec3<float>{0.0, 0.0, ((float)u.getCurrentHeight() - 4.0f) / 2.0f / 40.0f});
 				item->ownerItem = bi;
 				item = nullptr;
 
@@ -1323,9 +1325,6 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				           targetVector.y, targetVector.z, targetVectorModified.x,
 				           targetVectorModified.y, targetVectorModified.z, targetVectorDifference);
 
-				bi->position =
-				    u.position +
-				    Vec3<float>{0.0, 0.0, ((float)u.getCurrentHeight() - 4.0f) / 2.0f / 40.0f};
 				bi->velocity = (glm::normalize(Vec3<float>{targetVectorModified.x,
 				                                           targetVectorModified.y, 0.0f}) *
 				                    targetVectorDifference * velocityXY +
@@ -1336,7 +1335,6 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				bi->ownerInvulnerableTicks =
 				    (int)ceilf(36.0f / glm::length(bi->velocity / VELOCITY_SCALE_BATTLE)) + 1;
 
-				state.current_battle->map->addObjectToMap(bi);
 				u.addMission(state, changeStance(u, BodyState::Standing));
 				return;
 			}
@@ -1406,12 +1404,10 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				// Remove item
 				item->ownerAgent->removeEquipment(item);
 				// Drop item
-				auto bi = state.current_battle->addItem(state);
-				bi->item = item;
+				auto bi = state.current_battle->placeItem(state, item,
+				                                          u.position + Vec3<float>{0.0, 0.0, 0.5f});
 				item = nullptr;
 				bi->falling = true;
-				bi->position = u.position + Vec3<float>{0.0, 0.0, 0.5f};
-				state.current_battle->map->addObjectToMap(bi);
 			}
 			return;
 		}

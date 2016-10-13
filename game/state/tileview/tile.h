@@ -41,6 +41,8 @@ class BattleUnit;
 class TileObjectBattleUnit;
 class BattleItem;
 class TileObjectBattleItem;
+class BattleHazard;
+class TileObjectBattleHazard;
 class Sample;
 
 class TileTransform
@@ -113,7 +115,7 @@ class Tile
 	void updateBattlescapeUIDrawOrder();
 
 	// Height, 0-0.975, of the tile's ground and feature's height
-	// Height cannot be 0 as that is equal to 1.000 on the tile below
+	// Height cannot be 1 as that is equal to 0.000 on the tile below
 	float height = 0.0f;
 	// Movement cost through the tile's ground (or feature)
 	int movementCostIn = 4;
@@ -241,6 +243,7 @@ class TileMap
 	void addObjectToMap(sp<BattleMapPart>);
 	void addObjectToMap(sp<BattleItem>);
 	void addObjectToMap(sp<BattleUnit>);
+	void addObjectToMap(sp<BattleHazard>);
 
 	unsigned int getLayer(TileObject::Type type) const;
 	unsigned int getLayerCount() const;

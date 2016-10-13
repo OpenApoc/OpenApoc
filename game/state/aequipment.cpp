@@ -18,7 +18,7 @@
 namespace OpenApoc
 {
 
-AEquipment::AEquipment() : equippedPosition(0, 0), ammo(0) {}
+AEquipment::AEquipment() : equippedPosition(0, 0), ammo(0), triggerType(TriggerType::None) {}
 
 int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
                             BattleUnit::FireAimingMode fireMode, bool thrown)
@@ -339,18 +339,7 @@ void AEquipment::prime(bool onImpact, int triggerDelay, float triggerRange)
 	}
 	else
 	{
-		switch (type->trigger_type)
-		{
-			case AEquipmentType::TriggerType::Normal:
-				triggerType = TriggerType::Timed;
-				break;
-			case AEquipmentType::TriggerType::Proximity:
-				triggerType = TriggerType::Proximity;
-				break;
-			case AEquipmentType::TriggerType::Boomeroid:
-				triggerType = TriggerType::Boomeroid;
-				break;
-		}
+		triggerType = type->trigger_type;
 	}
 	this->triggerDelay = triggerDelay;
 	this->triggerRange = triggerRange;
@@ -376,7 +365,7 @@ void AEquipment::explode(GameState &state)
 	switch (type->type)
 	{
 		case AEquipmentType::Type::Grenade:
-			state.current_battle->addExplosion(state, position, type->damage_type->doodadType,
+			state.current_battle->addExplosion(state, position, type->explosion_graphic,
 			                                   type->damage_type, type->damage,
 			                                   type->explosion_depletion_rate, ownerAgent->unit);
 			break;

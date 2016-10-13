@@ -25,6 +25,7 @@
 #include "game/state/rules/doodad_type.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"
+#include "game/state/tileview/tileobject_battlehazard.h"
 #include "game/state/tileview/tileobject_battleitem.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"
@@ -197,6 +198,10 @@ void Battle::initMap()
 	{
 		this->map->addObjectToMap(d);
 	}
+	for (auto &h : this->hazards)
+	{
+		this->map->addObjectToMap(h);
+	}
 }
 
 void linkUpList(std::list<BattleMapPart *> list)
@@ -325,7 +330,10 @@ void Battle::setMode(Mode mode)
 sp<Doodad> Battle::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 {
 	auto doodad = mksp<Doodad>(position, type);
-	map->addObjectToMap(doodad);
+	if (map)
+	{
+		map->addObjectToMap(doodad);
+	}
 	this->doodads.push_back(doodad);
 	return doodad;
 }
@@ -359,16 +367,28 @@ sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position,
 	return explosion;
 }
 
-sp<BattleUnit> Battle::addUnit(GameState &state)
+sp<BattleUnit> Battle::placeUnit(GameState &state, StateRef<Agent> agent)
 {
 	auto unit = mksp<BattleUnit>();
 	UString id = BattleUnit::generateObjectID(state);
 	unit->id = id;
+	unit->agent = agent;
 	unit->strategyImages = state.battle_common_image_list->strategyImages;
 	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
 	unit->squadNumber = -1;
 	units[id] = unit;
 	return unit;
+}
+
+sp<BattleUnit> Battle::placeUnit(GameState &state, StateRef<Agent> agent, Vec3<float> position)
+{
+	auto u = placeUnit(state, agent);
+	u->position = position;
+	if (map)
+	{
+		map->addObjectToMap(u);
+	}
+	return u;
 }
 
 sp<BattleDoor> Battle::addDoor(GameState &state)
@@ -381,12 +401,58 @@ sp<BattleDoor> Battle::addDoor(GameState &state)
 	return door;
 }
 
-sp<BattleItem> Battle::addItem(GameState &state)
+sp<BattleItem> Battle::placeItem(GameState &state, sp<AEquipment> item, Vec3<float> position)
 {
-	auto item = mksp<BattleItem>();
-	item->strategySprite = state.battle_common_image_list->strategyImages->at(480);
-	items.push_back(item);
-	return item;
+	auto bitem = mksp<BattleItem>();
+	bitem->strategySprite = state.battle_common_image_list->strategyImages->at(480);
+	bitem->item = item;
+	bitem->position = position;
+	if (map)
+	{
+		map->addObjectToMap(bitem);
+	}
+	items.push_back(bitem);
+	return bitem;
+}
+
+sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<DamageType> type,
+                                     Vec3<int> position, int ttl, int power,
+                                     int initialAgeTTLDivizor)
+{
+	auto hazard = mksp<BattleHazard>(state, type);
+	hazard->position = position;
+	hazard->position += Vec3<float>{0.5f, 0.5f, 0.5f};
+	hazard->lifetime = ttl;
+	hazard->age = hazard->lifetime * (initialAgeTTLDivizor - 1) / initialAgeTTLDivizor;
+	hazard->power = power;
+	// Remove existing hazard, ensure possible to do this, place this
+	if (map)
+	{
+		auto tile = map->getTile(position);
+		// Cannot add hazard if tile is blocked or if nothing is there to burn for fire
+		if (tile->height * 40.0f > 38.0f ||
+		    (tile->height * 40.0f < 1.0f && type->effectType == DamageType::EffectType::Fire))
+		{
+			return nullptr;
+		}
+		// Clear existing hazards
+		sp<BattleHazard> existingHazard;
+		for (auto obj : tile->ownedObjects)
+		{
+			if (obj->getType() == TileObject::Type::Hazard)
+			{
+				existingHazard = std::static_pointer_cast<TileObjectBattleHazard>(obj)->getHazard();
+			}
+		}
+		if (existingHazard)
+		{
+			existingHazard->die(state, false);
+		}
+		map->addObjectToMap(hazard);
+	}
+	// Insert new hazard
+	hazards.insert(hazard);
+	return hazard;
 }
 
 void Battle::update(GameState &state, unsigned int ticks)
@@ -466,18 +532,27 @@ void Battle::update(GameState &state, unsigned int ticks)
 		o.second->update(state, ticks);
 	}
 	Trace::end("Battle::update::doors->update");
-	Trace::start("Battle::update::explosions->update");
-	for (auto &o : this->explosions)
+	Trace::start("Battle::update::doodads->update");
+	for (auto it = this->doodads.begin(); it != this->doodads.end();)
 	{
-		o->update(state, ticks);
+		auto d = *it++;
+		d->update(state, ticks);
 	}
-	Trace::end("Battle::update::explosions->update");
+	Trace::end("Battle::update::doodads->update");
 	Trace::start("Battle::update::hazards->update");
-	for (auto &o : this->hazards)
+	for (auto it = this->hazards.begin(); it != this->hazards.end();)
 	{
-		o->update(state, ticks);
+		auto d = *it++;
+		d->update(state, ticks);
 	}
 	Trace::end("Battle::update::hazards->update");
+	Trace::start("Battle::update::explosions->update");
+	for (auto it = this->explosions.begin(); it != this->explosions.end();)
+	{
+		auto d = *it++;
+		d->update(state, ticks);
+	}
+	Trace::end("Battle::update::explosions->update");
 	Trace::start("Battle::update::map_parts->update");
 	for (auto &o : this->map_parts)
 	{
@@ -497,13 +572,6 @@ void Battle::update(GameState &state, unsigned int ticks)
 		o.second->update(state, ticks);
 	}
 	Trace::end("Battle::update::units->update");
-	Trace::start("Battle::update::doodads->update");
-	for (auto it = this->doodads.begin(); it != this->doodads.end();)
-	{
-		auto d = *it++;
-		d->update(state, ticks);
-	}
-	Trace::end("Battle::update::doodads->update");
 }
 
 void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,

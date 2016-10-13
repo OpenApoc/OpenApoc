@@ -36,7 +36,7 @@ void BattleItem::die(GameState &state, bool violently)
 // Returns true if sound and doodad were handled by it
 bool BattleItem::applyDamage(GameState &state, int power, StateRef<DamageType> damageType)
 {
-	if (!damageType->explosive || damageType->gas || damageType->flame)
+	if (damageType->explosive != true || damageType->effectType != DamageType::EffectType::None)
 	{
 		return false;
 	}

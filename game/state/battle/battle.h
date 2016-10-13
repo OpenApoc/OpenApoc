@@ -3,6 +3,7 @@
 #include "game/state/battle/battleforces.h"
 #include "game/state/battle/battlemapsector.h"
 #include "game/state/stateobject.h"
+#include "game/state/gametime.h"
 #include "library/sp.h"
 #include "library/vec.h"
 #include <list>
@@ -20,12 +21,15 @@ namespace OpenApoc
 #define VOXEL_Y_BATTLE (24)
 #define VOXEL_Z_BATTLE (20)
 
+static const unsigned TICKS_PER_TURN = TICKS_PER_SECOND * 4;
+
 class BattleCommonImageList;
 class BattleCommonSampleList;
 class GameState;
 class TileMap;
 class BattleMapPart;
 class BattleUnit;
+class AEquipment;
 class BattleDoor;
 class BattleItem;
 class BattleExplosion;
@@ -123,10 +127,13 @@ class Battle : public std::enable_shared_from_this<Battle>
 	                                 StateRef<DoodadType> doodadType,
 	                                 StateRef<DamageType> damageType, int power, int depletionRate,
 	                                 StateRef<BattleUnit> ownerUnit = nullptr);
-	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
-	sp<BattleUnit> addUnit(GameState &state);
 	sp<BattleDoor> addDoor(GameState &state);
-	sp<BattleItem> addItem(GameState &state);
+	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
+	sp<BattleUnit> placeUnit(GameState &state, StateRef<Agent> agent);
+	sp<BattleUnit> placeUnit(GameState &state, StateRef<Agent> agent, Vec3<float> position);
+	sp<BattleItem> placeItem(GameState &state, sp<AEquipment> item, Vec3<float> position);
+	sp<BattleHazard> placeHazard(GameState &state, StateRef<DamageType> type, Vec3<int> position,
+	                             int ttl, int power, int initialAgeTTLDivizor = 1);
 
 	static void accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
 	                                    Vec3<float> &target, int accuracy, bool thrown = false);

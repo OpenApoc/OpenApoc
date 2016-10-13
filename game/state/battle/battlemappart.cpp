@@ -17,15 +17,17 @@
 namespace OpenApoc
 {
 
-void BattleMapPart::die(GameState &state, bool violently)
+void BattleMapPart::die(GameState &state, bool explosive, bool violently)
 {
 	if (violently)
 	{
 		if (type->explosion_power > 0)
 		{
-			state.current_battle->addExplosion(state, position, type->explosion_type->doodadType,
-			                                   type->explosion_type, type->explosion_power,
+			state.current_battle->addExplosion(state, position, nullptr, type->explosion_type,
+			                                   type->explosion_power,
 			                                   type->explosion_depletion_rate);
+			// Make it die so that it doesn't blow up twice!
+			explosive = false;
 		}
 	}
 
@@ -41,8 +43,24 @@ void BattleMapPart::die(GameState &state, bool violently)
 	}
 
 	// Doodad
-	auto doodad = state.current_battle->placeDoodad({&state, "DOODAD_29_EXPLODING_TERRAIN"},
-	                                                tileObject->getCenter());
+	switch (type->type)
+	{
+		case BattleMapPartType::Type::Ground:
+			// No dooad for grounds
+			break;
+		case BattleMapPartType::Type::LeftWall:
+			state.current_battle->placeDoodad({ &state, "DOODAD_29_EXPLODING_TERRAIN" },
+				tileObject->getCenter() - Vec3<float>(-0.5f,0.0f,0.0f));
+			break;
+		case BattleMapPartType::Type::RightWall:
+			state.current_battle->placeDoodad({ &state, "DOODAD_29_EXPLODING_TERRAIN" },
+				tileObject->getCenter() - Vec3<float>(0.0f, -0.5f, 0.0f));
+			break;
+		case BattleMapPartType::Type::Feature:
+			state.current_battle->placeDoodad({ &state, "DOODAD_29_EXPLODING_TERRAIN" },
+				tileObject->getCenter());
+			break;
+	}
 
 	// Replace with damaged / destroyed
 	if (type->damaged_map_part)
@@ -63,12 +81,20 @@ void BattleMapPart::die(GameState &state, bool violently)
 		// Replace ground with destroyed
 		if (this->position.z == 0 && this->type->type == BattleMapPartType::Type::Ground)
 		{
+			this->damaged = true;
 			this->type = type->destroyed_ground_tile;
 		}
 		// Destroy map part
 		else
 		{
-			destroyed = true;
+			if (explosive)
+			{
+				queueCollapse();
+			}
+			else
+			{
+				destroyed = true;
+			}
 		}
 	}
 
@@ -98,9 +124,8 @@ int BattleMapPart::getAnimationFrame()
 	}
 	else
 	{
-		return type->animation_frames.size() == 0
-		           ? -1
-		           : animation_frame_ticks / TICKS_PER_FRAME_MAP_PART;
+		return type->animation_frames.size() == 0 ? -1 : animation_frame_ticks /
+		                                                     TICKS_PER_FRAME_MAP_PART;
 	}
 }
 
@@ -137,14 +162,7 @@ bool BattleMapPart::applyDamage(GameState &state, int power, StateRef<DamageType
 	}
 
 	// If we came this far, map part has been damaged and must cease to be
-	if (damageType->explosive)
-	{
-		queueCollapse();
-	}
-	else
-	{
-		die(state);
-	}
+	die(state, damageType->explosive);
 	return false;
 }
 
@@ -1105,7 +1123,16 @@ void BattleMapPart::collapse()
 	{
 		return;
 	}
-	falling = true;
+	// Level 0 can't collapse
+	if (this->position.z == 0 && this->type->type == BattleMapPartType::Type::Ground)
+	{
+		this->damaged = true;
+		this->type = type->destroyed_ground_tile;
+	}
+	else
+	{
+		falling = true;
+	}
 	ceaseSupportProvision();
 	ceaseDoorFunction();
 }
