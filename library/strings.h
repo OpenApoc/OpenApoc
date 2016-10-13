@@ -18,7 +18,7 @@ class UString
   public:
 	// ASSUMPTIONS:
 	// All std::string/char are utf8
-	// wchar_t/std::wstring are platform-dependant types
+	// wchar_t/std::wstring are platform-dependant unicode types
 	// All lengths/offsets are in unicode code-points (not bytes/anything)
 	UString(std::string str);
 	UString(std::wstring wstr);
@@ -27,7 +27,6 @@ class UString
 	UString(UniChar uc);
 	UString(const char *cstr);
 	UString(const wchar_t *wcstr);
-	UString(const UniChar *ucstr);
 	UString(UString &&other);
 	UString();
 	~UString();

@@ -62,7 +62,7 @@ UString::UString() : u8Str() {}
 
 UString::UString(std::string str) : u8Str(str) {}
 
-UString::UString(char c) : u8Str(1, c) {}
+UString::UString(std::wstring wstr) : u8Str(boost::locale::conv::utf_to_utf<char>(wstr)) {}
 
 UString::UString(const char *cstr)
 
@@ -74,9 +74,26 @@ UString::UString(const char *cstr)
 	}
 }
 
+UString::UString(const wchar_t *wcstr)
+
+{
+	// We have to handle this manually as some things thought UString(nullptr) was a good idea
+	if (wcstr)
+	{
+		this->u8Str = boost::locale::conv::utf_to_utf<char>(wcstr);
+	}
+}
+
 UString::UString(const UString &) = default;
 
 UString::UString(UString &&other) { this->u8Str = std::move(other.u8Str); }
+
+UString::UString(char c) : u8Str() { u8Str = boost::locale::conv::utf_to_utf<char>(&c, &c + 1); }
+
+UString::UString(wchar_t wc) : u8Str()
+{
+	u8Str = boost::locale::conv::utf_to_utf<char>(&wc, &wc + 1);
+}
 
 UString::UString(UniChar uc) : u8Str()
 {
@@ -84,6 +101,8 @@ UString::UString(UniChar uc) : u8Str()
 }
 
 std::string UString::str() const { return this->u8Str; }
+
+std::wstring UString::wstr() const { return boost::locale::conv::utf_to_utf<wchar_t>(this->u8Str); }
 
 const char *UString::cStr() const { return this->u8Str.c_str(); }
 
