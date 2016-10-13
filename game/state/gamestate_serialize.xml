@@ -38,6 +38,7 @@
 		<member>gameTimeBeforeBattle</member>
 		<member type="SectionMap">battle_maps</member>
 		<member type="Section">current_battle</member>
+		<member type="Section">hazard_types</member>
 		<member type="Section">damage_modifiers</member>
 		<member type="Section">damage_types</member>
 		<member type="Section">agent_equipment</member>
@@ -341,10 +342,7 @@
 		<member>explosion_type</member>
 		<member>fire_resist</member>
 		<member>fire_burn_time</member>
-		<member>block_physical</member>
-		<member>block_gas</member>
-		<member>block_fire</member>
-		<member>block_psionic</member>
+		<member>block</member>
 		<member>size</member>
 		<member>damaged_map_part</member>
 		<member>alternative_map_part</member>
@@ -550,14 +548,19 @@
 	<object>
 		<name>BattleHazard</name>
 		<member>position</member>
-		<member>doodadType</member>
+		<member>damageType</member>
+		<member>hazardType</member>
+		<member>power</member>
 		<member>lifetime</member>
 		<member>age</member>
+		<member>frame</member>
+		<member>ticksUntilNextFrameChange</member>
+		<member>ticksUntilNextEffect</member>
 	</object>
 	<object>
 		<name>BattleExplosion</name>
 		<member>position</member>
-		<member>nextExpandLimited</member>
+		<member>power</member>
 		<member>ticksUntilExpansion</member>
 		<member>locationsToExpand</member>
 		<member>locationsVisited</member>
@@ -716,24 +719,40 @@
 	</object>
 	<object>
 		<name>DamageModifier</name>
-		<member>id</member>
-		<member>name</member>
 	</object>
 	<object>
+		<name>HazardType</name>
+		<member>doodadType</member>
+		<member>sound</member>
+		<member>minLifetime</member>
+		<member>maxLifetime</member>
+	</object>
+	<enum>
+		<name>DamageType::BlockType</name>
+		<value>Physical</value>
+		<value>Psionic</value>
+		<value>Gas</value>
+		<value>Fire</value>
+	</enum>
+	<enum>
+		<name>DamageType::EffectType</name>
+		<value>None</value>
+		<value>Stun</value>
+		<value>Smoke</value>
+		<value>Fire</value>
+		<value>Enzyme</value>
+	</enum>
+	<object>
 		<name>DamageType</name>
-		<member>id</member>
-		<member>name</member>
 		<member>icon_sprite</member>
 		<member>ignore_shield</member>
 		<member>modifiers</member>
 		<member>explosive</member>
-		<member>psionic</member>
-		<member>gas</member>
-		<member>flame</member>
-		<member>stun</member>
-		<member>smoke</member>
+		<member>explosionDoodad</member>
+		<member>blockType</member>
+		<member>effectType</member>
+		<member>hazardType</member>
 		<member>launcher</member>
-		<member>doodadType</member>
 		<member>explosionSounds</member>
 	</object>
 	<object>
@@ -1215,12 +1234,6 @@
 		<value>Loot</value>
 	</enum>
 	<enum>
-		<name>AEquipmentType::TriggerType</name>
-		<value>Normal</value>
-		<value>Proximity</value>
-		<value>Boomeroid</value>
-	</enum>
-	<enum>
 		<name>AgentType::Role</name>
 		<value>Soldier</value>
 		<value>Physicist</value>
@@ -1245,7 +1258,7 @@
 		<value>RightHand</value>
 	</enum>
 	<enum>
-		<name>AEquipment::TriggerType</name>
+		<name>TriggerType</name>
 		<value>None</value>
 		<value>Timed</value>
 		<value>Contact</value>

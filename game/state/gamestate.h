@@ -26,6 +26,7 @@ class DoodadType;
 class VEquipmentType;
 class VAmmoType;
 class BaseLayout;
+class HazardType;
 class UFOGrowth;
 class UFOIncursion;
 class Vehicle;
@@ -62,6 +63,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<UfopaediaCategory> ufopaedia;
 	ResearchState research;
 	StateRefMap<BattleMap> battle_maps;
+	StateRefMap<HazardType> hazard_types;
 	StateRefMap<DamageModifier> damage_modifiers;
 	StateRefMap<DamageType> damage_types;
 	StateRefMap<AEquipmentType> agent_equipment;

@@ -71,10 +71,10 @@ void InitialGameStateExtractor::readBattleMapParts(GameState &state, TACP &data_
 
 		object->fire_resist = entry.fire_resist;
 		object->fire_burn_time = entry.fire_burn_time;
-		object->block_physical = entry.block_physical;
-		object->block_gas = entry.block_gas;
-		object->block_fire = entry.block_fire;
-		object->block_psionic = entry.block_psionic;
+		object->block[DamageType::BlockType::Physical] = entry.block_physical;
+		object->block[DamageType::BlockType::Gas] = entry.block_gas;
+		object->block[DamageType::BlockType::Fire] = entry.block_fire;
+		object->block[DamageType::BlockType::Psionic] = entry.block_psionic;
 		object->size = entry.size;
 
 		object->voxelMapLOF = mksp<VoxelMap>(Vec3<int>{24, 24, 20});

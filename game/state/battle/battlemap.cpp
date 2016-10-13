@@ -890,9 +890,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						auto i = mksp<AEquipment>();
 						i->type = l;
 
-						auto bi = b->addItem(state);
-						bi->item = i;
-						bi->position = pair.first + shift;
+						auto bi = b->placeItem(state, i, pair.first + shift);
 					}
 					for (auto &tlb : tiles.los_blocks)
 					{
@@ -988,9 +986,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				b->participants.insert(a->owner);
 			}
 
-			auto u = b->addUnit(state);
+			auto u = b->placeUnit(state, a);
 
-			u->agent = a;
 			u->agent->unit = {&state, u->id};
 			u->owner = a->owner;
 			u->updateDisplayedItem();

@@ -384,6 +384,11 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 		stunDamageInTicks +=
 		    clamp(damage * SCALE, 0, std::max(0, stunPower * SCALE - stunDamageInTicks));
 	}
+	// Deal health damage
+	else
+	{
+		agent->modified_stats.health -= damage;
+	}
 
 	// Generate fatal wounds
 	if (generateFatalWounds)
@@ -402,9 +407,6 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 		}
 	}
 
-	// Deal damage
-	agent->modified_stats.health -= damage;
-
 	// Die or go unconscious
 	if (isDead())
 	{
@@ -417,7 +419,7 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 		fallUnconscious(state);
 	}
 
-	// Emit sound
+	// Emit sound fatal wound
 	if (fatal)
 	{
 		if (agent->type->fatalWoundSfx.find(agent->gender) != agent->type->fatalWoundSfx.end() &&
@@ -427,7 +429,8 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 			    listRandomiser(state.rng, agent->type->fatalWoundSfx.at(agent->gender)), position);
 		}
 	}
-	else
+	// Emit sound wound
+	else if (stunPower == 0)
 	{
 		if (agent->type->damageSfx.find(agent->gender) != agent->type->damageSfx.end() &&
 		    !agent->type->damageSfx.at(agent->gender).empty())
@@ -443,14 +446,18 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> damageType,
                              BodyPart bodyPart)
 {
-	fw().soundBackend->playSample(listRandomiser(state.rng, *genericHitSounds), position);
+	if (damageType->doesImpactDamage())
+	{
+		fw().soundBackend->playSample(listRandomiser(state.rng, *genericHitSounds), position);
+	}
 
 	// Calculate damage
 	int damage;
 	bool USER_OPTION_UFO_DAMAGE_MODEL = false;
-	if (damageType->smoke) // smoke deals 1-3 stun damage
+	if (damageType->effectType == DamageType::EffectType::Smoke) // smoke deals 1-3 stun damage
 	{
-		damage = randDamage050150(state.rng, 2);
+		power = 2;
+		damage = randDamage050150(state.rng, power);
 	}
 	else if (damageType->explosive) // explosive deals 50-150% damage
 	{
@@ -499,7 +506,8 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 		damageModifier = agent->type->damage_modifier;
 	}
 	// Smoke ignores armor value but does not ignore damage modifier
-	damage = damageType->dealDamage(damage, damageModifier) - (damageType->smoke ? 0 : armorValue);
+	damage = damageType->dealDamage(damage, damageModifier) -
+	         (damageType->ignoresArmorValue() ? 0 : armorValue);
 
 	// No daamge
 	if (damage <= 0)
@@ -508,7 +516,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	}
 
 	// Smoke, fire and stun damage does not damage armor
-	if (!damageType->smoke && !damageType->stun && !damageType->flame && armor)
+	if (damageType->dealsArmorDamage() && armor)
 	{
 		// Armor damage
 		int armorDamage = damage / 10 + 1;
@@ -521,18 +529,8 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	}
 
 	// Apply damage according to type
-	if (damageType->flame)
-	{
-		LogWarning("Handle fire damage properly!");
-	}
-	else if (damageType->smoke)
-	{
-		dealDamage(state, damage, false, 9001);
-	}
-	else
-	{
-		dealDamage(state, damage, true, damageType->stun ? power : 0);
-	}
+	dealDamage(state, damage, damageType->dealsFatalWounds(),
+	           damageType->dealsStunDamage() ? power : 0);
 
 	return false;
 }
@@ -545,7 +543,7 @@ BodyPart BattleUnit::determineBodyPartHit(StateRef<DamageType> damageType, Vec3<
 	// FIXME: Ensure body part determination is correct
 	// Assume top 25% is head, lower 25% is legs, and middle 50% is body/left/right
 	float altitude = (cposition.z - position.z) * 40.0f / (float)getCurrentHeight();
-	if (damageType->gas) // gas deals damage to the head
+	if (damageType->alwaysImpactsHead()) // gas deals damage to the head
 	{
 		bodyPartHit = BodyPart::Helmet;
 	}

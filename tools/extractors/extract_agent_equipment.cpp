@@ -46,6 +46,7 @@
 #define DT_PSIBLAST 6
 #define DT_EXPLOSIVE2 15
 #define DT_BRAINSUCKER 18
+#define DT_ENTROPY 16
 
 namespace OpenApoc
 {
@@ -203,14 +204,55 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 	std::map<int, sp<AEquipmentType>> weapons;
 	UString tracker_gun_clip_id = "";
 
-	for (unsigned i = 0; i < data_t.damage_type_names->count(); i++)
+	// Hazards
 	{
+		UString id = format("%s%s", HazardType::getPrefix(), "STUN_GAS");
+		auto h = mksp<HazardType>();
+		h->doodadType = {&state, "DOODAD_20_STUN_GAS"};
+		h->minLifetime = 1;
+		h->maxLifetime = 3;
+		state.hazard_types[id] = h;
+	}
+	{
+		UString id = format("%s%s", HazardType::getPrefix(), "ALIEN_GAS");
+		auto h = mksp<HazardType>();
+		h->doodadType = {&state, "DOODAD_19_ALIEN_GAS"};
+		// FIXME: Confirm these values
+		h->minLifetime = 1;
+		h->maxLifetime = 3;
+		state.hazard_types[id] = h;
+	}
+	{
+		UString id = format("%s%s", HazardType::getPrefix(), "SMOKE");
+		auto h = mksp<HazardType>();
+		h->doodadType = {&state, "DOODAD_18_SMOKE"};
+		h->minLifetime = 12;
+		h->maxLifetime = 24;
+		state.hazard_types[id] = h;
+	}
+	{
+		UString id = format("%s%s", HazardType::getPrefix(), "FIRE");
+		auto h = mksp<HazardType>();
+		h->doodadType = {&state, "DOODAD_17_FIRE"};
+		// FIXME: Confirm these values
+		h->minLifetime = 6;
+		h->maxLifetime = 10;
+		h->sound = fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/burning.raw:22050");
+		state.hazard_types[id] = h;
+	}
+
+	for (unsigned j = 0; j <= data_t.damage_type_names->count(); j++)
+	{
+		// extra enzyme entry for the purpose of implementing the entropy launcher
+		int i = j == data_t.damage_type_names->count() ? DT_ENTROPY : j;
 		auto d = mksp<DamageType>();
 
-		d->name = data_t.damage_type_names->get(i);
 		UString id = data_t.getDTypeId(i);
-
-		d->id = id;
+		if (i != j)
+		{
+			id = format("%s_SPECIAL", id);
+			d->effectType = DamageType::EffectType::Enzyme;
+		}
 
 		d->ignore_shield =
 		    (i < data_t.damage_types->count()) && (data_t.damage_types->get(i).ignore_shield == 1);
@@ -223,38 +265,39 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 		{
 			case DT_SMOKE:
 				d->explosive = true;
-				d->gas = true;
-				d->smoke = true;
-				d->doodadType = {&state, "DOODAD_18_SMOKE"};
+				d->effectType = DamageType::EffectType::Smoke;
+				d->explosionDoodad = {&state, "DOODAD_18_SMOKE"};
+				d->hazardType = {&state, "HAZARD_SMOKE"};
 				break;
 			case DT_AG:
 				d->explosive = true;
-				d->gas = true;
-				d->doodadType = {&state, "DOODAD_19_ALIEN_GAS"};
+				d->blockType = DamageType::BlockType::Gas;
+				d->explosionDoodad = {&state, "DOODAD_19_ALIEN_GAS"};
+				d->hazardType = {&state, "HAZARD_ALIEN_GAS"};
 				break;
 			case DT_INCENDARY:
 				d->explosive = true;
-				d->flame = true;
-				d->doodadType = {&state, "DOODAD_17_FIRE"};
+				d->effectType = DamageType::EffectType::Fire;
+				// uses default explosion doodad
+				d->hazardType = {&state, "HAZARD_FIRE"};
 				break;
 			case DT_STUNGAS:
 				d->explosive = true;
-				d->gas = true;
-				d->stun = true;
-				d->doodadType = {&state, "DOODAD_20_STUN_GAS"};
+				d->blockType = DamageType::BlockType::Gas;
+				d->effectType = DamageType::EffectType::Stun;
+				d->explosionDoodad = {&state, "DOODAD_20_STUN_GAS"};
+				d->hazardType = {&state, "HAZARD_STUN_GAS"};
 				break;
 			case DT_EXPLOSIVE:
+			case DT_EXPLOSIVE2:
 				d->explosive = true;
 				break;
 			case DT_STUNGUN:
-				d->stun = true;
+				d->effectType = DamageType::EffectType::Stun;
 				break;
 			case DT_PSIBLAST:
 				d->explosive = true;
-				d->psionic = true;
-				break;
-			case DT_EXPLOSIVE2:
-				d->explosive = true;
+				d->blockType = DamageType::BlockType::Psionic;
 				break;
 			case DT_BRAINSUCKER:
 				d->launcher = true;
@@ -291,10 +334,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 		auto d = mksp<DamageModifier>();
 		auto ddata = data_t.damage_modifiers->get(i);
 
-		d->name = data_t.damage_modifier_names->get(i);
 		UString id = data_t.getDModId(i);
-
-		d->id = id;
 
 		state.damage_modifiers[id] = d;
 
@@ -302,6 +342,12 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 		{
 			state.damage_types[data_t.getDTypeId(j)]->modifiers[{&state, id}] =
 			    ddata.damage_type_data[j];
+			// Extra entry for special entropy damage type
+			if (j == DT_ENTROPY)
+			{
+				state.damage_types[format("%s_SPECIAL", data_t.getDTypeId(j))]
+				    ->modifiers[{&state, id}] = ddata.damage_type_data[j];
+			}
 		}
 	}
 
@@ -808,13 +854,13 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 			switch (pdata.trigger_type)
 			{
 				case AGENT_GRENADE_TRIGGER_TYPE_NORMAL:
-					e->trigger_type = AEquipmentType::TriggerType::Normal;
+					e->trigger_type = TriggerType::Timed;
 					break;
 				case AGENT_GRENADE_TRIGGER_TYPE_PROXIMITY:
-					e->trigger_type = AEquipmentType::TriggerType::Proximity;
+					e->trigger_type = TriggerType::Proximity;
 					break;
 				case AGENT_GRENADE_TRIGGER_TYPE_BOOMEROID:
-					e->trigger_type = AEquipmentType::TriggerType::Boomeroid;
+					e->trigger_type = TriggerType::Boomeroid;
 					break;
 				default:
 					LogError("Unexpected grenade trigger type %d for ID %s",

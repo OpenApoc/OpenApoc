@@ -1003,9 +1003,12 @@ void BattleView::attemptToClearCurrentOrders(sp<BattleUnit> u, bool overrideBody
 			// Missions that cannot be cancelled before finished
 			case BattleUnitMission::MissionType::Fall:
 			case BattleUnitMission::MissionType::Snooze:
-			case BattleUnitMission::MissionType::DropItem:
 			case BattleUnitMission::MissionType::ThrowItem:
 				continue;
+			case BattleUnitMission::MissionType::DropItem:
+				if ((*m)->item)
+					continue;
+				break;
 			case BattleUnitMission::MissionType::ChangeBodyState:
 				if (overrideBodyStateChange)
 					break;
@@ -1162,7 +1165,7 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 	}
 	if (!valid)
 	{
-		actionImpossibleDelay = 40;
+ 		actionImpossibleDelay = 40;
 		return;
 	}
 

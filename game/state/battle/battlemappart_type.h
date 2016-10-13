@@ -1,5 +1,6 @@
 #pragma once
 
+#include "game/state/rules/damage.h"
 #include "game/state/stateobject.h"
 #include "game/state/tileview/tile.h"
 #include "library/sp.h"
@@ -10,7 +11,6 @@
 namespace OpenApoc
 {
 class DamageType;
-class Sample;
 class DamageModifier;
 class Image;
 class VoxelMap;
@@ -41,10 +41,8 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 	int fire_resist = 0;
 	int fire_burn_time = 0;
 
-	int block_physical = 0;
-	int block_gas = 0;
-	int block_fire = 0;
-	int block_psionic = 0;
+	std::map<DamageType::BlockType, int> block;
+
 	int size = 0;
 
 	StateRef<BattleMapPartType> damaged_map_part;

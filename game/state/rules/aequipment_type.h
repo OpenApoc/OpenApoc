@@ -21,6 +21,15 @@ class Organisation;
 class DamageType;
 class DamageModifier;
 
+enum class TriggerType
+{
+	None,
+	Timed,
+	Contact,
+	Proximity,
+	Boomeroid
+};
+
 class AEquipmentType : public StateObject<AEquipmentType>
 {
   public:
@@ -46,12 +55,6 @@ class AEquipmentType : public StateObject<AEquipmentType>
 		MediKit,
 		// For Psi-clones and stuff
 		Loot
-	};
-	enum class TriggerType
-	{
-		Normal,
-		Proximity,
-		Boomeroid
 	};
 
 	~AEquipmentType() override = default;
@@ -132,7 +135,7 @@ class AEquipmentType : public StateObject<AEquipmentType>
 	sp<Sample> fire_sfx;
 	sp<Sample> impact_sfx;
 	StateRef<DamageType> damage_type;
-	TriggerType trigger_type = TriggerType::Normal;
+	TriggerType trigger_type = TriggerType::None;
 	int explosion_depletion_rate = 0;
 };
 

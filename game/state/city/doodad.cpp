@@ -62,16 +62,16 @@ sp<Image> Doodad::getSprite()
 	if (this->sprite)
 		return sprite;
 	int animTime = 0;
-	sp<Image> sprite;
+	sp<Image> frame;
 	for (auto &f : type->frames)
 	{
-		sprite = f.image;
+		frame = f.image;
 		animTime += f.time * TICKS_MULTIPLIER;
 		if (animTime > age)
-			return sprite;
+			return frame;
 	}
 	LogWarning("Doodad reached age %d with no frame", age);
-	return sprite;
+	return frame;
 }
 
 } // namespace OpenApoc

@@ -1,4 +1,4 @@
-#pragma once
+	#pragma once
 
 #include "game/state/stateobject.h"
 #include "library/strings.h"
@@ -9,50 +9,95 @@ namespace OpenApoc
 class Image;
 class Sample;
 class DoodadType;
+class GameState;
+
+class HazardType : public StateObject<HazardType>
+{
+  public:
+	StateRef<DoodadType> doodadType;
+	sp<Sample> sound;
+
+	// Lifetime of a hazard
+	// In TB, hazard damages and spreads once every turn end
+	// In RT, it does so every 4 seconds
+
+	unsigned minLifetime = 0;
+	unsigned maxLifetime = 0;
+
+	// Get first frame used for age and offset
+	sp<Image> getFrame(int age, int offset);
+
+	// Get a random lifetime for the hazard of this type
+	int getLifetime(GameState &state);
+};
+
 class DamageModifier : public StateObject<DamageModifier>
 {
   public:
-	UString id;
-	UString name;
+	// nothing?
 };
 
 class DamageType : public StateObject<DamageType>
 {
   public:
-	UString id;
-	UString name;
+	enum class BlockType
+	{
+		Physical,
+		Psionic,
+		Gas,
+		Fire
+	};
+	enum class EffectType
+	{
+		None,
+		Stun,
+		Smoke,
+		Fire,
+		Enzyme
+	};
+
 	bool ignore_shield = false;
 	sp<Image> icon_sprite;
 	std::map<StateRef<DamageModifier>, int> modifiers;
 
 	// Wether this damage type produces explosion on hit
 	bool explosive = false;
-	// True = will use psionic block when checking for explosion block
-	bool psionic = false;
-	// True = explosion will spawn gas and animate as such
-	bool gas = false;
-	// True = deals no health damage, but sets on fire
-	// also, if explosion then will spawn file patches
-	bool flame = false;
-	// True = deals no health daamge, but stun damage instead, which cannot exceeed 2x power
-	bool stun = false;
-	// True = deals no health damage, but stun damage instead, which is fixed value of 2
-	// also, blocks vision
-	bool smoke = false;
+	// Doodad used by explosion, if nullptr will use common explosion doodad set
+	StateRef<DoodadType> explosionDoodad;
+	BlockType blockType = BlockType::Physical;
+	EffectType effectType = EffectType::None;
+	StateRef<HazardType> hazardType;
+
 	// True = when fired from weapon will throw ammunition to target location instead of firing
 	// properly
 	bool launcher = false;
 
-	// stun lasts 1 to 2
-	// smoke lasts 6 to 10
-	// ag not tested yet, assume 1 to 2
-	// clouds animate 1 neighbour sprite once in 2 seconds
-	// when exploding clouds animate once from full to zero and then start lingering
-	// explosion doodad is DOODAD_30_EXPLODING_PAYLOAD
-	// In TB smoke and fire deals damage on turn ends and on first spawn
-
-	// Doodad type spawned by this
-	StateRef<DoodadType> doodadType;
+	// True if explosive damage should reduce with distance (gas deals full damage everywhere)
+	bool hasDamageDissipation() const { return blockType != BlockType::Gas; }
+	// True if this damage type does something on it's initial impact
+	bool hasImpact() const { return blockType != BlockType::Gas && effectType != EffectType::Fire; }
+	// True if this damage type deals damage on initial impact
+	bool doesImpactDamage() const { return blockType != BlockType::Gas; }
+	// True if this always impacts unit's head
+	bool alwaysImpactsHead() const { return blockType == BlockType::Gas; }
+	// True if this ignores armor value
+	bool ignoresArmorValue() const { return effectType == EffectType::Smoke; }
+	// True if this deals damage to armor
+	bool dealsArmorDamage() const
+	{
+		return effectType != EffectType::Stun && effectType != EffectType::Smoke &&
+		       effectType != EffectType::Fire;
+	}
+	// True if this damage type deals fatal wounds
+	bool dealsFatalWounds() const
+	{
+		return effectType != EffectType::Stun && effectType != EffectType::Smoke;
+	}
+	// True if this deals stun damage instead of health damage
+	bool dealsStunDamage() const
+	{
+		return effectType == EffectType::Stun || effectType == EffectType::Smoke;
+	}
 
 	// Sounds when this explodes
 	std::list<sp<Sample>> explosionSounds;
