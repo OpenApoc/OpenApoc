@@ -1038,10 +1038,8 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> set)
 
 	// Then try to re-establish support links
 	bool listChanged;
-	int iteration = 0;
 	do
 	{
-		iteration++;
 		// DEBUG OUTPUT
 		LogWarning("%s", log.cStr());
 		log = "";
@@ -1137,20 +1135,6 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> set)
 		}
 		log += format("\n");
 		set = nextSet;
-		if (iteration > 1000)
-		{
-			for (auto mp : *set)
-			{
-				auto supportedByThisMp = mp->getSupportedParts();
-				for (auto newmp : *supportedByThisMp)
-				{
-					newmp->queueCollapse(mp->ticksUntilCollapse);
-					newmp->providesHardSupport = false;
-				}
-			}
-			LogError("Endless loop detected");
-			break;
-		}
 	} while (listChanged);
 
 	LogWarning("%s", log.cStr());
