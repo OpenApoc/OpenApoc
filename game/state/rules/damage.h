@@ -1,4 +1,4 @@
-	#pragma once
+#pragma once
 
 #include "game/state/stateobject.h"
 #include "library/strings.h"
@@ -67,10 +67,6 @@ class DamageType : public StateObject<DamageType>
 	BlockType blockType = BlockType::Physical;
 	EffectType effectType = EffectType::None;
 	StateRef<HazardType> hazardType;
-
-	// True = when fired from weapon will throw ammunition to target location instead of firing
-	// properly
-	bool launcher = false;
 
 	// True if explosive damage should reduce with distance (gas deals full damage everywhere)
 	bool hasDamageDissipation() const { return blockType != BlockType::Gas; }

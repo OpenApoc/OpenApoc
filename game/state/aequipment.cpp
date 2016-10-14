@@ -4,8 +4,10 @@
 #include "framework/sound.h"
 #include "game/state/agent.h"
 #include "game/state/battle/battle.h"
+#include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/city/projectile.h"
+#include "game/state/gamestate.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
@@ -18,10 +20,14 @@
 namespace OpenApoc
 {
 
-AEquipment::AEquipment() : equippedPosition(0, 0), ammo(0), triggerType(TriggerType::None) {}
+AEquipment::AEquipment()
+    : equippedPosition(0, 0), ammo(0), triggerType(TriggerType::None),
+      aimingMode(WeaponAimingMode::Aimed)
+{
+}
 
 int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
-                            BattleUnit::FireAimingMode fireMode, bool thrown)
+                            WeaponAimingMode fireMode, bool thrown)
 {
 	if (!ownerAgent)
 	{
@@ -105,7 +111,7 @@ void AEquipment::stopFiring()
 	readyToFire = false;
 }
 
-void AEquipment::startFiring(BattleUnit::FireAimingMode fireMode)
+void AEquipment::startFiring(WeaponAimingMode fireMode)
 {
 	if (ammo == 0)
 		return;
@@ -375,85 +381,119 @@ void AEquipment::explode(GameState &state)
 	}
 }
 
-sp<Projectile> AEquipment::fire(GameState &state, Vec3<float> targetPosition,
-                                Vec3<float> originalTarget, StateRef<BattleUnit> targetUnit)
+void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<BattleUnit> targetUnit)
 {
 	if (this->type->type != AEquipmentType::Type::Weapon)
 	{
 		LogError("fire() called on non-Weapon");
-		return nullptr;
+		return;
 	}
 	if (!readyToFire)
 	{
 		LogError("fire() called on non-ready Weapon");
-		return nullptr;
+		return;
 	}
 
 	auto unit = ownerAgent->unit;
 	auto payload = getPayloadType();
+	Vec3<float> originalTarget = targetPosition;
 
-	if (payload->damage_type->launcher)
+	if (payload->fire_sfx)
 	{
-		LogError("fire() called on launcher Weapon");
-		return nullptr;
+		fw().soundBackend->playSample(payload->fire_sfx, unit->position);
+	}
+
+	if (type->launcher)
+	{
+		auto unitPos = unit->getThrownItemLocation();
+		auto item = mksp<AEquipment>();
+		item->type = payload;
+		item->ammo = 1;
+		item->prime();
+		item->ownerAgent = ownerAgent;
+		float velocityXY = 0.0f;
+		float velocityZ = 0.0f;
+		if (!getVelocityForLaunch(unit, targetPosition, velocityXY, velocityZ))
+		{
+			LogError("Firing a launcher with no valid trajectory?");
+			return;
+		}
+		// Throw item (accuracy applied inside)
+		item->throwItem(state, targetPosition, velocityXY, velocityZ, true);
+	}
+	else
+	{
+		auto unitPos = unit->getMuzzleLocation();
+		// Apply accuracy algorithm
+		Battle::accuracyAlgorithmBattle(state, unitPos, targetPosition,
+		                                getAccuracy(unit->current_body_state,
+		                                            unit->current_movement_state,
+		                                            unit->fire_aiming_mode));
+		// Fire
+		Vec3<float> velocity = targetPosition - unitPos;
+		velocity = glm::normalize(velocity);
+		velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;
+		auto p = mksp<Projectile>(
+		    payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam, unit, targetUnit,
+		    originalTarget, unitPos, velocity, payload->turn_rate, payload->ttl * TICKS_MULTIPLIER,
+		    payload->damage, payload->explosion_depletion_rate, payload->tail_size,
+		    payload->projectile_sprites, payload->impact_sfx, payload->explosion_graphic,
+		    payload->damage_type);
+		state.current_battle->map->addObjectToMap(p);
+		state.current_battle->projectiles.insert(p);
 	}
 
 	readyToFire = false;
 	ammo--;
-	if (ammo == 0 && payload != type)
+	if (ammo == 0 && payloadType)
 	{
 		payloadType.clear();
 		loadAmmo(state);
 	}
-
-	if (payload->fire_sfx)
-	{
-		fw().soundBackend->playSample(payload->fire_sfx, unit->position);
-	}
-
-	auto unitPos = unit->getMuzzleLocation();
-	Vec3<float> velocity = targetPosition - unitPos;
-	velocity = glm::normalize(velocity);
-	velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;
-	return mksp<Projectile>(payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
-	                        unit, targetUnit, originalTarget, unitPos, velocity, payload->turn_rate,
-	                        payload->ttl * TICKS_MULTIPLIER, payload->damage,
-	                        payload->explosion_depletion_rate, payload->tail_size,
-	                        payload->projectile_sprites, payload->impact_sfx,
-	                        payload->explosion_graphic, payload->damage_type);
 }
 
-void AEquipment::launch(Vec3<float> &targetPosition, Vec3<float> &velocity)
+void AEquipment::throwItem(GameState &state, Vec3<int> targetPosition, float velocityXY,
+                           float velocityZ, bool launch)
 {
-	if (this->type->type != AEquipmentType::Type::Weapon)
+	auto &unit = *ownerAgent->unit;
+	Vec3<float> position = unit.getThrownItemLocation();
+	if (state.battle_common_sample_list->throwSounds.size() > 0)
 	{
-		LogError("fire() called on non-Weapon");
-		return;
-	}
-	if (!readyToFire)
-	{
-		LogError("fire() called on non-ready Weapon");
-		return;
+		fw().soundBackend->playSample(
+		    listRandomiser(state.rng, state.battle_common_sample_list->throwSounds), position,
+		    0.25f);
 	}
 
-	auto unit = ownerAgent->unit;
-	auto payload = getPayloadType();
+	// This will be modified by the accuracy algorithm
+	Vec3<float> targetLocationModified =
+	    Vec3<float>(targetPosition) + Vec3<float>{0.5f, 0.5f, 0.0f};
+	// This is proper target vector, stored to get differnece later
+	Vec3<float> targetVector = targetLocationModified - position;
+	// Apply accuracy (if launching apply normal, narrower spread)
+	Battle::accuracyAlgorithmBattle(state, position, targetLocationModified,
+	                                getAccuracy(unit.current_body_state,
+	                                            unit.current_movement_state, unit.fire_aiming_mode,
+	                                            true),
+	                                !launch);
+	Vec3<float> targetVectorModified = targetLocationModified - position;
+	// Calculate difference in lengths to modify velocity
+	float targetVectorDifference = glm::length(targetVectorModified) / glm::length(targetVector);
 
-	if (!payload->damage_type->launcher)
-	{
-		LogError("launch() called on non-launcher Weapon");
-		return;
-	}
+	velocityXY *= targetVectorDifference;
+	velocityZ *= targetVectorDifference;
 
-	readyToFire = false;
-	ammo--;
+	auto bi = state.current_battle->placeItem(state, shared_from_this(), position);
+	ownerItem = bi;
 
-	if (payload->fire_sfx)
-	{
-		fw().soundBackend->playSample(payload->fire_sfx, unit->position);
-	}
-
-	LogError("Implement launchers!");
+	bi->velocity =
+	    (glm::normalize(Vec3<float>{targetVectorModified.x, targetVectorModified.y, 0.0f}) *
+	         velocityXY +
+	     Vec3<float>{0.0f, 0.0f, velocityZ}) *
+	    VELOCITY_SCALE_BATTLE;
+	bi->falling = true;
+	// 36 / (velocity length) = enough ticks to pass 1 whole tile
+	bi->ownerInvulnerableTicks =
+	    (int)ceilf(36.0f / glm::length(bi->velocity / VELOCITY_SCALE_BATTLE)) + 1;
 }
 
 bool AEquipment::isLauncher()
@@ -468,10 +508,10 @@ bool AEquipment::isLauncher()
 		LogError("isLauncher() called on non-ready Weapon");
 		return false;
 	}
-	return getPayloadType()->damage_type->launcher;
+	return type->launcher;
 }
 
-StateRef<AEquipmentType> AEquipment::getPayloadType()
+StateRef<AEquipmentType> AEquipment::getPayloadType() const
 {
 	if (type->type == AEquipmentType::Type::Weapon && type->ammo_types.size() > 0)
 	{
@@ -480,15 +520,155 @@ StateRef<AEquipmentType> AEquipment::getPayloadType()
 	return type;
 }
 
-bool AEquipment::canFire(float range)
+bool AEquipment::canFire() const
 {
-	return type->type == AEquipmentType::Type::Weapon && ammo > 0 &&
-	       getPayloadType()->getRange() > range;
+	return (type->type == AEquipmentType::Type::Weapon && ammo > 0);
+}
+
+bool AEquipment::canFire(Vec3<float> to) const
+{
+	if (!canFire())
+		return false;
+	float distanceToTarget = glm::length(ownerAgent->unit->getMuzzleLocation() - to);
+	if (getPayloadType()->getRange() < distanceToTarget)
+		return false;
+	if (!type->launcher)
+	{
+		return true;
+	}
+	// Launchers need to additionally confirm a throw trajectory to target
+	float ignore1, ignore2;
+	return getVelocityForLaunch(ownerAgent->unit, to, ignore1, ignore2);
 };
 
-bool AEquipment::needsReload()
+bool AEquipment::needsReload() const
 {
 	return type->type == AEquipmentType::Type::Weapon && ammo == 0 && !type->ammo_types.empty();
+}
+
+// Alexey Andronov: Istrebitel
+// Made up values calculated by trying several throws in game
+// This formula closely resembles results I've gotten
+// But it may be completely wrong
+float AEquipment::getMaxThrowDistance(int weight, int strength, int heightDifference)
+{
+	static float max = 30.0f;
+	if (weight <= 2)
+	{
+		return max;
+	}
+	int mod = heightDifference > 0 ? heightDifference : heightDifference * 2;
+	return std::max(0.0f, std::min(max, (float)strength / ((float)weight - 1) - 2 + mod));
+}
+
+// Calculate starting velocity among xy and z to reach target
+bool AEquipment::calculateNextVelocityForThrow(float distanceXY, float diffZ, float &velocityXY,
+                                               float &velocityZ)
+{
+	static float dZ = 0.2f;
+
+	// Initial setup
+	// Start with X = 2.0f on first try, this is max speed item can have on XY
+	if (velocityXY == 0.0f)
+	{
+		velocityXY = 2.0f;
+	}
+	else
+	{
+		velocityXY -= dZ;
+	}
+
+	// For simplicity assume moving only along X
+	//
+	// t = time, in ticks
+	// VelocityZ(t) = VelocityZ0 - (Falling_Acceleration / VELOCITY_SCALE_Z) * t;
+	// Let:	a = -Faclling_acc / VELOCITY_SCALE_Z/ 2 / TICK_SCALE,
+	//		b = a + VelocityZ / TICK_SCALE,
+	//		c = diffZ
+	// z(t) = a*t^2 + b*t + c
+	//
+	// x = coordinate on the tile grid, in tiles
+	// x = t * VelocityX / TICK_SCALE
+	// t = x * TICK_SCALE / VelocityX
+	//
+	// We need to find VelocityZ, given a, t, c, that will produce a desired throw
+	// a*t^2 + b*t + c = 0 (hit the target at desired distance)
+	// b*t = -c-a*t^2
+	// b =  (-c-a*t^2)/t
+	// VelocityZ = TICK_SCALE * ((-c -a * t^2) / t - a)
+	//
+	// Howver, item must fall from above to the target
+	// Therefore, it's VelocityZ when arriving at target must be negative, and big enough
+	// If it's not, we must reduce VelocityX
+
+	float a = -FALLING_ACCELERATION_ITEM / VELOCITY_SCALE_BATTLE.z / 2.0f / TICK_SCALE;
+	float c = diffZ;
+	float t = 0.0f;
+
+	// We will continue reducing velocityXY  until we find such a trajectory
+	// that makes the item fall on top of the tile
+	while (velocityXY > 0.0f)
+	{
+		// FIXME: Should we prevent very high Z-trajectories, unreallistic for heavy items?
+		t = distanceXY * TICK_SCALE / (velocityXY);
+		velocityZ = TICK_SCALE * ((-c - a * t * t) / t - a);
+		if (velocityZ - (FALLING_ACCELERATION_ITEM / VELOCITY_SCALE_BATTLE.z) * t < -0.125f)
+		{
+			return true;
+		}
+		else
+		{
+			velocityXY -= dZ;
+		}
+	}
+	return false;
+}
+
+bool AEquipment::getVelocityForThrowLaunch(const sp<BattleUnit> unit, int weight,
+                                           Vec3<float> startPos, Vec3<int> target,
+                                           float &velocityXY, float &velocityZ)
+{
+	// Check distance to target
+	auto pos = unit->tileObject->getOwningTile()->position;
+	Vec3<float> targetVectorXY = target - pos;
+	targetVectorXY = {targetVectorXY.x, targetVectorXY.y, 0.0f};
+	float distance = glm::length(targetVectorXY);
+	if (distance >=
+	    getMaxThrowDistance(weight, unit->agent->modified_stats.strength, pos.z - target.z))
+	{
+		return false;
+	}
+
+	// Calculate trajectory
+	bool valid = true;
+	auto &map = unit->tileObject->map;
+	while (AEquipment::calculateNextVelocityForThrow(distance, startPos.z - target.z - 6.0f / 40.0f,
+	                                                 velocityXY, velocityZ))
+	{
+		valid = map.checkThrowTrajectory(unit->tileObject, startPos, target, targetVectorXY,
+		                                 velocityXY, velocityZ);
+		if (valid)
+		{
+			break;
+		}
+	}
+	return valid;
+}
+
+bool AEquipment::getVelocityForThrow(const sp<BattleUnit> unit, Vec3<int> target, float &velocityXY,
+                                     float &velocityZ) const
+{
+	return getVelocityForThrowLaunch(unit, type->weight + (payloadType ? payloadType->weight : 0),
+	                                 unit->getThrownItemLocation(), target, velocityXY, velocityZ);
+}
+
+bool AEquipment::getVelocityForLaunch(const sp<BattleUnit> unit, Vec3<int> target,
+                                      float &velocityXY, float &velocityZ) const
+{
+	// Launchers can use higher "throw" speeds
+	velocityXY = 4.0f;
+	return getVelocityForThrowLaunch(unit, payloadType->weight, unit->getMuzzleLocation(), target,
+	                                 velocityXY, velocityZ);
 }
 
 } // namespace OpenApoc

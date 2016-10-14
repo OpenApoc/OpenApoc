@@ -1286,55 +1286,9 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 			// Half way there - throw the item!
 			if (u.current_body_state == BodyState::Throwing)
 			{
-				if (state.battle_common_sample_list->throwSounds.size() > 0)
-				{
-					fw().soundBackend->playSample(
-					    listRandomiser(state.rng, state.battle_common_sample_list->throwSounds),
-					    u.getPosition(), 0.25f);
-				}
+				item->throwItem(state, targetLocation, velocityXY, velocityZ);
 
-				auto bi = state.current_battle->placeItem(
-				    state, item,
-				    u.position +
-				        Vec3<float>{0.0, 0.0, ((float)u.getCurrentHeight() - 4.0f) / 2.0f / 40.0f});
-				item->ownerItem = bi;
 				item = nullptr;
-
-				// Throwing accuracy applied
-
-				// This will be modified by accuracy algorithm
-				Vec3<float> targetLocationModified = targetLocation;
-				// This is proper target vector, stored to get differnece later
-				Vec3<float> targetVector =
-				    Vec3<int>(targetLocationModified) - u.tileObject->getOwningTile()->position;
-				// Apply accuracy
-				Battle::accuracyAlgorithmBattle(
-				    state, u.tileObject->getOwningTile()->position, targetLocationModified,
-				    bi->item->getAccuracy(u.current_body_state, u.current_movement_state,
-				                          u.fire_aiming_mode, true),
-				    true);
-				// We ignore change on Z because that would require re-calculating throw parabola
-				Vec3<float> targetVectorModified =
-				    Vec3<float>{targetLocationModified.x, targetLocationModified.y,
-				                targetLocation.z} -
-				    (Vec3<float>)u.tileObject->getOwningTile()->position;
-				// Calculate difference in lengths to modify velocity
-				float targetVectorDifference =
-				    glm::length(targetVectorModified) / glm::length(targetVector);
-				LogWarning("Target %f %f %f Modified %f %f %f diff %f", targetVector.x,
-				           targetVector.y, targetVector.z, targetVectorModified.x,
-				           targetVectorModified.y, targetVectorModified.z, targetVectorDifference);
-
-				bi->velocity = (glm::normalize(Vec3<float>{targetVectorModified.x,
-				                                           targetVectorModified.y, 0.0f}) *
-				                    targetVectorDifference * velocityXY +
-				                Vec3<float>{0.0f, 0.0f, velocityZ}) *
-				               targetVectorDifference * VELOCITY_SCALE_BATTLE;
-				bi->falling = true;
-				// 36 / (velocity length) = enough ticks to pass 1 whole tile
-				bi->ownerInvulnerableTicks =
-				    (int)ceilf(36.0f / glm::length(bi->velocity / VELOCITY_SCALE_BATTLE)) + 1;
-
 				u.addMission(state, changeStance(u, BodyState::Standing));
 				return;
 			}

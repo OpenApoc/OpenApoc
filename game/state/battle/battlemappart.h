@@ -87,5 +87,8 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 
 	// Cease providing or requiring support
 	void ceaseSupportProvision();
+
+	// Cease using support
+	void ceaseBeingSupported();
 };
 }

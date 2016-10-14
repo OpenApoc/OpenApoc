@@ -752,7 +752,6 @@
 		<member>blockType</member>
 		<member>effectType</member>
 		<member>hazardType</member>
-		<member>launcher</member>
 		<member>explosionSounds</member>
 	</object>
 	<object>
@@ -774,6 +773,7 @@
 		<member>score</member>
 		<member>research_dependency</member>
 		<member>two_handed</member>
+		<member>launcher</member>
 		<member>body_sprite</member>
 		<member>damage_modifier</member>
 		<member>body_part</member>
@@ -1103,7 +1103,7 @@
 		<value>Evasive</value>
 	</enum>
 	<enum>
-		<name>BattleUnit::FireAimingMode</name>
+		<name>WeaponAimingMode</name>
 		<value>Aimed</value>
 		<value>Snap</value>
 		<value>Auto</value>

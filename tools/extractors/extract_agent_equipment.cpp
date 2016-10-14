@@ -265,6 +265,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 		{
 			case DT_SMOKE:
 				d->explosive = true;
+				d->blockType = DamageType::BlockType::Gas;
 				d->effectType = DamageType::EffectType::Smoke;
 				d->explosionDoodad = {&state, "DOODAD_18_SMOKE"};
 				d->hazardType = {&state, "HAZARD_SMOKE"};
@@ -298,9 +299,6 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 			case DT_PSIBLAST:
 				d->explosive = true;
 				d->blockType = DamageType::BlockType::Psionic;
-				break;
-			case DT_BRAINSUCKER:
-				d->launcher = true;
 				break;
 		}
 
@@ -391,6 +389,12 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 			default:
 				e->two_handed = false;
 				break;
+		}
+
+		// Mark brainsucker launcher
+		if (edata.sprite_idx == 44)
+		{
+			e->launcher = true;
 		}
 
 		unsigned payload_idx = std::numeric_limits<unsigned>::max();

@@ -2,8 +2,8 @@
 
 #include "game/state/battle/battleforces.h"
 #include "game/state/battle/battlemapsector.h"
-#include "game/state/stateobject.h"
 #include "game/state/gametime.h"
+#include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
 #include <list>

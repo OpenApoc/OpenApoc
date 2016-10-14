@@ -48,72 +48,89 @@ void BattleHazard::die(GameState &state, bool violently)
 	}
 }
 
-bool BattleHazard::expand(GameState &state, const TileMap &map,
-	const Vec3<int> &to, int ttl)
+bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> &to, int ttl)
 {
 	// list of coordinates to check
 	static const std::map<Vec3<int>, std::list<std::pair<Vec3<int>, std::set<TileObject::Type>>>>
-		searchPattern = {
-			// Vertical
-			{ { 0, 0, 1 },{ { { 0, 0, 1 },{ TileObject::Type::Ground } } } },
-			{ { 0, 0, -1 },
-			{ { { 0, 0, 0 },{ TileObject::Type::Ground } },  } },
-			// Horizontal direct
-			{ { 0, -1, 0 },
-			{ { { 0, 0, 0 },{ TileObject::Type::RightWall } }, } },
-			{ { 0, 1, 0 },
-			{ { { 0, 1, 0 },{ TileObject::Type::RightWall } }, } },
-			{ { -1, 0, 0 },
-			{ { { 0, 0, 0 },{ TileObject::Type::LeftWall } }, } },
-			{ { 1, 0, 0 },
-			{ { { 1, 0, 0 },{ TileObject::Type::LeftWall } }, } },
-			// Horizontal top-left
-			{ { -1, -1, 0 },
-			{
-				{ { -1, 0, 0 },{ TileObject::Type::Feature } },
-				{ { 0, -1, 0 },{ TileObject::Type::Feature } },
-				{ { -1, 0, 0 },{ TileObject::Type::RightWall } },
-				{ { 0, -1, 0 },{ TileObject::Type::LeftWall } },
-				{ { 0, 0, 0 },{ TileObject::Type::RightWall } },
-				{ { 0, 0, 0 },{ TileObject::Type::LeftWall } },
-			} },
-			// Horizontal bottom-right
-			{ { 1, 1, 0 },
-			{
-				{ { 0, 1, 0 },{ TileObject::Type::Feature } },
-				{ { 1, 0, 0 },{ TileObject::Type::Feature } },
-				{ { 0, 1, 0 },{ TileObject::Type::RightWall } },
-				{ { 1, 0, 0 },{ TileObject::Type::LeftWall } },
-				{ { 1, 1, 0 },{ TileObject::Type::RightWall } },
-				{ { 1, 1, 0 },{ TileObject::Type::LeftWall } },
-			} },
-			// Horizontal top-right
-			{ { 1, -1, 0 },
-			{
-				{ { 1, 0, 0 },{ TileObject::Type::Feature } },
-				{ { 0, -1, 0 },{ TileObject::Type::Feature } },
-				{ { 0, 0, 0 },{ TileObject::Type::RightWall } },
-				{ { 1, -1, 0 },{ TileObject::Type::LeftWall } },
-				{ { 1, 0, 0 },{ TileObject::Type::RightWall } },
-				{ { 1, 0, 0 },{ TileObject::Type::LeftWall } },
-			} },
-			// Horizontal bottom-left
-			{ { -1, 1, 0 },
-			{
-				{ { -1, 0, 0 },{ TileObject::Type::Feature } },
-				{ { 0, 1, 0 },{ TileObject::Type::Feature } },
-				{ { -1, 1, 0 },{ TileObject::Type::RightWall } },
-				{ { 0, 0, 0 },{ TileObject::Type::LeftWall } },
-				{ { 0, 1, 0 },{ TileObject::Type::RightWall } },
-				{ { 0, 1, 0 },{ TileObject::Type::LeftWall } },
-			} },
-	};
-	
+	    searchPattern = {
+	        // Vertical
+	        {{0, 0, 1}, {{{0, 0, 1}, {TileObject::Type::Ground}}}},
+	        {{0, 0, -1},
+	         {
+	             {{0, 0, 0}, {TileObject::Type::Ground}},
+	         }},
+	        // Horizontal direct
+	        {{0, -1, 0},
+	         {
+	             {{0, 0, 0}, {TileObject::Type::RightWall}},
+	         }},
+	        {{0, 1, 0},
+	         {
+	             {{0, 1, 0}, {TileObject::Type::RightWall}},
+	         }},
+	        {{-1, 0, 0},
+	         {
+	             {{0, 0, 0}, {TileObject::Type::LeftWall}},
+	         }},
+	        {{1, 0, 0},
+	         {
+	             {{1, 0, 0}, {TileObject::Type::LeftWall}},
+	         }},
+	        // Horizontal top-left
+	        {{-1, -1, 0},
+	         {
+	             {{-1, 0, 0}, {TileObject::Type::Feature}},
+	             {{0, -1, 0}, {TileObject::Type::Feature}},
+	             {{-1, 0, 0}, {TileObject::Type::RightWall}},
+	             {{0, -1, 0}, {TileObject::Type::LeftWall}},
+	             {{0, 0, 0}, {TileObject::Type::RightWall}},
+	             {{0, 0, 0}, {TileObject::Type::LeftWall}},
+	         }},
+	        // Horizontal bottom-right
+	        {{1, 1, 0},
+	         {
+	             {{0, 1, 0}, {TileObject::Type::Feature}},
+	             {{1, 0, 0}, {TileObject::Type::Feature}},
+	             {{0, 1, 0}, {TileObject::Type::RightWall}},
+	             {{1, 0, 0}, {TileObject::Type::LeftWall}},
+	             {{1, 1, 0}, {TileObject::Type::RightWall}},
+	             {{1, 1, 0}, {TileObject::Type::LeftWall}},
+	         }},
+	        // Horizontal top-right
+	        {{1, -1, 0},
+	         {
+	             {{1, 0, 0}, {TileObject::Type::Feature}},
+	             {{0, -1, 0}, {TileObject::Type::Feature}},
+	             {{0, 0, 0}, {TileObject::Type::RightWall}},
+	             {{1, -1, 0}, {TileObject::Type::LeftWall}},
+	             {{1, 0, 0}, {TileObject::Type::RightWall}},
+	             {{1, 0, 0}, {TileObject::Type::LeftWall}},
+	         }},
+	        // Horizontal bottom-left
+	        {{-1, 1, 0},
+	         {
+	             {{-1, 0, 0}, {TileObject::Type::Feature}},
+	             {{0, 1, 0}, {TileObject::Type::Feature}},
+	             {{-1, 1, 0}, {TileObject::Type::RightWall}},
+	             {{0, 0, 0}, {TileObject::Type::LeftWall}},
+	             {{0, 1, 0}, {TileObject::Type::RightWall}},
+	             {{0, 1, 0}, {TileObject::Type::LeftWall}},
+	         }},
+	    };
+
 	// Ensure coordinates are ok
 	if (to.x < 0 || to.x >= map.size.x || to.y < 0 || to.y >= map.size.y || to.z < 0 ||
-		to.z >= map.size.z)
+	    to.z >= map.size.z)
 	{
 		return false;
+	}
+
+	// Fire spreads smoke
+	// Actual spread of fire is handled in the effect application
+	auto spreadDamageType = damageType;
+	if (damageType->effectType == DamageType::EffectType::Fire)
+	{
+		spreadDamageType = {&state, "DAMAGETYPE_SMOKE"};
 	}
 
 	// Ensure no hazard already there
@@ -124,8 +141,13 @@ bool BattleHazard::expand(GameState &state, const TileMap &map,
 	{
 		if (obj->getType() == TileObject::Type::Hazard)
 		{
-			existingHazard =
-				std::static_pointer_cast<TileObjectBattleHazard>(obj)->getHazard();
+			existingHazard = std::static_pointer_cast<TileObjectBattleHazard>(obj)->getHazard();
+			// Replace weaker hazards
+			if (existingHazard->damageType == spreadDamageType &&
+			    existingHazard->lifetime - existingHazard->age < ttl)
+			{
+				existingHazard = nullptr;
+			}
 			break;
 		}
 	}
@@ -147,7 +169,7 @@ bool BattleHazard::expand(GameState &state, const TileMap &map,
 			if (pair.second.find(obj->getType()) != pair.second.end())
 			{
 				auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(obj)->getOwner();
-				block = std::max(block, mp->type->block[damageType->blockType]);
+				block = std::max(block, mp->type->block[spreadDamageType->blockType]);
 			}
 		}
 	}
@@ -156,16 +178,18 @@ bool BattleHazard::expand(GameState &state, const TileMap &map,
 	{
 		return false;
 	}
-	
+
 	// If reached here try place hazard
-	auto hazard = state.current_battle->placeHazard(state, damageType, { to.x, to.y, to.z },
-		lifetime, power);
-	if (hazard)
+	auto hazard = state.current_battle->placeHazard(
+	    state, spreadDamageType, {to.x, to.y, to.z}, lifetime, power,
+	    damageType->effectType == DamageType::EffectType::Fire ? 6 : 1);
+	if (hazard && damageType->effectType != DamageType::EffectType::Fire)
 	{
 		hazard->age = age;
 		hazard->ticksUntilVisible = 0;
 		return true;
 	}
+
 	return false;
 }
 
@@ -177,11 +201,12 @@ void BattleHazard::grow(GameState &state)
 	}
 	auto &map = tileObject->map;
 	int newTTL = lifetime - age;
+
 	for (int x = position.x - 1; x <= position.x + 1; x++)
 	{
 		for (int y = position.y - 1; y <= position.y + 1; y++)
 		{
-			if (expand(state, map, { x,y,position.z }, newTTL))
+			if (expand(state, map, {x, y, position.z}, newTTL))
 			{
 				return;
 			}
@@ -189,7 +214,7 @@ void BattleHazard::grow(GameState &state)
 	}
 	for (int z = position.z - 1; z <= position.z + 1; z++)
 	{
-		if (expand(state, map, { position.x,position.y,z }, newTTL))
+		if (expand(state, map, {position.x, position.y, z}, newTTL))
 		{
 			return;
 		}
@@ -200,9 +225,13 @@ void BattleHazard::applyEffect(GameState &state)
 {
 	auto tile = tileObject->getOwningTile();
 
-	for (auto it = tile->ownedObjects.begin(); it != tile->ownedObjects.end();)
+	auto set = tile->ownedObjects;
+	for (auto obj : set)
 	{
-		auto obj = *it++;
+		if (tile->ownedObjects.find(obj) == tile->ownedObjects.end())
+		{
+			continue;
+		}
 		if (obj->getType() == TileObject::Type::Ground ||
 		    obj->getType() == TileObject::Type::Feature ||
 		    obj->getType() == TileObject::Type::LeftWall ||
