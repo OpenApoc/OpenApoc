@@ -466,9 +466,22 @@ BattleView::BattleView(sp<GameState> state)
 	this->uiTabsRT[2]
 	    ->findControlTyped<ScrollBar>("RANGE_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, updateRange);
-	// this->uiTabsTB[2]->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->setClickSound(nullptr);
-	// this->uiTabsTB[2]->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->Enabled = false;
-	LogWarning("Add TB controls for priming!");
+	this->uiTabsRT[2]
+		->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")
+		->setClickSound(nullptr);
+	this->uiTabsTB[2]->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->Enabled = false;
+	this->uiTabsTB[2]
+		->findControlTyped<GraphicButton>("BUTTON_CANCEL")
+		->addCallback(FormEventType::ButtonClick, cancelPriming);
+	this->uiTabsTB[2]
+		->findControlTyped<GraphicButton>("BUTTON_OK")
+		->addCallback(FormEventType::ButtonClick, finishPriming);
+	this->uiTabsTB[2]
+		->findControlTyped<ScrollBar>("DELAY_SLIDER")
+		->addCallback(FormEventType::ScrollBarChange, updateDelay);
+	this->uiTabsTB[2]
+		->findControlTyped<ScrollBar>("RANGE_SLIDER")
+		->addCallback(FormEventType::ScrollBarChange, updateRange);
 
 	// Hand controls
 
