@@ -316,7 +316,7 @@ bool BattleMapPart::findSupport()
 	// (following conditions provide "hard" support)
 	//
 	// Ground:
-	//  - G1: Feature Current/Below
+	//  - G1: Feature Below
 	//  - G2: Wall Adjacent Below
 	//  - G3: Feature Adjacent Below
 	//
@@ -416,8 +416,8 @@ bool BattleMapPart::findSupport()
 					switch (type->type)
 					{
 						case BattleMapPartType::Type::Ground:
-							//  - G1: Feature Current/Below
-							canSupport = canSupport || (x == pos.x && y == pos.y &&
+							//  - G1: Feature Below
+							canSupport = canSupport || (x == pos.x && y == pos.y && z < pos.z &&
 							                            o->getType() == TileObject::Type::Feature);
 							//  - G2: Wall Adjacent Below
 							if ((x >= pos.x || y >= pos.y) && z < pos.z)
@@ -683,86 +683,91 @@ bool BattleMapPart::findSupport()
 		}
 	}
 
-	// If we reached this - we can not provide hard support
-	providesHardSupport = false;
-
-	// Step 03: Try to cling to two adjacent objects of the same type
-	// (wall can also cling to feature)
-
-	// List of four directions (for ground and feature)
-	static const std::list<Vec3<int>> directionGDFTList = {
-	    {0, -1, 0}, {1, 0, 0}, {0, 1, 0}, {-1, 0, 0},
-	};
-
-	// List of directions for left wall
-	static const std::list<Vec3<int>> directionLWList = {
-	    {0, -1, 0}, {0, 1, 0},
-	};
-
-	// List of directions for right wall
-	static const std::list<Vec3<int>> directionRWList = {
-	    {1, 0, 0}, {-1, 0, 0},
-	};
-
-	auto &directionList =
-	    tileType == TileObject::Type::LeftWall
-	        ? directionLWList
-	        : (tileType == TileObject::Type::RightWall ? directionRWList : directionGDFTList);
-
-	// List of found map parts to cling on to
-	std::list<sp<BattleMapPart>> supports;
-	// Search for map parts
-	for (auto &dir : directionList)
+	
+	// DISABLED
+	if (false)
 	{
-		int x = pos.x + dir.x;
-		int y = pos.y + dir.y;
-		int z = pos.z + dir.z;
-		if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y || z < 0 || z >= map.size.z)
+		// If we reached this - we can not provide hard support
+		providesHardSupport = false;
+
+		// Step 03: Try to cling to two adjacent objects of the same type
+		// (wall can also cling to feature)
+
+		// List of four directions (for ground and feature)
+		static const std::list<Vec3<int>> directionGDFTList = {
+			{0, -1, 0}, {1, 0, 0}, {0, 1, 0}, {-1, 0, 0},
+		};
+
+		// List of directions for left wall
+		static const std::list<Vec3<int>> directionLWList = {
+			{0, -1, 0}, {0, 1, 0},
+		};
+
+		// List of directions for right wall
+		static const std::list<Vec3<int>> directionRWList = {
+			{1, 0, 0}, {-1, 0, 0},
+		};
+
+		auto &directionList =
+			tileType == TileObject::Type::LeftWall
+			? directionLWList
+			: (tileType == TileObject::Type::RightWall ? directionRWList : directionGDFTList);
+
+		// List of found map parts to cling on to
+		std::list<sp<BattleMapPart>> supports;
+		// Search for map parts
+		for (auto &dir : directionList)
 		{
-			continue;
-		}
-		auto tile = map.getTile(x, y, z);
-		for (auto &o : tile->ownedObjects)
-		{
-			if (o->getType() == tileType || (o->getType() == TileObject::Type::Feature &&
-			                                 (tileType == TileObject::Type::LeftWall ||
-			                                  tileType == TileObject::Type::RightWall)))
+			int x = pos.x + dir.x;
+			int y = pos.y + dir.y;
+			int z = pos.z + dir.z;
+			if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y || z < 0 || z >= map.size.z)
 			{
-				auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
-				if (mp != sft && mp->isAlive())
+				continue;
+			}
+			auto tile = map.getTile(x, y, z);
+			for (auto &o : tile->ownedObjects)
+			{
+				if (o->getType() == tileType || (o->getType() == TileObject::Type::Feature &&
+					(tileType == TileObject::Type::LeftWall ||
+						tileType == TileObject::Type::RightWall)))
 				{
-					bool canSupport =
-					    !mp->damaged &&
-					    (mp->type->type != BattleMapPartType::Type::Ground || z == pos.z) &&
-					    (mp->type->provides_support || z >= pos.z);
-					if (canSupport)
+					auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+					if (mp != sft && mp->isAlive())
 					{
-						supports.emplace_back(mp);
-						// No need to further look in this area
-						break;
+						bool canSupport =
+							!mp->damaged &&
+							(mp->type->type != BattleMapPartType::Type::Ground || z == pos.z) &&
+							(mp->type->provides_support || z >= pos.z);
+						if (canSupport)
+						{
+							supports.emplace_back(mp);
+							// No need to further look in this area
+							break;
+						}
 					}
 				}
 			}
 		}
-	}
-	// Calculate if we have enough supports (map edge counts as support)
-	auto supportCount = supports.size();
-	if (pos.x == 0 || pos.x == map.size.x - 1)
-	{
-		supportCount++;
-	}
-	if (pos.y == 0 || pos.y == map.size.y - 1)
-	{
-		supportCount++;
-	}
-	// Get support if we have enough
-	if (supportCount >= 2)
-	{
-		for (auto mp : supports)
+		// Calculate if we have enough supports (map edge counts as support)
+		auto supportCount = supports.size();
+		if (pos.x == 0 || pos.x == map.size.x - 1)
 		{
-			mp->supportedParts.emplace_back(position, type->type);
+			supportCount++;
 		}
-		return true;
+		if (pos.y == 0 || pos.y == map.size.y - 1)
+		{
+			supportCount++;
+		}
+		// Get support if we have enough
+		if (supportCount >= 2)
+		{
+			for (auto mp : supports)
+			{
+				mp->supportedParts.emplace_back(position, type->type);
+			}
+			return true;
+		}
 	}
 
 	// Step 04: Shoot "support lines" and try to find something
@@ -801,8 +806,8 @@ bool BattleMapPart::findSupport()
 					// fail
 					break;
 				}
-				// Found map part that provides hard support
-				if (mp->providesHardSupport)
+				// Found map part that provides hard support and won't collapse
+				if (mp->providesHardSupport && !mp->willCollapse())
 				{
 					// success
 					found = true;
@@ -880,8 +885,8 @@ bool BattleMapPart::findSupport()
 					// fail
 					break;
 				}
-				// Found map part that provides hard support
-				if (mp->providesHardSupport)
+				// Found map part that provides hard support and won't collapse
+				if (mp->providesHardSupport && !mp->willCollapse())
 				{
 					// success
 					found = true;
@@ -925,6 +930,7 @@ bool BattleMapPart::findSupport()
 		}
 	}
 
+	providesHardSupport = false;
 	return false;
 }
 
