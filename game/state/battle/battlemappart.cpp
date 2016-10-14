@@ -198,7 +198,7 @@ void BattleMapPart::ceaseDoorFunction()
 	door.clear();
 }
 
-bool BattleMapPart::attachToSomething(bool checkType)
+bool BattleMapPart::attachToSomething(bool checkType, bool checkHard)
 {
 	providesHardSupport = false;
 	auto pos = tileObject->getOwningTile()->position;
@@ -213,7 +213,7 @@ bool BattleMapPart::attachToSomething(bool checkType)
 
 	// List of directions (for ground and feature)
 	static const std::list<Vec3<int>> directionGDFTList = {
-	    {0, 0, -1}, {0, -1, 0}, {1, 0, 0}, {0, 1, 0}, {-1, 0, 0}, {0, 0, 1},
+	    {0, 0, -1}, {0, 0, 1}, {0, -1, 0}, {1, 0, 0}, {0, 1, 0}, {-1, 0, 0},
 	};
 
 	// List of directions for left wall
@@ -275,7 +275,7 @@ bool BattleMapPart::attachToSomething(bool checkType)
 				if (mp != sft && mp->isAlive())
 				{
 					bool canSupport =
-					    !mp->damaged && mp->providesHardSupport &&
+					    !mp->damaged && (mp->providesHardSupport || !checkHard) &&
 					    (mp->type->type != BattleMapPartType::Type::Ground || z == pos.z) &&
 					    (mp->type->provides_support || z >= pos.z);
 					if (canSupport)
@@ -683,92 +683,91 @@ bool BattleMapPart::findSupport()
 		}
 	}
 
-	
-	// DISABLED
-	if (false)
+// DISABLED clinging to 2 neighbouring objects, because that can introduce circular references
+// Besides, I *think* vanilla didn't have it that way
+#if 0
+	// If we reached this - we can not provide hard support
+	providesHardSupport = false;
+
+	// Step 03: Try to cling to two adjacent objects of the same type
+	// (wall can also cling to feature)
+
+	// List of four directions (for ground and feature)
+	static const std::list<Vec3<int>> directionGDFTList = {
+		{0, -1, 0}, {1, 0, 0}, {0, 1, 0}, {-1, 0, 0},
+	};
+
+	// List of directions for left wall
+	static const std::list<Vec3<int>> directionLWList = {
+		{0, -1, 0}, {0, 1, 0},
+	};
+
+	// List of directions for right wall
+	static const std::list<Vec3<int>> directionRWList = {
+		{1, 0, 0}, {-1, 0, 0},
+	};
+
+	auto &directionList =
+		tileType == TileObject::Type::LeftWall
+		? directionLWList
+		: (tileType == TileObject::Type::RightWall ? directionRWList : directionGDFTList);
+
+	// List of found map parts to cling on to
+	std::list<sp<BattleMapPart>> supports;
+	// Search for map parts
+	for (auto &dir : directionList)
 	{
-		// If we reached this - we can not provide hard support
-		providesHardSupport = false;
-
-		// Step 03: Try to cling to two adjacent objects of the same type
-		// (wall can also cling to feature)
-
-		// List of four directions (for ground and feature)
-		static const std::list<Vec3<int>> directionGDFTList = {
-			{0, -1, 0}, {1, 0, 0}, {0, 1, 0}, {-1, 0, 0},
-		};
-
-		// List of directions for left wall
-		static const std::list<Vec3<int>> directionLWList = {
-			{0, -1, 0}, {0, 1, 0},
-		};
-
-		// List of directions for right wall
-		static const std::list<Vec3<int>> directionRWList = {
-			{1, 0, 0}, {-1, 0, 0},
-		};
-
-		auto &directionList =
-			tileType == TileObject::Type::LeftWall
-			? directionLWList
-			: (tileType == TileObject::Type::RightWall ? directionRWList : directionGDFTList);
-
-		// List of found map parts to cling on to
-		std::list<sp<BattleMapPart>> supports;
-		// Search for map parts
-		for (auto &dir : directionList)
+		int x = pos.x + dir.x;
+		int y = pos.y + dir.y;
+		int z = pos.z + dir.z;
+		if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y || z < 0 || z >= map.size.z)
 		{
-			int x = pos.x + dir.x;
-			int y = pos.y + dir.y;
-			int z = pos.z + dir.z;
-			if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y || z < 0 || z >= map.size.z)
+			continue;
+		}
+		auto tile = map.getTile(x, y, z);
+		for (auto &o : tile->ownedObjects)
+		{
+			if (o->getType() == tileType || (o->getType() == TileObject::Type::Feature &&
+				(tileType == TileObject::Type::LeftWall ||
+					tileType == TileObject::Type::RightWall)))
 			{
-				continue;
-			}
-			auto tile = map.getTile(x, y, z);
-			for (auto &o : tile->ownedObjects)
-			{
-				if (o->getType() == tileType || (o->getType() == TileObject::Type::Feature &&
-					(tileType == TileObject::Type::LeftWall ||
-						tileType == TileObject::Type::RightWall)))
+				auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+				if (mp != sft && mp->isAlive())
 				{
-					auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
-					if (mp != sft && mp->isAlive())
+					bool canSupport =
+						!mp->damaged &&
+						(mp->type->type != BattleMapPartType::Type::Ground || z == pos.z) &&
+						(mp->type->provides_support || z >= pos.z);
+					if (canSupport)
 					{
-						bool canSupport =
-							!mp->damaged &&
-							(mp->type->type != BattleMapPartType::Type::Ground || z == pos.z) &&
-							(mp->type->provides_support || z >= pos.z);
-						if (canSupport)
-						{
-							supports.emplace_back(mp);
-							// No need to further look in this area
-							break;
-						}
+						supports.emplace_back(mp);
+						// No need to further look in this area
+						break;
 					}
 				}
 			}
 		}
-		// Calculate if we have enough supports (map edge counts as support)
-		auto supportCount = supports.size();
-		if (pos.x == 0 || pos.x == map.size.x - 1)
-		{
-			supportCount++;
-		}
-		if (pos.y == 0 || pos.y == map.size.y - 1)
-		{
-			supportCount++;
-		}
-		// Get support if we have enough
-		if (supportCount >= 2)
-		{
-			for (auto mp : supports)
-			{
-				mp->supportedParts.emplace_back(position, type->type);
-			}
-			return true;
-		}
 	}
+	// Calculate if we have enough supports (map edge counts as support)
+	auto supportCount = supports.size();
+	if (pos.x == 0 || pos.x == map.size.x - 1)
+	{
+		supportCount++;
+	}
+	if (pos.y == 0 || pos.y == map.size.y - 1)
+	{
+		supportCount++;
+	}
+	// Get support if we have enough
+	if (supportCount >= 2)
+	{
+		for (auto mp : supports)
+		{
+			mp->supportedParts.emplace_back(position, type->type);
+		}
+		return true;
+	}
+#endif
 
 	// Step 04: Shoot "support lines" and try to find something
 

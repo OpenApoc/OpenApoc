@@ -283,8 +283,10 @@ void Battle::initialMapPartLinkUp()
 
 	LogWarning("Attempting link up of unlinked parts");
 	// Try to link to objects of same type first, then to anything
-	for (int skipTypeCheck = 0; skipTypeCheck <= 1; skipTypeCheck++)
+	for (int iteration = 0; iteration <= 2; iteration++)
 	{
+		bool skipTypeCheck = iteration > 0;
+		bool skipHardCheck = iteration > 1;
 		do
 		{
 			foundSupport = false;
@@ -294,7 +296,7 @@ void Battle::initialMapPartLinkUp()
 				{
 					continue;
 				}
-				if (s->attachToSomething(!skipTypeCheck))
+				if (s->attachToSomething(!skipTypeCheck, !skipHardCheck))
 				{
 					s->cancelCollapse();
 					foundSupport = true;

@@ -10,15 +10,16 @@
 namespace OpenApoc
 {
 
-ScrollBar::ScrollBar()
-    : Control(), capture(false), grippersize(1), segmentsize(1),
-      gripperbutton(fw().data->loadImage(
-          "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:4:ui/menuopt.pal")),
+ScrollBar::ScrollBar(sp<Image> gripperImage)
+    : Control(), capture(false), grippersize(1), segmentsize(1), gripperbutton(gripperImage),
       buttonerror(fw().data->loadSample("RAWSOUND:xcom3/rawsound/extra/textbeep.raw:22050")),
       Value(0), BarOrientation(Orientation::Vertical), RenderStyle(ScrollBarRenderStyle::Menu),
       GripperColour(220, 192, 192), Minimum(0), Maximum(10), LargeChange(2)
 {
-	// LoadResources();
+	if (!gripperbutton)
+		gripperbutton = fw().data->loadImage(
+		    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:4:ui/menuopt.pal");
+	// loadResources();
 }
 
 ScrollBar::~ScrollBar() = default;
@@ -171,7 +172,7 @@ sp<Control> ScrollBar::copyTo(sp<Control> CopyParent)
 	sp<ScrollBar> copy;
 	if (CopyParent)
 	{
-		copy = CopyParent->createChild<ScrollBar>();
+		copy = CopyParent->createChild<ScrollBar>(gripperbutton);
 	}
 	else
 	{
@@ -192,6 +193,11 @@ void ScrollBar::configureSelfFromXml(tinyxml2::XMLElement *Element)
 	Control::configureSelfFromXml(Element);
 	tinyxml2::XMLElement *subnode;
 	UString attribvalue;
+
+	if (Element->FirstChildElement("gripperimage") != nullptr)
+	{
+		gripperbutton = fw().data->loadImage(Element->FirstChildElement("gripperimage")->GetText());
+	}
 
 	subnode = Element->FirstChildElement("grippercolour");
 	if (subnode != nullptr)

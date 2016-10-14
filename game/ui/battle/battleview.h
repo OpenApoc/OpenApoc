@@ -62,7 +62,7 @@ class BattleView : public BattleTileView
 	};
 	const Colour ammoColour = {158, 24, 12};
 
-	sp<Form> activeTab, baseForm;
+	sp<Form> activeTab, mainTab, psiTab, primingTab, baseForm;
 	std::vector<sp<Form>> uiTabsRT;
 	std::vector<sp<Form>> uiTabsTB;
 	BattleUpdateSpeed updateSpeed;

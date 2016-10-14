@@ -81,6 +81,11 @@ Collision BattleItem::checkItemCollision(Vec3<float> previousPosition, Vec3<floa
 void BattleItem::update(GameState &state, unsigned int ticks)
 {
 	item->update(state, ticks);
+	// May have exploded
+	if (!tileObject)
+	{
+		return;
+	}
 
 	if (ticksUntilCollapse > 0)
 	{
