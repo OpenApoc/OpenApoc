@@ -1,4 +1,6 @@
 #include "game/ui/battle/battledebriefing.h"
+#include "forms/form.h"
+#include "forms/graphicbutton.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"

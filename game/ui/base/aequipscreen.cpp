@@ -1,5 +1,7 @@
 #include "game/ui/base/aequipscreen.h"
-#include "forms/forms.h"
+#include "forms/form.h"
+#include "forms/graphic.h"
+#include "forms/label.h"
 #include "forms/ui.h"
 #include "framework/data.h"
 #include "framework/event.h"

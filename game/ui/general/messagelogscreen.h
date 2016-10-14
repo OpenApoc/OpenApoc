@@ -1,14 +1,15 @@
 #pragma once
 
 #include "framework/stage.h"
-
-#include "forms/forms.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {
 class GameState;
 class EventMessage;
 class CityView;
+class Form;
+class Control;
 
 class MessageLogScreen : public Stage
 {

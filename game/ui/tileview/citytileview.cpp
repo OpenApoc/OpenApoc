@@ -2,6 +2,7 @@
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/image.h"
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
 #include "framework/trace.h"

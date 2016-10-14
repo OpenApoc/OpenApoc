@@ -1,5 +1,5 @@
 #pragma once
-#include "framework/image.h"
+
 #include "library/sp.h"
 #include "library/vec.h"
 
@@ -10,6 +10,7 @@ class Base;
 class Building;
 class Facility;
 class GameState;
+class RGBImage;
 
 namespace BaseGraphics
 {

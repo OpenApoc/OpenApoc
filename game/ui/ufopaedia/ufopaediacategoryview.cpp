@@ -1,5 +1,9 @@
 #include "game/ui/ufopaedia/ufopaediacategoryview.h"
-#include "forms/forms.h"
+#include "forms/form.h"
+#include "forms/graphic.h"
+#include "forms/label.h"
+#include "forms/list.h"
+#include "forms/textbutton.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/font.h"
@@ -10,6 +14,7 @@
 #include "game/state/rules/facility_type.h"
 #include "game/state/rules/vehicle_type.h"
 #include "game/state/rules/vequipment_type.h"
+#include "game/state/ufopaedia.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
 

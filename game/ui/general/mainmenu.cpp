@@ -1,4 +1,6 @@
 #include "game/ui/general/mainmenu.h"
+#include "forms/form.h"
+#include "forms/label.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"

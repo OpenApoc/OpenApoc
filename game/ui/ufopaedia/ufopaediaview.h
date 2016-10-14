@@ -1,6 +1,5 @@
 #pragma once
 
-#include "forms/forms.h"
 #include "framework/stage.h"
 #include "library/sp.h"
 
@@ -8,6 +7,7 @@ namespace OpenApoc
 {
 
 class GameState;
+class Form;
 
 class UfopaediaView : public Stage
 {

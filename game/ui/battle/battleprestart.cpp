@@ -1,8 +1,11 @@
 #include "game/ui/battle/battleprestart.h"
+#include "forms/form.h"
+#include "forms/graphicbutton.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/battle/battlecommonimagelist.h"
+#include "game/state/gamestate.h"
 #include "game/ui/battle/battleview.h"
 #include "game/ui/general/loadingscreen.h"
 #include <cmath>

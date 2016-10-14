@@ -1,7 +1,9 @@
 #pragma once
+
 #include "framework/stage.h"
-#include "game/state/ufopaedia.h"
 #include "library/sp.h"
+#include <map>
+#include <vector>
 
 namespace OpenApoc
 {
@@ -9,6 +11,8 @@ namespace OpenApoc
 class Form;
 class GameState;
 class Label;
+class UfopaediaCategory;
+class UfopaediaEntry;
 
 class UfopaediaCategoryView : public Stage
 {

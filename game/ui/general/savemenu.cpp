@@ -1,4 +1,8 @@
 #include "game/ui/general/savemenu.h"
+#include "forms/form.h"
+#include "forms/label.h"
+#include "forms/list.h"
+#include "forms/textedit.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"

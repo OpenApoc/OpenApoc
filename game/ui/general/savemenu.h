@@ -1,13 +1,17 @@
 #pragma once
 
 #include "framework/stage.h"
-#include "game/state/gamestate.h"
-
-#include "forms/forms.h"
 #include "game/state/savemanager.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {
+
+class GameState;
+class Form;
+class TextEdit;
+class Control;
+
 enum class SaveMenuAction : unsigned
 {
 	// load without prompt to leave game

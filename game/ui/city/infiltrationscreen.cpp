@@ -1,4 +1,6 @@
 #include "game/ui/city/infiltrationscreen.h"
+#include "forms/form.h"
+#include "forms/label.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"

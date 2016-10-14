@@ -1,11 +1,10 @@
 #pragma once
 
-#include "forms/forms.h"
 #include "framework/stage.h"
-#include "game/state/research.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
+#include <map>
 
 namespace OpenApoc
 {
@@ -13,6 +12,10 @@ namespace OpenApoc
 class GameState;
 class Lab;
 class Base;
+class ResearchTopic;
+class Form;
+class Lab;
+class Control;
 
 class ResearchSelect : public Stage
 {

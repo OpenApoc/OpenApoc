@@ -1,4 +1,7 @@
 #include "game/ui/base/basestage.h"
+#include "forms/form.h"
+#include "forms/graphicbutton.h"
+#include "forms/label.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/renderer.h"

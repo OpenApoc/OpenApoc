@@ -1,8 +1,7 @@
 #pragma once
 
 #include "framework/stage.h"
-
-#include "forms/forms.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {
@@ -11,6 +10,8 @@ class EventMessage;
 class CityView;
 class Building;
 class VehicleType;
+class Form;
+class Control;
 
 class MapSelector : public Stage
 {

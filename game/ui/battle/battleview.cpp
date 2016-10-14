@@ -1,10 +1,20 @@
 #include "game/ui/battle/battleview.h"
+#include "forms/checkbox.h"
+#include "forms/form.h"
+#include "forms/graphic.h"
+#include "forms/graphicbutton.h"
+#include "forms/label.h"
+#include "forms/radiobutton.h"
+#include "forms/scrollbar.h"
+#include "forms/ticker.h"
+#include "forms/tristatebox.h"
 #include "forms/ui.h"
 #include "framework/apocresources/cursor.h"
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
+#include "framework/palette.h"
 #include "framework/renderer.h"
 #include "framework/trace.h"
 #include "game/state/aequipment.h"
@@ -14,6 +24,7 @@
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gameevent.h"
+#include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
 #include "game/state/tileview/collision.h"
@@ -467,21 +478,21 @@ BattleView::BattleView(sp<GameState> state)
 	    ->findControlTyped<ScrollBar>("RANGE_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, updateRange);
 	this->uiTabsRT[2]
-		->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")
-		->setClickSound(nullptr);
+	    ->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")
+	    ->setClickSound(nullptr);
 	this->uiTabsTB[2]->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->Enabled = false;
 	this->uiTabsTB[2]
-		->findControlTyped<GraphicButton>("BUTTON_CANCEL")
-		->addCallback(FormEventType::ButtonClick, cancelPriming);
+	    ->findControlTyped<GraphicButton>("BUTTON_CANCEL")
+	    ->addCallback(FormEventType::ButtonClick, cancelPriming);
 	this->uiTabsTB[2]
-		->findControlTyped<GraphicButton>("BUTTON_OK")
-		->addCallback(FormEventType::ButtonClick, finishPriming);
+	    ->findControlTyped<GraphicButton>("BUTTON_OK")
+	    ->addCallback(FormEventType::ButtonClick, finishPriming);
 	this->uiTabsTB[2]
-		->findControlTyped<ScrollBar>("DELAY_SLIDER")
-		->addCallback(FormEventType::ScrollBarChange, updateDelay);
+	    ->findControlTyped<ScrollBar>("DELAY_SLIDER")
+	    ->addCallback(FormEventType::ScrollBarChange, updateDelay);
 	this->uiTabsTB[2]
-		->findControlTyped<ScrollBar>("RANGE_SLIDER")
-		->addCallback(FormEventType::ScrollBarChange, updateRange);
+	    ->findControlTyped<ScrollBar>("RANGE_SLIDER")
+	    ->addCallback(FormEventType::ScrollBarChange, updateRange);
 
 	// Hand controls
 
