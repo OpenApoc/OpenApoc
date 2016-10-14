@@ -78,6 +78,10 @@ class AEquipmentType : public StateObject<AEquipmentType>
 	ResearchDependency research_dependency;
 	bool two_handed = false;
 
+	// True = when fired from weapon will throw ammunition to target location instead of firing
+	// properly
+	bool launcher = false;
+
 	// Armor only
 	sp<Image> body_sprite;
 	StateRef<DamageModifier> damage_modifier;

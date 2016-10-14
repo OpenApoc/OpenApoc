@@ -236,6 +236,9 @@ class TileMap
 	                        sp<TileObject> ignoredObject = nullptr, bool useLOS = false,
 	                        bool check_full_path = false) const;
 
+	bool checkThrowTrajectory(const sp<TileObject> thrower, Vec3<float> start, Vec3<int> end,
+	                          Vec3<float> targetVectorXY, float velocityXY, float velocityZ) const;
+
 	void addObjectToMap(sp<Projectile>);
 	void addObjectToMap(sp<Vehicle>);
 	void addObjectToMap(sp<Scenery>);

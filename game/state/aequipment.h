@@ -1,7 +1,6 @@
 #pragma once
 #include "game/state/agent.h"
 #include "game/state/battle/battle.h"
-#include "game/state/battle/battleunit.h"
 #include "game/state/gametime.h"
 #include "library/sp.h"
 #include "library/vec.h"
@@ -12,9 +11,11 @@ namespace OpenApoc
 static const unsigned TICKS_PER_RECHARGE = TICKS_PER_TURN;
 
 class BattleItem;
+class BattleUnit;
 class Projectile;
 class AEquipmentType;
 enum class TriggerType;
+enum class WeaponAimingMode;
 
 class AEquipment : public std::enable_shared_from_this<AEquipment>
 {
@@ -26,7 +27,7 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	// Type of loaded ammunition
 	StateRef<AEquipmentType> payloadType;
 	// Function to simplify getting payload for weapons and grenades
-	StateRef<AEquipmentType> getPayloadType();
+	StateRef<AEquipmentType> getPayloadType() const;
 
 	Vec2<int> equippedPosition;
 	AEquipmentSlotType equippedSlotType = AEquipmentSlotType::None;
@@ -61,16 +62,17 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	// Ticks until weapon is ready to fire
 	unsigned int weapon_fire_ticks_remaining = 0;
 	// Aiming mode for the weapon
-	BattleUnit::FireAimingMode aimingMode = BattleUnit::FireAimingMode::Aimed;
+	WeaponAimingMode aimingMode;
 
-	int getAccuracy(BodyState bodyState, MovementState movementState,
-	                BattleUnit::FireAimingMode fireMode, bool thrown = false);
+	int getAccuracy(BodyState bodyState, MovementState movementState, WeaponAimingMode fireMode,
+	                bool thrown = false);
 
-	bool isFiring() { return weapon_fire_ticks_remaining > 0 || readyToFire; };
-	bool canFire(float range = 0.0f);
-	bool needsReload();
+	bool isFiring() const { return weapon_fire_ticks_remaining > 0 || readyToFire; };
+	bool canFire() const;
+	bool canFire(Vec3<float> to) const;
+	bool needsReload() const;
 	void stopFiring();
-	void startFiring(BattleUnit::FireAimingMode fireMode);
+	void startFiring(WeaponAimingMode fireMode);
 
 	// Support nullptr ammoItem for auto-reloading
 	void loadAmmo(GameState &state, sp<AEquipment> ammoItem = nullptr);
@@ -80,19 +82,26 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	wp<BattleItem> ownerItem;
 
 	void update(GameState &state, unsigned int ticks);
-	/*
-	float getRange() const;
-	bool canFire() const;
-	void setReloadTime(int ticks);
-	// Reload uses up to 'ammoAvailable' to reload the weapon. It returns the amount
-	// actually used.
-	int reload(int ammoAvailable);
-	*/
+
 	// Wether this weapon works like brainsucker launcher, throwing it's ammunition instead of
 	// firing a projectile
 	bool isLauncher();
-	sp<Projectile> fire(GameState &state, Vec3<float> targetPosition, Vec3<float> originalTarget,
-	                    StateRef<BattleUnit> targetUnit = nullptr);
-	void launch(Vec3<float> &targetPosition, Vec3<float> &velocity);
+	void fire(GameState &state, Vec3<float> targetPosition,
+	          StateRef<BattleUnit> targetUnit = nullptr);
+	void throwItem(GameState &state, Vec3<int> targetPosition, float velocityXY, float velocityZ,
+	               bool launch = false);
+
+	bool getVelocityForThrow(const sp<BattleUnit> unit, Vec3<int> target, float &velocityXY,
+	                         float &velocityZ) const;
+	bool getVelocityForLaunch(const sp<BattleUnit> unit, Vec3<int> target, float &velocityXY,
+	                          float &velocityZ) const;
+
+  private:
+	static float getMaxThrowDistance(int weight, int strength, int heightDifference);
+	static bool calculateNextVelocityForThrow(float distanceXY, float diffZ, float &velocityXY,
+	                                          float &velocityZ);
+	static bool getVelocityForThrowLaunch(const sp<BattleUnit> unit, int weight,
+	                                      Vec3<float> startPos, Vec3<int> target, float &velocityXY,
+	                                      float &velocityZ);
 };
 } // namespace OpenApoc

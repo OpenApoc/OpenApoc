@@ -83,9 +83,12 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	bool findSupport();
 
 	// Try to attach to at least something, called for unlinked map parts when map starts
-	bool attachToSomething(bool checkType);
+	bool attachToSomething(bool checkType, bool checkHard);
 
 	// Cease providing or requiring support
 	void ceaseSupportProvision();
+
+	// Cease using support
+	void ceaseBeingSupported();
 };
 }

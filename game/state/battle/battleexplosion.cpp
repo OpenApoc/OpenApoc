@@ -98,9 +98,13 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 	// Gas does no direct damage
 	if (damageType->hasImpact())
 	{
-		for (auto it = tile->ownedObjects.begin(); it != tile->ownedObjects.end();)
+		auto set = tile->ownedObjects;
+		for (auto obj : set)
 		{
-			auto obj = *it++;
+			if (tile->ownedObjects.find(obj) == tile->ownedObjects.end())
+			{
+				continue;
+			}
 			if (obj->getType() == TileObject::Type::Ground ||
 			    obj->getType() == TileObject::Type::Feature ||
 			    obj->getType() == TileObject::Type::LeftWall ||
@@ -281,7 +285,7 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 	}
 	int distance = (1 + (dir.x != 0 ? 1 : 0) + (dir.y != 0 ? 1 : 0) + (dir.z != 0 ? 1 : 0));
 	nextPower -= depletionRate * distance / 2;
-	
+
 	// If we reach the tile, and our type has no range dissipation, just apply power
 	int thisPower = nextPower - depletionThis;
 	if (thisPower > 0 && !damageType->hasDamageDissipation())
@@ -289,7 +293,7 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 		thisPower = power;
 	}
 	nextPower -= depletionNext;
-	
+
 	// Add this tile to those which will be visited in the future
 	if (thisPower > 0)
 	{

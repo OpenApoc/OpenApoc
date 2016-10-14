@@ -771,7 +771,6 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			}
 			giveWayRequest.clear();
 		}
-
 		else // if not giving way
 		{
 			setMovementState(MovementState::None);
@@ -865,10 +864,9 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		unsigned int handTicksRemaining = ticks;
 		unsigned int turnTicksRemaining = ticks;
 
-		// Unconscious units cannot move their bodies, hands or turn, they can only animate body
+		// Unconscious units cannot move their hands or turn, they can only animate body or fall
 		if (!isConscious())
 		{
-			moveTicksRemaining = 0;
 			handTicksRemaining = 0;
 			turnTicksRemaining = 0;
 		}
@@ -888,7 +886,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			lastHandTicksRemaining = handTicksRemaining;
 			lastTurnTicksRemaining = turnTicksRemaining;
 
-			// STEP 01: Begin falling or changing stance to flying if appropriate
+			// Begin falling or changing stance to flying if appropriate
 			if (!falling)
 			{
 				// Check if should fall or start flying
@@ -967,7 +965,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				}
 			}
 
-			// Try changing hand state
+			// Change hand state
 			if (handTicksRemaining > 0)
 			{
 				if (firing_animation_ticks_remaining > 0)
@@ -1371,12 +1369,11 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				// Check if we are in range
 				if (canFire)
 				{
-					float distanceToTarget = glm::length(muzzleLocation - targetPosition);
-					if (weaponRight && !weaponRight->canFire(distanceToTarget))
+					if (weaponRight && !weaponRight->canFire(targetPosition))
 					{
 						weaponRight = nullptr;
 					}
-					if (weaponLeft && !weaponLeft->canFire(distanceToTarget))
+					if (weaponLeft && !weaponLeft->canFire(targetPosition))
 					{
 						weaponLeft = nullptr;
 					}
@@ -1448,23 +1445,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			// If still OK - fire!
 			if (firingWeapon)
 			{
-				if (firingWeapon->isLauncher())
-				{
-					LogError("Implement launchers");
-				}
-				else
-				{
-					auto originalTarget = targetPosition;
-					Battle::accuracyAlgorithmBattle(
-					    state, muzzleLocation, targetPosition,
-					    firingWeapon->getAccuracy(current_body_state, current_movement_state,
-					                              fire_aiming_mode));
-					auto p = firingWeapon->fire(state, targetPosition, originalTarget,
-					                            targetingMode == TargetingMode::Unit ? targetUnit
-					                                                                 : nullptr);
-					map.addObjectToMap(p);
-					state.current_battle->projectiles.insert(p);
-				}
+				firingWeapon->fire(state, targetPosition,
+				                   targetingMode == TargetingMode::Unit ? targetUnit : nullptr);
 				displayedItem = firingWeapon->type;
 				setHandState(HandState::Firing);
 				weaponFired = true;
@@ -1907,20 +1889,12 @@ Vec3<float> BattleUnit::getMuzzleLocation() const
 	                       40.0f};
 }
 
-// Alexey Andronov: Istrebitel
-// Made up values calculated by trying several throws in game
-// This formula closely resembles results I've gotten
-// But it may be completely wrong
-float BattleUnit::getMaxThrowDistance(int weight, int heightDifference)
+Vec3<float> BattleUnit::getThrownItemLocation() const
 {
-	float max = 30.0f;
-	if (weight <= 2)
-	{
-		return max;
-	}
-	int mod = heightDifference > 0 ? heightDifference : heightDifference * 2;
-	return std::max(
-	    0.0f, std::min(max, (float)agent->modified_stats.strength / ((float)weight - 1) - 2 + mod));
+	return position +
+	       Vec3<float>{0.0f, 0.0f,
+	                   ((float)agent->type->bodyType->height.at(BodyState::Throwing) - 4.0f) /
+	                       2.0f / 40.0f};
 }
 
 bool BattleUnit::shouldPlaySoundNow()
@@ -2051,6 +2025,15 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool s
 			{
 				missions.clear();
 				missions.emplace_front(mission);
+				if (start)
+				{
+					mission->start(state, *this);
+				}
+			}
+			else if (missions.front()->type == BattleUnitMission::MissionType::ChangeBodyState &&
+			         !isConscious())
+			{
+				missions.emplace_back(mission);
 				if (start)
 				{
 					mission->start(state, *this);

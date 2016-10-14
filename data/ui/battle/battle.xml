@@ -28,60 +28,6 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <image/>
 		<imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:135:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
-      <radiobutton id="BUTTON_LAYER_1" groupid="LAYER">
-        <position x="314" y="113"/>
-        <size width="13" height="8"/>
-        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:100:xcom3/tacdata/tactical.pal</image>
-        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:33:xcom3/tacdata/tactical.pal</imagechecked>
-      </radiobutton>
-      <radiobutton id="BUTTON_LAYER_2" groupid="LAYER">
-        <position x="314" y="104"/>
-        <size width="13" height="8"/>
-          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:101:xcom3/tacdata/tactical.pal</image>
-        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:34:xcom3/tacdata/tactical.pal</imagechecked>
-      </radiobutton>
-      <radiobutton id="BUTTON_LAYER_3" groupid="LAYER">
-        <position x="314" y="95"/>
-        <size width="13" height="8"/>
-          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:102:xcom3/tacdata/tactical.pal</image>
-        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:35:xcom3/tacdata/tactical.pal</imagechecked>
-      </radiobutton>
-      <radiobutton id="BUTTON_LAYER_4" groupid="LAYER">
-        <position x="314" y="86"/>
-        <size width="13" height="8"/>
-          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:103:xcom3/tacdata/tactical.pal</image>
-        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:36:xcom3/tacdata/tactical.pal</imagechecked>
-      </radiobutton>
-      <radiobutton id="BUTTON_LAYER_5" groupid="LAYER">
-        <position x="314" y="77"/>
-        <size width="13" height="8"/>
-          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:104:xcom3/tacdata/tactical.pal</image>
-        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:37:xcom3/tacdata/tactical.pal</imagechecked>
-      </radiobutton>
-      <radiobutton id="BUTTON_LAYER_6" groupid="LAYER">
-        <position x="314" y="68"/>
-        <size width="13" height="8"/>
-          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:105:xcom3/tacdata/tactical.pal</image>
-        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:38:xcom3/tacdata/tactical.pal</imagechecked>
-      </radiobutton>
-      <radiobutton id="BUTTON_LAYER_7" groupid="LAYER">
-        <position x="314" y="59"/>
-        <size width="13" height="8"/>
-          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:106:xcom3/tacdata/tactical.pal</image>
-        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:39:xcom3/tacdata/tactical.pal</imagechecked>
-      </radiobutton>
-      <radiobutton id="BUTTON_LAYER_8" groupid="LAYER">
-        <position x="314" y="50"/>
-        <size width="13" height="8"/>
-          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:107:xcom3/tacdata/tactical.pal</image>
-        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:40:xcom3/tacdata/tactical.pal</imagechecked>
-      </radiobutton>
-      <radiobutton id="BUTTON_LAYER_9" groupid="LAYER">
-        <position x="314" y="41"/>
-        <size width="13" height="8"/>
-          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:108:xcom3/tacdata/tactical.pal</image>
-        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:41:xcom3/tacdata/tactical.pal</imagechecked>
-      </radiobutton>
       <checkbox id="BUTTON_FOLLOW_AGENT">
         <position x="4" y="7"/>
         <size width="53" height="21"/>
@@ -146,7 +92,7 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:130:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
-	   <checkbox id="BUTTON_AUTO">
+	  <checkbox id="BUTTON_AUTO">
         <position x="159" y="100"/>
         <size width="29" height="25"/>
         <image/>
@@ -251,6 +197,61 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <size width="640" height="128"/>
         <image>RAW:xcom3/tacdata/tacbord.dat:640:128:xcom3/tacdata/tactical.pal</image>
       </graphic>
+	  <!-- Layers -->
+	  <radiobutton id="BUTTON_LAYER_1" groupid="LAYER">
+        <position x="314" y="113"/>
+        <size width="13" height="8"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:100:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:33:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_2" groupid="LAYER">
+        <position x="314" y="104"/>
+        <size width="13" height="8"/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:101:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:34:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_3" groupid="LAYER">
+        <position x="314" y="95"/>
+        <size width="13" height="8"/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:102:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:35:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_4" groupid="LAYER">
+        <position x="314" y="86"/>
+        <size width="13" height="8"/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:103:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:36:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_5" groupid="LAYER">
+        <position x="314" y="77"/>
+        <size width="13" height="8"/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:104:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:37:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_6" groupid="LAYER">
+        <position x="314" y="68"/>
+        <size width="13" height="8"/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:105:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:38:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_7" groupid="LAYER">
+        <position x="314" y="59"/>
+        <size width="13" height="8"/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:106:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:39:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_8" groupid="LAYER">
+        <position x="314" y="50"/>
+        <size width="13" height="8"/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:107:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:40:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_9" groupid="LAYER">
+        <position x="314" y="41"/>
+        <size width="13" height="8"/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:108:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:41:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
 	  <!-- Items in hands -->
 	  <graphic id = "IMAGE_RIGHT_HAND">
 	    <position x="263" y="29"/>
@@ -341,9 +342,46 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <image>RAW:xcom3/tacdata/tacbord3.dat:640:128:xcom3/tacdata/tactical.pal</image>
       </graphic>
       <!-- Grenade interface -->
-	  <!-- TBD -->
-	  <!-- TBD -->
-	  <!-- TBD -->
+	  <checkbox id="HIDDEN_CHECK_RIGHT_HAND">
+        <position x="0" y="0"/>
+        <size width="0" height="0"/>
+      </checkbox>
+	  <graphicbutton id="BUTTON_CANCEL">
+        <position x="201" y="101"/>
+        <size width="54" height="25"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:318:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
+	  <graphicbutton id="BUTTON_OK">
+        <position x="385" y="101"/>
+        <size width="54" height="25"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:317:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
+	  <label id="DELAY_TEXT" text="Delay  =  6.5s.">
+        <position x="262" y="40"/>
+        <size width="116" height="12"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+	  <label id="RANGE_TEXT" text="Range  =  4.5m.">
+        <position x="262" y="91"/>
+        <size width="116" height="12"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+	  <scroll id="DELAY_SLIDER">
+          <position x="263" y="78"/>
+          <size width="114" height="15"/>
+          <range min="0" max="29"/>
+		  <gripperimage>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:84:xcom3/tacdata/tactical.pal</gripperimage>
+      </scroll>
+	  <scroll id="RANGE_SLIDER">
+          <position x="263" y="106"/>
+          <size width="114" height="15"/>
+          <range min="0" max="6"/>
+		  <gripperimage>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:84:xcom3/tacdata/tactical.pal</gripperimage>
+      </scroll>
     </style>
   </form>
   <!-- Turn-Based Main Screen -->
@@ -360,6 +398,61 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
 	  <!-- TBD -->
 	  <!-- TBD -->
 	  <!-- TBD -->
+	   <!-- Layers -->
+	  <radiobutton id="BUTTON_LAYER_1" groupid="LAYER">
+        <position x="314" y="113"/>
+        <size width="13" height="8"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:100:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:33:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_2" groupid="LAYER">
+        <position x="314" y="104"/>
+        <size width="13" height="8"/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:101:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:34:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_3" groupid="LAYER">
+        <position x="314" y="95"/>
+        <size width="13" height="8"/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:102:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:35:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_4" groupid="LAYER">
+        <position x="314" y="86"/>
+        <size width="13" height="8"/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:103:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:36:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_5" groupid="LAYER">
+        <position x="314" y="77"/>
+        <size width="13" height="8"/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:104:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:37:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_6" groupid="LAYER">
+        <position x="314" y="68"/>
+        <size width="13" height="8"/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:105:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:38:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_7" groupid="LAYER">
+        <position x="314" y="59"/>
+        <size width="13" height="8"/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:106:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:39:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_8" groupid="LAYER">
+        <position x="314" y="50"/>
+        <size width="13" height="8"/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:107:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:40:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_9" groupid="LAYER">
+        <position x="314" y="41"/>
+        <size width="13" height="8"/>
+          <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:108:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:41:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton> 
 	 <!-- Items in hands -->
 	  <graphic id = "IMAGE_RIGHT_HAND">
 	    <position x="263" y="29"/>
@@ -445,6 +538,47 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <size width="640" height="128"/>
         <image>RAW:xcom3/tacdata/tacbord7.dat:640:128:xcom3/tacdata/tactical.pal</image>
       </graphic>
+	  <!-- Grenade interface -->
+	  <checkbox id="HIDDEN_CHECK_RIGHT_HAND">
+        <position x="0" y="0"/>
+        <size width="0" height="0"/>
+      </checkbox>
+	  <graphicbutton id="BUTTON_CANCEL">
+        <position x="201" y="101"/>
+        <size width="54" height="25"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:318:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
+	  <graphicbutton id="BUTTON_OK">
+        <position x="385" y="101"/>
+        <size width="54" height="25"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:317:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
+	  <label id="DELAY_TEXT" text="Delay  =  6.5s.">
+        <position x="262" y="40"/>
+        <size width="116" height="12"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+	  <label id="RANGE_TEXT" text="Range  =  4.5m.">
+        <position x="262" y="91"/>
+        <size width="116" height="12"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+	  <scroll id="DELAY_SLIDER">
+          <position x="263" y="78"/>
+          <size width="114" height="15"/>
+          <range min="0" max="29"/>
+		  <gripperimage>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:84:xcom3/tacdata/tactical.pal</gripperimage>
+      </scroll>
+	  <scroll id="RANGE_SLIDER">
+          <position x="263" y="106"/>
+          <size width="114" height="15"/>
+          <range min="0" max="6"/>
+		  <gripperimage>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:84:xcom3/tacdata/tactical.pal</gripperimage>
+      </scroll>
     </style>
   </form>
 </openapoc>

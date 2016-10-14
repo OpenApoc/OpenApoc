@@ -110,18 +110,21 @@ BattleView::BattleView(sp<GameState> state)
 	{
 		case Battle::Mode::RealTime:
 			this->activeTab = this->uiTabsRT[0];
+			this->mainTab = this->uiTabsRT[0];
+			this->psiTab = this->uiTabsRT[1];
+			this->primingTab = this->uiTabsRT[2];
 			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED0")->setChecked(true);
 			updateSpeed = BattleUpdateSpeed::Pause;
 			lastSpeed = BattleUpdateSpeed::Speed1;
 			break;
 		case Battle::Mode::TurnBased:
 			this->activeTab = this->uiTabsTB[0];
+			this->mainTab = this->uiTabsTB[0];
+			this->psiTab = this->uiTabsTB[1];
+			this->primingTab = this->uiTabsTB[2];
 			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED2")->setChecked(true);
 			updateSpeed = BattleUpdateSpeed::Speed2;
 			lastSpeed = BattleUpdateSpeed::Pause;
-			break;
-		default:
-			LogError("Unexpected battle mode \"%d\"", (int)state->current_battle->mode);
 			break;
 	}
 
@@ -182,21 +185,21 @@ BattleView::BattleView(sp<GameState> state)
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
 		    for (auto u : selectedUnits)
 		    {
-			    u->fire_aiming_mode = BattleUnit::FireAimingMode::Aimed;
+			    u->fire_aiming_mode = WeaponAimingMode::Aimed;
 		    }
 		});
 	this->baseForm->findControl("BUTTON_SNAP")
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
 		    for (auto u : selectedUnits)
 		    {
-			    u->fire_aiming_mode = BattleUnit::FireAimingMode::Snap;
+			    u->fire_aiming_mode = WeaponAimingMode::Snap;
 		    }
 		});
 	this->baseForm->findControl("BUTTON_AUTO")
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
 		    for (auto u : selectedUnits)
 		    {
-			    u->fire_aiming_mode = BattleUnit::FireAimingMode::Auto;
+			    u->fire_aiming_mode = WeaponAimingMode::Auto;
 		    }
 		});
 	this->baseForm->findControl("BUTTON_KNEEL")
@@ -287,23 +290,59 @@ BattleView::BattleView(sp<GameState> state)
 		    this->setZLevel(getZLevel() - 1);
 		    updateLayerButtons();
 		});
-	this->baseForm->findControl("BUTTON_LAYER_1")
+	this->uiTabsRT[0]
+	    ->findControl("BUTTON_LAYER_1")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(1); });
-	this->baseForm->findControl("BUTTON_LAYER_2")
+	this->uiTabsRT[0]
+	    ->findControl("BUTTON_LAYER_2")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(2); });
-	this->baseForm->findControl("BUTTON_LAYER_3")
+	this->uiTabsRT[0]
+	    ->findControl("BUTTON_LAYER_3")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(3); });
-	this->baseForm->findControl("BUTTON_LAYER_4")
+	this->uiTabsRT[0]
+	    ->findControl("BUTTON_LAYER_4")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(4); });
-	this->baseForm->findControl("BUTTON_LAYER_5")
+	this->uiTabsRT[0]
+	    ->findControl("BUTTON_LAYER_5")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(5); });
-	this->baseForm->findControl("BUTTON_LAYER_6")
+	this->uiTabsRT[0]
+	    ->findControl("BUTTON_LAYER_6")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(6); });
-	this->baseForm->findControl("BUTTON_LAYER_7")
+	this->uiTabsRT[0]
+	    ->findControl("BUTTON_LAYER_7")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(7); });
-	this->baseForm->findControl("BUTTON_LAYER_8")
+	this->uiTabsRT[0]
+	    ->findControl("BUTTON_LAYER_8")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(8); });
-	this->baseForm->findControl("BUTTON_LAYER_9")
+	this->uiTabsRT[0]
+	    ->findControl("BUTTON_LAYER_9")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(9); });
+	this->uiTabsTB[0]
+	    ->findControl("BUTTON_LAYER_1")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(1); });
+	this->uiTabsTB[0]
+	    ->findControl("BUTTON_LAYER_2")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(2); });
+	this->uiTabsTB[0]
+	    ->findControl("BUTTON_LAYER_3")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(3); });
+	this->uiTabsTB[0]
+	    ->findControl("BUTTON_LAYER_4")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(4); });
+	this->uiTabsTB[0]
+	    ->findControl("BUTTON_LAYER_5")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(5); });
+	this->uiTabsTB[0]
+	    ->findControl("BUTTON_LAYER_6")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(6); });
+	this->uiTabsTB[0]
+	    ->findControl("BUTTON_LAYER_7")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(7); });
+	this->uiTabsTB[0]
+	    ->findControl("BUTTON_LAYER_8")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(8); });
+	this->uiTabsTB[0]
+	    ->findControl("BUTTON_LAYER_9")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(9); });
 	this->baseForm->findControl("BUTTON_FOLLOW_AGENT")
 	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
@@ -367,6 +406,84 @@ BattleView::BattleView(sp<GameState> state)
 	std::function<void(FormsEvent * e)> throwLeftHand = [this, throwItem](Event *) {
 		throwItem(false);
 	};
+
+	std::function<void(FormsEvent * e)> cancelPriming = [this, throwItem](Event *) {
+		this->activeTab = this->mainTab;
+	};
+
+	std::function<void(FormsEvent * e)> finishPriming = [this, throwItem](Event *) {
+		bool right =
+		    this->primingTab->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->isChecked();
+		auto unit = selectedUnits.front();
+		auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
+		                                                  : AEquipmentSlotType::LeftHand);
+
+		int delay = this->primingTab->findControlTyped<ScrollBar>("DELAY_SLIDER")->getValue();
+		int range = this->primingTab->findControlTyped<ScrollBar>("RANGE_SLIDER")->getValue();
+		if (delay == 0)
+		{
+			item->prime();
+		}
+		else
+		{
+			item->prime(false, delay * TICKS_PER_SECOND / 4, range);
+		}
+		this->activeTab = this->mainTab;
+	};
+
+	std::function<void(FormsEvent * e)> updateDelay = [this, throwItem](Event *) {
+		int delay = this->primingTab->findControlTyped<ScrollBar>("DELAY_SLIDER")->getValue();
+		UString text;
+		if (delay == 0)
+			text = format(tr("Activates now."));
+		else
+			text = format(tr("Delay = %i"), (int)((float)delay / 4.0f));
+		this->primingTab->findControlTyped<Label>("DELAY_TEXT")->setText(text);
+	};
+
+	std::function<void(FormsEvent * e)> updateRange = [this, throwItem](Event *) {
+		int range = this->primingTab->findControlTyped<ScrollBar>("RANGE_SLIDER")->getValue();
+
+		UString text = format(tr("Range = %2.1fm."), ((float)(range + 1) * 1.5f));
+		this->primingTab->findControlTyped<Label>("RANGE_TEXT")->setText(text);
+	};
+
+	// Priming controls
+
+	this->uiTabsRT[2]
+	    ->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")
+	    ->setClickSound(nullptr);
+	this->uiTabsRT[2]->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->Enabled = false;
+	this->uiTabsRT[2]
+	    ->findControlTyped<GraphicButton>("BUTTON_CANCEL")
+	    ->addCallback(FormEventType::ButtonClick, cancelPriming);
+	this->uiTabsRT[2]
+	    ->findControlTyped<GraphicButton>("BUTTON_OK")
+	    ->addCallback(FormEventType::ButtonClick, finishPriming);
+	this->uiTabsRT[2]
+	    ->findControlTyped<ScrollBar>("DELAY_SLIDER")
+	    ->addCallback(FormEventType::ScrollBarChange, updateDelay);
+	this->uiTabsRT[2]
+	    ->findControlTyped<ScrollBar>("RANGE_SLIDER")
+	    ->addCallback(FormEventType::ScrollBarChange, updateRange);
+	this->uiTabsRT[2]
+		->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")
+		->setClickSound(nullptr);
+	this->uiTabsTB[2]->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->Enabled = false;
+	this->uiTabsTB[2]
+		->findControlTyped<GraphicButton>("BUTTON_CANCEL")
+		->addCallback(FormEventType::ButtonClick, cancelPriming);
+	this->uiTabsTB[2]
+		->findControlTyped<GraphicButton>("BUTTON_OK")
+		->addCallback(FormEventType::ButtonClick, finishPriming);
+	this->uiTabsTB[2]
+		->findControlTyped<ScrollBar>("DELAY_SLIDER")
+		->addCallback(FormEventType::ScrollBarChange, updateDelay);
+	this->uiTabsTB[2]
+		->findControlTyped<ScrollBar>("RANGE_SLIDER")
+		->addCallback(FormEventType::ScrollBarChange, updateRange);
+
+	// Hand controls
 
 	this->uiTabsRT[0]
 	    ->findControlTyped<Graphic>("OVERLAY_RIGHT_HAND")
@@ -434,9 +551,6 @@ BattleView::BattleView(sp<GameState> state)
 			    ->addCallback(FormEventType::ButtonClick,
 			                  [this](Event *) { this->state->current_battle->endTurn(); });
 			break;
-		default:
-			LogError("Unexpected battle mode \"%d\"", (int)state->current_battle->mode);
-			break;
 	}
 
 	updateLayerButtons();
@@ -446,15 +560,24 @@ BattleView::~BattleView() = default;
 
 void BattleView::begin()
 {
-	this->baseForm->findControl("BUTTON_LAYER_1")->Visible = maxZDraw >= 1;
-	this->baseForm->findControl("BUTTON_LAYER_2")->Visible = maxZDraw >= 2;
-	this->baseForm->findControl("BUTTON_LAYER_3")->Visible = maxZDraw >= 3;
-	this->baseForm->findControl("BUTTON_LAYER_4")->Visible = maxZDraw >= 4;
-	this->baseForm->findControl("BUTTON_LAYER_5")->Visible = maxZDraw >= 5;
-	this->baseForm->findControl("BUTTON_LAYER_6")->Visible = maxZDraw >= 6;
-	this->baseForm->findControl("BUTTON_LAYER_7")->Visible = maxZDraw >= 7;
-	this->baseForm->findControl("BUTTON_LAYER_8")->Visible = maxZDraw >= 8;
-	this->baseForm->findControl("BUTTON_LAYER_9")->Visible = maxZDraw >= 9;
+	this->uiTabsRT[0]->findControl("BUTTON_LAYER_1")->Visible = maxZDraw >= 1;
+	this->uiTabsRT[0]->findControl("BUTTON_LAYER_2")->Visible = maxZDraw >= 2;
+	this->uiTabsRT[0]->findControl("BUTTON_LAYER_3")->Visible = maxZDraw >= 3;
+	this->uiTabsRT[0]->findControl("BUTTON_LAYER_4")->Visible = maxZDraw >= 4;
+	this->uiTabsRT[0]->findControl("BUTTON_LAYER_5")->Visible = maxZDraw >= 5;
+	this->uiTabsRT[0]->findControl("BUTTON_LAYER_6")->Visible = maxZDraw >= 6;
+	this->uiTabsRT[0]->findControl("BUTTON_LAYER_7")->Visible = maxZDraw >= 7;
+	this->uiTabsRT[0]->findControl("BUTTON_LAYER_8")->Visible = maxZDraw >= 8;
+	this->uiTabsRT[0]->findControl("BUTTON_LAYER_9")->Visible = maxZDraw >= 9;
+	this->uiTabsTB[0]->findControl("BUTTON_LAYER_1")->Visible = maxZDraw >= 1;
+	this->uiTabsTB[0]->findControl("BUTTON_LAYER_2")->Visible = maxZDraw >= 2;
+	this->uiTabsTB[0]->findControl("BUTTON_LAYER_3")->Visible = maxZDraw >= 3;
+	this->uiTabsTB[0]->findControl("BUTTON_LAYER_4")->Visible = maxZDraw >= 4;
+	this->uiTabsTB[0]->findControl("BUTTON_LAYER_5")->Visible = maxZDraw >= 5;
+	this->uiTabsTB[0]->findControl("BUTTON_LAYER_6")->Visible = maxZDraw >= 6;
+	this->uiTabsTB[0]->findControl("BUTTON_LAYER_7")->Visible = maxZDraw >= 7;
+	this->uiTabsTB[0]->findControl("BUTTON_LAYER_8")->Visible = maxZDraw >= 8;
+	this->uiTabsTB[0]->findControl("BUTTON_LAYER_9")->Visible = maxZDraw >= 9;
 
 	if (state->current_battle->mode == Battle::Mode::TurnBased)
 		onNewTurn();
@@ -644,6 +767,15 @@ void BattleView::updateSelectedUnits()
 	if (prevLSU != lastSelectedUnit || !lastSelectedUnit)
 	{
 		resetPathPreview();
+		switch (state->current_battle->mode)
+		{
+			case Battle::Mode::RealTime:
+				this->activeTab = this->uiTabsRT[0];
+				break;
+			case Battle::Mode::TurnBased:
+				this->activeTab = this->uiTabsTB[0];
+				break;
+		}
 	}
 	else
 	{
@@ -802,13 +934,13 @@ void BattleView::updateSoldierButtons()
 	{
 		switch (u->fire_aiming_mode)
 		{
-			case BattleUnit::FireAimingMode::Aimed:
+			case WeaponAimingMode::Aimed:
 				aimed = true;
 				break;
-			case BattleUnit::FireAimingMode::Snap:
+			case WeaponAimingMode::Snap:
 				snap = true;
 				break;
-			case BattleUnit::FireAimingMode::Auto:
+			case WeaponAimingMode::Auto:
 				auto_fire = true;
 				break;
 		}
@@ -869,105 +1001,13 @@ void BattleView::updateSoldierButtons()
 	this->baseForm->findControlTyped<CheckBox>("BUTTON_AGGRESSIVE")->setChecked(aggressive);
 
 	bool throwing = !selectedUnits.empty() && selectedUnits.front()->isThrowing();
-	this->activeTab->findControlTyped<CheckBox>("BUTTON_LEFT_HAND_THROW")
+
+	this->mainTab->findControlTyped<CheckBox>("BUTTON_LEFT_HAND_THROW")
 	    ->setChecked(selectionState == BattleSelectionState::ThrowLeft || leftThrowDelay > 0 ||
 	                 throwing);
-	this->activeTab->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND_THROW")
+	this->mainTab->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND_THROW")
 	    ->setChecked(selectionState == BattleSelectionState::ThrowRight || rightThrowDelay > 0 ||
 	                 throwing);
-}
-
-// Calculate starting velocity among z to reach target
-bool calculateVelocityForThrow(float distanceXY, float diffZ, float &velocityXY, float &velocityZ)
-{
-	static float dZ = 0.2f;
-
-	// Initial setup
-	// Start with X = 2.0f on first try, this is max speed item can have on XY
-	if (velocityXY == 0.0f)
-	{
-		velocityXY = 2.0f;
-	}
-	else
-	{
-		velocityXY -= dZ;
-	}
-
-	// For simplicity assume moving only along X
-	//
-	// t = time, in ticks
-	// VelocityZ(t) = VelocityZ0 - (Falling_Acceleration / VELOCITY_SCALE_Z) * t;
-	// Let:	a = -Faclling_acc / VELOCITY_SCALE_Z/ 2 / TICK_SCALE,
-	//		b = a + VelocityZ / TICK_SCALE,
-	//		c = diffZ
-	// z(t) = a*t^2 + b*t + c
-	//
-	// x = coordinate on the tile grid, in tiles
-	// x = t * VelocityX / TICK_SCALE
-	// t = x * TICK_SCALE / VelocityX
-	//
-	// We need to find VelocityZ, given a, t, c, that will produce a desired throw
-	// a*t^2 + b*t + c = 0 (hit the target at desired distance)
-	// b*t = -c-a*t^2
-	// b =  (-c-a*t^2)/t
-	// VelocityZ = TICK_SCALE * ((-c -a * t^2) / t - a)
-	//
-	// Howver, item must fall from above to the target
-	// Therefore, it's VelocityZ when arriving at target must be negative, and big enough
-	// If it's not, we must reduce VelocityX
-
-	float a = -FALLING_ACCELERATION_ITEM / VELOCITY_SCALE_BATTLE.z / 2.0f / TICK_SCALE;
-	float c = diffZ;
-	float t = 0.0f;
-
-	// We will continue reducing velocityXY  until we find such a trajectory
-	// that makes the item fall on top of the tile
-	while (velocityXY > 0.0f)
-	{
-		// FIXME: Should we prevent very high Z-trajectories, unreallistic for heavy items?
-		t = distanceXY * TICK_SCALE / (velocityXY);
-		velocityZ = TICK_SCALE * ((-c - a * t * t) / t - a);
-		if (velocityZ - (FALLING_ACCELERATION_ITEM / VELOCITY_SCALE_BATTLE.z) * t < -0.125f)
-		{
-			return true;
-		}
-		else
-		{
-			velocityXY -= dZ;
-		}
-	}
-	return false;
-}
-
-// Checks if, while going along the trajectory, we reach target tile or get first collision within
-// it's boundaries
-bool checkThrowTrajectoryValid(TileMap &map, const sp<TileObject> thrower, Vec3<float> start,
-                               Vec3<int> end, Vec3<float> targetVectorXY, float velocityXY,
-                               float velocityZ)
-{
-	int iterationsPerCollision = 10;
-	Vec3<float> curPos = start;
-	Vec3<float> newPos;
-	Vec3<float> velocity =
-	    (glm::normalize(targetVectorXY) * velocityXY + Vec3<float>{0.0, 0.0, velocityZ}) *
-	    VELOCITY_SCALE_BATTLE;
-	Collision c;
-	do
-	{
-		newPos = curPos;
-		for (int i = 0; i < iterationsPerCollision; i++)
-		{
-			velocity.z -= FALLING_ACCELERATION_ITEM;
-			newPos += velocity / (float)TICK_SCALE / VELOCITY_SCALE_BATTLE;
-		}
-		c = map.findCollision(curPos, newPos, {});
-		if (c && c.obj == thrower)
-		{
-			c = {};
-		}
-		curPos = c ? c.position : newPos;
-	} while (!c && ((Vec3<int>)curPos) != end && curPos.z < map.size.z);
-	return (Vec3<int>)curPos == end;
 }
 
 void BattleView::attemptToClearCurrentOrders(sp<BattleUnit> u, bool overrideBodyStateChange)
@@ -1004,6 +1044,7 @@ void BattleView::attemptToClearCurrentOrders(sp<BattleUnit> u, bool overrideBody
 			case BattleUnitMission::MissionType::Fall:
 			case BattleUnitMission::MissionType::Snooze:
 			case BattleUnitMission::MissionType::ThrowItem:
+			case BattleUnitMission::MissionType::Teleport:
 				continue;
 			case BattleUnitMission::MissionType::DropItem:
 				if ((*m)->item)
@@ -1024,9 +1065,6 @@ void BattleView::attemptToClearCurrentOrders(sp<BattleUnit> u, bool overrideBody
 				u->goalFacing = u->facing;
 				u->turning_animation_ticks_remaining = 0;
 				break;
-			default:
-				LogError("Unknown mission type %d!", (int)(*m)->type);
-				continue;
 		}
 		if (it == u->missions.begin())
 		{
@@ -1132,40 +1170,12 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 		return;
 	}
 
-	// Check distance to target
-	auto pos = unit->tileObject->getOwningTile()->position;
-	Vec3<float> targetVectorXY = target - pos;
-	targetVectorXY = {targetVectorXY.x, targetVectorXY.y, 0.0f};
-	float distance = glm::length(targetVectorXY);
-	if (distance >= unit->getMaxThrowDistance(
-	                    item->type->weight + (item->payloadType ? item->payloadType->weight : 0),
-	                    pos.z - target.z))
-	{
-		actionImpossibleDelay = 40;
-		return;
-	}
-
-	// Calculate trajectory
-	Vec3<float> startPos = {
-	    unit->position.x, unit->position.y,
-	    unit->position.z +
-	        ((float)unit->agent->type->bodyType->height[BodyState::Throwing] - 4.0f) / 2.0f /
-	            40.0f};
 	float velXY = 0.0f;
 	float velZ = 0.0f;
-	bool valid = true;
-	while (calculateVelocityForThrow(distance, startPos.z - target.z - 6.0f / 40.0f, velXY, velZ))
+
+	if (!item->getVelocityForThrow(unit, target, velXY, velZ))
 	{
-		valid = checkThrowTrajectoryValid(map, unit->tileObject, startPos, target, targetVectorXY,
-		                                  velXY, velZ);
-		if (valid)
-		{
-			break;
-		}
-	}
-	if (!valid)
-	{
- 		actionImpossibleDelay = 40;
+		actionImpossibleDelay = 40;
 		return;
 	}
 
@@ -1225,7 +1235,21 @@ void BattleView::orderUse(bool right, bool automatic)
 				{
 					break;
 				}
-				LogError("Implement priming interface!");
+				this->activeTab = this->primingTab;
+				this->activeTab->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")
+				    ->setChecked(right);
+				bool range;
+				switch (item->type->trigger_type)
+				{
+					case TriggerType::Proximity:
+					case TriggerType::Boomeroid:
+						range = true;
+						break;
+					default:
+						range = false;
+				}
+				this->activeTab->findControl("RANGE_TEXT")->Visible = range;
+				this->activeTab->findControl("RANGE_SLIDER")->Visible = range;
 			}
 			break;
 		case AEquipmentType::Type::MindBender:
@@ -1881,31 +1905,31 @@ void BattleView::updateLayerButtons()
 	switch (this->getZLevel())
 	{
 		case 1:
-			this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_1")->setChecked(true);
+			this->mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_1")->setChecked(true);
 			break;
 		case 2:
-			this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_2")->setChecked(true);
+			this->mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_2")->setChecked(true);
 			break;
 		case 3:
-			this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_3")->setChecked(true);
+			this->mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_3")->setChecked(true);
 			break;
 		case 4:
-			this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_4")->setChecked(true);
+			this->mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_4")->setChecked(true);
 			break;
 		case 5:
-			this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_5")->setChecked(true);
+			this->mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_5")->setChecked(true);
 			break;
 		case 6:
-			this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_6")->setChecked(true);
+			this->mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_6")->setChecked(true);
 			break;
 		case 7:
-			this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_7")->setChecked(true);
+			this->mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_7")->setChecked(true);
 			break;
 		case 8:
-			this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_8")->setChecked(true);
+			this->mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_8")->setChecked(true);
 			break;
 		case 9:
-			this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_9")->setChecked(true);
+			this->mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_9")->setChecked(true);
 			break;
 	}
 }

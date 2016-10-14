@@ -29,7 +29,7 @@
 namespace OpenApoc
 {
 // FIXME: Seems to correspond to vanilla behavior, but ensure it's right
-static const unsigned  TICKS_PER_UNIT_EFFECT = TICKS_PER_TURN;
+static const unsigned TICKS_PER_UNIT_EFFECT = TICKS_PER_TURN;
 
 class TileObjectBattleUnit;
 class TileObjectShadow;
@@ -48,6 +48,13 @@ enum class KneelingMode
 	Kneeling
 };
 
+enum class WeaponAimingMode
+{
+	Aimed = 1,
+	Snap = 2,
+	Auto = 4
+};
+
 class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_from_this<BattleUnit>
 {
   public:
@@ -57,12 +64,6 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 		Aggressive,
 		Normal,
 		Evasive
-	};
-	enum class FireAimingMode
-	{
-		Aimed = 1,
-		Snap = 2,
-		Auto = 4
 	};
 	enum class FirePermissionMode
 	{
@@ -144,7 +145,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// User set modes
 
 	BehaviorMode behavior_mode = BehaviorMode::Normal;
-	FireAimingMode fire_aiming_mode = FireAimingMode::Snap;
+	WeaponAimingMode fire_aiming_mode = WeaponAimingMode::Snap;
 	FirePermissionMode fire_permission_mode = FirePermissionMode::AtWill;
 	MovementMode movement_mode = MovementMode::Walking;
 	KneelingMode kneeling_mode = KneelingMode::None;
@@ -270,6 +271,8 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	int getCurrentHeight() const { return agent->type->bodyType->height.at(current_body_state); }
 	// Get unit's gun muzzle location (where shots come from)
 	Vec3<float> getMuzzleLocation() const;
+	// Get thrown item's departure location
+	Vec3<float> getThrownItemLocation() const;
 
 	// TU functions
 	// Wether unit can afford action
@@ -291,8 +294,6 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// enemyTile);
 
 	const Vec3<float> &getPosition() const { return this->position; }
-
-	float getMaxThrowDistance(int weight, int heightDifference);
 
 	int getMaxHealth() const;
 	int getHealth() const;

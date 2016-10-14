@@ -5,6 +5,7 @@
 #include "game/state/aequipment.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlemappart.h"
+#include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
@@ -80,6 +81,11 @@ Collision BattleItem::checkItemCollision(Vec3<float> previousPosition, Vec3<floa
 void BattleItem::update(GameState &state, unsigned int ticks)
 {
 	item->update(state, ticks);
+	// May have exploded
+	if (!tileObject)
+	{
+		return;
+	}
 
 	if (ticksUntilCollapse > 0)
 	{

@@ -39,7 +39,7 @@ class ScrollBar : public Control
 	int Maximum;
 	int LargeChange;
 
-	ScrollBar();
+	ScrollBar(sp<Image> gripperImage = nullptr);
 	~ScrollBar() override;
 
 	void eventOccured(Event *e) override;

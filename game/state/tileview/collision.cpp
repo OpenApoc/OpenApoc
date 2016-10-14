@@ -1,5 +1,6 @@
 #include "game/state/tileview/collision.h"
 #include "game/state/battle/battle.h"
+#include "game/state/battle/battleitem.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject.h"
 #include "library/line.h"
@@ -67,6 +68,37 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 		}
 	}
 	return c;
+}
+
+// Checks if, while going along the trajectory, we reach target tile or get first collision within
+// it's boundaries
+bool TileMap::checkThrowTrajectory(const sp<TileObject> thrower, Vec3<float> start, Vec3<int> end,
+                                   Vec3<float> targetVectorXY, float velocityXY,
+                                   float velocityZ) const
+{
+	int iterationsPerCollision = 10;
+	Vec3<float> curPos = start;
+	Vec3<float> newPos;
+	Vec3<float> velocity =
+	    (glm::normalize(targetVectorXY) * velocityXY + Vec3<float>{0.0, 0.0, velocityZ}) *
+	    VELOCITY_SCALE_BATTLE;
+	Collision c;
+	do
+	{
+		newPos = curPos;
+		for (int i = 0; i < iterationsPerCollision; i++)
+		{
+			velocity.z -= FALLING_ACCELERATION_ITEM;
+			newPos += velocity / (float)TICK_SCALE / VELOCITY_SCALE_BATTLE;
+		}
+		c = findCollision(curPos, newPos, {});
+		if (c && c.obj == thrower)
+		{
+			c = {};
+		}
+		curPos = c ? c.position : newPos;
+	} while (!c && ((Vec3<int>)curPos) != end && curPos.z < size.z);
+	return (Vec3<int>)curPos == end;
 }
 
 }; // namespace OpenApoc

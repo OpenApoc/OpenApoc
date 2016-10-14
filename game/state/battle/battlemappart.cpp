@@ -1,6 +1,7 @@
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battledoor.h"
+#include "game/state/battle/battlehazard.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/city/projectile.h"
@@ -49,32 +50,28 @@ void BattleMapPart::die(GameState &state, bool explosive, bool violently)
 			// No dooad for grounds
 			break;
 		case BattleMapPartType::Type::LeftWall:
-			state.current_battle->placeDoodad({ &state, "DOODAD_29_EXPLODING_TERRAIN" },
-				tileObject->getCenter() - Vec3<float>(-0.5f,0.0f,0.0f));
+			state.current_battle->placeDoodad({&state, "DOODAD_29_EXPLODING_TERRAIN"},
+			                                  tileObject->getCenter() -
+			                                      Vec3<float>(-0.5f, 0.0f, 0.0f));
 			break;
 		case BattleMapPartType::Type::RightWall:
-			state.current_battle->placeDoodad({ &state, "DOODAD_29_EXPLODING_TERRAIN" },
-				tileObject->getCenter() - Vec3<float>(0.0f, -0.5f, 0.0f));
+			state.current_battle->placeDoodad({&state, "DOODAD_29_EXPLODING_TERRAIN"},
+			                                  tileObject->getCenter() -
+			                                      Vec3<float>(0.0f, -0.5f, 0.0f));
 			break;
 		case BattleMapPartType::Type::Feature:
-			state.current_battle->placeDoodad({ &state, "DOODAD_29_EXPLODING_TERRAIN" },
-				tileObject->getCenter());
+			state.current_battle->placeDoodad({&state, "DOODAD_29_EXPLODING_TERRAIN"},
+			                                  tileObject->getCenter());
 			break;
 	}
 
-	// Replace with damaged / destroyed
+	// Replace with damaged
 	if (type->damaged_map_part)
 	{
 		this->type = type->damaged_map_part;
-		if (findSupport())
-		{
-			this->damaged = true;
-		}
-		else
-		{
-			queueCollapse();
-		}
+		this->damaged = true;
 	}
+	// Destroy
 	else
 	{
 		// Don't destroy bottom tiles, else everything will leak out
@@ -99,11 +96,20 @@ void BattleMapPart::die(GameState &state, bool explosive, bool violently)
 	}
 
 	// Cease functioning
+	ceaseBeingSupported();
 	ceaseDoorFunction();
 	ceaseSupportProvision();
 
+	// Re-establish support for this if still alive
+	if (isAlive())
+	{
+		if (!findSupport())
+		{
+			queueCollapse();
+		}
+	}
 	// Destroy if destroyed
-	if (destroyed)
+	else if (destroyed)
 	{
 		this->tileObject->removeFromMap();
 		this->tileObject.reset();
@@ -192,7 +198,7 @@ void BattleMapPart::ceaseDoorFunction()
 	door.clear();
 }
 
-bool BattleMapPart::attachToSomething(bool checkType)
+bool BattleMapPart::attachToSomething(bool checkType, bool checkHard)
 {
 	providesHardSupport = false;
 	auto pos = tileObject->getOwningTile()->position;
@@ -207,7 +213,7 @@ bool BattleMapPart::attachToSomething(bool checkType)
 
 	// List of directions (for ground and feature)
 	static const std::list<Vec3<int>> directionGDFTList = {
-	    {0, 0, -1}, {0, -1, 0}, {1, 0, 0}, {0, 1, 0}, {-1, 0, 0}, {0, 0, 1},
+	    {0, 0, -1}, {0, 0, 1}, {0, -1, 0}, {1, 0, 0}, {0, 1, 0}, {-1, 0, 0},
 	};
 
 	// List of directions for left wall
@@ -269,8 +275,9 @@ bool BattleMapPart::attachToSomething(bool checkType)
 				if (mp != sft && mp->isAlive())
 				{
 					bool canSupport =
-					    !mp->damaged &&
-					    (mp->type->type != BattleMapPartType::Type::Ground || z == pos.z);
+					    !mp->damaged && (mp->providesHardSupport || !checkHard) &&
+					    (mp->type->type != BattleMapPartType::Type::Ground || z == pos.z) &&
+					    (mp->type->provides_support || z >= pos.z);
 					if (canSupport)
 					{
 						mp->supportedParts.emplace_back(position, type->type);
@@ -304,52 +311,12 @@ bool BattleMapPart::findSupport()
 	auto tileType = tileObject->getType();
 	auto sft = shared_from_this();
 
-	// Clean support providers for this map part
-	for (int x = pos.x - 1; x <= pos.x + 1; x++)
-	{
-		for (int y = pos.y - 1; y <= pos.y + 1; y++)
-		{
-			for (int z = pos.z - 1; z <= pos.z + 1; z++)
-			{
-				if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y || z < 0 ||
-				    z >= map.size.z)
-				{
-					continue;
-				}
-				auto tile = map.getTile(x, y, z);
-				for (auto &o : tile->ownedObjects)
-				{
-					if (o->getType() == TileObject::Type::Ground ||
-					    o->getType() == TileObject::Type::Feature ||
-					    o->getType() == TileObject::Type::LeftWall ||
-					    o->getType() == TileObject::Type::RightWall)
-					{
-						auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
-						auto it = mp->supportedParts.begin();
-						while (it != mp->supportedParts.end())
-						{
-							auto &p = *it;
-							if (p.first == pos && p.second == type->type)
-							{
-								it = supportedParts.erase(it);
-							}
-							else
-							{
-								it++;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
 	// There are several ways battle map part can get supported:
 	//
 	// (following conditions provide "hard" support)
 	//
 	// Ground:
-	//  - G1: Feature Current/Below
+	//  - G1: Feature Below
 	//  - G2: Wall Adjacent Below
 	//  - G3: Feature Adjacent Below
 	//
@@ -449,8 +416,8 @@ bool BattleMapPart::findSupport()
 					switch (type->type)
 					{
 						case BattleMapPartType::Type::Ground:
-							//  - G1: Feature Current/Below
-							canSupport = canSupport || (x == pos.x && y == pos.y &&
+							//  - G1: Feature Below
+							canSupport = canSupport || (x == pos.x && y == pos.y && z < pos.z &&
 							                            o->getType() == TileObject::Type::Feature);
 							//  - G2: Wall Adjacent Below
 							if ((x >= pos.x || y >= pos.y) && z < pos.z)
@@ -528,8 +495,8 @@ bool BattleMapPart::findSupport()
 						// Seems that "provide support" flag only matters for providing support
 						// upwards
 						if (mp != sft && mp->isAlive() && !mp->damaged &&
-						    (mp->type->provides_support ||
-						     mp->type->type == BattleMapPartType::Type::Ground || z <= pos.z))
+						    (mp->type->type != BattleMapPartType::Type::Ground || z == pos.z) &&
+						    (mp->type->provides_support || z >= pos.z))
 						{
 							mp->supportedParts.emplace_back(position, type->type);
 							return true;
@@ -704,7 +671,7 @@ bool BattleMapPart::findSupport()
 						bool canSupport = !mp->damaged &&
 						                  (mp->type->type != BattleMapPartType::Type::Ground ||
 						                   pair.first.z == pos.z) &&
-						                  (mp->type->provides_support || pair.first.z <= pos.z);
+						                  (mp->type->provides_support || pair.first.z >= pos.z);
 						if (canSupport)
 						{
 							mp->supportedParts.emplace_back(position, type->type);
@@ -716,6 +683,9 @@ bool BattleMapPart::findSupport()
 		}
 	}
 
+// DISABLED clinging to 2 neighbouring objects, because that can introduce circular references
+// Besides, I *think* vanilla didn't have it that way
+#if 0
 	// If we reached this - we can not provide hard support
 	providesHardSupport = false;
 
@@ -724,23 +694,23 @@ bool BattleMapPart::findSupport()
 
 	// List of four directions (for ground and feature)
 	static const std::list<Vec3<int>> directionGDFTList = {
-	    {0, -1, 0}, {1, 0, 0}, {0, 1, 0}, {-1, 0, 0},
+		{0, -1, 0}, {1, 0, 0}, {0, 1, 0}, {-1, 0, 0},
 	};
 
 	// List of directions for left wall
 	static const std::list<Vec3<int>> directionLWList = {
-	    {0, -1, 0}, {0, 1, 0},
+		{0, -1, 0}, {0, 1, 0},
 	};
 
 	// List of directions for right wall
 	static const std::list<Vec3<int>> directionRWList = {
-	    {1, 0, 0}, {-1, 0, 0},
+		{1, 0, 0}, {-1, 0, 0},
 	};
 
 	auto &directionList =
-	    tileType == TileObject::Type::LeftWall
-	        ? directionLWList
-	        : (tileType == TileObject::Type::RightWall ? directionRWList : directionGDFTList);
+		tileType == TileObject::Type::LeftWall
+		? directionLWList
+		: (tileType == TileObject::Type::RightWall ? directionRWList : directionGDFTList);
 
 	// List of found map parts to cling on to
 	std::list<sp<BattleMapPart>> supports;
@@ -758,16 +728,16 @@ bool BattleMapPart::findSupport()
 		for (auto &o : tile->ownedObjects)
 		{
 			if (o->getType() == tileType || (o->getType() == TileObject::Type::Feature &&
-			                                 (tileType == TileObject::Type::LeftWall ||
-			                                  tileType == TileObject::Type::RightWall)))
+				(tileType == TileObject::Type::LeftWall ||
+					tileType == TileObject::Type::RightWall)))
 			{
 				auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
 				if (mp != sft && mp->isAlive())
 				{
 					bool canSupport =
-					    !mp->damaged &&
-					    (mp->type->type != BattleMapPartType::Type::Ground || z == pos.z) &&
-					    (mp->type->provides_support || z <= pos.z);
+						!mp->damaged &&
+						(mp->type->type != BattleMapPartType::Type::Ground || z == pos.z) &&
+						(mp->type->provides_support || z >= pos.z);
 					if (canSupport)
 					{
 						supports.emplace_back(mp);
@@ -797,6 +767,7 @@ bool BattleMapPart::findSupport()
 		}
 		return true;
 	}
+#endif
 
 	// Step 04: Shoot "support lines" and try to find something
 
@@ -834,8 +805,8 @@ bool BattleMapPart::findSupport()
 					// fail
 					break;
 				}
-				// Found map part that provides hard support
-				if (mp->providesHardSupport)
+				// Found map part that provides hard support and won't collapse
+				if (mp->providesHardSupport && !mp->willCollapse())
 				{
 					// success
 					found = true;
@@ -913,8 +884,8 @@ bool BattleMapPart::findSupport()
 					// fail
 					break;
 				}
-				// Found map part that provides hard support
-				if (mp->providesHardSupport)
+				// Found map part that provides hard support and won't collapse
+				if (mp->providesHardSupport && !mp->willCollapse())
 				{
 					// success
 					found = true;
@@ -958,6 +929,7 @@ bool BattleMapPart::findSupport()
 		}
 	}
 
+	providesHardSupport = false;
 	return false;
 }
 
@@ -982,6 +954,52 @@ sp<std::set<BattleMapPart *>> BattleMapPart::getSupportedParts()
 		}
 	}
 	return collapseList;
+}
+
+void BattleMapPart::ceaseBeingSupported()
+{
+	auto pos = tileObject->getOwningTile()->position;
+	auto &map = tileObject->map;
+
+	// Clean support providers for this map part
+	for (int x = pos.x - 1; x <= pos.x + 1; x++)
+	{
+		for (int y = pos.y - 1; y <= pos.y + 1; y++)
+		{
+			for (int z = pos.z - 1; z <= pos.z + 1; z++)
+			{
+				if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y || z < 0 ||
+				    z >= map.size.z)
+				{
+					continue;
+				}
+				auto tile = map.getTile(x, y, z);
+				for (auto &o : tile->ownedObjects)
+				{
+					if (o->getType() == TileObject::Type::Ground ||
+					    o->getType() == TileObject::Type::Feature ||
+					    o->getType() == TileObject::Type::LeftWall ||
+					    o->getType() == TileObject::Type::RightWall)
+					{
+						auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+						auto it = mp->supportedParts.begin();
+						while (it != mp->supportedParts.end())
+						{
+							auto &p = *it;
+							if (p.first == pos && p.second == type->type)
+							{
+								it = supportedParts.erase(it);
+							}
+							else
+							{
+								it++;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 void BattleMapPart::ceaseSupportProvision()
@@ -1015,12 +1033,14 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> set)
 	for (auto mp : *set)
 	{
 		mp->queueCollapse();
+		mp->ceaseBeingSupported();
 	}
 
 	// Then try to re-establish support links
 	bool listChanged;
 	do
 	{
+		// DEBUG OUTPUT
 		LogWarning("%s", log.cStr());
 		log = "";
 		log += format("\nIteration begins. List contains %d items:", (int)set->size());
@@ -1033,27 +1053,29 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> set)
 
 		auto nextSet = mksp<std::set<BattleMapPart *>>();
 		listChanged = false;
+		// Attempt to re-link every entry in set
 		for (auto mp : *set)
 		{
+			// Unsupport every map part supported by this
 			auto supportedByThisMp = mp->getSupportedParts();
 			for (auto newmp : *supportedByThisMp)
 			{
 				newmp->queueCollapse(mp->ticksUntilCollapse);
-				newmp->providesHardSupport = false;
 			}
 			auto pos = mp->tileObject->getOwningTile()->position;
+			// Try to find support without those that depended on us
 			if (mp->findSupport())
 			{
 				log += format("\n Processing %s at %d %d %d: OK %s", mp->type.id, pos.x, pos.y,
 				              pos.z, mp->providesHardSupport ? "HARD" : "SOFT");
+				// DEBUG OUTPUT
 				{
-					auto t = pos;
 					auto &map = mp->tileObject->map;
-					for (int x = t.x - 1; x <= t.x + 1; x++)
+					for (int x = pos.x - 1; x <= pos.x + 1; x++)
 					{
-						for (int y = t.y - 1; y <= t.y + 1; y++)
+						for (int y = pos.y - 1; y <= pos.y + 1; y++)
 						{
-							for (int z = t.z - 1; z <= t.z + 1; z++)
+							for (int z = pos.z - 1; z <= pos.z + 1; z++)
 							{
 								if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y || z < 0 ||
 								    z >= map.size.z)
@@ -1073,11 +1095,11 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> set)
 										        ->getOwner();
 										for (auto &p : mp2->supportedParts)
 										{
-											if (p.first == t && p.second == mp->type->type)
+											if (p.first == pos && p.second == mp->type->type)
 											{
-												log +=
-												    format("\n - Supported by %s at %d %d %d",
-												           mp2->type.id, x - t.x, y - t.y, z - t.z);
+												log += format("\n - Supported by %s at %d %d %d",
+												              mp2->type.id, x - pos.x, y - pos.y,
+												              z - pos.z);
 											}
 										}
 									}
@@ -1086,6 +1108,7 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> set)
 						}
 					}
 				}
+				// Cancel collapse of this part and every part supported by it
 				mp->cancelCollapse();
 				for (auto newmp : *supportedByThisMp)
 				{
@@ -1104,6 +1127,7 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> set)
 					auto newpos = newmp->tileObject->getOwningTile()->position;
 					log += format("\n - %s at %d %d %d added to next iteration", newmp->type.id,
 					              newpos.x, newpos.y, newpos.z);
+					newmp->ceaseBeingSupported();
 					nextSet->insert(newmp);
 					listChanged = true;
 				}
@@ -1172,7 +1196,6 @@ void BattleMapPart::update(GameState &state, unsigned int ticks)
 		// Collision with this tile happens when map part moves from this tile to the next
 		if (newPosition.z < 0 || floorf(newPosition.z) != floorf(position.z))
 		{
-			LogWarning("Implement smoke when rubble falls through tile");
 			sp<BattleMapPart> rubble;
 			for (auto &obj : tileObject->getOwningTile()->ownedObjects)
 			{
@@ -1216,7 +1239,18 @@ void BattleMapPart::update(GameState &state, unsigned int ticks)
 						break;
 				}
 			}
-
+			// Spawn smoke, more intense if we land here
+			{
+				StateRef<DamageType> dtSmoke = {&state, "DAMAGETYPE_SMOKE"};
+				auto hazard = state.current_battle->placeHazard(
+				    state, dtSmoke, position, dtSmoke->hazardType->getLifetime(state), 2,
+				    destroyed ? 6 : 12);
+				if (hazard)
+				{
+					hazard->ticksUntilVisible = 0;
+				}
+			}
+			// Cease to exist if destroyed
 			if (destroyed)
 			{
 				if (!type->rubble.empty())
