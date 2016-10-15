@@ -952,17 +952,20 @@ BattleUnitMission *BattleUnitMission::changeStance(BattleUnit &, BodyState state
 {
 	auto *mission = new BattleUnitMission();
 	mission->type = MissionType::ChangeBodyState;
-	mission->bodyState = state;
+	mission->targetBodyState = state;
 	return mission;
 }
 
-BattleUnitMission *BattleUnitMission::throwItem(BattleUnit &, sp<AEquipment> item, Vec3<int> target,
+BattleUnitMission *BattleUnitMission::throwItem(BattleUnit &u, sp<AEquipment> item, Vec3<int> target,
                                                 float velocityXY, float velocityZ)
 {
 	auto *mission = new BattleUnitMission();
 	mission->type = MissionType::ThrowItem;
 	mission->item = item;
 	mission->targetLocation = target;
+	mission->targetFacing = getFacing(u, target);
+	mission->targetBodyState = BodyState::Throwing;
+	mission->freeTurn = true;
 	mission->velocityXY = velocityXY;
 	mission->velocityZ = velocityZ;
 	return mission;
@@ -974,6 +977,41 @@ BattleUnitMission *BattleUnitMission::dropItem(BattleUnit &, sp<AEquipment> item
 	mission->type = MissionType::DropItem;
 	mission->item = item;
 	return mission;
+}
+
+Vec2<int> BattleUnitMission::getFacing(BattleUnit &u, Vec3<int> to)
+{
+	return getFacing(u, u.tileObject->getOwningTile()->position, to);
+}
+
+Vec2<int> BattleUnitMission::getFacing(BattleUnit &u, Vec3<float> from, Vec3<float> to)
+{
+	static const std::list<Vec3<float>> angles = {
+		{ 0, -1, 0 },{ 1, -1, 0 },{ 1, 0, 0 },{ 1, 1, 0 },
+		{ 0, 1, 0 },{ -1, 1, 0 },{ -1, 0, 0 },{ -1, -1, 0 },
+	};
+
+	float closestAngle = FLT_MAX;
+	Vec3<int> closestVector = { 0, 0, 0 };
+	Vec3<float> targetFacing = (Vec3<float>)(to - from);
+	if (targetFacing.x == 0.0f && targetFacing.y == 0.0f)
+	{
+		closestVector = { u.facing.x, u.facing.y, 0 };
+	}
+	else
+	{
+		targetFacing.z = 0;
+		for (auto &a : angles)
+		{
+			float angle = glm::angle(glm::normalize(targetFacing), glm::normalize(a));
+			if (angle < closestAngle && u.agent->isFacingAllowed(Vec2<int>{a.x, a.y}))
+			{
+				closestAngle = angle;
+				closestVector = a;
+			}
+		}
+	}
+	return {closestVector.x, closestVector.y};
 }
 
 BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec2<int> target, bool free,
@@ -998,36 +1036,13 @@ BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<float> target, bo
 BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec3<float> from, Vec3<float> to,
                                            bool free, bool requireGoal)
 {
-	static const std::list<Vec3<float>> angles = {
-	    {0, -1, 0}, {1, -1, 0}, {1, 0, 0},  {1, 1, 0},
-	    {0, 1, 0},  {-1, 1, 0}, {-1, 0, 0}, {-1, -1, 0},
-	};
-
 	auto *mission = new BattleUnitMission();
 	mission->type = MissionType::Turn;
 	mission->requireGoal = requireGoal;
-	mission->free = free;
-	float closestAngle = FLT_MAX;
-	Vec3<int> closestVector = {0, 0, 0};
-	Vec3<float> targetFacing = (Vec3<float>)(to - from);
-	if (targetFacing.x == 0.0f && targetFacing.y == 0.0f)
-	{
-		closestVector = {u.facing.x, u.facing.y, 0};
-	}
-	else
-	{
-		targetFacing.z = 0;
-		for (auto &a : angles)
-		{
-			float angle = glm::angle(glm::normalize(targetFacing), glm::normalize(a));
-			if (angle < closestAngle && u.agent->isFacingAllowed(Vec2<int>{a.x, a.y}))
-			{
-				closestAngle = angle;
-				closestVector = a;
-			}
-		}
-	}
-	mission->targetFacing = {closestVector.x, closestVector.y};
+	mission->freeTurn = free;
+
+	
+	mission->targetFacing = getFacing(u, from, to);
 	return mission;
 }
 
@@ -1057,6 +1072,20 @@ BattleUnitMission *BattleUnitMission::teleport(BattleUnit &, sp<AEquipment> item
 
 bool BattleUnitMission::spendAgentTUs(GameState &state, BattleUnit &u, int cost)
 {
+	if (costPaidUpFront > 0)
+	{
+		if (costPaidUpFront >= cost)
+		{
+			costPaidUpFront -= cost;
+			cost = 0;
+		}
+		else
+		{
+			cost -= costPaidUpFront;
+			costPaidUpFront = 0;
+		}
+	}
+
 	if (u.spendTU(cost))
 	{
 		return true;
@@ -1067,23 +1096,82 @@ bool BattleUnitMission::spendAgentTUs(GameState &state, BattleUnit &u, int cost)
 
 bool BattleUnitMission::getNextDestination(GameState &state, BattleUnit &u, Vec3<float> &dest)
 {
-	if (this->type != MissionType::GotoLocation)
+	// If turning or changing body state then we cannot move
+	if (u.facing != u.goalFacing || u.current_body_state != u.target_body_state)
+	{
 		return false;
-	return advanceAlongPath(state, u, dest);
+	}
+	// If we have not yet consumed queued up body or turning change, then we cannot move
+	if (u.facing != targetFacing || u.current_body_state != targetBodyState)
+	{
+		return false;
+	}
+	switch (this->type)
+	{
+		case MissionType::GotoLocation:
+			return advanceAlongPath(state, u, dest);
+		default:
+			return false;
+	}
 }
 
 bool BattleUnitMission::getNextFacing(GameState &state, BattleUnit &u, Vec2<int> &dest)
 {
-	if (this->type != MissionType::Turn)
+	// If turning or changing body state then we cannot turn
+	if (u.current_body_state != u.target_body_state)
+	{
 		return false;
-	return advanceFacing(state, u, dest);
+	}
+	// If we have not yet consumed queued up body change, we cannot turn
+	// Unless we're throwing, in which case it's complicated
+	if (u.current_body_state != targetBodyState)
+	{
+		if (this->type == MissionType::ThrowItem)
+		{
+			// If we are turning, our priority is: [STAND] -> [TURN] -> [THROW]
+			// Therefore, if we're not standing, body takes priority, otherwise turning does
+			if (u.current_body_state != BodyState::Standing)
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	switch (this->type)
+	{
+	case MissionType::Turn:
+	case MissionType::ThrowItem:
+	case MissionType::GotoLocation:
+		return advanceFacing(state, u, dest);
+	default:
+		return false;
+	}
 }
 
 bool BattleUnitMission::getNextBodyState(GameState &state, BattleUnit &u, BodyState &dest)
 {
-	if (this->type != MissionType::ChangeBodyState)
-		return false;
-	return advanceBodyState(state, u, bodyState, dest);
+	// If we are throwing and ready to do so then body state change must wait until we turn
+	if (this->type == MissionType::ThrowItem && u.current_body_state == BodyState::Standing)
+	{
+		if (u.facing != u.goalFacing  || u.facing != targetFacing)
+		{
+			return false;
+		}
+	}
+	
+	switch (this->type)
+	{
+		case MissionType::Turn:
+		case MissionType::ThrowItem:
+		case MissionType::ChangeBodyState:
+		case MissionType::GotoLocation:
+			return advanceBodyState(state, u, targetBodyState, dest);
+		default:
+			return false;
+	}
 }
 
 void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int ticks, bool finished)
@@ -1129,6 +1217,19 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 			return;
 		}
 		case MissionType::ThrowItem:
+			// Half way there - throw the item!
+			if (item && u.current_body_state == BodyState::Throwing
+				 && u.target_body_state == BodyState::Throwing)
+			{
+				// Ensure item still belongs to agent
+				if (item->ownerAgent == u.agent && item->equippedSlotType!=AEquipmentSlotType::None)
+				{
+					item->ownerAgent->removeEquipment(item);
+					item->throwItem(state, targetLocation, velocityXY, velocityZ);
+				}
+				item = nullptr;
+				targetBodyState = BodyState::Standing;
+			}
 			return;
 		case MissionType::ReachGoal:
 			if (finished)
@@ -1179,15 +1280,11 @@ bool BattleUnitMission::isFinishedInternal(GameState &, BattleUnit &u)
 		case MissionType::Snooze:
 			return this->timeToSnooze == 0;
 		case MissionType::ChangeBodyState:
-			return u.current_body_state == this->bodyState;
+			return u.current_body_state == this->targetBodyState;
 		case MissionType::ThrowItem:
-			return !item;
+			return !item && u.current_body_state == BodyState::Standing;
 		case MissionType::Turn:
-			if ((u.facing == targetFacing) || u.isDead())
-			{
-				return true;
-			}
-			return false;
+			return u.facing == targetFacing;
 		case MissionType::Fall:
 			return !u.falling;
 		case MissionType::DropItem:
@@ -1213,9 +1310,14 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 
 	switch (this->type)
 	{
-		case MissionType::Turn:
 		case MissionType::ChangeBodyState:
 		{
+			return;
+		}
+		case MissionType::Turn:
+		{
+			// Reset target body state
+			targetBodyState = u.target_body_state;
 			return;
 		}
 		case MissionType::Teleport:
@@ -1277,95 +1379,36 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 			return;
 		}
 		case MissionType::ThrowItem:
-			// Item disappeared from inventory
-			if (item && item->ownerAgent != u.agent)
+		{
+			// Instant throw allows us to instantly change state and facing for free
+			// FIXME: actually read the option
+			bool USER_OPTION_ALLOW_INSTANT_THROWS = false;
+			if (USER_OPTION_ALLOW_INSTANT_THROWS)
 			{
-				item = nullptr;
-				return;
-			}
-			// Half way there - throw the item!
-			if (u.current_body_state == BodyState::Throwing)
-			{
-				item->throwItem(state, targetLocation, velocityXY, velocityZ);
-
-				item = nullptr;
-				u.addMission(state, changeStance(u, BodyState::Standing));
-				return;
-			}
-			// Just starting the throw
-			else if (item)
-			{
-				// Do we need to turn?
-				auto m = turn(u, (Vec3<float>)targetLocation + Vec3<float>{0.5f, 0.5f, 0.0f});
-				if (u.current_body_state != BodyState::Standing ||
-				    u.current_body_state != u.target_body_state || !m->isFinished(state, u))
-				{
-					// FIXME: actually read the option
-					bool USER_OPTION_ALLOW_INSTANT_THROWS = false;
-					if (!USER_OPTION_ALLOW_INSTANT_THROWS)
-					{
-						if (!m->isFinished(state, u))
-						{
-							u.addMission(state, m);
-							return;
-						}
-						if (u.current_body_state != u.target_body_state)
-						{
-							// body state is changing - wait for it to change and then retry
-							u.missions.emplace(++u.missions.begin(),
-							                   BattleUnitMission::throwItem(u, item, targetLocation,
-							                                                velocityXY, velocityZ));
-							u.missions.pop_front();              // pop this throw
-							u.missions.front()->start(state, u); // re-start body change
-							return;
-						}
-						else // body state is static but not standing
-						{
-							u.addMission(state,
-							             BattleUnitMission::changeStance(u, BodyState::Standing));
-							return;
-						}
-					}
-					u.setBodyState(BodyState::Standing);
-					u.facing = m->targetFacing;
-					u.goalFacing = m->targetFacing;
-				}
-				// Calculate cost
-				// I *think* this is correct? 18 TUs at 100 time units
-				int cost = u.agent->current_stats.time_units * 18 / 100;
-				if (!spendAgentTUs(state, u, cost))
-				{
-					LogWarning("Unit mission \"%s\" could not start: unsufficient TUs",
-					           getName().cStr());
-					return;
-				}
-				// Remove item
-				item->ownerAgent->removeEquipment(item);
-				// Start throw animation
-				u.addMission(state, BattleUnitMission::changeStance(u, BodyState::Throwing));
-				return;
-			}
-			// Throw finished - nothing else to do
-			else
-			{
-				// Nothing else to do
+				u.setBodyState(BodyState::Standing);
+				u.goalFacing = getFacing(u, targetLocation);
+				u.facing = u.goalFacing;
 			}
 			return;
+		}
 		case MissionType::DropItem:
 		{
-			if (item)
+			if (item && item->ownerAgent == u.agent && item->equippedSlotType != AEquipmentSlotType::None)
 			{
 				// Remove item
 				item->ownerAgent->removeEquipment(item);
 				// Drop item
 				auto bi = state.current_battle->placeItem(state, item,
 				                                          u.position + Vec3<float>{0.0, 0.0, 0.5f});
-				item = nullptr;
 				bi->falling = true;
 			}
+			item = nullptr;
 			return;
 		}
 		case MissionType::GotoLocation:
+			// Reset target body state and facing
+			targetBodyState = u.target_body_state;
+			targetFacing = u.goalFacing;
 			// If we have already tried to use this mission, see if path is still valid
 			if (currentPlannedPath.size() > 0)
 			{
@@ -1463,17 +1506,25 @@ void BattleUnitMission::setPathTo(BattleUnit &u, Vec3<int> target, int maxIterat
 
 bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<float> &dest)
 {
-	// FIXME: do not go into other units
-
-	if (u.isUnconscious() || u.isDead())
+	if (u.isUnconscious() || u.isDead() || currentPlannedPath.empty())
+	{
 		return false;
-	if (currentPlannedPath.empty())
+	}
+	if (currentPlannedPath.size() == 1)
+	{
+		currentPlannedPath.clear();
 		return false;
-	auto poppedPos = currentPlannedPath.front();
-	currentPlannedPath.pop_front();
-	if (currentPlannedPath.empty())
-		return false;
-	auto pos = currentPlannedPath.front();
+	}
+	
+	// Reset body and facing settings
+	targetBodyState = u.target_body_state;
+	targetFacing = u.goalFacing;
+	requireGoal = true;
+	freeTurn = false;
+	
+	// Get target location
+	auto it = ++currentPlannedPath.begin();
+	auto pos = *it++;
 
 	// See if we can actually go there
 	auto tFrom = u.tileObject->getOwningTile();
@@ -1493,13 +1544,14 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 	}
 
 	// See if we can make a shortcut
+	// --
 	// When ordering move to a unit already on the move, we can have a situation
 	// where going directly to 2nd step in the path is faster than going to the first
 	// In this case, we should skip unnesecary steps
-	auto it = ++currentPlannedPath.begin();
+	// --
 	// Start with position after next
-	// If next position has a node and we can go directly to that node
-	// Then update current position and iterator
+	// If the next position has a node and we can go directly to that node,
+	// then update current position and iterator
 	float newCost = 0;
 	bool newDoorInWay = false;
 	while (it != currentPlannedPath.end() &&
@@ -1510,74 +1562,79 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 	                                                          newCost, newDoorInWay))))
 	{
 		currentPlannedPath.pop_front();
-		poppedPos = pos;
-		pos = currentPlannedPath.front();
+		it = ++currentPlannedPath.begin();
+		pos = *it++;
 		tTo = tFrom->map.getTile(pos);
 		cost = newCost;
 		closedDoorInTheWay = newDoorInWay;
-		it = ++currentPlannedPath.begin();
 	}
 
-	// Do we need to change stance?
-	switch (u.movement_mode)
+	// Do we need to turn? If so, skip trying to fix the body
+	auto nextFacing = getFacing(u, pos);
+	if (nextFacing == u.facing)
 	{
-		// If want to move prone but not prone - go prone
-		case MovementMode::Prone:
-			if (u.current_body_state == BodyState::Prone)
-			{
-				// Ensure we can go prone at target tile
-				if (u.canProne(pos, u.facing))
+		// Do we need to change our body state?
+		switch (u.movement_mode)
+		{
+			// If we want to move prone but are not prone - go prone if we can
+			case MovementMode::Prone:
+				if (u.current_body_state == BodyState::Prone)
 				{
-					break;
+					// Ensure we can go prone at target tile
+					if (u.canProne(pos, u.facing))
+					{
+						break;
+					}
+					// If we can't go prone we will fall-through into walking below
 				}
-			}
-			else if (u.canProne(u.position, u.facing) && u.canProne(pos, u.facing))
-			{
-				u.addMission(state, changeStance(u, BodyState::Prone));
-				return false;
-			}
-		// Intentional fall-though, if we want to go prone but cannot go prone,
-		// we should act as if we're told to walk/run
-		// If want to move standing up but not standing/flying - go standing/flying where
-		// appropriate
-		case MovementMode::Walking:
-		case MovementMode::Running:
-			auto t = u.tileObject->getOwningTile();
-			if (u.current_body_state != BodyState::Standing &&
-			    u.current_body_state != BodyState::Flying)
-			{
-				if (t->getCanStand(u.isLarge()) && t->map.getTile(pos)->getCanStand(u.isLarge()))
+				else if (u.canProne(u.position, u.facing) && u.canProne(pos, u.facing))
 				{
-					u.addMission(state, changeStance(u, BodyState::Standing));
+					targetBodyState = BodyState::Prone;
 					return false;
 				}
-				else
+			// Intentional fall-though.
+			// If we want to go prone but cannot go prone - we should act as if we're told to walk/run
+			// If want to move standing up but not standing/flying - go standing/flying appropriately
+			case MovementMode::Walking:
+			case MovementMode::Running:
+			{
+				auto t = u.tileObject->getOwningTile();
+				switch (u.current_body_state)
 				{
-					u.addMission(state, changeStance(u, BodyState::Flying));
-					return false;
+					// Stop flying if we are flying and no longer require it
+					case BodyState::Flying:
+						if (t->getCanStand(u.isLarge()) &&
+							t->map.getTile(pos)->getCanStand(u.isLarge()))
+						{
+							targetBodyState = BodyState::Standing;
+							return false;
+						};
+						break;
+					// Start flying if we are standing and require flying
+					case BodyState::Standing:
+						if (!(t->getCanStand(u.isLarge()) && t->map.getTile(pos)->getCanStand(u.isLarge())))
+						{
+							targetBodyState = BodyState::Flying;
+							return false;
+						}
+						break;
+					// Start standing/flying if neither, appropriately to current conditions
+					default:
+						targetBodyState = t->getCanStand(u.isLarge()) 
+							&& t->map.getTile(pos)->getCanStand(u.isLarge()) 
+							? BodyState::Standing : BodyState::Flying;
+						return false;
 				}
+				break;
 			}
-			// Stop flying if we no longer require it
-			if (u.current_body_state == BodyState::Flying && t->getCanStand(u.isLarge()) &&
-			    t->map.getTile(pos)->getCanStand(u.isLarge()))
-			{
-				u.addMission(state, changeStance(u, BodyState::Standing));
-				return false;
-			}
-			// Start flying if we require it
-			if (u.current_body_state != BodyState::Flying && u.canFly() &&
-			    !(t->getCanStand(u.isLarge()) && t->map.getTile(pos)->getCanStand(u.isLarge())))
-			{
-				u.addMission(state, changeStance(u, BodyState::Flying));
-				return false;
-			}
-			break;
+		}
 	}
 
 	// Is there a unit in the target tile other than us?
 	auto blockingUnitTileObject = tTo->getUnitIfPresent(true, true, false, u.tileObject);
 	if (blockingUnitTileObject)
 	{
+		// FIXME: Check unit's allegiance? Will neutrals give way? I think they did in vanilla!
 		auto blockingUnit = blockingUnitTileObject->getUnit();
 		u.current_movement_state = MovementState::None;
 		// If unit is still patient enough, and we can ask to give way
@@ -1671,35 +1728,28 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 		cost /= 2;
 	}
 	int intCost = (int)cost;
-	if (costPaidUpFront > 0)
-	{
-		if (costPaidUpFront >= cost)
-		{
-			costPaidUpFront -= intCost;
-			intCost = 0;
-		}
-		else
-		{
-			intCost -= costPaidUpFront;
-			costPaidUpFront = 0;
-		}
-	}
 	// See if we can afford doing this move
 	if (!spendAgentTUs(state, u, intCost))
 	{
-		currentPlannedPath.push_front(poppedPos);
 		return false;
 	}
 
 	// Do we need to turn?
-	auto m = turn(u, pos, true);
-	if (!m->isFinished(state, u, false))
+	if (nextFacing != u.facing)
 	{
-		u.addMission(state, m);
-		currentPlannedPath.push_front(poppedPos);
+		targetFacing = nextFacing;
 		costPaidUpFront += intCost;
+		freeTurn = true;
+		// If we need to turn, do we need to change stance first?
+		if (u.current_body_state == BodyState::Prone)
+		{
+			targetBodyState = BodyState::Kneeling;
+		}
 		return false;
 	}
+
+	// Finally, we're moving!
+	currentPlannedPath.pop_front();
 
 	// FIXME: Deplete stamina according to encumbrance if running
 	makeAgentMove(u);
@@ -1717,32 +1767,38 @@ bool BattleUnitMission::advanceFacing(GameState &state, BattleUnit &u, Vec2<int>
 	    {0, {0, -1}}, {1, {1, -1}}, {2, {1, 0}},  {3, {1, 1}},
 	    {4, {0, 1}},  {5, {-1, 1}}, {6, {-1, 0}}, {7, {-1, -1}}};
 
-	if (targetFacing == u.facing)
+	// Already facing properly?
+	if (u.facing == targetFacing)
 		return false;
-
 	int curFacing = facing_dir_map.at(u.facing);
 	int tarFacing = facing_dir_map.at(targetFacing);
 	if (curFacing == tarFacing)
 		return false;
 
-	// Already facing properly?
-	if (isFinished(state, u))
-	{
-		return false;
-	}
 	// Go to goal first
 	if (!u.atGoal && requireGoal)
 	{
 		u.addMission(state, MissionType::ReachGoal);
 		return false;
 	}
+	
 	// If we need to turn, do we need to change stance first?
 	if (u.current_body_state == BodyState::Prone)
 	{
-		u.addMission(state, changeStance(u, BodyState::Kneeling));
+		targetBodyState = BodyState::Kneeling;
 		return false;
 	}
 
+	// If throwing then pay up front so that we can't turn for free
+	if (targetBodyState == BodyState::Throwing)
+	{
+		int cost = getBodyStateChangeCost(u, u.current_body_state, targetBodyState);
+		if (!spendAgentTUs(state, u, cost))
+			return false;
+		costPaidUpFront += cost;
+	}
+
+	// Turn
 	int clockwiseDistance = tarFacing - curFacing;
 	if (clockwiseDistance < 0)
 	{
@@ -1768,7 +1824,7 @@ bool BattleUnitMission::advanceFacing(GameState &state, BattleUnit &u, Vec2<int>
 	} while (!u.agent->isFacingAllowed(dest));
 
 	// Calculate and spend cost
-	int cost = free ? 0 : 1;
+	int cost = freeTurn ? 0 : 1;
 	if (!spendAgentTUs(state, u, cost))
 	{
 		LogWarning("Mission %s could not start: unsufficient TUs", getName().cStr());
@@ -1814,8 +1870,13 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodySt
 	{
 		return advanceBodyState(state, u, BodyState::Kneeling, dest);
 	}
+	// If trying to throw then stand first
+	if (targetState == BodyState::Throwing && u.current_body_state != BodyState::Standing)
+	{
+		return advanceBodyState(state, u, BodyState::Standing, dest);
+	}
 	// Calculate and spend cost
-	int cost = getBodyStateChangeCost(u.target_body_state, targetState);
+	int cost = getBodyStateChangeCost(u, u.target_body_state, targetState);
 
 	if (!spendAgentTUs(state, u, cost))
 	{
@@ -1827,7 +1888,7 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodySt
 	return true;
 }
 
-int BattleUnitMission::getBodyStateChangeCost(BodyState from, BodyState to)
+int BattleUnitMission::getBodyStateChangeCost(BattleUnit &u, BodyState from, BodyState to)
 {
 	// If not within these conditions, it costs nothing!
 	switch (to)
@@ -1866,6 +1927,9 @@ int BattleUnitMission::getBodyStateChangeCost(BodyState from, BodyState to)
 					return 0;
 			}
 			break;
+		case BodyState::Throwing:
+			// I *think* this is correct? 18 TUs at 100 time units to throw
+			return u.agent->current_stats.time_units * 18 / 100;
 		default:
 			return 0;
 	}
@@ -1912,7 +1976,7 @@ UString BattleUnitMission::getName()
 			name = "Snooze " + format(" for %u ticks", this->timeToSnooze);
 			break;
 		case MissionType::ChangeBodyState:
-			name = "ChangeBodyState " + format("%d", (int)this->bodyState);
+			name = "ChangeBodyState " + format("%d", (int)this->targetBodyState);
 			break;
 		case MissionType::ThrowItem:
 			name = "ThrowItem " +
@@ -1937,3 +2001,70 @@ UString BattleUnitMission::getName()
 }
 
 } // namespace OpenApoc
+
+
+/*
+			// Half way there - throw the item!
+			if (u.current_body_state == BodyState::Throwing)
+			{
+				//Done
+			}
+			
+			// Just starting the throw
+			else if (item)
+			{
+				// Do we need to turn?
+				auto m = turn(u, (Vec3<float>)targetLocation + Vec3<float>{0.5f, 0.5f, 0.0f});
+				if (u.current_body_state != BodyState::Standing ||
+				    u.current_body_state != u.target_body_state || !m->isFinished(state, u))
+				{
+					bool USER_OPTION_ALLOW_INSTANT_THROWS = false;
+					if (!USER_OPTION_ALLOW_INSTANT_THROWS)
+					{
+						if (!m->isFinished(state, u))
+						{
+							u.addMission(state, m);
+							return;
+						}
+						if (u.current_body_state != u.target_body_state)
+						{
+							// body state is changing - wait for it to change and then retry
+							u.missions.emplace(++u.missions.begin(),
+							                   BattleUnitMission::throwItem(u, item, targetLocation,
+							                                                velocityXY, velocityZ));
+							u.missions.pop_front();              // pop this throw
+							u.missions.front()->start(state, u); // re-start body change
+							return;
+						}
+						else // body state is static but not standing
+						{
+							u.addMission(state,
+							             BattleUnitMission::changeStance(u, BodyState::Standing));
+							return;
+						}
+					}
+					u.setBodyState(BodyState::Standing);
+					u.facing = m->targetFacing;
+					u.goalFacing = m->targetFacing;
+				}
+				// Calculate cost
+				// I *think* this is correct? 18 TUs at 100 time units
+				int cost = u.agent->current_stats.time_units * 18 / 100;
+				if (!spendAgentTUs(state, u, cost))
+				{
+					LogWarning("Unit mission \"%s\" could not start: unsufficient TUs",
+					           getName().cStr());
+					return;
+				}
+				// Remove item
+				item->ownerAgent->removeEquipment(item);
+				// Start throw animation
+				u.addMission(state, BattleUnitMission::changeStance(u, BodyState::Throwing));
+				return;
+			}
+			// Throw finished - nothing else to do
+			else
+			{
+				// Nothing else to do
+			}
+			*/

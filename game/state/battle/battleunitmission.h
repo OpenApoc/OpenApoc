@@ -44,6 +44,9 @@ class BattleUnitMission
 	// INTERNAL: Never called directly
 	static BattleUnitMission *turn(BattleUnit &u, Vec3<float> from, Vec3<float> to, bool free,
 	                               bool requireGoal);
+	// Used to determine target facings
+	static Vec2<int> getFacing(BattleUnit &u, Vec3<float> from, Vec3<float> to);
+	static Vec2<int> getFacing(BattleUnit &u, Vec3<int> to);
 
 	// Methods that calculate next action
 	bool advanceAlongPath(GameState &state, BattleUnit &u, Vec3<float> &dest);
@@ -71,7 +74,7 @@ class BattleUnitMission
 	bool isFinished(GameState &state, BattleUnit &u, bool callUpdateIfFinished = true);
 	void start(GameState &state, BattleUnit &u);
 	void setPathTo(BattleUnit &u, Vec3<int> target, int maxIterations = 1000);
-
+	
 	// Methods to request next action
 	// Request next destination
 	bool getNextDestination(GameState &state, BattleUnit &u, Vec3<float> &dest);
@@ -81,8 +84,9 @@ class BattleUnitMission
 	bool getNextBodyState(GameState &state, BattleUnit &u, BodyState &dest);
 
 	// Spend agent TUs or append AcquireTU mission
-	static bool spendAgentTUs(GameState &state, BattleUnit &u, int cost);
-	static int getBodyStateChangeCost(BodyState from, BodyState to);
+	bool spendAgentTUs(GameState &state, BattleUnit &u, int cost);
+	
+	static int getBodyStateChangeCost(BattleUnit &u, BodyState from, BodyState to);
 
 	// Other agent control methods
 	void makeAgentMove(BattleUnit &u);
@@ -131,7 +135,7 @@ class BattleUnitMission
 	// Turn
 	Vec2<int> targetFacing = {0, 0};
 	bool requireGoal = false;
-	bool free = false;
+	bool freeTurn = false;
 
 	// ThrowItem, DropItem, Teleport
 	sp<AEquipment> item;
@@ -147,6 +151,6 @@ class BattleUnitMission
 	unsigned int timeUnits = 0;
 
 	// ChangeBodyState
-	BodyState bodyState = BodyState::Downed;
+	BodyState targetBodyState = BodyState::Downed;
 };
 } // namespace OpenApoc

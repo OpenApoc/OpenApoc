@@ -39,7 +39,7 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimat
     const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
     std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction, int frames_per_100_units,
     int split_point, bool left_side, bool isOverlay, bool removeItem, Vec2<int> targetOffset,
-    Vec2<int> beginOffset, bool inverse, int extraEndFrames)
+    Vec2<int> beginOffset, bool inverse, int extraEndFrames, bool singleFrame)
 {
 	static const std::map<Vec2<int>, int> offset_dir_map = {
 	    {{0, -1}, 0}, {{1, -1}, 1}, {{1, 0}, 2},  {{1, 1}, 3},
@@ -52,7 +52,7 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimat
 	int offset_ua = dataAD[index * 8 + offset_dir].offset;
 	int offset_uf = dataUA[offset_ua].offset;
 	int from = left_side ? 0 : split_point;
-	int to = left_side ? split_point : dataUA[offset_ua].frame_count;
+	int to = singleFrame ? from + 1 : (left_side ? split_point : dataUA[offset_ua].frame_count);
 
 	for (int i = from; i < to; i++)
 	{

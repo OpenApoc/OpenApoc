@@ -290,13 +290,13 @@
 		<member>allowSkipNodes</member>
 		<member>targetFacing</member>
 		<member>requireGoal</member>
-		<member>free</member>
+		<member>freeTurn</member>
 		<member>item</member>
 		<member>velocityXY</member>
 		<member>velocityZ</member>
 		<member>timeToSnooze</member>
 		<member>timeUnits</member>
-		<member>bodyState</member>
+		<member>targetBodyState</member>
 		<member>currentPlannedPath</member>
 		<member>allowRunningAway</member>
 	</object>

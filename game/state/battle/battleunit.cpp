@@ -700,7 +700,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			// If we're given a giveWay request 0, 0 it means we're asked to kneel temporarily
 			if (giveWayRequest.size() == 1 && giveWayRequest.front().x == 0 &&
 			    giveWayRequest.front().y == 0 &&
-			    canAfford(BattleUnitMission::getBodyStateChangeCost(target_body_state,
+			    canAfford(BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
 			                                                        BodyState::Kneeling)))
 			{
 				// Give time for that unit to pass
@@ -777,7 +777,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			// Kneel if not kneeling and should kneel
 			if (kneeling_mode == KneelingMode::Kneeling &&
 			    current_body_state != BodyState::Kneeling && canKneel() &&
-			    canAfford(BattleUnitMission::getBodyStateChangeCost(target_body_state,
+			    canAfford(BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
 			                                                        BodyState::Kneeling)))
 			{
 				addMission(state, BattleUnitMission::changeStance(*this, BodyState::Kneeling));
@@ -786,7 +786,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			else if (movement_mode == MovementMode::Prone &&
 			         current_body_state != BodyState::Prone &&
 			         kneeling_mode != KneelingMode::Kneeling && canProne(position, facing) &&
-			         canAfford(BattleUnitMission::getBodyStateChangeCost(target_body_state,
+			         canAfford(BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
 			                                                             BodyState::Prone)))
 			{
 				addMission(state, BattleUnitMission::changeStance(*this, BodyState::Prone));
@@ -800,7 +800,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			{
 				if (agent->isBodyStateAllowed(BodyState::Standing))
 				{
-					if (canAfford(BattleUnitMission::getBodyStateChangeCost(target_body_state,
+					if (canAfford(BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
 					                                                        BodyState::Standing)))
 					{
 						addMission(state,
@@ -809,7 +809,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				}
 				else
 				{
-					if (canAfford(BattleUnitMission::getBodyStateChangeCost(target_body_state,
+					if (canAfford(BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
 					                                                        BodyState::Flying)))
 					{
 						addMission(state,
@@ -821,7 +821,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			else if (current_body_state == BodyState::Flying &&
 			         tileObject->getOwningTile()->getCanStand(isLarge()) &&
 			         agent->isBodyStateAllowed(BodyState::Standing) &&
-			         canAfford(BattleUnitMission::getBodyStateChangeCost(target_body_state,
+			         canAfford(BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
 			                                                             BodyState::Standing)))
 			{
 				addMission(state, BattleUnitMission::changeStance(*this, BodyState::Standing));
@@ -838,7 +838,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						break;
 					}
 				}
-				if (!hasSupport && canAfford(BattleUnitMission::getBodyStateChangeCost(
+				if (!hasSupport && canAfford(BattleUnitMission::getBodyStateChangeCost(*this,
 				                       target_body_state, BodyState::Kneeling)))
 				{
 					addMission(state, BattleUnitMission::changeStance(*this, BodyState::Kneeling));

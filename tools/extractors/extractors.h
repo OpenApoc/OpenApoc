@@ -109,7 +109,7 @@ class InitialGameStateExtractor
 	    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
 	    int frames_per_100_units, int split_point, bool left_side, bool isOverlay = false,
 	    bool removeItem = false, Vec2<int> targetOffset = {0, 0}, Vec2<int> beginOffset = {0, 0},
-	    bool inverse = false, int extraEndFrames = 0);
+	    bool inverse = false, int extraEndFrames = 0, bool singleFrame = false);
 
 	sp<BattleUnitAnimationPack::AnimationEntry>
 	getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
