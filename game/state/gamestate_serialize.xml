@@ -299,6 +299,7 @@
 		<member>targetBodyState</member>
 		<member>currentPlannedPath</member>
 		<member>allowRunningAway</member>
+		<member>cancelled</member>
 	</object>
 	<object>
 		<name>Base</name>
@@ -385,8 +386,10 @@
 		<member>currentPlayer</member>
 		<member>currentActiveOrganisation</member>
 		<member>currentTurn</member>
-		<member>battleviewZLevel</member>
-		<member>battleviewScreenCenter</member>
+		<member>battleViewZLevel</member>
+		<member>battleViewScreenCenter</member>
+		<member>battleViewGroupMove</member>
+		<member>battleViewSelectedUnits</member>
 	</object>
 	<object>
 		<name>BattleMap</name>
@@ -1038,14 +1041,17 @@
 		<value>InfiltrateSubvert</value>
 	</enum>
 	<enum>
-		<name>BattleUnitMission::MissionType</name>
+		<name>BattleUnitMission::Type</name>
 		<value>GotoLocation</value>
 		<value>Snooze</value>
+		<value>RestartNextMission</value>
 		<value>AcquireTU</value>
 		<value>ChangeBodyState</value>
 		<value>ThrowItem</value>
+		<value>DropItem</value>
 		<value>Turn</value>
-		<value>Fall</value>
+		<value>ReachGoal</value>
+		<value>Teleport</value>
 	</enum>
 	<enum>
 		<name>VEquipment::WeaponState</name>

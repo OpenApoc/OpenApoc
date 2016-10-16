@@ -103,21 +103,12 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// Turn number
 	int currentTurn = 0;
 
-	// Store information about last screen center location, so that when we load a save
-	// we could restore it
-	int battleviewZLevel;
-	Vec3<float> battleviewScreenCenter;
+	// BattleView and BattleTileView settings, saved here so that we can return to them
 
-	// Contains height at which to spawn units, or -1 if spawning is not possible
-	// No need to serialize this, as we cannot save/load during briefing
-	std::vector<std::vector<std::vector<int>>> spawnMap;
-
-	// Following members are not serialized, but rather are set in initBattle method
-
-	sp<BattleCommonImageList> common_image_list;
-	sp<BattleCommonSampleList> common_sample_list;
-
-	std::map<StateRef<Organisation>, BattleForces> forces;
+	int battleViewZLevel = 0;
+	Vec3<float> battleViewScreenCenter;
+	bool battleViewGroupMove = false;
+	std::list<StateRef<BattleUnit>> battleViewSelectedUnits;
 
 	void update(GameState &state, unsigned int ticks);
 
@@ -180,6 +171,19 @@ class Battle : public std::enable_shared_from_this<Battle>
 	void unloadAnimationPacks(GameState &state);
 
 	friend class BattleMap;
+
+  public:
+	
+	// Following members are not serialized, but rather are set in initBattle method
+	
+	sp<BattleCommonImageList> common_image_list;
+	sp<BattleCommonSampleList> common_sample_list;
+
+	std::map<StateRef<Organisation>, BattleForces> forces;
+
+	// Contains height at which to spawn units, or -1 if spawning is not possible
+	// No need to serialize this, as we cannot save/load during briefing
+	std::vector<std::vector<std::vector<int>>> spawnMap;
 };
 
 }; // namespace OpenApoc

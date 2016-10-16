@@ -413,7 +413,7 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 		item->ownerAgent = ownerAgent;
 		float velocityXY = 0.0f;
 		float velocityZ = 0.0f;
-		if (!getVelocityForLaunch(unit, targetPosition, velocityXY, velocityZ))
+		if (!getVelocityForLaunch(*unit, targetPosition, velocityXY, velocityZ))
 		{
 			LogError("Firing a launcher with no valid trajectory?");
 			return;
@@ -538,7 +538,7 @@ bool AEquipment::canFire(Vec3<float> to) const
 	}
 	// Launchers need to additionally confirm a throw trajectory to target
 	float ignore1, ignore2;
-	return getVelocityForLaunch(ownerAgent->unit, to, ignore1, ignore2);
+	return getVelocityForLaunch(*ownerAgent->unit, to, ignore1, ignore2);
 };
 
 bool AEquipment::needsReload() const
@@ -624,28 +624,28 @@ bool AEquipment::calculateNextVelocityForThrow(float distanceXY, float diffZ, fl
 	return false;
 }
 
-bool AEquipment::getVelocityForThrowLaunch(const sp<BattleUnit> unit, int weight,
+bool AEquipment::getVelocityForThrowLaunch(const BattleUnit &unit, int weight,
                                            Vec3<float> startPos, Vec3<int> target,
                                            float &velocityXY, float &velocityZ)
 {
 	// Check distance to target
-	auto pos = unit->tileObject->getOwningTile()->position;
+	auto pos = unit.tileObject->getOwningTile()->position;
 	Vec3<float> targetVectorXY = target - pos;
 	targetVectorXY = {targetVectorXY.x, targetVectorXY.y, 0.0f};
 	float distance = glm::length(targetVectorXY);
 	if (distance >=
-	    getMaxThrowDistance(weight, unit->agent->modified_stats.strength, pos.z - target.z))
+	    getMaxThrowDistance(weight, unit.agent->modified_stats.strength, pos.z - target.z))
 	{
 		return false;
 	}
 
 	// Calculate trajectory
 	bool valid = true;
-	auto &map = unit->tileObject->map;
+	auto &map = unit.tileObject->map;
 	while (AEquipment::calculateNextVelocityForThrow(distance, startPos.z - target.z - 6.0f / 40.0f,
 	                                                 velocityXY, velocityZ))
 	{
-		valid = map.checkThrowTrajectory(unit->tileObject, startPos, target, targetVectorXY,
+		valid = map.checkThrowTrajectory(unit.tileObject, startPos, target, targetVectorXY,
 		                                 velocityXY, velocityZ);
 		if (valid)
 		{
@@ -655,19 +655,19 @@ bool AEquipment::getVelocityForThrowLaunch(const sp<BattleUnit> unit, int weight
 	return valid;
 }
 
-bool AEquipment::getVelocityForThrow(const sp<BattleUnit> unit, Vec3<int> target, float &velocityXY,
+bool AEquipment::getVelocityForThrow(const BattleUnit &unit, Vec3<int> target, float &velocityXY,
                                      float &velocityZ) const
 {
 	return getVelocityForThrowLaunch(unit, type->weight + (payloadType ? payloadType->weight : 0),
-	                                 unit->getThrownItemLocation(), target, velocityXY, velocityZ);
+	                                 unit.getThrownItemLocation(), target, velocityXY, velocityZ);
 }
 
-bool AEquipment::getVelocityForLaunch(const sp<BattleUnit> unit, Vec3<int> target,
+bool AEquipment::getVelocityForLaunch(const BattleUnit &unit, Vec3<int> target,
                                       float &velocityXY, float &velocityZ) const
 {
 	// Launchers can use higher "throw" speeds
 	velocityXY = 4.0f;
-	return getVelocityForThrowLaunch(unit, payloadType->weight, unit->getMuzzleLocation(), target,
+	return getVelocityForThrowLaunch(unit, payloadType->weight, unit.getMuzzleLocation(), target,
 	                                 velocityXY, velocityZ);
 }
 

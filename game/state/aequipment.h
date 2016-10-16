@@ -91,16 +91,16 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	void throwItem(GameState &state, Vec3<int> targetPosition, float velocityXY, float velocityZ,
 	               bool launch = false);
 
-	bool getVelocityForThrow(const sp<BattleUnit> unit, Vec3<int> target, float &velocityXY,
+	bool getVelocityForThrow(const BattleUnit &unit, Vec3<int> target, float &velocityXY,
 	                         float &velocityZ) const;
-	bool getVelocityForLaunch(const sp<BattleUnit> unit, Vec3<int> target, float &velocityXY,
+	bool getVelocityForLaunch(const BattleUnit &unit, Vec3<int> target, float &velocityXY,
 	                          float &velocityZ) const;
 
   private:
 	static float getMaxThrowDistance(int weight, int strength, int heightDifference);
 	static bool calculateNextVelocityForThrow(float distanceXY, float diffZ, float &velocityXY,
 	                                          float &velocityZ);
-	static bool getVelocityForThrowLaunch(const sp<BattleUnit> unit, int weight,
+	static bool getVelocityForThrowLaunch(const BattleUnit &unit, int weight,
 	                                      Vec3<float> startPos, Vec3<int> target, float &velocityXY,
 	                                      float &velocityZ);
 };

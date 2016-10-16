@@ -280,7 +280,7 @@ bool BattleUnit::isThrowing() const
 	bool throwing = false;
 	for (auto &m : missions)
 	{
-		if (m->type == BattleUnitMission::MissionType::ThrowItem)
+		if (m->type == BattleUnitMission::Type::ThrowItem)
 		{
 			throwing = true;
 			break;
@@ -330,7 +330,8 @@ bool BattleUnit::canProne(Vec3<int> pos, Vec2<int> fac) const
 	{
 		auto bodyTile = tileObject->map.getTile(pos);
 		auto legsTile = tileObject->map.getTile(legsPos);
-		if (legsTile->canStand && std::abs(legsTile->height - bodyTile->height) <= 0.25f &&
+		if (legsTile->canStand && bodyTile->canStand &&
+		    std::abs(legsTile->height - bodyTile->height) <= 0.25f &&
 		    legsTile->getPassable(false, agent->type->bodyType->height.at(BodyState::Prone)) &&
 		    (legsPos == (Vec3<int>)position || !legsTile->getUnitIfPresent(true, true)))
 		{
@@ -674,10 +675,6 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	if (missions.empty() && isConscious())
 	{
 		// Sanity checks
-		if (falling)
-		{
-			LogError("Unit falling without a mission, wtf?");
-		}
 		if (goalFacing != facing)
 		{
 			LogError("Unit turning without a mission, wtf?");
@@ -690,7 +687,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		// Reach goal before everything else
 		if (!atGoal)
 		{
-			addMission(state, BattleUnitMission::MissionType::ReachGoal);
+			addMission(state, BattleUnitMission::Type::ReachGoal);
 		}
 
 		// Try giving way if asked to
@@ -748,7 +745,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 							addMission(state, BattleUnitMission::turn(*this, facing), false);
 							// 04: Return to our position after we're done
 							addMission(state,
-							           BattleUnitMission::gotoLocation(*this, position, 0, false),
+							           BattleUnitMission::gotoLocation(*this, position, 0),
 							           false);
 							// 03: Give time for that unit to pass
 							addMission(state, BattleUnitMission::snooze(*this, 60), false);
@@ -756,7 +753,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 							addMission(state, BattleUnitMission::turn(*this, facing), false);
 							// 01: Give way (move 1 tile away)
 							addMission(state,
-							           BattleUnitMission::gotoLocation(*this, pos, 0, false));
+							           BattleUnitMission::gotoLocation(*this, pos, 0));
 						}
 						if (!missions.empty())
 						{
@@ -780,7 +777,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			    canAfford(BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
 			                                                        BodyState::Kneeling)))
 			{
-				addMission(state, BattleUnitMission::changeStance(*this, BodyState::Kneeling));
+				setMission(state, BattleUnitMission::changeStance(*this, BodyState::Kneeling));
 			}
 			// Go prone if not prone and should stay prone
 			else if (movement_mode == MovementMode::Prone &&
@@ -789,7 +786,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			         canAfford(BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
 			                                                             BodyState::Prone)))
 			{
-				addMission(state, BattleUnitMission::changeStance(*this, BodyState::Prone));
+				setMission(state, BattleUnitMission::changeStance(*this, BodyState::Prone));
 			}
 			// Stand up if not standing up and should stand up
 			else if ((movement_mode == MovementMode::Walking ||
@@ -800,19 +797,19 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			{
 				if (agent->isBodyStateAllowed(BodyState::Standing))
 				{
-					if (canAfford(BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
-					                                                        BodyState::Standing)))
+					if (canAfford(BattleUnitMission::getBodyStateChangeCost(
+					        *this, target_body_state, BodyState::Standing)))
 					{
-						addMission(state,
+						setMission(state,
 						           BattleUnitMission::changeStance(*this, BodyState::Standing));
 					}
 				}
 				else
 				{
-					if (canAfford(BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
-					                                                        BodyState::Flying)))
+					if (canAfford(BattleUnitMission::getBodyStateChangeCost(
+					        *this, target_body_state, BodyState::Flying)))
 					{
-						addMission(state,
+						setMission(state,
 						           BattleUnitMission::changeStance(*this, BodyState::Flying));
 					}
 				}
@@ -824,7 +821,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			         canAfford(BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
 			                                                             BodyState::Standing)))
 			{
-				addMission(state, BattleUnitMission::changeStance(*this, BodyState::Standing));
+				setMission(state, BattleUnitMission::changeStance(*this, BodyState::Standing));
 			}
 			// Stop being prone if legs are no longer supported and we haven't taken a mission yet
 			if (current_body_state == BodyState::Prone && missions.empty())
@@ -838,10 +835,10 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						break;
 					}
 				}
-				if (!hasSupport && canAfford(BattleUnitMission::getBodyStateChangeCost(*this,
-				                       target_body_state, BodyState::Kneeling)))
+				if (!hasSupport && canAfford(BattleUnitMission::getBodyStateChangeCost(
+				                       *this, target_body_state, BodyState::Kneeling)))
 				{
-					addMission(state, BattleUnitMission::changeStance(*this, BodyState::Kneeling));
+					setMission(state, BattleUnitMission::changeStance(*this, BodyState::Kneeling));
 				}
 			}
 		}
@@ -916,7 +913,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					// If not flying and has no support - fall!
 					if (!hasSupport && !canFly())
 					{
-						addMission(state, BattleUnitMission::MissionType::Fall);
+						startFalling();
 					}
 					// If flying and not supported both on current and goal locations - start flying
 					if (!fullySupported && canFly())
@@ -924,6 +921,10 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						if (current_body_state == target_body_state)
 						{
 							setBodyState(BodyState::Flying);
+							if (!missions.empty())
+							{
+								missions.front()->targetBodyState = current_body_state;
+							}
 						}
 					}
 				}
@@ -1058,7 +1059,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					}
 				}
 
-				// Not falling and moving
+				// We are moving and not falling
 				else if (current_movement_state != MovementState::None)
 				{
 					unsigned int speedModifier = 100;
@@ -1178,7 +1179,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						}
 					}
 				}
-				// Not falling and not moving
+				// We are not moving and not falling
 				else
 				{
 					// Check if we should adjust our current position
@@ -1190,7 +1191,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					// If not at goal - go to goal
 					if (!atGoal)
 					{
-						addMission(state, BattleUnitMission::MissionType::ReachGoal);
+						addMission(state, BattleUnitMission::Type::ReachGoal);
 					}
 					// If at goal - try to request new destination
 					else
@@ -1224,8 +1225,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					if (turning_animation_ticks_remaining > 0)
 					{
 						turnTicksRemaining -= turning_animation_ticks_remaining;
-						turning_animation_ticks_remaining = 0;
-						facing = goalFacing;
+						setFacing(goalFacing);
 					}
 					// Pop finished missions if present
 					if (popFinishedMissions(state))
@@ -1524,6 +1524,12 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	// FIXME: Soldier "thinking" (auto-attacking, auto-turning)
 }
 
+void BattleUnit::startFalling()
+{
+	setMovementState(MovementState::None);
+	falling = true;
+}
+
 void BattleUnit::updateDisplayedItem()
 {
 	auto lastDisplayedItem = displayedItem;
@@ -1532,7 +1538,7 @@ void BattleUnit::updateDisplayedItem()
 	{
 		for (auto &m : missions)
 		{
-			if (m->type != BattleUnitMission::MissionType::ThrowItem || !m->item)
+			if (m->type != BattleUnitMission::Type::ThrowItem || !m->item)
 			{
 				continue;
 			}
@@ -1845,6 +1851,13 @@ void BattleUnit::beginTurning(Vec2<int> newFacing)
 	turning_animation_ticks_remaining = TICKS_PER_FRAME_UNIT;
 }
 
+void BattleUnit::setFacing(Vec2<int> newFacing)
+{
+	facing = newFacing;
+	goalFacing = newFacing;
+	turning_animation_ticks_remaining = 0;
+}
+
 void BattleUnit::setMovementState(MovementState state)
 {
 	current_movement_state = state;
@@ -1964,142 +1977,218 @@ bool BattleUnit::getNextBodyState(GameState &state, BodyState &dest)
 	return missions.front()->getNextBodyState(state, *this, dest);
 }
 
-bool BattleUnit::addMission(GameState &state, BattleUnitMission::MissionType type)
+bool BattleUnit::addMission(GameState &state, BattleUnitMission::Type type)
 {
 	switch (type)
 	{
-		case BattleUnitMission::MissionType::Fall:
-			return addMission(state, BattleUnitMission::fall(*this));
-		case BattleUnitMission::MissionType::RestartNextMission:
+		case BattleUnitMission::Type::RestartNextMission:
 			return addMission(state, BattleUnitMission::restartNextMission(*this));
-		case BattleUnitMission::MissionType::ReachGoal:
-			if (!addMission(state, BattleUnitMission::reachGoal(*this), false))
-			{
-				return false;
-			}
-			if (!addMission(state, BattleUnitMission::turn(*this, goalPosition)))
-			{
-				LogError("Could not add turn in front of reachGoal? WTF?");
-				return false;
-			}
-			return true;
-		case BattleUnitMission::MissionType::ThrowItem:
-		case BattleUnitMission::MissionType::Snooze:
-		case BattleUnitMission::MissionType::ChangeBodyState:
-		case BattleUnitMission::MissionType::Turn:
-		case BattleUnitMission::MissionType::AcquireTU:
-		case BattleUnitMission::MissionType::GotoLocation:
-		case BattleUnitMission::MissionType::Teleport:
+		case BattleUnitMission::Type::ReachGoal:
+			return addMission(state, BattleUnitMission::reachGoal(*this));
+		case BattleUnitMission::Type::ThrowItem:
+		case BattleUnitMission::Type::Snooze:
+		case BattleUnitMission::Type::ChangeBodyState:
+		case BattleUnitMission::Type::Turn:
+		case BattleUnitMission::Type::AcquireTU:
+		case BattleUnitMission::Type::GotoLocation:
+		case BattleUnitMission::Type::Teleport:
 			LogError("Cannot add mission by type if it requires parameters");
-			break;
-		default:
-			LogError("Unimplemented");
 			break;
 	}
 	return false;
+}
+
+bool BattleUnit::cancelMissions(GameState &state)
+{
+	if (missions.empty())
+	{
+		return true;
+	}
+
+	// Figure out if we can cancel the mission in front
+	bool letFinish = false;
+	switch (missions.front()->type)
+	{
+		// Missions that cannot be cancelled
+		case BattleUnitMission::Type::ThrowItem:
+			return false;
+		// Missions that must be let finish (unless forcing)
+		case BattleUnitMission::Type::ChangeBodyState:
+		case BattleUnitMission::Type::Turn:
+		case BattleUnitMission::Type::GotoLocation:
+		case BattleUnitMission::Type::ReachGoal:
+			letFinish = true;
+			break;
+		// Missions that can be cancelled
+		case BattleUnitMission::Type::Snooze:
+		case BattleUnitMission::Type::DropItem:
+		case BattleUnitMission::Type::Teleport:
+		case BattleUnitMission::Type::RestartNextMission:
+		case BattleUnitMission::Type::AcquireTU:
+			break;
+	}
+
+	// Figure out what to do with the unfinished mission
+	if (letFinish)
+	{
+		auto &m = missions.front();
+		// If turning - downgrade to a turning mission
+		if (facing != goalFacing)
+		{
+			m->type = BattleUnitMission::Type::Turn;
+			m->targetFacing = goalFacing;
+			if (m->costPaidUpFront > 0)
+			{
+				// Refund queued action, subtract turning cost
+				agent->modified_stats.time_units += m->costPaidUpFront - 1;
+			}
+		}
+		// If changing body - downgrade to a body state change mission
+		else if (current_body_state != target_body_state)
+		{
+			m->type = BattleUnitMission::Type::ChangeBodyState;
+			m->targetBodyState = target_body_state;
+		}
+		else
+		{
+			letFinish = false;
+		}
+	}
+
+	// Cancel missions
+	while (missions.size() > letFinish ? 1 : 0)
+	{
+		agent->modified_stats.time_units += missions.back()->costPaidUpFront;
+		missions.pop_back();
+	}
+	if (missions.empty() && !atGoal)
+	{
+		addMission(state, BattleUnitMission::Type::ReachGoal);
+	}
+	return true;
+}
+
+bool BattleUnit::setMission(GameState &state, BattleUnitMission *mission)
+{
+	// Check if mission was actually passed
+	// We can receive nullptr here in case mission was impossible
+	if (!mission)
+	{
+		return false;
+	}
+
+	// Special checks and actions based on mission type
+	switch (mission->type)
+	{
+	case BattleUnitMission::Type::Turn:
+		stopAttacking();
+		break;
+	case BattleUnitMission::Type::ThrowItem:
+		// We already checked if item is throwable inside the mission creation
+		break;
+	}
+
+	if (!cancelMissions(state))
+	{
+		return false;
+	}
+
+	// There is a mission remaining that wants to let it finish
+	if (!missions.empty())
+	{
+		switch (mission->type)
+		{
+			// Instant throw always cancels if agent can afford it
+			case BattleUnitMission::Type::ThrowItem:
+			{
+				// FIXME: actually read the option
+				bool USER_OPTION_ALLOW_INSTANT_THROWS = false;
+				if (USER_OPTION_ALLOW_INSTANT_THROWS &&
+				    canAfford(BattleUnitMission::getThrowCost(*this)))
+				{
+					setBodyState(current_body_state);
+					setFacing(facing);
+					missions.clear();
+				}
+				break;
+			}
+			// Turning can be cancelled if our mission will require us to turn in a different
+			// direction
+			case BattleUnitMission::Type::Turn:
+			case BattleUnitMission::Type::GotoLocation:
+			case BattleUnitMission::Type::ReachGoal:
+			{
+				Vec2<int> nextFacing;
+				bool haveNextFacing = true;
+				switch (mission->type)
+				{
+					case BattleUnitMission::Type::Turn:
+						nextFacing = BattleUnitMission::getFacingStep(*this, mission->targetFacing);
+						break;
+					case BattleUnitMission::Type::GotoLocation:
+						// We have to start it in order to see where we're going
+						mission->start(state, *this);
+						if (mission->currentPlannedPath.empty())
+						{
+							haveNextFacing = false;
+							break;
+						}
+						nextFacing = BattleUnitMission::getFacingStep(
+						    *this, BattleUnitMission::getFacing(
+						               *this, mission->currentPlannedPath.front()));
+						break;
+					case BattleUnitMission::Type::ReachGoal:
+						nextFacing = BattleUnitMission::getFacingStep(
+						    *this, BattleUnitMission::getFacing(*this, position, goalPosition));
+						break;
+					default: // don't cry about unhandled case, compiler
+						break;
+				}
+				// If we are turning towards something that will not be our next facing when we try
+				// to execute our mission then we're better off canceling it
+				if (haveNextFacing && nextFacing != goalFacing)
+				{
+					setFacing(facing);
+					missions.clear();
+				}
+				break;
+			}
+			default:
+				break;
+		}
+	}
+
+	// Finally, add the mission
+	return addMission(state, mission);
 }
 
 bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool start)
 {
 	switch (mission->type)
 	{
-		// Falling:
-		// - If waiting for TUs, cancel everything and fall
-		// - If throwing, append after throw
-		// - Otherwise, append in front
-		case BattleUnitMission::MissionType::Fall:
-			if (falling)
-			{
-				LogError("Falling when already falling? WTF?");
-				return false;
-			}
-			if (missions.empty())
-			{
-				missions.emplace_front(mission);
-				if (start)
-				{
-					mission->start(state, *this);
-				}
-			}
-			else if (missions.front()->type == BattleUnitMission::MissionType::AcquireTU)
-			{
-				missions.clear();
-				missions.emplace_front(mission);
-				if (start)
-				{
-					mission->start(state, *this);
-				}
-			}
-			else if (missions.front()->type == BattleUnitMission::MissionType::ChangeBodyState &&
-			         !isConscious())
-			{
-				missions.emplace_back(mission);
-				if (start)
-				{
-					mission->start(state, *this);
-				}
-			}
-			else
-			{
-				auto it = missions.begin();
-				while (it != missions.end() &&
-				       (*it)->type != BattleUnitMission::MissionType::ThrowItem &&
-				       ++it != missions.end())
-				{
-				}
-				if (it == missions.end())
-				{
-					missions.emplace_front(mission);
-					if (start)
-					{
-						mission->start(state, *this);
-					}
-				}
-				else
-				{
-					missions.emplace(++it, mission);
-					if (start)
-					{
-						mission->start(state, *this);
-					}
-				}
-			}
-			break;
 		// Reach goal can only be added if it can overwrite the mission
-		case BattleUnitMission::MissionType::ReachGoal:
+		case BattleUnitMission::Type::ReachGoal:
 		{
-			// If current mission does not prevent moving - then move to goal
-			bool shouldMoveToGoal = true;
 			if (missions.size() > 0)
 			{
 				switch (missions.front()->type)
 				{
 					// Missions that prevent going to goal
-					case BattleUnitMission::MissionType::Fall:
-					case BattleUnitMission::MissionType::Snooze:
-					case BattleUnitMission::MissionType::ThrowItem:
-					case BattleUnitMission::MissionType::ChangeBodyState:
-					case BattleUnitMission::MissionType::ReachGoal:
-					case BattleUnitMission::MissionType::DropItem:
-					case BattleUnitMission::MissionType::Teleport:
-						shouldMoveToGoal = false;
-						break;
-					// Turn prevents moving to goal if it does not require goal
-					case BattleUnitMission::MissionType::Turn:
-						shouldMoveToGoal = missions.front()->requireGoal;
-						break;
+					case BattleUnitMission::Type::Snooze:
+					case BattleUnitMission::Type::ThrowItem:
+					case BattleUnitMission::Type::ChangeBodyState:
+					case BattleUnitMission::Type::ReachGoal:
+					case BattleUnitMission::Type::DropItem:
+					case BattleUnitMission::Type::Teleport:
+					case BattleUnitMission::Type::RestartNextMission:
+					case BattleUnitMission::Type::GotoLocation:
+					case BattleUnitMission::Type::Turn:
+						return false;
 					// Missions that can be overwritten
-					case BattleUnitMission::MissionType::AcquireTU:
-					case BattleUnitMission::MissionType::GotoLocation:
-					case BattleUnitMission::MissionType::RestartNextMission:
-						shouldMoveToGoal = true;
+					case BattleUnitMission::Type::AcquireTU:
 						break;
 				}
 			}
-			if (!shouldMoveToGoal)
-			{
-				return false;
-			}
 			missions.emplace_front(mission);
 			if (start)
 			{
@@ -2107,47 +2196,26 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool s
 			}
 			break;
 		}
-		// Turn that requires goal can only be added
-		// if it's not added in front of "reachgoal" mission
-		case BattleUnitMission::MissionType::Turn:
-		{
-			if (mission->requireGoal)
-			{
-				auto it = missions.begin();
-				while (it != missions.end() &&
-				       (*it)->type != BattleUnitMission::MissionType::ReachGoal &&
-				       ++it != missions.end())
-				{
-				}
-				if (it != missions.end())
-				{
-					return false;
-				}
-			}
-			missions.emplace_front(mission);
-			if (start)
+		// Missions that can be added to the back at any time
+		case BattleUnitMission::Type::Turn:
+		case BattleUnitMission::Type::ChangeBodyState:
+		case BattleUnitMission::Type::ThrowItem:
+		case BattleUnitMission::Type::GotoLocation:
+		case BattleUnitMission::Type::Teleport:
+			missions.emplace_back(mission);
+			// Missions added to back normally start only if they are the only mission in the queue
+			// Teleport always starts immediately, even if the agent is waiting to finish something
+			if (start &&
+			    (missions.size() == 1 || mission->type == BattleUnitMission::Type::Teleport))
 			{
 				mission->start(state, *this);
 			}
 			break;
-		}
-		// Snooze, change body state, acquire TU, restart and teleport can be added at any time
-		case BattleUnitMission::MissionType::Snooze:
-		case BattleUnitMission::MissionType::ChangeBodyState:
-		case BattleUnitMission::MissionType::AcquireTU:
-		case BattleUnitMission::MissionType::RestartNextMission:
-		case BattleUnitMission::MissionType::Teleport:
-		case BattleUnitMission::MissionType::DropItem:
-			missions.emplace_front(mission);
-			if (start)
-			{
-				mission->start(state, *this);
-			}
-			break;
-		// FIXME: Implement this
-		case BattleUnitMission::MissionType::ThrowItem:
-		case BattleUnitMission::MissionType::GotoLocation:
-			LogWarning("Adding Throw/GoTo : Ensure implemented correctly!");
+		// Missions that can be added to the front at any time
+		case BattleUnitMission::Type::Snooze:
+		case BattleUnitMission::Type::AcquireTU:
+		case BattleUnitMission::Type::RestartNextMission:
+		case BattleUnitMission::Type::DropItem:
 			missions.emplace_front(mission);
 			if (start)
 			{
@@ -2158,5 +2226,34 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool s
 	return true;
 }
 
-// FIXME: When unit dies, gets destroyed, retreats or changes ownership, remove it from squad
+void BattleUnit::groupMove(std::list<StateRef<BattleUnit>>&units, Vec3<int> targetLocation, bool demandGiveWay)
+{
+	static const std::list<Vec2<int>> targetOffsets = { 
+		{ -1, 1}, { 1, 1 }, { 0, 2 }, { -1, -1 }, { -2, 0 }, { 0, -2 }, { 1, -1 }, { 2, 0 },
+		{ -4, 0 }, { -3, -1 }, { -2, -2}, { -1, -3}, 
+		{ 0, -4 }, { 1, -3 }, { 2, -2 }, { 3, -1 }, 
+		{ 4, 0 }, { 3, 1 }, { 2, 2 }, { 1, 3 }, 
+		{ 0, 4 }, { -1, 3 }, { -2, 2 }, { -3, 1 },
+	};
+
+	// 2 is linear move, 3 diagonal move, 4 diagonal + vertical
+	static const int maxAllowance = 6;
+
+	// Algorithm:
+	//
+	// - Find first unit that can reach the goal or arrive within allowed distance
+	//
+	// - Point iterator to first list element
+	//
+	// - For every unit other than the unit found:
+	//	- Path from targetLocation to iterator
+	//	- If path is less than 50% unoptimal, path unit to iterator
+	//	  Else do nothing
+	//  - Increment iterator
+	//  - Break if iterator reached end
+	//  - Continue if pathed to iterator (above)
+	
+	
+}
+
 }

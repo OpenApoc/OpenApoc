@@ -271,15 +271,17 @@ void InitialGameStateExtractor::extractAnimationPackUnit(sp<BattleUnitAnimationP
 
 		// Throwing (taken from Body Standing -> Throwing and back animation: 41)
 		p->standart_animations[ItemWieldMode::None][HandState::AtEase][MovementState::None]
-			[BodyState::Throwing][{x, y}] =
-			getAnimationEntry(dataAD, dataUA, dataUF, 41, { x, y }, 100, 5, true, false, false, { 0,0 }, { 0,0 }, false, 0, true);
+		                      [BodyState::Throwing][{x, y}] =
+		    getAnimationEntry(dataAD, dataUA, dataUF, 41, {x, y}, 100, 5, true, false, false,
+		                      {0, 0}, {0, 0}, false, 0, true);
 		p->standart_animations[ItemWieldMode::OneHanded][HandState::AtEase][MovementState::None]
-			[BodyState::Throwing][{x, y}] =
-			getAnimationEntry(dataAD, dataUA, dataUF, 41, { x, y }, 100, 5, true, false, false, { 0,0 }, { 0,0 }, false, 0, true);
+		                      [BodyState::Throwing][{x, y}] =
+		    getAnimationEntry(dataAD, dataUA, dataUF, 41, {x, y}, 100, 5, true, false, false,
+		                      {0, 0}, {0, 0}, false, 0, true);
 		p->standart_animations[ItemWieldMode::TwoHanded][HandState::AtEase][MovementState::None]
-			[BodyState::Throwing][{x, y}] =
-			getAnimationEntry(dataAD, dataUA, dataUF, 41, { x, y }, 100, 5, true, false, false, { 0,0 }, { 0,0 }, false, 0, true);
-
+		                      [BodyState::Throwing][{x, y}] =
+		    getAnimationEntry(dataAD, dataUA, dataUF, 41, {x, y}, 100, 5, true, false, false,
+		                      {0, 0}, {0, 0}, false, 0, true);
 	}
 
 	// Body state change animations
@@ -405,8 +407,8 @@ void InitialGameStateExtractor::extractAnimationPackUnit(sp<BattleUnitAnimationP
 
 		// Body Standing -> Throwing and back animation: 41
 		p->body_state_animations[ItemWieldMode::None][HandState::AtEase][MovementState::None]
-								[BodyState::Standing][BodyState::Throwing][{x, y}] =
-			getAnimationEntry(dataAD, dataUA, dataUF, 41, { x, y }, 100, 5, true);
+		                        [BodyState::Standing][BodyState::Throwing][{x, y}] =
+		    getAnimationEntry(dataAD, dataUA, dataUF, 41, {x, y}, 100, 5, true);
 		p->body_state_animations[ItemWieldMode::OneHanded][HandState::AtEase][MovementState::None]
 		                        [BodyState::Standing][BodyState::Throwing][{x, y}] =
 		    getAnimationEntry(dataAD, dataUA, dataUF, 41, {x, y}, 100, 5, true);

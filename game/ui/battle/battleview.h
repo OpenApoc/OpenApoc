@@ -113,7 +113,7 @@ class BattleView : public BattleTileView
 	void orderDrop(bool right);
 	void orderThrow(Vec3<int> target, bool right);
 	void orderTeleport(Vec3<int> target, bool right);
-	void orderSelect(sp<BattleUnit> u, bool inverse = false, bool additive = false);
+	void orderSelect(StateRef<BattleUnit> u, bool inverse = false, bool additive = false);
 	void orderFire(Vec3<int> target,
 	               BattleUnit::WeaponStatus status = BattleUnit::WeaponStatus::FiringBothHands,
 	               bool modifier = false);
@@ -121,11 +121,8 @@ class BattleView : public BattleTileView
 	               BattleUnit::WeaponStatus status = BattleUnit::WeaponStatus::FiringBothHands);
 	void orderFocus(StateRef<BattleUnit> u);
 
-	void attemptToClearCurrentOrders(sp<BattleUnit> u, bool overrideBodyStateChange = false);
-	bool canEmplaceTurnInFront(sp<BattleUnit> u);
-
   public:
-	BattleView(sp<GameState> state);
+	BattleView(sp<GameState> gameState);
 	~BattleView() override;
 	void begin() override;
 	void resume() override;

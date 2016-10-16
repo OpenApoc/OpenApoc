@@ -181,7 +181,19 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <image/>
        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:307:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
-	  
+	  <!-- Squad Assign and Group move buttons -->
+	  <radiobutton id="BUTTON_MOVE_GROUP" groupid="GROUPMOVE">
+        <position x="80" y="68"/>
+        <size width="37" height="25"/>
+        <image/>
+       <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:122:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+	  <radiobutton id="BUTTON_MOVE_INDIVIDUALLY" groupid="GROUPMOVE">
+        <position x="116" y="68"/>
+        <size width="37" height="25"/>
+        <image/>
+       <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:124:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
 	  <!-- TBD -->
 	  <!-- TBD -->
 	  <!-- TBD -->
