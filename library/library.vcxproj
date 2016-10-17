@@ -29,6 +29,7 @@
     <ClInclude Include="vec.h" />
     <ClInclude Include="voxel.h" />
     <ClInclude Include="xorshift.h" />
+	<ClInclude Include="vector_remove.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="strings.cpp" />
