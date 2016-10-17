@@ -303,6 +303,9 @@ Framework::~Framework()
 {
 	TRACE_FN;
 	LogInfo("Destroying framework");
+	LogInfo("Stopping threadpool");
+	p->threadPool.reset();
+	LogInfo("Clearing stages");
 	p->ProgramStages.clear();
 	LogInfo("Saving config");
 	if (config().getBool("Config.Save"))
