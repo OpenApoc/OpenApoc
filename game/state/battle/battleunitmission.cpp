@@ -1151,6 +1151,10 @@ bool BattleUnitMission::spendAgentTUs(GameState &state, BattleUnit &u, int cost,
 
 bool BattleUnitMission::getNextDestination(GameState &state, BattleUnit &u, Vec3<float> &dest)
 {
+	if (cancelled)
+	{
+		return false;
+	}
 	// If turning or changing body state then we cannot move
 	if (u.facing != u.goalFacing || u.current_body_state != u.target_body_state)
 	{
@@ -1172,6 +1176,10 @@ bool BattleUnitMission::getNextDestination(GameState &state, BattleUnit &u, Vec3
 
 bool BattleUnitMission::getNextFacing(GameState &state, BattleUnit &u, Vec2<int> &dest)
 {
+	if (cancelled)
+	{
+		return false;
+	}
 	// If turning or changing body state then we cannot turn
 	if (u.current_body_state != u.target_body_state)
 	{
@@ -1209,6 +1217,10 @@ bool BattleUnitMission::getNextFacing(GameState &state, BattleUnit &u, Vec2<int>
 
 bool BattleUnitMission::getNextBodyState(GameState &state, BattleUnit &u, BodyState &dest)
 {
+	if (cancelled)
+	{
+		return false;
+	}
 	// If we are throwing and ready to do so then body state change must wait until we turn
 	if (this->type == Type::ThrowItem && u.current_body_state == BodyState::Standing)
 	{

@@ -30,7 +30,7 @@ class BattleTileView : public TileView
 
   private:
 	LayerDrawingMode layerDrawingMode;
-	sp<Battle> battle;
+	Battle &battle;
 
 	sp<Image> selectedTileEmptyImageBack;
 	sp<Image> selectedTileEmptyImageFront;
@@ -62,7 +62,7 @@ class BattleTileView : public TileView
   public:
 	BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
 	               TileViewMode initialMode, Vec3<float> screenCenterTile,
-	               sp<Battle> battle);
+	               Battle &current_battle);
 	~BattleTileView() override;
 
 	// In turn-based, preview path cost when hovering over same tile for more than set amount of

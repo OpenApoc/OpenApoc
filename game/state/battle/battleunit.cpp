@@ -18,6 +18,7 @@
 #include <cmath>
 #include <glm/glm.hpp>
 #include <glm/gtx/vector_angle.hpp>
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -700,10 +701,10 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			    canAfford(BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
 			                                                        BodyState::Kneeling)))
 			{
-				// Give time for that unit to pass
-				addMission(state, BattleUnitMission::snooze(*this, TICKS_PER_SECOND), false);
 				// Give way
-				addMission(state, BattleUnitMission::changeStance(*this, BodyState::Kneeling));
+				setMission(state, BattleUnitMission::changeStance(*this, BodyState::Kneeling));
+				// Give time for that unit to pass
+				addMission(state, BattleUnitMission::snooze(*this, TICKS_PER_SECOND), true);
 			}
 			else
 			{
@@ -741,19 +742,18 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						}
 						if (acceptable)
 						{
-							// 05: Turn to previous facing
-							addMission(state, BattleUnitMission::turn(*this, facing), false);
+							// 01: Give way (move 1 tile away)
+							setMission(state,
+								BattleUnitMission::gotoLocation(*this, pos, 0));
+							// 02: Turn to previous facing
+							addMission(state, BattleUnitMission::turn(*this, facing), true);
+							// 03: Give time for that unit to pass
+							addMission(state, BattleUnitMission::snooze(*this, 60), true);
 							// 04: Return to our position after we're done
 							addMission(state,
-							           BattleUnitMission::gotoLocation(*this, position, 0),
-							           false);
-							// 03: Give time for that unit to pass
-							addMission(state, BattleUnitMission::snooze(*this, 60), false);
-							// 02: Turn to previous facing
-							addMission(state, BattleUnitMission::turn(*this, facing), false);
-							// 01: Give way (move 1 tile away)
-							addMission(state,
-							           BattleUnitMission::gotoLocation(*this, pos, 0));
+								BattleUnitMission::gotoLocation(*this, position, 0), true);
+							// 05: Turn to previous facing
+							addMission(state, BattleUnitMission::turn(*this, facing), true);
 						}
 						if (!missions.empty())
 						{
@@ -2005,6 +2005,13 @@ bool BattleUnit::cancelMissions(GameState &state)
 		return true;
 	}
 
+	// Pop finished missions
+	if (popFinishedMissions(state))
+	{
+		// Unit retreated
+		return false;
+	}
+
 	// Figure out if we can cancel the mission in front
 	bool letFinish = false;
 	switch (missions.front()->type)
@@ -2056,7 +2063,7 @@ bool BattleUnit::cancelMissions(GameState &state)
 	}
 
 	// Cancel missions
-	while (missions.size() > letFinish ? 1 : 0)
+	while (missions.size() > (letFinish ? 1 : 0))
 	{
 		agent->modified_stats.time_units += missions.back()->costPaidUpFront;
 		missions.pop_back();
@@ -2162,8 +2169,14 @@ bool BattleUnit::setMission(GameState &state, BattleUnitMission *mission)
 	return addMission(state, mission);
 }
 
-bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool start)
+bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool toBack)
 {
+	if (toBack)
+	{
+		missions.emplace_back(mission);
+		return true;
+	}
+
 	switch (mission->type)
 	{
 		// Reach goal can only be added if it can overwrite the mission
@@ -2190,10 +2203,7 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool s
 				}
 			}
 			missions.emplace_front(mission);
-			if (start)
-			{
-				mission->start(state, *this);
-			}
+			mission->start(state, *this);
 			break;
 		}
 		// Missions that can be added to the back at any time
@@ -2205,8 +2215,7 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool s
 			missions.emplace_back(mission);
 			// Missions added to back normally start only if they are the only mission in the queue
 			// Teleport always starts immediately, even if the agent is waiting to finish something
-			if (start &&
-			    (missions.size() == 1 || mission->type == BattleUnitMission::Type::Teleport))
+			if (missions.size() == 1 || mission->type == BattleUnitMission::Type::Teleport)
 			{
 				mission->start(state, *this);
 			}
@@ -2217,43 +2226,237 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool s
 		case BattleUnitMission::Type::RestartNextMission:
 		case BattleUnitMission::Type::DropItem:
 			missions.emplace_front(mission);
-			if (start)
-			{
-				mission->start(state, *this);
-			}
+			mission->start(state, *this);
 			break;
 	}
 	return true;
 }
 
-void BattleUnit::groupMove(std::list<StateRef<BattleUnit>>&units, Vec3<int> targetLocation, bool demandGiveWay)
+Vec3<int> rotate(Vec3<int> vec, int rotation)
 {
-	static const std::list<Vec2<int>> targetOffsets = { 
-		{ -1, 1}, { 1, 1 }, { 0, 2 }, { -1, -1 }, { -2, 0 }, { 0, -2 }, { 1, -1 }, { 2, 0 },
-		{ -4, 0 }, { -3, -1 }, { -2, -2}, { -1, -3}, 
-		{ 0, -4 }, { 1, -3 }, { 2, -2 }, { 3, -1 }, 
-		{ 4, 0 }, { 3, 1 }, { 2, 2 }, { 1, 3 }, 
-		{ 0, 4 }, { -1, 3 }, { -2, 2 }, { -3, 1 },
+	switch (rotation)
+	{
+		case 1:
+			return{ -vec.y, vec.x, vec.z };
+		case 2:
+			return{ -vec.x, -vec.y, vec.z };
+		case 3:
+			return{ vec.y, -vec.x, vec.z };
+		default:
+			return vec;
+	}
+}
+
+void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>>&selectedUnits, Vec3<int> targetLocation, bool demandGiveWay)
+{
+	// We must choose a leader who will go into center. For that we try to path everybody to it.
+	// Max allowed deviation from targetLocation to consider unit a leader immediately.
+	// If noone lands within this distance, the one closest is chosen
+	// 2 is linear move, 3 diagonal move, 4 diagonal + vertical move
+	static const int maxAllowance = 6;
+	
+	// Legend:				
+	//
+	// (arrive from the southwest)						(arrive from the south)                   
+	//
+	//         6			G = goal					         7			G = goal
+	//       5   6			F = flanks					       7   7		1 = 1s back row
+	//     4   5   6		1 = 1st back row			     6   6   6		2 = 2nd back row
+	//   3   F   5   6		2 = 2nd back row			   5   5   5   5	3 = 3rd back row
+	// 2   1   G   5   6	3 = sides of 1st back row	 F   F   G   F   F	4 = sides of 1st bk row
+	//   2   1   F   5		4 = sides of flanks			   4   1   1   4	F = flanks
+	//     2   1   4		5 = 1st front row			     2   2   2		5 = 1st front row
+	//       2   3			6 = 2nd front row			       3   3		6 = 2nd front row
+	//         2										         3			7 = 3rd front row
+	//
+	//						
+
+	static const std::list<Vec3<int>> targetOffsetsDiagonal = {
+		// Two locations to the flanks
+		{ -1, -1 , 0 }, { 1, 1 , 0 },
+		// Three locations in the 1st back row
+		{ -1, 1, 0 }, { -2, 0 , 0 }, { 0, 2 , 0},
+		// 2nd Back row
+		{ -2, 2 , 0 }, { -3, 1, 0 }, { -1, 3 , 0 }, { -4, 0 , 0 }, { 0, 4 , 0 },
+		// Two locations to the side of the 1st back row
+		{ -3, -1 , 0 }, { 1, 3 , 0 },
+		// Two locations to the side of the flanks
+		{ -2, -2, 0 }, { 2, 2 , 0 },
+		// 1st Front row
+		{ 1, -1 , 0 },  { 0, -2 , 0 },  { 2, 0 , 0 }, { -1, -3, 0 }, { 3, 1 , 0 },
+		// 2nd Front row
+		{ 2, -2 , 0 }, { 1, -3 , 0 }, { 3, -1 , 0 }, { 0, -4 , 0 }, { 4, 0 , 0 },
 	};
 
-	// 2 is linear move, 3 diagonal move, 4 diagonal + vertical
-	static const int maxAllowance = 6;
+	static const std::map<Vec2<int>, int> rotationDiagonal = {
+		{ { 1,-1 },0 }, { { 1,1 },1 }, { { -1,1 },2 }, { { -1,-1 },3 },
+	};
+	
+	static const std::list<Vec3<int>> targetOffsetsLinear = {
+		// Two locations in the 1st back row
+		{ -1, 1, 0 }, { 1, 1 , 0 },
+		// Three locations in the 2nd back row
+		{ 0, 2 , 0 }, { -2, 2 , 0 }, { 2, 2 , 0 },
+		// 3rd Back row
+		{ -1, 3 , 0 }, { 1, 3 , 0 }, { 0, 4 , 0 },
+		// Sides of the 1st back row
+		{ -3, 1, 0 }, { 3, 1 , 0 },
+		// Flanks
+		{ -2, 0 , 0 }, { 2, 0 , 0 }, { -4, 0 , 0 }, { 4, 0 , 0 },
+		// 1st front row
+		{ -1, -1 , 0 }, { 1, -1 , 0 }, { -3, -1 , 0 }, { 3, -1 , 0 },
+		// 2nd front row
+		{ 0, -2 , 0 }, { -2, -2, 0 }, { 2, -2 , 0 },
+		// 3rd front row
+		{ -1, -3, 0 },{ 1, -3 , 0 }, { 0, -4 , 0 },
+	};
 
-	// Algorithm:
-	//
-	// - Find first unit that can reach the goal or arrive within allowed distance
-	//
-	// - Point iterator to first list element
-	//
-	// - For every unit other than the unit found:
-	//	- Path from targetLocation to iterator
-	//	- If path is less than 50% unoptimal, path unit to iterator
-	//	  Else do nothing
-	//  - Increment iterator
-	//  - Break if iterator reached end
-	//  - Continue if pathed to iterator (above)
+	static const std::map<Vec2<int>, int> rotationLinear = {
+		{ { 0,-1 },0 },{ { 1,0 },1 },{ { 0,1 },2 },{ { -1,0 },3 },
+	};
+
+	if (selectedUnits.empty())
+	{
+		return;
+	}
 	
+	UString log = ";";
+	log += format("\nGroup move order issued to %d, %d, %d. Looking for the leader. Total number of units: %d", targetLocation.x, targetLocation.y, targetLocation.z, (int)selectedUnits.size());
+
+	// Find the unit that will lead the group
+
+	StateRef<BattleUnit> leadUnit;
+	BattleUnitMission *leadMission = nullptr;
+	int minDistance = INT_MAX;
+	auto units = selectedUnits;
+	auto itUnit = units.begin();
+	while (itUnit != units.end())
+	{
+		auto curUnit = *itUnit;
+		log += format("\nTrying unit %s for leader", curUnit.id);
+
+		auto mission = BattleUnitMission::gotoLocation(*curUnit, targetLocation);
+		bool missionAdded = curUnit->setMission(state, mission);
+		if (missionAdded)
+		{
+			mission->start(state, *curUnit);
+			if (!mission->currentPlannedPath.empty())
+			{
+				auto unitTarget = mission->currentPlannedPath.back();
+				int absX = std::abs(targetLocation.x - unitTarget.x);
+				int absY = std::abs(targetLocation.y - unitTarget.y);
+				int absZ = std::abs(targetLocation.z - unitTarget.z);
+				int distance = std::max(std::max(absX, absY), absZ) + absX + absY + absZ;
+				if (distance <= maxAllowance)
+				{
+					leadUnit = curUnit;
+					leadMission = mission;
+					log += format("\nUnit could reach target, chosen to be the leader.");
+					break;
+				}
+				else if (distance < minDistance)
+				{
+					log += format("\nUnit could not path to target, but was the closest, remembering him.");
+					// Cancel last leader's mission
+					if (leadMission)
+					{
+						leadMission->cancelled = true;
+					}
+					minDistance = distance;
+					leadUnit = curUnit;
+					leadMission = mission;
+				}
+			}
+		}
+		mission->cancelled = true;
+		if (missionAdded)
+		{
+			log += format("\nUnit could not path to target, trying next one.");
+			// Unit cannot path to target but maybe he can path to something near it, leave him in
+			itUnit++;
+		}
+		else
+		{
+			log += format("\nUnit could not set mission, removing.");
+			// Unit cannot add a movement mission - remove him
+			itUnit = units.erase(itUnit);
+		}
+	}
+	if (itUnit == units.end() && !leadUnit)
+	{
+		log += format("\nNoone could path to target, aborting");
+		LogWarning(log.cStr());
+		return;
+	}
 	
+	// In case we couldn't reach it, change our target
+	targetLocation = leadMission->currentPlannedPath.back();
+	// Remove leader from list of units that require pathing
+	units.remove(leadUnit);
+	// Determine our direction and rotation
+	Vec2<int> dir = { targetLocation.x - (++leadMission->currentPlannedPath.rbegin())->x, targetLocation.y - (++leadMission->currentPlannedPath.rbegin())->y };
+	if (dir.x == 0 && dir.y == 0)
+	{
+		dir.y = -1;
+	}
+	bool diagonal = dir.x != 0 && dir.y != 0;
+	auto &targetOffsets = diagonal ? targetOffsetsDiagonal : targetOffsetsLinear;
+	int rotation = diagonal ? rotationDiagonal.at(dir) : rotationLinear.at(dir);
+	
+	// Sort remaining units based on proximity to target and speed
+	auto &map = leadUnit->tileObject->map;
+	auto h = BattleUnitTileHelper(map, *leadUnit);
+	units.sort([h, targetLocation](const StateRef<BattleUnit>& a, const StateRef<BattleUnit>& b)
+	{
+		return h.getDistance((Vec3<int>)a->position, targetLocation)
+			/ a->agent->modified_stats.getActualSpeedValue() 
+				< h.getDistance((Vec3<int>)b->position, targetLocation)
+			/ b->agent->modified_stats.getActualSpeedValue();
+	});
+
+	// Path every other unit to areas around target
+	log += format("\nTarget location is now %d, %d, %d. Leader is %s", targetLocation.x, targetLocation.y, targetLocation.z, leadUnit.id);
+
+	auto itOffset = targetOffsets.begin();
+	for (auto unit : units)
+	{
+		if (itOffset == targetOffsets.end())
+		{
+			log += format("\nRan out of location offsets, exiting");
+			break;
+		}
+		log += format("\nPathing unit %s", unit.id);
+		while (itOffset != targetOffsets.end())
+		{
+			auto offset = rotate(*itOffset, rotation);
+			auto targetLocationOffsetted = targetLocation + offset;
+			if (targetLocationOffsetted.x < 0 || targetLocationOffsetted.x >= map.size.x || targetLocationOffsetted.y < 0 ||
+				targetLocationOffsetted.y >= map.size.y || targetLocationOffsetted.z < 0 || targetLocationOffsetted.z >= map.size.z)
+			{
+				log += format("\nLocation was outside map bounds, trying next one");
+				itOffset++;
+				continue;
+			}
+
+			log += format("\nTrying location %d, %d, %d at offset %d, %d, %d", targetLocationOffsetted.x, targetLocationOffsetted.y, targetLocationOffsetted.z, offset.x, offset.y, offset.z);
+			float costLimit = 1.50f * 2.0f * (float)(std::max(std::abs(offset.x), std::abs(offset.y))
+				+ std::abs(offset.x)
+				+ std::abs(offset.y));
+			auto path = map.findShortestPath(targetLocation, targetLocationOffsetted, costLimit / 2.0f,
+				BattleUnitTileHelper{ map, *unit }, true, nullptr,
+				costLimit);
+			itOffset++;
+			if (!path.empty() && path.back() == targetLocationOffsetted)
+			{
+				log += format("\nLocation checks out, pathing to it");
+				unit->setMission(state, BattleUnitMission::gotoLocation(*unit, targetLocationOffsetted));
+				break;
+			}
+			log += format("\nLocation was unreachable, trying next one");
+		}
+	}
+	log += format("\nSuccessfully pathed everybody to target");
+	LogWarning(log.cStr());
 }
 
 }

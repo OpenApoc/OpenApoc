@@ -76,13 +76,13 @@ class AgentStats
 	int accuracy = 0;
 	int reactions = 0;
 	int speed = 0;
-	int getActualSpeedValue() { return speed / 8; }
-	int getDisplaySpeedValue() { return 8 * getActualSpeedValue(); }
+	int getActualSpeedValue() const { return speed / 8; }
+	int getDisplaySpeedValue() const { return 8 * getActualSpeedValue(); }
 	int time_units = 0;
 	void restoreTU() { time_units = speed; }
 	int stamina = 0;
-	int getDisplayStaminaValue() { return stamina / 2; }
-	bool canRun() { return stamina > 0; }
+	int getDisplayStaminaValue() const { return stamina / 2; }
+	bool canRun() const { return stamina > 0; }
 	int bravery = 0;
 	int strength = 0;
 	int morale = 0;

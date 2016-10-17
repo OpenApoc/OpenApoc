@@ -209,7 +209,8 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	bool getNextDestination(GameState &state, Vec3<float> &dest);
 	bool getNextFacing(GameState &state, Vec2<int> &dest);
 	bool getNextBodyState(GameState &state, BodyState &dest);
-	bool addMission(GameState &state, BattleUnitMission *mission, bool start = true);
+	// Add mission, if possible to the front, otherwise to the back (if toBack then always to back)
+	bool addMission(GameState &state, BattleUnitMission *mission, bool toBack = false);
 	bool addMission(GameState &state, BattleUnitMission::Type type);
 	// Attempt to cancel all unit missions, returns true if successful
 	bool cancelMissions(GameState &state);
@@ -319,7 +320,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	void die(GameState &state, bool violently, bool bledToDeath = false);
 	void destroy(GameState &state);
 
-	static void groupMove(std::list<StateRef<BattleUnit>>&units, Vec3<int> targetLocation, bool demandGiveWay);
+	static void groupMove(GameState &state, std::list<StateRef<BattleUnit>>&selectedUnits, Vec3<int> targetLocation, bool demandGiveWay);
 
 	// Following members are not serialized, but rather are set in initBattle method
 

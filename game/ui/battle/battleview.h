@@ -70,6 +70,8 @@ class BattleView : public BattleTileView
 
 	sp<GameState> state;
 
+	Battle &battle;
+
 	AgentEquipmentInfo leftHandInfo;
 	AgentEquipmentInfo rightHandInfo;
 
