@@ -67,7 +67,7 @@ void BaseSelectScreen::eventOccurred(Event *e)
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
 			auto clickTile = this->screenToTileCoords(
 			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
-			this->setScreenCenterTile({clickTile.x, clickTile.y});
+			this->setScreenCenterTile(Vec2<float>{clickTile.x, clickTile.y});
 		}
 		else if (Event::isPressed(e->mouse().Button, Event::MouseButton::Left))
 		{

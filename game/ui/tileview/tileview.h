@@ -52,6 +52,15 @@ class TileView : public Stage, public TileTransform
 	Vec2<int> getScreenOffset() const;
 	virtual void setScreenCenterTile(Vec2<float> center);
 	virtual void setScreenCenterTile(Vec3<float> center);
+	virtual void setScreenCenterTile(Vec2<int> center)
+	{
+		this->setScreenCenterTile(Vec2<float>{center.x, center.y});
+	}
+	virtual void setScreenCenterTile(Vec3<int> center)
+	{
+
+		this->setScreenCenterTile(Vec3<float>{center.x, center.y, center.z});
+	}
 
 	Vec3<int> getSelectedTilePosition();
 	virtual void setSelectedTilePosition(Vec3<int> newPosition);
