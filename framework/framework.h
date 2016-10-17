@@ -49,9 +49,7 @@ class Framework
 	static Framework &getInstance();
 	static Framework *tryGetInstance();
 
-	// If frameCount != 0, it'll quit after that many frames. If it is zero, it'll run forever (Or
-	// until a user quit event)
-	void run(sp<Stage> initialStage, size_t frameCount = 0);
+	void run(sp<Stage> initialStage);
 	void processEvents();
 	/* PushEvent() take ownership of the Event, and will delete it after use*/
 	void pushEvent(up<Event> e);
