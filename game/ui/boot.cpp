@@ -5,6 +5,9 @@
 #include "forms/ui.h"
 #include "framework/configfile.h"
 #include "framework/framework.h"
+#include "game/state/gamestate.h"
+#include "game/ui/battle/battleview.h"
+#include "game/ui/city/cityview.h"
 #include "game/ui/general/loadingscreen.h"
 #include "game/ui/general/mainmenu.h"
 #include "game/ui/general/videoscreen.h"
@@ -13,6 +16,7 @@
 namespace OpenApoc
 {
 ConfigOptionBool skipIntroOption("Game", "SkipIntro", "Skip intro video", false);
+ConfigOptionString loadGameOption("Game", "Load", "Path to save game to load at startup", "");
 
 void BootUp::begin() {}
 
@@ -28,13 +32,54 @@ void BootUp::update()
 {
 	bool skipIntro = skipIntroOption.get();
 	// The first forms instance causes it to get loaded
-	auto loadTask = fw().threadPoolEnqueue([]() {
-		auto &ui_instance = ui();
-		std::ignore = ui_instance;
-	});
+	sp<GameState> loadedState;
+	std::future<void> loadTask;
+	bool loadGame = false;
 
-	auto nextScreen =
-	    mksp<LoadingScreen>(std::move(loadTask), []() -> sp<Stage> { return mksp<MainMenu>(); });
+	if (loadGameOption.get().empty())
+	{
+		loadTask = fw().threadPoolEnqueue([]() {
+			auto &ui_instance = ui();
+			std::ignore = ui_instance;
+		});
+	}
+	else
+	{
+		loadGame = true;
+		auto path = loadGameOption.get();
+		loadedState = mksp<GameState>();
+		loadTask = fw().threadPoolEnqueue([loadedState, path]() {
+			auto &ui_instance = ui();
+			std::ignore = ui_instance;
+			LogWarning("Loading save \"%s\"", path.cStr());
+
+			if (!loadedState->loadGame(path))
+			{
+				LogError("Failed to load supplied game \"%s\"", path.cStr());
+			}
+			loadedState->initState();
+		});
+	}
+
+	sp<Stage> nextScreen;
+	if (loadGame == true)
+	{
+		nextScreen = mksp<LoadingScreen>(std::move(loadTask), [loadedState]() -> sp<Stage> {
+			if (loadedState->current_battle)
+			{
+				return mksp<BattleView>(loadedState);
+			}
+			else
+			{
+				return mksp<CityView>(loadedState);
+			}
+		});
+	}
+	else
+	{
+		nextScreen = mksp<LoadingScreen>(std::move(loadTask),
+		                                 []() -> sp<Stage> { return mksp<MainMenu>(); });
+	}
 
 	fw().stageQueueCommand(
 	    {StageCmd::Command::REPLACE,
