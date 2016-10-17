@@ -2,6 +2,7 @@
 
 #include "framework/stage.h"
 #include "library/sp.h"
+#include <functional>
 #include <future>
 
 namespace OpenApoc
@@ -13,7 +14,8 @@ class GameState;
 class LoadingScreen : public Stage
 {
   private:
-	std::future<sp<GameState>> loading_task;
+	std::future<void> loadingTask;
+	std::function<sp<Stage>()> nextScreenFn;
 	sp<Image> loadingimage;
 	sp<Image> backgroundimage;
 	float loadingimageangle;
@@ -21,10 +23,9 @@ class LoadingScreen : public Stage
 	int scaleDivisor = 0;
 
   public:
-	LoadingScreen(std::future<sp<GameState>> gameStateTask, sp<Image> background = nullptr,
-	              int scaleDivisor = 3, bool showRotatingImage = true);
-	// can override this in a screen that would load into something else
-	virtual sp<Stage> createUiForGame(sp<GameState> gameState) const;
+	LoadingScreen(std::future<void> task, std::function<sp<Stage>()> nextScreenFn,
+	              sp<Image> background = nullptr, int scaleDivisor = 3,
+	              bool showRotatingImage = true);
 	// Stage control
 	void begin() override;
 	void pause() override;

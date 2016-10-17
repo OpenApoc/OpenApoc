@@ -5,6 +5,7 @@
 #include "forms/ui.h"
 #include "framework/configfile.h"
 #include "framework/framework.h"
+#include "game/ui/general/loadingscreen.h"
 #include "game/ui/general/mainmenu.h"
 #include "game/ui/general/videoscreen.h"
 #include <cmath>
@@ -32,10 +33,12 @@ void BootUp::update()
 		std::ignore = ui_instance;
 	});
 
+	auto nextScreen =
+	    mksp<LoadingScreen>(std::move(loadTask), []() -> sp<Stage> { return mksp<MainMenu>(); });
+
 	fw().stageQueueCommand(
 	    {StageCmd::Command::REPLACE,
-	     mksp<VideoScreen>(skipIntro ? "" : "SMK:xcom3/smk/intro1.smk", std::move(loadTask),
-	                       []() -> sp<Stage> { return mksp<MainMenu>(); })});
+	     mksp<VideoScreen>(skipIntro ? "" : "SMK:xcom3/smk/intro1.smk", nextScreen)});
 }
 
 void BootUp::render() {}

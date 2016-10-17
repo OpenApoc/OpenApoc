@@ -44,34 +44,33 @@ static std::map<SaveType, UString> saveTypeNames{{SaveType::Manual, "New saved g
                                                  {SaveType::Quick, "Quicksave"},
                                                  {SaveType::Auto, "Autosave"}};
 
-std::future<sp<GameState>> SaveManager::loadGame(const SaveMetadata &metadata) const
+std::future<void> SaveManager::loadGame(const SaveMetadata &metadata, sp<GameState> state) const
 {
-	return loadGame(metadata.getFile());
+	return loadGame(metadata.getFile(), state);
 }
 
-std::future<sp<GameState>> SaveManager::loadGame(const UString &savePath) const
+std::future<void> SaveManager::loadGame(const UString &savePath, sp<GameState> state) const
 {
 	UString saveArchiveLocation = savePath;
-	auto loadTask = fw().threadPoolEnqueue([saveArchiveLocation]() -> sp<GameState> {
-		auto state = mksp<GameState>();
+	auto loadTask = fw().threadPoolEnqueue([saveArchiveLocation, state]() -> void {
 		if (!state->loadGame(saveArchiveLocation))
 		{
 			LogError("Failed to load '%s'", saveArchiveLocation.cStr());
-			return nullptr;
+			return;
 		}
 		state->initState();
-		return state;
+		return;
 	});
 
 	return loadTask;
 }
 
-std::future<sp<GameState>> SaveManager::loadSpecialSave(const SaveType type) const
+std::future<void> SaveManager::loadSpecialSave(const SaveType type, sp<GameState> state) const
 {
 	if (type == SaveType::Manual)
 	{
 		LogError("Cannot load automatic save for type %i", static_cast<int>(type));
-		return std::async(std::launch::deferred, []() -> sp<GameState> { return nullptr; });
+		return std::async(std::launch::deferred, []() -> void { return; });
 	}
 
 	UString saveName;
@@ -83,10 +82,10 @@ std::future<sp<GameState>> SaveManager::loadSpecialSave(const SaveType type) con
 	catch (std::out_of_range)
 	{
 		LogError("Cannot find name of save type %i", static_cast<int>(type));
-		return std::async(std::launch::deferred, []() -> sp<GameState> { return nullptr; });
+		return std::async(std::launch::deferred, []() -> void { return; });
 	}
 
-	return loadGame(createSavePath(saveName));
+	return loadGame(createSavePath(saveName), state);
 }
 
 bool writeArchiveWithBackup(const sp<SerializationArchive> archive, const UString &path, bool pack)

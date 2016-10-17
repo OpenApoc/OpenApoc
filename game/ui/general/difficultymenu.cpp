@@ -27,25 +27,23 @@ void DifficultyMenu::resume() {}
 
 void DifficultyMenu::finish() {}
 
-std::future<sp<GameState>> loadGame(const UString &path)
+std::future<void> loadGame(const UString &path, sp<GameState> state)
 {
-	auto loadTask = fw().threadPoolEnqueue([path]() -> sp<GameState> {
-
-		auto state = mksp<GameState>();
+	auto loadTask = fw().threadPoolEnqueue([path, state]() -> void {
 		if (!state->loadGame("data/gamestate_common"))
 		{
 			LogError("Failed to load common gamestate");
-			return nullptr;
+			return;
 		}
 		if (!state->loadGame(path))
 		{
 			LogError("Failed to load '%s'", path.cStr());
-			return nullptr;
+			return;
 		}
 		state->startGame();
 		state->initState();
 		state->fillPlayerStartingProperty();
-		return state;
+		return;
 	});
 
 	return loadTask;
@@ -93,8 +91,12 @@ void DifficultyMenu::eventOccurred(Event *e)
 			return;
 		}
 
+		auto loadedState = mksp<GameState>();
+
 		fw().stageQueueCommand(
-		    {StageCmd::Command::PUSH, mksp<LoadingScreen>(loadGame(initialStatePath))});
+		    {StageCmd::Command::PUSH,
+		     mksp<LoadingScreen>(loadGame(initialStatePath, loadedState),
+		                         [loadedState]() { return mksp<CityView>(loadedState); })});
 		return;
 	}
 }

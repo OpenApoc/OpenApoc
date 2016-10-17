@@ -13,15 +13,11 @@
 namespace OpenApoc
 {
 
-std::future<sp<GameState>> enterBattle(sp<GameState> state)
+std::future<void> enterBattle(sp<GameState> state)
 {
 
-	auto loadTask = fw().threadPoolEnqueue([state]() -> sp<GameState> {
-
-		Battle::enterBattle(*state.get());
-
-		return state;
-	});
+	auto loadTask =
+	    fw().threadPoolEnqueue([state]() -> void { Battle::enterBattle(*state.get()); });
 
 	return loadTask;
 }
@@ -30,11 +26,14 @@ BattlePreStart::BattlePreStart(sp<GameState> state)
     : Stage(), menuform(ui().getForm("FORM_BATTLE_PRESTART")), state(state)
 {
 	menuform->findControlTyped<GraphicButton>("BUTTON_OK")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+	    ->addCallback(FormEventType::ButtonClick, [this, state](Event *) {
+
+		    auto gameState = this->state;
 
 		    fw().stageQueueCommand(
 		        {StageCmd::Command::PUSH,
-		         mksp<LoadingScreen>(enterBattle(this->state),
+		         mksp<LoadingScreen>(enterBattle(gameState),
+		                             [gameState]() { return mksp<BattleView>(gameState); },
 		                             this->state->battle_common_image_list->loadingImage, 1)});
 		});
 }
