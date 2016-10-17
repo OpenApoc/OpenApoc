@@ -6,6 +6,7 @@
 #include "game/state/rules/doodad_type.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_doodad.h"
+#include <algorithm>
 
 namespace OpenApoc
 {
@@ -46,7 +47,13 @@ void Doodad::remove(GameState &state)
 	this->tileObject->removeFromMap();
 	this->tileObject = nullptr;
 	for (auto &city : state.cities)
-		city.second->doodads.remove(thisPtr);
+	{
+		auto it = std::remove(city.second->doodads.begin(), city.second->doodads.end(), thisPtr);
+		if (it != city.second->doodads.end())
+		{
+			city.second->doodads.erase(it, city.second->doodads.end());
+		}
+	}
 	if (state.current_battle)
 		state.current_battle->doodads.remove(thisPtr);
 }
