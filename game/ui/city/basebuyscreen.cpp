@@ -1,4 +1,7 @@
 #include "game/ui/city/basebuyscreen.h"
+#include "forms/form.h"
+#include "forms/graphic.h"
+#include "forms/label.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"

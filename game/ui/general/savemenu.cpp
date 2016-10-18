@@ -1,10 +1,17 @@
 #include "game/ui/general/savemenu.h"
+#include "forms/form.h"
+#include "forms/label.h"
+#include "forms/list.h"
+#include "forms/textedit.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
 #include "game/state/gamestate.h"
+#include "game/ui/battle/battleview.h"
+#include "game/ui/city/cityview.h"
+#include "game/ui/general/loadingscreen.h"
 #include "game/ui/general/loadingscreen.h"
 #include "game/ui/general/messagebox.h"
 #include "library/sp.h"
@@ -222,8 +229,20 @@ void SaveMenu::loadWithWarning(sp<Control> parent)
 		if (slot != nullptr)
 		{
 			std::function<void()> onSuccess = std::function<void()>([this, slot] {
+				auto state = mksp<GameState>();
+				auto task = saveManager.loadGame(*slot, state);
 				fw().stageQueueCommand(
-				    {StageCmd::Command::PUSH, mksp<LoadingScreen>(saveManager.loadGame(*slot))});
+				    {StageCmd::Command::PUSH,
+				     mksp<LoadingScreen>(std::move(task), [state]() -> sp<Stage> {
+					     if (state->current_battle)
+					     {
+						     return mksp<BattleView>(state);
+					     }
+					     else
+					     {
+						     return mksp<CityView>(state);
+					     }
+					 })});
 			});
 			sp<MessageBox> messageBox = mksp<MessageBox>(
 			    MessageBox("Load game", "Unsaved progress will be lost. Continue?",
@@ -241,8 +260,19 @@ void SaveMenu::tryToLoadGame(sp<Control> slotControl)
 		sp<SaveMetadata> slot = slotControl->getData<SaveMetadata>();
 		if (slot != nullptr)
 		{
-			fw().stageQueueCommand(
-			    {StageCmd::Command::PUSH, mksp<LoadingScreen>(saveManager.loadGame(*slot))});
+			auto state = mksp<GameState>();
+			auto task = saveManager.loadGame(*slot, state);
+			fw().stageQueueCommand({StageCmd::Command::PUSH,
+			                        mksp<LoadingScreen>(std::move(task), [state]() -> sp<Stage> {
+				                        if (state->current_battle)
+				                        {
+					                        return mksp<BattleView>(state);
+				                        }
+				                        else
+				                        {
+					                        return mksp<CityView>(state);
+				                        }
+				                    })});
 		}
 	}
 }

@@ -1,10 +1,11 @@
 #pragma once
+
 #include "framework/logger.h"
-#include "framework/palette.h"
 #include "framework/stage.h"
-#include "game/state/gamestate.h"
 #include "game/state/tileview/tile.h"
+#include "library/colour.h"
 #include "library/sp.h"
+#include "library/vec.h"
 
 #define STRAT_TILE_X 8
 #define STRAT_TILE_Y 8
@@ -14,6 +15,7 @@ namespace OpenApoc
 
 class TileMap;
 class Image;
+class Palette;
 
 class TileView : public Stage, public TileTransform
 {
@@ -50,6 +52,15 @@ class TileView : public Stage, public TileTransform
 	Vec2<int> getScreenOffset() const;
 	virtual void setScreenCenterTile(Vec2<float> center);
 	virtual void setScreenCenterTile(Vec3<float> center);
+	virtual void setScreenCenterTile(Vec2<int> center)
+	{
+		this->setScreenCenterTile(Vec2<float>{center.x, center.y});
+	}
+	virtual void setScreenCenterTile(Vec3<int> center)
+	{
+
+		this->setScreenCenterTile(Vec3<float>{center.x, center.y, center.z});
+	}
 
 	Vec3<int> getSelectedTilePosition();
 	virtual void setSelectedTilePosition(Vec3<int> newPosition);

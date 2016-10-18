@@ -1,4 +1,5 @@
 #include "game/ui/general/optionsmenu.h"
+#include "forms/form.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"

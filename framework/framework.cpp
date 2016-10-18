@@ -84,6 +84,9 @@ ConfigOptionInt screenScaleYOption("Framework.Screen", "ScaleY",
 ConfigOptionString languageOption("Framework", "Language",
                                   "The language used ingame (empty for system default)", "");
 
+ConfigOptionInt frameLimit("Framework", "FrameLimit", "Quit after this many frames - 0 = unlimited",
+                           0);
+
 } // anonymous namespace
 
 namespace OpenApoc
@@ -300,6 +303,9 @@ Framework::~Framework()
 {
 	TRACE_FN;
 	LogInfo("Destroying framework");
+	LogInfo("Stopping threadpool");
+	p->threadPool.reset();
+	LogInfo("Clearing stages");
 	p->ProgramStages.clear();
 	LogInfo("Saving config");
 	if (config().getBool("Config.Save"))
@@ -327,8 +333,9 @@ Framework &Framework::getInstance()
 }
 Framework *Framework::tryGetInstance() { return instance; }
 
-void Framework::run(sp<Stage> initialStage, size_t frameCount)
+void Framework::run(sp<Stage> initialStage)
 {
+	auto frameCount = frameLimit.get();
 	if (!createWindow)
 	{
 		LogError("Trying to run framework without window");

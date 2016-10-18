@@ -2,6 +2,7 @@
 
 #include "framework/stage.h"
 #include "game/state/rules/vequipment_type.h"
+#include "game/state/stateobject.h"
 #include "library/colour.h"
 #include "library/rect.h"
 #include "library/sp.h"
@@ -17,6 +18,7 @@ class VEquipment;
 class BitmapFont;
 class GameState;
 class Control;
+class VEquipmentType;
 
 class VEquipScreen : public Stage
 {

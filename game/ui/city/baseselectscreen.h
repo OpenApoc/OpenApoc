@@ -1,13 +1,14 @@
-
 #pragma once
 
-#include "forms/forms.h"
 #include "framework/stage.h"
 #include "game/ui/tileview/citytileview.h"
 #include "library/sp.h"
 
 namespace OpenApoc
 {
+
+class Form;
+class GameState;
 
 class BaseSelectScreen : public CityTileView
 {

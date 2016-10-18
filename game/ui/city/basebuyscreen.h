@@ -1,9 +1,7 @@
-
 #pragma once
 
 #include "framework/stage.h"
-
-#include "forms/forms.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {
@@ -11,6 +9,8 @@ namespace OpenApoc
 class Building;
 class Base;
 class GameState;
+class Form;
+class Graphic;
 
 class BaseBuyScreen : public Stage
 {

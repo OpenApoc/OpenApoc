@@ -1,9 +1,9 @@
 #pragma once
+
 #include "framework/stage.h"
 #include "library/sp.h"
 #include "library/vec.h"
 #include <chrono>
-#include <future>
 
 namespace OpenApoc
 {
@@ -15,11 +15,7 @@ class FrameImage;
 class VideoScreen : public Stage
 {
   private:
-	std::future<void> loading_task;
-	sp<Image> loadingimage;
-	std::function<sp<Stage>()> nextScreenFn;
-	sp<Image> backgroundimage;
-	float loadingimageangle;
+	sp<Stage> nextScreen;
 
 	Vec2<int> frame_position;
 	Vec2<int> frame_size;
@@ -29,8 +25,7 @@ class VideoScreen : public Stage
 	sp<FrameImage> current_frame;
 
   public:
-	VideoScreen(const UString &videoPath, std::future<void> task,
-	            std::function<sp<Stage>()> nextScreenFn, sp<Image> background = nullptr);
+	VideoScreen(const UString &videoPath, sp<Stage> nextScreen);
 	// Stage control
 	void begin() override;
 	void pause() override;

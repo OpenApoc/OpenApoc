@@ -1,8 +1,14 @@
 #pragma once
+
 #include "game/ui/tileview/tileview.h"
+#include "library/sp.h"
+#include "library/vec.h"
 
 namespace OpenApoc
 {
+
+class Image;
+
 class CityTileView : public TileView
 {
   public:

@@ -1,5 +1,5 @@
 #pragma once
-#include "forms/forms.h"
+
 #include "framework/stage.h"
 #include "library/sp.h"
 #include <future>
@@ -9,6 +9,7 @@ namespace OpenApoc
 
 class Image;
 class GameState;
+class Form;
 
 class BattleDebriefing : public Stage
 {

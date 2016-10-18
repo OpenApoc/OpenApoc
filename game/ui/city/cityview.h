@@ -1,6 +1,9 @@
 #pragma once
+
 #include "game/ui/tileview/citytileview.h"
 #include "library/sp.h"
+#include <map>
+#include <vector>
 
 namespace OpenApoc
 {
@@ -9,6 +12,7 @@ class Form;
 class GameState;
 class GraphicButton;
 class Control;
+class Vehicle;
 
 enum class UpdateSpeed
 {

@@ -1,12 +1,16 @@
-
 #pragma once
 
 #include "framework/stage.h"
-
-#include "forms/forms.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {
+
+class CheckBox;
+class Label;
+class Form;
+class TextButton;
+class Control;
 
 class FormPreview : public Stage
 {

@@ -1,14 +1,14 @@
-
 #pragma once
 
 #include "framework/stage.h"
-
-#include "forms/forms.h"
-
+#include "library/sp.h"
+#include "library/strings.h"
 #include <functional>
 
 namespace OpenApoc
 {
+
+class Form;
 
 class MessageBox : public Stage
 {

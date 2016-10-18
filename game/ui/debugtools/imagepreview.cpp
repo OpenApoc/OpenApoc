@@ -1,4 +1,8 @@
 #include "game/ui/debugtools/imagepreview.h"
+#include "forms/form.h"
+#include "forms/graphic.h"
+#include "forms/graphicbutton.h"
+#include "forms/textedit.h"
 #include "forms/ui.h"
 #include "framework/data.h"
 #include "framework/event.h"

@@ -1,11 +1,9 @@
 #pragma once
+
 #include "framework/stage.h"
-#include "library/sp.h"
 
 namespace OpenApoc
 {
-
-class Image;
 
 class BootUp : public Stage
 {

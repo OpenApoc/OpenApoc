@@ -17,10 +17,8 @@
 namespace OpenApoc
 {
 
-VideoScreen::VideoScreen(const UString &videoPath, std::future<void> task,
-                         std::function<sp<Stage>()> nextScreenFn, sp<Image> background)
-    : Stage(), loading_task(std::move(task)), nextScreenFn(nextScreenFn),
-      backgroundimage(background)
+VideoScreen::VideoScreen(const UString &videoPath, sp<Stage> nextScreen)
+    : Stage(), nextScreen(nextScreen)
 {
 	if (videoPath != "")
 	{
@@ -50,14 +48,6 @@ VideoScreen::VideoScreen(const UString &videoPath, std::future<void> task,
 
 void VideoScreen::begin()
 {
-	// FIXME: This is now useless, as it doesn't actually load anything interesting here
-	loadingimage = fw().data->loadImage("ui/loading.png");
-	if (!backgroundimage)
-	{
-		backgroundimage = fw().data->loadImage("ui/logo.png");
-	}
-	fw().displaySetIcon();
-	loadingimageangle = 0;
 	last_frame_time = std::chrono::high_resolution_clock::now();
 	if (this->video)
 	{
@@ -93,20 +83,7 @@ void VideoScreen::update()
 {
 	if (!this->current_frame)
 	{
-		loadingimageangle += (M_PI + 0.05f);
-		if (loadingimageangle >= M_PI * 2.0f)
-			loadingimageangle -= M_PI * 2.0f;
-
-		auto status = this->loading_task.wait_for(std::chrono::seconds(0));
-		switch (status)
-		{
-			case std::future_status::ready:
-				fw().stageQueueCommand({StageCmd::Command::REPLACE, this->nextScreenFn()});
-				return;
-			default:
-				// Not yet finished
-				return;
-		}
+		fw().stageQueueCommand({StageCmd::Command::REPLACE, this->nextScreen});
 	}
 }
 
@@ -137,24 +114,6 @@ void VideoScreen::render()
 			fw().renderer->setPalette(this->current_frame->palette);
 		fw().renderer->drawScaled(this->current_frame->image, this->frame_position,
 		                          this->frame_size, Renderer::Scaler::Nearest);
-	}
-	else
-	{
-
-		int logow = fw().displayGetWidth() / 3;
-		float logosc = logow / static_cast<float>(backgroundimage->size.x);
-
-		Vec2<float> logoPosition{
-		    fw().displayGetWidth() / 2 - (backgroundimage->size.x * logosc / 2),
-		    fw().displayGetHeight() / 2 - (backgroundimage->size.y * logosc / 2)};
-		Vec2<float> logoSize{backgroundimage->size.x * logosc, backgroundimage->size.y * logosc};
-
-		fw().renderer->drawScaled(backgroundimage, logoPosition, logoSize);
-
-		fw().renderer->drawRotated(
-		    loadingimage, Vec2<float>{24, 24},
-		    Vec2<float>{fw().displayGetWidth() - 50, fw().displayGetHeight() - 50},
-		    loadingimageangle);
 	}
 }
 

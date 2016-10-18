@@ -1,5 +1,5 @@
-#include "game/state/rules/vehicle_type.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/vehicle_type.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include <glm/glm.hpp>

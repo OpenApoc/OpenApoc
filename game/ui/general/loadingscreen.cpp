@@ -2,9 +2,11 @@
 #define _USE_MATH_DEFINES
 #endif
 #include "game/ui/general/loadingscreen.h"
+#include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/renderer.h"
+#include "game/state/gamestate.h"
 #include "game/ui/battle/battleview.h"
 #include "game/ui/city/cityview.h"
 #include <algorithm>
@@ -13,10 +15,13 @@
 namespace OpenApoc
 {
 
-LoadingScreen::LoadingScreen(std::future<sp<GameState>> gameStateTask, sp<Image> background,
-                             int scaleDivisor, bool showRotatingImage)
-    : Stage(), loading_task(std::move(gameStateTask)), backgroundimage(background),
-      showRotatingImage(showRotatingImage), scaleDivisor(scaleDivisor)
+ConfigOptionBool asyncLoading("Game", "ASyncLoading",
+                              "Load in background while displaying animated loading screen", true);
+
+LoadingScreen::LoadingScreen(std::future<void> task, std::function<sp<Stage>()> nextScreenFn,
+                             sp<Image> background, int scaleDivisor, bool showRotatingImage)
+    : Stage(), loadingTask(std::move(task)), nextScreenFn(std::move(nextScreenFn)),
+      backgroundimage(background), showRotatingImage(showRotatingImage), scaleDivisor(scaleDivisor)
 {
 }
 
@@ -33,6 +38,10 @@ void LoadingScreen::begin()
 	}
 	fw().displaySetIcon();
 	loadingimageangle = 0;
+	if (asyncLoading.get() == false)
+	{
+		loadingTask.wait();
+	}
 }
 
 void LoadingScreen::pause() {}
@@ -43,37 +52,24 @@ void LoadingScreen::finish() {}
 
 void LoadingScreen::eventOccurred(Event *e) { std::ignore = e; }
 
-sp<Stage> LoadingScreen::createUiForGame(sp<GameState> gameState) const
-{
-	// FIXME load to correct screen based on loaded game state
-	if (gameState->current_battle)
-		return mksp<BattleView>(gameState);
-	else
-		return mksp<CityView>(gameState);
-}
-
 void LoadingScreen::update()
 {
 	loadingimageangle += (float)(M_PI + 0.05f);
 	if (loadingimageangle >= (float)(M_PI * 2.0f))
 		loadingimageangle -= (float)(M_PI * 2.0f);
 
-	auto status = this->loading_task.wait_for(std::chrono::seconds(0));
+	auto status = this->loadingTask.wait_for(std::chrono::seconds(0));
+	if (asyncLoading.get() == false)
+	{
+		LogAssert(status == std::future_status::ready);
+	}
 	switch (status)
 	{
 		case std::future_status::ready:
 		{
-			auto gameState = loading_task.get();
-			if (gameState != nullptr)
-			{
-				fw().stageQueueCommand({StageCmd::Command::REPLACEALL, createUiForGame(gameState)});
-			}
-			else
-			{
-				fw().stageQueueCommand({StageCmd::Command::POP});
-			}
-		}
+			fw().stageQueueCommand({StageCmd::Command::REPLACE, nextScreenFn()});
 			return;
+		}
 		default:
 			// Not yet finished
 			return;

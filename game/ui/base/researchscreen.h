@@ -1,6 +1,5 @@
 #pragma once
 
-#include "forms/forms.h"
 #include "game/state/stateobject.h"
 #include "game/ui/base/basestage.h"
 #include "library/sp.h"
@@ -15,6 +14,10 @@ class Facility;
 class GameState;
 class ResearchTopic;
 class Agent;
+class Control;
+class Image;
+class ResearchTopic;
+class Graphic;
 
 class ResearchScreen : public BaseStage
 {

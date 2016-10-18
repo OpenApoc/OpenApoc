@@ -1,5 +1,5 @@
 #pragma once
-#include "forms/forms.h"
+
 #include "framework/stage.h"
 #include "game/ui/base/basegraphics.h"
 #include "library/sp.h"
@@ -11,6 +11,9 @@ namespace OpenApoc
 class Base;
 class Facility;
 class GameState;
+class Form;
+class Label;
+class GraphicButton;
 
 class BaseStage : public Stage
 {

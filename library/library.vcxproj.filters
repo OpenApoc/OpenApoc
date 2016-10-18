@@ -45,6 +45,9 @@
     <ClInclude Include="strings_format.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+	<ClInclude Include="vector_remove.h">
+	  <Filter>Header Files</Filter>
+	</ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="strings.cpp">

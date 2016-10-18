@@ -1,12 +1,12 @@
-
 #pragma once
 
 #include "framework/stage.h"
-
-#include "forms/forms.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {
+
+class Form;
 
 class DebugMenu : public Stage
 {

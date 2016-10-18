@@ -1,13 +1,18 @@
 #pragma once
-#include "framework/framework.h"
+
 #include "game/state/battle/battleunit.h"
 #include "game/ui/tileview/tileview.h"
+#include "library/sp.h"
+#include "library/vec.h"
+#include <list>
+#include <vector>
 
 namespace OpenApoc
 {
 
 class TileObjectBattleUnit;
 class Battle;
+class Image;
 
 class BattleTileView : public TileView
 {

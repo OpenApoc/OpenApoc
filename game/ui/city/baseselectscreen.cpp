@@ -1,4 +1,6 @@
 #include "game/ui/city/baseselectscreen.h"
+#include "forms/form.h"
+#include "forms/label.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
@@ -8,6 +10,7 @@
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/scenery.h"
+#include "game/state/gamestate.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_scenery.h"
@@ -64,7 +67,7 @@ void BaseSelectScreen::eventOccurred(Event *e)
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
 			auto clickTile = this->screenToTileCoords(
 			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
-			this->setScreenCenterTile({clickTile.x, clickTile.y});
+			this->setScreenCenterTile(Vec2<float>{clickTile.x, clickTile.y});
 		}
 		else if (Event::isPressed(e->mouse().Button, Event::MouseButton::Left))
 		{

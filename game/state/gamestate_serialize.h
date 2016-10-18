@@ -292,6 +292,12 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, std::vector
 	if (!node)
 		return;
 	auto entry = node->getNodeOpt("entry");
+	uint64_t sizeHint = 0;
+	serializeIn(state, node->getNodeOpt("sizeHint"), sizeHint);
+	if (sizeHint)
+	{
+		vector.reserve(vector.size() + sizeHint);
+	}
 	while (entry)
 	{
 		vector.emplace_back();
@@ -534,6 +540,9 @@ void serializeOut(sp<SerializationNode> node, const std::vector<T> &vector, cons
 	{
 		serializeOut(node->addNode("entry"), entry, defaultRef);
 	}
+	uint64_t sizeHint = vector.size();
+	uint64_t sizeHintDefault = 0;
+	serializeOut(node->addNode("sizeHint"), sizeHint, sizeHintDefault);
 }
 
 } // namespace OpenApoc

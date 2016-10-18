@@ -1,4 +1,5 @@
 #include "game/ui/debugtools/debugmenu.h"
+#include "forms/form.h"
 #include "forms/ui.h"
 #include "framework/data.h"
 #include "framework/event.h"

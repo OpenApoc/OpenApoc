@@ -1,4 +1,5 @@
 #include "game/ui/ufopaedia/ufopaediaview.h"
+#include "forms/form.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
