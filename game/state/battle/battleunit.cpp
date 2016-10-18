@@ -376,29 +376,13 @@ bool BattleUnit::canKneel() const
 	return true;
 }
 
-void BattleUnit::addFatalWound(GameState &state)
+void BattleUnit::addFatalWound(GameState &state, BodyPart fatalWoundPart)
 {
-	switch (randBoundsInclusive(state.rng, 0, 4))
-	{
-		case 0:
-			fatalWounds[BodyPart::Body]++;
-			break;
-		case 1:
-			fatalWounds[BodyPart::Helmet]++;
-			break;
-		case 2:
-			fatalWounds[BodyPart::LeftArm]++;
-			break;
-		case 3:
-			fatalWounds[BodyPart::RightArm]++;
-			break;
-		case 4:
-			fatalWounds[BodyPart::Helmet]++;
-			break;
-	}
+	fatalWounds[fatalWoundPart]++;
 }
 
-void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWounds, int stunPower)
+void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWounds,
+                            BodyPart fatalWoundPart, int stunPower)
 {
 	bool wasConscious = isConscious();
 	bool fatal = false;
@@ -425,12 +409,12 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 		while (woundDamageRemaining > 10)
 		{
 			woundDamageRemaining -= 10;
-			addFatalWound(state);
+			addFatalWound(state, fatalWoundPart);
 			fatal = true;
 		}
 		if (randBoundsExclusive(state.rng, 0, 10) < woundDamageRemaining)
 		{
-			addFatalWound(state);
+			addFatalWound(state, fatalWoundPart);
 			fatal = true;
 		}
 	}
@@ -457,8 +441,8 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 			    listRandomiser(state.rng, agent->type->fatalWoundSfx.at(agent->gender)), position);
 		}
 	}
-	// Emit sound wound
-	else if (stunPower == 0)
+	// Emit sound wound (unless if dealing damage from a fatal wound)
+	else if (stunPower == 0 && generateFatalWounds)
 	{
 		if (agent->type->damageSfx.find(agent->gender) != agent->type->damageSfx.end() &&
 		    !agent->type->damageSfx.at(agent->gender).empty())
@@ -557,7 +541,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	}
 
 	// Apply damage according to type
-	dealDamage(state, damage, damageType->dealsFatalWounds(),
+	dealDamage(state, damage, damageType->dealsFatalWounds(), bodyPart,
 	           damageType->dealsStunDamage() ? power : 0);
 
 	return false;
@@ -657,6 +641,22 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		stunDamageInTicks = std::max(0, stunDamageInTicks - (int)ticks);
 	}
 
+	// Ensure still have item if healing
+	if (isHealing)
+	{
+		isHealing = false;
+		auto e1 = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+		auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+		if (e1 && e1->type->type == AEquipmentType::Type::MediKit)
+		{
+			isHealing = true;
+		}
+		else if (e2 && e2->type->type == AEquipmentType::Type::MediKit)
+		{
+			isHealing = true;
+		}
+	}
+
 	// Fatal wounds / healing
 	if (isFatallyWounded() && !isDead())
 	{
@@ -669,21 +669,20 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			{
 				if (w.second > 0)
 				{
+					dealDamage(state, w.second, false, BodyPart::Body, 0);
 					if (isHealing && healingBodyPart == w.first)
 					{
 						w.second--;
-					}
-					else
-					{
-						// FIXME: Deal damage in a unified way so we don't have to check
-						// for unconscious and dead manually !
-						agent->modified_stats.health -= w.second;
+						// healing fatal wound heals 3hp, as well as 1hp we just dealt in damage
+						agent->modified_stats.health += 4;
+						agent->modified_stats.health =
+						    std::min(agent->modified_stats.health, agent->current_stats.health);
 					}
 				}
 			}
 		}
-		// If fully healed
-		if (!isFatallyWounded())
+		// If fully healed the body part
+		if (isHealing && fatalWounds[healingBodyPart] == 0)
 		{
 			isHealing = false;
 		}
@@ -1052,7 +1051,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					{
 						// FIXME: Proper stun damage (ensure it is!)
 						stunDamageInTicks = 0;
-						dealDamage(state, agent->current_stats.health * 3 / 2, false, 9001);
+						dealDamage(state, agent->current_stats.health * 3 / 2, false,
+						           BodyPart::Body, 9001);
 						fallUnconscious(state);
 					}
 					setPosition(newPosition);

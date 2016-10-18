@@ -101,22 +101,12 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 	                                           "icons.tab:%d:xcom3/tacdata/tactical.pal",
 	                                           194));
 
-	int healingIconsInARow = 4;
-	for (int i = 0; i < healingIconsInARow; i++)
-	{
-		healingIcons.push_back(
-		    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
-		                                195)));
-	}
-	for (int i = 0; i < healingIconsInARow; i++)
-	{
-		healingIcons.push_back(
-		    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
-		                                196)));
-	}
-	healingIcon = *healingIcons.begin();
+	healingIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   195)));
+	healingIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   196)));
 
 	targetLocationIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
@@ -248,12 +238,8 @@ void BattleTileView::render()
 
 	// Rotate Icons
 	{
-		// FIXME: Rubbish, introduce delay like for waypoints
-		auto pos = ++std::find(healingIcons.begin(), healingIcons.end(), healingIcon);
-		if (pos == healingIcons.end())
-			pos = healingIcons.begin();
-		healingIcon = *pos;
-
+		healingIconTicksAccumulated++;
+		healingIconTicksAccumulated %= healingIcons.size() * HEALING_ICONS_ANIMATION_DELAY;
 		iconAnimationTicksAccumulated++;
 		iconAnimationTicksAccumulated %= targetLocationIcons.size() * TARGET_ICONS_ANIMATION_DELAY;
 		focusAnimationTicksAccumulated++;
@@ -720,6 +706,7 @@ void BattleTileView::render()
 				static const Vec2<float> offsetRunning = {0.0f, 0.0f};
 				static const Vec2<float> offsetBehavior = {0.0f, 0.0f};
 				static const Vec2<float> offsetBleed = {0.0f, 0.0f};
+				static const Vec2<float> offsetHealing = {6.0f, 14.0f};
 				static const Vec2<float> offsetTU = {13.0f, -5.0f};
 				static const Vec2<float> offsetHealth = {6.0f, 2.0f};
 
@@ -760,7 +747,9 @@ void BattleTileView::render()
 				{
 					if (obj.first->isHealing)
 					{
-						r.draw(healingIcon, pos + offsetBleed);
+						r.draw(healingIcons[healingIconTicksAccumulated /
+						                    HEALING_ICONS_ANIMATION_DELAY],
+						       pos + offsetHealing);
 					}
 					else
 					{

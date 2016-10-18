@@ -140,6 +140,7 @@
 		<member>readyToFire</member>
 		<member>weapon_fire_ticks_remaining</member>
 		<member>aimingMode</member>
+		<member>inUse</member>
 	</object>
 	<object>
 		<name>EquipmentSet</name>
@@ -546,6 +547,7 @@
 		<member>bounced</member>
 		<member>falling</member>
 		<member>ownerInvulnerableTicks</member>
+		<member>collisionIgnoredTicks</member>
 		<member>ticksUntilCollapse</member>
 	</object>
 	<object>

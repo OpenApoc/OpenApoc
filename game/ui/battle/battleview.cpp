@@ -37,6 +37,9 @@ static const std::vector<UString> TAB_FORM_NAMES_RT = {
 static const std::vector<UString> TAB_FORM_NAMES_TB = {
     "FORM_BATTLE_UI_TB_1", "FORM_BATTLE_UI_TB_2", "FORM_BATTLE_UI_TB_3",
 };
+static const std::set<BodyPart> bodyParts{BodyPart::Body, BodyPart::Helmet, BodyPart::LeftArm,
+                                          BodyPart::Legs, BodyPart::RightArm};
+
 } // anonymous namespace
 
 BattleView::BattleView(sp<GameState> gameState)
@@ -126,6 +129,133 @@ BattleView::BattleView(sp<GameState> gameState)
 			lastSpeed = BattleUpdateSpeed::Pause;
 			break;
 	}
+
+	medikitForms[false] = ui().getForm("FORM_BATTLE_MEDIKIT_LEFT");
+	medikitForms[true] = ui().getForm("FORM_BATTLE_MEDIKIT_RIGHT");
+	motionScannerForms[false] = ui().getForm("FORM_BATTLE_MOTION_SCANNER_LEFT");
+	motionScannerForms[true] = ui().getForm("FORM_BATTLE_MOTION_SCANNER_RIGHT");
+
+	itemForms.push_back(medikitForms[false]);
+	itemForms.push_back(medikitForms[true]);
+	itemForms.push_back(motionScannerForms[false]);
+	itemForms.push_back(motionScannerForms[true]);
+
+	medikitBodyParts[false][BodyPart::Legs][false] =
+	    medikitForms[false]->findControl("MEDIKIT_LEGS_RED");
+	medikitBodyParts[false][BodyPart::Body][false] =
+	    medikitForms[false]->findControl("MEDIKIT_BODY_RED");
+	medikitBodyParts[false][BodyPart::LeftArm][false] =
+	    medikitForms[false]->findControl("MEDIKIT_LEFT_HAND_RED");
+	medikitBodyParts[false][BodyPart::RightArm][false] =
+	    medikitForms[false]->findControl("MEDIKIT_RIGHT_HAND_RED");
+	medikitBodyParts[false][BodyPart::Helmet][false] =
+	    medikitForms[false]->findControl("MEDIKIT_HEAD_RED");
+	medikitBodyParts[true][BodyPart::Legs][false] =
+	    medikitForms[true]->findControl("MEDIKIT_LEGS_RED");
+	medikitBodyParts[true][BodyPart::Body][false] =
+	    medikitForms[true]->findControl("MEDIKIT_BODY_RED");
+	medikitBodyParts[true][BodyPart::LeftArm][false] =
+	    medikitForms[true]->findControl("MEDIKIT_LEFT_HAND_RED");
+	medikitBodyParts[true][BodyPart::RightArm][false] =
+	    medikitForms[true]->findControl("MEDIKIT_RIGHT_HAND_RED");
+	medikitBodyParts[true][BodyPart::Helmet][false] =
+	    medikitForms[true]->findControl("MEDIKIT_HEAD_RED");
+	medikitBodyParts[false][BodyPart::Legs][true] =
+	    medikitForms[false]->findControl("MEDIKIT_LEGS_GREEN");
+	medikitBodyParts[false][BodyPart::Body][true] =
+	    medikitForms[false]->findControl("MEDIKIT_BODY_GREEN");
+	medikitBodyParts[false][BodyPart::LeftArm][true] =
+	    medikitForms[false]->findControl("MEDIKIT_LEFT_HAND_GREEN");
+	medikitBodyParts[false][BodyPart::RightArm][true] =
+	    medikitForms[false]->findControl("MEDIKIT_RIGHT_HAND_GREEN");
+	medikitBodyParts[false][BodyPart::Helmet][true] =
+	    medikitForms[false]->findControl("MEDIKIT_HEAD_GREEN");
+	medikitBodyParts[true][BodyPart::Legs][true] =
+	    medikitForms[true]->findControl("MEDIKIT_LEGS_GREEN");
+	medikitBodyParts[true][BodyPart::Body][true] =
+	    medikitForms[true]->findControl("MEDIKIT_BODY_GREEN");
+	medikitBodyParts[true][BodyPart::LeftArm][true] =
+	    medikitForms[true]->findControl("MEDIKIT_LEFT_HAND_GREEN");
+	medikitBodyParts[true][BodyPart::RightArm][true] =
+	    medikitForms[true]->findControl("MEDIKIT_RIGHT_HAND_GREEN");
+	medikitBodyParts[true][BodyPart::Helmet][true] =
+	    medikitForms[true]->findControl("MEDIKIT_HEAD_GREEN");
+
+	std::function<void(FormsEvent * e)> medikitButtonHead = [this](Event *) {
+		orderHeal(BodyPart::Helmet);
+	};
+	std::function<void(FormsEvent * e)> medikitButtonBody = [this](Event *) {
+		orderHeal(BodyPart::Body);
+	};
+	std::function<void(FormsEvent * e)> medikitButtonLeftHand = [this](Event *) {
+		orderHeal(BodyPart::LeftArm);
+	};
+	std::function<void(FormsEvent * e)> medikitButtonRightHand = [this](Event *) {
+		orderHeal(BodyPart::RightArm);
+	};
+	std::function<void(FormsEvent * e)> medikitButtonLegs = [this](Event *) {
+		orderHeal(BodyPart::Legs);
+	};
+	medikitForms[false]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_HEAD_BUTTON")
+	    ->addCallback(FormEventType::ButtonClick, medikitButtonHead);
+	medikitForms[false]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_BODY_BUTTON")
+	    ->addCallback(FormEventType::ButtonClick, medikitButtonBody);
+	medikitForms[false]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_LEFT_HAND_BUTTON")
+	    ->addCallback(FormEventType::ButtonClick, medikitButtonLeftHand);
+	medikitForms[false]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_RIGHT_HAND_BUTTON")
+	    ->addCallback(FormEventType::ButtonClick, medikitButtonRightHand);
+	medikitForms[false]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_LEGS_BUTTON")
+	    ->addCallback(FormEventType::ButtonClick, medikitButtonLegs);
+	medikitForms[true]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_HEAD_BUTTON")
+	    ->addCallback(FormEventType::ButtonClick, medikitButtonHead);
+	medikitForms[true]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_BODY_BUTTON")
+	    ->addCallback(FormEventType::ButtonClick, medikitButtonBody);
+	medikitForms[true]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_LEFT_HAND_BUTTON")
+	    ->addCallback(FormEventType::ButtonClick, medikitButtonLeftHand);
+	medikitForms[true]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_RIGHT_HAND_BUTTON")
+	    ->addCallback(FormEventType::ButtonClick, medikitButtonRightHand);
+	medikitForms[true]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_LEGS_BUTTON")
+	    ->addCallback(FormEventType::ButtonClick, medikitButtonLegs);
+	medikitForms[false]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_HEAD_BUTTON")
+	    ->setClickSound(nullptr);
+	medikitForms[false]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_BODY_BUTTON")
+	    ->setClickSound(nullptr);
+	medikitForms[false]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_LEFT_HAND_BUTTON")
+	    ->setClickSound(nullptr);
+	medikitForms[false]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_RIGHT_HAND_BUTTON")
+	    ->setClickSound(nullptr);
+	medikitForms[false]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_LEGS_BUTTON")
+	    ->setClickSound(nullptr);
+	medikitForms[true]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_HEAD_BUTTON")
+	    ->setClickSound(nullptr);
+	medikitForms[true]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_BODY_BUTTON")
+	    ->setClickSound(nullptr);
+	medikitForms[true]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_LEFT_HAND_BUTTON")
+	    ->setClickSound(nullptr);
+	medikitForms[true]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_RIGHT_HAND_BUTTON")
+	    ->setClickSound(nullptr);
+	medikitForms[true]
+	    ->findControlTyped<GraphicButton>("MEDIKIT_LEGS_BUTTON")
+	    ->setClickSound(nullptr);
 
 	// Refresh base views
 	resume();
@@ -435,9 +565,10 @@ BattleView::BattleView(sp<GameState> gameState)
 		                                                  : AEquipmentSlotType::LeftHand);
 
 		int delay = this->primingTab->findControlTyped<ScrollBar>("DELAY_SLIDER")->getValue();
+		LogWarning("Delay %d", delay);
 		int range = this->primingTab->findControlTyped<ScrollBar>("RANGE_SLIDER")->getValue();
-		if (delay == 0 && (item->type->trigger_type == TriggerType::Timed ||
-		                   item->type->trigger_type == TriggerType::Contact))
+		if (delay == 0 && (item->type->trigger_type != TriggerType::Boomeroid ||
+		                   item->type->trigger_type != TriggerType::Proximity))
 		{
 			item->prime();
 		}
@@ -450,6 +581,7 @@ BattleView::BattleView(sp<GameState> gameState)
 
 	std::function<void(FormsEvent * e)> updateDelay = [this, throwItem](Event *) {
 		int delay = this->primingTab->findControlTyped<ScrollBar>("DELAY_SLIDER")->getValue();
+		LogWarning("Delay %d", delay);
 		UString text;
 		if (delay == 0)
 			text = format(tr("Activates now."));
@@ -610,6 +742,20 @@ void BattleView::render()
 	activeTab->render();
 	baseForm->render();
 
+	int pauseIconOffsetX = 0;
+
+	// Item forms
+	for (auto f : itemForms)
+	{
+		if (f->Enabled)
+		{
+			f->render();
+			if (f == motionScannerForms[false] || f == medikitForms[false])
+			{
+				pauseIconOffsetX = f->Size.x;
+			}
+		}
+	}
 	// Pause icon
 	if (battle.mode == Battle::Mode::TurnBased)
 	{
@@ -618,7 +764,8 @@ void BattleView::render()
 		pauseIconTimer %= PAUSE_ICON_BLINK_TIME * 2;
 		if (updateSpeed == BattleUpdateSpeed::Pause && pauseIconTimer > PAUSE_ICON_BLINK_TIME)
 		{
-			fw().renderer->draw(pauseIcon, {fw().displayGetSize().x - pauseIcon->size.x, 0.0f});
+			fw().renderer->draw(
+			    pauseIcon, {fw().displayGetSize().x - pauseIconOffsetX - pauseIcon->size.x, 0.0f});
 		}
 	}
 
@@ -713,6 +860,7 @@ void BattleView::update()
 	}
 
 	// Pulsate palette colors
+
 	colorCurrent += (colorForward ? 1 : -1);
 	if (colorCurrent <= 0 || colorCurrent >= 15)
 	{
@@ -722,6 +870,7 @@ void BattleView::update()
 	this->pal = modPalette[colorCurrent];
 
 	// Update weapons if required
+
 	auto rightInfo = createItemOverlayInfo(true);
 	if (!(rightInfo == rightHandInfo) &&
 	    (this->activeTab == uiTabsRT[0] || this->activeTab == uiTabsTB[0]))
@@ -737,7 +886,64 @@ void BattleView::update()
 		updateItemInfo(false);
 	}
 
+	// Update item forms
+
+	for (auto f : itemForms)
+	{
+		f->Enabled = false;
+	}
+	if (leftHandInfo.selected || rightHandInfo.selected)
+	{
+		auto unit = battle.battleViewSelectedUnits.front();
+		for (int i = 0; i < 2; i++)
+		{
+			bool right = i == 0;
+			if (right ? !rightHandInfo.selected : !leftHandInfo.selected)
+			{
+				continue;
+			}
+			auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
+			                                                  : AEquipmentSlotType::LeftHand);
+			if (!item->inUse)
+			{
+				continue;
+			}
+			switch (item->type->type)
+			{
+				case AEquipmentType::Type::MotionScanner:
+					motionScannerForms[right]->Enabled = true;
+					break;
+				case AEquipmentType::Type::MediKit:
+					medikitForms[right]->Enabled = true;
+					for (auto c : medikitBodyParts[right])
+					{
+						c.second[false]->Visible = false;
+						c.second[true]->Visible = false;
+					}
+					for (auto p : bodyParts)
+					{
+						if (unit->fatalWounds[p] > 0)
+						{
+							medikitBodyParts[right][p]
+							                [unit->isHealing && p == unit->healingBodyPart]
+							                    ->Visible = true;
+						}
+					}
+					break;
+				default:
+					LogError("Using an item other than the motion scanner / medikit?");
+			}
+		}
+	}
+
 	// FIXME: Possibly more efficient ways than re-generating all controls every frame?
+	for (auto f : itemForms)
+	{
+		if (f->Enabled)
+		{
+			f->update();
+		}
+	}
 	activeTab->update();
 	baseForm->update();
 
@@ -1188,7 +1394,16 @@ void BattleView::orderUse(bool right, bool automatic)
 			{
 				break;
 			}
-			LogError("Implement motion scanner");
+			if (!item->inUse && battle.mode == Battle::Mode::TurnBased)
+			{
+				int cost = 5;
+				if (!item->ownerAgent->unit->spendTU(cost))
+				{
+					LogWarning("Notify unsufficient TU for motion scanner");
+					break;
+				}
+			}
+			item->inUse = !item->inUse;
 			break;
 		case AEquipmentType::Type::MediKit:
 			// Medikit has no automatic mode
@@ -1196,7 +1411,7 @@ void BattleView::orderUse(bool right, bool automatic)
 			{
 				break;
 			}
-			LogError("Implement medikit");
+			item->inUse = !item->inUse;
 			break;
 		case AEquipmentType::Type::Teleporter:
 			// Teleporter does not care for automatic mode
@@ -1386,12 +1601,48 @@ void BattleView::orderFocus(StateRef<BattleUnit> u)
 	}
 }
 
+void BattleView::orderHeal(BodyPart part)
+{
+	auto unit = battle.battleViewSelectedUnits.front();
+
+	if (unit->fatalWounds[part] == 0)
+	{
+		return;
+	}
+
+	if (battle.mode == Battle::Mode::TurnBased)
+	{
+		int cost = 18;
+		if (!unit->spendTU(cost))
+		{
+			LogWarning("Notify unsufficient TU for medikit");
+			return;
+		}
+		unit->fatalWounds[part]--;
+	}
+
+	unit->isHealing = true;
+	unit->healingBodyPart = part;
+}
+
 void BattleView::eventOccurred(Event *e)
 {
 	activeTab->eventOccured(e);
 	baseForm->eventOccured(e);
+	bool eventWithin = false;
+	for (auto f : itemForms)
+	{
+		if (f->Enabled)
+		{
+			f->eventOccured(e);
+			if (f->eventIsWithin(e))
+			{
+				eventWithin = true;
+			}
+		}
+	}
 
-	if (activeTab->eventIsWithin(e) || baseForm->eventIsWithin(e))
+	if (eventWithin || activeTab->eventIsWithin(e) || baseForm->eventIsWithin(e))
 	{
 		return;
 	}
@@ -2022,7 +2273,7 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 					default:
 						break;
 				}
-				a.selected = e->primed ||
+				a.selected = e->inUse || e->primed ||
 				             (selectionState == BattleSelectionState::FireRight && rightHand) ||
 				             (selectionState == BattleSelectionState::FireLeft && !rightHand) ||
 				             (selectionState == BattleSelectionState::TeleportRight && rightHand) ||

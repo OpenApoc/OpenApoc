@@ -266,6 +266,21 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 		}
 	}
 
+	// If in use - confirm we're still in the right place
+	if (inUse)
+	{
+		switch (equippedSlotType)
+		{
+			case AEquipmentSlotType::LeftHand:
+			case AEquipmentSlotType::RightHand:
+				break;
+			case AEquipmentSlotType::None:
+			default:
+				inUse = false;
+				break;
+		}
+	}
+
 	// Process primed explosives
 	if (primed)
 	{

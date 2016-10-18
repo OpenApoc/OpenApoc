@@ -139,8 +139,9 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Stun damage acquired
 	int stunDamageInTicks = 0;
 	int getStunDamage() const;
-	void addFatalWound(GameState &state);
-	void dealDamage(GameState &state, int damage, bool generateFatalWounds, int stunPower);
+	void addFatalWound(GameState &state, BodyPart fatalWoundPart);
+	void dealDamage(GameState &state, int damage, bool generateFatalWounds, BodyPart fatalWoundPart,
+	                int stunPower);
 
 	// User set modes
 

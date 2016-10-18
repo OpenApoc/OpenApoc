@@ -68,6 +68,12 @@ class BattleView : public BattleTileView
 	BattleUpdateSpeed updateSpeed;
 	BattleUpdateSpeed lastSpeed;
 
+	std::list<sp<Form>> itemForms;
+	std::map<bool, sp<Form>> motionScannerForms;
+	std::map<bool, sp<Form>> medikitForms;
+	// right/left, bodypart, healing or wounded ( false = wounded, true = healing)
+	std::map<bool, std::map<BodyPart, std::map<bool, sp<Control>>>> medikitBodyParts;
+
 	sp<GameState> state;
 
 	Battle &battle;
@@ -122,6 +128,7 @@ class BattleView : public BattleTileView
 	void orderFire(StateRef<BattleUnit> u,
 	               BattleUnit::WeaponStatus status = BattleUnit::WeaponStatus::FiringBothHands);
 	void orderFocus(StateRef<BattleUnit> u);
+	void orderHeal(BodyPart part);
 
   public:
 	BattleView(sp<GameState> gameState);

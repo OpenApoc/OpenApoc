@@ -64,6 +64,9 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	// Aiming mode for the weapon
 	WeaponAimingMode aimingMode;
 
+	// In use, for medikit and motion scanner
+	bool inUse = false;
+
 	int getAccuracy(BodyState bodyState, MovementState movementState, WeaponAimingMode fireMode,
 	                bool thrown = false);
 
@@ -76,10 +79,6 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 
 	// Support nullptr ammoItem for auto-reloading
 	void loadAmmo(GameState &state, sp<AEquipment> ammoItem = nullptr);
-
-	// Following members are not serialized, but rather are set in initBattle method
-
-	wp<BattleItem> ownerItem;
 
 	void update(GameState &state, unsigned int ticks);
 
@@ -105,5 +104,10 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	static bool getVelocityForThrowLaunch(const BattleUnit *unit, const TileMap &map, int strength,
 	                                      int weight, Vec3<float> startPos, Vec3<int> target,
 	                                      float &velocityXY, float &velocityZ);
+
+  public:
+	// Following members are not serialized, but rather are set in initBattle method
+
+	wp<BattleItem> ownerItem;
 };
 } // namespace OpenApoc
