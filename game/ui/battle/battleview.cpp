@@ -139,6 +139,10 @@ BattleView::BattleView(sp<GameState> gameState)
 	itemForms.push_back(medikitForms[true]);
 	itemForms.push_back(motionScannerForms[false]);
 	itemForms.push_back(motionScannerForms[true]);
+	for (auto f : itemForms)
+	{
+		f->Enabled = false;
+	}
 
 	medikitBodyParts[false][BodyPart::Legs][false] =
 	    medikitForms[false]->findControl("MEDIKIT_LEGS_RED");
