@@ -2532,7 +2532,7 @@ void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &se
 	if (itUnit == units.end() && !leadUnit)
 	{
 		log += format("\nNoone could path to target, aborting");
-		LogWarning(log.cStr());
+		LogWarning("%s",log.cStr());
 		return;
 	}
 
@@ -2576,7 +2576,7 @@ void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &se
 		if (itOffset == targetOffsets.end())
 		{
 			log += format("\nRan out of location offsets, exiting");
-			LogWarning(log.cStr());
+			LogWarning("%s", log.cStr());
 			return;
 		}
 		log += format("\nPathing unit %s", unit.id);
@@ -2613,6 +2613,6 @@ void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &se
 		}
 	}
 	log += format("\nSuccessfully pathed everybody to target");
-	LogWarning(log.cStr());
+	LogWarning("%s", log.cStr());
 }
 }

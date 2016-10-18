@@ -1493,7 +1493,7 @@ void BattleView::orderSelect(StateRef<BattleUnit> u, bool inverse, bool additive
 	{
 		log += format("\n%s", m->getName());
 	}
-	LogWarning(log.cStr());
+	LogWarning("%s", log.cStr());
 
 	auto pos =
 	    std::find(battle.battleViewSelectedUnits.begin(), battle.battleViewSelectedUnits.end(), u);
