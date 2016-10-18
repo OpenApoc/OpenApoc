@@ -69,7 +69,15 @@ class BattleView : public BattleTileView
 	BattleUpdateSpeed updateSpeed;
 	BattleUpdateSpeed lastSpeed;
 
+	std::list<sp<Form>> itemForms;
+	std::map<bool, sp<Form>> motionScannerForms;
+	std::map<bool, sp<Form>> medikitForms;
+	// right/left, bodypart, healing or wounded ( false = wounded, true = healing)
+	std::map<bool, std::map<BodyPart, std::map<bool, sp<Control>>>> medikitBodyParts;
+
 	sp<GameState> state;
+
+	Battle &battle;
 
 	AgentEquipmentInfo leftHandInfo;
 	AgentEquipmentInfo rightHandInfo;
@@ -114,19 +122,17 @@ class BattleView : public BattleTileView
 	void orderDrop(bool right);
 	void orderThrow(Vec3<int> target, bool right);
 	void orderTeleport(Vec3<int> target, bool right);
-	void orderSelect(sp<BattleUnit> u, bool inverse = false, bool additive = false);
+	void orderSelect(StateRef<BattleUnit> u, bool inverse = false, bool additive = false);
 	void orderFire(Vec3<int> target,
 	               BattleUnit::WeaponStatus status = BattleUnit::WeaponStatus::FiringBothHands,
 	               bool modifier = false);
 	void orderFire(StateRef<BattleUnit> u,
 	               BattleUnit::WeaponStatus status = BattleUnit::WeaponStatus::FiringBothHands);
 	void orderFocus(StateRef<BattleUnit> u);
-
-	void attemptToClearCurrentOrders(sp<BattleUnit> u, bool overrideBodyStateChange = false);
-	bool canEmplaceTurnInFront(sp<BattleUnit> u);
+	void orderHeal(BodyPart part);
 
   public:
-	BattleView(sp<GameState> state);
+	BattleView(sp<GameState> gameState);
 	~BattleView() override;
 	void begin() override;
 	void resume() override;

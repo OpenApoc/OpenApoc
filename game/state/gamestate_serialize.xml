@@ -140,6 +140,7 @@
 		<member>readyToFire</member>
 		<member>weapon_fire_ticks_remaining</member>
 		<member>aimingMode</member>
+		<member>inUse</member>
 	</object>
 	<object>
 		<name>EquipmentSet</name>
@@ -290,15 +291,16 @@
 		<member>allowSkipNodes</member>
 		<member>targetFacing</member>
 		<member>requireGoal</member>
-		<member>free</member>
+		<member>freeTurn</member>
 		<member>item</member>
 		<member>velocityXY</member>
 		<member>velocityZ</member>
 		<member>timeToSnooze</member>
 		<member>timeUnits</member>
-		<member>bodyState</member>
+		<member>targetBodyState</member>
 		<member>currentPlannedPath</member>
 		<member>allowRunningAway</member>
+		<member>cancelled</member>
 	</object>
 	<object>
 		<name>Base</name>
@@ -385,8 +387,10 @@
 		<member>currentPlayer</member>
 		<member>currentActiveOrganisation</member>
 		<member>currentTurn</member>
-		<member>battleviewZLevel</member>
-		<member>battleviewScreenCenter</member>
+		<member>battleViewZLevel</member>
+		<member>battleViewScreenCenter</member>
+		<member>battleViewGroupMove</member>
+		<member>battleViewSelectedUnits</member>
 	</object>
 	<object>
 		<name>BattleMap</name>
@@ -531,7 +535,7 @@
 		<member>destroyed</member>
 		<member>falling</member>
 		<member>fallingSpeed</member>
-		<member>giveWayRequest</member>
+		<member>giveWayRequestData</member>
 		<member>displayedItem</member>
 		<member>battleMode</member>
 	</object>
@@ -543,6 +547,7 @@
 		<member>bounced</member>
 		<member>falling</member>
 		<member>ownerInvulnerableTicks</member>
+		<member>collisionIgnoredTicks</member>
 		<member>ticksUntilCollapse</member>
 	</object>
 	<object>
@@ -1038,14 +1043,17 @@
 		<value>InfiltrateSubvert</value>
 	</enum>
 	<enum>
-		<name>BattleUnitMission::MissionType</name>
+		<name>BattleUnitMission::Type</name>
 		<value>GotoLocation</value>
 		<value>Snooze</value>
+		<value>RestartNextMission</value>
 		<value>AcquireTU</value>
 		<value>ChangeBodyState</value>
 		<value>ThrowItem</value>
+		<value>DropItem</value>
 		<value>Turn</value>
-		<value>Fall</value>
+		<value>ReachGoal</value>
+		<value>Teleport</value>
 	</enum>
 	<enum>
 		<name>VEquipment::WeaponState</name>

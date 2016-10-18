@@ -22,10 +22,9 @@
 namespace OpenApoc
 {
 BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
-                               TileViewMode initialMode, int currentZLevel,
-                               Vec3<float> screenCenterTile, sp<Battle> battle)
-    : TileView(map, isoTileSize, stratTileSize, initialMode), currentZLevel(currentZLevel),
-      battle(battle)
+                               TileViewMode initialMode, Vec3<float> screenCenterTile,
+                               Battle &current_battle)
+    : TileView(map, isoTileSize, stratTileSize, initialMode), battle(current_battle)
 {
 	layerDrawingMode = LayerDrawingMode::UpToCurrentLevel;
 	selectedTileEmptyImageBack =
@@ -102,22 +101,12 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 	                                           "icons.tab:%d:xcom3/tacdata/tactical.pal",
 	                                           194));
 
-	int healingIconsInARow = 4;
-	for (int i = 0; i < healingIconsInARow; i++)
-	{
-		healingIcons.push_back(
-		    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
-		                                195)));
-	}
-	for (int i = 0; i < healingIconsInARow; i++)
-	{
-		healingIcons.push_back(
-		    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
-		                                196)));
-	}
-	healingIcon = *healingIcons.begin();
+	healingIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   195)));
+	healingIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   196)));
 
 	targetLocationIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
@@ -200,7 +189,7 @@ void BattleTileView::eventOccurred(Event *e)
 				LogWarning("Writing voxel view to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
 				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-				    {imageOffset, imageOffset + dpySize}, *this, currentZLevel));
+				    {imageOffset, imageOffset + dpySize}, *this, battle.battleViewZLevel));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 			break;
@@ -209,15 +198,16 @@ void BattleTileView::eventOccurred(Event *e)
 				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
 				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-				    {imageOffset, imageOffset + dpySize}, *this, currentZLevel, true));
+				    {imageOffset, imageOffset + dpySize}, *this, battle.battleViewZLevel, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 			case SDLK_F8:
 			{
 				LogWarning("Writing voxel view to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
-				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-				    {imageOffset, imageOffset + dpySize}, *this, currentZLevel, false, true));
+				auto img = std::dynamic_pointer_cast<RGBImage>(
+				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this,
+				                            battle.battleViewZLevel, false, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 			break;
@@ -225,8 +215,9 @@ void BattleTileView::eventOccurred(Event *e)
 			{
 				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
-				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-				    {imageOffset, imageOffset + dpySize}, *this, currentZLevel, true, true));
+				auto img = std::dynamic_pointer_cast<RGBImage>(
+				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this,
+				                            battle.battleViewZLevel, true, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 			break;
@@ -247,12 +238,8 @@ void BattleTileView::render()
 
 	// Rotate Icons
 	{
-		// FIXME: Rubbish, introduce delay like for waypoints
-		auto pos = ++std::find(healingIcons.begin(), healingIcons.end(), healingIcon);
-		if (pos == healingIcons.end())
-			pos = healingIcons.begin();
-		healingIcon = *pos;
-
+		healingIconTicksAccumulated++;
+		healingIconTicksAccumulated %= healingIcons.size() * HEALING_ICONS_ANIMATION_DELAY;
 		iconAnimationTicksAccumulated++;
 		iconAnimationTicksAccumulated %= targetLocationIcons.size() * TARGET_ICONS_ANIMATION_DELAY;
 		focusAnimationTicksAccumulated++;
@@ -280,15 +267,15 @@ void BattleTileView::render()
 	{
 		case LayerDrawingMode::UpToCurrentLevel:
 			zFrom = 0;
-			zTo = currentZLevel;
+			zTo = battle.battleViewZLevel;
 			break;
 		case LayerDrawingMode::AllLevels:
 			zFrom = 0;
 			zTo = maxZDraw;
 			break;
 		case LayerDrawingMode::OnlyCurrentLevel:
-			zFrom = currentZLevel - 1;
-			zTo = currentZLevel;
+			zFrom = battle.battleViewZLevel - 1;
+			zTo = battle.battleViewZLevel;
 			break;
 	}
 
@@ -378,16 +365,16 @@ void BattleTileView::render()
 			// FIXME: Actually read ingame option
 			bool USER_OPTION_DRAW_WAYPOINTS = true;
 			bool darkenWaypoints = false;
-			for (auto u : selectedUnits)
+			for (auto u : battle.battleViewSelectedUnits)
 			{
 				for (auto &m : u->missions)
 				{
-					if (m->type == BattleUnitMission::MissionType::ReachGoal)
+					if (m->type == BattleUnitMission::Type::ReachGoal)
 					{
 						targetIconLocations.insert(m->targetLocation);
 						break;
 					}
-					if (m->type == BattleUnitMission::MissionType::GotoLocation &&
+					if (m->type == BattleUnitMission::Type::GotoLocation &&
 					    !m->currentPlannedPath.empty())
 					{
 						targetIconLocations.insert(m->targetLocation);
@@ -417,7 +404,7 @@ void BattleTileView::render()
 
 			for (int z = zFrom; z < zTo; z++)
 			{
-				int currentLevel = z - currentZLevel + 1;
+				int currentLevel = z - battle.battleViewZLevel + 1;
 
 				// Find out when to draw selection bracket parts (if ever)
 				Tile *selTileOnCurLevel = nullptr;
@@ -443,7 +430,7 @@ void BattleTileView::render()
 						if (u)
 						{
 							// FIXME: Check if player can see unit, if not - do not change cursor!
-							if (battle->currentPlayer->isRelatedTo(u->getUnit()->owner) ==
+							if (battle.currentPlayer->isRelatedTo(u->getUnit()->owner) ==
 							    Organisation::Relation::Hostile)
 							{
 								selectionImageBack = selectedTileFireImageBack;
@@ -519,19 +506,21 @@ void BattleTileView::render()
 								{
 									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
 									             ->getUnit();
-									friendly = u->owner == battle->currentPlayer;
-									hostile = battle->currentPlayer->isRelatedTo(u->owner) ==
+									friendly = u->owner == battle.currentPlayer;
+									hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 									          Organisation::Relation::Hostile;
-									if (!selectedUnits.empty())
+									if (!battle.battleViewSelectedUnits.empty())
 									{
-										auto selectedPos = std::find(selectedUnits.begin(),
-										                             selectedUnits.end(), u);
+										auto selectedPos =
+										    std::find(battle.battleViewSelectedUnits.begin(),
+										              battle.battleViewSelectedUnits.end(), u);
 
-										if (selectedPos == selectedUnits.begin())
+										if (selectedPos == battle.battleViewSelectedUnits.begin())
 										{
 											unitsToDrawSelectionArrows.push_back({u, true});
 										}
-										else if (selectedPos != selectedUnits.end())
+										else if (selectedPos !=
+										         battle.battleViewSelectedUnits.end())
 										{
 											unitsToDrawSelectionArrows.push_back({u, false});
 										}
@@ -539,7 +528,7 @@ void BattleTileView::render()
 										if (true) // FIXME: Check if visible by current player
 										{
 											bool focusedBySelectedUnits = false;
-											for (auto su : selectedUnits)
+											for (auto su : battle.battleViewSelectedUnits)
 											{
 												if (std::find(u->focusedByUnits.begin(),
 												              u->focusedByUnits.end(),
@@ -605,7 +594,7 @@ void BattleTileView::render()
 			// Draw next level, units whose "legs" are below "zTo", projectiles and items moving
 			for (int z = zTo; z < maxZDraw && z < zTo + 1; z++)
 			{
-				int currentLevel = z - currentZLevel + 1;
+				int currentLevel = z - battle.battleViewZLevel + 1;
 
 				unsigned int layer1 = map.getLayer(TileObject::Type::Unit);
 				unsigned int layer2 = map.getLayer(TileObject::Type::Shadow);
@@ -636,20 +625,22 @@ void BattleTileView::render()
 								{
 									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
 									             ->getUnit();
-									friendly = u->owner == battle->currentPlayer;
-									hostile = battle->currentPlayer->isRelatedTo(u->owner) ==
+									friendly = u->owner == battle.currentPlayer;
+									hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 									          Organisation::Relation::Hostile;
 									draw = true;
-									if (!selectedUnits.empty())
+									if (!battle.battleViewSelectedUnits.empty())
 									{
-										auto selectedPos = std::find(selectedUnits.begin(),
-										                             selectedUnits.end(), u);
+										auto selectedPos =
+										    std::find(battle.battleViewSelectedUnits.begin(),
+										              battle.battleViewSelectedUnits.end(), u);
 
-										if (selectedPos == selectedUnits.begin())
+										if (selectedPos == battle.battleViewSelectedUnits.begin())
 										{
 											unitsToDrawSelectionArrows.push_back({u, true});
 										}
-										else if (selectedPos != selectedUnits.end())
+										else if (selectedPos !=
+										         battle.battleViewSelectedUnits.end())
 										{
 											unitsToDrawSelectionArrows.push_back({u, false});
 										}
@@ -657,7 +648,7 @@ void BattleTileView::render()
 										if (true) // FIXME: Check if visible by current player
 										{
 											bool focusedBySelectedUnits = false;
-											for (auto su : selectedUnits)
+											for (auto su : battle.battleViewSelectedUnits)
 											{
 												if (std::find(u->focusedByUnits.begin(),
 												              u->focusedByUnits.end(),
@@ -715,6 +706,7 @@ void BattleTileView::render()
 				static const Vec2<float> offsetRunning = {0.0f, 0.0f};
 				static const Vec2<float> offsetBehavior = {0.0f, 0.0f};
 				static const Vec2<float> offsetBleed = {0.0f, 0.0f};
+				static const Vec2<float> offsetHealing = {6.0f, 14.0f};
 				static const Vec2<float> offsetTU = {13.0f, -5.0f};
 				static const Vec2<float> offsetHealth = {6.0f, 2.0f};
 
@@ -741,7 +733,7 @@ void BattleTileView::render()
 				r.draw(behaviorUnitSelectionUnderlay[obj.first->behavior_mode],
 				       pos + offsetBehavior);
 
-				if (battle->mode == Battle::Mode::TurnBased)
+				if (battle.mode == Battle::Mode::TurnBased)
 				{
 					auto &img = tuIndicators[obj.first->agent->modified_stats.time_units];
 					r.draw(img, pos + offsetTU - Vec2<float>{img->size.x / 2, img->size.y / 2});
@@ -755,7 +747,9 @@ void BattleTileView::render()
 				{
 					if (obj.first->isHealing)
 					{
-						r.draw(healingIcon, pos + offsetBleed);
+						r.draw(healingIcons[healingIconTicksAccumulated /
+						                    HEALING_ICONS_ANIMATION_DELAY],
+						       pos + offsetHealing);
 					}
 					else
 					{
@@ -779,8 +773,8 @@ void BattleTileView::render()
 				// Therefore, if value is >=frames, we do 2*frames -2 -offset
 				// For example, 2*5 - 2 - 5 = 3, that's how we get 3 that's after 4
 				Vec2<float> imgOffset = {
-				    (float)battle->common_image_list->focusArrows[0]->size.x / 2.0f,
-				    (float)battle->common_image_list->focusArrows[0]->size.y / 2.0f};
+				    (float)battle.common_image_list->focusArrows[0]->size.x / 2.0f,
+				    (float)battle.common_image_list->focusArrows[0]->size.y / 2.0f};
 				if (offset >= FOCUS_ICONS_ANIMATION_FRAMES)
 					offset = 2 * FOCUS_ICONS_ANIMATION_FRAMES - 2 - offset;
 
@@ -789,13 +783,13 @@ void BattleTileView::render()
 					float largeOffset = obj.second ? 2.0f : 1.0f;
 					Vec2<float> pos = tileToOffsetScreenCoords(obj.first->getCenter());
 
-					r.draw(battle->common_image_list->focusArrows[0],
+					r.draw(battle.common_image_list->focusArrows[0],
 					       pos - imgOffset + largeOffset * offset1 + offset * offsetd14);
-					r.draw(battle->common_image_list->focusArrows[1],
+					r.draw(battle.common_image_list->focusArrows[1],
 					       pos - imgOffset + largeOffset * offset2 + offset * offsetd23);
-					r.draw(battle->common_image_list->focusArrows[2],
+					r.draw(battle.common_image_list->focusArrows[2],
 					       pos - imgOffset + largeOffset * offset3 - offset * offsetd23);
-					r.draw(battle->common_image_list->focusArrows[3],
+					r.draw(battle.common_image_list->focusArrows[3],
 					       pos - imgOffset + largeOffset * offset4 - offset * offsetd14);
 				}
 			}
@@ -824,12 +818,12 @@ void BattleTileView::render()
 								{
 									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
 									             ->getUnit();
-									bool friendly = u->owner == battle->currentPlayer;
-									bool hostile = battle->currentPlayer->isRelatedTo(u->owner) ==
+									bool friendly = u->owner == battle.currentPlayer;
+									bool hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 									               Organisation::Relation::Hostile;
 
 									unitsToDraw.emplace_back(obj, obj->getOwningTile()->position.z -
-									                                  (currentZLevel - 1),
+									                                  (battle.battleViewZLevel - 1),
 									                         friendly, hostile);
 								}
 							}
@@ -841,7 +835,7 @@ void BattleTileView::render()
 			for (int z = zFrom; z < zTo; z++)
 			{
 				// currentZLevel is an upper exclusive boundary, that's why we need to sub 1 here
-				int currentLevel = z - (currentZLevel - 1);
+				int currentLevel = z - (battle.battleViewZLevel - 1);
 
 				for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
 				{
@@ -859,12 +853,12 @@ void BattleTileView::render()
 								{
 									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
 									             ->getUnit();
-									bool friendly = u->owner == battle->currentPlayer;
-									bool hostile = battle->currentPlayer->isRelatedTo(u->owner) ==
+									bool friendly = u->owner == battle.currentPlayer;
+									bool hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 									               Organisation::Relation::Hostile;
 
 									unitsToDraw.emplace_back(obj, obj->getOwningTile()->position.z -
-									                                  (currentZLevel - 1),
+									                                  (battle.battleViewZLevel - 1),
 									                         friendly, hostile);
 									continue;
 								}
@@ -874,7 +868,7 @@ void BattleTileView::render()
 									{
 										itemsToDraw.emplace_back(obj,
 										                         obj->getOwningTile()->position.z -
-										                             (currentZLevel - 1));
+										                             (battle.battleViewZLevel - 1));
 									}
 									continue;
 								}
@@ -905,12 +899,12 @@ void BattleTileView::render()
 								{
 									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
 									             ->getUnit();
-									bool friendly = u->owner == battle->currentPlayer;
-									bool hostile = battle->currentPlayer->isRelatedTo(u->owner) ==
+									bool friendly = u->owner == battle.currentPlayer;
+									bool hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 									               Organisation::Relation::Hostile;
 
 									unitsToDraw.emplace_back(obj, obj->getOwningTile()->position.z -
-									                                  (currentZLevel - 1),
+									                                  (battle.battleViewZLevel - 1),
 									                         friendly, hostile);
 								}
 							}
@@ -943,11 +937,11 @@ void BattleTileView::render()
 
 void BattleTileView::setZLevel(int zLevel)
 {
-	currentZLevel = clamp(zLevel, 1, maxZDraw);
-	setScreenCenterTile(Vec3<float>{centerPos.x, centerPos.y, currentZLevel - 1});
+	battle.battleViewZLevel = clamp(zLevel, 1, maxZDraw);
+	setScreenCenterTile(Vec3<float>{centerPos.x, centerPos.y, battle.battleViewZLevel - 1});
 }
 
-int BattleTileView::getZLevel() { return currentZLevel; }
+int BattleTileView::getZLevel() { return battle.battleViewZLevel; }
 
 void BattleTileView::setLayerDrawingMode(LayerDrawingMode mode) { layerDrawingMode = mode; }
 

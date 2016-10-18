@@ -6,6 +6,7 @@
 #include "library/line.h"
 #include "library/sp.h"
 #include "library/voxel.h"
+#include <algorithm>
 #include <iterator>
 
 namespace OpenApoc
@@ -82,16 +83,27 @@ bool TileMap::checkThrowTrajectory(const sp<TileObject> thrower, Vec3<float> sta
 	Vec3<float> velocity =
 	    (glm::normalize(targetVectorXY) * velocityXY + Vec3<float>{0.0, 0.0, velocityZ}) *
 	    VELOCITY_SCALE_BATTLE;
+	int collisionIgnoredTicks =
+	    thrower ? 0 : (int)ceilf(36.0f / glm::length(velocity / VELOCITY_SCALE_BATTLE)) + 1;
 	Collision c;
 	do
 	{
 		newPos = curPos;
-		for (int i = 0; i < iterationsPerCollision; i++)
+		for (int i = 0; i < iterationsPerCollision &&
+		                (collisionIgnoredTicks == 0 || i < collisionIgnoredTicks);
+		     i++)
 		{
 			velocity.z -= FALLING_ACCELERATION_ITEM;
 			newPos += velocity / (float)TICK_SCALE / VELOCITY_SCALE_BATTLE;
 		}
-		c = findCollision(curPos, newPos, {});
+		if (collisionIgnoredTicks > 0)
+		{
+			collisionIgnoredTicks = std::max(0, collisionIgnoredTicks - iterationsPerCollision);
+		}
+		else
+		{
+			c = findCollision(curPos, newPos, {});
+		}
 		if (c && c.obj == thrower)
 		{
 			c = {};

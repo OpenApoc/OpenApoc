@@ -1250,18 +1250,20 @@ void Battle::enterBattle(GameState &state)
 	if (!firstPlayerUnit)
 	{
 		LogError("WTF, no player units found?");
-		state.current_battle->battleviewScreenCenter = state.current_battle->map->size / 2;
-		state.current_battle->battleviewZLevel = state.current_battle->map->size.z / 2 + 1;
+		state.current_battle->battleViewScreenCenter = state.current_battle->map->size / 2;
+		state.current_battle->battleViewZLevel = state.current_battle->map->size.z / 2 + 1;
 	}
 	else
 	{
-		state.current_battle->battleviewScreenCenter = firstPlayerUnit->position;
-		state.current_battle->battleviewZLevel = (int)ceilf(firstPlayerUnit->position.z);
+		state.current_battle->battleViewScreenCenter = firstPlayerUnit->position;
+		state.current_battle->battleViewZLevel = (int)ceilf(firstPlayerUnit->position.z);
 	}
+	state.current_battle->battleViewGroupMove = true;
 
 	if (state.current_battle->mission_type == Battle::MissionType::RaidHumans)
 	{
 		// FIXME: Make X-COM hostile to target org for the duration of this mission
+		LogWarning("IMPLEMENT: Make X-COM hostile to target org for the duration of this mission");
 	}
 
 	state.current_battle->initBattle(state, true);

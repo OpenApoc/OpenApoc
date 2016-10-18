@@ -139,8 +139,9 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Stun damage acquired
 	int stunDamageInTicks = 0;
 	int getStunDamage() const;
-	void addFatalWound(GameState &state);
-	void dealDamage(GameState &state, int damage, bool generateFatalWounds, int stunPower);
+	void addFatalWound(GameState &state, BodyPart fatalWoundPart);
+	void dealDamage(GameState &state, int damage, bool generateFatalWounds, BodyPart fatalWoundPart,
+	                int stunPower);
 
 	// User set modes
 
@@ -199,6 +200,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Time, in game ticks, until unit can turn by 1/8th of a circle
 	unsigned int turning_animation_ticks_remaining = 0;
 	void beginTurning(Vec2<int> newFacing);
+	void setFacing(Vec2<int> newFacing);
 
 	// Mission logic
 
@@ -208,8 +210,13 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	bool getNextDestination(GameState &state, Vec3<float> &dest);
 	bool getNextFacing(GameState &state, Vec2<int> &dest);
 	bool getNextBodyState(GameState &state, BodyState &dest);
-	bool addMission(GameState &state, BattleUnitMission *mission, bool start = true);
-	bool addMission(GameState &state, BattleUnitMission::MissionType type);
+	// Add mission, if possible to the front, otherwise to the back (if toBack then always to back)
+	bool addMission(GameState &state, BattleUnitMission *mission, bool toBack = false);
+	bool addMission(GameState &state, BattleUnitMission::Type type);
+	// Attempt to cancel all unit missions, returns true if successful
+	bool cancelMissions(GameState &state);
+	// Attempt to give unit a new mission, replacing others, returns true if successful
+	bool setMission(GameState &state, BattleUnitMission *mission);
 
 	Vec3<float> position;
 	Vec3<float> goalPosition;
@@ -229,10 +236,13 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Freefalling
 	bool falling = false;
 	float fallingSpeed = 0.0f;
+	void startFalling();
 
 	// If unit is asked to give way, this list will be filled with facings
 	// in order of priority that should be tried by it
-	std::list<Vec2<int>> giveWayRequest;
+	std::list<Vec2<int>> giveWayRequestData;
+	void requestGiveWay(const BattleUnit &requestor, const std::list<Vec3<int>> &plannedPath,
+	                    Vec3<int> pos);
 
 	StateRef<AEquipmentType> displayedItem;
 	void updateDisplayedItem();
@@ -306,12 +316,17 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 
 	void update(GameState &state, unsigned int ticks);
 
+	void triggerProximity(GameState &state);
+
 	void retreat(GameState &state);
 	void dropDown(GameState &state);
 	void tryToRiseUp(GameState &state);
 	void fallUnconscious(GameState &state);
 	void die(GameState &state, bool violently, bool bledToDeath = false);
 	void destroy(GameState &state);
+
+	static void groupMove(GameState &state, std::list<StateRef<BattleUnit>> &selectedUnits,
+	                      Vec3<int> targetLocation, bool demandGiveWay);
 
 	// Following members are not serialized, but rather are set in initBattle method
 
