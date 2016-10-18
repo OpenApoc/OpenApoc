@@ -22,10 +22,9 @@
 namespace OpenApoc
 {
 BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
-                               TileViewMode initialMode,
-                               Vec3<float> screenCenterTile, Battle &current_battle)
-    : TileView(map, isoTileSize, stratTileSize, initialMode),
-      battle(current_battle)
+                               TileViewMode initialMode, Vec3<float> screenCenterTile,
+                               Battle &current_battle)
+    : TileView(map, isoTileSize, stratTileSize, initialMode), battle(current_battle)
 {
 	layerDrawingMode = LayerDrawingMode::UpToCurrentLevel;
 	selectedTileEmptyImageBack =
@@ -216,8 +215,9 @@ void BattleTileView::eventOccurred(Event *e)
 			{
 				LogWarning("Writing voxel view to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
-				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-				    {imageOffset, imageOffset + dpySize}, *this, battle.battleViewZLevel, false, true));
+				auto img = std::dynamic_pointer_cast<RGBImage>(
+				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this,
+				                            battle.battleViewZLevel, false, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 			break;
@@ -225,8 +225,9 @@ void BattleTileView::eventOccurred(Event *e)
 			{
 				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
-				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-				    {imageOffset, imageOffset + dpySize}, *this, battle.battleViewZLevel, true, true));
+				auto img = std::dynamic_pointer_cast<RGBImage>(
+				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this,
+				                            battle.battleViewZLevel, true, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 			break;
@@ -524,14 +525,16 @@ void BattleTileView::render()
 									          Organisation::Relation::Hostile;
 									if (!battle.battleViewSelectedUnits.empty())
 									{
-										auto selectedPos = std::find(battle.battleViewSelectedUnits.begin(),
-										                             battle.battleViewSelectedUnits.end(), u);
+										auto selectedPos =
+										    std::find(battle.battleViewSelectedUnits.begin(),
+										              battle.battleViewSelectedUnits.end(), u);
 
 										if (selectedPos == battle.battleViewSelectedUnits.begin())
 										{
 											unitsToDrawSelectionArrows.push_back({u, true});
 										}
-										else if (selectedPos != battle.battleViewSelectedUnits.end())
+										else if (selectedPos !=
+										         battle.battleViewSelectedUnits.end())
 										{
 											unitsToDrawSelectionArrows.push_back({u, false});
 										}
@@ -642,14 +645,16 @@ void BattleTileView::render()
 									draw = true;
 									if (!battle.battleViewSelectedUnits.empty())
 									{
-										auto selectedPos = std::find(battle.battleViewSelectedUnits.begin(),
-										                             battle.battleViewSelectedUnits.end(), u);
+										auto selectedPos =
+										    std::find(battle.battleViewSelectedUnits.begin(),
+										              battle.battleViewSelectedUnits.end(), u);
 
 										if (selectedPos == battle.battleViewSelectedUnits.begin())
 										{
 											unitsToDrawSelectionArrows.push_back({u, true});
 										}
-										else if (selectedPos != battle.battleViewSelectedUnits.end())
+										else if (selectedPos !=
+										         battle.battleViewSelectedUnits.end())
 										{
 											unitsToDrawSelectionArrows.push_back({u, false});
 										}

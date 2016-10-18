@@ -22,6 +22,7 @@ class BattleUnitTileHelper : public CanEnterTileHelper
   public:
 	BattleUnitTileHelper(TileMap &map, BattleUnit &u) : map(map), u(u) {}
 
+	static float getDistanceStatic(Vec3<float> from, Vec3<float> to);
 	float getDistance(Vec3<float> from, Vec3<float> to) const override;
 
 	bool canEnterTile(Tile *from, Tile *to, bool demandGiveWay = false) const override;
@@ -95,7 +96,7 @@ class BattleUnitMission
 	// Methods to create new missions
 	static BattleUnitMission *gotoLocation(BattleUnit &u, Vec3<int> target, int facingDelta = 0,
 	                                       bool demandGiveWay = false, bool allowSkipNodes = true,
-										   int giveWayAttempts = 20, bool allowRunningAway = false);
+	                                       int giveWayAttempts = 20, bool allowRunningAway = false);
 	static BattleUnitMission *snooze(BattleUnit &u, unsigned int ticks);
 	static BattleUnitMission *acquireTU(BattleUnit &u, unsigned int tu);
 	static BattleUnitMission *changeStance(BattleUnit &u, BodyState state);

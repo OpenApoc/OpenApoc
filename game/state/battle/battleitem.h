@@ -5,6 +5,8 @@
 #include "library/vec.h"
 
 #define FALLING_ACCELERATION_ITEM 0.14285714f // 1/7th
+// IT was observed that boomeroid hops towards objects moving up to 14 tiles away
+#define BOOMEROID_RANGE 14.0f * 4.0f
 
 namespace OpenApoc
 {
@@ -35,7 +37,11 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 
 	bool falling = false;
 
+	// Amount of ticks during which collision with owner agent is not checked
 	unsigned int ownerInvulnerableTicks = 0;
+
+	// Amount of ticks during which collision is not checked
+	unsigned int collisionIgnoredTicks = 0;
 
 	unsigned int ticksUntilCollapse = 0;
 
@@ -47,6 +53,8 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 	bool applyDamage(GameState &state, int power, StateRef<DamageType> damageType);
 
 	void die(GameState &state, bool violently = true);
+
+	void hopTo(GameState &state, Vec3<float> targetPosition);
 
 	void update(GameState &state, unsigned int ticks);
 

@@ -17,6 +17,19 @@
 namespace OpenApoc
 {
 
+float BattleUnitTileHelper::getDistanceStatic(Vec3<float> from, Vec3<float> to)
+{
+	auto diff = to - from;
+	auto xDiff = std::abs(diff.x);
+	auto yDiff = std::abs(diff.y);
+	auto zDiff = std::abs(diff.z);
+	return (std::max(std::max(xDiff, yDiff), zDiff) + xDiff + yDiff + zDiff) * 2.0f;
+}
+
+float BattleUnitTileHelper::getDistance(Vec3<float> from, Vec3<float> to) const
+{
+	return getDistanceStatic(from, to);
+}
 bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool demandGiveWay) const
 {
 	float nothing;
@@ -901,18 +914,9 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 	return true;
 }
 
-float BattleUnitTileHelper::getDistance(Vec3<float> from, Vec3<float> to) const
-{
-	auto diff = to - from;
-	auto xDiff = std::abs(diff.x);
-	auto yDiff = std::abs(diff.y);
-	auto zDiff = std::abs(diff.z);
-	return (std::max(std::max(xDiff, yDiff), zDiff) + xDiff + yDiff + zDiff) * 2.0f;
-}
-
 BattleUnitMission *BattleUnitMission::gotoLocation(BattleUnit &u, Vec3<int> target, int facingDelta,
-												bool demandGiveWay, bool allowSkipNodes,
-												int giveWayAttempts, bool allowRunningAway)
+                                                   bool demandGiveWay, bool allowSkipNodes,
+                                                   int giveWayAttempts, bool allowRunningAway)
 {
 	std::ignore = facingDelta;
 	auto *mission = new BattleUnitMission();
@@ -1730,56 +1734,10 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 		    // and unit we're asking is not big
 		    // (coding giving way for large units is too much of a fuss,
 		    // and ain't going to be used a lot anyway, just path around them)
-		    && !blockingUnit->isLarge())
+		    && !blockingUnit->isLarge() && !u.isLarge())
 		{
-			// Ask unit to give way to us if not asked already
-			if (blockingUnit->giveWayRequest.size() == 0
-			    // and it's not busy
-			    && !blockingUnit->isBusy())
-			{
-				// If unit is prone and we're trying to go into it's legs
-				if (blockingUnit->current_body_state == BodyState::Prone &&
-				    blockingUnit->tileObject->getOwningTile()->position != pos)
-				{
-					blockingUnit->giveWayRequest.emplace_back(0, 0);
-				}
-				// If unit is not prone or we're trying to go into it's body
-				else
-				{
-					static const std::map<Vec2<int>, int> facing_dir_map = {
-					    {{0, -1}, 0}, {{1, -1}, 1}, {{1, 0}, 2},  {{1, 1}, 3},
-					    {{0, 1}, 4},  {{-1, 1}, 5}, {{-1, 0}, 6}, {{-1, -1}, 7}};
-					static const std::map<int, Vec2<int>> dir_facing_map = {
-					    {0, {0, -1}}, {1, {1, -1}}, {2, {1, 0}},  {3, {1, 1}},
-					    {4, {0, 1}},  {5, {-1, 1}}, {6, {-1, 0}}, {7, {-1, -1}}};
-
-					// Start with unit's facing, and go to the sides, adding facings
-					// if they're not in our path and not our current position.
-					// Next facings: [0] is clockwise, [1] is counter-clockwise from current
-					std::vector<int> nextFacings = {facing_dir_map.at(blockingUnit->facing),
-					                                facing_dir_map.at(blockingUnit->facing)};
-					for (int i = 0; i <= 4; i++)
-					{
-						int limit = i == 0 || i == 4 ? 0 : 1;
-						for (int j = 0; j <= limit; j++)
-						{
-							auto nextFacing = dir_facing_map.at(nextFacings[j]);
-							Vec3<int> nextPos = {blockingUnit->position.x + nextFacing.x,
-							                     blockingUnit->position.y + nextFacing.y,
-							                     blockingUnit->position.z};
-							if (nextPos == (Vec3<int>)u.position ||
-							    std::find(currentPlannedPath.begin(), currentPlannedPath.end(),
-							              nextPos) != currentPlannedPath.end())
-							{
-								continue;
-							}
-							blockingUnit->giveWayRequest.push_back(nextFacing);
-						}
-						nextFacings[0] = nextFacings[0] == 7 ? 0 : nextFacings[0] + 1;
-						nextFacings[1] = nextFacings[1] == 0 ? 7 : nextFacings[1] - 1;
-					}
-				}
-			}
+			// Ask unit to give way to us
+			blockingUnit->requestGiveWay(u, currentPlannedPath, pos);
 
 			// Snooze for a moment and try again
 			u.addMission(state, snooze(u, 16));
@@ -1934,8 +1892,8 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodySt
 	// Calculate and spend cost
 
 	// Cost to reach goal is free
-	int cost = type == Type::ReachGoal ? 0 : getBodyStateChangeCost(u, u.target_body_state,
-	                                                                       targetState);
+	int cost =
+	    type == Type::ReachGoal ? 0 : getBodyStateChangeCost(u, u.target_body_state, targetState);
 	// If unsufficient TUs - cancel missions other than GotoLocation
 	if (!spendAgentTUs(state, u, cost, type != Type::GotoLocation))
 	{

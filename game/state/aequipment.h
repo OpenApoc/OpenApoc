@@ -42,9 +42,9 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	bool primed = false;
 	// If set, will count down timer and go off when trigger condition is satisfied
 	bool activated = false;
-	// Delay until trigger is activated
+	// Delay until trigger is activated, in ticks
 	unsigned int triggerDelay = 0;
-	// Range for proximity
+	// Range for proximity, same scale as TUs (4 linear, 6 diagonal etc.)
 	float triggerRange = 0.0f;
 	// Type of trigger used
 	TriggerType triggerType;
@@ -91,6 +91,8 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	void throwItem(GameState &state, Vec3<int> targetPosition, float velocityXY, float velocityZ,
 	               bool launch = false);
 
+	bool getVelocityForThrow(const TileMap &map, int strength, Vec3<float> startPos,
+	                         Vec3<int> target, float &velocityXY, float &velocityZ) const;
 	bool getVelocityForThrow(const BattleUnit &unit, Vec3<int> target, float &velocityXY,
 	                         float &velocityZ) const;
 	bool getVelocityForLaunch(const BattleUnit &unit, Vec3<int> target, float &velocityXY,
@@ -100,8 +102,8 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	static float getMaxThrowDistance(int weight, int strength, int heightDifference);
 	static bool calculateNextVelocityForThrow(float distanceXY, float diffZ, float &velocityXY,
 	                                          float &velocityZ);
-	static bool getVelocityForThrowLaunch(const BattleUnit &unit, int weight,
-	                                      Vec3<float> startPos, Vec3<int> target, float &velocityXY,
-	                                      float &velocityZ);
+	static bool getVelocityForThrowLaunch(const BattleUnit *unit, const TileMap &map, int strength,
+	                                      int weight, Vec3<float> startPos, Vec3<int> target,
+	                                      float &velocityXY, float &velocityZ);
 };
 } // namespace OpenApoc

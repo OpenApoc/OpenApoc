@@ -768,7 +768,7 @@
             <value>0</value>
           </entry>
         </armor>
-        <damage_modifier>DAMAGEMODIFIER_HYBRID</damage_modifier>
+        <damage_modifier>DAMAGEMODIFIER_MUTANT</damage_modifier>
         <inventory>true</inventory>
 		<can_improve>true</can_improve>
 		<playable>true</playable>

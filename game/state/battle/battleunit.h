@@ -239,7 +239,9 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 
 	// If unit is asked to give way, this list will be filled with facings
 	// in order of priority that should be tried by it
-	std::list<Vec2<int>> giveWayRequest;
+	std::list<Vec2<int>> giveWayRequestData;
+	void requestGiveWay(const BattleUnit &requestor, const std::list<Vec3<int>> &plannedPath,
+	                    Vec3<int> pos);
 
 	StateRef<AEquipmentType> displayedItem;
 	void updateDisplayedItem();
@@ -313,6 +315,8 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 
 	void update(GameState &state, unsigned int ticks);
 
+	void triggerProximity(GameState &state);
+
 	void retreat(GameState &state);
 	void dropDown(GameState &state);
 	void tryToRiseUp(GameState &state);
@@ -320,7 +324,8 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	void die(GameState &state, bool violently, bool bledToDeath = false);
 	void destroy(GameState &state);
 
-	static void groupMove(GameState &state, std::list<StateRef<BattleUnit>>&selectedUnits, Vec3<int> targetLocation, bool demandGiveWay);
+	static void groupMove(GameState &state, std::list<StateRef<BattleUnit>> &selectedUnits,
+	                      Vec3<int> targetLocation, bool demandGiveWay);
 
 	// Following members are not serialized, but rather are set in initBattle method
 

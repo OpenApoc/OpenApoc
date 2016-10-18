@@ -311,8 +311,8 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 					}
 					case TriggerType::Proximity:
 					case TriggerType::Boomeroid:
-						LogWarning("Implement proximity/boomeroid triggers!");
-					// Intentional fall-through for now
+						// Nothing, triggered by moving units
+						break;
 					case TriggerType::Timed:
 					{
 						auto item = ownerItem.lock();
@@ -624,29 +624,27 @@ bool AEquipment::calculateNextVelocityForThrow(float distanceXY, float diffZ, fl
 	return false;
 }
 
-bool AEquipment::getVelocityForThrowLaunch(const BattleUnit &unit, int weight,
-                                           Vec3<float> startPos, Vec3<int> target,
+bool AEquipment::getVelocityForThrowLaunch(const BattleUnit *unit, const TileMap &map, int strength,
+                                           int weight, Vec3<float> startPos, Vec3<int> target,
                                            float &velocityXY, float &velocityZ)
 {
 	// Check distance to target
-	auto pos = unit.tileObject->getOwningTile()->position;
+	Vec3<int> pos = startPos;
 	Vec3<float> targetVectorXY = target - pos;
 	targetVectorXY = {targetVectorXY.x, targetVectorXY.y, 0.0f};
 	float distance = glm::length(targetVectorXY);
-	if (distance >=
-	    getMaxThrowDistance(weight, unit.agent->modified_stats.strength, pos.z - target.z))
+	if (distance >= getMaxThrowDistance(weight, strength, pos.z - target.z))
 	{
 		return false;
 	}
 
 	// Calculate trajectory
 	bool valid = true;
-	auto &map = unit.tileObject->map;
 	while (AEquipment::calculateNextVelocityForThrow(distance, startPos.z - target.z - 6.0f / 40.0f,
 	                                                 velocityXY, velocityZ))
 	{
-		valid = map.checkThrowTrajectory(unit.tileObject, startPos, target, targetVectorXY,
-		                                 velocityXY, velocityZ);
+		valid = map.checkThrowTrajectory(unit ? unit->tileObject : nullptr, startPos, target,
+		                                 targetVectorXY, velocityXY, velocityZ);
 		if (valid)
 		{
 			break;
@@ -655,20 +653,31 @@ bool AEquipment::getVelocityForThrowLaunch(const BattleUnit &unit, int weight,
 	return valid;
 }
 
+bool AEquipment::getVelocityForThrow(const TileMap &map, int strength, Vec3<float> startPos,
+                                     Vec3<int> target, float &velocityXY, float &velocityZ) const
+{
+	return getVelocityForThrowLaunch(nullptr, map, strength,
+	                                 type->weight + (payloadType ? payloadType->weight : 0),
+	                                 startPos, target, velocityXY, velocityZ);
+}
+
 bool AEquipment::getVelocityForThrow(const BattleUnit &unit, Vec3<int> target, float &velocityXY,
                                      float &velocityZ) const
 {
-	return getVelocityForThrowLaunch(unit, type->weight + (payloadType ? payloadType->weight : 0),
+	return getVelocityForThrowLaunch(&unit, unit.tileObject->map,
+	                                 unit.agent->modified_stats.strength,
+	                                 type->weight + (payloadType ? payloadType->weight : 0),
 	                                 unit.getThrownItemLocation(), target, velocityXY, velocityZ);
 }
 
-bool AEquipment::getVelocityForLaunch(const BattleUnit &unit, Vec3<int> target,
-                                      float &velocityXY, float &velocityZ) const
+bool AEquipment::getVelocityForLaunch(const BattleUnit &unit, Vec3<int> target, float &velocityXY,
+                                      float &velocityZ) const
 {
 	// Launchers can use higher "throw" speeds
 	velocityXY = 4.0f;
-	return getVelocityForThrowLaunch(unit, payloadType->weight, unit.getMuzzleLocation(), target,
-	                                 velocityXY, velocityZ);
+	return getVelocityForThrowLaunch(&unit, unit.tileObject->map,
+	                                 unit.agent->modified_stats.strength, payloadType->weight,
+	                                 unit.getThrownItemLocation(), target, velocityXY, velocityZ);
 }
 
 } // namespace OpenApoc

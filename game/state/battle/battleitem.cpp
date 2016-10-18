@@ -16,6 +16,7 @@
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_shadow.h"
 #include <cmath>
+#include <glm/glm.hpp>
 
 namespace OpenApoc
 {
@@ -32,6 +33,46 @@ void BattleItem::die(GameState &state, bool violently)
 	this->shadowObject->removeFromMap();
 	this->tileObject.reset();
 	this->shadowObject.reset();
+}
+
+void BattleItem::hopTo(GameState &state, Vec3<float> targetPosition)
+{
+	if (falling)
+	{
+		return;
+	}
+	// It was observed that boomeroids hop 1 to 4 tiles away (never overshooting)
+	int distance =
+	    std::min(16.0f, BattleUnitTileHelper::getDistanceStatic(position, targetPosition)) / 4.0f;
+	distance = randBoundsInclusive(state.rng, 1, distance);
+	auto targetVector = targetPosition - position;
+	float velXY = 0.0f;
+	float velZ = 0.0f;
+	while (distance > 1)
+	{
+		// Try to hop this distance towards target
+		velXY = 0.0f;
+		velZ = 0.0f;
+		Vec3<float> target = position + glm::normalize(targetVector) * (float)distance;
+		if (item->getVelocityForThrow(tileObject->map, 100, position, target, velXY, velZ))
+		{
+			break;
+		}
+		else
+		{
+			distance--;
+		}
+	}
+	if (distance > 1)
+	{
+		falling = true;
+		velocity = (glm::normalize(Vec3<float>{targetVector.x, targetVector.y, 0.0f}) * velXY +
+		            Vec3<float>{0.0f, 0.0f, velZ}) *
+		           VELOCITY_SCALE_BATTLE;
+		// Enough to leave our home cell
+		collisionIgnoredTicks =
+		    (int)ceilf(36.0f / glm::length(velocity / VELOCITY_SCALE_BATTLE)) + 1;
+	}
 }
 
 // Returns true if sound and doodad were handled by it
@@ -72,6 +113,8 @@ void BattleItem::setPosition(const Vec3<float> &pos)
 
 Collision BattleItem::checkItemCollision(Vec3<float> previousPosition, Vec3<float> nextPosition)
 {
+	if (collisionIgnoredTicks > 0)
+		return {};
 	Collision c = tileObject->map.findCollision(
 	    previousPosition, nextPosition, {},
 	    ownerInvulnerableTicks > 0 ? item->ownerAgent->unit->tileObject : nullptr);
@@ -116,6 +159,19 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 			ownerInvulnerableTicks = 0;
 		}
 	}
+
+	if (collisionIgnoredTicks > 0)
+	{
+		if (collisionIgnoredTicks > ticks)
+		{
+			collisionIgnoredTicks -= ticks;
+		}
+		else
+		{
+			collisionIgnoredTicks = 0;
+		}
+	}
+
 	int remainingTicks = ticks;
 
 	auto previousPosition = position;

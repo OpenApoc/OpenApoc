@@ -173,9 +173,8 @@ class Battle : public std::enable_shared_from_this<Battle>
 	friend class BattleMap;
 
   public:
-	
 	// Following members are not serialized, but rather are set in initBattle method
-	
+
 	sp<BattleCommonImageList> common_image_list;
 	sp<BattleCommonSampleList> common_sample_list;
 

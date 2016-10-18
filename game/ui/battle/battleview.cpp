@@ -43,9 +43,9 @@ BattleView::BattleView(sp<GameState> gameState)
     : BattleTileView(*gameState->current_battle->map,
                      Vec3<int>{TILE_X_BATTLE, TILE_Y_BATTLE, TILE_Z_BATTLE},
                      Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric,
-	  gameState->current_battle->battleViewScreenCenter, *gameState->current_battle),
-      baseForm(ui().getForm("FORM_BATTLE_UI")), state(gameState), battle(*state->current_battle), 
-	  followAgent(false), palette(fw().data->loadPalette("xcom3/tacdata/tactical.pal")),
+                     gameState->current_battle->battleViewScreenCenter, *gameState->current_battle),
+      baseForm(ui().getForm("FORM_BATTLE_UI")), state(gameState), battle(*state->current_battle),
+      followAgent(false), palette(fw().data->loadPalette("xcom3/tacdata/tactical.pal")),
       selectionState(BattleSelectionState::Normal)
 {
 	this->pal = palette;
@@ -289,15 +289,13 @@ BattleView::BattleView(sp<GameState> gameState)
 		    this->setZLevel(getZLevel() - 1);
 		    updateLayerButtons();
 		});
-	
+
 	this->baseForm->findControl("BUTTON_MOVE_GROUP")
-		->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		this->battle.battleViewGroupMove = true;
-	});
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this](Event *) { this->battle.battleViewGroupMove = true; });
 	this->baseForm->findControl("BUTTON_MOVE_INDIVIDUALLY")
-		->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		this->battle.battleViewGroupMove = false;
-	});
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this](Event *) { this->battle.battleViewGroupMove = false; });
 	if (battle.battleViewGroupMove)
 	{
 		this->baseForm->findControlTyped<RadioButton>("BUTTON_MOVE_GROUP")->setChecked(true);
@@ -369,7 +367,8 @@ BattleView::BattleView(sp<GameState> gameState)
 
 	this->baseForm->findControl("BUTTON_SHOW_OPTIONS")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InGameOptions>(this->state->shared_from_this())});
+		    fw().stageQueueCommand(
+		        {StageCmd::Command::PUSH, mksp<InGameOptions>(this->state->shared_from_this())});
 		});
 	this->baseForm->findControl("BUTTON_SHOW_LOG")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { LogWarning("Show log"); });
@@ -437,13 +436,14 @@ BattleView::BattleView(sp<GameState> gameState)
 
 		int delay = this->primingTab->findControlTyped<ScrollBar>("DELAY_SLIDER")->getValue();
 		int range = this->primingTab->findControlTyped<ScrollBar>("RANGE_SLIDER")->getValue();
-		if (delay == 0)
+		if (delay == 0 && (item->type->trigger_type == TriggerType::Timed ||
+		                   item->type->trigger_type == TriggerType::Contact))
 		{
 			item->prime();
 		}
 		else
 		{
-			item->prime(false, delay * TICKS_PER_SECOND / 4, range);
+			item->prime(false, delay * TICKS_PER_SECOND / 4, (range + 1) * 6);
 		}
 		this->activeTab = this->mainTab;
 	};
@@ -658,7 +658,7 @@ void BattleView::update()
 	BattleTileView::update();
 	// FIXME: Is there a more efficient way? But TileView does not know about battle or state!
 	battle.battleViewScreenCenter = centerPos;
-	
+
 	updateSelectedUnits();
 	updateSelectionMode();
 	updateSoldierButtons();
@@ -769,7 +769,9 @@ void BattleView::updateSelectedUnits()
 			it++;
 		}
 	}
-	lastSelectedUnit = battle.battleViewSelectedUnits.size() == 0 ? nullptr : battle.battleViewSelectedUnits.front();
+	lastSelectedUnit = battle.battleViewSelectedUnits.size() == 0
+	                       ? nullptr
+	                       : battle.battleViewSelectedUnits.front();
 
 	// Cancel stuff that cancels on unit change
 	if (prevLSU != lastSelectedUnit)
@@ -1016,7 +1018,8 @@ void BattleView::updateSoldierButtons()
 	this->baseForm->findControlTyped<CheckBox>("BUTTON_NORMAL")->setChecked(normal);
 	this->baseForm->findControlTyped<CheckBox>("BUTTON_AGGRESSIVE")->setChecked(aggressive);
 
-	bool throwing = !battle.battleViewSelectedUnits.empty() && battle.battleViewSelectedUnits.front()->isThrowing();
+	bool throwing = !battle.battleViewSelectedUnits.empty() &&
+	                battle.battleViewSelectedUnits.front()->isThrowing();
 
 	this->mainTab->findControlTyped<CheckBox>("BUTTON_LEFT_HAND_THROW")
 	    ->setChecked(selectionState == BattleSelectionState::ThrowLeft || leftThrowDelay > 0 ||
@@ -1051,22 +1054,24 @@ void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 			if (runAway)
 			{
 				// Running away units are impatient!
-				mission = BattleUnitMission::gotoLocation(*unit, target, facingOffset, demandGiveWay, true, 1, true);
+				mission = BattleUnitMission::gotoLocation(*unit, target, facingOffset,
+				                                          demandGiveWay, true, 1, true);
 			}
 			else // not running away
 			{
-				mission = BattleUnitMission::gotoLocation(*unit, target, facingOffset, demandGiveWay);
+				mission =
+				    BattleUnitMission::gotoLocation(*unit, target, facingOffset, demandGiveWay);
 			}
 
 			if (unit->setMission(*state, mission))
 			{
-				LogWarning("BattleUnit \"%s\" going to location {%d,%d,%d}", unit->agent->name.cStr(),
-					target.x, target.y, target.z);
+				LogWarning("BattleUnit \"%s\" going to location {%d,%d,%d}",
+				           unit->agent->name.cStr(), target.x, target.y, target.z);
 			}
 			else
 			{
 				LogWarning("BattleUnit \"%s\" could not receive order to move",
-					unit->agent->name.cStr());
+				           unit->agent->name.cStr());
 			}
 		}
 	}
@@ -1251,9 +1256,17 @@ void BattleView::orderDrop(bool right)
 
 void BattleView::orderSelect(StateRef<BattleUnit> u, bool inverse, bool additive)
 {
-	LogWarning("Order to select unit %s", u.id.cStr());
+	UString log = "";
+	log += format("\nOrder to select unit %s.", u.id.cStr());
+	log += format("\nMissions [%d]:", (int)u->missions.size());
+	for (auto &m : u->missions)
+	{
+		log += format("\n%s", m->getName());
+	}
+	LogWarning(log.cStr());
 
-	auto pos = std::find(battle.battleViewSelectedUnits.begin(), battle.battleViewSelectedUnits.end(), u);
+	auto pos =
+	    std::find(battle.battleViewSelectedUnits.begin(), battle.battleViewSelectedUnits.end(), u);
 	if (inverse)
 	{
 		// Unit in selection => remove
@@ -1412,7 +1425,8 @@ void BattleView::eventOccurred(Event *e)
 				modifierLCtrl = true;
 				break;
 			case SDLK_ESCAPE:
-				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InGameOptions>(state->shared_from_this())});
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH, mksp<InGameOptions>(state->shared_from_this())});
 				return;
 			case SDLK_PAGEUP:
 				this->setZLevel(getZLevel() + 1);
@@ -1547,8 +1561,7 @@ void BattleView::eventOccurred(Event *e)
 					{
 						case Event::MouseButton::Left:
 							// If unit is present, priority is to move if not occupied
-							if (unitPresent &&
-							    unitPresent->owner == battle.currentPlayer)
+							if (unitPresent && unitPresent->owner == battle.currentPlayer)
 							{
 								// Move if units are selected and noone is occupying
 								if (!unitOccupying && battle.battleViewSelectedUnits.size() > 0)
@@ -1560,7 +1573,7 @@ void BattleView::eventOccurred(Event *e)
 								// Select if friendly unit present under cursor
 								else
 								{
-									orderSelect({ &*state, unitPresent->id });
+									orderSelect({&*state, unitPresent->id});
 								}
 							}
 							// Move if empty
@@ -1572,8 +1585,7 @@ void BattleView::eventOccurred(Event *e)
 						case Event::MouseButton::Right:
 							// Turn if no enemy unit present under cursor
 							// or if holding alt
-							if (!unitPresent ||
-							    unitPresent->owner == battle.currentPlayer ||
+							if (!unitPresent || unitPresent->owner == battle.currentPlayer ||
 							    selectionState == BattleSelectionState::NormalAlt)
 							{
 								orderTurn(t);
@@ -1609,10 +1621,9 @@ void BattleView::eventOccurred(Event *e)
 					{
 						// LMB = Add to selection
 						case Event::MouseButton::Left:
-							if (unitPresent &&
-							    unitPresent->owner == battle.currentPlayer)
+							if (unitPresent && unitPresent->owner == battle.currentPlayer)
 							{
-								orderSelect({ &*state, unitPresent->id }, false, true);
+								orderSelect({&*state, unitPresent->id}, false, true);
 							}
 							// If none occupying - order move if additional modifiers held
 							else if (!unitOccupying &&
@@ -1625,10 +1636,9 @@ void BattleView::eventOccurred(Event *e)
 							break;
 						// RMB = Remove from selection
 						case Event::MouseButton::Right:
-							if (unitPresent &&
-							    unitPresent->owner == battle.currentPlayer)
+							if (unitPresent && unitPresent->owner == battle.currentPlayer)
 							{
-								orderSelect({ &*state, unitPresent->id}, true);
+								orderSelect({&*state, unitPresent->id}, true);
 							}
 							break;
 						default:
@@ -1860,9 +1870,8 @@ void BattleView::onNewTurn()
 	if (battle.currentActiveOrganisation == battle.currentPlayer)
 	{
 		baseForm->findControlTyped<Ticker>("NEWS_TICKER")
-		    ->addMessage(tr("Turn:") + " " + format("%d", battle.currentTurn) +
-		                 "   " + tr("Side:") + "  " +
-		                 tr(battle.currentActiveOrganisation->name));
+		    ->addMessage(tr("Turn:") + " " + format("%d", battle.currentTurn) + "   " +
+		                 tr("Side:") + "  " + tr(battle.currentActiveOrganisation->name));
 	}
 }
 

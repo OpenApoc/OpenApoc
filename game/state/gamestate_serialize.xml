@@ -534,7 +534,7 @@
 		<member>destroyed</member>
 		<member>falling</member>
 		<member>fallingSpeed</member>
-		<member>giveWayRequest</member>
+		<member>giveWayRequestData</member>
 		<member>displayedItem</member>
 		<member>battleMode</member>
 	</object>
