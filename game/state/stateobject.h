@@ -36,6 +36,10 @@ template <typename T> class StateObject
 		auto id = getNextObjectID(state, getPrefix());
 		return getPrefix() + Strings::fromU64(id);
 	}
+	// StateObjects are not copy-able
+	StateObject(const StateObject &) = delete;
+	// Move is fine
+	StateObject(StateObject &&) = default;
 };
 
 template <typename T> class StateRef
