@@ -1460,7 +1460,6 @@ class OGLES30Renderer final : public Renderer
 	}
 	void drawTinted(sp<Image> i, Vec2<float> position, Colour tint) override
 	{
-		this->flush();
 		auto viewport_size = this->current_surface->size;
 		bool flip_y = (this->current_surface == this->default_surface);
 		auto size = i->size;
