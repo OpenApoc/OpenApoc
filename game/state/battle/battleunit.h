@@ -24,6 +24,8 @@
 
 #define FALLING_ACCELERATION_UNIT 0.16666667f // 1/6th
 
+#define LOS_RANGE 20
+
 #define LOS_CHECK_INTERVAL_TRACKING 36
 
 namespace OpenApoc
@@ -161,8 +163,8 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	}
 	BodyState current_body_state = BodyState::Standing;
 	BodyState target_body_state = BodyState::Standing;
-	void setBodyState(BodyState state);
-	void beginBodyStateChange(BodyState state);
+	void setBodyState(GameState &state, BodyState bodyState);
+	void beginBodyStateChange(GameState &state, BodyState bodyState);
 
 	// Time, in game ticks, until hands animation is finished
 	unsigned int hand_animation_ticks_remaining = 0;
@@ -199,8 +201,8 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 
 	// Time, in game ticks, until unit can turn by 1/8th of a circle
 	unsigned int turning_animation_ticks_remaining = 0;
-	void beginTurning(Vec2<int> newFacing);
-	void setFacing(Vec2<int> newFacing);
+	void beginTurning(GameState &state, Vec2<int> newFacing);
+	void setFacing(GameState &state, Vec2<int> newFacing);
 
 	// Mission logic
 
@@ -311,7 +313,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	int getMaxShield() const;
 	int getShield() const;
 
-	void setPosition(const Vec3<float> &pos);
+	void setPosition(GameState &state, const Vec3<float> &pos);
 	void resetGoal();
 
 	void update(GameState &state, unsigned int ticks);
@@ -340,6 +342,25 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	- ref. to psi attacker (who is controlling it/...)
 	*/
   private:
+	friend class Battle;
+
 	void startAttacking(WeaponStatus status);
+
+	// Visibility theory
+	//
+	// We update unit's vision to other stuff when
+	// - unit changes position,
+	// - unit changes facing,
+	// - battlemappart/hazard changes in his field of vision
+	//
+	// We update other units's vision to this unit when:
+	// - unit changes position
+	// - unit changes "cloaked" flag
+
+	// Update unit's vision of other units and terrain
+	// Update other units's vision of this unit
+	void updateUnitVisibilityAndVision(GameState &state);
+	void updateUnitVisibility(GameState &state);
+	void updateUnitVision(GameState &state);
 };
 }

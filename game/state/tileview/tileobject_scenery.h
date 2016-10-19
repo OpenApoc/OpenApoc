@@ -13,7 +13,7 @@ class TileObjectScenery : public TileObject
 {
   public:
 	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition, TileViewMode mode,
-	          int, bool, bool) override;
+	          bool visible, int, bool, bool) override;
 	~TileObjectScenery() override;
 
 	wp<Scenery> scenery;

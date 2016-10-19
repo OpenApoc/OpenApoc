@@ -1,5 +1,6 @@
 #include "game/state/tileview/tileobject.h"
 #include "framework/logger.h"
+#include "framework/renderer.h"
 #include "game/state/tileview/tile.h"
 #include <algorithm>
 #include <cmath>
@@ -20,6 +21,20 @@ void TileObject::setBounds(Vec3<float> bounds)
 {
 	this->bounds = bounds;
 	this->bounds_div_2 = bounds / 2.0f;
+}
+
+void TileObject::drawTinted(Renderer &r, sp<Image> sprite, Vec2<float> position, bool visible)
+{
+	if (visible)
+	{
+		r.draw(sprite, position);
+	}
+	else
+	{
+#ifdef DRAW_TINTED
+		r.drawTinted(sprite, position, COLOUR_BLACK);
+#endif
+	}
 }
 
 void TileObject::removeFromMap()

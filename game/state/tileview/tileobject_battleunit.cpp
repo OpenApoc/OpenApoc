@@ -16,7 +16,8 @@ namespace OpenApoc
 {
 
 void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-                                TileViewMode mode, int currentLevel, bool friendly, bool hostile)
+                                TileViewMode mode, bool visible, int currentLevel, bool friendly,
+                                bool hostile)
 {
 	static const int offset_prone = 8;
 	static const int offset_large = 32;
@@ -74,7 +75,7 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 			    unit->target_hand_state,
 			    unit->usingLift ? MovementState::None : unit->current_movement_state,
 			    unit->getBodyAnimationFrame(), unit->getHandAnimationFrame(),
-			    unit->getDistanceTravelled(), firingAngle);
+			    unit->getDistanceTravelled(), firingAngle, visible);
 			break;
 		}
 		case TileViewMode::Strategy:
@@ -99,69 +100,73 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 			switch (icon_type)
 			{
 				case ICON_STANDART:
-					r.draw(unit->strategyImages->at(side_offset * 120 + curent_level_offset * 40 +
-					                                facing_offset),
-					       screenPosition - Vec2<float>{4, 4});
+					drawTinted(r, unit->strategyImages->at(
+					                  side_offset * 120 + curent_level_offset * 40 + facing_offset),
+					           screenPosition - Vec2<float>{4, 4}, visible);
 					break;
 				case ICON_PRONE:
 					// Vertical
 					if (facing_offset == 0 || facing_offset == 4)
 					{
-						r.draw(unit->strategyImages->at(side_offset * 120 +
-						                                curent_level_offset * 40 +
-						                                offset_prone_map.at(facing_offset) + 0),
-						       screenPosition - Vec2<float>{4.0f, 8.0f});
-						r.draw(unit->strategyImages->at(side_offset * 120 +
-						                                curent_level_offset * 40 +
-						                                offset_prone_map.at(facing_offset) + 1),
-						       screenPosition - Vec2<float>{4.0f, 0.0f});
+						drawTinted(r, unit->strategyImages->at(
+						                  side_offset * 120 + curent_level_offset * 40 +
+						                  offset_prone_map.at(facing_offset) + 0),
+						           screenPosition - Vec2<float>{4.0f, 8.0f}, visible);
+						drawTinted(r, unit->strategyImages->at(
+						                  side_offset * 120 + curent_level_offset * 40 +
+						                  offset_prone_map.at(facing_offset) + 1),
+						           screenPosition - Vec2<float>{4.0f, 0.0f}, visible);
 					}
 					// Horizontal
 					else if (facing_offset == 2 || facing_offset == 6)
 					{
-						r.draw(unit->strategyImages->at(side_offset * 120 +
-						                                curent_level_offset * 40 +
-						                                offset_prone_map.at(facing_offset) + 0),
-						       screenPosition - Vec2<float>{8.0f, 4.0f});
-						r.draw(unit->strategyImages->at(side_offset * 120 +
-						                                curent_level_offset * 40 +
-						                                offset_prone_map.at(facing_offset) + 1),
-						       screenPosition - Vec2<float>{0.0f, 4.0f});
+						drawTinted(r, unit->strategyImages->at(
+						                  side_offset * 120 + curent_level_offset * 40 +
+						                  offset_prone_map.at(facing_offset) + 0),
+						           screenPosition - Vec2<float>{8.0f, 4.0f}, visible);
+						drawTinted(r, unit->strategyImages->at(
+						                  side_offset * 120 + curent_level_offset * 40 +
+						                  offset_prone_map.at(facing_offset) + 1),
+						           screenPosition - Vec2<float>{0.0f, 4.0f}, visible);
 					}
 					// Diagonal
 					else
 					{
-						r.draw(unit->strategyImages->at(side_offset * 120 +
-						                                curent_level_offset * 40 +
-						                                offset_prone_map.at(facing_offset) + 0),
-						       screenPosition - Vec2<float>{8.0f, 8.0f});
-						r.draw(unit->strategyImages->at(side_offset * 120 +
-						                                curent_level_offset * 40 +
-						                                offset_prone_map.at(facing_offset) + 1),
-						       screenPosition - Vec2<float>{0.0f, 8.0f});
-						r.draw(unit->strategyImages->at(side_offset * 120 +
-						                                curent_level_offset * 40 +
-						                                offset_prone_map.at(facing_offset) + 2),
-						       screenPosition - Vec2<float>{8.0f, 0.0f});
-						r.draw(unit->strategyImages->at(side_offset * 120 +
-						                                curent_level_offset * 40 +
-						                                offset_prone_map.at(facing_offset) + 3),
-						       screenPosition - Vec2<float>{0.0f, 0.0f});
+						drawTinted(r, unit->strategyImages->at(
+						                  side_offset * 120 + curent_level_offset * 40 +
+						                  offset_prone_map.at(facing_offset) + 0),
+						           screenPosition - Vec2<float>{8.0f, 8.0f}, visible);
+						drawTinted(r, unit->strategyImages->at(
+						                  side_offset * 120 + curent_level_offset * 40 +
+						                  offset_prone_map.at(facing_offset) + 1),
+						           screenPosition - Vec2<float>{0.0f, 8.0f}, visible);
+						drawTinted(r, unit->strategyImages->at(
+						                  side_offset * 120 + curent_level_offset * 40 +
+						                  offset_prone_map.at(facing_offset) + 2),
+						           screenPosition - Vec2<float>{8.0f, 0.0f}, visible);
+						drawTinted(r, unit->strategyImages->at(
+						                  side_offset * 120 + curent_level_offset * 40 +
+						                  offset_prone_map.at(facing_offset) + 3),
+						           screenPosition - Vec2<float>{0.0f, 0.0f}, visible);
 					}
 					break;
 				case ICON_LARGE:
-					r.draw(unit->strategyImages->at(side_offset * 120 + curent_level_offset * 40 +
-					                                offset_large + 0),
-					       screenPosition - Vec2<float>{8.0f, 8.0f});
-					r.draw(unit->strategyImages->at(side_offset * 120 + curent_level_offset * 40 +
-					                                offset_large + 1),
-					       screenPosition - Vec2<float>{0.0f, 8.0f});
-					r.draw(unit->strategyImages->at(side_offset * 120 + curent_level_offset * 40 +
-					                                offset_large + 2),
-					       screenPosition - Vec2<float>{8.0f, 0.0f});
-					r.draw(unit->strategyImages->at(side_offset * 120 + curent_level_offset * 40 +
-					                                offset_large + 3),
-					       screenPosition - Vec2<float>{0.0f, 0.0f});
+					drawTinted(r,
+					           unit->strategyImages->at(
+					               side_offset * 120 + curent_level_offset * 40 + offset_large + 0),
+					           screenPosition - Vec2<float>{8.0f, 8.0f}, visible);
+					drawTinted(r,
+					           unit->strategyImages->at(
+					               side_offset * 120 + curent_level_offset * 40 + offset_large + 1),
+					           screenPosition - Vec2<float>{0.0f, 8.0f}, visible);
+					drawTinted(r,
+					           unit->strategyImages->at(
+					               side_offset * 120 + curent_level_offset * 40 + offset_large + 2),
+					           screenPosition - Vec2<float>{8.0f, 0.0f}, visible);
+					drawTinted(r,
+					           unit->strategyImages->at(
+					               side_offset * 120 + curent_level_offset * 40 + offset_large + 3),
+					           screenPosition - Vec2<float>{0.0f, 0.0f}, visible);
 					break;
 			}
 			break;

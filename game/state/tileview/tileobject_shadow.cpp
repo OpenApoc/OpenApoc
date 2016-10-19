@@ -16,8 +16,10 @@ namespace OpenApoc
 {
 
 void TileObjectShadow::draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-                            TileViewMode mode, int, bool, bool)
+                            TileViewMode mode, bool visible, int, bool, bool)
 {
+	if (!visible)
+		return;
 	std::ignore = transform;
 	auto vehicle = this->ownerVehicle.lock();
 	auto unit = this->ownerBattleUnit.lock();
@@ -67,7 +69,7 @@ void TileObjectShadow::draw(Renderer &r, TileTransform &transform, Vec2<float> s
 				    unit->current_hand_state, unit->target_hand_state,
 				    unit->usingLift ? MovementState::None : unit->current_movement_state,
 				    unit->getBodyAnimationFrame(), unit->getHandAnimationFrame(),
-				    unit->getDistanceTravelled());
+				    unit->getDistanceTravelled(), visible);
 			}
 			if (item)
 			{

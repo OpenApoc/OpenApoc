@@ -2,6 +2,7 @@
 #include "framework/renderer.h"
 #include "game/state/battle/battleunitimagepack.h"
 #include "game/state/gamestate.h"
+#include "game/state/tileview/tileobject.h"
 
 namespace OpenApoc
 {
@@ -121,14 +122,16 @@ int BattleUnitAnimationPack::getFrameCountFiring(StateRef<AEquipmentType> heldIt
 		return 0;
 }
 
-void BattleUnitAnimationPack::drawShadow(Renderer &r, Vec2<float> screenPosition,
-                                         StateRef<BattleUnitImagePack> shadow,
-                                         StateRef<AEquipmentType> heldItem, Vec2<int> facing,
-                                         BodyState currentBody, BodyState targetBody,
-                                         HandState currentHands, HandState targetHands,
-                                         MovementState movement, int body_animation_delay,
-                                         int hands_animation_delay, int distance_travelled)
+void BattleUnitAnimationPack::drawShadow(
+    Renderer &r, Vec2<float> screenPosition, StateRef<BattleUnitImagePack> shadow,
+    StateRef<AEquipmentType> heldItem, Vec2<int> facing, BodyState currentBody,
+    BodyState targetBody, HandState currentHands, HandState targetHands, MovementState movement,
+    int body_animation_delay, int hands_animation_delay, int distance_travelled, bool visible)
 {
+	if (!visible)
+	{
+		return;
+	}
 	// If we are calling this, then we have already ensured that object has shadows,
 	// and should not check for it again
 
@@ -183,7 +186,8 @@ void BattleUnitAnimationPack::drawUnit(
     StateRef<BattleUnitImagePack> leftHand, StateRef<BattleUnitImagePack> rightHand,
     StateRef<AEquipmentType> heldItem, Vec2<int> facing, BodyState currentBody,
     BodyState targetBody, HandState currentHands, HandState targetHands, MovementState movement,
-    int body_animation_delay, int hands_animation_delay, int distance_travelled, int firingAngle)
+    int body_animation_delay, int hands_animation_delay, int distance_travelled, int firingAngle,
+    bool visible)
 {
 	sp<AnimationEntry> e;
 	sp<AnimationEntry> e_legs;
@@ -284,35 +288,41 @@ void BattleUnitAnimationPack::drawUnit(
 			case AnimationEntry::Frame::UnitImagePart::Body:
 				if (!body)
 					continue;
-				r.draw(body->images[b->index], screenPosition - b->offset - body->image_offset);
+				TileObject::drawTinted(r, body->images[b->index],
+				                       screenPosition - b->offset - body->image_offset, visible);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::Legs:
 				if (!legs)
 					continue;
-				r.draw(legs->images[b->index], screenPosition - b->offset - legs->image_offset);
+				TileObject::drawTinted(r, legs->images[b->index],
+				                       screenPosition - b->offset - legs->image_offset, visible);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::Helmet:
 				if (!helmet)
 					continue;
-				r.draw(helmet->images[b->index], screenPosition - b->offset - helmet->image_offset);
+				TileObject::drawTinted(r, helmet->images[b->index],
+				                       screenPosition - b->offset - helmet->image_offset, visible);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::LeftArm:
 				if (!leftHand)
 					continue;
-				r.draw(leftHand->images[b->index],
-				       screenPosition - b->offset - leftHand->image_offset);
+				TileObject::drawTinted(r, leftHand->images[b->index],
+				                       screenPosition - b->offset - leftHand->image_offset,
+				                       visible);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::RightArm:
 				if (!rightHand)
 					continue;
-				r.draw(rightHand->images[b->index],
-				       screenPosition - b->offset - rightHand->image_offset);
+				TileObject::drawTinted(r, rightHand->images[b->index],
+				                       screenPosition - b->offset - rightHand->image_offset,
+				                       visible);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::Weapon:
 				if (!heldItem)
 					continue;
-				r.draw(heldItem->held_image_pack->images[b->index],
-				       screenPosition - b->offset - heldItem->held_image_pack->image_offset);
+				TileObject::drawTinted(
+				    r, heldItem->held_image_pack->images[b->index],
+				    screenPosition - b->offset - heldItem->held_image_pack->image_offset, visible);
 				break;
 			// Travis complains I'm not handling "Shadow"
 			default:

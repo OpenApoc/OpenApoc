@@ -13,7 +13,7 @@ class TileObjectBattleHazard : public TileObject
 {
   public:
 	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition, TileViewMode mode,
-	          int, bool, bool) override;
+	          bool visible, int, bool, bool) override;
 	~TileObjectBattleHazard() override;
 	sp<BattleHazard> getHazard();
 	Vec3<float> getPosition() const override;

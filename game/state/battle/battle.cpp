@@ -150,13 +150,18 @@ void Battle::initBattle(GameState &state, bool first)
 		if (p->trackedUnit)
 			p->trackedObject = p->trackedUnit->tileObject;
 	}
-	// On first run, init support links and items
+	// On first run, init support links and items, do vsibility
 	if (first)
 	{
 		initialMapPartLinkUp();
 		for (auto &o : this->items)
 		{
 			o->tryCollapse();
+		}
+		// Check which blocks and tiles are visible
+		for (auto u : units)
+		{
+			u.second->updateUnitVision(state);
 		}
 	}
 }
@@ -574,6 +579,21 @@ void Battle::update(GameState &state, unsigned int ticks)
 		o.second->update(state, ticks);
 	}
 	Trace::end("Battle::update::units->update");
+}
+
+int Battle::getLosBlockID(int x, int y, int z) const
+{
+	return tileToLosBlock.at(z * size.x * size.y + y * size.x + x);
+}
+
+bool Battle::getVisible(StateRef<Organisation> org, int x, int y, int z) const
+{
+	return visibleTiles.at(org).at(z * size.x * size.y + y * size.x + x);
+}
+
+void Battle::setVisible(StateRef<Organisation> org, int x, int y, int z, bool val)
+{
+	visibleTiles[org][z * size.x * size.y + y * size.x + x] = val;
 }
 
 void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
@@ -1209,19 +1229,19 @@ void Battle::enterBattle(GameState &state)
 		// Stance
 		if (u->agent->isBodyStateAllowed(BodyState::Standing))
 		{
-			u->setBodyState(BodyState::Standing);
+			u->setBodyState(state, BodyState::Standing);
 		}
 		else if (u->agent->isBodyStateAllowed(BodyState::Flying))
 		{
-			u->setBodyState(BodyState::Flying);
+			u->setBodyState(state, BodyState::Flying);
 		}
 		else if (u->agent->isBodyStateAllowed(BodyState::Kneeling))
 		{
-			u->setBodyState(BodyState::Kneeling);
+			u->setBodyState(state, BodyState::Kneeling);
 		}
 		else if (u->agent->isBodyStateAllowed(BodyState::Prone))
 		{
-			u->setBodyState(BodyState::Prone);
+			u->setBodyState(state, BodyState::Prone);
 			if (u->canMove() && u->agent->type->bodyType->allowed_facing.size() > 1)
 			{
 				LogError("Unit %s cannot Stand, Fly or Kneel, but can turn!",

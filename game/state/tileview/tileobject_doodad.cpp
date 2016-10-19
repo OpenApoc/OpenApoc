@@ -7,7 +7,7 @@ namespace OpenApoc
 {
 
 void TileObjectDoodad::draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-                            TileViewMode mode, int, bool, bool)
+                            TileViewMode mode, bool visible, int, bool, bool)
 {
 	std::ignore = transform;
 	// Mode isn't used as TileView::tileToScreenCoords already transforms according to the mode
@@ -31,7 +31,7 @@ void TileObjectDoodad::draw(Renderer &r, TileTransform &transform, Vec2<float> s
 		default:
 			LogError("Unsupported view mode");
 	}
-	r.draw(sprite, transformedScreenPos);
+	drawTinted(r, sprite, transformedScreenPos, visible);
 }
 
 TileObjectDoodad::~TileObjectDoodad() = default;
