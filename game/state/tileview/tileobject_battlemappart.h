@@ -13,7 +13,7 @@ class TileObjectBattleMapPart : public TileObject
 {
   public:
 	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition, TileViewMode mode,
-	          int, bool, bool) override;
+	          bool visible, int, bool, bool) override;
 	~TileObjectBattleMapPart() override;
 
 	// For faster rendering, sp is better than wp

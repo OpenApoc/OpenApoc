@@ -8,7 +8,7 @@ namespace OpenApoc
 {
 
 void TileObjectScenery::draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-                             TileViewMode mode, int, bool, bool)
+                             TileViewMode mode, bool, int, bool, bool)
 {
 	std::ignore = transform;
 	// Mode isn't used as TileView::tileToScreenCoords already transforms according to the mode

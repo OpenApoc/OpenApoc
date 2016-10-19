@@ -85,23 +85,107 @@ bool BattleUnit::isFatallyWounded()
 	return false;
 }
 
-void BattleUnit::setPosition(const Vec3<float> &pos)
+void BattleUnit::setPosition(GameState &state, const Vec3<float> &pos)
 {
-	this->position = pos;
-	if (!this->tileObject)
+	bool unitChangedTiles = (Vec3<int>)pos != (Vec3<int>)position;
+	position = pos;
+	if (!tileObject)
 	{
 		LogError("setPosition called on unit with no tile object");
 		return;
 	}
 	else
 	{
-		this->tileObject->setPosition(pos);
+		tileObject->setPosition(pos);
 	}
 
-	if (this->shadowObject)
+	if (shadowObject)
 	{
-		this->shadowObject->setPosition(this->tileObject->getCenter());
+		shadowObject->setPosition(tileObject->getCenter());
 	}
+	if (unitChangedTiles)
+	{
+		updateUnitVisibilityAndVision(state);
+	}
+}
+
+void BattleUnit::updateUnitVisibility(GameState &state)
+{
+	// Update other units's vision of this unit
+	LogWarning("Implement unitVisibility");
+}
+
+void BattleUnit::updateUnitVision(GameState &state)
+{
+	static const std::set<TileObject::Type> mapPartSet = {
+	    TileObject::Type::Ground, TileObject::Type::LeftWall, TileObject::Type::RightWall,
+	    TileObject::Type::Feature};
+
+	auto &battle = *state.current_battle;
+	auto &map = *battle.map;
+
+	// Update unit's vision of los blocks
+	auto idx = battle.getLosBlockID(position.x, position.y, position.z);
+	if (!battle.visibleBlocks.at(owner).at(idx))
+	{
+		battle.visibleBlocks.at(owner).at(idx) = true;
+		auto l = battle.los_blocks.at(idx);
+		for (int x = l->start.x; x < l->end.x; x++)
+		{
+			for (int y = l->start.y; y < l->end.y; y++)
+			{
+				for (int z = l->start.z; z < l->end.z; z++)
+				{
+					battle.setVisible(owner, x, y, z);
+				}
+			}
+		}
+	}
+
+	// Update unit's vision of terrain
+	// Update unit's vision of other units
+	LogWarning("Optimise this monstrosity!");
+	bool diagonal = facing.x != 0 && facing.y != 0;
+	bool swap = facing.x == 0;
+	bool negative1 = (swap && facing.y < 0) || (!swap && facing.x < 0);
+	bool negative2 = (!swap && facing.y < 0) || (swap && facing.x < 0);
+	int minC1 = negative1 ? 1 - LOS_RANGE : 0;
+	int maxC1 = negative1 ? 1 : LOS_RANGE;
+
+	auto eyesPos = getMuzzleLocation();
+	for (int c1 = minC1; c1 < maxC1; c1++)
+	{
+		int minC2 = !diagonal ? -std::abs(c1) : (negative2 ? 1 - LOS_RANGE : 0);
+		int maxC2 = !diagonal ? 1 + std::abs(c1) : (negative2 ? 1 : LOS_RANGE);
+		for (int c2 = minC2; c2 < maxC2; c2++)
+		{
+			int x = position.x + (swap ? c2 : c1);
+			int y = position.y + (swap ? c1 : c2);
+
+			if (x < 0 || x >= battle.size.x || y < 0 || y >= battle.size.y ||
+			    c1 * c1 + c2 * c2 > LOS_RANGE * LOS_RANGE)
+			{
+				continue;
+			}
+
+			for (int z = 0; z < battle.size.z; z++)
+			{
+				auto c = map.findCollision(eyesPos, {x + 0.5f, y + 0.5f, z + 0.5f}, mapPartSet,
+				                           tileObject, true, false, true);
+				for (auto vec : c.tilesPassed)
+				{
+					battle.setVisible(owner, vec.x, vec.y, vec.z);
+				}
+			}
+		}
+	}
+	LogWarning("Update vision of units!!");
+}
+
+void BattleUnit::updateUnitVisibilityAndVision(GameState &state)
+{
+	updateUnitVision(state);
+	updateUnitVisibility(state);
 }
 
 void BattleUnit::resetGoal()
@@ -944,7 +1028,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					{
 						if (current_body_state == target_body_state)
 						{
-							setBodyState(BodyState::Flying);
+							setBodyState(state, BodyState::Flying);
 							if (!missions.empty())
 							{
 								missions.front()->targetBodyState = current_body_state;
@@ -967,7 +1051,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					if (body_animation_ticks_remaining > 0)
 					{
 						bodyTicksRemaining -= body_animation_ticks_remaining;
-						setBodyState(target_body_state);
+						setBodyState(state, target_body_state);
 					}
 					// Pop finished missions if present
 					if (popFinishedMissions(state))
@@ -984,7 +1068,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						BodyState nextState = BodyState::Downed;
 						if (getNextBodyState(state, nextState))
 						{
-							beginBodyStateChange(nextState);
+							beginBodyStateChange(state, nextState);
 						}
 					}
 				}
@@ -1055,7 +1139,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						           BodyPart::Body, 9001);
 						fallUnconscious(state);
 					}
-					setPosition(newPosition);
+					setPosition(state, newPosition);
 					triggerProximity(state);
 
 					// Falling units can always turn
@@ -1072,11 +1156,11 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						if (!isConscious())
 						{
 							// Bodies drop to the exact spot they fell upon
-							setPosition({position.x, position.y, restingPosition.z});
+							setPosition(state, {position.x, position.y, restingPosition.z});
 						}
 						else
 						{
-							setPosition(restingPosition);
+							setPosition(state, restingPosition);
 						}
 						triggerProximity(state);
 						resetGoal();
@@ -1134,7 +1218,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						newPosition /= VELOCITY_SCALE_BATTLE;
 						newPosition /= (float)TICKS_PER_UNIT_TRAVELLED;
 						newPosition += getPosition();
-						setPosition(newPosition);
+						setPosition(state, newPosition);
 						triggerProximity(state);
 						moveTicksRemaining = moveTicksRemaining % moveTicksConsumeRate;
 						atGoal = false;
@@ -1152,7 +1236,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 								                 distanceToGoal / FLYING_ACCELERATION_DIVISOR);
 							}
 							moveTicksRemaining -= distanceToGoal * moveTicksConsumeRate;
-							setPosition(goalPosition);
+							setPosition(state, goalPosition);
 							triggerProximity(state);
 							goalPosition = getPosition();
 						}
@@ -1254,7 +1338,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					if (turning_animation_ticks_remaining > 0)
 					{
 						turnTicksRemaining -= turning_animation_ticks_remaining;
-						setFacing(goalFacing);
+						setFacing(state, goalFacing);
 					}
 					// Pop finished missions if present
 					if (popFinishedMissions(state))
@@ -1265,7 +1349,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					Vec2<int> nextFacing;
 					if (getNextFacing(state, nextFacing))
 					{
-						beginTurning(nextFacing);
+						beginTurning(state, nextFacing);
 					}
 				}
 			}
@@ -1757,7 +1841,7 @@ void BattleUnit::dropDown(GameState &state)
 	resetGoal();
 	setMovementState(MovementState::None);
 	setHandState(HandState::AtEase);
-	setBodyState(target_body_state);
+	setBodyState(state, target_body_state);
 	// Check if we can drop from current state
 	while (agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
 	                                                    BodyState::Downed, current_hand_state,
@@ -1770,19 +1854,19 @@ void BattleUnit::dropDown(GameState &state)
 			case BodyState::Flying:
 				if (agent->isBodyStateAllowed(BodyState::Standing))
 				{
-					setBodyState(BodyState::Standing);
+					setBodyState(state, BodyState::Standing);
 					continue;
 				}
 			// Intentional fall-through
 			case BodyState::Standing:
 				if (agent->isBodyStateAllowed(BodyState::Kneeling))
 				{
-					setBodyState(BodyState::Kneeling);
+					setBodyState(state, BodyState::Kneeling);
 					continue;
 				}
 			// Intentional fall-through
 			case BodyState::Kneeling:
-				setBodyState(BodyState::Prone);
+				setBodyState(state, BodyState::Prone);
 				continue;
 			case BodyState::Prone:
 			case BodyState::Downed:
@@ -1853,7 +1937,7 @@ void BattleUnit::fallUnconscious(GameState &state)
 	dropDown(state);
 }
 
-void BattleUnit::beginBodyStateChange(BodyState state)
+void BattleUnit::beginBodyStateChange(GameState &state, BodyState bodyState)
 {
 	// Cease hand animation immediately
 	if (hand_animation_ticks_remaining != 0)
@@ -1861,14 +1945,14 @@ void BattleUnit::beginBodyStateChange(BodyState state)
 
 	// Find which animation is possible
 	int frameCount = agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
-	                                                              state, current_hand_state,
+	                                                              bodyState, current_hand_state,
 	                                                              current_movement_state, facing);
 	// No such animation
 	// Try stopping movement
 	if (frameCount == 0 && current_movement_state != MovementState::None)
 	{
 		frameCount = agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
-		                                                          state, current_hand_state,
+		                                                          bodyState, current_hand_state,
 		                                                          MovementState::None, facing);
 		if (frameCount != 0)
 		{
@@ -1879,7 +1963,7 @@ void BattleUnit::beginBodyStateChange(BodyState state)
 	if (frameCount == 0 && current_hand_state != HandState::AtEase)
 	{
 		frameCount = agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
-		                                                          state, HandState::AtEase,
+		                                                          bodyState, HandState::AtEase,
 		                                                          current_movement_state, facing);
 		if (frameCount != 0)
 		{
@@ -1888,31 +1972,31 @@ void BattleUnit::beginBodyStateChange(BodyState state)
 	}
 
 	int ticks = frameCount * TICKS_PER_FRAME_UNIT;
-	if (ticks > 0 && current_body_state != state)
+	if (ticks > 0 && current_body_state != bodyState)
 	{
-		target_body_state = state;
+		target_body_state = bodyState;
 		body_animation_ticks_remaining = ticks;
 		// Updates bounds etc.
 		if (tileObject)
 		{
-			setPosition(position);
+			setPosition(state, position);
 		}
 	}
 	else
 	{
-		setBodyState(state);
+		setBodyState(state, bodyState);
 	}
 }
 
-void BattleUnit::setBodyState(BodyState state)
+void BattleUnit::setBodyState(GameState &state, BodyState bodyState)
 {
-	current_body_state = state;
-	target_body_state = state;
+	current_body_state = bodyState;
+	target_body_state = bodyState;
 	body_animation_ticks_remaining = 0;
 	// Updates bounds etc.
 	if (tileObject)
 	{
-		setPosition(position);
+		setPosition(state, position);
 	}
 }
 
@@ -1949,17 +2033,18 @@ void BattleUnit::setHandState(HandState state)
 	aiming_ticks_remaining = state == HandState::Aiming ? TICKS_PER_SECOND / 3 : 0;
 }
 
-void BattleUnit::beginTurning(Vec2<int> newFacing)
+void BattleUnit::beginTurning(GameState &, Vec2<int> newFacing)
 {
 	goalFacing = newFacing;
 	turning_animation_ticks_remaining = TICKS_PER_FRAME_UNIT;
 }
 
-void BattleUnit::setFacing(Vec2<int> newFacing)
+void BattleUnit::setFacing(GameState &state, Vec2<int> newFacing)
 {
 	facing = newFacing;
 	goalFacing = newFacing;
 	turning_animation_ticks_remaining = 0;
+	updateUnitVision(state);
 }
 
 void BattleUnit::setMovementState(MovementState state)
@@ -2215,8 +2300,8 @@ bool BattleUnit::setMission(GameState &state, BattleUnitMission *mission)
 				if (USER_OPTION_ALLOW_INSTANT_THROWS &&
 				    canAfford(BattleUnitMission::getThrowCost(*this)))
 				{
-					setBodyState(current_body_state);
-					setFacing(facing);
+					setBodyState(state, current_body_state);
+					setFacing(state, facing);
 					missions.clear();
 				}
 				break;
@@ -2266,7 +2351,7 @@ bool BattleUnit::setMission(GameState &state, BattleUnitMission *mission)
 					// to execute our mission then we're better off canceling it
 					if (haveNextFacing && nextFacing != goalFacing)
 					{
-						setFacing(facing);
+						setFacing(state, facing);
 						missions.clear();
 					}
 				}
@@ -2532,7 +2617,7 @@ void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &se
 	if (itUnit == units.end() && !leadUnit)
 	{
 		log += format("\nNoone could path to target, aborting");
-		LogWarning(log.cStr());
+		LogWarning("%s", log.cStr());
 		return;
 	}
 
@@ -2576,7 +2661,7 @@ void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &se
 		if (itOffset == targetOffsets.end())
 		{
 			log += format("\nRan out of location offsets, exiting");
-			LogWarning(log.cStr());
+			LogWarning("%s", log.cStr());
 			return;
 		}
 		log += format("\nPathing unit %s", unit.id);
@@ -2613,6 +2698,6 @@ void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &se
 		}
 	}
 	log += format("\nSuccessfully pathed everybody to target");
-	LogWarning(log.cStr());
+	LogWarning("%s", log.cStr());
 }
 }

@@ -14,8 +14,8 @@ namespace OpenApoc
 
 Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
                                  const std::set<TileObject::Type> validTypes,
-                                 sp<TileObject> ignoredObject, bool useLOS,
-                                 bool check_full_path) const
+                                 sp<TileObject> ignoredObject, bool useLOS, bool check_full_path,
+                                 bool storeTilesPassed) const
 {
 	bool type_checking = validTypes.size() > 0;
 	Collision c;
@@ -37,6 +37,10 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 				continue;
 			else
 				return c;
+		}
+		if (storeTilesPassed)
+		{
+			c.tilesPassed.insert(tile);
 		}
 
 		const Tile *t = this->getTile(tile);

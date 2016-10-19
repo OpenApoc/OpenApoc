@@ -28,7 +28,7 @@ class FakeSceneryTileObject : public TileObject
 		this->position = newPosition;
 		TileObject::setPosition(newPosition);
 	}
-	void draw(Renderer &, TileTransform &, Vec2<float>, TileViewMode, int, bool, bool) override
+	void draw(Renderer &, TileTransform &, Vec2<float>, TileViewMode, bool, int, bool, bool) override
 	{
 		LogError("DRAW CALLED ON FAKE SCENERY??");
 		exit(EXIT_FAILURE);

@@ -7,7 +7,8 @@ namespace OpenApoc
 {
 
 void TileObjectBattleMapPart::draw(Renderer &r, TileTransform &transform,
-                                   Vec2<float> screenPosition, TileViewMode mode, int, bool, bool)
+                                   Vec2<float> screenPosition, TileViewMode mode, bool visible, int,
+                                   bool, bool)
 {
 	std::ignore = transform;
 	// Mode isn't used as TileView::tileToScreenCoords already transforms according to the mode
@@ -42,7 +43,7 @@ void TileObjectBattleMapPart::draw(Renderer &r, TileTransform &transform,
 			LogError("Unsupported view mode");
 	}
 	if (sprite)
-		r.draw(sprite, transformedScreenPos);
+		drawTinted(r, sprite, transformedScreenPos, visible);
 }
 
 TileObject::Type TileObjectBattleMapPart::convertType(BattleMapPartType::Type type)

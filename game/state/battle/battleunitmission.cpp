@@ -1436,7 +1436,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				// Teleport unit
 				u.missions.clear();
 				u.stopAttacking();
-				u.setPosition(t->getRestingPosition(u.isLarge()));
+				u.setPosition(state, t->getRestingPosition(u.isLarge()));
 				u.resetGoal();
 				BodyState targetBodyState = canStand ? BodyState::Standing : BodyState::Flying;
 				if (!u.agent->isBodyStateAllowed(targetBodyState))
@@ -1447,7 +1447,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 					targetBodyState = BodyState::Prone;
 				if (!u.agent->isBodyStateAllowed(targetBodyState))
 					LogError("Unit has no valid body state? WTF?");
-				u.setBodyState(targetBodyState);
+				u.setBodyState(state, targetBodyState);
 				u.setMovementState(MovementState::None);
 				u.falling = false;
 
@@ -1466,8 +1466,8 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 			bool USER_OPTION_ALLOW_INSTANT_THROWS = false;
 			if (USER_OPTION_ALLOW_INSTANT_THROWS)
 			{
-				u.setBodyState(BodyState::Standing);
-				u.setFacing(getFacing(u, targetLocation));
+				u.setBodyState(state, BodyState::Standing);
+				u.setFacing(state, getFacing(u, targetLocation));
 			}
 			return;
 		}
@@ -1855,7 +1855,7 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodySt
 	if (u.current_body_state != u.target_body_state)
 	{
 		LogError("Requesting to change body state during another body state change?");
-		u.setBodyState(u.target_body_state);
+		u.setBodyState(state, u.target_body_state);
 	}
 
 	// Transition for stance changes

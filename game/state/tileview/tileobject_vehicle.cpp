@@ -12,7 +12,7 @@ namespace OpenApoc
 {
 
 void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-                             TileViewMode mode, int currentLevel, bool friendly, bool hostile)
+                             TileViewMode mode, bool, int currentLevel, bool friendly, bool hostile)
 {
 	std::ignore = transform;
 	std::ignore = currentLevel;

@@ -3,6 +3,7 @@
 #include "framework/logger.h"
 #include "game/state/gametime.h"
 #include "game/state/tileview/tileobject.h"
+#include "library/colour.h"
 #include "library/rect.h"
 #include "library/sp.h"
 #include <set>
@@ -17,6 +18,8 @@
 
 namespace OpenApoc
 {
+
+static const Colour COLOUR_BLACK = {0, 0, 0, 255};
 
 static const unsigned TICK_SCALE = TICKS_PER_SECOND / 4;
 
@@ -234,7 +237,7 @@ class TileMap
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
 	                        const std::set<TileObject::Type> validTypes = {},
 	                        sp<TileObject> ignoredObject = nullptr, bool useLOS = false,
-	                        bool check_full_path = false) const;
+	                        bool check_full_path = false, bool storeTilesPassed = false) const;
 
 	bool checkThrowTrajectory(const sp<TileObject> thrower, Vec3<float> start, Vec3<int> end,
 	                          Vec3<float> targetVectorXY, float velocityXY, float velocityZ) const;

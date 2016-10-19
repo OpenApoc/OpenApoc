@@ -2,6 +2,7 @@
 
 #include "library/sp.h"
 #include "library/vec.h"
+#include <set>
 
 namespace OpenApoc
 {
@@ -15,6 +16,7 @@ class Collision
 	sp<TileObject> obj;
 	sp<Projectile> projectile;
 	Vec3<float> position;
+	std::set<Vec3<int>> tilesPassed;
 	explicit operator bool() const { return obj != nullptr; }
 };
 

@@ -72,7 +72,14 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	StateRef<BattleMap> battle_map;
 
-	std::list<sp<BattleMapSector::LineOfSightBlock>> los_blocks;
+	std::vector<sp<BattleMapSector::LineOfSightBlock>> los_blocks;
+	std::vector<int> tileToLosBlock;
+	std::map<StateRef<Organisation>, std::vector<bool>> visibleTiles;
+	std::map<StateRef<Organisation>, std::vector<bool>> visibleBlocks;
+
+	int getLosBlockID(int x, int y, int z) const;
+	bool getVisible(StateRef<Organisation> org, int x, int y, int z) const;
+	void setVisible(StateRef<Organisation> org, int x, int y, int z, bool val = true);
 
 	MissionType mission_type = MissionType::AlienExtermination;
 	UString mission_location_id;

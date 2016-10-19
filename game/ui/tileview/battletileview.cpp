@@ -463,6 +463,7 @@ void BattleTileView::render()
 						for (int x = minX; x < maxX; x++)
 						{
 							auto tile = map.getTile(x, y, z);
+							bool visible = battle.getVisible(battle.currentPlayer, x, y, z);
 							auto object_count = tile->drawnObjects[layer].size();
 							size_t obj_id = 0;
 							do
@@ -547,8 +548,8 @@ void BattleTileView::render()
 									}
 								}
 								Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
-								obj->draw(r, *this, pos, this->viewMode, currentLevel, friendly,
-								          hostile);
+								obj->draw(r, *this, pos, this->viewMode, visible, currentLevel,
+								          friendly, hostile);
 								// Loop ends when "break" is reached above
 								obj_id++;
 							} while (true);
@@ -608,6 +609,7 @@ void BattleTileView::render()
 						for (int x = minX; x < maxX; x++)
 						{
 							auto tile = map.getTile(x, y, z);
+							bool visible = battle.getVisible(battle.currentPlayer, x, y, z);
 							auto object_count = tile->drawnObjects[layer].size();
 							size_t obj_id = 0;
 							do
@@ -688,8 +690,8 @@ void BattleTileView::render()
 								if (draw)
 								{
 									Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
-									obj->draw(r, *this, pos, this->viewMode, currentLevel, friendly,
-									          hostile);
+									obj->draw(r, *this, pos, this->viewMode, visible, currentLevel,
+									          friendly, hostile);
 								}
 								// Loop ends when "break" is reached above
 								obj_id++;
@@ -797,8 +799,9 @@ void BattleTileView::render()
 		break;
 		case TileViewMode::Strategy:
 		{
-			std::list<std::tuple<sp<TileObject>, int, bool, bool>> unitsToDraw;
-			std::list<std::tuple<sp<TileObject>, int>> itemsToDraw;
+			// Bools are visible, friendly, hostile
+			std::list<std::tuple<sp<TileObject>, bool, int, bool, bool>> unitsToDraw;
+			std::list<std::tuple<sp<TileObject>, bool, int>> itemsToDraw;
 
 			for (int z = 0; z < zFrom; z++)
 			{
@@ -809,6 +812,7 @@ void BattleTileView::render()
 						for (int x = minX; x < maxX; x++)
 						{
 							auto tile = map.getTile(x, y, z);
+							bool visible = battle.getVisible(battle.currentPlayer, x, y, z);
 							auto object_count = tile->drawnObjects[layer].size();
 
 							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
@@ -822,8 +826,9 @@ void BattleTileView::render()
 									bool hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 									               Organisation::Relation::Hostile;
 
-									unitsToDraw.emplace_back(obj, obj->getOwningTile()->position.z -
-									                                  (battle.battleViewZLevel - 1),
+									unitsToDraw.emplace_back(obj, visible,
+									                         obj->getOwningTile()->position.z -
+									                             (battle.battleViewZLevel - 1),
 									                         friendly, hostile);
 								}
 							}
@@ -844,6 +849,7 @@ void BattleTileView::render()
 						for (int x = minX; x < maxX; x++)
 						{
 							auto tile = map.getTile(x, y, z);
+							bool visible = battle.getVisible(battle.currentPlayer, x, y, z);
 							auto object_count = tile->drawnObjects[layer].size();
 
 							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
@@ -857,8 +863,9 @@ void BattleTileView::render()
 									bool hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 									               Organisation::Relation::Hostile;
 
-									unitsToDraw.emplace_back(obj, obj->getOwningTile()->position.z -
-									                                  (battle.battleViewZLevel - 1),
+									unitsToDraw.emplace_back(obj, visible,
+									                         obj->getOwningTile()->position.z -
+									                             (battle.battleViewZLevel - 1),
 									                         friendly, hostile);
 									continue;
 								}
@@ -866,7 +873,7 @@ void BattleTileView::render()
 								{
 									if (currentLevel == 0)
 									{
-										itemsToDraw.emplace_back(obj,
+										itemsToDraw.emplace_back(obj, visible,
 										                         obj->getOwningTile()->position.z -
 										                             (battle.battleViewZLevel - 1));
 									}
@@ -874,7 +881,7 @@ void BattleTileView::render()
 								}
 
 								Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
-								obj->draw(r, *this, pos, this->viewMode, currentLevel);
+								obj->draw(r, *this, pos, this->viewMode, visible, currentLevel);
 							}
 						}
 					}
@@ -890,6 +897,7 @@ void BattleTileView::render()
 						for (int x = minX; x < maxX; x++)
 						{
 							auto tile = map.getTile(x, y, z);
+							bool visible = battle.getVisible(battle.currentPlayer, x, y, z);
 							auto object_count = tile->drawnObjects[layer].size();
 
 							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
@@ -903,8 +911,9 @@ void BattleTileView::render()
 									bool hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 									               Organisation::Relation::Hostile;
 
-									unitsToDraw.emplace_back(obj, obj->getOwningTile()->position.z -
-									                                  (battle.battleViewZLevel - 1),
+									unitsToDraw.emplace_back(obj, visible,
+									                         obj->getOwningTile()->position.z -
+									                             (battle.battleViewZLevel - 1),
 									                         friendly, hostile);
 								}
 							}
@@ -917,13 +926,14 @@ void BattleTileView::render()
 			{
 				Vec2<float> pos = tileToOffsetScreenCoords(std::get<0>(obj)->getCenter());
 				std::get<0>(obj)->draw(r, *this, pos, this->viewMode, std::get<1>(obj),
-				                       std::get<2>(obj), std::get<3>(obj));
+				                       std::get<2>(obj), std::get<3>(obj), std::get<4>(obj));
 			}
 
 			for (auto obj : itemsToDraw)
 			{
 				Vec2<float> pos = tileToOffsetScreenCoords(std::get<0>(obj)->getCenter());
-				std::get<0>(obj)->draw(r, *this, pos, this->viewMode, std::get<1>(obj));
+				std::get<0>(obj)->draw(r, *this, pos, this->viewMode, std::get<1>(obj),
+				                       std::get<2>(obj));
 			}
 
 			renderStrategyOverlay(r);

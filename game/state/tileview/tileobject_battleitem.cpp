@@ -10,7 +10,7 @@ namespace OpenApoc
 {
 
 void TileObjectBattleItem::draw(Renderer &r, TileTransform &, Vec2<float> screenPosition,
-                                TileViewMode mode, int, bool, bool)
+                                TileViewMode mode, bool visible, int, bool, bool)
 {
 	// Mode isn't used as TileView::tileToScreenCoords already transforms according to the mode
 	std::ignore = mode;
@@ -31,7 +31,7 @@ void TileObjectBattleItem::draw(Renderer &r, TileTransform &, Vec2<float> screen
 			break;
 		case TileViewMode::Strategy:
 		{
-			if (item->falling)
+			if (item->falling || !visible)
 				break;
 			sprite = item->strategySprite;
 			transformedScreenPos -= Vec2<float>{4, 4};
@@ -41,7 +41,7 @@ void TileObjectBattleItem::draw(Renderer &r, TileTransform &, Vec2<float> screen
 			LogError("Unsupported view mode");
 	}
 	if (sprite)
-		r.draw(sprite, transformedScreenPos);
+		drawTinted(r, sprite, transformedScreenPos, visible);
 }
 
 TileObjectBattleItem::~TileObjectBattleItem() = default;
