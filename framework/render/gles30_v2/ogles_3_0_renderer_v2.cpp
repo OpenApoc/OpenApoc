@@ -521,7 +521,7 @@ class SpriteDrawMachine
 	    "void main() {\n"
 	    "  uses_palette = in_uses_palette;\n"
 	    "  page = in_page;\n"
-		"  tint = in_tint;\n"
+	    "  tint = in_tint;\n"
 	    "  texcoord = in_spritesheet_position + in_position * in_spritesheet_size;\n"
 	    // This calculates the screen position from (0..viewport_size)
 	    "  vec2 tmp_pos = in_screen_position + in_position * in_screen_size;\n"
