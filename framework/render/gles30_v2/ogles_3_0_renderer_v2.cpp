@@ -110,6 +110,7 @@ struct SpriteDescription
 	Vec2<float> spritesheet_size;
 	Vec2<float> screen_position;
 	Vec2<float> screen_size;
+	Colour tint;
 };
 
 class SpritesheetEntry final : public RendererImageData
@@ -368,7 +369,7 @@ class SpriteBuffer
 	SpriteBuffer(int buffer_size, GL::GLuint position_attr = 0, GL::GLuint uses_palette_attr = 1,
 	             GL::GLuint page_attr = 2, GL::GLuint spritesheet_position_attr = 3,
 	             GL::GLuint spritesheet_size_attr = 4, GL::GLuint screen_position_attr = 5,
-	             GL::GLuint screen_size_attr = 6)
+	             GL::GLuint screen_size_attr = 6, GL::GLuint tint_attr = 7)
 	    : sprite_buffer_id(0), vertex_buffer_id(0), vao_id(0), buffer_contents(0),
 	      buffer(buffer_size)
 	{
@@ -417,6 +418,12 @@ class SpriteBuffer
 		                        sizeof(SpriteDescription),
 		                        (GL::GLvoid *)offsetof(SpriteDescription, screen_size));
 
+		gl->EnableVertexAttribArray(tint_attr);
+		gl->VertexAttribDivisor(tint_attr, 1);
+		gl->VertexAttribPointer(tint_attr, 4, GL::UNSIGNED_BYTE, GL::TRUE,
+		                        sizeof(SpriteDescription),
+		                        (GL::GLvoid *)offsetof(SpriteDescription, tint));
+
 		// Setup the base vertices for the sprite quad - these have the default attrib divisor 0 so
 		// are progressed per vertex within each instance
 		Vec2<float> position_values[4] = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
@@ -442,7 +449,7 @@ class SpriteBuffer
 	bool isFull() const { return buffer_contents >= this->buffer.size(); }
 	bool isEmpty() const { return this->buffer.size() == 0; }
 	void reset() { this->buffer_contents = 0; }
-	void pushRGB(sp<SpritesheetEntry> e, Vec2<float> screenPos, Vec2<float> screenSize)
+	void pushRGB(sp<SpritesheetEntry> e, Vec2<float> screenPos, Vec2<float> screenSize, Colour tint)
 	{
 		LogAssert(!this->isFull());
 		LogAssert(e->page != -1);
@@ -456,8 +463,10 @@ class SpriteBuffer
 		d.spritesheet_size = e->size;
 		d.screen_position = screenPos;
 		d.screen_size = screenSize;
+		d.tint = tint;
 	}
-	void pushPalette(sp<SpritesheetEntry> e, Vec2<float> screenPos, Vec2<float> screenSize)
+	void pushPalette(sp<SpritesheetEntry> e, Vec2<float> screenPos, Vec2<float> screenSize,
+	                 Colour tint)
 	{
 		LogAssert(!this->isFull());
 		LogAssert(e->page != -1);
@@ -471,6 +480,7 @@ class SpriteBuffer
 		d.spritesheet_size = e->size;
 		d.screen_position = screenPos;
 		d.screen_size = screenSize;
+		d.tint = tint;
 	}
 	void draw()
 	{
@@ -501,14 +511,17 @@ class SpriteDrawMachine
 	    "layout (location = 4) in vec2 in_spritesheet_size;\n"
 	    "layout (location = 5) in vec2 in_screen_position;\n"
 	    "layout (location = 6) in vec2 in_screen_size;\n"
+	    "layout (location = 7) in vec4 in_tint;\n"
 	    "uniform vec2 viewport_size;\n"
 	    "uniform bool flipY;\n"
 	    "out vec2 texcoord;\n"
+	    "out vec4 tint;\n"
 	    "flat out int page;\n"
 	    "flat out int uses_palette;\n"
 	    "void main() {\n"
 	    "  uses_palette = in_uses_palette;\n"
 	    "  page = in_page;\n"
+		"  tint = in_tint;\n"
 	    "  texcoord = in_spritesheet_position + in_position * in_spritesheet_size;\n"
 	    // This calculates the screen position from (0..viewport_size)
 	    "  vec2 tmp_pos = in_screen_position + in_position * in_screen_size;\n"
@@ -524,6 +537,7 @@ class SpriteDrawMachine
 	    "precision highp float;\n"
 	    "precision highp int;\n"
 	    "in vec2 texcoord;\n"
+	    "in vec4 tint;\n"
 	    "flat in int page;\n"
 	    "flat in int uses_palette;\n"
 	    "uniform highp isampler2DArray paletted_spritesheets;\n"
@@ -535,9 +549,10 @@ class SpriteDrawMachine
 	    "    int idx = texelFetch(paletted_spritesheets, ivec3(texcoord.x, texcoord.y, page), "
 	    "0).r;\n"
 	    "    if (idx == 0) discard;\n"
-	    "    out_colour = texelFetch(palette, ivec2(idx, 0), 0);\n"
+	    "    out_colour = texelFetch(palette, ivec2(idx, 0), 0) * tint;\n"
 	    "  } else {\n"
-	    "    out_colour = texelFetch(rgb_spritesheets, ivec3(texcoord.x, texcoord.y, page), 0);\n"
+	    "    out_colour = texelFetch(rgb_spritesheets, ivec3(texcoord.x, texcoord.y, page), 0) * "
+	    "tint;\n"
 	    "  }\n"
 	    "}\n"};
 	std::vector<up<SpriteBuffer>> buffers;
@@ -627,7 +642,7 @@ class SpriteDrawMachine
 		this->used_buffers++;
 	}
 	void draw(sp<RGBImage> i, Vec2<float> screenPos, Vec2<float> screenSize,
-	          Vec2<unsigned int> viewport_size, bool flip_y)
+	          Vec2<unsigned int> viewport_size, bool flip_y, Colour tint = {255, 255, 255, 255})
 	{
 		auto sprite = std::dynamic_pointer_cast<SpritesheetEntry>(i->rendererPrivateData);
 		if (!sprite)
@@ -639,10 +654,10 @@ class SpriteDrawMachine
 		{
 			this->flush(viewport_size, flip_y);
 		}
-		this->buffers[this->current_buffer]->pushRGB(sprite, screenPos, screenSize);
+		this->buffers[this->current_buffer]->pushRGB(sprite, screenPos, screenSize, tint);
 	}
 	void draw(sp<PaletteImage> i, Vec2<float> screenPos, Vec2<float> screenSize,
-	          Vec2<unsigned int> viewport_size, bool flip_y)
+	          Vec2<unsigned int> viewport_size, bool flip_y, Colour tint = {255, 255, 255, 255})
 	{
 		auto sprite = std::dynamic_pointer_cast<SpritesheetEntry>(i->rendererPrivateData);
 		if (!sprite)
@@ -654,7 +669,7 @@ class SpriteDrawMachine
 		{
 			this->flush(viewport_size, flip_y);
 		}
-		this->buffers[this->current_buffer]->pushPalette(sprite, screenPos, screenSize);
+		this->buffers[this->current_buffer]->pushPalette(sprite, screenPos, screenSize, tint);
 	}
 };
 
@@ -1452,18 +1467,45 @@ class OGLES30Renderer final : public Renderer
 		auto paletteImage = std::dynamic_pointer_cast<PaletteImage>(i);
 		if (paletteImage)
 		{
-
-			this->flush();
-			this->texturedMachine->draw(paletteImage, position, size, {0, 0}, 0, viewport_size,
-			                            flip_y, tint);
+			if (paletteImage->size.x <= this->maxSpriteSizeToPack.x &&
+			    paletteImage->size.y <= this->maxSpriteSizeToPack.y)
+			{
+				if (this->state != State::BatchingSprites)
+				{
+					this->flush();
+					this->state = State::BatchingSprites;
+				}
+				this->spriteMachine->draw(paletteImage, position, size, viewport_size, flip_y,
+				                          tint);
+			}
+			else
+			{
+				this->flush();
+				this->texturedMachine->draw(paletteImage, position, size, {0, 0}, 0, viewport_size,
+				                            flip_y, tint);
+			}
 			return;
 		}
 		auto rgbImage = std::dynamic_pointer_cast<RGBImage>(i);
 		if (rgbImage)
 		{
-			this->flush();
-			this->texturedMachine->draw(rgbImage, position, size, {0, 0}, 0, viewport_size, flip_y,
-			                            Renderer::Scaler::Nearest, tint);
+			if (rgbImage->size.x <= this->maxSpriteSizeToPack.x &&
+			    rgbImage->size.y <= this->maxSpriteSizeToPack.y)
+			{
+				if (this->state != State::BatchingSprites)
+				{
+					this->flush();
+					this->state = State::BatchingSprites;
+				}
+				this->spriteMachine->draw(rgbImage, position, size, viewport_size, flip_y, tint);
+			}
+			else
+			{
+
+				this->flush();
+				this->texturedMachine->draw(rgbImage, position, size, {0, 0}, 0, viewport_size,
+				                            flip_y, Renderer::Scaler::Nearest, tint);
+			}
 			return;
 		}
 		auto surface = std::dynamic_pointer_cast<Surface>(i);
