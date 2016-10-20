@@ -92,6 +92,10 @@ ConfigOptionInt frameLimit("Framework", "FrameLimit", "Quit after this many fram
 namespace OpenApoc
 {
 
+UString Framework::getDataDir() const { return dataPathOption.get(); }
+
+UString Framework::getCDPath() const { return cdPathOption.get(); }
+
 Framework *Framework::instance = nullptr;
 
 class JukeBoxImpl : public JukeBox

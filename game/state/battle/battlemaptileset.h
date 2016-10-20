@@ -21,6 +21,6 @@ class BattleMapTileset
 	// high level api for saving tilesets
 	bool saveTileset(const UString &path, bool pack = true);
 
-	static const UString tilesetPath;
+	static UString getTilesetPath();
 };
 }

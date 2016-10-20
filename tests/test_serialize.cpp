@@ -118,14 +118,69 @@ int main(int argc, char **argv)
 		return EXIT_FAILURE;
 	}
 
-	LogInfo("Testing started nited state");
+	LogInfo("Testing started inited state");
 	state->initState();
+	state->fillPlayerStartingProperty();
 
 	if (!test_gamestate_serialization(state))
 	{
 		LogError("Serialization test failed for started inited game");
 		return EXIT_FAILURE;
 	}
+
+	LogInfo("Testing state with battle");
+	{
+
+		StateRef<Organisation> org = {state.get(), UString("ORG_ALIEN")};
+		auto v = mksp<Vehicle>();
+		auto vID = Vehicle::generateObjectID(*state);
+		sp<VehicleType> vType;
+
+		// Fine a vehicle type with a battlemap
+		for (auto &vTypePair : state->vehicle_types)
+		{
+			if (vTypePair.second->battle_map)
+			{
+				vType = vTypePair.second;
+				break;
+			}
+		}
+		if (!vType)
+		{
+			LogError("No vehicle with BattleMap found");
+			return EXIT_FAILURE;
+		}
+		LogInfo("Using vehicle map for \"%s\"", vType->name.cStr());
+		v->type = {state.get(), vType};
+		v->name = format("%s %d", v->type->name, ++v->type->numCreated);
+		state->vehicles[vID] = v;
+
+		StateRef<Vehicle> enemyVehicle = {state.get(), vID};
+		StateRef<Vehicle> playerVehicle = {};
+
+		std::list<StateRef<Agent>> agents;
+		for (auto &a : state->agents)
+		{
+			if (a.second->type->role == AgentType::Role::Soldier &&
+			    a.second->owner == state->getPlayer())
+			{
+				agents.emplace_back(state.get(), a.second);
+			}
+		}
+
+		Battle::beginBattle(*state, org, agents, playerVehicle, enemyVehicle);
+		Battle::enterBattle(*state);
+
+		if (!test_gamestate_serialization(state))
+		{
+			LogError("Serialization test failed for in-battle game");
+			return EXIT_FAILURE;
+		}
+		Battle::finishBattle(*state);
+		Battle::exitBattle(*state);
+	}
+
+	LogInfo("test_serialize success");
 
 	return EXIT_SUCCESS;
 }

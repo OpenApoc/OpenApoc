@@ -738,8 +738,9 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 					{
 						LogInfo("Loading sector tiles \"%s\"", sec->sectorTilesName.cStr());
 						sec->tiles.reset(new BattleMapSectorTiles());
-						if (!sec->tiles->loadSector(state, BattleMapSectorTiles::mapSectorPath +
-						                                       "/" + sec->sectorTilesName))
+						if (!sec->tiles->loadSector(state,
+						                            BattleMapSectorTiles::getMapSectorPath() + "/" +
+						                                sec->sectorTilesName))
 						{
 							LogError("Failed to load sector tiles \"%s\"",
 							         sec->sectorTilesName.cStr());
@@ -1107,7 +1108,7 @@ void BattleMap::loadTilesets(GameState &state) const
 	for (auto &tilesetName : this->tilesets)
 	{
 		unsigned count = 0;
-		auto tilesetPath = BattleMapTileset::tilesetPath + "/" + tilesetName;
+		auto tilesetPath = BattleMapTileset::getTilesetPath() + "/" + tilesetName;
 		LogInfo("Loading tileset \"%s\" from \"%s\"", tilesetName.cStr(), tilesetPath.cStr());
 		BattleMapTileset tileset;
 		if (!tileset.loadTileset(state, tilesetPath))

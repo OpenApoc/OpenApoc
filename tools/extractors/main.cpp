@@ -102,8 +102,9 @@ int main(int argc, char *argv[])
 			}
 			else
 			{
-				if (!imagePack->saveImagePack(
-				        BattleUnitImagePack::imagePackPath + "/" + imagePackStrings.first, false))
+				if (!imagePack->saveImagePack(BattleUnitImagePack::getImagePackPath() + "/" +
+				                                  imagePackStrings.first,
+				                              false))
 				{
 					LogError("Failed to save image pack \"%s\"", imagePackStrings.first.cStr());
 				}
@@ -125,7 +126,8 @@ int main(int argc, char *argv[])
 			else
 			{
 				if (!imagePack->saveImagePack(
-				        format("%s%s%d", BattleUnitImagePack::imagePackPath, "/item", i), false))
+				        format("%s%s%d", BattleUnitImagePack::getImagePackPath(), "/item", i),
+				        false))
 				{
 					LogError("Failed to save  item image pack \"%d\"", i);
 				}
@@ -145,8 +147,9 @@ int main(int argc, char *argv[])
 			}
 			else
 			{
-				if (!imagePack->saveImagePack(
-				        BattleUnitImagePack::imagePackPath + "/" + imagePackStrings.first, false))
+				if (!imagePack->saveImagePack(BattleUnitImagePack::getImagePackPath() + "/" +
+				                                  imagePackStrings.first,
+				                              false))
 				{
 					LogError("Failed to save image pack \"%s\"", imagePackStrings.first.cStr());
 				}
@@ -168,9 +171,10 @@ int main(int argc, char *argv[])
 			}
 			else
 			{
-				if (!animationPack->saveAnimationPack(BattleUnitAnimationPack::animationPackPath +
-				                                          "/" + animationPackStrings.first,
-				                                      false))
+				if (!animationPack->saveAnimationPack(
+				        BattleUnitAnimationPack::getAnimationPackPath() + "/" +
+				            animationPackStrings.first,
+				        false))
 				{
 					LogError("Failed to save animation pack \"%s\"",
 					         animationPackStrings.first.cStr());
@@ -194,7 +198,8 @@ int main(int argc, char *argv[])
 			}
 			else
 			{
-				if (!tileSet->saveTileset(BattleMapTileset::tilesetPath + "/" + tileSetName, false))
+				if (!tileSet->saveTileset(BattleMapTileset::getTilesetPath() + "/" + tileSetName,
+				                          false))
 				{
 					LogError("Failed to save tileset \"%s\"", tileSetName.cStr());
 				}
@@ -220,9 +225,8 @@ int main(int argc, char *argv[])
 			{
 				auto &sectorName = sectorPair.first;
 				auto &sector = sectorPair.second;
-				auto path = BattleMapSectorTiles::mapSectorPath;
-				if (!sector->saveSector(BattleMapSectorTiles::mapSectorPath + "/" + sectorName,
-				                        false))
+				auto path = BattleMapSectorTiles::getMapSectorPath();
+				if (!sector->saveSector(path + "/" + sectorName, false))
 				{
 					LogError("Failed to save map sector \"%s\"", sectorName.cStr());
 				}

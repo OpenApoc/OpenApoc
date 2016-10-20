@@ -146,6 +146,6 @@ class BattleUnitAnimationPack : public StateObject<BattleUnitAnimationPack>
 	// Function used when getting file path
 	static const UString getNameFromID(UString id);
 
-	static const UString animationPackPath;
+	static UString getAnimationPackPath();
 };
 }

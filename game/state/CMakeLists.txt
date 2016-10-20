@@ -33,6 +33,7 @@ set (GAMESTATE_SOURCE_FILES
 	battle/battleunitanimationpack.cpp
 	battle/battleunitimagepack.cpp
 	battle/battleunitmission.cpp
+	battle/battlemaptileset.cpp
 	city/baselayout.cpp
 	city/building.cpp
 	city/city.cpp

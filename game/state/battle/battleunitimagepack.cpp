@@ -1,8 +1,12 @@
 #include "game/state/battle/battleunitimagepack.h"
+#include "framework/framework.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc
 {
+
+UString BattleUnitImagePack::getImagePackPath() { return fw().getDataDir() + "/imagepacks"; }
+
 template <>
 sp<BattleUnitImagePack> StateObject<BattleUnitImagePack>::get(const GameState &state,
                                                               const UString &id)
