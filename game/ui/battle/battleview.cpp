@@ -1494,9 +1494,9 @@ void BattleView::orderSelect(StateRef<BattleUnit> u, bool inverse, bool additive
 		log += format("\n%s", m->getName());
 	}
 	log += format("\Seen units [%d]:", (int)u->visibleUnits.size());
-	for (auto &u : u->visibleUnits)
+	for (auto &unit : u->visibleUnits)
 	{
-		log += format("\n%s", u.id);
+		log += format("\n%s", unit.id);
 	}
 	LogWarning("%s", log.cStr());
 
