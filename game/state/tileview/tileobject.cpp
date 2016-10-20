@@ -31,9 +31,7 @@ void TileObject::drawTinted(Renderer &r, sp<Image> sprite, Vec2<float> position,
 	}
 	else
 	{
-#ifdef DRAW_TINTED
 		r.drawTinted(sprite, position, COLOUR_BLACK);
-#endif
 	}
 }
 

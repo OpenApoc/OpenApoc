@@ -435,12 +435,22 @@ void Tile::updateBattlescapeParameters()
 	height = height / (float)TILE_Z_BATTLE;
 }
 
-sp<TileObjectBattleUnit> Tile::getUnitIfPresent() { return firstUnitPresent; }
+bool Tile::updateVisionBlockage(int value)
+{
+	if (visionBlockage == value)
+	{
+		return false;
+	}
+	visionBlockage = value;
+	return true;
+}
+
+sp<TileObjectBattleUnit> Tile::getUnitIfPresent() const { return firstUnitPresent; }
 
 sp<TileObjectBattleUnit> Tile::getUnitIfPresent(bool onlyConscious, bool mustOccupy,
                                                 bool mustBeStatic,
                                                 sp<TileObjectBattleUnit> exceptThis, bool onlyLarge,
-                                                bool checkLargeSpace)
+                                                bool checkLargeSpace) const
 {
 	if (checkLargeSpace)
 	{

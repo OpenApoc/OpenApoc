@@ -322,6 +322,7 @@ void BattleHazard::update(GameState &state, unsigned int ticks)
 		ticksUntilNextEffect += TICKS_PER_HAZARD_EFFECT;
 		applyEffect(state);
 		age++;
+		updateTileVisionBlock(state);
 		if (age >= lifetime)
 		{
 			die(state);
@@ -330,6 +331,16 @@ void BattleHazard::update(GameState &state, unsigned int ticks)
 		{
 			grow(state);
 		}
+	}
+}
+
+void BattleHazard::updateTileVisionBlock(GameState &state)
+{
+	int visionBlock =
+	    damageType->effectType == DamageType::EffectType::Smoke ? (lifetime - age) / 3 : 0;
+	if (tileObject->getOwningTile()->updateVisionBlockage(visionBlock))
+	{
+		state.current_battle->queueVisionUpdate(position);
 	}
 }
 

@@ -1080,6 +1080,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 		{
 			b->visibleTiles[o] = std::vector<bool>(b->size.x * b->size.y * b->size.z, false);
 			b->visibleBlocks[o] = std::vector<bool>(b->los_blocks.size(), false);
+			b->visibleUnits[o] = {};
 		}
 
 		// Unload sector tiles

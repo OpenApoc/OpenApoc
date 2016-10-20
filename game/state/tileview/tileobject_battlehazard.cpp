@@ -12,6 +12,10 @@ namespace OpenApoc
 void TileObjectBattleHazard::draw(Renderer &r, TileTransform &, Vec2<float> screenPosition,
                                   TileViewMode mode, bool visible, int, bool, bool)
 {
+	if (!visible)
+	{
+		return;
+	}
 	// Mode isn't used as TileView::tileToScreenCoords already transforms according to the mode
 	std::ignore = mode;
 

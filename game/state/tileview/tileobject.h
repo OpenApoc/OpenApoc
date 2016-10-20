@@ -5,8 +5,6 @@
 #include "library/vec.h"
 #include <vector>
 
-#define DRAW_TINTED
-
 namespace OpenApoc
 {
 

@@ -374,6 +374,8 @@
 		<member>tileToLosBlock</member>
 		<member>visibleTiles</member>
 		<member>visibleBlocks</member>
+		<member>visibleUnits</member>
+		<member>tilesChangedForVision</member>
 		<member>mission_type</member>
 		<member>mission_location_id</member>
 		<member>mode</member>
@@ -540,7 +542,7 @@
 		<member>fallingSpeed</member>
 		<member>giveWayRequestData</member>
 		<member>displayedItem</member>
-		<member>battleMode</member>
+		<member>visibleUnits</member>
 	</object>
 	<object>
 		<name>BattleItem</name>

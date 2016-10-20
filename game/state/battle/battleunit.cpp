@@ -94,10 +94,8 @@ void BattleUnit::setPosition(GameState &state, const Vec3<float> &pos)
 		LogError("setPosition called on unit with no tile object");
 		return;
 	}
-	else
-	{
-		tileObject->setPosition(pos);
-	}
+
+	tileObject->setPosition(pos);
 
 	if (shadowObject)
 	{
@@ -112,7 +110,20 @@ void BattleUnit::setPosition(GameState &state, const Vec3<float> &pos)
 void BattleUnit::updateUnitVisibility(GameState &state)
 {
 	// Update other units's vision of this unit
-	LogWarning("Implement unitVisibility");
+
+	StateRef<BattleUnit> thisUnit = {&state, id};
+	for (auto u : state.current_battle->units)
+	{
+		if (u.second->owner == owner)
+		{
+			continue;
+		}
+		if (u.second->visibleUnits.find(thisUnit) != u.second->visibleUnits.end())
+		{
+			// FIXME: This is lazy, do it proper?
+			u.second->updateUnitVision(state);
+		}
+	}
 }
 
 void BattleUnit::updateUnitVision(GameState &state)
@@ -123,63 +134,198 @@ void BattleUnit::updateUnitVision(GameState &state)
 
 	auto &battle = *state.current_battle;
 	auto &map = *battle.map;
+	auto lastVisibleUnits = visibleUnits;
+	visibleUnits.clear();
 
-	// Update unit's vision of los blocks
-	auto idx = battle.getLosBlockID(position.x, position.y, position.z);
-	if (!battle.visibleBlocks.at(owner).at(idx))
+	// Vision is actually updated only if conscious, otherwise we clear visible units and that's it
+	if (isConscious())
 	{
-		battle.visibleBlocks.at(owner).at(idx) = true;
-		auto l = battle.los_blocks.at(idx);
-		for (int x = l->start.x; x < l->end.x; x++)
+
+		// Update unit's vision of los blocks
+		auto idx = battle.getLosBlockID(position.x, position.y, position.z);
+		if (!battle.visibleBlocks.at(owner).at(idx))
 		{
-			for (int y = l->start.y; y < l->end.y; y++)
+			battle.visibleBlocks.at(owner).at(idx) = true;
+			auto l = battle.los_blocks.at(idx);
+			for (int x = l->start.x; x < l->end.x; x++)
 			{
-				for (int z = l->start.z; z < l->end.z; z++)
+				for (int y = l->start.y; y < l->end.y; y++)
 				{
-					battle.setVisible(owner, x, y, z);
+					for (int z = l->start.z; z < l->end.z; z++)
+					{
+						battle.setVisible(owner, x, y, z);
+					}
 				}
 			}
 		}
-	}
 
-	// Update unit's vision of terrain
-	// Update unit's vision of other units
-	LogWarning("Optimise this monstrosity!");
-	bool diagonal = facing.x != 0 && facing.y != 0;
-	bool swap = facing.x == 0;
-	bool negative1 = (swap && facing.y < 0) || (!swap && facing.x < 0);
-	bool negative2 = (!swap && facing.y < 0) || (swap && facing.x < 0);
-	int minC1 = negative1 ? 1 - LOS_RANGE : 0;
-	int maxC1 = negative1 ? 1 : LOS_RANGE;
+		// Update unit's vision of terrain
+		// Update unit's vision of other units
 
-	auto eyesPos = getMuzzleLocation();
-	for (int c1 = minC1; c1 < maxC1; c1++)
-	{
-		int minC2 = !diagonal ? -std::abs(c1) : (negative2 ? 1 - LOS_RANGE : 0);
-		int maxC2 = !diagonal ? 1 + std::abs(c1) : (negative2 ? 1 : LOS_RANGE);
-		for (int c2 = minC2; c2 < maxC2; c2++)
+		// Algorithm:
+		//
+		// This is UFO EU vision algorithm, I assume Apoc does the same (or similar)
+		// FOV is 90 degrees and vision deteriorates 1 tile forward per 2 tiles to the side
+		// Which means, unit can see 20 tiles forward, or 19 tiles forward +-2, or 18 tiles forward
+		// +-4
+		// Two lines formed by this formula reach Pure diagonal at 13
+		//
+		// Reference links:
+		// http://www.ufopaedia.org/index.php/Line_of_sight
+		// http://www.ufopaedia.org/index.php/File:VizRange20.gif
+		//
+		// If unit is looking N/S/E/W, algorithm is simple.
+		// Let axis unit is facing on be A1 (X if E/W, Y if N/S), and other axis be A2.
+		// Let coordinates on these axes be called C1 and C2.
+		// C2 goes from -13 to +13 C1 is calculated using formula C1 = 20 - (|C2| + 1) / 2
+		// We then apply sign: if unit is facing towards +inf on A1, sign is "+", else sign is "-"
+		// This way, we sweep the 90 degree arc.
+		//
+		// If unit is looking diagonally, algorithm is more complicated.
+		// We do the same as above, but we must flip axes for a half of the arc.
+		// We must flip signs too. This is done after we process the middle value.
+
+		auto eyesPos = getMuzzleLocation();
+		bool diagonal = facing.x != 0 && facing.y != 0;
+		bool swap = facing.x == 0;
+		bool inverseC1 = false; // changed halfway when processing diagonals
+		int signC2 = (diagonal && facing.y > 0) ? -1 : 1;
+		int signC1 = (swap && facing.y < 0) || (!swap && facing.x < 0) ? -1 : 1;
+
+		for (int i = -13; i < 14; i++)
 		{
-			int x = position.x + (swap ? c2 : c1);
-			int y = position.y + (swap ? c1 : c2);
+			int c2 = inverseC1 ? 1 - i : i;
+			int c1 = 20 - (std::abs(c2) + 1) / 2;
+			int x = position.x + (swap ? c2 * signC2 : c1 * signC1);
+			int y = position.y + (swap ? c1 * signC1 : c2 * signC2);
 
-			if (x < 0 || x >= battle.size.x || y < 0 || y >= battle.size.y ||
-			    c1 * c1 + c2 * c2 > LOS_RANGE * LOS_RANGE)
+			if (i == 0 && diagonal)
 			{
-				continue;
+				swap = !swap;
+				int sC1 = signC1;
+				signC1 = -signC2;
+				signC2 = -sC1;
+				inverseC1 = true;
 			}
 
 			for (int z = 0; z < battle.size.z; z++)
 			{
 				auto c = map.findCollision(eyesPos, {x + 0.5f, y + 0.5f, z + 0.5f}, mapPartSet,
 				                           tileObject, true, false, true);
-				for (auto vec : c.tilesPassed)
+				if (c)
 				{
-					battle.setVisible(owner, vec.x, vec.y, vec.z);
+					// We ignore wall/ground if we come from outside the tile
+					auto t = c.obj->getType();
+					// FIXME: This does not work as intended. Need improvement
+					// Sometimes collision will happen with the feature instead of ground/wall
+					// This allows vision into tiles that should otherwise be concealed.
+					if ((t == TileObject::Type::Ground && z > position.z) ||
+					    (t == TileObject::Type::LeftWall && x > position.x) ||
+					    (t == TileObject::Type::RightWall && y > position.y))
+					{
+						c.tilesPassed.pop_back();
+					}
+				}
+				// Apply vision blockage
+				// We apply a median value accumulated in all tiles passed every time we pass a tile
+				// This makes it so that we do not over or under-apply smoke when going diagonally
+				float blockageAccumulatedSoFar = 0.0f;
+				int distanceToLastTile = 0;
+				float accumulatedSinceLastTile = 0;
+				int numberTilesWithBlockage = 0;
+				auto ourTile = (Vec3<int>)position;
+				for (auto t : c.tilesPassed)
+				{
+					auto vec = t->position;
+					if (vec == ourTile)
+					{
+						continue;
+					}
+
+					// Apply vision blockage if we passed at least 1 tile
+					auto thisDistance = sqrtf((vec.x - position.x) * (vec.x - position.x) +
+					                          (vec.y - position.y) * (vec.y - position.y) +
+					                          (vec.z - position.z) * (vec.z - position.z));
+					if ((int)thisDistance > distanceToLastTile)
+					{
+						if (numberTilesWithBlockage > 0)
+						{
+							blockageAccumulatedSoFar += accumulatedSinceLastTile *
+							                            ((int)thisDistance - distanceToLastTile) /
+							                            numberTilesWithBlockage;
+						}
+						distanceToLastTile = thisDistance;
+						accumulatedSinceLastTile = 0;
+						numberTilesWithBlockage = 0;
+					}
+
+					// Reached end of LOS with accumulated blockage
+					if ((int)(thisDistance + blockageAccumulatedSoFar) > LOS_RANGE)
+					{
+						break;
+					}
+
+					// Add this tile's vision blockage to accumulated since last tile blockage
+					auto thisBlockage = t->visionBlockage;
+					if (thisBlockage > 0)
+					{
+						accumulatedSinceLastTile += thisBlockage;
+						numberTilesWithBlockage++;
+					}
+
+					// FIXME: This check should be removed after I figure out issues with seeing up
+					// through floors
+					if (!battle.getVisible(owner, vec.x, vec.y, vec.z))
+					{
+						battle.setVisible(owner, vec.x, vec.y, vec.z);
+					}
+					auto unitOccupying = t->getUnitIfPresent(true, true);
+					if (unitOccupying)
+					{
+						auto u = unitOccupying->getUnit();
+						if (u->owner != owner)
+						{
+							visibleUnits.insert({&state, u->id});
+						}
+					}
 				}
 			}
 		}
 	}
-	LogWarning("Update vision of units!!");
+
+	// Add newly visible units to owner's list
+	for (auto vu : visibleUnits)
+	{
+		if (lastVisibleUnits.find(vu) == lastVisibleUnits.end())
+		{
+			state.current_battle->visibleUnits[owner].insert(vu);
+		}
+	}
+
+	// See if someone else sees a unit we stopped seeing
+	for (auto lvu : lastVisibleUnits)
+	{
+		if (visibleUnits.find(lvu) == visibleUnits.end())
+		{
+			bool someoneElseSees = false;
+			for (auto u : state.current_battle->units)
+			{
+				if (u.second->owner != owner)
+				{
+					continue;
+				}
+				if (u.second->visibleUnits.find(lvu) != u.second->visibleUnits.end())
+				{
+					someoneElseSees = true;
+					break;
+				}
+			}
+			if (!someoneElseSees)
+			{
+				state.current_battle->visibleUnits[owner].erase(lvu);
+			}
+		}
+	}
 }
 
 void BattleUnit::updateUnitVisibilityAndVision(GameState &state)
@@ -215,9 +361,9 @@ void BattleUnit::setFocus(GameState &state, StateRef<BattleUnit> unit)
 	focusUnit->focusedByUnits.push_back(sru);
 }
 
-void BattleUnit::startAttacking(WeaponStatus status)
+void BattleUnit::startAttacking(GameState &state, WeaponStatus status)
 {
-	switch (battleMode)
+	switch (state.current_battle->mode)
 	{
 		case Battle::Mode::TurnBased:
 			// In Turn based we cannot override firing
@@ -258,16 +404,17 @@ void BattleUnit::startAttacking(WeaponStatus status)
 	ticksTillNextTargetCheck = 0;
 }
 
-void BattleUnit::startAttacking(StateRef<BattleUnit> unit, WeaponStatus status)
+void BattleUnit::startAttacking(GameState &state, StateRef<BattleUnit> unit, WeaponStatus status)
 {
-	startAttacking(status);
+	startAttacking(state, status);
 	targetUnit = unit;
 	targetingMode = TargetingMode::Unit;
 }
 
-void BattleUnit::startAttacking(Vec3<int> tile, WeaponStatus status, bool atGround)
+void BattleUnit::startAttacking(GameState &state, Vec3<int> tile, WeaponStatus status,
+                                bool atGround)
 {
-	startAttacking(status);
+	startAttacking(state, status);
 	targetTile = tile;
 	targetTile = tile;
 	targetingMode = atGround ? TargetingMode::TileGround : TargetingMode::TileCenter;
@@ -280,18 +427,18 @@ void BattleUnit::stopAttacking()
 	targetUnit.clear();
 	ticksTillNextTargetCheck = 0;
 }
-bool BattleUnit::canAfford(int cost) const
+bool BattleUnit::canAfford(GameState &state, int cost) const
 {
-	if (battleMode == Battle::Mode::RealTime)
+	if (state.current_battle->mode == Battle::Mode::RealTime)
 	{
 		return true;
 	}
 	return agent->modified_stats.time_units >= cost;
 }
 
-bool BattleUnit::spendTU(int cost)
+bool BattleUnit::spendTU(GameState &state, int cost)
 {
-	if (battleMode == Battle::Mode::RealTime)
+	if (state.current_battle->mode == Battle::Mode::RealTime)
 	{
 		return true;
 	}
@@ -807,8 +954,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			// If we're given a giveWay request 0, 0 it means we're asked to kneel temporarily
 			if (giveWayRequestData.size() == 1 && giveWayRequestData.front().x == 0 &&
 			    giveWayRequestData.front().y == 0 &&
-			    canAfford(BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
-			                                                        BodyState::Kneeling)))
+			    canAfford(state, BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
+			                                                               BodyState::Kneeling)))
 			{
 				// Give way
 				setMission(state, BattleUnitMission::changeStance(*this, BodyState::Kneeling));
@@ -882,8 +1029,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			// Kneel if not kneeling and should kneel
 			if (kneeling_mode == KneelingMode::Kneeling &&
 			    current_body_state != BodyState::Kneeling && canKneel() &&
-			    canAfford(BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
-			                                                        BodyState::Kneeling)))
+			    canAfford(state, BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
+			                                                               BodyState::Kneeling)))
 			{
 				setMission(state, BattleUnitMission::changeStance(*this, BodyState::Kneeling));
 			}
@@ -891,8 +1038,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			else if (movement_mode == MovementMode::Prone &&
 			         current_body_state != BodyState::Prone &&
 			         kneeling_mode != KneelingMode::Kneeling && canProne(position, facing) &&
-			         canAfford(BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
-			                                                             BodyState::Prone)))
+			         canAfford(state, BattleUnitMission::getBodyStateChangeCost(
+			                              *this, target_body_state, BodyState::Prone)))
 			{
 				setMission(state, BattleUnitMission::changeStance(*this, BodyState::Prone));
 			}
@@ -905,8 +1052,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			{
 				if (agent->isBodyStateAllowed(BodyState::Standing))
 				{
-					if (canAfford(BattleUnitMission::getBodyStateChangeCost(
-					        *this, target_body_state, BodyState::Standing)))
+					if (canAfford(state, BattleUnitMission::getBodyStateChangeCost(
+					                         *this, target_body_state, BodyState::Standing)))
 					{
 						setMission(state,
 						           BattleUnitMission::changeStance(*this, BodyState::Standing));
@@ -914,8 +1061,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				}
 				else
 				{
-					if (canAfford(BattleUnitMission::getBodyStateChangeCost(
-					        *this, target_body_state, BodyState::Flying)))
+					if (canAfford(state, BattleUnitMission::getBodyStateChangeCost(
+					                         *this, target_body_state, BodyState::Flying)))
 					{
 						setMission(state,
 						           BattleUnitMission::changeStance(*this, BodyState::Flying));
@@ -926,8 +1073,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			else if (current_body_state == BodyState::Flying &&
 			         tileObject->getOwningTile()->getCanStand(isLarge()) &&
 			         agent->isBodyStateAllowed(BodyState::Standing) &&
-			         canAfford(BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
-			                                                             BodyState::Standing)))
+			         canAfford(state, BattleUnitMission::getBodyStateChangeCost(
+			                              *this, target_body_state, BodyState::Standing)))
 			{
 				setMission(state, BattleUnitMission::changeStance(*this, BodyState::Standing));
 			}
@@ -943,8 +1090,9 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						break;
 					}
 				}
-				if (!hasSupport && canAfford(BattleUnitMission::getBodyStateChangeCost(
-				                       *this, target_body_state, BodyState::Kneeling)))
+				if (!hasSupport &&
+				    canAfford(state, BattleUnitMission::getBodyStateChangeCost(
+				                         *this, target_body_state, BodyState::Kneeling)))
 				{
 					setMission(state, BattleUnitMission::changeStance(*this, BodyState::Kneeling));
 				}
@@ -1833,7 +1981,6 @@ void BattleUnit::tryToRiseUp(GameState &state)
 
 	missions.clear();
 	addMission(state, BattleUnitMission::changeStance(*this, targetState));
-	// Unit will automatically move to goal after rising due to logic in update()
 }
 
 void BattleUnit::dropDown(GameState &state)
@@ -1993,10 +2140,12 @@ void BattleUnit::setBodyState(GameState &state, BodyState bodyState)
 	current_body_state = bodyState;
 	target_body_state = bodyState;
 	body_animation_ticks_remaining = 0;
-	// Updates bounds etc.
 	if (tileObject)
 	{
+		// Updates bounds etc.
 		setPosition(state, position);
+		// Update vision since our head position may have changed
+		updateUnitVision(state);
 	}
 }
 
@@ -2298,7 +2447,7 @@ bool BattleUnit::setMission(GameState &state, BattleUnitMission *mission)
 				// FIXME: actually read the option
 				bool USER_OPTION_ALLOW_INSTANT_THROWS = false;
 				if (USER_OPTION_ALLOW_INSTANT_THROWS &&
-				    canAfford(BattleUnitMission::getThrowCost(*this)))
+				    canAfford(state, BattleUnitMission::getThrowCost(*this)))
 				{
 					setBodyState(state, current_body_state);
 					setFacing(state, facing);

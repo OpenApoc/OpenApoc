@@ -70,9 +70,14 @@ Battle::~Battle()
 		s->tileObject = nullptr;
 	}
 	this->map_parts.clear();
+	for (auto &s : this->visibleUnits)
+	{
+		s.second.clear();
+	}
 	for (auto &u : this->units)
 	{
 		u.second->agent->unit.clear();
+		u.second->visibleUnits.clear();
 	}
 	for (auto &s : this->items)
 	{
@@ -149,6 +154,10 @@ void Battle::initBattle(GameState &state, bool first)
 	{
 		if (p->trackedUnit)
 			p->trackedObject = p->trackedUnit->tileObject;
+	}
+	for (auto &h : hazards)
+	{
+		h->updateTileVisionBlock(state);
 	}
 	// On first run, init support links and items, do vsibility
 	if (first)
@@ -325,14 +334,7 @@ void Battle::initialMapPartLinkUp()
 	LogWarning("Link up finished!");
 }
 
-void Battle::setMode(Mode mode)
-{
-	this->mode = mode;
-	for (auto &o : this->units)
-	{
-		o.second->battleMode = mode;
-	}
-}
+void Battle::setMode(Mode mode) { this->mode = mode; }
 
 sp<Doodad> Battle::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 {
@@ -456,6 +458,7 @@ sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<DamageType> type
 			existingHazard->die(state, false);
 		}
 		map->addObjectToMap(hazard);
+		hazard->updateTileVisionBlock(state);
 	}
 	// Insert new hazard
 	hazards.insert(hazard);
@@ -579,6 +582,42 @@ void Battle::update(GameState &state, unsigned int ticks)
 		o.second->update(state, ticks);
 	}
 	Trace::end("Battle::update::units->update");
+
+	// Now after we updated everything, we update what needs to be updated last
+
+	// Update unit vision for units that see changes in terrain or hazards
+	Trace::start("Battle::update::vision");
+	{
+		std::set<sp<BattleUnit>> unitsToUpdate;
+		for (auto &entry : units)
+		{
+			auto unit = entry.second;
+			if (!unit->isConscious())
+			{
+				continue;
+			}
+			for (auto &pos : tilesChangedForVision)
+			{
+				auto vec = pos - (Vec3<int>)unit->position;
+				// Quick check it's to the right side of us and in range
+				// FIXME: Should we check more thoroughly to save CPU time (probably)?
+				if ((vec.x > 0 && unit->facing.x < 0) || (vec.y > 0 && unit->facing.y < 0) ||
+				    (vec.x < 0 && unit->facing.x > 0) || (vec.y < 0 && unit->facing.y > 0) ||
+				    (vec.x * vec.x + vec.y * vec.y + vec.z * vec.z > LOS_RANGE * LOS_RANGE))
+				{
+					continue;
+				}
+				unitsToUpdate.insert(unit);
+				break;
+			}
+		}
+		for (auto &unit : unitsToUpdate)
+		{
+			unit->updateUnitVision(state);
+		}
+		tilesChangedForVision.clear();
+	}
+	Trace::end("Battle::update::vision");
 }
 
 int Battle::getLosBlockID(int x, int y, int z) const
@@ -595,6 +634,8 @@ void Battle::setVisible(StateRef<Organisation> org, int x, int y, int z, bool va
 {
 	visibleTiles[org][z * size.x * size.y + y * size.x + x] = val;
 }
+
+void Battle::queueVisionUpdate(Vec3<int> tile) { tilesChangedForVision.insert(tile); }
 
 void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
                                      Vec3<float> &target, int accuracy, bool thrown)

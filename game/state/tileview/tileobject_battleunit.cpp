@@ -19,6 +19,10 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
                                 TileViewMode mode, bool visible, int currentLevel, bool friendly,
                                 bool hostile)
 {
+	// We never draw non-visible units? Or maybe we do?
+	if (!visible)
+		return;
+
 	static const int offset_prone = 8;
 	static const int offset_large = 32;
 
@@ -80,8 +84,8 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 		}
 		case TileViewMode::Strategy:
 		{
-			// Dead units don't appear on strategy screen
-			if (unit->isDead())
+			// Dead or non-visible units don't appear on strategy screen
+			if (unit->isDead() || !visible)
 				break;
 
 			// 0 = enemy, 3 = friendly, 2 = neutral

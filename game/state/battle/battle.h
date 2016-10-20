@@ -76,10 +76,19 @@ class Battle : public std::enable_shared_from_this<Battle>
 	std::vector<int> tileToLosBlock;
 	std::map<StateRef<Organisation>, std::vector<bool>> visibleTiles;
 	std::map<StateRef<Organisation>, std::vector<bool>> visibleBlocks;
+	std::map<StateRef<Organisation>, std::set<StateRef<BattleUnit>>> visibleUnits;
 
 	int getLosBlockID(int x, int y, int z) const;
 	bool getVisible(StateRef<Organisation> org, int x, int y, int z) const;
 	void setVisible(StateRef<Organisation> org, int x, int y, int z, bool val = true);
+	// Tiles that have something changed inside them and require to re-calculate vision
+	// of every soldier who has them in LOS. Triggers include:
+	// - Map part changing tiles
+	// - Map part dying or getting damaged
+	// - Map part which is door opening/closing
+	std::set<Vec3<int>> tilesChangedForVision;
+	// Queue tile for vision update
+	void queueVisionUpdate(Vec3<int> tile);
 
 	MissionType mission_type = MissionType::AlienExtermination;
 	UString mission_location_id;
