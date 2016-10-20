@@ -1138,7 +1138,7 @@ bool BattleUnitMission::spendAgentTUs(GameState &state, BattleUnit &u, int cost,
 		}
 	}
 
-	if (u.spendTU(cost))
+	if (u.spendTU(state, cost))
 	{
 		return true;
 	}

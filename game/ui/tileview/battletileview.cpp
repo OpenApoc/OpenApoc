@@ -13,6 +13,7 @@
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battleunitmission.h"
+#include "game/state/gamestate.h"
 #include "game/state/organisation.h"
 #include "game/state/tileview/tileobject_battleitem.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
@@ -23,8 +24,9 @@ namespace OpenApoc
 {
 BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
                                TileViewMode initialMode, Vec3<float> screenCenterTile,
-                               Battle &current_battle)
-    : TileView(map, isoTileSize, stratTileSize, initialMode), battle(current_battle)
+                               GameState &gameState)
+    : TileView(map, isoTileSize, stratTileSize, initialMode), state(gameState),
+      battle(*gameState.current_battle)
 {
 	layerDrawingMode = LayerDrawingMode::UpToCurrentLevel;
 	selectedTileEmptyImageBack =
@@ -503,10 +505,16 @@ void BattleTileView::render()
 								auto &obj = tile->drawnObjects[layer][obj_id];
 								bool friendly = false;
 								bool hostile = false;
+								bool objectVisible = visible;
 								if (obj->getType() == TileObject::Type::Unit)
 								{
 									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
 									             ->getUnit();
+									objectVisible =
+									    !u->isConscious() || u->owner == battle.currentPlayer ||
+									    battle.visibleUnits.at(battle.currentPlayer)
+									            .find({&state, u->id}) !=
+									        battle.visibleUnits.at(battle.currentPlayer).end();
 									friendly = u->owner == battle.currentPlayer;
 									hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 									          Organisation::Relation::Hostile;
@@ -526,7 +534,7 @@ void BattleTileView::render()
 											unitsToDrawSelectionArrows.push_back({u, false});
 										}
 										// If visible and focused by selected - draw focus arrows
-										if (true) // FIXME: Check if visible by current player
+										if (objectVisible)
 										{
 											bool focusedBySelectedUnits = false;
 											for (auto su : battle.battleViewSelectedUnits)
@@ -548,8 +556,8 @@ void BattleTileView::render()
 									}
 								}
 								Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
-								obj->draw(r, *this, pos, this->viewMode, visible, currentLevel,
-								          friendly, hostile);
+								obj->draw(r, *this, pos, this->viewMode, objectVisible,
+								          currentLevel, friendly, hostile);
 								// Loop ends when "break" is reached above
 								obj_id++;
 							} while (true);
@@ -619,6 +627,7 @@ void BattleTileView::render()
 									break;
 								}
 								auto &obj = tile->drawnObjects[layer][obj_id];
+								bool objectVisible = visible;
 								bool friendly = false;
 								bool hostile = false;
 								bool draw = false;
@@ -627,6 +636,11 @@ void BattleTileView::render()
 								{
 									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
 									             ->getUnit();
+									objectVisible =
+									    !u->isConscious() || u->owner == battle.currentPlayer ||
+									    battle.visibleUnits.at(battle.currentPlayer)
+									            .find({&state, u->id}) !=
+									        battle.visibleUnits.at(battle.currentPlayer).end();
 									friendly = u->owner == battle.currentPlayer;
 									hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 									          Organisation::Relation::Hostile;
@@ -647,7 +661,7 @@ void BattleTileView::render()
 											unitsToDrawSelectionArrows.push_back({u, false});
 										}
 										// If visible and focused - draw focus arrows
-										if (true) // FIXME: Check if visible by current player
+										if (objectVisible)
 										{
 											bool focusedBySelectedUnits = false;
 											for (auto su : battle.battleViewSelectedUnits)
@@ -690,8 +704,8 @@ void BattleTileView::render()
 								if (draw)
 								{
 									Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
-									obj->draw(r, *this, pos, this->viewMode, visible, currentLevel,
-									          friendly, hostile);
+									obj->draw(r, *this, pos, this->viewMode, objectVisible,
+									          currentLevel, friendly, hostile);
 								}
 								// Loop ends when "break" is reached above
 								obj_id++;
@@ -812,7 +826,6 @@ void BattleTileView::render()
 						for (int x = minX; x < maxX; x++)
 						{
 							auto tile = map.getTile(x, y, z);
-							bool visible = battle.getVisible(battle.currentPlayer, x, y, z);
 							auto object_count = tile->drawnObjects[layer].size();
 
 							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
@@ -822,11 +835,16 @@ void BattleTileView::render()
 								{
 									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
 									             ->getUnit();
+									bool objectVisible =
+									    !u->isConscious() || u->owner == battle.currentPlayer ||
+									    battle.visibleUnits.at(battle.currentPlayer)
+									            .find({&state, u->id}) !=
+									        battle.visibleUnits.at(battle.currentPlayer).end();
 									bool friendly = u->owner == battle.currentPlayer;
 									bool hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 									               Organisation::Relation::Hostile;
 
-									unitsToDraw.emplace_back(obj, visible,
+									unitsToDraw.emplace_back(obj, objectVisible,
 									                         obj->getOwningTile()->position.z -
 									                             (battle.battleViewZLevel - 1),
 									                         friendly, hostile);
@@ -855,10 +873,16 @@ void BattleTileView::render()
 							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 							{
 								auto &obj = tile->drawnObjects[layer][obj_id];
+								bool objectVisible = visible;
 								if (obj->getType() == TileObject::Type::Unit)
 								{
 									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
 									             ->getUnit();
+									objectVisible =
+									    !u->isConscious() || u->owner == battle.currentPlayer ||
+									    battle.visibleUnits.at(battle.currentPlayer)
+									            .find({&state, u->id}) !=
+									        battle.visibleUnits.at(battle.currentPlayer).end();
 									bool friendly = u->owner == battle.currentPlayer;
 									bool hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 									               Organisation::Relation::Hostile;
@@ -881,7 +905,8 @@ void BattleTileView::render()
 								}
 
 								Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
-								obj->draw(r, *this, pos, this->viewMode, visible, currentLevel);
+								obj->draw(r, *this, pos, this->viewMode, objectVisible,
+								          currentLevel);
 							}
 						}
 					}
@@ -897,7 +922,6 @@ void BattleTileView::render()
 						for (int x = minX; x < maxX; x++)
 						{
 							auto tile = map.getTile(x, y, z);
-							bool visible = battle.getVisible(battle.currentPlayer, x, y, z);
 							auto object_count = tile->drawnObjects[layer].size();
 
 							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
@@ -907,11 +931,16 @@ void BattleTileView::render()
 								{
 									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
 									             ->getUnit();
+									bool objectVisible =
+									    !u->isConscious() || u->owner == battle.currentPlayer ||
+									    battle.visibleUnits.at(battle.currentPlayer)
+									            .find({&state, u->id}) !=
+									        battle.visibleUnits.at(battle.currentPlayer).end();
 									bool friendly = u->owner == battle.currentPlayer;
 									bool hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 									               Organisation::Relation::Hostile;
 
-									unitsToDraw.emplace_back(obj, visible,
+									unitsToDraw.emplace_back(obj, objectVisible,
 									                         obj->getOwningTile()->position.z -
 									                             (battle.battleViewZLevel - 1),
 									                         friendly, hostile);

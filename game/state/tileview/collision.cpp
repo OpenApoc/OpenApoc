@@ -38,12 +38,12 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 			else
 				return c;
 		}
-		if (storeTilesPassed)
+		const Tile *t = this->getTile(tile);
+		if (storeTilesPassed && (c.tilesPassed.empty() || c.tilesPassed.back() != t))
 		{
-			c.tilesPassed.insert(tile);
+			c.tilesPassed.push_back(t);
 		}
 
-		const Tile *t = this->getTile(tile);
 		for (auto &obj : t->intersectingObjects)
 		{
 			if ((!obj->hasVoxelMap()) ||

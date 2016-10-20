@@ -41,6 +41,7 @@ class BattleHazard : public std::enable_shared_from_this<BattleHazard>
 	void grow(GameState &state);
 	void applyEffect(GameState &state);
 	void die(GameState &state, bool violently = true);
+	void updateTileVisionBlock(GameState &state);
 
 	void update(GameState &state, unsigned int ticks);
 

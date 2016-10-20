@@ -119,10 +119,10 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	unsigned int ticksTillNextTargetCheck = 0;
 
 	void setFocus(GameState &state, StateRef<BattleUnit> unit);
-	void startAttacking(StateRef<BattleUnit> unit,
+	void startAttacking(GameState &state, StateRef<BattleUnit> unit,
 	                    WeaponStatus status = WeaponStatus::FiringBothHands);
-	void startAttacking(Vec3<int> tile, WeaponStatus status = WeaponStatus::FiringBothHands,
-	                    bool atGround = false);
+	void startAttacking(GameState &state, Vec3<int> tile,
+	                    WeaponStatus status = WeaponStatus::FiringBothHands, bool atGround = false);
 	void stopAttacking();
 
 	// Stats
@@ -249,8 +249,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	StateRef<AEquipmentType> displayedItem;
 	void updateDisplayedItem();
 
-	// Battle parameters
-	Battle::Mode battleMode = Battle::Mode::RealTime;
+	std::set<StateRef<BattleUnit>> visibleUnits;
 
 	// Returns true if the unit is dead
 	bool isDead() const;
@@ -288,9 +287,9 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 
 	// TU functions
 	// Wether unit can afford action
-	bool canAfford(int cost) const;
+	bool canAfford(GameState &state, int cost) const;
 	// Returns if unit did spend (false if unsufficient TUs)
-	bool spendTU(int cost);
+	bool spendTU(GameState &state, int cost);
 
 	BodyPart determineBodyPartHit(StateRef<DamageType> damageType, Vec3<float> cposition,
 	                              Vec3<float> direction);
@@ -344,23 +343,24 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
   private:
 	friend class Battle;
 
-	void startAttacking(WeaponStatus status);
+	void startAttacking(GameState &state, WeaponStatus status);
 
-	// Visibility theory
+	// Visibility theory (* is implemented)
 	//
 	// We update unit's vision to other stuff when
-	// - unit changes position,
-	// - unit changes facing,
-	// - battlemappart/hazard changes in his field of vision
+	// * unit changes position,
+	// * unit changes facing,
+	// * battlemappart or hazard changes in his field of vision
 	//
 	// We update other units's vision to this unit when:
-	// - unit changes position
+	// * unit changes position
 	// - unit changes "cloaked" flag
 
 	// Update unit's vision of other units and terrain
-	// Update other units's vision of this unit
-	void updateUnitVisibilityAndVision(GameState &state);
 	void updateUnitVisibility(GameState &state);
+	// Update other units's vision of this unit
 	void updateUnitVision(GameState &state);
+	// Update both this unit's vision and other unit's vision of this unit
+	void updateUnitVisibilityAndVision(GameState &state);
 };
 }

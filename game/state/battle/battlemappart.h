@@ -27,7 +27,7 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 
 	const Vec3<float> &getPosition() const { return this->position; }
 	Vec3<float> position;
-	void setPosition(const Vec3<float> &pos);
+	void setPosition(GameState &state, const Vec3<float> &pos);
 
 	unsigned int ticksUntilCollapse = 0;
 	bool damaged = false;

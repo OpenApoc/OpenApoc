@@ -87,35 +87,7 @@ class Tile
 
 	// Only used by Battle
 
-	// Returns unit present in the tile, if any (quick call for just any unit ever)
-	sp<TileObjectBattleUnit> getUnitIfPresent();
-	// Returns unit present in the tile, if any
-	sp<TileObjectBattleUnit> getUnitIfPresent(bool onlyConscious, bool mustOccupy = false,
-	                                          bool mustBeStatic = false,
-	                                          sp<TileObjectBattleUnit> exceptThis = nullptr,
-	                                          bool onlyLarge = false, bool checkLargeSpace = false);
-	// Returns items that can be collected by standing in this tile)
-	std::list<sp<BattleItem>> getItems();
-	// Returns resting position for items and units in the tile
-	Vec3<float> getRestingPosition(bool large = false);
-	// Returns the object that provides support (resting position) for items
-	sp<BattleMapPart> getItemSupportingObject();
-	// Returns if the tile is passable (including side tiles for large)
-	bool getPassable(bool large = false, int height = 0);
-	// Returns if head fits in the tile
-	bool getHeadFits(bool large, int height);
-	// Returns if the tile provides ground for standing (including side tiles for large)
-	bool getCanStand(bool large = false);
-	// Returns if the tile is solid (cannot pop head into it)
-	bool getSolidGround(bool large = false);
-	// Returns wether tile is an exit
-	bool getHasExit(bool large = false);
-	// Updates most battlescape tile parameters
-	void updateBattlescapeParameters();
-	// Updates "unit present" parameter
-	void updateBattlescapeUnitPresent();
-	// Updates battlescape ui draw order variables
-	void updateBattlescapeUIDrawOrder();
+	// Vars
 
 	// Height, 0-0.975, of the tile's ground and feature's height
 	// Height cannot be 1 as that is equal to 0.000 on the tile below
@@ -155,8 +127,48 @@ class Tile
 	sp<std::vector<sp<Sample>>> walkSfx;
 	// sfx to use when object falls on tile
 	sp<Sample> objectDropSfx;
-	// Solid tileobject in the tile with the highest height that supports items
+	// Solid tileobject in the tile with the highest height that supports itemsl
 	sp<BattleMapPart> supportProviderForItems;
+	// How much tiles are added to vision distance after passing this tile
+	int visionBlockage = 0;
+
+	// Methods
+
+	// Returns unit present in the tile, if any (quick call for just any unit ever)
+	sp<TileObjectBattleUnit> getUnitIfPresent() const;
+	// Returns unit present in the tile, if any
+	sp<TileObjectBattleUnit> getUnitIfPresent(bool onlyConscious, bool mustOccupy = false,
+	                                          bool mustBeStatic = false,
+	                                          sp<TileObjectBattleUnit> exceptThis = nullptr,
+	                                          bool onlyLarge = false,
+	                                          bool checkLargeSpace = false) const;
+	// Returns items that can be collected by standing in this tile)
+	std::list<sp<BattleItem>> getItems();
+	// Returns resting position for items and units in the tile
+	Vec3<float> getRestingPosition(bool large = false);
+	// Returns the object that provides support (resting position) for items
+	sp<BattleMapPart> getItemSupportingObject();
+	// Returns if the tile is passable (including side tiles for large)
+	bool getPassable(bool large = false, int height = 0);
+	// Returns if head fits in the tile
+	bool getHeadFits(bool large, int height);
+	// Returns if the tile provides ground for standing (including side tiles for large)
+	bool getCanStand(bool large = false);
+	// Returns if the tile is solid (cannot pop head into it)
+	bool getSolidGround(bool large = false);
+	// Returns wether tile is an exit
+	bool getHasExit(bool large = false);
+
+	// Updaters
+
+	// Updates most battlescape tile parameters
+	void updateBattlescapeParameters();
+	// Updates "unit present" parameter
+	void updateBattlescapeUnitPresent();
+	// Updates battlescape ui draw order variables
+	void updateBattlescapeUIDrawOrder();
+	// Updates vision blockage of the tile. returns if changed
+	bool updateVisionBlockage(int value = 0);
 
 #ifdef PATHFINDING_DEBUG
 	bool pathfindingDebugFlag = false;

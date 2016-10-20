@@ -35,6 +35,7 @@ void BattleMapPart::die(GameState &state, bool explosive, bool violently)
 	// If falling just cease to be, do damage
 	if (falling)
 	{
+		state.current_battle->queueVisionUpdate(position);
 		this->tileObject->removeFromMap();
 		this->tileObject.reset();
 		destroyed = true;
@@ -95,6 +96,9 @@ void BattleMapPart::die(GameState &state, bool explosive, bool violently)
 		}
 	}
 
+	// Queue update of vision
+	state.current_battle->queueVisionUpdate(position);
+
 	// Cease functioning
 	ceaseBeingSupported();
 	ceaseDoorFunction();
@@ -130,9 +134,8 @@ int BattleMapPart::getAnimationFrame()
 	}
 	else
 	{
-		return type->animation_frames.size() == 0
-		           ? -1
-		           : animation_frame_ticks / TICKS_PER_FRAME_MAP_PART;
+		return type->animation_frames.size() == 0 ? -1 : animation_frame_ticks /
+		                                                     TICKS_PER_FRAME_MAP_PART;
 	}
 }
 
@@ -1275,7 +1278,7 @@ void BattleMapPart::update(GameState &state, unsigned int ticks)
 						if (it != type->rubble.end() && ++it != type->rubble.end())
 						{
 							rubble->type = *it;
-							rubble->setPosition(rubble->position);
+							rubble->setPosition(state, rubble->position);
 						}
 					}
 				}
@@ -1285,7 +1288,7 @@ void BattleMapPart::update(GameState &state, unsigned int ticks)
 			}
 		}
 
-		setPosition(newPosition);
+		setPosition(state, newPosition);
 		return;
 	}
 
@@ -1297,17 +1300,21 @@ void BattleMapPart::update(GameState &state, unsigned int ticks)
 	}
 }
 
-void BattleMapPart::setPosition(const Vec3<float> &pos)
+void BattleMapPart::setPosition(GameState &state, const Vec3<float> &pos)
 {
-	this->position = pos;
+	auto oldPosition = position;
+	position = pos;
 	if (!this->tileObject)
 	{
 		LogError("setPosition called on map part with no tile object");
 		return;
 	}
-	else
+
+	this->tileObject->setPosition(pos);
+	if ((Vec3<int>)oldPosition != (Vec3<int>)position)
 	{
-		this->tileObject->setPosition(pos);
+		state.current_battle->queueVisionUpdate(position);
+		state.current_battle->queueVisionUpdate(oldPosition);
 	}
 }
 

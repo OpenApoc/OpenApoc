@@ -48,7 +48,7 @@ const UString &StateObject<BattleDoor>::getId(const GameState &state, const sp<B
 	return emptyString;
 }
 
-void BattleDoor::setDoorState(bool open)
+void BattleDoor::setDoorState(GameState &state, bool open)
 {
 	animationTicksRemaining = 0;
 	this->open = open;
@@ -81,17 +81,17 @@ void BattleDoor::setDoorState(bool open)
 	// Trigger tile's parameters update
 	for (auto &s : mapParts)
 	{
-		auto i = s.lock();
-		if (!i || !i->tileObject)
+		auto mp = s.lock();
+		if (!mp || !mp->tileObject)
 		{
 			continue;
 		}
-		i->tileObject->getOwningTile()->updateBattlescapeParameters();
-		// i->tileObject->setPosition(currentPosition); // <-- don't need to do that?
+		mp->tileObject->getOwningTile()->updateBattlescapeParameters();
+		state.current_battle->queueVisionUpdate(mp->position);
 	}
 }
 
-void BattleDoor::update(GameState &, unsigned int ticks)
+void BattleDoor::update(GameState &state, unsigned int ticks)
 {
 	if (!operational)
 	{
@@ -107,7 +107,7 @@ void BattleDoor::update(GameState &, unsigned int ticks)
 		}
 		else
 		{
-			setDoorState(!open);
+			setDoorState(state, !open);
 		}
 	}
 

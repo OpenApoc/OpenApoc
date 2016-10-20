@@ -57,7 +57,7 @@ BattleView::BattleView(sp<GameState> gameState)
     : BattleTileView(*gameState->current_battle->map,
                      Vec3<int>{TILE_X_BATTLE, TILE_Y_BATTLE, TILE_Z_BATTLE},
                      Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric,
-                     gameState->current_battle->battleViewScreenCenter, *gameState->current_battle),
+                     gameState->current_battle->battleViewScreenCenter, *gameState),
       baseForm(ui().getForm("FORM_BATTLE_UI")), state(gameState), battle(*state->current_battle),
       followAgent(false), palette(fw().data->loadPalette("xcom3/tacdata/tactical.pal")),
       selectionState(BattleSelectionState::Normal)
@@ -1412,7 +1412,7 @@ void BattleView::orderUse(bool right, bool automatic)
 			if (!item->inUse && battle.mode == Battle::Mode::TurnBased)
 			{
 				int cost = 5;
-				if (!item->ownerAgent->unit->spendTU(cost))
+				if (!item->ownerAgent->unit->spendTU(*state, cost))
 				{
 					LogWarning("Notify unsufficient TU for motion scanner");
 					break;
@@ -1473,7 +1473,7 @@ void BattleView::orderDrop(bool right)
 			return;
 		}
 		int cost = 8;
-		if (!unit->spendTU(cost))
+		if (!unit->spendTU(*state, cost))
 		{
 			return;
 		}
@@ -1492,6 +1492,11 @@ void BattleView::orderSelect(StateRef<BattleUnit> u, bool inverse, bool additive
 	for (auto &m : u->missions)
 	{
 		log += format("\n%s", m->getName());
+	}
+	log += format("\Seen units [%d]:", (int)u->visibleUnits.size());
+	for (auto &unit : u->visibleUnits)
+	{
+		log += format("\n%s", unit.id);
 	}
 	LogWarning("%s", log.cStr());
 
@@ -1594,7 +1599,7 @@ void BattleView::orderFire(Vec3<int> target, BattleUnit::WeaponStatus status, bo
 	// FIXME: If TB ensure enough TUs for turn and fire
 	for (auto unit : battle.battleViewSelectedUnits)
 	{
-		unit->startAttacking(target, status, modifier);
+		unit->startAttacking(*state, target, status, modifier);
 	}
 }
 
@@ -1603,7 +1608,7 @@ void BattleView::orderFire(StateRef<BattleUnit> u, BattleUnit::WeaponStatus stat
 	// FIXME: If TB ensure enough TUs for turn and fire
 	for (auto unit : battle.battleViewSelectedUnits)
 	{
-		unit->startAttacking(u, status);
+		unit->startAttacking(*state, u, status);
 	}
 }
 
@@ -1628,7 +1633,7 @@ void BattleView::orderHeal(BodyPart part)
 	if (battle.mode == Battle::Mode::TurnBased)
 	{
 		int cost = 18;
-		if (!unit->spendTU(cost))
+		if (!unit->spendTU(*state, cost))
 		{
 			LogWarning("Notify unsufficient TU for medikit");
 			return;

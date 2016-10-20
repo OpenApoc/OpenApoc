@@ -25,7 +25,7 @@ class BattleDoor : public StateObject<BattleDoor>, public std::enable_shared_fro
 	bool right = false;
 	// "Open" flag for doors
 	bool open = false;
-	void setDoorState(bool open);
+	void setDoorState(GameState &state, bool open);
 	int animationFrameCount = 0;
 	int openTicksRemaining = 0;
 	// Amount of ticks until changing to open/closed state
