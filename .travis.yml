@@ -60,7 +60,7 @@ before_script:
 script:
 # Create the GameState as that triggers the generated source commands
   - if [ "${TIDY}" = "true" ]; then git --no-pager diff --ignore-submodules --stat && make OpenApoc_GameState -j2 && make tidy; fi
-  - if [ "${TIDY}" != "true" ]; then make -j2 && ctest -V -j 2 && ./bin/OpenApoc_DataExtractor && git --no-pager diff --ignore-submodules --stat data/; fi
+  - if [ "${TIDY}" != "true" ]; then make -j2 && ctest -V -j 2 && git --no-pager diff --ignore-submodules --stat data/; fi
 
 os:
   - linux
