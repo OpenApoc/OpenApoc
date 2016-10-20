@@ -26,22 +26,6 @@ add_test(NAME ${TEST}_difficulty1 COMMAND ${EXECUTABLE_OUTPUT_PATH}/${TEST}
 		${CMAKE_SOURCE_DIR}/data/difficulty1_patched
 		${CMAKE_SOURCE_DIR}/data/gamestate_common
 		--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)
-add_test(NAME ${TEST}_difficulty2 COMMAND ${EXECUTABLE_OUTPUT_PATH}/${TEST}
-		${CMAKE_SOURCE_DIR}/data/difficulty2_patched
-		${CMAKE_SOURCE_DIR}/data/gamestate_common
-		--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)
-add_test(NAME ${TEST}_difficulty3 COMMAND ${EXECUTABLE_OUTPUT_PATH}/${TEST}
-		${CMAKE_SOURCE_DIR}/data/difficulty3_patched
-		${CMAKE_SOURCE_DIR}/data/gamestate_common
-		--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)
-add_test(NAME ${TEST}_difficulty4 COMMAND ${EXECUTABLE_OUTPUT_PATH}/${TEST}
-		${CMAKE_SOURCE_DIR}/data/difficulty4_patched
-		${CMAKE_SOURCE_DIR}/data/gamestate_common
-		--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)
-add_test(NAME ${TEST}_difficulty5 COMMAND ${EXECUTABLE_OUTPUT_PATH}/${TEST}
-		${CMAKE_SOURCE_DIR}/data/difficulty5_patched
-		${CMAKE_SOURCE_DIR}/data/gamestate_common
-		--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)
 
 set_property(TARGET ${TEST} PROPERTY CXX_STANDARD 11)
 set_property(TARGET ${TEST} PROPERTY CXX_STANDARD_REQUIRED ON)
