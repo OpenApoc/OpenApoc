@@ -5,7 +5,6 @@
 #include "game/state/rules/doodad_type.h"
 #include "library/strings_format.h"
 #include "tools/extractors/common/doodads.h"
-#include "tools/extractors/common/tacp.h"
 #include "tools/extractors/extractors.h"
 #include <limits>
 
@@ -14,9 +13,6 @@ namespace OpenApoc
 
 void InitialGameStateExtractor::extractDoodads(GameState &state)
 {
-	auto &data_t = this->tacp;
-	auto &data_u = this->ufo2p;
-
 	static const int frameTTL = 1;
 
 	// DOODADS UFO2P

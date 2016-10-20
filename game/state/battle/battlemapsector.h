@@ -18,7 +18,7 @@ class BattleMapSector : public StateObject<BattleMapSector>
 {
   public:
 	BattleMapSector();
-	~BattleMapSector() = default;
+	~BattleMapSector() override = default;
 
 	class LineOfSightBlock
 	{

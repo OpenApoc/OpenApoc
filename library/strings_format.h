@@ -9,7 +9,7 @@
 namespace OpenApoc
 {
 
-static boost::format &format(boost::format &f) { return f; }
+static inline boost::format &format(boost::format &f) { return f; }
 
 template <typename T, typename... Args>
 static boost::format &format(boost::format &f, T const &arg, Args &&... args)
@@ -24,7 +24,7 @@ template <typename... Args> static UString format(const UString &fmt, Args &&...
 }
 
 //_lFormat shouldn't be used directly, instead use OpenApoc::tr()
-static boost::locale::format &lFormat(boost::locale::format &f) { return f; }
+static inline boost::locale::format &lFormat(boost::locale::format &f) { return f; }
 
 template <typename T, typename... Args>
 static boost::locale::format &lFormat(boost::locale::format &f, T const &arg, Args &&... args)

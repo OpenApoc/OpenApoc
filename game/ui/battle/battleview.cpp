@@ -1493,7 +1493,7 @@ void BattleView::orderSelect(StateRef<BattleUnit> u, bool inverse, bool additive
 	{
 		log += format("\n%s", m->getName());
 	}
-	log += format("\Seen units [%d]:", (int)u->visibleUnits.size());
+	log += format("\nSeen units [%d]:", (int)u->visibleUnits.size());
 	for (auto &unit : u->visibleUnits)
 	{
 		log += format("\n%s", unit.id);
