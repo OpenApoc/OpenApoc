@@ -1407,7 +1407,7 @@ void Battle::loadImagePacks(GameState &state)
 	{
 		if (imagePackName.length() == 0)
 			continue;
-		auto imagePackPath = BattleUnitImagePack::imagePackPath + "/" + imagePackName;
+		auto imagePackPath = BattleUnitImagePack::getImagePackPath() + "/" + imagePackName;
 		LogInfo("Loading image pack \"%s\" from \"%s\"", imagePackName.cStr(),
 		        imagePackPath.cStr());
 		auto imagePack = mksp<BattleUnitImagePack>();
@@ -1451,7 +1451,7 @@ void Battle::loadAnimationPacks(GameState &state)
 	for (auto &animationPackName : animationPacks)
 	{
 		auto animationPackPath =
-		    BattleUnitAnimationPack::animationPackPath + "/" + animationPackName;
+		    BattleUnitAnimationPack::getAnimationPackPath() + "/" + animationPackName;
 		LogInfo("Loading animation pack \"%s\" from \"%s\"", animationPackName.cStr(),
 		        animationPackPath.cStr());
 		auto animationPack = mksp<BattleUnitAnimationPack>();

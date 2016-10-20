@@ -69,7 +69,7 @@ class BattleMapSectorTiles
 	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_right_walls;
 	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_features;
 
-	static const UString mapSectorPath;
+	static UString getMapSectorPath();
 
 	// high level api for loading map sectors
 	bool loadSector(GameState &state, const UString &path);

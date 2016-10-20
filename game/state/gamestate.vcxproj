@@ -37,6 +37,7 @@
     <ClCompile Include="battle\battleunitanimationpack.cpp" />
     <ClCompile Include="battle\battleunitimagepack.cpp" />
     <ClCompile Include="battle\battleunitmission.cpp" />
+	<ClCompile Include="battle\battlemaptileset.cpp" />
     <ClCompile Include="city\baselayout.cpp" />
     <ClCompile Include="city\building.cpp" />
     <ClCompile Include="city\city.cpp" />

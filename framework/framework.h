@@ -98,6 +98,9 @@ class Framework
 		this->threadPoolTaskEnqueue([task]() { (*task)(); });
 		return res;
 	}
+
+	UString getDataDir() const;
+	UString getCDPath() const;
 };
 
 static inline Framework &fw() { return Framework::getInstance(); }

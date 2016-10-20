@@ -1,7 +1,9 @@
 #include "game/state/battle/battlemapsector.h"
+#include "framework/framework.h"
 
 namespace OpenApoc
 {
+
 BattleMapSector::BattleMapSector() {}
 
 bool BattleMapSector::LineOfSightBlock::contains(Vec3<int> tile)
@@ -33,4 +35,6 @@ sp<BattleMapSector::LineOfSightBlock> BattleMapSector::LineOfSightBlock::clone(V
 
 	return b;
 }
+
+UString BattleMapSectorTiles::getMapSectorPath() { return fw().getDataDir() + "/maps"; }
 }

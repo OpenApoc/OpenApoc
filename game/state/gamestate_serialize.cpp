@@ -297,9 +297,6 @@ bool GameState::deserialize(const sp<SerializationArchive> archive)
 	return true;
 }
 
-// FIXME: Move tilesetPath and others to some config variable?
-const UString BattleMapTileset::tilesetPath = "data/tilesets";
-
 static bool serialize(const BattleMapTileset &tileSet, sp<SerializationArchive> archive)
 {
 	try
@@ -356,8 +353,6 @@ bool BattleMapTileset::loadTileset(GameState &state, const UString &path)
 	return deserialize(*this, state, archive);
 }
 
-const UString BattleUnitImagePack::imagePackPath = "data/imagepacks";
-
 static bool serialize(const BattleUnitImagePack &imagePack, sp<SerializationArchive> archive)
 {
 	try
@@ -413,8 +408,6 @@ bool BattleUnitImagePack::loadImagePack(GameState &state, const UString &path)
 
 	return deserialize(*this, state, archive);
 }
-
-const UString BattleUnitAnimationPack::animationPackPath = "data/animationpacks";
 
 static bool serialize(const BattleUnitAnimationPack &animationPack,
                       sp<SerializationArchive> archive)
@@ -502,9 +495,6 @@ static bool deserialize(BattleMapSectorTiles &mapSector, const GameState &state,
 	}
 	return true;
 }
-
-// FIXME: Move tilesetPath to some config variable?
-const UString BattleMapSectorTiles::mapSectorPath = "data/maps";
 
 bool BattleMapSectorTiles::saveSector(const UString &path, bool pack)
 {

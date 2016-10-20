@@ -25,6 +25,6 @@ class BattleUnitImagePack : public StateObject<BattleUnitImagePack>
 	// Function used when getting file path
 	static const UString getNameFromID(UString id);
 
-	static const UString imagePackPath;
+	static UString getImagePackPath();
 };
 }

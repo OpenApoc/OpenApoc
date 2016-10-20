@@ -195,6 +195,9 @@
     <ClCompile Include="tileview\tileobject_battlehazard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+	<ClCompile Include="battle\battlemaptileset.cpp">
+	  <Filter>Source Files</Filter>
+	</ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agent.h">
