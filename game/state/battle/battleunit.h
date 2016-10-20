@@ -324,7 +324,6 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	void tryToRiseUp(GameState &state);
 	void fallUnconscious(GameState &state);
 	void die(GameState &state, bool violently, bool bledToDeath = false);
-	void destroy(GameState &state);
 
 	static void groupMove(GameState &state, std::list<StateRef<BattleUnit>> &selectedUnits,
 	                      Vec3<int> targetLocation, bool demandGiveWay);

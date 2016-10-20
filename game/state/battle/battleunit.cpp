@@ -1899,14 +1899,6 @@ void BattleUnit::updateDisplayedItem()
 	}
 }
 
-void BattleUnit::destroy(GameState &)
-{
-	this->tileObject->removeFromMap();
-	this->shadowObject->removeFromMap();
-	this->tileObject.reset();
-	this->shadowObject.reset();
-}
-
 void BattleUnit::tryToRiseUp(GameState &state)
 {
 	// Do not rise up if unit is standing on us

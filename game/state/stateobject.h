@@ -18,6 +18,14 @@ uint64_t getNextObjectID(GameState &state, const UString &objectPrefix);
 
 template <typename T> class StateRefMap : public std::map<UString, sp<T>>
 {
+  public:
+	~StateRefMap()
+	{
+		for (auto &obj : *this)
+		{
+			obj.second->destroy();
+		}
+	}
 };
 
 template <typename T> class StateObject
@@ -36,6 +44,8 @@ template <typename T> class StateObject
 		auto id = getNextObjectID(state, getPrefix());
 		return getPrefix() + Strings::fromU64(id);
 	}
+
+	virtual void destroy(){};
 	// StateObjects are not copy-able
 	StateObject(const StateObject &) = delete;
 	// Move is fine

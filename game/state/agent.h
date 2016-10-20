@@ -300,6 +300,8 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 
 	sp<AEquipment> leftHandItem;  // Left hand item, frequently accessed so will be stored here
 	sp<AEquipment> rightHandItem; // Left hand item, frequently accessed so will be stored here
+
+	void destroy() override;
 };
 
 class AgentGenerator

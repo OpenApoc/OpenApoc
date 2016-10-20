@@ -14,7 +14,7 @@ namespace OpenApoc
 class BattleMapSectorTiles;
 class BattleMapPartType;
 
-class BattleMapSector
+class BattleMapSector : public StateObject<BattleMapSector>
 {
   public:
 	BattleMapSector();
