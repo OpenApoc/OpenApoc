@@ -32,6 +32,11 @@ GameState::GameState() : player(this) {}
 
 GameState::~GameState()
 {
+	if (this->current_battle)
+	{
+		Battle::finishBattle(*this);
+		Battle::exitBattle(*this);
+	}
 	for (auto &v : this->vehicles)
 	{
 		auto vehicle = v.second;
