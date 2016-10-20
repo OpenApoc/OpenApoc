@@ -288,6 +288,8 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 
 		out << "\treturn true;\n}\n";
 
+		if (object.external == false)
+			out << "static inline\n";
 		out << "bool operator!=(const " << object.name << " &a, const " << object.name
 		    << " &b)\n{\n\treturn !(a == b);\n}\n";
 	}
