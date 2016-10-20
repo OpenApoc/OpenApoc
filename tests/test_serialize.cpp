@@ -118,8 +118,9 @@ int main(int argc, char **argv)
 		return EXIT_FAILURE;
 	}
 
-	LogInfo("Testing started nited state");
+	LogInfo("Testing started inited state");
 	state->initState();
+	state->fillPlayerStartingProperty();
 
 	if (!test_gamestate_serialization(state))
 	{
