@@ -26,6 +26,7 @@
 
 #define LOS_RANGE 20
 
+// How frequently unit tracks its target
 #define LOS_CHECK_INTERVAL_TRACKING 36
 
 namespace OpenApoc

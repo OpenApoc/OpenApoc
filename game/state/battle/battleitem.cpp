@@ -117,7 +117,7 @@ Collision BattleItem::checkItemCollision(Vec3<float> previousPosition, Vec3<floa
 		return {};
 	Collision c = tileObject->map.findCollision(
 	    previousPosition, nextPosition, {},
-	    ownerInvulnerableTicks > 0 ? item->ownerAgent->unit->tileObject : nullptr);
+	    ownerInvulnerableTicks > 0 ? item->ownerUnit->tileObject : nullptr);
 	return c;
 }
 

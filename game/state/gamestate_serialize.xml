@@ -130,6 +130,8 @@
 		<member>equippedPosition</member>
 		<member>equippedSlotType</member>
 		<member>ownerAgent</member>
+		<member>ownerOrganisation</member>
+		<member>ownerUnit</member>
 		<member>ammo</member>
 		<member>primed</member>
 		<member>activated</member>
@@ -1260,7 +1262,6 @@
 	</enum>
 	<enum>
 		<name>AEquipmentSlotType</name>
-		<value>None</value>
 		<value>General</value>
 		<value>ArmorBody</value>
 		<value>ArmorLegs</value>

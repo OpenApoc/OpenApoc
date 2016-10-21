@@ -2023,15 +2023,18 @@ void BattleUnit::dropDown(GameState &state)
 		break;
 	}
 	// Drop all gear
-	while (!agent->equipment.empty())
+	if (agent->type->inventory)
 	{
-		addMission(state, BattleUnitMission::dropItem(*this, agent->equipment.front()));
+		while (!agent->equipment.empty())
+		{
+			addMission(state, BattleUnitMission::dropItem(*this, agent->equipment.front()));
+		}
 	}
 	// Drop gear used by missions
 	std::list<sp<AEquipment>> itemsToDrop;
 	for (auto &m : missions)
 	{
-		if (m->item && m->item->equippedSlotType != AEquipmentSlotType::None)
+		if (m->item && m->item->ownerAgent)
 		{
 			itemsToDrop.push_back(m->item);
 		}
@@ -2420,6 +2423,15 @@ bool BattleUnit::setMission(GameState &state, BattleUnitMission *mission)
 		return false;
 	}
 
+	if (!agent->type->inventory)
+	{
+		if (mission->type == BattleUnitMission::Type::DropItem ||
+		    mission->type == BattleUnitMission::Type::ThrowItem)
+		{
+			return false;
+		}
+	}
+
 	// Special checks and actions based on mission type
 	switch (mission->type)
 	{
@@ -2517,6 +2529,14 @@ bool BattleUnit::setMission(GameState &state, BattleUnitMission *mission)
 
 bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool toBack)
 {
+	if (!agent->type->inventory)
+	{
+		if (mission->type == BattleUnitMission::Type::DropItem ||
+		    mission->type == BattleUnitMission::Type::ThrowItem)
+		{
+			return false;
+		}
+	}
 	if (toBack)
 	{
 		missions.emplace_back(mission);

@@ -70,22 +70,23 @@ Battle::~Battle()
 		s->tileObject = nullptr;
 	}
 	this->map_parts.clear();
-	for (auto &s : this->visibleUnits)
+	for (auto &u : this->visibleUnits)
 	{
-		s.second.clear();
+		u.second.clear();
 	}
 	for (auto &u : this->units)
 	{
 		u.second->agent->unit.clear();
 		u.second->visibleUnits.clear();
 	}
-	for (auto &s : this->items)
+	for (auto &i : this->items)
 	{
-		if (s->tileObject)
-			s->tileObject->removeFromMap();
-		if (s->shadowObject)
-			s->shadowObject->removeFromMap();
-		s->tileObject = nullptr;
+		if (i->tileObject)
+			i->tileObject->removeFromMap();
+		if (i->shadowObject)
+			i->shadowObject->removeFromMap();
+		i->tileObject = nullptr;
+		i->item->ownerUnit.clear();
 	}
 	this->items.clear();
 	this->doors.clear();
@@ -415,6 +416,7 @@ sp<BattleItem> Battle::placeItem(GameState &state, sp<AEquipment> item, Vec3<flo
 	auto bitem = mksp<BattleItem>();
 	bitem->strategySprite = state.battle_common_image_list->strategyImages->at(480);
 	bitem->item = item;
+	item->ownerItem = bitem;
 	bitem->position = position;
 	if (map)
 	{

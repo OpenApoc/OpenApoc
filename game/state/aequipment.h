@@ -10,8 +10,12 @@ namespace OpenApoc
 // Items recharge their recharge rate of ammo every 4 seconds (or fully recharge every turn in TB)
 static const unsigned TICKS_PER_RECHARGE = TICKS_PER_TURN;
 
+// How many shots does an exploded payload fire (max)
+static const unsigned MAX_PAYLOAD_EXPLOSION_SHOTS = 10;
+
 class BattleItem;
 class BattleUnit;
+class Organisation;
 class Projectile;
 class AEquipmentType;
 enum class TriggerType;
@@ -30,8 +34,13 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	StateRef<AEquipmentType> getPayloadType() const;
 
 	Vec2<int> equippedPosition;
-	AEquipmentSlotType equippedSlotType = AEquipmentSlotType::None;
+	AEquipmentSlotType equippedSlotType = AEquipmentSlotType::General;
+	// Agent in who's inventory this item is located
 	StateRef<Agent> ownerAgent;
+	// Organization which brought this item to the battle
+	StateRef<Organisation> ownerOrganisation;
+	// Unit that threw or dropped the item last
+	StateRef<BattleUnit> ownerUnit;
 
 	// Ammunition for weapons, protection for armor, charge for items
 	int ammo = 0;

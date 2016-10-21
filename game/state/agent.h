@@ -57,7 +57,6 @@ enum class MovementState
 };
 enum class AEquipmentSlotType
 {
-	None, // Used for equipment dropped by agent
 	General,
 	ArmorBody,
 	ArmorLegs,
@@ -266,8 +265,9 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 	StateRef<BattleUnit> unit;
 
 	std::list<sp<AEquipment>> equipment;
-	// Returns None if cannot add
-	AEquipmentSlotType canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type) const;
+	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
+	                     AEquipmentSlotType &slotType) const;
+	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type) const;
 	Vec2<int> findFirstSlotByType(AEquipmentSlotType slotType,
 	                              StateRef<AEquipmentType> type = nullptr);
 	// Add equipment by type to the first available slot of any type

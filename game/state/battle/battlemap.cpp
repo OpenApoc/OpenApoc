@@ -890,6 +890,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 							continue;
 						auto i = mksp<AEquipment>();
 						i->type = l;
+						i->ownerOrganisation = target_organisation;
 
 						auto bi = b->placeItem(state, i, pair.first + shift);
 					}
@@ -985,6 +986,11 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 			if (b->participants.find(a->owner) == b->participants.end())
 			{
 				b->participants.insert(a->owner);
+			}
+
+			for (auto i : a->equipment)
+			{
+				i->ownerOrganisation = a->owner;
 			}
 
 			auto u = b->placeUnit(state, a);

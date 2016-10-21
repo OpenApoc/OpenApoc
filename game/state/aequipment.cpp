@@ -6,6 +6,7 @@
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battleitem.h"
+#include "game/state/battle/battleunit.h"
 #include "game/state/city/projectile.h"
 #include "game/state/gamestate.h"
 #include "game/state/gamestate.h"
@@ -29,11 +30,13 @@ AEquipment::AEquipment()
 int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
                             WeaponAimingMode fireMode, bool thrown)
 {
-	if (!ownerAgent)
+	float accuracy = 0.0f;
+	auto agent = ownerAgent ? ownerAgent : (ownerUnit ? ownerUnit->agent : nullptr);
+	if (agent)
 	{
-		LogError("getAccuracy called on item not in agent's inventory!");
-		return 0;
+		accuracy = agent->modified_stats.accuracy;
 	}
+
 	StateRef<AEquipmentType> payload = getPayloadType();
 	if (!payload)
 	{
@@ -50,7 +53,7 @@ int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
 
 	// Take agent and weapon's accuracy
 
-	auto agentAccuracy = (float)ownerAgent->modified_stats.accuracy;
+	auto agentAccuracy = accuracy;
 	auto payloadAccuracy =
 	    type->type == AEquipmentType::Type::Weapon ? (float)payload->accuracy : 100.0f;
 
@@ -130,9 +133,9 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 	// If no ammoItem is supplied then look in the agent's inventory
 	if (!ammoItem)
 	{
-		if (equippedSlotType == AEquipmentSlotType::None)
+		if (!ownerAgent)
 		{
-			LogError("Trying to reload a weapon not in agent inventory!?");
+			LogError("Trying to auto-reload a weapon not in agent inventory!?");
 			return;
 		}
 		auto it = type->ammo_types.rbegin();
@@ -178,7 +181,7 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 		{
 			ownerItem->die(state, false);
 		}
-		else if (ownerAgent && equippedSlotType != AEquipmentSlotType::None)
+		else if (ownerAgent)
 		{
 			ownerAgent->removeEquipment(ammoItem);
 		}
@@ -214,77 +217,78 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 		}
 	}
 
-	// If firing - confirm we're still aiming
 	if (isFiring())
 	{
-		switch (ownerAgent->unit->target_hand_state)
+		// If firing - confirm we're still in inventory
+		// If firing - confirm we're still aiming
+		if (!ownerAgent || ownerAgent->unit->target_hand_state == HandState::AtEase)
 		{
-			// If aiming, changing into aiming, or firing, then we're fine
-			case HandState::Firing:
-			case HandState::Aiming:
-				break;
-			// Otherwise stop firing
-			default:
-				stopFiring();
+			stopFiring();
+		}
+		else
+		{
+			// If firing - confirm we're still attacking with it and it's in right place
+			switch (equippedSlotType)
+			{
+				// Check if we're still firing
+				case AEquipmentSlotType::LeftHand:
+					if (ownerAgent->unit->weaponStatus !=
+					        BattleUnit::WeaponStatus::FiringBothHands &&
+					    ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringLeftHand)
+					{
+						stopFiring();
+					}
+					else if (ownerAgent->unit->fire_aiming_mode != aimingMode)
+					{
+						startFiring(ownerAgent->unit->fire_aiming_mode);
+					}
+					break;
+				case AEquipmentSlotType::RightHand:
+					if (ownerAgent->unit->weaponStatus !=
+					        BattleUnit::WeaponStatus::FiringBothHands &&
+					    ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringRightHand)
+					{
+						stopFiring();
+					}
+					else if (ownerAgent->unit->fire_aiming_mode != aimingMode)
+					{
+						startFiring(ownerAgent->unit->fire_aiming_mode);
+					}
+					break;
+				// If weapon was moved to any other slot from hands, stop firing
+				default:
+					stopFiring();
+					break;
+			}
 		}
 	}
 
-	// If firing - confirm we're still attacking with it and it's in right place
-	if (isFiring())
-	{
-		switch (equippedSlotType)
-		{
-			// Check if we're still firing
-			case AEquipmentSlotType::LeftHand:
-				if (ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringBothHands &&
-				    ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringLeftHand)
-				{
-					stopFiring();
-				}
-				else if (ownerAgent->unit->fire_aiming_mode != aimingMode)
-				{
-					startFiring(ownerAgent->unit->fire_aiming_mode);
-				}
-				break;
-			case AEquipmentSlotType::RightHand:
-				if (ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringBothHands &&
-				    ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringRightHand)
-				{
-					stopFiring();
-				}
-				else if (ownerAgent->unit->fire_aiming_mode != aimingMode)
-				{
-					startFiring(ownerAgent->unit->fire_aiming_mode);
-				}
-				break;
-			// If weapon was dropped, we should stop firing
-			case AEquipmentSlotType::None:
-			// If weapon was moved to any other slot from hands, stop firing
-			default:
-				stopFiring();
-				break;
-		}
-	}
-
-	// If in use - confirm we're still in the right place
 	if (inUse)
 	{
-		switch (equippedSlotType)
+		// If in use - confirm we're still in agent's inventory
+		if (!ownerAgent)
 		{
-			case AEquipmentSlotType::LeftHand:
-			case AEquipmentSlotType::RightHand:
-				break;
-			case AEquipmentSlotType::None:
-			default:
-				inUse = false;
-				break;
+			inUse = false;
+		}
+		// If in use - confirm we're still in the right place
+		else
+		{
+			switch (equippedSlotType)
+			{
+				case AEquipmentSlotType::LeftHand:
+				case AEquipmentSlotType::RightHand:
+					break;
+				default:
+					inUse = false;
+					break;
+			}
 		}
 	}
 
 	// Process primed explosives
 	if (primed)
 	{
-		if (!activated && equippedSlotType == AEquipmentSlotType::None)
+		if (!activated && !ownerAgent)
 		{
 			activated = true;
 		}
@@ -379,8 +383,12 @@ void AEquipment::explode(GameState &state)
 	{
 		position = ownerAgent->unit->position;
 	}
-	if (equippedSlotType != AEquipmentSlotType::None)
+	if (ownerAgent)
 	{
+		if (!ownerUnit)
+		{
+			ownerUnit = ownerAgent->unit;
+		}
 		ownerAgent->removeEquipment(shared_from_this());
 	}
 	switch (type->type)
@@ -388,8 +396,49 @@ void AEquipment::explode(GameState &state)
 		case AEquipmentType::Type::Grenade:
 			state.current_battle->addExplosion(state, position, type->explosion_graphic,
 			                                   type->damage_type, type->damage,
-			                                   type->explosion_depletion_rate, ownerAgent->unit);
+			                                   type->explosion_depletion_rate, ownerUnit);
 			break;
+		case AEquipmentType::Type::Weapon:
+		case AEquipmentType::Type::Ammo:
+		{
+			auto payload = getPayloadType();
+			// If explosive just blow up
+			if (payload->damage_type->explosive)
+			{
+				state.current_battle->addExplosion(state, position, payload->explosion_graphic,
+				                                   payload->damage_type, payload->damage,
+				                                   payload->explosion_depletion_rate, ownerUnit);
+				break;
+			}
+			// Otherwise shoot stray shots into air
+			auto shots = std::min(ammo, (int)MAX_PAYLOAD_EXPLOSION_SHOTS);
+			auto bItem = ownerItem.lock();
+			if (!bItem)
+			{
+				LogError("WTF? Exploding ammo/weapon in agent inventory???");
+				break;
+			}
+			while (shots-- > 0)
+			{
+				auto velocity =
+				    Vec3<float>{(float)randBoundsInclusive(state.rng, -1000, 1000) / 1000.0f,
+				                (float)randBoundsInclusive(state.rng, -1000, 1000) / 1000.0f,
+				                (float)randBoundsInclusive(state.rng, 1, 1000) / 1000.0f};
+				velocity = glm::normalize(velocity);
+				velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;
+				auto p = mksp<Projectile>(payload->guided ? Projectile::Type::Missile
+				                                          : Projectile::Type::Beam,
+				                          ownerUnit, nullptr, Vec3<float>{0.0f, 0.0f, 0.0f},
+				                          position + Vec3<float>{0.0f, 0.0f, 0.33f}, velocity, 0,
+				                          payload->ttl * TICKS_MULTIPLIER, payload->damage,
+				                          payload->explosion_depletion_rate, payload->tail_size,
+				                          payload->projectile_sprites, payload->impact_sfx,
+				                          payload->explosion_graphic, payload->damage_type);
+				state.current_battle->map->addObjectToMap(p);
+				state.current_battle->projectiles.insert(p);
+			}
+			break;
+		}
 		default:
 			LogWarning("Implement blown up payload firing in all directions etc.");
 			break;
@@ -425,7 +474,7 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 		item->type = payload;
 		item->ammo = 1;
 		item->prime();
-		item->ownerAgent = ownerAgent;
+		item->ownerUnit = ownerAgent->unit;
 		float velocityXY = 0.0f;
 		float velocityZ = 0.0f;
 		if (!getVelocityForLaunch(*unit, targetPosition, velocityXY, velocityZ))
@@ -470,7 +519,7 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 void AEquipment::throwItem(GameState &state, Vec3<int> targetPosition, float velocityXY,
                            float velocityZ, bool launch)
 {
-	auto &unit = *ownerAgent->unit;
+	auto &unit = *ownerUnit;
 	Vec3<float> position = unit.getThrownItemLocation();
 	if (state.battle_common_sample_list->throwSounds.size() > 0)
 	{
@@ -498,7 +547,6 @@ void AEquipment::throwItem(GameState &state, Vec3<int> targetPosition, float vel
 	velocityZ *= targetVectorDifference;
 
 	auto bi = state.current_battle->placeItem(state, shared_from_this(), position);
-	ownerItem = bi;
 
 	bi->velocity =
 	    (glm::normalize(Vec3<float>{targetVectorModified.x, targetVectorModified.y, 0.0f}) *

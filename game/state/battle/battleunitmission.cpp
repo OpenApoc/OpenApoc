@@ -1295,10 +1295,10 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 			    u.target_body_state == BodyState::Throwing)
 			{
 				// Ensure item still belongs to agent
-				if (item->ownerAgent == u.agent &&
-				    item->equippedSlotType != AEquipmentSlotType::None)
+				if (item->ownerAgent == u.agent)
 				{
 					item->ownerAgent->removeEquipment(item);
+					item->ownerUnit = {&state, u.id};
 					item->throwItem(state, targetLocation, velocityXY, velocityZ);
 				}
 				item = nullptr;
@@ -1473,11 +1473,11 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 		}
 		case Type::DropItem:
 		{
-			if (item && item->ownerAgent == u.agent &&
-			    item->equippedSlotType != AEquipmentSlotType::None)
+			if (item && item->ownerAgent == u.agent)
 			{
 				// Remove item
 				item->ownerAgent->removeEquipment(item);
+				item->ownerUnit = {&state, u.id};
 				// Drop item
 				auto bi = state.current_battle->placeItem(state, item,
 				                                          u.position + Vec3<float>{0.0, 0.0, 0.5f});

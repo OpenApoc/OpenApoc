@@ -542,9 +542,22 @@ BattleView::BattleView(sp<GameState> gameState)
 	std::function<void(FormsEvent * e)> dropLeftHand = [this](Event *) { orderDrop(false); };
 
 	std::function<void(bool right)> throwItem = [this](bool right) {
-		if (this->battle.battleViewSelectedUnits.size() == 0 ||
-		    !(this->battle.battleViewSelectedUnits.front()->agent->getFirstItemInSlot(
-		        right ? AEquipmentSlotType::RightHand : AEquipmentSlotType::LeftHand)))
+		bool fail = false;
+		if (this->battle.battleViewSelectedUnits.size() == 0)
+		{
+			fail = true;
+		}
+		else
+		{
+			auto unit = this->battle.battleViewSelectedUnits.front();
+			if (!(unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
+			                                            : AEquipmentSlotType::LeftHand)) ||
+			    !unit->agent->type->inventory)
+			{
+				fail = true;
+			}
+		}
+		if (fail)
 		{
 			if (right)
 			{
@@ -556,8 +569,11 @@ BattleView::BattleView(sp<GameState> gameState)
 			}
 			return;
 		}
-		this->selectionState =
-		    right ? BattleSelectionState::ThrowRight : BattleSelectionState::ThrowLeft;
+		else
+		{
+			this->selectionState =
+			    right ? BattleSelectionState::ThrowRight : BattleSelectionState::ThrowLeft;
+		}
 	};
 
 	std::function<void(FormsEvent * e)> throwRightHand = [this, throwItem](Event *) {
@@ -1456,6 +1472,12 @@ void BattleView::orderDrop(bool right)
 		return;
 	}
 	auto unit = battle.battleViewSelectedUnits.front();
+
+	if (!unit->agent->type->inventory)
+	{
+		return;
+	}
+
 	auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
 	                                                  : AEquipmentSlotType::LeftHand);
 	if (item) // Drop item
@@ -1493,7 +1515,7 @@ void BattleView::orderSelect(StateRef<BattleUnit> u, bool inverse, bool additive
 	{
 		log += format("\n%s", m->getName());
 	}
-	log += format("\Seen units [%d]:", (int)u->visibleUnits.size());
+	log += format("\nSeen units [%d]:", (int)u->visibleUnits.size());
 	for (auto &unit : u->visibleUnits)
 	{
 		log += format("\n%s", unit.id);
