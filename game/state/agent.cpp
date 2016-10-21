@@ -707,4 +707,13 @@ StateRef<BattleUnitImagePack> Agent::getImagePack(BodyPart bodyPart) const
 		return it->second;
 	return nullptr;
 }
+
+void Agent::destroy()
+{
+	while (!equipment.empty())
+	{
+		this->removeEquipment(equipment.front());
+	}
+}
+
 } // namespace OpenApoc
