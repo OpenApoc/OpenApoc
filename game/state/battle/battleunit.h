@@ -29,10 +29,16 @@
 // How frequently unit tracks its target
 #define LOS_CHECK_INTERVAL_TRACKING 36
 
+// How far should unit spread information about seeing an enemy
+#define DISTANCE_TO_RELAY_VISIBLE_ENEMY_INFORMATION 5
+
+
 namespace OpenApoc
 {
 // FIXME: Seems to correspond to vanilla behavior, but ensure it's right
 static const unsigned TICKS_PER_UNIT_EFFECT = TICKS_PER_TURN;
+// Delay before unit will turn automatically again after doing it once
+static const unsigned AUTO_TURN_COOLDOWN = TICKS_PER_TURN;
 
 class TileObjectBattleUnit;
 class TileObjectShadow;
@@ -251,6 +257,9 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	void updateDisplayedItem();
 
 	std::set<StateRef<BattleUnit>> visibleUnits;
+	std::list<StateRef<BattleUnit>> visibleEnemies;
+
+	unsigned ticksUntilAutoTurnAvailable = 0;
 
 	// Returns true if the unit is dead
 	bool isDead() const;

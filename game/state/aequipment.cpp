@@ -425,7 +425,7 @@ void AEquipment::explode(GameState &state)
 				                (float)randBoundsInclusive(state.rng, -1000, 1000) / 1000.0f,
 				                (float)randBoundsInclusive(state.rng, 1, 1000) / 1000.0f};
 				velocity = glm::normalize(velocity);
-				velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;
+				velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER; 
 				auto p = mksp<Projectile>(payload->guided ? Projectile::Type::Missile
 				                                          : Projectile::Type::Beam,
 				                          ownerUnit, nullptr, Vec3<float>{0.0f, 0.0f, 0.0f},

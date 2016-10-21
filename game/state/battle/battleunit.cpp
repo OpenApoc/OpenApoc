@@ -136,6 +136,7 @@ void BattleUnit::updateUnitVision(GameState &state)
 	auto &map = *battle.map;
 	auto lastVisibleUnits = visibleUnits;
 	visibleUnits.clear();
+	visibleEnemies.clear();
 
 	// Vision is actually updated only if conscious, otherwise we clear visible units and that's it
 	if (isConscious())
@@ -293,12 +294,18 @@ void BattleUnit::updateUnitVision(GameState &state)
 		}
 	}
 
-	// Add newly visible units to owner's list
+	// Add newly visible units to owner's list and enemy list
 	for (auto vu : visibleUnits)
 	{
+		// owner's visible units list
 		if (lastVisibleUnits.find(vu) == lastVisibleUnits.end())
 		{
 			state.current_battle->visibleUnits[owner].insert(vu);
+		}
+		// units's visible enemies list
+		if (owner->isRelatedTo(vu->owner) == Organisation::Relation::Hostile)
+		{
+			visibleEnemies.push_back(vu);
 		}
 	}
 
@@ -324,6 +331,37 @@ void BattleUnit::updateUnitVision(GameState &state)
 			{
 				state.current_battle->visibleUnits[owner].erase(lvu);
 			}
+		}
+	}
+
+	// See if someone around us should turn to an enemy visible by us
+	if (!visibleEnemies.empty() && state.current_battle->mode == Battle::Mode::RealTime)
+	{
+		// Find closest visible enemy
+		auto it = visibleEnemies.begin();
+		auto closestEnemy = *it++;
+		float minDistance = glm::length(closestEnemy->position - position);
+		while (it != visibleEnemies.end())
+		{
+			auto enemy = *it++;
+			auto distance = glm::length(enemy->position - position);
+			if (distance < minDistance)
+			{
+				minDistance = distance;
+				closestEnemy = enemy;
+			}
+		}
+
+		for (auto u : state.current_battle->units)
+		{
+			if (u.second->ticksUntilAutoTurnAvailable > 0
+				|| u.second->owner != owner
+				|| !u.second->isConscious()
+				|| u.second->isBusy()
+				|| glm::length(position - u.second->position) > DISTANCE_TO_RELAY_VISIBLE_ENEMY_INFORMATION)
+				continue;
+			u.second->setMission(state, BattleUnitMission::turn(*u.second, closestEnemy->position));
+			u.second->ticksUntilAutoTurnAvailable = AUTO_TURN_COOLDOWN;
 		}
 	}
 }
@@ -530,9 +568,10 @@ bool BattleUnit::isStatic() const
 	return true;
 }
 
-bool BattleUnit::isBusy() const { return !isStatic() || isAttacking(); }
+bool BattleUnit::isBusy() const { return !missions.empty() || !visibleEnemies.empty() || isAttacking(); }
 
 bool BattleUnit::isAttacking() const { return weaponStatus != WeaponStatus::NotFiring; }
+
 bool BattleUnit::isThrowing() const
 {
 	bool throwing = false;
@@ -834,6 +873,13 @@ bool BattleUnit::handleCollision(GameState &state, Collision &c)
 	auto projectile = c.projectile.get();
 	if (projectile)
 	{
+		// Turn to attacker in real time
+		if (!isBusy() && isConscious() && state.current_battle->mode == Battle::Mode::RealTime && ticksUntilAutoTurnAvailable == 0)
+		{
+			setMission(state, BattleUnitMission::turn(*this, position - projectile->getVelocity()));
+			ticksUntilAutoTurnAvailable = AUTO_TURN_COOLDOWN;
+		}
+
 		return applyDamage(
 		    state, projectile->damage, projectile->damageType,
 		    determineBodyPartHit(projectile->damageType, c.position, projectile->getVelocity()));
@@ -863,6 +909,20 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 
 	// Update our stats and state
 	//
+
+	// Ticks until auto turning
+	if (ticksUntilAutoTurnAvailable > 0)
+	{
+		if (ticksUntilAutoTurnAvailable > ticks)
+		{
+			ticksUntilAutoTurnAvailable -= ticks;
+		}
+		else
+		{
+			ticksUntilAutoTurnAvailable = 0;
+		}
+	}
+
 
 	// FIXME: Regenerate stamina
 

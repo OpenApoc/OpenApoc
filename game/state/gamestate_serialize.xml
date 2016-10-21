@@ -545,6 +545,8 @@
 		<member>giveWayRequestData</member>
 		<member>displayedItem</member>
 		<member>visibleUnits</member>
+		<member>visibleEnemies</member>
+		<member>ticksUntilAutoTurnAvailable</member>
 	</object>
 	<object>
 		<name>BattleItem</name>
