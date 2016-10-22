@@ -37,7 +37,7 @@ class BattleHazard : public std::enable_shared_from_this<BattleHazard>
 	unsigned ticksUntilNextFrameChange = 0;
 	unsigned ticksUntilNextEffect = 0;
 
-	bool expand(GameState &state, const TileMap &map, const Vec3<int> &to, int ttl);
+	bool expand(GameState &state, const TileMap &map, const Vec3<int> &to, unsigned ttl);
 	void grow(GameState &state);
 	void applyEffect(GameState &state);
 	void die(GameState &state, bool violently = true);

@@ -1067,7 +1067,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 
 		// Fill up tiles
 		b->tileToLosBlock = std::vector<int>(b->size.x * b->size.y * b->size.z, 0);
-		for (int i = 0; i < b->los_blocks.size(); i++)
+		for (int i = 0; i < (int)b->los_blocks.size(); i++)
 		{
 			auto l = b->los_blocks[i];
 			for (int x = l->start.x; x < l->end.x; x++)

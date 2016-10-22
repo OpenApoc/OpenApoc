@@ -244,7 +244,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 	for (unsigned j = 0; j <= data_t.damage_type_names->count(); j++)
 	{
 		// extra enzyme entry for the purpose of implementing the entropy launcher
-		int i = j == data_t.damage_type_names->count() ? DT_ENTROPY : j;
+		unsigned i = j == data_t.damage_type_names->count() ? DT_ENTROPY : j;
 		auto d = mksp<DamageType>();
 
 		UString id = data_t.getDTypeId(i);
@@ -254,8 +254,8 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 			d->effectType = DamageType::EffectType::Enzyme;
 		}
 
-		d->ignore_shield =
-		    (i < data_t.damage_types->count()) && (data_t.damage_types->get(i).ignore_shield == 1);
+		d->ignore_shield = (i < (int)data_t.damage_types->count()) &&
+		                   (data_t.damage_types->get(i).ignore_shield == 1);
 
 		// Damage icons are located in tacdata icons, starting with id 14 and on
 		d->icon_sprite = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"

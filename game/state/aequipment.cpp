@@ -469,7 +469,6 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 
 	if (type->launcher)
 	{
-		auto unitPos = unit->getThrownItemLocation();
 		auto item = mksp<AEquipment>();
 		item->type = payload;
 		item->ammo = 1;

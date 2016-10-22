@@ -25,7 +25,7 @@ class HazardType : public StateObject<HazardType>
 	unsigned maxLifetime = 0;
 
 	// Get first frame used for age and offset
-	sp<Image> getFrame(int age, int offset);
+	sp<Image> getFrame(unsigned age, int offset);
 
 	// Get a random lifetime for the hazard of this type
 	int getLifetime(GameState &state);

@@ -86,7 +86,7 @@ int DamageType::dealDamage(int damage, StateRef<DamageModifier> modifier) const
 		return damage * modifiers.at(modifier) / 100;
 }
 
-sp<Image> HazardType::getFrame(int age, int offset)
+sp<Image> HazardType::getFrame(unsigned age, int offset)
 {
 	if (age >= maxLifetime)
 	{
@@ -94,7 +94,7 @@ sp<Image> HazardType::getFrame(int age, int offset)
 		return nullptr;
 	}
 	int frame = age * doodadType->frames.size() / maxLifetime;
-	while (frame + offset >= doodadType->frames.size())
+	while (frame + offset >= (int)doodadType->frames.size())
 		offset -= (doodadType->frames.size() - frame);
 	return doodadType->frames[frame + offset].image;
 }

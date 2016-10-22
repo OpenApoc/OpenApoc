@@ -609,10 +609,7 @@ bool BattleUnit::canKneel() const
 	return true;
 }
 
-void BattleUnit::addFatalWound(GameState &state, BodyPart fatalWoundPart)
-{
-	fatalWounds[fatalWoundPart]++;
-}
+void BattleUnit::addFatalWound(BodyPart fatalWoundPart) { fatalWounds[fatalWoundPart]++; }
 
 void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWounds,
                             BodyPart fatalWoundPart, int stunPower)
@@ -642,12 +639,12 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 		while (woundDamageRemaining > 10)
 		{
 			woundDamageRemaining -= 10;
-			addFatalWound(state, fatalWoundPart);
+			addFatalWound(fatalWoundPart);
 			fatal = true;
 		}
 		if (randBoundsExclusive(state.rng, 0, 10) < woundDamageRemaining)
 		{
-			addFatalWound(state, fatalWoundPart);
+			addFatalWound(fatalWoundPart);
 			fatal = true;
 		}
 	}
@@ -921,7 +918,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	{
 		bool unconscious = isUnconscious();
 		woundTicksAccumulated += ticks;
-		while (woundTicksAccumulated > TICKS_PER_UNIT_EFFECT)
+		while (woundTicksAccumulated >= TICKS_PER_UNIT_EFFECT)
 		{
 			woundTicksAccumulated -= TICKS_PER_UNIT_EFFECT;
 			for (auto &w : fatalWounds)
@@ -1206,19 +1203,18 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				{
 					auto muzzleLocation = getMuzzleLocation();
 					auto targetPosition = targetEnemy->tileObject->getVoxelCentrePosition();
-					auto cMap = map.findCollision(muzzleLocation, targetPosition, mapPartSet,
-						tileObject);
-					auto cUnit = map.findCollision(muzzleLocation, targetPosition, unitSet,
-						tileObject);
+					auto cMap =
+					    map.findCollision(muzzleLocation, targetPosition, mapPartSet, tileObject);
+					auto cUnit =
+					    map.findCollision(muzzleLocation, targetPosition, unitSet, tileObject);
 					if (cMap || (cUnit &&
-						owner->isRelatedTo(
-							std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)
-							->getUnit()
-							->owner) != Organisation::Relation::Hostile))
+					             owner->isRelatedTo(
+					                 std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)
+					                     ->getUnit()
+					                     ->owner) != Organisation::Relation::Hostile))
 					{
 						targetEnemy.clear();
 					}
-
 				}
 				// If can't attack focus or have no focus - take closest attackable
 				if (visibleUnits.find(targetEnemy) == visibleUnits.end())
@@ -1242,14 +1238,14 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						auto muzzleLocation = getMuzzleLocation();
 						auto targetPosition = entry.second->tileObject->getVoxelCentrePosition();
 						auto cMap = map.findCollision(muzzleLocation, targetPosition, mapPartSet,
-							tileObject);
-						auto cUnit = map.findCollision(muzzleLocation, targetPosition, unitSet,
-							tileObject);
+						                              tileObject);
+						auto cUnit =
+						    map.findCollision(muzzleLocation, targetPosition, unitSet, tileObject);
 						if (!cMap && (!cUnit ||
-							owner->isRelatedTo(
-								std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)
-								->getUnit()
-								->owner) == Organisation::Relation::Hostile))
+						              owner->isRelatedTo(
+						                  std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)
+						                      ->getUnit()
+						                      ->owner) == Organisation::Relation::Hostile))
 						{
 							targetEnemy = entry.second;
 							break;
@@ -1264,7 +1260,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				}
 				else
 				{
-					// If all of our targets are not attackable then snooze for a bit before re-trying
+					// If all of our targets are not attackable then snooze for a bit before
+					// re-trying
 					setMission(state, BattleUnitMission::snooze(*this, TICKS_PER_SECOND / 4));
 				}
 			}
@@ -1798,8 +1795,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					{
 						auto cMap = map.findCollision(muzzleLocation, targetPosition, mapPartSet,
 						                              tileObject);
-						auto cUnit = map.findCollision(muzzleLocation, targetPosition, unitSet,
-						                               tileObject);
+						auto cUnit =
+						    map.findCollision(muzzleLocation, targetPosition, unitSet, tileObject);
 						// Target is conscious, shot won't hit a map part, shot won't hit a
 						// non-hostile unit
 						canFire = canFire && targetUnit->isConscious() && !cMap &&
@@ -2262,6 +2259,7 @@ void BattleUnit::retreat(GameState &state)
 
 void BattleUnit::die(GameState &state, bool violently, bool bledToDeath)
 {
+	std::ignore = bledToDeath;
 	if (violently)
 	{
 		// FIXME: Explode if nessecary, or spawn shit
@@ -2537,6 +2535,7 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission::Type type)
 			return addMission(state, BattleUnitMission::restartNextMission(*this));
 		case BattleUnitMission::Type::ReachGoal:
 			return addMission(state, BattleUnitMission::reachGoal(*this));
+		case BattleUnitMission::Type::DropItem:
 		case BattleUnitMission::Type::ThrowItem:
 		case BattleUnitMission::Type::Snooze:
 		case BattleUnitMission::Type::ChangeBodyState:
@@ -2634,23 +2633,21 @@ bool BattleUnit::setMission(GameState &state, BattleUnitMission *mission)
 		return false;
 	}
 
-	if (!agent->type->inventory)
-	{
-		if (mission->type == BattleUnitMission::Type::DropItem ||
-		    mission->type == BattleUnitMission::Type::ThrowItem)
-		{
-			return false;
-		}
-	}
-
 	// Special checks and actions based on mission type
 	switch (mission->type)
 	{
 		case BattleUnitMission::Type::Turn:
 			stopAttacking();
 			break;
+		case BattleUnitMission::Type::DropItem:
 		case BattleUnitMission::Type::ThrowItem:
-			// We already checked if item is throwable inside the mission creation
+			if (!agent->type->inventory)
+			{
+				return false;
+			}
+			break;
+		default:
+			// Nothing to check for in other missions
 			break;
 	}
 
@@ -2949,7 +2946,7 @@ void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &se
 		auto curUnit = *itUnit;
 		log += format("\nTrying unit %s for leader", curUnit.id);
 
-		auto mission = BattleUnitMission::gotoLocation(*curUnit, targetLocation);
+		auto mission = BattleUnitMission::gotoLocation(*curUnit, targetLocation, 0, demandGiveWay);
 		bool missionAdded = curUnit->setMission(state, mission);
 		if (missionAdded)
 		{

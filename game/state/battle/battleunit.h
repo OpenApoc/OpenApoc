@@ -141,11 +141,11 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Is using a medikit
 	bool isHealing = false;
 	// Ticks until next wound damage or medikit heal is applied
-	int woundTicksAccumulated = 0;
+	unsigned woundTicksAccumulated = 0;
 	// Stun damage acquired
 	int stunDamageInTicks = 0;
 	int getStunDamage() const;
-	void addFatalWound(GameState &state, BodyPart fatalWoundPart);
+	void addFatalWound(BodyPart fatalWoundPart);
 	void dealDamage(GameState &state, int damage, bool generateFatalWounds, BodyPart fatalWoundPart,
 	                int stunPower);
 
