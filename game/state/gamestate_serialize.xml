@@ -130,6 +130,8 @@
 		<member>equippedPosition</member>
 		<member>equippedSlotType</member>
 		<member>ownerAgent</member>
+		<member>ownerOrganisation</member>
+		<member>ownerUnit</member>
 		<member>ammo</member>
 		<member>primed</member>
 		<member>activated</member>
@@ -375,6 +377,7 @@
 		<member>visibleTiles</member>
 		<member>visibleBlocks</member>
 		<member>visibleUnits</member>
+		<member>visibleEnemies</member>
 		<member>tilesChangedForVision</member>
 		<member>mission_type</member>
 		<member>mission_location_id</member>
@@ -543,6 +546,8 @@
 		<member>giveWayRequestData</member>
 		<member>displayedItem</member>
 		<member>visibleUnits</member>
+		<member>visibleEnemies</member>
+		<member>ticksUntilAutoTurnAvailable</member>
 	</object>
 	<object>
 		<name>BattleItem</name>
@@ -1260,7 +1265,6 @@
 	</enum>
 	<enum>
 		<name>AEquipmentSlotType</name>
-		<value>None</value>
 		<value>General</value>
 		<value>ArmorBody</value>
 		<value>ArmorLegs</value>

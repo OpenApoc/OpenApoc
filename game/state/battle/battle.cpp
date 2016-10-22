@@ -70,22 +70,23 @@ Battle::~Battle()
 		s->tileObject = nullptr;
 	}
 	this->map_parts.clear();
-	for (auto &s : this->visibleUnits)
+	for (auto &u : this->visibleUnits)
 	{
-		s.second.clear();
+		u.second.clear();
 	}
 	for (auto &u : this->units)
 	{
 		u.second->agent->unit.clear();
 		u.second->visibleUnits.clear();
 	}
-	for (auto &s : this->items)
+	for (auto &i : this->items)
 	{
-		if (s->tileObject)
-			s->tileObject->removeFromMap();
-		if (s->shadowObject)
-			s->shadowObject->removeFromMap();
-		s->tileObject = nullptr;
+		if (i->tileObject)
+			i->tileObject->removeFromMap();
+		if (i->shadowObject)
+			i->shadowObject->removeFromMap();
+		i->tileObject = nullptr;
+		i->item->ownerUnit.clear();
 	}
 	this->items.clear();
 	this->doors.clear();
@@ -415,6 +416,7 @@ sp<BattleItem> Battle::placeItem(GameState &state, sp<AEquipment> item, Vec3<flo
 	auto bitem = mksp<BattleItem>();
 	bitem->strategySprite = state.battle_common_image_list->strategyImages->at(480);
 	bitem->item = item;
+	item->ownerItem = bitem;
 	bitem->position = position;
 	if (map)
 	{
@@ -481,7 +483,24 @@ void Battle::update(GameState &state, unsigned int ticks)
 		auto c = p->checkProjectileCollision(*map);
 		if (c)
 		{
-			// FIXME: Handle collision
+			// Alert intended unit that he's on fire!
+			auto unit = c.projectile->trackedUnit;
+			if (unit &&
+			    unit->visibleUnits.find(c.projectile->firerUnit) == unit->visibleUnits.end())
+			{
+				LogWarning("Notify: unit %s that he's taking fire",
+				           c.projectile->trackedUnit.id.cStr());
+				// Turn to attacker in real time
+				if (!unit->isBusy() && unit->isConscious() &&
+				    state.current_battle->mode == Battle::Mode::RealTime &&
+				    unit->ticksUntilAutoTurnAvailable == 0)
+				{
+					unit->setMission(
+					    state, BattleUnitMission::turn(*unit, c.projectile->firerUnit->position));
+					unit->ticksUntilAutoTurnAvailable = AUTO_TURN_COOLDOWN;
+				}
+			}
+			// Handle collision
 			this->projectiles.erase(c.projectile);
 			bool playSound = true;
 			bool displayDoodad = true;

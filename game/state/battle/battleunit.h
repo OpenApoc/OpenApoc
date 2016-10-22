@@ -21,17 +21,21 @@
 #define UNITS_TRAVELLED_PER_SOUND_RUNNING_DIVISOR 2
 // This defines how fast a flying unit accelerates to full speed
 #define FLYING_ACCELERATION_DIVISOR 2
-
+// A bit faster than items
 #define FALLING_ACCELERATION_UNIT 0.16666667f // 1/6th
-
+// Unit's sight range max
 #define LOS_RANGE 20
-
-#define LOS_CHECK_INTERVAL_TRACKING 36
+// How far should unit spread information about seeing an enemy
+#define DISTANCE_TO_RELAY_VISIBLE_ENEMY_INFORMATION 5
 
 namespace OpenApoc
 {
 // FIXME: Seems to correspond to vanilla behavior, but ensure it's right
 static const unsigned TICKS_PER_UNIT_EFFECT = TICKS_PER_TURN;
+// Delay before unit will turn automatically again after doing it once
+static const unsigned AUTO_TURN_COOLDOWN = TICKS_PER_TURN;
+// How frequently unit tracks its target
+static const unsigned LOS_CHECK_INTERVAL_TRACKING = TICKS_PER_SECOND / 4;
 
 class TileObjectBattleUnit;
 class TileObjectShadow;
@@ -137,11 +141,11 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Is using a medikit
 	bool isHealing = false;
 	// Ticks until next wound damage or medikit heal is applied
-	int woundTicksAccumulated = 0;
+	unsigned woundTicksAccumulated = 0;
 	// Stun damage acquired
 	int stunDamageInTicks = 0;
 	int getStunDamage() const;
-	void addFatalWound(GameState &state, BodyPart fatalWoundPart);
+	void addFatalWound(BodyPart fatalWoundPart);
 	void dealDamage(GameState &state, int damage, bool generateFatalWounds, BodyPart fatalWoundPart,
 	                int stunPower);
 
@@ -250,6 +254,9 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	void updateDisplayedItem();
 
 	std::set<StateRef<BattleUnit>> visibleUnits;
+	std::list<StateRef<BattleUnit>> visibleEnemies;
+
+	unsigned ticksUntilAutoTurnAvailable = 0;
 
 	// Returns true if the unit is dead
 	bool isDead() const;
@@ -356,10 +363,10 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// - unit changes "cloaked" flag
 
 	// Update unit's vision of other units and terrain
-	void updateUnitVisibility(GameState &state);
+	void updateUnitVisibility(GameState &state, Vec3<float> oldPosition);
 	// Update other units's vision of this unit
 	void updateUnitVision(GameState &state);
 	// Update both this unit's vision and other unit's vision of this unit
-	void updateUnitVisibilityAndVision(GameState &state);
+	void updateUnitVisibilityAndVision(GameState &state, Vec3<float> oldPosition);
 };
 }

@@ -48,7 +48,7 @@ void BattleHazard::die(GameState &state, bool violently)
 	}
 }
 
-bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> &to, int ttl)
+bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> &to, unsigned ttl)
 {
 	// list of coordinates to check
 	static const std::map<Vec3<int>, std::list<std::pair<Vec3<int>, std::set<TileObject::Type>>>>

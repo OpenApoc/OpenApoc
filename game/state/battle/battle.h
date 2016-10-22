@@ -77,6 +77,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	std::map<StateRef<Organisation>, std::vector<bool>> visibleTiles;
 	std::map<StateRef<Organisation>, std::vector<bool>> visibleBlocks;
 	std::map<StateRef<Organisation>, std::set<StateRef<BattleUnit>>> visibleUnits;
+	std::map<StateRef<Organisation>, std::set<StateRef<BattleUnit>>> visibleEnemies;
 
 	int getLosBlockID(int x, int y, int z) const;
 	bool getVisible(StateRef<Organisation> org, int x, int y, int z) const;

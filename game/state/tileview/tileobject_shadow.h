@@ -21,11 +21,12 @@ class TileObjectShadow : public TileObject
 	Vec3<float> getPosition() const override;
 	void addToDrawnTiles(Tile *tile) override;
 
-  private:
-	friend class TileMap;
 	wp<Vehicle> ownerVehicle;
 	wp<BattleUnit> ownerBattleUnit;
 	wp<BattleItem> ownerBattleItem;
+
+  private:
+	friend class TileMap;
 	TileObjectShadow(TileMap &map, sp<Vehicle> owner);
 	TileObjectShadow(TileMap &map, sp<BattleUnit> owner);
 	TileObjectShadow(TileMap &map, sp<BattleItem> item);

@@ -542,9 +542,22 @@ BattleView::BattleView(sp<GameState> gameState)
 	std::function<void(FormsEvent * e)> dropLeftHand = [this](Event *) { orderDrop(false); };
 
 	std::function<void(bool right)> throwItem = [this](bool right) {
-		if (this->battle.battleViewSelectedUnits.size() == 0 ||
-		    !(this->battle.battleViewSelectedUnits.front()->agent->getFirstItemInSlot(
-		        right ? AEquipmentSlotType::RightHand : AEquipmentSlotType::LeftHand)))
+		bool fail = false;
+		if (this->battle.battleViewSelectedUnits.size() == 0)
+		{
+			fail = true;
+		}
+		else
+		{
+			auto unit = this->battle.battleViewSelectedUnits.front();
+			if (!(unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
+			                                            : AEquipmentSlotType::LeftHand)) ||
+			    !unit->agent->type->inventory)
+			{
+				fail = true;
+			}
+		}
+		if (fail)
 		{
 			if (right)
 			{
@@ -556,8 +569,11 @@ BattleView::BattleView(sp<GameState> gameState)
 			}
 			return;
 		}
-		this->selectionState =
-		    right ? BattleSelectionState::ThrowRight : BattleSelectionState::ThrowLeft;
+		else
+		{
+			this->selectionState =
+			    right ? BattleSelectionState::ThrowRight : BattleSelectionState::ThrowLeft;
+		}
 	};
 
 	std::function<void(FormsEvent * e)> throwRightHand = [this, throwItem](Event *) {
@@ -1456,6 +1472,12 @@ void BattleView::orderDrop(bool right)
 		return;
 	}
 	auto unit = battle.battleViewSelectedUnits.front();
+
+	if (!unit->agent->type->inventory)
+	{
+		return;
+	}
+
 	auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
 	                                                  : AEquipmentSlotType::LeftHand);
 	if (item) // Drop item
@@ -1673,7 +1695,8 @@ void BattleView::eventOccurred(Event *e)
 	     e->keyboard().KeyCode == SDLK_SPACE || e->keyboard().KeyCode == SDLK_RSHIFT ||
 	     e->keyboard().KeyCode == SDLK_LSHIFT || e->keyboard().KeyCode == SDLK_RALT ||
 	     e->keyboard().KeyCode == SDLK_LALT || e->keyboard().KeyCode == SDLK_RCTRL ||
-	     e->keyboard().KeyCode == SDLK_LCTRL || e->keyboard().KeyCode == SDLK_f))
+	     e->keyboard().KeyCode == SDLK_LCTRL || e->keyboard().KeyCode == SDLK_f
+			|| e->keyboard().KeyCode == SDLK_r))
 	{
 		switch (e->keyboard().KeyCode)
 		{
@@ -1742,8 +1765,19 @@ void BattleView::eventOccurred(Event *e)
 						BattleMapPart::attemptReLinkSupports(set);
 					}
 				}
+				break;
 			}
-			break;
+			case SDLK_r:
+			{
+				for (auto &entry : battle.visibleTiles)
+				{
+					for (unsigned i = 0;i < entry.second.size();i++)
+					{
+						entry.second[i] = true;
+					}
+				}
+				break;
+			}
 		}
 	}
 	else if (e->type() == EVENT_MOUSE_MOVE)

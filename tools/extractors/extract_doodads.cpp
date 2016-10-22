@@ -228,7 +228,7 @@ void InitialGameStateExtractor::extractDoodads(GameState &state)
 				d->lifetime = (int)indexes.size() * frameTTL * ttlmult;
 				d->repeatable = false;
 
-				for (int frame = 0; frame < indexes.size(); frame++)
+				for (int frame = 0; frame < (int)indexes.size(); frame++)
 				{
 					int idx = indexes[frame] + facing;
 

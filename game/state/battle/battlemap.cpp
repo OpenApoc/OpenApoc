@@ -890,6 +890,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 							continue;
 						auto i = mksp<AEquipment>();
 						i->type = l;
+						i->ownerOrganisation = target_organisation;
 
 						auto bi = b->placeItem(state, i, pair.first + shift);
 					}
@@ -987,6 +988,11 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				b->participants.insert(a->owner);
 			}
 
+			for (auto i : a->equipment)
+			{
+				i->ownerOrganisation = a->owner;
+			}
+
 			auto u = b->placeUnit(state, a);
 
 			u->agent->unit = {&state, u->id};
@@ -1061,7 +1067,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 
 		// Fill up tiles
 		b->tileToLosBlock = std::vector<int>(b->size.x * b->size.y * b->size.z, 0);
-		for (int i = 0; i < b->los_blocks.size(); i++)
+		for (int i = 0; i < (int)b->los_blocks.size(); i++)
 		{
 			auto l = b->los_blocks[i];
 			for (int x = l->start.x; x < l->end.x; x++)
