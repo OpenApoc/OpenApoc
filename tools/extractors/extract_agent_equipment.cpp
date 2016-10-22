@@ -254,7 +254,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 			d->effectType = DamageType::EffectType::Enzyme;
 		}
 
-		d->ignore_shield = (i < (int)data_t.damage_types->count()) &&
+		d->ignore_shield = (i < data_t.damage_types->count()) &&
 		                   (data_t.damage_types->get(i).ignore_shield == 1);
 
 		// Damage icons are located in tacdata icons, starting with id 14 and on

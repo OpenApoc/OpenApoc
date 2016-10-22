@@ -943,7 +943,7 @@ void BattleTileView::render()
 										    battle.currentPlayer->isRelatedTo(u->owner) ==
 										    Organisation::Relation::Hostile;
 
-										unitsToDraw.emplace_back(obj, visible,
+										unitsToDraw.emplace_back(obj, objectVisible,
 										                         obj->getOwningTile()->position.z -
 										                             (battle.battleViewZLevel - 1),
 										                         friendly, hostile);
