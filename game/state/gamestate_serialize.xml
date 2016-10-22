@@ -377,6 +377,7 @@
 		<member>visibleTiles</member>
 		<member>visibleBlocks</member>
 		<member>visibleUnits</member>
+		<member>visibleEnemies</member>
 		<member>tilesChangedForVision</member>
 		<member>mission_type</member>
 		<member>mission_location_id</member>

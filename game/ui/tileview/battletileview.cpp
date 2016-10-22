@@ -18,6 +18,7 @@
 #include "game/state/tileview/tileobject_battleitem.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"
+#include "game/state/tileview/tileobject_shadow.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc
@@ -506,54 +507,78 @@ void BattleTileView::render()
 								bool friendly = false;
 								bool hostile = false;
 								bool objectVisible = visible;
-								if (obj->getType() == TileObject::Type::Unit)
+								switch (obj->getType())
 								{
-									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
-									             ->getUnit();
-									objectVisible =
-									    !u->isConscious() || u->owner == battle.currentPlayer ||
-									    battle.visibleUnits.at(battle.currentPlayer)
-									            .find({&state, u->id}) !=
-									        battle.visibleUnits.at(battle.currentPlayer).end();
-									friendly = u->owner == battle.currentPlayer;
-									hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
-									          Organisation::Relation::Hostile;
-									if (!battle.battleViewSelectedUnits.empty())
+									case TileObject::Type::Shadow:
 									{
-										auto selectedPos =
-										    std::find(battle.battleViewSelectedUnits.begin(),
-										              battle.battleViewSelectedUnits.end(), u);
+										auto s = std::static_pointer_cast<TileObjectShadow>(obj);
+										auto u = s->ownerBattleUnit.lock();
+										if (u)
+										{
+											objectVisible =
+											    !u->isConscious() ||
+											    u->owner == battle.currentPlayer ||
+											    battle.visibleUnits.at(battle.currentPlayer)
+											            .find({&state, u->id}) !=
+											        battle.visibleUnits.at(battle.currentPlayer)
+											            .end();
+										}
+										break;
+									}
+									case TileObject::Type::Unit:
+									{
+										auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
+										             ->getUnit();
+										objectVisible =
+										    !u->isConscious() || u->owner == battle.currentPlayer ||
+										    battle.visibleUnits.at(battle.currentPlayer)
+										            .find({&state, u->id}) !=
+										        battle.visibleUnits.at(battle.currentPlayer).end();
+										friendly = u->owner == battle.currentPlayer;
+										hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
+										          Organisation::Relation::Hostile;
+										if (!battle.battleViewSelectedUnits.empty())
+										{
+											auto selectedPos =
+											    std::find(battle.battleViewSelectedUnits.begin(),
+											              battle.battleViewSelectedUnits.end(), u);
 
-										if (selectedPos == battle.battleViewSelectedUnits.begin())
-										{
-											unitsToDrawSelectionArrows.push_back({u, true});
-										}
-										else if (selectedPos !=
-										         battle.battleViewSelectedUnits.end())
-										{
-											unitsToDrawSelectionArrows.push_back({u, false});
-										}
-										// If visible and focused by selected - draw focus arrows
-										if (objectVisible)
-										{
-											bool focusedBySelectedUnits = false;
-											for (auto su : battle.battleViewSelectedUnits)
+											if (selectedPos ==
+											    battle.battleViewSelectedUnits.begin())
 											{
-												if (std::find(u->focusedByUnits.begin(),
-												              u->focusedByUnits.end(),
-												              su) != u->focusedByUnits.end())
+												unitsToDrawSelectionArrows.push_back({u, true});
+											}
+											else if (selectedPos !=
+											         battle.battleViewSelectedUnits.end())
+											{
+												unitsToDrawSelectionArrows.push_back({u, false});
+											}
+											// If visible and focused by selected - draw focus
+											// arrows
+											if (objectVisible)
+											{
+												bool focusedBySelectedUnits = false;
+												for (auto su : battle.battleViewSelectedUnits)
 												{
-													focusedBySelectedUnits = true;
-													break;
+													if (std::find(u->focusedByUnits.begin(),
+													              u->focusedByUnits.end(),
+													              su) != u->focusedByUnits.end())
+													{
+														focusedBySelectedUnits = true;
+														break;
+													}
+												}
+												if (focusedBySelectedUnits)
+												{
+													unitsToDrawFocusArrows.push_back(
+													    {obj, u->isLarge()});
 												}
 											}
-											if (focusedBySelectedUnits)
-											{
-												unitsToDrawFocusArrows.push_back(
-												    {obj, u->isLarge()});
-											}
 										}
+										break;
 									}
+									default:
+										break;
 								}
 								Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
 								obj->draw(r, *this, pos, this->viewMode, objectVisible,
@@ -631,75 +656,93 @@ void BattleTileView::render()
 								bool friendly = false;
 								bool hostile = false;
 								bool draw = false;
-								if ((obj->getType() == TileObject::Type::Unit &&
-								     obj->getPosition().z < zTo))
+								switch (obj->getType())
 								{
-									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
-									             ->getUnit();
-									objectVisible =
-									    !u->isConscious() || u->owner == battle.currentPlayer ||
-									    battle.visibleUnits.at(battle.currentPlayer)
-									            .find({&state, u->id}) !=
-									        battle.visibleUnits.at(battle.currentPlayer).end();
-									friendly = u->owner == battle.currentPlayer;
-									hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
-									          Organisation::Relation::Hostile;
-									draw = true;
-									if (!battle.battleViewSelectedUnits.empty())
+									case TileObject::Type::Unit:
 									{
-										auto selectedPos =
-										    std::find(battle.battleViewSelectedUnits.begin(),
-										              battle.battleViewSelectedUnits.end(), u);
-
-										if (selectedPos == battle.battleViewSelectedUnits.begin())
+										if (obj->getPosition().z < zTo)
 										{
-											unitsToDrawSelectionArrows.push_back({u, true});
-										}
-										else if (selectedPos !=
-										         battle.battleViewSelectedUnits.end())
-										{
-											unitsToDrawSelectionArrows.push_back({u, false});
-										}
-										// If visible and focused - draw focus arrows
-										if (objectVisible)
-										{
-											bool focusedBySelectedUnits = false;
-											for (auto su : battle.battleViewSelectedUnits)
+											auto u =
+											    std::static_pointer_cast<TileObjectBattleUnit>(obj)
+											        ->getUnit();
+											objectVisible =
+											    !u->isConscious() ||
+											    u->owner == battle.currentPlayer ||
+											    battle.visibleUnits.at(battle.currentPlayer)
+											            .find({&state, u->id}) !=
+											        battle.visibleUnits.at(battle.currentPlayer)
+											            .end();
+											friendly = u->owner == battle.currentPlayer;
+											hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
+											          Organisation::Relation::Hostile;
+											draw = true;
+											if (!battle.battleViewSelectedUnits.empty())
 											{
-												if (std::find(u->focusedByUnits.begin(),
-												              u->focusedByUnits.end(),
-												              su) != u->focusedByUnits.end())
+												auto selectedPos = std::find(
+												    battle.battleViewSelectedUnits.begin(),
+												    battle.battleViewSelectedUnits.end(), u);
+
+												if (selectedPos ==
+												    battle.battleViewSelectedUnits.begin())
 												{
-													focusedBySelectedUnits = true;
-													break;
+													unitsToDrawSelectionArrows.push_back({u, true});
+												}
+												else if (selectedPos !=
+												         battle.battleViewSelectedUnits.end())
+												{
+													unitsToDrawSelectionArrows.push_back(
+													    {u, false});
+												}
+												// If visible and focused - draw focus arrows
+												if (objectVisible)
+												{
+													bool focusedBySelectedUnits = false;
+													for (auto su : battle.battleViewSelectedUnits)
+													{
+														if (std::find(u->focusedByUnits.begin(),
+														              u->focusedByUnits.end(),
+														              su) !=
+														    u->focusedByUnits.end())
+														{
+															focusedBySelectedUnits = true;
+															break;
+														}
+													}
+													if (focusedBySelectedUnits)
+													{
+														unitsToDrawFocusArrows.push_back(
+														    {obj, u->isLarge()});
+													}
 												}
 											}
-											if (focusedBySelectedUnits)
-											{
-												unitsToDrawFocusArrows.push_back(
-												    {obj, u->isLarge()});
-											}
 										}
+										break;
 									}
-								}
-								if (obj->getType() == TileObject::Type::Item)
-								{
-									draw = std::static_pointer_cast<TileObjectBattleItem>(obj)
-									           ->getItem()
-									           ->falling;
-								}
-								if (obj->getType() == TileObject::Type::Projectile)
-								{
-									draw = true;
-								}
-								if (obj->getType() == TileObject::Type::Ground ||
-								    obj->getType() == TileObject::Type::LeftWall ||
-								    obj->getType() == TileObject::Type::RightWall ||
-								    obj->getType() == TileObject::Type::Feature)
-								{
-									draw = std::static_pointer_cast<TileObjectBattleMapPart>(obj)
-									           ->getOwner()
-									           ->falling;
+									case TileObject::Type::Item:
+									{
+										draw = std::static_pointer_cast<TileObjectBattleItem>(obj)
+										           ->getItem()
+										           ->falling;
+										break;
+									}
+									case TileObject::Type::Projectile:
+									{
+										draw = true;
+										break;
+									}
+									case TileObject::Type::Ground:
+									case TileObject::Type::LeftWall:
+									case TileObject::Type::RightWall:
+									case TileObject::Type::Feature:
+									{
+										draw =
+										    std::static_pointer_cast<TileObjectBattleMapPart>(obj)
+										        ->getOwner()
+										        ->falling;
+										break;
+									}
+									default:
+										break;
 								}
 								if (draw)
 								{
@@ -813,10 +856,11 @@ void BattleTileView::render()
 		break;
 		case TileViewMode::Strategy:
 		{
-			// Bools are visible, friendly, hostile
+			// Bools are: visible, friendly, hostile
 			std::list<std::tuple<sp<TileObject>, bool, int, bool, bool>> unitsToDraw;
 			std::list<std::tuple<sp<TileObject>, bool, int>> itemsToDraw;
 
+			// Gather units below current level
 			for (int z = 0; z < zFrom; z++)
 			{
 				for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
@@ -831,23 +875,30 @@ void BattleTileView::render()
 							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 							{
 								auto &obj = tile->drawnObjects[layer][obj_id];
-								if (obj->getType() == TileObject::Type::Unit)
+								switch (obj->getType())
 								{
-									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
-									             ->getUnit();
-									bool objectVisible =
-									    !u->isConscious() || u->owner == battle.currentPlayer ||
-									    battle.visibleUnits.at(battle.currentPlayer)
-									            .find({&state, u->id}) !=
-									        battle.visibleUnits.at(battle.currentPlayer).end();
-									bool friendly = u->owner == battle.currentPlayer;
-									bool hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
-									               Organisation::Relation::Hostile;
+									case TileObject::Type::Unit:
+									{
+										auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
+										             ->getUnit();
+										bool objectVisible =
+										    !u->isConscious() || u->owner == battle.currentPlayer ||
+										    battle.visibleUnits.at(battle.currentPlayer)
+										            .find({&state, u->id}) !=
+										        battle.visibleUnits.at(battle.currentPlayer).end();
+										bool friendly = u->owner == battle.currentPlayer;
+										bool hostile =
+										    battle.currentPlayer->isRelatedTo(u->owner) ==
+										    Organisation::Relation::Hostile;
 
-									unitsToDraw.emplace_back(obj, objectVisible,
-									                         obj->getOwningTile()->position.z -
-									                             (battle.battleViewZLevel - 1),
-									                         friendly, hostile);
+										unitsToDraw.emplace_back(obj, objectVisible,
+										                         obj->getOwningTile()->position.z -
+										                             (battle.battleViewZLevel - 1),
+										                         friendly, hostile);
+										break;
+									}
+									default:
+										break;
 								}
 							}
 						}
@@ -855,6 +906,8 @@ void BattleTileView::render()
 				}
 			}
 
+			// Draw everything but units and items
+			// Gather units and items on current level
 			for (int z = zFrom; z < zTo; z++)
 			{
 				// currentZLevel is an upper exclusive boundary, that's why we need to sub 1 here
@@ -874,36 +927,41 @@ void BattleTileView::render()
 							{
 								auto &obj = tile->drawnObjects[layer][obj_id];
 								bool objectVisible = visible;
-								if (obj->getType() == TileObject::Type::Unit)
+								switch (obj->getType())
 								{
-									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
-									             ->getUnit();
-									objectVisible =
-									    !u->isConscious() || u->owner == battle.currentPlayer ||
-									    battle.visibleUnits.at(battle.currentPlayer)
-									            .find({&state, u->id}) !=
-									        battle.visibleUnits.at(battle.currentPlayer).end();
-									bool friendly = u->owner == battle.currentPlayer;
-									bool hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
-									               Organisation::Relation::Hostile;
-
-									unitsToDraw.emplace_back(obj, visible,
-									                         obj->getOwningTile()->position.z -
-									                             (battle.battleViewZLevel - 1),
-									                         friendly, hostile);
-									continue;
-								}
-								else if (obj->getType() == TileObject::Type::Item)
-								{
-									if (currentLevel == 0)
+									case TileObject::Type::Unit:
 									{
-										itemsToDraw.emplace_back(obj, visible,
-										                         obj->getOwningTile()->position.z -
-										                             (battle.battleViewZLevel - 1));
-									}
-									continue;
-								}
+										auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
+										             ->getUnit();
+										objectVisible =
+										    !u->isConscious() || u->owner == battle.currentPlayer ||
+										    battle.visibleUnits.at(battle.currentPlayer)
+										            .find({&state, u->id}) !=
+										        battle.visibleUnits.at(battle.currentPlayer).end();
+										bool friendly = u->owner == battle.currentPlayer;
+										bool hostile =
+										    battle.currentPlayer->isRelatedTo(u->owner) ==
+										    Organisation::Relation::Hostile;
 
+										unitsToDraw.emplace_back(obj, visible,
+										                         obj->getOwningTile()->position.z -
+										                             (battle.battleViewZLevel - 1),
+										                         friendly, hostile);
+										continue;
+									}
+									case TileObject::Type::Item:
+									{
+										if (currentLevel == 0)
+										{
+											itemsToDraw.emplace_back(
+											    obj, visible, obj->getOwningTile()->position.z -
+											                      (battle.battleViewZLevel - 1));
+										}
+										continue;
+									}
+									default:
+										break;
+								}
 								Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
 								obj->draw(r, *this, pos, this->viewMode, objectVisible,
 								          currentLevel);
@@ -913,6 +971,7 @@ void BattleTileView::render()
 				}
 			}
 
+			// Gather units above current level
 			for (int z = zTo; z < maxZDraw; z++)
 			{
 				for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
@@ -927,23 +986,30 @@ void BattleTileView::render()
 							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 							{
 								auto &obj = tile->drawnObjects[layer][obj_id];
-								if (obj->getType() == TileObject::Type::Unit)
+								switch (obj->getType())
 								{
-									auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
-									             ->getUnit();
-									bool objectVisible =
-									    !u->isConscious() || u->owner == battle.currentPlayer ||
-									    battle.visibleUnits.at(battle.currentPlayer)
-									            .find({&state, u->id}) !=
-									        battle.visibleUnits.at(battle.currentPlayer).end();
-									bool friendly = u->owner == battle.currentPlayer;
-									bool hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
-									               Organisation::Relation::Hostile;
+									case TileObject::Type::Unit:
+									{
+										auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
+										             ->getUnit();
+										bool objectVisible =
+										    !u->isConscious() || u->owner == battle.currentPlayer ||
+										    battle.visibleUnits.at(battle.currentPlayer)
+										            .find({&state, u->id}) !=
+										        battle.visibleUnits.at(battle.currentPlayer).end();
+										bool friendly = u->owner == battle.currentPlayer;
+										bool hostile =
+										    battle.currentPlayer->isRelatedTo(u->owner) ==
+										    Organisation::Relation::Hostile;
 
-									unitsToDraw.emplace_back(obj, objectVisible,
-									                         obj->getOwningTile()->position.z -
-									                             (battle.battleViewZLevel - 1),
-									                         friendly, hostile);
+										unitsToDraw.emplace_back(obj, objectVisible,
+										                         obj->getOwningTile()->position.z -
+										                             (battle.battleViewZLevel - 1),
+										                         friendly, hostile);
+										break;
+									}
+									default:
+										break;
 								}
 							}
 						}
@@ -951,13 +1017,14 @@ void BattleTileView::render()
 				}
 			}
 
+			// Draw stuff
+
 			for (auto &obj : unitsToDraw)
 			{
 				Vec2<float> pos = tileToOffsetScreenCoords(std::get<0>(obj)->getCenter());
 				std::get<0>(obj)->draw(r, *this, pos, this->viewMode, std::get<1>(obj),
 				                       std::get<2>(obj), std::get<3>(obj), std::get<4>(obj));
 			}
-
 			for (auto obj : itemsToDraw)
 			{
 				Vec2<float> pos = tileToOffsetScreenCoords(std::get<0>(obj)->getCenter());

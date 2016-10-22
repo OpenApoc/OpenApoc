@@ -483,7 +483,24 @@ void Battle::update(GameState &state, unsigned int ticks)
 		auto c = p->checkProjectileCollision(*map);
 		if (c)
 		{
-			// FIXME: Handle collision
+			// Alert intended unit that he's on fire!
+			auto unit = c.projectile->trackedUnit;
+			if (unit &&
+			    unit->visibleUnits.find(c.projectile->firerUnit) == unit->visibleUnits.end())
+			{
+				LogWarning("Notify: unit %s that he's taking fire",
+				           c.projectile->trackedUnit.id.cStr());
+				// Turn to attacker in real time
+				if (!unit->isBusy() && unit->isConscious() &&
+				    state.current_battle->mode == Battle::Mode::RealTime &&
+				    unit->ticksUntilAutoTurnAvailable == 0)
+				{
+					unit->setMission(
+					    state, BattleUnitMission::turn(*unit, c.projectile->firerUnit->position));
+					unit->ticksUntilAutoTurnAvailable = AUTO_TURN_COOLDOWN;
+				}
+			}
+			// Handle collision
 			this->projectiles.erase(c.projectile);
 			bool playSound = true;
 			bool displayDoodad = true;
