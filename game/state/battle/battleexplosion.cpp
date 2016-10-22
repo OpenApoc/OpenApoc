@@ -26,7 +26,7 @@ BattleExplosion::BattleExplosion(Vec3<int> position, StateRef<DamageType> damage
                                  StateRef<BattleUnit> ownerUnit)
     : position(position), power(power), ticksUntilExpansion(TICKS_MULTIPLIER * 2),
       locationsToExpand({{{position, {power, power}}}, {}, {}}), locationsVisited({position}),
-      damageType(damageType), depletionRate(depletionRate), damageInTheEnd(damageInTheEnd),
+      damageType(damageType), damageInTheEnd(damageInTheEnd), depletionRate(depletionRate),
       ownerUnit(ownerUnit)
 {
 }
