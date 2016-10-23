@@ -1695,8 +1695,8 @@ void BattleView::eventOccurred(Event *e)
 	     e->keyboard().KeyCode == SDLK_SPACE || e->keyboard().KeyCode == SDLK_RSHIFT ||
 	     e->keyboard().KeyCode == SDLK_LSHIFT || e->keyboard().KeyCode == SDLK_RALT ||
 	     e->keyboard().KeyCode == SDLK_LALT || e->keyboard().KeyCode == SDLK_RCTRL ||
-	     e->keyboard().KeyCode == SDLK_LCTRL || e->keyboard().KeyCode == SDLK_f
-			|| e->keyboard().KeyCode == SDLK_r))
+	     e->keyboard().KeyCode == SDLK_LCTRL || e->keyboard().KeyCode == SDLK_f ||
+	     e->keyboard().KeyCode == SDLK_r))
 	{
 		switch (e->keyboard().KeyCode)
 		{
@@ -1771,7 +1771,7 @@ void BattleView::eventOccurred(Event *e)
 			{
 				for (auto &entry : battle.visibleTiles)
 				{
-					for (unsigned i = 0;i < entry.second.size();i++)
+					for (unsigned i = 0; i < entry.second.size(); i++)
 					{
 						entry.second[i] = true;
 					}
