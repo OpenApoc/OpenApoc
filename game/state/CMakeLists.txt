@@ -167,4 +167,7 @@ add_custom_command(OUTPUT
 
 set_target_properties(OpenApoc_GameState PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
 	"gamestate_pch.h")
-cotire(OpenApoc_GameState)
+
+if(ENABLE_COTIRE)
+	cotire(OpenApoc_GameState)
+endif()

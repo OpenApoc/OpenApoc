@@ -106,4 +106,7 @@ set_property(TARGET OpenApoc_GameUI PROPERTY CXX_STANDARD 11)
 
 set_target_properties(OpenApoc_GameUI PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
 	"gameui_pch.h")
-cotire(OpenApoc_GameUI)
+
+if(ENABLE_COTIRE)
+	cotire(OpenApoc_GameUI)
+endif()

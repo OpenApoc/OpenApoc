@@ -12,8 +12,19 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 INCLUDE(CheckCXXCompilerFlag)
 INCLUDE(CheckCCompilerFlag)
 
+# Sanitize doesn't seem to work with pch
+set(allow_cotire ON)
+
+string(TOLOWER ${CMAKE_BUILD_TYPE} lower_build_type)
+if (${lower_build_type} STREQUAL "sanitize")
+		MESSAGE("Disabling COTIRE on sanitize build")
+		set(allow_cotire OFF)
+endif()
+
 option(LTO "Build using link-time-optimisations" OFF)
 option(ENABLE_TESTS "Build some unit tests" ON)
+option(ENABLE_COTIRE "Enable Compile TIme Reducer (AKA use PCH)"
+		${allow_cotire})
 
 set(CD_PATH ${CMAKE_SOURCE_DIR}/data/cd.iso CACHE STRING "Path to cd.iso (used
 by test and extractor")
@@ -26,6 +37,8 @@ message("Using CD at \"${CD_PATH}\"")
 
 set(CMAKE_C_FLAGS_SANITIZE "-O1 -g -fsanitize=address,undefined")
 set(CMAKE_CXX_FLAGS_SANITIZE "-O1 -g -fsanitize=address,undefined")
+
+
 
 CHECK_CXX_COMPILER_FLAG("-flto"
 	COMPILER_SUPPORTS_LTO)

@@ -54,4 +54,7 @@ target_compile_definitions(OpenApoc_Library PUBLIC PTHREADS_AVAILABLE)
 
 set_target_properties(OpenApoc_Library PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
 	"library_pch.h")
-cotire(OpenApoc_Library)
+
+if(ENABLE_COTIRE)
+	cotire(OpenApoc_Library)
+endif()

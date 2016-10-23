@@ -90,4 +90,7 @@ endif()
 
 set_target_properties(OpenApoc_DataExtractor PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
 	"extractors_pch.h")
-cotire(OpenApoc_DataExtractor)
+
+if(ENABLE_COTIRE)
+	cotire(OpenApoc_DataExtractor)
+endif()

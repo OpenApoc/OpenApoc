@@ -74,4 +74,7 @@ set_property(TARGET OpenApoc_Forms PROPERTY CXX_STANDARD 11)
 
 set_target_properties(OpenApoc_Forms PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
 	"forms_pch.h")
-cotire(OpenApoc_Forms)
+
+if(ENABLE_COTIRE)
+	cotire(OpenApoc_Forms)
+endif()

@@ -280,5 +280,8 @@ target_include_directories(OpenApoc_Framework PUBLIC ${CMAKE_SOURCE_DIR})
 
 set_target_properties(OpenApoc_Framework PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
 	"framework_pch.h")
-cotire(OpenApoc_Framework)
+
+if(ENABLE_COTIRE)
+	cotire(OpenApoc_Framework)
+endif()
 
