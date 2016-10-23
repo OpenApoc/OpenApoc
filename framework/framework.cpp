@@ -307,6 +307,10 @@ Framework::~Framework()
 {
 	TRACE_FN;
 	LogInfo("Destroying framework");
+	// Stop any audio first, as if you've got ongoing music/samples it could call back into the
+	// framework for the threadpool/data read/all kinda of stuff it shouldn't do on a half-destroyed
+	// framework
+	audioShutdown();
 	LogInfo("Stopping threadpool");
 	p->threadPool.reset();
 	LogInfo("Clearing stages");
@@ -319,7 +323,6 @@ Framework::~Framework()
 	if (createWindow)
 	{
 		displayShutdown();
-		audioShutdown();
 	}
 	LogInfo("SDL shutdown");
 	PHYSFS_deinit();
