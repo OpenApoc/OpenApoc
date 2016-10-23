@@ -1,6 +1,11 @@
 # project name, and type
 PROJECT(OpenApoc_Forms CXX C)
 
+include (cotire)
+
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package (Threads REQUIRED)
+
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
@@ -66,4 +71,7 @@ target_include_directories(OpenApoc_Forms PUBLIC ${PC_TINYXML2_INCLUDEDIR})
 target_include_directories(OpenApoc_Forms PUBLIC ${CMAKE_SOURCE_DIR})
 
 set_property(TARGET OpenApoc_Forms PROPERTY CXX_STANDARD 11)
-set_property(TARGET OpenApoc_Forms PROPERTY CXX_STANDARD_REQUIRED ON)
+
+set_target_properties(OpenApoc_Forms PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
+	"forms_pch.h")
+cotire(OpenApoc_Forms)

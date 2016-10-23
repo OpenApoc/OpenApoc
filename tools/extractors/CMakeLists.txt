@@ -1,8 +1,13 @@
 # project name, and type
 PROJECT(OpenApoc_DataExtractor CXX C)
 
+include(cotire)
+
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package (Threads REQUIRED)
 
 set (DATAEXTRACTOR_SOURCE_FILES
 	common/tacp.cpp
@@ -71,7 +76,6 @@ target_link_libraries(OpenApoc_DataExtractor OpenApoc_Forms)
 target_link_libraries(OpenApoc_DataExtractor OpenApoc_GameState)
 
 set_property(TARGET OpenApoc_DataExtractor PROPERTY CXX_STANDARD 11)
-set_property(TARGET OpenApoc_DataExtractor PROPERTY CXX_STANDARD_REQUIRED ON)
 
 option(EXTRACT_DATA "Run the DataExtractor during build" ON)
 if (EXTRACT_DATA)
@@ -83,3 +87,7 @@ if (EXTRACT_DATA)
 				WORKING_DIRECTORY
 				${CMAKE_SOURCE_DIR})
 endif()
+
+set_target_properties(OpenApoc_DataExtractor PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
+	"extractors_pch.h")
+cotire(OpenApoc_DataExtractor)

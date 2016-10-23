@@ -1,6 +1,8 @@
 # project name, and type
 PROJECT(OpenApoc_Library CXX C)
 
+include(cotire)
+
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
@@ -48,5 +50,8 @@ target_include_directories(OpenApoc_Library PUBLIC ${GLM_INCLUDE_DIR})
 target_include_directories(OpenApoc_Library PUBLIC ${Boost_INCLUDE_DIRS})
 
 set_property(TARGET OpenApoc_Library PROPERTY CXX_STANDARD 11)
-set_property(TARGET OpenApoc_Library PROPERTY CXX_STANDARD_REQUIRED ON)
 target_compile_definitions(OpenApoc_Library PUBLIC PTHREADS_AVAILABLE)
+
+set_target_properties(OpenApoc_Library PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
+	"library_pch.h")
+cotire(OpenApoc_Library)

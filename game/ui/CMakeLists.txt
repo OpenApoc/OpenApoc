@@ -1,8 +1,13 @@
 # project name, and type
 PROJECT(OpenApoc_GameUI CXX C)
 
+include(cotire)
+
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package (Threads REQUIRED)
 
 set (GAMEUI_SOURCE_FILES
 	battle/battlebriefing.cpp
@@ -98,4 +103,7 @@ target_link_libraries(OpenApoc_GameUI PUBLIC OpenApoc_Forms)
 target_include_directories(OpenApoc_GameUI PRIVATE ${CMAKE_BINARY_DIR})
 
 set_property(TARGET OpenApoc_GameUI PROPERTY CXX_STANDARD 11)
-set_property(TARGET OpenApoc_GameUI PROPERTY CXX_STANDARD_REQUIRED ON)
+
+set_target_properties(OpenApoc_GameUI PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
+	"gameui_pch.h")
+cotire(OpenApoc_GameUI)

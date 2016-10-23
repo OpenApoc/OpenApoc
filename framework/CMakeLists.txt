@@ -4,6 +4,8 @@ PROJECT(OpenApoc_Framework CXX C)
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
+include(cotire)
+
 option(BACKTRACE_ON_ERROR "Print backtrace on logging an error (Requires libunwind on linux, no extra dependencies on windows)" ON)
 option(DIALOG_ON_ERROR "Pop up a dialog box showing errors" ON)
 
@@ -187,7 +189,6 @@ add_library(OpenApoc_Framework STATIC
 	${FILESYSTEM_SOURCE_FILES} ${FILESYSTEM_HEADER_FILES})
 
 set_property(TARGET OpenApoc_Framework PROPERTY CXX_STANDARD 11)
-set_property(TARGET OpenApoc_Framework PROPERTY CXX_STANDARD_REQUIRED ON)
 
 target_compile_definitions(OpenApoc_Framework PUBLIC
 		"-DRENDERERS=\"GLES_3_0:GL_2_0\""
@@ -275,3 +276,9 @@ target_link_libraries(OpenApoc_Framework PUBLIC physfs-static)
 target_include_directories(OpenApoc_Framework PRIVATE
 		${CMAKE_SOURCE_DIR}/dependencies/physfs/src)
 target_include_directories(OpenApoc_Framework PUBLIC ${CMAKE_SOURCE_DIR})
+
+
+set_target_properties(OpenApoc_Framework PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
+	"framework_pch.h")
+cotire(OpenApoc_Framework)
+
