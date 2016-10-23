@@ -1,5 +1,6 @@
 #pragma once
 
+#include "forms/control.h"
 #include "framework/apocresources/apocfont.h"
 #include "framework/configfile.h"
 #include "framework/data.h"

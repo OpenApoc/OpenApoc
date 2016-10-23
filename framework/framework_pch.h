@@ -1,6 +1,7 @@
 #pragma once
 #define WIN32_MEAN_AND_LEAN
 
+#include "framework/framework.h"
 #include "library/colour.h"
 #include "library/line.h"
 #include "library/rect.h"
@@ -11,7 +12,6 @@
 #include "library/vector_remove.h"
 #include "library/voxel.h"
 #include "library/xorshift.h"
-
 #include <SDL.h>
 #include <SDL_audio.h>
 #include <SDL_endian.h>

@@ -10,6 +10,7 @@
 #include "framework/serialization/serialize.h"
 #include "framework/sound.h"
 #include "framework/trace.h"
+#include "game/state/gamestate.h"
 #include "library/colour.h"
 #include "library/line.h"
 #include "library/rect.h"

@@ -30,7 +30,7 @@
 #include "library/vec.h"
 #include "library/voxel.h"
 #include "library/xorshift.h"
-#include <SDL_main.h>
+#include "tools/extractors/extractors.h"
 #include <algorithm>
 #include <array>
 #include <climits>
