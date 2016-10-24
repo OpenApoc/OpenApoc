@@ -107,7 +107,11 @@ void Graphic::unloadResources()
 
 sp<Image> Graphic::getImage() const { return image; }
 
-void Graphic::setImage(sp<Image> Image) { image = Image; }
+void Graphic::setImage(sp<Image> Image)
+{
+	image = Image;
+	this->setDirty();
+}
 
 sp<Control> Graphic::copyTo(sp<Control> CopyParent)
 {

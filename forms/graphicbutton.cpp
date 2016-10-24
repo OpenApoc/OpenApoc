@@ -107,15 +107,27 @@ void GraphicButton::setClickSound(sp<Sample> sample) { buttonclick = sample; }
 
 sp<Image> GraphicButton::getImage() const { return image; }
 
-void GraphicButton::setImage(sp<Image> Image) { image = Image; }
+void GraphicButton::setImage(sp<Image> Image)
+{
+	image = Image;
+	this->setDirty();
+}
 
 sp<Image> GraphicButton::getDepressedImage() const { return imagedepressed; }
 
-void GraphicButton::setDepressedImage(sp<Image> Image) { imagedepressed = Image; }
+void GraphicButton::setDepressedImage(sp<Image> Image)
+{
+	imagedepressed = Image;
+	this->setDirty();
+}
 
 sp<Image> GraphicButton::getHoverImage() const { return imagehover; }
 
-void GraphicButton::setHoverImage(sp<Image> Image) { imagehover = Image; }
+void GraphicButton::setHoverImage(sp<Image> Image)
+{
+	imagehover = Image;
+	this->setDirty();
+}
 
 sp<Control> GraphicButton::copyTo(sp<Control> CopyParent)
 {

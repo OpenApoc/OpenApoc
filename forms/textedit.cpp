@@ -197,6 +197,7 @@ void TextEdit::update()
 		if (caretTimer == 0)
 		{
 			caretDraw = !caretDraw;
+			this->setDirty();
 		}
 	}
 }
@@ -212,13 +213,22 @@ void TextEdit::setText(const UString &Text)
 	raiseEvent(FormEventType::TextChanged);
 }
 
-void TextEdit::setCursor(const UString &cursor) { this->cursor = cursor; }
+void TextEdit::setCursor(const UString &cursor)
+{
+	this->cursor = cursor;
+	this->setDirty();
+}
 
-void TextEdit::setTextMaxSize(size_t length) { this->textMaxLength = length; }
+void TextEdit::setTextMaxSize(size_t length)
+{
+	this->textMaxLength = length;
+	this->setDirty();
+}
 
 void TextEdit::setAllowedCharacters(const UString &allowedCharacters)
 {
 	this->allowedCharacters = allowedCharacters;
+	this->setDirty();
 }
 
 void TextEdit::raiseEvent(FormEventType Type)
@@ -230,7 +240,11 @@ void TextEdit::raiseEvent(FormEventType Type)
 
 sp<BitmapFont> TextEdit::getFont() const { return font; }
 
-void TextEdit::setFont(sp<BitmapFont> NewFont) { font = NewFont; }
+void TextEdit::setFont(sp<BitmapFont> NewFont)
+{
+	font = NewFont;
+	this->setDirty();
+}
 
 sp<Control> TextEdit::copyTo(sp<Control> CopyParent)
 {

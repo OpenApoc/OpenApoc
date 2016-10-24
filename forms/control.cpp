@@ -247,8 +247,10 @@ void Control::render()
 
 	if (controlArea == nullptr || controlArea->size != Vec2<unsigned int>(Size))
 	{
+		this->dirty = true;
 		controlArea.reset(new Surface{Vec2<unsigned int>(Size)});
 	}
+	if (this->dirty)
 	{
 		sp<Palette> previousPalette;
 		if (this->palette)
@@ -266,6 +268,8 @@ void Control::render()
 			fw().renderer->setPalette(previousPalette);
 		}
 	}
+
+	this->dirty = false;
 
 	if (Enabled)
 	{
@@ -672,6 +676,7 @@ void Control::setParent(sp<Control> Parent)
 			LogError("Reparenting control");
 		}
 		Parent->Controls.push_back(shared_from_this());
+		Parent->setDirty();
 	}
 	owningControl = Parent;
 }
@@ -854,9 +859,19 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 		// Mouse events fall-through
 		case FormEventType::MouseEnter:
 		case FormEventType::MouseLeave:
+		case FormEventType::MouseMove:
+		{
+			event = new FormsEvent();
+			event->forms().RaisedBy = shared_from_this();
+			event->forms().EventFlag = type;
+			event->forms().MouseInfo = parentEvent->mouse();
+			event->forms().MouseInfo.X -= resolvedLocation.x;
+			event->forms().MouseInfo.Y -= resolvedLocation.y;
+			fw().pushEvent(event);
+			break;
+		}
 		case FormEventType::MouseDown:
 		case FormEventType::MouseUp:
-		case FormEventType::MouseMove:
 		case FormEventType::MouseClick:
 		{
 			event = new FormsEvent();
@@ -866,6 +881,7 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 			event->forms().MouseInfo.X -= resolvedLocation.x;
 			event->forms().MouseInfo.Y -= resolvedLocation.y;
 			fw().pushEvent(event);
+			this->setDirty();
 			break;
 		}
 		// Keyboard events fall-through
@@ -878,6 +894,7 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 			event->forms().EventFlag = type;
 			event->forms().KeyInfo = parentEvent->keyboard();
 			fw().pushEvent(event);
+			this->setDirty();
 			break;
 		}
 		// Input event special
@@ -888,6 +905,7 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 			event->forms().EventFlag = type;
 			event->forms().Input = parentEvent->text();
 			fw().pushEvent(event);
+			this->setDirty();
 			break;
 		}
 		// Forms events fall-through
@@ -913,6 +931,7 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 			event->forms().RaisedBy = shared_from_this();
 			event->forms().EventFlag = type;
 			fw().pushEvent(event);
+			this->setDirty();
 			break;
 		}
 		default:
@@ -932,6 +951,16 @@ void Control::triggerEventCallbacks(FormsEvent *e)
 void Control::addCallback(FormEventType event, std::function<void(FormsEvent *e)> callback)
 {
 	this->callbacks[event].push_back(callback);
+}
+
+void Control::setDirty()
+{
+	this->dirty = true;
+	auto parent = this->getParent();
+	if (parent)
+	{
+		parent->setDirty();
+	}
 }
 
 }; // namespace OpenApoc

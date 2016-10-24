@@ -62,6 +62,7 @@ void Ticker::update()
 
 	if (animating)
 	{
+		this->setDirty();
 		animTimer++;
 		if (animTimer >= ANIM_TICKS)
 		{
@@ -92,11 +93,19 @@ void Ticker::update()
 
 void Ticker::unloadResources() {}
 
-void Ticker::addMessage(const UString &Text) { messages.emplace(Text); }
+void Ticker::addMessage(const UString &Text)
+{
+	messages.emplace(Text);
+	this->setDirty();
+}
 
 sp<BitmapFont> Ticker::getFont() const { return font; }
 
-void Ticker::setFont(sp<BitmapFont> NewFont) { font = NewFont; }
+void Ticker::setFont(sp<BitmapFont> NewFont)
+{
+	font = NewFont;
+	this->setDirty();
+}
 
 sp<Control> Ticker::copyTo(sp<Control> CopyParent)
 {

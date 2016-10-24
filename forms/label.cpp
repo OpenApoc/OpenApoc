@@ -54,11 +54,23 @@ void Label::unloadResources() {}
 
 UString Label::getText() const { return text; }
 
-void Label::setText(const UString &Text) { text = Text; }
+void Label::setText(const UString &Text)
+{
+	if (text == Text)
+		return;
+	text = Text;
+	this->setDirty();
+}
 
 sp<BitmapFont> Label::getFont() const { return font; }
 
-void Label::setFont(sp<BitmapFont> NewFont) { font = NewFont; }
+void Label::setFont(sp<BitmapFont> NewFont)
+{
+	if (font == NewFont)
+		return;
+	font = NewFont;
+	this->setDirty();
+}
 
 sp<Control> Label::copyTo(sp<Control> CopyParent)
 {

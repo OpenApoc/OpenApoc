@@ -36,6 +36,8 @@ class Control : public std::enable_shared_from_this<Control>
 	// Configures children of element after it was configured, see ConfigureFromXML
 	void configureChildrenFromXml(tinyxml2::XMLElement *Element);
 
+	bool dirty = true;
+
   protected:
 	sp<Palette> palette;
 	wp<Control> owningControl;
@@ -63,6 +65,8 @@ class Control : public std::enable_shared_from_this<Control>
 	void pushFormEvent(FormEventType type, Event *parentEvent);
 
 	void triggerEventCallbacks(FormsEvent *e);
+
+	void setDirty();
 
   public:
 	UString Name;

@@ -16,6 +16,7 @@ class ListBox : public Control
   private:
 	bool scroller_is_internal;
 	sp<Control> hovered, selected;
+	Vec2<int> scrollOffset = {0, 0};
 
 	void configureInternalScrollBar();
 

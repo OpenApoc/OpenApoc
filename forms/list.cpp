@@ -44,20 +44,10 @@ void ListBox::configureInternalScrollBar()
 
 void ListBox::onRender()
 {
-	Vec2<int> controlOffset, scrollOffset;
+	Vec2<int> controlOffset;
 	if (scroller == nullptr)
 	{
 		configureInternalScrollBar();
-	}
-
-	switch (ScrollOrientation)
-	{
-		case Orientation::Vertical:
-			scrollOffset.y = scroller->getValue();
-			break;
-		case Orientation::Horizontal:
-			scrollOffset.x = scroller->getValue();
-			break;
 	}
 
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
@@ -65,7 +55,7 @@ void ListBox::onRender()
 		auto ctrl = *c;
 		if (ctrl != scroller && ctrl->Visible)
 		{
-			ctrl->Location = controlOffset - scrollOffset;
+			ctrl->Location = controlOffset - this->scrollOffset;
 			switch (ListOrientation)
 			{
 				case Orientation::Vertical:
@@ -196,6 +186,21 @@ void ListBox::update()
 	if (scroller)
 	{
 		scroller->update();
+		Vec2<int> newScrollOffset = this->scrollOffset;
+		switch (ScrollOrientation)
+		{
+			case Orientation::Vertical:
+				newScrollOffset.y = scroller->getValue();
+				break;
+			case Orientation::Horizontal:
+				newScrollOffset.x = scroller->getValue();
+				break;
+		}
+		if (newScrollOffset != this->scrollOffset)
+		{
+			this->scrollOffset = newScrollOffset;
+			this->setDirty();
+		}
 	}
 }
 
@@ -215,6 +220,7 @@ void ListBox::clear()
 		configureInternalScrollBar();
 	}
 	resolveLocation();
+	this->setDirty();
 }
 
 void ListBox::addItem(sp<Control> Item)
@@ -225,10 +231,12 @@ void ListBox::addItem(sp<Control> Item)
 	{
 		selected = Item;
 	}
+	this->setDirty();
 }
 
 sp<Control> ListBox::removeItem(sp<Control> Item)
 {
+	this->setDirty();
 	for (auto i = Controls.begin(); i != Controls.end(); i++)
 	{
 		if (*i == Item)
@@ -251,6 +259,7 @@ sp<Control> ListBox::removeItem(sp<Control> Item)
 
 sp<Control> ListBox::removeItem(int Index)
 {
+	this->setDirty();
 	auto c = Controls.at(Index);
 	Controls.erase(Controls.begin() + Index);
 	resolveLocation();
@@ -408,5 +417,6 @@ void ListBox::setSelected(sp<Control> c)
 		    "Trying set ListBox selected control to something that isn't a member of the list");
 	}
 	this->selected = c;
+	this->setDirty();
 }
 }; // namespace OpenApoc
