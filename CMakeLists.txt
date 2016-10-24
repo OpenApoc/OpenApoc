@@ -12,13 +12,16 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 INCLUDE(CheckCXXCompilerFlag)
 INCLUDE(CheckCCompilerFlag)
 
-# Sanitize doesn't seem to work with pch
 set(allow_cotire ON)
 
+# Sanitize doesn't seem to work with pch on gcc
 string(TOLOWER ${CMAKE_BUILD_TYPE} lower_build_type)
-if (${lower_build_type} STREQUAL "sanitize")
+
+if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
+	if (${lower_build_type} STREQUAL "sanitize")
 		MESSAGE("Disabling COTIRE on sanitize build")
 		set(allow_cotire OFF)
+	endif()
 endif()
 
 option(LTO "Build using link-time-optimisations" OFF)
