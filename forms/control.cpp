@@ -6,6 +6,7 @@
 #include "framework/image.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
+#include "framework/trace.h"
 #include "library/sp.h"
 #include <tinyxml2.h>
 
@@ -238,6 +239,7 @@ void Control::eventOccured(Event *e)
 
 void Control::render()
 {
+	TRACE_FN_ARGS1("Name", this->Name);
 	if (!Visible || Size.x == 0 || Size.y == 0)
 	{
 		return;
