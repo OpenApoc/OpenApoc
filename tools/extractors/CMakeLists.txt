@@ -72,7 +72,6 @@ set( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
 
 target_link_libraries(OpenApoc_DataExtractor OpenApoc_Library)
 target_link_libraries(OpenApoc_DataExtractor OpenApoc_Framework)
-target_link_libraries(OpenApoc_DataExtractor OpenApoc_Forms)
 target_link_libraries(OpenApoc_DataExtractor OpenApoc_GameState)
 
 set_property(TARGET OpenApoc_DataExtractor PROPERTY CXX_STANDARD 11)
