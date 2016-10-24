@@ -102,6 +102,9 @@ class CityView : public CityTileView
 	sp<Palette> twilight_palette;
 	sp<Palette> night_palette;
 
+	bool drawCity = true;
+	sp<Surface> surface;
+
   public:
 	CityView(sp<GameState> state);
 	~CityView() override;

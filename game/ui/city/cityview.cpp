@@ -11,6 +11,7 @@
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/image.h"
 #include "framework/keycodes.h"
 #include "framework/palette.h"
 #include "framework/renderer.h"
@@ -455,44 +456,56 @@ void CityView::render()
 {
 	TRACE_FN;
 
-	CityTileView::render();
-	if (state->showVehiclePath)
+	if (!this->surface)
 	{
-		for (auto pair : state->vehicles)
+		this->drawCity = true;
+		this->surface = mksp<Surface>(fw().displayGetSize());
+	}
+
+	if (drawCity)
+	{
+		this->drawCity = false;
+		RendererSurfaceBinding b(*fw().renderer, this->surface);
+
+		CityTileView::render();
+		if (state->showVehiclePath)
 		{
-			auto v = pair.second;
-			if (v->city != state->current_city)
-				continue;
-			auto vTile = v->tileObject;
-			if (!vTile)
-				continue;
-			auto &path = v->missions.front()->currentPlannedPath;
-			Vec3<float> prevPos = vTile->getPosition();
-			for (auto pos : path)
+			for (auto pair : state->vehicles)
 			{
-				Vec2<float> screenPosA = this->tileToOffsetScreenCoords(prevPos);
-				Vec2<float> screenPosB = this->tileToOffsetScreenCoords(pos);
+				auto v = pair.second;
+				if (v->city != state->current_city)
+					continue;
+				auto vTile = v->tileObject;
+				if (!vTile)
+					continue;
+				auto &path = v->missions.front()->currentPlannedPath;
+				Vec3<float> prevPos = vTile->getPosition();
+				for (auto pos : path)
+				{
+					Vec2<float> screenPosA = this->tileToOffsetScreenCoords(prevPos);
+					Vec2<float> screenPosB = this->tileToOffsetScreenCoords(pos);
 
-				fw().renderer->drawLine(screenPosA, screenPosB, Colour{255, 0, 0, 128});
+					fw().renderer->drawLine(screenPosA, screenPosB, Colour{255, 0, 0, 128});
 
-				prevPos = pos;
+					prevPos = pos;
+				}
 			}
 		}
-	}
-	activeTab->render();
-	baseForm->render();
-	if (activeTab == uiTabs[0])
-	{
-		// Highlight selected base
-		for (auto &view : miniViews)
+		activeTab->render();
+		baseForm->render();
+		if (activeTab == uiTabs[0])
 		{
-			auto viewBase = view->getData<Base>();
-			if (state->current_base == viewBase)
+			// Highlight selected base
+			for (auto &view : miniViews)
 			{
-				Vec2<int> pos = uiTabs[0]->Location + view->Location - 1;
-				Vec2<int> size = view->Size + 2;
-				fw().renderer->drawRect(pos, size, Colour{255, 0, 0});
-				break;
+				auto viewBase = view->getData<Base>();
+				if (state->current_base == viewBase)
+				{
+					Vec2<int> pos = uiTabs[0]->Location + view->Location - 1;
+					Vec2<int> size = view->Size + 2;
+					fw().renderer->drawRect(pos, size, Colour{255, 0, 0});
+					break;
+				}
 			}
 		}
 	}
@@ -500,12 +513,17 @@ void CityView::render()
 	// If there's a modal dialog, darken the screen
 	if (fw().stageGetCurrent() != this->shared_from_this())
 	{
-		fw().renderer->drawFilledRect({0, 0}, fw().displayGetSize(), Colour{0, 0, 0, 128});
+		fw().renderer->drawTinted(this->surface, {0, 0}, {128, 128, 128, 255});
+	}
+	else
+	{
+		fw().renderer->draw(this->surface, {0, 0});
 	}
 }
 
 void CityView::update()
 {
+	this->drawCity = true;
 	CityTileView::update();
 
 	unsigned int ticks = 0;
@@ -746,6 +764,7 @@ void CityView::update()
 
 void CityView::eventOccurred(Event *e)
 {
+	this->drawCity = true;
 	activeTab->eventOccured(e);
 	baseForm->eventOccured(e);
 
