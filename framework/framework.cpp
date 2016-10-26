@@ -222,12 +222,21 @@ Framework::Framework(const UString programName, bool createWindow)
 	SDL_SetHint(SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH, "1");
 #endif
 	// Initialize subsystems separately?
-	if (SDL_Init(SDL_INIT_EVENTS | SDL_INIT_VIDEO) < 0)
+	if (SDL_Init(SDL_INIT_EVENTS) < 0)
 	{
 		LogError("Cannot init SDL2");
 		LogError("SDL error: %s", SDL_GetError());
 		p->quitProgram = true;
 		return;
+	}
+	if (createWindow)
+	{
+		if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0)
+		{
+			LogError("Cannot init SDL_VIDEO - \"%s\"", SDL_GetError());
+			p->quitProgram = true;
+			return;
+		}
 	}
 	LogInfo("Loading config\n");
 	p->quitProgram = false;
