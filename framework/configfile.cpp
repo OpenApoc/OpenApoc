@@ -439,7 +439,13 @@ ConfigOptionString::ConfigOptionString(const UString section, const UString name
 	config().addOptionString(section, name, "", description, defaultValue);
 }
 
-UString ConfigOptionString::get() const { return config().getString(section + "." + name); }
+UString ConfigOptionString::get() const
+{
+	if (section.empty())
+		return config().getString(name);
+	else
+		return config().getString(section + "." + name);
+}
 
 ConfigOptionInt::ConfigOptionInt(const UString section, const UString name,
                                  const UString description, const int defaultValue)
@@ -448,7 +454,14 @@ ConfigOptionInt::ConfigOptionInt(const UString section, const UString name,
 	config().addOptionInt(section, name, "", description, defaultValue);
 }
 
-int ConfigOptionInt::get() const { return config().getInt(section + "." + name); }
+int ConfigOptionInt::get() const
+{
+
+	if (section.empty())
+		return config().getInt(name);
+	else
+		return config().getInt(section + "." + name);
+}
 
 ConfigOptionBool::ConfigOptionBool(const UString section, const UString name,
                                    const UString description, const bool defaultValue)
@@ -457,5 +470,12 @@ ConfigOptionBool::ConfigOptionBool(const UString section, const UString name,
 	config().addOptionBool(section, name, "", description, defaultValue);
 }
 
-bool ConfigOptionBool::get() const { return config().getBool(section + "." + name); }
+bool ConfigOptionBool::get() const
+{
+	if (section.empty())
+		return config().getBool(name);
+	else
+
+		return config().getBool(section + "." + name);
+}
 }; // namespace OpenApoc
