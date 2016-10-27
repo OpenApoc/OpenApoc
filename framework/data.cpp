@@ -3,6 +3,7 @@
 #include "framework/apocresources/loftemps.h"
 #include "framework/apocresources/pck.h"
 #include "framework/apocresources/rawimage.h"
+#include "framework/configfile.h"
 #include "framework/image.h"
 #include "framework/imageloader_interface.h"
 #include "framework/logger.h"
@@ -28,6 +29,17 @@ using namespace OpenApoc;
 
 namespace OpenApoc
 {
+
+ConfigOptionInt imageCacheSize("Framework.Data", "ImageCacheSize",
+                               "Number of Images to keep in data cache", 100);
+ConfigOptionInt imageSetCacheSize("Framework.Data", "ImageSetCacheSize",
+                                  "Number of ImageSets to keep in data cache", 10);
+ConfigOptionInt voxelCacheSize("Framework.Data", "VoxelCacheSize",
+                               "Number of VoxelMaps to keep in data cache", 1);
+ConfigOptionInt fontStringCacheSize("Framework.Data", "FontStringCacheSize",
+                                    "Number of rendered font stings to keep in data cache", 100);
+ConfigOptionInt paletteCacheSize("Framework.Data", "PaletteCacheSize",
+                                 "Number of Palettes to keep in data cache", 10);
 
 class DataImpl final : public Data
 {
@@ -71,8 +83,7 @@ class DataImpl final : public Data
 	std::map<UString, std::unique_ptr<MusicLoaderFactory>> registeredMusicLoaders;
 
   public:
-	DataImpl(std::vector<UString> paths, int imageCacheSize = 100, int imageSetCacheSize = 10,
-	         int voxelCacheSize = 1, int fontStringCacheSize = 100, int paletteCacheSize = 10);
+	DataImpl(std::vector<UString> paths);
 	~DataImpl() override = default;
 
 	sp<Sample> loadSample(UString path) override;
@@ -91,16 +102,9 @@ class DataImpl final : public Data
 	bool writeImage(UString systemPath, sp<Image> image, sp<Palette> palette = nullptr) override;
 };
 
-Data *Data::createData(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize,
-                       int voxelCacheSize, int fontStringCacheSize, int paletteCacheSize)
-{
-	return new DataImpl(paths, imageCacheSize, imageSetCacheSize, voxelCacheSize,
-	                    fontStringCacheSize, paletteCacheSize);
-}
+Data *Data::createData(std::vector<UString> paths) { return new DataImpl(paths); }
 
-DataImpl::DataImpl(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize,
-                   int voxelCacheSize, int fontStringCacheSize, int paletteCacheSize)
-    : Data(paths)
+DataImpl::DataImpl(std::vector<UString> paths) : Data(paths)
 {
 	registeredImageBackends["lodepng"].reset(getLodePNGImageLoaderFactory());
 	registeredImageBackends["pcx"].reset(getPCXImageLoaderFactory());
@@ -159,15 +163,15 @@ DataImpl::DataImpl(std::vector<UString> paths, int imageCacheSize, int imageSetC
 		else
 			LogWarning("Failed to load music loader %s", t.cStr());
 	}
-	for (int i = 0; i < imageCacheSize; i++)
+	for (int i = 0; i < imageCacheSize.get(); i++)
 		pinnedImages.push(nullptr);
-	for (int i = 0; i < imageSetCacheSize; i++)
+	for (int i = 0; i < imageSetCacheSize.get(); i++)
 		pinnedImageSets.push(nullptr);
-	for (int i = 0; i < voxelCacheSize; i++)
+	for (int i = 0; i < voxelCacheSize.get(); i++)
 		pinnedLOFVoxels.push(nullptr);
-	for (int i = 0; i < fontStringCacheSize; i++)
+	for (int i = 0; i < fontStringCacheSize.get(); i++)
 		pinnedFontStrings.push(nullptr);
-	for (int i = 0; i < paletteCacheSize; i++)
+	for (int i = 0; i < paletteCacheSize.get(); i++)
 		pinnedPalettes.push(nullptr);
 }
 

@@ -24,9 +24,7 @@ class Data
 	wp<ResourceAliases> aliases;
 	FileSystem fs;
 
-	static Data *createData(std::vector<UString> paths, int imageCacheSize = 100,
-	                        int imageSetCacheSize = 10, int voxelCacheSize = 1,
-	                        int fontStringCacheSize = 100, int paletteCacheSize = 10);
+	static Data *createData(std::vector<UString> paths);
 	virtual ~Data() = default;
 	Data(std::vector<UString> paths) : fs(paths) {}
 
