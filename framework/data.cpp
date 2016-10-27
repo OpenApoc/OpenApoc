@@ -703,7 +703,15 @@ bool DataImpl::writeImage(UString systemPath, sp<Image> image, sp<Palette> palet
 {
 	auto outPath = fs::path(systemPath.str());
 	auto outDir = outPath.parent_path();
-	fs::create_directories(outDir);
+	try
+	{
+		fs::create_directories(outDir);
+	}
+	// Just catch any problem and continue anyway?
+	catch (fs::filesystem_error e)
+	{
+		LogWarning("create_directories failed with \"%s\"", e.what());
+	}
 	std::ofstream outFile(systemPath.str(), std::ios::binary);
 	if (!outFile)
 	{
