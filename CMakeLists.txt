@@ -15,10 +15,10 @@ INCLUDE(CheckCCompilerFlag)
 set(allow_cotire ON)
 
 # Sanitize doesn't seem to work with pch on gcc
-string(TOLOWER ${CMAKE_BUILD_TYPE} lower_build_type)
+string(TOLOWER "${CMAKE_BUILD_TYPE}" lower_build_type)
 
 if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
-	if (${lower_build_type} STREQUAL "sanitize")
+	if ("${lower_build_type}" STREQUAL "sanitize")
 		MESSAGE("Disabling COTIRE on sanitize build")
 		set(allow_cotire OFF)
 	endif()
