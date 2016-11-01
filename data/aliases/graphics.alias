@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <alias type="image" id="BUTTON_OK_DEPRESSED">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:5:ui/menuopt.pal</alias>
+  <alias type="image" id="BUTTON_PAEDIA_INFO">PCK:xcom3/ufodata/ped-but.pck:xcom3/ufodata/ped-but.tab:0:ui/ufopaedia.pal</alias>
+  <alias type="image" id="BUTTON_PAEDIA_PREVSECTION">PCK:xcom3/ufodata/ped-but.pck:xcom3/ufodata/ped-but.tab:2:ui/ufopaedia.pal</alias>
+  <alias type="image" id="BUTTON_PAEDIA_PREVTOPIC">PCK:xcom3/ufodata/ped-but.pck:xcom3/ufodata/ped-but.tab:3:ui/ufopaedia.pal</alias>
+  <alias type="image" id="BUTTON_PAEDIA_NEXTTOPIC">PCK:xcom3/ufodata/ped-but.pck:xcom3/ufodata/ped-but.tab:4:ui/ufopaedia.pal</alias>
+  <alias type="image" id="BUTTON_PAEDIA_NEXTSECTION">PCK:xcom3/ufodata/ped-but.pck:xcom3/ufodata/ped-but.tab:5:ui/ufopaedia.pal</alias>
+  <alias type="image" id="BUTTON_SLIDER_LEFT_DEPRESSED">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:53:ui/menuopt.pal</alias>
+  <alias type="image" id="BUTTON_SLIDER_LEFT">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</alias>
+  <alias type="image" id="BUTTON_SLIDER_RIGHT_DEPRESSED">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:54:ui/menuopt.pal</alias>
+  <alias type="image" id="BUTTON_SLIDER_RIGHT">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</alias>
+  <alias type="image" id="BUTTON_SCROLL_LEFT_DEPRESSED">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:2:ui/menuopt.pal</alias>
+  <alias type="image" id="BUTTON_SCROLL_RIGHT_DEPRESSED">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:3:ui/menuopt.pal</alias>
+  <alias type="image" id="BUTTON_SCROLL_UP_DEPRESSED">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:1:ui/menuopt.pal</alias>
+  <alias type="image" id="BUTTON_SCROLL_DOWN_DEPRESSED">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:0:ui/menuopt.pal</alias>
+  <alias type="image" id="BUTTON_GRIPPER">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:4:ui/menuopt.pal</alias>
+  <alias type="image" id="BUTTON_CHECKBOX_FALSE">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:64:ui/menuopt.pal</alias>
+  <alias type="image" id="BUTTON_CHECKBOX_TRUE">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:65:ui/menuopt.pal</alias>
+</openapoc>

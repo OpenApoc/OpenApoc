@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <!-- X-COM Vehicles tab -->
+  <form id="FORM_CITY_UI_2">
+    <style minwidth="640" minheight="128">
+      <position x="centre" y="bottom"/>
+      <size width="640" height="128"/>
+      <graphic>
+        <size width="640" height="128"/>
+        <image>RAW:xcom3/ufodata/isobord2.dat:640:128:xcom3/ufodata/pal_01.dat</image>
+      </graphic>
+      <!-- We currently create an scrollbar if none is specified, but we don't really want a scrollbar here, so we create one and mark it invisible -->
+      <scroll id="OWNED_VEHICLE_LIST_SCROLL" visible="N">
+        <position x="105" y="66"/>
+        <size width="431" height="16"/>
+      </scroll>
+      <listbox id="OWNED_VEHICLE_LIST" scrollbarid="OWNED_VEHICLE_LIST_SCROLL">
+        <position x="105" y="44"/>
+        <size height="24" width="431"/>
+        <orientation>horizontal</orientation>
+        <item size="0"/>
+      </listbox>
+      <radiobutton id="BUTTON_ATTACK_MODE_AGGRESSIVE" groupid="ATTACK_MODE">
+        <position x="245" y="72"/>
+        <size width="13" height="13"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_ATTACK_MODE_STANDARD" groupid="ATTACK_MODE">
+        <position x="245" y="85"/>
+        <size width="13" height="13"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_ATTACK_MODE_DEFENSIVE" groupid="ATTACK_MODE">
+        <position x="245" y="98"/>
+        <size width="13" height="13"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_ATTACK_MODE_EVASIVE" groupid="ATTACK_MODE">
+        <position x="245" y="111"/>
+        <size width="13" height="13"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_ALTITUDE_HIGHEST" groupid="ALTITUDE">
+        <position x="275" y="72"/>
+        <size width="13" height="13"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_ALTITUDE_HIGH" groupid="ALTITUDE">
+        <position x="275" y="85"/>
+        <size width="13" height="13"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_ALTITUDE_STANDARD" groupid="ALTITUDE">
+        <position x="275" y="98"/>
+        <size width="13" height="13"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_ALTITUDE_LOW" groupid="ALTITUDE">
+        <position x="275" y="111"/>
+        <size width="13" height="13"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <graphicbutton id="BUTTON_GOTO_BUILDING">
+        <size width="27" height="46"/>
+        <position x="299" y="75"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:0:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_GOTO_LOCATION">
+        <size width="27" height="46"/>
+        <position x="334" y="75"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:2:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_GOTO_BASE">
+        <size width="27" height="46"/>
+        <position x="369" y="75"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:7:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_EQUIP_VEHICLE">
+        <size width="27" height="46"/>
+        <position x="408" y="75"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:18:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_VEHICLE_BUILDING">
+        <size width="27" height="46"/>
+        <position x="443" y="75"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:8:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_VEHICLE_ATTACK">
+        <size width="27" height="46"/>
+        <position x="482" y="75"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:1:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_VEHICLE_ATTACK_BUILDING">
+        <size width="27" height="46"/>
+        <position x="517" y="75"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:3:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+    </style>
+  </form>
+</openapoc>

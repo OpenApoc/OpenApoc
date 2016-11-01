@@ -1,11 +1,11 @@
 #include "forms/ticker.h"
+#include "dependencies/pugixml/src/pugixml.hpp"
 #include "forms/ui.h"
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "framework/renderer.h"
 #include "library/sp.h"
-#include <tinyxml2.h>
 
 namespace OpenApoc
 {
@@ -124,50 +124,44 @@ sp<Control> Ticker::copyTo(sp<Control> CopyParent)
 	return copy;
 }
 
-void Ticker::configureSelfFromXml(tinyxml2::XMLElement *Element)
+void Ticker::configureSelfFromXml(pugi::xml_node *node)
 {
-	Control::configureSelfFromXml(Element);
-	tinyxml2::XMLElement *subnode;
-	UString attribvalue;
+	Control::configureSelfFromXml(node);
 
-	if (Element->FirstChildElement("font") != nullptr)
+	auto fontNode = node->child("font");
+	if (fontNode)
 	{
-		font = ui().getFont(Element->FirstChildElement("font")->GetText());
+		font = ui().getFont(fontNode.text().get());
 	}
-	subnode = Element->FirstChildElement("alignment");
-	if (subnode != nullptr)
+
+	auto alignmentNode = node->child("alignment");
+	if (alignmentNode)
 	{
-		if (subnode->Attribute("horizontal") != nullptr)
+		UString hAlign = alignmentNode.attribute("horizontal").as_string();
+		if (hAlign == "left")
 		{
-			attribvalue = subnode->Attribute("horizontal");
-			if (attribvalue == "left")
-			{
-				TextHAlign = HorizontalAlignment::Left;
-			}
-			else if (attribvalue == "centre")
-			{
-				TextHAlign = HorizontalAlignment::Centre;
-			}
-			else if (attribvalue == "right")
-			{
-				TextHAlign = HorizontalAlignment::Right;
-			}
+			TextHAlign = HorizontalAlignment::Left;
 		}
-		if (subnode->Attribute("vertical") != nullptr)
+		else if (hAlign == "centre")
 		{
-			attribvalue = subnode->Attribute("vertical");
-			if (attribvalue == "top")
-			{
-				TextVAlign = VerticalAlignment::Top;
-			}
-			else if (attribvalue == "centre")
-			{
-				TextVAlign = VerticalAlignment::Centre;
-			}
-			else if (attribvalue == "bottom")
-			{
-				TextVAlign = VerticalAlignment::Bottom;
-			}
+			TextHAlign = HorizontalAlignment::Centre;
+		}
+		else if (hAlign == "right")
+		{
+			TextHAlign = HorizontalAlignment::Right;
+		}
+		UString vAlign = alignmentNode.attribute("vertical").as_string();
+		if (vAlign == "top")
+		{
+			TextVAlign = VerticalAlignment::Top;
+		}
+		else if (vAlign == "centre")
+		{
+			TextVAlign = VerticalAlignment::Centre;
+		}
+		else if (vAlign == "bottom")
+		{
+			TextVAlign = VerticalAlignment::Bottom;
 		}
 	}
 }

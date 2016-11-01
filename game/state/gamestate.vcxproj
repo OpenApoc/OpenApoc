@@ -126,7 +126,6 @@
     <ClInclude Include="rules\damage.h" />
     <ClInclude Include="rules\doodad_type.h" />
     <ClInclude Include="rules\facility_type.h" />
-    <ClInclude Include="rules\resource_aliases.h" />
     <ClInclude Include="rules\scenery_tile_type.h" />
     <ClInclude Include="rules\ufo_growth.h" />
     <ClInclude Include="rules\ufo_incursion.h" />

@@ -1,4 +1,5 @@
 #include "framework/data.h"
+#include "dependencies/pugixml/src/pugixml.hpp"
 #include "framework/apocresources/apocpalette.h"
 #include "framework/apocresources/loftemps.h"
 #include "framework/apocresources/pck.h"
@@ -12,11 +13,11 @@
 #include "framework/sampleloader_interface.h"
 #include "framework/trace.h"
 #include "framework/video.h"
-#include "game/state/rules/resource_aliases.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/voxel.h"
 #include <fstream>
+#include <map>
 #include <mutex>
 #include <queue>
 
@@ -47,18 +48,24 @@ class DataImpl final : public Data
   private:
 	std::map<UString, std::weak_ptr<Image>> imageCache;
 	std::map<UString, std::weak_ptr<Image>> imageCacheLazy;
+	std::map<UString, UString> imageAliases;
 	std::recursive_mutex imageCacheLock;
 	std::map<UString, std::weak_ptr<ImageSet>> imageSetCache;
+	std::map<UString, UString> imageSetAliases;
 	std::recursive_mutex imageSetCacheLock;
 
 	std::map<UString, std::weak_ptr<Sample>> sampleCache;
+	std::map<UString, UString> sampleAliases;
 	std::recursive_mutex sampleCacheLock;
 	std::map<UString, std::weak_ptr<MusicTrack>> musicCache;
+	std::map<UString, UString> musicAliases;
 	std::recursive_mutex musicCacheLock;
 	std::map<UString, std::weak_ptr<LOFTemps>> LOFVoxelCache;
+	std::map<UString, UString> voxelAliases;
 	std::recursive_mutex voxelCacheLock;
 
 	std::map<UString, std::weak_ptr<Palette>> paletteCache;
+	std::map<UString, UString> paletteAliases;
 	std::recursive_mutex paletteCacheLock;
 
 	// The cache is organised in <font name , <text, image>>
@@ -82,6 +89,9 @@ class DataImpl final : public Data
 	std::map<UString, std::unique_ptr<SampleLoaderFactory>> registeredSampleLoaders;
 	std::map<UString, std::unique_ptr<MusicLoaderFactory>> registeredMusicLoaders;
 
+	void readAliases();
+	void readAliasFile(const UString &path);
+
   public:
 	DataImpl(std::vector<UString> paths);
 	~DataImpl() override = default;
@@ -93,6 +103,13 @@ class DataImpl final : public Data
 	sp<Palette> loadPalette(const UString &path) override;
 	sp<VoxelSlice> loadVoxelSlice(const UString &path) override;
 	sp<Video> loadVideo(const UString &path) override;
+
+	void addSampleAlias(const UString &name, const UString &value) override;
+	void addMusicAlias(const UString &name, const UString &value) override;
+	void addImageAlias(const UString &name, const UString &value) override;
+	void addImageSetAlias(const UString &name, const UString &value) override;
+	void addPaletteAlias(const UString &name, const UString &value) override;
+	void addVoxelSliceAlias(const UString &name, const UString &value) override;
 
 	sp<PaletteImage> getFontStringCacheEntry(const UString &font_name,
 	                                         const UString &text) override;
@@ -173,6 +190,8 @@ DataImpl::DataImpl(std::vector<UString> paths) : Data(paths)
 		pinnedFontStrings.push(nullptr);
 	for (int i = 0; i < paletteCacheSize.get(); i++)
 		pinnedPalettes.push(nullptr);
+
+	this->readAliases();
 }
 
 sp<VoxelSlice> DataImpl::loadVoxelSlice(const UString &path)
@@ -180,6 +199,14 @@ sp<VoxelSlice> DataImpl::loadVoxelSlice(const UString &path)
 	std::lock_guard<std::recursive_mutex> l(this->voxelCacheLock);
 	if (path == "")
 		return nullptr;
+
+	auto alias = this->voxelAliases.find(path);
+	if (alias != this->voxelAliases.end())
+	{
+		LogInfo("Using alias \"%s\" for \"%s\"", path.cStr(), alias->second.cStr());
+		return this->loadVoxelSlice(alias->second);
+	}
+
 	sp<VoxelSlice> slice;
 	if (path.substr(0, 9) == "LOFTEMPS:")
 	{
@@ -236,6 +263,14 @@ sp<VoxelSlice> DataImpl::loadVoxelSlice(const UString &path)
 sp<ImageSet> DataImpl::loadImageSet(const UString &path)
 {
 	std::lock_guard<std::recursive_mutex> l(this->imageSetCacheLock);
+
+	auto alias = this->imageSetAliases.find(path);
+	if (alias != this->imageSetAliases.end())
+	{
+		LogInfo("Using alias \"%s\" for \"%s\"", path.cStr(), alias->second.cStr());
+		return this->loadImageSet(alias->second);
+	}
+
 	UString cacheKey = path.toUpper();
 	sp<ImageSet> imgSet = this->imageSetCache[cacheKey].lock();
 	if (imgSet)
@@ -286,16 +321,14 @@ sp<ImageSet> DataImpl::loadImageSet(const UString &path)
 sp<Sample> DataImpl::loadSample(UString path)
 {
 	std::lock_guard<std::recursive_mutex> l(this->sampleCacheLock);
-	auto aliasMap = this->aliases.lock();
-	if (aliasMap)
+
+	auto alias = this->sampleAliases.find(path);
+	if (alias != this->sampleAliases.end())
 	{
-		auto aliasIt = aliasMap->sample.find(path);
-		if (aliasIt != aliasMap->sample.end())
-		{
-			LogInfo("Aliasing sample \"%s\" to \"%s\"", path.cStr(), aliasIt->second.cStr());
-			path = aliasIt->second;
-		}
+		LogInfo("Using alias \"%s\" for \"%s\"", path.cStr(), alias->second.cStr());
+		return this->loadSample(alias->second);
 	}
+
 	UString cacheKey = path.toUpper();
 	sp<Sample> sample = this->sampleCache[cacheKey].lock();
 	if (sample)
@@ -322,6 +355,13 @@ sp<MusicTrack> DataImpl::loadMusic(const UString &path)
 {
 	std::lock_guard<std::recursive_mutex> l(this->musicCacheLock);
 	TRACE_FN_ARGS1("path", path);
+	auto alias = this->musicAliases.find(path);
+	if (alias != this->musicAliases.end())
+	{
+		LogInfo("Using alias \"%s\" for \"%s\"", path.cStr(), alias->second.cStr());
+		return this->loadMusic(alias->second);
+	}
+
 	// No cache for music tracks, just stream of disk
 	for (auto &loader : this->musicLoaders)
 	{
@@ -343,6 +383,14 @@ sp<Image> DataImpl::loadImage(const UString &path, bool lazy)
 	{
 		return nullptr;
 	}
+
+	auto alias = this->imageAliases.find(path);
+	if (alias != this->imageAliases.end())
+	{
+		LogInfo("Using alias \"%s\" for \"%s\"", path.cStr(), alias->second.cStr());
+		return this->loadImage(alias->second, lazy);
+	}
+
 	// Use an uppercase version of the path for the cache key
 	UString cacheKey = path.toUpper();
 	sp<Image> img;
@@ -613,6 +661,14 @@ sp<Palette> DataImpl::loadPalette(const UString &path)
 		LogWarning("Invalid palette path");
 		return nullptr;
 	}
+
+	auto alias = this->paletteAliases.find(path);
+	if (alias != this->paletteAliases.end())
+	{
+		LogInfo("Using alias \"%s\" for \"%s\"", path.cStr(), alias->second.cStr());
+		return this->loadPalette(alias->second);
+	}
+
 	// Use an uppercase version of the path for the cache key
 	UString cacheKey = path.toUpper();
 
@@ -812,4 +868,171 @@ void DataImpl::putFontStringCacheEntry(const UString &font_name, const UString &
 	this->pinnedFontStrings.pop();
 }
 
+void DataImpl::addSampleAlias(const UString &name, const UString &value)
+{
+	std::lock_guard<std::recursive_mutex> l(this->sampleCacheLock);
+	LogAssert(name != value);
+	auto current = this->sampleAliases.find(name);
+	if (current != this->sampleAliases.end() && current->second != value)
+	{
+		LogWarning("Replacing alias \"%s\" - was \"%s\" now \"%s\"", name.cStr(),
+		           current->second.cStr(), value.cStr());
+	}
+	this->sampleAliases[name] = value;
+}
+void DataImpl::addMusicAlias(const UString &name, const UString &value)
+{
+	std::lock_guard<std::recursive_mutex> l(this->musicCacheLock);
+	LogAssert(name != value);
+	auto current = this->musicAliases.find(name);
+	if (current != this->musicAliases.end() && current->second != value)
+	{
+		LogWarning("Replacing alias \"%s\" - was \"%s\" now \"%s\"", name.cStr(),
+		           current->second.cStr(), value.cStr());
+	}
+	this->musicAliases[name] = value;
+}
+void DataImpl::addImageAlias(const UString &name, const UString &value)
+{
+	std::lock_guard<std::recursive_mutex> l(this->imageCacheLock);
+	LogAssert(name != value);
+	auto current = this->imageAliases.find(name);
+	if (current != this->imageAliases.end() && current->second != value)
+	{
+		LogWarning("Replacing alias \"%s\" - was \"%s\" now \"%s\"", name.cStr(),
+		           current->second.cStr(), value.cStr());
+	}
+	this->imageAliases[name] = value;
+}
+void DataImpl::addImageSetAlias(const UString &name, const UString &value)
+{
+	std::lock_guard<std::recursive_mutex> l(this->imageSetCacheLock);
+	LogAssert(name != value);
+	auto current = this->imageSetAliases.find(name);
+	if (current != this->imageSetAliases.end() && current->second != value)
+	{
+		LogWarning("Replacing alias \"%s\" - was \"%s\" now \"%s\"", name.cStr(),
+		           current->second.cStr(), value.cStr());
+	}
+	this->imageSetAliases[name] = value;
+}
+void DataImpl::addPaletteAlias(const UString &name, const UString &value)
+{
+	std::lock_guard<std::recursive_mutex> l(this->paletteCacheLock);
+	LogAssert(name != value);
+	auto current = this->paletteAliases.find(name);
+	if (current != this->paletteAliases.end() && current->second != value)
+	{
+		LogWarning("Replacing alias \"%s\" - was \"%s\" now \"%s\"", name.cStr(),
+		           current->second.cStr(), value.cStr());
+	}
+	this->paletteAliases[name] = value;
+}
+void DataImpl::addVoxelSliceAlias(const UString &name, const UString &value)
+{
+	std::lock_guard<std::recursive_mutex> l(this->voxelCacheLock);
+	LogAssert(name != value);
+	auto current = this->voxelAliases.find(name);
+	if (current != this->voxelAliases.end() && current->second != value)
+	{
+		LogWarning("Replacing alias \"%s\" - was \"%s\" now \"%s\"", name.cStr(),
+		           current->second.cStr(), value.cStr());
+	}
+	this->voxelAliases[name] = value;
+}
+
+void DataImpl::readAliases()
+{
+	auto aliasFiles = this->fs.enumerateDirectoryRecursive("aliases", ".alias");
+	for (auto &path : aliasFiles)
+	{
+		this->readAliasFile(path);
+	}
+}
+void DataImpl::readAliasFile(const UString &path)
+{
+	LogInfo("Reading aliases from \"%s\"", path.cStr());
+
+	auto file = this->fs.open(path);
+	if (!file)
+	{
+		LogWarning("Failed to open alias file \"%s\"", path.cStr());
+		return;
+	}
+
+	auto data = file.readAll();
+	if (!data)
+	{
+		LogWarning("Failed to read data from alias file \"%s\"", path.cStr());
+		return;
+	}
+
+	pugi::xml_document doc;
+	auto parseResult = doc.load_buffer(data.get(), file.size());
+	if (!parseResult)
+	{
+		LogWarning("Failed to parse alias file at \"%s\" - \"%s\" at \"%llu\"", path.cStr(),
+		           parseResult.description(), (unsigned long long)parseResult.offset);
+		return;
+	}
+	auto openapocNode = doc.child("openapoc");
+	if (!openapocNode)
+	{
+		LogWarning("Failed to find \"openapoc\" root node in alias file at \"%s\"", path.cStr());
+		return;
+	}
+	for (auto aliasNode = openapocNode.child("alias"); aliasNode;
+	     aliasNode = aliasNode.next_sibling("alias"))
+	{
+		UString name = aliasNode.attribute("id").value();
+		if (name.empty())
+		{
+			LogWarning("Alias with missing 'id' attribute in \"%s\"", path.cStr());
+			continue;
+		}
+		UString type = aliasNode.attribute("type").value();
+		if (type.empty())
+		{
+			LogWarning("Alias \"%s\" with missing 'type' attribute in \"%s\"", name.cStr(),
+			           path.cStr());
+			continue;
+		}
+		UString value = aliasNode.text().get();
+		if (value.empty())
+		{
+			LogWarning("Alias \"%s\" with missing value in \"%s\"", name.cStr(), path.cStr());
+			continue;
+		}
+		if (type == "sample")
+		{
+			this->addSampleAlias(name, value);
+		}
+		else if (type == "music")
+		{
+			this->addMusicAlias(name, value);
+		}
+		else if (type == "image")
+		{
+			this->addImageAlias(name, value);
+		}
+		else if (type == "imageset")
+		{
+			this->addImageSetAlias(name, value);
+		}
+		else if (type == "palette")
+		{
+			this->addPaletteAlias(name, value);
+		}
+		else if (type == "voxelslice")
+		{
+			this->addVoxelSliceAlias(name, value);
+		}
+		else
+		{
+			LogWarning("Alias \"%s\" with unknown type \"%s\"  in \"%s\"", name.cStr(), type.cStr(),
+			           path.cStr());
+			continue;
+		}
+	}
+}
 }; // namespace OpenApoc

@@ -11,7 +11,7 @@ namespace OpenApoc
 {
 
 InfiltrationScreen::InfiltrationScreen(sp<GameState> state)
-    : Stage(), menuform(ui().getForm("FORM_INFILTRATION_SCREEN")), state(state)
+    : Stage(), menuform(ui().getForm("city/infiltration")), state(state)
 {
 }
 

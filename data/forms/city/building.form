@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_BUILDING_SCREEN">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="640" height="480"/>
+      <graphic>
+        <image>xcom3/ufodata/buildscr.pcx</image>
+        <position x="0" y="0"/>
+        <size width="640" height="480"/>
+      </graphic>
+      <label id="TEXT_BUILDING_NAME">
+        <position x="113" y="0"/>
+        <size width="420" height="32"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>bigfont</font>
+      </label>
+      <label id="TEXT_FUNDS">
+        <position x="572" y="11"/>
+        <size width="60" height="10"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label text="Owner&gt;">
+        <position x="97" y="54"/>
+        <size width="60" height="23"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_OWNER_NAME">
+        <position x="147" y="54"/>
+        <size width="140" height="23"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label text="Function&gt;">
+        <position x="302" y="54"/>
+        <size width="60" height="23"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_BUILDING_FUNCTION">
+        <position x="358" y="54"/>
+        <size width="140" height="23"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphicbutton id="BUTTON_QUIT">
+        <position x="602" y="443"/>
+        <size width="40" height="40"/>
+        <image/>
+        <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
+      </graphicbutton>
+    </style>
+  </form>
+</openapoc>

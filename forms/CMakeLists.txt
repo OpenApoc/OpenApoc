@@ -52,21 +52,8 @@ list(APPEND ALL_HEADER_FILES ${LIBRARY_HEADER_FILES})
 add_library(OpenApoc_Forms STATIC ${FORMS_SOURCE_FILES}
 		${FORMS_HEADER_FILES})
 
-target_link_libraries(OpenApoc_Forms PUBLIC OpenApoc_Framework)
-
-FIND_PACKAGE(PkgConfig)
-PKG_CHECK_MODULES(PC_TINYXML2 REQUIRED tinyxml2)
-
-foreach (TINYXML2_LIBRARY ${PC_TINYXML2_LIBRARIES})
-	find_library(TINYXML2_LIBRARY_PATH ${TINYXML2_LIBRARY} HINTS
-		${PC_TINYXML2_LIBRARY_DIRS})
-	if (NOT TINYXML2_LIBRARY_PATH)
-		message(FATAL_ERROR "Failed to find tinyxml2 library
-		${TINYXML2_LIBRARY} in ${PC_TINYXML2_LIBRARY_DIRS}")
-	endif()
-	target_link_libraries(OpenApoc_Forms PUBLIC ${TINYXML2_LIBRARY_PATH})
-endforeach(TINYXML2_LIBRARY)
-target_include_directories(OpenApoc_Forms PUBLIC ${PC_TINYXML2_INCLUDEDIR})
+target_link_libraries(OpenApoc_Forms PUBLIC OpenApoc_Framework
+		OpenApoc_LibPugixml)
 
 target_include_directories(OpenApoc_Forms PUBLIC ${CMAKE_SOURCE_DIR})
 

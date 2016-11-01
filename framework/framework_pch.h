@@ -50,7 +50,6 @@
 #include <string>
 #include <sys/types.h>
 #include <thread>
-#include <tinyxml2.h>
 #include <utility>
 #include <vector>
 

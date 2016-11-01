@@ -2,6 +2,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
+#include "framework/data.h"
+#include "framework/framework.h"
 #include "framework/fs.h"
 #include "framework/logger.h"
 #include "framework/trace.h"
@@ -267,7 +269,6 @@ IFile FileSystem::open(const UString &path)
 std::list<UString> FileSystem::enumerateDirectory(const UString &basePath,
                                                   const UString &extension) const
 {
-
 	std::list<UString> result;
 	bool filterByExtension = !extension.empty();
 
@@ -289,6 +290,31 @@ std::list<UString> FileSystem::enumerateDirectory(const UString &basePath,
 	}
 	PHYSFS_freeList(elements);
 	return result;
+}
+
+static std::list<UString> recursiveFindFilesInDirectory(UString path, const UString &extension)
+{
+	std::list<UString> foundFiles;
+	auto list = fw().data->fs.enumerateDirectory(path, "");
+	for (auto &entry : list)
+	{
+		if (entry.endsWith(extension))
+		{
+			foundFiles.push_back(path + "/" + entry);
+		}
+		else
+		{
+			auto subdirFiles = recursiveFindFilesInDirectory(path + "/" + entry, extension);
+			foundFiles.insert(foundFiles.end(), subdirFiles.begin(), subdirFiles.end());
+		}
+	}
+	return foundFiles;
+}
+
+std::list<UString> FileSystem::enumerateDirectoryRecursive(const UString &basePath,
+                                                           const UString &extension) const
+{
+	return recursiveFindFilesInDirectory(basePath, extension);
 }
 
 } // namespace OpenApoc

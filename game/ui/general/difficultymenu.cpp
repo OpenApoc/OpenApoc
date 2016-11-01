@@ -12,7 +12,7 @@
 namespace OpenApoc
 {
 
-DifficultyMenu::DifficultyMenu() : Stage(), difficultymenuform(ui().getForm("FORM_DIFFICULTYMENU"))
+DifficultyMenu::DifficultyMenu() : Stage(), difficultymenuform(ui().getForm("difficultymenu"))
 {
 	LogAssert(difficultymenuform);
 }

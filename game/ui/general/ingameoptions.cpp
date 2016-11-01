@@ -22,7 +22,7 @@ namespace OpenApoc
 {
 
 InGameOptions::InGameOptions(sp<GameState> state)
-    : Stage(), menuform(ui().getForm("FORM_INGAMEOPTIONS")), state(state)
+    : Stage(), menuform(ui().getForm("ingameoptions")), state(state)
 {
 
 	/* Initialse all initial values */

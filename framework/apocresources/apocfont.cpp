@@ -1,80 +1,115 @@
 #include "framework/apocresources/apocfont.h"
+#include "dependencies/pugixml/src/pugixml.hpp"
 #include "framework/data.h"
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
+#include "framework/trace.h"
 #include "library/sp.h"
 
 // Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
 // symbols as part of the module that uses it
 #define BOOST_ALL_NO_LIB
 #include <boost/locale.hpp>
-#include <tinyxml2.h>
 
 namespace OpenApoc
 {
 
-sp<BitmapFont> ApocalypseFont::loadFont(tinyxml2::XMLElement *fontElement)
+sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 {
+	TRACE_FN_ARGS1("Font", fontDescPath);
+	auto file = fw().data->fs.open(fontDescPath);
+	if (!file)
+	{
+		LogWarning("Failed to open font file at path \"%s\"", fontDescPath.cStr());
+		return nullptr;
+	}
+
+	auto data = file.readAll();
+	if (!data)
+	{
+		LogWarning("Failed to read font file at path \"%s\"", fontDescPath.cStr());
+		return nullptr;
+	}
+
+	pugi::xml_document doc;
+
+	auto parseResult = doc.load_buffer(data.get(), file.size());
+
+	if (!parseResult)
+	{
+		LogWarning("Failed to parse font file at \"%s\" - \"%s\" at \"%llu\"", fontDescPath.cStr(),
+		           parseResult.description(), (unsigned long long)parseResult.offset);
+		return nullptr;
+	}
+
+	auto openapocNode = doc.child("openapoc");
+	if (!openapocNode)
+	{
+		LogWarning("Failed to find \"openapoc\" root node in font file at \"%s\"",
+		           fontDescPath.cStr());
+		return nullptr;
+	}
+
+	auto fontNode = openapocNode.child("apocfont");
+	if (!fontNode)
+	{
+		LogWarning("Failed to find \"openapoc::apocfont\" node in font file at \"%s\"",
+		           fontDescPath.cStr());
+		return nullptr;
+	}
+
 	int spacewidth = 0;
 	int height = 0;
 	UString fontName;
 
 	std::map<UniChar, UString> charMap;
 
-	const char *attr = fontElement->Attribute("name");
-	if (!attr)
+	fontName = fontNode.attribute("name").value();
+	if (fontName.empty())
 	{
 		LogError("apocfont element with no \"name\" attribute");
 		return nullptr;
 	}
-	fontName = attr;
 
-	auto err = fontElement->QueryIntAttribute("height", &height);
-	if (err != tinyxml2::XML_SUCCESS || height <= 0)
+	height = fontNode.attribute("height").as_int();
+	if (height <= 0)
 	{
 		LogError("apocfont \"%s\" with invalid \"height\" attribute", fontName.cStr());
 		return nullptr;
 	}
-	err = fontElement->QueryIntAttribute("spacewidth", &spacewidth);
-	if (err != tinyxml2::XML_SUCCESS || spacewidth <= 0)
+	spacewidth = fontNode.attribute("spacewidth").as_int();
+	if (spacewidth <= 0)
 	{
 		LogError("apocfont \"%s\" with invalid \"spacewidth\" attribute", fontName.cStr());
 		return nullptr;
 	}
 
-	for (auto *glyphNode = fontElement->FirstChildElement(); glyphNode;
-	     glyphNode = glyphNode->NextSiblingElement())
+	for (auto glyphNode = fontNode.child("glyph"); glyphNode;
+	     glyphNode = glyphNode.next_sibling("glyph"))
 	{
-		UString nodeName = glyphNode->Name();
-		if (nodeName != "glyph")
-		{
-			LogError("apocfont \"%s\" has unexpected child node \"%s\", skipping", fontName.cStr(),
-			         nodeName.cStr());
-			continue;
-		}
-		auto *glyphPath = glyphNode->Attribute("glyph");
-		if (!glyphPath)
+		UString glyphPath = glyphNode.attribute("glyph").value();
+		if (glyphPath.empty())
 		{
 			LogError("Font \"%s\" has glyph with missing string attribute - skipping glyph",
 			         fontName.cStr());
 			continue;
 		}
-		auto *glyphString = glyphNode->Attribute("string");
-		if (!glyphString)
+		UString glyphString = glyphNode.attribute("string").value();
+		if (glyphString.empty())
 		{
 			LogError("apocfont \"%s\" has glyph with missing string attribute - skipping glyph",
 			         fontName.cStr());
 			continue;
 		}
 
-		auto pointString = boost::locale::conv::utf_to_utf<UniChar>(glyphString);
+		auto pointString = boost::locale::conv::utf_to_utf<UniChar>(glyphString.cStr());
 
 		if (pointString.length() != 1)
 		{
 			LogError("apocfont \"%s\" glyph \"%s\" has %lu codepoints, expected one - skipping "
 			         "glyph",
-			         fontName.cStr(), glyphString, pointString.length());
+			         fontName.cStr(), glyphString.cStr(), pointString.length());
 			continue;
 		}
 		UniChar c = pointString[0];
@@ -82,7 +117,7 @@ sp<BitmapFont> ApocalypseFont::loadFont(tinyxml2::XMLElement *fontElement)
 		if (charMap.find(c) != charMap.end())
 		{
 			LogError("Font \"%s\" has multiple glyphs for string \"%s\" - skipping glyph",
-			         fontName.cStr(), glyphString);
+			         fontName.cStr(), glyphString.cStr());
 			continue;
 		}
 
@@ -90,7 +125,7 @@ sp<BitmapFont> ApocalypseFont::loadFont(tinyxml2::XMLElement *fontElement)
 	}
 
 	auto font = BitmapFont::loadFont(charMap, spacewidth, height, fontName,
-	                                 fw().data->loadPalette(fontElement->Attribute("palette")));
+	                                 fw().data->loadPalette(fontNode.attribute("palette").value()));
 	return font;
 }
 }; // namespace OpenApoc

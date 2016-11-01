@@ -43,10 +43,10 @@ namespace OpenApoc
 namespace
 {
 static const std::vector<UString> TAB_FORM_NAMES_RT = {
-    "FORM_BATTLE_UI_RT_1", "FORM_BATTLE_UI_RT_2", "FORM_BATTLE_UI_RT_3",
+    "battle/battle_rt_tab1", "battle/battle_rt_tab2", "battle/battle_rt_tab3",
 };
 static const std::vector<UString> TAB_FORM_NAMES_TB = {
-    "FORM_BATTLE_UI_TB_1", "FORM_BATTLE_UI_TB_2", "FORM_BATTLE_UI_TB_3",
+    "battle/battle_tb_tab1", "battle/battle_tb_tab2", "battle/battle_tb_tab3",
 };
 static const std::set<BodyPart> bodyParts{BodyPart::Body, BodyPart::Helmet, BodyPart::LeftArm,
                                           BodyPart::Legs, BodyPart::RightArm};
@@ -58,7 +58,7 @@ BattleView::BattleView(sp<GameState> gameState)
                      Vec3<int>{TILE_X_BATTLE, TILE_Y_BATTLE, TILE_Z_BATTLE},
                      Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric,
                      gameState->current_battle->battleViewScreenCenter, *gameState),
-      baseForm(ui().getForm("FORM_BATTLE_UI")), state(gameState), battle(*state->current_battle),
+      baseForm(ui().getForm("battle/battle")), state(gameState), battle(*state->current_battle),
       followAgent(false), palette(fw().data->loadPalette("xcom3/tacdata/tactical.pal")),
       selectionState(BattleSelectionState::Normal)
 {
@@ -141,10 +141,10 @@ BattleView::BattleView(sp<GameState> gameState)
 			break;
 	}
 
-	medikitForms[false] = ui().getForm("FORM_BATTLE_MEDIKIT_LEFT");
-	medikitForms[true] = ui().getForm("FORM_BATTLE_MEDIKIT_RIGHT");
-	motionScannerForms[false] = ui().getForm("FORM_BATTLE_MOTION_SCANNER_LEFT");
-	motionScannerForms[true] = ui().getForm("FORM_BATTLE_MOTION_SCANNER_RIGHT");
+	medikitForms[false] = ui().getForm("battle/battle_medkit_left");
+	medikitForms[true] = ui().getForm("battle/battle_medkit_right");
+	motionScannerForms[false] = ui().getForm("battle/battle_scanner_left");
+	motionScannerForms[true] = ui().getForm("battle/battle_scanner_right");
 
 	itemForms.push_back(medikitForms[false]);
 	itemForms.push_back(medikitForms[true]);

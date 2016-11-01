@@ -23,7 +23,7 @@ namespace OpenApoc
 ResearchScreen::ResearchScreen(sp<GameState> state, sp<Facility> selected_lab)
     : BaseStage(state), selected_lab(selected_lab)
 {
-	form = ui().getForm("FORM_RESEARCHSCREEN");
+	form = ui().getForm("researchscreen");
 	viewHighlight = BaseGraphics::FacilityHighlight::Labs;
 	viewFacility = selected_lab;
 	arrow = form->findControlTyped<Graphic>("MAGIC_ARROW");
@@ -270,7 +270,7 @@ void ResearchScreen::setCurrentLabInfo()
 
 	form->findControlTyped<Label>("TEXT_LAB_TYPE")->setText(labTypeName);
 
-	auto font = ui().getFont("SMALFONT");
+	auto font = ui().getFont("smalfont");
 	auto agentEntryHeight = font->getFontHeight() * 3;
 
 	auto unassignedAgentList = form->findControlTyped<ListBox>("LIST_UNASSIGNED");
@@ -447,7 +447,7 @@ sp<Control> ResearchScreen::createAgentControl(Vec2<int> size, StateRef<Agent> a
 	healthGraphic->Size = healthBarSize;
 	healthGraphic->ImagePosition = FillMethod::Stretch;
 
-	auto font = ui().getFont("SMALFONT");
+	auto font = ui().getFont("smalfont");
 
 	auto nameLabel = baseControl->createChild<Label>(agent->name, font);
 	nameLabel->Location = {40, 0};

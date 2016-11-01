@@ -145,7 +145,7 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 	waypointDarkIcons.push_back(fw().data->loadImage("battle/battle-waypoint-2-dark.png"));
 	waypointDarkIcons.push_back(fw().data->loadImage("battle/battle-waypoint-1-dark.png"));
 
-	auto font = ui().getFont("SMALLSET");
+	auto font = ui().getFont("smallset");
 
 	for (int i = 0; i <= 99; i++)
 	{

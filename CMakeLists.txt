@@ -114,8 +114,14 @@ add_custom_target(format)
 add_custom_target(format-sources)
 add_custom_target(format-xml)
 
+add_custom_target(format-forms)
+add_custom_target(format-fonts)
+add_custom_target(format-aliases)
+
 add_dependencies(format format-sources)
-add_dependencies(format format-xml)
+add_dependencies(format format-forms)
+add_dependencies(format format-fonts)
+add_dependencies(format format-aliases)
 
 set(CLANG_FORMAT clang-format CACHE STRING "clang-format executable name in PATH")
 
@@ -128,6 +134,10 @@ endforeach()
 
 file(GLOB_RECURSE XML_FILES ${CMAKE_SOURCE_DIR}/data/*.xml
 		${CMAKE_SOURCE_DIR}/data/*.XML)
+
+file(GLOB_RECURSE FONT_FILES ${CMAKE_SOURCE_DIR}/data/fonts/*.font)
+file(GLOB_RECURSE FORM_FILES ${CMAKE_SOURCE_DIR}/data/forms/*.form)
+file(GLOB_RECURSE ALIAS_FILES ${CMAKE_SOURCE_DIR}/data/aliases/*.alias)
 
 execute_process(COMMAND which xmllint OUTPUT_VARIABLE WHICH_XMLLINT_OUTPUT ERROR_QUIET
 		OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -145,6 +155,33 @@ if (XMLLINT_COMMAND)
 					--output ${XML_FILE}
 					DEPENDS ${XML_FILE})
 			add_dependencies(format-xml format-xml-${XML_FILE_STRIPPED})
+		endforeach()
+		foreach(FONT_FILE ${FONT_FILES})
+				string(MAKE_C_IDENTIFIER ${FONT_FILE} FONT_FILE_STRIPPED)
+				add_custom_target(format-font-${FONT_FILE_STRIPPED}
+						${XMLLINT_COMMAND} --format --encode UTF-8
+						${FONT_FILE} --output ${FONT_FILE}
+						DEPENDS ${FONT_FILE})
+				add_dependencies(format-fonts
+						format-font-${FONT_FILE_STRIPPED})
+		endforeach()
+		foreach(FORM_FILE ${FORM_FILES})
+				string(MAKE_C_IDENTIFIER ${FORM_FILE} FORM_FILE_STRIPPED)
+				add_custom_target(format-form-${FORM_FILE_STRIPPED}
+						${XMLLINT_COMMAND} --format --encode UTF-8
+						${FORM_FILE} --output ${FORM_FILE}
+						DEPENDS ${FORM_FILE})
+				add_dependencies(format-forms
+						format-form-${FORM_FILE_STRIPPED})
+		endforeach()
+		foreach(ALIAS_FILE ${ALIAS_FILES})
+			string(MAKE_C_IDENTIFIER ${ALIAS_FILE} ALIAS_FILE_STRIPPED)
+			add_custom_target(format-alias-${ALIAS_FILE_STRIPPED}
+					${XMLLINT_COMMAND} --format --encode UTF-8
+					${ALIAS_FILE} --output ${ALIAS_FILE}
+					DEPENDS ${ALIAS_FILE})
+			add_dependencies(format-aliases
+					format-alias-${ALIAS_FILE_STRIPPED})
 		endforeach()
 else()
 	message("xmllint not found, disabling format-xml target")

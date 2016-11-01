@@ -1,4 +1,5 @@
 #include "forms/graphicbutton.h"
+#include "dependencies/pugixml/src/pugixml.hpp"
 #include "forms/scrollbar.h"
 #include "framework/data.h"
 #include "framework/event.h"
@@ -7,7 +8,6 @@
 #include "framework/renderer.h"
 #include "framework/sound.h"
 #include "library/sp.h"
-#include <tinyxml2.h>
 
 namespace OpenApoc
 {
@@ -155,21 +155,23 @@ sp<Control> GraphicButton::copyTo(sp<Control> CopyParent)
 	return copy;
 }
 
-void GraphicButton::configureSelfFromXml(tinyxml2::XMLElement *Element)
+void GraphicButton::configureSelfFromXml(pugi::xml_node *node)
 {
-	Control::configureSelfFromXml(Element);
-	if (Element->FirstChildElement("image") != nullptr)
+	Control::configureSelfFromXml(node);
+	auto imageNode = node->child("image");
+	if (imageNode)
 	{
-		image = fw().data->loadImage(Element->FirstChildElement("image")->GetText());
+		image = fw().data->loadImage(imageNode.text().get());
 	}
-	if (Element->FirstChildElement("imagedepressed") != nullptr)
+	auto imageDepressedNode = node->child("imagedepressed");
+	if (imageDepressedNode)
 	{
-		imagedepressed =
-		    fw().data->loadImage(Element->FirstChildElement("imagedepressed")->GetText());
+		imagedepressed = fw().data->loadImage(imageDepressedNode.text().get());
 	}
-	if (Element->FirstChildElement("imagehover") != nullptr)
+	auto imageHoverNode = node->child("imagehover");
+	if (imageHoverNode)
 	{
-		imagehover = fw().data->loadImage(Element->FirstChildElement("imagehover")->GetText());
+		imagehover = fw().data->loadImage(imageHoverNode.text().get());
 	}
 }
 }; // namespace OpenApoc

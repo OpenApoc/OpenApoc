@@ -76,8 +76,8 @@ static const std::map<CityIcon, UString> CITY_ICON_RESOURCES = {
      "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:50:xcom3/ufodata/pal_01.dat"},
 };
 static const std::vector<UString> TAB_FORM_NAMES = {
-    "FORM_CITY_UI_1", "FORM_CITY_UI_2", "FORM_CITY_UI_3", "FORM_CITY_UI_4",
-    "FORM_CITY_UI_5", "FORM_CITY_UI_6", "FORM_CITY_UI_7", "FORM_CITY_UI_8",
+    "city/tab1", "city/tab2", "city/tab3", "city/tab4",
+    "city/tab5", "city/tab6", "city/tab7", "city/tab8",
 };
 
 static const std::vector<UString> CITY_ICON_VEHICLE_PASSENGER_COUNT_RESOURCES = {
@@ -102,7 +102,7 @@ static const std::vector<UString> CITY_ICON_VEHICLE_PASSENGER_COUNT_RESOURCES = 
 CityView::CityView(sp<GameState> state)
     : CityTileView(*state->current_city->map, Vec3<int>{TILE_X_CITY, TILE_Y_CITY, TILE_Z_CITY},
                    Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric),
-      baseForm(ui().getForm("FORM_CITY_UI")), updateSpeed(UpdateSpeed::Speed1),
+      baseForm(ui().getForm("city/city")), updateSpeed(UpdateSpeed::Speed1),
       lastSpeed(UpdateSpeed::Pause), state(state), followVehicle(false),
       selectionState(SelectionState::Normal),
       day_palette(fw().data->loadPalette("xcom3/ufodata/pal_01.dat")),

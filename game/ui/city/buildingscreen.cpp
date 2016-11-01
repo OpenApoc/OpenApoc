@@ -14,7 +14,7 @@ namespace OpenApoc
 {
 
 BuildingScreen::BuildingScreen(sp<GameState> state, sp<Building> building)
-    : Stage(), menuform(ui().getForm("FORM_BUILDING_SCREEN")), state(state), building(building)
+    : Stage(), menuform(ui().getForm("city/building")), state(state), building(building)
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 	menuform->findControlTyped<Label>("TEXT_BUILDING_NAME")->setText(tr(building->name));

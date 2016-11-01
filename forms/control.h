@@ -9,10 +9,10 @@
 #include <list>
 #include <map>
 
-namespace tinyxml2
+namespace pugi
 {
-class XMLElement;
-} // namespace tinyxml2
+class xml_node;
+} // namespace pugi
 
 namespace OpenApoc
 {
@@ -34,7 +34,7 @@ class Control : public std::enable_shared_from_this<Control>
 	std::map<FormEventType, std::list<std::function<void(FormsEvent *e)>>> callbacks;
 
 	// Configures children of element after it was configured, see ConfigureFromXML
-	void configureChildrenFromXml(tinyxml2::XMLElement *Element);
+	void configureChildrenFromXml(pugi::xml_node *parent);
 
 	bool dirty = true;
 
@@ -54,9 +54,9 @@ class Control : public std::enable_shared_from_this<Control>
 	void resolveLocation();
 
 	// Loads control and all subcontrols from xml
-	void configureFromXml(tinyxml2::XMLElement *Element);
+	void configureFromXml(pugi::xml_node *node);
 	// configures current element from xml element (without children)
-	virtual void configureSelfFromXml(tinyxml2::XMLElement *Element);
+	virtual void configureSelfFromXml(pugi::xml_node *node);
 
 	sp<Control> getRootControl();
 

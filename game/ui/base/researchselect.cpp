@@ -19,7 +19,7 @@ namespace OpenApoc
 {
 
 ResearchSelect::ResearchSelect(sp<GameState> state, sp<Lab> lab)
-    : Stage(), form(ui().getForm("FORM_RESEARCHSELECT")), lab(lab), state(state)
+    : Stage(), form(ui().getForm("researchselect")), lab(lab), state(state)
 {
 }
 
@@ -167,7 +167,7 @@ void ResearchSelect::populateResearchList()
 		auto control = mksp<Control>();
 		control->Size = {544, 20};
 
-		auto topic_name = control->createChild<Label>((t->name), ui().getFont("SMALFONT"));
+		auto topic_name = control->createChild<Label>((t->name), ui().getFont("smalfont"));
 		topic_name->Size = {200, 20};
 		topic_name->Location = {6, 0};
 
@@ -182,7 +182,7 @@ void ResearchSelect::populateResearchList()
 			else
 				progress_text = tr("Complete");
 			auto progress_label =
-			    control->createChild<Label>(progress_text, ui().getFont("SMALFONT"));
+			    control->createChild<Label>(progress_text, ui().getFont("smalfont"));
 			progress_label->Size = {100, 20};
 			progress_label->Location = {234, 0};
 		}
@@ -241,7 +241,7 @@ void ResearchSelect::populateResearchList()
 		}
 
 		auto skill_total_label =
-		    control->createChild<Label>(format("%d", skill_total), ui().getFont("SMALFONT"));
+		    control->createChild<Label>(format("%d", skill_total), ui().getFont("smalfont"));
 		skill_total_label->Size = {50, 20};
 		skill_total_label->Location = {328, 0};
 		skill_total_label->TextHAlign = HorizontalAlignment::Right;
@@ -260,7 +260,7 @@ void ResearchSelect::populateResearchList()
 				break;
 		}
 
-		auto lab_size_label = control->createChild<Label>(labSize, ui().getFont("SMALFONT"));
+		auto lab_size_label = control->createChild<Label>(labSize, ui().getFont("smalfont"));
 		lab_size_label->Size = {100, 20};
 		lab_size_label->Location = {439, 0};
 

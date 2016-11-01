@@ -110,9 +110,6 @@
     <ProjectReference Include="..\dependencies\physfs.vcxproj">
       <Project>{5a1d2ec4-525e-49b6-9398-be359e71cb35}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\dependencies\tinyxml2.vcxproj">
-      <Project>{d1c528b6-aa02-4d29-9d61-dc08e317a70d}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\library\library.vcxproj">
       <Project>{832bd75c-0c8c-4d12-a518-7b1aae3dd0ac}</Project>
     </ProjectReference>
@@ -169,22 +166,22 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)\dependencies\tinyxml2;$(SolutionDir)\dependencies\physfs\src;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\dependencies\physfs\src;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)\dependencies\tinyxml2;$(SolutionDir)\dependencies\physfs\src;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\dependencies\physfs\src;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)\dependencies\tinyxml2;$(SolutionDir)\dependencies\physfs\src;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\dependencies\physfs\src;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)\dependencies\tinyxml2;$(SolutionDir)\dependencies\physfs\src;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\dependencies\physfs\src;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>

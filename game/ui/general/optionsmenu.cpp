@@ -9,7 +9,7 @@
 namespace OpenApoc
 {
 
-OptionsMenu::OptionsMenu() : Stage(), menuform(ui().getForm("FORM_OPTIONSMENU")) {}
+OptionsMenu::OptionsMenu() : Stage(), menuform(ui().getForm("options")) {}
 
 OptionsMenu::~OptionsMenu() = default;
 

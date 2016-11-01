@@ -19,7 +19,7 @@ ImagePreview::ImagePreview() : Stage()
 	menuform->Location = {0, 0};
 	menuform->Size = {fw().displayGetWidth(), fw().displayGetHeight()};
 
-	imageFilename = menuform->createChild<TextEdit>("", ui().getFont("SMALFONT"));
+	imageFilename = menuform->createChild<TextEdit>("", ui().getFont("smalfont"));
 	imageFilename->Location = {5, 5};
 	imageFilename->Size = {fw().displayGetWidth() - 10, 15};
 	imageFilename->setText("RAW:xcom3/ufodata/isobord1.dat:640:128:xcom3/ufodata/pal_01.dat");

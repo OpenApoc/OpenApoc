@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <!-- Common controls -->
+  <form id="FORM_CITY_UI">
+    <style minwidth="640" minheight="128">
+      <position x="centre" y="bottom"/>
+      <size width="640" height="128"/>
+      <graphicbutton id="BUTTON_TAB_1">
+        <position x="145" y="22"/>
+        <size width="41" height="21"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_TAB_2">
+        <position x="189" y="22"/>
+        <size width="41" height="21"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_TAB_3">
+        <position x="233" y="22"/>
+        <size width="41" height="21"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_TAB_4">
+        <position x="277" y="22"/>
+        <size width="41" height="21"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_TAB_5">
+        <position x="321" y="22"/>
+        <size width="41" height="21"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_TAB_6">
+        <position x="365" y="22"/>
+        <size width="41" height="21"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_TAB_7">
+        <position x="409" y="22"/>
+        <size width="41" height="21"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_TAB_8">
+        <position x="453" y="22"/>
+        <size width="41" height="21"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <checkbox id="BUTTON_FOLLOW_VEHICLE">
+        <position x="4" y="7"/>
+        <size width="71" height="21"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:19:xcom3/ufodata/pal_01.dat</imagechecked>
+      </checkbox>
+      <checkbox id="BUTTON_TOGGLE_STRATMAP">
+        <position x="4" y="30"/>
+        <size width="71" height="21"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:12:xcom3/ufodata/pal_01.dat</imagechecked>
+      </checkbox>
+      <graphicbutton id="BUTTON_SHOW_ALIEN_INFILTRATION">
+        <position x="4" y="53"/>
+        <size width="35" height="21"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:60:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_SHOW_SCORE">
+        <position x="40" y="53"/>
+        <size width="35" height="21"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:61:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_SHOW_UFOPAEDIA">
+        <position x="4" y="76"/>
+        <size width="71" height="21"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:50:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_SHOW_OPTIONS">
+        <position x="4" y="99"/>
+        <size width="71" height="21"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:13:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_SHOW_LOG">
+        <position x="83" y="3"/>
+        <size width="25" height="25"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:10:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_ZOOM_EVENT">
+        <position x="532" y="3"/>
+        <size width="25" height="25"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:11:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+      <radiobutton id="BUTTON_SPEED0" groupid="SPEED">
+        <position x="565" y="7"/>
+        <size width="71" height="21"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:28:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_SPEED1" groupid="SPEED">
+        <position x="565" y="53"/>
+        <size width="35" height="21"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:29:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_SPEED2" groupid="SPEED">
+        <position x="600" y="53"/>
+        <size width="35" height="21"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:30:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_SPEED3" groupid="SPEED">
+        <position x="565" y="76"/>
+        <size width="35" height="21"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:31:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_SPEED4" groupid="SPEED">
+        <position x="600" y="76"/>
+        <size width="35" height="21"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:32:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_SPEED5" groupid="SPEED">
+        <position x="565" y="100"/>
+        <size width="71" height="21"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:33:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <label id="CLOCK" text="TICK TOCK">
+        <position x="568" y="34"/>
+        <size width="68" height="12"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <ticker id="NEWS_TICKER">
+        <position x="115" y="6"/>
+        <size width="410" height="17"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </ticker>
+    </style>
+  </form>
+</openapoc>

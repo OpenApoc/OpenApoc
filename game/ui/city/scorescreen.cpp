@@ -11,7 +11,7 @@ namespace OpenApoc
 {
 
 ScoreScreen::ScoreScreen(sp<GameState> state)
-    : Stage(), menuform(ui().getForm("FORM_SCORE_SCREEN")), state(state)
+    : Stage(), menuform(ui().getForm("city/score")), state(state)
 {
 }
 

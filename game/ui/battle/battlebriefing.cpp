@@ -16,8 +16,8 @@ namespace OpenApoc
 {
 
 BattleBriefing::BattleBriefing(sp<GameState> state, std::future<void> gameStateTask)
-    : Stage(), menuform(ui().getForm("FORM_BATTLE_BRIEFING")),
-      loading_task(std::move(gameStateTask)), state(state)
+    : Stage(), menuform(ui().getForm("battle/briefing")), loading_task(std::move(gameStateTask)),
+      state(state)
 {
 	menuform->findControlTyped<Label>("TEXT_DATE")->setText("Friday, 14th  July, 2084      17:35");
 	menuform->findControlTyped<Label>("TEXT_BRIEFING")->setText("You must lorem ipisum etc.");

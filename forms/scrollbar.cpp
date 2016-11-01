@@ -1,11 +1,11 @@
 #include "forms/scrollbar.h"
+#include "dependencies/pugixml/src/pugixml.hpp"
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
-#include <tinyxml2.h>
 
 namespace OpenApoc
 {
@@ -188,43 +188,35 @@ sp<Control> ScrollBar::copyTo(sp<Control> CopyParent)
 	return copy;
 }
 
-void ScrollBar::configureSelfFromXml(tinyxml2::XMLElement *Element)
+void ScrollBar::configureSelfFromXml(pugi::xml_node *node)
 {
-	Control::configureSelfFromXml(Element);
-	tinyxml2::XMLElement *subnode;
-	UString attribvalue;
+	Control::configureSelfFromXml(node);
 
-	if (Element->FirstChildElement("gripperimage") != nullptr)
+	auto gripperImageNode = node->child("gripperimage");
+	if (gripperImageNode)
 	{
-		gripperbutton = fw().data->loadImage(Element->FirstChildElement("gripperimage")->GetText());
+		gripperbutton = fw().data->loadImage(gripperImageNode.text().get());
 	}
 
-	subnode = Element->FirstChildElement("grippercolour");
-	if (subnode != nullptr)
+	auto gripperColourNode = node->child("grippercolour");
+	if (gripperColourNode)
 	{
-		if (subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "")
-		{
-			GripperColour = Colour(
-			    Strings::toU8(subnode->Attribute("r")), Strings::toU8(subnode->Attribute("g")),
-			    Strings::toU8(subnode->Attribute("b")), Strings::toU8(subnode->Attribute("a")));
-		}
-		else
-		{
-			GripperColour = Colour(Strings::toU8(subnode->Attribute("r")),
-			                       Strings::toU8(subnode->Attribute("g")),
-			                       Strings::toU8(subnode->Attribute("b")));
-		}
+		uint8_t r = gripperColourNode.attribute("r").as_uint(0);
+		uint8_t g = gripperColourNode.attribute("g").as_uint(0);
+		uint8_t b = gripperColourNode.attribute("b").as_uint(0);
+		uint8_t a = gripperColourNode.attribute("a").as_uint(255);
+		GripperColour = {r, g, b, a};
 	}
-	subnode = Element->FirstChildElement("range");
-	if (subnode != nullptr)
+	auto rangeNode = node->child("range");
+	if (rangeNode)
 	{
-		if (subnode->Attribute("min") != nullptr && UString(subnode->Attribute("min")) != "")
+		if (rangeNode.attribute("min"))
 		{
-			Minimum = Strings::toInteger(subnode->Attribute("min"));
+			Minimum = rangeNode.attribute("min").as_int();
 		}
-		if (subnode->Attribute("max") != nullptr && UString(subnode->Attribute("max")) != "")
+		if (rangeNode.attribute("max"))
 		{
-			Maximum = Strings::toInteger(subnode->Attribute("max"));
+			Maximum = rangeNode.attribute("max").as_int();
 		}
 	}
 }

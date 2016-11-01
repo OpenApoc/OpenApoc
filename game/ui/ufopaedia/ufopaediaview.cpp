@@ -12,7 +12,7 @@ namespace OpenApoc
 {
 
 UfopaediaView::UfopaediaView(sp<GameState> state)
-    : Stage(), menuform(ui().getForm("FORM_UFOPAEDIA_TITLE")), state(state)
+    : Stage(), menuform(ui().getForm("ufopaediatitle")), state(state)
 {
 }
 

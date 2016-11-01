@@ -22,7 +22,6 @@ We also have an IRC channel on http://freenode.net - #openapoc
 OpenApocalypse is built leveraging a number of libraries - to provide needed functionality (and save us the time of implementing it ourselves badly)
  
 - [SDL2](http://www.libsdl.org)
-- [TinyXML2](http://www.grinninglizard.com/tinyxml2/) (Version 2)
 - [GLM] (http://glm.g-truc.net/)
 - [Libunwind] (http://www.nongnu.org/libunwind/download.html) - debug backtracing on linux
 - [Boost] (http://boost.org) - specifially the 'locale' library, used for localisation
@@ -33,7 +32,7 @@ Requirements:
 Building on Windows:
 (Tested with Visual Studio 2015 community edition - Visual Studio 2013 is known to fail to build)
 - Checkout OpenApoc from github
-All the required dependencies (SDL2, tinyxml2, physfs, ICU) are packaged as submodules. These submodules are fetched automatically if using the github for windows app, so if you are please skip the next step
+All the required dependencies (SDL2, physfs, ICU) are packaged as submodules. These submodules are fetched automatically if using the github for windows app, so if you are please skip the next step
 - From a Git command line, run the following to fetch the dependency packages
 ```
 git submodule init
@@ -46,9 +45,9 @@ git submodule update
 
 Building on Linux
 (tested on ubuntu 14.04.3 - other distributions will probably need different packages to install - see the dependency list above)
-- Install the following packages: libsdl2-dev glm libtinyxml2-dev cmake build-essential git libboost-locale-dev libboost-filesystem-dev libboost-system-dev
+- Install the following packages: libsdl2-dev glm cmake build-essential git libboost-locale-dev libboost-filesystem-dev libboost-system-dev
 ```
-sudo apt-get install libsdl2-dev libtinyxml2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-system-dev
+sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-system-dev
 ```
 - Checkout OpenApoc from github
 - Fetch the dependencies from git with the following terminal command (run from the just-created OpenApoc folder)

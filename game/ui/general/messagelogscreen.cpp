@@ -16,7 +16,7 @@ namespace OpenApoc
 {
 
 MessageLogScreen::MessageLogScreen(sp<GameState> state, CityView &cityView)
-    : Stage(), menuform(ui().getForm("FORM_MESSAGE_LOG_SCREEN")), state(state)
+    : Stage(), menuform(ui().getForm("messagelog")), state(state)
 {
 	auto listbox = menuform->findControlTyped<ListBox>("LISTBOX_MESSAGES");
 	for (EventMessage message : state->messages)
@@ -35,17 +35,17 @@ sp<Control> MessageLogScreen::createMessageRow(EventMessage message, sp<GameStat
 	const int HEIGHT = 21;
 
 	auto date =
-	    control->createChild<Label>(message.time.getShortDateString(), ui().getFont("SMALFONT"));
+	    control->createChild<Label>(message.time.getShortDateString(), ui().getFont("smalfont"));
 	date->Location = {0, 0};
 	date->Size = {100, HEIGHT};
 	date->TextVAlign = VerticalAlignment::Centre;
 
-	auto time = control->createChild<Label>(message.time.getTimeString(), ui().getFont("SMALFONT"));
+	auto time = control->createChild<Label>(message.time.getTimeString(), ui().getFont("smalfont"));
 	time->Location = date->Location + Vec2<int>{date->Size.x, 0};
 	time->Size = {60, HEIGHT};
 	time->TextVAlign = VerticalAlignment::Centre;
 
-	auto text = control->createChild<Label>(message.text, ui().getFont("SMALFONT"));
+	auto text = control->createChild<Label>(message.text, ui().getFont("smalfont"));
 	text->Location = time->Location + Vec2<int>{time->Size.x, 0};
 	text->Size = {328, HEIGHT};
 	text->TextVAlign = VerticalAlignment::Centre;

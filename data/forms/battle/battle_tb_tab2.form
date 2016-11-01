@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <!-- Turn-Based Psi Attack -->
+  <form id="FORM_BATTLE_UI_TB_2">
+    <style minwidth="640" minheight="128">
+      <position x="centre" y="bottom"/>
+      <size width="640" height="128"/>
+      <backcolour r="128" g="96" b="80"/>
+      <graphic>
+        <size width="640" height="128"/>
+        <image>RAW:xcom3/tacdata/tacbord6.dat:640:128:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+    </style>
+  </form>
+</openapoc>

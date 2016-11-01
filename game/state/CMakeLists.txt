@@ -119,7 +119,6 @@ set (GAMESTATE_HEADER_FILES
 	rules/damage.h
 	rules/doodad_type.h
 	rules/facility_type.h
-	rules/resource_aliases.h
 	rules/scenery_tile_type.h
 	rules/ufo_growth.h
 	rules/ufo_incursion.h

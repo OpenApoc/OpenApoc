@@ -257,9 +257,6 @@
     <ClInclude Include="rules\facility_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rules\resource_aliases.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="rules\scenery_tile_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>

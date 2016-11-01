@@ -14,7 +14,7 @@
 namespace OpenApoc
 {
 
-DebugMenu::DebugMenu() : Stage(), menuform(ui().getForm("FORM_DEBUG_MENU")) {}
+DebugMenu::DebugMenu() : Stage(), menuform(ui().getForm("debugmenu")) {}
 
 DebugMenu::~DebugMenu() = default;
 

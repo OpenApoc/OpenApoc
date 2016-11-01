@@ -32,7 +32,7 @@ const Vec2<int> BaseScreen::NO_SELECTION = {-1, -1};
 
 BaseScreen::BaseScreen(sp<GameState> state) : BaseStage(state), selection(NO_SELECTION), drag(false)
 {
-	form = ui().getForm("FORM_BASESCREEN");
+	form = ui().getForm("basescreen");
 	viewHighlight = BaseGraphics::FacilityHighlight::Construction;
 }
 

@@ -1,4 +1,5 @@
 #include "forms/textbutton.h"
+#include "dependencies/pugixml/src/pugixml.hpp"
 #include "forms/label.h"
 #include "forms/ui.h"
 #include "framework/data.h"
@@ -9,7 +10,6 @@
 #include "framework/sound.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
-#include <tinyxml2.h>
 
 namespace OpenApoc
 {
@@ -143,17 +143,18 @@ sp<Control> TextButton::copyTo(sp<Control> CopyParent)
 	return copy;
 }
 
-void TextButton::configureSelfFromXml(tinyxml2::XMLElement *Element)
+void TextButton::configureSelfFromXml(pugi::xml_node *node)
 {
-	Control::configureSelfFromXml(Element);
+	Control::configureSelfFromXml(node);
 
-	if (Element->Attribute("text") != nullptr)
+	if (node->attribute("text"))
 	{
-		label->setText(tr(Element->Attribute("text")));
+		label->setText(tr(node->attribute("text").as_string()));
 	}
-	if (Element->FirstChildElement("font") != nullptr)
+	auto fontNode = node->child("font");
+	if (fontNode)
 	{
-		label->setFont(ui().getFont(Element->FirstChildElement("font")->GetText()));
+		label->setFont(ui().getFont(fontNode.text().get()));
 	}
 }
 }; // namespace OpenApoc

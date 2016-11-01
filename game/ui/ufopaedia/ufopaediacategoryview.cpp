@@ -23,7 +23,7 @@ namespace OpenApoc
 
 UfopaediaCategoryView::UfopaediaCategoryView(sp<GameState> state, sp<UfopaediaCategory> cat,
                                              sp<UfopaediaEntry> entry)
-    : Stage(), menuform(ui().getForm("FORM_UFOPAEDIA_BASE")), state(state), category(cat)
+    : Stage(), menuform(ui().getForm("ufopaedia")), state(state), category(cat)
 {
 	// Start with the intro page
 	this->position_iterator = this->category->entries.end();
