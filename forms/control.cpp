@@ -31,6 +31,7 @@ bool Control::isFocused() const
 
 void Control::resolveLocation()
 {
+	auto previousLocation = resolvedLocation;
 	auto parentControl = this->getParent();
 	if (parentControl == nullptr)
 	{
@@ -55,6 +56,11 @@ void Control::resolveLocation()
 	{
 		auto c = *ctrlidx;
 		c->resolveLocation();
+	}
+
+	if (previousLocation != resolvedLocation)
+	{
+		this->setDirty();
 	}
 }
 
