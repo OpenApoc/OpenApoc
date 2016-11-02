@@ -21,8 +21,8 @@ BattleBriefing::BattleBriefing(sp<GameState> state, std::future<void> gameStateT
 {
 	menuform->findControlTyped<Label>("TEXT_DATE")->setText("Friday, 14th  July, 2084      17:35");
 	menuform->findControlTyped<Label>("TEXT_BRIEFING")->setText("You must lorem ipisum etc.");
-	menuform->findControlTyped<GraphicButton>("BUTTON_REAL_TIME")->Visible = false;
-	menuform->findControlTyped<GraphicButton>("BUTTON_TURN_BASED")->Visible = false;
+	menuform->findControlTyped<GraphicButton>("BUTTON_REAL_TIME")->setVisible(false);
+	menuform->findControlTyped<GraphicButton>("BUTTON_TURN_BASED")->setVisible(false);
 
 	menuform->findControlTyped<GraphicButton>("BUTTON_REAL_TIME")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
@@ -58,8 +58,8 @@ void BattleBriefing::update()
 	{
 		case std::future_status::ready:
 		{
-			menuform->findControlTyped<GraphicButton>("BUTTON_REAL_TIME")->Visible = true;
-			menuform->findControlTyped<GraphicButton>("BUTTON_TURN_BASED")->Visible = true;
+			menuform->findControlTyped<GraphicButton>("BUTTON_REAL_TIME")->setVisible(true);
+			menuform->findControlTyped<GraphicButton>("BUTTON_TURN_BASED")->setVisible(true);
 		}
 			return;
 		default:

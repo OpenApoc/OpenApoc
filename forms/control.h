@@ -68,6 +68,8 @@ class Control : public std::enable_shared_from_this<Control>
 
 	void setDirty();
 
+	bool Visible;
+
   public:
 	UString Name;
 	Vec2<int> Location;
@@ -75,7 +77,6 @@ class Control : public std::enable_shared_from_this<Control>
 	Colour BackgroundColour;
 	bool takesFocus;
 	bool showBounds;
-	bool Visible;
 	bool Enabled;
 
 	bool canCopy;
@@ -94,6 +95,9 @@ class Control : public std::enable_shared_from_this<Control>
 
 	sp<Control> operator[](int Index) const;
 	sp<Control> findControl(UString ID) const;
+
+	void setVisible(bool value);
+	bool isVisible() const;
 
 	template <typename T> sp<T> findControlTyped(const UString &name) const
 	{

@@ -251,8 +251,8 @@ void UfopaediaCategoryView::eventOccurred(Event *e)
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_INFORMATION")
 		{
-			menuform->findControl("INFORMATION_PANEL")->Visible =
-			    !menuform->findControl("INFORMATION_PANEL")->Visible;
+			menuform->findControl("INFORMATION_PANEL")
+			    ->setVisible(!menuform->findControl("INFORMATION_PANEL")->isVisible());
 			return;
 		}
 	}
@@ -290,7 +290,7 @@ void UfopaediaCategoryView::setFormData()
 	menuform->findControlTyped<Label>("TEXT_TITLE_DATA")->setText(tr_title);
 
 	// Every time you we change the entry reset the info panel
-	menuform->findControl("INFORMATION_PANEL")->Visible = false;
+	menuform->findControl("INFORMATION_PANEL")->setVisible(false);
 
 	setFormStats();
 }

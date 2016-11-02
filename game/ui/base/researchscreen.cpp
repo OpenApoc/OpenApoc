@@ -154,7 +154,7 @@ void ResearchScreen::eventOccurred(Event *e)
 
 	if (e->type() == EVENT_MOUSE_MOVE)
 	{
-		arrow->Visible = (e->mouse().X > form->Location.x + arrow->Location.x);
+		arrow->setVisible((e->mouse().X > form->Location.x + arrow->Location.x));
 	}
 
 	if (e->type() == EVENT_FORM_INTERACTION)
@@ -394,21 +394,21 @@ void ResearchScreen::updateProgressInfo()
 	if (this->selected_lab->lab->current_project &&
 	    this->selected_lab->lab->current_project->type == ResearchTopic::Type::Engineering)
 	{
-		manufacturing_ntomake->Visible = true;
-		manufacturing_quantity->Visible = true;
-		manufacturing_scrollbar->Visible = true;
-		manufacturing_scroll_left->Visible = true;
-		manufacturing_scroll_right->Visible = true;
+		manufacturing_ntomake->setVisible(true);
+		manufacturing_quantity->setVisible(true);
+		manufacturing_scrollbar->setVisible(true);
+		manufacturing_scroll_left->setVisible(true);
+		manufacturing_scroll_right->setVisible(true);
 		manufacturing_scrollbar->setValue(this->selected_lab->lab->getQuantity());
 		manufacturing_quantity->setText(format(tr("%d"), this->selected_lab->lab->getQuantity()));
 	}
 	else
 	{
-		manufacturing_ntomake->Visible = false;
-		manufacturing_quantity->Visible = false;
-		manufacturing_scrollbar->Visible = false;
-		manufacturing_scroll_left->Visible = false;
-		manufacturing_scroll_right->Visible = false;
+		manufacturing_ntomake->setVisible(false);
+		manufacturing_quantity->setVisible(false);
+		manufacturing_scrollbar->setVisible(false);
+		manufacturing_scroll_left->setVisible(false);
+		manufacturing_scroll_right->setVisible(false);
 	}
 }
 

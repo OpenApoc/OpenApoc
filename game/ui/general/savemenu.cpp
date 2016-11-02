@@ -70,7 +70,7 @@ void SaveMenu::begin()
 		auto label = menuform->findControlTyped<Label>(titleLabelName);
 		if (label)
 		{
-			label->Visible = true;
+			label->setVisible(true);
 		}
 	}
 
@@ -79,7 +79,7 @@ void SaveMenu::begin()
 		auto newItemSlot = saveListBox->findControl(newSaveItemId);
 		if (newItemSlot != nullptr)
 		{
-			newItemSlot->Visible = true;
+			newItemSlot->setVisible(true);
 		}
 	}
 
@@ -153,10 +153,10 @@ void SaveMenu::begin()
 			auto saveNameTextEdit = newControl->findControlTyped<TextEdit>("TEXTEDIT_SAVE_NAME");
 			if (currentAction != SaveMenuAction::Save && saveNameTextEdit != nullptr)
 			{
-				saveNameTextEdit->Visible = false;
+				saveNameTextEdit->setVisible(false);
 			}
 		}
-		existingSlotControl->Visible = false;
+		existingSlotControl->setVisible(false);
 	}
 }
 
@@ -174,14 +174,14 @@ void SaveMenu::clearTextEdit(sp<TextEdit> textEdit)
 	textEdit->eventOccured(&e);
 
 	// reset text
-	textEdit->Visible = false;
+	textEdit->setVisible(false);
 	auto listItem = textEdit->getParent();
 	if (listItem)
 	{
 		auto nameLabel = listItem->findControlTyped<Label>("LABEL_NAME");
 		if (nameLabel)
 		{
-			nameLabel->Visible = true;
+			nameLabel->setVisible(true);
 		}
 	}
 	activeTextEdit = nullptr;
@@ -198,7 +198,7 @@ void SaveMenu::beginEditing(sp<TextEdit> textEdit, sp<TextEdit> activeTextEdit)
 	e.forms().RaisedBy = textEdit->shared_from_this();
 	e.forms().EventFlag = FormEventType::MouseClick;
 	textEdit->eventOccured(&e);
-	textEdit->Visible = true;
+	textEdit->setVisible(true);
 	textEdit->setAllowedCharacters(
 	    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,. -_");
 	textEdit->setTextMaxSize(32);
@@ -208,7 +208,7 @@ void SaveMenu::beginEditing(sp<TextEdit> textEdit, sp<TextEdit> activeTextEdit)
 		auto nameLabel = listItem->findControlTyped<Label>("LABEL_NAME");
 		if (nameLabel)
 		{
-			nameLabel->Visible = false;
+			nameLabel->setVisible(false);
 			if (nameLabel->getParent() && nameLabel->getParent()->Name != "NEW_SAVE_SLOT")
 			{
 				textEdit->setText(nameLabel->getText());
@@ -320,7 +320,7 @@ void SaveMenu::tryToDeleteSavedGame(sp<Control> &slotControl)
 		if (saveManager.deleteGame(slot))
 		{
 			// no way to pop
-			slotControl->Visible = false;
+			slotControl->setVisible(false);
 		}
 	});
 	sp<MessageBox> messageBox = mksp<MessageBox>(

@@ -950,4 +950,15 @@ void Control::setDirty()
 	}
 }
 
+void Control::setVisible(bool value)
+{
+	if (value != this->Visible)
+	{
+		this->Visible = value;
+		this->setDirty();
+	}
+}
+
+bool Control::isVisible() const { return this->Visible; }
+
 }; // namespace OpenApoc

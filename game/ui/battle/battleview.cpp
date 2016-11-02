@@ -719,14 +719,14 @@ BattleView::BattleView(sp<GameState> gameState)
 	switch (battle.mode)
 	{
 		case Battle::Mode::RealTime:
-			this->baseForm->findControl("BUTTON_ENDTURN")->Visible = false;
+			this->baseForm->findControl("BUTTON_ENDTURN")->setVisible(false);
 			break;
 		case Battle::Mode::TurnBased:
-			this->baseForm->findControl("BUTTON_SPEED0")->Visible = false;
-			this->baseForm->findControl("BUTTON_SPEED1")->Visible = false;
-			this->baseForm->findControl("BUTTON_SPEED2")->Visible = false;
-			this->baseForm->findControl("BUTTON_SPEED3")->Visible = false;
-			this->baseForm->findControl("CLOCK")->Visible = false;
+			this->baseForm->findControl("BUTTON_SPEED0")->setVisible(false);
+			this->baseForm->findControl("BUTTON_SPEED1")->setVisible(false);
+			this->baseForm->findControl("BUTTON_SPEED2")->setVisible(false);
+			this->baseForm->findControl("BUTTON_SPEED3")->setVisible(false);
+			this->baseForm->findControl("CLOCK")->setVisible(false);
 			this->baseForm->findControl("BUTTON_ENDTURN")
 			    ->addCallback(FormEventType::ButtonClick,
 			                  [this](Event *) { this->battle.endTurn(); });
@@ -740,24 +740,24 @@ BattleView::~BattleView() = default;
 
 void BattleView::begin()
 {
-	this->uiTabsRT[0]->findControl("BUTTON_LAYER_1")->Visible = maxZDraw >= 1;
-	this->uiTabsRT[0]->findControl("BUTTON_LAYER_2")->Visible = maxZDraw >= 2;
-	this->uiTabsRT[0]->findControl("BUTTON_LAYER_3")->Visible = maxZDraw >= 3;
-	this->uiTabsRT[0]->findControl("BUTTON_LAYER_4")->Visible = maxZDraw >= 4;
-	this->uiTabsRT[0]->findControl("BUTTON_LAYER_5")->Visible = maxZDraw >= 5;
-	this->uiTabsRT[0]->findControl("BUTTON_LAYER_6")->Visible = maxZDraw >= 6;
-	this->uiTabsRT[0]->findControl("BUTTON_LAYER_7")->Visible = maxZDraw >= 7;
-	this->uiTabsRT[0]->findControl("BUTTON_LAYER_8")->Visible = maxZDraw >= 8;
-	this->uiTabsRT[0]->findControl("BUTTON_LAYER_9")->Visible = maxZDraw >= 9;
-	this->uiTabsTB[0]->findControl("BUTTON_LAYER_1")->Visible = maxZDraw >= 1;
-	this->uiTabsTB[0]->findControl("BUTTON_LAYER_2")->Visible = maxZDraw >= 2;
-	this->uiTabsTB[0]->findControl("BUTTON_LAYER_3")->Visible = maxZDraw >= 3;
-	this->uiTabsTB[0]->findControl("BUTTON_LAYER_4")->Visible = maxZDraw >= 4;
-	this->uiTabsTB[0]->findControl("BUTTON_LAYER_5")->Visible = maxZDraw >= 5;
-	this->uiTabsTB[0]->findControl("BUTTON_LAYER_6")->Visible = maxZDraw >= 6;
-	this->uiTabsTB[0]->findControl("BUTTON_LAYER_7")->Visible = maxZDraw >= 7;
-	this->uiTabsTB[0]->findControl("BUTTON_LAYER_8")->Visible = maxZDraw >= 8;
-	this->uiTabsTB[0]->findControl("BUTTON_LAYER_9")->Visible = maxZDraw >= 9;
+	this->uiTabsRT[0]->findControl("BUTTON_LAYER_1")->setVisible(maxZDraw >= 1);
+	this->uiTabsRT[0]->findControl("BUTTON_LAYER_2")->setVisible(maxZDraw >= 2);
+	this->uiTabsRT[0]->findControl("BUTTON_LAYER_3")->setVisible(maxZDraw >= 3);
+	this->uiTabsRT[0]->findControl("BUTTON_LAYER_4")->setVisible(maxZDraw >= 4);
+	this->uiTabsRT[0]->findControl("BUTTON_LAYER_5")->setVisible(maxZDraw >= 5);
+	this->uiTabsRT[0]->findControl("BUTTON_LAYER_6")->setVisible(maxZDraw >= 6);
+	this->uiTabsRT[0]->findControl("BUTTON_LAYER_7")->setVisible(maxZDraw >= 7);
+	this->uiTabsRT[0]->findControl("BUTTON_LAYER_8")->setVisible(maxZDraw >= 8);
+	this->uiTabsRT[0]->findControl("BUTTON_LAYER_9")->setVisible(maxZDraw >= 9);
+	this->uiTabsTB[0]->findControl("BUTTON_LAYER_1")->setVisible(maxZDraw >= 1);
+	this->uiTabsTB[0]->findControl("BUTTON_LAYER_2")->setVisible(maxZDraw >= 2);
+	this->uiTabsTB[0]->findControl("BUTTON_LAYER_3")->setVisible(maxZDraw >= 3);
+	this->uiTabsTB[0]->findControl("BUTTON_LAYER_4")->setVisible(maxZDraw >= 4);
+	this->uiTabsTB[0]->findControl("BUTTON_LAYER_5")->setVisible(maxZDraw >= 5);
+	this->uiTabsTB[0]->findControl("BUTTON_LAYER_6")->setVisible(maxZDraw >= 6);
+	this->uiTabsTB[0]->findControl("BUTTON_LAYER_7")->setVisible(maxZDraw >= 7);
+	this->uiTabsTB[0]->findControl("BUTTON_LAYER_8")->setVisible(maxZDraw >= 8);
+	this->uiTabsTB[0]->findControl("BUTTON_LAYER_9")->setVisible(maxZDraw >= 9);
 
 	if (battle.mode == Battle::Mode::TurnBased)
 		onNewTurn();
@@ -948,8 +948,8 @@ void BattleView::update()
 					medikitForms[right]->Enabled = true;
 					for (auto c : medikitBodyParts[right])
 					{
-						c.second[false]->Visible = false;
-						c.second[true]->Visible = false;
+						c.second[false]->setVisible(false);
+						c.second[true]->setVisible(false);
 					}
 					for (auto p : bodyParts)
 					{
@@ -957,7 +957,7 @@ void BattleView::update()
 						{
 							medikitBodyParts[right][p]
 							                [unit->isHealing && p == unit->healingBodyPart]
-							                    ->Visible = true;
+							                    ->setVisible(true);
 						}
 					}
 					break;
@@ -1411,8 +1411,8 @@ void BattleView::orderUse(bool right, bool automatic)
 					default:
 						range = false;
 				}
-				this->activeTab->findControl("RANGE_TEXT")->Visible = range;
-				this->activeTab->findControl("RANGE_SLIDER")->Visible = range;
+				this->activeTab->findControl("RANGE_TEXT")->setVisible(range);
+				this->activeTab->findControl("RANGE_SLIDER")->setVisible(range);
 			}
 			break;
 		case AEquipmentType::Type::MindBender:

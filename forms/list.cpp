@@ -53,7 +53,7 @@ void ListBox::onRender()
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
 		auto ctrl = *c;
-		if (ctrl != scroller && ctrl->Visible)
+		if (ctrl != scroller && ctrl->isVisible())
 		{
 			ctrl->Location = controlOffset - this->scrollOffset;
 			switch (ListOrientation)
@@ -112,7 +112,7 @@ void ListBox::postRender()
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
 		auto ctrl = *c;
-		if (ctrl != scroller && ctrl->Visible)
+		if (ctrl != scroller && ctrl->isVisible())
 		{
 			if (ctrl == hovered)
 			{
