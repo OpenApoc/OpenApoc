@@ -132,8 +132,7 @@ foreach(FORMAT_SOURCE ${FORMAT_SOURCES})
 			format-source-${FORMAT_SOURCE_STRIPPED})
 endforeach()
 
-file(GLOB_RECURSE XML_FILES ${CMAKE_SOURCE_DIR}/data/*.xml
-		${CMAKE_SOURCE_DIR}/data/*.XML)
+file(GLOB_RECURSE XML_FILES ${CMAKE_SOURCE_DIR}/data/*.xml)
 
 file(GLOB_RECURSE FONT_FILES ${CMAKE_SOURCE_DIR}/data/fonts/*.font)
 file(GLOB_RECURSE FORM_FILES ${CMAKE_SOURCE_DIR}/data/forms/*.form)
