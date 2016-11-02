@@ -55,6 +55,8 @@ target_compile_definitions(OpenApoc_Library PUBLIC PTHREADS_AVAILABLE)
 set_target_properties(OpenApoc_Library PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
 	"library_pch.h")
 
-if(ENABLE_COTIRE)
+# Library with 2 source files is small enough that a pch is a net loss, so
+# disable by default
+if(FALSE AND ENABLE_COTIRE)
 	cotire(OpenApoc_Library)
 endif()
