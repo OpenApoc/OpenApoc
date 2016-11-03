@@ -38,7 +38,7 @@ before_install:
   - echo "Num cores ${NUM_CORES} Real cores ${NUM_REAL_CORES}"
 
 env:
-  - BUILD_TYPE="Quick"
+  - BUILD_TYPE="RelWithDebInfo"
   - BUILD_TYPE="Sanitize"
 
 matrix:
