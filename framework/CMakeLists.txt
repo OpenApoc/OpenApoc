@@ -191,8 +191,19 @@ add_library(OpenApoc_Framework STATIC
 set_property(TARGET OpenApoc_Framework PROPERTY CXX_STANDARD 11)
 
 target_compile_definitions(OpenApoc_Framework PUBLIC
-		"-DRENDERERS=\"GLES_3_0:GL_2_0\""
-		"-DGLESWRAP_PLATFORM_GLX")
+		"-DRENDERERS=\"GLES_3_0:GL_2_0\"")
+
+if(APPLE)
+	target_compile_definitions(OpenApoc_Framework PRIVATE
+			"-DGLESWRAP_PLATFORM_MACHO")
+	# OSX doesn't seem to support the c++11 'thread_local' keyword
+	target_compile_definitions(OpenApoc_Framework PRIVATE
+			"-DBROKEN_THREAD_LOCAL")
+	# Disable libunwind use on Apple
+	SET(BACKTRACE_ON_ERROR OFF CACHE BOOL "Print backtrace on logging an error (Requires libunwind on linux, no extra dependencies on windows)" FORCE)
+else()
+	target_compile_definitions(OpenApoc_Framework PRIVATE "-DGLESWRAP_PLATFORM_GLX")
+endif()
 
 # We use boost::locale for utf conversions and boost::filesystem for
 # serialization

@@ -246,7 +246,11 @@ void Trace::setThreadName(const UString &name)
 	if (!traceInited)
 		initTrace();
 #if defined(PTHREADS_AVAILABLE)
+#if defined(_GNU_SOURCE)
 	pthread_setname_np(pthread_self(), name.cStr());
+#elif defined (__APPLE__)
+	pthread_setname_np(name.cStr());
+#endif
 #endif
 	if (!enabled)
 		return;

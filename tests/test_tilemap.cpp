@@ -3,6 +3,9 @@
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"
 #include "library/voxel.h"
+#include <array>
+#include <utility>
+#include <vector>
 
 using namespace OpenApoc;
 

@@ -23,6 +23,8 @@
 
 #include <EGL/egl.h>
 
+#elif defined(GLESWRAP_PLATFORM_MACHO)
+#include <mach-o/dyld.h>
 #else
 #error Unknown platform
 #endif
@@ -122,6 +124,17 @@ class Gles3::Gles3Loader
 			func_pointer = reinterpret_cast<T>(eglGetProcAddress(full_proc_name.c_str()));
 			if (func_pointer)
 				return true;
+#elif defined(GLESWRAP_PLATFORM_MACHO)
+			NSSymbol symbol = NULL;
+			// MacOS adds a '_' to C symbols apparently
+			std::string symName = std::string("_") + full_proc_name;
+			if (NSIsSymbolNameDefined(symName.c_str()))
+			{
+				symbol = NSLookupAndBindSymbol(symName.c_str());
+				func_pointer = reinterpret_cast<T>(NSAddressOfSymbol(symbol));
+				return true;
+			}
+			return false;
 #endif
 		}
 		else
