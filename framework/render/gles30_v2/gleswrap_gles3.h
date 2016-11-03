@@ -35,7 +35,7 @@ class Gles3
 	typedef short GLshort;
 	typedef unsigned short GLushort;
 	typedef void GLvoid;
-	typedef struct GLsync *GLsync;
+	typedef void *GLsync;
 	typedef int64_t GLint64;
 	typedef uint64_t GLuint64;
 	// typedef unsigned int GLenum;
