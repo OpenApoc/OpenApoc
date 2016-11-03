@@ -16,7 +16,7 @@ before_install:
   - if [ $TRAVIS_OS_NAME = "linux" ]; then wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|sudo apt-key add - > /dev/null; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|sudo apt-key add - > /dev/null; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then sudo apt-get update > /dev/null; fi
-  - if [ $TRAVIS_OS_NAME = "linux" -a $CXX = "clang++" ]; then export TIDY=true; fi
+  - if [ $TRAVIS_OS_NAME = "linux" -a $CXX = "clang++" -a $BUILD_TYPE != "Sanitize" ]; then export TIDY=true; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then if [ "$CXX" = "g++" ]; then sudo apt-get install g++-5 -y > /dev/null; fi; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then if [ "$CXX" = "clang++" ]; then sudo apt-get install clang-3.8 --force-yes -y > /dev/null; fi; fi
