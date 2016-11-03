@@ -102,15 +102,30 @@ if(ENABLE_TESTS)
 	add_subdirectory(tests)
 endif()
 
-file(GLOB_RECURSE FORMAT_SOURCES ${CMAKE_SOURCE_DIR}/*.cpp
-		${CMAKE_SOURCE_DIR}/*.c ${CMAKE_SOURCE_DIR}/*.h)
+file(GLOB_RECURSE FORMAT_SOURCES
+		${CMAKE_SOURCE_DIR}/library/*.cpp
+		${CMAKE_SOURCE_DIR}/library/*.c
+		${CMAKE_SOURCE_DIR}/library/*.h
+		${CMAKE_SOURCE_DIR}/framework/*.cpp
+		${CMAKE_SOURCE_DIR}/framework/*.c
+		${CMAKE_SOURCE_DIR}/framework/*.h
+		${CMAKE_SOURCE_DIR}/forms/*.cpp
+		${CMAKE_SOURCE_DIR}/forms/*.c
+		${CMAKE_SOURCE_DIR}/forms/*.h
+		${CMAKE_SOURCE_DIR}/game/*.cpp
+		${CMAKE_SOURCE_DIR}/game/*.c
+		${CMAKE_SOURCE_DIR}/game/*.h
+		${CMAKE_SOURCE_DIR}/tools/*.cpp
+		${CMAKE_SOURCE_DIR}/tools/*.c
+		${CMAKE_SOURCE_DIR}/tools/*.h
+		${CMAKE_SOURCE_DIR}/tests/*.cpp
+		${CMAKE_SOURCE_DIR}/tests/*.c
+		${CMAKE_SOURCE_DIR}/tests/*.h
+		)
 
 file(GLOB_RECURSE DEPENDENCY_SOURCES ${CMAKE_SOURCE_DIR}/dependencies/*.cpp
 		${CMAKE_SOURCE_DIR}/dependencies/*.c ${CMAKE_SOURCE_DIR}/dependencies/*.h)
 
-if (DEPENDENCY_SOURCES)
-	list(REMOVE_ITEM FORMAT_SOURCES ${DEPENDENCY_SOURCES})
-endif()
 
 add_custom_target(format)
 add_custom_target(format-sources)
