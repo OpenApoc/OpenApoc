@@ -9,8 +9,10 @@
 #include "framework/trace.h"
 #include <physfs.h>
 
-#ifndef _WIN32
+#ifdef _WIN32
 #define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #ifdef ANDROID
 #define be16toh(x) htobe16(x)
 #define be32toh(x) htobe32(x)
@@ -18,10 +20,10 @@
 #define le16toh(x) htole16(x)
 #define le32toh(x) htole32(x)
 #define le64toh(x) htole64(x)
-#endif
+#elif defined(_DEFAULT_SOURCE) || defined(_BSD_SOURCE)
 #include <endian.h>
 #else
-/* Windows is always little endian? */
+/* We assume all other platforms are little endian for now */
 static inline uint16_t le16toh(uint16_t val) { return val; }
 static inline uint32_t le32toh(uint32_t val) { return val; }
 #endif
