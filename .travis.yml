@@ -2,6 +2,8 @@ language: cpp
 sudo: required
 dist: trusty
 
+cache: ccache
+
 compiler:
   - gcc
   - clang
@@ -11,6 +13,7 @@ os:
   - osx
 
 before_install:
+  - if [ $TRAVIS_OS_NAME = "linux" ]; then ccache -s; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y > /dev/null; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then sudo add-apt-repository "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.9 main" -y > /dev/null; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|sudo apt-key add - > /dev/null; fi
@@ -18,9 +21,9 @@ before_install:
   - if [ $TRAVIS_OS_NAME = "linux" ]; then sudo apt-get update > /dev/null; fi
   - if [ $TRAVIS_OS_NAME = "linux" -a $CXX = "clang++" -a $BUILD_TYPE != "Sanitize" ]; then export TIDY=true; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then if [ "$CXX" = "g++" ]; then sudo apt-get install g++-5 -y > /dev/null; fi; fi
-  - if [ $TRAVIS_OS_NAME = "linux" ]; then if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi; fi
+  - if [ $TRAVIS_OS_NAME = "linux" ]; then if [ "$CXX" = "g++" ]; then export CXX="ccache g++-5" CC="ccache gcc-5"; fi; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then if [ "$CXX" = "clang++" ]; then sudo apt-get install clang-3.9 --force-yes -y > /dev/null; fi; fi
-  - if [ $TRAVIS_OS_NAME = "linux" ]; then if [ "$CXX" = "clang++" ]; then export CXX="clang++-3.9" CC="clang-3.9"; fi; fi
+  - if [ $TRAVIS_OS_NAME = "linux" ]; then if [ "$CXX" = "clang++" ]; then export CXX="ccache clang++-3.9" CC="ccache clang-3.9"; fi; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then if [ "${TIDY}" = "true" ]; then sudo apt-get install clang-tidy-3.9 clang-format-3.9 clang-3.9 --force-yes -y > /dev/null; fi; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then sudo apt-get install libunwind8-dev libsdl2-dev libboost-locale-dev libboost-filesystem-dev libboost-program-options-dev -y > /dev/null; fi
   - if [ $TRAVIS_OS_NAME = "osx" ]; then brew update && brew install sdl2 xz ; fi
@@ -66,3 +69,4 @@ script:
 # Create the GameState as that triggers the generated source commands
   - make -j2 && ctest -V -j 2 && git --no-pager diff --ignore-submodules --stat
   - if [ "${TIDY}" = "true" ]; then make tidy; fi
+  - if [ $TRAVIS_OS_NAME = "linux" ]; then ccache -s; fi
