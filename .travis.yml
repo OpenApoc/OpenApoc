@@ -13,7 +13,7 @@ os:
   - osx
 
 before_install:
-  - if [ $TRAVIS_OS_NAME = "linux" ]; then ccache -s; fi
+  - if [ $TRAVIS_OS_NAME = "linux" ]; then ccache -M 1G; ccache -s; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y > /dev/null; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then sudo add-apt-repository "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.9 main" -y > /dev/null; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|sudo apt-key add - > /dev/null; fi
