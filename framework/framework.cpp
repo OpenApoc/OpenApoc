@@ -86,6 +86,8 @@ ConfigOptionString languageOption("Framework", "Language",
 
 ConfigOptionInt frameLimit("Framework", "FrameLimit", "Quit after this many frames - 0 = unlimited",
                            0);
+ConfigOptionInt swapInterval("Framework", "SwapInterval",
+                             "Swap interval (0 = tear, 1 = wait for vsync", 0);
 
 } // anonymous namespace
 
@@ -757,6 +759,8 @@ void Framework::displayInitialise()
 	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
 	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 1);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+	SDL_GL_SetSwapInterval(swapInterval.get());
 
 	int scrW = screenWidthOption.get();
 	int scrH = screenHeightOption.get();
