@@ -294,10 +294,11 @@ std::list<UString> FileSystem::enumerateDirectory(const UString &basePath,
 	return result;
 }
 
-static std::list<UString> recursiveFindFilesInDirectory(UString path, const UString &extension)
+static std::list<UString> recursiveFindFilesInDirectory(const FileSystem &fs, UString path,
+                                                        const UString &extension)
 {
 	std::list<UString> foundFiles;
-	auto list = fw().data->fs.enumerateDirectory(path, "");
+	auto list = fs.enumerateDirectory(path, "");
 	for (auto &entry : list)
 	{
 		if (entry.endsWith(extension))
@@ -306,7 +307,7 @@ static std::list<UString> recursiveFindFilesInDirectory(UString path, const UStr
 		}
 		else
 		{
-			auto subdirFiles = recursiveFindFilesInDirectory(path + "/" + entry, extension);
+			auto subdirFiles = recursiveFindFilesInDirectory(fs, path + "/" + entry, extension);
 			foundFiles.insert(foundFiles.end(), subdirFiles.begin(), subdirFiles.end());
 		}
 	}
@@ -316,7 +317,7 @@ static std::list<UString> recursiveFindFilesInDirectory(UString path, const UStr
 std::list<UString> FileSystem::enumerateDirectoryRecursive(const UString &basePath,
                                                            const UString &extension) const
 {
-	return recursiveFindFilesInDirectory(basePath, extension);
+	return recursiveFindFilesInDirectory(*this, basePath, extension);
 }
 
 } // namespace OpenApoc
