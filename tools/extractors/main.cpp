@@ -23,7 +23,7 @@ static void extractDifficulty(const InitialGameStateExtractor &e, UString output
 	{
 		s.loadGame(patchPath);
 	}
-	s.saveGame(outputPath, false);
+	s.saveGame(outputPath, true);
 }
 
 std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thingsToExtract = {
@@ -101,7 +101,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 		     {
 			     if (!imagePack->saveImagePack(BattleUnitImagePack::getImagePackPath() + "/" +
 			                                       imagePackStrings.first,
-			                                   false))
+			                                   true))
 			     {
 				     LogError("Failed to save image pack \"%s\"", imagePackStrings.first.cStr());
 			     }
@@ -126,7 +126,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 		     {
 			     if (!imagePack->saveImagePack(
 			             format("%s%s%d", BattleUnitImagePack::getImagePackPath(), "/item", i),
-			             false))
+			             true))
 			     {
 				     LogError("Failed to save  item image pack \"%d\"", i);
 			     }
@@ -149,7 +149,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 		     {
 			     if (!imagePack->saveImagePack(BattleUnitImagePack::getImagePackPath() + "/" +
 			                                       imagePackStrings.first,
-			                                   false))
+			                                   true))
 			     {
 				     LogError("Failed to save image pack \"%s\"", imagePackStrings.first.cStr());
 			     }
@@ -175,7 +175,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 			     if (!animationPack->saveAnimationPack(
 			             BattleUnitAnimationPack::getAnimationPackPath() + "/" +
 			                 animationPackStrings.first,
-			             false))
+			             true))
 			     {
 				     LogError("Failed to save animation pack \"%s\"",
 				              animationPackStrings.first.cStr());
@@ -202,7 +202,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 		     else
 		     {
 			     if (!tileSet->saveTileset(BattleMapTileset::getTilesetPath() + "/" + tileSetName,
-			                               false))
+			                               true))
 			     {
 				     LogError("Failed to save tileset \"%s\"", tileSetName.cStr());
 			     }
@@ -230,7 +230,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 			     auto &sectorName = sectorPair.first;
 			     auto &sector = sectorPair.second;
 			     auto path = BattleMapSectorTiles::getMapSectorPath();
-			     if (!sector->saveSector(path + "/" + sectorName, false))
+			     if (!sector->saveSector(path + "/" + sectorName, true))
 			     {
 				     LogError("Failed to save map sector \"%s\"", sectorName.cStr());
 			     }
