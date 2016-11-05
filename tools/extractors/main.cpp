@@ -239,12 +239,13 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	 }},
 };
 
-ConfigOptionString extractList(
-    "Extractor", "extract",
-    "Comma-separated list of things to extract  - \"all\" is special meaning everything", "all");
-
 int main(int argc, char *argv[])
 {
+	ConfigOptionString extractList(
+	    "Extractor", "extract",
+	    "Comma-separated list of things to extract  - \"all\" is special meaning everything",
+	    "all");
+
 	if (config().parseOptions(argc, argv))
 	{
 		return EXIT_FAILURE;
