@@ -101,7 +101,7 @@ bool ZipDataProvider::readDocument(const UString &filename, UString &result)
 }
 bool ZipDataProvider::saveDocument(const UString &path, UString contents)
 {
-	if (!mz_zip_writer_add_mem(&archive, path.cStr(), contents.cStr(), contents.length(),
+	if (!mz_zip_writer_add_mem(&archive, path.cStr(), contents.cStr(), contents.cStrLength(),
 	                           MZ_DEFAULT_COMPRESSION))
 	{
 		LogWarning("Failed to insert \"%s\" into zip file \"%s\"", path.cStr(),

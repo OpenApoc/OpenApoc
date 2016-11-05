@@ -34,10 +34,11 @@ class UString
 	UString(const UString &other);
 	UString &operator=(const UString &other);
 
-	std::string str() const;
+	const std::string &str() const;
 	std::wstring wstr() const;
 
 	const char *cStr() const;
+	size_t cStrLength() const;
 
 	UString toUpper() const;
 	UString toLower() const;

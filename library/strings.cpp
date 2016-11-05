@@ -100,11 +100,13 @@ UString::UString(UniChar uc) : u8Str()
 	u8Str = boost::locale::conv::utf_to_utf<char>(&uc, &uc + 1);
 }
 
-std::string UString::str() const { return this->u8Str; }
+const std::string &UString::str() const { return this->u8Str; }
 
 std::wstring UString::wstr() const { return boost::locale::conv::utf_to_utf<wchar_t>(this->u8Str); }
 
 const char *UString::cStr() const { return this->u8Str.c_str(); }
+
+size_t UString::cStrLength() const { return this->u8Str.length(); }
 
 bool UString::operator<(const UString &other) const { return (this->u8Str) < (other.u8Str); }
 
