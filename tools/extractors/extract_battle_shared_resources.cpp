@@ -14,7 +14,7 @@
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::extractSharedBattleResources(GameState &state)
+void InitialGameStateExtractor::extractSharedBattleResources(GameState &state) const
 {
 	// Common Images
 

@@ -66,7 +66,7 @@ static_assert(sizeof(struct citymap_tile_entry) == 52, "Unexpected citymap_tile_
 void InitialGameStateExtractor::extractCityScenery(GameState &state, UString tilePrefix,
                                                    UString datFile, UString spriteFile,
                                                    UString stratmapFile, UString lofFile,
-                                                   UString ovrFile, sp<City> city)
+                                                   UString ovrFile, sp<City> city) const
 {
 	auto &data = this->ufo2p;
 	auto minimap_palette = fw().data->loadPalette(SCENERY_MINIMAP_PALETTE);

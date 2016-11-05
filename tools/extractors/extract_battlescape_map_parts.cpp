@@ -12,12 +12,12 @@
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::readBattleMapParts(GameState &state, TACP &data_t,
+void InitialGameStateExtractor::readBattleMapParts(GameState &state, const TACP &data_t,
                                                    sp<BattleMapTileset> t,
                                                    BattleMapPartType::Type type,
                                                    const UString &idPrefix, const UString &dirName,
                                                    const UString &datName, const UString &pckName,
-                                                   const UString &stratPckName)
+                                                   const UString &stratPckName) const
 {
 	const UString loftempsFile = "xcom3/tacdata/loftemps.dat";
 	const UString loftempsTab = "xcom3/tacdata/loftemps.tab";
@@ -231,7 +231,7 @@ void InitialGameStateExtractor::readBattleMapParts(GameState &state, TACP &data_
 }
 
 sp<BattleMapTileset> InitialGameStateExtractor::extractTileSet(GameState &state,
-                                                               const UString &name)
+                                                               const UString &name) const
 {
 	UString tilePrefix = format("%s_", name.cStr());
 	UString map_prefix = "xcom3/maps/";

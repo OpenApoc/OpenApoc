@@ -15,7 +15,7 @@ void InitialGameStateExtractor::extractAnimationPackUnit(sp<BattleUnitAnimationP
                                                          const std::vector<AnimationDataAD> &dataAD,
                                                          const std::vector<AnimationDataUA> &dataUA,
                                                          std::vector<AnimationDataUF> &dataUF,
-                                                         int x, int y)
+                                                         int x, int y) const
 {
 	// Frames per 100 units
 	static const int pFrames = 300; // Prone

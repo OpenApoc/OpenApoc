@@ -39,7 +39,7 @@ std::map<UString, int> EquipscreenSprite = {{"VEHICLETYPE_ANNIHILATOR", 0},
                                             {"VEHICLETYPE_HAWK_AIR_WARRIOR", 11},
                                             {"VEHICLETYPE_GRIFFON_AFV", 12}};
 
-static void extract_equipment_layout(GameState &state, sp<VehicleType> vehicle, UFO2P &data,
+static void extract_equipment_layout(GameState &state, sp<VehicleType> vehicle, const UFO2P &data,
                                      VehicleEquipmentLayout layout,
                                      const uint8_t initial_equipment[45])
 {
@@ -108,7 +108,7 @@ static void extract_equipment_layout(GameState &state, sp<VehicleType> vehicle, 
 	}
 }
 
-void InitialGameStateExtractor::extractVehicles(GameState &state)
+void InitialGameStateExtractor::extractVehicles(GameState &state) const
 {
 	auto &data = this->ufo2p;
 	LogInfo("Number of vehicle strings: %zu", data.vehicle_names->readStrings.size());

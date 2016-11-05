@@ -11,7 +11,7 @@
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::extractDoodads(GameState &state)
+void InitialGameStateExtractor::extractDoodads(GameState &state) const
 {
 	static const int frameTTL = 1;
 

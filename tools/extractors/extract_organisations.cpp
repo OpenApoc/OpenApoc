@@ -7,7 +7,7 @@
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::extractOrganisations(GameState &state)
+void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 {
 	auto &data = this->ufo2p;
 	LogInfo("Number of org strings: %zu", data.organisation_names->readStrings.size());

@@ -51,7 +51,8 @@
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::extractAlienEquipmentSets(GameState &state, Difficulty difficulty)
+void InitialGameStateExtractor::extractAlienEquipmentSets(GameState &state,
+                                                          Difficulty difficulty) const
 {
 	auto &data_t = this->tacp;
 	auto &data_u = this->ufo2p;
@@ -167,7 +168,7 @@ void InitialGameStateExtractor::extractAlienEquipmentSets(GameState &state, Diff
 	}
 }
 
-void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
+void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 {
 	auto &data_t = this->tacp;
 	auto &data_u = this->ufo2p;

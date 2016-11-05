@@ -7,7 +7,7 @@
 namespace OpenApoc
 {
 
-std::map<UString, sp<Image>> InitialGameStateExtractor::extractBulletSpritesCity()
+std::map<UString, sp<Image>> InitialGameStateExtractor::extractBulletSpritesCity() const
 {
 	std::map<UString, sp<Image>> sprites;
 	auto &data = this->ufo2p;
@@ -34,7 +34,7 @@ std::map<UString, sp<Image>> InitialGameStateExtractor::extractBulletSpritesCity
 	return sprites;
 }
 
-std::map<UString, sp<Image>> InitialGameStateExtractor::extractBulletSpritesBattle()
+std::map<UString, sp<Image>> InitialGameStateExtractor::extractBulletSpritesBattle() const
 {
 	std::map<UString, sp<Image>> sprites;
 	auto &data = this->tacp;

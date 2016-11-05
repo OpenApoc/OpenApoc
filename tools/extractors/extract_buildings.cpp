@@ -11,7 +11,7 @@ namespace OpenApoc
 {
 
 void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFileName,
-                                                 sp<City> city, bool alienBuilding)
+                                                 sp<City> city, bool alienBuilding) const
 {
 	auto &data = this->ufo2p;
 

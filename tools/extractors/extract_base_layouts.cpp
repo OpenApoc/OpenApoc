@@ -8,7 +8,7 @@
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::extractBaseLayouts(GameState &state)
+void InitialGameStateExtractor::extractBaseLayouts(GameState &state) const
 {
 	auto &data = this->ufo2p;
 	for (unsigned i = 0; i < data.baselayouts->count(); i++)

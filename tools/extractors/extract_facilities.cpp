@@ -8,7 +8,7 @@
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::extractFacilities(GameState &state)
+void InitialGameStateExtractor::extractFacilities(GameState &state) const
 {
 	auto &data = this->ufo2p;
 	LogInfo("Number of facility strings: %u", (unsigned)data.facility_names->count());

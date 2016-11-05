@@ -14,7 +14,7 @@ namespace OpenApoc
 
 void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
                                                               const UString dirName,
-                                                              const int index)
+                                                              const int index) const
 {
 	UString tilePrefix = format("%s_", dirName);
 	UString map_prefix = "xcom3/maps/";
@@ -202,7 +202,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 }
 
 std::map<UString, up<BattleMapSectorTiles>>
-InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &mapRootName)
+InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &mapRootName) const
 {
 	std::map<UString, up<BattleMapSectorTiles>> sectors;
 	UString map_prefix = "xcom3/maps/";
@@ -458,8 +458,8 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 	return sectors;
 }
 
-void InitialGameStateExtractor::extractBattlescapeMap(GameState &state,
-                                                      const std::vector<OpenApoc::UString> &paths)
+void InitialGameStateExtractor::extractBattlescapeMap(
+    GameState &state, const std::vector<OpenApoc::UString> &paths) const
 {
 	for (unsigned i = 0; i < paths.size(); i++)
 	{

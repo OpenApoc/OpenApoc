@@ -9,8 +9,9 @@
 namespace OpenApoc
 {
 
-sp<BattleUnitImagePack>
-InitialGameStateExtractor::extractImagePack(GameState &state, const UString &path, bool shadow)
+sp<BattleUnitImagePack> InitialGameStateExtractor::extractImagePack(GameState &state,
+                                                                    const UString &path,
+                                                                    bool shadow) const
 {
 	std::ignore = state;
 	UString dirName = "xcom3/tacdata/";
@@ -38,7 +39,8 @@ InitialGameStateExtractor::extractImagePack(GameState &state, const UString &pat
 	return p;
 }
 
-sp<BattleUnitImagePack> InitialGameStateExtractor::extractItemImagePack(GameState &state, int item)
+sp<BattleUnitImagePack> InitialGameStateExtractor::extractItemImagePack(GameState &state,
+                                                                        int item) const
 {
 	std::ignore = state;
 	UString dirName = "xcom3/tacdata/";
@@ -56,7 +58,7 @@ sp<BattleUnitImagePack> InitialGameStateExtractor::extractItemImagePack(GameStat
 	return p;
 }
 
-int InitialGameStateExtractor::getItemImagePacksCount()
+int InitialGameStateExtractor::getItemImagePacksCount() const
 {
 	auto heldSpriteTabFileName = UString("xcom3/tacdata/unit/equip.tab");
 	auto heldSpriteTabFile = fw().data->fs.open(heldSpriteTabFileName);

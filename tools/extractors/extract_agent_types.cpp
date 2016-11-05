@@ -102,7 +102,7 @@ void pushEquipmentSlot(
 	outSlot.bounds = {x, y, x + w, y + h};
 }
 
-void InitialGameStateExtractor::extractAgentTypes(GameState &state)
+void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 {
 	const UString loftempsFile = "xcom3/tacdata/loftemps.dat";
 	const UString loftempsTab = "xcom3/tacdata/loftemps.tab";
@@ -1023,7 +1023,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 	}
 }
 
-void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state)
+void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 {
 	const UString loftempsFile = "xcom3/tacdata/loftemps.dat";
 	const UString loftempsTab = "xcom3/tacdata/loftemps.tab";

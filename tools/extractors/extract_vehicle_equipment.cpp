@@ -11,7 +11,7 @@
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::extractVehicleEquipment(GameState &state)
+void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 {
 	auto &data = this->ufo2p;
 
