@@ -280,11 +280,13 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
+	TraceObj mainTrace("main");
 	Framework fw(UString(argv[0]), false);
 	InitialGameStateExtractor initialGameStateExtractor;
 	for (auto ePair : extractorsToRun)
 	{
 		LogWarning("Running %s", ePair.first.cStr());
+		TraceObj exTrace(ePair.first);
 		ePair.second(initialGameStateExtractor);
 	}
 

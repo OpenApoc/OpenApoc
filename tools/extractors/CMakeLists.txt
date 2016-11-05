@@ -49,7 +49,6 @@ set (DATAEXTRACTOR_HEADER_FILES
 	common/datachunk.h
 	common/strtab.h
 	common/canonstring.h
-	common/crc32.h
 	common/ufo2p.h
 	common/scenerytile.h
 	common/vehicle.h

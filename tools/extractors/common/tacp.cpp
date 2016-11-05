@@ -1,8 +1,8 @@
 #include "tacp.h"
-#include "crc32.h"
 #include "framework/data.h"
 #include "framework/framework.h"
 
+#include <boost/crc.hpp>
 #include <iomanip>
 #include <iterator>
 
@@ -14,7 +14,7 @@ namespace OpenApoc
  * need to make sure the offsets are the same, then we can add them to an
  * 'allowed' list, or have a map of 'known' CRCs with offsets of the various
  * tables */
-uint32_t expected_tacp_crc32 = 0xd26df29e;
+uint32_t expected_tacp_crc32 = 0xfebbe39e;
 
 TACP::TACP(std::string file_name)
 {
@@ -26,14 +26,15 @@ TACP::TACP(std::string file_name)
 		exit(1);
 	}
 
-	std::istream_iterator<uint8_t> eof;
-	std::istream_iterator<uint8_t> sof(file);
+	auto data = file.readAll();
+	boost::crc_32_type crc;
+	crc.process_bytes(data.get(), file.size());
 
-	auto crc32 = crc(sof, eof);
+	auto crc32 = crc.checksum();
 
 	if (crc32 != expected_tacp_crc32)
 	{
-		LogError("File \"%s\"\" has an unknown crc32 value of 0x%08lx - expected 0x%08x",
+		LogError("File \"%s\"\" has an unknown crc32 value of 0x%08x - expected 0x%08x",
 		         file_name.c_str(), crc32, expected_tacp_crc32);
 	}
 
