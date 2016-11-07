@@ -6,6 +6,7 @@
 #include "library/voxel.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
+#include <cstring>
 #include <list>
 #include <map>
 #include <set>

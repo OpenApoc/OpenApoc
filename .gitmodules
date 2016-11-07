@@ -17,3 +17,6 @@
 [submodule "dependencies/lodepng"]
 	path = dependencies/lodepng
 	url = https://github.com/lvandeve/lodepng.git
+[submodule "dependencies/tinyformat"]
+	path = dependencies/tinyformat
+	url = https://github.com/c42f/tinyformat.git
