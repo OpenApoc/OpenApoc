@@ -33,7 +33,7 @@ bool FileDataProvider::readDocument(const UString &path, UString &result)
 	return !in.bad();
 }
 
-bool FileDataProvider::saveDocument(const UString &path, UString contents)
+bool FileDataProvider::saveDocument(const UString &path, const UString &contents)
 {
 	fs::path documentPath = (static_cast<fs::path>(archivePath.str()) / path.str());
 	fs::path directoryPath = documentPath.parent_path();

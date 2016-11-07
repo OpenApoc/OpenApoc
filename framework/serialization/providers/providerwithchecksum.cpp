@@ -193,7 +193,7 @@ bool ProviderWithChecksum::readDocument(const UString &path, UString &result)
 
 	return false;
 }
-bool ProviderWithChecksum::saveDocument(const UString &path, UString contents)
+bool ProviderWithChecksum::saveDocument(const UString &path, const UString &contents)
 {
 
 	if (inner->saveDocument(path, contents))

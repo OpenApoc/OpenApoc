@@ -99,7 +99,7 @@ bool ZipDataProvider::readDocument(const UString &filename, UString &result)
 	result = std::string(data.get(), (unsigned int)stat.m_uncomp_size);
 	return true;
 }
-bool ZipDataProvider::saveDocument(const UString &path, UString contents)
+bool ZipDataProvider::saveDocument(const UString &path, const UString &contents)
 {
 	if (!mz_zip_writer_add_mem(&archive, path.cStr(), contents.cStr(), contents.cStrLength(),
 	                           MZ_DEFAULT_COMPRESSION))
