@@ -783,8 +783,7 @@ void Framework::displayInitialise()
 
 	if (!p->window)
 	{
-		LogError("Failed to create window");
-		;
+		LogError("Failed to create window \"%s\"", SDL_GetError());
 		exit(1);
 	}
 
