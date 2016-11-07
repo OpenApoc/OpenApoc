@@ -1,5 +1,6 @@
 #pragma once
 
+#define TINYFORMAT_USE_VARIADIC_TEMPLATES
 #include "dependencies/tinyformat/tinyformat.h"
 #include "library/strings.h"
 namespace OpenApoc
