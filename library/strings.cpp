@@ -60,9 +60,11 @@ UString::~UString() = default;
 
 UString::UString() : u8Str() {}
 
-UString::UString(std::string str) : u8Str(str) {}
+UString::UString(const std::string &str) : u8Str(str) {}
 
-UString::UString(std::wstring wstr) : u8Str(boost::locale::conv::utf_to_utf<char>(wstr)) {}
+UString::UString(std::string &&str) : u8Str(std::move(str)) {}
+
+UString::UString(const std::wstring &wstr) : u8Str(boost::locale::conv::utf_to_utf<char>(wstr)) {}
 
 UString::UString(const char *cstr)
 
