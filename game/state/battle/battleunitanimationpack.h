@@ -67,29 +67,85 @@ class BattleUnitAnimationPack : public StateObject<BattleUnitAnimationPack>
 		int frames_per_100_units = 0;
 	};
 
+	class AnimationKey
+	{
+	  public:
+		ItemWieldMode itemWieldMode = ItemWieldMode::None;
+		HandState handState = HandState::AtEase;
+		MovementState movementState = MovementState::None;
+		BodyState bodyState = BodyState::Standing;
+		AnimationKey() = default;
+		AnimationKey(ItemWieldMode itemWieldMode, HandState handState, MovementState movementState,
+		             BodyState bodyState)
+		    : itemWieldMode(itemWieldMode), handState(handState), movementState(movementState),
+		      bodyState(bodyState)
+		{
+		}
+		bool operator<(const AnimationKey &other) const
+		{
+			return std::tie(itemWieldMode, handState, movementState, bodyState) <
+			       std::tie(other.itemWieldMode, other.handState, other.movementState,
+			                other.bodyState);
+		}
+	};
+
 	// Animations for cases where current state is equal to target state
-	std::map<
-	    ItemWieldMode,
-	    std::map<HandState, std::map<MovementState,
-	                                 std::map<BodyState, std::map<Vec2<int>, sp<AnimationEntry>>>>>>
-	    standart_animations;
+	std::map<AnimationKey, std::map<Vec2<int>, sp<AnimationEntry>>> standart_animations;
+
+	class ChangingHandAnimationKey
+	{
+	  public:
+		ItemWieldMode itemWieldMode = ItemWieldMode::None;
+		HandState currentHand = HandState::AtEase;
+		HandState targetHand = HandState::AtEase;
+		MovementState movementState = MovementState::None;
+		BodyState bodyState = BodyState::Standing;
+		ChangingHandAnimationKey() = default;
+		ChangingHandAnimationKey(ItemWieldMode itemWieldMode, HandState currentHand,
+		                         HandState targetHand, MovementState movementState,
+		                         BodyState bodyState)
+		    : itemWieldMode(itemWieldMode), currentHand(currentHand), targetHand(targetHand),
+		      movementState(movementState), bodyState(bodyState)
+		{
+		}
+		bool operator<(const ChangingHandAnimationKey &other) const
+		{
+			return std::tie(itemWieldMode, currentHand, targetHand, movementState, bodyState) <
+			       std::tie(other.itemWieldMode, other.currentHand, other.targetHand,
+			                other.movementState, other.bodyState);
+		}
+	};
 
 	// Animation for changing hand state. First is current, second is target.
-	std::map<
-	    ItemWieldMode,
-	    std::map<HandState,
-	             std::map<HandState,
-	                      std::map<MovementState,
-	                               std::map<BodyState, std::map<Vec2<int>, sp<AnimationEntry>>>>>>>
+	std::map<ChangingHandAnimationKey, std::map<Vec2<int>, sp<AnimationEntry>>>
 	    hand_state_animations;
 
+	class ChangingBodyStateAnimationKey
+	{
+	  public:
+		ItemWieldMode itemWieldMode = ItemWieldMode::None;
+		HandState handState = HandState::AtEase;
+		MovementState movementState = MovementState::None;
+		BodyState currentBodyState = BodyState::Standing;
+		BodyState targetBodyState = BodyState::Standing;
+		ChangingBodyStateAnimationKey() = default;
+		ChangingBodyStateAnimationKey(ItemWieldMode itemWieldMode, HandState handState,
+		                              MovementState movementState, BodyState currentBodyState,
+		                              BodyState targetBodyState)
+		    : itemWieldMode(itemWieldMode), handState(handState), movementState(movementState),
+		      currentBodyState(currentBodyState), targetBodyState(targetBodyState)
+		{
+		}
+		bool operator<(const ChangingBodyStateAnimationKey &other) const
+		{
+			return std::tie(itemWieldMode, handState, movementState, currentBodyState,
+			                targetBodyState) < std::tie(other.itemWieldMode, other.handState,
+			                                            other.movementState, other.currentBodyState,
+			                                            other.targetBodyState);
+		}
+	};
 	// Animation for changing body state. First is current, second is target.
-	std::map<
-	    ItemWieldMode,
-	    std::map<HandState,
-	             std::map<MovementState,
-	                      std::map<BodyState,
-	                               std::map<BodyState, std::map<Vec2<int>, sp<AnimationEntry>>>>>>>
+	std::map<ChangingBodyStateAnimationKey, std::map<Vec2<int>, sp<AnimationEntry>>>
 	    body_state_animations;
 
 	// Wether unit has alternative firing animations - upwards and downwards (2 versions each)
@@ -99,10 +155,28 @@ class BattleUnitAnimationPack : public StateObject<BattleUnitAnimationPack>
 	// second parameter is firing angle, which can be +/-1 or +/-2
 	// where + is firing upwards and - is downwards,
 	// 1 is angles 15-30 (degrees) and 2 is 30 and further
-	std::map<ItemWieldMode,
-	         std::map<int, std::map<MovementState,
-	                                std::map<BodyState, std::map<Vec2<int>, sp<AnimationEntry>>>>>>
-	    alt_fire_animations;
+	class AltFireAnimationKey
+	{
+	  public:
+		ItemWieldMode itemWieldMode = ItemWieldMode::None;
+		int angle = 0;
+		MovementState movementState = MovementState::None;
+		BodyState bodyState = BodyState::Standing;
+		AltFireAnimationKey() = default;
+
+		AltFireAnimationKey(ItemWieldMode itemWieldMode, int angle, MovementState movementState,
+		                    BodyState bodyState)
+		    : itemWieldMode(itemWieldMode), angle(angle), movementState(movementState),
+		      bodyState(bodyState)
+		{
+		}
+		bool operator<(const AltFireAnimationKey &other) const
+		{
+			return std::tie(itemWieldMode, angle, movementState, bodyState) <
+			       std::tie(other.itemWieldMode, other.angle, other.movementState, other.bodyState);
+		}
+	};
+	std::map<AltFireAnimationKey, std::map<Vec2<int>, sp<AnimationEntry>>> alt_fire_animations;
 
 	// Animation functions
 

@@ -939,6 +939,36 @@
 		<member>type</member>
 		<member>topics</member>
 	</object>
+	<object>
+		<name>BattleUnitAnimationPack::AnimationKey</name>
+		<member>itemWieldMode</member>
+		<member>handState</member>
+		<member>movementState</member>
+		<member>bodyState</member>
+	</object>
+	<object>
+		<name>BattleUnitAnimationPack::ChangingHandAnimationKey</name>
+		<member>itemWieldMode</member>
+		<member>currentHand</member>
+		<member>targetHand</member>
+		<member>movementState</member>
+		<member>bodyState</member>
+	</object>
+	<object>
+		<name>BattleUnitAnimationPack::ChangingBodyStateAnimationKey</name>
+		<member>itemWieldMode</member>
+		<member>handState</member>
+		<member>movementState</member>
+		<member>currentBodyState</member>
+		<member>targetBodyState</member>
+	</object>
+	<object>
+	<name>BattleUnitAnimationPack::AltFireAnimationKey</name>
+		<member>itemWieldMode</member>
+		<member>angle</member>
+		<member>movementState</member>
+		<member>bodyState</member>
+	</object>
 	<enum>
 		<name>VEquipmentType::Type</name>
 		<value>Engine</value>
