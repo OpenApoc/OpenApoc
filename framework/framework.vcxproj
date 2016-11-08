@@ -68,6 +68,7 @@
     <ClInclude Include="configfile.h" />
     <ClInclude Include="data.h" />
     <ClInclude Include="event.h" />
+    <ClInclude Include="filesystem.h" />
     <ClInclude Include="font.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="fs.h" />

@@ -101,9 +101,6 @@
     <ClInclude Include="extractors\common\canonstring.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="extractors\common\crc32.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="extractors\common\datachunk.h">
       <Filter>Header Files</Filter>
     </ClInclude>

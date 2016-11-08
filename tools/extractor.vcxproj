@@ -54,7 +54,6 @@
     <ClInclude Include="extractors\common\building.h" />
     <ClInclude Include="extractors\common\bulletsprite.h" />
     <ClInclude Include="extractors\common\canonstring.h" />
-    <ClInclude Include="extractors\common\crc32.h" />
     <ClInclude Include="extractors\common\datachunk.h" />
     <ClInclude Include="extractors\common\doodads.h" />
     <ClInclude Include="extractors\common\facilities.h" />
