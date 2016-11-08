@@ -1,5 +1,6 @@
 ﻿#include "game/state/savemanager.h"
 #include "framework/configfile.h"
+#include "framework/filesystem.h"
 #include "framework/framework.h"
 #include "framework/serialization/serialize.h"
 #include "framework/trace.h"
@@ -10,14 +11,12 @@
 // Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
 // symbols as part of the module that uses it
 #define BOOST_ALL_NO_LIB
-#include <boost/filesystem.hpp>
 
 // boost uuid for generating temporary identifier for new save
 #include <boost/uuid/uuid_generators.hpp> // generators
 #include <boost/uuid/uuid_io.hpp>         // conversion to string
 
 namespace uuids = boost::uuids;
-namespace fs = boost::filesystem;
 
 namespace OpenApoc
 {

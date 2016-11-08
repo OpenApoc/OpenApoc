@@ -1,5 +1,6 @@
 #include "framework/serialization/serialize.h"
 #include "dependencies/pugixml/src/pugixml.hpp"
+#include "framework/filesystem.h"
 #include "framework/logger.h"
 #include "framework/serialization/providers/filedataprovider.h"
 #include "framework/serialization/providers/providerwithchecksum.h"
@@ -8,13 +9,9 @@
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/strings_format.h"
+#include <map>
 #include <sstream>
 
-// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
-// symbols as part of the module that uses it
-#define BOOST_ALL_NO_LIB
-#include <boost/filesystem.hpp>
-#include <map>
 namespace OpenApoc
 {
 
@@ -160,8 +157,7 @@ sp<SerializationDataProvider> getProvider(bool pack)
 
 sp<SerializationArchive> SerializationArchive::readArchive(const UString &name)
 {
-	sp<SerializationDataProvider> dataProvider =
-	    getProvider(!boost::filesystem::is_directory(name.str()));
+	sp<SerializationDataProvider> dataProvider = getProvider(!fs::is_directory(name.str()));
 	if (!dataProvider->openArchive(name, false))
 	{
 		LogWarning("Failed to open archive at \"%s\"", name.cStr());

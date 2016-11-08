@@ -5,6 +5,7 @@
 #include "framework/apocresources/pck.h"
 #include "framework/apocresources/rawimage.h"
 #include "framework/configfile.h"
+#include "framework/filesystem.h"
 #include "framework/image.h"
 #include "framework/imageloader_interface.h"
 #include "framework/logger.h"
@@ -20,11 +21,6 @@
 #include <map>
 #include <mutex>
 #include <queue>
-
-#define BOOST_ALL_NO_LIB
-// boost::fs used to create directories in writeImage
-#include <boost/filesystem.hpp>
-namespace fs = boost::filesystem;
 
 using namespace OpenApoc;
 

@@ -39,6 +39,7 @@ set (FRAMEWORK_HEADER_FILES
 	event.h
 	font.h
 	framework.h
+	filesystem.h
 	fs.h
 	image.h
 	imageloader_interface.h
@@ -207,8 +208,29 @@ endif()
 
 # We use boost::locale for utf conversions and boost::filesystem for
 # serialization
-find_package(Boost REQUIRED COMPONENTS locale filesystem system
-		program_options)
+
+set(BOOST_PACKAGES locale system program_options)
+
+set(USE_EXPERIMENTAL_FILESYSTEM FALSE)
+
+if(CMAKE_COMPILER_IS_GNUCC)
+		if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.3 OR
+						CMAKE_CXX_COMPILER_VERSION VERSION_EQUAL 5.3)
+				set(USE_EXPERIMENTAL_FILESYSTEM TRUE)
+		endif()
+endif()
+
+if (USE_EXPERIMENTAL_FILESYSTEM)
+	message(STATUS "Using <experimental/filesystem>")
+	target_compile_definitions(OpenApoc_Framework PUBLIC "-DUSE_EXPERIMENTAL_FILESYSTEM")
+	target_link_libraries(OpenApoc_Framework PUBLIC stdc++fs)
+else()
+	message(STATUS "Using <boost/filesystem>")
+	set(BOOST_PACKAGES ${BOOST_PACKAGES} filesystem)
+	target_compile_definitions(OpenApoc_Framework PUBLIC "-DUSE_BOOST_FILESYSTEM")
+endif()
+
+find_package(Boost REQUIRED COMPONENTS ${BOOST_PACKAGES})
 target_link_libraries(OpenApoc_Framework PUBLIC ${Boost_LIBRARIES})
 target_include_directories(OpenApoc_Framework PUBLIC ${Boost_INCLUDE_DIRS})
 

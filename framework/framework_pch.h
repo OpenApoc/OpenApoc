@@ -1,6 +1,7 @@
 #pragma once
 #define WIN32_MEAN_AND_LEAN
 
+#include "framework/filesystem.h"
 #include "framework/framework.h"
 #include "library/colour.h"
 #include "library/line.h"
@@ -21,7 +22,6 @@
 #include <SDL_syswm.h>
 #include <algorithm>
 #include <array>
-#include <boost/filesystem.hpp>
 #include <boost/locale.hpp>
 #include <chrono>
 #include <condition_variable>

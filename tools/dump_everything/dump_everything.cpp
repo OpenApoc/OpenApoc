@@ -1,10 +1,6 @@
+#include "framework/filesystem.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
-
-// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
-// symbols as part of the module that uses it
-#define BOOST_ALL_NO_LIB
-#include <boost/filesystem.hpp>
 
 using namespace OpenApoc;
 class PCKFile
@@ -1049,7 +1045,7 @@ std::list<UString> loftempFiles = {
     "xcom3/ufodata/loftemps", "xcom3/tacdata/loftemps",
 };
 
-namespace fs = boost::filesystem;
+namespace fs = fs;
 
 static void dumpLofTemps(fs::path basePath, const UString &prefix)
 {

@@ -3,6 +3,7 @@
 #endif
 
 #include "framework/configfile.h"
+#include "framework/filesystem.h"
 #include "framework/logger.h"
 #include <fstream>
 #include <iostream>
@@ -13,11 +14,9 @@
 // Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
 // symbols as part of the module that uses it
 #define BOOST_ALL_NO_LIB
-#include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 
 namespace po = boost::program_options;
-namespace fs = boost::filesystem;
 
 namespace OpenApoc
 {
@@ -74,7 +73,11 @@ class ConfigFileImpl
 		}
 		fs::path programPath(argv[0]);
 		// Remove extension (if any) and path
-		programName = fs::change_extension(programPath.filename(), "").string();
+		programName = programPath.filename().string();
+		if (programName.endsWith(".exe"))
+		{
+			programName = programName.substr(0, programName.length() - 4);
+		}
 		if (!PHYSFS_isInit())
 		{
 			PHYSFS_init(programName.cStr());

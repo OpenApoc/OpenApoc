@@ -22,11 +22,6 @@
 #include "library/voxel.h"
 #include "library/xorshift.h"
 #include <algorithm>
-#include <boost/date_time.hpp>
-#include <boost/date_time/date_facet.hpp>
-#include <boost/filesystem.hpp>
-#include <boost/uuid/uuid_generators.hpp>
-#include <boost/uuid/uuid_io.hpp>
 #include <climits>
 #include <cmath>
 #include <cstdint>

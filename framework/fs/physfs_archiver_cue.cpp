@@ -6,26 +6,19 @@
 #define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 #endif
+
+#include "framework/filesystem.h"
 #include "framework/fs/physfs_archiver_cue.h"
 #include "framework/logger.h"
-
-#include "library/strings.h"
-
-// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
-// symbols as part of the module that uses it
-#define BOOST_ALL_NO_LIB
-#include <boost/filesystem.hpp>
-
-#include <fstream>
-#include <physfs.h>
-// for std::memcmp
 #include "library/sp.h"
+#include "library/strings.h"
+#include <SDL_endian.h> // endianness check
 #include <cstddef>
-#include <cstring>
+#include <cstring> // for std::memcmp
+#include <fstream>
 #include <inttypes.h>
-// endianness check
-#include <SDL_endian.h>
 #include <map>
+#include <physfs.h>
 
 using namespace OpenApoc;
 
@@ -244,7 +237,7 @@ class CueParser
 
 	bool parse(UString cueFilename)
 	{
-		boost::filesystem::path cueFilePath(cueFilename.cStr());
+		fs::path cueFilePath(cueFilename.cStr());
 
 		std::ifstream cueFile(cueFilename.str(), std::ios::in);
 		if (!cueFile)
@@ -962,10 +955,10 @@ class CueArchiver
 	    : imageFile(fileName), fileType(ftype), trackMode(tmode)
 	{
 		// "Hey, a .cue-.bin file pair should be really easy to read!" - sfalexrog, 15.04.2016
-		boost::filesystem::path filePath(fileName.cStr());
+		fs::path filePath(fileName.cStr());
 		// FIXME: This fsize is completely and utterly wrong - unless you're reading an actual iso
 		// (mode1_2048)
-		uint64_t fsize = boost::filesystem::file_size(filePath);
+		uint64_t fsize = fs::file_size(filePath);
 		LogInfo("Opening file %s of size %" PRIu64, fileName.cStr(), fsize);
 		cio = new CueIO(fileName, 0, fsize, ftype, tmode);
 		if (!cio->fileStream)
@@ -1094,23 +1087,22 @@ class CueArchiver
 			LogError("Could not parse file \"%s\"", filename);
 			return nullptr;
 		}
-		boost::filesystem::path cueFilePath(filename);
+		fs::path cueFilePath(filename);
 
-		boost::filesystem::path dataFilePath(
-		    cueFilePath.parent_path()); // parser.getDataFileName().cStr());
+		fs::path dataFilePath(cueFilePath.parent_path()); // parser.getDataFileName().cStr());
 		dataFilePath /= parser.getDataFileName().cStr();
 
-		if (!boost::filesystem::exists(dataFilePath))
+		if (!fs::exists(dataFilePath))
 		{
 			LogWarning("Could not find binary file \"%s\" referenced in the cuesheet",
 			           parser.getDataFileName().cStr());
 			LogWarning("Trying case-insensitive search...");
 			UString ucBin(parser.getDataFileName().cStr());
 			ucBin = ucBin.toLower();
-			// for (boost::filesystem::directory_entry &dirent :
-			// boost::filesystem::directory_iterator(cueFilePath.parent_path()))
-			for (auto dirent_it = boost::filesystem::directory_iterator(cueFilePath.parent_path());
-			     dirent_it != boost::filesystem::directory_iterator(); dirent_it++)
+			// for (fs::directory_entry &dirent :
+			// fs::directory_iterator(cueFilePath.parent_path()))
+			for (auto dirent_it = fs::directory_iterator(cueFilePath.parent_path());
+			     dirent_it != fs::directory_iterator(); dirent_it++)
 			{
 				auto dirent = *dirent_it;
 				LogInfo("Trying %s", dirent.path().c_str());
@@ -1122,7 +1114,7 @@ class CueArchiver
 					dataFilePath /= dirent.path().filename();
 				}
 			}
-			if (!boost::filesystem::exists(dataFilePath))
+			if (!fs::exists(dataFilePath))
 			{
 				LogError("Binary file does not exist: \"%s\"", dataFilePath.c_str());
 				return nullptr;

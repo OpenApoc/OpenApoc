@@ -5,16 +5,13 @@
 #include "framework/trace.h"
 #include "library/strings.h"
 #include "library/strings_format.h"
+#include <sstream>
+
+#include "dependencies/pugixml/src/pugixml.hpp"
 
 // Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
 // symbols as part of the module that uses it
 #define BOOST_ALL_NO_LIB
-#include <boost/filesystem.hpp>
-#include <sstream>
-namespace fs = boost::filesystem;
-
-#include "dependencies/pugixml/src/pugixml.hpp"
-
 #include <boost/crc.hpp>
 #include <boost/uuid/sha1.hpp>
 #include <boost/uuid/uuid.hpp>

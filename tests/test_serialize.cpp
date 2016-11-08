@@ -1,14 +1,11 @@
 #include "framework/configfile.h"
+#include "framework/filesystem.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "game/state/gamestate.h"
 #include "game/state/gamestate_serialize.h"
 #include <iostream>
-
-// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
-// symbols as part of the module that uses it
-#define BOOST_ALL_NO_LIB
-#include <boost/filesystem.hpp>
+#include <sstream>
 
 using namespace OpenApoc;
 
@@ -37,8 +34,9 @@ bool test_gamestate_serialization_roundtrip(sp<GameState> state, UString save_na
 
 bool test_gamestate_serialization(sp<GameState> state)
 {
-	auto tempPath = boost::filesystem::temp_directory_path() /
-	                boost::filesystem::unique_path("openapoc_test_serialize-%%%%%%%%");
+	std::stringstream ss;
+	ss << "openapoc_test_serialize-" << std::this_thread::get_id();
+	auto tempPath = fs::temp_directory_path() / ss.str();
 	UString pathString(tempPath.string());
 	LogInfo("Writing temp state to \"%s\"", pathString.cStr());
 	if (!test_gamestate_serialization_roundtrip(state, pathString))
@@ -47,7 +45,7 @@ bool test_gamestate_serialization(sp<GameState> state)
 		return false;
 	}
 
-	boost::filesystem::remove(tempPath);
+	fs::remove(tempPath);
 
 	return true;
 }
