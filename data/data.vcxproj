@@ -96,7 +96,7 @@
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>Generating data</Message>
-      <Outputs>difficulty1_patched\gamestate.xml</Outputs>
+      <Outputs>difficulty1_patched</Outputs>
       <Inputs>"$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe"</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
@@ -112,7 +112,7 @@
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>Generating data</Message>
-      <Outputs>difficulty1_patched\gamestate.xml</Outputs>
+      <Outputs>difficulty1_patched</Outputs>
       <Inputs>"$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe"</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
@@ -132,7 +132,7 @@
       <Command>cd /D "$(SolutionDir)"
 "$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe" --Framework.CD="$(SolutionDir)\data\cd.iso" --Framework.Data="$(SolutionDir)\data"</Command>
       <Message>Generating data</Message>
-      <Outputs>difficulty1_patched\gamestate.xml</Outputs>
+      <Outputs>difficulty1_patched</Outputs>
       <Inputs>"$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe"</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
@@ -152,7 +152,7 @@
       <Command>cd /D "$(SolutionDir)"
 "$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe" --Framework.CD="$(SolutionDir)\data\cd.iso" --Framework.Data="$(SolutionDir)\data"</Command>
       <Message>Generating data</Message>
-      <Outputs>difficulty1_patched\gamestate.xml</Outputs>
+      <Outputs>difficulty1_patched</Outputs>
       <Inputs>"$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe"</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
