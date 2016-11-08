@@ -1,10 +1,9 @@
 #pragma once
 
 // Enable <experimental/filesystem> by default on MSVC, as we only support 2015+ anyway
-#if !defined(USE_BOOST_FILESYSTEM) && !defined(USE_EXPERIMENTAL_FILESYSTEM) && defined (_MSC_VER)
+#if !defined(USE_BOOST_FILESYSTEM) && !defined(USE_EXPERIMENTAL_FILESYSTEM) && defined(_MSC_VER)
 #define USE_EXPERIMENTAL_FILESYSTEM
 #endif
-
 
 #if defined(USE_BOOST_FILESYSTEM)
 
