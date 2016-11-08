@@ -3,6 +3,7 @@
 #include "framework/logger.h"
 #include "library/sp.h"
 #include "library/strings.h"
+#include <cstring> // for memset()
 #include <iostream>
 
 namespace OpenApoc
