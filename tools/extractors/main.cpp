@@ -62,7 +62,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     GameState s;
 	     e.extractCommon(s);
 	     s.loadGame("data/common_patch");
-	     s.saveGame("data/gamestate_common", false);
+	     s.saveGame("data/gamestate_common");
 	 }},
     {"city_bullet_sprites",
      [](const InitialGameStateExtractor &e) {
