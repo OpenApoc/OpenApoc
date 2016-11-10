@@ -21,7 +21,7 @@ sp<Palette> OpenApoc::loadPNGPalette(Data &d, const UString fileName)
 	auto f = d.fs.open(fileName);
 	if (!f)
 	{
-		LogInfo("Failed to open file \"%s\" - skipping", fileName.cStr());
+		LogInfo("Failed to open file \"%s\" - skipping", fileName);
 		return nullptr;
 	}
 	auto data = f.readAll();
@@ -32,15 +32,15 @@ sp<Palette> OpenApoc::loadPNGPalette(Data &d, const UString fileName)
 	                           reinterpret_cast<unsigned char *>(data.get()), dataSize);
 	if (err)
 	{
-		LogInfo("Failed to read PNG headers from \"%s\" (%u) : %s - skipping",
-		        f.systemPath().cStr(), err, lodepng_error_text(err));
+		LogInfo("Failed to read PNG headers from \"%s\" (%u) : %s - skipping", f.systemPath(), err,
+		        lodepng_error_text(err));
 		return nullptr;
 	}
 	if (width * height != 256)
 	{
 
 		LogWarning("PNG \"%s\" size {%u,%u} too large for palette (must be 256 pixels total)",
-		           f.systemPath().cStr(), width, height);
+		           f.systemPath(), width, height);
 		return nullptr;
 	}
 	std::vector<unsigned char> pixels;
@@ -48,7 +48,7 @@ sp<Palette> OpenApoc::loadPNGPalette(Data &d, const UString fileName)
 	                             reinterpret_cast<unsigned char *>(data.get()), dataSize);
 	if (error)
 	{
-		LogInfo("Failed to read PNG \"%s\" (%u) : %s", f.systemPath().cStr(), err,
+		LogInfo("Failed to read PNG \"%s\" (%u) : %s", f.systemPath(), err,
 		        lodepng_error_text(err));
 		return nullptr;
 	}
@@ -88,13 +88,13 @@ class LodepngImageLoader : public OpenApoc::ImageLoader
 		                                   reinterpret_cast<unsigned char *>(data.get()), dataSize);
 		if (err)
 		{
-			LogInfo("Failed to read PNG headers from \"%s\" (%u) : %s", file.systemPath().cStr(),
-			        err, lodepng_error_text(err));
+			LogInfo("Failed to read PNG headers from \"%s\" (%u) : %s", file.systemPath(), err,
+			        lodepng_error_text(err));
 			return nullptr;
 		}
 
-		LogInfo("Loading PNG \"%s\" size {%u,%d} - colour mode %d depth %u",
-		        file.systemPath().cStr(), width, height, png_state.info_png.color.colortype,
+		LogInfo("Loading PNG \"%s\" size {%u,%d} - colour mode %d depth %u", file.systemPath(),
+		        width, height, png_state.info_png.color.colortype,
 		        png_state.info_png.color.bitdepth);
 
 		// Just convert to RGBA, as PNG palettes are often reordered/trimmed at every turn by any
@@ -109,7 +109,7 @@ class LodepngImageLoader : public OpenApoc::ImageLoader
 		}
 		if (!image.size())
 		{
-			LogInfo("Failed to load image %s (not a PNG?)", file.systemPath().cStr());
+			LogInfo("Failed to load image %s (not a PNG?)", file.systemPath());
 			return nullptr;
 		}
 		OpenApoc::Vec2<int> size(width, height);

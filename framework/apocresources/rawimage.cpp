@@ -12,7 +12,7 @@ sp<PaletteImage> RawImage::load(Data &data, const UString &filename, const Vec2<
 	auto infile = data.fs.open(filename);
 	if (!infile)
 	{
-		LogWarning("Failed to open file \"%s\"", filename.cStr());
+		LogWarning("Failed to open file \"%s\"", filename);
 		return nullptr;
 	}
 	if (size.x <= 0 || size.y <= 0)
@@ -23,8 +23,8 @@ sp<PaletteImage> RawImage::load(Data &data, const UString &filename, const Vec2<
 
 	if (infile.size() != static_cast<size_t>(size.x * size.y))
 	{
-		LogWarning("File \"%s\" has incorrect size for raw image of size {%d,%d}", filename.cStr(),
-		           size.x, size.y);
+		LogWarning("File \"%s\" has incorrect size for raw image of size {%d,%d}", filename, size.x,
+		           size.y);
 	}
 
 	auto image = mksp<PaletteImage>(size);
@@ -39,7 +39,7 @@ sp<PaletteImage> RawImage::load(Data &data, const UString &filename, const Vec2<
 			uint8_t idx;
 			if (!infile.read(reinterpret_cast<char *>(&idx), 1))
 			{
-				LogError("Unexpected EOF in file \"%s\" at {%d,%d}", filename.cStr(), x, y);
+				LogError("Unexpected EOF in file \"%s\" at {%d,%d}", filename, x, y);
 				return nullptr;
 			}
 			l.set(Vec2<unsigned int>{x, y}, idx);
@@ -54,7 +54,7 @@ sp<ImageSet> RawImage::loadSet(Data &data, const UString &filename, const Vec2<i
 	auto infile = data.fs.open(filename);
 	if (!infile)
 	{
-		LogWarning("Failed to open file \"%s\"", filename.cStr());
+		LogWarning("Failed to open file \"%s\"", filename);
 		return nullptr;
 	}
 	if (size.x <= 0 || size.y <= 0)
@@ -65,7 +65,7 @@ sp<ImageSet> RawImage::loadSet(Data &data, const UString &filename, const Vec2<i
 
 	if (infile.size() % static_cast<size_t>(size.x * size.y) != 0)
 	{
-		LogWarning("File \"%s\" has incorrect size for raw images of size {%d,%d}", filename.cStr(),
+		LogWarning("File \"%s\" has incorrect size for raw images of size {%d,%d}", filename,
 		           size.x, size.y);
 	}
 
@@ -89,8 +89,7 @@ sp<ImageSet> RawImage::loadSet(Data &data, const UString &filename, const Vec2<i
 				uint8_t idx;
 				if (!infile.read(reinterpret_cast<char *>(&idx), 1))
 				{
-					LogError("Unexpected EOF in file \"%s\" at {%zu:%d,%d}", filename.cStr(), i, x,
-					         y);
+					LogError("Unexpected EOF in file \"%s\" at {%zu:%d,%d}", filename, i, x, y);
 					return nullptr;
 				}
 				l.set(Vec2<unsigned int>{x, y}, idx);

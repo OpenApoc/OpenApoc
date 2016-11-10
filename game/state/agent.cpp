@@ -14,7 +14,7 @@ template <> sp<AgentType> StateObject<AgentType>::get(const GameState &state, co
 	auto it = state.agent_types.find(id);
 	if (it == state.agent_types.end())
 	{
-		LogError("No agent_type matching ID \"%s\"", id.cStr());
+		LogError("No agent_type matching ID \"%s\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -49,7 +49,7 @@ sp<AgentBodyType> StateObject<AgentBodyType>::get(const GameState &state, const 
 	auto it = state.agent_body_types.find(id);
 	if (it == state.agent_body_types.end())
 	{
-		LogError("No agent_body_type matching ID \"%s\"", id.cStr());
+		LogError("No agent_body_type matching ID \"%s\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -86,7 +86,7 @@ sp<AgentEquipmentLayout> StateObject<AgentEquipmentLayout>::get(const GameState 
 	auto it = state.agent_equipment_layouts.find(id);
 	if (it == state.agent_equipment_layouts.end())
 	{
-		LogError("No agent_body_type matching ID \"%s\"", id.cStr());
+		LogError("No agent_body_type matching ID \"%s\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -121,7 +121,7 @@ template <> sp<Agent> StateObject<Agent>::get(const GameState &state, const UStr
 	auto it = state.agents.find(id);
 	if (it == state.agents.end())
 	{
-		LogError("No agent matching ID \"%s\"", id.cStr());
+		LogError("No agent matching ID \"%s\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -427,7 +427,7 @@ bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
 		        {
 		            LogInfo("Equipping \"%s\" on \"%s\" at {%d,%d} failed: Armor intersecting both
 		armor and non-armor slot",
-		                type->name.cStr(), this->name.cStr(), pos.x, pos.y);
+		                type->name, this->name, pos.x, pos.y);
 		            return false;
 		        }
 		    }
@@ -451,7 +451,7 @@ bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
 			{
 				LogInfo(
 				    "Equipping \"%s\" on \"%s\" at {%d,%d} failed: Intersects with other equipment",
-				    type->name.cStr(), this->name.cStr(), pos.x, pos.y);
+				    type->name, this->name, pos.x, pos.y);
 				return false;
 			}
 		}
@@ -490,8 +490,8 @@ void Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type)
 	}
 	if (!slotFound)
 	{
-		LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id.cStr(),
-		         this->name.cStr());
+		LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id,
+		         this->name);
 		return;
 	}
 
@@ -504,8 +504,8 @@ void Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type,
 	Vec2<int> pos = findFirstSlotByType(slotType, type);
 	if (pos.x == -1)
 	{
-		LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id.cStr(),
-		         this->name.cStr());
+		LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id,
+		         this->name);
 		return;
 	}
 
@@ -533,8 +533,8 @@ void Agent::addEquipment(GameState &state, sp<AEquipment> object, AEquipmentSlot
 	Vec2<int> pos = findFirstSlotByType(slotType, object->type);
 	if (pos.x == -1)
 	{
-		LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id.cStr(),
-		         this->name.cStr());
+		LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id,
+		         this->name);
 		return;
 	}
 
@@ -546,11 +546,11 @@ void Agent::addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object)
 	AEquipmentSlotType slotType;
 	if (!canAddEquipment(pos, object->type, slotType))
 	{
-		LogError("Trying to add \"%s\" at {%d,%d} on agent  \"%s\" failed", object->type.id.cStr(),
-		         pos.x, pos.y, this->name.cStr());
+		LogError("Trying to add \"%s\" at {%d,%d} on agent  \"%s\" failed", object->type.id, pos.x,
+		         pos.y, this->name);
 	}
 
-	LogInfo("Equipped \"%s\" with equipment \"%s\"", this->name.cStr(), object->type->name.cStr());
+	LogInfo("Equipped \"%s\" with equipment \"%s\"", this->name, object->type->name);
 	object->equippedPosition = pos;
 	object->ownerAgent = StateRef<Agent>(&state, shared_from_this());
 	object->equippedSlotType = slotType;

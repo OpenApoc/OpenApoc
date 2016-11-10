@@ -51,7 +51,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 		file = PHYSFS_openRead(path.cStr());
 		if (!file)
 		{
-			LogError("Failed to open file \"%s\" : \"%s\"", path.cStr(), PHYSFS_getLastError());
+			LogError("Failed to open file \"%s\" : \"%s\"", path, PHYSFS_getLastError());
 			return;
 		}
 		systemPath = PHYSFS_getRealDir(path.cStr());
@@ -104,7 +104,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 
 		if (mode & std::ios_base::out)
 		{
-			LogError("ios::out set on read-only IFile \"%s\"", this->systemPath.cStr());
+			LogError("ios::out set on read-only IFile \"%s\"", this->systemPath);
 			LogAssert(0);
 			setp(buffer.get(), buffer.get());
 		}
@@ -122,7 +122,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 
 		if (mode & std::ios_base::out)
 		{
-			LogError("ios::out set on read-only IFile \"%s\"", this->systemPath.cStr());
+			LogError("ios::out set on read-only IFile \"%s\"", this->systemPath);
 			LogAssert(0);
 			setp(buffer.get(), buffer.get());
 		}
@@ -132,7 +132,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 
 	int_type overflow(int_type) override
 	{
-		LogError("overflow called on read-only IFile \"%s\"", this->systemPath.cStr());
+		LogError("overflow called on read-only IFile \"%s\"", this->systemPath);
 		LogAssert(0);
 		return 0;
 	}
@@ -228,16 +228,14 @@ FileSystem::FileSystem(std::vector<UString> paths)
 	{
 		if (!PHYSFS_mount(p.cStr(), "/", 0))
 		{
-			LogInfo("Failed to add resource dir \"%s\", error: %s", p.cStr(),
-			        PHYSFS_getLastError());
+			LogInfo("Failed to add resource dir \"%s\", error: %s", p, PHYSFS_getLastError());
 			continue;
 		}
 		else
-			LogInfo("Resource dir \"%s\" mounted to \"%s\"", p.cStr(),
-			        PHYSFS_getMountPoint(p.cStr()));
+			LogInfo("Resource dir \"%s\" mounted to \"%s\"", p, PHYSFS_getMountPoint(p.cStr()));
 	}
 	this->writeDir = PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME);
-	LogInfo("Setting write directory to \"%s\"", this->writeDir.cStr());
+	LogInfo("Setting write directory to \"%s\"", this->writeDir);
 	PHYSFS_setWriteDir(this->writeDir.cStr());
 	// Finally, the write directory trumps all
 	PHYSFS_mount(this->writeDir.cStr(), "/", 0);
@@ -253,18 +251,18 @@ IFile FileSystem::open(const UString &path)
 	auto lowerPath = path.toLower();
 	if (path != lowerPath)
 	{
-		LogError("Path \"%s\" contains CAPITAL - cut it out!", path.cStr());
+		LogError("Path \"%s\" contains CAPITAL - cut it out!", path);
 	}
 
 	if (!PHYSFS_exists(path.cStr()))
 	{
-		LogInfo("Failed to find \"%s\"", path.cStr());
+		LogInfo("Failed to find \"%s\"", path);
 		LogAssert(!f);
 		return f;
 	}
 	f.f.reset(new PhysfsIFileImpl(path));
 	f.rdbuf(dynamic_cast<PhysfsIFileImpl *>(f.f.get()));
-	LogInfo("Loading \"%s\" from \"%s\"", path.cStr(), f.systemPath().cStr());
+	LogInfo("Loading \"%s\" from \"%s\"", path, f.systemPath());
 	return f;
 }
 

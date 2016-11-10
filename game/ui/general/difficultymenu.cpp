@@ -37,7 +37,7 @@ std::future<void> loadGame(const UString &path, sp<GameState> state)
 		}
 		if (!state->loadGame(fw().getDataDir() + "/" + path))
 		{
-			LogError("Failed to load '%s'", path.cStr());
+			LogError("Failed to load '%s'", path);
 			return;
 		}
 		state->startGame();
@@ -87,7 +87,7 @@ void DifficultyMenu::eventOccurred(Event *e)
 		}
 		else
 		{
-			LogWarning("Unknown button pressed: %s", e->forms().RaisedBy->Name.cStr());
+			LogWarning("Unknown button pressed: %s", e->forms().RaisedBy->Name);
 			return;
 		}
 

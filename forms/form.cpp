@@ -56,20 +56,20 @@ sp<Form> Form::loadForm(const UString &path)
 	auto file = fw().data->fs.open(path);
 	if (!file)
 	{
-		LogWarning("Failed to open form file \"%s\"", path.cStr());
+		LogWarning("Failed to open form file \"%s\"", path);
 		return nullptr;
 	}
 	auto data = file.readAll();
 	if (!data)
 	{
-		LogWarning("Failed to read form data from \"%s\"", path.cStr());
+		LogWarning("Failed to read form data from \"%s\"", path);
 		return nullptr;
 	}
 	pugi::xml_document doc;
 	auto result = doc.load_buffer(data.get(), file.size());
 	if (!result)
 	{
-		LogWarning("Failed to parse form file at \"%s\" - \"%s\" at \"%llu\"", path.cStr(),
+		LogWarning("Failed to parse form file at \"%s\" - \"%s\" at \"%llu\"", path,
 		           result.description(), (unsigned long long)result.offset);
 		return nullptr;
 	}
@@ -77,13 +77,13 @@ sp<Form> Form::loadForm(const UString &path)
 	auto node = doc.child("openapoc");
 	if (!node)
 	{
-		LogWarning("No root \"openapoc\" root element in form file \"%s\"", path.cStr());
+		LogWarning("No root \"openapoc\" root element in form file \"%s\"", path);
 		return nullptr;
 	}
 	auto child = node.child("form");
 	if (!child)
 	{
-		LogWarning("No child node of \"form\" in form file \"%s\"", path.cStr());
+		LogWarning("No child node of \"form\" in form file \"%s\"", path);
 		return nullptr;
 	}
 	auto form = mksp<Form>();

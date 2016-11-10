@@ -301,7 +301,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		}
 		else
 		{
-			LogError("Unknown type for vehicle %s", id.cStr());
+			LogError("Unknown type for vehicle %s", id);
 		}
 
 		vehicle->acceleration = v.acceleration;

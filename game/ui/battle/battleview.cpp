@@ -101,7 +101,7 @@ BattleView::BattleView(sp<GameState> gameState)
 		sp<Form> f(ui().getForm(formName));
 		if (!f)
 		{
-			LogError("Failed to load form \"%s\"", formName.cStr());
+			LogError("Failed to load form \"%s\"", formName);
 			return;
 		}
 		f->takesFocus = false;
@@ -112,7 +112,7 @@ BattleView::BattleView(sp<GameState> gameState)
 		sp<Form> f(ui().getForm(formName));
 		if (!f)
 		{
-			LogError("Failed to load form \"%s\"", formName.cStr());
+			LogError("Failed to load form \"%s\"", formName);
 			return;
 		}
 		f->takesFocus = false;
@@ -1302,13 +1302,12 @@ void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 
 			if (unit->setMission(*state, mission))
 			{
-				LogWarning("BattleUnit \"%s\" going to location {%d,%d,%d}",
-				           unit->agent->name.cStr(), target.x, target.y, target.z);
+				LogWarning("BattleUnit \"%s\" going to location {%d,%d,%d}", unit->agent->name,
+				           target.x, target.y, target.z);
 			}
 			else
 			{
-				LogWarning("BattleUnit \"%s\" could not receive order to move",
-				           unit->agent->name.cStr());
+				LogWarning("BattleUnit \"%s\" could not receive order to move", unit->agent->name);
 			}
 		}
 	}
@@ -1320,13 +1319,12 @@ void BattleView::orderTurn(Vec3<int> target)
 	{
 		if (unit->setMission(*state, BattleUnitMission::turn(*unit, target)))
 		{
-			LogWarning("BattleUnit \"%s\" turning to face location {%d,%d,%d}",
-			           unit->agent->name.cStr(), target.x, target.y, target.z);
+			LogWarning("BattleUnit \"%s\" turning to face location {%d,%d,%d}", unit->agent->name,
+			           target.x, target.y, target.z);
 		}
 		else
 		{
-			LogWarning("BattleUnit \"%s\" could not receive order to turn",
-			           unit->agent->name.cStr());
+			LogWarning("BattleUnit \"%s\" could not receive order to turn", unit->agent->name);
 		}
 	}
 }
@@ -1347,7 +1345,7 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 
 	if (unit->setMission(*state, BattleUnitMission::throwItem(*unit, item, target)))
 	{
-		LogWarning("BattleUnit \"%s\" throwing item in the %s hand", unit->agent->name.cStr(),
+		LogWarning("BattleUnit \"%s\" throwing item in the %s hand", unit->agent->name,
 		           right ? "right" : "left");
 		selectionState = BattleSelectionState::Normal;
 	}
@@ -1484,7 +1482,7 @@ void BattleView::orderDrop(bool right)
 	{
 		// Special case, just add mission in front of anything and start it, no need to clear orders
 		unit->addMission(*state, BattleUnitMission::dropItem(*unit, item));
-		LogWarning("BattleUnit \"%s\" dropping item in %s hand", unit->agent->name.cStr(),
+		LogWarning("BattleUnit \"%s\" dropping item in %s hand", unit->agent->name,
 		           right ? "right" : "left");
 	}
 	else // Try to pick something up
@@ -1509,7 +1507,7 @@ void BattleView::orderDrop(bool right)
 void BattleView::orderSelect(StateRef<BattleUnit> u, bool inverse, bool additive)
 {
 	UString log = "";
-	log += format("\nOrder to select unit %s.", u.id.cStr());
+	log += format("\nOrder to select unit %s.", u.id);
 	log += format("\nMissions [%d]:", (int)u->missions.size());
 	for (auto &m : u->missions)
 	{
@@ -1520,7 +1518,7 @@ void BattleView::orderSelect(StateRef<BattleUnit> u, bool inverse, bool additive
 	{
 		log += format("\n%s", unit.id);
 	}
-	LogWarning("%s", log.cStr());
+	LogWarning("%s", log);
 
 	auto pos =
 	    std::find(battle.battleViewSelectedUnits.begin(), battle.battleViewSelectedUnits.end(), u);
@@ -1604,15 +1602,15 @@ void BattleView::orderTeleport(Vec3<int> target, bool right)
 	auto m = BattleUnitMission::teleport(*unit, item, target);
 	if (unit->setMission(*state, m) && !m->cancelled)
 	{
-		LogWarning("BattleUnit \"%s\" teleported using item in %s hand ", unit->agent->name.cStr(),
+		LogWarning("BattleUnit \"%s\" teleported using item in %s hand ", unit->agent->name,
 		           right ? "right" : "left");
 		selectionState = BattleSelectionState::Normal;
 	}
 	else
 	{
 		actionImpossibleDelay = 40;
-		LogWarning("BattleUnit \"%s\" could not teleport using item in %s hand ",
-		           unit->agent->name.cStr(), right ? "right" : "left");
+		LogWarning("BattleUnit \"%s\" could not teleport using item in %s hand ", unit->agent->name,
+		           right ? "right" : "left");
 	}
 }
 
@@ -2012,7 +2010,7 @@ void BattleView::eventOccurred(Event *e)
 								}
 							}
 						}
-						LogWarning("%s", debug.cStr());
+						LogWarning("%s", debug);
 					}
 					break;
 				case BattleSelectionState::FireAny:

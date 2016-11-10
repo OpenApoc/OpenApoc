@@ -19,7 +19,7 @@ sp<BattleUnitAnimationPack> StateObject<BattleUnitAnimationPack>::get(const Game
 	auto it = state.battle_unit_animation_packs.find(id);
 	if (it == state.battle_unit_animation_packs.end())
 	{
-		LogError("No BattleUnitAnimationPack matching ID \"%s\"", id.cStr());
+		LogError("No BattleUnitAnimationPack matching ID \"%s\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -55,7 +55,7 @@ const UString BattleUnitAnimationPack::getNameFromID(UString id)
 	auto plen = getPrefix().length();
 	if (id.length() > plen)
 		return id.substr(plen, id.length() - plen);
-	LogError("Invalid BattleUnitAnimationPack ID %s", id.cStr());
+	LogError("Invalid BattleUnitAnimationPack ID %s", id);
 	return emptyString;
 }
 

@@ -104,15 +104,14 @@ class Control : public std::enable_shared_from_this<Control>
 		auto c = this->findControl(name);
 		if (!c)
 		{
-			LogError("Failed to find control \"%s\" within form \"%s\"", name.cStr(),
-			         this->Name.cStr());
+			LogError("Failed to find control \"%s\" within form \"%s\"", name, this->Name);
 			return nullptr;
 		}
 		sp<T> typedControl = std::dynamic_pointer_cast<T>(c);
 		if (!typedControl)
 		{
-			LogError("Failed to cast control \"%s\" within form \"%s\" to type \"%s\"", name.cStr(),
-			         this->Name.cStr(), typeid(T).name());
+			LogError("Failed to cast control \"%s\" within form \"%s\" to type \"%s\"", name,
+			         this->Name, typeid(T).name());
 			return nullptr;
 		}
 		return typedControl;

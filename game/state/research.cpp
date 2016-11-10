@@ -101,7 +101,7 @@ sp<ResearchTopic> StateObject<ResearchTopic>::get(const GameState &state, const 
 	auto it = state.research.topics.find(id);
 	if (it == state.research.topics.end())
 	{
-		LogError("No research topic matching ID \"%s\"", id.cStr());
+		LogError("No research topic matching ID \"%s\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -137,7 +137,7 @@ template <> sp<Lab> StateObject<Lab>::get(const GameState &state, const UString 
 	auto it = state.research.labs.find(id);
 	if (it == state.research.labs.end())
 	{
-		LogError("No lab matching ID \"%s\"", id.cStr());
+		LogError("No lab matching ID \"%s\"", id);
 		return nullptr;
 	}
 	return it->second;

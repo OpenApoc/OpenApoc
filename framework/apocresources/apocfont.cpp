@@ -21,14 +21,14 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 	auto file = fw().data->fs.open(fontDescPath);
 	if (!file)
 	{
-		LogWarning("Failed to open font file at path \"%s\"", fontDescPath.cStr());
+		LogWarning("Failed to open font file at path \"%s\"", fontDescPath);
 		return nullptr;
 	}
 
 	auto data = file.readAll();
 	if (!data)
 	{
-		LogWarning("Failed to read font file at path \"%s\"", fontDescPath.cStr());
+		LogWarning("Failed to read font file at path \"%s\"", fontDescPath);
 		return nullptr;
 	}
 
@@ -38,7 +38,7 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 
 	if (!parseResult)
 	{
-		LogWarning("Failed to parse font file at \"%s\" - \"%s\" at \"%llu\"", fontDescPath.cStr(),
+		LogWarning("Failed to parse font file at \"%s\" - \"%s\" at \"%llu\"", fontDescPath,
 		           parseResult.description(), (unsigned long long)parseResult.offset);
 		return nullptr;
 	}
@@ -46,8 +46,7 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 	auto openapocNode = doc.child("openapoc");
 	if (!openapocNode)
 	{
-		LogWarning("Failed to find \"openapoc\" root node in font file at \"%s\"",
-		           fontDescPath.cStr());
+		LogWarning("Failed to find \"openapoc\" root node in font file at \"%s\"", fontDescPath);
 		return nullptr;
 	}
 
@@ -55,7 +54,7 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 	if (!fontNode)
 	{
 		LogWarning("Failed to find \"openapoc::apocfont\" node in font file at \"%s\"",
-		           fontDescPath.cStr());
+		           fontDescPath);
 		return nullptr;
 	}
 
@@ -75,13 +74,13 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 	height = fontNode.attribute("height").as_int();
 	if (height <= 0)
 	{
-		LogError("apocfont \"%s\" with invalid \"height\" attribute", fontName.cStr());
+		LogError("apocfont \"%s\" with invalid \"height\" attribute", fontName);
 		return nullptr;
 	}
 	spacewidth = fontNode.attribute("spacewidth").as_int();
 	if (spacewidth <= 0)
 	{
-		LogError("apocfont \"%s\" with invalid \"spacewidth\" attribute", fontName.cStr());
+		LogError("apocfont \"%s\" with invalid \"spacewidth\" attribute", fontName);
 		return nullptr;
 	}
 
@@ -92,14 +91,14 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 		if (glyphPath.empty())
 		{
 			LogError("Font \"%s\" has glyph with missing string attribute - skipping glyph",
-			         fontName.cStr());
+			         fontName);
 			continue;
 		}
 		UString glyphString = glyphNode.attribute("string").value();
 		if (glyphString.empty())
 		{
 			LogError("apocfont \"%s\" has glyph with missing string attribute - skipping glyph",
-			         fontName.cStr());
+			         fontName);
 			continue;
 		}
 
@@ -109,15 +108,15 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 		{
 			LogError("apocfont \"%s\" glyph \"%s\" has %lu codepoints, expected one - skipping "
 			         "glyph",
-			         fontName.cStr(), glyphString.cStr(), pointString.length());
+			         fontName, glyphString, pointString.length());
 			continue;
 		}
 		UniChar c = pointString[0];
 
 		if (charMap.find(c) != charMap.end())
 		{
-			LogError("Font \"%s\" has multiple glyphs for string \"%s\" - skipping glyph",
-			         fontName.cStr(), glyphString.cStr());
+			LogError("Font \"%s\" has multiple glyphs for string \"%s\" - skipping glyph", fontName,
+			         glyphString);
 			continue;
 		}
 

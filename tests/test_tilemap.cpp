@@ -47,8 +47,8 @@ static void test_collision(const TileMap &map, Vec3<float> line_start, Vec3<floa
 	{
 		LogError("Line between {%f,%f,%f} and {%f,%f,%f} collided with %s, expected %s",
 		         line_start.x, line_start.y, line_start.z, line_end.x, line_end.y, line_end.z,
-		         collision.obj ? collision.obj->getName().cStr() : "NONE",
-		         expected_collision ? expected_collision->getName().cStr() : "NONE");
+		         collision.obj ? collision.obj->getName() : "NONE",
+		         expected_collision ? expected_collision->getName() : "NONE");
 		exit(EXIT_FAILURE);
 	}
 }
@@ -92,10 +92,10 @@ int main(int argc, char **argv)
 		object.second->setPosition(initialPosition);
 		if (initialPosition != object.second->getPosition())
 		{
-			LogError("Object %s moved from {%f,%f,%f} to {%f,%f,%f}",
-			         object.second->getName().cStr(), initialPosition.x, initialPosition.y,
-			         initialPosition.z, object.second->getPosition().x,
-			         object.second->getPosition().y, object.second->getPosition().z);
+			LogError("Object %s moved from {%f,%f,%f} to {%f,%f,%f}", object.second->getName(),
+			         initialPosition.x, initialPosition.y, initialPosition.z,
+			         object.second->getPosition().x, object.second->getPosition().y,
+			         object.second->getPosition().z);
 			exit(EXIT_FAILURE);
 		}
 	}

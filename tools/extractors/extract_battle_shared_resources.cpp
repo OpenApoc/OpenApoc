@@ -23,7 +23,7 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state) c
 	if (!gameObjectStrategySpriteTabFile)
 	{
 		LogError("Failed to open dropped item StrategySprite TAB file \"%s\"",
-		         gameObjectStrategySpriteTabFileName.cStr());
+		         gameObjectStrategySpriteTabFileName);
 		return;
 	}
 	size_t gameObjectStrategySpriteCount = gameObjectStrategySpriteTabFile.size() / 4;
@@ -122,12 +122,12 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state) c
 
 		state.battle_common_sample_list->walkSounds.push_back(mksp<std::vector<sp<Sample>>>());
 		state.battle_common_sample_list->walkSounds[i - 1]->push_back(fw().data->loadSample(
-		    format("RAWSOUND:xcom3/rawsound/extra/ft%s%d.raw:22050", sfx_name.cStr(), 1)));
+		    format("RAWSOUND:xcom3/rawsound/extra/ft%s%d.raw:22050", sfx_name, 1)));
 		state.battle_common_sample_list->walkSounds[i - 1]->push_back(fw().data->loadSample(
-		    format("RAWSOUND:xcom3/rawsound/extra/ft%s%d.raw:22050", sfx_name.cStr(), 2)));
+		    format("RAWSOUND:xcom3/rawsound/extra/ft%s%d.raw:22050", sfx_name, 2)));
 
 		state.battle_common_sample_list->objectDropSounds.push_back(fw().data->loadSample(
-		    format("RAWSOUND:xcom3/rawsound/extra/ob%s.raw:22050", sfx_name.cStr())));
+		    format("RAWSOUND:xcom3/rawsound/extra/ob%s.raw:22050", sfx_name)));
 	}
 
 	state.battle_common_sample_list->throwSounds.push_back(

@@ -34,7 +34,7 @@ template <> sp<BattleUnit> StateObject<BattleUnit>::get(const GameState &state, 
 	auto it = state.current_battle->units.find(id);
 	if (it == state.current_battle->units.end())
 	{
-		LogError("No agent_type matching ID \"%s\"", id.cStr());
+		LogError("No agent_type matching ID \"%s\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -2478,8 +2478,7 @@ bool BattleUnit::popFinishedMissions(GameState &state)
 {
 	while (missions.size() > 0 && missions.front()->isFinished(state, *this))
 	{
-		LogWarning("Unit %s mission \"%s\" finished", id.cStr(),
-		           missions.front()->getName().cStr());
+		LogWarning("Unit %s mission \"%s\" finished", id, missions.front()->getName());
 		missions.pop_front();
 
 		// We may have retreated as a result of finished mission
@@ -2994,7 +2993,7 @@ void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &se
 	if (itUnit == units.end() && !leadUnit)
 	{
 		log += format("\nNoone could path to target, aborting");
-		LogWarning("%s", log.cStr());
+		LogWarning("%s", log);
 		return;
 	}
 
@@ -3038,7 +3037,7 @@ void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &se
 		if (itOffset == targetOffsets.end())
 		{
 			log += format("\nRan out of location offsets, exiting");
-			LogWarning("%s", log.cStr());
+			LogWarning("%s", log);
 			return;
 		}
 		log += format("\nPathing unit %s", unit.id);
@@ -3075,6 +3074,6 @@ void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &se
 		}
 	}
 	log += format("\nSuccessfully pathed everybody to target");
-	LogWarning("%s", log.cStr());
+	LogWarning("%s", log);
 }
 }

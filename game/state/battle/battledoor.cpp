@@ -19,7 +19,7 @@ template <> sp<BattleDoor> StateObject<BattleDoor>::get(const GameState &state, 
 	auto it = state.current_battle->doors.find(id);
 	if (it == state.current_battle->doors.end())
 	{
-		LogError("No agent_type matching ID \"%s\"", id.cStr());
+		LogError("No agent_type matching ID \"%s\"", id);
 		return nullptr;
 	}
 	return it->second;

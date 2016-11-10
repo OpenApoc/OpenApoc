@@ -38,7 +38,7 @@ bool test_gamestate_serialization(sp<GameState> state)
 	ss << "openapoc_test_serialize-" << std::this_thread::get_id();
 	auto tempPath = fs::temp_directory_path() / ss.str();
 	UString pathString(tempPath.string());
-	LogInfo("Writing temp state to \"%s\"", pathString.cStr());
+	LogInfo("Writing temp state to \"%s\"", pathString);
 	if (!test_gamestate_serialization_roundtrip(state, pathString))
 	{
 		LogError("Packed save test failed");
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
 
 	Framework fw("OpenApoc", false);
 
-	LogInfo("Loading \"%s\"", gamestate_name.cStr());
+	LogInfo("Loading \"%s\"", gamestate_name);
 
 	auto state = mksp<GameState>();
 
@@ -148,7 +148,7 @@ int main(int argc, char **argv)
 			LogError("No vehicle with BattleMap found");
 			return EXIT_FAILURE;
 		}
-		LogInfo("Using vehicle map for \"%s\"", vType->name.cStr());
+		LogInfo("Using vehicle map for \"%s\"", vType->name);
 		v->type = {state.get(), vType};
 		v->name = format("%s %d", v->type->name, ++v->type->numCreated);
 		state->vehicles[vID] = v;

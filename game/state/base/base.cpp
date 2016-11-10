@@ -27,7 +27,7 @@ Base::Base(GameState &state, StateRef<Building> building) : building(building)
 	StateRef<FacilityType> type = {&state, FacilityType::getPrefix() + "ACCESS_LIFT"};
 	if (canBuildFacility(type, building->base_layout->baseLift, true) != BuildError::NoError)
 	{
-		LogError("Building %s has invalid lift location", building->name.cStr());
+		LogError("Building %s has invalid lift location", building->name);
 	}
 	else
 	{
@@ -369,7 +369,7 @@ template <> sp<Base> StateObject<Base>::get(const GameState &state, const UStrin
 	auto it = state.player_bases.find(id);
 	if (it == state.player_bases.end())
 	{
-		LogError("No baseas matching ID \"%s\"", id.cStr());
+		LogError("No baseas matching ID \"%s\"", id);
 		return nullptr;
 	}
 	return it->second;

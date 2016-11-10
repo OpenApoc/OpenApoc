@@ -291,7 +291,7 @@ void Battle::initialMapPartLinkUp()
 		if (mp->willCollapse())
 		{
 			auto pos = mp->tileObject->getOwningTile()->position;
-			LogWarning("MP %s SBT %d at %d %d %d is UNLINKED", mp->type.id.cStr(),
+			LogWarning("MP %s SBT %d at %d %d %d is UNLINKED", mp->type.id,
 			           (int)mp->type->getVanillaSupportedById(), pos.x, pos.y, pos.z);
 		}
 	}
@@ -326,7 +326,7 @@ void Battle::initialMapPartLinkUp()
 		if (mp->willCollapse())
 		{
 			auto pos = mp->tileObject->getOwningTile()->position;
-			LogWarning("MP %s SBT %d at %d %d %d is going to fall", mp->type.id.cStr(),
+			LogWarning("MP %s SBT %d at %d %d %d is going to fall", mp->type.id,
 			           (int)mp->type->getVanillaSupportedById(), pos.x, pos.y, pos.z);
 		}
 	}
@@ -488,8 +488,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 			if (unit &&
 			    unit->visibleUnits.find(c.projectile->firerUnit) == unit->visibleUnits.end())
 			{
-				LogWarning("Notify: unit %s that he's taking fire",
-				           c.projectile->trackedUnit.id.cStr());
+				LogWarning("Notify: unit %s that he's taking fire", c.projectile->trackedUnit.id);
 				// Turn to attacker in real time
 				if (!unit->isBusy() && unit->isConscious() &&
 				    state.current_battle->mode == Battle::Mode::RealTime &&
@@ -1304,13 +1303,12 @@ void Battle::enterBattle(GameState &state)
 			u->setBodyState(state, BodyState::Prone);
 			if (u->canMove() && u->agent->type->bodyType->allowed_facing.size() > 1)
 			{
-				LogError("Unit %s cannot Stand, Fly or Kneel, but can turn!",
-				         u->agent->type.id.cStr());
+				LogError("Unit %s cannot Stand, Fly or Kneel, but can turn!", u->agent->type.id);
 			}
 		}
 		else
 		{
-			LogError("Unit %s cannot Stand, Fly, Kneel or go Prone!", u->agent->type.id.cStr());
+			LogError("Unit %s cannot Stand, Fly, Kneel or go Prone!", u->agent->type.id);
 		}
 		// Miscellaneous
 		u->agent->modified_stats.restoreTU();
@@ -1468,18 +1466,16 @@ void Battle::loadImagePacks(GameState &state)
 		if (imagePackName.length() == 0)
 			continue;
 		auto imagePackPath = BattleUnitImagePack::getImagePackPath() + "/" + imagePackName;
-		LogInfo("Loading image pack \"%s\" from \"%s\"", imagePackName.cStr(),
-		        imagePackPath.cStr());
+		LogInfo("Loading image pack \"%s\" from \"%s\"", imagePackName, imagePackPath);
 		auto imagePack = mksp<BattleUnitImagePack>();
 		if (!imagePack->loadImagePack(state, imagePackPath))
 		{
-			LogError("Failed to load image pack \"%s\" from \"%s\"", imagePackName.cStr(),
-			         imagePackPath.cStr());
+			LogError("Failed to load image pack \"%s\" from \"%s\"", imagePackName, imagePackPath);
 			continue;
 		}
 		state.battle_unit_image_packs[format("%s%s", BattleUnitImagePack::getPrefix(),
 		                                     imagePackName)] = imagePack;
-		LogInfo("Loaded image pack \"%s\" from \"%s\"", imagePackName.cStr(), imagePackPath.cStr());
+		LogInfo("Loaded image pack \"%s\" from \"%s\"", imagePackName, imagePackPath);
 	}
 }
 
@@ -1512,19 +1508,17 @@ void Battle::loadAnimationPacks(GameState &state)
 	{
 		auto animationPackPath =
 		    BattleUnitAnimationPack::getAnimationPackPath() + "/" + animationPackName;
-		LogInfo("Loading animation pack \"%s\" from \"%s\"", animationPackName.cStr(),
-		        animationPackPath.cStr());
+		LogInfo("Loading animation pack \"%s\" from \"%s\"", animationPackName, animationPackPath);
 		auto animationPack = mksp<BattleUnitAnimationPack>();
 		if (!animationPack->loadAnimationPack(state, animationPackPath))
 		{
-			LogError("Failed to load animation pack \"%s\" from \"%s\"", animationPackName.cStr(),
-			         animationPackPath.cStr());
+			LogError("Failed to load animation pack \"%s\" from \"%s\"", animationPackName,
+			         animationPackPath);
 			continue;
 		}
 		state.battle_unit_animation_packs[format("%s%s", BattleUnitAnimationPack::getPrefix(),
 		                                         animationPackName)] = animationPack;
-		LogInfo("Loaded animation pack \"%s\" from \"%s\"", animationPackName.cStr(),
-		        animationPackPath.cStr());
+		LogInfo("Loaded animation pack \"%s\" from \"%s\"", animationPackName, animationPackPath);
 	}
 }
 

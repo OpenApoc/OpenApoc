@@ -72,8 +72,8 @@ template <typename T> class StateRef
 		auto idPrefix = id.substr(0, prefix.length());
 		if (prefix != idPrefix)
 		{
-			LogError("%s object has invalid prefix - expected \"%s\" ID \"%s\"",
-			         T::getTypeName().cStr(), T::getPrefix().cStr(), id.cStr());
+			LogError("%s object has invalid prefix - expected \"%s\" ID \"%s\"", T::getTypeName(),
+			         T::getPrefix(), id);
 			throw std::runtime_error(
 			    format("%s object has invalid prefix - expected \"%s\" ID \"%s\"", T::getTypeName(),
 			           T::getPrefix(), id)
@@ -84,7 +84,7 @@ template <typename T> class StateRef
 #ifndef NDEBUG
 		if (!obj)
 		{
-			LogError("No %s object matching ID \"%s\" found", T::getTypeName().cStr(), id.cStr());
+			LogError("No %s object matching ID \"%s\" found", T::getTypeName(), id);
 			throw std::runtime_error(
 			    format("No %s object matching ID \"%s\"", T::getTypeName(), id).str());
 		}

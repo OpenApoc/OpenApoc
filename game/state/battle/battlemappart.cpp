@@ -1046,7 +1046,7 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> set)
 	do
 	{
 		// DEBUG OUTPUT
-		LogWarning("%s", log.cStr());
+		LogWarning("%s", log);
 		log = "";
 		log += format("\nIteration begins. List contains %d items:", (int)set->size());
 		for (auto mp : *set)
@@ -1142,7 +1142,7 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> set)
 		set = nextSet;
 	} while (listChanged);
 
-	LogWarning("%s", log.cStr());
+	LogWarning("%s", log);
 }
 
 void BattleMapPart::collapse()

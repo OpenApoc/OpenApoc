@@ -25,7 +25,7 @@ VideoScreen::VideoScreen(const UString &videoPath, sp<Stage> nextScreen)
 		this->video = fw().data->loadVideo(videoPath);
 		if (!this->video)
 		{
-			LogWarning("Failed to load video \"%s\"", videoPath.cStr());
+			LogWarning("Failed to load video \"%s\"", videoPath);
 		}
 		else
 		{

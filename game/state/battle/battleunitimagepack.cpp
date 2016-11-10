@@ -14,7 +14,7 @@ sp<BattleUnitImagePack> StateObject<BattleUnitImagePack>::get(const GameState &s
 	auto it = state.battle_unit_image_packs.find(id);
 	if (it == state.battle_unit_image_packs.end())
 	{
-		LogError("No BattleUnitImagePack matching ID \"%s\"", id.cStr());
+		LogError("No BattleUnitImagePack matching ID \"%s\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -52,7 +52,7 @@ const UString BattleUnitImagePack::getNameFromID(UString id)
 	auto plen = getPrefix().length();
 	if (id.length() > plen)
 		return id.substr(plen, id.length() - plen);
-	LogError("Invalid BattleUnitImagePack ID %s", id.cStr());
+	LogError("Invalid BattleUnitImagePack ID %s", id);
 	return emptyString;
 }
 }

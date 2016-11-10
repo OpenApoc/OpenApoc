@@ -12,7 +12,7 @@ bool FileDataProvider::openArchive(const UString &path, bool write)
 	archivePath = path;
 	if (!write && !fs::exists(path.str()))
 	{
-		LogWarning("Attempt to open not existing directory \"%s\"", path.cStr());
+		LogWarning("Attempt to open not existing directory \"%s\"", path);
 		return false;
 	}
 	return true;

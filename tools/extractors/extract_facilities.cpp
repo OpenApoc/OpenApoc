@@ -23,7 +23,7 @@ void InitialGameStateExtractor::extractFacilities(GameState &state) const
 
 		LogInfo(
 		    "Facility %d: %s cost %d image_offset %d size %d build_time %d maint %d capacity %d", i,
-		    id.cStr(), (int)f.cost, (int)f.image_offset, (int)f.size, (int)f.build_time,
+		    id, (int)f.cost, (int)f.image_offset, (int)f.size, (int)f.build_time,
 		    (int)f.maintainance_cost, (int)f.capacity);
 		LogInfo("u1 0x%04x u2 0x%04x", (unsigned)f.unknown1, (unsigned)f.unknown2);
 

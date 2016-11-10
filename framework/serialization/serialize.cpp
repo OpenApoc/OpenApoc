@@ -160,10 +160,10 @@ sp<SerializationArchive> SerializationArchive::readArchive(const UString &name)
 	sp<SerializationDataProvider> dataProvider = getProvider(!fs::is_directory(name.str()));
 	if (!dataProvider->openArchive(name, false))
 	{
-		LogWarning("Failed to open archive at \"%s\"", name.cStr());
+		LogWarning("Failed to open archive at \"%s\"", name);
 		return nullptr;
 	}
-	LogInfo("Opened archive \"%s\"", name.cStr());
+	LogInfo("Opened archive \"%s\"", name);
 
 	return mksp<XMLSerializationArchive>(dataProvider);
 }
@@ -184,7 +184,7 @@ sp<SerializationNode> XMLSerializationArchive::getRoot(const UString &prefix, co
 	auto path = prefix + name + ".xml";
 	if (dataProvider == nullptr)
 	{
-		LogWarning("Reading from not opened archive: %s!", path.cStr());
+		LogWarning("Reading from not opened archive: %s!", path);
 		return nullptr;
 	}
 
@@ -201,12 +201,12 @@ sp<SerializationNode> XMLSerializationArchive::getRoot(const UString &prefix, co
 			auto parse_result = doc.load_string(content.cStr());
 			if (!parse_result)
 			{
-				LogInfo("Failed to parse \"%s\" : \"%s\" at \"%llu\"", path.cStr(),
+				LogInfo("Failed to parse \"%s\" : \"%s\" at \"%llu\"", path,
 				        parse_result.description(), (unsigned long long)parse_result.offset);
 				return nullptr;
 			}
 			it = this->docRoots.find(path);
-			LogInfo("Parsed \"%s\"", path.cStr());
+			LogInfo("Parsed \"%s\"", path);
 		}
 	}
 	if (it == this->docRoots.end())
@@ -217,7 +217,7 @@ sp<SerializationNode> XMLSerializationArchive::getRoot(const UString &prefix, co
 	auto root = it->second.child(name.cStr());
 	if (!root)
 	{
-		LogWarning("Failed to find root with name \"%s\" in \"%s\"", name.cStr(), path.cStr());
+		LogWarning("Failed to find root with name \"%s\" in \"%s\"", name, path);
 		return nullptr;
 	}
 	return std::make_shared<XMLSerializationNode>(shared_from_this(), root, prefix + name + "/");
@@ -231,7 +231,7 @@ bool XMLSerializationArchive::write(const UString &path, bool pack)
 	auto dataProvider = getProvider(pack);
 	if (!dataProvider->openArchive(path, true))
 	{
-		LogWarning("Failed to open archive at \"%s\"", path.cStr());
+		LogWarning("Failed to open archive at \"%s\"", path);
 		return false;
 	}
 

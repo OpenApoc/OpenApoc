@@ -534,8 +534,8 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 				}
 				else
 				{
-					LogWarning("Control \"%s\" has not supported size x value \"%s\"",
-					           this->Name.cStr(), specialsizex.cStr());
+					LogWarning("Control \"%s\" has not supported size x value \"%s\"", this->Name,
+					           specialsizex);
 				}
 			}
 
@@ -564,13 +564,13 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 					{
 						LogWarning(
 						    "Control \"%s\" with \"item\" size.y does not have ListBox parent ",
-						    this->Name.cStr());
+						    this->Name);
 					}
 				}
 				else
 				{
-					LogWarning("Control \"%s\" has not supported size y value \"%s\"",
-					           this->Name.cStr(), specialsizey.cStr());
+					LogWarning("Control \"%s\" has not supported size y value \"%s\"", this->Name,
+					           specialsizey);
 				}
 			}
 		}
@@ -608,8 +608,8 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 		}
 	}
 
-	LogInfo("Control \"%s\" has %zu subcontrols (%d, %d, %d, %d)", this->Name.cStr(),
-	        Controls.size(), Location.x, Location.y, Size.x, Size.y);
+	LogInfo("Control \"%s\" has %zu subcontrols (%d, %d, %d, %d)", this->Name, Controls.size(),
+	        Location.x, Location.y, Size.x, Size.y);
 }
 
 void Control::unloadResources() {}

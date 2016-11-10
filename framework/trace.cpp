@@ -107,7 +107,7 @@ class TraceManager
 	{
 		if (!outFile)
 		{
-			LogError("Failed to open trace file \"%s\"", traceFile.get().cStr());
+			LogError("Failed to open trace file \"%s\"", traceFile.get());
 			return;
 		}
 	}

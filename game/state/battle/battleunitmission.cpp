@@ -1379,7 +1379,7 @@ bool BattleUnitMission::isFinishedInternal(GameState &, BattleUnit &u)
 			if (item)
 			{
 				LogError("%s's item still present, was isFinished called before its start?",
-				         getName().cStr());
+				         getName());
 			}
 			return true;
 		default:
@@ -1390,7 +1390,7 @@ bool BattleUnitMission::isFinishedInternal(GameState &, BattleUnit &u)
 
 void BattleUnitMission::start(GameState &state, BattleUnit &u)
 {
-	LogWarning("Unit mission \"%s\" starting", getName().cStr());
+	LogWarning("Unit mission \"%s\" starting", getName());
 
 	switch (this->type)
 	{
@@ -1418,7 +1418,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				if (item->type->type != AEquipmentType::Type::Teleporter)
 				{
 					LogError("Unit is trying to teleport using non-teleporter item %s!?",
-					         item->type->name.cStr());
+					         item->type->name);
 					cancelled = true;
 					return;
 				}
@@ -1583,8 +1583,7 @@ void BattleUnitMission::setPathTo(BattleUnit &u, Vec3<int> target, int maxIterat
 	}
 	else
 	{
-		LogError("Mission %s: Unit without tileobject attempted pathfinding!",
-		         this->getName().cStr());
+		LogError("Mission %s: Unit without tileobject attempted pathfinding!", this->getName());
 		cancelled = true;
 		return;
 	}
@@ -2002,12 +2001,11 @@ UString BattleUnitMission::getName()
 			break;
 		case Type::ThrowItem:
 			name = "ThrowItem " +
-			       format("%s at %d,%d,%d", item ? this->item->type->name.cStr() : "(item is gone)",
+			       format("%s at %d,%d,%d", item ? this->item->type->name : "(item is gone)",
 			              this->targetLocation.x, this->targetLocation.y, this->targetLocation.z);
 			break;
 		case Type::DropItem:
-			name =
-			    "DropItem " + format("%s", item ? this->item->type->name.cStr() : "(item is gone)");
+			name = "DropItem " + format("%s", item ? this->item->type->name : "(item is gone)");
 			break;
 		case Type::ReachGoal:
 			name = "ReachGoal";

@@ -120,7 +120,7 @@ class JukeBoxImpl : public JukeBox
 		{
 			auto musicTrack = fw.data->loadMusic(track);
 			if (!musicTrack)
-				LogError("Failed to load music track \"%s\" - skipping", track.cStr());
+				LogError("Failed to load music track \"%s\" - skipping", track);
 			else
 				this->trackList.push_back(musicTrack);
 		}
@@ -141,7 +141,7 @@ class JukeBoxImpl : public JukeBox
 			return;
 		}
 		LogInfo("Playing track %u (%s)", jukebox->position,
-		        jukebox->trackList[jukebox->position]->getName().cStr());
+		        jukebox->trackList[jukebox->position]->getName());
 		jukebox->fw.soundBackend->setTrack(jukebox->trackList[jukebox->position]);
 
 		jukebox->position++;
@@ -253,7 +253,7 @@ Framework::Framework(const UString programName, bool createWindow)
 		desiredLanguageName = languageOption.get();
 	}
 
-	LogInfo("Setting up locale \"%s\"", desiredLanguageName.cStr());
+	LogInfo("Setting up locale \"%s\"", desiredLanguageName);
 
 	boost::locale::generator gen;
 
@@ -264,14 +264,14 @@ Framework::Framework(const UString programName, bool createWindow)
 	for (auto &path : resourcePaths)
 	{
 		auto langPath = path + "/languages";
-		LogInfo("Adding \"%s\" to language path", langPath.cStr());
+		LogInfo("Adding \"%s\" to language path", langPath);
 		gen.add_messages_path(langPath.str());
 	}
 
 	std::vector<UString> translationDomains = {"paedia_string", "ufo_string"};
 	for (auto &domain : translationDomains)
 	{
-		LogInfo("Adding \"%s\" to translation domains", domain.cStr());
+		LogInfo("Adding \"%s\" to translation domains", domain);
 		gen.add_messages_domain(domain.str());
 	}
 
@@ -479,7 +479,7 @@ void Framework::processEvents()
 			if (e->keyboard().KeyCode == SDLK_F5)
 			{
 				UString screenshotName = "screenshot.png";
-				LogWarning("Writing screenshot to \"%s\"", screenshotName.cStr());
+				LogWarning("Writing screenshot to \"%s\"", screenshotName);
 				if (!p->defaultSurface->rendererPrivateData)
 				{
 					LogWarning("No renderer data on surface - nothing drawn yet?");
@@ -500,7 +500,7 @@ void Framework::processEvents()
 						}
 						else
 						{
-							LogWarning("Wrote screenshot to \"%s\"", screenshotName.cStr());
+							LogWarning("Wrote screenshot to \"%s\"", screenshotName);
 						}
 					}
 				}
@@ -821,7 +821,7 @@ void Framework::displayInitialise()
 		default:
 			profileType = "Unknown";
 	}
-	LogInfo("  Context profile: %s", profileType.cStr());
+	LogInfo("  Context profile: %s", profileType);
 	int ctxMajor, ctxMinor;
 	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &ctxMajor);
 	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &ctxMinor);
@@ -846,17 +846,17 @@ void Framework::displayInitialise()
 		auto rendererFactory = p->registeredRenderers.find(rendererName);
 		if (rendererFactory == p->registeredRenderers.end())
 		{
-			LogInfo("Renderer \"%s\" not in supported list", rendererName.cStr());
+			LogInfo("Renderer \"%s\" not in supported list", rendererName);
 			continue;
 		}
 		Renderer *r = rendererFactory->second->create();
 		if (!r)
 		{
-			LogInfo("Renderer \"%s\" failed to init", rendererName.cStr());
+			LogInfo("Renderer \"%s\" failed to init", rendererName);
 			continue;
 		}
 		this->renderer.reset(r);
-		LogInfo("Using renderer: %s", this->renderer->getName().cStr());
+		LogInfo("Using renderer: %s", this->renderer->getName());
 		break;
 	}
 	if (!this->renderer)
@@ -972,17 +972,17 @@ void Framework::audioInitialise()
 		auto backendFactory = p->registeredSoundBackends.find(soundBackendName);
 		if (backendFactory == p->registeredSoundBackends.end())
 		{
-			LogInfo("Sound backend %s not in supported list", soundBackendName.cStr());
+			LogInfo("Sound backend %s not in supported list", soundBackendName);
 			continue;
 		}
 		SoundBackend *backend = backendFactory->second->create();
 		if (!backend)
 		{
-			LogInfo("Sound backend %s failed to init", soundBackendName.cStr());
+			LogInfo("Sound backend %s failed to init", soundBackendName);
 			continue;
 		}
 		this->soundBackend.reset(backend);
-		LogInfo("Using sound backend %s", soundBackendName.cStr());
+		LogInfo("Using sound backend %s", soundBackendName);
 		break;
 	}
 	if (!this->soundBackend)

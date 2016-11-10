@@ -29,7 +29,7 @@ sp<FacilityType> StateObject<FacilityType>::get(const GameState &state, const US
 	auto it = state.facility_types.find(id);
 	if (it == state.facility_types.end())
 	{
-		LogError("No facility type matching ID \"%s\"", id.cStr());
+		LogError("No facility type matching ID \"%s\"", id);
 		return nullptr;
 	}
 	return it->second;

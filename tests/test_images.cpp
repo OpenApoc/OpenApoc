@@ -113,12 +113,11 @@ int main(int argc, char **argv)
 	{
 		if (!testImage(imagePair.first, imagePair.second))
 		{
-			LogError("Image \"%s\" didn't match reference \"%s\"", imagePair.first.cStr(),
-			         imagePair.second.cStr());
+			LogError("Image \"%s\" didn't match reference \"%s\"", imagePair.first,
+			         imagePair.second);
 			return EXIT_FAILURE;
 		}
-		LogInfo("Image \"%s\" matches reference \"%s\"", imagePair.first.cStr(),
-		        imagePair.second.cStr());
+		LogInfo("Image \"%s\" matches reference \"%s\"", imagePair.first, imagePair.second);
 	}
 
 	return EXIT_SUCCESS;

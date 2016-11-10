@@ -159,7 +159,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 				inFile.read((char *)&data, sizeof(data));
 				if (!inFile)
 				{
-					LogError("Failed to read entry in \"%s\"", fileName.cStr());
+					LogError("Failed to read entry in \"%s\"", fileName);
 					return nullptr;
 				}
 				dataAD.push_back(data);
@@ -183,7 +183,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 				inFile.read((char *)&data, sizeof(data));
 				if (!inFile)
 				{
-					LogError("Failed to read entry in \"%s\"", fileName.cStr());
+					LogError("Failed to read entry in \"%s\"", fileName);
 					return nullptr;
 				}
 				dataUA.push_back(data);
@@ -207,7 +207,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 				inFile.read((char *)&data, sizeof(data));
 				if (!inFile)
 				{
-					LogError("Failed to read entry in \"%s\"", fileName.cStr());
+					LogError("Failed to read entry in \"%s\"", fileName);
 					return nullptr;
 				}
 				dataUF.push_back(data);

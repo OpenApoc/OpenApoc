@@ -54,7 +54,7 @@ std::future<void> SaveManager::loadGame(const UString &savePath, sp<GameState> s
 	auto loadTask = fw().threadPoolEnqueue([saveArchiveLocation, state]() -> void {
 		if (!state->loadGame(saveArchiveLocation))
 		{
-			LogError("Failed to load '%s'", saveArchiveLocation.cStr());
+			LogError("Failed to load '%s'", saveArchiveLocation);
 			return;
 		}
 		state->initState();
@@ -178,7 +178,7 @@ bool SaveManager::findFreePath(UString &path, const UString &name) const
 			}
 		}
 
-		LogError("Unable to generate filename for save %s", name.cStr());
+		LogError("Unable to generate filename for save %s", name);
 		return false;
 	}
 

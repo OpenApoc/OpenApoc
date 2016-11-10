@@ -115,7 +115,7 @@ CityView::CityView(sp<GameState> state)
 		sp<Form> f(ui().getForm(formName));
 		if (!f)
 		{
-			LogError("Failed to load form \"%s\"", formName.cStr());
+			LogError("Failed to load form \"%s\"", formName);
 			return;
 		}
 		f->takesFocus = false;
@@ -143,7 +143,7 @@ CityView::CityView(sp<GameState> state)
 		auto image = fw().data->loadImage(path);
 		if (!image)
 		{
-			LogError("Failed to open city icon resource \"%s\"", path.cStr());
+			LogError("Failed to open city icon resource \"%s\"", path);
 		}
 		this->icons[type] = image;
 	}
@@ -154,7 +154,7 @@ CityView::CityView(sp<GameState> state)
 		if (!image && passengerResource != "")
 		{
 			LogError("Failed to open city vehicle passenger icon resource \"%s\"",
-			         passengerResource.cStr());
+			         passengerResource);
 		}
 		this->vehiclePassengerCountIcons.push_back(image);
 	}
@@ -295,7 +295,7 @@ CityView::CityView(sp<GameState> state)
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
 		    {
-			    LogInfo("Select building for vehicle \"%s\"", v->name.cStr());
+			    LogInfo("Select building for vehicle \"%s\"", v->name);
 			    this->selectionState = SelectionState::VehicleGotoBuilding;
 		    }
 
@@ -305,7 +305,7 @@ CityView::CityView(sp<GameState> state)
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
 		    {
-			    LogInfo("Select building for vehicle \"%s\"", v->name.cStr());
+			    LogInfo("Select building for vehicle \"%s\"", v->name);
 			    this->selectionState = SelectionState::VehicleGotoLocation;
 		    }
 
@@ -315,13 +315,13 @@ CityView::CityView(sp<GameState> state)
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
 		    {
-			    LogWarning("Goto base for vehicle \"%s\"", v->name.cStr());
+			    LogWarning("Goto base for vehicle \"%s\"", v->name);
 			    auto bld = v->homeBuilding;
 			    if (!bld)
 			    {
-				    LogError("Vehicle \"%s\" has no building", v->name.cStr());
+				    LogError("Vehicle \"%s\" has no building", v->name);
 			    }
-			    LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name.cStr(), bld->name.cStr());
+			    LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name, bld->name);
 			    // FIXME: Don't clear missions if not replacing current mission
 			    v->missions.clear();
 			    v->missions.emplace_back(VehicleMission::gotoBuilding(*this->state, *v, bld));
@@ -333,7 +333,7 @@ CityView::CityView(sp<GameState> state)
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
 		    {
-			    LogInfo("Select target for vehicle \"%s\"", v->name.cStr());
+			    LogInfo("Select target for vehicle \"%s\"", v->name);
 			    this->selectionState = SelectionState::VehicleAttackVehicle;
 		    }
 
@@ -343,7 +343,7 @@ CityView::CityView(sp<GameState> state)
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
 		    {
-			    LogInfo("Select target building for vehicle \"%s\"", v->name.cStr());
+			    LogInfo("Select target building for vehicle \"%s\"", v->name);
 			    this->selectionState = SelectionState::VehicleGotoLocation;
 		    }
 
@@ -436,7 +436,7 @@ void CityView::resume()
 		auto view = this->uiTabs[0]->findControlTyped<GraphicButton>(viewName);
 		if (!view)
 		{
-			LogError("Failed to find UI control matching \"%s\"", viewName.cStr());
+			LogError("Failed to find UI control matching \"%s\"", viewName);
 		}
 		view->setData(viewBase);
 		auto viewImage = BaseGraphics::drawMiniBase(viewBase);
@@ -658,7 +658,7 @@ void CityView::update()
 	if (!ownedVehicleList)
 	{
 		LogError("Failed to find \"OWNED_VEHICLE_LIST\" control on city tab \"%s\"",
-		         TAB_FORM_NAMES[1].cStr());
+		         TAB_FORM_NAMES[1]);
 	}
 
 	ownedVehicleList->ItemSpacing = 0;
@@ -867,21 +867,21 @@ void CityView::eventOccurred(Event *e)
 							v->missions.emplace_back(
 							    VehicleMission::gotoLocation(*state, *v, targetPos));
 							v->missions.front()->start(*this->state, *v);
-							LogWarning("Vehicle \"%s\" going to location {%d,%d,%d}",
-							           v->name.cStr(), targetPos.x, targetPos.y, targetPos.z);
+							LogWarning("Vehicle \"%s\" going to location {%d,%d,%d}", v->name,
+							           targetPos.x, targetPos.y, targetPos.z);
 						}
 						this->selectionState = SelectionState::Normal;
 					}
 					else if (building)
 					{
-						LogInfo("Scenery owned by building \"%s\"", building->name.cStr());
+						LogInfo("Scenery owned by building \"%s\"", building->name);
 						if (this->selectionState == SelectionState::VehicleGotoBuilding)
 						{
 							auto v = this->selectedVehicle.lock();
 							if (v && v->owner == state->getPlayer())
 							{
-								LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name.cStr(),
-								           building->name.cStr());
+								LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name,
+								           building->name);
 								// FIXME: Don't clear missions if not replacing current mission
 								v->missions.clear();
 								v->missions.emplace_back(
@@ -896,8 +896,8 @@ void CityView::eventOccurred(Event *e)
 							if (v)
 							{
 								// TODO: Attack building mission
-								LogWarning("Vehicle \"%s\" attack building \"%s\"", v->name.cStr(),
-								           building->name.cStr());
+								LogWarning("Vehicle \"%s\" attack building \"%s\"", v->name,
+								           building->name);
 							}
 							this->selectionState = SelectionState::Normal;
 						}
@@ -914,7 +914,7 @@ void CityView::eventOccurred(Event *e)
 				{
 					auto vehicle =
 					    std::dynamic_pointer_cast<TileObjectVehicle>(collision.obj)->getVehicle();
-					LogWarning("Clicked on vehicle \"%s\"", vehicle->name.cStr());
+					LogWarning("Clicked on vehicle \"%s\"", vehicle->name);
 
 					if (this->selectionState == SelectionState::VehicleAttackVehicle)
 					{
@@ -1000,7 +1000,7 @@ void CityView::eventOccurred(Event *e)
 					if (!ufopaedia_category)
 					{
 						LogError("No UFOPaedia category found for entry %s",
-						         ufopaedia_entry->title.cStr());
+						         ufopaedia_entry->title);
 					}
 				}
 				auto message_box = mksp<MessageBox>(
@@ -1075,8 +1075,8 @@ void CityView::eventOccurred(Event *e)
 				}
 				auto message_box = mksp<MessageBox>(
 				    tr("MANUFACTURE COMPLETED"),
-				    format("%s\n%s\n%s %d\n%d", lab_base->name, tr(item_name.cStr()),
-				           tr("Quantity:"), ev->goal, tr("Do you wish to reasign the Workshop?")),
+				    format("%s\n%s\n%s %d\n%d", lab_base->name, tr(item_name), tr("Quantity:"),
+				           ev->goal, tr("Do you wish to reasign the Workshop?")),
 				    MessageBox::ButtonOptions::YesNo,
 				    // Yes callback
 				    [game_state, lab_facility]() {
@@ -1131,12 +1131,12 @@ void CityView::eventOccurred(Event *e)
 						item_name = game_state->vehicles[ev->topic->item_produced]->name;
 						break;
 				}
-				auto message_box = mksp<MessageBox>(
-				    tr("MANUFACTURING HALTED"),
-				    format("%s\n%s\n%s %d/%d\n%d", lab_base->name, tr(item_name.cStr()),
-				           tr("Completion status:"), ev->done, ev->goal,
-				           tr("Production costs exceed your available funds.")),
-				    MessageBox::ButtonOptions::Ok);
+				auto message_box =
+				    mksp<MessageBox>(tr("MANUFACTURING HALTED"),
+				                     format("%s\n%s\n%s %d/%d\n%d", lab_base->name, tr(item_name),
+				                            tr("Completion status:"), ev->done, ev->goal,
+				                            tr("Production costs exceed your available funds.")),
+				                     MessageBox::ButtonOptions::Ok);
 				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 			}
 			break;
@@ -1211,7 +1211,7 @@ VehicleTileInfo CityView::createVehicleInfo(sp<Vehicle> v)
 
 sp<Control> CityView::createVehicleInfoControl(const VehicleTileInfo &info)
 {
-	LogInfo("Creating city info control for vehicle \"%s\"", info.vehicle->name.cStr());
+	LogInfo("Creating city info control for vehicle \"%s\"", info.vehicle->name);
 
 	auto frame = info.selected ? this->icons[CityIcon::SelectedFrame]
 	                           : this->icons[CityIcon::UnselectedFrame];

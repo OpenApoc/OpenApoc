@@ -96,7 +96,7 @@ void ResearchScreen::begin()
 		}
 		if (agent->assigned_to_lab)
 		{
-			LogError("Agent \"%s\" already assigned to a lab?", agent->name.cStr());
+			LogError("Agent \"%s\" already assigned to a lab?", agent->name);
 			return;
 		}
 		agent->assigned_to_lab = true;
@@ -114,7 +114,7 @@ void ResearchScreen::begin()
 		}
 		if (!agent->assigned_to_lab)
 		{
-			LogError("Agent \"%s\" not assigned to a lab?", agent->name.cStr());
+			LogError("Agent \"%s\" not assigned to a lab?", agent->name);
 			return;
 		}
 		agent->assigned_to_lab = false;
@@ -468,7 +468,7 @@ sp<Control> ResearchScreen::createAgentControl(Vec2<int> size, StateRef<Agent> a
 	}
 	else
 	{
-		LogError("Trying to show non-scientist agent %s (%s)", agent.id.cStr(), agent->name.cStr());
+		LogError("Trying to show non-scientist agent %s (%s)", agent.id, agent->name);
 	}
 
 	auto skillLabel = baseControl->createChild<Label>(format(tr("Skill %s"), skill), font);

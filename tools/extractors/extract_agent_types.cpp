@@ -116,7 +116,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 	auto portraitSmallTabFile = fw().data->fs.open(portraitSmallTabFileName);
 	if (!portraitSmallTabFile)
 	{
-		LogError("Failed to open small portrait TAB file \"%s\"", portraitSmallTabFileName.cStr());
+		LogError("Failed to open small portrait TAB file \"%s\"", portraitSmallTabFileName);
 		return;
 	}
 	size_t portraitSmallCount = portraitSmallTabFile.size() / 4;
@@ -125,7 +125,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 	auto portraitLargeTabFile = fw().data->fs.open(portraitLargeTabFileName);
 	if (!portraitLargeTabFile)
 	{
-		LogError("Failed to open Large portrait TAB file \"%s\"", portraitLargeTabFileName.cStr());
+		LogError("Failed to open Large portrait TAB file \"%s\"", portraitLargeTabFileName);
 		return;
 	}
 	size_t portraitLargeCount = portraitLargeTabFile.size() / 4;
