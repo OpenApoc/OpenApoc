@@ -123,7 +123,7 @@ bool writeArchiveWithBackup(const sp<SerializationArchive> archive, const UStrin
 
 		if (!haveNewName)
 		{
-			LogError("Unable to create temporary file at \"%s\"", tempPath.string().c_str());
+			LogError("Unable to create temporary file at \"%s\"", tempPath.string());
 			return false;
 		}
 
@@ -270,8 +270,7 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 		fs::path currentPath = fs::current_path().string();
 		if (!fs::exists(saveDirectory) && !fs::create_directories(saveDirectory))
 		{
-			LogWarning("Save directory \"%s\" not found, and could not be created!",
-			           saveDirectory.c_str());
+			LogWarning("Save directory \"%s\" not found, and could not be created!", saveDirectory);
 			return saveList;
 		}
 

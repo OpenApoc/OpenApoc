@@ -1105,7 +1105,7 @@ class CueArchiver
 			     dirent_it != fs::directory_iterator(); dirent_it++)
 			{
 				auto dirent = *dirent_it;
-				LogInfo("Trying %s", dirent.path().c_str());
+				LogInfo("Trying %s", dirent.path().string());
 				UString ucDirent(dirent.path().filename().string());
 				ucDirent = ucDirent.toLower();
 				if (ucDirent == ucBin)
@@ -1116,10 +1116,10 @@ class CueArchiver
 			}
 			if (!fs::exists(dataFilePath))
 			{
-				LogError("Binary file does not exist: \"%s\"", dataFilePath.c_str());
+				LogError("Binary file does not exist: \"%s\"", dataFilePath.string());
 				return nullptr;
 			}
-			LogWarning("Using \"%s\" as a binary file source", dataFilePath.c_str());
+			LogWarning("Using \"%s\" as a binary file source", dataFilePath.string());
 		}
 
 		return new CueArchiver(dataFilePath.string(), parser.getDataFileType(),

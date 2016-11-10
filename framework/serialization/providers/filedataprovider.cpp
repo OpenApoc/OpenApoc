@@ -35,7 +35,7 @@ bool FileDataProvider::saveDocument(const UString &path, const UString &contents
 	{
 		if (!fs::create_directories(directoryPath))
 		{
-			LogWarning("Failed to create directory \"%s\"", directoryPath.c_str());
+			LogWarning("Failed to create directory \"%s\"", directoryPath.string());
 			return false;
 		}
 	}
