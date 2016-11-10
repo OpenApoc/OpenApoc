@@ -87,9 +87,8 @@ void City::initMap()
 				if (b.second->bounds.within(pos))
 				{
 					b.second->landingPadLocations.push_back(s->initialPosition);
-					LogInfo("Pad {%d,%d} is within building %s {%d,%d},{%d,%d}", pos.x, pos.y,
-					        b.first, b.second->bounds.p0.x, b.second->bounds.p0.y,
-					        b.second->bounds.p1.x, b.second->bounds.p1.y);
+					LogInfo("Pad %s is within building %s bounds %s", pos, b.first,
+					        b.second->bounds);
 				}
 			}
 		}
@@ -105,7 +104,7 @@ void City::initMap()
 
 		for (auto &loc : b.second->landingPadLocations)
 		{
-			LogInfo("Pad: {%d,%d,%d}", loc.x, loc.y, loc.z);
+			LogInfo("Pad: %s", loc);
 		}
 	}
 	for (auto &p : this->projectiles)

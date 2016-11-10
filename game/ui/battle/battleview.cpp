@@ -1302,8 +1302,7 @@ void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 
 			if (unit->setMission(*state, mission))
 			{
-				LogWarning("BattleUnit \"%s\" going to location {%d,%d,%d}", unit->agent->name,
-				           target.x, target.y, target.z);
+				LogWarning("BattleUnit \"%s\" going to location %s", unit->agent->name, target);
 			}
 			else
 			{
@@ -1319,8 +1318,7 @@ void BattleView::orderTurn(Vec3<int> target)
 	{
 		if (unit->setMission(*state, BattleUnitMission::turn(*unit, target)))
 		{
-			LogWarning("BattleUnit \"%s\" turning to face location {%d,%d,%d}", unit->agent->name,
-			           target.x, target.y, target.z);
+			LogWarning("BattleUnit \"%s\" turning to face location %s", unit->agent->name, target);
 		}
 		else
 		{

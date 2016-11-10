@@ -76,8 +76,7 @@ static bool randomlyPlaceFacility(GameState &state, Base &base, StateRef<Facilit
 	}
 	else
 	{
-		LogError("Position {%d,%d} in base in possible list but failed to build", position.x,
-		         position.y);
+		LogError("Position %s in base in possible list but failed to build", position);
 		return false;
 	}
 }

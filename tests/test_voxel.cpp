@@ -14,8 +14,7 @@ static void check_voxel(Vec3<int> position, VoxelMap &v, bool expected)
 {
 	if (v.getBit(position) != expected)
 	{
-		LogError("Unexpected voxel at {%d,%d,%d} - expected %d", position.x, position.y, position.z,
-		         expected ? 1 : 0);
+		LogError("Unexpected voxel at %s - expected %d", position, expected ? 1 : 0);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -24,8 +23,7 @@ static void check_slice(Vec2<int> position, VoxelSlice &s, bool expected)
 {
 	if (s.getBit(position) != expected)
 	{
-		LogError("Unexpected voxel at {%d,%d} - expected %d", position.x, position.y,
-		         expected ? 1 : 0);
+		LogError("Unexpected voxel at %s - expected %d", position, expected ? 1 : 0);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -35,7 +33,7 @@ static void test_voxel(Vec3<int> voxel_size)
 	VoxelMap v{voxel_size};
 	if (v.size != voxel_size)
 	{
-		LogError("Unexpected size {%d,%d,%d}", v.size.x, v.size.y, v.size.z);
+		LogError("Unexpected size %s", v.size);
 		exit(EXIT_FAILURE);
 	}
 	// Ensure everything is '0' at init, and anything outside the bounds should be '0' too
@@ -54,8 +52,7 @@ static void test_voxel(Vec3<int> voxel_size)
 	v.calculateCentre();
 	if (v.getCentre() != v.size / 2)
 	{
-		LogError("Unexpected centre {%d,%d,%d} for empty map", v.getCentre().x, v.getCentre().y,
-		         v.getCentre().z);
+		LogError("Unexpected centre %s for empty map", v.getCentre());
 		exit(EXIT_FAILURE);
 	}
 
@@ -64,7 +61,7 @@ static void test_voxel(Vec3<int> voxel_size)
 
 	if (slice->size != Vec2<int>{voxel_size.x, voxel_size.y})
 	{
-		LogError("Unexpected slice size {%d,%d}", slice->size.x, slice->size.y);
+		LogError("Unexpected slice size %s", slice->size);
 		exit(EXIT_FAILURE);
 	}
 	// Ensure everything is '0' at init, and anything outside the bounds should be '0' too
@@ -129,9 +126,8 @@ static void test_voxel(Vec3<int> voxel_size)
 	v.calculateCentre();
 	if (v.getCentre() != bit_voxel_position)
 	{
-		LogError("Unexpected centre {%d,%d,%d} for single-bit map, expected {%d,%d,%d}",
-		         v.getCentre().x, v.getCentre().y, v.getCentre().z, bit_voxel_position.x,
-		         bit_voxel_position.y, bit_voxel_position.z);
+		LogError("Unexpected centre %s for single-bit map, expected %s", v.getCentre(),
+		         bit_voxel_position);
 		exit(EXIT_FAILURE);
 	}
 #endif
@@ -153,8 +149,7 @@ static void test_voxel(Vec3<int> voxel_size)
 	v.calculateCentre();
 	if (v.getCentre() != v.size / 2)
 	{
-		LogError("Unexpected centre {%d,%d,%d} for reset-to-empty map", v.getCentre().x,
-		         v.getCentre().y, v.getCentre().z);
+		LogError("Unexpected centre %s for reset-to-empty map", v.getCentre());
 		exit(EXIT_FAILURE);
 	}
 #endif
@@ -212,9 +207,7 @@ static void test_voxel(Vec3<int> voxel_size)
 	v.calculateCentre();
 	if (v.getCentre() != expected_centre)
 	{
-		LogError("Unexpected centre {%d,%d,%d} for 2 bit map, expected {%d,%d,%d}", v.getCentre().x,
-		         v.getCentre().y, v.getCentre().z, expected_centre.x, expected_centre.y,
-		         expected_centre.z);
+		LogError("Unexpected centre %s for 2 bit map, expected %s", v.getCentre(), expected_centre);
 		exit(EXIT_FAILURE);
 	}
 #endif
@@ -233,7 +226,7 @@ int main(int argc, char **argv)
 	};
 	for (auto &size : voxel_sizes)
 	{
-		LogInfo("Testing voxel size {%d,%d,%d}", size.x, size.y, size.z);
+		LogInfo("Testing voxel size %s", size);
 		test_voxel(size);
 	}
 }

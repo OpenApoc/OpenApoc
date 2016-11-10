@@ -64,19 +64,18 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	Vec3<float> goalPosition;
 	unsigned int iterationCount = 0;
 
-	LogInfo("Trying to route from {%d,%d,%d} to {%d,%d,%d}", origin.x, origin.y, origin.z,
-	        destination.x, destination.y, destination.z);
+	LogInfo("Trying to route from %s to %s", origin, destination);
 
 	if (origin.x < 0 || origin.x >= this->size.x || origin.y < 0 || origin.y >= this->size.y ||
 	    origin.z < 0 || origin.z >= this->size.z)
 	{
-		LogError("Bad origin {%d,%d,%d}", origin.x, origin.y, origin.z);
+		LogError("Bad origin %s", origin);
 		return {};
 	}
 	if (destination.x < 0 || destination.x >= this->size.x || destination.y < 0 ||
 	    destination.y >= this->size.y || destination.z < 0 || destination.z >= this->size.z)
 	{
-		LogError("Bad destination {%d,%d,%d}", destination.x, destination.y, destination.z);
+		LogError("Bad destination %s", destination);
 		return {};
 	}
 
@@ -85,20 +84,19 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 
 	if (!goalTile)
 	{
-		LogError("Failed to get destination tile at {%d,%d,%d}", destination.x, destination.y,
-		         destination.z);
+		LogError("Failed to get destination tile at %s", destination);
 		return {};
 	}
 	Tile *startTile = this->getTile(origin);
 	if (!startTile)
 	{
-		LogError("Failed to get origin tile at {%d,%d,%d}", origin.x, origin.y, origin.z);
+		LogError("Failed to get origin tile at %s", origin);
 		return {};
 	}
 
 	if (origin == destination)
 	{
-		LogInfo("Destination == origin {%d,%d,%d}", destination.x, destination.y, destination.z);
+		LogInfo("Destination == origin %s", destination);
 		return {goalTile->position};
 	}
 
@@ -211,25 +209,21 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	}
 	if (iterationCount > iterationLimit)
 	{
-		LogWarning("No route from {%d,%d,%d} to {%d,%d,%d} found after %d iterations, returning "
-		           "closest path {%d,%d,%d}",
-		           origin.x, origin.y, origin.z, destination.x, destination.y, destination.z,
-		           iterationCount, closestNodeSoFar->thisTile->position.x,
-		           closestNodeSoFar->thisTile->position.y, closestNodeSoFar->thisTile->position.z);
+		LogWarning("No route from %s to %s found after %d iterations, returning "
+		           "closest path %s",
+		           origin, destination, iterationCount, closestNodeSoFar->thisTile->position);
 	}
 	else if (closestNodeSoFar->distanceToGoal > 0)
 	{
 		if (maxCost > 0.0f)
 		{
-			LogInfo("Could not find path within maxPath, returning closest path {%d,%d,%d}",
-			        closestNodeSoFar->thisTile->position.x, closestNodeSoFar->thisTile->position.y,
-			        closestNodeSoFar->thisTile->position.z);
+			LogInfo("Could not find path within maxPath, returning closest path %s",
+			        closestNodeSoFar->thisTile->position.x);
 		}
 		else
 		{
-			LogError("Surprisingly, no nodes to expand! Closest path {%d,%d,%d}",
-			         closestNodeSoFar->thisTile->position.x, closestNodeSoFar->thisTile->position.y,
-			         closestNodeSoFar->thisTile->position.z);
+			LogError("Surprisingly, no nodes to expand! Closest path %s",
+			         closestNodeSoFar->thisTile->position.x);
 		}
 	}
 
@@ -325,19 +319,18 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	Vec3<float> goalPosition;
 	unsigned int iterationCount = 0;
 
-	LogInfo("Trying to route from {%d,%d,%d} to {%d,%d,%d}", origin.x, origin.y, origin.z,
-	        destination.x, destination.y, destination.z);
+	LogInfo("Trying to route from %s to %s", origin, destination);
 
 	if (origin.x < 0 || origin.x >= this->size.x || origin.y < 0 || origin.y >= this->size.y ||
 	    origin.z < 0 || origin.z >= this->size.z)
 	{
-		LogError("Bad origin {%d,%d,%d}", origin.x, origin.y, origin.z);
+		LogError("Bad origin %s", origin);
 		return {};
 	}
 	if (destination.x < 0 || destination.x >= this->size.x || destination.y < 0 ||
 	    destination.y >= this->size.y || destination.z < 0 || destination.z >= this->size.z)
 	{
-		LogError("Bad destination {%d,%d,%d}", destination.x, destination.y, destination.z);
+		LogError("Bad destination %s", destination);
 		return {};
 	}
 
@@ -346,20 +339,19 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 
 	if (!goalTile)
 	{
-		LogError("Failed to get destination tile at {%d,%d,%d}", destination.x, destination.y,
-		         destination.z);
+		LogError("Failed to get destination tile at %s", destination);
 		return {};
 	}
 	Tile *startTile = this->getTile(origin);
 	if (!startTile)
 	{
-		LogError("Failed to get origin tile at {%d,%d,%d}", origin.x, origin.y, origin.z);
+		LogError("Failed to get origin tile at %s", origin);
 		return {};
 	}
 
 	if (origin == destination)
 	{
-		LogInfo("Destination == origin {%d,%d,%d}", destination.x, destination.y, destination.z);
+		LogInfo("Destination == origin %s", destination);
 		return {goalTile->position};
 	}
 
@@ -452,9 +444,8 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 			}
 		}
 	}
-	LogWarning("No route found after %d iterations, returning closest path {%d,%d,%d}",
-	           iterationCount, closestNodeSoFar.thisTile->position.x,
-	           closestNodeSoFar.thisTile->position.y, closestNodeSoFar.thisTile->position.z);
+	LogWarning("No route found after %d iterations, returning closest path %s", iterationCount,
+	           closestNodeSoFar.thisTile->position);
 	return getPathToNode(visitedTiles, closestNodeSoFar);
 }
 }

@@ -518,12 +518,12 @@ void VEquipScreen::render()
 
 		if (!slotFound)
 		{
-			LogError("No matching slot for equipment at {%d,%d}", pos.x, pos.y);
+			LogError("No matching slot for equipment at %s", pos);
 		}
 
 		if (pos.x >= EQUIP_GRID_SLOTS.x || pos.y >= EQUIP_GRID_SLOTS.y)
 		{
-			LogError("Equipment at {%d,%d} outside grid", pos.x, pos.y);
+			LogError("Equipment at %s outside grid", pos);
 		}
 		pos *= EQUIP_GRID_SLOT_SIZE;
 		pos += equipOffset;

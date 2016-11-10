@@ -345,8 +345,8 @@ class Spritesheet
 		auto ret = page->addEntry(entry);
 		if (!ret)
 		{
-			LogError("Failed to pack a {%d,%d} sized sprite in a new page of size {%d,%d}?",
-			         entry->size.x, entry->size.y, page_size.x, page_size.y);
+			LogError("Failed to pack a %s sized sprite in a new page of size %s?", entry->size,
+			         page_size);
 		}
 		this->pages.push_back(page);
 		// Because of the way texStorage sets the array length at creation time
@@ -1675,12 +1675,12 @@ OGLES30Renderer::OGLES30Renderer() : state(State::Idle)
 	if (spritesheetPageSize.x > (unsigned int)max_texture_size ||
 	    spritesheetPageSize.y > (unsigned int)max_texture_size)
 	{
-		LogWarning("Default spritesheet size {%d,%d} larger than HW limit %d - clamping...",
-		           spritesheetPageSize.x, spritesheetPageSize.y, max_texture_size);
+		LogWarning("Default spritesheet size %s larger than HW limit %d - clamping...",
+		           spritesheetPageSize, max_texture_size);
 		spritesheetPageSize.x = std::min(spritesheetPageSize.x, (unsigned int)max_texture_size);
 		spritesheetPageSize.y = std::min(spritesheetPageSize.y, (unsigned int)max_texture_size);
 	}
-	LogInfo("Set spritesheet size to {%d,%d}", spritesheetPageSize.x, spritesheetPageSize.y);
+	LogInfo("Set spritesheet size to %s", spritesheetPageSize);
 
 	bool use_debug = false;
 

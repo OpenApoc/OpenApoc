@@ -38,8 +38,7 @@ static bool testImage(const UString &imageName, const UString &referenceName)
 
 	if (img->size != reference->size)
 	{
-		LogWarning("Invalid size, {%d,%d} doesn't match reference {%d,%d}", img->size.x,
-		           img->size.y, reference->size.x, reference->size.y);
+		LogWarning("Invalid size, %s doesn't match reference %s", img->size, reference->size);
 		return false;
 	}
 

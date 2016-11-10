@@ -115,4 +115,11 @@ template <typename T> class Rect
 		return merged;
 	}
 };
+
 }; // namespace OpenApoc
+
+template <typename T> std::ostream &operator<<(std::ostream &lhs, const OpenApoc::Rect<T> &rhs)
+{
+	lhs << "{" << rhs.p0 << "," << rhs.p1 << "}";
+	return lhs;
+}

@@ -72,17 +72,17 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 	Vec3<int> toPos = to->position;
 	if (fromPos == toPos)
 	{
-		LogError("FromPos == ToPos {%d,%d,%d}", toPos.x, toPos.y, toPos.z);
+		LogError("FromPos == ToPos %s", toPos);
 		return false;
 	}
 	if (!map.tileIsValid(fromPos))
 	{
-		LogError("FromPos {%d,%d,%d} is not on the map", fromPos.x, fromPos.y, fromPos.z);
+		LogError("FromPos %s is not on the map", fromPos);
 		return false;
 	}
 	if (!map.tileIsValid(toPos))
 	{
-		LogError("ToPos {%d,%d,%d} is not on the map", toPos.x, toPos.y, toPos.z);
+		LogError("ToPos %s is not on the map", toPos);
 		return false;
 	}
 
@@ -1983,12 +1983,10 @@ UString BattleUnitMission::getName()
 			name = "AcquireTUs " + format(" %u", this->timeUnits);
 			break;
 		case Type::GotoLocation:
-			name = "GotoLocation " + format(" {%d,%d,%d}", this->targetLocation.x,
-			                                this->targetLocation.y, this->targetLocation.z);
+			name = "GotoLocation " + format(" %s", this->targetLocation);
 			break;
 		case Type::Teleport:
-			name = "Teleport to " + format(" {%d,%d,%d}", this->targetLocation.x,
-			                               this->targetLocation.y, this->targetLocation.z);
+			name = "Teleport to " + format(" %s", this->targetLocation);
 			break;
 		case Type::RestartNextMission:
 			name = "Restart next mission";
@@ -2000,9 +1998,9 @@ UString BattleUnitMission::getName()
 			name = "ChangeBodyState " + format("%d", (int)this->targetBodyState);
 			break;
 		case Type::ThrowItem:
-			name = "ThrowItem " +
-			       format("%s at %d,%d,%d", item ? this->item->type->name : "(item is gone)",
-			              this->targetLocation.x, this->targetLocation.y, this->targetLocation.z);
+			name =
+			    "ThrowItem " + format("%s at %s", item ? this->item->type->name : "(item is gone)",
+			                          this->targetLocation);
 			break;
 		case Type::DropItem:
 			name = "DropItem " + format("%s", item ? this->item->type->name : "(item is gone)");
@@ -2011,7 +2009,7 @@ UString BattleUnitMission::getName()
 			name = "ReachGoal";
 			break;
 		case Type::Turn:
-			name = "Turn " + format(" {%d,%d}", this->targetFacing.x, this->targetFacing.y);
+			name = "Turn " + format(" %s", this->targetFacing);
 			break;
 	}
 	return name;

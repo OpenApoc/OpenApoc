@@ -845,8 +845,7 @@ void CityView::eventOccurred(Event *e)
 				{
 					auto scenery =
 					    std::dynamic_pointer_cast<TileObjectScenery>(collision.obj)->getOwner();
-					LogWarning("Clicked on scenery at {%f,%f,%f}", scenery->currentPosition.x,
-					           scenery->currentPosition.y, scenery->currentPosition.z);
+					LogWarning("Clicked on scenery at %s", scenery->currentPosition);
 
 					auto building = scenery->building;
 					if (this->selectionState == SelectionState::VehicleGotoLocation)
@@ -867,8 +866,7 @@ void CityView::eventOccurred(Event *e)
 							v->missions.emplace_back(
 							    VehicleMission::gotoLocation(*state, *v, targetPos));
 							v->missions.front()->start(*this->state, *v);
-							LogWarning("Vehicle \"%s\" going to location {%d,%d,%d}", v->name,
-							           targetPos.x, targetPos.y, targetPos.z);
+							LogWarning("Vehicle \"%s\" going to location %s", v->name, targetPos);
 						}
 						this->selectionState = SelectionState::Normal;
 					}

@@ -449,9 +449,8 @@ bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
 			                          otherEquipment->type->equipscreen_size};
 			if (otherBounds.intersects(bounds))
 			{
-				LogInfo(
-				    "Equipping \"%s\" on \"%s\" at {%d,%d} failed: Intersects with other equipment",
-				    type->name, this->name, pos.x, pos.y);
+				LogInfo("Equipping \"%s\" on \"%s\" at %s failed: Intersects with other equipment",
+				        type->name, this->name, pos);
 				return false;
 			}
 		}
@@ -546,8 +545,8 @@ void Agent::addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object)
 	AEquipmentSlotType slotType;
 	if (!canAddEquipment(pos, object->type, slotType))
 	{
-		LogError("Trying to add \"%s\" at {%d,%d} on agent  \"%s\" failed", object->type.id, pos.x,
-		         pos.y, this->name);
+		LogError("Trying to add \"%s\" at %s on agent  \"%s\" failed", object->type.id, pos,
+		         this->name);
 	}
 
 	LogInfo("Equipped \"%s\" with equipment \"%s\"", this->name, object->type->name);

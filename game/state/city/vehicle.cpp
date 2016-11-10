@@ -777,8 +777,8 @@ bool Vehicle::canAddEquipment(Vec2<int> pos, StateRef<VEquipmentType> type) cons
 		                          otherEquipment->type->equipscreen_size};
 		if (otherBounds.intersects(bounds))
 		{
-			LogInfo("Equipping \"%s\" on \"%s\" at {%d,%d} failed: Intersects with other equipment",
-			        type->name, this->name, pos.x, pos.y);
+			LogInfo("Equipping \"%s\" on \"%s\" at %s failed: Intersects with other equipment",
+			        type->name, this->name, pos);
 			return false;
 		}
 	}
@@ -801,8 +801,8 @@ bool Vehicle::canAddEquipment(Vec2<int> pos, StateRef<VEquipmentType> type) cons
 			}
 			if (!validSlot)
 			{
-				LogInfo("Equipping \"%s\" on \"%s\" at {%d,%d} failed: No valid slot", type->name,
-				        this->name, pos.x, pos.y);
+				LogInfo("Equipping \"%s\" on \"%s\" at %s failed: No valid slot", type->name,
+				        this->name, pos);
 				return false;
 			}
 		}
@@ -834,8 +834,8 @@ void Vehicle::addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentT
 	// If this was not within a slow fail
 	if (!slotFound)
 	{
-		LogError("Equipping \"%s\" on \"%s\" at {%d,%d} failed: No valid slot", type->name,
-		         this->name, pos.x, pos.y);
+		LogError("Equipping \"%s\" on \"%s\" at %s failed: No valid slot", type->name, this->name,
+		         pos);
 		return;
 	}
 

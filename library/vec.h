@@ -3,6 +3,7 @@
 #define GLM_FORCE_RADIANS
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
+#include <ostream>
 
 namespace OpenApoc
 {
@@ -26,6 +27,18 @@ template <typename T> static inline T clamp(const T &v, const T &min, const T &m
 }
 
 } // namespace OpenApoc
+
+template <typename T> std::ostream &operator<<(std::ostream &lhs, const OpenApoc::Vec2<T> &rhs)
+{
+	lhs << "{" << rhs.x << "," << rhs.y << "}";
+	return lhs;
+}
+
+template <typename T> std::ostream &operator<<(std::ostream &lhs, const OpenApoc::Vec3<T> &rhs)
+{
+	lhs << "{" << rhs.x << "," << rhs.y << "," << rhs.z << "}";
+	return lhs;
+}
 
 namespace glm
 {
