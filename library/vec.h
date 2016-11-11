@@ -28,18 +28,6 @@ template <typename T> static inline T clamp(const T &v, const T &min, const T &m
 
 } // namespace OpenApoc
 
-template <typename T> std::ostream &operator<<(std::ostream &lhs, const OpenApoc::Vec2<T> &rhs)
-{
-	lhs << "{" << rhs.x << "," << rhs.y << "}";
-	return lhs;
-}
-
-template <typename T> std::ostream &operator<<(std::ostream &lhs, const OpenApoc::Vec3<T> &rhs)
-{
-	lhs << "{" << rhs.x << "," << rhs.y << "," << rhs.z << "}";
-	return lhs;
-}
-
 namespace glm
 {
 // Required for storing in std::map
@@ -70,5 +58,17 @@ template <typename T> bool operator<(const tvec2<T, highp> &a, const tvec2<T, hi
 		return true;
 	else
 		return false;
+}
+
+template <typename T> std::ostream &operator<<(std::ostream &lhs, const OpenApoc::Vec2<T> &rhs)
+{
+	lhs << "{" << rhs.x << "," << rhs.y << "}";
+	return lhs;
+}
+
+template <typename T> std::ostream &operator<<(std::ostream &lhs, const OpenApoc::Vec3<T> &rhs)
+{
+	lhs << "{" << rhs.x << "," << rhs.y << "," << rhs.z << "}";
+	return lhs;
 }
 } // namespace glm
