@@ -437,11 +437,11 @@ void Tile::updateBattlescapeParameters()
 
 bool Tile::updateVisionBlockage(int value)
 {
-	if (visionBlockage == value)
+	if (visionBlockValue == value)
 	{
 		return false;
 	}
-	visionBlockage = value;
+	visionBlockValue = value;
 	return true;
 }
 

@@ -6,6 +6,7 @@
 #include "library/colour.h"
 #include "library/rect.h"
 #include "library/sp.h"
+#include <map>
 #include <set>
 #include <vector>
 
@@ -130,7 +131,7 @@ class Tile
 	// Solid tileobject in the tile with the highest height that supports itemsl
 	sp<BattleMapPart> supportProviderForItems;
 	// How much tiles are added to vision distance after passing this tile
-	int visionBlockage = 0;
+	int visionBlockValue = 0;
 
 	// Methods
 
@@ -249,7 +250,7 @@ class TileMap
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
 	                        const std::set<TileObject::Type> validTypes = {},
 	                        sp<TileObject> ignoredObject = nullptr, bool useLOS = false,
-	                        bool check_full_path = false, bool storeTilesPassed = false) const;
+	                        bool check_full_path = false, unsigned maxRange = 0) const;
 
 	bool checkThrowTrajectory(const sp<TileObject> thrower, Vec3<float> start, Vec3<int> end,
 	                          Vec3<float> targetVectorXY, float velocityXY, float velocityZ) const;

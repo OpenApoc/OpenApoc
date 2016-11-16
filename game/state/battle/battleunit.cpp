@@ -15,6 +15,7 @@
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_shadow.h"
+#include "library/line.h"
 #include "library/strings_format.h"
 #include <algorithm>
 #include <cmath>
@@ -108,18 +109,212 @@ void BattleUnit::setPosition(GameState &state, const Vec3<float> &pos)
 	}
 	if ((Vec3<int>)oldPosition != (Vec3<int>)position)
 	{
-		updateUnitVisibilityAndVision(state, oldPosition);
+		refreshUnitVisibilityAndVision(state, oldPosition);
 	}
 }
 
-void BattleUnit::updateUnitVisibility(GameState &state, Vec3<float> oldPosition)
+void BattleUnit::refreshUnitVisibility(GameState &state, Vec3<float> oldPosition)
 {
 	// Update other units's vision of this unit
-	state.current_battle->queueVisionUpdate(position);
-	state.current_battle->queueVisionUpdate(oldPosition);
+	state.current_battle->queueVisionRefresh(position);
+	state.current_battle->queueVisionRefresh(oldPosition);
 }
 
-void BattleUnit::updateUnitVision(GameState &state)
+bool BattleUnit::isWithinVision(Vec3<int> pos)
+{
+	auto diff = pos - (Vec3<int>)position;
+	// Distance quick check
+	if (diff.x * diff.x + diff.y * diff.y > VIEW_DISTANCE * VIEW_DISTANCE)
+	{
+		return false;
+	}
+	// Facing: Any, check if we're at the correct side
+	if (diff.x * facing.x < 0 || diff.y * facing.y < 0)
+	{
+		return false;
+	}
+	// Facing: Diagonalley
+	if (facing.x != 0 && facing.y != 0)
+	{
+		// Nothing to be done, we already checked above
+	}
+	// Facing: Along one of axes
+	else
+	{
+		// Facing: Along X
+		if (facing.x != 0)
+		{
+			// Already checked if we're at the correct side above
+			// Now we only need to check if we're inside the cone
+			if (std::abs(diff.x) < std::abs(diff.y))
+			{
+				return false;
+			}
+		}
+		// Facing: Along Y
+		else
+		{
+			// Already checked if we're at the correct side above
+			// Now we only need to check if we're inside the cone
+			if (std::abs(diff.x) > std::abs(diff.y))
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+void BattleUnit::calculateVisionToTerrain(GameState &state, Battle &battle, TileMap &map,
+                                          Vec3<float> eyesPos)
+{
+	std::set<int> discoveredBlocks;
+	auto &visibleBlocks = battle.visibleBlocks.at(owner);
+
+	// Update unit's vision of los block he's standing in
+	{
+		auto idx = battle.getLosBlockID(position.x, position.y, position.z);
+		if (!visibleBlocks.at(idx))
+		{
+			visibleBlocks.at(idx) = true;
+			discoveredBlocks.insert(idx);
+		}
+	}
+
+	// Calc los to other blocks we haven't seen yet
+	for (int idx = 0; idx < visibleBlocks.size(); idx++)
+	{
+		// Block already seen
+		if (visibleBlocks.at(idx))
+		{
+			continue;
+		}
+
+		// Get block and its center
+		auto &l = *battle.los_blocks.at(idx);
+		auto centerXY = Vec3<int>{(l.start.x + l.end.x) / 2, (l.start.y + l.end.y) / 2, 0};
+		// Set target to center
+		bool targetFound = false;
+		auto target = centerXY;
+		// Set target's Z to our level (or closest possible)
+		int posZ = position.z;
+		if (posZ >= l.start.z && posZ < l.end.z)
+		{
+			target.z = posZ;
+		}
+		else if (posZ < l.start.z)
+		{
+			target.z = l.start.z;
+		}
+		else
+		{
+			target.z = l.end.z - 1;
+		}
+		// Try to target center of LOS block (on our Z level)
+		if (isWithinVision(target))
+		{
+			targetFound = true;
+		}
+		// Try to target point within that is closest to our sight's middlepoint
+		else
+		{
+			// Get point in the middle of our sight forward
+			int dist =
+			    facing.x != 0 && facing.y != 0 ? VIEW_DISTANCE * 100 / 141 / 2 : VIEW_DISTANCE / 2;
+			auto sightMiddleXY = (Vec3<int>)position;
+			sightMiddleXY.x += facing.x * dist;
+			sightMiddleXY.y += facing.y * dist;
+			// Get point closest to that point
+			target.x =
+			    std::abs(l.start.x - sightMiddleXY.x) < std::abs(l.end.x - 1 - sightMiddleXY.x)
+			        ? l.start.x
+			        : l.end.x - 1;
+			target.y =
+			    std::abs(l.start.y - sightMiddleXY.y) < std::abs(l.end.y - 1 - sightMiddleXY.y)
+			        ? l.start.y
+			        : l.end.y - 1;
+			if (posZ >= l.start.z && posZ < l.end.z)
+			{
+				target.z = posZ;
+			}
+			else if (posZ < l.start.z)
+			{
+				target.z = l.start.z;
+			}
+			else
+			{
+				target.z = l.end.z - 1;
+			}
+			// Try to target that point
+			if (isWithinVision(target))
+			{
+				targetFound = true;
+			}
+		}
+
+		// If target is found then we can try to los to this block
+		if (targetFound)
+		{
+			auto c = map.findCollision(eyesPos, {target.x + 0.5f, target.y + 0.5f, target.z + 0.5f},
+			                           mapPartSet, tileObject, true, false, VIEW_DISTANCE);
+
+			// FIXME: Handle collisions with left/right/ground that prevent seeing inside
+			// If going positive on axes, we must shorten our beam a little bit, so that if
+			// collision was with a wall or ground, it would not consider a block as seen
+
+			if (!c.outOfRange && (!c || l.contains(c.position)))
+			{
+				visibleBlocks.at(idx) = true;
+				discoveredBlocks.insert(idx);
+			}
+		}
+	}
+
+	// Reveal all discovered blocks
+	for (auto idx : discoveredBlocks)
+	{
+		auto l = battle.los_blocks.at(idx);
+		for (int x = l->start.x; x < l->end.x; x++)
+		{
+			for (int y = l->start.y; y < l->end.y; y++)
+			{
+				for (int z = l->start.z; z < l->end.z; z++)
+				{
+					battle.setVisible(owner, x, y, z);
+				}
+			}
+		}
+	}
+}
+
+void BattleUnit::calculateVisionToUnits(GameState &state, Battle &battle, TileMap &map,
+                                        Vec3<float> eyesPos)
+{
+	for (auto &entry : battle.units)
+	{
+		auto &u = *entry.second;
+		// Unit unconscious, we own this unit or can't see it, skip
+		if (!u.isConscious() || u.owner == owner || !isWithinVision(u.position))
+		{
+			continue;
+		}
+		// FIXME: This likely won't work properly for large units
+		// Idea here is to LOS to the center of the occupied tile
+		auto target = u.tileObject->getCenter();
+		target.x = (int)target.x + 0.5f;
+		target.y = (int)target.y + 0.5f;
+		target.z = (int)target.z + 0.5f;
+		auto c =
+		    map.findCollision(eyesPos, target, mapPartSet, tileObject, true, false, VIEW_DISTANCE);
+		if (c || c.outOfRange)
+		{
+			continue;
+		}
+		visibleUnits.emplace(&state, entry.first);
+	}
+}
+
+void BattleUnit::refreshUnitVision(GameState &state)
 {
 	auto &battle = *state.current_battle;
 	auto &map = *battle.map;
@@ -130,157 +325,15 @@ void BattleUnit::updateUnitVision(GameState &state)
 	// Vision is actually updated only if conscious, otherwise we clear visible units and that's it
 	if (isConscious())
 	{
+		// FIXME: This likely won't work properly for large units
+		// Idea here is to LOS from the center of the occupied tile
+		auto eyesPos = Vec3<float>{
+		    (int)position.x + 0.5f, (int)position.y + 0.5f,
+		    (int)position.z +
+		        ((float)agent->type->bodyType->muzzleZPosition.at(current_body_state)) / 40.0f};
 
-		// Update unit's vision of los blocks
-		auto idx = battle.getLosBlockID(position.x, position.y, position.z);
-		if (!battle.visibleBlocks.at(owner).at(idx))
-		{
-			battle.visibleBlocks.at(owner).at(idx) = true;
-			auto l = battle.los_blocks.at(idx);
-			for (int x = l->start.x; x < l->end.x; x++)
-			{
-				for (int y = l->start.y; y < l->end.y; y++)
-				{
-					for (int z = l->start.z; z < l->end.z; z++)
-					{
-						battle.setVisible(owner, x, y, z);
-					}
-				}
-			}
-		}
-
-		// Update unit's vision of terrain
-		// Update unit's vision of other units
-
-		// Algorithm:
-		//
-		// This is UFO EU vision algorithm, I assume Apoc does the same (or similar)
-		// FOV is 90 degrees and vision deteriorates 1 tile forward per 2 tiles to the side
-		// Which means, unit can see 20 tiles forward, or 19 tiles forward +-2, or 18 tiles forward
-		// +-4
-		// Two lines formed by this formula reach Pure diagonal at 13
-		//
-		// Reference links:
-		// http://www.ufopaedia.org/index.php/Line_of_sight
-		// http://www.ufopaedia.org/index.php/File:VizRange20.gif
-		//
-		// If unit is looking N/S/E/W, algorithm is simple.
-		// Let axis unit is facing on be A1 (X if E/W, Y if N/S), and other axis be A2.
-		// Let coordinates on these axes be called C1 and C2.
-		// C2 goes from -13 to +13 C1 is calculated using formula C1 = 20 - (|C2| + 1) / 2
-		// We then apply sign: if unit is facing towards +inf on A1, sign is "+", else sign is "-"
-		// This way, we sweep the 90 degree arc.
-		//
-		// If unit is looking diagonally, algorithm is more complicated.
-		// We do the same as above, but we must flip axes for a half of the arc.
-		// We must flip signs too. This is done after we process the middle value.
-
-		auto eyesPos = getMuzzleLocation();
-		bool diagonal = facing.x != 0 && facing.y != 0;
-		bool swap = facing.x == 0;
-		bool inverseC1 = false; // changed halfway when processing diagonals
-		int signC2 = (diagonal && facing.y > 0) ? -1 : 1;
-		int signC1 = (swap && facing.y < 0) || (!swap && facing.x < 0) ? -1 : 1;
-
-		for (int i = -13; i < 14; i++)
-		{
-			int c2 = inverseC1 ? 1 - i : i;
-			int c1 = 20 - (std::abs(c2) + 1) / 2;
-			int x = position.x + (swap ? c2 * signC2 : c1 * signC1);
-			int y = position.y + (swap ? c1 * signC1 : c2 * signC2);
-
-			if (i == 0 && diagonal)
-			{
-				swap = !swap;
-				int sC1 = signC1;
-				signC1 = -signC2;
-				signC2 = -sC1;
-				inverseC1 = true;
-			}
-
-			for (int z = 0; z < battle.size.z; z++)
-			{
-				auto c = map.findCollision(eyesPos, {x + 0.5f, y + 0.5f, z + 0.5f}, mapPartSet,
-				                           tileObject, true, false, true);
-				if (c)
-				{
-					// We ignore wall/ground if we come from outside the tile
-					auto t = c.obj->getType();
-					// FIXME: This does not work as intended. Need improvement
-					// Sometimes collision will happen with the feature instead of ground/wall
-					// This allows vision into tiles that should otherwise be concealed.
-					if ((t == TileObject::Type::Ground && z > position.z) ||
-					    (t == TileObject::Type::LeftWall && x > position.x) ||
-					    (t == TileObject::Type::RightWall && y > position.y))
-					{
-						c.tilesPassed.pop_back();
-					}
-				}
-				// Apply vision blockage
-				// We apply a median value accumulated in all tiles passed every time we pass a tile
-				// This makes it so that we do not over or under-apply smoke when going diagonally
-				float blockageAccumulatedSoFar = 0.0f;
-				int distanceToLastTile = 0;
-				float accumulatedSinceLastTile = 0;
-				int numberTilesWithBlockage = 0;
-				auto ourTile = (Vec3<int>)position;
-				for (auto t : c.tilesPassed)
-				{
-					auto vec = t->position;
-					if (vec == ourTile)
-					{
-						continue;
-					}
-
-					// Apply vision blockage if we passed at least 1 tile
-					auto thisDistance = sqrtf((vec.x - position.x) * (vec.x - position.x) +
-					                          (vec.y - position.y) * (vec.y - position.y) +
-					                          (vec.z - position.z) * (vec.z - position.z));
-					if ((int)thisDistance > distanceToLastTile)
-					{
-						if (numberTilesWithBlockage > 0)
-						{
-							blockageAccumulatedSoFar += accumulatedSinceLastTile *
-							                            ((int)thisDistance - distanceToLastTile) /
-							                            numberTilesWithBlockage;
-						}
-						distanceToLastTile = thisDistance;
-						accumulatedSinceLastTile = 0;
-						numberTilesWithBlockage = 0;
-					}
-
-					// Reached end of LOS with accumulated blockage
-					if ((int)(thisDistance + blockageAccumulatedSoFar) > LOS_RANGE)
-					{
-						break;
-					}
-
-					// Add this tile's vision blockage to accumulated since last tile blockage
-					auto thisBlockage = t->visionBlockage;
-					if (thisBlockage > 0)
-					{
-						accumulatedSinceLastTile += thisBlockage;
-						numberTilesWithBlockage++;
-					}
-
-					// FIXME: This check should be removed after I figure out issues with seeing up
-					// through floors
-					if (!battle.getVisible(owner, vec.x, vec.y, vec.z))
-					{
-						battle.setVisible(owner, vec.x, vec.y, vec.z);
-					}
-					auto unitOccupying = t->getUnitIfPresent(true, true);
-					if (unitOccupying)
-					{
-						auto u = unitOccupying->getUnit();
-						if (u->owner != owner)
-						{
-							visibleUnits.insert({&state, u->id});
-						}
-					}
-				}
-			}
-		}
+		calculateVisionToTerrain(state, battle, map, eyesPos);
+		calculateVisionToUnits(state, battle, map, eyesPos);
 	}
 
 	// Add newly visible units to owner's list and enemy list
@@ -326,10 +379,10 @@ void BattleUnit::updateUnitVision(GameState &state)
 	}
 }
 
-void BattleUnit::updateUnitVisibilityAndVision(GameState &state, Vec3<float> oldPosition)
+void BattleUnit::refreshUnitVisibilityAndVision(GameState &state, Vec3<float> oldPosition)
 {
-	updateUnitVision(state);
-	updateUnitVisibility(state, oldPosition);
+	refreshUnitVision(state);
+	refreshUnitVisibility(state, oldPosition);
 }
 
 void BattleUnit::resetGoal()
@@ -399,7 +452,7 @@ void BattleUnit::startAttacking(GameState &state, WeaponStatus status)
 	}
 
 	weaponStatus = status;
-	ticksTillNextTargetCheck = 0;
+	ticksUntillNextTargetCheck = 0;
 }
 
 void BattleUnit::startAttacking(GameState &state, StateRef<BattleUnit> unit, WeaponStatus status)
@@ -423,7 +476,7 @@ void BattleUnit::stopAttacking()
 	weaponStatus = WeaponStatus::NotFiring;
 	targetingMode = TargetingMode::NoTarget;
 	targetUnit.clear();
-	ticksTillNextTargetCheck = 0;
+	ticksUntillNextTargetCheck = 0;
 }
 bool BattleUnit::canAfford(GameState &state, int cost) const
 {
@@ -499,33 +552,7 @@ bool BattleUnit::isConscious() const
 
 bool BattleUnit::isStatic() const
 {
-	if (falling)
-	{
-		return false;
-	}
-	if (!missions.empty() && missions.front()->type == BattleUnitMission::Type::AcquireTU)
-	{
-		return true;
-	}
-	for (auto &m : missions)
-	{
-		switch (m->type)
-		{
-			case BattleUnitMission::Type::ChangeBodyState:
-			case BattleUnitMission::Type::ReachGoal:
-			case BattleUnitMission::Type::ThrowItem:
-			case BattleUnitMission::Type::Turn:
-			case BattleUnitMission::Type::GotoLocation:
-				return false;
-			case BattleUnitMission::Type::AcquireTU:
-			case BattleUnitMission::Type::DropItem:
-			case BattleUnitMission::Type::RestartNextMission:
-			case BattleUnitMission::Type::Snooze:
-			case BattleUnitMission::Type::Teleport:
-				break;
-		}
-	}
-	return true;
+	return !falling && current_movement_state == MovementState::None;
 }
 
 bool BattleUnit::isBusy() const
@@ -614,6 +641,11 @@ void BattleUnit::addFatalWound(BodyPart fatalWoundPart) { fatalWounds[fatalWound
 void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWounds,
                             BodyPart fatalWoundPart, int stunPower)
 {
+	if (isDead())
+	{
+		return;
+	}
+
 	bool wasConscious = isConscious();
 	bool fatal = false;
 
@@ -853,29 +885,8 @@ bool BattleUnit::handleCollision(GameState &state, Collision &c)
 	return false;
 }
 
-void BattleUnit::update(GameState &state, unsigned int ticks)
+void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 {
-	// Destroyed or retreated units do not exist in the battlescape
-	if (destroyed || retreated)
-	{
-		return;
-	}
-
-	// Init
-	//
-	auto &map = tileObject->map;
-
-	// Update other classes
-	//
-	for (auto item : agent->equipment)
-		item->update(state, ticks);
-
-	if (!this->missions.empty())
-		this->missions.front()->update(state, *this, ticks);
-
-	// Update our stats and state
-	//
-
 	// Ticks until auto turning and targeting
 	if (ticksUntilAutoTurnAvailable > 0)
 	{
@@ -886,6 +897,17 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		else
 		{
 			ticksUntilAutoTurnAvailable = 0;
+		}
+	}
+	if (ticksUntilAutoTargetAvailable > 0)
+	{
+		if (ticksUntilAutoTargetAvailable > ticks)
+		{
+			ticksUntilAutoTargetAvailable -= ticks;
+		}
+		else
+		{
+			ticksUntilAutoTargetAvailable = 0;
 		}
 	}
 
@@ -953,6 +975,15 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		}
 	} // End of Fatal Wounds and Healing
 
+	// Turn off Jetpacks
+	if (current_body_state != BodyState::Flying)
+	{
+		flyingSpeedModifier = 0;
+	}
+}
+
+void BattleUnit::updateIdling(GameState &state)
+{
 	// Idling check #1
 	if (missions.empty() && isConscious())
 	{
@@ -994,32 +1025,37 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				{
 					for (int z = -1; z <= 1; z++)
 					{
-						if (z < 0 || z >= map.size.z)
+						if (z < 0 || z >= tileObject->map.size.z)
 						{
 							continue;
 						}
 						// Try the new heading
 						Vec3<int> pos = {position.x + newHeading.x, position.y + newHeading.y,
 						                 position.z + z};
-						auto to = map.getTile(pos);
+						auto to = tileObject->map.getTile(pos);
 						// Check if heading on our level is acceptable
-						bool acceptable = BattleUnitTileHelper{map, *this}.canEnterTile(from, to) &&
-						                  BattleUnitTileHelper{map, *this}.canEnterTile(to, from);
+						bool acceptable =
+						    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(from, to) &&
+						    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(to, from);
 						// If not, check if we can go down one tile
 						if (!acceptable && pos.z - 1 >= 0)
 						{
 							pos -= Vec3<int>{0, 0, 1};
-							to = map.getTile(pos);
-							acceptable = BattleUnitTileHelper{map, *this}.canEnterTile(from, to) &&
-							             BattleUnitTileHelper{map, *this}.canEnterTile(to, from);
+							to = tileObject->map.getTile(pos);
+							acceptable =
+							    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(from,
+							                                                              to) &&
+							    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(to, from);
 						}
 						// If not, check if we can go up one tile
-						if (!acceptable && pos.z + 2 < map.size.z)
+						if (!acceptable && pos.z + 2 < tileObject->map.size.z)
 						{
 							pos += Vec3<int>{0, 0, 2};
-							to = map.getTile(pos);
-							acceptable = BattleUnitTileHelper{map, *this}.canEnterTile(from, to) &&
-							             BattleUnitTileHelper{map, *this}.canEnterTile(to, from);
+							to = tileObject->map.getTile(pos);
+							acceptable =
+							    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(from,
+							                                                              to) &&
+							    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(to, from);
 						}
 						if (acceptable)
 						{
@@ -1050,7 +1086,6 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		}
 		else // if not giving way
 		{
-			setMovementState(MovementState::None);
 			// Kneel if not kneeling and should kneel
 			if (kneeling_mode == KneelingMode::Kneeling &&
 			    current_body_state != BodyState::Kneeling && canKneel() &&
@@ -1109,7 +1144,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 				bool hasSupport = true;
 				for (auto t : tileObject->occupiedTiles)
 				{
-					if (!map.getTile(t)->getCanStand())
+					if (!tileObject->map.getTile(t)->getCanStand())
 					{
 						hasSupport = false;
 						break;
@@ -1124,12 +1159,15 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			}
 		}
 	} // End of Idling Check #1
+}
 
+void BattleUnit::updateAcquireTarget(GameState &state, unsigned int ticks)
+{
 	// Still idling and not attacking? Attack or face enemy
-	if (missions.empty() && isConscious() && !isAttacking())
+	if (isConscious() && !isAttacking())
 	{
-		// See no enemies - turn to focused or closest visible enemy
-		if (visibleEnemies.empty())
+		// See no enemies and have no mission - turn to focused or closest visible enemy
+		if (visibleEnemies.empty() && missions.empty())
 		{
 			if (ticksUntilAutoTurnAvailable == 0)
 			{
@@ -1153,7 +1191,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 						}
 					}
 				}
-				if (closestEnemy && glm::distance(closestEnemy->position, position) < LOS_RANGE)
+				if (closestEnemy && glm::distance(closestEnemy->position, position) < VIEW_DISTANCE)
 				{
 					setMission(state, BattleUnitMission::turn(*this, closestEnemy->position));
 					ticksUntilAutoTurnAvailable = AUTO_TURN_COOLDOWN;
@@ -1161,7 +1199,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			}
 		}
 		// See enemy - turn or attack
-		else
+		else if (!visibleEnemies.empty() &&
+		         (missions.empty() || missions.front()->type != BattleUnitMission::Type::Snooze))
 		{
 			auto e1 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
 			auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
@@ -1188,7 +1227,6 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 							}
 						}
 					}
-					// Does not count as auto-turn!
 					setMission(state, BattleUnitMission::turn(*this, targetEnemy->position));
 					ticksUntilAutoTurnAvailable = AUTO_TURN_COOLDOWN;
 				}
@@ -1196,485 +1234,490 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			// Can attack and allowed to:		Attack enemy
 			else
 			{
-				// Find enemy we can attack amongst those visible
-				auto targetEnemy = focusUnit;
-				// Ensure we can attack focus
-				if (targetEnemy)
+				if (ticksUntilAutoTargetAvailable == 0)
 				{
-					auto muzzleLocation = getMuzzleLocation();
-					auto targetPosition = targetEnemy->tileObject->getVoxelCentrePosition();
-					auto cMap =
-					    map.findCollision(muzzleLocation, targetPosition, mapPartSet, tileObject);
-					auto cUnit =
-					    map.findCollision(muzzleLocation, targetPosition, unitSet, tileObject);
-					if (cMap || (cUnit &&
-					             owner->isRelatedTo(
-					                 std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)
-					                     ->getUnit()
-					                     ->owner) != Organisation::Relation::Hostile))
-					{
-						targetEnemy.clear();
-					}
-				}
-				// If can't attack focus or have no focus - take closest attackable
-				if (visibleUnits.find(targetEnemy) == visibleUnits.end())
-				{
-					targetEnemy.clear();
-					// Make a list of enemies sorted by distance to them
-					std::map<float, StateRef<BattleUnit>> enemiesByDistance;
-					for (auto u : visibleEnemies)
-					{
-						// Ensure we add every unit
-						auto distance = glm::distance(u->position, position);
-						while (enemiesByDistance.find(distance) != enemiesByDistance.end())
-						{
-							distance += 0.01f;
-						}
-						enemiesByDistance[distance] = u;
-					}
-					// Pick enemy that is closest and can be attacked
-					for (auto entry : enemiesByDistance)
+					// Find enemy we can attack amongst those visible
+					auto targetEnemy = focusUnit;
+					// Ensure we can attack focus
+					if (targetEnemy)
 					{
 						auto muzzleLocation = getMuzzleLocation();
-						auto targetPosition = entry.second->tileObject->getVoxelCentrePosition();
-						auto cMap = map.findCollision(muzzleLocation, targetPosition, mapPartSet,
-						                              tileObject);
-						auto cUnit =
-						    map.findCollision(muzzleLocation, targetPosition, unitSet, tileObject);
-						if (!cMap && (!cUnit ||
-						              owner->isRelatedTo(
-						                  std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)
-						                      ->getUnit()
-						                      ->owner) == Organisation::Relation::Hostile))
+						auto targetPosition = targetEnemy->tileObject->getVoxelCentrePosition();
+						auto cMap = tileObject->map.findCollision(muzzleLocation, targetPosition,
+						                                          mapPartSet, tileObject);
+						auto cUnit = tileObject->map.findCollision(muzzleLocation, targetPosition,
+						                                           unitSet, tileObject);
+						if (cMap || (cUnit &&
+						             owner->isRelatedTo(
+						                 std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)
+						                     ->getUnit()
+						                     ->owner) != Organisation::Relation::Hostile))
 						{
-							targetEnemy = entry.second;
-							break;
+							targetEnemy.clear();
 						}
 					}
-				}
+					// If can't attack focus or have no focus - take closest attackable
+					if (visibleUnits.find(targetEnemy) == visibleUnits.end())
+					{
+						targetEnemy.clear();
+						// Make a list of enemies sorted by distance to them
+						std::map<float, StateRef<BattleUnit>> enemiesByDistance;
+						for (auto u : visibleEnemies)
+						{
+							// Ensure we add every unit
+							auto distance = glm::distance(u->position, position);
+							while (enemiesByDistance.find(distance) != enemiesByDistance.end())
+							{
+								distance += 0.01f;
+							}
+							enemiesByDistance[distance] = u;
+						}
+						// Pick enemy that is closest and can be attacked
+						for (auto entry : enemiesByDistance)
+						{
+							auto muzzleLocation = getMuzzleLocation();
+							auto targetPosition =
+							    entry.second->tileObject->getVoxelCentrePosition();
+							auto cMap = tileObject->map.findCollision(
+							    muzzleLocation, targetPosition, mapPartSet, tileObject);
+							auto cUnit = tileObject->map.findCollision(
+							    muzzleLocation, targetPosition, unitSet, tileObject);
+							if (!cMap &&
+							    (!cUnit ||
+							     owner->isRelatedTo(
+							         std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)
+							             ->getUnit()
+							             ->owner) == Organisation::Relation::Hostile))
+							{
+								targetEnemy = entry.second;
+								break;
+							}
+						}
+					}
 
-				// Attack if we can
-				if (targetEnemy)
-				{
-					startAttacking(state, targetEnemy);
-				}
-				else
-				{
-					// If all of our targets are not attackable then snooze for a bit before
-					// re-trying
-					setMission(state, BattleUnitMission::snooze(*this, TICKS_PER_SECOND / 4));
+					// Attack if we can
+					if (targetEnemy)
+					{
+						startAttacking(state, targetEnemy);
+					}
+					else
+					{
+						ticksUntilAutoTargetAvailable = AUTO_TARGET_COOLDOWN;
+					}
 				}
 			}
 		}
 	}
+}
 
-	// Movement and Body Animation
+void BattleUnit::updateCheckIfFalling(GameState &state)
+{
+	// Begin falling or changing stance to flying if appropriate
+	if (!falling)
 	{
-		bool wasUsingLift = usingLift;
-		usingLift = false;
-
-		// Turn off Jetpacks
-		if (current_body_state != BodyState::Flying)
+		// Check if should fall or start flying
+		if (!canFly() || current_body_state != BodyState::Flying)
 		{
-			flyingSpeedModifier = 0;
+			bool hasSupport = false;
+			bool fullySupported = true;
+			if (tileObject->getOwningTile()->getCanStand(isLarge()))
+			{
+				hasSupport = true;
+			}
+			else
+			{
+				fullySupported = false;
+			}
+			if (!atGoal)
+			{
+				if (tileObject->map.getTile(goalPosition)->getCanStand(isLarge()))
+				{
+					hasSupport = true;
+				}
+				else
+				{
+					fullySupported = false;
+				}
+			}
+			// If not flying and has no support - fall!
+			if (!hasSupport && !canFly())
+			{
+				startFalling();
+			}
+			// If flying and not supported both on current and goal locations - start flying
+			if (!fullySupported && canFly())
+			{
+				if (current_body_state == target_body_state)
+				{
+					setBodyState(state, BodyState::Flying);
+					if (!missions.empty())
+					{
+						missions.front()->targetBodyState = current_body_state;
+					}
+				}
+			}
+		}
+	}
+}
+
+void BattleUnit::updateBody(GameState &state, unsigned int &bodyTicksRemaining)
+{
+	if (bodyTicksRemaining > 0)
+	{
+		if (body_animation_ticks_remaining > bodyTicksRemaining)
+		{
+			body_animation_ticks_remaining -= bodyTicksRemaining;
+			bodyTicksRemaining = 0;
+		}
+		else
+		{
+			if (body_animation_ticks_remaining > 0)
+			{
+				bodyTicksRemaining -= body_animation_ticks_remaining;
+				setBodyState(state, target_body_state);
+			}
+			// Pop finished missions if present
+			if (popFinishedMissions(state))
+			{
+				return;
+			}
+			// Try to get new body state change
+			// Can do it if we're not firing and (either not changing hand state, or
+			// starting to aim)
+			if (firing_animation_ticks_remaining == 0 &&
+			    (hand_animation_ticks_remaining == 0 || target_hand_state == HandState::Aiming))
+			{
+				BodyState nextState = BodyState::Downed;
+				if (getNextBodyState(state, nextState))
+				{
+					beginBodyStateChange(state, nextState);
+				}
+			}
+		}
+	}
+}
+
+void BattleUnit::updateMovement(GameState &state, unsigned int &moveTicksRemaining,
+                                bool &wasUsingLift)
+{
+	if (moveTicksRemaining > 0)
+	{
+		// If falling then process falling
+		if (falling)
+		{
+			// Falling consumes remaining move ticks
+			auto fallTicksRemaining =
+			    moveTicksRemaining / (agent->modified_stats.getActualSpeedValue() * 2);
+			moveTicksRemaining = 0;
+
+			// Process falling
+			auto newPosition = position;
+			while (fallTicksRemaining-- > 0)
+			{
+				fallingSpeed += FALLING_ACCELERATION_UNIT;
+				newPosition -=
+				    Vec3<float>{0.0f, 0.0f, (fallingSpeed / TICK_SCALE)} / VELOCITY_SCALE_BATTLE;
+			}
+			// Fell into a unit
+			if (isConscious() &&
+			    tileObject->map.getTile(newPosition)
+			        ->getUnitIfPresent(true, true, false, tileObject))
+			{
+				// FIXME: Proper stun damage (ensure it is!)
+				stunDamageInTicks = 0;
+				dealDamage(state, agent->current_stats.health * 3 / 2, false, BodyPart::Body, 9001);
+				fallUnconscious(state);
+			}
+			setPosition(state, newPosition);
+			triggerProximity(state);
+
+			// Falling units can always turn
+			goalPosition = position;
+			atGoal = true;
+
+			// Check if reached ground
+			auto restingPosition = tileObject->getOwningTile()->getRestingPosition(isLarge());
+			if (position.z < restingPosition.z)
+			{
+				// Stopped falling
+				falling = false;
+				if (!isConscious())
+				{
+					// Bodies drop to the exact spot they fell upon
+					setPosition(state, {position.x, position.y, restingPosition.z});
+				}
+				else
+				{
+					setPosition(state, restingPosition);
+				}
+				triggerProximity(state);
+				resetGoal();
+				// FIXME: Deal fall damage before nullifying this
+				// FIXME: Play falling sound
+				fallingSpeed = 0;
+			}
 		}
 
-		// If not running we will consume these twice as fast
-		unsigned int moveTicksRemaining = ticks * agent->modified_stats.getActualSpeedValue() * 2;
-		unsigned int bodyTicksRemaining = ticks;
-		unsigned int handTicksRemaining = ticks;
-		unsigned int turnTicksRemaining = ticks;
-
-		// Unconscious units cannot move their hands or turn, they can only animate body or fall
-		if (!isConscious())
+		// We are moving and not falling
+		else if (current_movement_state != MovementState::None)
 		{
-			handTicksRemaining = 0;
+			unsigned int speedModifier = 100;
+			if (current_body_state == BodyState::Flying)
+			{
+				speedModifier = std::max((unsigned)1, flyingSpeedModifier);
+			}
+
+			Vec3<float> vectorToGoal = goalPosition - getPosition();
+			unsigned int distanceToGoal = (unsigned)ceilf(glm::length(
+			    vectorToGoal * VELOCITY_SCALE_BATTLE * (float)TICKS_PER_UNIT_TRAVELLED));
+			unsigned int moveTicksConsumeRate =
+			    current_movement_state == MovementState::Running ? 1 : 2;
+
+			// Quick check, if moving strictly vertical then using lift
+			if (distanceToGoal > 0 && current_body_state != BodyState::Flying &&
+			    vectorToGoal.x == 0 && vectorToGoal.y == 0)
+			{
+				// FIXME: Actually read set option
+				bool USER_OPTION_GRAVLIFT_SOUNDS = true;
+				if (USER_OPTION_GRAVLIFT_SOUNDS && !wasUsingLift)
+				{
+					fw().soundBackend->playSample(agent->type->gravLiftSfx, getPosition(), 0.25f);
+				}
+				usingLift = true;
+				movement_ticks_passed = 0;
+			}
+			unsigned int movementTicksAccumulated = 0;
+			if (distanceToGoal * moveTicksConsumeRate * 100 / speedModifier > moveTicksRemaining)
+			{
+				if (flyingSpeedModifier != 100)
+				{
+					flyingSpeedModifier =
+					    std::min((unsigned)100, flyingSpeedModifier +
+					                                moveTicksRemaining / moveTicksConsumeRate /
+					                                    FLYING_ACCELERATION_DIVISOR);
+				}
+				movementTicksAccumulated = moveTicksRemaining / moveTicksConsumeRate;
+				auto dir = glm::normalize(vectorToGoal);
+				Vec3<float> newPosition = (float)(moveTicksRemaining / moveTicksConsumeRate) *
+				                          (float)(speedModifier / 100) * dir;
+				newPosition /= VELOCITY_SCALE_BATTLE;
+				newPosition /= (float)TICKS_PER_UNIT_TRAVELLED;
+				newPosition += getPosition();
+				setPosition(state, newPosition);
+				triggerProximity(state);
+				moveTicksRemaining = moveTicksRemaining % moveTicksConsumeRate;
+				atGoal = false;
+			}
+			else
+			{
+				if (distanceToGoal > 0)
+				{
+					movementTicksAccumulated = distanceToGoal;
+					if (flyingSpeedModifier != 100)
+					{
+						flyingSpeedModifier = std::min(
+						    (unsigned)100,
+						    flyingSpeedModifier + distanceToGoal / FLYING_ACCELERATION_DIVISOR);
+					}
+					moveTicksRemaining -= distanceToGoal * moveTicksConsumeRate;
+					setPosition(state, goalPosition);
+					triggerProximity(state);
+					goalPosition = getPosition();
+				}
+				atGoal = true;
+				// Pop finished missions if present
+				if (popFinishedMissions(state))
+				{
+					return;
+				}
+				// Try to get new destination
+				Vec3<float> nextGoal;
+				if (getNextDestination(state, nextGoal))
+				{
+					startMoving();
+					goalPosition = nextGoal;
+					atGoal = false;
+				}
+				else if (!hasMovementQueued())
+				{
+					setMovementState(MovementState::None);
+				}
+			}
+
+			// Scale ticks so that animations look proper on isometric sceen
+			// facing down or up on screen
+			if (facing.x == facing.y)
+			{
+				movement_ticks_passed += movementTicksAccumulated * 100 / 150;
+			}
+			// facing left or right on screen
+			else if (facing.x == -facing.y)
+			{
+				movement_ticks_passed += movementTicksAccumulated * 141 / 150;
+			}
+			else
+			{
+				movement_ticks_passed += movementTicksAccumulated;
+			}
+			// Footsteps sound
+			if (shouldPlaySoundNow() && current_body_state != BodyState::Flying)
+			{
+				if (agent->type->walkSfx.size() > 0)
+				{
+					fw().soundBackend->playSample(
+					    agent->type->walkSfx[getWalkSoundIndex() % agent->type->walkSfx.size()],
+					    getPosition(), 0.25f);
+				}
+				else
+				{
+					auto t = tileObject->getOwningTile();
+					if (t->walkSfx && t->walkSfx->size() > 0)
+					{
+						fw().soundBackend->playSample(
+						    t->walkSfx->at(getWalkSoundIndex() % t->walkSfx->size()), getPosition(),
+						    0.25f);
+					}
+				}
+			}
+		}
+		// We are not moving and not falling
+		else
+		{
+			// Check if we should adjust our current position
+			if (goalPosition == getPosition())
+			{
+				goalPosition = tileObject->getOwningTile()->getRestingPosition(isLarge());
+			}
+			atGoal = goalPosition == getPosition();
+			if (atGoal)
+			{
+				// Pop finished missions if present
+				if (popFinishedMissions(state))
+				{
+					return;
+				}
+				// Try to get new destination
+				Vec3<float> nextGoal;
+				if (getNextDestination(state, nextGoal))
+				{
+					startMoving();
+					goalPosition = nextGoal;
+					atGoal = false;
+				}
+				else if (!hasMovementQueued())
+				{
+					setMovementState(MovementState::None);
+				}
+			}
+		}
+	}
+}
+
+void BattleUnit::updateHands(GameState &state, unsigned int &handsTicksRemaining)
+{
+	if (handsTicksRemaining > 0)
+	{
+		if (firing_animation_ticks_remaining > 0)
+		{
+			if (firing_animation_ticks_remaining > handsTicksRemaining)
+			{
+				firing_animation_ticks_remaining -= handsTicksRemaining;
+				handsTicksRemaining = 0;
+			}
+			else
+			{
+				handsTicksRemaining -= firing_animation_ticks_remaining;
+				firing_animation_ticks_remaining = 0;
+				setHandState(HandState::Aiming);
+			}
+		}
+		else
+		{
+			if (hand_animation_ticks_remaining > handsTicksRemaining)
+			{
+				hand_animation_ticks_remaining -= handsTicksRemaining;
+				handsTicksRemaining = 0;
+			}
+			else
+			{
+				if (hand_animation_ticks_remaining > 0)
+				{
+					handsTicksRemaining -= hand_animation_ticks_remaining;
+					hand_animation_ticks_remaining = 0;
+					setHandState(target_hand_state);
+				}
+			}
+		}
+	}
+}
+
+void BattleUnit::updateTurning(GameState &state, unsigned int &turnTicksRemaining)
+{
+	// Try turning
+	if (turnTicksRemaining > 0)
+	{
+		if (turning_animation_ticks_remaining > turnTicksRemaining)
+		{
+			turning_animation_ticks_remaining -= turnTicksRemaining;
 			turnTicksRemaining = 0;
 		}
-
-		unsigned int lastMoveTicksRemaining = 0;
-		unsigned int lastBodyTicksRemaining = 0;
-		unsigned int lastHandTicksRemaining = 0;
-		unsigned int lastTurnTicksRemaining = 0;
-
-		while (lastMoveTicksRemaining != moveTicksRemaining ||
-		       lastBodyTicksRemaining != bodyTicksRemaining ||
-		       lastHandTicksRemaining != handTicksRemaining ||
-		       lastTurnTicksRemaining != turnTicksRemaining)
+		else
 		{
-			lastMoveTicksRemaining = moveTicksRemaining;
-			lastBodyTicksRemaining = bodyTicksRemaining;
-			lastHandTicksRemaining = handTicksRemaining;
-			lastTurnTicksRemaining = turnTicksRemaining;
-
-			// Begin falling or changing stance to flying if appropriate
-			if (!falling)
+			if (turning_animation_ticks_remaining > 0)
 			{
-				// Check if should fall or start flying
-				if (!canFly() || current_body_state != BodyState::Flying)
-				{
-					bool hasSupport = false;
-					bool fullySupported = true;
-					if (tileObject->getOwningTile()->getCanStand(isLarge()))
-					{
-						hasSupport = true;
-					}
-					else
-					{
-						fullySupported = false;
-					}
-					if (!atGoal)
-					{
-						if (map.getTile(goalPosition)->getCanStand(isLarge()))
-						{
-							hasSupport = true;
-						}
-						else
-						{
-							fullySupported = false;
-						}
-					}
-					// If not flying and has no support - fall!
-					if (!hasSupport && !canFly())
-					{
-						startFalling();
-					}
-					// If flying and not supported both on current and goal locations - start flying
-					if (!fullySupported && canFly())
-					{
-						if (current_body_state == target_body_state)
-						{
-							setBodyState(state, BodyState::Flying);
-							if (!missions.empty())
-							{
-								missions.front()->targetBodyState = current_body_state;
-							}
-						}
-					}
-				}
+				turnTicksRemaining -= turning_animation_ticks_remaining;
+				setFacing(state, goalFacing);
 			}
-
-			// Change body state
-			if (bodyTicksRemaining > 0)
+			// Pop finished missions if present
+			if (popFinishedMissions(state))
 			{
-				if (body_animation_ticks_remaining > bodyTicksRemaining)
-				{
-					body_animation_ticks_remaining -= bodyTicksRemaining;
-					bodyTicksRemaining = 0;
-				}
-				else
-				{
-					if (body_animation_ticks_remaining > 0)
-					{
-						bodyTicksRemaining -= body_animation_ticks_remaining;
-						setBodyState(state, target_body_state);
-					}
-					// Pop finished missions if present
-					if (popFinishedMissions(state))
-					{
-						return;
-					}
-					// Try to get new body state change
-					// Can do it if we're not firing and (either not changing hand state, or
-					// starting to aim)
-					if (firing_animation_ticks_remaining == 0 &&
-					    (hand_animation_ticks_remaining == 0 ||
-					     target_hand_state == HandState::Aiming))
-					{
-						BodyState nextState = BodyState::Downed;
-						if (getNextBodyState(state, nextState))
-						{
-							beginBodyStateChange(state, nextState);
-						}
-					}
-				}
+				return;
 			}
-
-			// Change hand state
-			if (handTicksRemaining > 0)
+			// Try to get new facing change
+			Vec2<int> nextFacing;
+			if (getNextFacing(state, nextFacing))
 			{
-				if (firing_animation_ticks_remaining > 0)
-				{
-					if (firing_animation_ticks_remaining > handTicksRemaining)
-					{
-						firing_animation_ticks_remaining -= handTicksRemaining;
-						handTicksRemaining = 0;
-					}
-					else
-					{
-						handTicksRemaining -= firing_animation_ticks_remaining;
-						firing_animation_ticks_remaining = 0;
-						setHandState(HandState::Aiming);
-					}
-				}
-				else
-				{
-					if (hand_animation_ticks_remaining > handTicksRemaining)
-					{
-						hand_animation_ticks_remaining -= handTicksRemaining;
-						handTicksRemaining = 0;
-					}
-					else
-					{
-						if (hand_animation_ticks_remaining > 0)
-						{
-							handTicksRemaining -= hand_animation_ticks_remaining;
-							hand_animation_ticks_remaining = 0;
-							setHandState(target_hand_state);
-						}
-					}
-				}
+				beginTurning(state, nextFacing);
 			}
-
-			// Try moving
-			if (moveTicksRemaining > 0)
-			{
-				// If falling then process falling
-				if (falling)
-				{
-					// Falling consumes remaining move ticks
-					auto fallTicksRemaining =
-					    moveTicksRemaining / (agent->modified_stats.getActualSpeedValue() * 2);
-					moveTicksRemaining = 0;
-
-					// Process falling
-					auto newPosition = position;
-					while (fallTicksRemaining-- > 0)
-					{
-						fallingSpeed += FALLING_ACCELERATION_UNIT;
-						newPosition -= Vec3<float>{0.0f, 0.0f, (fallingSpeed / TICK_SCALE)} /
-						               VELOCITY_SCALE_BATTLE;
-					}
-					// Fell into a unit
-					if (isConscious() &&
-					    map.getTile(newPosition)->getUnitIfPresent(true, true, false, tileObject))
-					{
-						// FIXME: Proper stun damage (ensure it is!)
-						stunDamageInTicks = 0;
-						dealDamage(state, agent->current_stats.health * 3 / 2, false,
-						           BodyPart::Body, 9001);
-						fallUnconscious(state);
-					}
-					setPosition(state, newPosition);
-					triggerProximity(state);
-
-					// Falling units can always turn
-					goalPosition = position;
-					atGoal = true;
-
-					// Check if reached ground
-					auto restingPosition =
-					    tileObject->getOwningTile()->getRestingPosition(isLarge());
-					if (position.z < restingPosition.z)
-					{
-						// Stopped falling
-						falling = false;
-						if (!isConscious())
-						{
-							// Bodies drop to the exact spot they fell upon
-							setPosition(state, {position.x, position.y, restingPosition.z});
-						}
-						else
-						{
-							setPosition(state, restingPosition);
-						}
-						triggerProximity(state);
-						resetGoal();
-						// FIXME: Deal fall damage before nullifying this
-						// FIXME: Play falling sound
-						fallingSpeed = 0;
-					}
-				}
-
-				// We are moving and not falling
-				else if (current_movement_state != MovementState::None)
-				{
-					unsigned int speedModifier = 100;
-					if (current_body_state == BodyState::Flying)
-					{
-						speedModifier = std::max((unsigned)1, flyingSpeedModifier);
-					}
-
-					Vec3<float> vectorToGoal = goalPosition - getPosition();
-					unsigned int distanceToGoal = (unsigned)ceilf(glm::length(
-					    vectorToGoal * VELOCITY_SCALE_BATTLE * (float)TICKS_PER_UNIT_TRAVELLED));
-					unsigned int moveTicksConsumeRate =
-					    current_movement_state == MovementState::Running ? 1 : 2;
-
-					// Quick check, if moving strictly vertical then using lift
-					if (distanceToGoal > 0 && current_body_state != BodyState::Flying &&
-					    vectorToGoal.x == 0 && vectorToGoal.y == 0)
-					{
-						// FIXME: Actually read set option
-						bool USER_OPTION_GRAVLIFT_SOUNDS = true;
-						if (USER_OPTION_GRAVLIFT_SOUNDS && !wasUsingLift)
-						{
-							fw().soundBackend->playSample(agent->type->gravLiftSfx, getPosition(),
-							                              0.25f);
-						}
-						usingLift = true;
-						movement_ticks_passed = 0;
-					}
-					unsigned int movementTicksAccumulated = 0;
-					if (distanceToGoal * moveTicksConsumeRate * 100 / speedModifier >
-					    moveTicksRemaining)
-					{
-						if (flyingSpeedModifier != 100)
-						{
-							flyingSpeedModifier = std::min(
-							    (unsigned)100, flyingSpeedModifier +
-							                       moveTicksRemaining / moveTicksConsumeRate /
-							                           FLYING_ACCELERATION_DIVISOR);
-						}
-						movementTicksAccumulated = moveTicksRemaining / moveTicksConsumeRate;
-						auto dir = glm::normalize(vectorToGoal);
-						Vec3<float> newPosition =
-						    (float)(moveTicksRemaining / moveTicksConsumeRate) *
-						    (float)(speedModifier / 100) * dir;
-						newPosition /= VELOCITY_SCALE_BATTLE;
-						newPosition /= (float)TICKS_PER_UNIT_TRAVELLED;
-						newPosition += getPosition();
-						setPosition(state, newPosition);
-						triggerProximity(state);
-						moveTicksRemaining = moveTicksRemaining % moveTicksConsumeRate;
-						atGoal = false;
-					}
-					else
-					{
-						if (distanceToGoal > 0)
-						{
-							movementTicksAccumulated = distanceToGoal;
-							if (flyingSpeedModifier != 100)
-							{
-								flyingSpeedModifier =
-								    std::min((unsigned)100,
-								             flyingSpeedModifier +
-								                 distanceToGoal / FLYING_ACCELERATION_DIVISOR);
-							}
-							moveTicksRemaining -= distanceToGoal * moveTicksConsumeRate;
-							setPosition(state, goalPosition);
-							triggerProximity(state);
-							goalPosition = getPosition();
-						}
-						atGoal = true;
-						// Pop finished missions if present
-						if (popFinishedMissions(state))
-						{
-							return;
-						}
-						// Try to get new destination
-						Vec3<float> nextGoal;
-						if (getNextDestination(state, nextGoal))
-						{
-							goalPosition = nextGoal;
-							atGoal = false;
-						}
-					}
-
-					// Scale ticks so that animations look proper on isometric sceen
-					// facing down or up on screen
-					if (facing.x == facing.y)
-					{
-						movement_ticks_passed += movementTicksAccumulated * 100 / 150;
-					}
-					// facing left or right on screen
-					else if (facing.x == -facing.y)
-					{
-						movement_ticks_passed += movementTicksAccumulated * 141 / 150;
-					}
-					else
-					{
-						movement_ticks_passed += movementTicksAccumulated;
-					}
-					// Footsteps sound
-					if (shouldPlaySoundNow() && current_body_state != BodyState::Flying)
-					{
-						if (agent->type->walkSfx.size() > 0)
-						{
-							fw().soundBackend->playSample(
-							    agent->type
-							        ->walkSfx[getWalkSoundIndex() % agent->type->walkSfx.size()],
-							    getPosition(), 0.25f);
-						}
-						else
-						{
-							auto t = tileObject->getOwningTile();
-							if (t->walkSfx && t->walkSfx->size() > 0)
-							{
-								fw().soundBackend->playSample(
-								    t->walkSfx->at(getWalkSoundIndex() % t->walkSfx->size()),
-								    getPosition(), 0.25f);
-							}
-						}
-					}
-				}
-				// We are not moving and not falling
-				else
-				{
-					// Check if we should adjust our current position
-					if (goalPosition == getPosition())
-					{
-						goalPosition = tileObject->getOwningTile()->getRestingPosition(isLarge());
-					}
-					atGoal = goalPosition == getPosition();
-					// If not at goal - go to goal
-					if (!atGoal)
-					{
-						addMission(state, BattleUnitMission::Type::ReachGoal);
-					}
-					// If at goal - try to request new destination
-					else
-					{
-						// Pop finished missions if present
-						if (popFinishedMissions(state))
-						{
-							return;
-						}
-						// Try to get new destination
-						Vec3<float> nextGoal;
-						if (getNextDestination(state, nextGoal))
-						{
-							goalPosition = nextGoal;
-							atGoal = false;
-						}
-					}
-				}
-			}
-
-			// Try turning
-			if (turnTicksRemaining > 0)
-			{
-				if (turning_animation_ticks_remaining > turnTicksRemaining)
-				{
-					turning_animation_ticks_remaining -= turnTicksRemaining;
-					turnTicksRemaining = 0;
-				}
-				else
-				{
-					if (turning_animation_ticks_remaining > 0)
-					{
-						turnTicksRemaining -= turning_animation_ticks_remaining;
-						setFacing(state, goalFacing);
-					}
-					// Pop finished missions if present
-					if (popFinishedMissions(state))
-					{
-						return;
-					}
-					// Try to get new facing change
-					Vec2<int> nextFacing;
-					if (getNextFacing(state, nextFacing))
-					{
-						beginTurning(state, nextFacing);
-					}
-				}
-			}
-
-			updateDisplayedItem();
 		}
+	}
+}
 
-	} // End of Movement and Body Animation
+void BattleUnit::updateDisplayedItem()
+{
+	auto lastDisplayedItem = displayedItem;
+	bool foundThrownItem = false;
+	if (missions.size() > 0)
+	{
+		for (auto &m : missions)
+		{
+			if (m->type != BattleUnitMission::Type::ThrowItem || !m->item)
+			{
+				continue;
+			}
+			displayedItem = m->item->type;
+			foundThrownItem = true;
+			break;
+		}
+	}
+	if (!foundThrownItem)
+	{
+		// If we're firing - try to keep last displayed item same, even if not dominant
+		displayedItem = agent->getDominantItemInHands(
+		    firing_animation_ticks_remaining > 0 ? lastDisplayedItem : nullptr);
+	}
+	// If displayed item changed or we are throwing - bring hands into "AtEase" state immediately
+	if (foundThrownItem || displayedItem != lastDisplayedItem)
+	{
+		if (hand_animation_ticks_remaining > 0 || current_hand_state != HandState::AtEase)
+		{
+			setHandState(HandState::AtEase);
+		}
+	}
+}
 
+void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
+{
 	// Firing
 	if (isAttacking())
 	{
@@ -1763,13 +1806,13 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 
 			if (targetingMode == TargetingMode::Unit)
 			{
-				if (ticksTillNextTargetCheck > ticks)
+				if (ticksUntillNextTargetCheck > ticks)
 				{
-					ticksTillNextTargetCheck -= ticks;
+					ticksUntillNextTargetCheck -= ticks;
 				}
 				else
 				{
-					ticksTillNextTargetCheck = 0;
+					ticksUntillNextTargetCheck = 0;
 				}
 
 				if (visibleUnits.find(targetUnit) == visibleUnits.end())
@@ -1788,15 +1831,15 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			{
 				// Note: If not targeting a unit, this will only be done once after start,
 				// and again once each time this unit stops moving
-				if (ticksTillNextTargetCheck == 0)
+				if (ticksUntillNextTargetCheck == 0)
 				{
-					ticksTillNextTargetCheck = LOS_CHECK_INTERVAL_TRACKING;
+					ticksUntillNextTargetCheck = LOS_CHECK_INTERVAL_TRACKING;
 					if (targetingMode == TargetingMode::Unit)
 					{
-						auto cMap = map.findCollision(muzzleLocation, targetPosition, mapPartSet,
-						                              tileObject);
-						auto cUnit =
-						    map.findCollision(muzzleLocation, targetPosition, unitSet, tileObject);
+						auto cMap = tileObject->map.findCollision(muzzleLocation, targetPosition,
+						                                          mapPartSet, tileObject);
+						auto cUnit = tileObject->map.findCollision(muzzleLocation, targetPosition,
+						                                           unitSet, tileObject);
 						// Target is conscious, shot won't hit a map part, shot won't hit a
 						// non-hostile unit
 						canFire = canFire && targetUnit->isConscious() && !cMap &&
@@ -1827,10 +1870,9 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 					// Check if we should turn to target tile (only do this if stationary)
 					if (canFire && current_movement_state == MovementState::None)
 					{
-						auto m = BattleUnitMission::turn(*this, targetTile);
-						if (!m->isFinished(state, *this, false))
+						if (BattleUnitMission::getFacing(*this, targetTile) != facing)
 						{
-							addMission(state, m);
+							addMission(state, BattleUnitMission::turn(*this, targetTile));
 						}
 					}
 				}
@@ -1965,8 +2007,179 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			beginHandStateChange(HandState::AtEase);
 		}
 	} // end if not Firing
+}
 
-	// FIXME: Soldier "thinking" (auto-attacking, auto-turning)
+void BattleUnit::updateAI(GameState &state, unsigned int ticks)
+{
+	// TODO: Disabled until proper pathfinding algorithm is developed
+	return;
+	if (!isConscious())
+	{
+		return;
+	}
+	// Check that unit is controlled by AI
+	if (owner == state.current_battle->currentPlayer && agent->type->allowsDirectControl)
+	{
+		return;
+	}
+	// Check that unit is allowed to act now
+	switch (state.current_battle->mode)
+	{
+		case Battle::Mode::TurnBased:
+		{
+			// FIXME: Implement TB AI properly, implement interrupts
+			if (owner != state.current_battle->currentActiveOrganisation)
+			{
+				return;
+			}
+			break;
+		}
+		case Battle::Mode::RealTime:
+		{
+			break;
+		}
+	}
+
+	// Act now!
+
+	if (aiState.ticksUntilThinkAgain > 0)
+	{
+		if (aiState.ticksUntilThinkAgain > ticks)
+		{
+			aiState.ticksUntilThinkAgain -= ticks;
+		}
+		else
+		{
+			aiState.ticksUntilThinkAgain = 0;
+		}
+	}
+
+	// Conditions for actually taking an action:
+	if (
+	    // If waiting for completion of a non-offensive action and encountered an enemy
+	    (aiState.waitForCompletion && aiState.ticksUntilThinkAgain == 0 && !aiState.offensive &&
+	     !visibleEnemies.empty())
+	    // If not waiting for completion and ticks until thinking again have ran out
+	    || (!aiState.waitForCompletion && aiState.ticksUntilThinkAgain == 0)
+	    // If waiting for completion and not busy
+	    || (aiState.waitForCompletion && !isBusy()))
+	{
+		auto action = AI::think(state, *this);
+		LogWarning("AI for unit %s decided to take action %s", id, action.getName().cStr());
+		aiState.ticksUntilThinkAgain = action.ticks;
+		aiState.type = action.type;
+		switch (action.type)
+		{
+			case AIAction::Type::Idle:
+				break;
+			case AIAction::Type::Move:
+				aiState.waitForCompletion = true;
+				for (auto &u : action.units)
+				{
+					u->aiState = aiState;
+				}
+				groupMove(state, action.units, action.targetLocation, true, 9999);
+				break;
+			case AIAction::Type::Retreat:
+				aiState.waitForCompletion = true;
+				for (auto &u : action.units)
+				{
+					u->setMission(state, BattleUnitMission::gotoLocation(*u, action.targetLocation,
+					                                                     0, true, true, 1, true));
+					u->aiState = aiState;
+				}
+				break;
+			case AIAction::Type::AttackGrenade:
+				aiState.offensive = true;
+				LogError("Implement acting on a Grenade action");
+				// Equip grenade
+				// Throw grenade
+				break;
+			case AIAction::Type::AttackWeapon:
+				aiState.offensive = true;
+				LogError("Implement acting on a Weapon action");
+				// Equip weapon
+				// Attack with weapon
+				break;
+			case AIAction::Type::AttackPsiMC:
+			case AIAction::Type::AttackPsiStun:
+			case AIAction::Type::AttackPsiPanic:
+				aiState.offensive = true;
+				LogError("Implement acting on a Psi AI action");
+				break;
+		}
+	}
+}
+
+void BattleUnit::update(GameState &state, unsigned int ticks)
+{
+	// Destroyed or retreated units do not exist in the battlescape
+	if (destroyed || retreated)
+	{
+		return;
+	}
+
+	// Update Items
+	for (auto item : agent->equipment)
+		item->update(state, ticks);
+
+	// Update Missions
+	if (!this->missions.empty())
+		this->missions.front()->update(state, *this, ticks);
+
+	// Update the unit
+
+	// Miscellaneous state updates, as well as unit's stats
+	updateStateAndStats(state, ticks);
+	// Idling #1: Auto-movement, auto-body change when idling
+	updateIdling(state);
+	// Acquire target
+	updateAcquireTarget(state, ticks);
+	// Main bulk - update movement, body, hands and turning
+	{
+		bool wasUsingLift = usingLift;
+		usingLift = false;
+
+		// If not running we will consume these twice as fast
+		unsigned int moveTicksRemaining = ticks * agent->modified_stats.getActualSpeedValue() * 2;
+		unsigned int bodyTicksRemaining = ticks;
+		unsigned int handsTicksRemaining = ticks;
+		unsigned int turnTicksRemaining = ticks;
+
+		// Unconscious units cannot move their hands or turn, they can only animate body or fall
+		if (!isConscious())
+		{
+			handsTicksRemaining = 0;
+			turnTicksRemaining = 0;
+		}
+
+		unsigned int lastMoveTicksRemaining = 0;
+		unsigned int lastBodyTicksRemaining = 0;
+		unsigned int lastHandsTicksRemaining = 0;
+		unsigned int lastTurnTicksRemaining = 0;
+
+		while (lastMoveTicksRemaining != moveTicksRemaining ||
+		       lastBodyTicksRemaining != bodyTicksRemaining ||
+		       lastHandsTicksRemaining != handsTicksRemaining ||
+		       lastTurnTicksRemaining != turnTicksRemaining)
+		{
+			lastMoveTicksRemaining = moveTicksRemaining;
+			lastBodyTicksRemaining = bodyTicksRemaining;
+			lastHandsTicksRemaining = handsTicksRemaining;
+			lastTurnTicksRemaining = turnTicksRemaining;
+
+			updateCheckIfFalling(state);
+			updateBody(state, bodyTicksRemaining);
+			updateHands(state, handsTicksRemaining);
+			updateMovement(state, moveTicksRemaining, wasUsingLift);
+			updateTurning(state, turnTicksRemaining);
+			updateDisplayedItem();
+		}
+	}
+	// Unit's attacking state
+	updateAttacking(state, ticks);
+	// AI
+	updateAI(state, ticks);
 }
 
 void BattleUnit::triggerProximity(GameState &state)
@@ -1999,6 +2212,23 @@ void BattleUnit::startFalling()
 {
 	setMovementState(MovementState::None);
 	falling = true;
+}
+
+void BattleUnit::startMoving()
+{
+	// FIXME: Account for different movement ways (strafing, backwards etc.)
+	if (movement_mode == MovementMode::Running && current_body_state != BodyState::Prone)
+	{
+		setMovementState(MovementState::Running);
+	}
+	else if (current_body_state != BodyState::Kneeling && current_body_state != BodyState::Throwing)
+	{
+		setMovementState(MovementState::Normal);
+	}
+	else
+	{
+		LogError("Trying to move while kneeling or throwing, wtf?");
+	}
 }
 
 void BattleUnit::requestGiveWay(const BattleUnit &requestor,
@@ -2046,39 +2276,6 @@ void BattleUnit::requestGiveWay(const BattleUnit &requestor,
 			}
 			nextFacings[0] = nextFacings[0] == 7 ? 0 : nextFacings[0] + 1;
 			nextFacings[1] = nextFacings[1] == 0 ? 7 : nextFacings[1] - 1;
-		}
-	}
-}
-
-void BattleUnit::updateDisplayedItem()
-{
-	auto lastDisplayedItem = displayedItem;
-	bool foundThrownItem = false;
-	if (missions.size() > 0)
-	{
-		for (auto &m : missions)
-		{
-			if (m->type != BattleUnitMission::Type::ThrowItem || !m->item)
-			{
-				continue;
-			}
-			displayedItem = m->item->type;
-			foundThrownItem = true;
-			break;
-		}
-	}
-	if (!foundThrownItem)
-	{
-		// If we're firing - try to keep last displayed item same, even if not dominant
-		displayedItem = agent->getDominantItemInHands(
-		    firing_animation_ticks_remaining > 0 ? lastDisplayedItem : nullptr);
-	}
-	// If displayed item changed or we are throwing - bring hands into "AtEase" state immediately
-	if (foundThrownItem || displayedItem != lastDisplayedItem)
-	{
-		if (hand_animation_ticks_remaining > 0 || current_hand_state != HandState::AtEase)
-		{
-			setHandState(HandState::AtEase);
 		}
 	}
 }
@@ -2340,6 +2537,11 @@ void BattleUnit::beginBodyStateChange(GameState &state, BodyState bodyState)
 	}
 }
 
+unsigned int BattleUnit::getBodyAnimationFrame() const
+{
+	return (body_animation_ticks_remaining + TICKS_PER_FRAME_UNIT - 1) / TICKS_PER_FRAME_UNIT;
+}
+
 void BattleUnit::setBodyState(GameState &state, BodyState bodyState)
 {
 	bool roseUp = current_body_state == BodyState::Downed;
@@ -2351,13 +2553,21 @@ void BattleUnit::setBodyState(GameState &state, BodyState bodyState)
 		// Updates bounds etc.
 		setPosition(state, position);
 		// Update vision since our head position may have changed
-		updateUnitVision(state);
+		refreshUnitVision(state);
 		// If rose up - update vision for units that see this
 		if (roseUp)
 		{
-			state.current_battle->queueVisionUpdate(position);
+			state.current_battle->queueVisionRefresh(position);
 		}
 	}
+}
+
+unsigned int BattleUnit::getHandAnimationFrame() const
+{
+	return ((firing_animation_ticks_remaining > 0 ? firing_animation_ticks_remaining
+	                                              : hand_animation_ticks_remaining) +
+	        TICKS_PER_FRAME_UNIT - 1) /
+	       TICKS_PER_FRAME_UNIT;
 }
 
 void BattleUnit::beginHandStateChange(HandState state)
@@ -2404,18 +2614,22 @@ void BattleUnit::setFacing(GameState &state, Vec2<int> newFacing)
 	facing = newFacing;
 	goalFacing = newFacing;
 	turning_animation_ticks_remaining = 0;
-	updateUnitVision(state);
+	refreshUnitVision(state);
 }
 
 void BattleUnit::setMovementState(MovementState state)
 {
+	if (current_movement_state == state)
+	{
+		return;
+	}
 	current_movement_state = state;
 	switch (state)
 	{
 		case MovementState::None:
 			movement_ticks_passed = 0;
 			movement_sounds_played = 0;
-			ticksTillNextTargetCheck = 0;
+			ticksUntillNextTargetCheck = 0;
 			break;
 		case MovementState::Running:
 		case MovementState::Strafing:
@@ -2459,6 +2673,11 @@ Vec3<float> BattleUnit::getThrownItemLocation() const
 	                       2.0f / 40.0f};
 }
 
+unsigned int BattleUnit::getDistanceTravelled() const
+{
+	return movement_ticks_passed / TICKS_PER_UNIT_TRAVELLED;
+}
+
 bool BattleUnit::shouldPlaySoundNow()
 {
 	bool play = false;
@@ -2495,6 +2714,18 @@ bool BattleUnit::popFinishedMissions(GameState &state)
 		{
 			LogWarning("No next unit mission, going idle");
 			break;
+		}
+	}
+	return false;
+}
+
+bool BattleUnit::hasMovementQueued()
+{
+	for (auto &m : missions)
+	{
+		if (m->type == BattleUnitMission::Type::GotoLocation)
+		{
+			return true;
 		}
 	}
 	return false;
@@ -2643,6 +2874,7 @@ bool BattleUnit::setMission(GameState &state, BattleUnitMission *mission)
 		case BattleUnitMission::Type::ThrowItem:
 			if (!agent->type->inventory)
 			{
+				delete mission;
 				return false;
 			}
 			break;
@@ -2653,6 +2885,7 @@ bool BattleUnit::setMission(GameState &state, BattleUnitMission *mission)
 
 	if (!cancelMissions(state))
 	{
+		delete mission;
 		return false;
 	}
 
@@ -2665,12 +2898,13 @@ bool BattleUnit::setMission(GameState &state, BattleUnitMission *mission)
 			case BattleUnitMission::Type::ThrowItem:
 			{
 				// FIXME: actually read the option
-				bool USER_OPTION_ALLOW_INSTANT_THROWS = false;
+				bool USER_OPTION_ALLOW_INSTANT_THROWS = true;
 				if (USER_OPTION_ALLOW_INSTANT_THROWS &&
 				    canAfford(state, BattleUnitMission::getThrowCost(*this)))
 				{
-					setBodyState(state, current_body_state);
-					setFacing(state, facing);
+					setMovementState(MovementState::None);
+					setBodyState(state, BodyState::Standing);
+					setFacing(state, BattleUnitMission::getFacing(*this, mission->targetLocation));
 					missions.clear();
 				}
 				break;
@@ -2742,6 +2976,7 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool t
 		if (mission->type == BattleUnitMission::Type::DropItem ||
 		    mission->type == BattleUnitMission::Type::ThrowItem)
 		{
+			delete mission;
 			return false;
 		}
 	}
@@ -2770,6 +3005,7 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool t
 					case BattleUnitMission::Type::RestartNextMission:
 					case BattleUnitMission::Type::GotoLocation:
 					case BattleUnitMission::Type::Turn:
+						delete mission;
 						return false;
 					// Missions that can be overwritten
 					case BattleUnitMission::Type::AcquireTU:
@@ -2822,7 +3058,7 @@ Vec3<int> rotate(Vec3<int> vec, int rotation)
 }
 
 void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &selectedUnits,
-                           Vec3<int> targetLocation, bool demandGiveWay)
+                           Vec3<int> targetLocation, bool demandGiveWay, int maxIterations)
 {
 	// Legend:
 	//
@@ -2918,6 +3154,13 @@ void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &se
 	{
 		return;
 	}
+	else if (selectedUnits.size() == 1)
+	{
+		selectedUnits.front()->setMission(
+		    state, BattleUnitMission::gotoLocation(*selectedUnits.front(), targetLocation, 0,
+		                                           demandGiveWay, true, 20, false, maxIterations));
+		return;
+	}
 
 	UString log = ";";
 	log += format("\nGroup move order issued to %d, %d, %d. Looking for the leader. Total number "
@@ -2946,12 +3189,17 @@ void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &se
 		auto curUnit = *itUnit;
 		log += format("\nTrying unit %s for leader", curUnit.id);
 
-		auto mission = BattleUnitMission::gotoLocation(*curUnit, targetLocation, 0, demandGiveWay);
+		auto mission = BattleUnitMission::gotoLocation(*curUnit, targetLocation, 0, demandGiveWay,
+		                                               true, 20, false, maxIterations);
 		bool missionAdded = curUnit->setMission(state, mission);
 		if (missionAdded)
 		{
 			mission->start(state, *curUnit);
-			if (!mission->currentPlannedPath.empty())
+			if (mission->currentPlannedPath.empty())
+			{
+				mission->cancelled = true;
+			}
+			else
 			{
 				auto unitTarget = mission->currentPlannedPath.back();
 				int absX = std::abs(targetLocation.x - unitTarget.x);
@@ -2969,15 +3217,18 @@ void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &se
 					minDistance = distance;
 					leadUnit = curUnit;
 					leadMission = mission;
+					if (distance == 0)
+					{
+						log += format("\nUnit could reach target, chosen to be the leader.");
+						break;
+					}
 				}
-				if (distance == 0)
+				else
 				{
-					log += format("\nUnit could reach target, chosen to be the leader.");
-					break;
+					mission->cancelled = true;
 				}
 			}
 		}
-		mission->cancelled = true;
 		if (missionAdded)
 		{
 			log += format("\nUnit could not path to target, trying next one.");
@@ -2986,7 +3237,7 @@ void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &se
 		}
 		else
 		{
-			log += format("\nUnit could not set mission, removing.");
+			log += format("\nUnit could not set a goto mission, removing him.");
 			// Unit cannot add a movement mission - remove him
 			itUnit = units.erase(itUnit);
 		}
@@ -3067,8 +3318,9 @@ void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &se
 			if (!path.empty() && path.back() == targetLocationOffsetted)
 			{
 				log += format("\nLocation checks out, pathing to it");
-				unit->setMission(state,
-				                 BattleUnitMission::gotoLocation(*unit, targetLocationOffsetted));
+				unit->setMission(state, BattleUnitMission::gotoLocation(
+				                            *unit, targetLocationOffsetted, 0, demandGiveWay, true,
+				                            20, false, maxIterations));
 				break;
 			}
 			log += format("\nLocation was unreachable, trying next one");

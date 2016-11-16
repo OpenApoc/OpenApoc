@@ -87,7 +87,7 @@ void BattleDoor::setDoorState(GameState &state, bool open)
 			continue;
 		}
 		mp->tileObject->getOwningTile()->updateBattlescapeParameters();
-		state.current_battle->queueVisionUpdate(mp->position);
+		state.current_battle->queueVisionRefresh(mp->position);
 	}
 }
 

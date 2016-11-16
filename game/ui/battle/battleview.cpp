@@ -1508,20 +1508,6 @@ void BattleView::orderDrop(bool right)
 
 void BattleView::orderSelect(StateRef<BattleUnit> u, bool inverse, bool additive)
 {
-	UString log = "";
-	log += format("\nOrder to select unit %s.", u.id.cStr());
-	log += format("\nMissions [%d]:", (int)u->missions.size());
-	for (auto &m : u->missions)
-	{
-		log += format("\n%s", m->getName());
-	}
-	log += format("\nSeen units [%d]:", (int)u->visibleUnits.size());
-	for (auto &unit : u->visibleUnits)
-	{
-		log += format("\n%s", unit.id);
-	}
-	LogWarning("%s", log.cStr());
-
 	auto pos =
 	    std::find(battle.battleViewSelectedUnits.begin(), battle.battleViewSelectedUnits.end(), u);
 	if (inverse)
@@ -1695,8 +1681,8 @@ void BattleView::eventOccurred(Event *e)
 	     e->keyboard().KeyCode == SDLK_SPACE || e->keyboard().KeyCode == SDLK_RSHIFT ||
 	     e->keyboard().KeyCode == SDLK_LSHIFT || e->keyboard().KeyCode == SDLK_RALT ||
 	     e->keyboard().KeyCode == SDLK_LALT || e->keyboard().KeyCode == SDLK_RCTRL ||
-	     e->keyboard().KeyCode == SDLK_LCTRL || e->keyboard().KeyCode == SDLK_f
-			|| e->keyboard().KeyCode == SDLK_r))
+	     e->keyboard().KeyCode == SDLK_LCTRL || e->keyboard().KeyCode == SDLK_f ||
+	     e->keyboard().KeyCode == SDLK_r))
 	{
 		switch (e->keyboard().KeyCode)
 		{
@@ -1769,13 +1755,7 @@ void BattleView::eventOccurred(Event *e)
 			}
 			case SDLK_r:
 			{
-				for (auto &entry : battle.visibleTiles)
-				{
-					for (unsigned i = 0;i < entry.second.size();i++)
-					{
-						entry.second[i] = true;
-					}
-				}
+				revealWholeMap = !revealWholeMap;
 				break;
 			}
 		}
@@ -1953,6 +1933,7 @@ void BattleView::eventOccurred(Event *e)
 					{
 						UString debug = "";
 						debug += format("\nDEBUG INFORMATION ABOUT TILE %d, %d, %d", t.x, t.y, t.z);
+						debug += format("\n LOS BLOCK %d", battle.getLosBlockID(t.x, t.y, t.z));
 						auto &map = *battle.map;
 						auto tile = map.getTile(t);
 						for (auto &o : tile->ownedObjects)
@@ -2010,6 +1991,29 @@ void BattleView::eventOccurred(Event *e)
 										}
 									}
 								}
+							}
+						}
+
+						auto uto = tile->getUnitIfPresent();
+						if (uto)
+						{
+							auto u = uto->getUnit();
+							debug += format("\nContains unit %s.", u->id.cStr());
+							debug += format("\nPosition: %f, %f, %f", u->position.x, u->position.y,
+							                u->position.z);
+							debug += format("\nGoal: %f, %f, %f", u->goalPosition.x,
+							                u->goalPosition.y, u->goalPosition.z);
+							debug += format("\nCurrent movement: %d, falling: %d",
+							                (int)u->current_movement_state, (int)u->falling);
+							debug += format("\nMissions [%d]:", (int)u->missions.size());
+							for (auto &m : u->missions)
+							{
+								debug += format("\n%s", m->getName());
+							}
+							debug += format("\nSeen units [%d]:", (int)u->visibleUnits.size());
+							for (auto &unit : u->visibleUnits)
+							{
+								debug += format("\n%s", unit.id);
 							}
 						}
 						LogWarning("%s", debug.cStr());

@@ -109,6 +109,8 @@
 		<member>equipment_layout</member>
 		<member>can_improve</member>
 		<member>playable</member>
+		<member>allowsDirectControl</member>
+		<member>aiType</member>
 		<member>score</member>
 		<member>walkSfx</member>
 		<member>crySfx</member>
@@ -302,6 +304,7 @@
 		<member>targetBodyState</member>
 		<member>currentPlannedPath</member>
 		<member>allowRunningAway</member>
+		<member>maxIterations</member>
 		<member>cancelled</member>
 	</object>
 	<object>
@@ -354,7 +357,7 @@
 		<member>transparent</member>
 		<member>sfxIndex</member>
 		<member>door</member>
-		<member>los_through_terrain</member>
+		<member>blocksLOS</member>
 		<member>floor</member>
 		<member>gravlift</member>
 		<member>movement_cost</member>
@@ -373,7 +376,6 @@
 		<member>size</member>
 		<member>battle_map</member>
 		<member>los_blocks</member>
-		<member>tileToLosBlock</member>
 		<member>visibleTiles</member>
 		<member>visibleBlocks</member>
 		<member>visibleUnits</member>
@@ -509,7 +511,7 @@
 		<member>targetUnit</member>
 		<member>focusUnit</member>
 		<member>focusedByUnits</member>
-		<member>ticksTillNextTargetCheck</member>
+		<member>ticksUntillNextTargetCheck</member>
 		<member>experiencePoints</member>
 		<member>fatalWounds</member>
 		<member>healingBodyPart</member>
@@ -530,6 +532,7 @@
 		<member>target_hand_state</member>
 		<member>movement_ticks_passed</member>
 		<member>movement_sounds_played</member>
+		<member>current_movement_state</member>
 		<member>turning_animation_ticks_remaining</member>
 		<member>missions</member>
 		<member>position</member>
@@ -548,6 +551,8 @@
 		<member>visibleUnits</member>
 		<member>visibleEnemies</member>
 		<member>ticksUntilAutoTurnAvailable</member>
+		<member>ticksUntilAutoTargetAvailable</member>
+		<member>aiState</member>
 	</object>
 	<object>
 		<name>BattleItem</name>
@@ -1325,4 +1330,31 @@
 		<value>Running</value>
 		<value>Strafing</value>
 	</enum>
+	<enum>
+		<name>AIType</name>
+		<value>None</value>
+		<value>Civilian</value>
+		<value>Loner</value>
+		<value>Group</value>
+		<value>Panic</value>
+		<value>Berserk</value>
+	</enum>
+	<enum>
+		<name>AIAction::Type</name>
+		<value>Idle</value>
+		<value>AttackWeapon</value>
+		<value>AttackGrenade</value>
+		<value>AttackPsiPanic</value>
+		<value>AttackPsiStun</value>
+		<value>AttackPsiMC</value>
+		<value>Move</value>
+		<value>Retreat</value>
+	</enum>
+	<object>
+		<name>AIState</name>
+		<member>type</member>
+		<member>ticksUntilThinkAgain</member>
+		<member>waitForCompletion</member>
+		<member>offensive</member>
+	</object>
 </openapoc_gamestate>

@@ -1065,23 +1065,6 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 			}
 		}
 
-		// Fill up tiles
-		b->tileToLosBlock = std::vector<int>(b->size.x * b->size.y * b->size.z, 0);
-		for (int i = 0; i < (int)b->los_blocks.size(); i++)
-		{
-			auto l = b->los_blocks[i];
-			for (int x = l->start.x; x < l->end.x; x++)
-			{
-				for (int y = l->start.y; y < l->end.y; y++)
-				{
-					for (int z = l->start.z; z < l->end.z; z++)
-					{
-						b->tileToLosBlock[z * b->size.x * b->size.y + y * b->size.x + x] = i;
-					}
-				}
-			}
-		}
-
 		// Fill up visibility
 		for (auto &o : b->participants)
 		{

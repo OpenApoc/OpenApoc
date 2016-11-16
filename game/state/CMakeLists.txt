@@ -19,6 +19,7 @@ set (GAMESTATE_SOURCE_FILES
 	ufopaedia.cpp
 	base/base.cpp
 	base/facility.cpp
+	battle/ai.cpp
 	battle/battle.cpp
 	battle/battledoor.cpp
 	battle/battleexplosion.cpp
@@ -84,6 +85,7 @@ set (GAMESTATE_HEADER_FILES
 	ufopaedia.h
 	base/base.h
 	base/facility.h
+	battle/ai.h
 	battle/battle.h
 	battle/battlecommonimagelist.h
 	battle/battlecommonsamplelist.h

@@ -533,6 +533,8 @@
         <inventory>true</inventory>
 		<can_improve>true</can_improve>
 		<playable>true</playable>
+		<allowsDirectControl>true</allowsDirectControl>
+		<aiType>Group</aiType>
         <equipment_layout>AGENTEQUIPMENTLAYOUT_FULL</equipment_layout>
 		<score>10</score>
 		<damageSfx>
@@ -772,6 +774,8 @@
         <inventory>true</inventory>
 		<can_improve>true</can_improve>
 		<playable>true</playable>
+		<allowsDirectControl>true</allowsDirectControl>
+		<aiType>Group</aiType>
         <equipment_layout>AGENTEQUIPMENTLAYOUT_FULL</equipment_layout>
 		<score>10</score>
 		<damageSfx>
@@ -963,6 +967,8 @@
         <inventory>true</inventory>
 		<can_improve>true</can_improve>
 		<playable>true</playable>
+		<allowsDirectControl>true</allowsDirectControl>
+		<aiType>Group</aiType>
         <equipment_layout>AGENTEQUIPMENTLAYOUT_FULL</equipment_layout>
 		<score>10</score>
 		<damageSfx>
@@ -1110,7 +1116,8 @@
         </armor>
         <damage_modifier>DAMAGEMODIFIER_GUN_EMPLACEMENT</damage_modifier>
         <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
-		<score>10</score>
+		<aiType>Loner</aiType>
+        <score>10</score>
 		<built_in_weapon_right>AEQUIPMENTTYPE_X-COM_BASE_TURRET_LASER</built_in_weapon_right>
       </sp>
     </value>
@@ -1207,6 +1214,7 @@
         </armor>
         <damage_modifier>DAMAGEMODIFIER_GUN_EMPLACEMENT</damage_modifier>
         <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
+		<aiType>Loner</aiType>
 		<score>10</score>
 		<built_in_weapon_right>AEQUIPMENTTYPE_X-COM_BASE_TURRET_DISRUPTOR</built_in_weapon_right>
       </sp>

@@ -916,7 +916,8 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 
 BattleUnitMission *BattleUnitMission::gotoLocation(BattleUnit &u, Vec3<int> target, int facingDelta,
                                                    bool demandGiveWay, bool allowSkipNodes,
-                                                   int giveWayAttempts, bool allowRunningAway)
+                                                   int giveWayAttempts, bool allowRunningAway,
+                                                   int maxIterations)
 {
 	std::ignore = facingDelta;
 	auto *mission = new BattleUnitMission();
@@ -928,6 +929,7 @@ BattleUnitMission *BattleUnitMission::gotoLocation(BattleUnit &u, Vec3<int> targ
 	mission->allowRunningAway = allowRunningAway;
 	mission->targetBodyState = u.target_body_state;
 	mission->targetFacing = u.goalFacing;
+	mission->maxIterations = maxIterations;
 
 	return mission;
 }
@@ -1255,24 +1257,12 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 		{
 			if (finished)
 			{
-				if (u.current_movement_state != MovementState::None)
-				{
-					u.setMovementState(MovementState::None);
-				}
 				if (allowRunningAway)
 				{
 					if (u.tileObject->getOwningTile()->getHasExit(u.isLarge()))
 					{
 						u.retreat(state);
 					}
-				}
-			}
-			else // = not finished
-			{
-				// Update movement speed if we're already moving
-				if (u.current_movement_state != MovementState::None)
-				{
-					makeAgentMove(u);
 				}
 			}
 			return;
@@ -1306,20 +1296,13 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 			}
 			return;
 		case Type::ReachGoal:
-			if (finished)
-			{
-				if (u.current_movement_state != MovementState::None)
-				{
-					u.setMovementState(MovementState::None);
-				}
-			}
-			else if (u.facing == u.goalFacing && u.facing == targetFacing &&
-			         u.current_body_state == u.target_body_state &&
-			         u.current_body_state == targetBodyState)
+			if (!finished && u.facing == u.goalFacing && u.facing == targetFacing &&
+			    u.current_body_state == u.target_body_state &&
+			    u.current_body_state == targetBodyState)
 			{
 				// Reaching goal means we already requested this node and paid the price, so no TU
 				// cost
-				makeAgentMove(u);
+				u.startMoving();
 			}
 			return;
 		case Type::AcquireTU:
@@ -1461,14 +1444,6 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 		}
 		case Type::ThrowItem:
 		{
-			// Instant throw allows us to instantly change state and facing for free
-			// FIXME: actually read the option
-			bool USER_OPTION_ALLOW_INSTANT_THROWS = false;
-			if (USER_OPTION_ALLOW_INSTANT_THROWS)
-			{
-				u.setBodyState(state, BodyState::Standing);
-				u.setFacing(state, getFacing(u, targetLocation));
-			}
 			return;
 		}
 		case Type::DropItem:
@@ -1517,7 +1492,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 			}
 			if (currentPlannedPath.size() == 0)
 			{
-				this->setPathTo(u, this->targetLocation);
+				this->setPathTo(u, this->targetLocation, maxIterations);
 			}
 			return;
 		case Type::Turn:
@@ -1747,6 +1722,8 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 		{
 			// Unit's patience has ran out
 			currentPlannedPath.clear();
+			demandGiveWay = false;
+			giveWayAttemptsRemaining = 1;
 			u.addMission(state, Type::RestartNextMission);
 			return false;
 		}
@@ -1794,9 +1771,6 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 
 	// Finally, we're moving!
 	currentPlannedPath.pop_front();
-
-	// FIXME: Deplete stamina according to encumbrance if running
-	makeAgentMove(u);
 
 	dest = u.tileObject->map.getTile(pos)->getRestingPosition(u.isLarge());
 	return true;
@@ -1954,24 +1928,6 @@ int BattleUnitMission::getBodyStateChangeCost(BattleUnit &u, BodyState from, Bod
 			return getThrowCost(u);
 		default:
 			return 0;
-	}
-}
-
-void BattleUnitMission::makeAgentMove(BattleUnit &u)
-{
-	// FIXME: Account for different movement ways (strafing, backwards etc.)
-	if (u.movement_mode == MovementMode::Running && u.current_body_state != BodyState::Prone)
-	{
-		u.setMovementState(MovementState::Running);
-	}
-	else if (u.current_body_state != BodyState::Kneeling &&
-	         u.current_body_state != BodyState::Throwing)
-	{
-		u.setMovementState(MovementState::Normal);
-	}
-	else
-	{
-		LogError("Trying to move while kneeling or throwing, wtf?");
 	}
 }
 

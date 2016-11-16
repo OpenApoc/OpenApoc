@@ -227,9 +227,9 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 		}
 		else
 		{
-			LogError("Surprisingly, no nodes to expand! Closest path {%d,%d,%d}",
-			         closestNodeSoFar->thisTile->position.x, closestNodeSoFar->thisTile->position.y,
-			         closestNodeSoFar->thisTile->position.z);
+			LogInfo("Surprisingly, no nodes to expand! Closest path {%d,%d,%d}",
+			        closestNodeSoFar->thisTile->position.x, closestNodeSoFar->thisTile->position.y,
+			        closestNodeSoFar->thisTile->position.z);
 		}
 	}
 

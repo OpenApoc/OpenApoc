@@ -23,6 +23,7 @@ class AgentBodyType;
 class BattleUnit;
 class DamageModifier;
 class VoxelMap;
+enum class AIType;
 
 enum class BodyPart
 {
@@ -75,7 +76,7 @@ class AgentStats
 	int accuracy = 0;
 	int reactions = 0;
 	int speed = 0;
-	int getActualSpeedValue() const { return speed / 8; }
+	int getActualSpeedValue() const { return (speed + 3) / 8; }
 	int getDisplaySpeedValue() const { return 8 * getActualSpeedValue(); }
 	int time_units = 0;
 	void restoreTU() { time_units = speed; }
@@ -150,6 +151,8 @@ class AgentType : public StateObject<AgentType>
 	static AEquipmentSlotType getArmorSlotType(BodyPart bodyPart);
 	// Enums for animation
 
+	AgentType();
+
 	UString id;
 	UString name;
 	Role role = Role::Soldier;
@@ -190,6 +193,11 @@ class AgentType : public StateObject<AgentType>
 	bool can_improve = false;
 	// Can this be generated for the player
 	bool playable = false;
+	// Can this be controlled by a player (if false, even when control is gained, AI will act)
+	// For example, X-Com base turrets behave this way (yours, give you sight, but can't control)
+	bool allowsDirectControl = false;
+	// AI type used by this
+	AIType aiType;
 
 	// Sounds unit makes when walking, overrides terrain's walk sounds if present
 	std::vector<sp<Sample>> walkSfx;

@@ -1,0 +1,381 @@
+LAZY COLLISION ALGORITHM
+	
+	if (lazy) //Only LOS mode implemented for now
+	{
+		const Tile *lastT = nullptr;
+		Vec3<int> lastTile = { -1, -1, -1 };
+		// "point" is thee corrdinate measured in voxel scale units, meaning,
+		// voxel point coordinate within map
+		for (auto &point : line)
+		{
+			auto tile = point / tileSize;
+			if (tile == lastTile)
+			{
+				continue;
+			}
+			if (tile.x < 0 || tile.x >= size.x || tile.y < 0 || tile.y >= size.y || tile.z < 0 ||
+				tile.z >= size.z)
+			{
+				if (check_full_path)
+				{
+					lastTile = tile;
+					continue;
+				}
+				else
+				{
+					return c;
+				}
+			}
+			const Tile *t = this->getTile(tile);
+			if (storeTilesPassed)
+			{
+				c.tilesPassed.push_back(t);
+			}
+			if (lastT)
+			{
+				bool blockAfter = false;
+				bool blockBefore = false;
+				if (tile.x != lastTile.x)
+				{
+					if (tile.x > lastTile.x)
+					{
+						if (!blockBefore && t->visionBlockLeftWall)
+						{
+							blockBefore = true;
+							blockAfter = true;
+						}
+					}
+					else
+					{
+						if (!blockAfter && lastT->visionBlockLeftWall)
+						{
+							blockAfter = true;
+						}
+					}
+				}
+				if (tile.y != lastTile.y)
+				{
+					if (tile.y > lastTile.y)
+					{
+						if (!blockBefore && t->visionBlockRightWall)
+						{
+							blockBefore = true;
+							blockAfter = true;
+						}
+					}
+					else
+					{
+						if (!blockAfter && lastT->visionBlockRightWall)
+						{
+							blockAfter = true;
+						}
+					}
+				}
+				if (tile.z != lastTile.z)
+				{
+					if (tile.z > lastTile.z)
+					{
+						if (!blockBefore && t->visionBlockGround)
+						{
+							blockBefore = true;
+							blockAfter = true;
+						}
+					}
+					else
+					{
+						if (!blockAfter && lastT->visionBlockGround)
+						{
+							blockAfter = true;
+						}
+					}
+				}
+				if (t->visionBlockFeature)
+				{
+					blockAfter = true;
+				}
+
+				if (blockBefore)
+				{
+					c.tilesPassed.pop_back();
+				}
+				if (blockAfter)
+				{
+					return c;
+				}
+			}
+			lastTile = tile;
+			lastT = t;
+		}
+	}
+
+PROPER VISION ALGORITHM (FROM X-COM 1&2): TOO SLOW, HAVE TO USE APOC's ALGO FOR NOW
+
+
+void BattleUnit::updateUnitVision(GameState &state)
+{
+	auto &battle = *state.current_battle;
+	auto &map = *battle.map;
+	auto lastVisibleUnits = visibleUnits;
+	visibleUnits.clear();
+	visibleEnemies.clear();
+
+	// Vision is actually updated only if conscious, otherwise we clear visible units and that's it
+	if (isConscious())
+	{
+
+		// Update unit's vision of los blocks
+		auto idx = battle.getLosBlockID(position.x, position.y, position.z);
+		if (!battle.visibleBlocks.at(owner).at(idx))
+		{
+			battle.visibleBlocks.at(owner).at(idx) = true;
+			auto l = battle.los_blocks.at(idx);
+			for (int x = l->start.x; x < l->end.x; x++)
+			{
+				for (int y = l->start.y; y < l->end.y; y++)
+				{
+					for (int z = l->start.z; z < l->end.z; z++)
+					{
+						battle.setVisible(owner, x, y, z);
+					}
+				}
+			}
+		}
+
+		// Update unit's vision of terrain
+		// Update unit's vision of other units
+
+		// Algorithm:
+		//
+		// This is UFO EU vision algorithm, I assume Apoc does the same (or similar)
+		// FOV is 90 degrees and vision deteriorates 1 tile forward per 2 tiles to the side
+		// Which means, unit can see 20 tiles straight forward, 
+		// or 19 tiles forward +-2 to the sides, 
+		// or 18 tiles forward +-4 to the sides etc.
+		// Two lines formed by this formula reach pure diagonal at 13
+		// Meaning, unit can see 13 tiles forward +-13 to the sides
+		//
+		// Reference links:
+		// http://www.ufopaedia.org/index.php/Line_of_sight
+		// http://www.ufopaedia.org/index.php/File:VizRange20.gif
+		//
+		// If unit is looking N/S/E/W, algorithm is simple.
+		// Let axis unit is facing on be A1 (X if E/W, Y if N/S), and other axis be A2.
+		// Let coordinates on these axes be called C1 and C2.
+		// C2 goes from -13 to +13 C1 is calculated using formula C1 = 20 - (|C2| + 1) / 2
+		// We then apply sign: if unit is facing towards +inf on A1, sign is "+", else sign is "-"
+		// This way, we sweep the 90 degree arc.
+		//
+		// If unit is looking diagonally, algorithm is more complicated.
+		// We do the same as above, but we must flip axes for a half of the arc.
+		// We must flip signs too. This is done after we process the middle value.
+		//
+		// For all z levels except topmost and bottommost, we only need to check the furthest away tile
+		// For z levels 0 and max, we should check every tile, unless we are ourselves at that level
+
+		auto eyesPos = getMuzzleLocation();
+		std::set<int> zLayersToFullyScan;
+
+		// LOS to the last point of every layer except topmost and bottommost level
+		bool diagonal = facing.x != 0 && facing.y != 0;
+		bool swap = facing.x == 0;
+		bool inverseC1 = false; // changed halfway when processing diagonals
+		int signC1 = (swap && facing.y < 0) || (!swap && facing.x < 0) ? -1 : 1;
+		int signC2 = (diagonal && facing.y > 0) ? -1 : 1;
+		for (int i = -13; i < 14; i++)
+		{
+			int c2 = inverseC1 ? 1 - i : i;
+			int c1 = 20 - (std::abs(c2) + 1) / 2;
+			int x = position.x + (swap ? c2 * signC2 : c1 * signC1);
+			int y = position.y + (swap ? c1 * signC1 : c2 * signC2);
+
+			if (i == 0 && diagonal)
+			{
+				swap = !swap;
+				int sC1 = signC1;
+				signC1 = -signC2;
+				signC2 = -sC1;
+				inverseC1 = true;
+			}
+			for (int z = 0; z < battle.size.z; z++)
+			{
+				if ((z == 0 && (int)position.z != 0) || (z == battle.size.z - 1 && (int)position.z != battle.size.z - 1))
+				{
+					// We process it later
+					zLayersToFullyScan.insert(z);
+				}
+				else
+				{
+					calculateVisionTo(state, battle, map, eyesPos, x, y, z);
+				}
+			}
+		}
+
+		// LOS to every point for topmost and bottommost layers
+		for (auto z : zLayersToFullyScan)
+		{
+			if (diagonal)
+			{
+				for (int dx = 0; dx <= 20; dx++)
+				{
+					int x = position.x + dx * facing.x;
+
+					for (int dy = 0; dy <= 20; dy++)
+					{
+						if ((dx == 13 && dy > 13) 
+							|| (dy == 13 && dx > 13) 
+							|| (dx >= dy && dy / 2 > 20 - dx) 
+							|| (dy >= dx && dx / 2 > 20 - dy))
+						{
+							continue;
+						}
+
+						int y = position.y + dy * facing.y;
+
+						calculateVisionTo(state, battle, map, eyesPos, x, y, z);
+					}
+				}
+			}
+			else
+			{
+				for (int c1 = 0; c1 <= 20; c1++)
+				{
+					int c2Max = c1 == 13 ? 13 : std::min(c1, (20 - c1) * 2);
+
+					for (int c2 = -c2Max;c2 <= c2Max; c2++)
+					{
+						int x = position.x + (swap ? c2 : c1 * signC1);
+						int y = position.y + (swap ? c1 * signC1 : c2);
+
+						calculateVisionTo(state, battle, map, eyesPos, x, y, z);
+					}
+				}
+			}
+		}
+	}
+
+	// Add newly visible units to owner's list and enemy list
+	for (auto vu : visibleUnits)
+	{
+		// owner's visible units list
+		if (lastVisibleUnits.find(vu) == lastVisibleUnits.end())
+		{
+			state.current_battle->visibleUnits[owner].insert(vu);
+		}
+		// units's visible enemies list
+		if (owner->isRelatedTo(vu->owner) == Organisation::Relation::Hostile)
+		{
+			visibleEnemies.push_back(vu);
+			state.current_battle->visibleEnemies[owner].insert(vu);
+		}
+	}
+
+	// See if someone else sees a unit we stopped seeing
+	for (auto lvu : lastVisibleUnits)
+	{
+		if (visibleUnits.find(lvu) == visibleUnits.end())
+		{
+			bool someoneElseSees = false;
+			for (auto u : state.current_battle->units)
+			{
+				if (u.second->owner != owner)
+				{
+					continue;
+				}
+				if (u.second->visibleUnits.find(lvu) != u.second->visibleUnits.end())
+				{
+					someoneElseSees = true;
+					break;
+				}
+			}
+			if (!someoneElseSees)
+			{
+				state.current_battle->visibleUnits[owner].erase(lvu);
+				state.current_battle->visibleEnemies[owner].erase(lvu);
+			}
+		}
+	}
+}
+
+
+void BattleUnit::calculateVisionTo(GameState &state, Battle &battle, TileMap &map, Vec3<float> eyesPos, int x, int y, int z)
+{
+	// FIXME: Maybe this can be improved?
+	// If you set lazy to false, a proper los check is done, however, it is too slow
+	auto c = map.findCollision(eyesPos, { x + 0.5f, y + 0.5f, z + 0.5f }, mapPartSet,
+		tileObject, true, false, true, true);
+	if (c) // This is only done in non-lazy mode
+	{
+		// We ignore wall/ground if we come from outside the tile
+		auto t = c.obj->getType();
+		// FIXME: This does not work as intended. Need improvement
+		// Sometimes collision will happen with the feature instead of ground/wall
+		// This allows vision into tiles that should otherwise be concealed.
+		if ((t == TileObject::Type::Ground && z > position.z) ||
+			(t == TileObject::Type::LeftWall && x > position.x) ||
+			(t == TileObject::Type::RightWall && y > position.y))
+		{
+			c.tilesPassed.pop_back();
+		}
+	}
+	// Apply vision blockage
+	// We apply a median value accumulated in all tiles passed every time we pass a tile
+	// This makes it so that we do not over or under-apply smoke when going diagonally
+	float blockageAccumulatedSoFar = 0.0f;
+	int distanceToLastTile = 0;
+	float accumulatedSinceLastTile = 0;
+	int numberTilesWithBlockage = 0;
+	auto ourTile = (Vec3<int>)position;
+	for (auto t : c.tilesPassed)
+	{
+		auto vec = t->position;
+		if (vec == ourTile)
+		{
+			continue;
+		}
+
+		// Apply vision blockage if we passed at least 1 tile
+		auto thisDistance = sqrtf((vec.x - position.x) * (vec.x - position.x) +
+			(vec.y - position.y) * (vec.y - position.y) +
+			(vec.z - position.z) * (vec.z - position.z));
+		if ((int)thisDistance > distanceToLastTile)
+		{
+			if (numberTilesWithBlockage > 0)
+			{
+				blockageAccumulatedSoFar += accumulatedSinceLastTile *
+					((int)thisDistance - distanceToLastTile) /
+					numberTilesWithBlockage;
+			}
+			distanceToLastTile = thisDistance;
+			accumulatedSinceLastTile = 0;
+			numberTilesWithBlockage = 0;
+		}
+
+		// Reached end of LOS with accumulated blockage
+		if ((int)(thisDistance + blockageAccumulatedSoFar) > 20)
+		{
+			break;
+		}
+
+		// Add this tile's vision blockage to accumulated since last tile blockage
+		auto thisBlockage = t->visionBlockValue;
+		if (thisBlockage > 0)
+		{
+			accumulatedSinceLastTile += thisBlockage;
+			numberTilesWithBlockage++;
+		}
+
+		// Mark tile visible
+		battle.setVisible(owner, vec.x, vec.y, vec.z);
+
+		// Mark units visible
+		auto unitOccupying = t->getUnitIfPresent(true, true);
+		if (unitOccupying)
+		{
+			auto u = unitOccupying->getUnit();
+			if (u->owner != owner)
+			{
+				visibleUnits.insert({ &state, u->id });
+			}
+		}
+	}
+}

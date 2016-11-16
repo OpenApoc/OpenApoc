@@ -136,6 +136,7 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 	// Ensure no hazard already there
 
 	sp<BattleHazard> existingHazard;
+	bool replaceWeaker = false;
 	auto targetTile = map.getTile(to.x, to.y, to.z);
 	for (auto obj : targetTile->ownedObjects)
 	{
@@ -146,12 +147,12 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 			if (existingHazard->damageType == spreadDamageType &&
 			    existingHazard->lifetime - existingHazard->age < ttl)
 			{
-				existingHazard = nullptr;
+				replaceWeaker = true;
 			}
 			break;
 		}
 	}
-	if (existingHazard)
+	if (!replaceWeaker && existingHazard)
 	{
 		return false;
 	}
@@ -180,17 +181,24 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 	}
 
 	// If reached here try place hazard
-	auto hazard = state.current_battle->placeHazard(
-	    state, spreadDamageType, {to.x, to.y, to.z}, lifetime, power,
-	    damageType->effectType == DamageType::EffectType::Fire ? 6 : 1);
-	if (hazard && damageType->effectType != DamageType::EffectType::Fire)
+	if (replaceWeaker)
 	{
-		hazard->age = age;
-		hazard->ticksUntilVisible = 0;
-		return true;
+		existingHazard->lifetime = lifetime;
+		existingHazard->age = age;
+		existingHazard->ticksUntilVisible = 0;
 	}
-
-	return false;
+	else
+	{
+		auto hazard = state.current_battle->placeHazard(
+		    state, spreadDamageType, {to.x, to.y, to.z}, lifetime, power,
+		    damageType->effectType == DamageType::EffectType::Fire ? 6 : 1);
+		if (hazard && damageType->effectType != DamageType::EffectType::Fire)
+		{
+			hazard->age = age;
+			hazard->ticksUntilVisible = 0;
+		}
+	}
+	return true;
 }
 
 void BattleHazard::grow(GameState &state)
@@ -340,7 +348,7 @@ void BattleHazard::updateTileVisionBlock(GameState &state)
 	    damageType->effectType == DamageType::EffectType::Smoke ? (lifetime - age) / 3 : 0;
 	if (tileObject->getOwningTile()->updateVisionBlockage(visionBlock))
 	{
-		state.current_battle->queueVisionUpdate(position);
+		state.current_battle->queueVisionRefresh(position);
 	}
 }
 

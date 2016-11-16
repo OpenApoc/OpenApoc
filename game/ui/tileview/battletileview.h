@@ -89,6 +89,8 @@ class BattleTileView : public TileView
 	void resetPathPreview();
 	void updatePathPreview();
 
+	bool revealWholeMap = false;
+
 	void setZLevel(int zLevel);
 	int getZLevel();
 
