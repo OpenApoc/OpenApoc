@@ -21,12 +21,9 @@ class UString;
 class Data
 {
   public:
-	wp<ResourceAliases> aliases;
 	FileSystem fs;
 
-	static Data *createData(std::vector<UString> paths, int imageCacheSize = 100,
-	                        int imageSetCacheSize = 10, int voxelCacheSize = 1,
-	                        int fontStringCacheSize = 100, int paletteCacheSize = 10);
+	static Data *createData(std::vector<UString> paths);
 	virtual ~Data() = default;
 	Data(std::vector<UString> paths) : fs(paths) {}
 
@@ -37,6 +34,13 @@ class Data
 	virtual sp<Palette> loadPalette(const UString &path) = 0;
 	virtual sp<VoxelSlice> loadVoxelSlice(const UString &path) = 0;
 	virtual sp<Video> loadVideo(const UString &path) = 0;
+
+	virtual void addSampleAlias(const UString &name, const UString &value) = 0;
+	virtual void addMusicAlias(const UString &name, const UString &value) = 0;
+	virtual void addImageAlias(const UString &name, const UString &value) = 0;
+	virtual void addImageSetAlias(const UString &name, const UString &value) = 0;
+	virtual void addPaletteAlias(const UString &name, const UString &value) = 0;
+	virtual void addVoxelSliceAlias(const UString &name, const UString &value) = 0;
 
 	virtual sp<PaletteImage> getFontStringCacheEntry(const UString &font_name,
 	                                                 const UString &text) = 0;

@@ -207,24 +207,24 @@ sp<ImageSet> PCKLoader::load(Data &d, UString PckFilename, UString TabFilename)
 	auto pck = d.fs.open(PckFilename);
 	if (!pck)
 	{
-		LogError("Failed to open PCK file \"%s\"", PckFilename.cStr());
+		LogError("Failed to open PCK file \"%s\"", PckFilename);
 		return nullptr;
 	}
 	auto tab = d.fs.open(TabFilename);
 	if (!tab)
 	{
-		LogError("Failed to open TAB file \"%s\"", TabFilename.cStr());
+		LogError("Failed to open TAB file \"%s\"", TabFilename);
 		return nullptr;
 	}
 
 	auto tabMultiplier = guessTabMultiplier(pck, tab);
 	if (tabMultiplier == 0)
 	{
-		LogWarning("Failed to guess tab file type for \"%s\"", TabFilename.cStr());
+		LogWarning("Failed to guess tab file type for \"%s\"", TabFilename);
 		return nullptr;
 	}
 
-	LogInfo("Reading \"%s\" with tab multiplier %u", TabFilename.cStr(), tabMultiplier);
+	LogInfo("Reading \"%s\" with tab multiplier %u", TabFilename, tabMultiplier);
 
 	unsigned int endIdx = (tab.size() / 4);
 
@@ -337,13 +337,13 @@ sp<ImageSet> PCKLoader::loadStrat(Data &data, UString PckFilename, UString TabFi
 	auto tabFile = data.fs.open(TabFilename);
 	if (!tabFile)
 	{
-		LogWarning("Failed to open tab \"%s\"", TabFilename.cStr());
+		LogWarning("Failed to open tab \"%s\"", TabFilename);
 		return nullptr;
 	}
 	auto pckFile = data.fs.open(PckFilename);
 	if (!pckFile)
 	{
-		LogWarning("Failed to open tab \"%s\"", TabFilename.cStr());
+		LogWarning("Failed to open tab \"%s\"", TabFilename);
 		return nullptr;
 	}
 
@@ -465,13 +465,13 @@ sp<ImageSet> PCKLoader::loadShadow(Data &data, UString PckFilename, UString TabF
 	auto tabFile = data.fs.open(TabFilename);
 	if (!tabFile)
 	{
-		LogWarning("Failed to open tab \"%s\"", TabFilename.cStr());
+		LogWarning("Failed to open tab \"%s\"", TabFilename);
 		return nullptr;
 	}
 	auto pckFile = data.fs.open(PckFilename);
 	if (!pckFile)
 	{
-		LogWarning("Failed to open tab \"%s\"", TabFilename.cStr());
+		LogWarning("Failed to open tab \"%s\"", TabFilename);
 		return nullptr;
 	}
 	imageSet->maxSize = {0, 0};

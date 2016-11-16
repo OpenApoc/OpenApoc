@@ -1,5 +1,5 @@
-#include "game/state/rules/vehicle_type.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/vehicle_type.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include <glm/glm.hpp>
@@ -86,7 +86,7 @@ template <> sp<VehicleType> StateObject<VehicleType>::get(const GameState &state
 	auto it = state.vehicle_types.find(id);
 	if (it == state.vehicle_types.end())
 	{
-		LogError("No vehicle type matching ID \"%s\"", id.cStr());
+		LogError("No vehicle type matching ID \"%s\"", id);
 		return nullptr;
 	}
 	return it->second;

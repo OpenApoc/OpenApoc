@@ -209,12 +209,12 @@ static void initLogger()
 
 void _logAssert(UString prefix, UString string, int line, UString file)
 {
-	Log(LogLevel::Error, prefix, "Assertion \"%s\" failed at %s:%d", string.cStr(), file.cStr(),
-	    line);
+	Log(LogLevel::Error, prefix,
+	    ::OpenApoc::format("Assertion \"%s\" failed at %s:%d", string.cStr(), file.cStr(), line));
 	exit(EXIT_FAILURE);
 }
 
-void Log(LogLevel level, UString prefix, const char *format, ...)
+void Log(LogLevel level, UString prefix, const UString &text)
 {
 	bool exit_app = false;
 	const char *level_prefix;
@@ -253,27 +253,16 @@ void Log(LogLevel level, UString prefix, const char *format, ...)
 
 	if (writeToFile)
 	{
-		va_list arglist;
-		va_start(arglist, format);
-		fprintf(outFile, "%s %llu %s: ", level_prefix, clockns, prefix.cStr());
-		vfprintf(outFile, format, arglist);
-
+		fprintf(outFile, "%s %llu %s: %s\n", level_prefix, clockns, prefix.cStr(), text.cStr());
 		// On error print a backtrace to the log file
 		if (level <= backtraceLogLevel)
 			print_backtrace(outFile);
-		fprintf(outFile, "\n");
-		va_end(arglist);
 		fflush(outFile);
 	}
 
 	if (writeToStderr)
 	{
-		va_list arglist;
-		va_start(arglist, format);
-		fprintf(stderr, "%s %llu %s: ", level_prefix, clockns, prefix.cStr());
-		vfprintf(stderr, format, arglist);
-		fprintf(stderr, "\n");
-		va_end(arglist);
+		fprintf(stderr, "%s %llu %s: %s\n", level_prefix, clockns, prefix.cStr(), text.cStr());
 		if (level <= backtraceLogLevel)
 			print_backtrace(stderr);
 		fflush(stderr);
@@ -291,25 +280,11 @@ void Log(LogLevel level, UString prefix, const char *format, ...)
 		}
 		else
 		{
-			va_list arglist;
-			// Show dialog
-			/* How big should the string be? */
-			va_start(arglist, format);
-			auto strSize = vsnprintf(NULL, 0, format, arglist);
-			strSize += 1; // NULL terminator
-			up<char[]> string(new char[strSize]);
-			va_end(arglist);
-
-			/* Now format the string */
-			va_start(arglist, format);
-			vsnprintf(string.get(), strSize, format, arglist);
-			va_end(arglist);
-
 			SDL_MessageBoxData mBoxData;
 			mBoxData.flags = SDL_MESSAGEBOX_ERROR;
 			mBoxData.window = NULL; // Might happen before we get our window?
 			mBoxData.title = "OpenApoc ERROR";
-			mBoxData.message = string.get();
+			mBoxData.message = text.cStr();
 			mBoxData.numbuttons = 2;
 			SDL_MessageBoxButtonData buttons[2];
 			buttons[0].flags = SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT;

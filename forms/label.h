@@ -39,7 +39,7 @@ class Label : public Control
 	void setFont(sp<BitmapFont> NewFont);
 
 	sp<Control> copyTo(sp<Control> CopyParent) override;
-	void configureSelfFromXml(tinyxml2::XMLElement *Element) override;
+	void configureSelfFromXml(pugi::xml_node *node) override;
 };
 
 }; // namespace OpenApoc

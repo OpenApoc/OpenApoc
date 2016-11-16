@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <!-- Bases tab -->
+  <form id="FORM_CITY_UI_1">
+    <style minwidth="640" minheight="128">
+      <position x="centre" y="bottom"/>
+      <size width="640" height="128"/>
+      <graphic>
+        <size width="640" height="128"/>
+        <image>RAW:xcom3/ufodata/isobord1.dat:640:128:xcom3/ufodata/pal_01.dat</image>
+      </graphic>
+      <graphicbutton id="BUTTON_BASE_1">
+        <position x="90" y="52"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_2">
+        <position x="126" y="52"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_3">
+        <position x="162" y="52"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_4">
+        <position x="198" y="52"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_5">
+        <position x="234" y="52"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_6">
+        <position x="270" y="52"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_7">
+        <position x="306" y="52"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_8">
+        <position x="342" y="52"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <label id="TEXT_BASE_NAME">
+        <position x="95" y="95"/>
+        <size width="275" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphicbutton id="BUTTON_SHOW_BASE">
+        <position x="408" y="75"/>
+        <size width="27" height="46"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:40:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BUILD_BASE">
+        <position x="443" y="75"/>
+        <size width="27" height="46"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:41:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+    </style>
+  </form>
+</openapoc>

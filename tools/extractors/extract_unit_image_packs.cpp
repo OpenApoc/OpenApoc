@@ -9,8 +9,9 @@
 namespace OpenApoc
 {
 
-sp<BattleUnitImagePack>
-InitialGameStateExtractor::extractImagePack(GameState &state, const UString &path, bool shadow)
+sp<BattleUnitImagePack> InitialGameStateExtractor::extractImagePack(GameState &state,
+                                                                    const UString &path,
+                                                                    bool shadow) const
 {
 	std::ignore = state;
 	UString dirName = "xcom3/tacdata/";
@@ -19,7 +20,7 @@ InitialGameStateExtractor::extractImagePack(GameState &state, const UString &pat
 	auto imageTabFile = fw().data->fs.open(imageTabFileName);
 	if (!imageTabFile)
 	{
-		LogError("Failed to open TAB file \"%s\"", imageTabFileName.cStr());
+		LogError("Failed to open TAB file \"%s\"", imageTabFileName);
 		return nullptr;
 	}
 	size_t imageTabFileEntryCount = imageTabFile.size() / 4;
@@ -38,7 +39,8 @@ InitialGameStateExtractor::extractImagePack(GameState &state, const UString &pat
 	return p;
 }
 
-sp<BattleUnitImagePack> InitialGameStateExtractor::extractItemImagePack(GameState &state, int item)
+sp<BattleUnitImagePack> InitialGameStateExtractor::extractItemImagePack(GameState &state,
+                                                                        int item) const
 {
 	std::ignore = state;
 	UString dirName = "xcom3/tacdata/";
@@ -56,13 +58,13 @@ sp<BattleUnitImagePack> InitialGameStateExtractor::extractItemImagePack(GameStat
 	return p;
 }
 
-int InitialGameStateExtractor::getItemImagePacksCount()
+int InitialGameStateExtractor::getItemImagePacksCount() const
 {
 	auto heldSpriteTabFileName = UString("xcom3/tacdata/unit/equip.tab");
 	auto heldSpriteTabFile = fw().data->fs.open(heldSpriteTabFileName);
 	if (!heldSpriteTabFile)
 	{
-		LogError("Failed to open held item sprite TAB file \"%s\"", heldSpriteTabFileName.cStr());
+		LogError("Failed to open held item sprite TAB file \"%s\"", heldSpriteTabFileName);
 		return -1;
 	}
 	return heldSpriteTabFile.size() / 4 / 8;

@@ -47,13 +47,13 @@ class RawMusicTrack : public MusicTrack
 	{
 		if (!file)
 		{
-			LogError("Failed to open file \"%s\"", fileName.cStr());
+			LogError("Failed to open file \"%s\"", fileName);
 			return;
 		}
 		if (file.size() < fileOffset + (numSamples * MusicChannels * MusicBytesPerSample))
 		{
 			LogError("File \"%s\" insufficient size for offset %u + size %u - returned size %zu",
-			         fileName.cStr(), fileOffset, numSamples * MusicChannels * MusicBytesPerSample,
+			         fileName, fileOffset, numSamples * MusicChannels * MusicBytesPerSample,
 			         file.size());
 			return;
 		}
@@ -80,7 +80,7 @@ class RawMusicTrack : public MusicTrack
 	{
 		if (!valid)
 		{
-			LogError("Playing invalid file \"%s\"", file.fileName().cStr());
+			LogError("Playing invalid file \"%s\"", file.fileName());
 			*returnedSamples = 0;
 			return MusicCallbackReturn::End;
 		}
@@ -92,7 +92,7 @@ class RawMusicTrack : public MusicTrack
 		if (!file.read(reinterpret_cast<char *>(sampleBuffer),
 		               samples * MusicBytesPerSample * MusicChannels))
 		{
-			LogError("Failed to read sample data in \"%s\"", file.fileName().cStr());
+			LogError("Failed to read sample data in \"%s\"", file.fileName());
 			this->valid = false;
 			samples = 0;
 		}
@@ -102,7 +102,7 @@ class RawMusicTrack : public MusicTrack
 			// Prepare this track to be reused
 			if (!file.seekg(startingPosition))
 			{
-				LogWarning("Could not rewind track %s", name.cStr());
+				LogWarning("Could not rewind track %s", name);
 			}
 			samplePosition = 0;
 			return MusicCallbackReturn::End;
@@ -134,13 +134,13 @@ class RawMusicLoader : public MusicLoader
 		auto strings = path.split(':');
 		if (strings.size() != 2)
 		{
-			LogInfo("Invalid raw music path string \"%s\"", path.cStr());
+			LogInfo("Invalid raw music path string \"%s\"", path);
 			return nullptr;
 		}
 
 		if (!Strings::isInteger(strings[1]))
 		{
-			LogInfo("Raw music track \"%s\" doesn't look like a number", strings[1].cStr());
+			LogInfo("Raw music track \"%s\" doesn't look like a number", strings[1]);
 			return nullptr;
 		}
 

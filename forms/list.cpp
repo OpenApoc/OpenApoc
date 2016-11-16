@@ -1,9 +1,9 @@
 #include "forms/list.h"
+#include "dependencies/pugixml/src/pugixml.hpp"
 #include "forms/scrollbar.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/renderer.h"
-#include <tinyxml2.h>
 
 namespace OpenApoc
 {
@@ -44,28 +44,18 @@ void ListBox::configureInternalScrollBar()
 
 void ListBox::onRender()
 {
-	Vec2<int> controlOffset, scrollOffset;
+	Vec2<int> controlOffset;
 	if (scroller == nullptr)
 	{
 		configureInternalScrollBar();
 	}
 
-	switch (ScrollOrientation)
-	{
-		case Orientation::Vertical:
-			scrollOffset.y = scroller->getValue();
-			break;
-		case Orientation::Horizontal:
-			scrollOffset.x = scroller->getValue();
-			break;
-	}
-
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
 		auto ctrl = *c;
-		if (ctrl != scroller && ctrl->Visible)
+		if (ctrl != scroller && ctrl->isVisible())
 		{
-			ctrl->Location = controlOffset - scrollOffset;
+			ctrl->Location = controlOffset - this->scrollOffset;
 			switch (ListOrientation)
 			{
 				case Orientation::Vertical:
@@ -122,7 +112,7 @@ void ListBox::postRender()
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
 		auto ctrl = *c;
-		if (ctrl != scroller && ctrl->Visible)
+		if (ctrl != scroller && ctrl->isVisible())
 		{
 			if (ctrl == hovered)
 			{
@@ -196,6 +186,21 @@ void ListBox::update()
 	if (scroller)
 	{
 		scroller->update();
+		Vec2<int> newScrollOffset = this->scrollOffset;
+		switch (ScrollOrientation)
+		{
+			case Orientation::Vertical:
+				newScrollOffset.y = scroller->getValue();
+				break;
+			case Orientation::Horizontal:
+				newScrollOffset.x = scroller->getValue();
+				break;
+		}
+		if (newScrollOffset != this->scrollOffset)
+		{
+			this->scrollOffset = newScrollOffset;
+			this->setDirty();
+		}
 	}
 }
 
@@ -215,6 +220,7 @@ void ListBox::clear()
 		configureInternalScrollBar();
 	}
 	resolveLocation();
+	this->setDirty();
 }
 
 void ListBox::addItem(sp<Control> Item)
@@ -225,10 +231,12 @@ void ListBox::addItem(sp<Control> Item)
 	{
 		selected = Item;
 	}
+	this->setDirty();
 }
 
 sp<Control> ListBox::removeItem(sp<Control> Item)
 {
+	this->setDirty();
 	for (auto i = Controls.begin(); i != Controls.end(); i++)
 	{
 		if (*i == Item)
@@ -251,6 +259,7 @@ sp<Control> ListBox::removeItem(sp<Control> Item)
 
 sp<Control> ListBox::removeItem(int Index)
 {
+	this->setDirty();
 	auto c = Controls.at(Index);
 	Controls.erase(Controls.begin() + Index);
 	resolveLocation();
@@ -295,45 +304,39 @@ sp<Control> ListBox::copyTo(sp<Control> CopyParent)
 	return copy;
 }
 
-void ListBox::configureSelfFromXml(tinyxml2::XMLElement *Element)
+void ListBox::configureSelfFromXml(pugi::xml_node *node)
 {
-	Control::configureSelfFromXml(Element);
-	tinyxml2::XMLElement *subnode;
-	UString attribvalue;
+	Control::configureSelfFromXml(node);
 
-	subnode = Element->FirstChildElement("item");
-	if (subnode != nullptr)
+	auto itemNode = node->child("item");
+	if (itemNode)
 	{
-		if (subnode->Attribute("size") != nullptr && UString(subnode->Attribute("size")) != "")
+		if (itemNode.attribute("size"))
 		{
-			ItemSize = Strings::toInteger(subnode->Attribute("size"));
+			ItemSize = itemNode.attribute("size").as_int();
 		}
-		if (subnode->Attribute("spacing") != nullptr &&
-		    UString(subnode->Attribute("spacing")) != "")
+		if (itemNode.attribute("spacing"))
 		{
-			ItemSpacing = Strings::toInteger(subnode->Attribute("spacing"));
+			ItemSpacing = itemNode.attribute("spacing").as_int();
 		}
 	}
-	subnode = Element->FirstChildElement("orientation");
-	if (subnode != nullptr)
+	auto orientationNode = node->child("orientation");
+	if (orientationNode)
 	{
-		if (UString(subnode->GetText()) != "")
+		UString value = orientationNode.text().get();
+		if (value == "horizontal")
 		{
-			UString value = subnode->GetText();
-			if (value == "horizontal")
-			{
-				ListOrientation = Orientation::Horizontal;
-				ScrollOrientation = Orientation::Horizontal;
-			}
-			else if (value == "vertical")
-			{
-				ListOrientation = Orientation::Vertical;
-				ScrollOrientation = Orientation::Vertical;
-			}
+			ListOrientation = Orientation::Horizontal;
+			ScrollOrientation = Orientation::Horizontal;
 		}
-		if (subnode->Attribute("list") != nullptr && UString(subnode->Attribute("list")) != "")
+		else if (value == "vertical")
 		{
-			UString value = UString(subnode->Attribute("list"));
+			ListOrientation = Orientation::Vertical;
+			ScrollOrientation = Orientation::Vertical;
+		}
+		if (orientationNode.attribute("list"))
+		{
+			value = orientationNode.attribute("list").as_string();
 			if (value == "horizontal")
 			{
 				ListOrientation = Orientation::Horizontal;
@@ -343,9 +346,9 @@ void ListBox::configureSelfFromXml(tinyxml2::XMLElement *Element)
 				ListOrientation = Orientation::Vertical;
 			}
 		}
-		if (subnode->Attribute("scroll") != nullptr && UString(subnode->Attribute("scroll")) != "")
+		if (orientationNode.attribute("scroll"))
 		{
-			UString value = UString(subnode->Attribute("scroll"));
+			value = orientationNode.attribute("scroll").as_string();
 			if (value == "horizontal")
 			{
 				ScrollOrientation = Orientation::Horizontal;
@@ -356,37 +359,23 @@ void ListBox::configureSelfFromXml(tinyxml2::XMLElement *Element)
 			}
 		}
 	}
-	subnode = Element->FirstChildElement("hovercolour");
-	if (subnode != nullptr)
+	auto hoverColourNode = node->child("hovercolour");
+	if (hoverColourNode)
 	{
-		if (subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "")
-		{
-			HoverColour = Colour{
-			    Strings::toU8(subnode->Attribute("r")), Strings::toU8(subnode->Attribute("g")),
-			    Strings::toU8(subnode->Attribute("b")), Strings::toU8(subnode->Attribute("a"))};
-		}
-		else
-		{
-			HoverColour = Colour{Strings::toU8(subnode->Attribute("r")),
-			                     Strings::toU8(subnode->Attribute("g")),
-			                     Strings::toU8(subnode->Attribute("b"))};
-		}
+		uint8_t r = hoverColourNode.attribute("r").as_uint(0);
+		uint8_t g = hoverColourNode.attribute("g").as_uint(0);
+		uint8_t b = hoverColourNode.attribute("b").as_uint(0);
+		uint8_t a = hoverColourNode.attribute("a").as_uint(255);
+		HoverColour = {r, g, b, a};
 	}
-	subnode = Element->FirstChildElement("selcolour");
-	if (subnode != nullptr)
+	auto selColourNode = node->child("selcolour");
+	if (selColourNode)
 	{
-		if (subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "")
-		{
-			SelectedColour = Colour{
-			    Strings::toU8(subnode->Attribute("r")), Strings::toU8(subnode->Attribute("g")),
-			    Strings::toU8(subnode->Attribute("b")), Strings::toU8(subnode->Attribute("a"))};
-		}
-		else
-		{
-			SelectedColour = Colour{Strings::toU8(subnode->Attribute("r")),
-			                        Strings::toU8(subnode->Attribute("g")),
-			                        Strings::toU8(subnode->Attribute("b"))};
-		}
+		uint8_t r = selColourNode.attribute("r").as_uint(0);
+		uint8_t g = selColourNode.attribute("g").as_uint(0);
+		uint8_t b = selColourNode.attribute("b").as_uint(0);
+		uint8_t a = selColourNode.attribute("a").as_uint(255);
+		SelectedColour = {r, g, b, a};
 	}
 }
 
@@ -408,5 +397,6 @@ void ListBox::setSelected(sp<Control> c)
 		    "Trying set ListBox selected control to something that isn't a member of the list");
 	}
 	this->selected = c;
+	this->setDirty();
 }
 }; // namespace OpenApoc

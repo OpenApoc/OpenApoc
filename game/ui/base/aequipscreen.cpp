@@ -76,7 +76,7 @@ static sp<Image> createStatsBar(int initialValue, int currentValue, int modified
 }
 
 AEquipScreen::AEquipScreen(sp<GameState> state)
-    : Stage(), form(ui().getForm("FORM_AEQUIPSCREEN")),
+    : Stage(), form(ui().getForm("aequipscreen")),
       pal(fw().data->loadPalette("xcom3/ufodata/agenteqp.pcx")), state(state)
 
 {

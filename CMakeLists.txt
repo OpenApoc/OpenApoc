@@ -6,12 +6,28 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+
 # check compiler
 INCLUDE(CheckCXXCompilerFlag)
 INCLUDE(CheckCCompilerFlag)
 
+set(allow_cotire ON)
+
+# Sanitize doesn't seem to work with pch on gcc
+string(TOLOWER "${CMAKE_BUILD_TYPE}" lower_build_type)
+
+if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
+	if ("${lower_build_type}" STREQUAL "sanitize")
+		MESSAGE("Disabling COTIRE on sanitize build")
+		set(allow_cotire OFF)
+	endif()
+endif()
+
 option(LTO "Build using link-time-optimisations" OFF)
 option(ENABLE_TESTS "Build some unit tests" ON)
+option(ENABLE_COTIRE "Enable Compile TIme Reducer (AKA use PCH)"
+		${allow_cotire})
 
 set(CD_PATH ${CMAKE_SOURCE_DIR}/data/cd.iso CACHE STRING "Path to cd.iso (used
 by test and extractor")
@@ -22,8 +38,12 @@ endif()
 
 message("Using CD at \"${CD_PATH}\"")
 
-set(CMAKE_C_FLAGS_SANITIZE "-O1 -g -fsanitize=address,undefined")
-set(CMAKE_CXX_FLAGS_SANITIZE "-O1 -g -fsanitize=address,undefined")
+set(CMAKE_C_FLAGS_SANITIZE "-O1 -g1 -fsanitize=address,undefined")
+set(CMAKE_CXX_FLAGS_SANITIZE "-O1 -g1 -fsanitize=address,undefined")
+
+set(CMAKE_C_FLAGS_QUICK "-O1 -g0")
+set(CMAKE_CXX_FLAGS_QUICK "-O1 -g0")
+
 
 CHECK_CXX_COMPILER_FLAG("-flto"
 	COMPILER_SUPPORTS_LTO)
@@ -82,22 +102,43 @@ if(ENABLE_TESTS)
 	add_subdirectory(tests)
 endif()
 
-file(GLOB_RECURSE FORMAT_SOURCES ${CMAKE_SOURCE_DIR}/*.cpp
-		${CMAKE_SOURCE_DIR}/*.c ${CMAKE_SOURCE_DIR}/*.h)
+file(GLOB_RECURSE FORMAT_SOURCES
+		${CMAKE_SOURCE_DIR}/library/*.cpp
+		${CMAKE_SOURCE_DIR}/library/*.c
+		${CMAKE_SOURCE_DIR}/library/*.h
+		${CMAKE_SOURCE_DIR}/framework/*.cpp
+		${CMAKE_SOURCE_DIR}/framework/*.c
+		${CMAKE_SOURCE_DIR}/framework/*.h
+		${CMAKE_SOURCE_DIR}/forms/*.cpp
+		${CMAKE_SOURCE_DIR}/forms/*.c
+		${CMAKE_SOURCE_DIR}/forms/*.h
+		${CMAKE_SOURCE_DIR}/game/*.cpp
+		${CMAKE_SOURCE_DIR}/game/*.c
+		${CMAKE_SOURCE_DIR}/game/*.h
+		${CMAKE_SOURCE_DIR}/tools/*.cpp
+		${CMAKE_SOURCE_DIR}/tools/*.c
+		${CMAKE_SOURCE_DIR}/tools/*.h
+		${CMAKE_SOURCE_DIR}/tests/*.cpp
+		${CMAKE_SOURCE_DIR}/tests/*.c
+		${CMAKE_SOURCE_DIR}/tests/*.h
+		)
 
 file(GLOB_RECURSE DEPENDENCY_SOURCES ${CMAKE_SOURCE_DIR}/dependencies/*.cpp
 		${CMAKE_SOURCE_DIR}/dependencies/*.c ${CMAKE_SOURCE_DIR}/dependencies/*.h)
 
-if (DEPENDENCY_SOURCES)
-	list(REMOVE_ITEM FORMAT_SOURCES ${DEPENDENCY_SOURCES})
-endif()
 
 add_custom_target(format)
 add_custom_target(format-sources)
 add_custom_target(format-xml)
 
+add_custom_target(format-forms)
+add_custom_target(format-fonts)
+add_custom_target(format-aliases)
+
 add_dependencies(format format-sources)
-add_dependencies(format format-xml)
+add_dependencies(format format-forms)
+add_dependencies(format format-fonts)
+add_dependencies(format format-aliases)
 
 set(CLANG_FORMAT clang-format CACHE STRING "clang-format executable name in PATH")
 
@@ -108,8 +149,11 @@ foreach(FORMAT_SOURCE ${FORMAT_SOURCES})
 			format-source-${FORMAT_SOURCE_STRIPPED})
 endforeach()
 
-file(GLOB_RECURSE XML_FILES ${CMAKE_SOURCE_DIR}/data/*.xml
-		${CMAKE_SOURCE_DIR}/data/*.XML)
+file(GLOB_RECURSE XML_FILES ${CMAKE_SOURCE_DIR}/data/*.xml)
+
+file(GLOB_RECURSE FONT_FILES ${CMAKE_SOURCE_DIR}/data/fonts/*.font)
+file(GLOB_RECURSE FORM_FILES ${CMAKE_SOURCE_DIR}/data/forms/*.form)
+file(GLOB_RECURSE ALIAS_FILES ${CMAKE_SOURCE_DIR}/data/aliases/*.alias)
 
 execute_process(COMMAND which xmllint OUTPUT_VARIABLE WHICH_XMLLINT_OUTPUT ERROR_QUIET
 		OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -127,6 +171,33 @@ if (XMLLINT_COMMAND)
 					--output ${XML_FILE}
 					DEPENDS ${XML_FILE})
 			add_dependencies(format-xml format-xml-${XML_FILE_STRIPPED})
+		endforeach()
+		foreach(FONT_FILE ${FONT_FILES})
+				string(MAKE_C_IDENTIFIER ${FONT_FILE} FONT_FILE_STRIPPED)
+				add_custom_target(format-font-${FONT_FILE_STRIPPED}
+						${XMLLINT_COMMAND} --format --encode UTF-8
+						${FONT_FILE} --output ${FONT_FILE}
+						DEPENDS ${FONT_FILE})
+				add_dependencies(format-fonts
+						format-font-${FONT_FILE_STRIPPED})
+		endforeach()
+		foreach(FORM_FILE ${FORM_FILES})
+				string(MAKE_C_IDENTIFIER ${FORM_FILE} FORM_FILE_STRIPPED)
+				add_custom_target(format-form-${FORM_FILE_STRIPPED}
+						${XMLLINT_COMMAND} --format --encode UTF-8
+						${FORM_FILE} --output ${FORM_FILE}
+						DEPENDS ${FORM_FILE})
+				add_dependencies(format-forms
+						format-form-${FORM_FILE_STRIPPED})
+		endforeach()
+		foreach(ALIAS_FILE ${ALIAS_FILES})
+			string(MAKE_C_IDENTIFIER ${ALIAS_FILE} ALIAS_FILE_STRIPPED)
+			add_custom_target(format-alias-${ALIAS_FILE_STRIPPED}
+					${XMLLINT_COMMAND} --format --encode UTF-8
+					${ALIAS_FILE} --output ${ALIAS_FILE}
+					DEPENDS ${ALIAS_FILE})
+			add_dependencies(format-aliases
+					format-alias-${ALIAS_FILE_STRIPPED})
 		endforeach()
 else()
 	message("xmllint not found, disabling format-xml target")

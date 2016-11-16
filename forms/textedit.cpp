@@ -1,4 +1,5 @@
 #include "forms/textedit.h"
+#include "dependencies/pugixml/src/pugixml.hpp"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/font.h"
@@ -8,7 +9,6 @@
 #include "framework/renderer.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
-#include <tinyxml2.h>
 
 namespace OpenApoc
 {
@@ -197,6 +197,7 @@ void TextEdit::update()
 		if (caretTimer == 0)
 		{
 			caretDraw = !caretDraw;
+			this->setDirty();
 		}
 	}
 }
@@ -212,13 +213,22 @@ void TextEdit::setText(const UString &Text)
 	raiseEvent(FormEventType::TextChanged);
 }
 
-void TextEdit::setCursor(const UString &cursor) { this->cursor = cursor; }
+void TextEdit::setCursor(const UString &cursor)
+{
+	this->cursor = cursor;
+	this->setDirty();
+}
 
-void TextEdit::setTextMaxSize(size_t length) { this->textMaxLength = length; }
+void TextEdit::setTextMaxSize(size_t length)
+{
+	this->textMaxLength = length;
+	this->setDirty();
+}
 
 void TextEdit::setAllowedCharacters(const UString &allowedCharacters)
 {
 	this->allowedCharacters = allowedCharacters;
+	this->setDirty();
 }
 
 void TextEdit::raiseEvent(FormEventType Type)
@@ -230,7 +240,11 @@ void TextEdit::raiseEvent(FormEventType Type)
 
 sp<BitmapFont> TextEdit::getFont() const { return font; }
 
-void TextEdit::setFont(sp<BitmapFont> NewFont) { font = NewFont; }
+void TextEdit::setFont(sp<BitmapFont> NewFont)
+{
+	font = NewFont;
+	this->setDirty();
+}
 
 sp<Control> TextEdit::copyTo(sp<Control> CopyParent)
 {
@@ -249,54 +263,47 @@ sp<Control> TextEdit::copyTo(sp<Control> CopyParent)
 	return copy;
 }
 
-void TextEdit::configureSelfFromXml(tinyxml2::XMLElement *Element)
+void TextEdit::configureSelfFromXml(pugi::xml_node *node)
 {
-	Control::configureSelfFromXml(Element);
-	tinyxml2::XMLElement *subnode;
-	UString attribvalue;
+	Control::configureSelfFromXml(node);
 
-	if (Element->Attribute("text") != nullptr)
+	if (node->attribute("text"))
 	{
-		text = tr(Element->Attribute("text"));
+		text = tr(node->attribute("text").as_string());
 	}
-	if (Element->FirstChildElement("font") != nullptr)
+	auto fontNode = node->child("font");
+	if (fontNode)
 	{
-		font = ui().getFont(Element->FirstChildElement("font")->GetText());
+		font = ui().getFont(fontNode.text().get());
 	}
-	subnode = Element->FirstChildElement("alignment");
-	if (subnode != nullptr)
+	auto alignmentNode = node->child("alignment");
+	if (alignmentNode)
 	{
-		if (subnode->Attribute("horizontal") != nullptr)
+		UString hAlign = alignmentNode.attribute("horizontal").as_string();
+		if (hAlign == "left")
 		{
-			attribvalue = subnode->Attribute("horizontal");
-			if (attribvalue == "left")
-			{
-				TextHAlign = HorizontalAlignment::Left;
-			}
-			else if (attribvalue == "centre")
-			{
-				TextHAlign = HorizontalAlignment::Centre;
-			}
-			else if (attribvalue == "right")
-			{
-				TextHAlign = HorizontalAlignment::Right;
-			}
+			TextHAlign = HorizontalAlignment::Left;
 		}
-		if (subnode->Attribute("vertical") != nullptr)
+		else if (hAlign == "centre")
 		{
-			attribvalue = subnode->Attribute("vertical");
-			if (attribvalue == "top")
-			{
-				TextVAlign = VerticalAlignment::Top;
-			}
-			else if (attribvalue == "centre")
-			{
-				TextVAlign = VerticalAlignment::Centre;
-			}
-			else if (attribvalue == "bottom")
-			{
-				TextVAlign = VerticalAlignment::Bottom;
-			}
+			TextHAlign = HorizontalAlignment::Centre;
+		}
+		else if (hAlign == "right")
+		{
+			TextHAlign = HorizontalAlignment::Right;
+		}
+		UString vAlign = alignmentNode.attribute("vertical").as_string();
+		if (vAlign == "top")
+		{
+			TextVAlign = VerticalAlignment::Top;
+		}
+		else if (vAlign == "centre")
+		{
+			TextVAlign = VerticalAlignment::Centre;
+		}
+		else if (vAlign == "bottom")
+		{
+			TextVAlign = VerticalAlignment::Bottom;
 		}
 	}
 }

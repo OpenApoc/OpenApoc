@@ -38,8 +38,7 @@ static bool testImage(const UString &imageName, const UString &referenceName)
 
 	if (img->size != reference->size)
 	{
-		LogWarning("Invalid size, {%d,%d} doesn't match reference {%d,%d}", img->size.x,
-		           img->size.y, reference->size.x, reference->size.y);
+		LogWarning("Invalid size, %s doesn't match reference %s", img->size, reference->size);
 		return false;
 	}
 
@@ -113,12 +112,11 @@ int main(int argc, char **argv)
 	{
 		if (!testImage(imagePair.first, imagePair.second))
 		{
-			LogError("Image \"%s\" didn't match reference \"%s\"", imagePair.first.cStr(),
-			         imagePair.second.cStr());
+			LogError("Image \"%s\" didn't match reference \"%s\"", imagePair.first,
+			         imagePair.second);
 			return EXIT_FAILURE;
 		}
-		LogInfo("Image \"%s\" matches reference \"%s\"", imagePair.first.cStr(),
-		        imagePair.second.cStr());
+		LogInfo("Image \"%s\" matches reference \"%s\"", imagePair.first, imagePair.second);
 	}
 
 	return EXIT_SUCCESS;

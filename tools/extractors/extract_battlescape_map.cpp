@@ -14,7 +14,7 @@ namespace OpenApoc
 
 void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
                                                               const UString dirName,
-                                                              const int index)
+                                                              const int index) const
 {
 	UString tilePrefix = format("%s_", dirName);
 	UString map_prefix = "xcom3/maps/";
@@ -28,14 +28,14 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 		auto inFile = fw().data->fs.open(datFileName);
 		if (!inFile)
 		{
-			LogError("Failed to open \"%s\"", fileName.cStr());
+			LogError("Failed to open \"%s\"", fileName);
 			return;
 		}
 
 		inFile.read((char *)&bdata, sizeof(bdata));
 		if (!inFile)
 		{
-			LogError("Failed to read entry in \"%s\"", fileName.cStr());
+			LogError("Failed to read entry in \"%s\"", fileName);
 			return;
 		}
 	}
@@ -47,14 +47,14 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 		auto inFile = fw().data->fs.open(fullPath);
 		if (!inFile)
 		{
-			LogError("Failed to open \"%s\"", fileName.cStr());
+			LogError("Failed to open \"%s\"", fileName);
 			return;
 		}
 
 		inFile.read((char *)&rdata, sizeof(rdata));
 		if (!inFile)
 		{
-			LogError("Failed to read entry in \"%s\"", fileName.cStr());
+			LogError("Failed to read entry in \"%s\"", fileName);
 			return;
 		}
 	}
@@ -67,7 +67,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 		auto inFile = fw().data->fs.open(fullPath);
 		if (!inFile)
 		{
-			LogError("Failed to open \"%s\"", fileName.cStr());
+			LogError("Failed to open \"%s\"", fileName);
 			return;
 		}
 
@@ -178,7 +178,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 			inFile.read((char *)&sdata, sizeof(sdata));
 			if (!inFile)
 			{
-				LogError("Failed to read entry in \"%s\"", fileName.cStr());
+				LogError("Failed to read entry in \"%s\"", fileName);
 				return;
 			}
 		}
@@ -202,7 +202,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 }
 
 std::map<UString, up<BattleMapSectorTiles>>
-InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &mapRootName)
+InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &mapRootName) const
 {
 	std::map<UString, up<BattleMapSectorTiles>> sectors;
 	UString map_prefix = "xcom3/maps/";
@@ -216,14 +216,14 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 		auto inFile = fw().data->fs.open(datFileName);
 		if (!inFile)
 		{
-			LogError("Failed to open \"%s\"", fileName.cStr());
+			LogError("Failed to open \"%s\"", fileName);
 			return {};
 		}
 
 		inFile.read((char *)&bdata, sizeof(bdata));
 		if (!inFile)
 		{
-			LogError("Failed to read entry in \"%s\"", fileName.cStr());
+			LogError("Failed to read entry in \"%s\"", fileName);
 			return {};
 		}
 	}
@@ -244,14 +244,14 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 			auto inFile = fw().data->fs.open(fullPath);
 			if (!inFile)
 			{
-				LogInfo("Sector %d not present for map %s", sector, mapRootName.cStr());
+				LogInfo("Sector %d not present for map %s", sector, mapRootName);
 				continue;
 			}
 
 			inFile.read((char *)&sdata, sizeof(sdata));
 			if (!inFile)
 			{
-				LogError("Failed to read entry in \"%s\"", fileName.cStr());
+				LogError("Failed to read entry in \"%s\"", fileName);
 				return {};
 			}
 		}
@@ -265,7 +265,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 			auto inFile = fw().data->fs.open(fullPath);
 			if (!inFile)
 			{
-				LogError("Failed to open \"%s\"", fileName.cStr());
+				LogError("Failed to open \"%s\"", fileName);
 				return {};
 			}
 
@@ -279,7 +279,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 				inFile.read((char *)&ldata, sizeof(ldata));
 				if (!inFile)
 				{
-					LogError("Failed to read entry %d in \"%s\"", i, fileName.cStr());
+					LogError("Failed to read entry %d in \"%s\"", i, fileName);
 					return {};
 				}
 
@@ -352,7 +352,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 					inFile.read((char *)&ldata, sizeof(ldata));
 					if (!inFile)
 					{
-						LogError("Failed to read entry %d in \"%s\"", i, fileName.cStr());
+						LogError("Failed to read entry %d in \"%s\"", i, fileName);
 						return {};
 					}
 
@@ -392,7 +392,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 			auto inFile = fw().data->fs.open(fullPath);
 			if (!inFile)
 			{
-				LogError("Failed to open \"%s\"", fileName.cStr());
+				LogError("Failed to open \"%s\"", fileName);
 			}
 			auto fileSize = inFile.size();
 
@@ -412,8 +412,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 						inFile.read((char *)&tdata, sizeof(tdata));
 						if (!inFile)
 						{
-							LogError("Failed to read entry %d,%d,%d in \"%s\"", x, y, z,
-							         fileName.cStr());
+							LogError("Failed to read entry %d,%d,%d in \"%s\"", x, y, z, fileName);
 							return {};
 						}
 						// read ground
@@ -458,8 +457,8 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 	return sectors;
 }
 
-void InitialGameStateExtractor::extractBattlescapeMap(GameState &state,
-                                                      const std::vector<OpenApoc::UString> &paths)
+void InitialGameStateExtractor::extractBattlescapeMap(
+    GameState &state, const std::vector<OpenApoc::UString> &paths) const
 {
 	for (unsigned i = 0; i < paths.size(); i++)
 	{

@@ -4,6 +4,8 @@ PROJECT(OpenApoc_Framework CXX C)
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
+include(cotire)
+
 option(BACKTRACE_ON_ERROR "Print backtrace on logging an error (Requires libunwind on linux, no extra dependencies on windows)" ON)
 option(DIALOG_ON_ERROR "Pop up a dialog box showing errors" ON)
 
@@ -37,6 +39,7 @@ set (FRAMEWORK_HEADER_FILES
 	event.h
 	font.h
 	framework.h
+	filesystem.h
 	fs.h
 	image.h
 	imageloader_interface.h
@@ -187,16 +190,47 @@ add_library(OpenApoc_Framework STATIC
 	${FILESYSTEM_SOURCE_FILES} ${FILESYSTEM_HEADER_FILES})
 
 set_property(TARGET OpenApoc_Framework PROPERTY CXX_STANDARD 11)
-set_property(TARGET OpenApoc_Framework PROPERTY CXX_STANDARD_REQUIRED ON)
 
 target_compile_definitions(OpenApoc_Framework PUBLIC
-		"-DRENDERERS=\"GLES_3_0:GL_2_0\""
-		"-DGLESWRAP_PLATFORM_GLX")
+		"-DRENDERERS=\"GLES_3_0:GL_2_0\"")
+
+if(APPLE)
+	target_compile_definitions(OpenApoc_Framework PRIVATE
+			"-DGLESWRAP_PLATFORM_MACHO")
+	# OSX doesn't seem to support the c++11 'thread_local' keyword
+	target_compile_definitions(OpenApoc_Framework PRIVATE
+			"-DBROKEN_THREAD_LOCAL")
+	# Disable libunwind use on Apple
+	SET(BACKTRACE_ON_ERROR OFF CACHE BOOL "Print backtrace on logging an error (Requires libunwind on linux, no extra dependencies on windows)" FORCE)
+else()
+	target_compile_definitions(OpenApoc_Framework PRIVATE "-DGLESWRAP_PLATFORM_GLX")
+endif()
 
 # We use boost::locale for utf conversions and boost::filesystem for
 # serialization
-find_package(Boost REQUIRED COMPONENTS locale filesystem system
-		program_options)
+
+set(BOOST_PACKAGES locale system program_options)
+
+set(USE_EXPERIMENTAL_FILESYSTEM FALSE)
+
+if(CMAKE_COMPILER_IS_GNUCC)
+		if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.3 OR
+						CMAKE_CXX_COMPILER_VERSION VERSION_EQUAL 5.3)
+				set(USE_EXPERIMENTAL_FILESYSTEM TRUE)
+		endif()
+endif()
+
+if (USE_EXPERIMENTAL_FILESYSTEM)
+	message(STATUS "Using <experimental/filesystem>")
+	target_compile_definitions(OpenApoc_Framework PUBLIC "-DUSE_EXPERIMENTAL_FILESYSTEM")
+	target_link_libraries(OpenApoc_Framework PUBLIC stdc++fs)
+else()
+	message(STATUS "Using <boost/filesystem>")
+	set(BOOST_PACKAGES ${BOOST_PACKAGES} filesystem)
+	target_compile_definitions(OpenApoc_Framework PUBLIC "-DUSE_BOOST_FILESYSTEM")
+endif()
+
+find_package(Boost REQUIRED COMPONENTS ${BOOST_PACKAGES})
 target_link_libraries(OpenApoc_Framework PUBLIC ${Boost_LIBRARIES})
 target_include_directories(OpenApoc_Framework PUBLIC ${Boost_INCLUDE_DIRS})
 
@@ -275,3 +309,12 @@ target_link_libraries(OpenApoc_Framework PUBLIC physfs-static)
 target_include_directories(OpenApoc_Framework PRIVATE
 		${CMAKE_SOURCE_DIR}/dependencies/physfs/src)
 target_include_directories(OpenApoc_Framework PUBLIC ${CMAKE_SOURCE_DIR})
+
+
+set_target_properties(OpenApoc_Framework PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
+	"framework_pch.h")
+
+if(ENABLE_COTIRE)
+	cotire(OpenApoc_Framework)
+endif()
+

@@ -261,7 +261,7 @@ bool GameState::loadGame(const UString &path)
 	auto archive = SerializationArchive::readArchive(path);
 	if (!archive)
 	{
-		LogError("Failed to read \"%s\"", path.cStr());
+		LogError("Failed to read \"%s\"", path);
 		return false;
 	}
 
@@ -277,7 +277,7 @@ bool GameState::serialize(sp<SerializationArchive> archive) const
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
 		return false;
 	}
 	return true;
@@ -291,7 +291,7 @@ bool GameState::deserialize(const sp<SerializationArchive> archive)
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
 		return false;
 	}
 	return true;
@@ -306,7 +306,7 @@ static bool serialize(const BattleMapTileset &tileSet, sp<SerializationArchive> 
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
 		return false;
 	}
 	return true;
@@ -321,7 +321,7 @@ static bool deserialize(BattleMapTileset &tileSet, const GameState &state,
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
 		return false;
 	}
 	return true;
@@ -346,7 +346,7 @@ bool BattleMapTileset::loadTileset(GameState &state, const UString &path)
 	auto archive = SerializationArchive::readArchive(path);
 	if (!archive)
 	{
-		LogError("Failed to read \"%s\"", path.cStr());
+		LogError("Failed to read \"%s\"", path);
 		return false;
 	}
 
@@ -362,7 +362,7 @@ static bool serialize(const BattleUnitImagePack &imagePack, sp<SerializationArch
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
 		return false;
 	}
 	return true;
@@ -377,7 +377,7 @@ static bool deserialize(BattleUnitImagePack &imagePack, const GameState &state,
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
 		return false;
 	}
 	return true;
@@ -402,7 +402,7 @@ bool BattleUnitImagePack::loadImagePack(GameState &state, const UString &path)
 	auto archive = SerializationArchive::readArchive(path);
 	if (!archive)
 	{
-		LogError("Failed to read \"%s\"", path.cStr());
+		LogError("Failed to read \"%s\"", path);
 		return false;
 	}
 
@@ -419,7 +419,7 @@ static bool serialize(const BattleUnitAnimationPack &animationPack,
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
 		return false;
 	}
 	return true;
@@ -434,7 +434,7 @@ static bool deserialize(BattleUnitAnimationPack &animationPack, const GameState 
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
 		return false;
 	}
 	return true;
@@ -459,7 +459,7 @@ bool BattleUnitAnimationPack::loadAnimationPack(GameState &state, const UString 
 	auto archive = SerializationArchive::readArchive(path);
 	if (!archive)
 	{
-		LogError("Failed to read \"%s\"", path.cStr());
+		LogError("Failed to read \"%s\"", path);
 		return false;
 	}
 
@@ -475,7 +475,7 @@ static bool serialize(const BattleMapSectorTiles &mapSector, sp<SerializationArc
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
 		return false;
 	}
 	return true;
@@ -490,7 +490,7 @@ static bool deserialize(BattleMapSectorTiles &mapSector, const GameState &state,
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
 		return false;
 	}
 	return true;
@@ -515,7 +515,7 @@ bool BattleMapSectorTiles::loadSector(GameState &state, const UString &path)
 	auto archive = SerializationArchive::readArchive(path);
 	if (!archive)
 	{
-		LogError("Failed to read \"%s\"", path.cStr());
+		LogError("Failed to read \"%s\"", path);
 		return false;
 	}
 

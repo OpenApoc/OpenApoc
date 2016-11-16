@@ -25,7 +25,7 @@ class ZipDataProvider : public SerializationDataProvider
 	ZipDataProvider &operator=(ZipDataProvider const &) = delete;
 	bool openArchive(const UString &path, bool write) override;
 	bool readDocument(const UString &path, UString &result) override;
-	bool saveDocument(const UString &path, UString contents) override;
+	bool saveDocument(const UString &path, const UString &contents) override;
 	bool finalizeSave() override;
 };
 }

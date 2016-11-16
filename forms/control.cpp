@@ -1,4 +1,5 @@
 #include "forms/control.h"
+#include "dependencies/pugixml/src/pugixml.hpp"
 #include "forms/forms.h"
 #include "framework/data.h"
 #include "framework/event.h"
@@ -6,8 +7,8 @@
 #include "framework/image.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
+#include "framework/trace.h"
 #include "library/sp.h"
-#include <tinyxml2.h>
 
 namespace OpenApoc
 {
@@ -30,6 +31,7 @@ bool Control::isFocused() const
 
 void Control::resolveLocation()
 {
+	auto previousLocation = resolvedLocation;
 	auto parentControl = this->getParent();
 	if (parentControl == nullptr)
 	{
@@ -54,6 +56,11 @@ void Control::resolveLocation()
 	{
 		auto c = *ctrlidx;
 		c->resolveLocation();
+	}
+
+	if (previousLocation != resolvedLocation)
+	{
+		this->setDirty();
 	}
 }
 
@@ -238,6 +245,7 @@ void Control::eventOccured(Event *e)
 
 void Control::render()
 {
+	TRACE_FN_ARGS1("Name", this->Name);
 	if (!Visible || Size.x == 0 || Size.y == 0)
 	{
 		return;
@@ -245,8 +253,10 @@ void Control::render()
 
 	if (controlArea == nullptr || controlArea->size != Vec2<unsigned int>(Size))
 	{
+		this->dirty = true;
 		controlArea.reset(new Surface{Vec2<unsigned int>(Size)});
 	}
+	if (this->dirty)
 	{
 		sp<Palette> previousPalette;
 		if (this->palette)
@@ -264,6 +274,8 @@ void Control::render()
 			fw().renderer->setPalette(previousPalette);
 		}
 	}
+
+	this->dirty = false;
 
 	if (Enabled)
 	{
@@ -307,87 +319,84 @@ void Control::update()
 	}
 }
 
-void Control::configureFromXml(tinyxml2::XMLElement *Element)
+void Control::configureFromXml(pugi::xml_node *node)
 {
-	configureSelfFromXml(Element);
-	configureChildrenFromXml(Element);
+	configureSelfFromXml(node);
+	configureChildrenFromXml(node);
 }
 
-void Control::configureChildrenFromXml(tinyxml2::XMLElement *Element)
+void Control::configureChildrenFromXml(pugi::xml_node *parent)
 {
 	UString nodename;
 	UString attribvalue;
-	tinyxml2::XMLElement *node;
-	for (node = Element->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
+	for (auto node = parent->first_child(); node; node = node.next_sibling())
 	{
-		nodename = node->Name();
+		nodename = node.name();
 
 		// Child controls
 		if (nodename == "control")
 		{
 			auto c = this->createChild<Control>();
-			c->configureFromXml(node);
+			c->configureFromXml(&node);
 		}
 		else if (nodename == "label")
 		{
 			auto l = this->createChild<Label>();
-			l->configureFromXml(node);
+			l->configureFromXml(&node);
 		}
 		else if (nodename == "graphic")
 		{
 			auto g = this->createChild<Graphic>();
-			g->configureFromXml(node);
+			g->configureFromXml(&node);
 		}
 		else if (nodename == "textbutton")
 		{
 			auto tb = this->createChild<TextButton>();
-			tb->configureFromXml(node);
+			tb->configureFromXml(&node);
 		}
 		else if (nodename == "graphicbutton")
 		{
 			auto gb = this->createChild<GraphicButton>();
-			gb->configureFromXml(node);
-			if (node->Attribute("scrollprev") != nullptr &&
-			    UString(node->Attribute("scrollprev")) != "")
+			gb->configureFromXml(&node);
+			UString scrollPrev = node.attribute("scrollprev").as_string();
+			if (!scrollPrev.empty())
 			{
-				attribvalue = node->Attribute("scrollprev");
-				gb->ScrollBarPrev = this->findControlTyped<ScrollBar>(attribvalue);
+				gb->ScrollBarPrev = this->findControlTyped<ScrollBar>(scrollPrev);
 			}
-			if (node->Attribute("scrollnext") != nullptr &&
-			    UString(node->Attribute("scrollnext")) != "")
+			UString scrollNext = node.attribute("scrollnext").as_string();
+			if (!scrollNext.empty())
 			{
-				attribvalue = node->Attribute("scrollnext");
-				gb->ScrollBarNext = this->findControlTyped<ScrollBar>(attribvalue);
+				gb->ScrollBarNext = this->findControlTyped<ScrollBar>(scrollNext);
 			}
 		}
 		else if (nodename == "checkbox")
 		{
 			auto cb = this->createChild<CheckBox>();
-			cb->configureFromXml(node);
+			cb->configureFromXml(&node);
 		}
 		else if (nodename == "tristatebox")
 		{
 			auto cb = this->createChild<TriStateBox>();
-			cb->configureFromXml(node);
+			cb->configureFromXml(&node);
 		}
 		else if (nodename == "radiobutton")
 		{
 			sp<RadioButtonGroup> group = nullptr;
-			if (node->Attribute("groupid") != nullptr && UString(node->Attribute("groupid")) != "")
+			UString groupID = node.attribute("groupid").as_string();
+			if (!groupID.empty())
 			{
-				attribvalue = node->Attribute("groupid");
-				if (radiogroups.find(attribvalue) == radiogroups.end())
+				if (radiogroups.find(groupID) == radiogroups.end())
 				{
-					radiogroups[attribvalue] = mksp<RadioButtonGroup>(attribvalue);
+					radiogroups[groupID] = mksp<RadioButtonGroup>(groupID);
 				}
-				group = radiogroups[attribvalue];
+				group = radiogroups[groupID];
 			}
 			else
 			{
-				LogError("Radiobutton \"%s\" has no group", node->Attribute("id"));
+				LogError("Radiobutton \"%s\" has no group", node.attribute("id").as_string());
 			}
 			auto rb = this->createChild<RadioButton>(group);
-			rb->configureFromXml(node);
+			rb->configureFromXml(&node);
 			if (group)
 			{
 				group->radioButtons.push_back(rb);
@@ -396,139 +405,123 @@ void Control::configureChildrenFromXml(tinyxml2::XMLElement *Element)
 		else if (nodename == "scroll")
 		{
 			auto sb = this->createChild<ScrollBar>();
-			sb->configureFromXml(node);
+			sb->configureFromXml(&node);
 		}
 
 		else if (nodename == "listbox")
 		{
 			sp<ScrollBar> sb = nullptr;
+			UString scrollBarID = node.attribute("scrollbarid").as_string();
 
-			if (node->Attribute("scrollbarid") != nullptr &&
-			    UString(node->Attribute("scrollbarid")) != "")
+			if (!scrollBarID.empty())
 			{
-				attribvalue = node->Attribute("scrollbarid");
-				sb = this->findControlTyped<ScrollBar>(attribvalue);
+				sb = this->findControlTyped<ScrollBar>(scrollBarID);
 			}
 			auto lb = this->createChild<ListBox>(sb);
-			lb->configureFromXml(node);
+			lb->configureFromXml(&node);
 		}
 
 		else if (nodename == "textedit")
 		{
 			auto te = this->createChild<TextEdit>();
-			te->configureFromXml(node);
+			te->configureFromXml(&node);
 		}
 
 		else if (nodename == "ticker")
 		{
 			auto tk = this->createChild<Ticker>();
-			tk->configureFromXml(node);
+			tk->configureFromXml(&node);
 		}
 	}
 }
 
-void Control::configureSelfFromXml(tinyxml2::XMLElement *Element)
+void Control::configureSelfFromXml(pugi::xml_node *node)
 {
-	UString nodename;
-	UString attribvalue;
 	UString specialpositionx = "";
 	UString specialpositiony = "";
 
-	if (Element->Attribute("id") != nullptr && UString(Element->Attribute("id")) != "")
+	if (node->attribute("id"))
 	{
-		nodename = Element->Attribute("id");
-		this->Name = nodename;
+		this->Name = node->attribute("id").as_string();
 	}
-
-	if (Element->Attribute("visible") != nullptr && UString(Element->Attribute("visible")) != "")
+	if (node->attribute("visible"))
 	{
-		UString vistxt = Element->Attribute("visible");
-		vistxt = vistxt.substr(0, 1).toUpper();
-		this->Visible = (vistxt == "Y" || vistxt == "T");
+		this->Visible = node->attribute("visible").as_bool();
 	}
-
-	if (Element->Attribute("border") != nullptr && UString(Element->Attribute("border")) != "")
+	if (node->attribute("border"))
 	{
-		UString vistxt = Element->Attribute("border");
-		vistxt = vistxt.substr(0, 1).toUpper();
-		this->showBounds = (vistxt == "Y" || vistxt == "T");
+		this->showBounds = node->attribute("border").as_bool();
 	}
 
 	auto parentControl = this->getParent();
-	tinyxml2::XMLElement *node;
-	for (node = Element->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
+	for (auto child = node->first_child(); child; child = child.next_sibling())
 	{
-		nodename = node->Name();
+		UString childName = child.name();
 
-		if (nodename == "palette")
+		if (childName == "palette")
 		{
-			auto pal = fw().data->loadPalette(node->GetText());
+			auto pal = fw().data->loadPalette(child.text().get());
 			if (!pal)
 			{
 				LogError("Control referenced palette \"%s\" that cannot be loaded",
-				         node->GetText());
+				         child.text().get());
 			}
 			this->palette = pal;
 		}
 
-		else if (nodename == "backcolour")
+		else if (childName == "backcolour")
 		{
-			if (node->Attribute("a") != nullptr && UString(node->Attribute("a")) != "")
+			uint8_t r = child.attribute("r").as_uint();
+			uint8_t g = child.attribute("g").as_uint();
+			uint8_t b = child.attribute("b").as_uint();
+			uint8_t a = child.attribute("a").as_uint(255);
+			this->BackgroundColour = Colour{r, g, b, a};
+		}
+		else if (childName == "position")
+		{
+			UString xAttr = child.attribute("x").as_string();
+			if (Strings::isInteger(xAttr))
 			{
-				this->BackgroundColour = Colour{
-				    Strings::toU8(node->Attribute("r")), Strings::toU8(node->Attribute("g")),
-				    Strings::toU8(node->Attribute("b")), Strings::toU8(node->Attribute("a"))};
+				Location.x = child.attribute("x").as_int();
 			}
 			else
 			{
-				this->BackgroundColour =
-				    Colour{Strings::toU8(node->Attribute("r")), Strings::toU8(node->Attribute("g")),
-				           Strings::toU8(node->Attribute("b"))};
+				specialpositionx = xAttr;
+			}
+			UString yAttr = child.attribute("y").as_string();
+			if (Strings::isInteger(yAttr))
+			{
+				Location.y = child.attribute("y").as_int();
+			}
+			else
+			{
+				specialpositiony = yAttr;
 			}
 		}
-		else if (nodename == "position")
-		{
-			if (Strings::isInteger(node->Attribute("x")))
-			{
-				Location.x = Strings::toInteger(node->Attribute("x"));
-			}
-			else
-			{
-				specialpositionx = node->Attribute("x");
-			}
-			if (Strings::isInteger(node->Attribute("y")))
-			{
-				Location.y = Strings::toInteger(node->Attribute("y"));
-			}
-			else
-			{
-				specialpositiony = node->Attribute("y");
-			}
-		}
-		else if (nodename == "size")
+		else if (childName == "size")
 		{
 			UString specialsizex = "";
 			UString specialsizey = "";
 
+			UString widthAttr = child.attribute("width").as_string();
 			// if size ends with % this means that it is special (percentage) size
-			UString width = node->Attribute("width");
-			if (Strings::isInteger(width) && !(width.str().back() == '%'))
+			if (Strings::isInteger(widthAttr) && !widthAttr.endsWith("%"))
 			{
-				Size.x = Strings::toInteger(width);
+				Size.x = child.attribute("width").as_int();
 			}
 			else
 			{
-				specialsizex = width;
+				specialsizex = widthAttr;
 			}
-
-			UString height = node->Attribute("height");
-			if (Strings::isInteger(height) && !(height.str().back() == '%'))
+			UString heightAttr = child.attribute("height").as_string();
+			// if size ends with % this means that it is special (percentage) size
+			if (Strings::isInteger(heightAttr) && !heightAttr.endsWith("%"))
 			{
-				Size.y = Strings::toInteger(height);
+				Size.y = child.attribute("height").as_int();
 			}
 			else
 			{
-				specialsizey = height;
+				specialsizey = heightAttr;
 			}
 
 			if (specialsizex != "")
@@ -541,8 +534,8 @@ void Control::configureSelfFromXml(tinyxml2::XMLElement *Element)
 				}
 				else
 				{
-					LogWarning("Control \"%s\" has not supported size x value \"%s\"",
-					           this->Name.cStr(), specialsizex.cStr());
+					LogWarning("Control \"%s\" has not supported size x value \"%s\"", this->Name,
+					           specialsizex);
 				}
 			}
 
@@ -571,13 +564,13 @@ void Control::configureSelfFromXml(tinyxml2::XMLElement *Element)
 					{
 						LogWarning(
 						    "Control \"%s\" with \"item\" size.y does not have ListBox parent ",
-						    this->Name.cStr());
+						    this->Name);
 					}
 				}
 				else
 				{
-					LogWarning("Control \"%s\" has not supported size y value \"%s\"",
-					           this->Name.cStr(), specialsizey.cStr());
+					LogWarning("Control \"%s\" has not supported size y value \"%s\"", this->Name,
+					           specialsizey);
 				}
 			}
 		}
@@ -615,8 +608,8 @@ void Control::configureSelfFromXml(tinyxml2::XMLElement *Element)
 		}
 	}
 
-	LogInfo("Control \"%s\" has %zu subcontrols (%d, %d, %d, %d)", this->Name.cStr(),
-	        Controls.size(), Location.x, Location.y, Size.x, Size.y);
+	LogInfo("Control \"%s\" has %zu subcontrols (%d, %d, %d, %d)", this->Name, Controls.size(),
+	        Location.x, Location.y, Size.x, Size.y);
 }
 
 void Control::unloadResources() {}
@@ -670,6 +663,7 @@ void Control::setParent(sp<Control> Parent)
 			LogError("Reparenting control");
 		}
 		Parent->Controls.push_back(shared_from_this());
+		Parent->setDirty();
 	}
 	owningControl = Parent;
 }
@@ -852,9 +846,19 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 		// Mouse events fall-through
 		case FormEventType::MouseEnter:
 		case FormEventType::MouseLeave:
+		case FormEventType::MouseMove:
+		{
+			event = new FormsEvent();
+			event->forms().RaisedBy = shared_from_this();
+			event->forms().EventFlag = type;
+			event->forms().MouseInfo = parentEvent->mouse();
+			event->forms().MouseInfo.X -= resolvedLocation.x;
+			event->forms().MouseInfo.Y -= resolvedLocation.y;
+			fw().pushEvent(event);
+			break;
+		}
 		case FormEventType::MouseDown:
 		case FormEventType::MouseUp:
-		case FormEventType::MouseMove:
 		case FormEventType::MouseClick:
 		{
 			event = new FormsEvent();
@@ -864,6 +868,7 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 			event->forms().MouseInfo.X -= resolvedLocation.x;
 			event->forms().MouseInfo.Y -= resolvedLocation.y;
 			fw().pushEvent(event);
+			this->setDirty();
 			break;
 		}
 		// Keyboard events fall-through
@@ -876,6 +881,7 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 			event->forms().EventFlag = type;
 			event->forms().KeyInfo = parentEvent->keyboard();
 			fw().pushEvent(event);
+			this->setDirty();
 			break;
 		}
 		// Input event special
@@ -886,6 +892,7 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 			event->forms().EventFlag = type;
 			event->forms().Input = parentEvent->text();
 			fw().pushEvent(event);
+			this->setDirty();
 			break;
 		}
 		// Forms events fall-through
@@ -911,6 +918,7 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 			event->forms().RaisedBy = shared_from_this();
 			event->forms().EventFlag = type;
 			fw().pushEvent(event);
+			this->setDirty();
 			break;
 		}
 		default:
@@ -931,5 +939,26 @@ void Control::addCallback(FormEventType event, std::function<void(FormsEvent *e)
 {
 	this->callbacks[event].push_back(callback);
 }
+
+void Control::setDirty()
+{
+	this->dirty = true;
+	auto parent = this->getParent();
+	if (parent)
+	{
+		parent->setDirty();
+	}
+}
+
+void Control::setVisible(bool value)
+{
+	if (value != this->Visible)
+	{
+		this->Visible = value;
+		this->setDirty();
+	}
+}
+
+bool Control::isVisible() const { return this->Visible; }
 
 }; // namespace OpenApoc

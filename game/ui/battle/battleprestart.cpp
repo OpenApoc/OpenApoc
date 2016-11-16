@@ -23,7 +23,7 @@ std::future<void> enterBattle(sp<GameState> state)
 }
 
 BattlePreStart::BattlePreStart(sp<GameState> state)
-    : Stage(), menuform(ui().getForm("FORM_BATTLE_PRESTART")), state(state)
+    : Stage(), menuform(ui().getForm("battle/prestart")), state(state)
 {
 	menuform->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick, [this, state](Event *) {

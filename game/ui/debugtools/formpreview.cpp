@@ -37,10 +37,10 @@ FormPreview::FormPreview() : Stage()
 	c->Size = previewselector->Size - 4;
 	c->BackgroundColour = {80, 80, 80, 255};
 
-	auto l = c->createChild<Label>("Pick Form:", ui().getFont("SMALFONT"));
+	auto l = c->createChild<Label>("Pick Form:", ui().getFont("smalfont"));
 	l->Location = {0, 0};
 	l->Size.x = c->Size.x;
-	l->Size.y = ui().getFont("SMALFONT")->getFontHeight();
+	l->Size.y = ui().getFont("smalfont")->getFontHeight();
 	l->BackgroundColour = {80, 80, 80, 255};
 
 	interactWithDisplay = c->createChild<CheckBox>(
@@ -54,14 +54,14 @@ FormPreview::FormPreview() : Stage()
 	interactWithDisplay->BackgroundColour = {80, 80, 80, 255};
 	interactWithDisplay->setChecked(true);
 
-	l = c->createChild<Label>("Interact?", ui().getFont("SMALFONT"));
+	l = c->createChild<Label>("Interact?", ui().getFont("smalfont"));
 	l->Location.x = interactWithDisplay->Size.x + 2;
 	l->Location.y = interactWithDisplay->Location.y;
 	l->Size.x = c->Size.x - l->Location.x;
 	l->Size.y = interactWithDisplay->Size.y;
 	l->BackgroundColour = {80, 80, 80, 255};
 
-	reloadButton = c->createChild<TextButton>("Reload xml forms", ui().getFont("SMALFONT"));
+	reloadButton = c->createChild<TextButton>("Reload xml forms", ui().getFont("smalfont"));
 	reloadButton->Location = {0, interactWithDisplay->Location.y + interactWithDisplay->Size.y};
 	reloadButton->Name = "FORM_RELOAD";
 	reloadButton->Size = {c->Size.x, interactWithDisplay->Size.y};
@@ -69,7 +69,7 @@ FormPreview::FormPreview() : Stage()
 
 	auto lb = c->createChild<ListBox>();
 	lb->Location.x = 0;
-	lb->Location.y = ui().getFont("SMALFONT")->getFontHeight();
+	lb->Location.y = ui().getFont("smalfont")->getFontHeight();
 	lb->Size.x = c->Size.x;
 	lb->Size.y = interactWithDisplay->Location.y - lb->Location.y;
 	lb->Name = "FORM_LIST";
@@ -79,7 +79,7 @@ FormPreview::FormPreview() : Stage()
 	std::vector<UString> idlist = ui().getFormIDs();
 	for (auto idx = idlist.begin(); idx != idlist.end(); idx++)
 	{
-		l = lb->createChild<Label>(*idx, ui().getFont("SMALFONT"));
+		l = lb->createChild<Label>(*idx, ui().getFont("smalfont"));
 		l->Name = l->getText();
 		l->BackgroundColour = {192, 80, 80, 0};
 		// lb->addItem( l );

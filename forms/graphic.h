@@ -35,7 +35,7 @@ class Graphic : public Control
 	void setImage(sp<Image> Image);
 
 	sp<Control> copyTo(sp<Control> CopyParent) override;
-	void configureSelfFromXml(tinyxml2::XMLElement *Element) override;
+	void configureSelfFromXml(pugi::xml_node *node) override;
 };
 
 }; // namespace OpenApoc

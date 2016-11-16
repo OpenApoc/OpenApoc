@@ -19,7 +19,7 @@ sp<BattleUnitAnimationPack> StateObject<BattleUnitAnimationPack>::get(const Game
 	auto it = state.battle_unit_animation_packs.find(id);
 	if (it == state.battle_unit_animation_packs.end())
 	{
-		LogError("No BattleUnitAnimationPack matching ID \"%s\"", id.cStr());
+		LogError("No BattleUnitAnimationPack matching ID \"%s\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -55,7 +55,7 @@ const UString BattleUnitAnimationPack::getNameFromID(UString id)
 	auto plen = getPrefix().length();
 	if (id.length() > plen)
 		return id.substr(plen, id.length() - plen);
-	LogError("Invalid BattleUnitAnimationPack ID %s", id.cStr());
+	LogError("Invalid BattleUnitAnimationPack ID %s", id);
 	return emptyString;
 }
 
@@ -76,15 +76,22 @@ int BattleUnitAnimationPack::getFrameCountBody(StateRef<AEquipmentType> heldItem
 {
 	sp<AnimationEntry> e;
 	if (currentBody == targetBody)
-		e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
-		                                                         : ItemWieldMode::OneHanded)
-		                                 : ItemWieldMode::None][currentHands][movement][currentBody]
-		                       [facing];
+	{
+		AnimationKey key = {
+		    heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded)
+		             : ItemWieldMode::None,
+		    currentHands, movement, currentBody};
+
+		e = standart_animations[key][facing];
+	}
 	else
-		e = body_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
-		                                                           : ItemWieldMode::OneHanded)
-		                                   : ItemWieldMode::None][currentHands][movement]
-		                         [currentBody][targetBody][facing];
+	{
+		ChangingBodyStateAnimationKey key = {
+		    heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded)
+		             : ItemWieldMode::None,
+		    currentHands, movement, currentBody, targetBody};
+		e = body_state_animations[key][facing];
+	}
 	if (e)
 		return e->frame_count;
 	else
@@ -98,15 +105,22 @@ int BattleUnitAnimationPack::getFrameCountHands(StateRef<AEquipmentType> heldIte
 {
 	sp<AnimationEntry> e;
 	if (currentHands == targetHands)
-		e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
-		                                                         : ItemWieldMode::OneHanded)
-		                                 : ItemWieldMode::None][currentHands][movement][currentBody]
-		                       [facing];
+	{
+		AnimationKey key = {
+		    heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded)
+		             : ItemWieldMode::None,
+		    currentHands, movement, currentBody};
+
+		e = standart_animations[key][facing];
+	}
 	else
-		e = hand_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
-		                                                           : ItemWieldMode::OneHanded)
-		                                   : ItemWieldMode::None][currentHands][targetHands]
-		                         [movement][currentBody][facing];
+	{
+		ChangingHandAnimationKey key = {
+		    heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded)
+		             : ItemWieldMode::None,
+		    currentHands, targetHands, movement, currentBody};
+		e = hand_state_animations[key][facing];
+	}
 	if (e)
 		return e->frame_count;
 	else
@@ -118,10 +132,13 @@ int BattleUnitAnimationPack::getFrameCountFiring(StateRef<AEquipmentType> heldIt
                                                  Vec2<int> facing)
 {
 	sp<AnimationEntry> e;
-	e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
-	                                                         : ItemWieldMode::OneHanded)
-	                                 : ItemWieldMode::None][HandState::Firing][movement]
-	                       [currentBody][facing];
+	{
+		AnimationKey key = {
+		    heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded)
+		             : ItemWieldMode::None,
+		    HandState::Firing, movement, currentBody};
+		e = standart_animations[key][facing];
+	}
 	if (e)
 		return e->frame_count;
 	else
@@ -145,26 +162,30 @@ void BattleUnitAnimationPack::drawShadow(
 	int frame = -1;
 	if (currentHands != targetHands)
 	{
-		e = hand_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
-		                                                           : ItemWieldMode::OneHanded)
-		                                   : ItemWieldMode::None][currentHands][targetHands]
-		                         [movement][currentBody][facing];
+		ChangingHandAnimationKey key = {
+		    heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded)
+		             : ItemWieldMode::None,
+		    currentHands, targetHands, movement, currentBody};
+		e = hand_state_animations[key][facing];
 		frame = e->frame_count - hands_animation_delay;
 	}
 	else if (currentBody != targetBody)
 	{
-		e = body_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
-		                                                           : ItemWieldMode::OneHanded)
-		                                   : ItemWieldMode::None][currentHands][movement]
-		                         [currentBody][targetBody][facing];
+		ChangingBodyStateAnimationKey key = {
+		    heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded)
+		             : ItemWieldMode::None,
+		    currentHands, movement, currentBody, targetBody};
+		e = body_state_animations[key][facing];
 		frame = e->frame_count - body_animation_delay;
 	}
 	else
 	{
-		e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
-		                                                         : ItemWieldMode::OneHanded)
-		                                 : ItemWieldMode::None][currentHands][movement][currentBody]
-		                       [facing];
+		AnimationKey key = {
+		    heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded)
+		             : ItemWieldMode::None,
+		    currentHands, movement, currentBody};
+
+		e = standart_animations[key][facing];
 		if (currentHands == HandState::Firing)
 			frame = e->frame_count - hands_animation_delay;
 		else
@@ -206,45 +227,48 @@ void BattleUnitAnimationPack::drawUnit(
 	int frame_legs = -1;
 	if (currentHands != targetHands)
 	{
-		e = hand_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
-		                                                           : ItemWieldMode::OneHanded)
-		                                   : ItemWieldMode::None][currentHands][targetHands]
-		                         [movement][currentBody][facing];
+		ChangingHandAnimationKey key = {
+		    heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded)
+		             : ItemWieldMode::None,
+		    currentHands, targetHands, movement, currentBody};
+		e = hand_state_animations[key][facing];
 		frame = e->frame_count - hands_animation_delay;
 		if (e->is_overlay)
 		{
-			e_legs =
-			    standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
-			                                                         : ItemWieldMode::OneHanded)
-			                                 : ItemWieldMode::None][HandState::AtEase][movement]
-			                       [currentBody][facing];
+			AnimationKey standardKey = {heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+			                                                             : ItemWieldMode::OneHanded)
+			                                     : ItemWieldMode::None,
+			                            HandState::AtEase, movement, currentBody};
+			e_legs = standart_animations[standardKey][facing];
 			frame_legs =
 			    (distance_travelled * 100 / e_legs->frames_per_100_units) % e_legs->frame_count;
 		}
 	}
 	else if (currentBody != targetBody)
 	{
-		e = body_state_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
-		                                                           : ItemWieldMode::OneHanded)
-		                                   : ItemWieldMode::None][currentHands][movement]
-		                         [currentBody][targetBody][facing];
+		ChangingBodyStateAnimationKey key = {
+		    heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded : ItemWieldMode::OneHanded)
+		             : ItemWieldMode::None,
+		    currentHands, movement, currentBody, targetBody};
+		e = body_state_animations[key][facing];
 		frame = e->frame_count - body_animation_delay;
 	}
 	else
 	{
 		if (currentHands == HandState::Firing && hasAlternativeFiringAnimations && firingAngle != 0)
 		{
-			e = alt_fire_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
-			                                                         : ItemWieldMode::OneHanded)
-			                                 : ItemWieldMode::None][firingAngle][movement]
-			                       [currentBody][facing];
+			e = alt_fire_animations[{heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+			                                                          : ItemWieldMode::OneHanded)
+			                                  : ItemWieldMode::None,
+			                         firingAngle, movement, currentBody}][facing];
 		}
 		else
 		{
-			e = standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
-			                                                         : ItemWieldMode::OneHanded)
-			                                 : ItemWieldMode::None][currentHands][movement]
-			                       [currentBody][facing];
+			AnimationKey key = {heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+			                                                     : ItemWieldMode::OneHanded)
+			                             : ItemWieldMode::None,
+			                    currentHands, movement, currentBody};
+			e = standart_animations[key][facing];
 		}
 		if (currentHands == HandState::Firing)
 			frame = e->frame_count - hands_animation_delay;
@@ -254,11 +278,11 @@ void BattleUnitAnimationPack::drawUnit(
 		// But since frame_count is 1, the previous line attains the same result, so why bother
 		if (e->is_overlay)
 		{
-			e_legs =
-			    standart_animations[heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
-			                                                         : ItemWieldMode::OneHanded)
-			                                 : ItemWieldMode::None][HandState::AtEase][movement]
-			                       [currentBody][facing];
+			AnimationKey key = {heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
+			                                                     : ItemWieldMode::OneHanded)
+			                             : ItemWieldMode::None,
+			                    HandState::AtEase, movement, currentBody};
+			e_legs = standart_animations[key][facing];
 			frame_legs =
 			    (distance_travelled * 100 / e_legs->frames_per_100_units) % e_legs->frame_count;
 		}

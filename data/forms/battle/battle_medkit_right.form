@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_BATTLE_MEDIKIT_RIGHT">
+    <style minwidth="97" minheight="97">
+      <position x="left" y="top"/>
+      <size width="97" height="97"/>
+      <backcolour a="0"/>
+      <!-- Medikit BG -->
+      <graphic id="MEDIKIT_BG">
+        <size width="96" height="97"/>
+        <position x="0" y="0"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:215:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+      <!-- Medikit damaged body parts-->
+      <graphic id="MEDIKIT_LEGS_RED">
+        <size width="96" height="97"/>
+        <position x="0" y="0"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:216:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+      <graphic id="MEDIKIT_BODY_RED">
+        <size width="96" height="97"/>
+        <position x="0" y="0"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:217:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+      <graphic id="MEDIKIT_LEFT_HAND_RED">
+        <size width="96" height="97"/>
+        <position x="0" y="0"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:218:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+      <graphic id="MEDIKIT_RIGHT_HAND_RED">
+        <size width="96" height="97"/>
+        <position x="0" y="0"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:219:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+      <graphic id="MEDIKIT_HEAD_RED">
+        <size width="96" height="97"/>
+        <position x="0" y="0"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:220:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+      <!-- Medikit healed body parts-->
+      <graphic id="MEDIKIT_LEGS_GREEN">
+        <size width="96" height="97"/>
+        <position x="0" y="0"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:221:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+      <graphic id="MEDIKIT_BODY_GREEN">
+        <size width="96" height="97"/>
+        <position x="0" y="0"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:222:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+      <graphic id="MEDIKIT_LEFT_HAND_GREEN">
+        <size width="96" height="97"/>
+        <position x="0" y="0"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:223:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+      <graphic id="MEDIKIT_RIGHT_HAND_GREEN">
+        <size width="96" height="97"/>
+        <position x="0" y="0"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:224:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+      <graphic id="MEDIKIT_HEAD_GREEN">
+        <size width="96" height="97"/>
+        <position x="0" y="0"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:225:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+      <!-- Medikit buttons for body parts-->
+      <graphicbutton id="MEDIKIT_HEAD_BUTTON">
+        <position x="43" y="10"/>
+        <size width="13" height="12"/>
+        <image/>
+      </graphicbutton>
+      <graphicbutton id="MEDIKIT_RIGHT_HAND_BUTTON">
+        <position x="32" y="21"/>
+        <size width="8" height="35"/>
+        <image/>
+      </graphicbutton>
+      <graphicbutton id="MEDIKIT_LEFT_HAND_BUTTON">
+        <position x="59" y="21"/>
+        <size width="9" height="35"/>
+        <image/>
+      </graphicbutton>
+      <graphicbutton id="MEDIKIT_BODY_BUTTON">
+        <position x="40" y="21"/>
+        <size width="19" height="30"/>
+        <image/>
+      </graphicbutton>
+      <graphicbutton id="MEDIKIT_LEGS_BUTTON">
+        <position x="39" y="51"/>
+        <size width="23" height="29"/>
+        <image/>
+      </graphicbutton>
+    </style>
+  </form>
+</openapoc>

@@ -9,10 +9,10 @@
 #include <list>
 #include <map>
 
-namespace tinyxml2
+namespace pugi
 {
-class XMLElement;
-} // namespace tinyxml2
+class xml_node;
+} // namespace pugi
 
 namespace OpenApoc
 {
@@ -34,7 +34,9 @@ class Control : public std::enable_shared_from_this<Control>
 	std::map<FormEventType, std::list<std::function<void(FormsEvent *e)>>> callbacks;
 
 	// Configures children of element after it was configured, see ConfigureFromXML
-	void configureChildrenFromXml(tinyxml2::XMLElement *Element);
+	void configureChildrenFromXml(pugi::xml_node *parent);
+
+	bool dirty = true;
 
   protected:
 	sp<Palette> palette;
@@ -52,9 +54,9 @@ class Control : public std::enable_shared_from_this<Control>
 	void resolveLocation();
 
 	// Loads control and all subcontrols from xml
-	void configureFromXml(tinyxml2::XMLElement *Element);
+	void configureFromXml(pugi::xml_node *node);
 	// configures current element from xml element (without children)
-	virtual void configureSelfFromXml(tinyxml2::XMLElement *Element);
+	virtual void configureSelfFromXml(pugi::xml_node *node);
 
 	sp<Control> getRootControl();
 
@@ -64,6 +66,10 @@ class Control : public std::enable_shared_from_this<Control>
 
 	void triggerEventCallbacks(FormsEvent *e);
 
+	void setDirty();
+
+	bool Visible;
+
   public:
 	UString Name;
 	Vec2<int> Location;
@@ -71,7 +77,6 @@ class Control : public std::enable_shared_from_this<Control>
 	Colour BackgroundColour;
 	bool takesFocus;
 	bool showBounds;
-	bool Visible;
 	bool Enabled;
 
 	bool canCopy;
@@ -91,20 +96,22 @@ class Control : public std::enable_shared_from_this<Control>
 	sp<Control> operator[](int Index) const;
 	sp<Control> findControl(UString ID) const;
 
+	void setVisible(bool value);
+	bool isVisible() const;
+
 	template <typename T> sp<T> findControlTyped(const UString &name) const
 	{
 		auto c = this->findControl(name);
 		if (!c)
 		{
-			LogError("Failed to find control \"%s\" within form \"%s\"", name.cStr(),
-			         this->Name.cStr());
+			LogError("Failed to find control \"%s\" within form \"%s\"", name, this->Name);
 			return nullptr;
 		}
 		sp<T> typedControl = std::dynamic_pointer_cast<T>(c);
 		if (!typedControl)
 		{
-			LogError("Failed to cast control \"%s\" within form \"%s\" to type \"%s\"", name.cStr(),
-			         this->Name.cStr(), typeid(T).name());
+			LogError("Failed to cast control \"%s\" within form \"%s\" to type \"%s\"", name,
+			         this->Name, typeid(T).name());
 			return nullptr;
 		}
 		return typedControl;

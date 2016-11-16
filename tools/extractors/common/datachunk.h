@@ -28,12 +28,12 @@ template <typename T> class DataChunk
 		}
 	}
 
-	T get(unsigned int offset)
+	T get(unsigned int offset) const
 	{
 		LogAssert(offset < readData.size());
 		return readData[offset];
 	}
 
-	size_t count() { return readData.size(); }
+	size_t count() const { return readData.size(); }
 };
 } // namespace OpenApoc

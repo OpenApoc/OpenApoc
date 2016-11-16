@@ -1,8 +1,8 @@
 #include "ufo2p.h"
-#include "crc32.h"
 #include "framework/data.h"
 #include "framework/framework.h"
 
+#include <boost/crc.hpp>
 #include <iomanip>
 #include <iterator>
 
@@ -14,7 +14,7 @@ namespace OpenApoc
  * need to make sure the offsets are the same, then we can add them to an
  * 'allowed' list, or have a map of 'known' CRCs with offsets of the various
  * tables */
-uint32_t expected_ufo2p_crc32 = 0x1e7e11d6;
+uint32_t expected_ufo2p_crc32 = 0x4749ffc1;
 
 UFO2P::UFO2P(std::string file_name)
 {
@@ -25,15 +25,15 @@ UFO2P::UFO2P(std::string file_name)
 		LogError("Failed to open \"%s\"", file_name.c_str());
 		exit(1);
 	}
+	auto data = file.readAll();
+	boost::crc_32_type crc;
+	crc.process_bytes(data.get(), file.size());
 
-	std::istream_iterator<uint8_t> eof;
-	std::istream_iterator<uint8_t> sof(file);
-
-	auto crc32 = crc(sof, eof);
+	auto crc32 = crc.checksum();
 
 	if (crc32 != expected_ufo2p_crc32)
 	{
-		LogError("File \"%s\"\" has an unknown crc32 value of 0x%08lx - expected 0x%08x",
+		LogError("File \"%s\"\" has an unknown crc32 value of 0x%08x - expected 0x%08x",
 		         file_name.c_str(), crc32, expected_ufo2p_crc32);
 	}
 

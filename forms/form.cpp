@@ -1,5 +1,7 @@
 #include "form.h"
-#include <tinyxml2.h>
+#include "dependencies/pugixml/src/pugixml.hpp"
+#include "framework/data.h"
+#include "framework/framework.h"
 
 namespace OpenApoc
 {
@@ -8,35 +10,24 @@ Form::Form() : Control() {}
 
 Form::~Form() = default;
 
-void Form::readFormStyle(tinyxml2::XMLElement *FormConfiguration)
+void Form::readFormStyle(pugi::xml_node *node)
 {
-	if (FormConfiguration == nullptr)
+	if (node == nullptr)
 	{
 		return;
 	}
-
-	tinyxml2::XMLElement *node;
-	tinyxml2::XMLElement *usenode = nullptr;
 	UString nodename;
+	this->Name = node->attribute("id").as_string();
 
-	if (FormConfiguration->Attribute("id"))
-		this->Name = FormConfiguration->Attribute("id");
-
-	for (node = FormConfiguration->FirstChildElement(); node != nullptr;
-	     node = node->NextSiblingElement())
+	for (auto child = node->first_child(); child; child = child.next_sibling())
 	{
-		nodename = node->Name();
+		nodename = child.name();
 		if (nodename == "style")
 		{
 			// TODO: Determine best "style" based on minwidth and minheight attributes
-			usenode = node;
+			configureFromXml(&child);
+			resolveLocation();
 		}
-	}
-
-	if (usenode != nullptr)
-	{
-		configureFromXml(usenode);
-		resolveLocation();
 	}
 }
 
@@ -58,6 +49,46 @@ sp<Control> Form::copyTo(sp<Control> CopyParent)
 	auto copy = mksp<Form>();
 	copyControlData(copy);
 	return copy;
+}
+
+sp<Form> Form::loadForm(const UString &path)
+{
+	auto file = fw().data->fs.open(path);
+	if (!file)
+	{
+		LogWarning("Failed to open form file \"%s\"", path);
+		return nullptr;
+	}
+	auto data = file.readAll();
+	if (!data)
+	{
+		LogWarning("Failed to read form data from \"%s\"", path);
+		return nullptr;
+	}
+	pugi::xml_document doc;
+	auto result = doc.load_buffer(data.get(), file.size());
+	if (!result)
+	{
+		LogWarning("Failed to parse form file at \"%s\" - \"%s\" at \"%llu\"", path,
+		           result.description(), (unsigned long long)result.offset);
+		return nullptr;
+	}
+
+	auto node = doc.child("openapoc");
+	if (!node)
+	{
+		LogWarning("No root \"openapoc\" root element in form file \"%s\"", path);
+		return nullptr;
+	}
+	auto child = node.child("form");
+	if (!child)
+	{
+		LogWarning("No child node of \"form\" in form file \"%s\"", path);
+		return nullptr;
+	}
+	auto form = mksp<Form>();
+	form->readFormStyle(&child);
+	return form;
 }
 
 }; // namespace OpenApoc

@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tinyxml2", "dependencies\tinyxml2.vcxproj", "{D1C528B6-AA02-4D29-9D61-DC08E317A70D}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "physfs", "dependencies\physfs.vcxproj", "{5A1D2EC4-525E-49B6-9398-BE359E71CB35}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glm", "dependencies\glm.vcxproj", "{5A1E7764-CFDC-49FE-BF31-064DCC661D15}"
@@ -53,14 +51,6 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Debug|Win32.ActiveCfg = Debug|Win32
-		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Debug|Win32.Build.0 = Debug|Win32
-		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Debug|x64.ActiveCfg = Debug|x64
-		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Debug|x64.Build.0 = Debug|x64
-		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release|Win32.ActiveCfg = Release|Win32
-		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release|Win32.Build.0 = Release|Win32
-		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release|x64.ActiveCfg = Release|x64
-		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release|x64.Build.0 = Release|x64
 		{5A1D2EC4-525E-49B6-9398-BE359E71CB35}.Debug|Win32.ActiveCfg = Debug|Win32
 		{5A1D2EC4-525E-49B6-9398-BE359E71CB35}.Debug|Win32.Build.0 = Debug|Win32
 		{5A1D2EC4-525E-49B6-9398-BE359E71CB35}.Debug|x64.ActiveCfg = Debug|x64
@@ -202,7 +192,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{D1C528B6-AA02-4D29-9D61-DC08E317A70D} = {90A13965-1997-49A0-98A7-FD7484C0707D}
 		{5A1D2EC4-525E-49B6-9398-BE359E71CB35} = {90A13965-1997-49A0-98A7-FD7484C0707D}
 		{5A1E7764-CFDC-49FE-BF31-064DCC661D15} = {90A13965-1997-49A0-98A7-FD7484C0707D}
 		{832BD75C-0C8C-4D12-A518-7B1AAE3DD0AC} = {90A13965-1997-49A0-98A7-FD7484C0707D}

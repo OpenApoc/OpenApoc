@@ -49,7 +49,7 @@ void Doodad::remove(GameState &state)
 	this->tileObject = nullptr;
 	for (auto &city : state.cities)
 	{
-		removeOneItemFromVector(city.second->doodads, thisPtr);
+		city.second->doodads.remove(thisPtr);
 	}
 	if (state.current_battle)
 		state.current_battle->doodads.remove(thisPtr);

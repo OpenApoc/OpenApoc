@@ -23,7 +23,7 @@ namespace OpenApoc
 ResearchScreen::ResearchScreen(sp<GameState> state, sp<Facility> selected_lab)
     : BaseStage(state), selected_lab(selected_lab)
 {
-	form = ui().getForm("FORM_RESEARCHSCREEN");
+	form = ui().getForm("researchscreen");
 	viewHighlight = BaseGraphics::FacilityHighlight::Labs;
 	viewFacility = selected_lab;
 	arrow = form->findControlTyped<Graphic>("MAGIC_ARROW");
@@ -96,7 +96,7 @@ void ResearchScreen::begin()
 		}
 		if (agent->assigned_to_lab)
 		{
-			LogError("Agent \"%s\" already assigned to a lab?", agent->name.cStr());
+			LogError("Agent \"%s\" already assigned to a lab?", agent->name);
 			return;
 		}
 		agent->assigned_to_lab = true;
@@ -114,7 +114,7 @@ void ResearchScreen::begin()
 		}
 		if (!agent->assigned_to_lab)
 		{
-			LogError("Agent \"%s\" not assigned to a lab?", agent->name.cStr());
+			LogError("Agent \"%s\" not assigned to a lab?", agent->name);
 			return;
 		}
 		agent->assigned_to_lab = false;
@@ -154,7 +154,7 @@ void ResearchScreen::eventOccurred(Event *e)
 
 	if (e->type() == EVENT_MOUSE_MOVE)
 	{
-		arrow->Visible = (e->mouse().X > form->Location.x + arrow->Location.x);
+		arrow->setVisible((e->mouse().X > form->Location.x + arrow->Location.x));
 	}
 
 	if (e->type() == EVENT_FORM_INTERACTION)
@@ -270,7 +270,7 @@ void ResearchScreen::setCurrentLabInfo()
 
 	form->findControlTyped<Label>("TEXT_LAB_TYPE")->setText(labTypeName);
 
-	auto font = ui().getFont("SMALFONT");
+	auto font = ui().getFont("smalfont");
 	auto agentEntryHeight = font->getFontHeight() * 3;
 
 	auto unassignedAgentList = form->findControlTyped<ListBox>("LIST_UNASSIGNED");
@@ -394,21 +394,21 @@ void ResearchScreen::updateProgressInfo()
 	if (this->selected_lab->lab->current_project &&
 	    this->selected_lab->lab->current_project->type == ResearchTopic::Type::Engineering)
 	{
-		manufacturing_ntomake->Visible = true;
-		manufacturing_quantity->Visible = true;
-		manufacturing_scrollbar->Visible = true;
-		manufacturing_scroll_left->Visible = true;
-		manufacturing_scroll_right->Visible = true;
+		manufacturing_ntomake->setVisible(true);
+		manufacturing_quantity->setVisible(true);
+		manufacturing_scrollbar->setVisible(true);
+		manufacturing_scroll_left->setVisible(true);
+		manufacturing_scroll_right->setVisible(true);
 		manufacturing_scrollbar->setValue(this->selected_lab->lab->getQuantity());
 		manufacturing_quantity->setText(format(tr("%d"), this->selected_lab->lab->getQuantity()));
 	}
 	else
 	{
-		manufacturing_ntomake->Visible = false;
-		manufacturing_quantity->Visible = false;
-		manufacturing_scrollbar->Visible = false;
-		manufacturing_scroll_left->Visible = false;
-		manufacturing_scroll_right->Visible = false;
+		manufacturing_ntomake->setVisible(false);
+		manufacturing_quantity->setVisible(false);
+		manufacturing_scrollbar->setVisible(false);
+		manufacturing_scroll_left->setVisible(false);
+		manufacturing_scroll_right->setVisible(false);
 	}
 }
 
@@ -447,7 +447,7 @@ sp<Control> ResearchScreen::createAgentControl(Vec2<int> size, StateRef<Agent> a
 	healthGraphic->Size = healthBarSize;
 	healthGraphic->ImagePosition = FillMethod::Stretch;
 
-	auto font = ui().getFont("SMALFONT");
+	auto font = ui().getFont("smalfont");
 
 	auto nameLabel = baseControl->createChild<Label>(agent->name, font);
 	nameLabel->Location = {40, 0};
@@ -468,7 +468,7 @@ sp<Control> ResearchScreen::createAgentControl(Vec2<int> size, StateRef<Agent> a
 	}
 	else
 	{
-		LogError("Trying to show non-scientist agent %s (%s)", agent.id.cStr(), agent->name.cStr());
+		LogError("Trying to show non-scientist agent %s (%s)", agent.id, agent->name);
 	}
 
 	auto skillLabel = baseControl->createChild<Label>(format(tr("Skill %s"), skill), font);

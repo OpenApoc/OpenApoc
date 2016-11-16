@@ -1,6 +1,3 @@
-[submodule "dependencies/tinyxml2"]
-	path = dependencies/tinyxml2
-	url = https://github.com/leethomason/tinyxml2.git
 [submodule "dependencies/glm"]
 	path = dependencies/glm
 	url = https://github.com/JonnyH/glm.git
@@ -20,3 +17,6 @@
 [submodule "dependencies/lodepng"]
 	path = dependencies/lodepng
 	url = https://github.com/lvandeve/lodepng.git
+[submodule "dependencies/tinyformat"]
+	path = dependencies/tinyformat
+	url = https://github.com/c42f/tinyformat.git

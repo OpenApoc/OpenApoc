@@ -1,4 +1,5 @@
 #include "forms/tristatebox.h"
+#include "dependencies/pugixml/src/pugixml.hpp"
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
@@ -6,7 +7,6 @@
 #include "framework/renderer.h"
 #include "framework/sound.h"
 #include "library/sp.h"
-#include <tinyxml2.h>
 
 namespace OpenApoc
 {
@@ -132,20 +132,23 @@ sp<Control> TriStateBox::copyTo(sp<Control> CopyParent)
 	return copy;
 }
 
-void TriStateBox::configureSelfFromXml(tinyxml2::XMLElement *Element)
+void TriStateBox::configureSelfFromXml(pugi::xml_node *node)
 {
-	Control::configureSelfFromXml(Element);
-	if (Element->FirstChildElement("image") != nullptr)
+	Control::configureSelfFromXml(node);
+	auto imageNode = node->child("image");
+	if (imageNode)
 	{
-		image1 = fw().data->loadImage(Element->FirstChildElement("image")->GetText());
+		image1 = fw().data->loadImage(imageNode.text().get());
 	}
-	if (Element->FirstChildElement("image2") != nullptr)
+	auto imageNode2 = node->child("image2");
+	if (imageNode2)
 	{
-		image2 = fw().data->loadImage(Element->FirstChildElement("image2")->GetText());
+		image2 = fw().data->loadImage(imageNode2.text().get());
 	}
-	if (Element->FirstChildElement("image3") != nullptr)
+	auto imageNode3 = node->child("image3");
+	if (imageNode3)
 	{
-		image3 = fw().data->loadImage(Element->FirstChildElement("image3")->GetText());
+		image3 = fw().data->loadImage(imageNode3.text().get());
 	}
 }
 }; // namespace OpenApoc

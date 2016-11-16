@@ -6,6 +6,7 @@
 #include "library/voxel.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
+#include <cstring>
 #include <list>
 #include <map>
 #include <set>
@@ -39,7 +40,7 @@ std::map<UString, int> EquipscreenSprite = {{"VEHICLETYPE_ANNIHILATOR", 0},
                                             {"VEHICLETYPE_HAWK_AIR_WARRIOR", 11},
                                             {"VEHICLETYPE_GRIFFON_AFV", 12}};
 
-static void extract_equipment_layout(GameState &state, sp<VehicleType> vehicle, UFO2P &data,
+static void extract_equipment_layout(GameState &state, sp<VehicleType> vehicle, const UFO2P &data,
                                      VehicleEquipmentLayout layout,
                                      const uint8_t initial_equipment[45])
 {
@@ -108,7 +109,7 @@ static void extract_equipment_layout(GameState &state, sp<VehicleType> vehicle, 
 	}
 }
 
-void InitialGameStateExtractor::extractVehicles(GameState &state)
+void InitialGameStateExtractor::extractVehicles(GameState &state) const
 {
 	auto &data = this->ufo2p;
 	LogInfo("Number of vehicle strings: %zu", data.vehicle_names->readStrings.size());
@@ -300,7 +301,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state)
 		}
 		else
 		{
-			LogError("Unknown type for vehicle %s", id.cStr());
+			LogError("Unknown type for vehicle %s", id);
 		}
 
 		vehicle->acceleration = v.acceleration;
@@ -831,9 +832,9 @@ void InitialGameStateExtractor::extractVehicles(GameState &state)
 						vehicle->voxelMaps[FACING_NORTH][z * v.size_y * v.size_x +
 						                                 pair.first.y * v.size_x + pair.first.x] =
 						    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
-						vehicle->voxelMapsLOS[FACING_NORTH]
-						                     [z * v.size_y * v.size_x + pair.first.y * v.size_x +
-						                      pair.first.x] =
+						vehicle
+						    ->voxelMapsLOS[FACING_NORTH][z * v.size_y * v.size_x +
+						                                 pair.first.y * v.size_x + pair.first.x] =
 						    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
 						int limit = v.loftemps_height - 16 * z;
 						for (int i = 0; i < limit; i++)
@@ -885,14 +886,14 @@ void InitialGameStateExtractor::extractVehicles(GameState &state)
 							// Facing north
 							vehicle->voxelMaps[FACING_NORTH][z * size.y * size.x + y * size.x + x] =
 							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
-							vehicle->voxelMapsLOS[FACING_NORTH]
-							                     [z * size.y * size.x + y * size.x + x] =
+							vehicle
+							    ->voxelMapsLOS[FACING_NORTH][z * size.y * size.x + y * size.x + x] =
 							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
 							// Facing south
 							vehicle->voxelMaps[FACING_SOUTH][z * size.y * size.x + y * size.x + x] =
 							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
-							vehicle->voxelMapsLOS[FACING_SOUTH]
-							                     [z * size.y * size.x + y * size.x + x] =
+							vehicle
+							    ->voxelMapsLOS[FACING_SOUTH][z * size.y * size.x + y * size.x + x] =
 							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
 
 							int limit = v.loftemps_height - 16 * z;
@@ -968,14 +969,14 @@ void InitialGameStateExtractor::extractVehicles(GameState &state)
 							// Facing east
 							vehicle->voxelMaps[FACING_EAST][z * size.y * size.x + y * size.x + x] =
 							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
-							vehicle->voxelMapsLOS[FACING_EAST]
-							                     [z * size.y * size.x + y * size.x + x] =
+							vehicle
+							    ->voxelMapsLOS[FACING_EAST][z * size.y * size.x + y * size.x + x] =
 							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
 							// Facing west
 							vehicle->voxelMaps[FACING_WEST][z * size.y * size.x + y * size.x + x] =
 							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
-							vehicle->voxelMapsLOS[FACING_WEST]
-							                     [z * size.y * size.x + y * size.x + x] =
+							vehicle
+							    ->voxelMapsLOS[FACING_WEST][z * size.y * size.x + y * size.x + x] =
 							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
 							int limit = v.loftemps_height - 16 * z;
 							for (int i = 0; i < limit; i++)

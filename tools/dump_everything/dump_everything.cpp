@@ -1,10 +1,6 @@
+#include "framework/filesystem.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
-
-// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
-// symbols as part of the module that uses it
-#define BOOST_ALL_NO_LIB
-#include <boost/filesystem.hpp>
 
 using namespace OpenApoc;
 class PCKFile
@@ -1049,20 +1045,20 @@ std::list<UString> loftempFiles = {
     "xcom3/ufodata/loftemps", "xcom3/tacdata/loftemps",
 };
 
-namespace fs = boost::filesystem;
+namespace fs = fs;
 
 static void dumpLofTemps(fs::path basePath, const UString &prefix)
 {
 	auto tabFileName = prefix + ".tab";
 	auto datFileName = prefix + ".dat";
 
-	LogWarning("Reading LOFTEMPS \"%s\"", prefix.cStr());
+	LogWarning("Reading LOFTEMPS \"%s\"", prefix);
 	size_t tabSize = 0;
 	{
 		auto tabFile = fw().data->fs.open(tabFileName);
 		if (!tabFile)
 		{
-			LogError("Failed to open LOFTEMPS tab \"%s\"", tabFileName.cStr());
+			LogError("Failed to open LOFTEMPS tab \"%s\"", tabFileName);
 			return;
 		}
 		tabSize = tabFile.size();
@@ -1074,12 +1070,11 @@ static void dumpLofTemps(fs::path basePath, const UString &prefix)
 
 	for (size_t i = 0; i < count; i++)
 	{
-		auto imgPath =
-		    format("LOFTEMPS:%s:%s:%u", datFileName.cStr(), tabFileName.cStr(), (unsigned)i);
+		auto imgPath = format("LOFTEMPS:%s:%s:%u", datFileName, tabFileName, (unsigned)i);
 		auto img = fw().data->loadImage(imgPath);
 		if (!img)
 		{
-			LogError("Failed to load \"%s\"", imgPath.cStr());
+			LogError("Failed to load \"%s\"", imgPath);
 			return;
 		}
 		auto outName = format("%u.png", (unsigned)i);
@@ -1093,14 +1088,13 @@ static void dumpRaw(fs::path outDir, const RawImage &i)
 	auto inName = i.prefix + i.suffix;
 	auto fileName = i.prefix + ".png";
 	auto outPath = outDir / fileName.str();
-	auto imageString =
-	    format("RAW:%s:%u:%u:%s", inName.cStr(), i.size.x, i.size.y, i.palette.cStr());
-	LogWarning("Reading \"%s\"", imageString.cStr());
+	auto imageString = format("RAW:%s:%u:%u:%s", inName, i.size.x, i.size.y, i.palette);
+	LogWarning("Reading \"%s\"", imageString);
 
 	auto img = fw().data->loadImage(imageString);
 	if (!img)
 	{
-		LogError("Failed to read \"%s\"", imageString.cStr());
+		LogError("Failed to read \"%s\"", imageString);
 		return;
 	}
 
@@ -1114,17 +1108,17 @@ static void dumpPck(fs::path outDir, const UString &prefix, const UString &palet
 	auto basePath = outDir / prefix.str();
 	fs::create_directories(basePath);
 	auto imageString = type + ":" + prefix + ".pck:" + prefix + ".tab";
-	LogWarning("Reading \"%s\"", imageString.cStr());
+	LogWarning("Reading \"%s\"", imageString);
 	auto imgSet = fw().data->loadImageSet(imageString);
 	if (!imgSet)
 	{
-		LogError("Failed to load image set \"%s\"", prefix.cStr());
+		LogError("Failed to load image set \"%s\"", prefix);
 		return;
 	}
 	auto palette = fw().data->loadPalette(paletteString);
 	if (!palette)
 	{
-		LogError("Failed to load palette \"%s\"", paletteString.cStr());
+		LogError("Failed to load palette \"%s\"", paletteString);
 		return;
 	}
 
@@ -1146,11 +1140,11 @@ static void dumpPcx(fs::path outDir, const UString &prefix)
 	auto pcxName = prefix + ".pcx";
 	auto path = outDir / outName.str();
 	fs::create_directories(path.parent_path());
-	LogWarning("Reading \"%s\"", pcxName.cStr());
+	LogWarning("Reading \"%s\"", pcxName);
 	auto img = fw().data->loadImage(pcxName);
 	if (!img)
 	{
-		LogError("Failed to load pcx \"%s\"", pcxName.cStr());
+		LogError("Failed to load pcx \"%s\"", pcxName);
 		return;
 	}
 	fw().data->writeImage(path.native(), img);

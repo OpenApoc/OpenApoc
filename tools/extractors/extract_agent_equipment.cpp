@@ -51,7 +51,8 @@
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::extractAlienEquipmentSets(GameState &state, Difficulty difficulty)
+void InitialGameStateExtractor::extractAlienEquipmentSets(GameState &state,
+                                                          Difficulty difficulty) const
 {
 	auto &data_t = this->tacp;
 	auto &data_u = this->ufo2p;
@@ -167,7 +168,7 @@ void InitialGameStateExtractor::extractAlienEquipmentSets(GameState &state, Diff
 	}
 }
 
-void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
+void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 {
 	auto &data_t = this->tacp;
 	auto &data_u = this->ufo2p;
@@ -176,8 +177,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 	auto gameObjectSpriteTabFile = fw().data->fs.open(gameObjectSpriteTabFileName);
 	if (!gameObjectSpriteTabFile)
 	{
-		LogError("Failed to open dropped item sprite TAB file \"%s\"",
-		         gameObjectSpriteTabFileName.cStr());
+		LogError("Failed to open dropped item sprite TAB file \"%s\"", gameObjectSpriteTabFileName);
 		return;
 	}
 	size_t gameObjectSpriteCount = gameObjectSpriteTabFile.size() / 4;
@@ -187,7 +187,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 	if (!gameObjectShadowSpriteTabFile)
 	{
 		LogError("Failed to open shadow dropped item sprite TAB file \"%s\"",
-		         gameObjectShadowSpriteTabFileName.cStr());
+		         gameObjectShadowSpriteTabFileName);
 		return;
 	}
 	size_t gameObjectShadowSpriteCount = gameObjectShadowSpriteTabFile.size() / 4;
@@ -196,7 +196,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 	auto heldSpriteTabFile = fw().data->fs.open(heldSpriteTabFileName);
 	if (!heldSpriteTabFile)
 	{
-		LogError("Failed to open held item sprite TAB file \"%s\"", heldSpriteTabFileName.cStr());
+		LogError("Failed to open held item sprite TAB file \"%s\"", heldSpriteTabFileName);
 		return;
 	}
 	size_t heldSpriteCount = heldSpriteTabFile.size() / 4 / 8;
@@ -443,7 +443,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 						break;
 					default:
 						LogError("Unexpected body part type %d for ID %s", (int)adata.body_part,
-						         id.cStr());
+						         id);
 				}
 				switch (adata.damage_modifier)
 				{
@@ -458,7 +458,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 						break;
 					default:
 						LogError("Unexpected damage modifier %d for ID %s",
-						         (int)adata.damage_modifier, id.cStr());
+						         (int)adata.damage_modifier, id);
 						break;
 				}
 				e->body_image_pack = {&state, format("%s%s%d%s", BattleUnitImagePack::getPrefix(),
@@ -594,13 +594,12 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 						e->type = AEquipmentType::Type::MediKit;
 						break;
 					default:
-						LogError("Unexpected general type %d for ID %s", (int)gdata.type,
-						         id.cStr());
+						LogError("Unexpected general type %d for ID %s", (int)gdata.type, id);
 				}
 			}
 			break;
 			default:
-				LogInfo("Encountered empty item in ID %s, moving on", id.cStr());
+				LogInfo("Encountered empty item in ID %s, moving on", id);
 				continue;
 		}
 
@@ -645,7 +644,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 		if (payload_idx != std::numeric_limits<unsigned>::max())
 		{
 			if (payload_idx >= data_t.agent_payload->count())
-				LogError("Invalid payload index %u for ID %s", payload_idx, id.cStr());
+				LogError("Invalid payload index %u for ID %s", payload_idx, id);
 
 			auto pdata = data_t.agent_payload->get(payload_idx);
 
@@ -868,7 +867,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state)
 					break;
 				default:
 					LogError("Unexpected grenade trigger type %d for ID %s",
-					         (int)pdata.trigger_type, id.cStr());
+					         (int)pdata.trigger_type, id);
 			}
 			e->explosion_depletion_rate = pdata.explosion_depletion_rate;
 

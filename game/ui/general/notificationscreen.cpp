@@ -13,7 +13,7 @@ namespace OpenApoc
 
 NotificationScreen::NotificationScreen(sp<GameState> state, CityView &cityView,
                                        const UString &message)
-    : Stage(), menuform(ui().getForm("FORM_NOTIFICATION_SCREEN")), state(state)
+    : Stage(), menuform(ui().getForm("notification")), state(state)
 {
 	menuform->findControlTyped<Label>("TEXT_NOTIFICATION")->setText(message);
 

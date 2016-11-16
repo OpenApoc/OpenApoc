@@ -103,7 +103,7 @@ void pushEquipmentSlot(
 	outSlot.bounds = {x, y, x + w, y + h};
 }
 
-void InitialGameStateExtractor::extractAgentTypes(GameState &state)
+void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 {
 	const UString loftempsFile = "xcom3/tacdata/loftemps.dat";
 	const UString loftempsTab = "xcom3/tacdata/loftemps.tab";
@@ -117,7 +117,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 	auto portraitSmallTabFile = fw().data->fs.open(portraitSmallTabFileName);
 	if (!portraitSmallTabFile)
 	{
-		LogError("Failed to open small portrait TAB file \"%s\"", portraitSmallTabFileName.cStr());
+		LogError("Failed to open small portrait TAB file \"%s\"", portraitSmallTabFileName);
 		return;
 	}
 	size_t portraitSmallCount = portraitSmallTabFile.size() / 4;
@@ -126,7 +126,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 	auto portraitLargeTabFile = fw().data->fs.open(portraitLargeTabFileName);
 	if (!portraitLargeTabFile)
 	{
-		LogError("Failed to open Large portrait TAB file \"%s\"", portraitLargeTabFileName.cStr());
+		LogError("Failed to open Large portrait TAB file \"%s\"", portraitLargeTabFileName);
 		return;
 	}
 	size_t portraitLargeCount = portraitLargeTabFile.size() / 4;
@@ -1084,7 +1084,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state)
 	}
 }
 
-void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state)
+void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 {
 	const UString loftempsFile = "xcom3/tacdata/loftemps.dat";
 	const UString loftempsTab = "xcom3/tacdata/loftemps.tab";

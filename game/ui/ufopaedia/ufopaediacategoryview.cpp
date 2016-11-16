@@ -23,7 +23,7 @@ namespace OpenApoc
 
 UfopaediaCategoryView::UfopaediaCategoryView(sp<GameState> state, sp<UfopaediaCategory> cat,
                                              sp<UfopaediaEntry> entry)
-    : Stage(), menuform(ui().getForm("FORM_UFOPAEDIA_BASE")), state(state), category(cat)
+    : Stage(), menuform(ui().getForm("ufopaedia")), state(state), category(cat)
 {
 	// Start with the intro page
 	this->position_iterator = this->category->entries.end();
@@ -41,8 +41,7 @@ UfopaediaCategoryView::UfopaediaCategoryView(sp<GameState> state, sp<UfopaediaCa
 		}
 		if (it == cat->entries.end())
 		{
-			LogError("Failed to find UFOpaedia entry %s in category %s", entry->title.cStr(),
-			         cat->title.cStr());
+			LogError("Failed to find UFOpaedia entry %s in category %s", entry->title, cat->title);
 		}
 	}
 }
@@ -79,7 +78,7 @@ void UfopaediaCategoryView::begin()
 		auto label = menuform->findControlTyped<Label>(labelName);
 		if (!label)
 		{
-			LogError("Failed to find UI control matching \"%s\"", labelName.cStr());
+			LogError("Failed to find UI control matching \"%s\"", labelName);
 		}
 		label->setText("");
 		statsLabels.push_back(label);
@@ -88,7 +87,7 @@ void UfopaediaCategoryView::begin()
 		auto value = menuform->findControlTyped<Label>(valueName);
 		if (!value)
 		{
-			LogError("Failed to find UI control matching \"%s\"", valueName.cStr());
+			LogError("Failed to find UI control matching \"%s\"", valueName);
 		}
 		value->setText("");
 		statsValues.push_back(value);
@@ -99,7 +98,7 @@ void UfopaediaCategoryView::begin()
 		auto label = menuform->findControlTyped<Label>(labelName);
 		if (!label)
 		{
-			LogError("Failed to find UI control matching \"%s\"", labelName.cStr());
+			LogError("Failed to find UI control matching \"%s\"", labelName);
 		}
 		label->setText("");
 		orgLabels.push_back(label);
@@ -108,7 +107,7 @@ void UfopaediaCategoryView::begin()
 		auto value = menuform->findControlTyped<Label>(valueName);
 		if (!value)
 		{
-			LogError("Failed to find UI control matching \"%s\"", valueName.cStr());
+			LogError("Failed to find UI control matching \"%s\"", valueName);
 		}
 		value->setText("");
 		orgValues.push_back(value);
@@ -189,8 +188,7 @@ void UfopaediaCategoryView::eventOccurred(Event *e)
 				it++;
 				if (it == state->ufopaedia.end())
 				{
-					LogError("Failed to find current category \"%s\"",
-					         this->category->title.cStr());
+					LogError("Failed to find current category \"%s\"", this->category->title);
 				}
 			}
 			// Increment it once to get the next
@@ -213,8 +211,7 @@ void UfopaediaCategoryView::eventOccurred(Event *e)
 				it++;
 				if (it == state->ufopaedia.end())
 				{
-					LogError("Failed to find current category \"%s\"",
-					         this->category->title.cStr());
+					LogError("Failed to find current category \"%s\"", this->category->title);
 				}
 			}
 			// Loop around to the beginning
@@ -242,8 +239,7 @@ void UfopaediaCategoryView::eventOccurred(Event *e)
 				it++;
 				if (it == this->category->entries.end())
 				{
-					LogError("Failed to find current category \"%s\"",
-					         this->category->title.cStr());
+					LogError("Failed to find current category \"%s\"", this->category->title);
 				}
 			}
 			this->position_iterator = it;
@@ -251,8 +247,8 @@ void UfopaediaCategoryView::eventOccurred(Event *e)
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_INFORMATION")
 		{
-			menuform->findControl("INFORMATION_PANEL")->Visible =
-			    !menuform->findControl("INFORMATION_PANEL")->Visible;
+			menuform->findControl("INFORMATION_PANEL")
+			    ->setVisible(!menuform->findControl("INFORMATION_PANEL")->isVisible());
 			return;
 		}
 	}
@@ -290,7 +286,7 @@ void UfopaediaCategoryView::setFormData()
 	menuform->findControlTyped<Label>("TEXT_TITLE_DATA")->setText(tr_title);
 
 	// Every time you we change the entry reset the info panel
-	menuform->findControl("INFORMATION_PANEL")->Visible = false;
+	menuform->findControl("INFORMATION_PANEL")->setVisible(false);
 
 	setFormStats();
 }

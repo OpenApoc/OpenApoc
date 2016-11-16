@@ -32,9 +32,9 @@ static const Colour EQUIP_GRID_COLOUR_GENERAL{255, 40, 255, 255};
 static const float GLOW_COUNTER_INCREMENT = M_PI / 15.0f;
 
 VEquipScreen::VEquipScreen(sp<GameState> state)
-    : Stage(), form(ui().getForm("FORM_VEQUIPSCREEN")), selectionType(VEquipmentType::Type::Weapon),
+    : Stage(), form(ui().getForm("vequipscreen")), selectionType(VEquipmentType::Type::Weapon),
       pal(fw().data->loadPalette("xcom3/ufodata/vroadwar.pcx")),
-      labelFont(ui().getFont("SMALFONT")), drawHighlightBox(false), state(state), glowCounter(0)
+      labelFont(ui().getFont("smalfont")), drawHighlightBox(false), state(state), glowCounter(0)
 
 {
 	form->findControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->setChecked(true);
@@ -232,7 +232,7 @@ void VEquipScreen::eventOccurred(Event *e)
 				if (base->inventoryVehicleEquipment[draggedEquipment->id] <= 0)
 				{
 					LogError("Trying to equip item \"%s\" with zero inventory",
-					         this->draggedEquipment->id.cStr());
+					         this->draggedEquipment->id);
 				}
 				base->inventoryVehicleEquipment[draggedEquipment->id]--;
 				this->selected->addEquipment(*state, equipmentGridPos, this->draggedEquipment);
@@ -275,7 +275,7 @@ void VEquipScreen::render()
 		auto label = form->findControlTyped<Label>(labelName);
 		if (!label)
 		{
-			LogError("Failed to find UI control matching \"%s\"", labelName.cStr());
+			LogError("Failed to find UI control matching \"%s\"", labelName);
 		}
 		label->setText("");
 		statsLabels.push_back(label);
@@ -284,7 +284,7 @@ void VEquipScreen::render()
 		auto value = form->findControlTyped<Label>(valueName);
 		if (!value)
 		{
-			LogError("Failed to find UI control matching \"%s\"", valueName.cStr());
+			LogError("Failed to find UI control matching \"%s\"", valueName);
 		}
 		value->setText("");
 		statsValues.push_back(value);
@@ -518,12 +518,12 @@ void VEquipScreen::render()
 
 		if (!slotFound)
 		{
-			LogError("No matching slot for equipment at {%d,%d}", pos.x, pos.y);
+			LogError("No matching slot for equipment at %s", pos);
 		}
 
 		if (pos.x >= EQUIP_GRID_SLOTS.x || pos.y >= EQUIP_GRID_SLOTS.y)
 		{
-			LogError("Equipment at {%d,%d} outside grid", pos.x, pos.y);
+			LogError("Equipment at %s outside grid", pos);
 		}
 		pos *= EQUIP_GRID_SLOT_SIZE;
 		pos += equipOffset;
@@ -578,7 +578,7 @@ void VEquipScreen::render()
 		default:
 			LogError(
 			    "Trying to draw equipment screen of unsupported vehicle type for vehicle \"%s\"",
-			    this->selected->name.cStr());
+			    this->selected->name);
 			allowedEquipmentUser = VEquipmentType::User::Air;
 	}
 	// Draw the inventory if the selected is in a building, and that is a base
@@ -683,14 +683,14 @@ void VEquipScreen::setSelectedVehicle(sp<Vehicle> vehicle)
 		LogError("Trying to set invalid selected vehicle");
 		return;
 	}
-	LogInfo("Selecting vehicle \"%s\"", vehicle->name.cStr());
+	LogInfo("Selecting vehicle \"%s\"", vehicle->name);
 	this->selected = vehicle;
 	auto backgroundImage = vehicle->type->equipment_screen;
 	if (!backgroundImage)
 	{
 		LogError("Trying to view equipment screen of vehicle \"%s\" which has no equipment screen "
 		         "background",
-		         vehicle->type->name.cStr());
+		         vehicle->type->name);
 	}
 
 	auto backgroundControl = form->findControlTyped<Graphic>("BACKGROUND");

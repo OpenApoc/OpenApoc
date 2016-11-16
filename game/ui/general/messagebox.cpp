@@ -23,22 +23,22 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 	const int MARGIN = 8;
 	const Vec2<int> BUTTON_SIZE = {100, 28};
 
-	auto lTitle = form->createChild<Label>(title.toUpper(), ui().getFont("SMALFONT"));
+	auto lTitle = form->createChild<Label>(title.toUpper(), ui().getFont("smalfont"));
 	lTitle->Size.x = form->Size.x - MARGIN * 2;
-	lTitle->Size.y = ui().getFont("SMALFONT")->getFontHeight();
+	lTitle->Size.y = ui().getFont("smalfont")->getFontHeight();
 	lTitle->Location = {MARGIN, MARGIN};
 	lTitle->TextHAlign = HorizontalAlignment::Centre;
 
-	auto lText = form->createChild<Label>(text, ui().getFont("SMALFONT"));
+	auto lText = form->createChild<Label>(text, ui().getFont("smalfont"));
 	lText->Size.x = form->Size.x - MARGIN * 2;
-	lText->Size.y = ui().getFont("SMALFONT")->getFontHeight(text, lText->Size.x);
+	lText->Size.y = ui().getFont("smalfont")->getFontHeight(text, lText->Size.x);
 	lText->Location = lTitle->Location;
 	lText->Location.y += lTitle->Size.y + MARGIN * 2;
 	lText->TextHAlign = HorizontalAlignment::Centre;
 
 	if (buttons == ButtonOptions::Ok)
 	{
-		auto bOk = form->createChild<TextButton>(tr("OK"), ui().getFont("SMALLSET"));
+		auto bOk = form->createChild<TextButton>(tr("OK"), ui().getFont("smallset"));
 		bOk->Name = "BUTTON_OK";
 		bOk->Size = BUTTON_SIZE;
 		bOk->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
@@ -49,14 +49,14 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 	}
 	else if (buttons == ButtonOptions::YesNo)
 	{
-		auto bYes = form->createChild<TextButton>(tr("Yes"), ui().getFont("SMALLSET"));
+		auto bYes = form->createChild<TextButton>(tr("Yes"), ui().getFont("smallset"));
 		bYes->Name = "BUTTON_YES";
 		bYes->Size = BUTTON_SIZE;
 		bYes->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
 		bYes->Location.x = MARGIN;
 		bYes->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
-		auto bNo = form->createChild<TextButton>(tr("No"), ui().getFont("SMALLSET"));
+		auto bNo = form->createChild<TextButton>(tr("No"), ui().getFont("smallset"));
 		bNo->Name = "BUTTON_NO";
 		bNo->Size = BUTTON_SIZE;
 		bNo->RenderStyle = TextButton::ButtonRenderStyle::Bevel;

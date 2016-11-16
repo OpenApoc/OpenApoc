@@ -26,7 +26,7 @@ template <> sp<BattleMap> StateObject<BattleMap>::get(const GameState &state, co
 	auto it = state.battle_maps.find(id);
 	if (it == state.battle_maps.end())
 	{
-		LogError("No battle_map matching ID \"%s\"", id.cStr());
+		LogError("No battle_map matching ID \"%s\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -574,7 +574,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 		{
 			LogWarning("Failed to place mandatory sectors for map %s with size %d, %d, %d at "
 			           "attempt %d",
-			           id.cStr(), size.x, size.y, size.z, attempt_make_map);
+			           id, size.x, size.y, size.z, attempt_make_map);
 			continue;
 		}
 
@@ -601,7 +601,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 		{
 			LogWarning("Failed to place mandatory sectors for map %s with size %d, %d, %d at "
 			           "attempt %d",
-			           id.cStr(), size.x, size.y, size.z, attempt_make_map);
+			           id, size.x, size.y, size.z, attempt_make_map);
 			continue;
 		}
 
@@ -698,13 +698,13 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 		// If we failed at filling a map at this point, then there's nothing else we can do
 		if (!isMapComplete(sec_map, size))
 		{
-			LogWarning("Failed to complete map %s with size %d, %d, %d at attempt %d", id.cStr(),
-			           size.x, size.y, size.z, attempt_make_map);
+			LogWarning("Failed to complete map %s with size %d, %d, %d at attempt %d", id, size.x,
+			           size.y, size.z, attempt_make_map);
 			continue;
 		}
 
-		LogWarning("Successfully completed map %s with size %d, %d, %d at attempt %d", id.cStr(),
-		           size.x, size.y, size.z, attempt_make_map);
+		LogWarning("Successfully completed map %s with size %d, %d, %d at attempt %d", id, size.x,
+		           size.y, size.z, attempt_make_map);
 
 		// If we succeeded, time to actually create a battle map
 		auto b = mksp<Battle>();
@@ -736,20 +736,18 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 						continue;
 					if (!sec->tiles)
 					{
-						LogInfo("Loading sector tiles \"%s\"", sec->sectorTilesName.cStr());
+						LogInfo("Loading sector tiles \"%s\"", sec->sectorTilesName);
 						sec->tiles.reset(new BattleMapSectorTiles());
 						if (!sec->tiles->loadSector(state,
 						                            BattleMapSectorTiles::getMapSectorPath() + "/" +
 						                                sec->sectorTilesName))
 						{
-							LogError("Failed to load sector tiles \"%s\"",
-							         sec->sectorTilesName.cStr());
+							LogError("Failed to load sector tiles \"%s\"", sec->sectorTilesName);
 						}
 					}
 					else
 					{
-						LogInfo("Using already-loaded sector tiles \"%s\"",
-						        sec->sectorTilesName.cStr());
+						LogInfo("Using already-loaded sector tiles \"%s\"", sec->sectorTilesName);
 					}
 					auto &tiles = *sec->tiles;
 					Vec3<int> shift = {x * chunk_size.x, y * chunk_size.y, z * chunk_size.z};
@@ -1081,7 +1079,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 
 		return b;
 	}
-	LogError("Failed to create map %s", id.cStr());
+	LogError("Failed to create map %s", id);
 	return nullptr;
 }
 
@@ -1098,12 +1096,11 @@ void BattleMap::loadTilesets(GameState &state) const
 	{
 		unsigned count = 0;
 		auto tilesetPath = BattleMapTileset::getTilesetPath() + "/" + tilesetName;
-		LogInfo("Loading tileset \"%s\" from \"%s\"", tilesetName.cStr(), tilesetPath.cStr());
+		LogInfo("Loading tileset \"%s\" from \"%s\"", tilesetName, tilesetPath);
 		BattleMapTileset tileset;
 		if (!tileset.loadTileset(state, tilesetPath))
 		{
-			LogError("Failed to load tileset \"%s\" from \"%s\"", tilesetName.cStr(),
-			         tilesetPath.cStr());
+			LogError("Failed to load tileset \"%s\" from \"%s\"", tilesetName, tilesetPath);
 			continue;
 		}
 
@@ -1139,13 +1136,13 @@ void BattleMap::loadTilesets(GameState &state) const
 			// Sanity check
 			if (state.battleMapTiles.find(tileName) != state.battleMapTiles.end())
 			{
-				LogError("Duplicate tile with ID \"%s\"", tileName.cStr());
+				LogError("Duplicate tile with ID \"%s\"", tileName);
 				continue;
 			}
 			state.battleMapTiles.emplace(tileName, tile);
 			count++;
 		}
-		LogInfo("Loaded %u tiles from tileset \"%s\"", count, tilesetName.cStr());
+		LogInfo("Loaded %u tiles from tileset \"%s\"", count, tilesetName);
 	}
 }
 

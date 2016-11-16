@@ -1,8 +1,13 @@
 # project name, and type
 PROJECT(OpenApoc_GameState CXX C)
 
+include(cotire)
+
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package (Threads REQUIRED)
 
 set (GAMESTATE_SOURCE_FILES
 	aequipment.cpp
@@ -116,7 +121,6 @@ set (GAMESTATE_HEADER_FILES
 	rules/damage.h
 	rules/doodad_type.h
 	rules/facility_type.h
-	rules/resource_aliases.h
 	rules/scenery_tile_type.h
 	rules/ufo_growth.h
 	rules/ufo_incursion.h
@@ -149,8 +153,6 @@ target_link_libraries(OpenApoc_GameState PUBLIC OpenApoc_Framework)
 target_include_directories(OpenApoc_GameState PRIVATE ${CMAKE_BINARY_DIR})
 
 set_property(TARGET OpenApoc_GameState PROPERTY CXX_STANDARD 11)
-set_property(TARGET OpenApoc_GameState PROPERTY CXX_STANDARD_REQUIRED ON)
-
 
 add_custom_command(OUTPUT
 		gamestate_serialize_generated.h
@@ -164,3 +166,9 @@ add_custom_command(OUTPUT
 		${CMAKE_BINARY_DIR}/bin/OpenApoc_GamestateSerializeGen
 		${CMAKE_SOURCE_DIR}/game/state/gamestate_serialize.xml)
 
+set_target_properties(OpenApoc_GameState PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
+	"gamestate_pch.h")
+
+if(ENABLE_COTIRE)
+	cotire(OpenApoc_GameState)
+endif()

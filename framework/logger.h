@@ -1,6 +1,7 @@
 #pragma once
 
 #include "library/strings.h"
+#include "library/strings_format.h"
 
 #if defined(_MSC_VER) && _MSC_VER > 1400
 #include <sal.h>
@@ -39,8 +40,7 @@ enum class LogLevel : int
 	Info = 3,
 	Debug = 3,
 };
-// All format strings (%s) are expected to be UTF8
-void Log(LogLevel level, UString prefix, const char *format, ...) PRINTF_ATTR(3, 4);
+void Log(LogLevel level, UString prefix, const UString &text);
 
 NORETURN_FUNCTION void _logAssert(UString prefix, UString string, int line, UString file);
 
@@ -58,19 +58,27 @@ NORETURN_FUNCTION void _logAssert(UString prefix, UString string, int line, UStr
 #if defined(__GNUC__)
 // GCC has an extension if __VA_ARGS__ are not supplied to 'remove' the precending comma
 #define LogDebug(f, ...)                                                                           \
-	OpenApoc::Log(OpenApoc::LogLevel::Debug, OpenApoc::UString(LOGGER_PREFIX), f, ##__VA_ARGS__)
+	OpenApoc::Log(OpenApoc::LogLevel::Debug, OpenApoc::UString(LOGGER_PREFIX),                     \
+	              ::OpenApoc::format(f, ##__VA_ARGS__))
 #define LogInfo(f, ...)                                                                            \
-	OpenApoc::Log(OpenApoc::LogLevel::Info, OpenApoc::UString(LOGGER_PREFIX), f, ##__VA_ARGS__)
+	OpenApoc::Log(OpenApoc::LogLevel::Info, OpenApoc::UString(LOGGER_PREFIX),                      \
+	              ::OpenApoc::format(f, ##__VA_ARGS__))
 #define LogWarning(f, ...)                                                                         \
-	OpenApoc::Log(OpenApoc::LogLevel::Warning, OpenApoc::UString(LOGGER_PREFIX), f, ##__VA_ARGS__)
+	OpenApoc::Log(OpenApoc::LogLevel::Warning, OpenApoc::UString(LOGGER_PREFIX),                   \
+	              ::OpenApoc::format(f, ##__VA_ARGS__))
 #define LogError(f, ...)                                                                           \
-	OpenApoc::Log(OpenApoc::LogLevel::Error, OpenApoc::UString(LOGGER_PREFIX), f, ##__VA_ARGS__)
+	OpenApoc::Log(OpenApoc::LogLevel::Error, OpenApoc::UString(LOGGER_PREFIX),                     \
+	              ::OpenApoc::format(f, ##__VA_ARGS__))
 #else
 // At least msvc automatically removes the comma
-#define LogDebug(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Debug, LOGGER_PREFIX, f, __VA_ARGS__)
-#define LogInfo(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Info, LOGGER_PREFIX, f, __VA_ARGS__)
-#define LogWarning(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Warning, LOGGER_PREFIX, f, __VA_ARGS__)
-#define LogError(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Error, LOGGER_PREFIX, f, __VA_ARGS__)
+#define LogDebug(f, ...)                                                                           \
+	OpenApoc::Log(OpenApoc::LogLevel::Debug, LOGGER_PREFIX, ::OpenApoc::format(f, __VA_ARGS__))
+#define LogInfo(f, ...)                                                                            \
+	OpenApoc::Log(OpenApoc::LogLevel::Info, LOGGER_PREFIX, ::OpenApoc::format(f, __VA_ARGS__))
+#define LogWarning(f, ...)                                                                         \
+	OpenApoc::Log(OpenApoc::LogLevel::Warning, LOGGER_PREFIX, ::OpenApoc::format(f, __VA_ARGS__))
+#define LogError(f, ...)                                                                           \
+	OpenApoc::Log(OpenApoc::LogLevel::Error, LOGGER_PREFIX, ::OpenApoc::format(f, __VA_ARGS__))
 #endif
 //#else
 #if 0

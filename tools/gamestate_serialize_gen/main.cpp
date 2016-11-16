@@ -194,27 +194,27 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 	{
 		if (object.external == true)
 			continue;
-		out << "static inline void serializeIn(const GameState *, sp<SerializationNode> node, "
+		out << "inline void serializeIn(const GameState *, sp<SerializationNode> node, "
 		    << object.name << " &obj);\n";
-		out << "static inline void serializeOut(sp<SerializationNode> node, const " << object.name
+		out << "inline void serializeOut(sp<SerializationNode> node, const " << object.name
 		    << " &obj, const " << object.name << " &ref);\n";
-		out << "static inline bool operator==(const " << object.name << " &a, const " << object.name
+		out << "inline bool operator==(const " << object.name << " &a, const " << object.name
 		    << " &b);\n";
-		out << "static inline bool operator!=(const " << object.name << " &a, const " << object.name
+		out << "inline bool operator!=(const " << object.name << " &a, const " << object.name
 		    << " &b);\n\n";
 	}
 
 	for (auto &e : state.enums)
 	{
-		out << "static inline void serializeIn(const GameState *, sp<SerializationNode> node, "
-		    << e.name << " &val);\n";
-		out << "static inline void serializeOut(sp<SerializationNode> node, const " << e.name
+		out << "inline void serializeIn(const GameState *, sp<SerializationNode> node, " << e.name
+		    << " &val);\n";
+		out << "inline void serializeOut(sp<SerializationNode> node, const " << e.name
 		    << " &val, const " << e.name << " &ref);\n";
 	}
 	for (auto &object : state.objects)
 	{
 		if (object.external == false)
-			out << "static inline\n";
+			out << "inline\n";
 		out << "void serializeIn(const GameState *state, sp<SerializationNode> node, "
 		    << object.name << " &obj)\n{\n";
 
@@ -246,7 +246,7 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 		out << "}\n";
 
 		if (object.external == false)
-			out << "static inline\n";
+			out << "inline\n";
 		out << "void serializeOut(sp<SerializationNode> node, const " << object.name
 		    << " &obj, const " << object.name << " &ref)\n{\n";
 
@@ -277,7 +277,7 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 		out << "}\n";
 
 		if (object.external == false)
-			out << "static inline\n";
+			out << "inline\n";
 		out << "bool operator==(const " << object.name << " &a, const " << object.name
 		    << " &b)\n{\n";
 
@@ -289,14 +289,14 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 		out << "\treturn true;\n}\n";
 
 		if (object.external == false)
-			out << "static inline\n";
+			out << "inline\n";
 		out << "bool operator!=(const " << object.name << " &a, const " << object.name
 		    << " &b)\n{\n\treturn !(a == b);\n}\n";
 	}
 
 	for (auto &e : state.enums)
 	{
-		out << "static inline\n";
+		out << "inline\n";
 		out << "void serializeIn(const GameState *state, sp<SerializationNode> node, " << e.name
 		    << " &val)\n{\n"
 		    << "\tstatic const std::map<" << e.name << ", UString> valueMap = {\n";
@@ -309,7 +309,7 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 		out << "\tserializeIn(state, node, val, valueMap);\n"
 		    << "}\n";
 
-		out << "static inline\n";
+		out << "inline\n";
 		out << "void serializeOut(sp<SerializationNode> node, const " << e.name << " &val, const "
 		    << e.name << " &ref)\n{\n"
 		    << "\tstatic const std::map<" << e.name << ", UString> valueMap = {\n";

@@ -23,7 +23,7 @@ namespace OpenApoc
 {
 
 MapSelector::MapSelector(sp<GameState> state)
-    : Stage(), menuform(ui().getForm("FORM_MAPSELECTOR")), state(state)
+    : Stage(), menuform(ui().getForm("mapselector")), state(state)
 {
 	auto listbox = menuform->findControlTyped<ListBox>("LISTBOX_MAPS");
 	std::set<sp<BattleMap>> seen_maps;
@@ -74,17 +74,17 @@ sp<Control> MapSelector::createMapRowBuilding(sp<Building> building, sp<GameStat
 
 	const int HEIGHT = 21;
 
-	auto date = control->createChild<Label>(UString(""), ui().getFont("SMALFONT"));
+	auto date = control->createChild<Label>(UString(""), ui().getFont("smalfont"));
 	date->Location = {0, 0};
 	date->Size = {100, HEIGHT};
 	date->TextVAlign = VerticalAlignment::Centre;
 
-	auto time = control->createChild<Label>(UString(""), ui().getFont("SMALFONT"));
+	auto time = control->createChild<Label>(UString(""), ui().getFont("smalfont"));
 	time->Location = date->Location + Vec2<int>{date->Size.x, 0};
 	time->Size = {60, HEIGHT};
 	time->TextVAlign = VerticalAlignment::Centre;
 
-	auto text = control->createChild<Label>(building->name, ui().getFont("SMALFONT"));
+	auto text = control->createChild<Label>(building->name, ui().getFont("smalfont"));
 	text->Location = time->Location + Vec2<int>{time->Size.x, 0};
 	text->Size = {328, HEIGHT};
 	text->TextVAlign = VerticalAlignment::Centre;
@@ -139,17 +139,17 @@ sp<Control> MapSelector::createMapRowVehicle(sp<VehicleType> vehicle, sp<GameSta
 
 	const int HEIGHT = 21;
 
-	auto date = control->createChild<Label>(UString(""), ui().getFont("SMALFONT"));
+	auto date = control->createChild<Label>(UString(""), ui().getFont("smalfont"));
 	date->Location = {0, 0};
 	date->Size = {100, HEIGHT};
 	date->TextVAlign = VerticalAlignment::Centre;
 
-	auto time = control->createChild<Label>(UString(""), ui().getFont("SMALFONT"));
+	auto time = control->createChild<Label>(UString(""), ui().getFont("smalfont"));
 	time->Location = date->Location + Vec2<int>{date->Size.x, 0};
 	time->Size = {60, HEIGHT};
 	time->TextVAlign = VerticalAlignment::Centre;
 
-	auto text = control->createChild<Label>(vehicle->name, ui().getFont("SMALFONT"));
+	auto text = control->createChild<Label>(vehicle->name, ui().getFont("smalfont"));
 	text->Location = time->Location + Vec2<int>{time->Size.x, 0};
 	text->Size = {328, HEIGHT};
 	text->TextVAlign = VerticalAlignment::Centre;

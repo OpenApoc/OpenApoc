@@ -87,9 +87,8 @@ void City::initMap()
 				if (b.second->bounds.within(pos))
 				{
 					b.second->landingPadLocations.push_back(s->initialPosition);
-					LogInfo("Pad {%d,%d} is within building %s {%d,%d},{%d,%d}", pos.x, pos.y,
-					        b.first.cStr(), b.second->bounds.p0.x, b.second->bounds.p0.y,
-					        b.second->bounds.p1.x, b.second->bounds.p1.y);
+					LogInfo("Pad %s is within building %s bounds %s", pos, b.first,
+					        b.second->bounds);
 				}
 			}
 		}
@@ -98,14 +97,14 @@ void City::initMap()
 	{
 		if (b.second->landingPadLocations.empty())
 		{
-			LogError("Building %s has no landing pads", b.first.cStr());
+			LogError("Building %s has no landing pads", b.first);
 		}
-		LogInfo("Building %s has %u landing pads:", b.first.cStr(),
+		LogInfo("Building %s has %u landing pads:", b.first,
 		        (unsigned)b.second->landingPadLocations.size());
 
 		for (auto &loc : b.second->landingPadLocations)
 		{
-			LogInfo("Pad: {%d,%d,%d}", loc.x, loc.y, loc.z);
+			LogInfo("Pad: %s", loc);
 		}
 	}
 	for (auto &p : this->projectiles)
@@ -288,7 +287,7 @@ template <> sp<City> StateObject<City>::get(const GameState &state, const UStrin
 	auto it = state.cities.find(id);
 	if (it == state.cities.end())
 	{
-		LogError("No citymap matching ID \"%s\"", id.cStr());
+		LogError("No citymap matching ID \"%s\"", id);
 		return nullptr;
 	}
 	return it->second;

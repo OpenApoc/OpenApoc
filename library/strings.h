@@ -20,8 +20,9 @@ class UString
 	// All std::string/char are utf8
 	// wchar_t/std::wstring are platform-dependant unicode types
 	// All lengths/offsets are in unicode code-points (not bytes/anything)
-	UString(std::string str);
-	UString(std::wstring wstr);
+	UString(const std::string &str);
+	UString(std::string &&str);
+	UString(const std::wstring &wstr);
 	UString(char c);
 	UString(wchar_t wc);
 	UString(UniChar uc);
@@ -34,10 +35,11 @@ class UString
 	UString(const UString &other);
 	UString &operator=(const UString &other);
 
-	std::string str() const;
+	const std::string &str() const;
 	std::wstring wstr() const;
 
 	const char *cStr() const;
+	size_t cStrLength() const;
 
 	UString toUpper() const;
 	UString toLower() const;

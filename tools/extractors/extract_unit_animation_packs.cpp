@@ -39,7 +39,7 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimat
     const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
     std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction, int frames_per_100_units,
     int split_point, bool left_side, bool isOverlay, bool removeItem, Vec2<int> targetOffset,
-    Vec2<int> beginOffset, bool inverse, int extraEndFrames, bool singleFrame)
+    Vec2<int> beginOffset, bool inverse, int extraEndFrames, bool singleFrame) const
 {
 	static const std::map<Vec2<int>, int> offset_dir_map = {
 	    {{0, -1}, 0}, {{1, -1}, 1}, {{1, 0}, 2},  {{1, 1}, 3},
@@ -129,14 +129,14 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimat
 }
 
 // Get Prone offset for facing
-Vec2<int> InitialGameStateExtractor::gPrOff(Vec2<int> facing)
+Vec2<int> InitialGameStateExtractor::gPrOff(Vec2<int> facing) const
 {
 	// 48 = tile_x, 24 = tile_y
 	return {(facing.x - facing.y) * 48 / 8, (facing.x + facing.y) * 24 / 8};
 }
-sp<BattleUnitAnimationPack> InitialGameStateExtractor::extractAnimationPack(GameState &state,
-                                                                            const UString &path,
-                                                                            const UString &name)
+sp<BattleUnitAnimationPack>
+InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString &path,
+                                                const UString &name) const
 {
 	std::ignore = state;
 	UString dirName = "xcom3/tacdata/";
@@ -159,7 +159,7 @@ sp<BattleUnitAnimationPack> InitialGameStateExtractor::extractAnimationPack(Game
 				inFile.read((char *)&data, sizeof(data));
 				if (!inFile)
 				{
-					LogError("Failed to read entry in \"%s\"", fileName.cStr());
+					LogError("Failed to read entry in \"%s\"", fileName);
 					return nullptr;
 				}
 				dataAD.push_back(data);
@@ -183,7 +183,7 @@ sp<BattleUnitAnimationPack> InitialGameStateExtractor::extractAnimationPack(Game
 				inFile.read((char *)&data, sizeof(data));
 				if (!inFile)
 				{
-					LogError("Failed to read entry in \"%s\"", fileName.cStr());
+					LogError("Failed to read entry in \"%s\"", fileName);
 					return nullptr;
 				}
 				dataUA.push_back(data);
@@ -207,7 +207,7 @@ sp<BattleUnitAnimationPack> InitialGameStateExtractor::extractAnimationPack(Game
 				inFile.read((char *)&data, sizeof(data));
 				if (!inFile)
 				{
-					LogError("Failed to read entry in \"%s\"", fileName.cStr());
+					LogError("Failed to read entry in \"%s\"", fileName);
 					return nullptr;
 				}
 				dataUF.push_back(data);

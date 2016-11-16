@@ -213,7 +213,7 @@ const std::map<OpenApoc::UString, OpenApoc::UString> InitialGameStateExtractor::
 
 // clang-format on
 
-void InitialGameStateExtractor::extractCommon(GameState &state)
+void InitialGameStateExtractor::extractCommon(GameState &state) const
 {
 	this->extractOrganisations(state);
 	this->extractVehicleEquipment(state);
@@ -238,7 +238,7 @@ void InitialGameStateExtractor::extractCommon(GameState &state)
 	this->extractSharedBattleResources(state);
 }
 
-void InitialGameStateExtractor::extract(GameState &state, Difficulty difficulty)
+void InitialGameStateExtractor::extract(GameState &state, Difficulty difficulty) const
 {
 	this->extractAlienEquipmentSets(state, difficulty);
 

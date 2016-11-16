@@ -66,14 +66,14 @@ static_assert(sizeof(struct citymap_tile_entry) == 52, "Unexpected citymap_tile_
 void InitialGameStateExtractor::extractCityScenery(GameState &state, UString tilePrefix,
                                                    UString datFile, UString spriteFile,
                                                    UString stratmapFile, UString lofFile,
-                                                   UString ovrFile, sp<City> city)
+                                                   UString ovrFile, sp<City> city) const
 {
 	auto &data = this->ufo2p;
 	auto minimap_palette = fw().data->loadPalette(SCENERY_MINIMAP_PALETTE);
 	auto inFile = fw().data->fs.open("xcom3/ufodata/" + datFile + ".dat");
 	if (!inFile)
 	{
-		LogError("Failed to open \"%s.dat\"", datFile.cStr());
+		LogError("Failed to open \"%s.dat\"", datFile);
 	}
 
 	auto fileSize = inFile.size();
@@ -112,8 +112,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				tile->tile_type = SceneryTileType::TileType::CityWall;
 				break;
 			default:
-				LogError("Unexpected scenery tile type %d for ID %s", (int)entry.tile_type,
-				         id.cStr());
+				LogError("Unexpected scenery tile type %d for ID %s", (int)entry.tile_type, id);
 		}
 
 		switch (entry.road_type)
@@ -128,8 +127,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				tile->road_type = SceneryTileType::RoadType::Terminal;
 				break;
 			default:
-				LogError("Unexpected scenery road type %d for ID %s", (int)entry.road_type,
-				         id.cStr());
+				LogError("Unexpected scenery road type %d for ID %s", (int)entry.road_type, id);
 		}
 
 		switch (entry.walk_type)
@@ -144,8 +142,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				tile->walk_mode = SceneryTileType::WalkMode::Onto;
 				break;
 			default:
-				LogError("Unexpected scenery walk type %d for ID %s", (int)entry.walk_type,
-				         id.cStr());
+				LogError("Unexpected scenery walk type %d for ID %s", (int)entry.walk_type, id);
 		}
 
 		tile->constitution = entry.constitution;

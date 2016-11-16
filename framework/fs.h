@@ -46,6 +46,8 @@ class FileSystem
 	IFile open(const UString &path);
 	UString getCorrectCaseFilename(const UString &path);
 	std::list<UString> enumerateDirectory(const UString &path, const UString &extension) const;
+	std::list<UString> enumerateDirectoryRecursive(const UString &path,
+	                                               const UString &extension) const;
 };
 
 } // namespace OpenApoc

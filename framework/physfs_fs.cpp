@@ -2,13 +2,17 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
+#include "framework/data.h"
+#include "framework/framework.h"
 #include "framework/fs.h"
 #include "framework/logger.h"
 #include "framework/trace.h"
 #include <physfs.h>
 
-#ifndef _WIN32
+#ifdef _WIN32
 #define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #ifdef ANDROID
 #define be16toh(x) htobe16(x)
 #define be32toh(x) htobe32(x)
@@ -16,10 +20,10 @@
 #define le16toh(x) htole16(x)
 #define le32toh(x) htole32(x)
 #define le64toh(x) htole64(x)
-#endif
+#elif defined(_DEFAULT_SOURCE) || defined(_BSD_SOURCE)
 #include <endian.h>
 #else
-/* Windows is always little endian? */
+/* We assume all other platforms are little endian for now */
 static inline uint16_t le16toh(uint16_t val) { return val; }
 static inline uint32_t le32toh(uint32_t val) { return val; }
 #endif
@@ -47,7 +51,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 		file = PHYSFS_openRead(path.cStr());
 		if (!file)
 		{
-			LogError("Failed to open file \"%s\" : \"%s\"", path.cStr(), PHYSFS_getLastError());
+			LogError("Failed to open file \"%s\" : \"%s\"", path, PHYSFS_getLastError());
 			return;
 		}
 		systemPath = PHYSFS_getRealDir(path.cStr());
@@ -100,7 +104,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 
 		if (mode & std::ios_base::out)
 		{
-			LogError("ios::out set on read-only IFile \"%s\"", this->systemPath.cStr());
+			LogError("ios::out set on read-only IFile \"%s\"", this->systemPath);
 			LogAssert(0);
 			setp(buffer.get(), buffer.get());
 		}
@@ -118,7 +122,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 
 		if (mode & std::ios_base::out)
 		{
-			LogError("ios::out set on read-only IFile \"%s\"", this->systemPath.cStr());
+			LogError("ios::out set on read-only IFile \"%s\"", this->systemPath);
 			LogAssert(0);
 			setp(buffer.get(), buffer.get());
 		}
@@ -128,7 +132,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 
 	int_type overflow(int_type) override
 	{
-		LogError("overflow called on read-only IFile \"%s\"", this->systemPath.cStr());
+		LogError("overflow called on read-only IFile \"%s\"", this->systemPath);
 		LogAssert(0);
 		return 0;
 	}
@@ -224,16 +228,14 @@ FileSystem::FileSystem(std::vector<UString> paths)
 	{
 		if (!PHYSFS_mount(p.cStr(), "/", 0))
 		{
-			LogInfo("Failed to add resource dir \"%s\", error: %s", p.cStr(),
-			        PHYSFS_getLastError());
+			LogInfo("Failed to add resource dir \"%s\", error: %s", p, PHYSFS_getLastError());
 			continue;
 		}
 		else
-			LogInfo("Resource dir \"%s\" mounted to \"%s\"", p.cStr(),
-			        PHYSFS_getMountPoint(p.cStr()));
+			LogInfo("Resource dir \"%s\" mounted to \"%s\"", p, PHYSFS_getMountPoint(p.cStr()));
 	}
 	this->writeDir = PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME);
-	LogInfo("Setting write directory to \"%s\"", this->writeDir.cStr());
+	LogInfo("Setting write directory to \"%s\"", this->writeDir);
 	PHYSFS_setWriteDir(this->writeDir.cStr());
 	// Finally, the write directory trumps all
 	PHYSFS_mount(this->writeDir.cStr(), "/", 0);
@@ -249,25 +251,24 @@ IFile FileSystem::open(const UString &path)
 	auto lowerPath = path.toLower();
 	if (path != lowerPath)
 	{
-		LogError("Path \"%s\" contains CAPITAL - cut it out!", path.cStr());
+		LogError("Path \"%s\" contains CAPITAL - cut it out!", path);
 	}
 
 	if (!PHYSFS_exists(path.cStr()))
 	{
-		LogInfo("Failed to find \"%s\"", path.cStr());
+		LogInfo("Failed to find \"%s\"", path);
 		LogAssert(!f);
 		return f;
 	}
 	f.f.reset(new PhysfsIFileImpl(path));
 	f.rdbuf(dynamic_cast<PhysfsIFileImpl *>(f.f.get()));
-	LogInfo("Loading \"%s\" from \"%s\"", path.cStr(), f.systemPath().cStr());
+	LogInfo("Loading \"%s\" from \"%s\"", path, f.systemPath());
 	return f;
 }
 
 std::list<UString> FileSystem::enumerateDirectory(const UString &basePath,
                                                   const UString &extension) const
 {
-
 	std::list<UString> result;
 	bool filterByExtension = !extension.empty();
 
@@ -289,6 +290,32 @@ std::list<UString> FileSystem::enumerateDirectory(const UString &basePath,
 	}
 	PHYSFS_freeList(elements);
 	return result;
+}
+
+static std::list<UString> recursiveFindFilesInDirectory(const FileSystem &fs, UString path,
+                                                        const UString &extension)
+{
+	std::list<UString> foundFiles;
+	auto list = fs.enumerateDirectory(path, "");
+	for (auto &entry : list)
+	{
+		if (entry.endsWith(extension))
+		{
+			foundFiles.push_back(path + "/" + entry);
+		}
+		else
+		{
+			auto subdirFiles = recursiveFindFilesInDirectory(fs, path + "/" + entry, extension);
+			foundFiles.insert(foundFiles.end(), subdirFiles.begin(), subdirFiles.end());
+		}
+	}
+	return foundFiles;
+}
+
+std::list<UString> FileSystem::enumerateDirectoryRecursive(const UString &basePath,
+                                                           const UString &extension) const
+{
+	return recursiveFindFilesInDirectory(*this, basePath, extension);
 }
 
 } // namespace OpenApoc

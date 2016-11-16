@@ -77,8 +77,8 @@ sp<PaletteImage> BitmapFont::getGlyph(UniChar codepoint)
 	{
 		// FIXME: Hack - assume all missing glyphs are spaces
 		// TODO: Fallback fonts?
-		LogWarning("Font %s missing glyph for character \"%s\" (codepoint %u)",
-		           this->getName().cStr(), UString(codepoint).cStr(), codepoint);
+		LogWarning("Font %s missing glyph for character \"%s\" (codepoint %u)", this->getName(),
+		           UString(codepoint), codepoint);
 		auto missingGlyph = this->getGlyph(UString::u8Char(' '));
 		fontbitmaps.emplace(codepoint, missingGlyph);
 	}
@@ -105,13 +105,13 @@ sp<BitmapFont> BitmapFont::loadFont(const std::map<UniChar, UString> &glyphMap, 
 		auto fontImage = fw().data->loadImage(p.second);
 		if (!fontImage)
 		{
-			LogError("Failed to read glyph image \"%s\"", p.second.cStr());
+			LogError("Failed to read glyph image \"%s\"", p.second);
 			continue;
 		}
 		auto paletteImage = std::dynamic_pointer_cast<PaletteImage>(fontImage);
 		if (!paletteImage)
 		{
-			LogError("Glyph image \"%s\" doesn't look like a PaletteImage", p.second.cStr());
+			LogError("Glyph image \"%s\" doesn't look like a PaletteImage", p.second);
 			continue;
 		}
 		unsigned int maxWidth = 0;
@@ -187,7 +187,7 @@ std::list<UString> BitmapFont::wordWrapText(const UString &Text, int MaxWidth)
 					{
 						LogWarning("No break in line \"%s\" found - this will probably overflow "
 						           "the control",
-						           currentTestLine.cStr());
+						           currentTestLine);
 						currentLine = currentTestLine;
 						remainingChunks.pop_front();
 					}

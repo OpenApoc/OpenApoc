@@ -79,7 +79,7 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 	    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:25:xcom3/ufodata/base.pcx");
 	sp<Image> circleL = fw().data->loadImage(
 	    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:26:xcom3/ufodata/base.pcx");
-	auto font = ui().getFont("SMALFONT");
+	auto font = ui().getFont("smalfont");
 	for (auto &facility : base->facilities)
 	{
 		sp<Image> sprite = facility->type->sprite;

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_BATTLE_MOTION_SCANNER_LEFT">
+    <style minwidth="97" minheight="97">
+      <position x="right" y="top"/>
+      <size width="97" height="97"/>
+      <backcolour a="0"/>
+      <!-- Motion scanner-->
+      <graphic id="MOTION_SCANNER">
+        <size width="97" height="97"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:87:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+    </style>
+  </form>
+</openapoc>

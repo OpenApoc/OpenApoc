@@ -11,7 +11,7 @@ namespace OpenApoc
 {
 
 void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFileName,
-                                                 sp<City> city, bool alienBuilding)
+                                                 sp<City> city, bool alienBuilding) const
 {
 	auto &data = this->ufo2p;
 
@@ -20,12 +20,12 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 	auto inFile = fw().data->fs.open(fileName);
 	if (!inFile)
 	{
-		LogError("Failed to open \"%s\"", fileName.cStr());
+		LogError("Failed to open \"%s\"", fileName);
 	}
 	auto fileSize = inFile.size();
 	auto bldCount = fileSize / sizeof(struct BldFileEntry);
 
-	LogInfo("Loading %lu buildings from %s", (unsigned long)bldCount, fileName.cStr());
+	LogInfo("Loading %lu buildings from %s", (unsigned long)bldCount, fileName);
 
 	for (unsigned i = 0; i < bldCount; i++)
 	{

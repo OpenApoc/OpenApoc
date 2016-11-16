@@ -22,7 +22,7 @@ namespace OpenApoc
 {
 
 InGameOptions::InGameOptions(sp<GameState> state)
-    : Stage(), menuform(ui().getForm("FORM_INGAMEOPTIONS")), state(state)
+    : Stage(), menuform(ui().getForm("ingameoptions")), state(state)
 {
 
 	/* Initialse all initial values */
@@ -120,16 +120,16 @@ void InGameOptions::eventOccurred(Event *e)
 		{
 			for (auto &r : this->state->research.topics)
 			{
-				LogWarning("Topic \"%s\"", r.first.cStr());
+				LogWarning("Topic \"%s\"", r.first);
 				auto &topic = r.second;
 				if (topic->isComplete())
 				{
-					LogWarning("Topic \"%s\" already complete", r.first.cStr());
+					LogWarning("Topic \"%s\" already complete", r.first);
 				}
 				else
 				{
 					topic->man_hours_progress = topic->man_hours;
-					LogWarning("Topic \"%s\" marked as complete", r.first.cStr());
+					LogWarning("Topic \"%s\" marked as complete", r.first);
 				}
 			}
 			this->state->research.resortTopicList();

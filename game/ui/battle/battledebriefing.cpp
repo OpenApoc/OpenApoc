@@ -12,7 +12,7 @@
 namespace OpenApoc
 {
 BattleDebriefing::BattleDebriefing(sp<GameState> state)
-    : Stage(), menuform(ui().getForm("FORM_BATTLE_DEBRIEFING")), state(state)
+    : Stage(), menuform(ui().getForm("battle/debriefing")), state(state)
 {
 	menuform->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {

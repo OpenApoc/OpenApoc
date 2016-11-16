@@ -16,6 +16,7 @@ class ListBox : public Control
   private:
 	bool scroller_is_internal;
 	sp<Control> hovered, selected;
+	Vec2<int> scrollOffset = {0, 0};
 
 	void configureInternalScrollBar();
 
@@ -47,7 +48,7 @@ class ListBox : public Control
 	sp<Control> operator[](int Index);
 
 	sp<Control> copyTo(sp<Control> CopyParent) override;
-	void configureSelfFromXml(tinyxml2::XMLElement *Element) override;
+	void configureSelfFromXml(pugi::xml_node *node) override;
 
 	template <typename T> sp<T> getHoveredData() const
 	{

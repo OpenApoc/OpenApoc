@@ -5,16 +5,13 @@
 #include "framework/trace.h"
 #include "library/strings.h"
 #include "library/strings_format.h"
+#include <sstream>
+
+#include "dependencies/pugixml/src/pugixml.hpp"
 
 // Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
 // symbols as part of the module that uses it
 #define BOOST_ALL_NO_LIB
-#include <boost/filesystem.hpp>
-#include <sstream>
-namespace fs = boost::filesystem;
-
-#include "dependencies/pugixml/src/pugixml.hpp"
-
 #include <boost/crc.hpp>
 #include <boost/uuid/sha1.hpp>
 #include <boost/uuid/uuid.hpp>
@@ -74,7 +71,7 @@ static UString calculateChecksum(const UString &type, const std::string &str)
 	}
 	else
 	{
-		LogWarning("Unknown checksum type \"%s\"", type.cStr());
+		LogWarning("Unknown checksum type \"%s\"", type);
 		return "";
 	}
 }
@@ -128,7 +125,7 @@ bool ProviderWithChecksum::parseManifest(const std::string &manifestData)
 
 		if (this->checksums.find(fileName) != this->checksums.end())
 		{
-			LogWarning("Multiple manifest entries for path \"%s\"", fileName.cStr());
+			LogWarning("Multiple manifest entries for path \"%s\"", fileName);
 		}
 
 		this->checksums[fileName] = {};
@@ -161,7 +158,7 @@ bool ProviderWithChecksum::openArchive(const UString &path, bool write)
 		UString result;
 		if (!inner->readDocument("checksum.xml", result))
 		{
-			LogInfo("Missing manifest file in \"%s\"", path.cStr());
+			LogInfo("Missing manifest file in \"%s\"", path);
 			return true;
 		}
 		parseManifest(result.str());
@@ -179,13 +176,12 @@ bool ProviderWithChecksum::readDocument(const UString &path, UString &result)
 			if (expectedCSum != calculatedCSum)
 			{
 				LogWarning("File \"%s\" has incorrect \"%s\" checksum \"%s\", expected \"%s\"",
-				           path.cStr(), csum.first.cStr(), calculatedCSum.cStr(),
-				           expectedCSum.cStr());
+				           path, csum.first, calculatedCSum, expectedCSum);
 			}
 			else
 			{
-				LogDebug("File \"%s\" matches \"%s\" checksum \"%s\"", path.cStr(),
-				         csum.first.cStr(), calculatedCSum.cStr());
+				LogDebug("File \"%s\" matches \"%s\" checksum \"%s\"", path, csum.first,
+				         calculatedCSum);
 			}
 		}
 		return true;
@@ -193,14 +189,14 @@ bool ProviderWithChecksum::readDocument(const UString &path, UString &result)
 
 	return false;
 }
-bool ProviderWithChecksum::saveDocument(const UString &path, UString contents)
+bool ProviderWithChecksum::saveDocument(const UString &path, const UString &contents)
 {
 
 	if (inner->saveDocument(path, contents))
 	{
 		if (this->checksums.find(path) != this->checksums.end())
 		{
-			LogWarning("Multiple document entries for path \"%s\"", path.cStr());
+			LogWarning("Multiple document entries for path \"%s\"", path);
 		}
 		this->checksums[path.str()] = {};
 		if (useCRCChecksum.get())

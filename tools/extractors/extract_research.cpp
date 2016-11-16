@@ -7,7 +7,7 @@
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::extractResearch(GameState &state)
+void InitialGameStateExtractor::extractResearch(GameState &state) const
 {
 	auto &data = this->ufo2p;
 	for (unsigned i = 0; i < data.research_data->count(); i++)
@@ -32,7 +32,7 @@ void InitialGameStateExtractor::extractResearch(GameState &state)
 				break;
 			default:
 				LogError("Unexpected researchGroup 0x%02x for research item %s",
-				         (unsigned)rdata.researchGroup, id.cStr());
+				         (unsigned)rdata.researchGroup, id);
 		}
 		switch (rdata.labSize)
 		{
@@ -44,7 +44,7 @@ void InitialGameStateExtractor::extractResearch(GameState &state)
 				break;
 			default:
 				LogError("Unexpected labSize 0x%02x for research item %s", (unsigned)rdata.labSize,
-				         id.cStr());
+				         id);
 		}
 		// FIXME: this assumed all listed techs are reqired, which is not true for some topics
 		// (It's possible that an unknown member in ResearchData marks this, or it's done
@@ -71,7 +71,7 @@ void InitialGameStateExtractor::extractResearch(GameState &state)
 
 		if (state.research.topics.find(id) != state.research.topics.end())
 		{
-			LogError("Multiple research topics with ID \"%s\"", id.cStr());
+			LogError("Multiple research topics with ID \"%s\"", id);
 		}
 		state.research.topics[id] = r;
 // FIXME: The ufopaedia entries here don't seem to directly map to the IDs we're currently using?
@@ -97,8 +97,8 @@ void InitialGameStateExtractor::extractResearch(GameState &state)
 		if (paediaEntry->required_research)
 		{
 			LogError("Multiple required research for UFOPaedia topic \"%s\" - \"%s\" and \"%s\"",
-			         ufopaediaEntryID.cStr(), r->name.cStr(),
-			         paediaEntry->required_research->name.cStr());
+			         ufopaediaEntryID, r->name,
+			         paediaEntry->required_research->name);
 		}
 		paediaEntry->required_research = {&state, id};
 #endif

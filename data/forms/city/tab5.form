@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <!-- Engineering tab -->
+  <form id="FORM_CITY_UI_5">
+    <style minwidth="640" minheight="128">
+      <position x="centre" y="bottom"/>
+      <size width="640" height="128"/>
+      <graphic>
+        <size width="640" height="128"/>
+        <image>RAW:xcom3/ufodata/isobord5.dat:640:128:xcom3/ufodata/pal_01.dat</image>
+      </graphic>
+    </style>
+  </form>
+</openapoc>

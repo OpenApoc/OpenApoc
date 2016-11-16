@@ -134,8 +134,9 @@ int BattleMapPart::getAnimationFrame()
 	}
 	else
 	{
-		return type->animation_frames.size() == 0 ? -1 : animation_frame_ticks /
-		                                                     TICKS_PER_FRAME_MAP_PART;
+		return type->animation_frames.size() == 0
+		           ? -1
+		           : animation_frame_ticks / TICKS_PER_FRAME_MAP_PART;
 	}
 }
 
@@ -1045,7 +1046,7 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> set)
 	do
 	{
 		// DEBUG OUTPUT
-		LogWarning("%s", log.cStr());
+		LogWarning("%s", log);
 		log = "";
 		log += format("\nIteration begins. List contains %d items:", (int)set->size());
 		for (auto mp : *set)
@@ -1141,7 +1142,7 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> set)
 		set = nextSet;
 	} while (listChanged);
 
-	LogWarning("%s", log.cStr());
+	LogWarning("%s", log);
 }
 
 void BattleMapPart::collapse()

@@ -12,7 +12,7 @@ namespace OpenApoc
 {
 
 UfopaediaView::UfopaediaView(sp<GameState> state)
-    : Stage(), menuform(ui().getForm("FORM_UFOPAEDIA_TITLE")), state(state)
+    : Stage(), menuform(ui().getForm("ufopaediatitle")), state(state)
 {
 }
 
@@ -57,7 +57,7 @@ void UfopaediaView::eventOccurred(Event *e)
 				{
 					fw().stageQueueCommand(
 					    {StageCmd::Command::PUSH, mksp<UfopaediaCategoryView>(state, cat.second)});
-					LogInfo("Clicked category \"%s\"", catName.cStr());
+					LogInfo("Clicked category \"%s\"", catName);
 					return;
 				}
 			}

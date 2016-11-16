@@ -1,4 +1,5 @@
 #include "forms/checkbox.h"
+#include "dependencies/pugixml/src/pugixml.hpp"
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
@@ -6,7 +7,6 @@
 #include "framework/renderer.h"
 #include "framework/sound.h"
 #include "library/sp.h"
-#include <tinyxml2.h>
 
 namespace OpenApoc
 {
@@ -106,16 +106,16 @@ sp<Control> CheckBox::copyTo(sp<Control> CopyParent)
 	return copy;
 }
 
-void CheckBox::configureSelfFromXml(tinyxml2::XMLElement *Element)
+void CheckBox::configureSelfFromXml(pugi::xml_node *node)
 {
-	Control::configureSelfFromXml(Element);
-	if (Element->FirstChildElement("image") != nullptr)
+	Control::configureSelfFromXml(node);
+	if (node->child("image"))
 	{
-		imageunchecked = fw().data->loadImage(Element->FirstChildElement("image")->GetText());
+		imageunchecked = fw().data->loadImage(node->child("image").text().get());
 	}
-	if (Element->FirstChildElement("imagechecked") != nullptr)
+	if (node->child("imagechecked"))
 	{
-		imagechecked = fw().data->loadImage(Element->FirstChildElement("imagechecked")->GetText());
+		imagechecked = fw().data->loadImage(node->child("imagechecked").text().get());
 	}
 }
 }; // namespace OpenApoc

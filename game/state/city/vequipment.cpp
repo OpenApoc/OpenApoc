@@ -43,7 +43,7 @@ sp<Projectile> VEquipment::fire(Vec3<float> targetPosition, StateRef<Vehicle> ta
 		auto it = WeaponStateMap.find(this->weaponState);
 		if (it != WeaponStateMap.end())
 			stateName = it->second;
-		LogWarning("Trying to fire weapon in state %s", stateName.cStr());
+		LogWarning("Trying to fire weapon in state %s", stateName);
 		return nullptr;
 	}
 	if (this->ammo <= 0 && this->type->max_ammo != 0)

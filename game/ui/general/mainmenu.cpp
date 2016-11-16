@@ -19,7 +19,7 @@ namespace OpenApoc
 
 static std::vector<UString> tracks{"music:0", "music:1", "music:2"};
 
-MainMenu::MainMenu() : Stage(), mainmenuform(ui().getForm("FORM_MAINMENU"))
+MainMenu::MainMenu() : Stage(), mainmenuform(ui().getForm("mainmenu"))
 {
 	auto versionLabel = mainmenuform->findControlTyped<Label>("VERSION_LABEL");
 	versionLabel->setText(OPENAPOC_VERSION);

@@ -44,21 +44,22 @@ class InitialGameStateExtractor
 		DIFFICULTY_5,
 	};
 	InitialGameStateExtractor() = default;
-	void extractCommon(GameState &state);
-	void extract(GameState &state, Difficulty difficulty);
+	void extractCommon(GameState &state) const;
+	void extract(GameState &state, Difficulty difficulty) const;
 	/* extractBulletSprites() returns a list of images, so doesn't affect a GameState */
-	std::map<UString, sp<Image>> extractBulletSpritesCity();
-	std::map<UString, sp<Image>> extractBulletSpritesBattle();
+	std::map<UString, sp<Image>> extractBulletSpritesCity() const;
+	std::map<UString, sp<Image>> extractBulletSpritesBattle() const;
 
 	// Though this takes a gamestate, that's just used to hang StateRef<>s off
-	sp<BattleMapTileset> extractTileSet(GameState &state, const UString &name);
-	sp<BattleUnitImagePack> extractImagePack(GameState &state, const UString &path, bool shadow);
-	sp<BattleUnitImagePack> extractItemImagePack(GameState &state, int item);
-	int getItemImagePacksCount();
+	sp<BattleMapTileset> extractTileSet(GameState &state, const UString &name) const;
+	sp<BattleUnitImagePack> extractImagePack(GameState &state, const UString &path,
+	                                         bool shadow) const;
+	sp<BattleUnitImagePack> extractItemImagePack(GameState &state, int item) const;
+	int getItemImagePacksCount() const;
 	sp<BattleUnitAnimationPack> extractAnimationPack(GameState &state, const UString &path,
-	                                                 const UString &name);
+	                                                 const UString &name) const;
 	std::map<UString, up<BattleMapSectorTiles>> extractMapSectors(GameState &state,
-	                                                              const UString &mapRootName);
+	                                                              const UString &mapRootName) const;
 
 	// Lookup table of building function number -> battlemap path
 	static const std::vector<UString> battleMapPaths;
@@ -71,36 +72,38 @@ class InitialGameStateExtractor
 
   private:
 	// 'common' state doesn't rely on difficulty
-	void extractAgentTypes(GameState &state);
-	void extractAgentBodyTypes(GameState &state);
-	void extractVehicles(GameState &state);
-	void extractOrganisations(GameState &state);
-	void extractFacilities(GameState &state);
-	void extractBaseLayouts(GameState &state);
-	void extractVehicleEquipment(GameState &state);
-	void extractResearch(GameState &state);
-	void extractAgentEquipment(GameState &state);
-	void extractDoodads(GameState &state);
+	void extractAgentTypes(GameState &state) const;
+	void extractAgentBodyTypes(GameState &state) const;
+	void extractVehicles(GameState &state) const;
+	void extractOrganisations(GameState &state) const;
+	void extractFacilities(GameState &state) const;
+	void extractBaseLayouts(GameState &state) const;
+	void extractVehicleEquipment(GameState &state) const;
+	void extractResearch(GameState &state) const;
+	void extractAgentEquipment(GameState &state) const;
+	void extractDoodads(GameState &state) const;
 
-	void extractBattlescapeMap(GameState &state, const std::vector<OpenApoc::UString> &paths);
-	void extractBattlescapeMapFromPath(GameState &state, const UString dirName, const int index);
-	void readBattleMapParts(GameState &state, TACP &data_t, sp<BattleMapTileset> t,
+	void extractBattlescapeMap(GameState &state, const std::vector<OpenApoc::UString> &paths) const;
+	void extractBattlescapeMapFromPath(GameState &state, const UString dirName,
+	                                   const int index) const;
+	void readBattleMapParts(GameState &state, const TACP &data_t, sp<BattleMapTileset> t,
 	                        BattleMapPartType::Type type, const UString &idPrefix,
 	                        const UString &dirName, const UString &datName, const UString &pckName,
-	                        const UString &stratPckName);
+	                        const UString &stratPckName) const;
 
-	void extractSharedBattleResources(GameState &state);
+	void extractSharedBattleResources(GameState &state) const;
 
 	// Then things that change on difficulty
 
-	void extractAlienEquipmentSets(GameState &state, Difficulty difficulty);
+	void extractAlienEquipmentSets(GameState &state, Difficulty difficulty) const;
 
 	void extractBuildings(GameState &state, UString bldFileName, sp<City> city,
-	                      bool alienBuilding = false);
-	void extractCityMap(GameState &state, UString fileName, UString tilePrefix, sp<City> city);
+	                      bool alienBuilding = false) const;
+	void extractCityMap(GameState &state, UString fileName, UString tilePrefix,
+	                    sp<City> city) const;
 	void extractCityScenery(GameState &state, UString tilePrefix, UString datFile,
 	                        UString spriteFile, UString stratmapFile, UString lofFile,
-	                        UString ovrFile, sp<City> city);
+	                        UString ovrFile, sp<City> city) const;
 
 	// Unit animation packs functions
 
@@ -109,14 +112,14 @@ class InitialGameStateExtractor
 	    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
 	    int frames_per_100_units, int split_point, bool left_side, bool isOverlay = false,
 	    bool removeItem = false, Vec2<int> targetOffset = {0, 0}, Vec2<int> beginOffset = {0, 0},
-	    bool inverse = false, int extraEndFrames = 0, bool singleFrame = false);
+	    bool inverse = false, int extraEndFrames = 0, bool singleFrame = false) const;
 
 	sp<BattleUnitAnimationPack::AnimationEntry>
 	getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
 	                  const std::vector<AnimationDataUA> &dataUA,
 	                  std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
 	                  int frames_per_100_units = 100, bool isOverlay = false,
-	                  Vec2<int> targetOffset = {0, 0}, Vec2<int> beginOffset = {0, 0})
+	                  Vec2<int> targetOffset = {0, 0}, Vec2<int> beginOffset = {0, 0}) const
 	{
 		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, frames_per_100_units, 0,
 		                         false, isOverlay, false, targetOffset, beginOffset);
@@ -124,7 +127,7 @@ class InitialGameStateExtractor
 
 	sp<BattleUnitAnimationPack::AnimationEntry> getAnimationEntry(
 	    const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
-	    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction, bool inverse)
+	    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction, bool inverse) const
 	{
 		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, 100, 0, false, false,
 		                         false, {0, 0}, {0, 0}, inverse);
@@ -134,19 +137,19 @@ class InitialGameStateExtractor
 	getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
 	                  const std::vector<AnimationDataUA> &dataUA,
 	                  std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
-	                  Vec2<int> targetOffset, Vec2<int> beginOffset)
+	                  Vec2<int> targetOffset, Vec2<int> beginOffset) const
 	{
 		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, 100, 0, false, false,
 		                         false, targetOffset, beginOffset);
 	}
 
-	Vec2<int> gPrOff(Vec2<int> facing);
+	Vec2<int> gPrOff(Vec2<int> facing) const;
 
 	// Unit animation pack extractors
 
 	void extractAnimationPackUnit(sp<BattleUnitAnimationPack> p,
 	                              const std::vector<AnimationDataAD> &dataAD,
 	                              const std::vector<AnimationDataUA> &dataUA,
-	                              std::vector<AnimationDataUF> &dataUF, int x, int y);
+	                              std::vector<AnimationDataUF> &dataUF, int x, int y) const;
 };
 }

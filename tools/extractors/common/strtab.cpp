@@ -43,7 +43,7 @@ StrTab::StrTab(std::istream &file, off_t start_offset, off_t end_offset, bool ma
 		LogError("Table didn't end with NULL");
 }
 
-std::string StrTab::get(int offset)
+std::string StrTab::get(int offset) const
 {
 	if (offset >= (int)readStrings.size())
 	{

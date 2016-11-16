@@ -12,7 +12,7 @@
 namespace OpenApoc
 {
 
-DifficultyMenu::DifficultyMenu() : Stage(), difficultymenuform(ui().getForm("FORM_DIFFICULTYMENU"))
+DifficultyMenu::DifficultyMenu() : Stage(), difficultymenuform(ui().getForm("difficultymenu"))
 {
 	LogAssert(difficultymenuform);
 }
@@ -30,14 +30,14 @@ void DifficultyMenu::finish() {}
 std::future<void> loadGame(const UString &path, sp<GameState> state)
 {
 	auto loadTask = fw().threadPoolEnqueue([path, state]() -> void {
-		if (!state->loadGame("data/gamestate_common"))
+		if (!state->loadGame(fw().getDataDir() + "/gamestate_common"))
 		{
 			LogError("Failed to load common gamestate");
 			return;
 		}
-		if (!state->loadGame(path))
+		if (!state->loadGame(fw().getDataDir() + "/" + path))
 		{
-			LogError("Failed to load '%s'", path.cStr());
+			LogError("Failed to load '%s'", path);
 			return;
 		}
 		state->startGame();
@@ -67,27 +67,27 @@ void DifficultyMenu::eventOccurred(Event *e)
 		UString initialStatePath;
 		if (e->forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY1") == 0)
 		{
-			initialStatePath = "data/difficulty1_patched";
+			initialStatePath = "difficulty1_patched";
 		}
 		else if (e->forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY2") == 0)
 		{
-			initialStatePath = "data/difficulty2_patched";
+			initialStatePath = "difficulty2_patched";
 		}
 		else if (e->forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY3") == 0)
 		{
-			initialStatePath = "data/difficulty3_patched";
+			initialStatePath = "difficulty3_patched";
 		}
 		else if (e->forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY4") == 0)
 		{
-			initialStatePath = "data/difficulty4_patched";
+			initialStatePath = "difficulty4_patched";
 		}
 		else if (e->forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY5") == 0)
 		{
-			initialStatePath = "data/difficulty5_patched";
+			initialStatePath = "difficulty5_patched";
 		}
 		else
 		{
-			LogWarning("Unknown button pressed: %s", e->forms().RaisedBy->Name.cStr());
+			LogWarning("Unknown button pressed: %s", e->forms().RaisedBy->Name);
 			return;
 		}
 

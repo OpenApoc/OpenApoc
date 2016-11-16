@@ -1,5 +1,6 @@
 ﻿#include "game/state/savemanager.h"
 #include "framework/configfile.h"
+#include "framework/filesystem.h"
 #include "framework/framework.h"
 #include "framework/serialization/serialize.h"
 #include "framework/trace.h"
@@ -10,14 +11,12 @@
 // Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
 // symbols as part of the module that uses it
 #define BOOST_ALL_NO_LIB
-#include <boost/filesystem.hpp>
 
 // boost uuid for generating temporary identifier for new save
 #include <boost/uuid/uuid_generators.hpp> // generators
 #include <boost/uuid/uuid_io.hpp>         // conversion to string
 
 namespace uuids = boost::uuids;
-namespace fs = boost::filesystem;
 
 namespace OpenApoc
 {
@@ -55,7 +54,7 @@ std::future<void> SaveManager::loadGame(const UString &savePath, sp<GameState> s
 	auto loadTask = fw().threadPoolEnqueue([saveArchiveLocation, state]() -> void {
 		if (!state->loadGame(saveArchiveLocation))
 		{
-			LogError("Failed to load '%s'", saveArchiveLocation.cStr());
+			LogError("Failed to load '%s'", saveArchiveLocation);
 			return;
 		}
 		state->initState();
@@ -124,7 +123,7 @@ bool writeArchiveWithBackup(const sp<SerializationArchive> archive, const UStrin
 
 		if (!haveNewName)
 		{
-			LogError("Unable to create temporary file at \"%s\"", tempPath.string().c_str());
+			LogError("Unable to create temporary file at \"%s\"", tempPath.string());
 			return false;
 		}
 
@@ -179,7 +178,7 @@ bool SaveManager::findFreePath(UString &path, const UString &name) const
 			}
 		}
 
-		LogError("Unable to generate filename for save %s", name.cStr());
+		LogError("Unable to generate filename for save %s", name);
 		return false;
 	}
 
@@ -271,8 +270,7 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 		fs::path currentPath = fs::current_path().string();
 		if (!fs::exists(saveDirectory) && !fs::create_directories(saveDirectory))
 		{
-			LogWarning("Save directory \"%s\" not found, and could not be created!",
-			           saveDirectory.c_str());
+			LogWarning("Save directory \"%s\" not found, and could not be created!", saveDirectory);
 			return saveList;
 		}
 
