@@ -1989,6 +1989,7 @@ void BattleView::eventOccurred(Event *e)
 								}
 							}
 						}
+
 						auto uto = tile->getUnitIfPresent();
 						if (uto)
 						{
@@ -2011,7 +2012,7 @@ void BattleView::eventOccurred(Event *e)
 								debug += format("\n%s", unit.id);
 							}
 						}
-						LogWarning("%s", debug.cStr());
+						LogWarning("%s", debug);
 					}
 					break;
 				case BattleSelectionState::FireAny:
