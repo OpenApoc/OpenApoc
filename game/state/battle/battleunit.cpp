@@ -2013,6 +2013,7 @@ void BattleUnit::updateAI(GameState &state, unsigned int ticks)
 {
 	// TODO: Disabled until proper pathfinding algorithm is developed
 	return;
+
 	if (!isConscious())
 	{
 		return;
