@@ -1,6 +1,7 @@
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "game/state/agent.h"
+#include "game/state/battle/ai.h"
 #include "game/state/battle/battleunitimagepack.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
@@ -178,6 +179,66 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			default:
 				a->role = AgentType::Role::Soldier;
 				a->playable = false;
+				break;
+		}
+
+		// Control and AI
+		a->allowsDirectControl = true;
+		switch (i)
+		{
+			case UNIT_TYPE_BIOCHEMIST:
+			case UNIT_TYPE_ENGINEER:
+			case UNIT_TYPE_QUANTUM_PHYSIST:
+			case UNIT_TYPE_UPPER_CLASS_FEMALE_1:
+			case UNIT_TYPE_UPPER_CLASS_FEMALE_2:
+			case UNIT_TYPE_UPPER_CLASS_FEMALE_3:
+			case UNIT_TYPE_UPPER_CLASS_MALE_1:
+			case UNIT_TYPE_UPPER_CLASS_MALE_2:
+			case UNIT_TYPE_UPPER_CLASS_MALE_3:
+			case UNIT_TYPE_CIVILIAN_FEMALE_1:
+			case UNIT_TYPE_CIVILIAN_FEMALE_2:
+			case UNIT_TYPE_CIVILIAN_FEMALE_3:
+			case UNIT_TYPE_CIVILIAN_MALE_1:
+			case UNIT_TYPE_CIVILIAN_MALE_2:
+			case UNIT_TYPE_CIVILIAN_MALE_3:
+			case UNIT_TYPE_LOWER_CLASS_MALE_1:
+			case UNIT_TYPE_LOWER_CLASS_MALE_2:
+			case UNIT_TYPE_LOWER_CLASS_MALE_3:
+			case UNIT_TYPE_LOWER_CLASS_FEMALE_1:
+			case UNIT_TYPE_LOWER_CLASS_FEMALE_2:
+			case UNIT_TYPE_LOWER_CLASS_FEMALE_3:
+			case UNIT_TYPE_ANDROID:
+			case UNIT_TYPE_GREY:
+			case UNIT_TYPE_CORPORATE_BOSS:
+				a->aiType = AIType::Civilian;
+				break;
+			case UNIT_TYPE_CRYSALIS:
+				a->aiType = AIType::None;
+				break;
+			case UNIT_TYPE_MULTIWORM:
+			case UNIT_TYPE_HYPERWORM:
+			case UNIT_TYPE_POPPER:
+			case UNIT_TYPE_MEGASPAWN:
+			case UNIT_TYPE_PSIMORPH:
+			case UNIT_TYPE_QUEENSPAWN:
+			case UNIT_TYPE_BRAINSUCKER:
+			case UNIT_TYPE_MULTIWORM_EGG:
+			case UNIT_TYPE_MICRONOID:
+				a->aiType = AIType::Loner;
+				break;
+			case UNIT_TYPE_GANG_LEADER:
+			case UNIT_TYPE_CULT_LEADER:
+			case UNIT_TYPE_POLITICIAN:
+			case UNIT_TYPE_CHIEF_OF_POLICE:
+			case UNIT_TYPE_CORPORATE_HOOD:
+			case UNIT_TYPE_POLICE:
+			case UNIT_TYPE_GANGSTER:
+			case UNIT_TYPE_CULTIST:
+			case UNIT_TYPE_SECURITY:
+			case UNIT_TYPE_ANTHROPOD:
+			case UNIT_TYPE_SKELETOID:
+			case UNIT_TYPE_SPITTER:
+				a->aiType = AIType::Group;
 				break;
 		}
 

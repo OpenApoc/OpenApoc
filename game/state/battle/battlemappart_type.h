@@ -52,7 +52,7 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 	bool transparent = false;
 	int sfxIndex = -1;
 	bool door = false;
-	bool los_through_terrain = false;
+	bool blocksLOS = false;
 	bool floor = false;
 	bool gravlift = false;
 	int movement_cost = 0;

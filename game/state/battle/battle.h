@@ -73,8 +73,9 @@ class Battle : public std::enable_shared_from_this<Battle>
 	StateRef<BattleMap> battle_map;
 
 	std::vector<sp<BattleMapSector::LineOfSightBlock>> los_blocks;
-	std::vector<int> tileToLosBlock;
+	// Map of vectors of bools, one bool for every tile, denotes visible tiles (same indexing)
 	std::map<StateRef<Organisation>, std::vector<bool>> visibleTiles;
+	// Map of vectors of bools, one bool for every los block, denotes visible blocks
 	std::map<StateRef<Organisation>, std::vector<bool>> visibleBlocks;
 	std::map<StateRef<Organisation>, std::set<StateRef<BattleUnit>>> visibleUnits;
 	std::map<StateRef<Organisation>, std::set<StateRef<BattleUnit>>> visibleEnemies;
@@ -89,7 +90,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// - Map part which is door opening/closing
 	std::set<Vec3<int>> tilesChangedForVision;
 	// Queue tile for vision update
-	void queueVisionUpdate(Vec3<int> tile);
+	void queueVisionRefresh(Vec3<int> tile);
 
 	MissionType mission_type = MissionType::AlienExtermination;
 	UString mission_location_id;
@@ -196,6 +197,11 @@ class Battle : public std::enable_shared_from_this<Battle>
 	sp<BattleCommonSampleList> common_sample_list;
 
 	std::map<StateRef<Organisation>, BattleForces> forces;
+
+	// Vector of indexes to los blocks, each block appears according to it's priority
+	std::vector<int> losBlockRandomizer;
+	// Vector of indexes to los blocks, for each tile (index is like tile's location in tilemap)
+	std::vector<int> tileToLosBlock;
 
 	// Contains height at which to spawn units, or -1 if spawning is not possible
 	// No need to serialize this, as we cannot save/load during briefing

@@ -70,7 +70,7 @@ class BattleUnitMission
 	void update(GameState &state, BattleUnit &u, unsigned int ticks, bool finished = false);
 	bool isFinished(GameState &state, BattleUnit &u, bool callUpdateIfFinished = true);
 	void start(GameState &state, BattleUnit &u);
-	void setPathTo(BattleUnit &u, Vec3<int> target, int maxIterations = 1000);
+	void setPathTo(BattleUnit &u, Vec3<int> target, int maxIterations);
 
 	// Methods to request next action
 	// Request next destination
@@ -90,13 +90,11 @@ class BattleUnitMission
 	static Vec2<int> getFacing(BattleUnit &u, Vec3<float> from, Vec3<float> to);
 	static Vec2<int> getFacing(BattleUnit &u, Vec3<int> to);
 
-	// Other agent control methods
-	void makeAgentMove(BattleUnit &u);
-
 	// Methods to create new missions
 	static BattleUnitMission *gotoLocation(BattleUnit &u, Vec3<int> target, int facingDelta = 0,
 	                                       bool demandGiveWay = false, bool allowSkipNodes = true,
-	                                       int giveWayAttempts = 20, bool allowRunningAway = false);
+	                                       int giveWayAttempts = 20, bool allowRunningAway = false,
+	                                       int maxIterations = 1000);
 	static BattleUnitMission *snooze(BattleUnit &u, unsigned int ticks);
 	static BattleUnitMission *acquireTU(BattleUnit &u, unsigned int tu);
 	static BattleUnitMission *changeStance(BattleUnit &u, BodyState state);
@@ -124,6 +122,7 @@ class BattleUnitMission
 	int giveWayAttemptsRemaining = 0;
 	bool allowRunningAway = false;
 	std::list<Vec3<int>> currentPlannedPath;
+	int maxIterations = 0;
 	// Unit will follow its path exactly without trying to skip nodes
 	bool allowSkipNodes = false;
 	// Unit will ignore static non-large units when pathfinding

@@ -368,30 +368,65 @@ void BattleTileView::render()
 			// FIXME: Actually read ingame option
 			bool USER_OPTION_DRAW_WAYPOINTS = true;
 			bool darkenWaypoints = false;
-			for (auto u : battle.battleViewSelectedUnits)
+			std::list<StateRef<BattleUnit>> allUnits;
+			if (revealWholeMap)
 			{
-				for (auto &m : u->missions)
+				for (auto entry : battle.units)
 				{
-					if (m->type == BattleUnitMission::Type::ReachGoal)
+					auto &u = entry.second;
+					for (auto &m : u->missions)
 					{
-						targetIconLocations.insert(m->targetLocation);
-						break;
-					}
-					if (m->type == BattleUnitMission::Type::GotoLocation &&
-					    !m->currentPlannedPath.empty())
-					{
-						targetIconLocations.insert(m->targetLocation);
-						if (USER_OPTION_DRAW_WAYPOINTS)
+						if (m->type == BattleUnitMission::Type::ReachGoal)
 						{
-							for (auto w : m->currentPlannedPath)
+							targetIconLocations.insert(m->targetLocation);
+							break;
+						}
+						if (m->type == BattleUnitMission::Type::GotoLocation &&
+						    !m->currentPlannedPath.empty())
+						{
+							targetIconLocations.insert(m->targetLocation);
+							if (USER_OPTION_DRAW_WAYPOINTS)
 							{
-								if (w != m->targetLocation)
+								for (auto w : m->currentPlannedPath)
 								{
-									waypointLocations.insert(w);
+									if (w != m->targetLocation)
+									{
+										waypointLocations.insert(w);
+									}
 								}
 							}
+							break;
 						}
-						break;
+					}
+				}
+			}
+			else
+			{
+				for (auto u : battle.battleViewSelectedUnits)
+				{
+					for (auto &m : u->missions)
+					{
+						if (m->type == BattleUnitMission::Type::ReachGoal)
+						{
+							targetIconLocations.insert(m->targetLocation);
+							break;
+						}
+						if (m->type == BattleUnitMission::Type::GotoLocation &&
+						    !m->currentPlannedPath.empty())
+						{
+							targetIconLocations.insert(m->targetLocation);
+							if (USER_OPTION_DRAW_WAYPOINTS)
+							{
+								for (auto w : m->currentPlannedPath)
+								{
+									if (w != m->targetLocation)
+									{
+										waypointLocations.insert(w);
+									}
+								}
+							}
+							break;
+						}
 					}
 				}
 			}
@@ -581,8 +616,9 @@ void BattleTileView::render()
 										break;
 								}
 								Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
-								obj->draw(r, *this, pos, this->viewMode, objectVisible,
-								          currentLevel, friendly, hostile);
+								obj->draw(r, *this, pos, this->viewMode,
+								          revealWholeMap || objectVisible, currentLevel, friendly,
+								          hostile);
 								// Loop ends when "break" is reached above
 								obj_id++;
 							} while (true);
@@ -747,8 +783,9 @@ void BattleTileView::render()
 								if (draw)
 								{
 									Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
-									obj->draw(r, *this, pos, this->viewMode, objectVisible,
-									          currentLevel, friendly, hostile);
+									obj->draw(r, *this, pos, this->viewMode,
+									          revealWholeMap || objectVisible, currentLevel,
+									          friendly, hostile);
 								}
 								// Loop ends when "break" is reached above
 								obj_id++;
@@ -891,7 +928,8 @@ void BattleTileView::render()
 										    battle.currentPlayer->isRelatedTo(u->owner) ==
 										    Organisation::Relation::Hostile;
 
-										unitsToDraw.emplace_back(obj, objectVisible,
+										unitsToDraw.emplace_back(obj,
+										                         revealWholeMap || objectVisible,
 										                         obj->getOwningTile()->position.z -
 										                             (battle.battleViewZLevel - 1),
 										                         friendly, hostile);
@@ -943,7 +981,8 @@ void BattleTileView::render()
 										    battle.currentPlayer->isRelatedTo(u->owner) ==
 										    Organisation::Relation::Hostile;
 
-										unitsToDraw.emplace_back(obj, objectVisible,
+										unitsToDraw.emplace_back(obj,
+										                         revealWholeMap || objectVisible,
 										                         obj->getOwningTile()->position.z -
 										                             (battle.battleViewZLevel - 1),
 										                         friendly, hostile);
@@ -954,8 +993,9 @@ void BattleTileView::render()
 										if (currentLevel == 0)
 										{
 											itemsToDraw.emplace_back(
-											    obj, visible, obj->getOwningTile()->position.z -
-											                      (battle.battleViewZLevel - 1));
+											    obj, revealWholeMap || visible,
+											    obj->getOwningTile()->position.z -
+											        (battle.battleViewZLevel - 1));
 										}
 										continue;
 									}
@@ -963,8 +1003,8 @@ void BattleTileView::render()
 										break;
 								}
 								Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
-								obj->draw(r, *this, pos, this->viewMode, objectVisible,
-								          currentLevel);
+								obj->draw(r, *this, pos, this->viewMode,
+								          revealWholeMap || objectVisible, currentLevel);
 							}
 						}
 					}
@@ -1002,7 +1042,8 @@ void BattleTileView::render()
 										    battle.currentPlayer->isRelatedTo(u->owner) ==
 										    Organisation::Relation::Hostile;
 
-										unitsToDraw.emplace_back(obj, objectVisible,
+										unitsToDraw.emplace_back(obj,
+										                         revealWholeMap || objectVisible,
 										                         obj->getOwningTile()->position.z -
 										                             (battle.battleViewZLevel - 1),
 										                         friendly, hostile);

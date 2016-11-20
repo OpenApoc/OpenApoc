@@ -20,7 +20,7 @@
 // produces projectiles that are too slow.
 // Approximately this multiplier brings them back to speeds matching vanilla
 // However, this may be wrong
-#define PROJECTILE_VELOCITY_MULTIPLIER 8
+#define PROJECTILE_VELOCITY_MULTIPLIER 8.0f
 
 namespace OpenApoc
 {

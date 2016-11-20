@@ -143,7 +143,58 @@ void InitialGameStateExtractor::readBattleMapParts(GameState &state, const TACP 
 		object->transparent = entry.transparent == 1;
 		object->sfxIndex = entry.sfx - 1;
 		object->door = entry.is_door == 1 && entry.is_door_closed == 1;
-		object->los_through_terrain = entry.los_through_terrain == 1;
+		// Unused in vanilla
+		// object->los_through_terrain = entry.los_through_terrain == 1;
+		// Instead we mark objects based on wether they block los or not
+		// For now, we simply cheat and check several voxels
+		switch (type)
+		{
+			case BattleMapPartType::Type::Ground:
+				// Ground blocks LOS if there's something in the middle column
+				for (int i = 0; i < 20; i++)
+				{
+					if (object->voxelMapLOS->getBit({12, 12, i}))
+					{
+						object->blocksLOS = true;
+						break;
+					}
+				}
+				break;
+			case BattleMapPartType::Type::LeftWall:
+				// Wall blocks LOS if there's something in the middle line
+				for (int i = 0; i < 24; i++)
+				{
+					if (object->voxelMapLOS->getBit({i, 12, 10}))
+					{
+						object->blocksLOS = true;
+						break;
+					}
+				}
+				break;
+			case BattleMapPartType::Type::RightWall:
+				// Wall blocks LOS if there's something in the middle line
+				for (int i = 0; i < 24; i++)
+				{
+					if (object->voxelMapLOS->getBit({12, i, 10}))
+					{
+						object->blocksLOS = true;
+						break;
+					}
+				}
+				break;
+			case BattleMapPartType::Type::Feature:
+				// Feature blocks LOS if there's something in the middle cross
+				for (int i = 0; i < 24; i++)
+				{
+					if (object->voxelMapLOS->getBit({12, i, 10}) ||
+					    object->voxelMapLOS->getBit({i, 12, 10}))
+					{
+						object->blocksLOS = true;
+						break;
+					}
+				}
+				break;
+		}
 		object->floor = entry.is_floor == 1;
 		object->gravlift = entry.is_gravlift == 1;
 		object->movement_cost = entry.movement_cost;

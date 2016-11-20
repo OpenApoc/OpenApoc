@@ -156,6 +156,32 @@ void Battle::initBattle(GameState &state, bool first)
 		if (p->trackedUnit)
 			p->trackedObject = p->trackedUnit->tileObject;
 	}
+	// Fill up los block randomizer
+	for (int i = 0; i < (int)los_blocks.size(); i++)
+	{
+		for (int j = 0; j < los_blocks.at(i)->ai_patrol_priority; j++)
+		{
+			losBlockRandomizer.push_back(i);
+		}
+	}
+
+	// Fill up tiles
+	tileToLosBlock = std::vector<int>(size.x * size.y * size.z, 0);
+	for (int i = 0; i < (int)los_blocks.size(); i++)
+	{
+		auto l = los_blocks[i];
+		for (int x = l->start.x; x < l->end.x; x++)
+		{
+			for (int y = l->start.y; y < l->end.y; y++)
+			{
+				for (int z = l->start.z; z < l->end.z; z++)
+				{
+					tileToLosBlock[z * size.x * size.y + y * size.x + x] = i;
+				}
+			}
+		}
+	}
+	// Hazards
 	for (auto &h : hazards)
 	{
 		h->updateTileVisionBlock(state);
@@ -171,7 +197,7 @@ void Battle::initBattle(GameState &state, bool first)
 		// Check which blocks and tiles are visible
 		for (auto u : units)
 		{
-			u.second->updateUnitVision(state);
+			u.second->refreshUnitVision(state);
 		}
 	}
 }
@@ -483,7 +509,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 		auto c = p->checkProjectileCollision(*map);
 		if (c)
 		{
-			// Alert intended unit that he's on fire!
+			// Alert intended unit that he's on fire, if he cannot see the firer
 			auto unit = c.projectile->trackedUnit;
 			if (unit &&
 			    unit->visibleUnits.find(c.projectile->firerUnit) == unit->visibleUnits.end())
@@ -621,7 +647,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 				// FIXME: Should we check more thoroughly to save CPU time (probably)?
 				if ((vec.x > 0 && unit->facing.x < 0) || (vec.y > 0 && unit->facing.y < 0) ||
 				    (vec.x < 0 && unit->facing.x > 0) || (vec.y < 0 && unit->facing.y > 0) ||
-				    (vec.x * vec.x + vec.y * vec.y + vec.z * vec.z > LOS_RANGE * LOS_RANGE))
+				    (vec.x * vec.x + vec.y * vec.y + vec.z * vec.z > 400))
 				{
 					continue;
 				}
@@ -631,7 +657,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 		}
 		for (auto &unit : unitsToUpdate)
 		{
-			unit->updateUnitVision(state);
+			unit->refreshUnitVision(state);
 		}
 		tilesChangedForVision.clear();
 	}
@@ -653,7 +679,7 @@ void Battle::setVisible(StateRef<Organisation> org, int x, int y, int z, bool va
 	visibleTiles[org][z * size.x * size.y + y * size.x + x] = val;
 }
 
-void Battle::queueVisionUpdate(Vec3<int> tile) { tilesChangedForVision.insert(tile); }
+void Battle::queueVisionRefresh(Vec3<int> tile) { tilesChangedForVision.insert(tile); }
 
 void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
                                      Vec3<float> &target, int accuracy, bool thrown)

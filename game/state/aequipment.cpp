@@ -78,7 +78,9 @@ int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
 		                       : (movementState == MovementState::Running ? 1.70f : 1.35f);
 
 		// Having both hands busy also increases it by another 1,5x
-		if (ownerAgent->getFirstItemInSlot(AEquipmentSlotType::LeftHand) &&
+		if (ownerAgent && (equippedSlotType == AEquipmentSlotType::LeftHand ||
+		                   equippedSlotType == AEquipmentSlotType::RightHand) &&
+		    ownerAgent->getFirstItemInSlot(AEquipmentSlotType::LeftHand) &&
 		    ownerAgent->getFirstItemInSlot(AEquipmentSlotType::RightHand))
 		{
 			agentDispersion *= 1.5f;
@@ -512,6 +514,7 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 	{
 		payloadType.clear();
 		loadAmmo(state);
+		ownerAgent->updateSpeed();
 	}
 }
 
@@ -735,8 +738,13 @@ bool AEquipment::getVelocityForThrow(const BattleUnit &unit, Vec3<int> target, f
 bool AEquipment::getVelocityForLaunch(const BattleUnit &unit, Vec3<int> target, float &velocityXY,
                                       float &velocityZ) const
 {
-	// Launchers can use higher "throw" speeds
-	velocityXY = 4.0f;
+	// Launchers use weapon's projectile speed as their XY speed
+	// Item's velocityXY is later multiplied by velocity_scale
+	// Projectie's speed is already in that scale, but is later multiplied by velocity_multiplier
+	// Therefore we multiply by velocity_mult and divide by scale to convert proj speed to item
+	// speed
+	velocityXY =
+	    (float)getPayloadType()->speed * PROJECTILE_VELOCITY_MULTIPLIER / VELOCITY_SCALE_BATTLE.x;
 	return getVelocityForThrowLaunch(&unit, unit.tileObject->map,
 	                                 unit.agent->modified_stats.strength, payloadType->weight,
 	                                 unit.getThrownItemLocation(), target, velocityXY, velocityZ);

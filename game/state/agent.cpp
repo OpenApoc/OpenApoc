@@ -1,5 +1,6 @@
 #include "game/state/agent.h"
 #include "game/state/aequipment.h"
+#include "game/state/battle/ai.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
@@ -148,6 +149,8 @@ template <> const UString &StateObject<Agent>::getId(const GameState &state, con
 	LogError("No agent matching pointer %p", ptr.get());
 	return emptyString;
 }
+
+AgentType::AgentType() : aiType(AIType::None) {}
 
 AEquipmentSlotType AgentType::getArmorSlotType(BodyPart bodyPart)
 {
@@ -586,9 +589,25 @@ void Agent::removeEquipment(sp<AEquipment> object)
 
 void Agent::updateSpeed()
 {
-	// Fixme: calculate how much equipment slows us down here
-	initial_stats.restoreTU();
-	current_stats.restoreTU();
+	int encumbrance = 0;
+	for (auto &item : equipment)
+	{
+		encumbrance += item->type->weight;
+		if (item->payloadType && item->ammo > 0)
+		{
+			encumbrance += item->payloadType->weight;
+		}
+	}
+	encumbrance *= encumbrance;
+
+	// Expecting str to never be 0
+	int strength = current_stats.strength;
+	strength *= strength * 16;
+
+	// Ensure actual speed is at least "1"
+	modified_stats.speed = std::max(
+	    8, ((strength + encumbrance) / 2 + current_stats.speed * (strength - encumbrance)) /
+	           (strength + encumbrance));
 }
 
 StateRef<BattleUnitAnimationPack> Agent::getAnimationPack() const

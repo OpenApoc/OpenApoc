@@ -68,8 +68,8 @@ sp<Projectile> VEquipment::fire(Vec3<float> targetPosition, StateRef<Vehicle> ta
 	auto vehicleMuzzle = vehicleTile->getVehicle()->getMuzzleLocation();
 	Vec3<float> velocity = targetPosition - vehicleMuzzle;
 	velocity = glm::normalize(velocity);
-	velocity *=
-	    type->speed * PROJECTILE_VELOCITY_MULTIPLIER; // I believe this is the correct formula
+	// I believe this is the correct formula
+	velocity *= type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 
 	return mksp<Projectile>(type->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
 	                        owner, targetVehicle, vehicleMuzzle, velocity, type->turn_rate,

@@ -15,9 +15,18 @@ namespace OpenApoc
 Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
                                  const std::set<TileObject::Type> validTypes,
                                  sp<TileObject> ignoredObject, bool useLOS, bool check_full_path,
-                                 bool storeTilesPassed) const
+                                 unsigned maxRange) const
 {
-	bool type_checking = validTypes.size() > 0;
+	bool typeChecking = validTypes.size() > 0;
+	bool rangeChecking = maxRange > 0.0f;
+	const Tile *lastT = nullptr;
+	// We apply a median value accumulated in all tiles passed every time we pass a tile
+	// This makes it so that we do not over or under-apply smoke when going diagonally
+	float blockageAccumulatedSoFar = 0.0f;
+	int distanceToLastTile = 0;
+	float accumulatedSinceLastTile = 0;
+	int numberTilesWithBlockage = 0;
+	// Init collision parameters
 	Collision c;
 	c.obj = nullptr;
 	Vec3<int> tileSize = voxelMapSize;
@@ -25,6 +34,7 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 	Vec3<int> lineSegmentStartVoxel = lineSegmentStart * tileSizef;
 	Vec3<int> lineSegmentEndVoxel = lineSegmentEnd * tileSizef;
 	LineSegment<int, true> line{lineSegmentStartVoxel, lineSegmentEndVoxel};
+
 	// "point" is thee corrdinate measured in voxel scale units, meaning,
 	// voxel point coordinate within map
 	for (auto &point : line)
@@ -34,22 +44,73 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 		    tile.z >= size.z)
 		{
 			if (check_full_path)
+			{
 				continue;
+			}
 			else
+			{
 				return c;
+			}
 		}
 		const Tile *t = this->getTile(tile);
-		if (storeTilesPassed && (c.tilesPassed.empty() || c.tilesPassed.back() != t))
+		if (rangeChecking)
 		{
-			c.tilesPassed.push_back(t);
+			if (!lastT)
+			{
+				lastT = t;
+			}
+			else
+			{
+				if (t != lastT)
+				{
+					lastT = t;
+					auto vec = t->position;
+					// Apply vision blockage if we passed at least 1 tile
+					auto thisDistance =
+					    sqrtf((vec.x - lineSegmentStart.x) * (vec.x - lineSegmentStart.x) +
+					          (vec.y - lineSegmentStart.y) * (vec.y - lineSegmentStart.y) +
+					          (vec.z - lineSegmentStart.z) * (vec.z - lineSegmentStart.z));
+					if ((int)thisDistance > distanceToLastTile)
+					{
+						if (numberTilesWithBlockage > 0)
+						{
+							blockageAccumulatedSoFar += accumulatedSinceLastTile *
+							                            ((int)thisDistance - distanceToLastTile) /
+							                            numberTilesWithBlockage;
+						}
+						distanceToLastTile = thisDistance;
+						accumulatedSinceLastTile = 0;
+						numberTilesWithBlockage = 0;
+					}
+
+					// Reached end of LOS with accumulated blockage
+					if ((unsigned)(thisDistance + blockageAccumulatedSoFar) > maxRange)
+					{
+						c.outOfRange = true;
+						c.position = Vec3<float>{point};
+						c.position /= tileSizef;
+						return c;
+					}
+
+					// Add this tile's vision blockage to accumulated since last tile blockage
+					auto thisBlockage = t->visionBlockValue;
+					if (thisBlockage > 0)
+					{
+						accumulatedSinceLastTile += thisBlockage;
+						numberTilesWithBlockage++;
+					}
+				}
+			}
 		}
 
 		for (auto &obj : t->intersectingObjects)
 		{
 			if ((!obj->hasVoxelMap()) ||
-			    (type_checking && validTypes.find(obj->type) == validTypes.end()) ||
+			    (typeChecking && validTypes.find(obj->type) == validTypes.end()) ||
 			    (obj == ignoredObject))
+			{
 				continue;
+			}
 			// coordinate of the object's voxelmap's min point
 			auto objPos = obj->getCenter();
 			objPos -= obj->getVoxelOffset();
@@ -72,6 +133,7 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 			}
 		}
 	}
+
 	return c;
 }
 

@@ -35,7 +35,7 @@ void BattleMapPart::die(GameState &state, bool explosive, bool violently)
 	// If falling just cease to be, do damage
 	if (falling)
 	{
-		state.current_battle->queueVisionUpdate(position);
+		state.current_battle->queueVisionRefresh(position);
 		this->tileObject->removeFromMap();
 		this->tileObject.reset();
 		destroyed = true;
@@ -97,7 +97,7 @@ void BattleMapPart::die(GameState &state, bool explosive, bool violently)
 	}
 
 	// Queue update of vision
-	state.current_battle->queueVisionUpdate(position);
+	state.current_battle->queueVisionRefresh(position);
 
 	// Cease functioning
 	ceaseBeingSupported();
@@ -1314,8 +1314,8 @@ void BattleMapPart::setPosition(GameState &state, const Vec3<float> &pos)
 	this->tileObject->setPosition(pos);
 	if ((Vec3<int>)oldPosition != (Vec3<int>)position)
 	{
-		state.current_battle->queueVisionUpdate(position);
-		state.current_battle->queueVisionUpdate(oldPosition);
+		state.current_battle->queueVisionRefresh(position);
+		state.current_battle->queueVisionRefresh(oldPosition);
 	}
 }
 
