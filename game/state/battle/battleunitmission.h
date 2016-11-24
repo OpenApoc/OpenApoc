@@ -5,6 +5,7 @@
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
+#include "game/state/tileview/tileobject_battleunit.h"
 #include <list>
 
 namespace OpenApoc
@@ -12,28 +13,34 @@ namespace OpenApoc
 class BattleUnit;
 class Tile;
 class TileMap;
+enum class BattleUnitType;
 
 class BattleUnitTileHelper : public CanEnterTileHelper
 {
   private:
 	TileMap &map;
-	BattleUnit &u;
+	bool large;
+	bool flying;
+	int maxHeight;
+	sp<TileObjectBattleUnit> tileObject;
 
   public:
-	BattleUnitTileHelper(TileMap &map, BattleUnit &u) : map(map), u(u) {}
-
+	BattleUnitTileHelper(TileMap &map, BattleUnit &u);
+	BattleUnitTileHelper(TileMap &map, bool large, bool flying, int maxHeight, sp<TileObjectBattleUnit> tileObject);
+	BattleUnitTileHelper(TileMap &map, BattleUnitType type);
+	
 	static float getDistanceStatic(Vec3<float> from, Vec3<float> to);
+	static float getDistanceStatic(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd);
 	float getDistance(Vec3<float> from, Vec3<float> to) const override;
+	float getDistance(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd) const override;
 
-	bool canEnterTile(Tile *from, Tile *to, bool demandGiveWay = false) const override;
+	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false, bool ignoreAllUnits = false) const override;
 	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay,
-	                  bool demandGiveWay = false) const override;
-
-	bool canEnterTile(Tile *from, Tile *to, bool ignoreUnits, bool demandGiveWay) const;
-	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay, bool ignoreUnits,
-	                  bool demandGiveWay) const;
+	                  bool ignoreStaticUnits = false, bool ignoreAllUnits = false) const override;
 
 	float pathOverheadAlloawnce() const override { return 1.25f; }
+
+	BattleUnitType getType() const;
 };
 
 class BattleUnitMission
@@ -70,7 +77,7 @@ class BattleUnitMission
 	void update(GameState &state, BattleUnit &u, unsigned int ticks, bool finished = false);
 	bool isFinished(GameState &state, BattleUnit &u, bool callUpdateIfFinished = true);
 	void start(GameState &state, BattleUnit &u);
-	void setPathTo(BattleUnit &u, Vec3<int> target, int maxIterations);
+	void setPathTo(GameState &state, BattleUnit &u, Vec3<int> target, int maxIterations);
 
 	// Methods to request next action
 	// Request next destination

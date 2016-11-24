@@ -60,7 +60,7 @@ class BattleMapSector : public StateObject<BattleMapSector>
 class BattleMapSectorTiles
 {
   public:
-	std::list<sp<BattleMapSector::LineOfSightBlock>> los_blocks;
+	std::list<sp<BattleMapSector::LineOfSightBlock>> losBlocks;
 
 	std::map<Vec3<int>, Organisation::LootPriority> loot_locations;
 

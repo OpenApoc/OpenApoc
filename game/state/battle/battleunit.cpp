@@ -116,6 +116,7 @@ void BattleUnit::setPosition(GameState &state, const Vec3<float> &pos)
 void BattleUnit::refreshUnitVisibility(GameState &state, Vec3<float> oldPosition)
 {
 	// Update other units's vision of this unit
+	// FIXME: Do this properly? Only update vision to this unit, not to everything?
 	state.current_battle->queueVisionRefresh(position);
 	state.current_battle->queueVisionRefresh(oldPosition);
 }
@@ -191,7 +192,7 @@ void BattleUnit::calculateVisionToTerrain(GameState &state, Battle &battle, Tile
 		}
 
 		// Get block and its center
-		auto &l = *battle.los_blocks.at(idx);
+		auto &l = *battle.losBlocks.at(idx);
 		auto centerXY = Vec3<int>{(l.start.x + l.end.x) / 2, (l.start.y + l.end.y) / 2, 0};
 		// Set target to center
 		bool targetFound = false;
@@ -273,7 +274,7 @@ void BattleUnit::calculateVisionToTerrain(GameState &state, Battle &battle, Tile
 	// Reveal all discovered blocks
 	for (auto idx : discoveredBlocks)
 	{
-		auto l = battle.los_blocks.at(idx);
+		auto l = battle.losBlocks.at(idx);
 		for (int x = l->start.x; x < l->end.x; x++)
 		{
 			for (int y = l->start.y; y < l->end.y; y++)
@@ -574,6 +575,32 @@ bool BattleUnit::isThrowing() const
 		}
 	}
 	return throwing;
+}
+
+BattleUnitType BattleUnit::getType() const
+{
+	if (isLarge())
+	{
+		if (canFly())
+		{
+			return BattleUnitType::LargeFlyer;
+		}
+		else
+		{
+			return BattleUnitType::LargeWalker;
+		}
+	}
+	else
+	{
+		if (canFly())
+		{
+			return BattleUnitType::SmallFlyer;
+		}
+		else
+		{
+			return BattleUnitType::SmallWalker;
+		}
+	}
 }
 
 bool BattleUnit::canFly() const
@@ -2558,6 +2585,7 @@ void BattleUnit::setBodyState(GameState &state, BodyState bodyState)
 		// If rose up - update vision for units that see this
 		if (roseUp)
 		{
+			// FIXME: Do this properly? Only update vision to this unit, not to everything?
 			state.current_battle->queueVisionRefresh(position);
 		}
 	}
@@ -3313,7 +3341,7 @@ void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &se
 			    1.50f * 2.0f * (float)(std::max(std::abs(offset.x), std::abs(offset.y)) +
 			                           std::abs(offset.x) + std::abs(offset.y));
 			auto path = map.findShortestPath(targetLocation, targetLocationOffsetted,
-			                                 costLimit / 2.0f, h, true, nullptr, costLimit);
+			                                 costLimit / 2.0f, h, true, false, nullptr, costLimit);
 			itOffset++;
 			if (!path.empty() && path.back() == targetLocationOffsetted)
 			{

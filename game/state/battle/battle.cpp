@@ -157,9 +157,9 @@ void Battle::initBattle(GameState &state, bool first)
 			p->trackedObject = p->trackedUnit->tileObject;
 	}
 	// Fill up los block randomizer
-	for (int i = 0; i < (int)los_blocks.size(); i++)
+	for (int i = 0; i < (int)losBlocks.size(); i++)
 	{
-		for (int j = 0; j < los_blocks.at(i)->ai_patrol_priority; j++)
+		for (int j = 0; j < losBlocks.at(i)->ai_patrol_priority; j++)
 		{
 			losBlockRandomizer.push_back(i);
 		}
@@ -167,9 +167,9 @@ void Battle::initBattle(GameState &state, bool first)
 
 	// Fill up tiles
 	tileToLosBlock = std::vector<int>(size.x * size.y * size.z, 0);
-	for (int i = 0; i < (int)los_blocks.size(); i++)
+	for (int i = 0; i < (int)losBlocks.size(); i++)
 	{
-		auto l = los_blocks[i];
+		auto l = losBlocks[i];
 		for (int x = l->start.x; x < l->end.x; x++)
 		{
 			for (int y = l->start.y; y < l->end.y; y++)
@@ -186,7 +186,7 @@ void Battle::initBattle(GameState &state, bool first)
 	{
 		h->updateTileVisionBlock(state);
 	}
-	// On first run, init support links and items, do vsibility
+	// On first run, init support links and items, do vsibility and pathfinding
 	if (first)
 	{
 		initialMapPartLinkUp();
@@ -199,6 +199,8 @@ void Battle::initBattle(GameState &state, bool first)
 		{
 			u.second->refreshUnitVision(state);
 		}
+		// Pathfinding
+		updatePathfinding(state);
 	}
 }
 
@@ -493,11 +495,8 @@ sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<DamageType> type
 	return hazard;
 }
 
-void Battle::update(GameState &state, unsigned int ticks)
+void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 {
-	TRACE_FN_ARGS1("ticks", Strings::fromInteger(static_cast<int>(ticks)));
-
-	Trace::start("Battle::update::projectiles->update");
 	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
 	{
 		auto p = *it++;
@@ -512,16 +511,16 @@ void Battle::update(GameState &state, unsigned int ticks)
 			// Alert intended unit that he's on fire, if he cannot see the firer
 			auto unit = c.projectile->trackedUnit;
 			if (unit &&
-			    unit->visibleUnits.find(c.projectile->firerUnit) == unit->visibleUnits.end())
+				unit->visibleUnits.find(c.projectile->firerUnit) == unit->visibleUnits.end())
 			{
 				LogWarning("Notify: unit %s that he's taking fire", c.projectile->trackedUnit.id);
 				// Turn to attacker in real time
 				if (!unit->isBusy() && unit->isConscious() &&
-				    state.current_battle->mode == Battle::Mode::RealTime &&
-				    unit->ticksUntilAutoTurnAvailable == 0)
+					state.current_battle->mode == Battle::Mode::RealTime &&
+					unit->ticksUntilAutoTurnAvailable == 0)
 				{
 					unit->setMission(
-					    state, BattleUnitMission::turn(*unit, c.projectile->firerUnit->position));
+						state, BattleUnitMission::turn(*unit, c.projectile->firerUnit->position));
 					unit->ticksUntilAutoTurnAvailable = AUTO_TURN_COOLDOWN;
 				}
 			}
@@ -532,34 +531,34 @@ void Battle::update(GameState &state, unsigned int ticks)
 			if (c.projectile->damageType->explosive)
 			{
 				auto explosion = addExplosion(state, c.position, c.projectile->doodadType,
-				                              c.projectile->damageType, c.projectile->damage,
-				                              c.projectile->depletionRate, c.projectile->firerUnit);
+					c.projectile->damageType, c.projectile->damage,
+					c.projectile->depletionRate, c.projectile->firerUnit);
 				displayDoodad = false;
 			}
 			else
 			{
 				switch (c.obj->getType())
 				{
-					case TileObject::Type::Unit:
-					{
-						auto unit =
-						    std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit();
-						displayDoodad = !unit->handleCollision(state, c);
-						playSound = false;
-						break;
-					}
-					case TileObject::Type::Ground:
-					case TileObject::Type::LeftWall:
-					case TileObject::Type::RightWall:
-					case TileObject::Type::Feature:
-					{
-						auto mapPartTile = std::static_pointer_cast<TileObjectBattleMapPart>(c.obj);
-						displayDoodad = !mapPartTile->getOwner()->handleCollision(state, c);
-						playSound = displayDoodad;
-						break;
-					}
-					default:
-						LogError("Collision with non-collidable object");
+				case TileObject::Type::Unit:
+				{
+					auto unit =
+						std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit();
+					displayDoodad = !unit->handleCollision(state, c);
+					playSound = false;
+					break;
+				}
+				case TileObject::Type::Ground:
+				case TileObject::Type::LeftWall:
+				case TileObject::Type::RightWall:
+				case TileObject::Type::Feature:
+				{
+					auto mapPartTile = std::static_pointer_cast<TileObjectBattleMapPart>(c.obj);
+					displayDoodad = !mapPartTile->getOwner()->handleCollision(state, c);
+					playSound = displayDoodad;
+					break;
+				}
+				default:
+					LogError("Collision with non-collidable object");
 				}
 			}
 			if (displayDoodad)
@@ -579,6 +578,200 @@ void Battle::update(GameState &state, unsigned int ticks)
 			}
 		}
 	}
+}
+
+void Battle::updateVision(GameState &state)
+{
+	std::set<sp<BattleUnit>> unitsToUpdate;
+	for (auto &entry : units)
+	{
+		auto unit = entry.second;
+		if (!unit->isConscious())
+		{
+			continue;
+		}
+		for (auto &pos : tilesChangedForVision)
+		{
+			auto vec = pos - (Vec3<int>)unit->position;
+			// Quick check it's to the right side of us and in range
+			// FIXME: Should we check more thoroughly to save CPU time (probably)?
+			if ((vec.x > 0 && unit->facing.x < 0) || (vec.y > 0 && unit->facing.y < 0) ||
+				(vec.x < 0 && unit->facing.x > 0) || (vec.y < 0 && unit->facing.y > 0) ||
+				(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z > 400))
+			{
+				continue;
+			}
+			unitsToUpdate.insert(unit);
+			break;
+		}
+	}
+	for (auto &unit : unitsToUpdate)
+	{
+		unit->refreshUnitVision(state);
+	}
+	tilesChangedForVision.clear();
+}
+
+bool findLosBlockCenter(TileMap &map, BattleUnitType type, const BattleMapSector::LineOfSightBlock &lb, Vec3<int> center, Vec3<int> &closestValidPos)
+{
+	bool large = type == BattleUnitType::LargeFlyer || type == BattleUnitType::LargeWalker;
+	bool flying = type == BattleUnitType::LargeFlyer || type == BattleUnitType::SmallFlyer;
+	int height = large ? 70 : 32;
+	int dist = -1;
+	bool somethingHappened;
+	do
+	{
+		dist++;
+		somethingHappened = false;
+		for (int dx = -dist; dx <= dist; dx++)
+		{
+			int x = center.x + dx;
+			if (x < lb.start.x || x >= lb.end.x)
+			{
+				continue;
+			}
+			for (int dy = -dist; dy <= dist; dy++)
+			{
+				int y = center.y + dy;
+				if (y <lb.start.y || y >= lb.end.y)
+				{
+					continue;
+				}
+				for (int dz = -dist; dz <= dist; dz++)
+				{
+					int z = center.z + dz;
+					if (z < lb.start.z || z >= lb.end.z)
+					{
+						continue;
+					}
+					// At least one coord must be at the edge so that we don't re-check already checked points
+					if (std::abs(dx) != dist && std::abs(dy) != dist && std::abs(dz) != dist)
+					{
+						continue;
+					}
+					somethingHappened = true;
+
+					auto t = map.getTile(x, y, z);
+					if (t->getPassable(large, height) && (flying || t->getCanStand(large)))
+					{
+						closestValidPos = { x, y, z };
+						return true;
+					}
+				}
+			}
+		}
+	} while (somethingHappened);
+
+	return false;
+}
+
+void Battle::updatePathfinding(GameState &state)
+{
+	// How much attempts are given to the pathfinding until giving up and concluding that
+	// there is no path between two sectors. This is a multiplier for "distance", which is
+	// a minimum number of iterations required to pathfind between two locations
+	static const int PATH_ITERATION_LIMIT_MULTIPLIER = 2;
+
+	// How much can resulting path differ from optimal path
+	static const int PATH_COST_LIMIT_MULTIPLIER = 2;
+
+	int lbCount = losBlocks.size();
+	auto &mapRef = *map;
+
+	// Fill up map of helpers
+	// It would be appropriate to use a std::map here, alas, it doesn't work when there's
+	// no default constructor available, so I have to use this kludge
+	std::vector<BattleUnitTileHelper> helperMap = { BattleUnitTileHelper(mapRef, (BattleUnitType)0), BattleUnitTileHelper(mapRef, (BattleUnitType)1), BattleUnitTileHelper(mapRef, (BattleUnitType)2),BattleUnitTileHelper(mapRef, (BattleUnitType)3) };
+	
+	// First update all center positions
+	for (int i = 0; i < lbCount; i++)
+	{
+		if (!blockNeedsUpdate[i])
+		{
+			continue;
+		}
+		blockNeedsUpdate[i] = false;
+
+		// Mark all paths including this block as needing an update
+		for (int j = 0; j < lbCount; j++)
+		{
+			if (linkAvailable[i + lbCount*j])
+			{
+				linkNeedsUpdate[std::min(i , j) + std::max(i , j) * lbCount] = true;
+			}
+		}
+
+		// Find closest to center valid position for every kind of unit
+		auto &lb = *losBlocks[i];
+		auto center = (lb.start + lb.end) / 2;
+		for (auto type : BattleUnitTypeList)
+		{
+			blockAvailable[type][i] = findLosBlockCenter(mapRef, type, lb, center, blockCenterPos[type][i]);
+		}
+	}
+
+	// Now update all paths
+	for (auto i = 0; i < lbCount - 1; i++)
+	{
+		for (auto j = i + 1; j < lbCount; j++)
+		{
+			if (!linkNeedsUpdate[i + j * lbCount])
+			{
+				continue;
+			}
+			linkNeedsUpdate[i + j * lbCount] = false;
+
+			// Update link for every kind of unit
+			for (auto type : BattleUnitTypeList)
+			{
+				// Do not try if one of blocks is unavailable
+				if (!blockAvailable[type][i] || !blockAvailable[type][j])
+				{
+					linkCost[type][i + j * lbCount] = -1;
+					linkCost[type][j + i * lbCount] = -1;
+					continue;
+				}
+
+				// See if path from one center to another center is possible
+				// within reasonable number of attempts
+				int dX = std::abs(blockCenterPos[type][i].x - blockCenterPos[type][j].x);
+				int dY = std::abs(blockCenterPos[type][i].y - blockCenterPos[type][j].y);
+				int dZ = std::abs(blockCenterPos[type][i].z - blockCenterPos[type][j].z);
+				int distance = (dX + dY + dZ + std::max(dX, std::max(dY, dZ))) / 2;
+
+				float cost = 0.0f;
+
+				auto path = mapRef.findShortestPath(blockCenterPos[type][i], 
+					blockCenterPos[type][j], distance * PATH_ITERATION_LIMIT_MULTIPLIER, 
+					helperMap[(int)type], true, true, &cost, distance * 4 * PATH_COST_LIMIT_MULTIPLIER);
+
+				if (path.empty() || (*path.rbegin()) != blockCenterPos[type][j])
+				{
+					linkCost[type][i + j * lbCount] = -1;
+					linkCost[type][j + i * lbCount] = -1;
+				}
+				else
+				{
+					linkCost[type][i + j * lbCount] = (int)cost;
+					linkCost[type][j + i * lbCount] = (int)cost;
+				}
+			}
+		}
+	}
+
+	// FIXME: Somehow introduce multi-threading here or throttle the load
+	// Calculating paths is the more costly operation here. If a big chunk of map is changed,
+	// it can take up to half a second to calculate. One option would be to calculate it
+	// in a different thread (maybe writing results to a different array, and then just swapping)
+	// Another option would be to throttle updates (have a limit on how many can be done per tick)
+}
+
+void Battle::update(GameState &state, unsigned int ticks)
+{
+	TRACE_FN_ARGS1("ticks", Strings::fromInteger(static_cast<int>(ticks)));
+
+	Trace::start("Battle::update::projectiles->update");
+	updateProjectiles(state, ticks);
 	Trace::end("Battle::update::projectiles->update");
 	Trace::start("Battle::update::doors->update");
 	for (auto &o : this->doors)
@@ -627,41 +820,15 @@ void Battle::update(GameState &state, unsigned int ticks)
 	}
 	Trace::end("Battle::update::units->update");
 
-	// Now after we updated everything, we update what needs to be updated last
+	// Now after we called update() for everything, we update what needs to be updated last
 
 	// Update unit vision for units that see changes in terrain or hazards
 	Trace::start("Battle::update::vision");
-	{
-		std::set<sp<BattleUnit>> unitsToUpdate;
-		for (auto &entry : units)
-		{
-			auto unit = entry.second;
-			if (!unit->isConscious())
-			{
-				continue;
-			}
-			for (auto &pos : tilesChangedForVision)
-			{
-				auto vec = pos - (Vec3<int>)unit->position;
-				// Quick check it's to the right side of us and in range
-				// FIXME: Should we check more thoroughly to save CPU time (probably)?
-				if ((vec.x > 0 && unit->facing.x < 0) || (vec.y > 0 && unit->facing.y < 0) ||
-				    (vec.x < 0 && unit->facing.x > 0) || (vec.y < 0 && unit->facing.y > 0) ||
-				    (vec.x * vec.x + vec.y * vec.y + vec.z * vec.z > 400))
-				{
-					continue;
-				}
-				unitsToUpdate.insert(unit);
-				break;
-			}
-		}
-		for (auto &unit : unitsToUpdate)
-		{
-			unit->refreshUnitVision(state);
-		}
-		tilesChangedForVision.clear();
-	}
+	updateVision(state);
 	Trace::end("Battle::update::vision");
+	Trace::start("Battle::update::pathfinding");
+	updatePathfinding(state);
+	Trace::end("Battle::update::pathfinding");
 }
 
 int Battle::getLosBlockID(int x, int y, int z) const
@@ -680,6 +847,42 @@ void Battle::setVisible(StateRef<Organisation> org, int x, int y, int z, bool va
 }
 
 void Battle::queueVisionRefresh(Vec3<int> tile) { tilesChangedForVision.insert(tile); }
+
+void Battle::queuePathfindingRefresh(Vec3<int> tile) 
+{ 
+	blockNeedsUpdate[getLosBlockID(tile.x, tile.y, tile.z)] = true;
+	auto tXgt0 = tile.x > 0;
+	auto tYgt0 = tile.y > 0;
+	auto tZgt0 = tile.z > 0;
+	if (tXgt0)
+	{
+		blockNeedsUpdate[getLosBlockID(tile.x - 1, tile.y, tile.z)] = true;
+		if (tYgt0)
+		{
+			blockNeedsUpdate[getLosBlockID(tile.x - 1, tile.y - 1, tile.z)] = true;
+			if (tZgt0)
+			{
+				blockNeedsUpdate[getLosBlockID(tile.x - 1, tile.y - 1, tile.z - 1)] = true;
+			}
+		}
+		if (tZgt0)
+		{
+			blockNeedsUpdate[getLosBlockID(tile.x - 1, tile.y, tile.z - 1)] = true;
+		}
+	}
+	if (tYgt0)
+	{
+		blockNeedsUpdate[getLosBlockID(tile.x, tile.y - 1, tile.z)] = true;
+		if (tZgt0)
+		{
+			blockNeedsUpdate[getLosBlockID(tile.x, tile.y - 1, tile.z - 1)] = true;
+		}
+	}
+	if (tZgt0)
+	{
+		blockNeedsUpdate[getLosBlockID(tile.x, tile.y, tile.z - 1)] = true;
+	}
+}
 
 void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
                                      Vec3<float> &target, int accuracy, bool thrown)
@@ -851,7 +1054,7 @@ void Battle::enterBattle(GameState &state)
 	}
 
 	// Fill spawn maps
-	for (auto &l : b->los_blocks)
+	for (auto &l : b->losBlocks)
 	{
 		if (l->spawn_priority == 0)
 		{

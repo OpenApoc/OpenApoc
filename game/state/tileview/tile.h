@@ -181,11 +181,12 @@ class CanEnterTileHelper
   public:
 	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
 	virtual bool canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay,
-	                          bool demandGiveWay = false) const = 0;
+	                          bool ignoreStaticUnits = false, bool ignoreAllUnits = false) const = 0;
 	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
-	virtual bool canEnterTile(Tile *from, Tile *to, bool demandGiveWay = false) const = 0;
+	virtual bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false, bool ignoreAllUnits = false) const = 0;
 	virtual float adjustCost(Vec3<int> /*  nextPosition */, int /* z */) const { return 0; }
 	virtual float getDistance(Vec3<float> from, Vec3<float> to) const = 0;
+	virtual float getDistance(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd) const = 0;
 	virtual ~CanEnterTileHelper() = default;
 	// This allows pathfinding to be biased towards goal. Can generate paths that are not perfect,
 	// but helps with pathfinding in battlescape where optimal path can be complicated.
@@ -241,11 +242,20 @@ class TileMap
 	        std::vector<std::set<TileObject::Type>> layerMap);
 	~TileMap();
 
-	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destination,
+	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destinationStart, Vec3<int> destinationEnd,
 	                                      unsigned int iterationLimit,
 	                                      const CanEnterTileHelper &canEnterTile,
-	                                      bool demandGiveWay = false, float *cost = nullptr,
+	                                      bool ignoreStaticUnits = false, bool ignoreAllUnits = false, float *cost = nullptr,
 	                                      float maxCost = 0.0f);
+
+	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destination,
+		unsigned int iterationLimit,
+		const CanEnterTileHelper &canEnterTile,
+		bool ignoreStaticUnits = false, bool ignoreAllUnits = false, float *cost = nullptr,
+		float maxCost = 0.0f)
+	{
+		return findShortestPath(origin, destination, destination + Vec3<int>{1, 1, 1}, iterationLimit, canEnterTile, ignoreStaticUnits, ignoreAllUnits, cost, maxCost);
+	}
 
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
 	                        const std::set<TileObject::Type> validTypes = {},

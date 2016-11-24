@@ -35,7 +35,6 @@ void BattleMapPart::die(GameState &state, bool explosive, bool violently)
 	// If falling just cease to be, do damage
 	if (falling)
 	{
-		state.current_battle->queueVisionRefresh(position);
 		this->tileObject->removeFromMap();
 		this->tileObject.reset();
 		destroyed = true;
@@ -96,8 +95,9 @@ void BattleMapPart::die(GameState &state, bool explosive, bool violently)
 		}
 	}
 
-	// Queue update of vision
+	// Queue updates
 	state.current_battle->queueVisionRefresh(position);
+	state.current_battle->queuePathfindingRefresh(position);
 
 	// Cease functioning
 	ceaseBeingSupported();
@@ -1145,7 +1145,7 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> set)
 	LogWarning("%s", log);
 }
 
-void BattleMapPart::collapse()
+void BattleMapPart::collapse(GameState &state)
 {
 	// If it's already falling or destroyed or supported do nothing
 	if (falling || !tileObject)
@@ -1161,6 +1161,16 @@ void BattleMapPart::collapse()
 	else
 	{
 		falling = true;
+		state.current_battle->queueVisionRefresh(position);
+		state.current_battle->queuePathfindingRefresh(position);
+		// Note: Pathfinding refresh relies on tile's battlescape parameters being updated
+		// before it happens, so that battlescape parameters already account for the 
+		// now disfunctional map part. Pathfinding update will only happen 
+		// after we call setPosition() on the map part, which will
+		// call update to the battlescape parameters of the tile, which will
+		// in turn make us ignore the falling map part properly
+		// If we would somehow call collapse() in a way that would set falling to true but 
+		// would not trigger the setPosition() afterwards, this logic would fail
 	}
 	ceaseSupportProvision();
 	ceaseDoorFunction();
@@ -1182,7 +1192,7 @@ void BattleMapPart::update(GameState &state, unsigned int ticks)
 		else
 		{
 			ticksUntilCollapse = 0;
-			collapse();
+			collapse(state);
 		}
 	}
 
@@ -1312,11 +1322,6 @@ void BattleMapPart::setPosition(GameState &state, const Vec3<float> &pos)
 	}
 
 	this->tileObject->setPosition(pos);
-	if ((Vec3<int>)oldPosition != (Vec3<int>)position)
-	{
-		state.current_battle->queueVisionRefresh(position);
-		state.current_battle->queueVisionRefresh(oldPosition);
-	}
 }
 
 bool BattleMapPart::isAlive() const

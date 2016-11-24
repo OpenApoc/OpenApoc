@@ -65,6 +65,18 @@ enum class WeaponAimingMode
 	Auto = 4
 };
 
+// Unit's general type, used in pathfinding
+enum class BattleUnitType
+{
+	SmallWalker,
+	SmallFlyer,
+	LargeWalker,
+	LargeFlyer
+};
+static const std::list<BattleUnitType> BattleUnitTypeList = {
+	BattleUnitType::LargeFlyer, BattleUnitType::LargeWalker,
+	BattleUnitType::SmallFlyer, BattleUnitType::SmallWalker };
+
 class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_from_this<BattleUnit>
 {
   public:
@@ -89,7 +101,6 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 		FiringRightHand,
 		FiringBothHands
 	};
-
 	// Enum for tracking unit's targeting mode
 	enum class TargetingMode
 	{
@@ -98,7 +109,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 		TileCenter,
 		TileGround
 	};
-
+	
 	// [Properties]
 
 	UString id;
@@ -329,6 +340,8 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	bool isAttacking() const;
 	// Wether unit is throwing an item
 	bool isThrowing() const;
+	// Return unit's general type
+	BattleUnitType getType() const;
 
 	// Returns true if the unit is conscious and can fly
 	bool canFly() const;

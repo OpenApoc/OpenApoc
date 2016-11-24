@@ -329,7 +329,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 					}
 				}
 
-				tiles->los_blocks.push_back(los_block);
+				tiles->losBlocks.push_back(los_block);
 			}
 		}
 

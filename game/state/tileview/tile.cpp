@@ -251,7 +251,6 @@ bool Tile::getHeadFits(bool large, int height)
 			auto toY1 = map.getTile(Vec3<int>{position.x, position.y - 1, position.z});
 			auto toXY1 = map.getTile(Vec3<int>{position.x - 1, position.y - 1, position.z});
 
-			// If we have solid ground upon arriving - check if we fit
 			float maxHeight = this->height;
 			maxHeight = std::max(maxHeight, toX1->height);
 			maxHeight = std::max(maxHeight, toY1->height);
