@@ -1132,7 +1132,7 @@ void BattleMap::initNewMap(sp<Battle> b)
 	for (auto type : BattleUnitTypeList)
 	{
 		b->blockAvailable[type] = std::vector<bool>(size, false);
-		b->blockCenterPos[type] = std::vector<Vec3<int>>(size, {});
+		b->blockCenterPos[type] = std::vector<Vec3<int>>(size, Vec3<int>());
 		b->linkCost[type] = std::vector<int>(size * size, -1);
 	}
 }
