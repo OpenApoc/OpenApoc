@@ -2065,6 +2065,9 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 
 void BattleUnit::updateAI(GameState &state, unsigned int ticks)
 {
+	// AI not yet ready
+	return;
+
 	if (!isConscious())
 	{
 		return;
