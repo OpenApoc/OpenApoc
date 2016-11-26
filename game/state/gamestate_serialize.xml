@@ -553,6 +553,7 @@
 		<member>falling</member>
 		<member>fallingSpeed</member>
 		<member>giveWayRequestData</member>
+		<member>attackerPosition</member>
 		<member>displayedItem</member>
 		<member>visibleUnits</member>
 		<member>visibleEnemies</member>

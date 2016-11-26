@@ -264,6 +264,10 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 			         closestNodeSoFar->thisTile->position);
 		}
 	}
+	/*else
+	{
+		LogInfo("Path of length %d found in %d iterations", (int)(closestNodeSoFar->costToGetHere * canEnterTile.pathOverheadAlloawnce() / 4.0f), iterationCount);
+	}*/
 
 	auto result = closestNodeSoFar->getPathToNode();
 	if (cost)
@@ -284,17 +288,20 @@ std::list<Vec3<int>> Battle::findShortestPath(Vec3<int> origin, Vec3<int> destin
 {
 	// Maximum distance, in tiless, that will result in trying the direct pathfinding first
 	// Otherwise, we start with pathfinding using LOS blocks immediately
-	static const int MAX_DISTANCE_TO_PATH_DIRECTLY = 20;
+	static const int MAX_DISTANCE_TO_PATHFIND_DIRECTLY = 20;
 
 	// How much attempts are given to the pathfinding until giving up and concluding that
 	// there is no simple path between orig and dest. This is a multiplier for "distance", which is
 	// a minimum number of iterations required to pathfind between two locations
 	static const int PATH_ITERATION_LIMIT_MULTIPLIER = 2;
 
-	// Same as PATH_... but for navigating on los blocks
-	static const int GRAPH_ITERATION_LIMIT_MULTIPLIER = 10;
+	// Same as PATH_ITERATION_LIMIT_MULTIPLIER but for when navigating to next los block
+	static const int GRAPH_ITERATION_LIMIT_MULTIPLIER = 2;
 
-
+	// Extra iterations allowed when pathing to a los block, because if we need 
+	// to find a door we can have a hard time doing so
+	static const int GRAPH_ITERATION_LIMIT_EXTRA = 50;
+	
 	LogInfo("Trying to route (battle) from %s to %s", origin, destination);
 
 	if (origin.x < 0 || origin.x >= this->size.x || origin.y < 0 || origin.y >= this->size.y ||
@@ -314,7 +321,7 @@ std::list<Vec3<int>> Battle::findShortestPath(Vec3<int> origin, Vec3<int> destin
 
 	// Try to pathfind directly if close enough
 	int distance = canEnterTile.getDistance(origin, destination) / 4.0f;
-	if (distance < MAX_DISTANCE_TO_PATH_DIRECTLY)
+	if (distance < MAX_DISTANCE_TO_PATHFIND_DIRECTLY)
 	{
 		result = map->findShortestPath(origin, destination, distance * PATH_ITERATION_LIMIT_MULTIPLIER, canEnterTile, ignoreStaticUnits, ignoreAllUnits, cost, maxCost);
 
@@ -341,13 +348,6 @@ std::list<Vec3<int>> Battle::findShortestPath(Vec3<int> origin, Vec3<int> destin
 		}
 	}
 
-	//Debug output
-	UString log;
-	log += format("\nDebug output of los block path, count: %d", (int)pathLB.size());
-	for (auto &i : pathLB)
-	log += format("\n LB %d : %s - %s", (int)i, losBlocks[i]->start, losBlocks[i]->end);
-	LogWarning("%s", log);
-
 	// Pathfind using path among blocks
 	result.clear();
 	result.push_back(origin);
@@ -366,7 +366,7 @@ std::list<Vec3<int>> Battle::findShortestPath(Vec3<int> origin, Vec3<int> destin
 		auto distToNext = canEnterTile.getDistance(curOrigin, (lb.start + lb.end) / 2) / 4.0f;
 
 		// Pathfind to next LOS Block
-		auto path = map->findShortestPath(curOrigin, lb.start, lb.end, distToNext * GRAPH_ITERATION_LIMIT_MULTIPLIER, canEnterTile, ignoreStaticUnits, ignoreAllUnits, &curCost, curMaxCost);
+		auto path = map->findShortestPath(curOrigin, lb.start, lb.end, distToNext * GRAPH_ITERATION_LIMIT_MULTIPLIER + GRAPH_ITERATION_LIMIT_EXTRA, canEnterTile, ignoreStaticUnits, ignoreAllUnits, &curCost, curMaxCost);
 		// Include new entries into result
 		while (!path.empty())
 		{
@@ -395,7 +395,7 @@ std::list<Vec3<int>> Battle::findShortestPath(Vec3<int> origin, Vec3<int> destin
 	auto curOrigin = *result.rbegin();
 	float curCost = 0.0f;
 	auto distToNext = canEnterTile.getDistance(curOrigin, destination) / 4.0f;
-	auto path = map->findShortestPath(curOrigin, destination, distToNext * GRAPH_ITERATION_LIMIT_MULTIPLIER, canEnterTile, ignoreStaticUnits, ignoreAllUnits, &curCost, curMaxCost);
+	auto path = map->findShortestPath(curOrigin, destination, distToNext * GRAPH_ITERATION_LIMIT_MULTIPLIER + GRAPH_ITERATION_LIMIT_EXTRA, canEnterTile, ignoreStaticUnits, ignoreAllUnits, &curCost, curMaxCost);
 	// Include new entries into result
 	while (!path.empty())
 	{
@@ -411,7 +411,23 @@ std::list<Vec3<int>> Battle::findShortestPath(Vec3<int> origin, Vec3<int> destin
 	return result;
 }
 
-
+// FIXME: This can be improved with caching of results, though I am not sure if it would be worth it.
+//
+// The way to improve is as follows:
+//
+// After we find a path, we know for sure that this path is optimal for all the subpaths in it.
+// For example, if optimal path from A to D is A->B->C->D, then the optimal path from B to D 
+// would certainly be B->C->D, and from A to C will be A->B->C etc. Additionally, since paths
+// are bi-directional, we can also be sure that D->B is D->C->B etc.
+//
+// Knowing this, we can create a 2d vector that tells us, which is the next LB when pathing to an LB
+// For example, if we established A to D is A->B->C->D, then we can record, that
+// for B, when pathing to C, next is C, when pathing to D, next is C.
+//
+// We could then use this when pathing. When starting, if the value for origin->dest is filled,
+// we already know the path and just return it.
+//
+// Obviously, when any update of the LOS block pathfinding happens, this would have to be cleared.
 std::list<int> Battle::findLosBlockPath(int origin, int destination, BattleUnitType type, int iterationLimit)
 {
 	int lbCount = losBlocks.size();
