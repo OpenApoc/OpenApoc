@@ -28,15 +28,15 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
   public:
 	FlyingVehicleTileHelper(TileMap &map, Vehicle &v) : map(map), v(v) {}
 
-	bool canEnterTile(Tile *from, Tile *to, bool demandGiveWay = false) const override
+	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false, bool ignoreAllUnits = false) const override
 	{
 		float nothing;
 		bool none;
-		return canEnterTile(from, to, nothing, none, demandGiveWay);
+		return canEnterTile(from, to, nothing, none, ignoreStaticUnits, ignoreAllUnits);
 	}
 
 	// Support 'from' being nullptr for if a vehicle is being spawned in the map
-	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &, bool) const override
+	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &, bool, bool) const override
 	{
 		Vec3<int> fromPos = {0, 0, 0};
 		if (from)
@@ -117,6 +117,16 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 	float getDistance(Vec3<float> from, Vec3<float> to) const override
 	{
 		return glm::length(to - from);
+	}
+
+	float getDistance(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd) const override
+	{
+		auto diffStart = toStart - from;
+		auto diffEnd = toEnd - from - Vec3<float> {1.0f, 1.0f, 1.0f};
+		auto xDiff = from.x >= toStart.x && from.x < toEnd.x ? 0.0f : std::min(std::abs(diffStart.x), std::abs(diffEnd.x));
+		auto yDiff = from.y >= toStart.y && from.y < toEnd.y ? 0.0f : std::min(std::abs(diffStart.y), std::abs(diffEnd.y));
+		auto zDiff = from.z >= toStart.z && from.z < toEnd.z ? 0.0f : std::min(std::abs(diffStart.z), std::abs(diffEnd.z));
+		return sqrtf(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
 	}
 
 	bool canLandOnTile(Tile *to) const

@@ -83,7 +83,7 @@ AIAction AI::getMoveAction(GameState &state, std::list<StateRef<BattleUnit>> &un
 {
 	AIAction action;
 
-	auto &l = *state.current_battle->los_blocks.at(
+	auto &l = *state.current_battle->losBlocks.at(
 	    vectorRandomizer(state.rng, state.current_battle->losBlockRandomizer));
 
 	action.type = AIAction::Type::Move;
@@ -318,5 +318,7 @@ UString AIAction::getName()
 		case AIAction::Type::AttackPsiPanic:
 			return format("Attack %s with psi panic using %s ", target->id, item->type->id);
 	}
+	LogError("Unimplemented getName for AIAction %d", (int)type);
+	return "";
 }
 }

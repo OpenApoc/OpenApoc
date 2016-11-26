@@ -65,6 +65,18 @@ enum class WeaponAimingMode
 	Auto = 4
 };
 
+// Unit's general type, used in pathfinding
+enum class BattleUnitType
+{
+	SmallWalker,
+	SmallFlyer,
+	LargeWalker,
+	LargeFlyer
+};
+static const std::list<BattleUnitType> BattleUnitTypeList = {
+	BattleUnitType::LargeFlyer, BattleUnitType::LargeWalker,
+	BattleUnitType::SmallFlyer, BattleUnitType::SmallWalker };
+
 class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_from_this<BattleUnit>
 {
   public:
@@ -89,7 +101,6 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 		FiringRightHand,
 		FiringBothHands
 	};
-
 	// Enum for tracking unit's targeting mode
 	enum class TargetingMode
 	{
@@ -98,7 +109,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 		TileCenter,
 		TileGround
 	};
-
+	
 	// [Properties]
 
 	UString id;
@@ -216,11 +227,18 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 
 	// Successfully retreated from combat
 	bool retreated = false;
+	
 	// Died and corpse was destroyed in an explosion
 	bool destroyed = false;
+	
 	// If unit is asked to give way, this list will be filled with facings
 	// in order of priority that should be tried by it
 	std::list<Vec2<int>> giveWayRequestData;
+	
+	// If unit was under attack, this will be filled with position of the attacker relative to us
+	// Otherwise it will be 0,0,0
+	Vec3<int> attackerPosition = { 0, 0, 0 };
+	
 	// AI
 	AIState aiState;
 
@@ -329,6 +347,10 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	bool isAttacking() const;
 	// Wether unit is throwing an item
 	bool isThrowing() const;
+	// Return unit's general type
+	BattleUnitType getType() const;
+	// Wether unit is AI controlled
+	bool isAIControlled(GameState &state) const;
 
 	// Returns true if the unit is conscious and can fly
 	bool canFly() const;
@@ -367,6 +389,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 
 	void update(GameState &state, unsigned int ticks);
 	void updateStateAndStats(GameState &state, unsigned int ticks);
+	void updateEvents(GameState &state);
 	void updateIdling(GameState &state);
 	void updateAcquireTarget(GameState &state, unsigned int ticks);
 	void updateCheckIfFalling(GameState &state);

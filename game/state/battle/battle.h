@@ -42,6 +42,8 @@ class BattleMap;
 class Vehicle;
 class Building;
 class Agent;
+enum class BattleUnitType;
+class BattleUnitTileHelper;
 
 class Battle : public std::enable_shared_from_this<Battle>
 {
@@ -72,13 +74,44 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	StateRef<BattleMap> battle_map;
 
-	std::vector<sp<BattleMapSector::LineOfSightBlock>> los_blocks;
+	std::vector<sp<BattleMapSector::LineOfSightBlock>> losBlocks;
 	// Map of vectors of bools, one bool for every tile, denotes visible tiles (same indexing)
 	std::map<StateRef<Organisation>, std::vector<bool>> visibleTiles;
 	// Map of vectors of bools, one bool for every los block, denotes visible blocks
 	std::map<StateRef<Organisation>, std::vector<bool>> visibleBlocks;
 	std::map<StateRef<Organisation>, std::set<StateRef<BattleUnit>>> visibleUnits;
 	std::map<StateRef<Organisation>, std::set<StateRef<BattleUnit>>> visibleEnemies;
+
+	// Map of vector of flags, wether los block is available for pathfinding for this type
+	std::map<BattleUnitType, std::vector<bool>> blockAvailable;
+	// Map of vector of positions, those are center positions of a LOS block 
+	// (for pathfinding calculations) for every kind of unit and every block
+	std::map<BattleUnitType, std::vector<Vec3<int>>> blockCenterPos;
+	// Vector which contains a 2d array of bools, which denotes wether
+	// a connection between two los blocks exists (wether they are adjacent)
+	std::vector<bool> linkAvailable;
+	// Map of vector which contains a 2d array of ints, which denotes 
+	// cost of a link (with -1 being no link present)
+	std::map<BattleUnitType, std::vector<int>> linkCost;
+	// Vector of flags, one for each los block, which deontes wether
+	// los block had changed and needs update
+	std::vector<bool> blockNeedsUpdate;
+	// Vector which contains a 2d array of bools, which denotes wether 
+	// a connection between two los blocks needs an update
+	// Note: technically, this is a 2d array, but we only fill half of it
+	// We fill only values for 2nd index which is bigger than 1st
+	// Example: If there's a link update required between ids 2 and 3,
+	// we will set only [2 + 3 * size] to true
+	std::vector<bool> linkNeedsUpdate;
+	// Queue relevant los blocks for refresh
+	void queuePathfindingRefresh(Vec3<int> tile);
+
+	std::list<int> findLosBlockPath(int origin, int destination, BattleUnitType type, int iterationLimit = 1000);
+
+	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destination,
+		const BattleUnitTileHelper &canEnterTile,
+		bool ignoreStaticUnits = false, bool ignoreAllUnits = false, float *cost = nullptr,
+		float maxCost = 0.0f);
 
 	int getLosBlockID(int x, int y, int z) const;
 	bool getVisible(StateRef<Organisation> org, int x, int y, int z) const;
@@ -130,6 +163,10 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	void update(GameState &state, unsigned int ticks);
 
+	void updateProjectiles(GameState &state, unsigned int ticks);
+	void updateVision(GameState &state);
+	void updatePathfinding(GameState &state);
+	
 	// Adding objects to battle
 
 	sp<BattleExplosion> addExplosion(GameState &state, Vec3<int> position,
@@ -198,7 +235,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	std::map<StateRef<Organisation>, BattleForces> forces;
 
-	// Vector of indexes to los blocks, each block appears according to it's priority
+	// Vector of indexes to los blocks, each block appears multiple times according to its priority
 	std::vector<int> losBlockRandomizer;
 	// Vector of indexes to los blocks, for each tile (index is like tile's location in tilemap)
 	std::vector<int> tileToLosBlock;

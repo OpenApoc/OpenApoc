@@ -1,11 +1,9 @@
+#include "game/state/battle/battleunitmission.h"
+#include "game/state/battle/battle.h"
+#include "game/state/battle/battlemap.h"
 #include "framework/trace.h"
 #include "game/state/tileview/tile.h"
 #include <algorithm>
-
-// Comments about this at the end of the file
-#define NEW_PATHING_ALGORITHM
-
-#ifdef NEW_PATHING_ALGORITHM
 
 namespace OpenApoc
 {
@@ -41,12 +39,41 @@ class PathNode
 	float distanceToGoal;
 };
 
+class LosNode
+{
+public:
+	LosNode(float costToGetHere, float distanceToGoal, LosNode *parentNode, int block)
+		: costToGetHere(costToGetHere), parentNode(parentNode), block(block),
+		distanceToGoal(distanceToGoal)
+	{
+	}
+
+	std::list<int> getPathToNode()
+	{
+		std::list<int> path;
+		path.push_back(block);
+		LosNode *t = parentNode;
+		while (t)
+		{
+			path.push_front(t->block);
+			t = t->parentNode;
+		}
+
+		return path;
+	}
+
+	float costToGetHere;
+	LosNode *parentNode;
+	int block;
+	float distanceToGoal;
+};
+
 } // anonymous namespace
 
-std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination,
-                                               unsigned int iterationLimit,
-                                               const CanEnterTileHelper &canEnterTile,
-                                               bool demandGiveWay, float *cost, float maxCost)
+std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destinationStart, Vec3<int> destinationEnd,
+	unsigned int iterationLimit,
+	const CanEnterTileHelper &canEnterTile,
+	bool ignoreStaticUnits, bool ignoreAllUnits, float *cost, float maxCost)
 {
 #ifdef PATHFINDING_DEBUG
 	for (auto &t : tiles)
@@ -61,10 +88,12 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	int strideY = size.x;
 	std::list<PathNode *> nodesToDelete;
 	std::list<PathNode *> fringe;
-	Vec3<float> goalPosition;
+	Vec3<float> goalPositionStart;
+	Vec3<float> goalPositionEnd;
+	bool destinationIsSingleTile = destinationStart == destinationEnd - Vec3<int>{1, 1, 1};
 	unsigned int iterationCount = 0;
 
-	LogInfo("Trying to route from %s to %s", origin, destination);
+	LogInfo("Trying to route from %s to %s-%s", origin, destinationStart, destinationEnd);
 
 	if (origin.x < 0 || origin.x >= this->size.x || origin.y < 0 || origin.y >= this->size.y ||
 	    origin.z < 0 || origin.z >= this->size.z)
@@ -72,21 +101,22 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 		LogError("Bad origin %s", origin);
 		return {};
 	}
-	if (destination.x < 0 || destination.x >= this->size.x || destination.y < 0 ||
-	    destination.y >= this->size.y || destination.z < 0 || destination.z >= this->size.z)
+	if (destinationStart.x < 0 || destinationStart.x >= this->size.x || destinationStart.y < 0 ||
+	    destinationStart.y >= this->size.y || destinationStart.z < 0 || destinationStart.z >= this->size.z)
 	{
-		LogError("Bad destination %s", destination);
+		LogError("Bad destinationStart %s", destinationStart);
 		return {};
 	}
-
-	goalPosition = {destination.x, destination.y, destination.z};
-	Tile *goalTile = this->getTile(destination);
-
-	if (!goalTile)
+	if (destinationEnd.x <= destinationStart.x || destinationEnd.x > this->size.x || destinationEnd.y <= destinationStart.y ||
+		destinationEnd.y > this->size.y || destinationEnd.z <= destinationStart.z || destinationEnd.z > this->size.z)
 	{
-		LogError("Failed to get destination tile at %s", destination);
-		return {};
+		LogError("Bad destinationEnd %s", destinationEnd);
+		return{};
 	}
+
+	goalPositionStart = destinationStart;
+	goalPositionEnd = destinationEnd;
+	
 	Tile *startTile = this->getTile(origin);
 	if (!startTile)
 	{
@@ -94,14 +124,16 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 		return {};
 	}
 
-	if (origin == destination)
+	if (origin.x >= destinationStart.x && origin.x < destinationEnd.x 
+		&& origin.y >= destinationStart.y && origin.y < destinationEnd.y 
+		&& origin.z >= destinationStart.z && origin.z < destinationEnd.z)
 	{
-		LogInfo("Destination == origin %s", destination);
-		return {goalTile->position};
+		LogInfo("Origin is within destination!");
+		return {startTile->position};
 	}
 
 	auto startNode =
-	    new PathNode(0.0f, canEnterTile.getDistance(origin, goalPosition), nullptr, startTile);
+	    new PathNode(0.0f, canEnterTile.getDistance(origin, goalPositionStart, goalPositionEnd), nullptr, startTile);
 	nodesToDelete.push_back(startNode);
 	fringe.emplace_back(startNode);
 
@@ -139,23 +171,16 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 		if (closestNodeSoFar->parentNode == nullptr)
 			closestNodeSoFar = nodeToExpand;
 
-		Vec3<int> currentPosition = nodeToExpand->thisTile->position;
-		if (currentPosition == destination)
+		if (nodeToExpand->distanceToGoal == 0)
 		{
-			if (maxCost == 0.0f || nodeToExpand->costToGetHere <= maxCost)
-			{
-				closestNodeSoFar = nodeToExpand;
-			}
+			closestNodeSoFar = nodeToExpand;
 			break;
-		}
-
-		if (nodeToExpand->distanceToGoal < closestNodeSoFar->distanceToGoal)
+		} 
+		else if (nodeToExpand->distanceToGoal < closestNodeSoFar->distanceToGoal)
 		{
-			if (maxCost == 0.0f || nodeToExpand->costToGetHere <= maxCost)
-			{
-				closestNodeSoFar = nodeToExpand;
-			}
+			closestNodeSoFar = nodeToExpand;
 		}
+		Vec3<int> currentPosition = nodeToExpand->thisTile->position;
 		for (int z = -1; z <= 1; z++)
 		{
 			for (int y = -1; y <= 1; y++)
@@ -182,7 +207,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					float cost = 0.0f;
 					bool unused = false;
 					if (!canEnterTile.canEnterTile(nodeToExpand->thisTile, tile, cost, unused,
-					                               demandGiveWay))
+						ignoreStaticUnits, ignoreAllUnits))
 						continue;
 					float newNodeCost = nodeToExpand->costToGetHere;
 
@@ -191,8 +216,12 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					// make pathfinder biased towards vehicle's altitude preference
 					newNodeCost += canEnterTile.adjustCost(nextPosition, z);
 
+					// Do not add to the fringe if too far
+					if (maxCost != 0.0f && newNodeCost >= maxCost)
+						continue;
+
 					auto newNode = new PathNode(
-					    newNodeCost, canEnterTile.getDistance(nextPosition, goalPosition),
+					    newNodeCost, destinationIsSingleTile ? canEnterTile.getDistance(nextPosition, goalPositionStart) : canEnterTile.getDistance(nextPosition, goalPositionStart, goalPositionEnd),
 					    nodeToExpand, tile);
 					nodesToDelete.push_back(newNode);
 
@@ -209,9 +238,18 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	}
 	if (iterationCount > iterationLimit)
 	{
-		LogWarning("No route from %s to %s found after %d iterations, returning "
-		           "closest path %s",
-		           origin, destination, iterationCount, closestNodeSoFar->thisTile->position);
+		if (maxCost > 0.0f)
+		{
+			LogInfo("No route from %s to %s-%s found after %d iterations, returning "
+				"closest path %s",
+				origin, destinationStart, destinationEnd, iterationCount, closestNodeSoFar->thisTile->position);
+		}
+		else
+		{
+			LogWarning("No route from %s to %s-%s found after %d iterations, returning "
+				"closest path %s",
+				origin, destinationStart, destinationEnd, iterationCount, closestNodeSoFar->thisTile->position);
+		}
 	}
 	else if (closestNodeSoFar->distanceToGoal > 0)
 	{
@@ -226,6 +264,10 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 			         closestNodeSoFar->thisTile->position);
 		}
 	}
+	/*else
+	{
+		LogInfo("Path of length %d found in %d iterations", (int)(closestNodeSoFar->costToGetHere * canEnterTile.pathOverheadAlloawnce() / 4.0f), iterationCount);
+	}*/
 
 	auto result = closestNodeSoFar->getPathToNode();
 	if (cost)
@@ -238,127 +280,186 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 
 	return result;
 }
-}
 
-// endif NEW_PATHING_ALGORITHM
-#else // OLD_PATHING_ALGORITHM
-
-#include <unordered_map>
-
-namespace OpenApoc
+std::list<Vec3<int>> Battle::findShortestPath(Vec3<int> origin, Vec3<int> destination,
+	const BattleUnitTileHelper &canEnterTile,
+	bool ignoreStaticUnits, bool ignoreAllUnits, float *cost,
+	float maxCost)
 {
-namespace
-{
-class PathNode
-{
-  public:
-	PathNode(float costToGetHere, float distanceToGoal, Tile *parentTile, Tile *thisTile)
-	    : costToGetHere(costToGetHere), parentTile(parentTile), thisTile(thisTile),
-	      distanceToGoal(distanceToGoal)
-	{
-	}
+	// Maximum distance, in tiless, that will result in trying the direct pathfinding first
+	// Otherwise, we start with pathfinding using LOS blocks immediately
+	static const int MAX_DISTANCE_TO_PATHFIND_DIRECTLY = 20;
 
-	PathNode(float costToGetHere, float distanceToGoal, Tile *parentTile, Tile *thisTile,
-	         const Vec3<float> &goal)
-	    : costToGetHere(costToGetHere), parentTile(parentTile), thisTile(thisTile),
-	      distanceToGoal(distanceToGoal)
-	{
-	}
-	float costToGetHere;
-	Tile *parentTile;
-	Tile *thisTile;
+	// How much attempts are given to the pathfinding until giving up and concluding that
+	// there is no simple path between orig and dest. This is a multiplier for "distance", which is
+	// a minimum number of iterations required to pathfind between two locations
+	static const int PATH_ITERATION_LIMIT_MULTIPLIER = 2;
 
-	float distanceToGoal;
-};
+	// Same as PATH_ITERATION_LIMIT_MULTIPLIER but for when navigating to next los block
+	static const int GRAPH_ITERATION_LIMIT_MULTIPLIER = 2;
 
-// class PathNodeComparer
-//{
-//  public:
-//	bool operator()(const PathNode &p1, const PathNode &p2)
-//	{
-//		return (p1.costToGetHere + p1.distanceToGoal) < (p2.costToGetHere + p2.distanceToGoal);
-//	}
-//};
-
-} // anonymous namespace
-
-static std::list<Vec3<int>> getPathToNode(std::unordered_map<Tile *, PathNode> nodes, PathNode &end)
-{
-	std::list<Vec3<int>> path;
-	path.push_back(end.thisTile->position);
-	Tile *t = end.parentTile;
-	while (t)
-	{
-		path.push_front(t->position);
-		auto nextNodeIt = nodes.find(t);
-		if (nextNodeIt == nodes.end())
-		{
-			LogError("Trying to expand unvisited node?");
-			return {};
-		}
-		auto &nextNode = nextNodeIt->second;
-		if (nextNode.thisTile != t)
-		{
-			LogError("Unexpected parentTile pointer");
-			return {};
-		}
-		t = nextNode.parentTile;
-	}
-
-	return path;
-}
-
-std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination,
-                                               unsigned int iterationLimit,
-                                               const CanEnterTileHelper &canEnterTile, float,
-                                               bool demandGiveWay)
-{
-	TRACE_FN;
-	std::unordered_map<Tile *, PathNode> visitedTiles;
-	std::list<PathNode> fringe;
-	Vec3<float> goalPosition;
-	unsigned int iterationCount = 0;
-
-	LogInfo("Trying to route from %s to %s", origin, destination);
+	// Extra iterations allowed when pathing to a los block, because if we need 
+	// to find a door we can have a hard time doing so
+	static const int GRAPH_ITERATION_LIMIT_EXTRA = 50;
+	
+	LogInfo("Trying to route (battle) from %s to %s", origin, destination);
 
 	if (origin.x < 0 || origin.x >= this->size.x || origin.y < 0 || origin.y >= this->size.y ||
-	    origin.z < 0 || origin.z >= this->size.z)
+		origin.z < 0 || origin.z >= this->size.z)
 	{
 		LogError("Bad origin %s", origin);
-		return {};
+		return{};
 	}
 	if (destination.x < 0 || destination.x >= this->size.x || destination.y < 0 ||
-	    destination.y >= this->size.y || destination.z < 0 || destination.z >= this->size.z)
+		destination.y >= this->size.y || destination.z < 0 || destination.z >= this->size.z)
 	{
 		LogError("Bad destination %s", destination);
-		return {};
+		return{};
 	}
 
-	goalPosition = {destination.x, destination.y, destination.z};
-	Tile *goalTile = this->getTile(destination);
+	std::list<Vec3<int>> result;
 
-	if (!goalTile)
+	// Try to pathfind directly if close enough
+	int distance = canEnterTile.getDistance(origin, destination) / 4.0f;
+	if (distance < MAX_DISTANCE_TO_PATHFIND_DIRECTLY)
 	{
-		LogError("Failed to get destination tile at %s", destination);
-		return {};
+		result = map->findShortestPath(origin, destination, distance * PATH_ITERATION_LIMIT_MULTIPLIER, canEnterTile, ignoreStaticUnits, ignoreAllUnits, cost, maxCost);
+
+		if ((*result.rbegin()) == destination)
+		{
+			return result;
+		}
 	}
-	Tile *startTile = this->getTile(origin);
-	if (!startTile)
+
+	// Pathfind on graphs of los blocks
+	int destLB = getLosBlockID(destination.x, destination.y, destination.z);
+	auto pathLB = findLosBlockPath(getLosBlockID(origin.x, origin.y, origin.z), destLB, canEnterTile.getType());
+
+	// If pathfinding on graphs failed - return short part of the path towards target
+	if ((*pathLB.rbegin()) != destLB)
 	{
-		LogError("Failed to get origin tile at %s", origin);
-		return {};
+		if (!result.empty())
+		{
+			return result;
+		}
+		else
+		{
+			return map->findShortestPath(origin, destination, distance * PATH_ITERATION_LIMIT_MULTIPLIER, canEnterTile, ignoreStaticUnits, ignoreAllUnits, cost, maxCost);
+		}
 	}
+
+	// Pathfind using path among blocks
+	result.clear();
+	result.push_back(origin);
+	if (cost)
+	{
+		*cost = 0.0f;
+	}
+	float curMaxCost = maxCost;
+	while (!pathLB.empty())
+	{
+		auto curOrigin = *result.rbegin();
+		float curCost = 0.0f;
+		auto lbID = pathLB.front();
+		pathLB.pop_front();
+		auto &lb = *losBlocks[lbID];
+		auto distToNext = canEnterTile.getDistance(curOrigin, (lb.start + lb.end) / 2) / 4.0f;
+
+		// Pathfind to next LOS Block
+		auto path = map->findShortestPath(curOrigin, lb.start, lb.end, distToNext * GRAPH_ITERATION_LIMIT_MULTIPLIER + GRAPH_ITERATION_LIMIT_EXTRA, canEnterTile, ignoreStaticUnits, ignoreAllUnits, &curCost, curMaxCost);
+		// Include new entries into result
+		while (!path.empty())
+		{
+			result.push_back(path.front());
+			path.pop_front();
+		}
+		// Update costs
+		if (cost)
+		{
+			*cost += curCost;
+		}
+		if (maxCost != 0)
+		{
+			curMaxCost -= curCost;
+		}
+
+		// If we did not reach the block - exit
+		if (getLosBlockID(result.rbegin()->x, result.rbegin()->y, result.rbegin()->z) != lbID)
+		{
+			return result;
+		}
+	}
+
+	// Pathfind to destination
+
+	auto curOrigin = *result.rbegin();
+	float curCost = 0.0f;
+	auto distToNext = canEnterTile.getDistance(curOrigin, destination) / 4.0f;
+	auto path = map->findShortestPath(curOrigin, destination, distToNext * GRAPH_ITERATION_LIMIT_MULTIPLIER + GRAPH_ITERATION_LIMIT_EXTRA, canEnterTile, ignoreStaticUnits, ignoreAllUnits, &curCost, curMaxCost);
+	// Include new entries into result
+	while (!path.empty())
+	{
+		result.push_back(path.front());
+		path.pop_front();
+	}
+	// Update costs
+	if (cost)
+	{
+		*cost += curCost;
+	}
+
+	return result;
+}
+
+// FIXME: This can be improved with caching of results, though I am not sure if it would be worth it.
+//
+// The way to improve is as follows:
+//
+// After we find a path, we know for sure that this path is optimal for all the subpaths in it.
+// For example, if optimal path from A to D is A->B->C->D, then the optimal path from B to D 
+// would certainly be B->C->D, and from A to C will be A->B->C etc. Additionally, since paths
+// are bi-directional, we can also be sure that D->B is D->C->B etc.
+//
+// Knowing this, we can create a 2d vector that tells us, which is the next LB when pathing to an LB
+// For example, if we established A to D is A->B->C->D, then we can record, that
+// for B, when pathing to C, next is C, when pathing to D, next is C.
+//
+// We could then use this when pathing. When starting, if the value for origin->dest is filled,
+// we already know the path and just return it.
+//
+// Obviously, when any update of the LOS block pathfinding happens, this would have to be cleared.
+std::list<int> Battle::findLosBlockPath(int origin, int destination, BattleUnitType type, int iterationLimit)
+{
+	int lbCount = losBlocks.size();
+	std::vector<bool> visitedBlocks = std::vector<bool>(lbCount, false);
+	std::list<LosNode *> nodesToDelete;
+	std::list<LosNode *> fringe;
+	unsigned int iterationCount = 0;
+
+	LogInfo("Trying to route from lb %d to lb %d", origin, destination);
 
 	if (origin == destination)
 	{
-		LogInfo("Destination == origin %s", destination);
-		return {goalTile->position};
+		LogInfo("Origin is destination!");
+		return{ destination };
 	}
 
-	PathNode startNode(0.0f, canEnterTile.getDistance(origin, goalPosition), nullptr, startTile,
-	                   goalPosition);
+	if (!blockAvailable[type][origin])
+	{
+		LogInfo("Origin unavailable!");
+		return{ };
+	}
+	
+	if (!blockAvailable[type][destination])
+	{
+		LogInfo("Destination unavailable!");
+		return{};
+	}
+	
+	auto startNode =
+		new LosNode(0.0f, BattleUnitTileHelper::getDistanceStatic(blockCenterPos[type][origin], blockCenterPos[type][destination]), nullptr, origin);
+	nodesToDelete.push_back(startNode);
 	fringe.emplace_back(startNode);
-	visitedTiles.emplace(startTile, startNode);
 
 	auto closestNodeSoFar = *fringe.begin();
 
@@ -367,138 +468,78 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 		auto first = fringe.begin();
 		if (first == fringe.end())
 		{
-			LogInfo("No more tiles to expand after %d iterations", iterationCount);
-			return {};
+			LogInfo("No more blocks to expand after %d iterations", iterationCount);
+			break;
 		}
 		auto nodeToExpand = *first;
 		fringe.erase(first);
 
-		// Make it so we always try to move at least one tile
-		if (closestNodeSoFar.parentTile == nullptr)
-			closestNodeSoFar = nodeToExpand;
-
-		Vec3<int> currentPosition = nodeToExpand.thisTile->position;
-		if (currentPosition == destination)
+		// Skip if we've already expanded this
+		if (visitedBlocks[nodeToExpand->block])
 		{
-			return getPathToNode(visitedTiles, nodeToExpand);
+			iterationCount--;
+			continue;
+		}
+		visitedBlocks[nodeToExpand->block] = true;
+
+		// Return goal / store closest
+		if (nodeToExpand->distanceToGoal == 0)
+		{
+			closestNodeSoFar = nodeToExpand;
+			break;
+		}
+		else if (nodeToExpand->distanceToGoal < closestNodeSoFar->distanceToGoal)
+		{
+			closestNodeSoFar = nodeToExpand;
 		}
 
-		if (nodeToExpand.distanceToGoal < closestNodeSoFar.distanceToGoal)
+		// Try every possible connection
+		int i = nodeToExpand->block;
+		for (int j = 0; j < lbCount; j++)
 		{
-			closestNodeSoFar = nodeToExpand;
-		}
-		for (int z = -1; z <= 1; z++)
-		{
-			for (int y = -1; y <= 1; y++)
+			if (j == i || linkCost[type][i + j * lbCount] == -1)
 			{
-				for (int x = -1; x <= 1; x++)
-				{
-					if (x == 0 && y == 0 && z == 0)
-					{
-						continue;
-					}
-					auto nextPosition = currentPosition;
-					nextPosition.x += x;
-					nextPosition.y += y;
-					nextPosition.z += z;
-					if (!tileIsValid(nextPosition))
-						continue;
-
-					Tile *tile = this->getTile(nextPosition);
-					// If Skip if we've already expanded this, as in a 3d-grid we know the first
-					// expansion will be the shortest route
-					if (visitedTiles.find(tile) != visitedTiles.end())
-						continue;
-					// FIXME: Make 'blocked' tiles cleverer (e.g. don't plan around objects that
-					// will move anyway?)
-					float cost = 0.0f;
-					if (!canEnterTile.canEnterTile(nodeToExpand.thisTile, tile, cost,
-					                               demandGiveWay))
-						continue;
-					// FIXME: The old code *tried* to disallow diagonal paths that would clip past
-					// scenery but it didn't seem to work, no we should re-add that here
-					float newNodeCost = nodeToExpand.costToGetHere;
-
-					newNodeCost += cost;
-
-					// make pathfinder biased towards vehicle's altitude preference
-					newNodeCost += canEnterTile.adjustCost(nextPosition, z);
-
-					PathNode newNode(newNodeCost,
-					                 canEnterTile.applyPathOverheadAllowance(
-					                     canEnterTile.getDistance(nextPosition, goalPosition)),
-					                 nodeToExpand.thisTile, tile, goalPosition);
-					// Allow entering goal multiple times, so that we can find a faster route
-					if (nextPosition != destination)
-					{
-						visitedTiles.emplace(tile, newNode);
-					}
-					// Put node at appropriate place in the list
-					auto it = fringe.begin();
-					while (it != fringe.end() &&
-					       (it->costToGetHere + it->distanceToGoal) <
-					           (newNode.costToGetHere + newNode.distanceToGoal))
-						it++;
-					fringe.emplace(it, newNode);
-				}
+				continue;
 			}
+
+			float newNodeCost = nodeToExpand->costToGetHere;
+			newNodeCost += linkCost[type][i + j * lbCount];
+
+			auto newNode = new LosNode(
+				newNodeCost, 
+				BattleUnitTileHelper::getDistanceStatic(blockCenterPos[type][j], blockCenterPos[type][destination]),
+				nodeToExpand, j);
+			nodesToDelete.push_back(newNode);
+
+			// Put node at appropriate place in the list
+			auto it = fringe.begin();
+			while (it != fringe.end() &&
+				((*it)->costToGetHere + (*it)->distanceToGoal) <
+				(newNode->costToGetHere + newNode->distanceToGoal))
+				it++;
+			fringe.emplace(it, newNode);
 		}
 	}
-	LogWarning("No route found after %d iterations, returning closest path %s", iterationCount,
-	           closestNodeSoFar.thisTile->position);
-	return getPathToNode(visitedTiles, closestNodeSoFar);
+					
+	if (iterationCount > iterationLimit)
+	{
+		LogWarning("No route from lb %d to %d found after %d iterations, returning "
+			"closest path %d",
+			origin, destination, iterationCount, closestNodeSoFar->block);
+	}
+	else if (closestNodeSoFar->distanceToGoal > 0)
+	{
+		LogInfo("Surprisingly, no nodes to expand! Closest path %d",
+			closestNodeSoFar->block);
+	}
+
+	auto result = closestNodeSoFar->getPathToNode();
+	
+	for (auto &p : nodesToDelete)
+		delete p;
+
+	return result;
 }
+
 }
 
-#endif //  OLD_PATHING_ALGORITHM
-
-/*
-// Alexey Andronov (Istrebitel)
-//
-// I have rewritten pathfinding algorithm using pointers instead of list of visited points
-// This makes fixing problems with old algorithm easier
-//
-// One such problem was that we would add node to list of visited				    /---\
-// at the moment we	first pathfind into it, and instead we should					|+  |
-// do it when we pathfind from it. The way it worked, pathfinding                  2\-*-/
-// would produce unoptimal paths, as demonstrated on the right:					  143**
-//
-//   (legend: "+" is goal, "|/\-" are walls)
-// We find path into 1, and next we try 2, because 2 is closest to goal
-// From 2 we try several tiles including 3. We add 3 to visited tiles.
-// When eventually we try 4, we cannot use path from 4 to 3, because 3 is in visited tiles,
-// even though "1-4-3" is cheaper than "1-2-3".
-//
-// In new algorithm, we add node to visited when we pathfind from it, therefore we can add
-// tile into fringe multiple times, but this allows us to get better paths
-//
-// In case I have broken something horribly, I'm including old pathfinding algorithm here
-// However, I'm certain new one should work properly.
-
-// Ideas for improved pathfinding for battlescape
-//
-// I think I know how to improve battlescape pathfinding, and this is something close to what
-// vanilla does with "connecting" LOS blocks.
-// Basically, the game has every sector divided into blocks. And these usually correspond
-// to landscape - meaning, usually a block is either passable inside, or full inside.
-//
-// This means we can create a graph which connects blocks with adjacent blocks
-//
-// We can then mark blocks that are not passable, defined as "cannot go from one wall to
-// an opposite one in a reasonable amount of time".
-//
-// We can then check each block-to-block connection, and see if it exists,
-// and if it requires a waypoint.
-// A connection exists if you can go (canEnterTile) between adjacent tiles in adjacent blocks
-// Waypoint is required if this is true only for several tiles, not all of them
-// Waypoint is itself a block that encompasses all passable adjacent blocks
-// (it can be just 1 tile, it can be a group of tiles)
-//
-// This will provide us with a waypoint graph.
-// When trying to pathfind and unable to do so within reasonable ammount of attempts,
-// we can check with the graph. We can first pathfind through the graph, and get a list of
-// LOS blocks we must pass from start to goal. We ignore impassable blocks and connections.
-// Then we can take all waypoints we encountered and path through them
-// (path to closest tile within first waypoint, then closest tile withing second waypoint, etc.
-// until we reach final waypoint, then path to goal)
-*/

@@ -52,7 +52,7 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	// Handles mappart ceasing to exist (fatal damage or fell on something)
 	void die(GameState &state, bool explosive = false, bool violently = true);
 	// Collapses mappart immediately
-	void collapse();
+	void collapse(GameState &state);
 
 	// Makes mappart stop being valid for support and collapse in 1 vanilla tick
 	void queueCollapse(unsigned additionalDelay = 0);

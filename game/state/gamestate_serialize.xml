@@ -375,11 +375,17 @@
 		<name>Battle</name>
 		<member>size</member>
 		<member>battle_map</member>
-		<member>los_blocks</member>
+		<member>losBlocks</member>
 		<member>visibleTiles</member>
 		<member>visibleBlocks</member>
 		<member>visibleUnits</member>
 		<member>visibleEnemies</member>
+		<member>blockAvailable</member>
+		<member>blockCenterPos</member>
+		<member>linkAvailable</member>
+		<member>linkCost</member>
+		<member>blockNeedsUpdate</member>
+		<member>linkNeedsUpdate</member>
 		<member>tilesChangedForVision</member>
 		<member>mission_type</member>
 		<member>mission_location_id</member>
@@ -433,7 +439,7 @@
 	</object>
 	<object external="true">
 		<name>BattleMapSectorTiles</name>
-		<member>los_blocks</member>
+		<member>losBlocks</member>
 		<member>loot_locations</member>
 		<member>initial_grounds</member>
 		<member>initial_left_walls</member>
@@ -547,6 +553,7 @@
 		<member>falling</member>
 		<member>fallingSpeed</member>
 		<member>giveWayRequestData</member>
+		<member>attackerPosition</member>
 		<member>displayedItem</member>
 		<member>visibleUnits</member>
 		<member>visibleEnemies</member>
@@ -1190,6 +1197,13 @@
 		<value>Unit</value>
 		<value>TileCenter</value>
 		<value>TileGround</value>
+	</enum>
+	<enum>
+		<name>BattleUnitType</name>
+		<value>SmallWalker</value>
+		<value>SmallFlyer</value>
+		<value>LargeWalker</value>
+		<value>LargeFlyer</value>
 	</enum>
 	<enum>
 		<name>Organisation::LootPriority</name>

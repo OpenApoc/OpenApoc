@@ -67,6 +67,7 @@ TileObject::Type TileObjectBattleMapPart::convertType(BattleMapPartType::Type ty
 void TileObjectBattleMapPart::setPosition(Vec3<float> newPosition)
 {
 	TileObject::setPosition(newPosition);
+	
 	owningTile->updateBattlescapeParameters();
 	drawOnTile->updateBattlescapeUIDrawOrder();
 }
@@ -78,6 +79,7 @@ void TileObjectBattleMapPart::removeFromMap()
 	auto prevDrawOnTile = drawOnTile;
 
 	TileObject::removeFromMap();
+
 	if (requireRecalc)
 	{
 		prevOwningTile->updateBattlescapeParameters();
@@ -99,11 +101,19 @@ sp<VoxelMap> TileObjectBattleMapPart::getVoxelMap(Vec3<int>, bool los) const
 {
 	if (los)
 	{
-		return this->getOwner()->type->voxelMapLOS;
+		if (getOwner()->falling)
+		{
+			// Falling map parts do not break LOS
+			return nullptr;
+		}
+		else
+		{
+			return getOwner()->type->voxelMapLOS;
+		}
 	}
 	else
 	{
-		return this->getOwner()->type->voxelMapLOF;
+		return getOwner()->type->voxelMapLOF;
 	}
 }
 

@@ -116,6 +116,7 @@ void BattleUnit::setPosition(GameState &state, const Vec3<float> &pos)
 void BattleUnit::refreshUnitVisibility(GameState &state, Vec3<float> oldPosition)
 {
 	// Update other units's vision of this unit
+	// FIXME: Do this properly? Only update vision to this unit, not to everything?
 	state.current_battle->queueVisionRefresh(position);
 	state.current_battle->queueVisionRefresh(oldPosition);
 }
@@ -191,7 +192,7 @@ void BattleUnit::calculateVisionToTerrain(GameState &state, Battle &battle, Tile
 		}
 
 		// Get block and its center
-		auto &l = *battle.los_blocks.at(idx);
+		auto &l = *battle.losBlocks.at(idx);
 		auto centerXY = Vec3<int>{(l.start.x + l.end.x) / 2, (l.start.y + l.end.y) / 2, 0};
 		// Set target to center
 		bool targetFound = false;
@@ -273,7 +274,7 @@ void BattleUnit::calculateVisionToTerrain(GameState &state, Battle &battle, Tile
 	// Reveal all discovered blocks
 	for (auto idx : discoveredBlocks)
 	{
-		auto l = battle.los_blocks.at(idx);
+		auto l = battle.losBlocks.at(idx);
 		for (int x = l->start.x; x < l->end.x; x++)
 		{
 			for (int y = l->start.y; y < l->end.y; y++)
@@ -576,6 +577,37 @@ bool BattleUnit::isThrowing() const
 	return throwing;
 }
 
+BattleUnitType BattleUnit::getType() const
+{
+	if (isLarge())
+	{
+		if (canFly())
+		{
+			return BattleUnitType::LargeFlyer;
+		}
+		else
+		{
+			return BattleUnitType::LargeWalker;
+		}
+	}
+	else
+	{
+		if (canFly())
+		{
+			return BattleUnitType::SmallFlyer;
+		}
+		else
+		{
+			return BattleUnitType::SmallWalker;
+		}
+	}
+}
+
+bool BattleUnit::isAIControlled(GameState &state) const
+{
+	return !(owner == state.current_battle->currentPlayer && agent->type->allowsDirectControl);
+}
+
 bool BattleUnit::canFly() const
 {
 	return isConscious() && agent->isBodyStateAllowed(BodyState::Flying);
@@ -870,13 +902,7 @@ bool BattleUnit::handleCollision(GameState &state, Collision &c)
 	auto projectile = c.projectile.get();
 	if (projectile)
 	{
-		// Turn to attacker in real time
-		if (!isBusy() && isConscious() && state.current_battle->mode == Battle::Mode::RealTime &&
-		    ticksUntilAutoTurnAvailable == 0)
-		{
-			setMission(state, BattleUnitMission::turn(*this, position - projectile->getVelocity()));
-			ticksUntilAutoTurnAvailable = AUTO_TURN_COOLDOWN;
-		}
+		attackerPosition = -projectile->getVelocity();
 
 		return applyDamage(
 		    state, projectile->damage, projectile->damageType,
@@ -982,6 +1008,116 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 	}
 }
 
+void BattleUnit::updateEvents(GameState &state)
+{
+	// Try giving way if asked to
+	// FIXME: Ensure we're not in a firefight before giving way!
+	if (giveWayRequestData.size() > 0)
+	{
+		if (!missions.empty() || !isConscious())
+		{
+			giveWayRequestData.clear();
+		}
+		else
+		{
+			// If we're given a giveWay request 0, 0 it means we're asked to kneel temporarily
+			if (giveWayRequestData.size() == 1 && giveWayRequestData.front().x == 0 &&
+				giveWayRequestData.front().y == 0 &&
+				canAfford(state, BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
+					BodyState::Kneeling)))
+			{
+				// Give way
+				setMission(state, BattleUnitMission::changeStance(*this, BodyState::Kneeling));
+				// Give time for that unit to pass
+				addMission(state, BattleUnitMission::snooze(*this, TICKS_PER_SECOND), true);
+			}
+			else
+			{
+				auto from = tileObject->getOwningTile();
+				for (auto newHeading : giveWayRequestData)
+				{
+					for (int z = -1; z <= 1; z++)
+					{
+						if (z < 0 || z >= tileObject->map.size.z)
+						{
+							continue;
+						}
+						// Try the new heading
+						Vec3<int> pos = { position.x + newHeading.x, position.y + newHeading.y,
+							position.z + z };
+						auto to = tileObject->map.getTile(pos);
+						// Check if heading on our level is acceptable
+						bool acceptable =
+							BattleUnitTileHelper{ tileObject->map, *this }.canEnterTile(from, to) &&
+							BattleUnitTileHelper{ tileObject->map, *this }.canEnterTile(to, from);
+						// If not, check if we can go down one tile
+						if (!acceptable && pos.z - 1 >= 0)
+						{
+							pos -= Vec3<int>{0, 0, 1};
+							to = tileObject->map.getTile(pos);
+							acceptable =
+								BattleUnitTileHelper{ tileObject->map, *this }.canEnterTile(from,
+									to) &&
+								BattleUnitTileHelper{ tileObject->map, *this }.canEnterTile(to, from);
+						}
+						// If not, check if we can go up one tile
+						if (!acceptable && pos.z + 2 < tileObject->map.size.z)
+						{
+							pos += Vec3<int>{0, 0, 2};
+							to = tileObject->map.getTile(pos);
+							acceptable =
+								BattleUnitTileHelper{ tileObject->map, *this }.canEnterTile(from,
+									to) &&
+								BattleUnitTileHelper{ tileObject->map, *this }.canEnterTile(to, from);
+						}
+						if (acceptable)
+						{
+							// 01: Give way (move 1 tile away)
+							setMission(state, BattleUnitMission::gotoLocation(*this, pos, 0));
+							// 02: Turn to previous facing
+							addMission(state, BattleUnitMission::turn(*this, facing), true);
+							// 03: Give time for that unit to pass
+							addMission(state, BattleUnitMission::snooze(*this, 60), true);
+							// 04: Return to our position after we're done
+							addMission(state, BattleUnitMission::gotoLocation(*this, position, 0),
+								true);
+							// 05: Turn to previous facing
+							addMission(state, BattleUnitMission::turn(*this, facing), true);
+						}
+						if (!missions.empty())
+						{
+							break;
+						}
+					}
+					if (!missions.empty())
+					{
+						break;
+					}
+				}
+			}
+			giveWayRequestData.clear();
+		}
+	}
+
+	// Process being hit or under fire
+	static const Vec3<int> none = { 0,0,0 };
+	if (attackerPosition != none)
+	{
+		// Turn to attacker in real time if we're idle
+		if (!isBusy() && isConscious() && state.current_battle->mode == Battle::Mode::RealTime &&
+			ticksUntilAutoTurnAvailable == 0)
+		{
+			setMission(state, BattleUnitMission::turn(*this, position + (Vec3<float>)attackerPosition));
+			ticksUntilAutoTurnAvailable = AUTO_TURN_COOLDOWN;
+		}
+		if (isAIControlled(state))
+		{
+			aiState.attackerPosition = attackerPosition;
+		}
+		attackerPosition = none;
+	}
+}
+
 void BattleUnit::updateIdling(GameState &state)
 {
 	// Idling check #1
@@ -1002,89 +1138,7 @@ void BattleUnit::updateIdling(GameState &state)
 		{
 			addMission(state, BattleUnitMission::Type::ReachGoal);
 		}
-
-		// Try giving way if asked to
-		// FIXME: Ensure we're not in a firefight before giving way!
-		else if (giveWayRequestData.size() > 0)
-		{
-			// If we're given a giveWay request 0, 0 it means we're asked to kneel temporarily
-			if (giveWayRequestData.size() == 1 && giveWayRequestData.front().x == 0 &&
-			    giveWayRequestData.front().y == 0 &&
-			    canAfford(state, BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
-			                                                               BodyState::Kneeling)))
-			{
-				// Give way
-				setMission(state, BattleUnitMission::changeStance(*this, BodyState::Kneeling));
-				// Give time for that unit to pass
-				addMission(state, BattleUnitMission::snooze(*this, TICKS_PER_SECOND), true);
-			}
-			else
-			{
-				auto from = tileObject->getOwningTile();
-				for (auto newHeading : giveWayRequestData)
-				{
-					for (int z = -1; z <= 1; z++)
-					{
-						if (z < 0 || z >= tileObject->map.size.z)
-						{
-							continue;
-						}
-						// Try the new heading
-						Vec3<int> pos = {position.x + newHeading.x, position.y + newHeading.y,
-						                 position.z + z};
-						auto to = tileObject->map.getTile(pos);
-						// Check if heading on our level is acceptable
-						bool acceptable =
-						    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(from, to) &&
-						    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(to, from);
-						// If not, check if we can go down one tile
-						if (!acceptable && pos.z - 1 >= 0)
-						{
-							pos -= Vec3<int>{0, 0, 1};
-							to = tileObject->map.getTile(pos);
-							acceptable =
-							    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(from,
-							                                                              to) &&
-							    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(to, from);
-						}
-						// If not, check if we can go up one tile
-						if (!acceptable && pos.z + 2 < tileObject->map.size.z)
-						{
-							pos += Vec3<int>{0, 0, 2};
-							to = tileObject->map.getTile(pos);
-							acceptable =
-							    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(from,
-							                                                              to) &&
-							    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(to, from);
-						}
-						if (acceptable)
-						{
-							// 01: Give way (move 1 tile away)
-							setMission(state, BattleUnitMission::gotoLocation(*this, pos, 0));
-							// 02: Turn to previous facing
-							addMission(state, BattleUnitMission::turn(*this, facing), true);
-							// 03: Give time for that unit to pass
-							addMission(state, BattleUnitMission::snooze(*this, 60), true);
-							// 04: Return to our position after we're done
-							addMission(state, BattleUnitMission::gotoLocation(*this, position, 0),
-							           true);
-							// 05: Turn to previous facing
-							addMission(state, BattleUnitMission::turn(*this, facing), true);
-						}
-						if (!missions.empty())
-						{
-							break;
-						}
-					}
-					if (!missions.empty())
-					{
-						break;
-					}
-				}
-			}
-			giveWayRequestData.clear();
-		}
-		else // if not giving way
+		else
 		{
 			// Kneel if not kneeling and should kneel
 			if (kneeling_mode == KneelingMode::Kneeling &&
@@ -2011,7 +2065,7 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 
 void BattleUnit::updateAI(GameState &state, unsigned int ticks)
 {
-	// TODO: Disabled until proper pathfinding algorithm is developed
+	// AI not yet ready
 	return;
 
 	if (!isConscious())
@@ -2019,7 +2073,7 @@ void BattleUnit::updateAI(GameState &state, unsigned int ticks)
 		return;
 	}
 	// Check that unit is controlled by AI
-	if (owner == state.current_battle->currentPlayer && agent->type->allowsDirectControl)
+	if (!isAIControlled(state))
 	{
 		return;
 	}
@@ -2132,6 +2186,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 
 	// Miscellaneous state updates, as well as unit's stats
 	updateStateAndStats(state, ticks);
+	// Unit events - was under fire, was requested to give way etc.
+	updateEvents(state);
 	// Idling #1: Auto-movement, auto-body change when idling
 	updateIdling(state);
 	// Acquire target
@@ -2558,6 +2614,7 @@ void BattleUnit::setBodyState(GameState &state, BodyState bodyState)
 		// If rose up - update vision for units that see this
 		if (roseUp)
 		{
+			// FIXME: Do this properly? Only update vision to this unit, not to everything?
 			state.current_battle->queueVisionRefresh(position);
 		}
 	}
@@ -3313,7 +3370,7 @@ void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &se
 			    1.50f * 2.0f * (float)(std::max(std::abs(offset.x), std::abs(offset.y)) +
 			                           std::abs(offset.x) + std::abs(offset.y));
 			auto path = map.findShortestPath(targetLocation, targetLocationOffsetted,
-			                                 costLimit / 2.0f, h, true, nullptr, costLimit);
+			                                 costLimit / 2.0f, h, true, false, nullptr, costLimit);
 			itOffset++;
 			if (!path.empty() && path.back() == targetLocationOffsetted)
 			{
