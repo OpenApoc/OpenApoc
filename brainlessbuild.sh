@@ -1,5 +1,9 @@
 #! /bin/sh
 
+unset LC_CTYPE
+
+find -name CMakeCache.txt | xargs rm -v
+
 git submodule init
 git submodule update
 
