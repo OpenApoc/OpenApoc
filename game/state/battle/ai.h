@@ -4,6 +4,7 @@
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
+#include "float.h"
 #include <list>
 
 namespace OpenApoc
