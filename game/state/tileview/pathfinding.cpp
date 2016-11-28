@@ -4,6 +4,7 @@
 #include "game/state/battle/battleunit.h"
 #include "game/state/battle/battleunitmission.h"
 #include "game/state/tileview/tile.h"
+#include "limits.h"
 #include <algorithm>
 
 namespace OpenApoc
