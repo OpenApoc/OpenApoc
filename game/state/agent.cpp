@@ -701,6 +701,18 @@ sp<AEquipment> Agent::getFirstItemByType(StateRef<AEquipmentType> type) const
 	return nullptr;
 }
 
+sp<AEquipment> Agent::getFirstItemByType(AEquipmentType::Type type) const
+{
+	for (auto e : equipment)
+	{
+		if (e->type->type == type)
+		{
+			return e;
+		}
+	}
+	return nullptr;
+}
+
 sp<AEquipment> Agent::getFirstShield() const
 {
 	for (auto e : equipment)

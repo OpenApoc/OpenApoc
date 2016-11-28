@@ -9,6 +9,23 @@
 namespace OpenApoc
 {
 
+/* AI LOGIC: attack()
+
+options (checked for every visible target):
+- stand still and shoot at target with weapon
+  (advance to target's location while shoooting at it)
+- run forward to get in range for firing a weapon
+- throw a grenade
+- run forward to get in range for a greande throw
+- use psi attack
+
+- calculate priority for each action
+- pick action with highest priority
+- if "shoot at target" action wins then:
+  - advance if CTH is low, stand still if high, with some added random variance
+
+*/
+
 // AI Logic for attacking:
 //
 // We go through every possibile tool:
@@ -46,94 +63,227 @@ namespace OpenApoc
 //	   Then just divide distance by velocity (scaled) to get ticks
 // - every second delay divides value gotten above by 2
 
-// AI must also react to things like
-// - getting shot at while moving
+AIMovement::AIMovement() : movementMode(MovementMode::Walking), kneelingMode(KneelingMode::None) {}
 
-AIAction AI::getWeaponAction(GameState &state, BattleUnit &u, sp<AEquipment> e,
-                             sp<BattleUnit> target)
+AIDecision::AIDecision(sp<AIAction> action, sp<AIMovement> movement)
+    : action(action), movement(movement),
+      priority(
+          std::max(action ? action->priority : FLT_MIN, movement ? movement->priority : FLT_MIN)),
+      ticksUntilThinkAgain(std::max(action ? action->ticksUntilThinkAgain : -1,
+                                    movement ? movement->ticksUntilThinkAgain : -1))
 {
-	AIAction action;
-	action.priority = FLT_MIN;
+}
 
-	return action;
+void AIState::reset(GameState &state, bool duringBattle)
+{
+	lastDecision.action = nullptr;
+	lastDecision.movement = nullptr;
+	lastDecision.ticksUntilThinkAgain = randBoundsExclusive(
+	    state.rng, 0, duringBattle ? (int)TICKS_PER_SECOND : (int)TICKS_PER_TURN);
+}
+
+// FIXME: Allow for patrol to point other than center
+sp<AIMovement> AI::getPatrolMovement(GameState &state, BattleUnit &u)
+{
+	static float SQUAD_RANGE = 10.0f;
+
+	auto result = mksp<AIMovement>();
+	result->priority = 0.0f;
+
+	// List of units that will go on patrol
+	std::list<StateRef<BattleUnit>> units;
+	units.emplace_back(&state, u.id);
+
+	// If we have group AI - collect other units within range
+	if (u.agent->type->aiType == AIType::Group && u.agent->type->allowsDirectControl)
+	{
+		// Collect all units within squad range
+		auto sft = u.shared_from_this();
+		for (auto &unit : state.current_battle->forces[u.owner].squads[u.squadNumber].units)
+		{
+			if (unit != sft && unit->isConscious() && unit->agent->type->aiType == AIType::Group &&
+			    unit->agent->type->allowsDirectControl && unit->visibleEnemies.empty() &&
+			    glm::distance(unit->position, u.position) < SQUAD_RANGE)
+			{
+				// If unit is busy and moving to a point within range - wait for him
+				if (unit->isBusy())
+				{
+					if (!unit->missions.empty())
+					{
+						auto &m = unit->missions.front();
+						if (m->type == BattleUnitMission::Type::GotoLocation &&
+						    glm::distance((Vec3<float>)m->targetLocation, u.position) < SQUAD_RANGE)
+						{
+							result->ticksUntilThinkAgain = TICKS_PER_TURN;
+							return result;
+						}
+					}
+				}
+				else
+				{
+					units.emplace_back(&state, unit->id);
+				}
+			}
+		}
+	}
+
+	int maxIterations = 50;
+	int iterationCount = 0;
+
+	while (iterationCount++ < maxIterations)
+	{
+		auto lbID = vectorRandomizer(state.rng, state.current_battle->losBlockRandomizer);
+
+		// Make sure every unit can go there
+		bool unavailable = false;
+		for (auto &unit : units)
+		{
+			if (!state.current_battle->blockAvailable[unit->getType()][lbID])
+			{
+				unavailable = true;
+				break;
+			}
+		}
+		if (unavailable)
+		{
+			continue;
+		}
+
+		// Go there actually
+		// auto &lb = *state.current_battle->losBlocks.at(lbID); // <-- not needed?
+		result->type = AIMovement::Type::Patrol;
+		result->targetLocation = state.current_battle->blockCenterPos[u.getType()][lbID];
+		result->units = units;
+		break;
+	}
+
+	return result;
+}
+
+sp<AIMovement> AI::getRetreatMovement(GameState &state, BattleUnit &u, bool forced)
+{
+	// Chance to take retreat is 1% per morale point below 20
+	if (randBoundsExclusive(state.rng, 0, 100) >= std::max(0, 20 - u.agent->modified_stats.morale))
+	{
+		return nullptr;
+	}
+
+	LogWarning("Implement retreat (for now patrolling instead)");
+
+	auto result = mksp<AIMovement>();
+
+	return getPatrolMovement(state, u);
+}
+
+sp<AIMovement> AI::getTakeCoverMovement(GameState &state, BattleUnit &u, bool forced)
+{
+	// Chance to take cover is 33% * sqrt(num_enemies_seen), if no one is seen then assume 3
+	if (randBoundsExclusive(state.rng, 0, 100) >=
+	    33.0f * sqrtf(u.visibleEnemies.empty() ? 3 : (int)u.visibleEnemies.size()))
+	{
+		return nullptr;
+	}
+
+	LogWarning("Implement take cover (for now kneeling instead)");
+
+	auto result = mksp<AIMovement>();
+
+	result->kneelingMode = KneelingMode::Kneeling;
+	result->priority = 0.0f;
+	result->type = AIMovement::Type::None;
+
+	return result;
+}
+
+sp<AIMovement> AI::getKneelMovement(GameState &state, BattleUnit &u, bool forced)
+{
+	// Chance to kneel is 33% * sqrt(num_enemies_seen), if no one is seen then assume 3
+	if (randBoundsExclusive(state.rng, 0, 100) >=
+	    33.0f * sqrtf(u.visibleEnemies.empty() ? 3 : (int)u.visibleEnemies.size()))
+	{
+		return nullptr;
+	}
+
+	auto result = mksp<AIMovement>();
+
+	result->kneelingMode = KneelingMode::Kneeling;
+	result->priority = 0.0f;
+	result->type = AIMovement::Type::None;
+
+	return result;
+}
+
+sp<AIMovement> AI::getTurnMovement(GameState &state, BattleUnit &u, Vec3<int> target)
+{
+	auto result = mksp<AIMovement>();
+
+	result->type = AIMovement::Type::Turn;
+	result->priority = 0.0f;
+	result->targetLocation = target;
+	if (u.aiState.lastDecision.movement)
+	{
+		result->kneelingMode = u.aiState.lastDecision.movement->kneelingMode;
+	}
+
+	return result;
+}
+
+sp<AIMovement> AI::getPursueMovement(GameState &state, BattleUnit &u, Vec3<int> target)
+{
+	// Chance to pursuit is 1% per morale point above 20
+	if (randBoundsExclusive(state.rng, 0, 100) >= std::max(0, u.agent->modified_stats.morale - 20))
+	{
+		return nullptr;
+	}
+
+	auto result = mksp<AIMovement>();
+
+	result->type = AIMovement::Type::Patrol;
+	result->targetLocation = target;
+	result->priority = 0.0f;
+
+	return result;
+}
+
+// FIXME: IMPLEMENT PROPER WEAPON AI
+AIDecision AI::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
+                                 sp<BattleUnit> target)
+{
+	if (e->canFire(target->position))
+	{
+		auto action = mksp<AIAction>();
+		action->item = e;
+		action->targetUnit = target;
+		action->type = AIAction::Type::AttackWeapon;
+		action->ticksUntilThinkAgain = TICKS_PER_TURN;
+		action->priority = e->getPayloadType()->damage;
+
+		return {action, mksp<AIMovement>()};
+	}
+
+	return {};
 }
 
 // FIXME: IMPLEMENT PSI AI
-AIAction AI::getPsiAction(GameState &state, BattleUnit &u, sp<AEquipment> e, sp<BattleUnit> target,
-                          AIAction::Type type)
+AIDecision AI::getPsiDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
+                              sp<BattleUnit> target, AIAction::Type type)
 {
-	AIAction action;
-	action.priority = FLT_MIN;
-
-	return action;
+	return {};
 }
 
-AIAction AI::getGrenadeAction(GameState &state, BattleUnit &u, sp<AEquipment> e,
-                              sp<BattleUnit> target)
+// FIXME: IMPLEMENT GRENADE AI
+AIDecision AI::getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
+                                  sp<BattleUnit> target)
 {
-	AIAction action;
-	action.priority = FLT_MIN;
-
-	return action;
+	return {};
 }
 
-// FIXME: Implement AI pathing to something other than center
-// FIXME: Implement AI checking wether target block can be stood in by this unit
-AIAction AI::getMoveAction(GameState &state, std::list<StateRef<BattleUnit>> &units)
+AIDecision AI::getAttackDecision(GameState &state, BattleUnit &u)
 {
-	AIAction action;
+	auto decision = AIDecision();
+	decision.ticksUntilThinkAgain = TICKS_PER_SECOND;
 
-	auto &l = *state.current_battle->losBlocks.at(
-	    vectorRandomizer(state.rng, state.current_battle->losBlockRandomizer));
-
-	action.type = AIAction::Type::Move;
-	action.targetLocation = {(l.start.x + l.end.x) / 2, (l.start.y + l.end.y) / 2,
-	                         (l.start.z + l.end.z) / 2};
-	action.units = units;
-	// At least for 2 seconds keep moving and do not think again
-	action.ticks = TICKS_PER_SECOND * 2;
-
-	return action;
-}
-
-// FIXME: IMPLEMENT RETREAT
-AIAction AI::getRetreatAction(GameState &state, std::list<StateRef<BattleUnit>> &units)
-{
-	AIAction action;
-
-	// return action;
-	return getMoveAction(state, units);
-}
-
-// Calculate AI's next action in case no enemies are seen
-AIAction AI::thinkGreen(GameState &state, std::list<StateRef<BattleUnit>> &units)
-{
-	// Try move and retreat
-	// Retreat chance depends on morale. Chance goes from 20% at 0 to 1% at 19, then 0% at 20+
-	if (randBoundsExclusive(state.rng, 0, 100) - 80 >=
-	    (*units.begin())->agent->modified_stats.morale)
-	{
-		// Retreat
-		// Find a valid exit ground tile
-		return getRetreatAction(state, units);
-	}
-	else
-	{
-		// Move
-		// Find a los block we want to go into
-		// Higher priority blocks have higher chance of being went into
-		return getMoveAction(state, units);
-	}
-}
-
-// Calculate AI's next action in case enemies are seen
-AIAction AI::thinkRed(GameState &state, BattleUnit &u)
-{
-	AIAction action;
-	action.priority = FLT_MIN;
-	action.ticks = TICKS_PER_SECOND;
-
-	// Try weapon/grenade/psi attack
+	// Try each item for a weapon/grenade/psi attack
 	// If out of range - advance
 	// If you have no valid attack at all - retreat
 
@@ -170,155 +320,415 @@ AIAction AI::thinkRed(GameState &state, BattleUnit &u)
 			{
 				case AEquipmentType::Type::Weapon:
 				{
-					auto newAction = getWeaponAction(state, u, e, target);
-					if (newAction.priority > action.priority)
+					auto newDecision = getWeaponDecision(state, u, e, target);
+					if (newDecision.priority > decision.priority)
 					{
-						action = newAction;
+						decision = newDecision;
 					}
 					break;
 				}
 				case AEquipmentType::Type::Grenade:
 				{
-					auto newAction = getGrenadeAction(state, u, e, target);
-					if (newAction.priority > action.priority)
+					auto newDecision = getGrenadeDecision(state, u, e, target);
+					if (newDecision.priority > decision.priority)
 					{
-						action = newAction;
+						decision = newDecision;
 					}
 					break;
 				}
 				case AEquipmentType::Type::MindBender:
 				{
-					auto newAction = getPsiAction(state, u, e, target, AIAction::Type::AttackPsiMC);
-					if (newAction.priority > action.priority)
+					auto newDecision =
+					    getPsiDecision(state, u, e, target, AIAction::Type::AttackPsiMC);
+					if (newDecision.priority > decision.priority)
 					{
-						action = newAction;
+						decision = newDecision;
 					}
-					newAction = getPsiAction(state, u, e, target, AIAction::Type::AttackPsiPanic);
-					if (newAction.priority > action.priority)
+					newDecision =
+					    getPsiDecision(state, u, e, target, AIAction::Type::AttackPsiPanic);
+					if (newDecision.priority > decision.priority)
 					{
-						action = newAction;
+						decision = newDecision;
 					}
-					newAction = getPsiAction(state, u, e, target, AIAction::Type::AttackPsiStun);
-					if (newAction.priority > action.priority)
+					newDecision =
+					    getPsiDecision(state, u, e, target, AIAction::Type::AttackPsiStun);
+					if (newDecision.priority > decision.priority)
 					{
-						action = newAction;
+						decision = newDecision;
 					}
 					break;
 				}
 				default: // don't cry travis
-					// Nothing to do
+					     // Nothing to do
 					break;
 			}
 		}
 	}
-	return action;
+	if (!decision.action && !decision.movement)
+	{
+		return {nullptr, getRetreatMovement(state, u, true)};
+	}
+	return decision;
 }
 
-AIAction AI::think(GameState &state, BattleUnit &u)
+// Calculate AI's next action in case the unit is not attacking
+AIDecision AI::thinkGreen(GameState &state, BattleUnit &u)
 {
-	static float SQUAD_RANGE = 5.0f;
+	static const Vec3<int> NONE = {0, 0, 0};
 
+	bool isMoving = u.aiState.lastDecision.movement && u.isMoving();
+	bool isUnderAttack = u.aiState.attackerPosition != NONE;
+	bool isInterrupted = u.aiState.lastDecision.ticksUntilThinkAgain > 0;
+	bool isEnemyVisible = !u.visibleEnemies.empty();
+	bool wasEnemyVisible = u.aiState.enemySpotted && u.aiState.lastSeenEnemyPosition != NONE;
+
+	if (isMoving)
+	{
+		// If unit is moving into cover -> carry on
+		if (u.aiState.lastDecision.movement->type == AIMovement::Type::TakeCover)
+		{
+			return {};
+		}
+		// If unit is moving to get in range and target is visible -> carry on
+		if (u.aiState.lastDecision.movement->type == AIMovement::Type::GetInRange &&
+		    std::find(u.visibleEnemies.begin(), u.visibleEnemies.end(),
+		              u.aiState.lastDecision.action->targetUnit) != u.visibleEnemies.end())
+		{
+			return {};
+		}
+	}
+
+	if (isEnemyVisible)
+	{
+		auto kneel = getKneelMovement(state, u);
+		if (kneel)
+		{
+			return {nullptr, kneel};
+		}
+
+		if (isUnderAttack)
+		{
+			auto takeCover = getTakeCoverMovement(state, u);
+			if (takeCover)
+			{
+				return {nullptr, takeCover};
+			}
+
+			if (isInterrupted)
+			{
+				return {};
+			}
+		}
+
+		auto retreat = getRetreatMovement(state, u);
+		if (retreat)
+		{
+			return {nullptr, retreat};
+		}
+
+		return getAttackDecision(state, u);
+	}
+
+	if (wasEnemyVisible)
+	{
+		auto retreat = getRetreatMovement(state, u);
+		if (retreat)
+		{
+			return {nullptr, retreat};
+		}
+
+		if (isUnderAttack)
+		{
+			auto takeCover = getTakeCoverMovement(state, u);
+			if (takeCover)
+			{
+				return {nullptr, takeCover};
+			}
+		}
+
+		auto pursue =
+		    getPursueMovement(state, u, (Vec3<int>)u.position + u.aiState.lastSeenEnemyPosition);
+		if (pursue)
+		{
+			return {nullptr, pursue};
+		}
+
+		if (isMoving)
+		{
+			return {};
+		}
+	}
+
+	if (isUnderAttack)
+	{
+		if (!wasEnemyVisible)
+		{
+			auto takeCover = getTakeCoverMovement(state, u);
+			if (takeCover)
+			{
+				return {nullptr, takeCover};
+			}
+		}
+
+		if (u.missions.empty() || u.missions.front()->type != BattleUnitMission::Type::Turn)
+		{
+			return {nullptr,
+			        getTurnMovement(state, u, (Vec3<int>)u.position + u.aiState.attackerPosition)};
+		}
+	}
+
+	if (isMoving)
+	{
+		return {};
+	}
+
+	if (!wasEnemyVisible)
+	{
+		auto retreat = getRetreatMovement(state, u);
+		if (retreat)
+		{
+			return {nullptr, retreat};
+		}
+	}
+
+	return {nullptr, getPatrolMovement(state, u)};
+}
+
+// Calculate AI's next action in case enemies are seen
+AIDecision AI::thinkRed(GameState &state, BattleUnit &u)
+{
+	static const Vec3<int> NONE = {0, 0, 0};
+
+	bool isUnderAttack = u.aiState.attackerPosition != NONE;
+	bool isInterrupted = u.aiState.lastDecision.ticksUntilThinkAgain > 0;
+
+	if (isUnderAttack)
+	{
+		auto takeCover = getTakeCoverMovement(state, u);
+		if (takeCover)
+		{
+			return {nullptr, takeCover};
+		}
+
+		auto kneel = getKneelMovement(state, u);
+		if (kneel)
+		{
+			return {nullptr, kneel};
+		}
+
+		if (isInterrupted)
+		{
+			return {};
+		}
+	}
+
+	auto retreat = getRetreatMovement(state, u);
+	if (retreat)
+	{
+		return {nullptr, retreat};
+	}
+
+	return getAttackDecision(state, u);
+}
+
+AIDecision AI::think(GameState &state, BattleUnit &u)
+{
 	if (u.agent->type->aiType == AIType::None)
 	{
-		AIAction action;
-		action.ticks = TICKS_PER_HOUR;
-		return action;
+		auto result = AIDecision();
+		result.ticksUntilThinkAgain = TICKS_PER_HOUR;
+		return result;
 	}
 
-	routine(state, u);
+	auto result = u.visibleEnemies.empty() ? thinkGreen(state, u) : thinkRed(state, u);
 
-	std::list<StateRef<BattleUnit>> units;
+	routine(state, u, result);
 
-	// Figure out wether we want to act as a group
-	if (u.agent->type->aiType == AIType::Group && u.agent->type->allowsDirectControl)
-	{
-		// If no enemies visible - try to move as group
-		if (u.visibleEnemies.empty())
-		{
-			auto sft = u.shared_from_this();
-			for (auto &unit : state.current_battle->forces[u.owner].squads[u.squadNumber].units)
-			{
-				if (unit != sft && unit->isConscious() &&
-				    unit->agent->type->aiType == AIType::Group &&
-				    unit->agent->type->allowsDirectControl && unit->visibleEnemies.empty())
-				{
-					units.emplace_back(&state, unit->id);
-				}
-			}
-			if (!units.empty())
-			{
-				// Check if at least half of the group is ready
-				int numUnitsReady = 0;
-				for (auto &unit : units)
-				{
-					if (!unit->isBusy())
-					{
-						numUnitsReady++;
-					}
-				}
-				if (numUnitsReady + 1 < (units.size() + 1) / 2)
-				{
-					// Group move failed, just process this unit
-					units.clear();
-				}
-			}
-		}
-		else // If enemies are visible - stop other units nearby from moving
-		{
-			for (auto unit : state.current_battle->forces[u.owner].squads[u.squadNumber].units)
-			{
-				if (!unit->missions.empty() &&
-				    unit->missions.front()->type == BattleUnitMission::Type::GotoLocation &&
-				    glm::distance(u.position, unit->position) < SQUAD_RANGE)
-				{
-					unit->cancelMissions(state);
-				}
-			}
-		}
-	}
-
-	// If no enemies seen - patrol
-	if (u.visibleEnemies.empty())
-	{
-		units.emplace_back(&state, u.id);
-		return thinkGreen(state, units);
-	}
-	// If enemies seen - attack
-	else
-	{
-		return thinkRed(state, u);
-	}
+	return result;
 }
 
-void AI::routine(GameState &state, BattleUnit &u)
+void AI::routine(GameState &state, BattleUnit &u, const AIDecision &decision)
 {
-	// Operate inventory, reload weapons etc.
+	static const Vec3<int> NONE = {0, 0, 0};
+
+	// Do whatever needs to be done for the chosen action
+	if (decision.action)
+	{
+		// Equip item we're going to use
+		if (decision.action->item)
+		{
+			auto rhItem = u.agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+			if (rhItem != decision.action->item)
+			{
+				// Remove item in the right hand
+				if (rhItem)
+				{
+					u.agent->removeEquipment(rhItem);
+				}
+
+				// Remove item we will use and equip it in the right hand
+				u.agent->removeEquipment(decision.action->item);
+				u.agent->addEquipment(state, decision.action->item, AEquipmentSlotType::RightHand);
+
+				// Equip back the item removed earlier
+				if (rhItem)
+				{
+					for (auto s : u.agent->type->equipment_layout->slots)
+					{
+						if (u.agent->canAddEquipment(s.bounds.p0, rhItem->type))
+						{
+							u.agent->addEquipment(state, s.bounds.p0, rhItem);
+							rhItem = nullptr;
+							break;
+						}
+					}
+				}
+
+				// Drop the item if we couldn't equip it
+				if (rhItem)
+				{
+					u.addMission(state, BattleUnitMission::dropItem(u, rhItem));
+				}
+			}
+		}
+	}
+
+	// Do whatever needs to be done for the chosen movement
+	if (decision.movement)
+	{
+		u.kneeling_mode = decision.movement->kneelingMode;
+		u.movement_mode = decision.movement->movementMode;
+	}
+
+	// Do miscellaneous stuff
+
+	// Reload all guns
+	for (auto &e : u.agent->equipment)
+	{
+		if (e->needsReload())
+		{
+			e->loadAmmo(state);
+		}
+	}
+	// Equip a cloaking field if we don't already have one in left hand
+	auto cloaking = u.agent->getFirstItemByType(AEquipmentType::Type::CloakingField);
+	if (cloaking)
+	{
+		auto lhItem = u.agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+		if (!lhItem || lhItem->type->type != AEquipmentType::Type::CloakingField)
+		{
+			// Remove item in the left hand
+			if (lhItem)
+			{
+				u.agent->removeEquipment(lhItem);
+			}
+
+			// Remove item we will use and equip it in the right hand
+			u.agent->removeEquipment(cloaking);
+			u.agent->addEquipment(state, cloaking, AEquipmentSlotType::LeftHand);
+
+			// Equip back the item removed earlier
+			if (lhItem)
+			{
+				for (auto s : u.agent->type->equipment_layout->slots)
+				{
+					if (u.agent->canAddEquipment(s.bounds.p0, lhItem->type))
+					{
+						u.agent->addEquipment(state, s.bounds.p0, lhItem);
+						lhItem = nullptr;
+						break;
+					}
+				}
+			}
+
+			// Drop the item if we couldn't equip it
+			if (lhItem)
+			{
+				u.addMission(state, BattleUnitMission::dropItem(u, lhItem));
+			}
+		}
+	}
+
+	// Update aiState
+	{
+		u.aiState.attackerPosition = NONE;
+		u.aiState.enemySpottedPrevious = u.aiState.enemySpotted;
+		u.aiState.enemySpotted = false;
+		u.aiState.lastSeenEnemyPosition = NONE;
+		// Set movement to none if complete
+		if (u.aiState.lastDecision.movement)
+		{
+			switch (u.aiState.lastDecision.movement->type)
+			{
+				case AIMovement::Type::Patrol:
+				case AIMovement::Type::Advance:
+				case AIMovement::Type::GetInRange:
+				case AIMovement::Type::TakeCover:
+					if (!u.isMoving())
+					{
+						u.aiState.lastDecision.movement->type = AIMovement::Type::None;
+					}
+					break;
+				case AIMovement::Type::Turn:
+					if (u.goalFacing == u.facing)
+					{
+						u.aiState.lastDecision.movement->type = AIMovement::Type::None;
+					}
+					break;
+				default:
+					break;
+			}
+		}
+	}
 }
 
 UString AIAction::getName()
 {
 	switch (type)
 	{
-		case AIAction::Type::Idle:
-			return format("Idle for %d", ticks);
-		case AIAction::Type::Move:
-			return format("Move to %d,%d,%d in a group of %d", targetLocation.x, targetLocation.y,
-			              targetLocation.z, (int)units.size());
-		case AIAction::Type::Retreat:
-			return format("Retreat to %d,%d,%d in a group of %d", targetLocation.x,
-			              targetLocation.y, targetLocation.z, (int)units.size());
+		case AIAction::Type::None:
+			return format("Nothing");
 		case AIAction::Type::AttackGrenade:
-			return format("Attack %s with grenade %s ", target->id, item->type->id);
+			return format("Attack %s with grenade %s ", targetUnit->id, item->type->id);
 		case AIAction::Type::AttackWeapon:
-			return format("Attack %s with weapon %s ", target->id, item->type->id);
+			return format("Attack %s with weapon %s ", targetUnit->id, item->type->id);
 		case AIAction::Type::AttackPsiMC:
-			return format("Attack %s with psi MC using %s ", target->id, item->type->id);
+			return format("Attack %s with psi MC using %s ", targetUnit->id, item->type->id);
 		case AIAction::Type::AttackPsiStun:
-			return format("Attack %s with psi stun using %s ", target->id, item->type->id);
+			return format("Attack %s with psi stun using %s ", targetUnit->id, item->type->id);
 		case AIAction::Type::AttackPsiPanic:
-			return format("Attack %s with psi panic using %s ", target->id, item->type->id);
+			return format("Attack %s with psi panic using %s ", targetUnit->id, item->type->id);
 	}
 	LogError("Unimplemented getName for AIAction %d", (int)type);
 	return "";
+}
+
+UString AIMovement::getName()
+{
+	switch (type)
+	{
+		case AIMovement::Type::None:
+			return format("Nothing");
+		case AIMovement::Type::Patrol:
+			return format("Move to %s in a group of %d", targetLocation, (int)units.size());
+		case AIMovement::Type::Advance:
+			return format("Advance on target to %s", targetLocation);
+		case AIMovement::Type::GetInRange:
+			return format("Get in range, moving to %s", targetLocation);
+		case AIMovement::Type::Retreat:
+			return format("Retreat to %s in a group of %d", targetLocation, (int)units.size());
+		case AIMovement::Type::TakeCover:
+			return format("Taking cover, moving to %s", targetLocation);
+		case AIMovement::Type::Turn:
+			return format("Turn to %s", targetLocation);
+	}
+	LogError("Unimplemented getName for AIMovement %d", (int)type);
+	return "";
+}
+
+UString AIDecision::getName()
+{
+	return format("Action: [%s] Movement: [%s] Timer: %d", action ? action->getName() : "NULL",
+	              movement ? movement->getName() : "NULL", ticksUntilThinkAgain);
 }
 }

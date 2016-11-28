@@ -563,18 +563,22 @@ bool BattleUnit::isBusy() const
 
 bool BattleUnit::isAttacking() const { return weaponStatus != WeaponStatus::NotFiring; }
 
-bool BattleUnit::isThrowing() const
+bool BattleUnit::isThrowing() const { return isDoing(BattleUnitMission::Type::ThrowItem); }
+
+bool BattleUnit::isMoving() const { return isDoing(BattleUnitMission::Type::GotoLocation); }
+
+bool BattleUnit::isDoing(BattleUnitMission::Type missionType) const
 {
-	bool throwing = false;
+	bool found = false;
 	for (auto &m : missions)
 	{
-		if (m->type == BattleUnitMission::Type::ThrowItem)
+		if (m->type == missionType)
 		{
-			throwing = true;
+			found = true;
 			break;
 		}
 	}
-	return throwing;
+	return found;
 }
 
 BattleUnitType BattleUnit::getType() const
@@ -1010,6 +1014,8 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 
 void BattleUnit::updateEvents(GameState &state)
 {
+	static const Vec3<int> NONE = {0, 0, 0};
+
 	// Try giving way if asked to
 	// FIXME: Ensure we're not in a firefight before giving way!
 	if (giveWayRequestData.size() > 0)
@@ -1022,9 +1028,9 @@ void BattleUnit::updateEvents(GameState &state)
 		{
 			// If we're given a giveWay request 0, 0 it means we're asked to kneel temporarily
 			if (giveWayRequestData.size() == 1 && giveWayRequestData.front().x == 0 &&
-				giveWayRequestData.front().y == 0 &&
-				canAfford(state, BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
-					BodyState::Kneeling)))
+			    giveWayRequestData.front().y == 0 &&
+			    canAfford(state, BattleUnitMission::getBodyStateChangeCost(*this, target_body_state,
+			                                                               BodyState::Kneeling)))
 			{
 				// Give way
 				setMission(state, BattleUnitMission::changeStance(*this, BodyState::Kneeling));
@@ -1043,22 +1049,22 @@ void BattleUnit::updateEvents(GameState &state)
 							continue;
 						}
 						// Try the new heading
-						Vec3<int> pos = { position.x + newHeading.x, position.y + newHeading.y,
-							position.z + z };
+						Vec3<int> pos = {position.x + newHeading.x, position.y + newHeading.y,
+						                 position.z + z};
 						auto to = tileObject->map.getTile(pos);
 						// Check if heading on our level is acceptable
 						bool acceptable =
-							BattleUnitTileHelper{ tileObject->map, *this }.canEnterTile(from, to) &&
-							BattleUnitTileHelper{ tileObject->map, *this }.canEnterTile(to, from);
+						    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(from, to) &&
+						    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(to, from);
 						// If not, check if we can go down one tile
 						if (!acceptable && pos.z - 1 >= 0)
 						{
 							pos -= Vec3<int>{0, 0, 1};
 							to = tileObject->map.getTile(pos);
 							acceptable =
-								BattleUnitTileHelper{ tileObject->map, *this }.canEnterTile(from,
-									to) &&
-								BattleUnitTileHelper{ tileObject->map, *this }.canEnterTile(to, from);
+							    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(from,
+							                                                              to) &&
+							    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(to, from);
 						}
 						// If not, check if we can go up one tile
 						if (!acceptable && pos.z + 2 < tileObject->map.size.z)
@@ -1066,9 +1072,9 @@ void BattleUnit::updateEvents(GameState &state)
 							pos += Vec3<int>{0, 0, 2};
 							to = tileObject->map.getTile(pos);
 							acceptable =
-								BattleUnitTileHelper{ tileObject->map, *this }.canEnterTile(from,
-									to) &&
-								BattleUnitTileHelper{ tileObject->map, *this }.canEnterTile(to, from);
+							    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(from,
+							                                                              to) &&
+							    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(to, from);
 						}
 						if (acceptable)
 						{
@@ -1080,7 +1086,7 @@ void BattleUnit::updateEvents(GameState &state)
 							addMission(state, BattleUnitMission::snooze(*this, 60), true);
 							// 04: Return to our position after we're done
 							addMission(state, BattleUnitMission::gotoLocation(*this, position, 0),
-								true);
+							           true);
 							// 05: Turn to previous facing
 							addMission(state, BattleUnitMission::turn(*this, facing), true);
 						}
@@ -1100,21 +1106,35 @@ void BattleUnit::updateEvents(GameState &state)
 	}
 
 	// Process being hit or under fire
-	static const Vec3<int> none = { 0,0,0 };
-	if (attackerPosition != none)
+	if (attackerPosition != NONE)
 	{
 		// Turn to attacker in real time if we're idle
 		if (!isBusy() && isConscious() && state.current_battle->mode == Battle::Mode::RealTime &&
-			ticksUntilAutoTurnAvailable == 0)
+		    ticksUntilAutoTurnAvailable == 0)
 		{
-			setMission(state, BattleUnitMission::turn(*this, position + (Vec3<float>)attackerPosition));
+			setMission(state,
+			           BattleUnitMission::turn(*this, position + (Vec3<float>)attackerPosition));
 			ticksUntilAutoTurnAvailable = AUTO_TURN_COOLDOWN;
 		}
 		if (isAIControlled(state))
 		{
 			aiState.attackerPosition = attackerPosition;
 		}
-		attackerPosition = none;
+		attackerPosition = NONE;
+	}
+
+	// Process spotting an enemy
+	if (!aiState.enemySpotted && !visibleEnemies.empty() && isAIControlled(state))
+	{
+		aiState.enemySpotted = true;
+		// our target has a priority over others if enemy
+		aiState.lastSeenEnemyPosition =
+		    (targetUnit &&
+		             std::find(visibleEnemies.begin(), visibleEnemies.end(), targetUnit) !=
+		                 visibleEnemies.end()
+		         ? targetUnit->position
+		         : visibleEnemies.front()->position) -
+		    position;
 	}
 }
 
@@ -2065,8 +2085,7 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 
 void BattleUnit::updateAI(GameState &state, unsigned int ticks)
 {
-	// AI not yet ready
-	return;
+	static const Vec3<int> NONE = {0, 0, 0};
 
 	if (!isConscious())
 	{
@@ -2091,79 +2110,225 @@ void BattleUnit::updateAI(GameState &state, unsigned int ticks)
 		}
 		case Battle::Mode::RealTime:
 		{
+			// in RT the AI is always active?
 			break;
 		}
 	}
 
-	// Act now!
+	// Re-think if required
 
-	if (aiState.ticksUntilThinkAgain > 0)
+	if (aiState.lastDecision.ticksUntilThinkAgain > 0)
 	{
-		if (aiState.ticksUntilThinkAgain > ticks)
+		if (aiState.lastDecision.ticksUntilThinkAgain > ticks)
 		{
-			aiState.ticksUntilThinkAgain -= ticks;
+			aiState.lastDecision.ticksUntilThinkAgain -= ticks;
 		}
 		else
 		{
-			aiState.ticksUntilThinkAgain = 0;
+			aiState.lastDecision.ticksUntilThinkAgain = 0;
 		}
 	}
 
-	// Conditions for actually taking an action:
-	if (
-	    // If waiting for completion of a non-offensive action and encountered an enemy
-	    (aiState.waitForCompletion && aiState.ticksUntilThinkAgain == 0 && !aiState.offensive &&
-	     !visibleEnemies.empty())
-	    // If not waiting for completion and ticks until thinking again have ran out
-	    || (!aiState.waitForCompletion && aiState.ticksUntilThinkAgain == 0)
-	    // If waiting for completion and not busy
-	    || (aiState.waitForCompletion && !isBusy()))
+	// Decision is never re-thought if: actionType == grenade && currently throwing
+	if (aiState.lastDecision.action &&
+	    aiState.lastDecision.action->type == AIAction::Type::AttackGrenade && !missions.empty() &&
+	    missions.front()->type == BattleUnitMission::Type::ThrowItem)
 	{
-		auto action = AI::think(state, *this);
-		LogWarning("AI for unit %s decided to take action %s", id, action.getName().cStr());
-		aiState.ticksUntilThinkAgain = action.ticks;
-		aiState.type = action.type;
-		switch (action.type)
+		return;
+	}
+
+	// Decision wether we need to re-think our actions
+	bool reThink =
+	    // Timer ran out
+	    aiState.lastDecision.ticksUntilThinkAgain == 0
+	    // We have no action, no movement and no timer set up
+	    || ((!aiState.lastDecision.action ||
+	         aiState.lastDecision.action->type == AIAction::Type::None) &&
+	        (!aiState.lastDecision.movement ||
+	         aiState.lastDecision.movement->type == AIMovement::Type::None) &&
+	        aiState.lastDecision.ticksUntilThinkAgain == -1)
+	    // We just spotted an enemy and we have no timer
+	    || (!visibleEnemies.empty() && !aiState.enemySpottedPrevious &&
+	        aiState.lastDecision.ticksUntilThinkAgain == -1)
+	    // We just stopped seeing an enemy
+	    || (visibleEnemies.empty() && aiState.enemySpotted)
+	    // We were attacked
+	    || (aiState.attackerPosition != NONE)
+	    // We stopped moving
+	    || (aiState.lastDecision.movement &&
+	        aiState.lastDecision.movement->type != AIMovement::Type::None &&
+	        aiState.lastDecision.movement->type != AIMovement::Type::Turn && !isMoving())
+	    // We stopped throwing
+	    || (aiState.lastDecision.action &&
+	        aiState.lastDecision.action->type == AIAction::Type::AttackGrenade &&
+	        (missions.empty() || missions.front()->type != BattleUnitMission::Type::ThrowItem))
+	    // We stopped attacking with PSI
+	    || (aiState.lastDecision.action &&
+	        (aiState.lastDecision.action->type == AIAction::Type::AttackPsiMC ||
+	         aiState.lastDecision.action->type == AIAction::Type::AttackPsiPanic ||
+	         aiState.lastDecision.action->type == AIAction::Type::AttackPsiStun)
+	        // FIXME: Introduce PSI condition
+	        && false)
+	    // We stopped attacking with a weapon
+	    || (aiState.lastDecision.action &&
+	        aiState.lastDecision.action->type == AIAction::Type::AttackWeapon && !isAttacking());
+
+	if (!reThink)
+	{
+		return;
+	}
+
+	// Decide
+	auto decision = AI::think(state, *this);
+	LogWarning("AI for unit %s decided to take action %s", id, decision.getName());
+
+	// No new decision was made
+	if (!decision.action && !decision.movement)
+	{
+		if (decision.ticksUntilThinkAgain != -1)
 		{
-			case AIAction::Type::Idle:
-				break;
-			case AIAction::Type::Move:
-				aiState.waitForCompletion = true;
-				for (auto &u : action.units)
-				{
-					u->aiState = aiState;
-				}
-				groupMove(state, action.units, action.targetLocation, true, 9999);
-				break;
-			case AIAction::Type::Retreat:
-				aiState.waitForCompletion = true;
-				for (auto &u : action.units)
-				{
-					u->setMission(state, BattleUnitMission::gotoLocation(*u, action.targetLocation,
-					                                                     0, true, true, 1, true));
-					u->aiState = aiState;
-				}
+			aiState.lastDecision.ticksUntilThinkAgain = decision.ticksUntilThinkAgain;
+		}
+		else
+		{
+			// Ensure no freezing of AI
+			// If no new decision is made and
+			if (aiState.lastDecision.ticksUntilThinkAgain == -1 &&
+			    (!aiState.lastDecision.action ||
+			     aiState.lastDecision.action->type == AIAction::Type::None) &&
+			    (!aiState.lastDecision.movement ||
+			     aiState.lastDecision.movement->type == AIMovement::Type::None))
+			{
+				aiState.lastDecision.ticksUntilThinkAgain = TICKS_PER_TURN;
+			}
+		}
+		return;
+	}
+
+	// Act on decided action
+	if (decision.action)
+	{
+		switch (decision.action->type)
+		{
+			case AIAction::Type::None:
 				break;
 			case AIAction::Type::AttackGrenade:
-				aiState.offensive = true;
-				LogError("Implement acting on a Grenade action");
-				// Equip grenade
+				LogWarning("Implement acting on a Grenade action");
 				// Throw grenade
 				break;
 			case AIAction::Type::AttackWeapon:
-				aiState.offensive = true;
-				LogError("Implement acting on a Weapon action");
-				// Equip weapon
+				LogWarning("Implement acting on a Weapon action");
 				// Attack with weapon
 				break;
 			case AIAction::Type::AttackPsiMC:
 			case AIAction::Type::AttackPsiStun:
 			case AIAction::Type::AttackPsiPanic:
-				aiState.offensive = true;
-				LogError("Implement acting on a Psi AI action");
+				LogWarning("Implement acting on a Psi AI action");
 				break;
 		}
 	}
+	else
+	{
+		decision.action = aiState.lastDecision.action;
+	}
+
+	// Act on decided movement
+	if (decision.movement)
+	{
+		// Find out if we can use teleporter to move
+		bool useTeleporter = false;
+		switch (decision.movement->type)
+		{
+			case AIMovement::Type::Patrol:
+				useTeleporter = true;
+				for (auto &u : decision.movement->units)
+				{
+					bool unitHasTeleporter = false;
+					for (auto &e : u->agent->equipment)
+					{
+						if (e->type->type == AEquipmentType::Type::Teleporter &&
+						    e->ammo == e->type->max_ammo &&
+						    u->canAfford(state, u->agent->current_stats.time_units * 55 / 100))
+						{
+							unitHasTeleporter = true;
+							break;
+						}
+					}
+					if (!useTeleporter)
+					{
+						break;
+					}
+				}
+				break;
+			case AIMovement::Type::Advance:
+			case AIMovement::Type::GetInRange:
+			case AIMovement::Type::TakeCover:
+				for (auto &e : agent->equipment)
+				{
+					if (e->type->type == AEquipmentType::Type::Teleporter)
+					{
+						if (e->type->type == AEquipmentType::Type::Teleporter &&
+						    e->ammo == e->type->max_ammo &&
+						    canAfford(state, agent->current_stats.time_units * 55 / 100))
+						{
+							useTeleporter = true;
+							break;
+						}
+					}
+				}
+				break;
+			default:
+				break;
+		}
+
+		// Do movement
+		switch (decision.movement->type)
+		{
+			case AIMovement::Type::None:
+				for (auto &m : missions)
+				{
+					if (m->type == BattleUnitMission::Type::GotoLocation)
+					{
+						m->targetLocation = goalPosition;
+						m->currentPlannedPath.clear();
+					}
+				}
+				break;
+			case AIMovement::Type::Patrol:
+				for (auto &u : decision.movement->units)
+				{
+					u->aiState.lastDecision.movement = mksp<AIMovement>(*decision.movement);
+					u->aiState.lastDecision.ticksUntilThinkAgain = decision.ticksUntilThinkAgain;
+				}
+				Battle::groupMove(state, decision.movement->units,
+				                  decision.movement->targetLocation, true);
+				break;
+			case AIMovement::Type::Retreat:
+				for (auto &u : decision.movement->units)
+				{
+					u->setMission(
+					    state, BattleUnitMission::gotoLocation(
+					               *u, decision.movement->targetLocation, 0, true, true, 1, true));
+					u->aiState = aiState;
+				}
+				break;
+			case AIMovement::Type::Turn:
+				setMission(state,
+				           BattleUnitMission::turn(*this, decision.movement->targetLocation));
+				break;
+			case AIMovement::Type::Advance:
+			case AIMovement::Type::GetInRange:
+			case AIMovement::Type::TakeCover:
+				LogWarning("Implement Advance/GetInRagnge/TakeCover AI movement's execution");
+				break;
+		}
+	}
+	else
+	{
+		decision.movement = aiState.lastDecision.movement;
+	}
+
+	aiState.lastDecision = decision;
 }
 
 void BattleUnit::update(GameState &state, unsigned int ticks)
@@ -2410,11 +2575,13 @@ void BattleUnit::tryToRiseUp(GameState &state)
 	}
 
 	missions.clear();
+	aiState.reset(state);
 	addMission(state, BattleUnitMission::changeStance(*this, targetState));
 }
 
 void BattleUnit::dropDown(GameState &state)
 {
+	aiState.reset(state);
 	resetGoal();
 	setMovementState(MovementState::None);
 	setHandState(HandState::AtEase);
@@ -2856,6 +3023,13 @@ bool BattleUnit::cancelMissions(GameState &state)
 		// Missions that cannot be cancelled
 		case BattleUnitMission::Type::ThrowItem:
 			return false;
+		// Drop Item can only be cancelled if item is in agent's inventory
+		case BattleUnitMission::Type::DropItem:
+			if (missions.front()->item && !missions.front()->item->ownerAgent)
+			{
+				return false;
+			}
+			break;
 		// Missions that must be let finish (unless forcing)
 		case BattleUnitMission::Type::ChangeBodyState:
 		case BattleUnitMission::Type::Turn:
@@ -2865,7 +3039,6 @@ bool BattleUnit::cancelMissions(GameState &state)
 			break;
 		// Missions that can be cancelled
 		case BattleUnitMission::Type::Snooze:
-		case BattleUnitMission::Type::DropItem:
 		case BattleUnitMission::Type::Teleport:
 		case BattleUnitMission::Type::RestartNextMission:
 		case BattleUnitMission::Type::AcquireTU:
@@ -3097,293 +3270,5 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool t
 			break;
 	}
 	return true;
-}
-
-Vec3<int> rotate(Vec3<int> vec, int rotation)
-{
-	switch (rotation)
-	{
-		case 1:
-			return {-vec.y, vec.x, vec.z};
-		case 2:
-			return {-vec.x, -vec.y, vec.z};
-		case 3:
-			return {vec.y, -vec.x, vec.z};
-		default:
-			return vec;
-	}
-}
-
-void BattleUnit::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &selectedUnits,
-                           Vec3<int> targetLocation, bool demandGiveWay, int maxIterations)
-{
-	// Legend:
-	//
-	// (arrive from the southwest)						(arrive from the south)
-	//
-	//         6			G = goal					         7			G = goal
-	//       5   6			F = flanks					       7   7		1 = 1s back row
-	//     4   5   6		1 = 1st back row			     6   6   6		2 = 2nd back row
-	//   3   F   5   6		2 = 2nd back row			   5   5   5   5	3 = 3rd back row
-	// 2   1   G   5   6	3 = sides of 1st back row	 F   F   G   F   F	4 = sides of 1st bk row
-	//   2   1   F   5		4 = sides of flanks			   4   1   1   4	F = flanks
-	//     2   1   4		5 = 1st front row			     2   2   2		5 = 1st front row
-	//       2   3			6 = 2nd front row			       3   3		6 = 2nd front row
-	//         2										         3			7 = 3rd front row
-	//
-	// We will of course rotate this accordingly with the direction from which units come
-
-	static const std::list<Vec3<int>> targetOffsetsDiagonal = {
-	    // Two locations to the flanks
-	    {-1, -1, 0},
-	    {1, 1, 0},
-	    // Three locations in the 1st back row
-	    {-1, 1, 0},
-	    {-2, 0, 0},
-	    {0, 2, 0},
-	    // 2nd Back row
-	    {-2, 2, 0},
-	    {-3, 1, 0},
-	    {-1, 3, 0},
-	    {-4, 0, 0},
-	    {0, 4, 0},
-	    // Two locations to the side of the 1st back row
-	    {-3, -1, 0},
-	    {1, 3, 0},
-	    // Two locations to the side of the flanks
-	    {-2, -2, 0},
-	    {2, 2, 0},
-	    // 1st Front row
-	    {1, -1, 0},
-	    {0, -2, 0},
-	    {2, 0, 0},
-	    {-1, -3, 0},
-	    {3, 1, 0},
-	    // 2nd Front row
-	    {2, -2, 0},
-	    {1, -3, 0},
-	    {3, -1, 0},
-	    {0, -4, 0},
-	    {4, 0, 0},
-	};
-	static const std::map<Vec2<int>, int> rotationDiagonal = {
-	    {{1, -1}, 0}, {{1, 1}, 1}, {{-1, 1}, 2}, {{-1, -1}, 3},
-	};
-	static const std::list<Vec3<int>> targetOffsetsLinear = {
-	    // Two locations in the 1st back row
-	    {-1, 1, 0},
-	    {1, 1, 0},
-	    // Three locations in the 2nd back row
-	    {0, 2, 0},
-	    {-2, 2, 0},
-	    {2, 2, 0},
-	    // 3rd Back row
-	    {-1, 3, 0},
-	    {1, 3, 0},
-	    {0, 4, 0},
-	    // Sides of the 1st back row
-	    {-3, 1, 0},
-	    {3, 1, 0},
-	    // Flanks
-	    {-2, 0, 0},
-	    {2, 0, 0},
-	    {-4, 0, 0},
-	    {4, 0, 0},
-	    // 1st front row
-	    {-1, -1, 0},
-	    {1, -1, 0},
-	    {-3, -1, 0},
-	    {3, -1, 0},
-	    // 2nd front row
-	    {0, -2, 0},
-	    {-2, -2, 0},
-	    {2, -2, 0},
-	    // 3rd front row
-	    {-1, -3, 0},
-	    {1, -3, 0},
-	    {0, -4, 0},
-	};
-	static const std::map<Vec2<int>, int> rotationLinear = {
-	    {{0, -1}, 0}, {{1, 0}, 1}, {{0, 1}, 2}, {{-1, 0}, 3},
-	};
-
-	if (selectedUnits.empty())
-	{
-		return;
-	}
-	else if (selectedUnits.size() == 1)
-	{
-		selectedUnits.front()->setMission(
-		    state, BattleUnitMission::gotoLocation(*selectedUnits.front(), targetLocation, 0,
-		                                           demandGiveWay, true, 20, false, maxIterations));
-		return;
-	}
-
-	UString log = ";";
-	log += format("\nGroup move order issued to %d, %d, %d. Looking for the leader. Total number "
-	              "of units: %d",
-	              targetLocation.x, targetLocation.y, targetLocation.z, (int)selectedUnits.size());
-
-	// Sort units based on proximity to target and speed
-
-	auto &map = selectedUnits.front()->tileObject->map;
-	auto units = selectedUnits;
-	units.sort([targetLocation](const StateRef<BattleUnit> &a, const StateRef<BattleUnit> &b) {
-		return BattleUnitTileHelper::getDistanceStatic((Vec3<int>)a->position, targetLocation) /
-		           a->agent->modified_stats.getActualSpeedValue() <
-		       BattleUnitTileHelper::getDistanceStatic((Vec3<int>)b->position, targetLocation) /
-		           b->agent->modified_stats.getActualSpeedValue();
-	});
-
-	// Find the unit that will lead the group
-
-	StateRef<BattleUnit> leadUnit;
-	BattleUnitMission *leadMission = nullptr;
-	int minDistance = INT_MAX;
-	auto itUnit = units.begin();
-	while (itUnit != units.end())
-	{
-		auto curUnit = *itUnit;
-		log += format("\nTrying unit %s for leader", curUnit.id);
-
-		auto mission = BattleUnitMission::gotoLocation(*curUnit, targetLocation, 0, demandGiveWay,
-		                                               true, 20, false, maxIterations);
-		bool missionAdded = curUnit->setMission(state, mission);
-		if (missionAdded)
-		{
-			mission->start(state, *curUnit);
-			if (mission->currentPlannedPath.empty())
-			{
-				mission->cancelled = true;
-			}
-			else
-			{
-				auto unitTarget = mission->currentPlannedPath.back();
-				int absX = std::abs(targetLocation.x - unitTarget.x);
-				int absY = std::abs(targetLocation.y - unitTarget.y);
-				int absZ = std::abs(targetLocation.z - unitTarget.z);
-				int distance = std::max(std::max(absX, absY), absZ) + absX + absY + absZ;
-				if (distance < minDistance)
-				{
-					log += format("\nUnit was the closest to target yet, remembering him.");
-					// Cancel last leader's mission
-					if (leadMission)
-					{
-						leadMission->cancelled = true;
-					}
-					minDistance = distance;
-					leadUnit = curUnit;
-					leadMission = mission;
-					if (distance == 0)
-					{
-						log += format("\nUnit could reach target, chosen to be the leader.");
-						break;
-					}
-				}
-				else
-				{
-					mission->cancelled = true;
-				}
-			}
-		}
-		if (missionAdded)
-		{
-			log += format("\nUnit could not path to target, trying next one.");
-			// Unit cannot path to target but maybe he can path to something near it, leave him in
-			itUnit++;
-		}
-		else
-		{
-			log += format("\nUnit could not set a goto mission, removing him.");
-			// Unit cannot add a movement mission - remove him
-			itUnit = units.erase(itUnit);
-		}
-	}
-	if (itUnit == units.end() && !leadUnit)
-	{
-		log += format("\nNoone could path to target, aborting");
-		LogWarning("%s", log);
-		return;
-	}
-
-	// In case we couldn't reach it, change our target
-	targetLocation = leadMission->currentPlannedPath.back();
-	// Remove leader from list of units that require pathing
-	units.remove(leadUnit);
-	// Determine our direction and rotation
-	auto fromIt = leadMission->currentPlannedPath.rbegin();
-	int fromLimit = std::min(3, (int)leadMission->currentPlannedPath.size());
-	for (int i = 0; i < fromLimit; i++)
-	{
-		fromIt++;
-	}
-	Vec2<int> dir = {clamp(targetLocation.x - fromIt->x, -1, 1),
-	                 clamp(targetLocation.y - fromIt->y, -1, 1)};
-	if (dir.x == 0 && dir.y == 0)
-	{
-		dir.y = -1;
-	}
-	bool diagonal = dir.x != 0 && dir.y != 0;
-	auto &targetOffsets = diagonal ? targetOffsetsDiagonal : targetOffsetsLinear;
-	int rotation = diagonal ? rotationDiagonal.at(dir) : rotationLinear.at(dir);
-
-	// Sort remaining units based on proximity to target and speed
-	auto h = BattleUnitTileHelper(map, *leadUnit);
-	units.sort([h, targetLocation](const StateRef<BattleUnit> &a, const StateRef<BattleUnit> &b) {
-		return h.getDistance((Vec3<int>)a->position, targetLocation) /
-		           a->agent->modified_stats.getActualSpeedValue() <
-		       h.getDistance((Vec3<int>)b->position, targetLocation) /
-		           b->agent->modified_stats.getActualSpeedValue();
-	});
-
-	// Path every other unit to areas around target
-	log += format("\nTarget location is now %d, %d, %d. Leader is %s", targetLocation.x,
-	              targetLocation.y, targetLocation.z, leadUnit.id);
-
-	auto itOffset = targetOffsets.begin();
-	for (auto unit : units)
-	{
-		if (itOffset == targetOffsets.end())
-		{
-			log += format("\nRan out of location offsets, exiting");
-			LogWarning("%s", log);
-			return;
-		}
-		log += format("\nPathing unit %s", unit.id);
-		while (itOffset != targetOffsets.end())
-		{
-			auto offset = rotate(*itOffset, rotation);
-			auto targetLocationOffsetted = targetLocation + offset;
-			if (targetLocationOffsetted.x < 0 || targetLocationOffsetted.x >= map.size.x ||
-			    targetLocationOffsetted.y < 0 || targetLocationOffsetted.y >= map.size.y ||
-			    targetLocationOffsetted.z < 0 || targetLocationOffsetted.z >= map.size.z)
-			{
-				log += format("\nLocation was outside map bounds, trying next one");
-				itOffset++;
-				continue;
-			}
-
-			log += format("\nTrying location %d, %d, %d at offset %d, %d, %d",
-			              targetLocationOffsetted.x, targetLocationOffsetted.y,
-			              targetLocationOffsetted.z, offset.x, offset.y, offset.z);
-			float costLimit =
-			    1.50f * 2.0f * (float)(std::max(std::abs(offset.x), std::abs(offset.y)) +
-			                           std::abs(offset.x) + std::abs(offset.y));
-			auto path = map.findShortestPath(targetLocation, targetLocationOffsetted,
-			                                 costLimit / 2.0f, h, true, false, nullptr, costLimit);
-			itOffset++;
-			if (!path.empty() && path.back() == targetLocationOffsetted)
-			{
-				log += format("\nLocation checks out, pathing to it");
-				unit->setMission(state, BattleUnitMission::gotoLocation(
-				                            *unit, targetLocationOffsetted, 0, demandGiveWay, true,
-				                            20, false, maxIterations));
-				break;
-			}
-			log += format("\nLocation was unreachable, trying next one");
-		}
-	}
-	log += format("\nSuccessfully pathed everybody to target");
-	LogWarning("%s", log);
 }
 }

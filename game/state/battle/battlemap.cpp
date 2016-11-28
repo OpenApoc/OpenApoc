@@ -216,19 +216,19 @@ namespace
 bool doTwoSectorsIntersect(int x1, int y1, int z1, Vec3<int> s1, int x2, int y2, int z2,
                            Vec3<int> s2)
 {
-	return 
-		// 1's right > 2's left
-		x1 + s1.x > x2 
-		// 2's right > 1's left
-		&& x2 + s2.x > x1 
-		// 1's top > 2's bottom
-		&& z1 + s1.z > z2 
-		// 2's top > 1's bottom
-		&& z2 + s2.z > z1 
-		// 1's front > 2's back
-		&& y1 + s1.y > y2 
-		// 2's front > 1's back
-		&& y2 + s2.y > y1;
+	return
+	    // 1's right > 2's left
+	    x1 + s1.x > x2
+	    // 2's right > 1's left
+	    && x2 + s2.x > x1
+	    // 1's top > 2's bottom
+	    && z1 + s1.z > z2
+	    // 2's top > 1's bottom
+	    && z2 + s2.z > z1
+	    // 1's front > 2's back
+	    && y1 + s1.y > y2
+	    // 2's front > 1's back
+	    && y2 + s2.y > y1;
 }
 
 bool doesCellIntersectSomething(std::vector<sp<BattleMapSector>> &sec_map,
@@ -239,14 +239,16 @@ bool doesCellIntersectSomething(std::vector<sp<BattleMapSector>> &sec_map,
 	for (int x2 = 0; x2 < map_size.x; x2++)
 		for (int y2 = 0; y2 < map_size.y; y2++)
 			for (int z2 = 0; z2 < map_size.z; z2++)
-				intersects = intersects || (sec_map[x2 + y2 * map_size.x + z2 * map_size.x * map_size.y] &&
-				                            doTwoSectorsIntersect(x1, y1, z1, cell_size, x2, y2, z2,
-				                                                  sec_map[x2 + y2 * map_size.x + z2 * map_size.x * map_size.y]->size));
+				intersects =
+				    intersects ||
+				    (sec_map[x2 + y2 * map_size.x + z2 * map_size.x * map_size.y] &&
+				     doTwoSectorsIntersect(
+				         x1, y1, z1, cell_size, x2, y2, z2,
+				         sec_map[x2 + y2 * map_size.x + z2 * map_size.x * map_size.y]->size));
 	return intersects;
 }
 
-bool isMapComplete(std::vector<sp<BattleMapSector>> &sec_map,
-                   const Vec3<int> &map_size)
+bool isMapComplete(std::vector<sp<BattleMapSector>> &sec_map, const Vec3<int> &map_size)
 {
 	// We check if every single cell of a map intersects with at least some sector
 	bool complete = true;
@@ -257,8 +259,7 @@ bool isMapComplete(std::vector<sp<BattleMapSector>> &sec_map,
 	return complete;
 }
 
-bool placeSector(GameState &state,
-                 std::vector<sp<BattleMapSector>> &sec_map,
+bool placeSector(GameState &state, std::vector<sp<BattleMapSector>> &sec_map,
                  const Vec3<int> &map_size, const sp<BattleMapSector> sector, bool force = false,
                  bool invert_x_packing = false, bool invert_y_packing = false)
 {
@@ -293,14 +294,24 @@ bool placeSector(GameState &state,
 
 						// Try moving back on x
 						can_move = true;
-						for (int y2 = y1; y2 < y1 + sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]->size.y; y2++)
-							for (int z2 = z1; z2 < z1 + sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]->size.z; z2++)
+						for (int y2 = y1;
+						     y2 < y1 +
+						              sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]
+						                  ->size.y;
+						     y2++)
+							for (int z2 = z1;
+							     z2 <
+							     z1 +
+							         sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]
+							             ->size.z;
+							     z2++)
 								can_move = can_move &&
 								           !doesCellIntersectSomething(sec_map, map_size, x1 - dx1,
 								                                       y2, z2);
 						if (can_move)
 						{
-							sec_map[x1 - dx1 + y1 * map_size.x + z1 * map_size.x * map_size.y] = sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y];
+							sec_map[x1 - dx1 + y1 * map_size.x + z1 * map_size.x * map_size.y] =
+							    sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y];
 							sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y] = nullptr;
 							moved = true;
 							continue;
@@ -308,14 +319,24 @@ bool placeSector(GameState &state,
 
 						// Try moving back on y
 						can_move = true;
-						for (int x2 = x1; x2 < x1 + sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]->size.x; x2++)
-							for (int z2 = z1; z2 < z1 + sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]->size.z; z2++)
+						for (int x2 = x1;
+						     x2 < x1 +
+						              sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]
+						                  ->size.x;
+						     x2++)
+							for (int z2 = z1;
+							     z2 <
+							     z1 +
+							         sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]
+							             ->size.z;
+							     z2++)
 								can_move = can_move &&
 								           !doesCellIntersectSomething(sec_map, map_size, x2,
 								                                       y1 - dy1, z2);
 						if (can_move)
 						{
-							sec_map[x1 + (y1 - dy1) * map_size.x + z1 * map_size.x * map_size.y] = sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y];
+							sec_map[x1 + (y1 - dy1) * map_size.x + z1 * map_size.x * map_size.y] =
+							    sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y];
 							sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y] = nullptr;
 							moved = true;
 							continue;
@@ -323,14 +344,24 @@ bool placeSector(GameState &state,
 
 						// Try moving back on z
 						can_move = true;
-						for (int x2 = x1; x2 < x1 + sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]->size.x; x2++)
-							for (int y2 = z1; y2 < y1 + sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]->size.y; y2++)
+						for (int x2 = x1;
+						     x2 < x1 +
+						              sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]
+						                  ->size.x;
+						     x2++)
+							for (int y2 = z1;
+							     y2 <
+							     y1 +
+							         sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]
+							             ->size.y;
+							     y2++)
 								can_move = can_move &&
 								           !doesCellIntersectSomething(sec_map, map_size, x2, y2,
 								                                       z1 - dz1);
 						if (can_move)
 						{
-							sec_map[x1 + y1 * map_size.x + (z1 - dz1) * map_size.x * map_size.y] = sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y];
+							sec_map[x1 + y1 * map_size.x + (z1 - dz1) * map_size.x * map_size.y] =
+							    sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y];
 							sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y] = nullptr;
 							moved = true;
 							continue;
@@ -358,9 +389,12 @@ bool placeSector(GameState &state,
 						for (int y2 = 0; y2 < map_size.y; y2++)
 							for (int z2 = 0; z2 < map_size.z; z2++)
 								fits = fits &&
-								       (!sec_map[x2 + y2 * map_size.x + z2 * map_size.x * map_size.y] ||
+								       (!sec_map[x2 + y2 * map_size.x +
+								                 z2 * map_size.x * map_size.y] ||
 								        !doTwoSectorsIntersect(x1, y1, z1, sector->size, x2, y2, z2,
-								                               sec_map[x2 + y2 * map_size.x + z2 * map_size.x * map_size.y]->size));
+								                               sec_map[x2 + y2 * map_size.x +
+								                                       z2 * map_size.x * map_size.y]
+								                                   ->size));
 					if (!fits)
 						continue;
 
@@ -374,7 +408,8 @@ bool placeSector(GameState &state,
 			continue;
 
 		auto location = vectorRandomizer(state.rng, possible_locations);
-		sec_map[location.x + location.y * map_size.x + location.z * map_size.x * map_size.y] = sector;
+		sec_map[location.x + location.y * map_size.x + location.z * map_size.x * map_size.y] =
+		    sector;
 
 		return true;
 	}
@@ -382,9 +417,10 @@ bool placeSector(GameState &state,
 }
 } // anonymous-namespace
 
-bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int> &size, GameState &state, StateRef<Organisation> target_organisation,
-	std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
-	Battle::MissionType mission_type, UString mission_location_id)
+bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int> &size,
+                            GameState &state, StateRef<Organisation> target_organisation,
+                            std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
+                            Battle::MissionType mission_type, UString mission_location_id)
 {
 
 	// Vanilla had vertical stacking of sectors planned, but not implemented. I will implement both
@@ -419,10 +455,10 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 		size_mod += randBoundsInclusive(state.rng, 0, 1);
 	// Vertical stacking is also randomized, and disabled if the map does not allow it
 	allow_vertical_stacking =
-		allow_vertical_stacking && max_battle_size.z > 1 && randBool(state.rng);
+	    allow_vertical_stacking && max_battle_size.z > 1 && randBool(state.rng);
 	// This switch is only relevant if we're vertically stacking
 	require_only_largest_mandatory_sector =
-		require_only_largest_mandatory_sector && allow_vertical_stacking;
+	    require_only_largest_mandatory_sector && allow_vertical_stacking;
 	// However, there are maps that have too many mandatory sectors
 	// For these maps, we must set this switch, otherwise it's not possible to create a map!
 	if (!require_only_largest_mandatory_sector)
@@ -430,7 +466,7 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 		int remainingMapSize = max_battle_size.x * max_battle_size.y * max_battle_size.z;
 		for (auto &s : sectors)
 			remainingMapSize -=
-			s.second->size.x * s.second->size.y * s.second->size.z * s.second->occurrence_min;
+			    s.second->size.x * s.second->size.y * s.second->size.z * s.second->occurrence_min;
 		if (remainingMapSize < 0)
 			require_only_largest_mandatory_sector = true;
 	}
@@ -450,7 +486,7 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 		secNames.push_back(s.first);
 		secRefs.push_back(s.second);
 		secMaxSizeSeen =
-			std::max(secMaxSizeSeen, s.second->size.x * s.second->size.y * s.second->size.z);
+		    std::max(secMaxSizeSeen, s.second->size.x * s.second->size.y * s.second->size.z);
 		secMaxZSeen = std::max(secMaxZSeen, s.second->size.z);
 	}
 
@@ -500,48 +536,48 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 		{
 			// If we reached second attempt, it means we failed to create a map with modded size,
 			// and must revert to normal
-		case 2:
-			size = normal_size;
-			break;
+			case 2:
+				size = normal_size;
+				break;
 			// If we reached third attempt, it means we failed to create a stacked map with normal
 			// size, and should cancel vertical stacking.
 			// If there was no vertical stacking, skip this attempt
-		case 3:
-			if (!allow_vertical_stacking)
-				continue;
-			size = modded_size;
-			size.z = 1;
-			break;
+			case 3:
+				if (!allow_vertical_stacking)
+					continue;
+				size = modded_size;
+				size.z = 1;
+				break;
 			// If we reached fourth attempt, it means we failed to create a map with modded size
 			// without vertical stacking, and should try normal without stacking
 			// If there was no vertical stacking, skip this attempt
-		case 4:
-			if (!allow_vertical_stacking)
-				continue;
-			size = normal_size;
-			size.z = 1;
-			break;
+			case 4:
+				if (!allow_vertical_stacking)
+					continue;
+				size = normal_size;
+				size.z = 1;
+				break;
 			// If we reached fifth attempt, it means we failed to create a random map and should
 			// try a non-random map, filling sectors in big-to-small order, with vertical stacking
-		case 5:
-			size = normal_size;
-			random_generation = false;
-			break;
+			case 5:
+				size = normal_size;
+				random_generation = false;
+				break;
 			// If we reached sixth attempt, it means we failed to create a random map and should
 			// try a non-random map, filling sectors in big-to-small order, without vert. stacking
-		case 6:
-			if (!allow_vertical_stacking)
-				continue;
-			size = normal_size;
-			size.z = 1;
-			random_generation = false;
-			break;
+			case 6:
+				if (!allow_vertical_stacking)
+					continue;
+				size = normal_size;
+				size.z = 1;
+				random_generation = false;
+				break;
 		}
 
 		bool invert_x_packing = randBoundsInclusive(state.rng, 0, 1) == 1;
 		bool invert_y_packing = randBoundsInclusive(state.rng, 0, 1) == 1;
 
-		sec_map = { (unsigned)size.x * size.y * size.z, nullptr };
+		sec_map = {(unsigned)size.x * size.y * size.z, nullptr};
 		std::vector<int> sec_num_placed = std::vector<int>(secCount + 1, 0);
 		// Fill the list of remaining sectors so that we first attempt to place the mandatory sector
 		// that is highest and largest
@@ -550,7 +586,7 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 			for (int s = 1; s <= secMaxSizeSeen; s++)
 				for (int i = 1; i <= secCount; i++)
 					if (secRefs[i]->size.x * secRefs[i]->size.y * secRefs[i]->size.z == s &&
-						secRefs[i]->size.z == z)
+					    secRefs[i]->size.z == z)
 						remaining_sectors.push_back(i);
 
 		// Disable sectors that don't fit
@@ -560,15 +596,15 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 		{
 			sec_num_placed[remaining_sectors[i]] = 0;
 			if (secRefs[remaining_sectors[i]]->size.x > size.x ||
-				secRefs[remaining_sectors[i]]->size.y > size.y ||
-				secRefs[remaining_sectors[i]]->size.z > size.z)
+			    secRefs[remaining_sectors[i]]->size.y > size.y ||
+			    secRefs[remaining_sectors[i]]->size.z > size.z)
 			{
 				// We only care about losing non-vertically-stacked sectors,
 				// as vanilla had some maps where only stacked sectors are mandatory,
 				// yet it never actually did stacking!
 				// If, however, we are losing a stacked sector while stacking, then we do care!
 				if (secRefs[remaining_sectors[i]]->occurrence_min > 0 &&
-					secRefs[remaining_sectors[i]]->size.z <= size.z)
+				    secRefs[remaining_sectors[i]]->size.z <= size.z)
 				{
 					mandatorySectorLost = true;
 				}
@@ -577,7 +613,7 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 			else
 			{
 				mandatorySectorRemaining =
-					mandatorySectorRemaining || (secRefs[remaining_sectors[i]]->occurrence_min > 0);
+				    mandatorySectorRemaining || (secRefs[remaining_sectors[i]]->occurrence_min > 0);
 			}
 		}
 		// If we have lost all mandatory sectors due to size,
@@ -585,8 +621,8 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 		if (mandatorySectorLost && !mandatorySectorRemaining)
 		{
 			LogWarning("Failed to place mandatory sectors for map %s with size %d, %d, %d at "
-				"attempt %d",
-				id, size.x, size.y, size.z, attempt_make_map);
+			           "attempt %d",
+			           id, size.x, size.y, size.z, attempt_make_map);
 			continue;
 		}
 
@@ -598,11 +634,11 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 				break;
 			for (int j = 0; j < secRefs[remaining_sectors[i]]->occurrence_min; j++)
 				failed = failed ||
-				!placeSector(state, sec_map, size, secRefs[remaining_sectors[i]], true,
-					invert_x_packing, invert_y_packing);
+				         !placeSector(state, sec_map, size, secRefs[remaining_sectors[i]], true,
+				                      invert_x_packing, invert_y_packing);
 			sec_num_placed[remaining_sectors[i]] = secRefs[remaining_sectors[i]]->occurrence_min;
 			if (sec_num_placed[remaining_sectors[i]] ==
-				secRefs[remaining_sectors[i]]->occurrence_max)
+			    secRefs[remaining_sectors[i]]->occurrence_max)
 				remaining_sectors.erase(remaining_sectors.begin() + i);
 			if (require_only_largest_mandatory_sector)
 				break;
@@ -612,8 +648,8 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 		if (failed)
 		{
 			LogWarning("Failed to place mandatory sectors for map %s with size %d, %d, %d at "
-				"attempt %d",
-				id, size.x, size.y, size.z, attempt_make_map);
+			           "attempt %d",
+			           id, size.x, size.y, size.z, attempt_make_map);
 			continue;
 		}
 
@@ -640,10 +676,10 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 					for (int i = (int)remaining_sectors.size() - 1; i >= 0; i--)
 					{
 						if (sec_num_placed[remaining_sectors[i]] ==
-							secRefs[remaining_sectors[i]]->occurrence_max ||
-							secRefs[remaining_sectors[i]]->size.x > size.x ||
-							secRefs[remaining_sectors[i]]->size.y > size.y ||
-							secRefs[remaining_sectors[i]]->size.z > size.z)
+						        secRefs[remaining_sectors[i]]->occurrence_max ||
+						    secRefs[remaining_sectors[i]]->size.x > size.x ||
+						    secRefs[remaining_sectors[i]]->size.y > size.y ||
+						    secRefs[remaining_sectors[i]]->size.z > size.z)
 							remaining_sectors.erase(remaining_sectors.begin() + i);
 					}
 				}
@@ -655,10 +691,10 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 				{
 					int i = randBoundsExclusive(state.rng, (int)0, (int)remaining_sectors.size());
 					if (placeSector(state, sec_map, size, secRefs[remaining_sectors[i]],
-						attempt_fill_map == 2, invert_x_packing, invert_y_packing))
+					                attempt_fill_map == 2, invert_x_packing, invert_y_packing))
 					{
 						if (++sec_num_placed[remaining_sectors[i]] ==
-							secRefs[remaining_sectors[i]]->occurrence_max)
+						    secRefs[remaining_sectors[i]]->occurrence_max)
 							remaining_sectors.erase(remaining_sectors.begin() + i);
 					}
 					else
@@ -676,7 +712,7 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 			for (int i = (int)remaining_sectors.size() - 1; i >= 0; i--)
 			{
 				while (sec_num_placed[remaining_sectors[i]] <
-					secRefs[remaining_sectors[i]]->occurrence_max)
+				       secRefs[remaining_sectors[i]]->occurrence_max)
 				{
 					bool placed = false;
 					for (int x = 0; x <= size.x - secRefs[remaining_sectors[i]]->size.x; x++)
@@ -684,10 +720,10 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 						for (int y = 0; y <= size.y - secRefs[remaining_sectors[i]]->size.z; y++)
 						{
 							for (int z = 0; z <= size.z - secRefs[remaining_sectors[i]]->size.z;
-								z++)
+							     z++)
 							{
 								placed = placeSector(state, sec_map, size,
-									secRefs[remaining_sectors[i]]);
+								                     secRefs[remaining_sectors[i]]);
 								if (placed)
 									break;
 							}
@@ -711,33 +747,35 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 		if (!isMapComplete(sec_map, size))
 		{
 			LogWarning("Failed to complete map %s with size %d, %d, %d at attempt %d", id, size.x,
-				size.y, size.z, attempt_make_map);
+			           size.y, size.z, attempt_make_map);
 			continue;
 		}
 
 		LogWarning("Successfully completed map %s with size %d, %d, %d at attempt %d", id, size.x,
-			size.y, size.z, attempt_make_map);
+		           size.y, size.z, attempt_make_map);
 		return true;
 	}
-	
+
 	LogError("Failed to generate a map %s", id);
 	return false;
 }
 
-sp<Battle> BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>> &doors, bool &spawnCivilians, std::vector<sp<BattleMapSector>> sec_map, Vec3<int> size,
-	GameState &state, StateRef<Organisation> target_organisation,
-	std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
-	Battle::MissionType mission_type, UString mission_location_id)
+sp<Battle>
+BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>> &doors,
+                   bool &spawnCivilians, std::vector<sp<BattleMapSector>> sec_map, Vec3<int> size,
+                   GameState &state, StateRef<Organisation> target_organisation,
+                   std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
+                   Battle::MissionType mission_type, UString mission_location_id)
 {
 	auto b = mksp<Battle>();
 
 	b->currentPlayer = state.getPlayer();
 	b->currentActiveOrganisation = state.getPlayer();
 	b->currentTurn = 1;
-	b->size = { chunk_size.x * size.x, chunk_size.y * size.y, chunk_size.z * size.z };
-	b->spawnMap = { (unsigned)b->size.x,
-	{ (unsigned)b->size.y, std::vector<int>((unsigned)b->size.z, 0) } };
-	b->battle_map = { &state, id };
+	b->size = {chunk_size.x * size.x, chunk_size.y * size.y, chunk_size.z * size.z};
+	b->spawnMap = {(unsigned)b->size.x,
+	               {(unsigned)b->size.y, std::vector<int>((unsigned)b->size.z, 0)}};
+	b->battle_map = {&state, id};
 	b->mission_type = mission_type;
 	b->mission_location_id = mission_location_id;
 	b->player_craft = player_craft;
@@ -756,9 +794,8 @@ sp<Battle> BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<Batt
 				{
 					LogInfo("Loading sector tiles \"%s\"", sec->sectorTilesName);
 					sec->tiles.reset(new BattleMapSectorTiles());
-					if (!sec->tiles->loadSector(state,
-						BattleMapSectorTiles::getMapSectorPath() + "/" +
-						sec->sectorTilesName))
+					if (!sec->tiles->loadSector(state, BattleMapSectorTiles::getMapSectorPath() +
+					                                       "/" + sec->sectorTilesName))
 					{
 						LogError("Failed to load sector tiles \"%s\"", sec->sectorTilesName);
 					}
@@ -768,7 +805,7 @@ sp<Battle> BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<Batt
 					LogInfo("Using already-loaded sector tiles \"%s\"", sec->sectorTilesName);
 				}
 				auto &tiles = *sec->tiles;
-				Vec3<int> shift = { x * chunk_size.x, y * chunk_size.y, z * chunk_size.z };
+				Vec3<int> shift = {x * chunk_size.x, y * chunk_size.y, z * chunk_size.z};
 
 				for (auto &pair : tiles.initial_grounds)
 				{
@@ -782,14 +819,13 @@ sp<Battle> BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<Batt
 					// Check wether this is an exit location, and if so,
 					// replace the ground map part with an appropriate exit
 					bool canExit =
-						s->position.z >= exit_level_min && s->position.z <= exit_level_max;
-					canExit = canExit &&
-						(s->position.x > 0 || allow_exit[MapDirection::West]) &&
-						(s->position.y > 0 || allow_exit[MapDirection::North]) &&
-						(s->position.x < size.x * chunk_size.x - 1 ||
-							allow_exit[MapDirection::East]) &&
-							(s->position.y < size.y * chunk_size.y - 1 ||
-								allow_exit[MapDirection::South]);
+					    s->position.z >= exit_level_min && s->position.z <= exit_level_max;
+					canExit = canExit && (s->position.x > 0 || allow_exit[MapDirection::West]) &&
+					          (s->position.y > 0 || allow_exit[MapDirection::North]) &&
+					          (s->position.x < size.x * chunk_size.x - 1 ||
+					           allow_exit[MapDirection::East]) &&
+					          (s->position.y < size.y * chunk_size.y - 1 ||
+					           allow_exit[MapDirection::South]);
 					if (canExit)
 					{
 						Vec3<int> exitLocX = s->position;
@@ -818,18 +854,16 @@ sp<Battle> BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<Batt
 
 					// Set spawnability and height
 					if (s->type->movement_cost == 255 || s->type->height == 39 ||
-						b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] ==
-						-1)
+					    b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] == -1)
 					{
-						b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] =
-							-1;
+						b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] = -1;
 					}
 					else
 					{
 						b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] =
-							std::max(b->spawnMap[initialPosition.x][initialPosition.y]
-								[initialPosition.z],
-								s->type->height);
+						    std::max(b->spawnMap[initialPosition.x][initialPosition.y]
+						                        [initialPosition.z],
+						             s->type->height);
 					}
 
 					b->map_parts.push_back(s);
@@ -880,18 +914,16 @@ sp<Battle> BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<Batt
 
 					// Set spawnability and height
 					if (s->type->movement_cost == 255 || s->type->height == 39 ||
-						b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] ==
-						-1)
+					    b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] == -1)
 					{
-						b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] =
-							-1;
+						b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] = -1;
 					}
 					else
 					{
 						b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] =
-							std::max(b->spawnMap[initialPosition.x][initialPosition.y]
-								[initialPosition.z],
-								s->type->height);
+						    std::max(b->spawnMap[initialPosition.x][initialPosition.y]
+						                        [initialPosition.z],
+						             s->type->height);
 					}
 
 					b->map_parts.push_back(s);
@@ -900,8 +932,7 @@ sp<Battle> BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<Batt
 				{
 					if (target_organisation->loot[pair.second].size() == 0)
 						continue;
-					auto l =
-						vectorRandomizer(state.rng, target_organisation->loot[pair.second]);
+					auto l = vectorRandomizer(state.rng, target_organisation->loot[pair.second]);
 					if (!l)
 						continue;
 					auto i = mksp<AEquipment>();
@@ -915,8 +946,7 @@ sp<Battle> BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<Batt
 					auto lb = tlb->clone(shift);
 					b->losBlocks.push_back(lb);
 					// At least one civilian spawner required for map to spawn civilians
-					if (lb->spawn_type ==
-						BattleMapSector::LineOfSightBlock::SpawnType::Civilian)
+					if (lb->spawn_type == BattleMapSector::LineOfSightBlock::SpawnType::Civilian)
 					{
 						spawnCivilians = true;
 					}
@@ -924,14 +954,13 @@ sp<Battle> BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<Batt
 					// allowance
 					// in order for it to qualify for spawning X-Com agents
 					else if (lb->spawn_priority > 0 &&
-						lb->spawn_type ==
-						BattleMapSector::LineOfSightBlock::SpawnType::Player)
+					         lb->spawn_type == BattleMapSector::LineOfSightBlock::SpawnType::Player)
 					{
-						bool canSpawn = lb->start.z >= entrance_level_min &&
-							lb->start.z < entrance_level_max;
-						canSpawn = canSpawn &&
-							(lb->start.x == 0 || lb->end.x == size.x * chunk_size.x ||
-								lb->start.y == 0 || lb->end.y == size.y * chunk_size.y);
+						bool canSpawn =
+						    lb->start.z >= entrance_level_min && lb->start.z < entrance_level_max;
+						canSpawn =
+						    canSpawn && (lb->start.x == 0 || lb->end.x == size.x * chunk_size.x ||
+						                 lb->start.y == 0 || lb->end.y == size.y * chunk_size.y);
 						if (!canSpawn)
 						{
 							lb->spawn_priority = 0;
@@ -945,7 +974,9 @@ sp<Battle> BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<Batt
 	return b;
 }
 
-void BattleMap::linkDoors(sp<Battle> b, std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>> doors, GameState &state)
+void BattleMap::linkDoors(sp<Battle> b,
+                          std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>> doors,
+                          GameState &state)
 {
 	for (int i = 0; i < 2; i++)
 	{
@@ -971,7 +1002,7 @@ void BattleMap::linkDoors(sp<Battle> b, std::vector<std::list<std::pair<Vec3<int
 
 				auto it = doors[i].begin();
 				while (it != doors[i].end() &&
-					(it->first.x != loc.x || it->first.y != loc.y || it->first.z != loc.z))
+				       (it->first.x != loc.x || it->first.y != loc.y || it->first.z != loc.z))
 				{
 					it++;
 				}
@@ -980,9 +1011,9 @@ void BattleMap::linkDoors(sp<Battle> b, std::vector<std::list<std::pair<Vec3<int
 					continue;
 				}
 
-				it->second->door = { &state, d->id };
-				d->animationFrameCount = std::max(
-					d->animationFrameCount, (int)it->second->type->animation_frames.size());
+				it->second->door = {&state, d->id};
+				d->animationFrameCount = std::max(d->animationFrameCount,
+				                                  (int)it->second->type->animation_frames.size());
 				// d->mapParts.push_back(it->second); // <- no need to do it here, we do it in
 				// initBattle
 
@@ -997,10 +1028,10 @@ void BattleMap::linkDoors(sp<Battle> b, std::vector<std::list<std::pair<Vec3<int
 			}
 		}
 	}
-
 }
 
-void BattleMap::fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state, std::list<StateRef<Agent>> &agents)
+void BattleMap::fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state,
+                           std::list<StateRef<Agent>> &agents)
 {
 	// Agents are just added to squads in a default way here.
 	// Player will be allowed a chance to equip them and assign to squads how they prefer
@@ -1019,7 +1050,7 @@ void BattleMap::fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state, 
 
 		auto u = b->placeUnit(state, a);
 
-		u->agent->unit = { &state, u->id };
+		u->agent->unit = {&state, u->id};
 		u->owner = a->owner;
 		u->updateDisplayedItem();
 		if (!spawnCivilians && a->owner == state.getCivilian())
@@ -1060,8 +1091,7 @@ void BattleMap::fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state, 
 				{
 					if (b->forces[o].squads[s].getNumUnits() >= 3)
 						break;
-					if (u.second->owner != o || u.second->squadNumber != -1 ||
-						u.second->retreated)
+					if (u.second->owner != o || u.second->squadNumber != -1 || u.second->retreated)
 						continue;
 					u.second->assignToSquad(*b, s);
 					agentCount[o]--;
@@ -1088,7 +1118,6 @@ void BattleMap::fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state, 
 			}
 		}
 	}
-
 }
 
 void BattleMap::initNewMap(sp<Battle> b)
@@ -1102,7 +1131,7 @@ void BattleMap::initNewMap(sp<Battle> b)
 	}
 
 	// Init los block pathfinding
-	
+
 	// Vars
 	int size = b->losBlocks.size();
 	auto &losBlocks = b->losBlocks;
@@ -1120,7 +1149,9 @@ void BattleMap::initNewMap(sp<Battle> b)
 		for (auto j = i + 1; j < size; j++)
 		{
 			auto &b2 = *losBlocks[j];
-			if (doTwoSectorsIntersect(b1.start.x, b1.start.y, b1.start.z, b1.end - b1.start + Vec3<int>{1, 1, 1}, b2.start.x, b2.start.y, b2.start.z, b2.end - b2.start + Vec3<int>{1, 1, 1}))
+			if (doTwoSectorsIntersect(
+			        b1.start.x, b1.start.y, b1.start.z, b1.end - b1.start + Vec3<int>{1, 1, 1},
+			        b2.start.x, b2.start.y, b2.start.z, b2.end - b2.start + Vec3<int>{1, 1, 1}))
 			{
 				linkAvailable[i + j * size] = true;
 				linkAvailable[j + i * size] = true;
@@ -1145,26 +1176,29 @@ void BattleMap::unloadTiles()
 }
 
 sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> target_organisation,
-	std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
+                                   std::list<StateRef<Agent>> &agents,
+                                   StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
                                    UString mission_location_id)
 {
 	std::vector<sp<BattleMapSector>> sec_map;
 	Vec3<int> size;
 	auto doors = std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>>(2);
 	bool spawnCivilians = false;
-	
+
 	// Step 01: Generate map layout
-	if (!generateMap(sec_map, size, state, target_organisation, agents, player_craft, mission_type, mission_location_id))
+	if (!generateMap(sec_map, size, state, target_organisation, agents, player_craft, mission_type,
+	                 mission_location_id))
 	{
 		return nullptr;
 	}
 
 	// Step 02: Fill map with map parts
-	auto b = fillMap(doors, spawnCivilians, sec_map, size, state, target_organisation, agents, player_craft, mission_type, mission_location_id);
+	auto b = fillMap(doors, spawnCivilians, sec_map, size, state, target_organisation, agents,
+	                 player_craft, mission_type, mission_location_id);
 
 	// Step 03: Link adjacent doors
 	linkDoors(b, doors, state);
-	
+
 	// Step 04: Fill squads initially (and remove civilians if there's no spawns for them)
 	fillSquads(b, spawnCivilians, state, agents);
 

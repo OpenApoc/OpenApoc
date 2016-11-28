@@ -74,8 +74,8 @@ enum class BattleUnitType
 	LargeFlyer
 };
 static const std::list<BattleUnitType> BattleUnitTypeList = {
-	BattleUnitType::LargeFlyer, BattleUnitType::LargeWalker,
-	BattleUnitType::SmallFlyer, BattleUnitType::SmallWalker };
+    BattleUnitType::LargeFlyer, BattleUnitType::LargeWalker, BattleUnitType::SmallFlyer,
+    BattleUnitType::SmallWalker};
 
 class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_from_this<BattleUnit>
 {
@@ -109,7 +109,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 		TileCenter,
 		TileGround
 	};
-	
+
 	// [Properties]
 
 	UString id;
@@ -227,18 +227,18 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 
 	// Successfully retreated from combat
 	bool retreated = false;
-	
+
 	// Died and corpse was destroyed in an explosion
 	bool destroyed = false;
-	
+
 	// If unit is asked to give way, this list will be filled with facings
 	// in order of priority that should be tried by it
 	std::list<Vec2<int>> giveWayRequestData;
-	
+
 	// If unit was under attack, this will be filled with position of the attacker relative to us
 	// Otherwise it will be 0,0,0
-	Vec3<int> attackerPosition = { 0, 0, 0 };
-	
+	Vec3<int> attackerPosition = {0, 0, 0};
+
 	// AI
 	AIState aiState;
 
@@ -347,6 +347,10 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	bool isAttacking() const;
 	// Wether unit is throwing an item
 	bool isThrowing() const;
+	// Wether unit is moving (has Goto Location queued)
+	bool isMoving() const;
+	// Wether unit is doing a specific mission (has it queued)
+	bool isDoing(BattleUnitMission::Type missionType) const;
 	// Return unit's general type
 	BattleUnitType getType() const;
 	// Wether unit is AI controlled
@@ -407,10 +411,6 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	void tryToRiseUp(GameState &state);
 	void fallUnconscious(GameState &state);
 	void die(GameState &state, bool violently, bool bledToDeath = false);
-
-	// Move a group of units in formation
-	static void groupMove(GameState &state, std::list<StateRef<BattleUnit>> &selectedUnits,
-	                      Vec3<int> targetLocation, bool demandGiveWay, int maxIterations = 1000);
 
 	// Following members are not serialized, but rather are set in initBattle method
 

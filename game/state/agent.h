@@ -1,6 +1,7 @@
 #pragma once
 
 #include "framework/image.h"
+#include "game/state/rules/aequipment_type.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -15,7 +16,6 @@ namespace OpenApoc
 class Base;
 class Organisation;
 class AEquipment;
-class AEquipmentType;
 class BattleUnitAnimationPack;
 class BattleUnitImagePack;
 class Sample;
@@ -301,6 +301,7 @@ class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Age
 	sp<AEquipment> getFirstItemInSlot(AEquipmentSlotType type, bool lazy = true) const;
 	sp<AEquipment> getFirstShield() const;
 	sp<AEquipment> getFirstItemByType(StateRef<AEquipmentType> type) const;
+	sp<AEquipment> getFirstItemByType(AEquipmentType::Type type) const;
 
 	StateRef<BattleUnitImagePack> getImagePack(BodyPart bodyPart) const;
 

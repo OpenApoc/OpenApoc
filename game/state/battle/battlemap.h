@@ -63,19 +63,23 @@ class BattleMap : public StateObject<BattleMap>
 	                        std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
 	                        Battle::MissionType mission_type, UString mission_location_id);
 
-	
-	bool generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int> &size, GameState &state, StateRef<Organisation> target_organisation,
-		std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
-		Battle::MissionType mission_type, UString mission_location_id);
-	
-	sp<Battle> fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>> &doors, bool &spawnCivilians, std::vector<sp<BattleMapSector>> sec_map, Vec3<int> size,
-		GameState &state, StateRef<Organisation> target_organisation,
-		std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
-		Battle::MissionType mission_type, UString mission_location_id);
+	bool generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int> &size, GameState &state,
+	                 StateRef<Organisation> target_organisation, std::list<StateRef<Agent>> &agents,
+	                 StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
+	                 UString mission_location_id);
 
-	void linkDoors(sp<Battle> b, std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>> doors, GameState &state);
+	sp<Battle> fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>> &doors,
+	                   bool &spawnCivilians, std::vector<sp<BattleMapSector>> sec_map,
+	                   Vec3<int> size, GameState &state, StateRef<Organisation> target_organisation,
+	                   std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
+	                   Battle::MissionType mission_type, UString mission_location_id);
 
-	void fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state, std::list<StateRef<Agent>> &agents);
+	void linkDoors(sp<Battle> b,
+	               std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>> doors,
+	               GameState &state);
+
+	void fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state,
+	                std::list<StateRef<Agent>> &agents);
 
 	void initNewMap(sp<Battle> b);
 

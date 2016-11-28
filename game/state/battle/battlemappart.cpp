@@ -134,9 +134,8 @@ int BattleMapPart::getAnimationFrame()
 	}
 	else
 	{
-		return type->animation_frames.size() == 0
-		           ? -1
-		           : animation_frame_ticks / TICKS_PER_FRAME_MAP_PART;
+		return type->animation_frames.size() == 0 ? -1 : animation_frame_ticks /
+		                                                     TICKS_PER_FRAME_MAP_PART;
 	}
 }
 
@@ -1164,12 +1163,12 @@ void BattleMapPart::collapse(GameState &state)
 		state.current_battle->queueVisionRefresh(position);
 		state.current_battle->queuePathfindingRefresh(position);
 		// Note: Pathfinding refresh relies on tile's battlescape parameters being updated
-		// before it happens, so that battlescape parameters already account for the 
-		// now disfunctional map part. Pathfinding update will only happen 
+		// before it happens, so that battlescape parameters already account for the
+		// now disfunctional map part. Pathfinding update will only happen
 		// after we call setPosition() on the map part, which will
 		// call update to the battlescape parameters of the tile, which will
 		// in turn make us ignore the falling map part properly
-		// If we would somehow call collapse() in a way that would set falling to true but 
+		// If we would somehow call collapse() in a way that would set falling to true but
 		// would not trigger the setPosition() afterwards, this logic would fail
 	}
 	ceaseSupportProvision();

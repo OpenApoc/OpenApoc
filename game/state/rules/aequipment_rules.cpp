@@ -5,6 +5,8 @@
 
 namespace OpenApoc
 {
+AEquipmentType::AEquipmentType() : body_part(BodyPart::Body) {}
+
 template <> const UString &StateObject<AEquipmentType>::getPrefix()
 {
 	static UString prefix = "AEQUIPMENTTYPE_";

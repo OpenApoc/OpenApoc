@@ -1,6 +1,5 @@
 #pragma once
 
-#include "game/state/agent.h"
 #include "game/state/research.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
@@ -20,6 +19,7 @@ class BattleUnitImagePack;
 class Organisation;
 class DamageType;
 class DamageModifier;
+enum class BodyPart;
 
 enum class TriggerType
 {
@@ -57,6 +57,7 @@ class AEquipmentType : public StateObject<AEquipmentType>
 		Loot
 	};
 
+	AEquipmentType();
 	~AEquipmentType() override = default;
 
 	// Shared stuff
@@ -85,7 +86,7 @@ class AEquipmentType : public StateObject<AEquipmentType>
 	// Armor only
 	sp<Image> body_sprite;
 	StateRef<DamageModifier> damage_modifier;
-	BodyPart body_part = BodyPart::Body;
+	BodyPart body_part;
 	StateRef<BattleUnitImagePack> body_image_pack;
 	bool provides_flight = false;
 

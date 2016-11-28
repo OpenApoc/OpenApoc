@@ -304,7 +304,6 @@
 		<member>targetBodyState</member>
 		<member>currentPlannedPath</member>
 		<member>allowRunningAway</member>
-		<member>maxIterations</member>
 		<member>cancelled</member>
 	</object>
 	<object>
@@ -1385,20 +1384,47 @@
 	</enum>
 	<enum>
 		<name>AIAction::Type</name>
-		<value>Idle</value>
+		<value>None</value>
 		<value>AttackWeapon</value>
 		<value>AttackGrenade</value>
 		<value>AttackPsiPanic</value>
 		<value>AttackPsiStun</value>
 		<value>AttackPsiMC</value>
-		<value>Move</value>
+	</enum>
+	<enum>
+		<name>AIMovement::Type</name>
+		<value>None</value>
+		<value>Patrol</value>
+		<value>Advance</value>
+		<value>GetInRange</value>
+		<value>TakeCover</value>
 		<value>Retreat</value>
 	</enum>
 	<object>
-		<name>AIState</name>
+		<name>AIAction</name>
 		<member>type</member>
+		<member>targetUnit</member>
+		<member>item</member>
+	</object>
+	<object>
+		<name>AIMovement</name>
+		<member>type</member>
+		<member>targetLocation</member>
+		<member>movementMode</member>
+		<member>kneelingMode</member>
+	</object>
+	<object>
+		<name>AIDecision</name>
+		<member>action</member>
+		<member>movement</member>
 		<member>ticksUntilThinkAgain</member>
-		<member>waitForCompletion</member>
-		<member>offensive</member>
+	</object>
+	<object>
+		<name>AIState</name>
+		<member>lastDecision</member>
+		<member>enemySpotted</member>
+		<member>enemySpottedPrevious</member>
+		<member>attackerPosition</member>
+		<member>lastSeenEnemyPosition</member>
 	</object>
 </openapoc_gamestate>
