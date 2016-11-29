@@ -39,6 +39,8 @@ list(APPEND ALL_SOURCE_FILES ${MINIZ_SOURCE_FILES})
 
 add_library(OpenApoc_Miniz STATIC ${MINIZ_SOURCE_FILES})
 
+target_compile_definitions(OpenApoc_Miniz PUBLIC MINIZ_NO_TIME)
+
 target_include_directories(OpenApoc_Miniz PUBLIC ${CMAKE_SOURCE_DIR})
 target_include_directories(OpenApoc_Miniz PRIVATE
 		${CMAKE_SOURCE_DIR}/dependencies/miniz)
