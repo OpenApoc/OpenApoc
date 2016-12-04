@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "debian/contrib-jessie64"
+  config.vm.box = "ubuntu/xenial64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -81,6 +81,17 @@ Vagrant.configure(2) do |config|
 	git clone /vagrant/dependencies/$i OpenApoc/dependencies/$i
     done
     ( cd OpenApoc && git submodule init && git submodule update )
+    ( cd OpenApoc/dependencies/physfs && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo . && make && sudo make install)
+    ( cd OpenApoc/dependencies/glm && cmake . && make && sudo make install)
+
+    ( ln -s /vagrant/data/cd.iso OpenApoc/data )
+
+    (
+	mkdir -p OpenApoc/build
+	cd OpenApoc/build
+	cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+	make
+    )
 
   SHELL
 end
