@@ -72,6 +72,7 @@ Vagrant.configure(2) do |config|
 
     # Install dev env for OpenApoc
     sudo apt-get install -y libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-system-dev
+    sudo apt-get install -y gettext libboost-program-options-dev libxml2-utils
 
     unset LC_CTYPE
 
