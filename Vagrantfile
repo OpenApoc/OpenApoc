@@ -80,7 +80,6 @@ Vagrant.configure(2) do |config|
 	git clone /vagrant/dependencies/$i OpenApoc/dependencies/$i
     done
     ( cd OpenApoc && git submodule init && git submodule update )
-    ( cd OpenApoc/dependencies/physfs && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo . && make && sudo make install)
     ( cd OpenApoc/dependencies/glm && cmake . && make && sudo make install)
 
     ( ln -s /vagrant/data/cd.iso OpenApoc/data )
