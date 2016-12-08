@@ -2,10 +2,10 @@
 
 #include "game/state/agent.h"
 #include "game/state/tileview/tile.h"
+#include "game/state/tileview/tileobject_battleunit.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
-#include "game/state/tileview/tileobject_battleunit.h"
 #include <list>
 
 namespace OpenApoc
@@ -26,15 +26,17 @@ class BattleUnitTileHelper : public CanEnterTileHelper
 
   public:
 	BattleUnitTileHelper(TileMap &map, BattleUnit &u);
-	BattleUnitTileHelper(TileMap &map, bool large, bool flying, int maxHeight, sp<TileObjectBattleUnit> tileObject);
+	BattleUnitTileHelper(TileMap &map, bool large, bool flying, int maxHeight,
+	                     sp<TileObjectBattleUnit> tileObject);
 	BattleUnitTileHelper(TileMap &map, BattleUnitType type);
-	
+
 	static float getDistanceStatic(Vec3<float> from, Vec3<float> to);
 	static float getDistanceStatic(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd);
 	float getDistance(Vec3<float> from, Vec3<float> to) const override;
 	float getDistance(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd) const override;
 
-	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false, bool ignoreAllUnits = false) const override;
+	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
+	                  bool ignoreAllUnits = false) const override;
 	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay,
 	                  bool ignoreStaticUnits = false, bool ignoreAllUnits = false) const override;
 

@@ -84,19 +84,19 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	// Map of vector of flags, wether los block is available for pathfinding for this type
 	std::map<BattleUnitType, std::vector<bool>> blockAvailable;
-	// Map of vector of positions, those are center positions of a LOS block 
+	// Map of vector of positions, those are center positions of a LOS block
 	// (for pathfinding calculations) for every kind of unit and every block
 	std::map<BattleUnitType, std::vector<Vec3<int>>> blockCenterPos;
 	// Vector which contains a 2d array of bools, which denotes wether
 	// a connection between two los blocks exists (wether they are adjacent)
 	std::vector<bool> linkAvailable;
-	// Map of vector which contains a 2d array of ints, which denotes 
+	// Map of vector which contains a 2d array of ints, which denotes
 	// cost of a link (with -1 being no link present)
 	std::map<BattleUnitType, std::vector<int>> linkCost;
 	// Vector of flags, one for each los block, which deontes wether
 	// los block had changed and needs update
 	std::vector<bool> blockNeedsUpdate;
-	// Vector which contains a 2d array of bools, which denotes wether 
+	// Vector which contains a 2d array of bools, which denotes wether
 	// a connection between two los blocks needs an update
 	// Note: technically, this is a 2d array, but we only fill half of it
 	// We fill only values for 2nd index which is bigger than 1st
@@ -106,12 +106,14 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// Queue relevant los blocks for refresh
 	void queuePathfindingRefresh(Vec3<int> tile);
 
-	std::list<int> findLosBlockPath(int origin, int destination, BattleUnitType type, int iterationLimit = 1000);
+	std::list<int> findLosBlockPath(int origin, int destination, BattleUnitType type,
+	                                int iterationLimit = 1000);
 
 	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destination,
-		const BattleUnitTileHelper &canEnterTile,
-		bool ignoreStaticUnits = false, bool ignoreAllUnits = false, float *cost = nullptr,
-		float maxCost = 0.0f);
+	                                      const BattleUnitTileHelper &canEnterTile,
+	                                      bool ignoreStaticUnits = false,
+	                                      bool ignoreAllUnits = false, float *cost = nullptr,
+	                                      float maxCost = 0.0f);
 
 	int getLosBlockID(int x, int y, int z) const;
 	bool getVisible(StateRef<Organisation> org, int x, int y, int z) const;
@@ -166,7 +168,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	void updateProjectiles(GameState &state, unsigned int ticks);
 	void updateVision(GameState &state);
 	void updatePathfinding(GameState &state);
-	
+
 	// Adding objects to battle
 
 	sp<BattleExplosion> addExplosion(GameState &state, Vec3<int> position,

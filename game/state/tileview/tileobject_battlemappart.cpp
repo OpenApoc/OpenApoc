@@ -67,7 +67,7 @@ TileObject::Type TileObjectBattleMapPart::convertType(BattleMapPartType::Type ty
 void TileObjectBattleMapPart::setPosition(Vec3<float> newPosition)
 {
 	TileObject::setPosition(newPosition);
-	
+
 	owningTile->updateBattlescapeParameters();
 	drawOnTile->updateBattlescapeUIDrawOrder();
 }

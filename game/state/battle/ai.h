@@ -13,7 +13,7 @@ class GameState;
 class AEquipment;
 class BattleUnit;
 
-//enum class AIActionType
+// enum class AIActionType
 //{
 //
 //};
@@ -64,10 +64,9 @@ class AIState
 	bool offensive = false;
 
 	// Relative position of a person who attacked us since last think()
-	Vec3<int> attackerPosition = { 0, 0, 0 };
+	Vec3<int> attackerPosition = {0, 0, 0};
 	// Relative position of last seen enemy's last seen position (on last think())
-	Vec3<int> lastSeenEnemyPosition = { 0, 0, 0 };
-
+	Vec3<int> lastSeenEnemyPosition = {0, 0, 0};
 };
 
 enum class AIType

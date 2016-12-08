@@ -18,16 +18,25 @@ namespace OpenApoc
 {
 
 BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, BattleUnitType type)
-	: BattleUnitTileHelper(map, (type == BattleUnitType::LargeFlyer || type == BattleUnitType::LargeWalker), (type == BattleUnitType::LargeFlyer || type == BattleUnitType::SmallFlyer), (type == BattleUnitType::LargeFlyer || type == BattleUnitType::LargeWalker) ? 70 : 32, nullptr)
-{ }
+    : BattleUnitTileHelper(
+          map, (type == BattleUnitType::LargeFlyer || type == BattleUnitType::LargeWalker),
+          (type == BattleUnitType::LargeFlyer || type == BattleUnitType::SmallFlyer),
+          (type == BattleUnitType::LargeFlyer || type == BattleUnitType::LargeWalker) ? 70 : 32,
+          nullptr)
+{
+}
 
-BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, bool large, bool flying, int maxHeight, sp<TileObjectBattleUnit> tileObject)
-	: map(map), large(large), flying(flying), maxHeight(maxHeight), tileObject(tileObject)
-{ }
+BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, bool large, bool flying, int maxHeight,
+                                           sp<TileObjectBattleUnit> tileObject)
+    : map(map), large(large), flying(flying), maxHeight(maxHeight), tileObject(tileObject)
+{
+}
 
 BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, BattleUnit &u)
-	: BattleUnitTileHelper(map, u.isLarge(), u.canFly(), u.agent->type->bodyType->maxHeight, u.tileObject)
-{ }
+    : BattleUnitTileHelper(map, u.isLarge(), u.canFly(), u.agent->type->bodyType->maxHeight,
+                           u.tileObject)
+{
+}
 
 // Returns distance between two positions, in TUs required to move optimally between them (walking)
 float BattleUnitTileHelper::getDistanceStatic(Vec3<float> from, Vec3<float> to)
@@ -40,17 +49,22 @@ float BattleUnitTileHelper::getDistanceStatic(Vec3<float> from, Vec3<float> to)
 }
 
 // Returns distance between two positions, in TUs required to move optimally between them (walking)
-float BattleUnitTileHelper::getDistanceStatic(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd)
+float BattleUnitTileHelper::getDistanceStatic(Vec3<float> from, Vec3<float> toStart,
+                                              Vec3<float> toEnd)
 {
 	auto diffStart = toStart - from;
-	auto diffEnd = toEnd - from - Vec3<float> {1.0f, 1.0f, 1.0f};
-	auto xDiff = from.x >= toStart.x && from.x < toEnd.x ? 0.0f : std::min(std::abs(diffStart.x), std::abs(diffEnd.x));
-	auto yDiff = from.y >= toStart.y && from.y < toEnd.y ? 0.0f : std::min(std::abs(diffStart.y), std::abs(diffEnd.y));
-	auto zDiff = from.z >= toStart.z && from.z < toEnd.z ? 0.0f : std::min(std::abs(diffStart.z), std::abs(diffEnd.z));
+	auto diffEnd = toEnd - from - Vec3<float>{1.0f, 1.0f, 1.0f};
+	auto xDiff = from.x >= toStart.x && from.x < toEnd.x ? 0.0f : std::min(std::abs(diffStart.x),
+	                                                                       std::abs(diffEnd.x));
+	auto yDiff = from.y >= toStart.y && from.y < toEnd.y ? 0.0f : std::min(std::abs(diffStart.y),
+	                                                                       std::abs(diffEnd.y));
+	auto zDiff = from.z >= toStart.z && from.z < toEnd.z ? 0.0f : std::min(std::abs(diffStart.z),
+	                                                                       std::abs(diffEnd.z));
 	return (std::max(std::max(xDiff, yDiff), zDiff) + xDiff + yDiff + zDiff) * 2.0f;
 }
 
-float BattleUnitTileHelper::getDistance(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd) const
+float BattleUnitTileHelper::getDistance(Vec3<float> from, Vec3<float> toStart,
+                                        Vec3<float> toEnd) const
 {
 	return getDistanceStatic(from, toStart, toEnd);
 }
@@ -196,8 +210,10 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 		// Check if no static unit occupies it
 		if (!ignoreAllUnits)
 		{
-			// Actually, in case we are set to ignore static units, we still have to check for large static units,
-			// because they don't know how to give way, and therefore are considered permanent obstacles
+			// Actually, in case we are set to ignore static units, we still have to check for large
+			// static units,
+			// because they don't know how to give way, and therefore are considered permanent
+			// obstacles
 			if (to->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits))
 				return false;
 			if (toX1->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits))
@@ -246,7 +262,8 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 	else
 	{
 		// Check that no static unit occupies this tile
-		if (!ignoreAllUnits && to->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits))
+		if (!ignoreAllUnits &&
+		    to->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits))
 			return false;
 		// Movement cost into the tiles
 		costInt = to->movementCostIn;
@@ -487,10 +504,11 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 				}
 				if (!ignoreAllUnits &&
 				    (bottomLeftZ0->getUnitIfPresent(true, true, true, tileObject,
-						ignoreStaticUnits) ||
-				     rightTopZ0->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits) ||
+				                                    ignoreStaticUnits) ||
+				     rightTopZ0->getUnitIfPresent(true, true, true, tileObject,
+				                                  ignoreStaticUnits) ||
 				     bottomLeftZ1->getUnitIfPresent(true, true, true, tileObject,
-						 ignoreStaticUnits) ||
+				                                    ignoreStaticUnits) ||
 				     rightTopZ1->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits)))
 				{
 					return false;
@@ -610,10 +628,10 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 				if (!ignoreAllUnits &&
 				    (topLeftZ0->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits) ||
 				     bottomRightZ0->getUnitIfPresent(true, true, true, tileObject,
-						 ignoreStaticUnits) ||
+				                                     ignoreStaticUnits) ||
 				     topLeftZ1->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits) ||
 				     bottomRightZ1->getUnitIfPresent(true, true, true, tileObject,
-						 ignoreStaticUnits)))
+				                                     ignoreStaticUnits)))
 				{
 					return false;
 				}
@@ -822,7 +840,8 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 					return false;
 				}
 				if (!ignoreAllUnits &&
-				    (bottomLeft->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits) ||
+				    (bottomLeft->getUnitIfPresent(true, true, true, tileObject,
+				                                  ignoreStaticUnits) ||
 				     topRight->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits)))
 				{
 					return false;
@@ -838,7 +857,8 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 				}
 				if (!ignoreAllUnits &&
 				    (topLeft->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits) ||
-				     bottomRight->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits)))
+				     bottomRight->getUnitIfPresent(true, true, true, tileObject,
+				                                   ignoreStaticUnits)))
 				{
 					return false;
 				}
@@ -1556,7 +1576,8 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 	}
 }
 
-void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> target, int maxIterations)
+void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> target,
+                                  int maxIterations)
 {
 	auto unitTile = u.tileObject;
 	if (unitTile)
@@ -1587,8 +1608,8 @@ void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> tar
 			to = map.getTile(target);
 		}
 
-		auto path = state.current_battle->findShortestPath(u.goalPosition, target, 
-		                                 BattleUnitTileHelper{map, u}, demandGiveWay);
+		auto path = state.current_battle->findShortestPath(
+		    u.goalPosition, target, BattleUnitTileHelper{map, u}, demandGiveWay);
 
 		// Always start with the current position
 		this->currentPlannedPath.push_back(u.goalPosition);

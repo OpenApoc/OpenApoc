@@ -511,7 +511,7 @@ void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 			// Alert intended unit that he's on fire, if he cannot see the firer
 			auto unit = c.projectile->trackedUnit;
 			if (unit &&
-				unit->visibleUnits.find(c.projectile->firerUnit) == unit->visibleUnits.end())
+			    unit->visibleUnits.find(c.projectile->firerUnit) == unit->visibleUnits.end())
 			{
 				LogWarning("Notify: unit %s that he's taking fire", c.projectile->trackedUnit.id);
 				unit->attackerPosition = c.projectile->firerUnit->position;
@@ -523,34 +523,34 @@ void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 			if (c.projectile->damageType->explosive)
 			{
 				auto explosion = addExplosion(state, c.position, c.projectile->doodadType,
-					c.projectile->damageType, c.projectile->damage,
-					c.projectile->depletionRate, c.projectile->firerUnit);
+				                              c.projectile->damageType, c.projectile->damage,
+				                              c.projectile->depletionRate, c.projectile->firerUnit);
 				displayDoodad = false;
 			}
 			else
 			{
 				switch (c.obj->getType())
 				{
-				case TileObject::Type::Unit:
-				{
-					auto unit =
-						std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit();
-					displayDoodad = !unit->handleCollision(state, c);
-					playSound = false;
-					break;
-				}
-				case TileObject::Type::Ground:
-				case TileObject::Type::LeftWall:
-				case TileObject::Type::RightWall:
-				case TileObject::Type::Feature:
-				{
-					auto mapPartTile = std::static_pointer_cast<TileObjectBattleMapPart>(c.obj);
-					displayDoodad = !mapPartTile->getOwner()->handleCollision(state, c);
-					playSound = displayDoodad;
-					break;
-				}
-				default:
-					LogError("Collision with non-collidable object");
+					case TileObject::Type::Unit:
+					{
+						auto unit =
+						    std::static_pointer_cast<TileObjectBattleUnit>(c.obj)->getUnit();
+						displayDoodad = !unit->handleCollision(state, c);
+						playSound = false;
+						break;
+					}
+					case TileObject::Type::Ground:
+					case TileObject::Type::LeftWall:
+					case TileObject::Type::RightWall:
+					case TileObject::Type::Feature:
+					{
+						auto mapPartTile = std::static_pointer_cast<TileObjectBattleMapPart>(c.obj);
+						displayDoodad = !mapPartTile->getOwner()->handleCollision(state, c);
+						playSound = displayDoodad;
+						break;
+					}
+					default:
+						LogError("Collision with non-collidable object");
 				}
 			}
 			if (displayDoodad)
@@ -588,8 +588,8 @@ void Battle::updateVision(GameState &state)
 			// Quick check it's to the right side of us and in range
 			// FIXME: Should we check more thoroughly to save CPU time (probably)?
 			if ((vec.x > 0 && unit->facing.x < 0) || (vec.y > 0 && unit->facing.y < 0) ||
-				(vec.x < 0 && unit->facing.x > 0) || (vec.y < 0 && unit->facing.y > 0) ||
-				(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z > 400))
+			    (vec.x < 0 && unit->facing.x > 0) || (vec.y < 0 && unit->facing.y > 0) ||
+			    (vec.x * vec.x + vec.y * vec.y + vec.z * vec.z > 400))
 			{
 				continue;
 			}
@@ -604,7 +604,9 @@ void Battle::updateVision(GameState &state)
 	tilesChangedForVision.clear();
 }
 
-bool findLosBlockCenter(TileMap &map, BattleUnitType type, const BattleMapSector::LineOfSightBlock &lb, Vec3<int> center, Vec3<int> &closestValidPos)
+bool findLosBlockCenter(TileMap &map, BattleUnitType type,
+                        const BattleMapSector::LineOfSightBlock &lb, Vec3<int> center,
+                        Vec3<int> &closestValidPos)
 {
 	bool large = type == BattleUnitType::LargeFlyer || type == BattleUnitType::LargeWalker;
 	bool flying = type == BattleUnitType::LargeFlyer || type == BattleUnitType::SmallFlyer;
@@ -625,7 +627,7 @@ bool findLosBlockCenter(TileMap &map, BattleUnitType type, const BattleMapSector
 			for (int dy = -dist; dy <= dist; dy++)
 			{
 				int y = center.y + dy;
-				if (y <lb.start.y || y >= lb.end.y)
+				if (y < lb.start.y || y >= lb.end.y)
 				{
 					continue;
 				}
@@ -636,7 +638,8 @@ bool findLosBlockCenter(TileMap &map, BattleUnitType type, const BattleMapSector
 					{
 						continue;
 					}
-					// At least one coord must be at the edge so that we don't re-check already checked points
+					// At least one coord must be at the edge so that we don't re-check already
+					// checked points
 					if (std::abs(dx) != dist && std::abs(dy) != dist && std::abs(dz) != dist)
 					{
 						continue;
@@ -646,7 +649,7 @@ bool findLosBlockCenter(TileMap &map, BattleUnitType type, const BattleMapSector
 					auto t = map.getTile(x, y, z);
 					if (t->getPassable(large, height) && (flying || t->getCanStand(large)))
 					{
-						closestValidPos = { x, y, z };
+						closestValidPos = {x, y, z};
 						return true;
 					}
 				}
@@ -673,8 +676,11 @@ void Battle::updatePathfinding(GameState &state)
 	// Fill up map of helpers
 	// It would be appropriate to use a std::map here, alas, it doesn't work when there's
 	// no default constructor available, so I have to use this kludge
-	std::vector<BattleUnitTileHelper> helperMap = { BattleUnitTileHelper(mapRef, (BattleUnitType)0), BattleUnitTileHelper(mapRef, (BattleUnitType)1), BattleUnitTileHelper(mapRef, (BattleUnitType)2),BattleUnitTileHelper(mapRef, (BattleUnitType)3) };
-	
+	std::vector<BattleUnitTileHelper> helperMap = {BattleUnitTileHelper(mapRef, (BattleUnitType)0),
+	                                               BattleUnitTileHelper(mapRef, (BattleUnitType)1),
+	                                               BattleUnitTileHelper(mapRef, (BattleUnitType)2),
+	                                               BattleUnitTileHelper(mapRef, (BattleUnitType)3)};
+
 	// First update all center positions
 	for (int i = 0; i < lbCount; i++)
 	{
@@ -687,9 +693,9 @@ void Battle::updatePathfinding(GameState &state)
 		// Mark all paths including this block as needing an update
 		for (int j = 0; j < lbCount; j++)
 		{
-			if (linkAvailable[i + lbCount*j])
+			if (linkAvailable[i + lbCount * j])
 			{
-				linkNeedsUpdate[std::min(i , j) + std::max(i , j) * lbCount] = true;
+				linkNeedsUpdate[std::min(i, j) + std::max(i, j) * lbCount] = true;
 			}
 		}
 
@@ -698,7 +704,8 @@ void Battle::updatePathfinding(GameState &state)
 		auto center = (lb.start + lb.end) / 2;
 		for (auto type : BattleUnitTypeList)
 		{
-			blockAvailable[type][i] = findLosBlockCenter(mapRef, type, lb, center, blockCenterPos[type][i]);
+			blockAvailable[type][i] =
+			    findLosBlockCenter(mapRef, type, lb, center, blockCenterPos[type][i]);
 		}
 	}
 
@@ -733,9 +740,10 @@ void Battle::updatePathfinding(GameState &state)
 
 				float cost = 0.0f;
 
-				auto path = mapRef.findShortestPath(blockCenterPos[type][i], 
-					blockCenterPos[type][j], distance * PATH_ITERATION_LIMIT_MULTIPLIER, 
-					helperMap[(int)type], true, true, &cost, distance * 4 * PATH_COST_LIMIT_MULTIPLIER);
+				auto path = mapRef.findShortestPath(
+				    blockCenterPos[type][i], blockCenterPos[type][j],
+				    distance * PATH_ITERATION_LIMIT_MULTIPLIER, helperMap[(int)type], true, true,
+				    &cost, distance * 4 * PATH_COST_LIMIT_MULTIPLIER);
 
 				if (path.empty() || (*path.rbegin()) != blockCenterPos[type][j])
 				{
@@ -840,8 +848,8 @@ void Battle::setVisible(StateRef<Organisation> org, int x, int y, int z, bool va
 
 void Battle::queueVisionRefresh(Vec3<int> tile) { tilesChangedForVision.insert(tile); }
 
-void Battle::queuePathfindingRefresh(Vec3<int> tile) 
-{ 
+void Battle::queuePathfindingRefresh(Vec3<int> tile)
+{
 	blockNeedsUpdate[getLosBlockID(tile.x, tile.y, tile.z)] = true;
 	auto tXgt0 = tile.x > 0;
 	auto tYgt0 = tile.y > 0;
