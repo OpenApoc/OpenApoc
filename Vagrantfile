@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "ubuntu/trusty64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -62,15 +62,44 @@ Vagrant.configure(2) do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", inline: <<-SHELL
-    sudo apt-get update
+  config.vm.provision "shell",
+	privileged: false,
+	inline: <<-SHELL
+
+	# Remove the default puppet
+	sudo apt remove --purge ruby
+
+	# Setup the OS, as the .travis.yml
+	# XXX - should be able to parse the file, and extract important things
+
+
+	sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+	sudo add-apt-repository ppa:george-edison55/cmake-3.x -y
+	sudo add-apt-repository "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.9 main" -y
+	wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | sudo apt-key add -
+	sudo apt-get update
+
+
+	sudo apt-get install ccache g++-5 -y
+	export CXX="g++-5" CC="gcc-5"
+	sudo apt-get install libunwind8-dev libsdl2-dev libboost-locale-dev libboost-filesystem-dev libboost-program-options-dev -y
+	mkdir ~/dependency-prefix
+	export PKG_CONFIG_PATH=~/dependency-prefix/lib/pkgconfig
+	# setup some default settings
+	export LSAN_OPTIONS="exitcode=0"
+	export NUM_CORES=$(grep '^processor' /proc/cpuinfo|wc -l)
+
+	pushd ./dependencies/glm && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . > /dev/null && make -j2 > /dev/null && make install > /dev/null && popd
 
     # Install X11 + OpenGL
-    sudo apt-get install -y mesa-utils xinit i3
+    sudo apt-get install -y mesa-utils xinit i3 x11-xserver-utils
 
     # Install dev env for OpenApoc
     sudo apt-get install -y libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-system-dev
     sudo apt-get install -y gettext libboost-program-options-dev libxml2-utils
+
+	# Install perf tools
+	sudo apt-get install -y perf pstack
 
     unset LC_CTYPE
 
@@ -82,7 +111,8 @@ Vagrant.configure(2) do |config|
     ( cd OpenApoc && git submodule init && git submodule update )
     ( cd OpenApoc/dependencies/glm && cmake . && make && sudo make install)
 
-    ( ln -s /vagrant/data/cd.iso OpenApoc/data )
+    ( ln -s /vagrant/data/XCOM.* OpenApoc/data )
+    ( ln -s XCOM.cue OpenApoc/data/cd.iso )
 
     (
 	mkdir -p OpenApoc/build
