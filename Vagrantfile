@@ -45,7 +45,11 @@ Vagrant.configure(2) do |config|
   #
   config.vm.provider "virtualbox" do |vb|
     vb.gui = false
-    vb.memory = "512"
+
+    # Some C++ files take 1600+ MiB RSS
+    vb.memory = "2048"
+
+    # No need to rush, as if multiple compilation, you'll even need more RSS
     vb.cpus = 1
   end
   #
