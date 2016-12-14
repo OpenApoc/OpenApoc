@@ -229,7 +229,8 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 	}
 	// Trying all possible names, because game actually has some maps missing sectors in the middle
 	// (like, 05RESCUE has no SEC04 but has SEC05 and on)
-	for (int sector = 1; sector < 100; sector++)
+	// Note this starts at 0, as some maps have 'sec00' as the first, not 'sec01'
+	for (int sector = 0; sector < 100; sector++)
 	{
 		UString secName = format("%02d", sector);
 		UString tilesName = format("%s_%02d", dirName, sector);
@@ -245,7 +246,12 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 			if (!inFile)
 			{
 				LogInfo("Sector %d not present for map %s", sector, mapRootName);
-				continue;
+				// Special case - handle some maps starting at 0 not 1
+				if (sector == 0)
+				{
+					continue;
+				}
+				break;
 			}
 
 			inFile.read((char *)&sdata, sizeof(sdata));
