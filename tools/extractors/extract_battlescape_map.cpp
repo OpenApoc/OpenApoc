@@ -156,7 +156,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 
 	// Trying all possible names, because game actually has some maps missing sectors in the middle
 	// (like, 05RESCUE has no SEC04 but has SEC05 and on)
-	for (int sector = 1; sector < 100; sector++)
+	for (int sector = 0; sector < 100; sector++)
 	{
 		UString secName = format("%02d", sector);
 
@@ -246,12 +246,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 			if (!inFile)
 			{
 				LogInfo("Sector %d not present for map %s", sector, mapRootName);
-				// Special case - handle some maps starting at 0 not 1
-				if (sector == 0)
-				{
-					continue;
-				}
-				break;
+				continue;
 			}
 
 			inFile.read((char *)&sdata, sizeof(sdata));
