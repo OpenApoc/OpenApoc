@@ -156,22 +156,27 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 
 	// Trying all possible names, because game actually has some maps missing sectors in the middle
 	// (like, 05RESCUE has no SEC04 but has SEC05 and on)
-	for (int sector = 0; sector < 100; sector++)
+	auto sdtFiles = fw().data->fs.enumerateDirectory(map_prefix + "/" + dirName, ".sdt");
+	for (const auto &sdtFile : sdtFiles)
 	{
-		UString secName = format("%02d", sector);
+		LogInfo("Reading map %s", sdtFile);
+		/*  Trim off '.sdt' to get the base map name */
+		LogAssert(sdtFile.length() >= 4);
+		auto secName = sdtFile.substr(0, sdtFile.length() - 4);
 
-		UString tilesName = format("%s_%02d", dirName, sector);
+		auto sector = secName.substr(secName.length() - 2);
+
+		UString tilesName = format("%s_%s", dirName, sector);
 
 		SecSdtStructure sdata;
 		{
-			auto fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("sec") +
-			                secName + UString(".sdt");
+			auto fileName = dirName + UString("/") + sdtFile;
 
 			auto fullPath = map_prefix + fileName;
 			auto inFile = fw().data->fs.open(fullPath);
 			if (!inFile)
 			{
-				LogInfo("Sector %d not present for map %d", sector, index);
+				LogInfo("Sector %s not present for map %d", sector, index);
 				continue;
 			}
 
@@ -190,7 +195,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 		s->occurrence_max = sdata.occurrence_max;
 		s->sectorTilesName = tilesName;
 
-		m->sectors["SEC" + secName] = s;
+		m->sectors["SEC" + sector] = s;
 	}
 
 	if (bdata.destroyed_ground_idx != 0)
@@ -227,25 +232,29 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 			return {};
 		}
 	}
-	// Trying all possible names, because game actually has some maps missing sectors in the middle
-	// (like, 05RESCUE has no SEC04 but has SEC05 and on)
-	// Note this starts at 0, as some maps have 'sec00' as the first, not 'sec01'
-	for (int sector = 0; sector < 100; sector++)
+	auto sdtFiles = fw().data->fs.enumerateDirectory(map_prefix + "/" + dirName, ".sdt");
+
+	for (const auto &sdtFile : sdtFiles)
 	{
-		UString secName = format("%02d", sector);
-		UString tilesName = format("%s_%02d", dirName, sector);
+		LogInfo("Reading map %s", sdtFile);
+		/*  Trim off '.sdt' to get the base map name */
+		LogAssert(sdtFile.length() >= 4);
+		auto secName = sdtFile.substr(0, sdtFile.length() - 4);
+
+		auto sector = secName.substr(secName.length() - 2);
+
+		UString tilesName = format("%s_%s", dirName, sector);
 		up<BattleMapSectorTiles> tiles(new BattleMapSectorTiles());
 
 		SecSdtStructure sdata;
 		{
-			auto fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("sec") +
-			                secName + UString(".sdt");
+			auto fileName = dirName + UString("/") + secName + UString(".sdt");
 
 			auto fullPath = map_prefix + fileName;
 			auto inFile = fw().data->fs.open(fullPath);
 			if (!inFile)
 			{
-				LogInfo("Sector %d not present for map %s", sector, mapRootName);
+				LogInfo("Sector %s not present for map %s", sector, mapRootName);
 				continue;
 			}
 
@@ -259,8 +268,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 
 		// Read LOS blocks
 		{
-			auto fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("sec") +
-			                secName + UString(".sls");
+			auto fileName = dirName + UString("/") + secName + UString(".sls");
 
 			auto fullPath = map_prefix + fileName;
 			auto inFile = fw().data->fs.open(fullPath);
@@ -336,8 +344,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 
 		// Read Loot locations
 		{
-			auto fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("sec") +
-			                secName + UString(".sob");
+			auto fileName = dirName + UString("/") + secName + UString(".sob");
 
 			auto fullPath = map_prefix + fileName;
 			auto inFile = fw().data->fs.open(fullPath);
@@ -384,8 +391,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 
 		// Read sector map
 		{
-			auto fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("sec") +
-			                secName + UString(".smp");
+			auto fileName = dirName + UString("/") + secName + UString(".smp");
 
 			auto expectedFileSize = bdata.chunk_x * bdata.chunk_y * bdata.chunk_z * sdata.chunks_x *
 			                        sdata.chunks_y * sdata.chunks_z * 4;
