@@ -26,11 +26,14 @@ after_build:
 - echo %APPVEYOR_BUILD_VERSION% > OpenApoc-%APPVEYOR_BUILD_VERSION%\build-id
 - copy bin\%PLATFORM%\%CONFIGURATION%\*.dll OpenApoc-%APPVEYOR_BUILD_VERSION%\
 - copy bin\%PLATFORM%\%CONFIGURATION%\*.exe OpenApoc-%APPVEYOR_BUILD_VERSION%\
-- copy bin\%PLATFORM%\%CONFIGURATION%\*.pdb OpenApoc-%APPVEYOR_BUILD_VERSION%\
 - del data\cd.iso
 - del data\cd.iso.xz
 - xcopy /E data OpenApoc-%APPVEYOR_BUILD_VERSION%\data\
 - 7z a OpenApoc-msvc.zip OpenApoc-%APPVEYOR_BUILD_VERSION%
+- copy bin\%PLATFORM%\%CONFIGURATION%\*.pdb OpenApoc-%APPVEYOR_BUILD_VERSION%\
+- 7z a OpenApoc-msvc-debug.zip OpenApoc-%APPVEYOR_BUILD_VERSION%\*.pdb
 artifacts:
 - path: OpenApoc-msvc.zip
   name: built-zip
+- path: OpenApoc-msvc-debug.zip
+  name: debug-zip
