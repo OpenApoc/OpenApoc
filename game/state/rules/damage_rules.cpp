@@ -5,19 +5,19 @@
 namespace OpenApoc
 {
 
-template <> const UString &StateObject<HazardType>::getPrefix()
+const UString &HazardType::getPrefix()
 {
 	static UString prefix = "HAZARD_";
 	return prefix;
 }
 
-template <> const UString &StateObject<HazardType>::getTypeName()
+const UString &HazardType::getTypeName()
 {
 	static UString name = "HazardType";
 	return name;
 }
 
-template <> sp<HazardType> StateObject<HazardType>::get(const GameState &state, const UString &id)
+sp<HazardType> HazardType::get(const GameState &state, const UString &id)
 {
 	auto it = state.hazard_types.find(id);
 	if (it == state.hazard_types.end())
@@ -28,20 +28,19 @@ template <> sp<HazardType> StateObject<HazardType>::get(const GameState &state, 
 	return it->second;
 }
 
-template <> const UString &StateObject<DamageModifier>::getPrefix()
+const UString &DamageModifier::getPrefix()
 {
 	static UString prefix = "DAMAGEMODIFIER_";
 	return prefix;
 }
 
-template <> const UString &StateObject<DamageModifier>::getTypeName()
+const UString &DamageModifier::getTypeName()
 {
 	static UString name = "DamageModifier";
 	return name;
 }
 
-template <>
-sp<DamageModifier> StateObject<DamageModifier>::get(const GameState &state, const UString &id)
+sp<DamageModifier> DamageModifier::get(const GameState &state, const UString &id)
 {
 	auto it = state.damage_modifiers.find(id);
 	if (it == state.damage_modifiers.end())
@@ -52,19 +51,19 @@ sp<DamageModifier> StateObject<DamageModifier>::get(const GameState &state, cons
 	return it->second;
 }
 
-template <> const UString &StateObject<DamageType>::getPrefix()
+const UString &DamageType::getPrefix()
 {
 	static UString prefix = "DAMAGETYPE_";
 	return prefix;
 }
 
-template <> const UString &StateObject<DamageType>::getTypeName()
+const UString &DamageType::getTypeName()
 {
 	static UString name = "DamageType";
 	return name;
 }
 
-template <> sp<DamageType> StateObject<DamageType>::get(const GameState &state, const UString &id)
+sp<DamageType> DamageType::get(const GameState &state, const UString &id)
 {
 	auto it = state.damage_types.find(id);
 	if (it == state.damage_types.end())

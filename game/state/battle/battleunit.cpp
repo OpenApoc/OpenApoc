@@ -30,7 +30,7 @@ static const std::set<TileObject::Type> mapPartSet = {
     TileObject::Type::Feature};
 static const std::set<TileObject::Type> unitSet = {TileObject::Type::Unit};
 
-template <> sp<BattleUnit> StateObject<BattleUnit>::get(const GameState &state, const UString &id)
+sp<BattleUnit> BattleUnit::get(const GameState &state, const UString &id)
 {
 	auto it = state.current_battle->units.find(id);
 	if (it == state.current_battle->units.end())
@@ -41,18 +41,17 @@ template <> sp<BattleUnit> StateObject<BattleUnit>::get(const GameState &state, 
 	return it->second;
 }
 
-template <> const UString &StateObject<BattleUnit>::getPrefix()
+const UString &BattleUnit::getPrefix()
 {
 	static UString prefix = "BATTLEUNIT_";
 	return prefix;
 }
-template <> const UString &StateObject<BattleUnit>::getTypeName()
+const UString &BattleUnit::getTypeName()
 {
 	static UString name = "BattleUnit";
 	return name;
 }
-template <>
-const UString &StateObject<BattleUnit>::getId(const GameState &state, const sp<BattleUnit> ptr)
+const UString &BattleUnit::getId(const GameState &state, const sp<BattleUnit> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &a : state.current_battle->units)

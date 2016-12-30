@@ -282,7 +282,7 @@ sp<Doodad> City::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 	return doodad;
 }
 
-template <> sp<City> StateObject<City>::get(const GameState &state, const UString &id)
+sp<City> City::get(const GameState &state, const UString &id)
 {
 	auto it = state.cities.find(id);
 	if (it == state.cities.end())
@@ -293,18 +293,18 @@ template <> sp<City> StateObject<City>::get(const GameState &state, const UStrin
 	return it->second;
 }
 
-template <> const UString &StateObject<City>::getPrefix()
+const UString &City::getPrefix()
 {
 	static UString prefix = "CITYMAP_";
 	return prefix;
 }
-template <> const UString &StateObject<City>::getTypeName()
+const UString &City::getTypeName()
 {
 	static UString name = "City";
 	return name;
 }
 
-template <> const UString &StateObject<City>::getId(const GameState &state, const sp<City> ptr)
+const UString &City::getId(const GameState &state, const sp<City> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &c : state.cities)

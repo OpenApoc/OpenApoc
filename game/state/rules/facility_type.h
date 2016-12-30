@@ -10,8 +10,9 @@ namespace OpenApoc
 {
 class Image;
 class UfopaediaEntry;
-class FacilityType : public StateObject<FacilityType>
+class FacilityType : public StateObject
 {
+	STATE_OBJECT(FacilityType)
   public:
 	enum class Capacity
 	{

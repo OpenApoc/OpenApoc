@@ -28,8 +28,9 @@ class ProjectDependencies
 	bool satisfied(StateRef<Base> base) const;
 };
 
-class ResearchTopic : public StateObject<ResearchTopic>
+class ResearchTopic : public StateObject
 {
+	STATE_OBJECT(ResearchTopic)
   public:
 	ResearchTopic() = default;
 	enum class Type
@@ -106,8 +107,9 @@ class ItemDependency
 	bool satisfied(StateRef<Base> base) const;
 };
 
-class Lab : public StateObject<Lab>
+class Lab : public StateObject
 {
+	STATE_OBJECT(Lab)
   public:
 	Lab() = default;
 	ResearchTopic::LabSize size = ResearchTopic::LabSize::Small;

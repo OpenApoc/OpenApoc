@@ -18,8 +18,9 @@ class Image;
 class VoxelMap;
 class BattleMap;
 
-class VehicleType : public StateObject<VehicleType>
+class VehicleType : public StateObject
 {
+	STATE_OBJECT(VehicleType)
   public:
 	enum class Type
 	{

@@ -21,7 +21,7 @@ namespace OpenApoc
 {
 BattleMap::BattleMap() {}
 
-template <> sp<BattleMap> StateObject<BattleMap>::get(const GameState &state, const UString &id)
+sp<BattleMap> BattleMap::get(const GameState &state, const UString &id)
 {
 	auto it = state.battle_maps.find(id);
 	if (it == state.battle_maps.end())
@@ -32,18 +32,17 @@ template <> sp<BattleMap> StateObject<BattleMap>::get(const GameState &state, co
 	return it->second;
 }
 
-template <> const UString &StateObject<BattleMap>::getPrefix()
+const UString &BattleMap::getPrefix()
 {
 	static UString prefix = "BATTLEMAP_";
 	return prefix;
 }
-template <> const UString &StateObject<BattleMap>::getTypeName()
+const UString &BattleMap::getTypeName()
 {
 	static UString name = "BattleMap";
 	return name;
 }
-template <>
-const UString &StateObject<BattleMap>::getId(const GameState &state, const sp<BattleMap> ptr)
+const UString &BattleMap::getId(const GameState &state, const sp<BattleMap> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &a : state.battle_maps)

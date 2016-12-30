@@ -10,7 +10,7 @@
 namespace OpenApoc
 {
 
-template <> sp<AgentType> StateObject<AgentType>::get(const GameState &state, const UString &id)
+sp<AgentType> AgentType::get(const GameState &state, const UString &id)
 {
 	auto it = state.agent_types.find(id);
 	if (it == state.agent_types.end())
@@ -21,18 +21,18 @@ template <> sp<AgentType> StateObject<AgentType>::get(const GameState &state, co
 	return it->second;
 }
 
-template <> const UString &StateObject<AgentType>::getPrefix()
+const UString &AgentType::getPrefix()
 {
 	static UString prefix = "AGENTTYPE_";
 	return prefix;
 }
-template <> const UString &StateObject<AgentType>::getTypeName()
+const UString &AgentType::getTypeName()
 {
 	static UString name = "AgentType";
 	return name;
 }
-template <>
-const UString &StateObject<AgentType>::getId(const GameState &state, const sp<AgentType> ptr)
+
+const UString &AgentType::getId(const GameState &state, const sp<AgentType> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &a : state.agent_types)
@@ -44,8 +44,7 @@ const UString &StateObject<AgentType>::getId(const GameState &state, const sp<Ag
 	return emptyString;
 }
 
-template <>
-sp<AgentBodyType> StateObject<AgentBodyType>::get(const GameState &state, const UString &id)
+sp<AgentBodyType> AgentBodyType::get(const GameState &state, const UString &id)
 {
 	auto it = state.agent_body_types.find(id);
 	if (it == state.agent_body_types.end())
@@ -56,19 +55,18 @@ sp<AgentBodyType> StateObject<AgentBodyType>::get(const GameState &state, const 
 	return it->second;
 }
 
-template <> const UString &StateObject<AgentBodyType>::getPrefix()
+const UString &AgentBodyType::getPrefix()
 {
 	static UString prefix = "AGENTBODYTYPE_";
 	return prefix;
 }
-template <> const UString &StateObject<AgentBodyType>::getTypeName()
+const UString &AgentBodyType::getTypeName()
 {
 	static UString name = "AgentBodyType";
 	return name;
 }
-template <>
-const UString &StateObject<AgentBodyType>::getId(const GameState &state,
-                                                 const sp<AgentBodyType> ptr)
+
+const UString &AgentBodyType::getId(const GameState &state, const sp<AgentBodyType> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &a : state.agent_body_types)
@@ -80,9 +78,7 @@ const UString &StateObject<AgentBodyType>::getId(const GameState &state,
 	return emptyString;
 }
 
-template <>
-sp<AgentEquipmentLayout> StateObject<AgentEquipmentLayout>::get(const GameState &state,
-                                                                const UString &id)
+sp<AgentEquipmentLayout> AgentEquipmentLayout::get(const GameState &state, const UString &id)
 {
 	auto it = state.agent_equipment_layouts.find(id);
 	if (it == state.agent_equipment_layouts.end())
@@ -93,19 +89,19 @@ sp<AgentEquipmentLayout> StateObject<AgentEquipmentLayout>::get(const GameState 
 	return it->second;
 }
 
-template <> const UString &StateObject<AgentEquipmentLayout>::getPrefix()
+const UString &AgentEquipmentLayout::getPrefix()
 {
 	static UString prefix = "AGENTEQUIPMENTLAYOUT_";
 	return prefix;
 }
-template <> const UString &StateObject<AgentEquipmentLayout>::getTypeName()
+const UString &AgentEquipmentLayout::getTypeName()
 {
 	static UString name = "AgentEquipmentLayout";
 	return name;
 }
-template <>
-const UString &StateObject<AgentEquipmentLayout>::getId(const GameState &state,
-                                                        const sp<AgentEquipmentLayout> ptr)
+
+const UString &AgentEquipmentLayout::getId(const GameState &state,
+                                           const sp<AgentEquipmentLayout> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &a : state.agent_equipment_layouts)
@@ -117,7 +113,7 @@ const UString &StateObject<AgentEquipmentLayout>::getId(const GameState &state,
 	return emptyString;
 }
 
-template <> sp<Agent> StateObject<Agent>::get(const GameState &state, const UString &id)
+sp<Agent> Agent::get(const GameState &state, const UString &id)
 {
 	auto it = state.agents.find(id);
 	if (it == state.agents.end())
@@ -128,17 +124,17 @@ template <> sp<Agent> StateObject<Agent>::get(const GameState &state, const UStr
 	return it->second;
 }
 
-template <> const UString &StateObject<Agent>::getPrefix()
+const UString &Agent::getPrefix()
 {
 	static UString prefix = "AGENT_";
 	return prefix;
 }
-template <> const UString &StateObject<Agent>::getTypeName()
+const UString &Agent::getTypeName()
 {
 	static UString name = "Agent";
 	return name;
 }
-template <> const UString &StateObject<Agent>::getId(const GameState &state, const sp<Agent> ptr)
+const UString &Agent::getId(const GameState &state, const sp<Agent> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &a : state.agents)

@@ -13,8 +13,9 @@ class Vehicle;
 class AgentType;
 class AEquipmentType;
 
-class Organisation : public StateObject<Organisation>
+class Organisation : public StateObject
 {
+	STATE_OBJECT(Organisation)
   public:
 	enum class Relation
 	{

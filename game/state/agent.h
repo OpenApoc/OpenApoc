@@ -102,8 +102,9 @@ class AgentPortrait
 	sp<Image> icon;
 };
 
-class AgentEquipmentLayout : public StateObject<AgentEquipmentLayout>
+class AgentEquipmentLayout : public StateObject
 {
+	STATE_OBJECT(AgentEquipmentLayout)
   public:
 	enum class AlignmentX
 	{
@@ -133,8 +134,9 @@ class AgentEquipmentLayout : public StateObject<AgentEquipmentLayout>
 	std::list<EquipmentLayoutSlot> slots;
 };
 
-class AgentType : public StateObject<AgentType>
+class AgentType : public StateObject
 {
+	STATE_OBJECT(AgentType)
   public:
 	enum class Role
 	{
@@ -216,8 +218,9 @@ class AgentType : public StateObject<AgentType>
 	sp<Sample> gravLiftSfx;
 };
 
-class AgentBodyType : public StateObject<AgentBodyType>
+class AgentBodyType : public StateObject
 {
+	STATE_OBJECT(AgentBodyType)
   public:
 	// This, among others, determines wether unit has built-in hover capability, can can be
 	// overriden by use of certain armor
@@ -240,8 +243,9 @@ class AgentBodyType : public StateObject<AgentBodyType>
 	std::map<BodyState, std::map<Vec2<int>, std::vector<sp<VoxelMap>>>> voxelMaps;
 };
 
-class Agent : public StateObject<Agent>, public std::enable_shared_from_this<Agent>
+class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 {
+	STATE_OBJECT(Agent)
   public:
 	Agent() = default;
 

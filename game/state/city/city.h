@@ -29,8 +29,9 @@ class SceneryTileType;
 class BaseLayout;
 class TileMap;
 
-class City : public StateObject<City>
+class City : public StateObject
 {
+	STATE_OBJECT(City)
   public:
 	City() = default;
 	~City() override;

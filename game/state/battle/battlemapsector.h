@@ -14,8 +14,9 @@ namespace OpenApoc
 class BattleMapSectorTiles;
 class BattleMapPartType;
 
-class BattleMapSector : public StateObject<BattleMapSector>
+class BattleMapSector : public StateObject
 {
+	STATE_OBJECT(BattleMapSector)
   public:
 	BattleMapSector();
 	~BattleMapSector() override = default;

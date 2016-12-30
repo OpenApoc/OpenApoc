@@ -69,8 +69,7 @@ bool Organisation::isNegativeTo(const StateRef<Organisation> &other) const
 	return x < 0;
 }
 
-template <>
-sp<Organisation> StateObject<Organisation>::get(const GameState &state, const UString &id)
+sp<Organisation> Organisation::get(const GameState &state, const UString &id)
 {
 	auto it = state.organisations.find(id);
 	if (it == state.organisations.end())
@@ -81,12 +80,12 @@ sp<Organisation> StateObject<Organisation>::get(const GameState &state, const US
 	return it->second;
 }
 
-template <> const UString &StateObject<Organisation>::getPrefix()
+const UString &Organisation::getPrefix()
 {
 	static UString prefix = "ORG_";
 	return prefix;
 }
-template <> const UString &StateObject<Organisation>::getTypeName()
+const UString &Organisation::getTypeName()
 {
 	static UString name = "Organisation";
 	return name;

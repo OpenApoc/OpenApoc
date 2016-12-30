@@ -10,8 +10,7 @@ const std::map<UFOIncursion::PrimaryMission, UString> UFOIncursion::primaryMissi
     {PrimaryMission::Attack, "attack"},
     {PrimaryMission::Overspawn, "overspawn"}};
 
-template <>
-sp<UFOIncursion> StateObject<UFOIncursion>::get(const GameState &state, const UString &id)
+sp<UFOIncursion> UFOIncursion::get(const GameState &state, const UString &id)
 {
 	auto it = state.ufo_incursions.find(id);
 	if (it == state.ufo_incursions.end())
@@ -22,12 +21,12 @@ sp<UFOIncursion> StateObject<UFOIncursion>::get(const GameState &state, const US
 	return it->second;
 }
 
-template <> const UString &StateObject<UFOIncursion>::getPrefix()
+const UString &UFOIncursion::getPrefix()
 {
 	static UString prefix = "UFO_INCURSION_";
 	return prefix;
 }
-template <> const UString &StateObject<UFOIncursion>::getTypeName()
+const UString &UFOIncursion::getTypeName()
 {
 	static UString name = "UFOIncursion";
 	return name;

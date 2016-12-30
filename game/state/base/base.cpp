@@ -363,7 +363,7 @@ int Base::getUsage(sp<Facility> facility) const
 	return static_cast<int>(usage * 100);
 }
 
-template <> sp<Base> StateObject<Base>::get(const GameState &state, const UString &id)
+sp<Base> Base::get(const GameState &state, const UString &id)
 {
 	auto it = state.player_bases.find(id);
 	if (it == state.player_bases.end())
@@ -374,17 +374,17 @@ template <> sp<Base> StateObject<Base>::get(const GameState &state, const UStrin
 	return it->second;
 }
 
-template <> const UString &StateObject<Base>::getPrefix()
+const UString &Base::getPrefix()
 {
 	static UString prefix = "BASE_";
 	return prefix;
 }
-template <> const UString &StateObject<Base>::getTypeName()
+const UString &Base::getTypeName()
 {
 	static UString name = "Base";
 	return name;
 }
-template <> const UString &StateObject<Base>::getId(const GameState &state, const sp<Base> ptr)
+const UString &Base::getId(const GameState &state, const sp<Base> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &b : state.player_bases)

@@ -19,8 +19,9 @@ class Vehicle;
 class BattleMapPartType;
 class BattleMapSector;
 
-class BattleMap : public StateObject<BattleMap>
+class BattleMap : public StateObject
 {
+	STATE_OBJECT(BattleMap)
   public:
 	BattleMap();
 	~BattleMap() override = default;

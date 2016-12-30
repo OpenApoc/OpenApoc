@@ -81,7 +81,7 @@ static std::map<VehicleType::Banking, Vec3<float>> banking_vectors = {
     {VehicleType::Banking::Descending, Vec3<float>{0, 0, -1}},
 };
 
-template <> sp<VehicleType> StateObject<VehicleType>::get(const GameState &state, const UString &id)
+sp<VehicleType> VehicleType::get(const GameState &state, const UString &id)
 {
 	auto it = state.vehicle_types.find(id);
 	if (it == state.vehicle_types.end())
@@ -92,18 +92,17 @@ template <> sp<VehicleType> StateObject<VehicleType>::get(const GameState &state
 	return it->second;
 }
 
-template <> const UString &StateObject<VehicleType>::getPrefix()
+const UString &VehicleType::getPrefix()
 {
 	static UString prefix = "VEHICLETYPE_";
 	return prefix;
 }
-template <> const UString &StateObject<VehicleType>::getTypeName()
+const UString &VehicleType::getTypeName()
 {
 	static UString name = "VehicleType";
 	return name;
 }
-template <>
-const UString &StateObject<VehicleType>::getId(const GameState &state, const sp<VehicleType> ptr)
+const UString &VehicleType::getId(const GameState &state, const sp<VehicleType> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &v : state.vehicle_types)

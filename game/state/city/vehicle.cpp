@@ -22,18 +22,18 @@
 namespace OpenApoc
 {
 
-template <> const UString &StateObject<Vehicle>::getPrefix()
+const UString &Vehicle::getPrefix()
 {
 	static UString prefix = "VEHICLE_";
 	return prefix;
 }
-template <> const UString &StateObject<Vehicle>::getTypeName()
+const UString &Vehicle::getTypeName()
 {
 	static UString name = "Vehicle";
 	return name;
 }
-template <>
-const UString &StateObject<Vehicle>::getId(const GameState &state, const sp<Vehicle> ptr)
+
+const UString &Vehicle::getId(const GameState &state, const sp<Vehicle> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &v : state.vehicles)
@@ -900,7 +900,7 @@ void Vehicle::equipDefaultEquipment(GameState &state)
 	}
 }
 
-template <> sp<Vehicle> StateObject<Vehicle>::get(const GameState &state, const UString &id)
+sp<Vehicle> Vehicle::get(const GameState &state, const UString &id)
 {
 	auto it = state.vehicles.find(id);
 	if (it == state.vehicles.end())

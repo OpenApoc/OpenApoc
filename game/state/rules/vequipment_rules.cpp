@@ -21,20 +21,19 @@ VEquipmentType::VEquipmentType()
       accuracy_modifier(0), cargo_space(0), passengers(0), alien_space(0), missile_jamming(0),
       shielding(0), cloaking(false), teleporting(false){};
 
-template <> const UString &StateObject<VEquipmentType>::getPrefix()
+const UString &VEquipmentType::getPrefix()
 {
 	static UString prefix = "VEQUIPMENTTYPE_";
 	return prefix;
 }
 
-template <> const UString &StateObject<VEquipmentType>::getTypeName()
+const UString &VEquipmentType::getTypeName()
 {
 	static UString name = "VEquipmentType";
 	return name;
 }
 
-template <>
-sp<VEquipmentType> StateObject<VEquipmentType>::get(const GameState &state, const UString &id)
+sp<VEquipmentType> VEquipmentType::get(const GameState &state, const UString &id)
 {
 	auto it = state.vehicle_equipment.find(id);
 	if (it == state.vehicle_equipment.end())

@@ -17,8 +17,9 @@ class Sample;
 class DoodadType;
 class Organisation;
 
-class VEquipmentType : public StateObject<VEquipmentType>
+class VEquipmentType : public StateObject
 {
+	STATE_OBJECT(VEquipmentType)
   public:
 	VEquipmentType();
 	enum class Type

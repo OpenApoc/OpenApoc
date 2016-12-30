@@ -30,8 +30,9 @@ enum class TriggerType
 	Boomeroid
 };
 
-class AEquipmentType : public StateObject<AEquipmentType>
+class AEquipmentType : public StateObject
 {
+	STATE_OBJECT(AEquipmentType)
   public:
 	enum class Type
 	{
@@ -143,8 +144,9 @@ class AEquipmentType : public StateObject<AEquipmentType>
 	int explosion_depletion_rate = 0;
 };
 
-class EquipmentSet : public StateObject<EquipmentSet>
+class EquipmentSet : public StateObject
 {
+	STATE_OBJECT(EquipmentSet)
   public:
 	class WeaponData
 	{
