@@ -3,516 +3,458 @@
   <entry>
     <key>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL_CLIP</key>
     <value>
-      <sp>
-		<max_ammo>9001</max_ammo>
-        <damage>9001</damage>
-      </sp>
+      <max_ammo>9001</max_ammo>
+      <damage>9001</damage>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_X-COM_BASE_TURRET_LASER</key>
     <value>
-      <sp>
-        <type>Weapon</type>
-        <id>AEQUIPMENTTYPE_X-COM_BASE_TURRET_LASER</id>
-        <name>X-Com Base Turret's Laser</name>
-        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:9:xcom3/tacdata/tactical.pal</equipscreen_sprite>
-        <equipscreen_size>
-          <x>2</x>
-          <y>5</y>
-        </equipscreen_size>
-        <manufacturer>ORG_X-COM</manufacturer>
-		<max_ammo>30</max_ammo>
-		<recharge>1</recharge>
-        <speed>36</speed>
-        <projectile_sprites>
-          <entry>bulletsprites/battle/35.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/01.png</entry>
-          <entry>bulletsprites/battle/02.png</entry>
-          <entry>bulletsprites/battle/03.png</entry>
-          <entry>bulletsprites/battle/04.png</entry>
-          <entry>bulletsprites/battle/05.png</entry>
-          <entry>bulletsprites/battle/06.png</entry>
-          <entry>bulletsprites/battle/07.png</entry>
-          <entry>bulletsprites/battle/08.png</entry>
-          <entry>bulletsprites/battle/09.png</entry>
-          <entry />
-          <entry>bulletsprites/battle/09.png</entry>
-        </projectile_sprites>
-        <damage>26</damage>
-        <accuracy>5</accuracy>
-        <fire_delay>42</fire_delay>
-        <tail_size>36</tail_size>
-        <range>1200</range>
-        <explosion_graphic>22</explosion_graphic>
-        <damage_type>DAMAGETYPE_LASER_BEAM</damage_type>
-      </sp>
+      <type>Weapon</type>
+      <id>AEQUIPMENTTYPE_X-COM_BASE_TURRET_LASER</id>
+      <name>X-Com Base Turret's Laser</name>
+      <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:9:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+      <equipscreen_size>
+        <x>2</x>
+        <y>5</y>
+      </equipscreen_size>
+      <manufacturer>ORG_X-COM</manufacturer>
+      <max_ammo>30</max_ammo>
+      <recharge>1</recharge>
+      <speed>36</speed>
+      <projectile_sprites>
+        <entry>bulletsprites/battle/35.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/01.png</entry>
+        <entry>bulletsprites/battle/02.png</entry>
+        <entry>bulletsprites/battle/03.png</entry>
+        <entry>bulletsprites/battle/04.png</entry>
+        <entry>bulletsprites/battle/05.png</entry>
+        <entry>bulletsprites/battle/06.png</entry>
+        <entry>bulletsprites/battle/07.png</entry>
+        <entry>bulletsprites/battle/08.png</entry>
+        <entry>bulletsprites/battle/09.png</entry>
+        <entry/>
+        <entry>bulletsprites/battle/09.png</entry>
+      </projectile_sprites>
+      <damage>26</damage>
+      <accuracy>5</accuracy>
+      <fire_delay>42</fire_delay>
+      <tail_size>36</tail_size>
+      <range>1200</range>
+      <explosion_graphic>22</explosion_graphic>
+      <damage_type>DAMAGETYPE_LASER_BEAM</damage_type>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_X-COM_BASE_TURRET_DISRUPTOR</key>
     <value>
-      <sp>
-        <type>Weapon</type>
-        <id>AEQUIPMENTTYPE_X-COM_BASE_TURRET_DISRUPTOR</id>
-        <name>X-Com Base Turret's Disruptor</name>
-        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:41:xcom3/tacdata/tactical.pal</equipscreen_sprite>
-        <equipscreen_size>
-          <x>2</x>
-          <y>4</y>
-        </equipscreen_size>
-        <manufacturer>ORG_X-COM</manufacturer>
-        <max_ammo>34</max_ammo>
-        <recharge>1</recharge>
-        <speed>26</speed>
-        <projectile_sprites>
-          <entry>bulletsprites/battle/34.png</entry>
-          <entry>bulletsprites/battle/50.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/50.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/50.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/50.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/50.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/50.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/50.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/50.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/50.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/50.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/50.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/23.png</entry>
-          <entry>bulletsprites/battle/50.png</entry>
-        </projectile_sprites>
-        <damage>70</damage>
-        <accuracy>25</accuracy>
-        <fire_delay>40</fire_delay>
-        <tail_size>35</tail_size>
-        <range>1000</range>
-        <explosion_graphic>25</explosion_graphic>
-        <damage_type>DAMAGETYPE_DISRUPTOR_BEAM</damage_type>
-      </sp>
+      <type>Weapon</type>
+      <id>AEQUIPMENTTYPE_X-COM_BASE_TURRET_DISRUPTOR</id>
+      <name>X-Com Base Turret's Disruptor</name>
+      <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:41:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+      <equipscreen_size>
+        <x>2</x>
+        <y>4</y>
+      </equipscreen_size>
+      <manufacturer>ORG_X-COM</manufacturer>
+      <max_ammo>34</max_ammo>
+      <recharge>1</recharge>
+      <speed>26</speed>
+      <projectile_sprites>
+        <entry>bulletsprites/battle/34.png</entry>
+        <entry>bulletsprites/battle/50.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/50.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/50.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/50.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/50.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/50.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/50.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/50.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/50.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/50.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/50.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/23.png</entry>
+        <entry>bulletsprites/battle/50.png</entry>
+      </projectile_sprites>
+      <damage>70</damage>
+      <accuracy>25</accuracy>
+      <fire_delay>40</fire_delay>
+      <tail_size>35</tail_size>
+      <range>1000</range>
+      <explosion_graphic>25</explosion_graphic>
+      <damage_type>DAMAGETYPE_DISRUPTOR_BEAM</damage_type>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_ALIEN_GAS_GRENADE</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_ALIEN_GAS</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_ALIEN_GAS</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_BOOMEROID</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_BOOMEROID</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_BOOMEROID</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_BRAINSUCKER_LAUNCHER</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_BRAINSUCKER_LAUNCHER</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_DEVASTATOR_CANNON</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_DEVASTATOR_CANNON</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_DEVASTATOR_CANNON</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_DIMENSION_DESTABILISER</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_DIMENSION_DESTABILISER</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_DIMENSION_DESTABILISER</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_DIMENSION_MISSILE</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_DIMENSION_MISSILE</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_DIMENSION_MISSILE</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_DIMENSION_MISSILE_LAUNCHER</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>PAEDIAENTRY_DIMENSION_MISSILE_LAUNCHER</entry>
-			  <entry>RESEARCH_DIMENSION_MISSILE</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>PAEDIAENTRY_DIMENSION_MISSILE_LAUNCHER</entry>
+            <entry>RESEARCH_DIMENSION_MISSILE</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_DISRUPTOR_GUN</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_DISRUPTOR_GUN</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_DISRUPTOR_GUN</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_ENTROPY_LAUNCHER</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_ENTROPY_LAUNCHER</entry>
-			  <entry>RESEARCH_ENTROPY_POD</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_ENTROPY_LAUNCHER</entry>
+            <entry>RESEARCH_ENTROPY_POD</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_ENTROPY_POD</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_ENTROPY_POD</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_ENTROPY_POD</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_HEAVY_LAUNCHER_AG_MISSILE</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_ALIEN_GAS</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_ALIEN_GAS</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_MINILAUNCHER_AG_MISSILE</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_ALIEN_GAS</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_ALIEN_GAS</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_PERSONAL_CLOAKING_FIELD</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_PERSONAL_CLOAKING_FIELD</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_PERSONAL_CLOAKING_FIELD</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_PERSONAL_DISRUPTOR_SHIELD</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_PERSONAL_DISRUPTOR_SHIELD</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_PERSONAL_DISRUPTOR_SHIELD</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_PERSONAL_TELEPORTER</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_PERSONAL_TELEPORTER</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_PERSONAL_TELEPORTER</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_TOXIGUN</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_BIOLOGICAL_WARFARE</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_BIOLOGICAL_WARFARE</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_TOXIGUN_A-CLIP</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_BIOLOGICAL_WARFARE</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_BIOLOGICAL_WARFARE</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_TOXIGUN_B-CLIP</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_TOXIN_TYPE_B</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_TOXIN_TYPE_B</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_TOXIGUN_C-CLIP</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_TOXIN_TYPE_C</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_TOXIN_TYPE_C</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_VORTEX_MINE</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_VORTEX_MINE</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_VORTEX_MINE</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_X-COM_BODY_SHIELD</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_DISRUPTOR_ARMOR</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_DISRUPTOR_ARMOR</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_X-COM_HEAD_SHIELD</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_DISRUPTOR_ARMOR</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_DISRUPTOR_ARMOR</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_X-COM_LEFT_ARM_SHIELD</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_DISRUPTOR_ARMOR</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_DISRUPTOR_ARMOR</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_X-COM_LEG_SHIELDS</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_DISRUPTOR_ARMOR</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_DISRUPTOR_ARMOR</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_X-COM_RIGHT_ARM_SHIELD</key>
     <value>
-      <sp>
-    	<research>
-          <entry>
-            <type>All</type>
-            <topics>
-              <entry>RESEARCH_DISRUPTOR_ARMOR</entry>
-            </topics>
-          </entry>
-        </research>
-      </sp>
+      <research>
+        <entry>
+          <type>All</type>
+          <topics>
+            <entry>RESEARCH_DISRUPTOR_ARMOR</entry>
+          </topics>
+        </entry>
+      </research>
     </value>
   </entry>
 </agent_equipment>
-
-

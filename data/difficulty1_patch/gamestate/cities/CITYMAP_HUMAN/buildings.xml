@@ -3,49 +3,37 @@
   <entry>
     <key>BUILDING_DICKENS_ESTATE</key>
     <value>
-      <sp>
-        <base_layout>BASELAYOUT_5</base_layout>
-      </sp>
+      <base_layout>BASELAYOUT_5</base_layout>
     </value>
   </entry>
   <entry>
     <key>BUILDING_HEAVENLY_TOWERS</key>
     <value>
-      <sp>
-        <base_layout>BASELAYOUT_12</base_layout>
-      </sp>
+      <base_layout>BASELAYOUT_12</base_layout>
     </value>
   </entry>
   <entry>
     <key>BUILDING_WAREHOUSE_THREE</key>
     <value>
-      <sp>
-        <base_layout>BASELAYOUT_2</base_layout>
-      </sp>
+      <base_layout>BASELAYOUT_2</base_layout>
     </value>
   </entry>
   <entry>
     <key>BUILDING_WAREHOUSE_FOUR</key>
     <value>
-      <sp>
-        <base_layout>BASELAYOUT_3</base_layout>
-      </sp>
+      <base_layout>BASELAYOUT_3</base_layout>
     </value>
   </entry>
   <entry>
     <key>BUILDING_WAREHOUSE_SEVEN</key>
     <value>
-      <sp>
-        <base_layout>BASELAYOUT_12</base_layout>
-      </sp>
+      <base_layout>BASELAYOUT_12</base_layout>
     </value>
   </entry>
   <entry>
     <key>BUILDING_WAREHOUSE_NINE</key>
     <value>
-      <sp>
-        <base_layout>BASELAYOUT_0</base_layout>
-      </sp>
+      <base_layout>BASELAYOUT_0</base_layout>
     </value>
   </entry>
 </buildings>
