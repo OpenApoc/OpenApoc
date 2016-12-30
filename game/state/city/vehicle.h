@@ -49,7 +49,6 @@ class Vehicle : public StateObject, public std::enable_shared_from_this<Vehicle>
 		Defensive,
 		Evasive
 	};
-	static const std::map<AttackMode, UString> AttackModeMap;
 	AttackMode attackMode;
 
 	enum class Altitude
@@ -59,7 +58,6 @@ class Vehicle : public StateObject, public std::enable_shared_from_this<Vehicle>
 		Standard = 6,
 		Low = 3
 	};
-	static const std::map<Altitude, UString> AltitudeMap;
 	Altitude altitude;
 
 	void equipDefaultEquipment(GameState &state);

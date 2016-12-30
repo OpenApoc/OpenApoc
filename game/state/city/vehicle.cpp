@@ -144,20 +144,6 @@ Vehicle::Vehicle()
 
 Vehicle::~Vehicle() = default;
 
-const std::map<Vehicle::AttackMode, UString> Vehicle::AttackModeMap = {
-    {Vehicle::AttackMode::Aggressive, "aggressive"},
-    {Vehicle::AttackMode::Standard, "standard"},
-    {Vehicle::AttackMode::Defensive, "defensive"},
-    {Vehicle::AttackMode::Evasive, "evasive"},
-};
-
-const std::map<Vehicle::Altitude, UString> Vehicle::AltitudeMap = {
-    {Vehicle::Altitude::Highest, "highest"},
-    {Vehicle::Altitude::High, "high"},
-    {Vehicle::Altitude::Standard, "standard"},
-    {Vehicle::Altitude::Low, "low"},
-};
-
 void Vehicle::launch(TileMap &map, GameState &state, Vec3<float> initialPosition)
 {
 	LogInfo("Launching %s", this->name);

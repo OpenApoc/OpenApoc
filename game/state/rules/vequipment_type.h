@@ -28,7 +28,6 @@ class VEquipmentType : public StateObject
 		Weapon,
 		General,
 	};
-	static const std::map<Type, UString> TypeMap;
 
 	enum class User
 	{
@@ -36,7 +35,6 @@ class VEquipmentType : public StateObject
 		Air,
 		Ammo,
 	};
-	static const std::map<User, UString> UserMap;
 
 	~VEquipmentType() override = default;
 

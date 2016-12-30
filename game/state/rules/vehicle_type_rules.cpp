@@ -9,35 +9,6 @@
 namespace OpenApoc
 {
 
-const std::map<VehicleType::Type, UString> VehicleType::TypeMap = {
-    {Type::Flying, "flying"}, {Type::Ground, "ground"}, {Type::UFO, "ufo"},
-};
-
-const std::map<VehicleType::Banking, UString> VehicleType::BankingMap = {
-    {Banking::Flat, "flat"},
-    {Banking::Left, "left"},
-    {Banking::Right, "right"},
-    {Banking::Ascending, "ascending"},
-    {Banking::Descending, "descending"},
-};
-
-const std::map<VehicleType::ArmourDirection, UString> VehicleType::ArmourDirectionMap = {
-
-    {ArmourDirection::Top, "top"},     {ArmourDirection::Bottom, "bottom"},
-    {ArmourDirection::Front, "front"}, {ArmourDirection::Rear, "rear"},
-    {ArmourDirection::Left, "left"},   {ArmourDirection::Right, "right"},
-};
-
-const std::map<VehicleType::AlignmentX, UString> VehicleType::AlignmentXMap = {
-
-    {AlignmentX::Left, "left"}, {AlignmentX::Centre, "centre"}, {AlignmentX::Right, "right"},
-};
-
-const std::map<VehicleType::AlignmentY, UString> VehicleType::AlignmentYMap = {
-
-    {AlignmentY::Top, "top"}, {AlignmentY::Centre, "centre"}, {AlignmentY::Bottom, "bottom"},
-};
-
 static const std::map<VehicleType::Direction, Vec3<float>> DirectionVectors = {
     {VehicleType::Direction::N, glm::normalize(Vec3<float>{0, -1, 0})},
     {VehicleType::Direction::NNE, glm::normalize(Vec3<float>{1, -2, 0})},

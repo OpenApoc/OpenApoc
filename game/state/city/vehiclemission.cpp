@@ -1392,9 +1392,24 @@ bool VehicleMission::isTakingOff(Vehicle &v)
 
 UString VehicleMission::getName()
 {
+	static const std::map<VehicleMission::MissionType, UString> TypeMap = {
+	    {MissionType::GotoLocation, "GotoLocation"},
+	    {MissionType::GotoBuilding, "GotoBuilding"},
+	    {MissionType::GotoPortal, "GotoBuilding"},
+	    {MissionType::FollowVehicle, "FollowVehicle"},
+	    {MissionType::AttackVehicle, "AttackVehicle"},
+	    {MissionType::AttackBuilding, "AttackBuilding"},
+	    {MissionType::Snooze, "Snooze"},
+	    {MissionType::TakeOff, "TakeOff"},
+	    {MissionType::Land, "Land"},
+	    {MissionType::Crash, "Crash"},
+	    {MissionType::Patrol, "Patrol"},
+	    {MissionType::InfiltrateSubvert, "Infiltrate/Subvert"},
+	    {MissionType::RestartNextMission, "RestartNextMission"},
+	};
 	UString name = "UNKNOWN";
-	auto it = VehicleMission::TypeMap.find(this->type);
-	if (it != VehicleMission::TypeMap.end())
+	const auto it = TypeMap.find(this->type);
+	if (it != TypeMap.end())
 		name = it->second;
 	switch (this->type)
 	{
@@ -1439,21 +1454,5 @@ UString VehicleMission::getName()
 	}
 	return name;
 }
-
-const std::map<VehicleMission::MissionType, UString> VehicleMission::TypeMap = {
-    {MissionType::GotoLocation, "GotoLocation"},
-    {MissionType::GotoBuilding, "GotoBuilding"},
-    {MissionType::GotoPortal, "GotoBuilding"},
-    {MissionType::FollowVehicle, "FollowVehicle"},
-    {MissionType::AttackVehicle, "AttackVehicle"},
-    {MissionType::AttackBuilding, "AttackBuilding"},
-    {MissionType::Snooze, "Snooze"},
-    {MissionType::TakeOff, "TakeOff"},
-    {MissionType::Land, "Land"},
-    {MissionType::Crash, "Crash"},
-    {MissionType::Patrol, "Patrol"},
-    {MissionType::InfiltrateSubvert, "Infiltrate/Subvert"},
-    {MissionType::RestartNextMission, "RestartNextMission"},
-};
 
 } // namespace OpenApoc

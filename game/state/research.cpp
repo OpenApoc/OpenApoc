@@ -14,25 +14,6 @@
 namespace OpenApoc
 {
 
-const std::map<ResearchTopic::Type, UString> ResearchTopic::TypeMap = {
-    {Type::BioChem, "biochem"}, {Type::Physics, "physics"}, {Type::Engineering, "engineering"},
-};
-
-const std::map<ResearchTopic::LabSize, UString> ResearchTopic::LabSizeMap = {
-    {LabSize::Small, "small"}, {LabSize::Large, "large"},
-};
-
-const std::map<ResearchTopic::ItemType, UString> ResearchTopic::ItemTypeMap = {
-    {ItemType::VehicleEquipment, "vehicleequipment"},
-    {ItemType::AgentEquipment, "agentequipment"},
-    {ItemType::VehicleEquipmentAmmo, "vehicleequipmentammo"},
-    {ItemType::Craft, "craft"},
-};
-
-const std::map<ResearchDependency::Type, UString> ResearchDependency::TypeMap = {
-    {Type::Any, "any"}, {Type::All, "all"}, {Type::Unused, "unused"},
-};
-
 bool ResearchTopic::isComplete() const
 {
 	return (this->type != ResearchTopic::Type::Engineering) &&

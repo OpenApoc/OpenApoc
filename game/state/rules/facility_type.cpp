@@ -4,17 +4,6 @@
 namespace OpenApoc
 {
 
-const std::map<FacilityType::Capacity, UString> FacilityType::CapacityMap = {
-
-    {Capacity::Nothing, "nothing"},   {Capacity::Quarters, "quarters"},
-    {Capacity::Stores, "stores"},     {Capacity::Medical, "medical"},
-    {Capacity::Training, "training"}, {Capacity::Psi, "psi"},
-    {Capacity::Repair, "repair"},     {Capacity::Chemistry, "chemistry"},
-    {Capacity::Physics, "physics"},   {Capacity::Workshop, "workshop"},
-    {Capacity::Aliens, "aliens"},
-
-};
-
 FacilityType::FacilityType()
     : fixed(false), buildCost(0), buildTime(0), weeklyCost(0), capacityType(Capacity::Nothing),
       capacityAmount(0), size(1)

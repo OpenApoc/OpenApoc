@@ -23,7 +23,6 @@ class SceneryTileType : public StateObject
 		PeopleTube,
 		CityWall,
 	};
-	static const std::map<TileType, UString> TileTypeMap;
 
 	enum class RoadType
 	{
@@ -31,7 +30,6 @@ class SceneryTileType : public StateObject
 		Junction,
 		Terminal,
 	};
-	static const std::map<RoadType, UString> RoadTypeMap;
 
 	enum class WalkMode
 	{
@@ -39,7 +37,6 @@ class SceneryTileType : public StateObject
 		Into,
 		Onto
 	};
-	static const std::map<WalkMode, UString> WalkModeMap;
 
 	sp<Image> sprite;
 	sp<Image> strategySprite;

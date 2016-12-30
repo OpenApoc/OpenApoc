@@ -4,14 +4,6 @@
 namespace OpenApoc
 {
 
-const std::map<VEquipmentType::Type, UString> VEquipmentType::TypeMap = {
-    {Type::Engine, "engine"}, {Type::Weapon, "weapon"}, {Type::General, "general"},
-};
-
-const std::map<VEquipmentType::User, UString> VEquipmentType::UserMap = {
-    {User::Ground, "ground"}, {User::Air, "air"},
-};
-
 // A bit painful but as not everything is expected to be set we have to zero all the non-constructed
 // types
 VEquipmentType::VEquipmentType()

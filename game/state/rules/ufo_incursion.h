@@ -20,7 +20,6 @@ class UFOIncursion : public StateObject
 		Attack,
 		Overspawn
 	};
-	static const std::map<PrimaryMission, UString> primaryMissionMap;
 
 	PrimaryMission primaryMission = PrimaryMission::Infiltration;
 	std::vector<std::pair<UString, int>> primaryList;

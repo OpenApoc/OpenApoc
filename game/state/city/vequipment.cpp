@@ -13,13 +13,6 @@
 namespace OpenApoc
 {
 
-const std::map<VEquipment::WeaponState, UString> VEquipment::WeaponStateMap = {
-    {WeaponState::Ready, "ready"},
-    {WeaponState::Disabled, "disabled"},
-    {WeaponState::Reloading, "reloading"},
-    {WeaponState::OutOfAmmo, "outofammo"},
-};
-
 VEquipment::VEquipment()
     : equippedPosition(0, 0), weaponState(WeaponState::Ready), ammo(0), reloadTime(0)
 {
@@ -27,6 +20,13 @@ VEquipment::VEquipment()
 
 sp<Projectile> VEquipment::fire(Vec3<float> targetPosition, StateRef<Vehicle> targetVehicle)
 {
+	static const std::map<VEquipment::WeaponState, UString> WeaponStateMap = {
+	    {WeaponState::Ready, "ready"},
+	    {WeaponState::Disabled, "disabled"},
+	    {WeaponState::Reloading, "reloading"},
+	    {WeaponState::OutOfAmmo, "outofammo"},
+	};
+
 	if (this->type->type != VEquipmentType::Type::Weapon)
 	{
 		LogError("fire() called on non-Weapon");
@@ -40,7 +40,7 @@ sp<Projectile> VEquipment::fire(Vec3<float> targetPosition, StateRef<Vehicle> ta
 	if (this->weaponState != WeaponState::Ready)
 	{
 		UString stateName = "UNKNOWN";
-		auto it = WeaponStateMap.find(this->weaponState);
+		const auto it = WeaponStateMap.find(this->weaponState);
 		if (it != WeaponStateMap.end())
 			stateName = it->second;
 		LogWarning("Trying to fire weapon in state %s", stateName);

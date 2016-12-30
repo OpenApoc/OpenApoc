@@ -28,7 +28,6 @@ class FacilityType : public StateObject
 		Workshop,
 		Aliens
 	};
-	static const std::map<Capacity, UString> CapacityMap;
 	FacilityType();
 	UString name;
 	bool fixed;

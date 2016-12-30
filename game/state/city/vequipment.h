@@ -42,7 +42,6 @@ class VEquipment
 		Reloading,
 		OutOfAmmo,
 	};
-	static const std::map<WeaponState, UString> WeaponStateMap;
 	WeaponState weaponState;
 	StateRef<Vehicle> owner;
 	int ammo;

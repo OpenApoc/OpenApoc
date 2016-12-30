@@ -26,7 +26,6 @@ class UfopaediaEntry : public StateObject
 		Facility,
 		Building
 	};
-	static const std::map<Data, UString> DataMap;
 	UfopaediaEntry();
 	UString title;
 	UString description;
