@@ -4,7 +4,9 @@
 // symbols as part of the module that uses it
 #define BOOST_ALL_NO_LIB
 #include <boost/algorithm/string/predicate.hpp>
-#include <boost/locale.hpp>
+#include <boost/locale/conversion.hpp>
+#include <boost/locale/encoding_utf.hpp>
+#include <boost/locale/message.hpp>
 
 #ifdef DUMP_TRANSLATION_STRINGS
 #include <fstream>
