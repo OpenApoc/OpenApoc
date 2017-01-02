@@ -254,7 +254,7 @@ sp<SerializationNode> XMLSerializationNode::addNode(const UString &name, const U
 {
 	auto newNode = this->node.append_child();
 	newNode.set_name(name.cStr());
-	newNode.set_value(value.cStr());
+	newNode.text().set(value.cStr());
 	return std::make_shared<XMLSerializationNode>(
 	    this->archive, newNode, std::static_pointer_cast<XMLSerializationNode>(shared_from_this()));
 }
