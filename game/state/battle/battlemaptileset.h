@@ -19,7 +19,7 @@ class BattleMapTileset
 	bool loadTileset(GameState &state, const UString &path);
 
 	// high level api for saving tilesets
-	bool saveTileset(const UString &path, bool pack = true);
+	bool saveTileset(const UString &path, bool pack = true, bool pretty = false);
 
 	static UString getTilesetPath();
 };

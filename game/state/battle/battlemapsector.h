@@ -76,6 +76,6 @@ class BattleMapSectorTiles
 	bool loadSector(GameState &state, const UString &path);
 
 	// high level api for saving map sectors
-	bool saveSector(const UString &path, bool pack = true);
+	bool saveSector(const UString &path, bool pack = true, bool pretty = false);
 };
 }

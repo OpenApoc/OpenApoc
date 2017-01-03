@@ -150,7 +150,9 @@ add_library(OpenApoc_GameState STATIC ${GAMESTATE_SOURCE_FILES}
 target_link_libraries(OpenApoc_GameState PUBLIC OpenApoc_Library)
 target_link_libraries(OpenApoc_GameState PUBLIC OpenApoc_Framework)
 
-target_include_directories(OpenApoc_GameState PRIVATE ${CMAKE_BINARY_DIR})
+# This needs to be public as gamestate_serialize_generated.h needs to be in
+# the path
+target_include_directories(OpenApoc_GameState PUBLIC ${CMAKE_BINARY_DIR})
 
 set_property(TARGET OpenApoc_GameState PROPERTY CXX_STANDARD 11)
 

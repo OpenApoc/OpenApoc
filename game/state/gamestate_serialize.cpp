@@ -242,13 +242,13 @@ void serializeOut(sp<SerializationNode> node, const Xorshift128Plus<uint32_t> &t
 	serializeOut(node->addNode("s1"), s[1], sr[1]);
 }
 
-bool GameState::saveGame(const UString &path, bool pack)
+bool GameState::saveGame(const UString &path, bool pack, bool pretty)
 {
 	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
 	if (serialize(archive))
 	{
-		archive->write(path, pack);
+		archive->write(path, pack, pretty);
 		return true;
 	}
 	return false;
@@ -329,13 +329,13 @@ static bool deserialize(BattleMapTileset &tileSet, const GameState &state,
 	return true;
 }
 
-bool BattleMapTileset::saveTileset(const UString &path, bool pack)
+bool BattleMapTileset::saveTileset(const UString &path, bool pack, bool pretty)
 {
 	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
 	if (serialize(*this, archive))
 	{
-		archive->write(path, pack);
+		archive->write(path, pack, pretty);
 		return true;
 	}
 	return false;
@@ -385,13 +385,13 @@ static bool deserialize(BattleUnitImagePack &imagePack, const GameState &state,
 	return true;
 }
 
-bool BattleUnitImagePack::saveImagePack(const UString &path, bool pack)
+bool BattleUnitImagePack::saveImagePack(const UString &path, bool pack, bool pretty)
 {
 	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
 	if (serialize(*this, archive))
 	{
-		archive->write(path, pack);
+		archive->write(path, pack, pretty);
 		return true;
 	}
 	return false;
@@ -442,13 +442,13 @@ static bool deserialize(BattleUnitAnimationPack &animationPack, const GameState 
 	return true;
 }
 
-bool BattleUnitAnimationPack::saveAnimationPack(const UString &path, bool pack)
+bool BattleUnitAnimationPack::saveAnimationPack(const UString &path, bool pack, bool pretty)
 {
 	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
 	if (serialize(*this, archive))
 	{
-		archive->write(path, pack);
+		archive->write(path, pack, pretty);
 		return true;
 	}
 	return false;
@@ -498,13 +498,13 @@ static bool deserialize(BattleMapSectorTiles &mapSector, const GameState &state,
 	return true;
 }
 
-bool BattleMapSectorTiles::saveSector(const UString &path, bool pack)
+bool BattleMapSectorTiles::saveSector(const UString &path, bool pack, bool pretty)
 {
 	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
 	if (serialize(*this, archive))
 	{
-		archive->write(path, pack);
+		archive->write(path, pack, pretty);
 		return true;
 	}
 	return false;
