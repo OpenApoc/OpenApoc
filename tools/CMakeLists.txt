@@ -6,6 +6,8 @@ option(BUILD_GAMESTATESERIALIZEGEN "Build a that regenerates the gamestate
 serialization code" ON)
 option(BUILD_EDITOR "Build the gamestate editor tool" OFF)
 option(BUILD_DUMPEVERYTHING "Tool that dumps all known images" OFF)
+option(BUILD_SERIALIZATIONTOOL "Tool to work with serialized gamestate
+archives" ON)
 
 if(BUILD_EXTRACTOR)
 		add_subdirectory(extractors)
@@ -23,6 +25,9 @@ if (BUILD_DUMPEVERYTHING)
 		add_subdirectory(dump_everything)
 endif()
 
+if (BUILD_SERIALIZATIONTOOL)
+		add_subdirectory(serialization_tool)
+endif()
 
 # GameState serialization code generator isn't optional
 add_subdirectory(gamestate_serialize_gen)
