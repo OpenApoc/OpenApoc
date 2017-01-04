@@ -1,9 +1,13 @@
 #pragma once
 
 #include "library/rect.h"
+#include "library/sp.h"
+#include <list>
 
 namespace OpenApoc
 {
+
+class Image;
 
 enum class EquipmentSlotType
 {
@@ -65,4 +69,20 @@ class EquipmentLayoutSlot
 	{
 	}
 };
+
+class Equipment
+{
+  public:
+	virtual sp<Image> getEquipmentImage() const = 0;
+	// Returns the size in 'slots'
+	virtual Vec2<int> getEquipmentSlotSize() const = 0;
+};
+
+class EquippableObject
+{
+  public:
+	virtual sp<Equipment> getEquipmentAt(const Vec2<int> &position) const = 0;
+	virtual const std::list<EquipmentLayoutSlot> &getSlots() const = 0;
+};
+
 } // namespace OpenApoc

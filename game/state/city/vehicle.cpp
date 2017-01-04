@@ -897,4 +897,30 @@ sp<Vehicle> Vehicle::get(const GameState &state, const UString &id)
 	return it->second;
 }
 
+sp<Equipment> Vehicle::getEquipmentAt(const Vec2<int> &position) const
+{
+	Vec2<int> slotPosition = {0, 0};
+	for (auto &slot : this->type->equipment_layout_slots)
+	{
+		if (slot.bounds.within(position))
+		{
+			slotPosition = slot.bounds.p0;
+		}
+	}
+	for (auto &eq : this->equipment)
+	{
+		Rect<int> eqBounds{eq->equippedPosition, eq->equippedPosition + eq->type->equipscreen_size};
+		if (eqBounds.within(slotPosition))
+		{
+			return eq;
+		}
+	}
+	return nullptr;
+}
+
+const std::list<EquipmentLayoutSlot> &Vehicle::getSlots() const
+{
+	return this->type->equipment_layout_slots;
+}
+
 }; // namespace OpenApoc

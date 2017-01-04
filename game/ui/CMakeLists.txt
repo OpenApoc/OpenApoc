@@ -46,6 +46,7 @@ set (GAMEUI_SOURCE_FILES
 	tileview/tileview.cpp
 	ufopaedia/ufopaediacategoryview.cpp
 	ufopaedia/ufopaediaview.cpp
+	equipscreen.cpp
 	boot.cpp)
 source_group(gamestate\\sources FILES ${GAMEUI_SOURCE_FILES})
 set (GAMEUI_HEADER_FILES
@@ -85,6 +86,7 @@ set (GAMEUI_HEADER_FILES
 	tileview/tileview.h
 	ufopaedia/ufopaediacategoryview.h
 	ufopaedia/ufopaediaview.h
+	equipscreen.h
 	boot.h)
 source_group(gamestate\\headers FILES ${GAMEUI_HEADER_FILES})
 
