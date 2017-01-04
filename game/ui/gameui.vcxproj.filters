@@ -126,6 +126,9 @@
     <ClCompile Include="battle\battleprestart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="equipscreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boot.h">
@@ -237,6 +240,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="battle\battledebriefing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="equipscreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

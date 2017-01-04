@@ -40,6 +40,7 @@
     <ClCompile Include="debugtools\debugmenu.cpp" />
     <ClCompile Include="debugtools\formpreview.cpp" />
     <ClCompile Include="debugtools\imagepreview.cpp" />
+    <ClCompile Include="equipscreen.cpp" />
     <ClCompile Include="general\mapselector.cpp" />
     <ClCompile Include="general\messagelogscreen.cpp" />
     <ClCompile Include="general\notificationscreen.cpp" />
@@ -79,6 +80,7 @@
     <ClInclude Include="debugtools\debugmenu.h" />
     <ClInclude Include="debugtools\formpreview.h" />
     <ClInclude Include="debugtools\imagepreview.h" />
+    <ClInclude Include="equipscreen.h" />
     <ClInclude Include="general\mapselector.h" />
     <ClInclude Include="general\messagelogscreen.h" />
     <ClInclude Include="general\notificationscreen.h" />
