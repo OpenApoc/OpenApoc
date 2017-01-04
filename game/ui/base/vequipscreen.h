@@ -25,7 +25,7 @@ class VEquipScreen : public Stage
   private:
 	sp<Form> form;
 	sp<Vehicle> selected;
-	VEquipmentType::Type selectionType;
+	EquipmentSlotType selectionType;
 	sp<Palette> pal;
 	sp<BitmapFont> labelFont;
 

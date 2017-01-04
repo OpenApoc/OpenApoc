@@ -32,7 +32,7 @@ static const Colour EQUIP_GRID_COLOUR_GENERAL{255, 40, 255, 255};
 static const float GLOW_COUNTER_INCREMENT = M_PI / 15.0f;
 
 VEquipScreen::VEquipScreen(sp<GameState> state)
-    : Stage(), form(ui().getForm("vequipscreen")), selectionType(VEquipmentType::Type::Weapon),
+    : Stage(), form(ui().getForm("vequipscreen")), selectionType(EquipmentSlotType::VehicleWeapon),
       pal(fw().data->loadPalette("xcom3/ufodata/vroadwar.pcx")),
       labelFont(ui().getFont("smalfont")), drawHighlightBox(false), state(state), glowCounter(0)
 
@@ -119,17 +119,17 @@ void VEquipScreen::eventOccurred(Event *e)
 	{
 		if (form->findControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->isChecked())
 		{
-			this->selectionType = VEquipmentType::Type::Weapon;
+			this->selectionType = EquipmentSlotType::VehicleWeapon;
 			return;
 		}
 		else if (form->findControlTyped<RadioButton>("BUTTON_SHOW_ENGINES")->isChecked())
 		{
-			this->selectionType = VEquipmentType::Type::Engine;
+			this->selectionType = EquipmentSlotType::VehicleEngine;
 			return;
 		}
 		else if (form->findControlTyped<RadioButton>("BUTTON_SHOW_GENERAL")->isChecked())
 		{
-			this->selectionType = VEquipmentType::Type::General;
+			this->selectionType = EquipmentSlotType::VehicleGeneral;
 			return;
 		}
 	}
@@ -310,7 +310,7 @@ void VEquipScreen::render()
 		// Draw equipment stats
 		switch (highlightedEquipment->type)
 		{
-			case VEquipmentType::Type::Engine:
+			case EquipmentSlotType::VehicleEngine:
 			{
 				auto &engineType = *highlightedEquipment;
 				statsLabels[statsCount]->setText(tr("Top Speed"));
@@ -320,7 +320,7 @@ void VEquipScreen::render()
 				statsValues[statsCount]->setText(format("%d", engineType.power));
 				break;
 			}
-			case VEquipmentType::Type::Weapon:
+			case EquipmentSlotType::VehicleWeapon:
 			{
 				auto &weaponType = *highlightedEquipment;
 				statsLabels[statsCount]->setText(tr("Damage"));
@@ -342,7 +342,7 @@ void VEquipScreen::render()
 				}
 				break;
 			}
-			case VEquipmentType::Type::General:
+			case EquipmentSlotType::VehicleGeneral:
 			{
 				auto &generalType = *highlightedEquipment;
 				if (generalType.accuracy_modifier)
@@ -465,13 +465,13 @@ void VEquipScreen::render()
 				Colour equipColour;
 				switch (selectionType)
 				{
-					case VEquipmentType::Type::Engine:
+					case EquipmentSlotType::VehicleEngine:
 						equipColour = EQUIP_GRID_COLOUR_ENGINE;
 						break;
-					case VEquipmentType::Type::Weapon:
+					case EquipmentSlotType::VehicleWeapon:
 						equipColour = EQUIP_GRID_COLOUR_WEAPON;
 						break;
-					case VEquipmentType::Type::General:
+					case EquipmentSlotType::VehicleGeneral:
 						equipColour = EQUIP_GRID_COLOUR_GENERAL;
 						break;
 				}
@@ -499,8 +499,8 @@ void VEquipScreen::render()
 	{
 		auto pos = e->equippedPosition;
 
-		VehicleType::AlignmentX alignX = VehicleType::AlignmentX::Left;
-		VehicleType::AlignmentY alignY = VehicleType::AlignmentY::Top;
+		AlignmentX alignX = AlignmentX::Left;
+		AlignmentY alignY = AlignmentY::Top;
 		Rect<int> slotBounds;
 		bool slotFound = false;
 
@@ -533,27 +533,27 @@ void VEquipScreen::render()
 
 		switch (alignX)
 		{
-			case VehicleType::AlignmentX::Left:
+			case AlignmentX::Left:
 				pos.x += 0;
 				break;
-			case VehicleType::AlignmentX::Right:
+			case AlignmentX::Right:
 				pos.x += diffX * EQUIP_GRID_SLOT_SIZE.x;
 				break;
-			case VehicleType::AlignmentX::Centre:
+			case AlignmentX::Centre:
 				pos.x += (diffX * EQUIP_GRID_SLOT_SIZE.x) / 2;
 				break;
 		}
 
 		switch (alignY)
 		{
-			case VehicleType::AlignmentY::Top:
+			case AlignmentY::Top:
 				pos.y += 0;
 				break;
-			case VehicleType::AlignmentY::Bottom:
+			case AlignmentY::Bottom:
 				pos.y += diffY * EQUIP_GRID_SLOT_SIZE.y;
 
 				break;
-			case VehicleType::AlignmentY::Centre:
+			case AlignmentY::Centre:
 				pos.y += (diffY * EQUIP_GRID_SLOT_SIZE.y) / 2;
 				break;
 		}

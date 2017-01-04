@@ -1,6 +1,7 @@
 #pragma once
 
 #include "framework/image.h"
+#include "game/state/equipment.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -56,17 +57,6 @@ enum class MovementState
 	Running,
 	Strafing
 };
-enum class AEquipmentSlotType
-{
-	General,
-	ArmorBody,
-	ArmorLegs,
-	ArmorHelmet,
-	ArmorLeftHand,
-	ArmorRightHand,
-	LeftHand,
-	RightHand
-};
 
 class AgentStats
 {
@@ -106,31 +96,6 @@ class AgentEquipmentLayout : public StateObject
 {
 	STATE_OBJECT(AgentEquipmentLayout)
   public:
-	enum class AlignmentX
-	{
-		Left,
-		Right,
-		Centre,
-	};
-	enum class AlignmentY
-	{
-		Top,
-		Bottom,
-		Centre,
-	};
-	class EquipmentLayoutSlot
-	{
-	  public:
-		AEquipmentSlotType type = AEquipmentSlotType::General;
-		AlignmentX align_x = AlignmentX::Left;
-		AlignmentY align_y = AlignmentY::Top;
-		Rect<int> bounds;
-		EquipmentLayoutSlot() = default;
-		EquipmentLayoutSlot(AlignmentX align_x, AlignmentY align_y, Rect<int> bounds)
-		    : align_x(align_x), align_y(align_y), bounds(bounds)
-		{
-		}
-	};
 	std::list<EquipmentLayoutSlot> slots;
 };
 
@@ -150,7 +115,7 @@ class AgentType : public StateObject
 		Male,
 		Female,
 	};
-	static AEquipmentSlotType getArmorSlotType(BodyPart bodyPart);
+	static EquipmentSlotType getArmorSlotType(BodyPart bodyPart);
 	// Enums for animation
 
 	AgentType();
@@ -190,7 +155,7 @@ class AgentType : public StateObject
 
 	StateRef<AgentEquipmentLayout> equipment_layout;
 
-	AgentEquipmentLayout::EquipmentLayoutSlot *getFirstSlot(AEquipmentSlotType type);
+	EquipmentLayoutSlot *getFirstSlot(EquipmentSlotType type);
 
 	bool can_improve = false;
 	// Can this be generated for the player
@@ -278,19 +243,19 @@ class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 
 	std::list<sp<AEquipment>> equipment;
 	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
-	                     AEquipmentSlotType &slotType) const;
+	                     EquipmentSlotType &slotType) const;
 	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type) const;
-	Vec2<int> findFirstSlotByType(AEquipmentSlotType slotType,
+	Vec2<int> findFirstSlotByType(EquipmentSlotType slotType,
 	                              StateRef<AEquipmentType> type = nullptr);
 	// Add equipment by type to the first available slot of any type
 	void addEquipmentByType(GameState &state, StateRef<AEquipmentType> type);
 	// Add equipment to the first available slot of a specific type
 	void addEquipmentByType(GameState &state, StateRef<AEquipmentType> type,
-	                        AEquipmentSlotType slotType);
+	                        EquipmentSlotType slotType);
 	// Add equipment by type to a specific position
 	void addEquipmentByType(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type);
 	// Add equipment to the first available slot of a specific type
-	void addEquipment(GameState &state, sp<AEquipment> object, AEquipmentSlotType slotType);
+	void addEquipment(GameState &state, sp<AEquipment> object, EquipmentSlotType slotType);
 	// Add equipment to a specific position
 	void addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object);
 	void removeEquipment(sp<AEquipment> object);
@@ -302,7 +267,7 @@ class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 	// removed
 	StateRef<AEquipmentType>
 	getDominantItemInHands(StateRef<AEquipmentType> itemLastFired = nullptr) const;
-	sp<AEquipment> getFirstItemInSlot(AEquipmentSlotType type, bool lazy = true) const;
+	sp<AEquipment> getFirstItemInSlot(EquipmentSlotType type, bool lazy = true) const;
 	sp<AEquipment> getFirstShield() const;
 	sp<AEquipment> getFirstItemByType(StateRef<AEquipmentType> type) const;
 

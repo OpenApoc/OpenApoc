@@ -78,10 +78,10 @@ int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
 		                       : (movementState == MovementState::Running ? 1.70f : 1.35f);
 
 		// Having both hands busy also increases it by another 1,5x
-		if (ownerAgent && (equippedSlotType == AEquipmentSlotType::LeftHand ||
-		                   equippedSlotType == AEquipmentSlotType::RightHand) &&
-		    ownerAgent->getFirstItemInSlot(AEquipmentSlotType::LeftHand) &&
-		    ownerAgent->getFirstItemInSlot(AEquipmentSlotType::RightHand))
+		if (ownerAgent && (equippedSlotType == EquipmentSlotType::LeftHand ||
+		                   equippedSlotType == EquipmentSlotType::RightHand) &&
+		    ownerAgent->getFirstItemInSlot(EquipmentSlotType::LeftHand) &&
+		    ownerAgent->getFirstItemInSlot(EquipmentSlotType::RightHand))
 		{
 			agentDispersion *= 1.5f;
 		}
@@ -233,7 +233,7 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 			switch (equippedSlotType)
 			{
 				// Check if we're still firing
-				case AEquipmentSlotType::LeftHand:
+				case EquipmentSlotType::LeftHand:
 					if (ownerAgent->unit->weaponStatus !=
 					        BattleUnit::WeaponStatus::FiringBothHands &&
 					    ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringLeftHand)
@@ -245,7 +245,7 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 						startFiring(ownerAgent->unit->fire_aiming_mode);
 					}
 					break;
-				case AEquipmentSlotType::RightHand:
+				case EquipmentSlotType::RightHand:
 					if (ownerAgent->unit->weaponStatus !=
 					        BattleUnit::WeaponStatus::FiringBothHands &&
 					    ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringRightHand)
@@ -277,8 +277,8 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 		{
 			switch (equippedSlotType)
 			{
-				case AEquipmentSlotType::LeftHand:
-				case AEquipmentSlotType::RightHand:
+				case EquipmentSlotType::LeftHand:
+				case EquipmentSlotType::RightHand:
 					break;
 				default:
 					inUse = false;

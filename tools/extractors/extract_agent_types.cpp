@@ -89,11 +89,9 @@ void fillAgentImagePacksByDefault(GameState &state, sp<AgentType> a, UString ima
 	    &state, format("%s%s%s", BattleUnitImagePack::getPrefix(), imagePackName, "e")};
 }
 
-void pushEquipmentSlot(
-    sp<AgentEquipmentLayout> a, int x, int y, int w = 1, int h = 1,
-    AEquipmentSlotType type = AEquipmentSlotType::General,
-    AgentEquipmentLayout::AlignmentX align_x = AgentEquipmentLayout::AlignmentX::Left,
-    AgentEquipmentLayout::AlignmentY align_y = AgentEquipmentLayout::AlignmentY::Top)
+void pushEquipmentSlot(sp<AgentEquipmentLayout> a, int x, int y, int w = 1, int h = 1,
+                       EquipmentSlotType type = EquipmentSlotType::General,
+                       AlignmentX align_x = AlignmentX::Left, AlignmentY align_y = AlignmentY::Top)
 {
 	a->slots.emplace_back();
 	auto &outSlot = a->slots.back();
@@ -1007,12 +1005,10 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 
 		auto a = mksp<AgentEquipmentLayout>();
 		// Located off-screen, invisible in inventory
-		pushEquipmentSlot(a, 1024, 6, 3, 5, AEquipmentSlotType::RightHand,
-		                  AgentEquipmentLayout::AlignmentX::Centre,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 1024, 6, 3, 5, AEquipmentSlotType::LeftHand,
-		                  AgentEquipmentLayout::AlignmentX::Centre,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
+		pushEquipmentSlot(a, 1024, 6, 3, 5, EquipmentSlotType::RightHand, AlignmentX::Centre,
+		                  AlignmentY::Centre);
+		pushEquipmentSlot(a, 1024, 6, 3, 5, EquipmentSlotType::LeftHand, AlignmentX::Centre,
+		                  AlignmentY::Centre);
 
 		state.agent_equipment_layouts[id] = a;
 	}
@@ -1023,32 +1019,25 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 		UString id = format("%s%s", AgentEquipmentLayout::getPrefix(), canon_string(name));
 
 		auto a = mksp<AgentEquipmentLayout>();
-		pushEquipmentSlot(a, 0, 6, 3, 5, AEquipmentSlotType::RightHand,
-		                  AgentEquipmentLayout::AlignmentX::Centre,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 12, 6, 3, 5, AEquipmentSlotType::LeftHand,
-		                  AgentEquipmentLayout::AlignmentX::Centre,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
+		pushEquipmentSlot(a, 0, 6, 3, 5, EquipmentSlotType::RightHand, AlignmentX::Centre,
+		                  AlignmentY::Centre);
+		pushEquipmentSlot(a, 12, 6, 3, 5, EquipmentSlotType::LeftHand, AlignmentX::Centre,
+		                  AlignmentY::Centre);
 
 		// Can humanoids with inventory other than X-Com wear armor in vanilla? Probably not?
 		// But why not let them for fun? :)))) Armored flying anthropod FTW!
 
 		// Armor
-		pushEquipmentSlot(a, 6, 3, 2, 2, AEquipmentSlotType::ArmorHelmet,
-		                  AgentEquipmentLayout::AlignmentX::Centre,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 4, 5, 2, 6, AEquipmentSlotType::ArmorRightHand,
-		                  AgentEquipmentLayout::AlignmentX::Right,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 6, 5, 2, 6, AEquipmentSlotType::ArmorBody,
-		                  AgentEquipmentLayout::AlignmentX::Centre,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 8, 5, 2, 6, AEquipmentSlotType::ArmorLeftHand,
-		                  AgentEquipmentLayout::AlignmentX::Left,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 4, 11, 6, 5, AEquipmentSlotType::ArmorLegs,
-		                  AgentEquipmentLayout::AlignmentX::Centre,
-		                  AgentEquipmentLayout::AlignmentY::Top);
+		pushEquipmentSlot(a, 6, 3, 2, 2, EquipmentSlotType::ArmorHelmet, AlignmentX::Centre,
+		                  AlignmentY::Centre);
+		pushEquipmentSlot(a, 4, 5, 2, 6, EquipmentSlotType::ArmorRightHand, AlignmentX::Right,
+		                  AlignmentY::Centre);
+		pushEquipmentSlot(a, 6, 5, 2, 6, EquipmentSlotType::ArmorBody, AlignmentX::Centre,
+		                  AlignmentY::Centre);
+		pushEquipmentSlot(a, 8, 5, 2, 6, EquipmentSlotType::ArmorLeftHand, AlignmentX::Left,
+		                  AlignmentY::Centre);
+		pushEquipmentSlot(a, 4, 11, 6, 5, EquipmentSlotType::ArmorLegs, AlignmentX::Centre,
+		                  AlignmentY::Top);
 		// Belt #1
 		for (int i = 0; i < 4; i++)
 		{
@@ -1056,12 +1045,10 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 		}
 		pushEquipmentSlot(a, 0, 13);
 		// Special
-		pushEquipmentSlot(a, 2, 14, 2, 2, AEquipmentSlotType::General,
-		                  AgentEquipmentLayout::AlignmentX::Centre,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 11, 14, 2, 2, AEquipmentSlotType::General,
-		                  AgentEquipmentLayout::AlignmentX::Centre,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
+		pushEquipmentSlot(a, 2, 14, 2, 2, EquipmentSlotType::General, AlignmentX::Centre,
+		                  AlignmentY::Centre);
+		pushEquipmentSlot(a, 11, 14, 2, 2, EquipmentSlotType::General, AlignmentX::Centre,
+		                  AlignmentY::Centre);
 		// Belt #2
 		for (int i = 0; i < 4; i++)
 		{

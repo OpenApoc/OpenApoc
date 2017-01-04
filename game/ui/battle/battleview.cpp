@@ -550,8 +550,8 @@ BattleView::BattleView(sp<GameState> gameState)
 		else
 		{
 			auto unit = this->battle.battleViewSelectedUnits.front();
-			if (!(unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-			                                            : AEquipmentSlotType::LeftHand)) ||
+			if (!(unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
+			                                            : EquipmentSlotType::LeftHand)) ||
 			    !unit->agent->type->inventory)
 			{
 				fail = true;
@@ -592,8 +592,8 @@ BattleView::BattleView(sp<GameState> gameState)
 		bool right =
 		    this->primingTab->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->isChecked();
 		auto unit = this->battle.battleViewSelectedUnits.front();
-		auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-		                                                  : AEquipmentSlotType::LeftHand);
+		auto item = unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
+		                                                  : EquipmentSlotType::LeftHand);
 
 		int delay = this->primingTab->findControlTyped<ScrollBar>("DELAY_SLIDER")->getValue();
 		LogWarning("Delay %d", delay);
@@ -933,8 +933,8 @@ void BattleView::update()
 			{
 				continue;
 			}
-			auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-			                                                  : AEquipmentSlotType::LeftHand);
+			auto item = unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
+			                                                  : EquipmentSlotType::LeftHand);
 			if (!item->inUse)
 			{
 				continue;
@@ -1334,8 +1334,8 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 		return;
 	}
 	auto unit = battle.battleViewSelectedUnits.front();
-	auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-	                                                  : AEquipmentSlotType::LeftHand);
+	auto item = unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
+	                                                  : EquipmentSlotType::LeftHand);
 	if (!item)
 	{
 		return;
@@ -1361,8 +1361,8 @@ void BattleView::orderUse(bool right, bool automatic)
 		return;
 	}
 	auto unit = battle.battleViewSelectedUnits.front();
-	auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-	                                                  : AEquipmentSlotType::LeftHand);
+	auto item = unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
+	                                                  : EquipmentSlotType::LeftHand);
 
 	if (!item)
 		return;
@@ -1474,8 +1474,8 @@ void BattleView::orderDrop(bool right)
 		return;
 	}
 
-	auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-	                                                  : AEquipmentSlotType::LeftHand);
+	auto item = unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
+	                                                  : EquipmentSlotType::LeftHand);
 	if (item) // Drop item
 	{
 		// Special case, just add mission in front of anything and start it, no need to clear orders
@@ -1496,8 +1496,8 @@ void BattleView::orderDrop(bool right)
 			return;
 		}
 		auto item = items.front();
-		unit->agent->addEquipment(*state, item->item, right ? AEquipmentSlotType::RightHand
-		                                                    : AEquipmentSlotType::LeftHand);
+		unit->agent->addEquipment(*state, item->item, right ? EquipmentSlotType::RightHand
+		                                                    : EquipmentSlotType::LeftHand);
 		item->die(*state, false);
 	}
 }
@@ -1565,8 +1565,8 @@ void BattleView::orderTeleport(Vec3<int> target, bool right)
 		return;
 	}
 	auto unit = battle.battleViewSelectedUnits.front();
-	auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-	                                                  : AEquipmentSlotType::LeftHand);
+	auto item = unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
+	                                                  : EquipmentSlotType::LeftHand);
 
 	// FIXME: REMOVE TEMPORARY CHEAT
 	if (!item || item->type->type != AEquipmentType::Type::Teleporter)
@@ -2293,11 +2293,11 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 	sp<AEquipment> e = nullptr;
 	if (rightHand)
 	{
-		e = u->agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+		e = u->agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
 	}
 	else
 	{
-		e = u->agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+		e = u->agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
 	}
 	if (e)
 	{

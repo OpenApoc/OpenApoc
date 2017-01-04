@@ -426,7 +426,7 @@ void BattleUnit::startAttacking(GameState &state, WeaponStatus status)
 			if (status == WeaponStatus::FiringBothHands)
 			{
 				// Right hand has priority
-				auto rhItem = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+				auto rhItem = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
 				if (rhItem && rhItem->canFire())
 				{
 					status = WeaponStatus::FiringRightHand;
@@ -948,8 +948,8 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 	if (isHealing)
 	{
 		isHealing = false;
-		auto e1 = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
-		auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+		auto e1 = agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
+		auto e2 = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
 		if (e1 && e1->type->type == AEquipmentType::Type::MediKit)
 		{
 			isHealing = true;
@@ -1256,8 +1256,8 @@ void BattleUnit::updateAcquireTarget(GameState &state, unsigned int ticks)
 		else if (!visibleEnemies.empty() &&
 		         (missions.empty() || missions.front()->type != BattleUnitMission::Type::Snooze))
 		{
-			auto e1 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
-			auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+			auto e1 = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
+			auto e2 = agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
 			// Cannot or forbidden to attack:	Turn to enemy
 			if (fire_permission_mode == FirePermissionMode::CeaseFire ||
 			    ((!e1 || !e1->canFire()) && (!e2 || !e2->canFire())))
@@ -1804,8 +1804,8 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 		// For simplicity, prepare weapons we can use
 		// We can use a weapon if we're set to fire this hand, and it's a weapon that can be fired
 
-		auto weaponRight = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
-		auto weaponLeft = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+		auto weaponRight = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
+		auto weaponLeft = agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
 		switch (weaponStatus)
 		{
 			case WeaponStatus::FiringBothHands:

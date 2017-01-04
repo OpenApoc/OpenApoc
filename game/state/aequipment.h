@@ -1,6 +1,7 @@
 #pragma once
 #include "game/state/agent.h"
 #include "game/state/battle/battle.h"
+#include "game/state/equipment.h"
 #include "game/state/gametime.h"
 #include "library/sp.h"
 #include "library/vec.h"
@@ -34,7 +35,7 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	StateRef<AEquipmentType> getPayloadType() const;
 
 	Vec2<int> equippedPosition;
-	AEquipmentSlotType equippedSlotType = AEquipmentSlotType::General;
+	EquipmentSlotType equippedSlotType = EquipmentSlotType::General;
 	// Agent in who's inventory this item is located
 	StateRef<Agent> ownerAgent;
 	// Organization which brought this item to the battle
