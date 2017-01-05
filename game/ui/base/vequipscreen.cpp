@@ -591,10 +591,10 @@ void VEquipScreen::setHighlightedSlotType(EquipmentSlotType type)
 			this->paperDoll->setHighlightColours({EQUIP_GRID_COLOUR, EQUIP_GRID_COLOUR_GENERAL});
 			break;
 		case EquipmentSlotType::VehicleWeapon:
-		this->paperDoll->setHighlightColours({EQUIP_GRID_COLOUR, EQUIP_GRID_COLOUR_WEAPON});
+			this->paperDoll->setHighlightColours({EQUIP_GRID_COLOUR, EQUIP_GRID_COLOUR_WEAPON});
 			break;
 		case EquipmentSlotType::VehicleEngine:
-		this->paperDoll->setHighlightColours({EQUIP_GRID_COLOUR, EQUIP_GRID_COLOUR_ENGINE});
+			this->paperDoll->setHighlightColours({EQUIP_GRID_COLOUR, EQUIP_GRID_COLOUR_ENGINE});
 			break;
 		default:
 		{

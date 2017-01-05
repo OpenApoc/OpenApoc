@@ -83,6 +83,9 @@ class EquippableObject
   public:
 	virtual sp<Equipment> getEquipmentAt(const Vec2<int> &position) const = 0;
 	virtual const std::list<EquipmentLayoutSlot> &getSlots() const = 0;
+	// Returns a list of (position, equipment). The position is the single 'owning' slot position
+	// for equipment that spans over multiple slots.
+	virtual std::list<std::pair<Vec2<int>, sp<Equipment>>> getEquipment() const = 0;
 };
 
 } // namespace OpenApoc

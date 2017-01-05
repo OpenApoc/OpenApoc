@@ -923,4 +923,17 @@ const std::list<EquipmentLayoutSlot> &Vehicle::getSlots() const
 	return this->type->equipment_layout_slots;
 }
 
+std::list<std::pair<Vec2<int>, sp<Equipment>>> Vehicle::getEquipment() const
+{
+	std::list<std::pair<Vec2<int>, sp<Equipment>>> equipmentList;
+
+	for (auto &equipmentObject : this->equipment)
+	{
+		equipmentList.emplace_back(
+		    std::make_pair(equipmentObject->equippedPosition, equipmentObject));
+	}
+
+	return equipmentList;
+}
+
 }; // namespace OpenApoc

@@ -58,7 +58,6 @@ void EquipmentPaperDoll::update()
 		{
 			this->slotHighlightCounter -= 2.0f * M_PI;
 		}
-		LogWarning("update() - counter %d", this->slotHighlightCounter);
 		// Scale the sin curve from (-1, 1) to (0, 1)
 		float glowFactor = (sin(this->slotHighlightCounter) + 1.0f) / 2.0f;
 
@@ -73,6 +72,19 @@ void EquipmentPaperDoll::update()
 
 		this->setDirty();
 	}
+}
+
+static const EquipmentLayoutSlot *getSlotAtPosition(Vec2<int> pos,
+                                                    const std::list<EquipmentLayoutSlot> &slots)
+{
+	for (auto &slot : slots)
+	{
+		if (slot.bounds.within(pos))
+		{
+			return &slot;
+		}
+	}
+	return nullptr;
 }
 
 void EquipmentPaperDoll::onRender()
@@ -113,58 +125,56 @@ void EquipmentPaperDoll::onRender()
 			fw().renderer->drawLine(p10, p00, nonHighlightColour, 2);
 		}
 	}
-	//Draw all equipment after slot lines to ensure they're on top
-	
-	for (auto &slot : slotList)
+	// Draw all equipment after slot lines to ensure they're on top
+	auto equipment = this->object->getEquipment();
+	for (auto &equipPair : equipment)
 	{
-		auto pos= slot.bounds.p0;
-		auto equipment = this->object->getEquipmentAt(pos);
-		if (equipment)
+		auto pos = equipPair.first;
+		auto equipment = equipPair.second;
+		auto *slot = getSlotAtPosition(pos, slotList);
+		if (!slot)
 		{
-			auto equipmentSize = equipment->getEquipmentSlotSize();
-			auto alignX = slot.align_x;
-			auto alignY = slot.align_y;
-			auto slotBounds = slot.bounds;
-
-			pos *= slotSizePixels;
-
-			int diffX = slotBounds.getWidth() - equipmentSize.x;
-			int diffY = slotBounds.getHeight() - equipmentSize.y;
-
-			switch (alignX)
-			{
-				case AlignmentX::Left:
-					pos.x += 0;
-					break;
-				case AlignmentX::Right:
-					pos.x += diffX * slotSizePixels.x;
-					break;
-				case AlignmentX::Centre:
-					pos.x += (diffX * slotSizePixels.x)/2;
-					break;
-			}
-
-			switch (alignY)
-			{
-				case AlignmentY::Top:
-					pos.y += 0;
-					break;
-				case AlignmentY::Bottom:
-					pos.y += diffY * slotSizePixels.y;
-					break;
-				case AlignmentY::Centre:
-					pos.y += (diffY * slotSizePixels.y) / 2;
-					break;
-			}
-			fw().renderer->draw(equipment->getEquipmentImage(), pos);
+			LogWarning("Equipment at %s not in slot", pos);
 		}
+		auto equipmentSize = equipment->getEquipmentSlotSize();
+		auto alignX = slot->align_x;
+		auto alignY = slot->align_y;
+		auto slotBounds = slot->bounds;
+
+		pos *= slotSizePixels;
+
+		int diffX = slotBounds.getWidth() - equipmentSize.x;
+		int diffY = slotBounds.getHeight() - equipmentSize.y;
+
+		switch (alignX)
+		{
+			case AlignmentX::Left:
+				pos.x += 0;
+				break;
+			case AlignmentX::Right:
+				pos.x += diffX * slotSizePixels.x;
+				break;
+			case AlignmentX::Centre:
+				pos.x += (diffX * slotSizePixels.x) / 2;
+				break;
+		}
+
+		switch (alignY)
+		{
+			case AlignmentY::Top:
+				pos.y += 0;
+				break;
+			case AlignmentY::Bottom:
+				pos.y += diffY * slotSizePixels.y;
+				break;
+			case AlignmentY::Centre:
+				pos.y += (diffY * slotSizePixels.y) / 2;
+				break;
+		}
+		fw().renderer->draw(equipment->getEquipmentImage(), pos);
 	}
 }
 
-void EquipmentPaperDoll::updateEquipment()
-{
-	this->setDirty();
-}
-
+void EquipmentPaperDoll::updateEquipment() { this->setDirty(); }
 
 } // namespace OpenApoc

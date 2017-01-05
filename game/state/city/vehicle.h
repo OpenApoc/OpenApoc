@@ -139,6 +139,7 @@ class Vehicle : public StateObject,
 
 	sp<Equipment> getEquipmentAt(const Vec2<int> &position) const override;
 	const std::list<EquipmentLayoutSlot> &getSlots() const override;
+	std::list<std::pair<Vec2<int>, sp<Equipment>>> getEquipment() const override;
 };
 
 }; // namespace OpenApoc
