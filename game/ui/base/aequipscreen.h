@@ -2,6 +2,7 @@
 
 #include "framework/stage.h"
 #include "library/sp.h"
+#include "library/vec.h"
 #include <map>
 
 namespace OpenApoc
