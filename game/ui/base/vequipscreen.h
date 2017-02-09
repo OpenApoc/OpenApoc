@@ -3,7 +3,6 @@
 #include "framework/stage.h"
 #include "game/state/rules/vequipment_type.h"
 #include "game/state/stateobject.h"
-#include "game/ui/equipscreen.h"
 #include "library/colour.h"
 #include "library/rect.h"
 #include "library/sp.h"
@@ -20,6 +19,7 @@ class BitmapFont;
 class GameState;
 class Control;
 class VEquipmentType;
+class EquipmentPaperDoll;
 
 class VEquipScreen : public Stage
 {

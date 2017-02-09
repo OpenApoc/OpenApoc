@@ -9,6 +9,7 @@
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
 #include "game/state/gamestate.h"
+#include "game/ui/equipscreen.h"
 
 namespace OpenApoc
 {
@@ -74,12 +75,18 @@ static sp<Image> createStatsBar(int initialValue, int currentValue, int modified
 
 	return img;
 }
+const Vec2<int> AEquipScreen::EQUIP_GRID_SLOT_SIZE{16, 16};
+const Vec2<int> AEquipScreen::EQUIP_GRID_SLOTS{16, 16};
 
 AEquipScreen::AEquipScreen(sp<GameState> state)
     : Stage(), form(ui().getForm("aequipscreen")),
       pal(fw().data->loadPalette("xcom3/ufodata/agenteqp.pcx")), state(state)
 
 {
+	auto paperDollPlaceholder = form->findControlTyped<Graphic>("PAPER_DOLL");
+
+	this->paperDoll = form->createChild<EquipmentPaperDoll>(
+	    paperDollPlaceholder->Location, paperDollPlaceholder->Size, EQUIP_GRID_SLOT_SIZE);
 }
 
 AEquipScreen::~AEquipScreen() = default;
