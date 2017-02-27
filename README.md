@@ -22,7 +22,7 @@ We also have an IRC channel on http://freenode.net - #openapoc
 OpenApocalypse is built leveraging a number of libraries - to provide needed functionality (and save us the time of implementing it ourselves badly)
  
 - [SDL2](http://www.libsdl.org)
-- [Boost] (http://boost.org) - specifially the 'locale' library, used for localisation
+- [Boost] (http://boost.org) - specifially the 'locale' library, used for localisation, 'program-options' for settings management, and 'filesystem'
 - [Libunwind] (http://www.nongnu.org/libunwind/download.html) - debug backtracing on linux - not needed on windows
 
 The following libraries are also used, but are shipped as submodules in the repository and directly included in the build, so you don't need to install these dependencies to build or use openapoc.
@@ -54,9 +54,9 @@ git submodule update -f
 
 ### Building on Linux
 (tested on ubuntu 16.04 - other distributions will probably need different packages to install, and we require at least gcc 5 or clang 3.8)
-- Install the following packages: libsdl2-dev cmake build-essential git libboost-locale-dev libboost-filesystem-dev libboost-system-dev
+- Install the following packages: libsdl2-dev cmake build-essential git libboost-locale-dev libboost-filesystem-dev libboost-system-dev libboost-program-options-dev
 ```
-sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-system-dev
+sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-system-dev libboost-program-options-dev
 ```
 - Checkout OpenApoc from github
 - Fetch the dependencies from git with the following terminal command (run from the just-created OpenApoc folder)
