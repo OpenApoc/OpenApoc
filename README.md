@@ -80,12 +80,7 @@ cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
 ```
 make -j4
 ```
-- This should create a directory 'bin' under the build directory, with the 'OpenApoc' executable file, and the 'data' directory already in place.
-- Change to the build/bin directory
+- This should create a directory 'bin' under the build directory, with the 'OpenApoc' executable file. OpenApoc by default expects the data folder to be in the current working directory, so running the executable from the root of the git checkout should work.
 ```
-cd bin
-```
-- Run openapoc
-```
-./OpenApoc
+./build/bin/OpenApoc
 ```
