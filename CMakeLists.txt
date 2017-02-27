@@ -62,6 +62,9 @@ if (LTO)
 		endif()
 endif(LTO)
 
+set(GLM_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/dependencies/glm)
+MARK_AS_ADVANCED(GLM_INCLUDE_DIR)
+
 add_subdirectory(library)
 add_subdirectory(framework)
 add_subdirectory(forms)

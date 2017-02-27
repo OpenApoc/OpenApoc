@@ -32,13 +32,6 @@ source_group(library\\headers FILES ${LIBRARY_HEADER_FILES})
 list(APPEND ALL_SOURCE_FILES ${LIBRARY_SOURCE_FILES})
 list(APPEND ALL_HEADER_FILES ${LIBRARY_HEADER_FILES})
 
-#Require the glm matrix/vector maths library
-FIND_PATH(GLM_INCLUDE_DIR glm/glm.hpp)
-MARK_AS_ADVANCED(GLM_INCLUDE_DIR)
-if (NOT GLM_INCLUDE_DIR)
-		message(FATAL_ERROR "GLM headers not found")
-endif()
-
 add_library(OpenApoc_Library STATIC ${LIBRARY_SOURCE_FILES}
 		${LIBRARY_HEADER_FILES})
 
