@@ -15,8 +15,9 @@ class Building;
 class Facility;
 class GameState;
 
-class Base : public StateObject<Base>
+class Base : public StateObject
 {
+	STATE_OBJECT(Base)
   public:
 	std::vector<std::vector<bool>> corridors;
 	std::vector<sp<Facility>> facilities;

@@ -14,25 +14,6 @@
 namespace OpenApoc
 {
 
-const std::map<ResearchTopic::Type, UString> ResearchTopic::TypeMap = {
-    {Type::BioChem, "biochem"}, {Type::Physics, "physics"}, {Type::Engineering, "engineering"},
-};
-
-const std::map<ResearchTopic::LabSize, UString> ResearchTopic::LabSizeMap = {
-    {LabSize::Small, "small"}, {LabSize::Large, "large"},
-};
-
-const std::map<ResearchTopic::ItemType, UString> ResearchTopic::ItemTypeMap = {
-    {ItemType::VehicleEquipment, "vehicleequipment"},
-    {ItemType::AgentEquipment, "agentequipment"},
-    {ItemType::VehicleEquipmentAmmo, "vehicleequipmentammo"},
-    {ItemType::Craft, "craft"},
-};
-
-const std::map<ResearchDependency::Type, UString> ResearchDependency::TypeMap = {
-    {Type::Any, "any"}, {Type::All, "all"}, {Type::Unused, "unused"},
-};
-
 bool ResearchTopic::isComplete() const
 {
 	return (this->type != ResearchTopic::Type::Engineering) &&
@@ -95,8 +76,7 @@ bool ProjectDependencies::satisfied(StateRef<Base> base) const
 	return true;
 }
 
-template <>
-sp<ResearchTopic> StateObject<ResearchTopic>::get(const GameState &state, const UString &id)
+sp<ResearchTopic> ResearchTopic::get(const GameState &state, const UString &id)
 {
 	auto it = state.research.topics.find(id);
 	if (it == state.research.topics.end())
@@ -107,20 +87,18 @@ sp<ResearchTopic> StateObject<ResearchTopic>::get(const GameState &state, const 
 	return it->second;
 }
 
-template <> const UString &StateObject<ResearchTopic>::getPrefix()
+const UString &ResearchTopic::getPrefix()
 {
 	static UString prefix = "RESEARCH_";
 	return prefix;
 }
-template <> const UString &StateObject<ResearchTopic>::getTypeName()
+const UString &ResearchTopic::getTypeName()
 {
 	static UString name = "ResearchTopic";
 	return name;
 }
 
-template <>
-const UString &StateObject<ResearchTopic>::getId(const GameState &state,
-                                                 const sp<ResearchTopic> ptr)
+const UString &ResearchTopic::getId(const GameState &state, const sp<ResearchTopic> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &r : state.research.topics)
@@ -132,7 +110,7 @@ const UString &StateObject<ResearchTopic>::getId(const GameState &state,
 	return emptyString;
 }
 
-template <> sp<Lab> StateObject<Lab>::get(const GameState &state, const UString &id)
+sp<Lab> Lab::get(const GameState &state, const UString &id)
 {
 	auto it = state.research.labs.find(id);
 	if (it == state.research.labs.end())
@@ -143,18 +121,18 @@ template <> sp<Lab> StateObject<Lab>::get(const GameState &state, const UString 
 	return it->second;
 }
 
-template <> const UString &StateObject<Lab>::getPrefix()
+const UString &Lab::getPrefix()
 {
 	static UString prefix = "LAB_";
 	return prefix;
 }
-template <> const UString &StateObject<Lab>::getTypeName()
+const UString &Lab::getTypeName()
 {
 	static UString name = "Lab";
 	return name;
 }
 
-template <> const UString &StateObject<Lab>::getId(const GameState &state, const sp<Lab> ptr)
+const UString &Lab::getId(const GameState &state, const sp<Lab> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &l : state.research.labs)

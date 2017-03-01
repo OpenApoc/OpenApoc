@@ -4,19 +4,19 @@
 namespace OpenApoc
 {
 
-template <> const UString &StateObject<VAmmoType>::getPrefix()
+const UString &VAmmoType::getPrefix()
 {
 	static UString prefix = "VAMMOTYPE_";
 	return prefix;
 }
 
-template <> const UString &StateObject<VAmmoType>::getTypeName()
+const UString &VAmmoType::getTypeName()
 {
 	static UString name = "VAmmoType";
 	return name;
 }
 
-template <> sp<VAmmoType> StateObject<VAmmoType>::get(const GameState &state, const UString &id)
+sp<VAmmoType> VAmmoType::get(const GameState &state, const UString &id)
 {
 	auto it = state.vehicle_ammo.find(id);
 	if (it == state.vehicle_ammo.end())

@@ -5,21 +5,11 @@
 namespace OpenApoc
 {
 
-const std::map<UfopaediaEntry::Data, UString> UfopaediaEntry::DataMap = {
-
-    {Data::Nothing, "nothing"},     {Data::Organisation, "organisation"},
-    {Data::Vehicle, "vehicle"},     {Data::VehicleEquipment, "vequipment"},
-    {Data::Equipment, "equipment"}, {Data::Facility, "facility"},
-    {Data::Building, "building"}
-
-};
-
 UfopaediaEntry::UfopaediaEntry() : data_type(Data::Nothing) {}
 
 bool UfopaediaEntry::isVisible() const { return this->dependency.satisfied(); }
 
-template <>
-sp<UfopaediaEntry> StateObject<UfopaediaEntry>::get(const GameState &state, const UString &id)
+sp<UfopaediaEntry> UfopaediaEntry::get(const GameState &state, const UString &id)
 {
 	for (auto &cat : state.ufopaedia)
 	{
@@ -31,12 +21,12 @@ sp<UfopaediaEntry> StateObject<UfopaediaEntry>::get(const GameState &state, cons
 	return nullptr;
 }
 
-template <> const UString &StateObject<UfopaediaEntry>::getPrefix()
+const UString &UfopaediaEntry::getPrefix()
 {
 	static UString prefix = "PAEDIAENTRY_";
 	return prefix;
 }
-template <> const UString &StateObject<UfopaediaEntry>::getTypeName()
+const UString &UfopaediaEntry::getTypeName()
 {
 	static UString name = "UfopaediaEntry";
 	return name;

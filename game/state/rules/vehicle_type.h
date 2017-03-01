@@ -18,8 +18,9 @@ class Image;
 class VoxelMap;
 class BattleMap;
 
-class VehicleType : public StateObject<VehicleType>
+class VehicleType : public StateObject
 {
+	STATE_OBJECT(VehicleType)
   public:
 	enum class Type
 	{
@@ -27,7 +28,6 @@ class VehicleType : public StateObject<VehicleType>
 		Ground,
 		UFO,
 	};
-	static const std::map<Type, UString> TypeMap;
 	enum class Direction
 	{
 		N,
@@ -47,7 +47,6 @@ class VehicleType : public StateObject<VehicleType>
 		NW,
 		NNW
 	};
-	static const std::map<Direction, UString> DirectionMap;
 	static const Vec3<float> &directionToVector(Direction);
 	enum class Banking
 	{
@@ -57,7 +56,6 @@ class VehicleType : public StateObject<VehicleType>
 		Ascending,
 		Descending,
 	};
-	static const std::map<Banking, UString> BankingMap;
 	enum class ArmourDirection
 	{
 		Top,
@@ -67,21 +65,18 @@ class VehicleType : public StateObject<VehicleType>
 		Left,
 		Right,
 	};
-	static const std::map<ArmourDirection, UString> ArmourDirectionMap;
 	enum class AlignmentX
 	{
 		Left,
 		Right,
 		Centre,
 	};
-	static const std::map<AlignmentX, UString> AlignmentXMap;
 	enum class AlignmentY
 	{
 		Top,
 		Bottom,
 		Centre,
 	};
-	static const std::map<AlignmentY, UString> AlignmentYMap;
 
 	// This is explictly mutable it can be used through a const ref
 	// FIXME: Should this go somewhere else in the state? If the rules are meant to be immutable

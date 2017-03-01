@@ -22,18 +22,18 @@
 namespace OpenApoc
 {
 
-template <> const UString &StateObject<Vehicle>::getPrefix()
+const UString &Vehicle::getPrefix()
 {
 	static UString prefix = "VEHICLE_";
 	return prefix;
 }
-template <> const UString &StateObject<Vehicle>::getTypeName()
+const UString &Vehicle::getTypeName()
 {
 	static UString name = "Vehicle";
 	return name;
 }
-template <>
-const UString &StateObject<Vehicle>::getId(const GameState &state, const sp<Vehicle> ptr)
+
+const UString &Vehicle::getId(const GameState &state, const sp<Vehicle> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &v : state.vehicles)
@@ -143,20 +143,6 @@ Vehicle::Vehicle()
 }
 
 Vehicle::~Vehicle() = default;
-
-const std::map<Vehicle::AttackMode, UString> Vehicle::AttackModeMap = {
-    {Vehicle::AttackMode::Aggressive, "aggressive"},
-    {Vehicle::AttackMode::Standard, "standard"},
-    {Vehicle::AttackMode::Defensive, "defensive"},
-    {Vehicle::AttackMode::Evasive, "evasive"},
-};
-
-const std::map<Vehicle::Altitude, UString> Vehicle::AltitudeMap = {
-    {Vehicle::Altitude::Highest, "highest"},
-    {Vehicle::Altitude::High, "high"},
-    {Vehicle::Altitude::Standard, "standard"},
-    {Vehicle::Altitude::Low, "low"},
-};
 
 void Vehicle::launch(TileMap &map, GameState &state, Vec3<float> initialPosition)
 {
@@ -900,7 +886,7 @@ void Vehicle::equipDefaultEquipment(GameState &state)
 	}
 }
 
-template <> sp<Vehicle> StateObject<Vehicle>::get(const GameState &state, const UString &id)
+sp<Vehicle> Vehicle::get(const GameState &state, const UString &id)
 {
 	auto it = state.vehicles.find(id);
 	if (it == state.vehicles.end())

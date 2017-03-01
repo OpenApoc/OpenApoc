@@ -136,15 +136,11 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, up<T> &ptr)
 {
 	if (!node)
 		return;
-	auto upNode = node->getNodeOpt("up");
-	if (upNode)
+	if (!ptr)
 	{
-		if (!ptr)
-		{
-			ptr.reset(new T);
-		}
-		serializeIn(state, upNode, *ptr);
+		ptr.reset(new T);
 	}
+	serializeIn(state, node, *ptr);
 }
 
 template <typename T>
@@ -152,15 +148,11 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, sp<T> &ptr)
 {
 	if (!node)
 		return;
-	auto spNode = node->getNodeOpt("sp");
-	if (spNode)
+	if (!ptr)
 	{
-		if (!ptr)
-		{
-			ptr = std::make_shared<T>();
-		}
-		serializeIn(state, spNode, *ptr);
+		ptr = std::make_shared<T>();
 	}
+	serializeIn(state, node, *ptr);
 }
 
 template <typename T>
@@ -388,11 +380,11 @@ void serializeOut(sp<SerializationNode> node, const up<T> &ptr, const up<T> &ref
 	if (ptr)
 	{
 		if (ref)
-			serializeOut(node->addNode("up"), *ptr, *ref);
+			serializeOut(node, *ptr, *ref);
 		else
 		{
 			T defaultRef;
-			serializeOut(node->addNode("up"), *ptr, defaultRef);
+			serializeOut(node, *ptr, defaultRef);
 		}
 	}
 }
@@ -403,11 +395,11 @@ void serializeOut(sp<SerializationNode> node, const sp<T> &ptr, const sp<T> &ref
 	if (ptr)
 	{
 		if (ref)
-			serializeOut(node->addNode("sp"), *ptr, *ref);
+			serializeOut(node, *ptr, *ref);
 		else
 		{
 			T defaultRef;
-			serializeOut(node->addNode("sp"), *ptr, defaultRef);
+			serializeOut(node, *ptr, defaultRef);
 		}
 	}
 }

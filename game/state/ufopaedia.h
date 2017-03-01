@@ -12,8 +12,9 @@ namespace OpenApoc
 class ResearchTopic;
 class LazyImage;
 
-class UfopaediaEntry : public StateObject<UfopaediaEntry>
+class UfopaediaEntry : public StateObject
 {
+	STATE_OBJECT(UfopaediaEntry)
   public:
 	enum class Data
 	{
@@ -25,7 +26,6 @@ class UfopaediaEntry : public StateObject<UfopaediaEntry>
 		Facility,
 		Building
 	};
-	static const std::map<Data, UString> DataMap;
 	UfopaediaEntry();
 	UString title;
 	UString description;
@@ -38,8 +38,9 @@ class UfopaediaEntry : public StateObject<UfopaediaEntry>
 	bool isVisible() const;
 };
 
-class UfopaediaCategory : public StateObject<UfopaediaCategory>
+class UfopaediaCategory : public StateObject
 {
+	STATE_OBJECT(UfopaediaCategory)
   public:
 	UString title;
 	UString description;

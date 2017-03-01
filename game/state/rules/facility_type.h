@@ -10,8 +10,9 @@ namespace OpenApoc
 {
 class Image;
 class UfopaediaEntry;
-class FacilityType : public StateObject<FacilityType>
+class FacilityType : public StateObject
 {
+	STATE_OBJECT(FacilityType)
   public:
 	enum class Capacity
 	{
@@ -27,7 +28,6 @@ class FacilityType : public StateObject<FacilityType>
 		Workshop,
 		Aliens
 	};
-	static const std::map<Capacity, UString> CapacityMap;
 	FacilityType();
 	UString name;
 	bool fixed;

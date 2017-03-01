@@ -24,8 +24,9 @@ enum class ItemWieldMode
 	TwoHanded
 };
 
-class BattleUnitAnimationPack : public StateObject<BattleUnitAnimationPack>
+class BattleUnitAnimationPack : public StateObject
 {
+	STATE_OBJECT(BattleUnitAnimationPack)
   public:
 	class AnimationEntry
 	{
@@ -215,7 +216,7 @@ class BattleUnitAnimationPack : public StateObject<BattleUnitAnimationPack>
 	bool loadAnimationPack(GameState &state, const UString &path);
 
 	// high level api for saving
-	bool saveAnimationPack(const UString &path, bool pack = true);
+	bool saveAnimationPack(const UString &path, bool pack = true, bool pretty = false);
 
 	// Function used when getting file path
 	static const UString getNameFromID(UString id);

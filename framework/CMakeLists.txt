@@ -237,14 +237,6 @@ target_include_directories(OpenApoc_Framework PUBLIC ${Boost_INCLUDE_DIRS})
 find_package(Threads)
 target_link_libraries(OpenApoc_Framework PUBLIC ${CMAKE_THREAD_LIBS_INIT})
 
-
-#Require the glm matrix/vector maths library
-FIND_PATH(GLM_INCLUDE_DIR glm/glm.hpp)
-MARK_AS_ADVANCED(GLM_INCLUDE_DIR)
-if (NOT GLM_INCLUDE_DIR)
-		message(FATAL_ERROR "GLM headers not found")
-endif()
-
 target_include_directories(OpenApoc_Framework PUBLIC ${GLM_INCLIDE_DIR})
 
 find_package(PkgConfig)

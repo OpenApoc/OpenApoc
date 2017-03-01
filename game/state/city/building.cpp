@@ -5,7 +5,7 @@
 namespace OpenApoc
 {
 
-template <> sp<Building> StateObject<Building>::get(const GameState &state, const UString &id)
+sp<Building> Building::get(const GameState &state, const UString &id)
 {
 	for (auto &city : state.cities)
 	{
@@ -18,19 +18,18 @@ template <> sp<Building> StateObject<Building>::get(const GameState &state, cons
 	return nullptr;
 }
 
-template <> const UString &StateObject<Building>::getPrefix()
+const UString &Building::getPrefix()
 {
 	static UString prefix = "BUILDING_";
 	return prefix;
 }
-template <> const UString &StateObject<Building>::getTypeName()
+const UString &Building::getTypeName()
 {
 	static UString name = "Building";
 	return name;
 }
 
-template <>
-const UString &StateObject<Building>::getId(const GameState &state, const sp<Building> ptr)
+const UString &Building::getId(const GameState &state, const sp<Building> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &c : state.cities)

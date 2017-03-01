@@ -9,8 +9,9 @@ namespace OpenApoc
 {
 class Image;
 class VoxelMap;
-class SceneryTileType : public StateObject<SceneryTileType>
+class SceneryTileType : public StateObject
 {
+	STATE_OBJECT(SceneryTileType)
   public:
 	SceneryTileType() = default;
 
@@ -22,7 +23,6 @@ class SceneryTileType : public StateObject<SceneryTileType>
 		PeopleTube,
 		CityWall,
 	};
-	static const std::map<TileType, UString> TileTypeMap;
 
 	enum class RoadType
 	{
@@ -30,7 +30,6 @@ class SceneryTileType : public StateObject<SceneryTileType>
 		Junction,
 		Terminal,
 	};
-	static const std::map<RoadType, UString> RoadTypeMap;
 
 	enum class WalkMode
 	{
@@ -38,7 +37,6 @@ class SceneryTileType : public StateObject<SceneryTileType>
 		Into,
 		Onto
 	};
-	static const std::map<WalkMode, UString> WalkModeMap;
 
 	sp<Image> sprite;
 	sp<Image> strategySprite;

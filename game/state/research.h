@@ -28,8 +28,9 @@ class ProjectDependencies
 	bool satisfied(StateRef<Base> base) const;
 };
 
-class ResearchTopic : public StateObject<ResearchTopic>
+class ResearchTopic : public StateObject
 {
+	STATE_OBJECT(ResearchTopic)
   public:
 	ResearchTopic() = default;
 	enum class Type
@@ -38,13 +39,11 @@ class ResearchTopic : public StateObject<ResearchTopic>
 		Physics,
 		Engineering,
 	};
-	static const std::map<Type, UString> TypeMap;
 	enum class LabSize
 	{
 		Small,
 		Large,
 	};
-	static const std::map<LabSize, UString> LabSizeMap;
 	enum class ItemType
 	{
 		VehicleEquipment,
@@ -52,7 +51,6 @@ class ResearchTopic : public StateObject<ResearchTopic>
 		VehicleEquipmentAmmo,
 		Craft,
 	};
-	static const std::map<ItemType, UString> ItemTypeMap;
 
 	// Shared Research & Manufacture
 	UString name;
@@ -88,7 +86,6 @@ class ResearchDependency
 		All,
 		Unused
 	};
-	static const std::map<Type, UString> TypeMap;
 	Type type = Type::Any;
 
 	std::set<StateRef<ResearchTopic>> topics;
@@ -106,8 +103,9 @@ class ItemDependency
 	bool satisfied(StateRef<Base> base) const;
 };
 
-class Lab : public StateObject<Lab>
+class Lab : public StateObject
 {
+	STATE_OBJECT(Lab)
   public:
 	Lab() = default;
 	ResearchTopic::LabSize size = ResearchTopic::LabSize::Small;

@@ -58,7 +58,7 @@ class XMLSerializationArchive : public SerializationArchive,
   public:
 	sp<SerializationNode> newRoot(const UString &prefix, const UString &name) override;
 	sp<SerializationNode> getRoot(const UString &prefix, const UString &name) override;
-	bool write(const UString &path, bool pack) override;
+	bool write(const UString &path, bool pack, bool pretty) override;
 	XMLSerializationArchive() : dataProvider(nullptr), docRoots(){};
 	XMLSerializationArchive(const sp<SerializationDataProvider> dataProvider)
 	    : dataProvider(dataProvider){};
@@ -223,7 +223,7 @@ sp<SerializationNode> XMLSerializationArchive::getRoot(const UString &prefix, co
 	return std::make_shared<XMLSerializationNode>(shared_from_this(), root, prefix + name + "/");
 }
 
-bool XMLSerializationArchive::write(const UString &path, bool pack)
+bool XMLSerializationArchive::write(const UString &path, bool pack, bool pretty)
 {
 	TraceObj trace("Writing archive", {{"path", path}});
 	// warning! data provider must be freed when this method ends,
@@ -239,7 +239,12 @@ bool XMLSerializationArchive::write(const UString &path, bool pack)
 	{
 		TraceObj traceSave("Saving root", {{"root", root.first}});
 		std::stringstream ss;
-		root.second.save(ss, "  ");
+		unsigned int flags = pugi::format_default;
+		if (pretty == false)
+		{
+			flags = pugi::format_raw;
+		}
+		root.second.save(ss, "", flags);
 		TraceObj traceSaveData("Saving root data", {{"root", root.first}});
 		if (!dataProvider->saveDocument(root.first, ss.str()))
 		{
@@ -254,7 +259,7 @@ sp<SerializationNode> XMLSerializationNode::addNode(const UString &name, const U
 {
 	auto newNode = this->node.append_child();
 	newNode.set_name(name.cStr());
-	newNode.set_value(value.cStr());
+	newNode.text().set(value.cStr());
 	return std::make_shared<XMLSerializationNode>(
 	    this->archive, newNode, std::static_pointer_cast<XMLSerializationNode>(shared_from_this()));
 }

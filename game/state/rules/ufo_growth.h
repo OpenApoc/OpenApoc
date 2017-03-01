@@ -7,8 +7,9 @@
 namespace OpenApoc
 {
 
-class UFOGrowth : public StateObject<UFOGrowth>
+class UFOGrowth : public StateObject
 {
+	STATE_OBJECT(UFOGrowth)
   public:
 	int week = 0;
 	std::vector<std::pair<UString, int>> vehicleTypeList;

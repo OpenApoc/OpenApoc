@@ -45,7 +45,6 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 		Beam,
 		Missile,
 	};
-	static const std::map<Type, UString> TypeMap;
 
 	// Beams have a width & tail length
 	// FIXME: Make this a non-constant colour?

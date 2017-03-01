@@ -7,9 +7,7 @@ namespace OpenApoc
 
 UString BattleUnitImagePack::getImagePackPath() { return fw().getDataDir() + "/imagepacks"; }
 
-template <>
-sp<BattleUnitImagePack> StateObject<BattleUnitImagePack>::get(const GameState &state,
-                                                              const UString &id)
+sp<BattleUnitImagePack> BattleUnitImagePack::get(const GameState &state, const UString &id)
 {
 	auto it = state.battle_unit_image_packs.find(id);
 	if (it == state.battle_unit_image_packs.end())
@@ -20,19 +18,17 @@ sp<BattleUnitImagePack> StateObject<BattleUnitImagePack>::get(const GameState &s
 	return it->second;
 }
 
-template <> const UString &StateObject<BattleUnitImagePack>::getPrefix()
+const UString &BattleUnitImagePack::getPrefix()
 {
 	static UString prefix = "BATTLEUNITIMAGEPACK_";
 	return prefix;
 }
-template <> const UString &StateObject<BattleUnitImagePack>::getTypeName()
+const UString &BattleUnitImagePack::getTypeName()
 {
 	static UString name = "BattleUnitImagePack";
 	return name;
 }
-template <>
-const UString &StateObject<BattleUnitImagePack>::getId(const GameState &state,
-                                                       const sp<BattleUnitImagePack> ptr)
+const UString &BattleUnitImagePack::getId(const GameState &state, const sp<BattleUnitImagePack> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &a : state.battle_unit_image_packs)

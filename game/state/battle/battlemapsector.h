@@ -14,8 +14,9 @@ namespace OpenApoc
 class BattleMapSectorTiles;
 class BattleMapPartType;
 
-class BattleMapSector : public StateObject<BattleMapSector>
+class BattleMapSector : public StateObject
 {
+	STATE_OBJECT(BattleMapSector)
   public:
 	BattleMapSector();
 	~BattleMapSector() override = default;
@@ -75,6 +76,6 @@ class BattleMapSectorTiles
 	bool loadSector(GameState &state, const UString &path);
 
 	// high level api for saving map sectors
-	bool saveSector(const UString &path, bool pack = true);
+	bool saveSector(const UString &path, bool pack = true, bool pretty = false);
 };
 }

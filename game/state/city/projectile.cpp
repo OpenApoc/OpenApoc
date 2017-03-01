@@ -18,10 +18,6 @@
 namespace OpenApoc
 {
 
-const std::map<Projectile::Type, UString> Projectile::TypeMap = {
-    {Type::Beam, "beam"}, {Type::Missile, "missile"},
-};
-
 Projectile::Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> target,
                        Vec3<float> position, Vec3<float> velocity, int turnRate,
                        unsigned int lifetime, int damage, unsigned int tail_length,

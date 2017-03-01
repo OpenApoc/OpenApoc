@@ -75,7 +75,6 @@ class VehicleMission
 		GotoPortal,
 		InfiltrateSubvert,
 	};
-	static const std::map<MissionType, UString> TypeMap;
 
 	MissionType type = MissionType::GotoLocation;
 

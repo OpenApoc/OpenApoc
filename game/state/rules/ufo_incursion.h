@@ -9,8 +9,9 @@
 namespace OpenApoc
 {
 
-class UFOIncursion : public StateObject<UFOIncursion>
+class UFOIncursion : public StateObject
 {
+	STATE_OBJECT(UFOIncursion)
   public:
 	enum class PrimaryMission
 	{
@@ -19,7 +20,6 @@ class UFOIncursion : public StateObject<UFOIncursion>
 		Attack,
 		Overspawn
 	};
-	static const std::map<PrimaryMission, UString> primaryMissionMap;
 
 	PrimaryMission primaryMission = PrimaryMission::Infiltration;
 	std::vector<std::pair<UString, int>> primaryList;

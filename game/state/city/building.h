@@ -16,8 +16,9 @@ class Base;
 class BattleMap;
 class BaseLayout;
 
-class Building : public StateObject<Building>
+class Building : public StateObject
 {
+	STATE_OBJECT(Building)
   public:
 	UString name;
 	UString function;

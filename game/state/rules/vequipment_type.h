@@ -17,8 +17,9 @@ class Sample;
 class DoodadType;
 class Organisation;
 
-class VEquipmentType : public StateObject<VEquipmentType>
+class VEquipmentType : public StateObject
 {
+	STATE_OBJECT(VEquipmentType)
   public:
 	VEquipmentType();
 	enum class Type
@@ -27,7 +28,6 @@ class VEquipmentType : public StateObject<VEquipmentType>
 		Weapon,
 		General,
 	};
-	static const std::map<Type, UString> TypeMap;
 
 	enum class User
 	{
@@ -35,7 +35,6 @@ class VEquipmentType : public StateObject<VEquipmentType>
 		Air,
 		Ammo,
 	};
-	static const std::map<User, UString> UserMap;
 
 	~VEquipmentType() override = default;
 

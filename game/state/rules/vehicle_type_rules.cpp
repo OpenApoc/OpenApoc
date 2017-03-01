@@ -9,35 +9,6 @@
 namespace OpenApoc
 {
 
-const std::map<VehicleType::Type, UString> VehicleType::TypeMap = {
-    {Type::Flying, "flying"}, {Type::Ground, "ground"}, {Type::UFO, "ufo"},
-};
-
-const std::map<VehicleType::Banking, UString> VehicleType::BankingMap = {
-    {Banking::Flat, "flat"},
-    {Banking::Left, "left"},
-    {Banking::Right, "right"},
-    {Banking::Ascending, "ascending"},
-    {Banking::Descending, "descending"},
-};
-
-const std::map<VehicleType::ArmourDirection, UString> VehicleType::ArmourDirectionMap = {
-
-    {ArmourDirection::Top, "top"},     {ArmourDirection::Bottom, "bottom"},
-    {ArmourDirection::Front, "front"}, {ArmourDirection::Rear, "rear"},
-    {ArmourDirection::Left, "left"},   {ArmourDirection::Right, "right"},
-};
-
-const std::map<VehicleType::AlignmentX, UString> VehicleType::AlignmentXMap = {
-
-    {AlignmentX::Left, "left"}, {AlignmentX::Centre, "centre"}, {AlignmentX::Right, "right"},
-};
-
-const std::map<VehicleType::AlignmentY, UString> VehicleType::AlignmentYMap = {
-
-    {AlignmentY::Top, "top"}, {AlignmentY::Centre, "centre"}, {AlignmentY::Bottom, "bottom"},
-};
-
 static const std::map<VehicleType::Direction, Vec3<float>> DirectionVectors = {
     {VehicleType::Direction::N, glm::normalize(Vec3<float>{0, -1, 0})},
     {VehicleType::Direction::NNE, glm::normalize(Vec3<float>{1, -2, 0})},
@@ -81,7 +52,7 @@ static std::map<VehicleType::Banking, Vec3<float>> banking_vectors = {
     {VehicleType::Banking::Descending, Vec3<float>{0, 0, -1}},
 };
 
-template <> sp<VehicleType> StateObject<VehicleType>::get(const GameState &state, const UString &id)
+sp<VehicleType> VehicleType::get(const GameState &state, const UString &id)
 {
 	auto it = state.vehicle_types.find(id);
 	if (it == state.vehicle_types.end())
@@ -92,18 +63,17 @@ template <> sp<VehicleType> StateObject<VehicleType>::get(const GameState &state
 	return it->second;
 }
 
-template <> const UString &StateObject<VehicleType>::getPrefix()
+const UString &VehicleType::getPrefix()
 {
 	static UString prefix = "VEHICLETYPE_";
 	return prefix;
 }
-template <> const UString &StateObject<VehicleType>::getTypeName()
+const UString &VehicleType::getTypeName()
 {
 	static UString name = "VehicleType";
 	return name;
 }
-template <>
-const UString &StateObject<VehicleType>::getId(const GameState &state, const sp<VehicleType> ptr)
+const UString &VehicleType::getId(const GameState &state, const sp<VehicleType> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &v : state.vehicle_types)

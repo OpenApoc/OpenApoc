@@ -1,14 +1,17 @@
 #include "dependencies/pugixml/src/pugixml.hpp"
+#include <cstdio>
+#include <fstream>
+#include <iostream>
+#include <list>
+#include <map>
+#include <memory>
+#include <string>
 
 // Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
 // symbols as part of the module that uses it
 #define BOOST_ALL_NO_LIB
 #include <boost/program_options.hpp>
-#include <fstream>
-#include <iostream>
-#include <list>
-#include <map>
-#include <string>
+#include <boost/uuid/sha1.hpp>
 
 namespace po = boost::program_options;
 
@@ -48,13 +51,47 @@ class StateDefinition
   public:
 	std::list<SerializeObject> objects;
 	std::list<SerializeEnum> enums;
+	std::string hashString;
 };
 
 bool readXml(std::istream &in, StateDefinition &state)
 {
 	pugi::xml_document doc;
 
-	auto ret = doc.load(in);
+	in.seekg(0, std::ios::end);
+	auto fileSize = in.tellg();
+	in.seekg(0, std::ios::beg);
+
+	std::unique_ptr<char[]> fileData(new char[fileSize]);
+	in.read(fileData.get(), fileSize);
+	if (!in)
+	{
+		std::cerr << "Failed to read " << fileSize << "bytes from input file\n";
+		return false;
+	}
+
+	boost::uuids::detail::sha1 sha;
+	sha.reset();
+	sha.process_bytes(fileData.get(), fileSize);
+	unsigned int hashValue[5];
+	sha.get_digest(hashValue);
+
+	for (int i = 0; i < 5; i++)
+	{
+		unsigned int v = hashValue[i];
+		for (int j = 0; j < 4; j++)
+		{
+			// FIXME: Probably need to do the reverse for big endian?
+			char stringBuf[3];
+			unsigned int byteHex = v & 0xff000000;
+			byteHex >>= 24;
+			snprintf(stringBuf, sizeof(stringBuf), "%02x", byteHex);
+			state.hashString += stringBuf;
+			v <<= 8;
+		}
+	}
+
+	auto ret = doc.load_buffer(fileData.get(), fileSize);
 	if (!ret)
 	{
 		std::cerr << "Failed to parse file:" << ret.description() << "\n";
@@ -153,6 +190,8 @@ void writeHeader(std::ofstream &out, const StateDefinition &state)
 	out << "#include \"game/state/gamestate.h\"\n\n";
 	out << "#include \"game/state/gamestate_serialize.h\"\n\n";
 	out << "namespace OpenApoc {\n\n";
+	out << "static constexpr const char* const GAMESTATE_SERIALIZATION_VERSION = \""
+	    << state.hashString << "\";\n";
 	out << "class SerializationNode;\n\n";
 	for (auto &object : state.objects)
 	{
