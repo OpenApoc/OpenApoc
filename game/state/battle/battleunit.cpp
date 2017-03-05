@@ -2129,125 +2129,8 @@ void BattleUnit::updateAI(GameState &state, unsigned int ticks)
 	if (!decision.isEmpty())
 	{
 		LogWarning("AI %s for unit %s decided to %s", decision.ai, id, decision.getName());
+		executeAIDecision(state, decision);
 	}
-
-	// Act on decided action
-	if (decision.action)
-	{
-		switch (decision.action->type)
-		{
-			case AIAction::Type::None:
-				break;
-			case AIAction::Type::AttackGrenade:
-				LogWarning("Implement acting on a Grenade action");
-				// Throw grenade
-				break;
-			case AIAction::Type::AttackWeapon:
-				LogWarning("Implement acting on a Weapon action");
-				// Attack with weapon
-				break;
-			case AIAction::Type::AttackPsiMC:
-			case AIAction::Type::AttackPsiStun:
-			case AIAction::Type::AttackPsiPanic:
-				LogWarning("Implement acting on a Psi AI action");
-				break;
-		}
-	}
-
-	// Act on decided movement
-	if (decision.movement)
-	{
-		// Find out if we can use teleporter to move
-		bool useTeleporter = false;
-		switch (decision.movement->type)
-		{
-			case AIMovement::Type::Patrol:
-				useTeleporter = true;
-				for (auto &u : decision.movement->units)
-				{
-					bool unitHasTeleporter = false;
-					for (auto &e : u->agent->equipment)
-					{
-						if (e->type->type == AEquipmentType::Type::Teleporter &&
-						    e->ammo == e->type->max_ammo &&
-						    u->canAfford(state, u->agent->current_stats.time_units * 55 / 100))
-						{
-							unitHasTeleporter = true;
-							break;
-						}
-					}
-					if (!useTeleporter)
-					{
-						break;
-					}
-				}
-				break;
-			case AIMovement::Type::Advance:
-			case AIMovement::Type::GetInRange:
-			case AIMovement::Type::TakeCover:
-				for (auto &e : agent->equipment)
-				{
-					if (e->type->type == AEquipmentType::Type::Teleporter)
-					{
-						if (e->type->type == AEquipmentType::Type::Teleporter &&
-						    e->ammo == e->type->max_ammo &&
-						    canAfford(state, agent->current_stats.time_units * 55 / 100))
-						{
-							useTeleporter = true;
-							break;
-						}
-					}
-				}
-				break;
-			default:
-				break;
-		}
-
-		// Do movement
-		switch (decision.movement->type)
-		{
-			case AIMovement::Type::None:
-				for (auto &m : missions)
-				{
-					if (m->type == BattleUnitMission::Type::GotoLocation)
-					{
-						m->targetLocation = goalPosition;
-						m->currentPlannedPath.clear();
-					}
-				}
-				break;
-			case AIMovement::Type::Patrol:
-				for (auto &u : decision.movement->units)
-				{
-					u->aiList.lastDecision.movement = mksp<AIMovement>(*decision.movement);
-					u->aiList.lastDecision.ticksUntilThinkAgain = decision.ticksUntilThinkAgain;
-				}
-				Battle::groupMove(state, decision.movement->units,
-				                  decision.movement->targetLocation, true);
-				break;
-			case AIMovement::Type::Retreat:
-				for (auto &u : decision.movement->units)
-				{
-					u->setMission(
-					    state, BattleUnitMission::gotoLocation(
-					               *u, decision.movement->targetLocation, 0, true, true, 1, true));
-					u->aiList.lastDecision.movement = mksp<AIMovement>(*decision.movement);
-					u->aiList.lastDecision.ticksUntilThinkAgain = decision.ticksUntilThinkAgain;
-				}
-				break;
-			case AIMovement::Type::Turn:
-				setMission(state,
-				           BattleUnitMission::turn(*this, decision.movement->targetLocation));
-				break;
-			case AIMovement::Type::Advance:
-			case AIMovement::Type::GetInRange:
-			case AIMovement::Type::TakeCover:
-				LogWarning("Implement Advance/GetInRagnge/TakeCover AI movement's execution");
-				break;
-		}
-	}
-
-	aiList.registerNewDecision(decision);
 }
 
 void BattleUnit::update(GameState &state, unsigned int ticks)
@@ -2418,6 +2301,134 @@ void BattleUnit::requestGiveWay(const BattleUnit &requestor,
 			nextFacings[0] = nextFacings[0] == 7 ? 0 : nextFacings[0] + 1;
 			nextFacings[1] = nextFacings[1] == 0 ? 7 : nextFacings[1] - 1;
 		}
+	}
+}
+
+void BattleUnit::executeGroupAIDecision(GameState &state, AIDecision &decision, std::list<StateRef<BattleUnit>> &units)
+{
+	if (decision.action)
+	{
+		for (auto u : units)
+		{
+			u->executeAIAction(state, *decision.action);
+		}
+	}
+	if (decision.movement)
+	{
+		switch (decision.movement->type)
+		{
+			case AIMovement::Type::Patrol:
+				Battle::groupMove(state, units,
+					decision.movement->targetLocation, true);
+				break;
+			default:
+				for (auto u : units)
+				{
+					u->executeAIMovement(state, *decision.movement);
+				}
+				break;
+		}
+	}
+}
+
+void BattleUnit::executeAIDecision(GameState &state, AIDecision &decision)
+{
+	if (decision.action)
+	{
+		executeAIAction(state, *decision.action);
+	}
+	if (decision.movement)
+	{
+		executeAIMovement(state, *decision.movement);
+	}
+}
+
+void BattleUnit::executeAIAction(GameState &state, AIAction &action)
+{
+	switch (action.type)
+	{
+	case AIAction::Type::AttackGrenade:
+		LogWarning("Implement acting on a Grenade action");
+		// Throw grenade
+		break;
+	case AIAction::Type::AttackWeapon:
+		LogWarning("Implement acting on a Weapon action");
+		// Attack with weapon
+		break;
+	case AIAction::Type::AttackPsiMC:
+	case AIAction::Type::AttackPsiStun:
+	case AIAction::Type::AttackPsiPanic:
+		LogWarning("Implement acting on a Psi AI action");
+		break;
+	}
+}
+
+void BattleUnit::executeAIMovement(GameState &state, AIMovement &movement)
+{
+	//FIXME: USE teleporter to move?
+	// Or maybe this is done in AI?
+
+	/*
+	// Find out if we can use teleporter to move
+	bool useTeleporter = false;
+	switch (movement.type)
+	{
+		case AIMovement::Type::Pursue:
+		case AIMovement::Type::Patrol:
+		case AIMovement::Type::Advance:
+		case AIMovement::Type::GetInRange:
+		case AIMovement::Type::TakeCover:
+			for (auto &e : agent->equipment)
+			{
+				if (e->type->type == AEquipmentType::Type::Teleporter)
+				{
+					if (e->type->type == AEquipmentType::Type::Teleporter &&
+						e->ammo == e->type->max_ammo &&
+						canAfford(state, agent->current_stats.time_units * 55 / 100))
+					{
+						useTeleporter = true;
+						break;
+					}
+				}
+			}
+			break;
+		default:
+			break;
+	}
+	*/
+
+	// Do movement
+	switch (movement.type)
+	{
+		case AIMovement::Type::Stop:
+			for (auto &m : missions)
+			{
+				if (m->type == BattleUnitMission::Type::GotoLocation)
+				{
+					m->targetLocation = goalPosition;
+					m->currentPlannedPath.clear();
+				}
+			}
+			break;
+		case AIMovement::Type::Patrol:
+			setMission(
+				state, BattleUnitMission::gotoLocation(
+					*this, movement.targetLocation));
+			break;
+		case AIMovement::Type::Retreat:
+			setMission(
+				state, BattleUnitMission::gotoLocation(
+					*this, movement.targetLocation, 0, true, true, 1, true));
+			break;
+		case AIMovement::Type::Turn:
+			setMission(state,
+				BattleUnitMission::turn(*this, movement.targetLocation));
+			break;
+		case AIMovement::Type::Advance:
+		case AIMovement::Type::GetInRange:
+		case AIMovement::Type::TakeCover:
+			LogWarning("Implement Advance/GetInRagnge/TakeCover AI movement's execution");
+			break;
 	}
 }
 

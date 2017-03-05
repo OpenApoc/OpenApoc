@@ -1757,7 +1757,8 @@ void BattleView::eventOccurred(Event *e)
 			}
 			case SDLK_a:
 			{
-				if (battle.units.empty())
+				LogWarning("AI debug key currently disabled");
+				/*if (battle.units.empty())
 				{
 					break;
 				}
@@ -1789,7 +1790,7 @@ void BattleView::eventOccurred(Event *e)
 					{
 						u.second->aiList.lastDecision.ticksUntilThinkAgain = TICKS_PER_DAY;
 					}
-				}
+				}*/
 				break;
 			}
 		}

@@ -827,7 +827,13 @@ void Battle::update(GameState &state, unsigned int ticks)
 	}
 	Trace::end("Battle::update::units->update");
 	Trace::start("Battle::update::ai->think");
-	aiBlock.think(state);
+	{
+		auto result = aiBlock.think(state);
+		for (auto entry : result)
+		{
+			BattleUnit::executeGroupAIDecision(state, entry.second, entry.first);
+		}
+	}
 	Trace::end("Battle::update::ai->think");
 
 	// Now after we called update() for everything, we update what needs to be updated last

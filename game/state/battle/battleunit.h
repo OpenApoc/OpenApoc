@@ -46,6 +46,9 @@ class TileObjectBattleUnit;
 class TileObjectShadow;
 class Battle;
 class DamageType;
+class AIDecision;
+class AIAction;
+class AIMovement;
 
 enum class MovementMode
 {
@@ -327,11 +330,19 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Returns if unit did spend (false if unsufficient TUs)
 	bool spendTU(GameState &state, int cost);
 
+	// AI execution
+
+	static void executeGroupAIDecision(GameState &state, AIDecision &decision, std::list<StateRef<BattleUnit>> &units);
+	void executeAIDecision(GameState &state, AIDecision &decision);
+	void executeAIAction(GameState &state, AIAction &action);
+	void executeAIMovement(GameState &state, AIMovement &movement);
+
+	
 	// Misc
 
 	void requestGiveWay(const BattleUnit &requestor, const std::list<Vec3<int>> &plannedPath,
 	                    Vec3<int> pos);
-
+	
 	// Unit state queries
 
 	// Returns true if the unit is dead

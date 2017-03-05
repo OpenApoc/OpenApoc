@@ -1386,7 +1386,6 @@
 	</enum>
 	<enum>
 		<name>AIAction::Type</name>
-		<value>None</value>
 		<value>AttackWeapon</value>
 		<value>AttackGrenade</value>
 		<value>AttackPsiPanic</value>
@@ -1395,9 +1394,10 @@
 	</enum>
 	<enum>
 		<name>AIMovement::Type</name>
-		<value>None</value>
+		<value>Stop</value>
 		<value>Patrol</value>
 		<value>Advance</value>
+		<value>Pursue</value>
 		<value>GetInRange</value>
 		<value>TakeCover</value>
 		<value>Retreat</value>
@@ -1419,7 +1419,6 @@
 		<name>AIDecision</name>
 		<member>action</member>
 		<member>movement</member>
-		<member>ticksUntilThinkAgain</member>
 	</object>
 	<object>
 		<name>UnitAI</name>
@@ -1427,10 +1426,10 @@
 	</object>
 	<object>
 		<name>UnitAIList</name>
-		<member>lastDecision</member>
 		<member>aiList</member>
+		<member>aiMap</member>
 		<member>ticksLastThink</member>
-		<member>ticksUntilThinkAgain</member>
+		<member>ticksUntilReThink</member>
 	</object>
 	<object>
 		<name>LowMoraleUnitAI</name>
@@ -1444,7 +1443,8 @@
 	<object>
 		<name>VanillaUnitAI</name>
 		<member>ticksLastThink</member>
-		<member>ticksUntilThinkAgain</member>
+		<member>ticksUntilReThink</member>
+		<member>lastDecision</member>
 		<member>enemySpotted</member>
 		<member>enemySpottedPrevious</member>
 		<member>attackerPosition</member>
@@ -1457,11 +1457,11 @@
 		<name>TacticalAIBlock</name>
 		<member>aiList</member>
 		<member>ticksLastThink</member>
-		<member>ticksUntilThinkAgain</member>
+		<member>ticksUntilReThink</member>
 	</object>
 	<object>
 		<name>VanillaTacticalAI</name>
 		<member>ticksLastThink</member>
-		<member>ticksUntilThinkAgain</member>
+		<member>ticksUntilReThink</member>
 	</object>
 </openapoc_gamestate>
