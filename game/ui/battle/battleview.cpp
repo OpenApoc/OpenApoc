@@ -18,7 +18,7 @@
 #include "framework/renderer.h"
 #include "framework/trace.h"
 #include "game/state/aequipment.h"
-#include "game/state/battle/ai.h"
+#include "game/state/battle/ai/ai.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart.h"
@@ -1764,10 +1764,10 @@ void BattleView::eventOccurred(Event *e)
 				bool activeAIFound = false;
 				for (auto &u : battle.units)
 				{
-					if ((u.second->aiState.lastDecision.action &&
-					     u.second->aiState.lastDecision.action->type != AIAction::Type::None) ||
-					    (u.second->aiState.lastDecision.movement &&
-					     u.second->aiState.lastDecision.movement->type != AIMovement::Type::None))
+					if ((u.second->aiList.lastDecision.action &&
+					     u.second->aiList.lastDecision.action->type != AIAction::Type::None) ||
+					    (u.second->aiList.lastDecision.movement &&
+					     u.second->aiList.lastDecision.movement->type != AIMovement::Type::None))
 					{
 						activeAIFound = true;
 						break;
@@ -1776,18 +1776,18 @@ void BattleView::eventOccurred(Event *e)
 
 				for (auto &u : battle.units)
 				{
-					if ((u.second->aiState.lastDecision.action &&
-					     u.second->aiState.lastDecision.action->type != AIAction::Type::None) ||
-					    (u.second->aiState.lastDecision.movement &&
-					     u.second->aiState.lastDecision.movement->type != AIMovement::Type::None))
+					if ((u.second->aiList.lastDecision.action &&
+					     u.second->aiList.lastDecision.action->type != AIAction::Type::None) ||
+					    (u.second->aiList.lastDecision.movement &&
+					     u.second->aiList.lastDecision.movement->type != AIMovement::Type::None))
 					{
 						u.second->cancelMissions(*state);
 						u.second->stopAttacking();
 					}
-					u.second->aiState.reset(*state);
+					u.second->aiList.reset(*state, *u.second);
 					if (activeAIFound)
 					{
-						u.second->aiState.lastDecision.ticksUntilThinkAgain = TICKS_PER_DAY;
+						u.second->aiList.lastDecision.ticksUntilThinkAgain = TICKS_PER_DAY;
 					}
 				}
 				break;
@@ -2049,12 +2049,12 @@ void BattleView::eventOccurred(Event *e)
 							{
 								debug += format("\n%s", unit.id);
 							}
-							debug += format(
+						/*	debug += format(
 							    "\nCurrent ai state:\n  %s\n  enSp %d enSpPr %d attPos %s "
 							    "lasSnEnPos %s",
-							    u->aiState.lastDecision.getName(), (int)u->aiState.enemySpotted,
+							    u->aiList.lastDecision.getName(), (int)u->aiState.enemySpotted,
 							    (int)u->aiState.enemySpottedPrevious, u->aiState.attackerPosition,
-							    u->aiState.lastSeenEnemyPosition);
+							    u->aiList.lastSeenEnemyPosition);*/
 						}
 						LogWarning("%s", debug);
 					}

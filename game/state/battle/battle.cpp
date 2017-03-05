@@ -3,6 +3,7 @@
 #include "framework/sound.h"
 #include "framework/trace.h"
 #include "game/state/aequipment.h"
+#include "game/state/battle/ai/ai.h"
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battledoor.h"
@@ -186,7 +187,7 @@ void Battle::initBattle(GameState &state, bool first)
 	{
 		h->updateTileVisionBlock(state);
 	}
-	// On first run, init support links and items, do vsibility and pathfinding
+	// On first run, init support links and items, do vsibility and pathfinding, reset AI
 	if (first)
 	{
 		initialMapPartLinkUp();
@@ -201,6 +202,8 @@ void Battle::initBattle(GameState &state, bool first)
 		}
 		// Pathfinding
 		updatePathfinding(state);
+		// AI
+		aiBlock.init(state);
 	}
 }
 
@@ -415,7 +418,7 @@ sp<BattleUnit> Battle::placeUnit(GameState &state, StateRef<Agent> agent)
 	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
 	unit->squadNumber = -1;
 	units[id] = unit;
-	unit->aiState.reset(state, false);
+	unit->init(state);
 	return unit;
 }
 
@@ -426,7 +429,6 @@ sp<BattleUnit> Battle::placeUnit(GameState &state, StateRef<Agent> agent, Vec3<f
 	if (map)
 	{
 		map->addObjectToMap(u);
-		u->aiState.reset(state);
 	}
 	return u;
 }
@@ -824,6 +826,9 @@ void Battle::update(GameState &state, unsigned int ticks)
 		o.second->update(state, ticks);
 	}
 	Trace::end("Battle::update::units->update");
+	Trace::start("Battle::update::ai->think");
+	aiBlock.think(state);
+	Trace::end("Battle::update::ai->think");
 
 	// Now after we called update() for everything, we update what needs to be updated last
 

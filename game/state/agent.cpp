@@ -1,6 +1,6 @@
 #include "game/state/agent.h"
 #include "game/state/aequipment.h"
-#include "game/state/battle/ai.h"
+#include "game/state/battle/ai/ai.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"

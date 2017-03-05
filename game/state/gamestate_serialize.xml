@@ -399,6 +399,7 @@
 		<member>explosions</member>
 		<member>hazards</member>
 		<member>participants</member>
+		<member>aiBlock</member>
 		<member>currentPlayer</member>
 		<member>currentActiveOrganisation</member>
 		<member>currentTurn</member>
@@ -558,7 +559,7 @@
 		<member>visibleEnemies</member>
 		<member>ticksUntilAutoTurnAvailable</member>
 		<member>ticksUntilAutoTargetAvailable</member>
-		<member>aiState</member>
+		<member>aiList</member>
 	</object>
 	<object>
 		<name>BattleItem</name>
@@ -1379,7 +1380,8 @@
 		<value>Civilian</value>
 		<value>Loner</value>
 		<value>Group</value>
-		<value>Panic</value>
+		<value>PanicFreeze</value>
+		<value>PanicRun</value>
 		<value>Berserk</value>
 	</enum>
 	<enum>
@@ -1420,11 +1422,46 @@
 		<member>ticksUntilThinkAgain</member>
 	</object>
 	<object>
-		<name>AIState</name>
+		<name>UnitAI</name>
+		<member>active</member>
+	</object>
+	<object>
+		<name>UnitAIList</name>
 		<member>lastDecision</member>
+		<member>aiList</member>
+		<member>ticksLastThink</member>
+		<member>ticksUntilThinkAgain</member>
+	</object>
+	<object>
+		<name>LowMoraleUnitAI</name>
+	</object>
+	<object>
+		<name>DefaultUnitAI</name>
+	</object>
+	<object>
+		<name>BehaviorUnitAI</name>
+	</object>
+	<object>
+		<name>VanillaUnitAI</name>
+		<member>ticksLastThink</member>
+		<member>ticksUntilThinkAgain</member>
 		<member>enemySpotted</member>
 		<member>enemySpottedPrevious</member>
 		<member>attackerPosition</member>
 		<member>lastSeenEnemyPosition</member>
+	</object>
+	<object>
+		<name>TacticalAI</name>
+	</object>
+	<object>
+		<name>TacticalAIBlock</name>
+		<member>aiList</member>
+		<member>ticksLastThink</member>
+		<member>ticksUntilThinkAgain</member>
+	</object>
+	<object>
+		<name>VanillaTacticalAI</name>
+		<member>ticksLastThink</member>
+		<member>ticksUntilThinkAgain</member>
 	</object>
 </openapoc_gamestate>

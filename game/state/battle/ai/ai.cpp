@@ -1,4 +1,5 @@
-#include "game/state/battle/ai.h"
+#include "game/state/battle/ai/ai.h"
+#include "game/state/battle/battle.h"
 #include "game/state/aequipment.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
@@ -74,16 +75,140 @@ AIDecision::AIDecision(sp<AIAction> action, sp<AIMovement> movement)
 {
 }
 
-void AIState::reset(GameState &state, bool duringBattle)
+bool AIDecision::isEmpty()
 {
-	lastDecision.action = nullptr;
-	lastDecision.movement = nullptr;
-	lastDecision.ticksUntilThinkAgain = randBoundsExclusive(
-	    state.rng, 0, duringBattle ? (int)TICKS_PER_SECOND : (int)TICKS_PER_TURN);
+	return !action && !movement;
 }
 
-// FIXME: Allow for patrol to point other than center
-sp<AIMovement> AI::getPatrolMovement(GameState &state, BattleUnit &u)
+void UnitAIList::init(GameState &state, BattleUnit &u)
+{
+	// FIXME: Actually read this option
+	bool USER_OPTION_USE_HARDCORE_AI = false;
+
+	lastDecision.action = nullptr;
+	lastDecision.movement = nullptr;
+
+	aiList.push_back(mksp<LowMoraleUnitAI>());
+	aiList.push_back(mksp<DefaultUnitAI>());
+	aiList.push_back(mksp<BehaviorUnitAI>());
+	// Even player units have AI because when they're taken control of they will need that
+	if (USER_OPTION_USE_HARDCORE_AI)
+	{
+		aiList.push_back(mksp<HardcoreUnitAI>());
+	}
+	else
+	{
+		aiList.push_back(mksp<VanillaUnitAI>());
+	}
+
+	for (int i = 0;i < aiList.size();i++)
+	{
+		aiMap[aiList[i]->getName()] = i;
+	}
+
+	reset(state, u);
+}
+
+void UnitAIList::reset(GameState &state, BattleUnit &u)
+{
+	ticksLastThink = state.gameTime.getTicks();
+	ticksUntilThinkAgain = randBoundsExclusive(
+		state.rng, 0, (int)TICKS_PER_SECOND);
+
+	for (auto &ai : aiList)
+	{
+		ai->reset(state, u);
+	}
+}
+
+AIDecision UnitAIList::think(GameState &state, BattleUnit &u)
+{
+	auto curTicks = state.gameTime.getTicks();
+	if (ticksLastThink + ticksUntilThinkAgain > curTicks)
+	{
+		return{};
+	}
+
+	ticksLastThink = curTicks;
+	ticksUntilThinkAgain = AI_THINK_INTERVAL;
+
+	AIDecision decision = {};
+	for (auto ai : aiList)
+	{
+		auto newDecision = ai->think(state, u);
+		if (newDecision.isEmpty())
+		{
+			continue;
+		}
+		// We can keep last decision's movement if this one is action only, 
+		// because that would mean this decision may be possible to be done on the move
+		// We cannot take last decision's action because it might override
+		// our move or maulfunction otherwise
+		if (!newDecision.movement && decision.movement)
+		{
+			newDecision.movement = decision.movement;
+		}
+		decision = newDecision;
+		decision.ai = ai->getName();
+		if (newDecision.halt)
+		{
+			break;
+		}
+	}
+	return decision;
+}
+
+void UnitAIList::registerNewDecision(AIDecision decision)
+{
+	if (lastDecision.action && !decision.action)
+	{
+		decision.action = lastDecision.action;
+	}
+	if (lastDecision.movement && !decision.movement)
+	{
+		decision.movement = lastDecision.movement;
+	}
+	lastDecision = decision;
+}
+
+void UnitAIList::notifyUnderFire(Vec3<int> position)
+{ 
+	for (auto &ai : aiList)
+	{
+		if (!ai->active)
+		{
+			continue;
+		}
+		ai->notifyUnderFire(position);
+	}
+}
+
+void UnitAIList::notifyHit(Vec3<int> position)
+{ 
+	for (auto &ai : aiList)
+	{
+		if (!ai->active)
+		{
+			continue;
+		}
+		ai->notifyHit(position);
+	}
+}
+
+void UnitAIList::notifyEnemySpotted(Vec3<int> position)
+{ 
+	for (auto &ai : aiList)
+	{
+		if (!ai->active)
+		{
+			continue;
+		}
+		ai->notifyEnemySpotted(position);
+	}
+}
+
+// FIXME: Allow for patrol to a point other than block's center
+sp<AIMovement> VanillaUnitAI::getPatrolMovement(GameState &state, BattleUnit &u)
 {
 	static float SQUAD_RANGE = 10.0f;
 
@@ -95,13 +220,13 @@ sp<AIMovement> AI::getPatrolMovement(GameState &state, BattleUnit &u)
 	units.emplace_back(&state, u.id);
 
 	// If we have group AI - collect other units within range
-	if (u.agent->type->aiType == AIType::Group && u.agent->type->allowsDirectControl)
+	if (u.getAIType() == AIType::Group && u.agent->type->allowsDirectControl)
 	{
 		// Collect all units within squad range
 		auto sft = u.shared_from_this();
 		for (auto &unit : state.current_battle->forces[u.owner].squads[u.squadNumber].units)
 		{
-			if (unit != sft && unit->isConscious() && unit->agent->type->aiType == AIType::Group &&
+			if (unit != sft && unit->isConscious() && unit->getAIType() == AIType::Group &&
 			    unit->agent->type->allowsDirectControl && unit->visibleEnemies.empty() &&
 			    glm::distance(unit->position, u.position) < SQUAD_RANGE)
 			{
@@ -160,7 +285,7 @@ sp<AIMovement> AI::getPatrolMovement(GameState &state, BattleUnit &u)
 	return result;
 }
 
-sp<AIMovement> AI::getRetreatMovement(GameState &state, BattleUnit &u, bool forced)
+sp<AIMovement> VanillaUnitAI::getRetreatMovement(GameState &state, BattleUnit &u, bool forced)
 {
 	// Chance to take retreat is 1% per morale point below 20
 	if (randBoundsExclusive(state.rng, 0, 100) >= std::max(0, 20 - u.agent->modified_stats.morale))
@@ -175,7 +300,7 @@ sp<AIMovement> AI::getRetreatMovement(GameState &state, BattleUnit &u, bool forc
 	return getPatrolMovement(state, u);
 }
 
-sp<AIMovement> AI::getTakeCoverMovement(GameState &state, BattleUnit &u, bool forced)
+sp<AIMovement> VanillaUnitAI::getTakeCoverMovement(GameState &state, BattleUnit &u, bool forced)
 {
 	// Chance to take cover is 33% * sqrt(num_enemies_seen), if no one is seen then assume 3
 	if (randBoundsExclusive(state.rng, 0, 100) >=
@@ -195,7 +320,7 @@ sp<AIMovement> AI::getTakeCoverMovement(GameState &state, BattleUnit &u, bool fo
 	return result;
 }
 
-sp<AIMovement> AI::getKneelMovement(GameState &state, BattleUnit &u, bool forced)
+sp<AIMovement> VanillaUnitAI::getKneelMovement(GameState &state, BattleUnit &u, bool forced)
 {
 	// Chance to kneel is 33% * sqrt(num_enemies_seen), if no one is seen then assume 3
 	if (randBoundsExclusive(state.rng, 0, 100) >=
@@ -213,22 +338,22 @@ sp<AIMovement> AI::getKneelMovement(GameState &state, BattleUnit &u, bool forced
 	return result;
 }
 
-sp<AIMovement> AI::getTurnMovement(GameState &state, BattleUnit &u, Vec3<int> target)
+sp<AIMovement> VanillaUnitAI::getTurnMovement(GameState &state, BattleUnit &u, Vec3<int> target)
 {
 	auto result = mksp<AIMovement>();
 
 	result->type = AIMovement::Type::Turn;
 	result->priority = 0.0f;
 	result->targetLocation = target;
-	if (u.aiState.lastDecision.movement)
+	if (u.aiList.lastDecision.movement)
 	{
-		result->kneelingMode = u.aiState.lastDecision.movement->kneelingMode;
+		result->kneelingMode = u.aiList.lastDecision.movement->kneelingMode;
 	}
 
 	return result;
 }
 
-sp<AIMovement> AI::getPursueMovement(GameState &state, BattleUnit &u, Vec3<int> target)
+sp<AIMovement> VanillaUnitAI::getPursueMovement(GameState &state, BattleUnit &u, Vec3<int> target)
 {
 	// Chance to pursuit is 1% per morale point above 20
 	if (randBoundsExclusive(state.rng, 0, 100) >= std::max(0, u.agent->modified_stats.morale - 20))
@@ -246,7 +371,7 @@ sp<AIMovement> AI::getPursueMovement(GameState &state, BattleUnit &u, Vec3<int> 
 }
 
 // FIXME: IMPLEMENT PROPER WEAPON AI
-AIDecision AI::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
+AIDecision VanillaUnitAI::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
                                  sp<BattleUnit> target)
 {
 	if (e->canFire(target->position))
@@ -265,20 +390,20 @@ AIDecision AI::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment>
 }
 
 // FIXME: IMPLEMENT PSI AI
-AIDecision AI::getPsiDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
+AIDecision VanillaUnitAI::getPsiDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
                               sp<BattleUnit> target, AIAction::Type type)
 {
 	return {};
 }
 
 // FIXME: IMPLEMENT GRENADE AI
-AIDecision AI::getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
+AIDecision VanillaUnitAI::getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
                                   sp<BattleUnit> target)
 {
 	return {};
 }
 
-AIDecision AI::getAttackDecision(GameState &state, BattleUnit &u)
+AIDecision VanillaUnitAI::getAttackDecision(GameState &state, BattleUnit &u)
 {
 	auto decision = AIDecision();
 	decision.ticksUntilThinkAgain = TICKS_PER_SECOND;
@@ -372,27 +497,27 @@ AIDecision AI::getAttackDecision(GameState &state, BattleUnit &u)
 }
 
 // Calculate AI's next action in case the unit is not attacking
-AIDecision AI::thinkGreen(GameState &state, BattleUnit &u)
+AIDecision VanillaUnitAI::thinkGreen(GameState &state, BattleUnit &u)
 {
 	static const Vec3<int> NONE = {0, 0, 0};
 
-	bool isMoving = u.aiState.lastDecision.movement && u.isMoving();
-	bool isUnderAttack = u.aiState.attackerPosition != NONE;
-	bool isInterrupted = u.aiState.lastDecision.ticksUntilThinkAgain > 0;
+	bool isMoving = u.aiList.lastDecision.movement && u.isMoving();
+	bool isUnderAttack = attackerPosition != NONE;
+	bool isInterrupted = u.aiList.lastDecision.ticksUntilThinkAgain > 0;
 	bool isEnemyVisible = !u.visibleEnemies.empty();
-	bool wasEnemyVisible = u.aiState.enemySpotted && u.aiState.lastSeenEnemyPosition != NONE;
+	bool wasEnemyVisible = enemySpotted && lastSeenEnemyPosition != NONE;
 
 	if (isMoving)
 	{
 		// If unit is moving into cover -> carry on
-		if (u.aiState.lastDecision.movement->type == AIMovement::Type::TakeCover)
+		if (u.aiList.lastDecision.movement->type == AIMovement::Type::TakeCover)
 		{
 			return {};
 		}
 		// If unit is moving to get in range and target is visible -> carry on
-		if (u.aiState.lastDecision.movement->type == AIMovement::Type::GetInRange &&
+		if (u.aiList.lastDecision.movement->type == AIMovement::Type::GetInRange &&
 		    std::find(u.visibleEnemies.begin(), u.visibleEnemies.end(),
-		              u.aiState.lastDecision.action->targetUnit) != u.visibleEnemies.end())
+		              u.aiList.lastDecision.action->targetUnit) != u.visibleEnemies.end())
 		{
 			return {};
 		}
@@ -447,7 +572,7 @@ AIDecision AI::thinkGreen(GameState &state, BattleUnit &u)
 		}
 
 		auto pursue =
-		    getPursueMovement(state, u, (Vec3<int>)u.position + u.aiState.lastSeenEnemyPosition);
+		    getPursueMovement(state, u, (Vec3<int>)u.position + lastSeenEnemyPosition);
 		if (pursue)
 		{
 			return {nullptr, pursue};
@@ -473,7 +598,7 @@ AIDecision AI::thinkGreen(GameState &state, BattleUnit &u)
 		if (u.missions.empty() || u.missions.front()->type != BattleUnitMission::Type::Turn)
 		{
 			return {nullptr,
-			        getTurnMovement(state, u, (Vec3<int>)u.position + u.aiState.attackerPosition)};
+			        getTurnMovement(state, u, (Vec3<int>)u.position + attackerPosition)};
 		}
 	}
 
@@ -495,12 +620,12 @@ AIDecision AI::thinkGreen(GameState &state, BattleUnit &u)
 }
 
 // Calculate AI's next action in case enemies are seen
-AIDecision AI::thinkRed(GameState &state, BattleUnit &u)
+AIDecision VanillaUnitAI::thinkRed(GameState &state, BattleUnit &u)
 {
 	static const Vec3<int> NONE = {0, 0, 0};
 
-	bool isUnderAttack = u.aiState.attackerPosition != NONE;
-	bool isInterrupted = u.aiState.lastDecision.ticksUntilThinkAgain > 0;
+	bool isUnderAttack = attackerPosition != NONE;
+	bool isInterrupted = u.aiList.lastDecision.ticksUntilThinkAgain > 0;
 
 	if (isUnderAttack)
 	{
@@ -531,13 +656,66 @@ AIDecision AI::thinkRed(GameState &state, BattleUnit &u)
 	return getAttackDecision(state, u);
 }
 
-AIDecision AI::think(GameState &state, BattleUnit &u)
+AIDecision VanillaUnitAI::thinkInternal(GameState &state, BattleUnit &u)
 {
-	if (u.agent->type->aiType == AIType::None)
+	static const Vec3<int> NONE = { 0, 0, 0 };
+
+	if (u.getAIType() == AIType::None)
 	{
 		auto result = AIDecision();
 		result.ticksUntilThinkAgain = TICKS_PER_HOUR;
 		return result;
+	}
+
+	// See wether re-think is required
+
+	// Decision is never re-thought if: actionType == grenade && currently throwing
+	if (u.aiList.lastDecision.action &&
+		u.aiList.lastDecision.action->type == AIAction::Type::AttackGrenade && !u.missions.empty() &&
+		u.missions.front()->type == BattleUnitMission::Type::ThrowItem)
+	{
+		return{};
+	}
+
+	// Decision wether we need to re-think our actions
+	bool reThink =
+		// Timer ran out
+		u.aiList.lastDecision.ticksUntilThinkAgain == 0
+		// We have no action, no movement and no timer set up
+		|| ((!u.aiList.lastDecision.action ||
+			u.aiList.lastDecision.action->type == AIAction::Type::None) &&
+			(!u.aiList.lastDecision.movement ||
+				u.aiList.lastDecision.movement->type == AIMovement::Type::None) &&
+			u.aiList.lastDecision.ticksUntilThinkAgain == -1)
+		// We just spotted an enemy and we have no timer
+		|| (!u.visibleEnemies.empty() && !enemySpottedPrevious &&
+			u.aiList.lastDecision.ticksUntilThinkAgain == -1)
+		// We just stopped seeing an enemy
+		|| (u.visibleEnemies.empty() && enemySpotted)
+		// We were attacked
+		|| (attackerPosition != NONE)
+		// We stopped moving
+		|| (u.aiList.lastDecision.movement &&
+			u.aiList.lastDecision.movement->type != AIMovement::Type::None &&
+			u.aiList.lastDecision.movement->type != AIMovement::Type::Turn && !u.isMoving())
+		// We stopped throwing
+		|| (u.aiList.lastDecision.action &&
+			u.aiList.lastDecision.action->type == AIAction::Type::AttackGrenade &&
+			(u.missions.empty() || u.missions.front()->type != BattleUnitMission::Type::ThrowItem))
+		// We stopped attacking with PSI
+		|| (u.aiList.lastDecision.action &&
+		(u.aiList.lastDecision.action->type == AIAction::Type::AttackPsiMC ||
+			u.aiList.lastDecision.action->type == AIAction::Type::AttackPsiPanic ||
+			u.aiList.lastDecision.action->type == AIAction::Type::AttackPsiStun)
+			// FIXME: Introduce PSI condition
+			&& false)
+		// We stopped attacking with a weapon
+		|| (u.aiList.lastDecision.action &&
+			u.aiList.lastDecision.action->type == AIAction::Type::AttackWeapon && !u.isAttacking());
+
+	if (!reThink)
+	{
+		return{};
 	}
 
 	auto result = u.visibleEnemies.empty() ? thinkGreen(state, u) : thinkRed(state, u);
@@ -547,7 +725,38 @@ AIDecision AI::think(GameState &state, BattleUnit &u)
 	return result;
 }
 
-void AI::routine(GameState &state, BattleUnit &u, const AIDecision &decision)
+AIDecision VanillaUnitAI::think(GameState &state, BattleUnit &u)
+{
+	active = u.isAIControlled(state);
+
+	if (!active)
+	{
+		return {};
+	}
+	
+	auto decision = thinkInternal(state, u);
+
+	if (decision.isEmpty())
+	{
+		if (decision.ticksUntilThinkAgain == -1)
+		{
+			// Ensure no freezing of AI
+			// If no new decision is made and
+			if (u.aiList.lastDecision.ticksUntilThinkAgain == -1 &&
+				(!u.aiList.lastDecision.action ||
+					u.aiList.lastDecision.action->type == AIAction::Type::None) &&
+					(!u.aiList.lastDecision.movement ||
+						u.aiList.lastDecision.movement->type == AIMovement::Type::None))
+			{
+				decision.ticksUntilThinkAgain = TICKS_PER_TURN;
+			}
+		}
+	}
+
+	return decision;
+}
+
+void VanillaUnitAI::routine(GameState &state, BattleUnit &u, const AIDecision &decision)
 {
 	static const Vec3<int> NONE = {0, 0, 0};
 
@@ -651,14 +860,14 @@ void AI::routine(GameState &state, BattleUnit &u, const AIDecision &decision)
 
 	// Update aiState
 	{
-		u.aiState.attackerPosition = NONE;
-		u.aiState.enemySpottedPrevious = u.aiState.enemySpotted;
-		u.aiState.enemySpotted = false;
-		u.aiState.lastSeenEnemyPosition = NONE;
+		attackerPosition = NONE;
+		enemySpottedPrevious = enemySpotted;
+		enemySpotted = false;
+		lastSeenEnemyPosition = NONE;
 		// Set movement to none if complete
-		if (u.aiState.lastDecision.movement)
+		if (u.aiList.lastDecision.movement)
 		{
-			switch (u.aiState.lastDecision.movement->type)
+			switch (u.aiList.lastDecision.movement->type)
 			{
 				case AIMovement::Type::Patrol:
 				case AIMovement::Type::Advance:
@@ -666,13 +875,13 @@ void AI::routine(GameState &state, BattleUnit &u, const AIDecision &decision)
 				case AIMovement::Type::TakeCover:
 					if (!u.isMoving())
 					{
-						u.aiState.lastDecision.movement->type = AIMovement::Type::None;
+						u.aiList.lastDecision.movement->type = AIMovement::Type::None;
 					}
 					break;
 				case AIMovement::Type::Turn:
 					if (u.goalFacing == u.facing)
 					{
-						u.aiState.lastDecision.movement->type = AIMovement::Type::None;
+						u.aiList.lastDecision.movement->type = AIMovement::Type::None;
 					}
 					break;
 				default:
@@ -731,4 +940,154 @@ UString AIDecision::getName()
 	return format("Action: [%s] Movement: [%s] Timer: %d", action ? action->getName() : "NULL",
 	              movement ? movement->getName() : "NULL", ticksUntilThinkAgain);
 }
+
+void LowMoraleUnitAI::reset(GameState &state, BattleUnit &u)
+{
+}
+
+AIDecision LowMoraleUnitAI::think(GameState &state, BattleUnit &u)
+{
+	switch (u.getAIType())
+	{
+	case AIType::PanicFreeze:
+	case AIType::PanicRun:
+	case AIType::Berserk:
+		active = true;
+		break;
+	case AIType::None:
+	case AIType::Civilian:
+	case AIType::Loner:
+	case AIType::Group:
+		active = false;
+		break;
+	}
+
+	if (!active)
+	{
+		return{};
+	}
+
+	LogError("Implement Low Morale AI");
+	return{};
+}
+
+void DefaultUnitAI::reset(GameState &state, BattleUnit &u)
+{
+}
+
+AIDecision DefaultUnitAI::think(GameState &state, BattleUnit &u)
+{
+	active = false;
+
+	if (!active)
+	{
+		return{};
+	}
+
+	LogError("Implement Default AI");
+	return {};
+}
+
+void BehaviorUnitAI::reset(GameState &state, BattleUnit &u)
+{
+
+}
+
+AIDecision BehaviorUnitAI::think(GameState &state, BattleUnit &u)
+{
+	active = false;
+
+	if (!active)
+	{
+		return{};
+	}
+
+	LogError("Implement Behavior AI");
+	return{};
+}
+
+void VanillaUnitAI::reset(GameState &state, BattleUnit &u)
+{
+	ticksLastThink = state.gameTime.getTicks();
+	ticksUntilThinkAgain = randBoundsExclusive(
+		state.rng, 0, (int)TICKS_PER_SECOND);
+}
+
+
+void VanillaUnitAI::notifyUnderFire(Vec3<int> position)
+{ 
+	attackerPosition = position;
+}
+
+void VanillaUnitAI::notifyHit(Vec3<int> position)
+{ 
+	attackerPosition = position;
+}
+
+void VanillaUnitAI::notifyEnemySpotted(Vec3<int> position)
+{ 
+	enemySpotted = true;
+	lastSeenEnemyPosition = position;
+}
+
+void VanillaTacticalAI::reset(GameState &state, const Organisation &o)
+{
+	ticksLastThink = state.gameTime.getTicks();
+	ticksUntilThinkAgain = randBoundsExclusive(
+		state.rng, 0, (int)TICKS_PER_SECOND);
+}
+
+AIDecision VanillaTacticalAI::think(GameState &state, const Organisation &o)
+{
+	static const int VANILLA_TACTICAL_AI_THINK_INTERVAL = TICKS_PER_SECOND / 8;
+
+	auto curTicks = state.gameTime.getTicks();
+	if (ticksLastThink + ticksUntilThinkAgain > curTicks)
+	{
+		return{};
+	}
+	
+	ticksLastThink = curTicks;
+	ticksUntilThinkAgain = VANILLA_TACTICAL_AI_THINK_INTERVAL;
+		
+	LogError("Implement Tactical AI");
+	ticksUntilThinkAgain = TICKS_PER_HOUR;
+
+	return{};
+}
+
+void TacticalAIBlock::init(GameState &state)
+{
+	for (auto o : state.current_battle->participants)
+	{
+		aiList[o] = mksp<VanillaTacticalAI>();
+		aiList[o]->reset(state, *o);
+	}
+	reset(state);
+}
+
+void TacticalAIBlock::reset(GameState &state)
+{
+	ticksLastThink = state.gameTime.getTicks();
+	ticksUntilThinkAgain = randBoundsExclusive(
+		state.rng, 0, (int)TICKS_PER_SECOND);
+}
+
+AIDecision TacticalAIBlock::think(GameState &state)
+{
+	auto curTicks = state.gameTime.getTicks();
+	if (ticksLastThink + ticksUntilThinkAgain > curTicks)
+	{
+		return{};
+	}
+
+	ticksLastThink = curTicks;
+	ticksUntilThinkAgain = AI_THINK_INTERVAL;
+
+	for (auto &o : this->aiList)
+	{
+		o.second->think(state, *o.first);
+	}
+}
+
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "game/state/battle/ai/ai.h"
 #include "game/state/battle/battleforces.h"
 #include "game/state/battle/battlemapsector.h"
 #include "game/state/gametime.h"
@@ -154,6 +155,8 @@ class Battle : public std::enable_shared_from_this<Battle>
 	up<TileMap> map;
 
 	std::set<StateRef<Organisation>> participants;
+
+	TacticalAIBlock aiBlock;
 
 	// Current player in control of the interface (will only change if we're going multiplayer)
 	StateRef<Organisation> currentPlayer;

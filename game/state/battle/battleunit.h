@@ -3,7 +3,8 @@
 #define _USE_MATH_DEFINES
 #endif
 #include "game/state/agent.h"
-#include "game/state/battle/ai.h"
+#include "game/state/gametime.h"
+#include "game/state/battle/ai/ai.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunitmission.h"
 #include "library/sp.h"
@@ -240,10 +241,12 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Otherwise it will be 0,0,0
 	Vec3<int> attackerPosition = {0, 0, 0};
 
-	// AI
-	AIState aiState;
-
+	// AI list
+	UnitAIList aiList;
+	
 	// [Methods]
+
+	void init(GameState &state);
 
 	// Squad
 
@@ -356,6 +359,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	BattleUnitType getType() const;
 	// Wether unit is AI controlled
 	bool isAIControlled(GameState &state) const;
+	// Unit's current AI type (can be modified by panic etc.)
+	AIType getAIType() const;
 
 	// Returns true if the unit is conscious and can fly
 	bool canFly() const;

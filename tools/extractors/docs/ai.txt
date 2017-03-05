@@ -1,0 +1,167 @@
+Every AI has a state.
+
+State:
+- time when last think() was done, 0 = never
+- # shots @ this unit SLT [abbr. for "since last think"]
+- last shot from dir
+- # hits @ this unit SLT
+- last hit from dir
+- if enemy spotted SLT
+- if target lost SLT
+- last enemy seen pos
+
+Events that change state:
+
+- NotifyUnitUnderFire (from)
+- NotifyUnitHit (from)
+- NotifyTargetSpotted ()
+- NotifyTargetLost (lastTgtPos)
+- (NotifyGiveWayRequested) (targetPos) [=where unit wants to move after entering our tile]
+
+Option 1: All AIs have same State class, State class is changed within Unit class
+Option 2: All AIs have their own State class, State class is notified and changes itself
+
+AI State is AI class itself because AI class has otherwise would contain nothing but Think() function
+
+AI has an order in which it is processed and AI of higher order can prevent AI of lower order from acting
+
+What kinds of AI will there be?
+
+- Panic Run AI
+- Panic Freeze AI
+- Berserk AI
+- Default AI
+- Aggressive AI
+- Normal AI
+- Cautious AI
+- Vanilla AI
+- Custom Made AI
+
+AI order:
+
+- Panic Run AI (can prevent action)
+- Panic Freeze AI (can prevent action)
+- Berserk AI (can prevent action)
+- Alien AI [Vanilla, Custom Made, etc.]
+- Default AI
+- Aggressive AI (only if set to use this)
+- Normal AI (only if set to use this)
+- Cautious AI (only if set to use this)
+
+Brief AI description
+
+- Panic Run AI
+  - Only if in Panic Run mode
+  - Drops whatever in hands
+  - If not moving run to a random LOS block that is further away from closest globally visible enemy than current pos
+  - Prevent further action
+  
+- Panic Freeze AI
+  - Only if in Panic Freeze mode
+  - Do nothing
+  - Prevent further action
+
+- Berserk AI
+  - Only if in Berserk mode
+  - Every several ticks pick a random visible target or a random tile around and shoot at it
+  - Prevent further action
+  
+- Default AI
+  - Always active for all units
+  - Turn to focused or closest enemy
+  - Turn to direction that we were hit from if we don't see who fired
+  - Attack focused or closest enemy with weapons in hand if not on Cease Fire
+  
+- Aggressive AI:
+  - Nothing?
+
+- Normal AI:
+  - Never do anything if already moving
+  - If under fire from unseen enemy then take cover against his approx. position if better cover exists otherwise kneel
+  - If under a lot of fire or hit then take cover against closest enemy if better cover exists otherwise kneel
+  - If cannot fire then take cover against closest enemy if better cover exists otherwise kneel
+  - (when implemented) take solid cover and take potshots from it
+  
+- Cautious AI:
+  - Never do anything if already moving
+  - Always take cover against closest enemy if better cover exists otherwise if can prone go prone otherwise kneel
+  - (when implemented) take solid cover take potshots
+  
+- Vanilla AI:
+  - When idle move to a random LOS block not occupied by an allied unit, using the priority system
+  - Randomly decide to retreat the level when morale is low
+  - Decide which weapon to use, when to use grenades, when to go in melee, when not to use AOE attacks so that friends aren't hurt
+
+- Custom Made AI:
+  - Teleporter assasins (when enemy spotted and no friendly adjacent to it, teleport behind it and switch to auto fire)
+  - Suicide bombers (when enemy close and more than 2 explosives in inventory, prime everything, start running, move towards enemy, when adjacent drop all exposives, switch to auto fire)
+  - Teleporter suicide bombers (teleport behind enemy, prime and drop all explosives, switch to auto fire)
+  - Gang up on enemy (when enemy is spotted all AI units within certain move distance to it and no enemy spotted will move to attack it)
+  - Aggressive grenadiers (if can throw offensive grenade always throw grenade before firing a gun)
+  - Smoke usage (if taking crit damage or more than 33% health damage, prime and drop a smoke then move to an ally that is far away from closest enemy but close to us) (find closest enemy, for every ally calculate it's distance to that enemy minus it's distance to us, pick one with largest value)
+
+Turret AI? 
+  Turrets just get 360 vision and aggressive AI, that's enough
+
+AI can be active or not  
+  All active AI are passed the notifications for the unit
+  
+New AI order
+  
+- Low Morale AI (always stop)
+- Default AI (always continue)
+- Behavior AI (continue if no decision was made)
+- Alien AI
+
+There is a Tactical AI, controls all units together, everything related to all units acting together, and Unit AI, controls a unit individually, never needs to know what's going on in another unit's head EVER!
+
+Tactial AI needs this information to function:
+
+1) List of units for this org and their public parameters
+2) Anything else? Nothing???
+
+Have a map of orgs to TacticalAI's in battle <--- DONE
+
+Need to redo how decisions are executed.
+
+AI gives a Decision for Unit
+
+Decision is what should be done (movement, action)
+Unit (or Units) should do it
+
+How to approach and melee an opponent?
+Or approach and grenade an opponent?
+
+We make a decision (grenade the opponent), choose the grenade, and the opponent. We're out of reange so we need to get closer. Our decision has "move to where enemy is located" and "fire". We also remember to re-think our decision if alloted time ran out (meaning, enemy is escaping us or something else happened). While moving we must check wether we are in range to attack. This is done by AI, obviously. AI's "think", then, is responsible for decision execution.
+
+1. Idle unit, Target in sight, think()s. 
+Decides on grenade, range 13, current range 15. Running speed 2 tiles/sec.
+Decision: Attack with grenade, move to target's position, rethink in 1,3 seconds.
+Execution: Cannot throw, thus starts moving.
+
+2. Think() called again on that unit's
+It's not yet time to re-think the AI, so it does nothing
+Unit does nothing as well, continues on.
+
+3. Think() called again on that unit's
+Think checks that decision does not require re-thinking based on timer.
+Think checks that decision does not require re-thinking based on circumstances.
+Decision: Unit receives SAME decision. 
+Execution: Cannot throw. Unit sees that it's already moving to the said location, so it does nothing (continues on).
+
+...
+
+4. Think() called again on that unit's
+Think checks that decision does not require re-thinking based on timer.
+Think checks that decision does not require re-thinking based on circumstances.
+Decision: Unit receives SAME decision. 
+Execution: Unit sees that it's in range. Stops and throws a grenade.
+
+...
+
+5. Think() called again on that unit's
+Think checks that decision does not require re-thinking based on timer.
+Think checks that decision does require re-thinking based on circumstances (decision was executed!)
+
+
+Therefore, we need to store both re-thinking timer and last decision made, in the unit AI.

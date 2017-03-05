@@ -1049,8 +1049,6 @@ void BattleMap::fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state,
 
 		auto u = b->placeUnit(state, a);
 
-		u->agent->unit = {&state, u->id};
-		u->owner = a->owner;
 		u->updateDisplayedItem();
 		if (!spawnCivilians && a->owner == state.getCivilian())
 		{
