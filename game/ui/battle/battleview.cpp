@@ -1760,36 +1760,36 @@ void BattleView::eventOccurred(Event *e)
 				LogWarning("AI debug key currently disabled");
 				/*if (battle.units.empty())
 				{
-					break;
+				    break;
 				}
 				bool activeAIFound = false;
 				for (auto &u : battle.units)
 				{
-					if ((u.second->aiList.lastDecision.action &&
-					     u.second->aiList.lastDecision.action->type != AIAction::Type::None) ||
-					    (u.second->aiList.lastDecision.movement &&
-					     u.second->aiList.lastDecision.movement->type != AIMovement::Type::None))
-					{
-						activeAIFound = true;
-						break;
-					}
+				    if ((u.second->aiList.lastDecision.action &&
+				         u.second->aiList.lastDecision.action->type != AIAction::Type::None) ||
+				        (u.second->aiList.lastDecision.movement &&
+				         u.second->aiList.lastDecision.movement->type != AIMovement::Type::None))
+				    {
+				        activeAIFound = true;
+				        break;
+				    }
 				}
 
 				for (auto &u : battle.units)
 				{
-					if ((u.second->aiList.lastDecision.action &&
-					     u.second->aiList.lastDecision.action->type != AIAction::Type::None) ||
-					    (u.second->aiList.lastDecision.movement &&
-					     u.second->aiList.lastDecision.movement->type != AIMovement::Type::None))
-					{
-						u.second->cancelMissions(*state);
-						u.second->stopAttacking();
-					}
-					u.second->aiList.reset(*state, *u.second);
-					if (activeAIFound)
-					{
-						u.second->aiList.lastDecision.ticksUntilThinkAgain = TICKS_PER_DAY;
-					}
+				    if ((u.second->aiList.lastDecision.action &&
+				         u.second->aiList.lastDecision.action->type != AIAction::Type::None) ||
+				        (u.second->aiList.lastDecision.movement &&
+				         u.second->aiList.lastDecision.movement->type != AIMovement::Type::None))
+				    {
+				        u.second->cancelMissions(*state);
+				        u.second->stopAttacking();
+				    }
+				    u.second->aiList.reset(*state, *u.second);
+				    if (activeAIFound)
+				    {
+				        u.second->aiList.lastDecision.ticksUntilThinkAgain = TICKS_PER_DAY;
+				    }
 				}*/
 				break;
 			}
@@ -2050,12 +2050,13 @@ void BattleView::eventOccurred(Event *e)
 							{
 								debug += format("\n%s", unit.id);
 							}
-						/*	debug += format(
-							    "\nCurrent ai state:\n  %s\n  enSp %d enSpPr %d attPos %s "
-							    "lasSnEnPos %s",
-							    u->aiList.lastDecision.getName(), (int)u->aiState.enemySpotted,
-							    (int)u->aiState.enemySpottedPrevious, u->aiState.attackerPosition,
-							    u->aiList.lastSeenEnemyPosition);*/
+							/*	debug += format(
+							        "\nCurrent ai state:\n  %s\n  enSp %d enSpPr %d attPos %s "
+							        "lasSnEnPos %s",
+							        u->aiList.lastDecision.getName(), (int)u->aiState.enemySpotted,
+							        (int)u->aiState.enemySpottedPrevious,
+							   u->aiState.attackerPosition,
+							        u->aiList.lastSeenEnemyPosition);*/
 						}
 						LogWarning("%s", debug);
 					}
@@ -2067,8 +2068,7 @@ void BattleView::eventOccurred(Event *e)
 					{
 						case Event::MouseButton::Left:
 						{
-							WeaponStatus status =
-							    WeaponStatus::FiringBothHands;
+							WeaponStatus status = WeaponStatus::FiringBothHands;
 							switch (selectionState)
 							{
 								case BattleSelectionState::FireLeft:

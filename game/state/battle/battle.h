@@ -221,25 +221,24 @@ class Battle : public std::enable_shared_from_this<Battle>
   public:
 	// Find shortest path, using los blocks as a guide if going far
 	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destination,
-		const BattleUnitTileHelper &canEnterTile,
-		bool approachOnly = false, bool ignoreStaticUnits = false,
-		int iterationLimitDirect = 0, bool forceDirect = false,
-		bool ignoreAllUnits = false, float *cost = nullptr,
-		float maxCost = 0.0f);
+	                                      const BattleUnitTileHelper &canEnterTile,
+	                                      bool approachOnly = false, bool ignoreStaticUnits = false,
+	                                      int iterationLimitDirect = 0, bool forceDirect = false,
+	                                      bool ignoreAllUnits = false, float *cost = nullptr,
+	                                      float maxCost = 0.0f);
 
 	// Find path over the graph of los blocks
 	std::list<int> findLosBlockPath(int origin, int destination, BattleUnitType type,
-		int iterationLimit = 1000);
+	                                int iterationLimit = 1000);
 
   private:
 	// The part of findShortestPath that uses LBs
-	std::list<Vec3<int>> findShortestPathUsingLB(Vec3<int> origin, Vec3<int> destination,
-		  const BattleUnitTileHelper &canEnterTile,
-		  bool approachOnly = false, bool ignoreStaticUnits = false,
-		  int iterationLimitDirect = 0, bool forceDirect = false,
-		  bool ignoreAllUnits = false, float *cost = nullptr,
-		  float maxCost = 0.0f);
-
+	std::list<Vec3<int>>
+	findShortestPathUsingLB(Vec3<int> origin, Vec3<int> destination,
+	                        const BattleUnitTileHelper &canEnterTile, bool approachOnly = false,
+	                        bool ignoreStaticUnits = false, int iterationLimitDirect = 0,
+	                        bool forceDirect = false, bool ignoreAllUnits = false,
+	                        float *cost = nullptr, float maxCost = 0.0f);
 
   private:
 	void loadResources(GameState &state);

@@ -1590,7 +1590,8 @@ void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> tar
 			// If unit cannot move at all - cancel
 			if (!u.canMove())
 			{
-				LogInfo("Cannot move to %d %d %d, unit has no movement ability", target.x, target.y, target.z);
+				LogInfo("Cannot move to %d %d %d, unit has no movement ability", target.x, target.y,
+				        target.z);
 				cancelled = true;
 				return;
 			}
@@ -1598,20 +1599,23 @@ void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> tar
 			if (!to->getPassable(u.isLarge(), u.agent->type->bodyType->maxHeight))
 			{
 				approachOnly = false;
-				for (int x = -1;x <= 1;x++)
+				for (int x = -1; x <= 1; x++)
 				{
-					for (int y = -1;y <= 1;y++)
+					for (int y = -1; y <= 1; y++)
 					{
-						for (int z = -1;z <= 1;z++)
+						for (int z = -1; z <= 1; z++)
 						{
 							if (x == 0 && y == 0 && z == 0)
 							{
 								continue;
 							}
 							auto targetPos = target + Vec3<int>(x, y, z);
-							if (map.tileIsValid(targetPos) && map.getTile(targetPos)->getPassable(u.isLarge(), u.agent->type->bodyType->maxHeight))
+							if (map.tileIsValid(targetPos) &&
+							    map.getTile(targetPos)->getPassable(
+							        u.isLarge(), u.agent->type->bodyType->maxHeight))
 							{
-								LogInfo("Cannot move to %d %d %d, moving to adjacent tile", target.x, target.y, target.z);
+								LogInfo("Cannot move to %d %d %d, moving to adjacent tile",
+								        target.x, target.y, target.z);
 								approachOnly = true;
 								break;
 							}
@@ -1643,8 +1647,8 @@ void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> tar
 				target.z--;
 				if (target.z == -1)
 				{
-					LogError("Solid ground missing on level 0? Reached %d %d %d", target.x, target.y,
-						target.z);
+					LogError("Solid ground missing on level 0? Reached %d %d %d", target.x,
+					         target.y, target.z);
 					cancelled = true;
 					return;
 				}

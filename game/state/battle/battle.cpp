@@ -749,8 +749,8 @@ void Battle::updatePathfinding(GameState &state)
 
 				auto path = mapRef.findShortestPath(
 				    blockCenterPos[type][i], blockCenterPos[type][j],
-				    distance * PATH_ITERATION_LIMIT_MULTIPLIER, helperMap[(int)type], false, true, true,
-				    &cost, distance * 4 * PATH_COST_LIMIT_MULTIPLIER);
+				    distance * PATH_ITERATION_LIMIT_MULTIPLIER, helperMap[(int)type], false, true,
+				    true, &cost, distance * 4 * PATH_COST_LIMIT_MULTIPLIER);
 
 				if (path.empty() || (*path.rbegin()) != blockCenterPos[type][j])
 				{

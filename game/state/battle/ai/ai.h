@@ -1,12 +1,12 @@
 // FIXME: Separate this file into multiple files properly
 #pragma once
 
-#include "game/state/stateobject.h"
+#include "float.h"
 #include "game/state/gametime.h"
+#include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
-#include "float.h"
 #include <list>
 
 namespace OpenApoc
@@ -86,7 +86,7 @@ class AIMovement
 	// Movement type
 	Type type = Type::Stop;
 	// Where to move / face
-	Vec3<int> targetLocation = { 0,0,0 };
+	Vec3<int> targetLocation = {0, 0, 0};
 	// Preferred movement speed (not used for Stop or Turn)
 	// (init in constructor since it's undefined here)
 	MovementMode movementMode;
@@ -124,32 +124,31 @@ class AIDecision
 // Unit's AI type (AI may check this and act differently based on values here)
 enum class AIType
 {
-	None,			// Crysalises
-	Civilian,		// Civilians
-	Loner,			// Poppers, Large units
-	Group,			// Majority of the units
-	PanicFreeze,	// During Panic (the one that makes you freeze in place)
-	PanicRun,		// During Panic (the one that makes you drop weapon and run)
-	Berserk,		// During Berserk
+	None,        // Crysalises
+	Civilian,    // Civilians
+	Loner,       // Poppers, Large units
+	Group,       // Majority of the units
+	PanicFreeze, // During Panic (the one that makes you freeze in place)
+	PanicRun,    // During Panic (the one that makes you drop weapon and run)
+	Berserk,     // During Berserk
 };
-
 
 // Represents a logic that unit uses to decide it's automatic actions
 class UnitAI
 {
   public:
 	virtual const UString getName() { return ""; };
-	  
+
 	// Wether AI is currently active
 	bool active = false;
 
-	virtual void reset(GameState &state, BattleUnit &u) {};
+	virtual void reset(GameState &state, BattleUnit &u){};
 	// Returns decision that was made, and wether we should stop going forward on the AI chain
-	virtual std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) { return{}; };
+	virtual std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) { return {}; };
 
-	virtual void notifyUnderFire(Vec3<int> position) {};
-	virtual void notifyHit(Vec3<int> position) {};
-	virtual void notifyEnemySpotted(Vec3<int> position) {};
+	virtual void notifyUnderFire(Vec3<int> position){};
+	virtual void notifyHit(Vec3<int> position){};
+	virtual void notifyEnemySpotted(Vec3<int> position){};
 };
 
 class UnitAIHelper
@@ -158,11 +157,12 @@ class UnitAIHelper
 	static sp<AIMovement> getRetreatMovement(GameState &state, BattleUnit &u, bool forced = false);
 
 	static sp<AIMovement> getTakeCoverMovement(GameState &state, BattleUnit &u,
-		bool forced = false);
+	                                           bool forced = false);
 
 	static sp<AIMovement> getKneelMovement(GameState &state, BattleUnit &u, bool forced = false);
 
-	static sp<AIMovement> getPursueMovement(GameState &state, BattleUnit &u, Vec3<int> target, bool forced = false);
+	static sp<AIMovement> getPursueMovement(GameState &state, BattleUnit &u, Vec3<int> target,
+	                                        bool forced = false);
 
 	static sp<AIMovement> getTurnMovement(GameState &state, BattleUnit &u, Vec3<int> target);
 
@@ -171,7 +171,7 @@ class UnitAIHelper
 
 class UnitAIList
 {
-public:
+  public:
 	std::vector<sp<UnitAI>> aiList;
 	std::map<UString, unsigned> aiMap;
 
@@ -195,22 +195,23 @@ class LowMoraleUnitAI : public UnitAI
 	const UString getName() override { return "LowMorale"; };
 
 	void reset(GameState &state, BattleUnit &u) override;
-	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u)  override;
-	
+	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) override;
+
 	// FIXME: Implement panic and berserk AI
 };
 
-// AI that handles unit's automatic actions (turning to attacker, visible enemy, firing held weapons)
+// AI that handles unit's automatic actions (turning to attacker, visible enemy, firing held
+// weapons)
 class DefaultUnitAI : public UnitAI
 {
   public:
 	const UString getName() override { return "Default"; };
-	
+
 	int ticksAutoTurnAvailable = 0;
 	int ticksAutoTargetAvailable = 0;
 
 	// Relative position of a person who attacked us since last think()
-	Vec3<int> attackerPosition = { 0, 0, 0 };
+	Vec3<int> attackerPosition = {0, 0, 0};
 
 	void reset(GameState &state, BattleUnit &u) override;
 	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) override;
@@ -224,21 +225,21 @@ class BehaviorUnitAI : public UnitAI
 {
   public:
 	const UString getName() override { return "Behavior"; };
-	
+
 	void reset(GameState &state, BattleUnit &u) override;
 	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) override;
 
-	void notifyUnderFire(Vec3<int> position)  override { };
-	void notifyHit(Vec3<int> position)  override { };
-	void notifyEnemySpotted(Vec3<int> position)  override { };
+	void notifyUnderFire(Vec3<int> position) override{};
+	void notifyHit(Vec3<int> position) override{};
+	void notifyEnemySpotted(Vec3<int> position) override{};
 };
 
 // AI that handles vanilla alien and civilian behavior
 class VanillaUnitAI : public UnitAI
 {
   public:
-    const UString getName() override { return "VanillaUnit"; };
-	
+	const UString getName() override { return "VanillaUnit"; };
+
 	unsigned int ticksLastThink = 0;
 	// Value of 0 means we will not re-think based on timer
 	unsigned int ticksUntilReThink = 0;
@@ -247,16 +248,16 @@ class VanillaUnitAI : public UnitAI
 	AIDecision lastDecision;
 
 	// Was enemy ever visible since last think()
-    bool enemySpotted = false;
-    // Previous value, to identify when enemy was first spotted
-    bool enemySpottedPrevious = false;
-    // Relative position of a person who attacked us since last think()
-    Vec3<int> attackerPosition = { 0, 0, 0 };
-    // Relative position of last seen enemy's last seen position since last think()
-    Vec3<int> lastSeenEnemyPosition = { 0, 0, 0 };
+	bool enemySpotted = false;
+	// Previous value, to identify when enemy was first spotted
+	bool enemySpottedPrevious = false;
+	// Relative position of a person who attacked us since last think()
+	Vec3<int> attackerPosition = {0, 0, 0};
+	// Relative position of last seen enemy's last seen position since last think()
+	Vec3<int> lastSeenEnemyPosition = {0, 0, 0};
 
 	void reset(GameState &state, BattleUnit &u) override;
-	
+
 	// Calculate AI's next decision, then do the routine
 	// If unit has group AI, and patrol decision is made, the group will move together
 	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) override;
@@ -277,13 +278,13 @@ class VanillaUnitAI : public UnitAI
 
 	std::tuple<AIDecision, float, unsigned> getAttackDecision(GameState &state, BattleUnit &u);
 
-	std::tuple<AIDecision, float, unsigned> getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
-		sp<BattleUnit> target);
-	std::tuple<AIDecision, float, unsigned> getPsiDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
-		sp<BattleUnit> target, AIAction::Type type);
-	std::tuple<AIDecision, float, unsigned> getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
-		sp<BattleUnit> target);
-
+	std::tuple<AIDecision, float, unsigned>
+	getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment> e, sp<BattleUnit> target);
+	std::tuple<AIDecision, float, unsigned> getPsiDecision(GameState &state, BattleUnit &u,
+	                                                       sp<AEquipment> e, sp<BattleUnit> target,
+	                                                       AIAction::Type type);
+	std::tuple<AIDecision, float, unsigned>
+	getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment> e, sp<BattleUnit> target);
 };
 
 // AI that tries to be as hard towards the player as possible, TBD
@@ -295,9 +296,9 @@ class HardcoreUnitAI : public UnitAI
 	void reset(GameState &state, BattleUnit &u) { active = true; };
 	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) override { return {}; };
 
-	void notifyUnderFire(Vec3<int> position)  override { };
-	void notifyHit(Vec3<int> position)  override { };
-	void notifyEnemySpotted(Vec3<int> position)  override { };
+	void notifyUnderFire(Vec3<int> position) override{};
+	void notifyHit(Vec3<int> position) override{};
+	void notifyEnemySpotted(Vec3<int> position) override{};
 };
 
 // Represents an AI that controls all units on the tactical as a whole
@@ -306,8 +307,12 @@ class TacticalAI
   public:
 	virtual const UString getName() { return ""; };
 
-	virtual void reset(GameState &state, StateRef<Organisation> o) {};
-	virtual std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>> think(GameState &state, StateRef<Organisation> o) { return{}; };
+	virtual void reset(GameState &state, StateRef<Organisation> o){};
+	virtual std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>>
+	think(GameState &state, StateRef<Organisation> o)
+	{
+		return {};
+	};
 };
 
 // Represents tactical AI for every AI-controlled org in battle
@@ -331,12 +336,13 @@ class VanillaTacticalAI : public TacticalAI
 	const UString getName() override { return "VanillaTactical"; };
 
 	void reset(GameState &state, StateRef<Organisation> o);
-	std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>> think(GameState &state, StateRef<Organisation> o) override;
+	std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>>
+	think(GameState &state, StateRef<Organisation> o) override;
 
 	unsigned int ticksLastThink = 0;
 	unsigned int ticksUntilReThink = 0;
 
- 	std::tuple<std::list<StateRef<BattleUnit>>, sp<AIMovement>> getPatrolMovement(GameState &state, BattleUnit &u);
+	std::tuple<std::list<StateRef<BattleUnit>>, sp<AIMovement>> getPatrolMovement(GameState &state,
+	                                                                              BattleUnit &u);
 };
-
 }

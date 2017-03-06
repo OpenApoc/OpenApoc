@@ -26,10 +26,10 @@ namespace OpenApoc
 
 namespace
 {
-	static const std::set<TileObject::Type> mapPartSet = {
-		TileObject::Type::Ground, TileObject::Type::LeftWall, TileObject::Type::RightWall,
-		TileObject::Type::Feature };
-	static const std::set<TileObject::Type> unitSet = { TileObject::Type::Unit };
+static const std::set<TileObject::Type> mapPartSet = {
+    TileObject::Type::Ground, TileObject::Type::LeftWall, TileObject::Type::RightWall,
+    TileObject::Type::Feature};
+static const std::set<TileObject::Type> unitSet = {TileObject::Type::Unit};
 }
 
 sp<BattleUnit> BattleUnit::get(const GameState &state, const UString &id)
@@ -69,7 +69,7 @@ const UString &BattleUnit::getId(const GameState &state, const sp<BattleUnit> pt
 void BattleUnit::init(GameState &state)
 {
 	owner = agent->owner;
-	agent->unit = { &state, id };
+	agent->unit = {&state, id};
 	aiList.init(state, *this);
 }
 
@@ -498,29 +498,27 @@ void BattleUnit::stopAttacking()
 WeaponStatus BattleUnit::canAttackUnit(GameState &state, sp<BattleUnit> unit)
 {
 	return canAttackUnit(state, unit, agent->getFirstItemInSlot(AEquipmentSlotType::RightHand),
-		agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand));
+	                     agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand));
 }
 
-WeaponStatus BattleUnit::canAttackUnit(GameState &state, sp<BattleUnit> unit, sp<AEquipment> rightHand, sp<AEquipment> leftHand)
+WeaponStatus BattleUnit::canAttackUnit(GameState &state, sp<BattleUnit> unit,
+                                       sp<AEquipment> rightHand, sp<AEquipment> leftHand)
 {
 	auto muzzleLocation = getMuzzleLocation();
-	auto targetPosition =
-		unit->tileObject->getVoxelCentrePosition();
+	auto targetPosition = unit->tileObject->getVoxelCentrePosition();
 	// Map part that prevents LOF to target
-	auto cMap = tileObject->map.findCollision(
-		muzzleLocation, targetPosition, mapPartSet, tileObject);
+	auto cMap =
+	    tileObject->map.findCollision(muzzleLocation, targetPosition, mapPartSet, tileObject);
 	// Unit that prevents LOF to target
-	auto cUnit = tileObject->map.findCollision(
-		muzzleLocation, targetPosition, unitSet, tileObject);
-	// Condition: 
+	auto cUnit = tileObject->map.findCollision(muzzleLocation, targetPosition, unitSet, tileObject);
+	// Condition:
 	// No map part blocks LOF
 	if (!cMap
-		// No unit blocks LOF
-		&& (!cUnit ||
-			owner->isRelatedTo(
-				std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)
-				->getUnit()
-				->owner) == Organisation::Relation::Hostile))
+	    // No unit blocks LOF
+	    && (!cUnit ||
+	        owner->isRelatedTo(
+	            std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)->getUnit()->owner) ==
+	            Organisation::Relation::Hostile))
 	{
 		// One of held weapons is in range
 		bool rightCanFire = rightHand && rightHand->canFire(targetPosition);
@@ -1298,7 +1296,8 @@ void BattleUnit::updateCheckIfFalling(GameState &state)
 			}
 			// If flying and not supported both on current and goal locations - start flying
 			// Note: Throwing units can "hover" in standing body state
-			if (!fullySupported && canFly() && (missions.empty() || missions.front()->type!=BattleUnitMission::Type::ThrowItem))
+			if (!fullySupported && canFly() &&
+			    (missions.empty() || missions.front()->type != BattleUnitMission::Type::ThrowItem))
 			{
 				if (current_body_state == target_body_state)
 				{
@@ -1942,7 +1941,7 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 			    body_animation_ticks_remaining == 0 && current_hand_state != HandState::Aiming &&
 			    current_movement_state != MovementState::Running &&
 			    current_movement_state != MovementState::Strafing &&
-				current_body_state != BodyState::Throwing &&
+			    current_body_state != BodyState::Throwing &&
 			    !(current_body_state == BodyState::Prone &&
 			      current_movement_state != MovementState::None))
 			{
@@ -2178,7 +2177,8 @@ void BattleUnit::requestGiveWay(const BattleUnit &requestor,
 	}
 }
 
-void BattleUnit::executeGroupAIDecision(GameState &state, AIDecision &decision, std::list<StateRef<BattleUnit>> &units)
+void BattleUnit::executeGroupAIDecision(GameState &state, AIDecision &decision,
+                                        std::list<StateRef<BattleUnit>> &units)
 {
 	if (decision.action)
 	{
@@ -2198,8 +2198,7 @@ void BattleUnit::executeGroupAIDecision(GameState &state, AIDecision &decision, 
 					u->kneeling_mode = decision.movement->kneelingMode;
 					u->movement_mode = decision.movement->movementMode;
 				}
-				Battle::groupMove(state, units,
-					decision.movement->targetLocation, true);
+				Battle::groupMove(state, units, decision.movement->targetLocation, true);
 				break;
 			default:
 				for (auto u : units)
@@ -2234,56 +2233,61 @@ void BattleUnit::executeAIAction(GameState &state, AIAction &action)
 			action.item = nullptr;
 			action.weaponStatus = WeaponStatus::FiringRightHand;
 		}
-
 	}
 
 	switch (action.type)
 	{
-	case AIAction::Type::AttackWeapon:
-		if (action.item)
-		{
-			auto rh = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
-			auto lh = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
-			if (action.item == rh)
+		case AIAction::Type::AttackWeapon:
+			if (action.item)
 			{
-				startAttacking(state, { &state, action.targetUnit->id }, WeaponStatus::FiringRightHand);
-				LogWarning("Attack with a weapon has item specified instead of hand state! Should not reach unit in this state.");
-			}
-			else if (action.item == lh)
-			{
-				startAttacking(state, { &state, action.targetUnit->id }, WeaponStatus::FiringLeftHand);
-				LogWarning("Attack with a weapon has item specified instead of hand state! Should not reach unit in this state.");
+				auto rh = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+				auto lh = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+				if (action.item == rh)
+				{
+					startAttacking(state, {&state, action.targetUnit->id},
+					               WeaponStatus::FiringRightHand);
+					LogWarning("Attack with a weapon has item specified instead of hand state! "
+					           "Should not reach unit in this state.");
+				}
+				else if (action.item == lh)
+				{
+					startAttacking(state, {&state, action.targetUnit->id},
+					               WeaponStatus::FiringLeftHand);
+					LogWarning("Attack with a weapon has item specified instead of hand state! "
+					           "Should not reach unit in this state.");
+				}
+				else
+				{
+					LogError(
+					    "Attack with a weapon has item specified that is not in unit's hands!");
+				}
 			}
 			else
 			{
-				LogError("Attack with a weapon has item specified that is not in unit's hands!");
+				startAttacking(state, {&state, action.targetUnit->id}, action.weaponStatus);
 			}
-		}
-		else
-		{
-			startAttacking(state, { &state, action.targetUnit->id }, action.weaponStatus);
-		}
-		break;
-	case AIAction::Type::AttackGrenade:
-		if (action.item->getCanThrow(*this, action.targetUnit->position))
-		{
-			if (setMission(state, BattleUnitMission::throwItem(*this, action.item, action.targetUnit->position)))
+			break;
+		case AIAction::Type::AttackGrenade:
+			if (action.item->getCanThrow(*this, action.targetUnit->position))
 			{
-				action.item->prime();
+				if (setMission(state, BattleUnitMission::throwItem(*this, action.item,
+				                                                   action.targetUnit->position)))
+				{
+					action.item->prime();
+				}
 			}
-		}
-		break;
-	case AIAction::Type::AttackPsiMC:
-	case AIAction::Type::AttackPsiStun:
-	case AIAction::Type::AttackPsiPanic:
-		LogWarning("Implement acting on a Psi AI action");
-		break;
+			break;
+		case AIAction::Type::AttackPsiMC:
+		case AIAction::Type::AttackPsiStun:
+		case AIAction::Type::AttackPsiPanic:
+			LogWarning("Implement acting on a Psi AI action");
+			break;
 	}
 }
 
 void BattleUnit::executeAIMovement(GameState &state, AIMovement &movement)
 {
-	//FIXME: USE teleporter to move?
+	// FIXME: USE teleporter to move?
 	// Or maybe this is done in AI?
 
 	/*
@@ -2291,27 +2295,27 @@ void BattleUnit::executeAIMovement(GameState &state, AIMovement &movement)
 	bool useTeleporter = false;
 	switch (movement.type)
 	{
-		case AIMovement::Type::Pursue:
-		case AIMovement::Type::Patrol:
-		case AIMovement::Type::Advance:
-		case AIMovement::Type::GetInRange:
-		case AIMovement::Type::TakeCover:
-			for (auto &e : agent->equipment)
-			{
-				if (e->type->type == AEquipmentType::Type::Teleporter)
-				{
-					if (e->type->type == AEquipmentType::Type::Teleporter &&
-						e->ammo == e->type->max_ammo &&
-						canAfford(state, agent->current_stats.time_units * 55 / 100))
-					{
-						useTeleporter = true;
-						break;
-					}
-				}
-			}
-			break;
-		default:
-			break;
+	    case AIMovement::Type::Pursue:
+	    case AIMovement::Type::Patrol:
+	    case AIMovement::Type::Advance:
+	    case AIMovement::Type::GetInRange:
+	    case AIMovement::Type::TakeCover:
+	        for (auto &e : agent->equipment)
+	        {
+	            if (e->type->type == AEquipmentType::Type::Teleporter)
+	            {
+	                if (e->type->type == AEquipmentType::Type::Teleporter &&
+	                    e->ammo == e->type->max_ammo &&
+	                    canAfford(state, agent->current_stats.time_units * 55 / 100))
+	                {
+	                    useTeleporter = true;
+	                    break;
+	                }
+	            }
+	        }
+	        break;
+	    default:
+	        break;
 	}
 	*/
 
@@ -2348,31 +2352,21 @@ void BattleUnit::executeAIMovement(GameState &state, AIMovement &movement)
 		case AIMovement::Type::TakeCover:
 		case AIMovement::Type::Patrol:
 		case AIMovement::Type::Pursue:
-			setMission(
-				state, BattleUnitMission::gotoLocation(
-					*this, movement.targetLocation));
+			setMission(state, BattleUnitMission::gotoLocation(*this, movement.targetLocation));
 			break;
 		case AIMovement::Type::Retreat:
-			setMission(
-				state, BattleUnitMission::gotoLocation(
-					*this, movement.targetLocation, 0, true, true, 1, true));
+			setMission(state, BattleUnitMission::gotoLocation(*this, movement.targetLocation, 0,
+			                                                  true, true, 1, true));
 			break;
 		case AIMovement::Type::Turn:
-			setMission(state,
-				BattleUnitMission::turn(*this, movement.targetLocation));
+			setMission(state, BattleUnitMission::turn(*this, movement.targetLocation));
 			break;
 	}
 }
 
-void BattleUnit::notifyUnderFire(Vec3<int> position)
-{
-	aiList.notifyUnderFire(position);
-}
+void BattleUnit::notifyUnderFire(Vec3<int> position) { aiList.notifyUnderFire(position); }
 
-void BattleUnit::notifyHit(Vec3<int> position)
-{
-	aiList.notifyHit(position);
-}
+void BattleUnit::notifyHit(Vec3<int> position) { aiList.notifyHit(position); }
 
 void BattleUnit::tryToRiseUp(GameState &state)
 {

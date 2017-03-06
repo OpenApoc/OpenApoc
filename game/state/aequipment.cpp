@@ -234,8 +234,7 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 			{
 				// Check if we're still firing
 				case AEquipmentSlotType::LeftHand:
-					if (ownerAgent->unit->weaponStatus !=
-					        WeaponStatus::FiringBothHands &&
+					if (ownerAgent->unit->weaponStatus != WeaponStatus::FiringBothHands &&
 					    ownerAgent->unit->weaponStatus != WeaponStatus::FiringLeftHand)
 					{
 						stopFiring();
@@ -246,8 +245,7 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 					}
 					break;
 				case AEquipmentSlotType::RightHand:
-					if (ownerAgent->unit->weaponStatus !=
-					        WeaponStatus::FiringBothHands &&
+					if (ownerAgent->unit->weaponStatus != WeaponStatus::FiringBothHands &&
 					    ownerAgent->unit->weaponStatus != WeaponStatus::FiringRightHand)
 					{
 						stopFiring();
@@ -717,7 +715,8 @@ bool AEquipment::getVelocityForThrowLaunch(const BattleUnit *unit, const TileMap
 	}
 	return valid;
 }
-bool AEquipment::getCanThrow(const TileMap &map, int strength, Vec3<float> startPos, Vec3<int> target)
+bool AEquipment::getCanThrow(const TileMap &map, int strength, Vec3<float> startPos,
+                             Vec3<int> target)
 {
 	float nothing1 = 0.0f;
 	float nothing2 = 0.0f;

@@ -3,10 +3,10 @@
 #define _USE_MATH_DEFINES
 #endif
 #include "game/state/agent.h"
-#include "game/state/gametime.h"
 #include "game/state/battle/ai/ai.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunitmission.h"
+#include "game/state/gametime.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
@@ -145,7 +145,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	std::list<StateRef<BattleUnit>> focusedByUnits;
 	// Ticks until we check if target is still valid, turn to it etc.
 	unsigned ticksUntillNextTargetCheck = 0;
-	
+
 	// Stats
 
 	// Accumulated xp points for each stat
@@ -237,7 +237,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// AI list
 	UnitAIList aiList;
-	
+
 	// [Methods]
 
 	void init(GameState &state);
@@ -271,7 +271,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Returns wether unit can be attacked by one of the two supplied weapons
 	// Checks wether target unit is in range, and clear LOF exists to it
 	// Clear LOF means no friendly fire and no map part in between
-	WeaponStatus canAttackUnit(GameState &state, sp<BattleUnit> unit, sp<AEquipment> rightHand, sp<AEquipment> leftHand = nullptr);
+	WeaponStatus canAttackUnit(GameState &state, sp<BattleUnit> unit, sp<AEquipment> rightHand,
+	                           sp<AEquipment> leftHand = nullptr);
 
 	// Body
 
@@ -331,7 +332,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// AI execution
 
-	static void executeGroupAIDecision(GameState &state, AIDecision &decision, std::list<StateRef<BattleUnit>> &units);
+	static void executeGroupAIDecision(GameState &state, AIDecision &decision,
+	                                   std::list<StateRef<BattleUnit>> &units);
 	void executeAIDecision(GameState &state, AIDecision &decision);
 	void executeAIAction(GameState &state, AIAction &action);
 	void executeAIMovement(GameState &state, AIMovement &movement);
@@ -344,7 +346,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	void requestGiveWay(const BattleUnit &requestor, const std::list<Vec3<int>> &plannedPath,
 	                    Vec3<int> pos);
-	
+
 	// Unit state queries
 
 	// Returns true if the unit is dead
