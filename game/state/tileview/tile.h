@@ -247,17 +247,17 @@ class TileMap
 	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destinationStart,
 	                                      Vec3<int> destinationEnd, unsigned int iterationLimit,
 	                                      const CanEnterTileHelper &canEnterTile,
-	                                      bool ignoreStaticUnits = false,
+										  bool approachOnly = false, bool ignoreStaticUnits = false,
 	                                      bool ignoreAllUnits = false, float *cost = nullptr,
 	                                      float maxCost = 0.0f);
 
 	std::list<Vec3<int>>
 	findShortestPath(Vec3<int> origin, Vec3<int> destination, unsigned int iterationLimit,
-	                 const CanEnterTileHelper &canEnterTile, bool ignoreStaticUnits = false,
+	                 const CanEnterTileHelper &canEnterTile, bool approachOnly = false, bool ignoreStaticUnits = false,
 	                 bool ignoreAllUnits = false, float *cost = nullptr, float maxCost = 0.0f)
 	{
 		return findShortestPath(origin, destination, destination + Vec3<int>{1, 1, 1},
-		                        iterationLimit, canEnterTile, ignoreStaticUnits, ignoreAllUnits,
+		                        iterationLimit, canEnterTile, approachOnly, ignoreStaticUnits, ignoreAllUnits,
 		                        cost, maxCost);
 	}
 

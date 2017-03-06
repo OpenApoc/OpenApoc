@@ -235,8 +235,8 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 				// Check if we're still firing
 				case AEquipmentSlotType::LeftHand:
 					if (ownerAgent->unit->weaponStatus !=
-					        BattleUnit::WeaponStatus::FiringBothHands &&
-					    ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringLeftHand)
+					        WeaponStatus::FiringBothHands &&
+					    ownerAgent->unit->weaponStatus != WeaponStatus::FiringLeftHand)
 					{
 						stopFiring();
 					}
@@ -247,8 +247,8 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 					break;
 				case AEquipmentSlotType::RightHand:
 					if (ownerAgent->unit->weaponStatus !=
-					        BattleUnit::WeaponStatus::FiringBothHands &&
-					    ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringRightHand)
+					        WeaponStatus::FiringBothHands &&
+					    ownerAgent->unit->weaponStatus != WeaponStatus::FiringRightHand)
 					{
 						stopFiring();
 					}
@@ -717,6 +717,12 @@ bool AEquipment::getVelocityForThrowLaunch(const BattleUnit *unit, const TileMap
 	}
 	return valid;
 }
+bool AEquipment::getCanThrow(const TileMap &map, int strength, Vec3<float> startPos, Vec3<int> target)
+{
+	float nothing1 = 0.0f;
+	float nothing2 = 0.0f;
+	return getVelocityForThrow(map, strength, startPos, target, nothing1, nothing2);
+}
 
 bool AEquipment::getVelocityForThrow(const TileMap &map, int strength, Vec3<float> startPos,
                                      Vec3<int> target, float &velocityXY, float &velocityZ) const
@@ -724,6 +730,13 @@ bool AEquipment::getVelocityForThrow(const TileMap &map, int strength, Vec3<floa
 	return getVelocityForThrowLaunch(nullptr, map, strength,
 	                                 type->weight + (payloadType ? payloadType->weight : 0),
 	                                 startPos, target, velocityXY, velocityZ);
+}
+
+bool AEquipment::getCanThrow(const BattleUnit &unit, Vec3<int> target)
+{
+	float nothing1 = 0.0f;
+	float nothing2 = 0.0f;
+	return getVelocityForThrow(unit, target, nothing1, nothing2);
 }
 
 bool AEquipment::getVelocityForThrow(const BattleUnit &unit, Vec3<int> target, float &velocityXY,

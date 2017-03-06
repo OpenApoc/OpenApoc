@@ -20,6 +20,8 @@ class BattleUnit;
 class Organisation;
 enum class MovementMode;
 enum class KneelingMode;
+enum class WeaponStatus;
+enum class AEquipmentSlotType;
 
 class AIAction
 {
@@ -32,6 +34,7 @@ class AIAction
 		AttackPsiStun,
 		AttackPsiMC,
 	};
+	AIAction();
 
 	// Parameters that are stored for future reference
 
@@ -42,6 +45,9 @@ class AIAction
 	// What to fire / what to throw / what to use for PSI
 	// For simply attacking with all weapons in hands, this can be null
 	sp<AEquipment> item;
+	// If attacking with weapons, which hands to use
+	// (init in constructor since it's undefined here)
+	WeaponStatus weaponStatus;
 
 	// Methods
 
@@ -57,6 +63,8 @@ class AIMovement
 		Stop,
 		// Turn to target location
 		Turn,
+		// Change stance
+		ChangeStance,
 		// Move to target location (patrol)
 		Patrol,
 		// Move to target location (advancing on enemy)
@@ -78,10 +86,12 @@ class AIMovement
 	// Movement type
 	Type type = Type::Stop;
 	// Where to move / face
-	Vec3<int> targetLocation;
-	// Preferred movement speed
+	Vec3<int> targetLocation = { 0,0,0 };
+	// Preferred movement speed (not used for Stop or Turn)
+	// (init in constructor since it's undefined here)
 	MovementMode movementMode;
-	// Preferred kneeling state
+	// Preferred kneeling state (not used for Stop or Turn)
+	// (init in constructor since it's undefined here)
 	KneelingMode kneelingMode;
 
 	// Methods
@@ -154,7 +164,9 @@ class UnitAIHelper
 
 	static sp<AIMovement> getPursueMovement(GameState &state, BattleUnit &u, Vec3<int> target, bool forced = false);
 
-	static sp<AIMovement> getTurnMovement(GameState &state, BattleUnit &u, sp<AIMovement> lastMovement, Vec3<int> target);
+	static sp<AIMovement> getTurnMovement(GameState &state, BattleUnit &u, Vec3<int> target);
+
+	static void ensureItemInSlot(GameState &state, sp<AEquipment> item, AEquipmentSlotType slot);
 };
 
 class UnitAIList
@@ -193,9 +205,18 @@ class DefaultUnitAI : public UnitAI
 {
   public:
 	const UString getName() override { return "Default"; };
+	
+	int ticksAutoTurnAvailable = 0;
+	int ticksAutoTargetAvailable = 0;
+
+	// Relative position of a person who attacked us since last think()
+	Vec3<int> attackerPosition = { 0, 0, 0 };
 
 	void reset(GameState &state, BattleUnit &u) override;
 	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) override;
+
+	void notifyUnderFire(Vec3<int> position) override;
+	void notifyHit(Vec3<int> position) override;
 };
 
 // AI that handles unit's behavior (Aggressive, Normal, Cautious)

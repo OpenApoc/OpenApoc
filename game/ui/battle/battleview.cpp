@@ -1599,7 +1599,7 @@ void BattleView::orderTeleport(Vec3<int> target, bool right)
 	}
 }
 
-void BattleView::orderFire(Vec3<int> target, BattleUnit::WeaponStatus status, bool modifier)
+void BattleView::orderFire(Vec3<int> target, WeaponStatus status, bool modifier)
 {
 	// FIXME: If TB ensure enough TUs for turn and fire
 	for (auto unit : battle.battleViewSelectedUnits)
@@ -1608,7 +1608,7 @@ void BattleView::orderFire(Vec3<int> target, BattleUnit::WeaponStatus status, bo
 	}
 }
 
-void BattleView::orderFire(StateRef<BattleUnit> u, BattleUnit::WeaponStatus status)
+void BattleView::orderFire(StateRef<BattleUnit> u, WeaponStatus status)
 {
 	// FIXME: If TB ensure enough TUs for turn and fire
 	for (auto unit : battle.battleViewSelectedUnits)
@@ -2067,15 +2067,15 @@ void BattleView::eventOccurred(Event *e)
 					{
 						case Event::MouseButton::Left:
 						{
-							BattleUnit::WeaponStatus status =
-							    BattleUnit::WeaponStatus::FiringBothHands;
+							WeaponStatus status =
+							    WeaponStatus::FiringBothHands;
 							switch (selectionState)
 							{
 								case BattleSelectionState::FireLeft:
-									status = BattleUnit::WeaponStatus::FiringLeftHand;
+									status = WeaponStatus::FiringLeftHand;
 									break;
 								case BattleSelectionState::FireRight:
-									status = BattleUnit::WeaponStatus::FiringRightHand;
+									status = WeaponStatus::FiringRightHand;
 									break;
 								case BattleSelectionState::FireAny:
 								default:

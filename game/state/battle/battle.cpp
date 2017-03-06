@@ -521,7 +521,7 @@ void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 					LogWarning("Notify: unit %s that he's taking fire",
 					           c.projectile->trackedUnit.id);
 				}
-				unit->attackerPosition = c.projectile->firerUnit->position;
+				unit->notifyUnderFire(c.projectile->firerPosition);
 			}
 			// Handle collision
 			this->projectiles.erase(c.projectile);
@@ -749,7 +749,7 @@ void Battle::updatePathfinding(GameState &state)
 
 				auto path = mapRef.findShortestPath(
 				    blockCenterPos[type][i], blockCenterPos[type][j],
-				    distance * PATH_ITERATION_LIMIT_MULTIPLIER, helperMap[(int)type], true, true,
+				    distance * PATH_ITERATION_LIMIT_MULTIPLIER, helperMap[(int)type], false, true, true,
 				    &cost, distance * 4 * PATH_COST_LIMIT_MULTIPLIER);
 
 				if (path.empty() || (*path.rbegin()) != blockCenterPos[type][j])

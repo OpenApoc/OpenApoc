@@ -1,6 +1,9 @@
 #include "game/state/battle/ai/ai.h"
 #include "game/state/battle/battle.h"
+#include "game/state/battle/battleunit.h"
+#include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/aequipment.h"
+#include "game/state/tileview/collision.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
@@ -9,6 +12,16 @@
 
 namespace OpenApoc
 {
+
+namespace
+{
+	static const std::set<TileObject::Type> mapPartSet = {
+		TileObject::Type::Ground, TileObject::Type::LeftWall, TileObject::Type::RightWall,
+		TileObject::Type::Feature };
+	static const std::set<TileObject::Type> unitSet = { TileObject::Type::Unit };
+	static const std::tuple<AIDecision, bool> NULLTUPLE2 = std::make_tuple(AIDecision(), false);
+	static const std::tuple<AIDecision, float, unsigned> NULLTUPLE3 = std::make_tuple(AIDecision(), FLT_MIN, 0);
+}
 
 /* AI LOGIC: attack()
 
@@ -63,6 +76,13 @@ options (checked for every visible target):
 //     Therefore, item can be considered to have a projectile speed of 48/8 = 6
 //	   Then just divide distance by velocity (scaled) to get ticks
 // - every second delay divides value gotten above by 2
+
+// Delay before unit will turn automatically again after doing it once
+static const unsigned AUTO_TURN_COOLDOWN = TICKS_PER_TURN;
+// Delay before unit will target an enemy automatically again after failing to do so once
+static const unsigned AUTO_TARGET_COOLDOWN = TICKS_PER_TURN / 4;
+
+AIAction::AIAction() : weaponStatus(WeaponStatus::NotFiring) {}
 
 AIMovement::AIMovement() : movementMode(MovementMode::Walking), kneelingMode(KneelingMode::None) {}
 
@@ -219,7 +239,7 @@ std::tuple<std::list<StateRef<BattleUnit>>, sp<AIMovement>> VanillaTacticalAI::g
 						    glm::distance((Vec3<float>)m->targetLocation, u.position) < SQUAD_RANGE)
 						{
 							units.clear();
-							return { units, result };
+							return std::make_tuple(units, result);
 						}
 					}
 				}
@@ -274,61 +294,111 @@ sp<AIMovement> UnitAIHelper::getRetreatMovement(GameState &state, BattleUnit &u,
 	LogWarning("Implement retreat (for now kneeling instead)");
 
 	auto result = mksp<AIMovement>();
-	result->kneelingMode = KneelingMode::Kneeling;
 	result->type = AIMovement::Type::Stop;
-
+	result->kneelingMode = KneelingMode::Kneeling;
+	result->movementMode = MovementMode::Walking;
+	
 	return result;
 }
 
 sp<AIMovement> UnitAIHelper::getTakeCoverMovement(GameState &state, BattleUnit &u, bool forced)
 {
 	// Chance to take cover is 33% * sqrt(num_enemies_seen), if no one is seen then assume 3
-	if (!forced && randBoundsExclusive(state.rng, 0, 100) >=
-	    33.0f * sqrtf(u.visibleEnemies.empty() ? 3 : (int)u.visibleEnemies.size()))
+	if (!forced)
 	{
-		return nullptr;
+		if (randBoundsExclusive(state.rng, 0, 100) >=
+			33.0f * sqrtf(u.visibleEnemies.empty() ? 3 : (int)u.visibleEnemies.size()))
+		{
+			return nullptr;
+		}
+		// If already prone - ignore (for now, until we implement proper take cover)
+		if (u.movement_mode == MovementMode::Prone)
+		{
+			return nullptr;
+		}
 	}
 
 	LogWarning("Implement take cover (for now proning instead)");
 
 	auto result = mksp<AIMovement>();
-
+	result->type = AIMovement::Type::ChangeStance;
 	result->movementMode = MovementMode::Prone;
-	result->type = AIMovement::Type::Stop;
-
+	result->kneelingMode = KneelingMode::None;
+	
 	return result;
 }
 
 sp<AIMovement> UnitAIHelper::getKneelMovement(GameState &state, BattleUnit &u, bool forced)
 {
-	// Chance to kneel is 33% * sqrt(num_enemies_seen), if no one is seen then assume 3
-	if (!forced && randBoundsExclusive(state.rng, 0, 100) >=
-	    33.0f * sqrtf(u.visibleEnemies.empty() ? 3 : (int)u.visibleEnemies.size()))
+	if (!forced)
 	{
-		return nullptr;
+		// Chance to kneel is 33% * sqrt(num_enemies_seen), if no one is seen then assume 3
+		if (randBoundsExclusive(state.rng, 0, 100) >=
+			33.0f * sqrtf(u.visibleEnemies.empty() ? 3 : (int)u.visibleEnemies.size()))
+		{
+			return nullptr;
+		}
+		// If already kneeling or prone - ignore
+		if (u.movement_mode == MovementMode::Prone || u.kneeling_mode == KneelingMode::Kneeling)
+		{
+			return nullptr;
+		}
 	}
 
 	auto result = mksp<AIMovement>();
-
+	result->type = AIMovement::Type::ChangeStance;
 	result->kneelingMode = KneelingMode::Kneeling;
-	result->type = AIMovement::Type::Stop;
-
+	result->movementMode = MovementMode::Walking;
+	
 	return result;
 }
 
-sp<AIMovement> UnitAIHelper::getTurnMovement(GameState &state, BattleUnit &u, sp<AIMovement> lastMovement, Vec3<int> target)
+sp<AIMovement> UnitAIHelper::getTurnMovement(GameState &state, BattleUnit &u, Vec3<int> target)
 {
 	auto result = mksp<AIMovement>();
 
 	result->type = AIMovement::Type::Turn;
 	result->targetLocation = target;
-	if (lastMovement)
-	{
-		result->kneelingMode = lastMovement->kneelingMode;
-		result->movementMode = lastMovement->movementMode;
-	}
 
 	return result;
+}
+
+void UnitAIHelper::ensureItemInSlot(GameState &state, sp<AEquipment> item, AEquipmentSlotType slot)
+{
+	auto u = item->ownerAgent->unit;
+	auto curItem = u->agent->getFirstItemInSlot(slot);
+	if (curItem != item)
+	{
+		// Remove item in the desired slot
+		if (curItem)
+		{
+			u->agent->removeEquipment(curItem);
+		}
+
+		// Remove item we will use and equip it in the desired slot
+		u->agent->removeEquipment(item);
+		u->agent->addEquipment(state, item, slot);
+
+		// Equip back the item removed earlier
+		if (curItem)
+		{
+			for (auto s : u->agent->type->equipment_layout->slots)
+			{
+				if (u->agent->canAddEquipment(s.bounds.p0, curItem->type))
+				{
+					u->agent->addEquipment(state, s.bounds.p0, curItem);
+					curItem = nullptr;
+					break;
+				}
+			}
+		}
+
+		// Drop the item if we couldn't equip it
+		if (curItem)
+		{
+			u->addMission(state, BattleUnitMission::dropItem(*u, curItem));
+		}
+	}
 }
 
 sp<AIMovement> UnitAIHelper::getPursueMovement(GameState &state, BattleUnit &u, Vec3<int> target, bool forced)
@@ -351,50 +421,80 @@ sp<AIMovement> UnitAIHelper::getPursueMovement(GameState &state, BattleUnit &u, 
 std::tuple<AIDecision, float, unsigned> VanillaUnitAI::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
                                  sp<BattleUnit> target)
 {
-	if (e->canFire(target->position))
+	if (u.canAttackUnit(state, target, e) != WeaponStatus::NotFiring)
 	{
 		auto action = mksp<AIAction>();
 		action->item = e;
 		action->targetUnit = target;
 		action->type = AIAction::Type::AttackWeapon;
-		auto movement = mksp<AIMovement>();
-		if (lastDecision.movement)
-		{
-			movement->kneelingMode = lastDecision.movement->kneelingMode;
-			movement->movementMode = lastDecision.movement->movementMode;
-		}
 		
+		auto movement = mksp<AIMovement>();
+		movement->type = AIMovement::Type::Stop;
+		// Chance to advance is 50%
+		if (randBoundsExclusive(state.rng, 0, 100) >= 50)
+		{
+			movement->type = AIMovement::Type::Advance;
+			movement->targetLocation = target->position;
+			movement->kneelingMode = KneelingMode::None;
+			movement->movementMode = MovementMode::Walking;
+		}
+
 		unsigned reThinkDelay = TICKS_PER_TURN;
 		float priority = e->getPayloadType()->damage;
 
-		return { {action, movement}, priority, reThinkDelay};
+		return std::make_tuple(AIDecision(action, movement), priority, reThinkDelay);
 	}
 
-	return{ AIDecision(), FLT_MIN , 0 };
+	return NULLTUPLE3;
 }
 
 // FIXME: IMPLEMENT PSI AI
 std::tuple<AIDecision, float, unsigned> VanillaUnitAI::getPsiDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
                               sp<BattleUnit> target, AIAction::Type type)
 {
-	return{ AIDecision(), FLT_MIN , 0 };
+	return NULLTUPLE3;
 }
 
 // FIXME: IMPLEMENT GRENADE AI
 std::tuple<AIDecision, float, unsigned> VanillaUnitAI::getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
                                   sp<BattleUnit> target)
 {
-	return { AIDecision(), FLT_MIN , 0 };
+	auto action = mksp<AIAction>();
+	action->item = e;
+	action->targetUnit = target;
+	action->type = AIAction::Type::AttackGrenade;
+
+	auto movement = mksp<AIMovement>();
+	movement->type = AIMovement::Type::Stop;
+
+	// Properly get rethingdelay based on how far we must run to reach throwable plint
+	unsigned reThinkDelay = TICKS_PER_TURN * 4;
+	// For now, auto-throw if in range at closest enemy
+	float priority = FLT_MAX - glm::length(u.position - target->position);
+
+	if (!e->getCanThrow(u, target->position))
+	{
+		// For now, just 30% chance to advance and throw anyway
+		if (randBoundsExclusive(state.rng, 0, 100) >= 30)
+		{
+			priority = FLT_MAX / 2 - glm::length(u.position - target->position);
+			movement->type = AIMovement::Type::GetInRange;
+			movement->movementMode = MovementMode::Running;
+			movement->targetLocation = target->position;
+		}
+	}
+
+	return std::make_tuple(AIDecision(action, movement), priority, reThinkDelay);
 }
 
 std::tuple<AIDecision, float, unsigned> VanillaUnitAI::getAttackDecision(GameState &state, BattleUnit &u)
 {
-	std::tuple<AIDecision, float, unsigned> decision = { AIDecision(), FLT_MIN, TICKS_PER_TURN };
+	std::tuple<AIDecision, float, unsigned> decision = NULLTUPLE3;
 
 	// Try each item for a weapon/grenade/psi attack
 	// If out of range - advance
-	// If you have no valid attack at all - retreat
-
+	// If cannot attack at all - take cover!
+	
 	bool mindBenderEncountered = false;
 	for (auto &e : u.agent->equipment)
 	{
@@ -473,6 +573,11 @@ std::tuple<AIDecision, float, unsigned> VanillaUnitAI::getAttackDecision(GameSta
 			}
 		}
 	}
+	// If cannot attack - take cover!
+	if (std::get<0>(decision).isEmpty())
+	{
+		decision = std::make_tuple(AIDecision(nullptr,UnitAIHelper::getTakeCoverMovement(state, u, true)), 0.0f, 0);
+	}
 
 	return decision;
 }
@@ -491,7 +596,7 @@ std::tuple<AIDecision, float, unsigned> VanillaUnitAI::thinkGreen(GameState &sta
 		// If unit is moving into cover -> carry on
 		if (lastDecision.movement->type == AIMovement::Type::TakeCover)
 		{
-			return {AIDecision(), FLT_MIN, 0};
+			return NULLTUPLE3;
 		}
 	}
 
@@ -500,7 +605,7 @@ std::tuple<AIDecision, float, unsigned> VanillaUnitAI::thinkGreen(GameState &sta
 		auto takeCover = UnitAIHelper::getTakeCoverMovement(state, u);
 		if (takeCover)
 		{
-			return{{ nullptr, takeCover }, 0.0f, 0 };
+			return std::make_tuple(AIDecision(nullptr, takeCover ), 0.0f, 0);
 		}
 	}
 
@@ -509,12 +614,12 @@ std::tuple<AIDecision, float, unsigned> VanillaUnitAI::thinkGreen(GameState &sta
 		auto pursue = UnitAIHelper::getPursueMovement(state, u, (Vec3<int>)u.position + lastSeenEnemyPosition);
 		if (pursue)
 		{
-			return {{nullptr, pursue }, 0.0f, 0};
+			return std::make_tuple(AIDecision(nullptr, pursue ), 0.0f, 0);
 		}
 
 		if (isMoving)
 		{
-			return{ AIDecision(), FLT_MIN, 0 };
+			return NULLTUPLE3;
 		}
 	}
 
@@ -522,12 +627,12 @@ std::tuple<AIDecision, float, unsigned> VanillaUnitAI::thinkGreen(GameState &sta
 	{
 		if (u.missions.empty() || u.missions.front()->type != BattleUnitMission::Type::Turn)
 		{
-			auto turn = UnitAIHelper::getTurnMovement(state, u, lastDecision.movement, (Vec3<int>)u.position + attackerPosition);
-			return{ {nullptr, turn}, 0.0f, 0};
+			auto turn = UnitAIHelper::getTurnMovement(state, u, (Vec3<int>)u.position + attackerPosition);
+			return std::make_tuple(AIDecision(nullptr, turn), 0.0f, 0);
 		}
 	}
 
-	return{ AIDecision(), FLT_MIN, 0 };
+	return NULLTUPLE3;
 }
 
 // Calculate AI's next action in case enemies are seen
@@ -543,18 +648,18 @@ std::tuple<AIDecision, float, unsigned> VanillaUnitAI::thinkRed(GameState &state
 		auto takeCover = UnitAIHelper::getTakeCoverMovement(state, u);
 		if (takeCover)
 		{
-			return{ { nullptr, takeCover }, 0.0f, 0 };
+			return std::make_tuple(AIDecision(nullptr, takeCover ), 0.0f, 0 );
 		}
 
 		auto kneel = UnitAIHelper::getKneelMovement(state, u);
 		if (kneel)
 		{
-			return{ { nullptr, kneel }, 0.0f, 0 };
+			return std::make_tuple(AIDecision(nullptr, kneel ), 0.0f, 0 );
 		}
 
 		if (isInterrupted)
 		{
-			return{ AIDecision(), FLT_MIN, 0 };
+			return NULLTUPLE3;
 		}
 	}
 
@@ -654,8 +759,8 @@ AIDecision VanillaUnitAI::thinkInternal(GameState &state, BattleUnit &u)
 		|| (enemySpotted && u.visibleEnemies.empty()
 			&& (!lastDecision.movement || (lastDecision.movement->type != AIMovement::Type::Pursue
 				&& lastDecision.movement->type != AIMovement::Type::GetInRange)))
-		// We were attacked
-		|| (attackerPosition != NONE)
+		// We were attacked and we are not on a mission to get in range
+		|| (attackerPosition != NONE && (!lastDecision.movement ||lastDecision.movement->type != AIMovement::Type::GetInRange))
 		// We have enemies in sight, we are not attacking and we are not carrying out an action
 		|| (!u.visibleEnemies.empty() && !u.isAttacking() && !lastDecision.action);
 	
@@ -664,11 +769,12 @@ AIDecision VanillaUnitAI::thinkInternal(GameState &state, BattleUnit &u)
 		
 	if (!reThink)
 	{
-		return{};
+		return lastDecision;
 	}
 
 	auto result = u.visibleEnemies.empty() ? thinkGreen(state, u) : thinkRed(state, u);
 	auto decision = std::get<0>(result);
+	lastDecision = decision;
 
 	if (decision.isEmpty())
 	{
@@ -689,7 +795,7 @@ std::tuple<AIDecision, bool> VanillaUnitAI::think(GameState &state, BattleUnit &
 
 	if (!active)
 	{
-		return {AIDecision(), false};
+		return NULLTUPLE2;
 	}
 	
 	auto decision = thinkInternal(state, u);
@@ -699,63 +805,12 @@ std::tuple<AIDecision, bool> VanillaUnitAI::think(GameState &state, BattleUnit &
 		lastDecision = decision;
 	}
 
-	return { decision, false };
+	return std::make_tuple(decision, false );
 }
 
 void VanillaUnitAI::routine(GameState &state, BattleUnit &u, const AIDecision &decision)
 {
 	static const Vec3<int> NONE = {0, 0, 0};
-
-	// Do whatever needs to be done for the chosen action
-	if (decision.action)
-	{
-		// Equip item we're going to use
-		if (decision.action->item)
-		{
-			auto rhItem = u.agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
-			if (rhItem != decision.action->item)
-			{
-				// Remove item in the right hand
-				if (rhItem)
-				{
-					u.agent->removeEquipment(rhItem);
-				}
-
-				// Remove item we will use and equip it in the right hand
-				u.agent->removeEquipment(decision.action->item);
-				u.agent->addEquipment(state, decision.action->item, AEquipmentSlotType::RightHand);
-
-				// Equip back the item removed earlier
-				if (rhItem)
-				{
-					for (auto s : u.agent->type->equipment_layout->slots)
-					{
-						if (u.agent->canAddEquipment(s.bounds.p0, rhItem->type))
-						{
-							u.agent->addEquipment(state, s.bounds.p0, rhItem);
-							rhItem = nullptr;
-							break;
-						}
-					}
-				}
-
-				// Drop the item if we couldn't equip it
-				if (rhItem)
-				{
-					u.addMission(state, BattleUnitMission::dropItem(u, rhItem));
-				}
-			}
-		}
-	}
-
-	// Do whatever needs to be done for the chosen movement
-	if (decision.movement)
-	{
-		u.kneeling_mode = decision.movement->kneelingMode;
-		u.movement_mode = decision.movement->movementMode;
-	}
-
-	// Do miscellaneous stuff
 
 	// Reload all guns
 	for (auto &e : u.agent->equipment)
@@ -765,42 +820,39 @@ void VanillaUnitAI::routine(GameState &state, BattleUnit &u, const AIDecision &d
 			e->loadAmmo(state);
 		}
 	}
+
 	// Equip a cloaking field if we don't already have one in left hand
 	auto cloaking = u.agent->getFirstItemByType(AEquipmentType::Type::CloakingField);
 	if (cloaking)
 	{
-		auto lhItem = u.agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
-		if (!lhItem || lhItem->type->type != AEquipmentType::Type::CloakingField)
+		UnitAIHelper::ensureItemInSlot(state, cloaking, AEquipmentSlotType::LeftHand);
+	}
+
+	// Equip best weapon in right hand if we don't have something we otherwise need in that slot
+	auto rhItem = u.agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+	if (!lastDecision.action || rhItem != lastDecision.action->item)
+	{
+		// Right now just equip most long ranged weapon, if tied most damaging
+		auto newItem = rhItem;
+		int maxRange = 0;
+		int maxDamage = 0;
+		for (auto &e : u.agent->equipment)
 		{
-			// Remove item in the left hand
-			if (lhItem)
+			if (!e->canFire())
 			{
-				u.agent->removeEquipment(lhItem);
+				continue;
 			}
-
-			// Remove item we will use and equip it in the right hand
-			u.agent->removeEquipment(cloaking);
-			u.agent->addEquipment(state, cloaking, AEquipmentSlotType::LeftHand);
-
-			// Equip back the item removed earlier
-			if (lhItem)
+			if ((e->getPayloadType()->range > maxRange)||(e->getPayloadType()->range == maxRange && e->getPayloadType()->damage > maxDamage))
 			{
-				for (auto s : u.agent->type->equipment_layout->slots)
-				{
-					if (u.agent->canAddEquipment(s.bounds.p0, lhItem->type))
-					{
-						u.agent->addEquipment(state, s.bounds.p0, lhItem);
-						lhItem = nullptr;
-						break;
-					}
-				}
+				maxRange = e->getPayloadType()->range;
+				maxDamage = e->getPayloadType()->damage;
+		
 			}
-
-			// Drop the item if we couldn't equip it
-			if (lhItem)
-			{
-				u.addMission(state, BattleUnitMission::dropItem(u, lhItem));
-			}
+		}
+		// Equip new item into slot
+		if (newItem != rhItem)
+		{
+			UnitAIHelper::ensureItemInSlot(state, newItem, AEquipmentSlotType::RightHand);
 		}
 	}
 
@@ -820,7 +872,14 @@ UString AIAction::getName()
 		case AIAction::Type::AttackGrenade:
 			return format("Attack %s with grenade %s ", targetUnit->id, item->type->id);
 		case AIAction::Type::AttackWeapon:
-			return format("Attack %s with weapon %s ", targetUnit->id, item->type->id);
+			if (item)
+			{
+				return format("Attack %s with weapon %s ", targetUnit->id, item->type->id);
+			}
+			else
+			{
+				return format("Attack %s with weapon(s)", targetUnit->id);
+			}
 		case AIAction::Type::AttackPsiMC:
 			return format("Attack %s with psi MC using %s ", targetUnit->id, item->type->id);
 		case AIAction::Type::AttackPsiStun:
@@ -838,6 +897,8 @@ UString AIMovement::getName()
 	{
 		case AIMovement::Type::Stop:
 			return format("Stop");
+		case AIMovement::Type::ChangeStance:
+			return format("Change Stance");
 		case AIMovement::Type::Patrol:
 			return format("Move to %s", targetLocation);
 		case AIMovement::Type::Advance:
@@ -886,11 +947,11 @@ std::tuple<AIDecision, bool> LowMoraleUnitAI::think(GameState &state, BattleUnit
 
 	if (!active)
 	{
-		return { AIDecision(), false };
+		return NULLTUPLE2;
 	}
 
 	LogError("Implement Low Morale AI");
-	return { AIDecision(), true };
+	return NULLTUPLE2;
 }
 
 void DefaultUnitAI::reset(GameState &state, BattleUnit &u)
@@ -898,17 +959,178 @@ void DefaultUnitAI::reset(GameState &state, BattleUnit &u)
 
 }
 
+void DefaultUnitAI::notifyUnderFire(Vec3<int> position)
+{
+	attackerPosition = position;
+}
+
+void DefaultUnitAI::notifyHit(Vec3<int> position)
+{
+	attackerPosition = position;
+}
+
+
 std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &u)
 {
-	active = false;
+	static const Vec3<int> NONE = { 0, 0, 0 };
+
+	active = true;
 
 	if (!active)
 	{
-		return{ AIDecision(), false };
+		return NULLTUPLE2;
 	}
 
-	LogError("Implement Default AI");
-	return{ AIDecision(), false };
+	sp<AIAction> action;
+	sp<AIMovement> movement;
+
+	// Turn to attacker in real time if we're idle
+	if (attackerPosition != NONE && !u.isBusy() && u.isConscious() &&
+		ticksAutoTurnAvailable <= state.gameTime.getTicks())
+	{
+		movement = mksp<AIMovement>();
+		movement->type = AIMovement::Type::Turn;
+		movement->targetLocation = u.position + (Vec3<float>)attackerPosition;
+		ticksAutoTurnAvailable = state.gameTime.getTicks() + AUTO_TURN_COOLDOWN;
+	}
+
+	// Attack or face enemy
+	if (u.isConscious() && !u.isAttacking())
+	{
+		// See no enemies and have no mission - turn to focused or closest visible enemy
+		if (u.visibleEnemies.empty() && u.missions.empty())
+		{
+			if (ticksAutoTurnAvailable <= state.gameTime.getTicks())
+			{
+				auto &units = state.current_battle->visibleEnemies[u.owner];
+				// Try focused unit
+				StateRef<BattleUnit> closestEnemy = u.focusUnit;
+				// If focused unit is unaccounted for, try for closest one
+				if (units.find(closestEnemy) == units.end())
+				{
+					closestEnemy.clear();
+					auto it = units.begin();
+					float minDistance = FLT_MAX;
+					while (it != units.end())
+					{
+						auto enemy = *it++;
+						auto distance = glm::distance(enemy->position, u.position);
+						if (distance < minDistance)
+						{
+							minDistance = distance;
+							closestEnemy = enemy;
+						}
+					}
+				}
+				if (closestEnemy && glm::distance(closestEnemy->position, u.position) < VIEW_DISTANCE)
+				{
+					movement = mksp<AIMovement>();
+					movement->type = AIMovement::Type::Turn;
+					movement->targetLocation = closestEnemy->position;
+					ticksAutoTurnAvailable = state.gameTime.getTicks() + AUTO_TURN_COOLDOWN;
+				}
+			}
+		}
+		// See enemy - turn or attack
+		else if (!u.visibleEnemies.empty() &&
+			(u.missions.empty() || u.missions.front()->type != BattleUnitMission::Type::Snooze))
+		{
+			auto e1 = u.agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+			auto e2 = u.agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+			// Cannot or forbidden to attack:	Turn to enemy
+			if (u.fire_permission_mode == BattleUnit::FirePermissionMode::CeaseFire ||
+				((!e1 || !e1->canFire()) && (!e2 || !e2->canFire())))
+			{
+				if (ticksAutoTurnAvailable <= state.gameTime.getTicks())
+				{
+					// Look at focused unit or find closest enemy
+					auto targetEnemy = u.focusUnit;
+					if (u.visibleUnits.find(targetEnemy) == u.visibleUnits.end())
+					{
+						auto it = u.visibleEnemies.begin();
+						float minDistance = FLT_MAX;
+						while (it != u.visibleEnemies.end())
+						{
+							auto enemy = *it++;
+							auto distance = glm::distance(enemy->position, u.position);
+							if (distance < minDistance)
+							{
+								minDistance = distance;
+								targetEnemy = enemy;
+							}
+						}
+					}
+					
+ 					movement = mksp<AIMovement>();
+					movement->type = AIMovement::Type::Turn;
+					movement->targetLocation = targetEnemy->position;
+					ticksAutoTurnAvailable = state.gameTime.getTicks() + AUTO_TURN_COOLDOWN;
+				}
+			}
+			// Can attack and allowed to:		Attack enemy
+			else
+			{
+				if (ticksAutoTargetAvailable <= state.gameTime.getTicks())
+				{
+					// Find enemy we can attack amongst those visible
+					auto targetEnemy = u.focusUnit;
+					auto weaponStatus = WeaponStatus::NotFiring;
+					// Ensure we can attack focus
+					if (targetEnemy)
+					{
+						if (u.canAttackUnit(state, targetEnemy) == WeaponStatus::NotFiring)
+						{
+							targetEnemy.clear();
+						}
+					}
+					// If can't attack focus or have no focus - take closest attackable
+					if (u.visibleUnits.find(targetEnemy) == u.visibleUnits.end())
+					{
+						targetEnemy.clear();
+						// Make a list of enemies sorted by distance to them
+						std::map<float, StateRef<BattleUnit>> enemiesByDistance;
+						for (auto enemy : u.visibleEnemies)
+						{
+							// Ensure we add every unit
+							auto distance = glm::distance(enemy->position, u.position);
+							while (enemiesByDistance.find(distance) != enemiesByDistance.end())
+							{
+								distance += 0.01f;
+							}
+							enemiesByDistance[distance] = enemy;
+						}
+						// Pick enemy that is closest and can be attacked
+						for (auto entry : enemiesByDistance)
+						{
+							weaponStatus = u.canAttackUnit(state, entry.second);
+							if (weaponStatus != WeaponStatus::NotFiring)
+							{
+								targetEnemy = entry.second;
+								break;
+							}
+						}
+					}
+
+					// Attack if we can
+					if (targetEnemy)
+					{
+						action = mksp<AIAction>();
+						action->type = AIAction::Type::AttackWeapon;
+						action->targetUnit = targetEnemy;
+						action->weaponStatus = weaponStatus;
+					}
+					else
+					{
+						ticksAutoTargetAvailable = state.gameTime.getTicks() + AUTO_TARGET_COOLDOWN;
+					}
+				}
+			}
+		}
+	}
+
+	attackerPosition = NONE;
+
+	return std::make_tuple(AIDecision(action, movement), action || movement);
 }
 
 void BehaviorUnitAI::reset(GameState &state, BattleUnit &u)
@@ -922,11 +1144,11 @@ std::tuple<AIDecision, bool> BehaviorUnitAI::think(GameState &state, BattleUnit 
 
 	if (!active)
 	{
-		return{ AIDecision(), false };
+		return NULLTUPLE2;
 	}
 
 	LogError("Implement Behavior AI");
-	return{ AIDecision(), false };
+	return NULLTUPLE2;
 }
 
 void VanillaUnitAI::reset(GameState &state, BattleUnit &u)
@@ -934,7 +1156,6 @@ void VanillaUnitAI::reset(GameState &state, BattleUnit &u)
 	ticksLastThink = state.gameTime.getTicks();
 	ticksUntilReThink = 0;
 }
-
 
 void VanillaUnitAI::notifyUnderFire(Vec3<int> position)
 { 
@@ -966,7 +1187,7 @@ std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>> VanillaTactica
 	auto curTicks = state.gameTime.getTicks();
 	if (ticksLastThink + ticksUntilReThink > curTicks)
 	{
-		return{};
+		return {};
 	}
 	
 	ticksLastThink = curTicks;

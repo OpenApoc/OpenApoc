@@ -165,3 +165,8 @@ Think checks that decision does require re-thinking based on circumstances (deci
 
 
 Therefore, we need to store both re-thinking timer and last decision made, in the unit AI.
+
+Only AI that can think of decisions not completeable immediately should store previous decisions
+
+
+create "move to adjacent spot" option (not only "move into tile")

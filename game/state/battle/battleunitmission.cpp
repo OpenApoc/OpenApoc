@@ -115,18 +115,18 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, float &cost, bool 
 	doorInTheWay = false;
 
 	// Error checks
-	if (!from)
-	{
-		LogError("No 'from' position supplied");
-		return false;
-	}
-	Vec3<int> fromPos = from->position;
 	if (!to)
 	{
 		LogError("No 'to' position supplied");
 		return false;
 	}
 	Vec3<int> toPos = to->position;
+	if (!from)
+	{
+		// Only check if target tile can be occupied
+		return to->getPassable(large, maxHeight);
+	}
+	Vec3<int> fromPos = from->position;
 	if (fromPos == toPos)
 	{
 		LogError("FromPos == ToPos %s", toPos);
@@ -1583,32 +1583,80 @@ void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> tar
 	{
 		auto &map = u.tileObject->map;
 		auto to = map.getTile(target);
+		bool approachOnly = false;
 		// Check if target tile is valid
 		while (true)
 		{
-			if (!u.canMove() || !to->getPassable(u.isLarge(), u.agent->type->bodyType->maxHeight))
+			// If unit cannot move at all - cancel
+			if (!u.canMove())
 			{
-				LogInfo("Cannot move to %d %d %d, impassable", target.x, target.y, target.z);
+				LogInfo("Cannot move to %d %d %d, unit has no movement ability", target.x, target.y, target.z);
 				cancelled = true;
 				return;
 			}
-			if (u.canFly() || to->getCanStand(u.isLarge()))
+			// If target occupied - try to find an adjacent unoccupied tile
+			if (!to->getPassable(u.isLarge(), u.agent->type->bodyType->maxHeight))
+			{
+				approachOnly = false;
+				for (int x = -1;x <= 1;x++)
+				{
+					for (int y = -1;y <= 1;y++)
+					{
+						for (int z = -1;z <= 1;z++)
+						{
+							if (x == 0 && y == 0 && z == 0)
+							{
+								continue;
+							}
+							auto targetPos = target + Vec3<int>(x, y, z);
+							if (map.tileIsValid(targetPos) && map.getTile(targetPos)->getPassable(u.isLarge(), u.agent->type->bodyType->maxHeight))
+							{
+								LogInfo("Cannot move to %d %d %d, moving to adjacent tile", target.x, target.y, target.z);
+								approachOnly = true;
+								break;
+							}
+						}
+						if (approachOnly)
+						{
+							break;
+						}
+					}
+					if (approachOnly)
+					{
+						break;
+					}
+				}
+				if (!approachOnly)
+				{
+					LogInfo("Cannot move to %d %d %d, impassable", target.x, target.y, target.z);
+					cancelled = true;
+					return;
+				}
+			}
+			if (approachOnly)
 			{
 				break;
 			}
-			target.z--;
-			if (target.z == -1)
+			// If target is in the air and unit cannot fly
+			if (!u.canFly() && !to->getCanStand(u.isLarge()))
 			{
-				LogError("Solid ground missing on level 0? Reached %d %d %d", target.x, target.y,
-				         target.z);
-				cancelled = true;
-				return;
+				target.z--;
+				if (target.z == -1)
+				{
+					LogError("Solid ground missing on level 0? Reached %d %d %d", target.x, target.y,
+						target.z);
+					cancelled = true;
+					return;
+				}
+				to = map.getTile(target);
+				continue;
 			}
-			to = map.getTile(target);
+			// Reached the end - everything's fine, path to target
+			break;
 		}
 
 		auto path = state.current_battle->findShortestPath(
-		    u.goalPosition, target, BattleUnitTileHelper{map, u}, demandGiveWay);
+		    u.goalPosition, target, BattleUnitTileHelper{map, u}, approachOnly, demandGiveWay);
 
 		// Always start with the current position
 		this->currentPlannedPath.push_back(u.goalPosition);

@@ -12,7 +12,6 @@
 #include "game/state/gamestate.h"
 #include "game/state/rules/damage.h"
 #include "game/state/tileview/collision.h"
-#include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_shadow.h"
 #include "library/line.h"
@@ -25,10 +24,13 @@
 namespace OpenApoc
 {
 
-static const std::set<TileObject::Type> mapPartSet = {
-    TileObject::Type::Ground, TileObject::Type::LeftWall, TileObject::Type::RightWall,
-    TileObject::Type::Feature};
-static const std::set<TileObject::Type> unitSet = {TileObject::Type::Unit};
+namespace
+{
+	static const std::set<TileObject::Type> mapPartSet = {
+		TileObject::Type::Ground, TileObject::Type::LeftWall, TileObject::Type::RightWall,
+		TileObject::Type::Feature };
+	static const std::set<TileObject::Type> unitSet = { TileObject::Type::Unit };
+}
 
 sp<BattleUnit> BattleUnit::get(const GameState &state, const UString &id)
 {
@@ -465,6 +467,12 @@ void BattleUnit::startAttacking(GameState &state, WeaponStatus status)
 
 void BattleUnit::startAttacking(GameState &state, StateRef<BattleUnit> unit, WeaponStatus status)
 {
+	// Attack on a friendly unit is replaced with an attack on the occupied tile
+	if (unit->owner == owner)
+	{
+		startAttacking(state, unit->tileObject->getVoxelCentrePosition(), status);
+		return;
+	}
 	startAttacking(state, status);
 	targetUnit = unit;
 	targetingMode = TargetingMode::Unit;
@@ -486,6 +494,53 @@ void BattleUnit::stopAttacking()
 	targetUnit.clear();
 	ticksUntillNextTargetCheck = 0;
 }
+
+WeaponStatus BattleUnit::canAttackUnit(GameState &state, sp<BattleUnit> unit)
+{
+	return canAttackUnit(state, unit, agent->getFirstItemInSlot(AEquipmentSlotType::RightHand),
+		agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand));
+}
+
+WeaponStatus BattleUnit::canAttackUnit(GameState &state, sp<BattleUnit> unit, sp<AEquipment> rightHand, sp<AEquipment> leftHand)
+{
+	auto muzzleLocation = getMuzzleLocation();
+	auto targetPosition =
+		unit->tileObject->getVoxelCentrePosition();
+	// Map part that prevents LOF to target
+	auto cMap = tileObject->map.findCollision(
+		muzzleLocation, targetPosition, mapPartSet, tileObject);
+	// Unit that prevents LOF to target
+	auto cUnit = tileObject->map.findCollision(
+		muzzleLocation, targetPosition, unitSet, tileObject);
+	// Condition: 
+	// No map part blocks LOF
+	if (!cMap
+		// No unit blocks LOF
+		&& (!cUnit ||
+			owner->isRelatedTo(
+				std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)
+				->getUnit()
+				->owner) == Organisation::Relation::Hostile))
+	{
+		// One of held weapons is in range
+		bool rightCanFire = rightHand && rightHand->canFire(targetPosition);
+		bool leftCanFire = leftHand && leftHand->canFire(targetPosition);
+		if (rightCanFire && leftCanFire)
+		{
+			return WeaponStatus::FiringBothHands;
+		}
+		else if (rightCanFire)
+		{
+			return WeaponStatus::FiringRightHand;
+		}
+		else if (leftCanFire)
+		{
+			return WeaponStatus::FiringLeftHand;
+		}
+	}
+	return WeaponStatus::NotFiring;
+}
+
 bool BattleUnit::canAfford(GameState &state, int cost) const
 {
 	if (state.current_battle->mode == Battle::Mode::RealTime)
@@ -919,7 +974,7 @@ bool BattleUnit::handleCollision(GameState &state, Collision &c)
 	auto projectile = c.projectile.get();
 	if (projectile)
 	{
-		attackerPosition = -projectile->getVelocity();
+		notifyHit(-projectile->getVelocity());
 
 		return applyDamage(
 		    state, projectile->damage, projectile->damageType,
@@ -930,30 +985,6 @@ bool BattleUnit::handleCollision(GameState &state, Collision &c)
 
 void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 {
-	// Ticks until auto turning and targeting
-	if (ticksUntilAutoTurnAvailable > 0)
-	{
-		if (ticksUntilAutoTurnAvailable > ticks)
-		{
-			ticksUntilAutoTurnAvailable -= ticks;
-		}
-		else
-		{
-			ticksUntilAutoTurnAvailable = 0;
-		}
-	}
-	if (ticksUntilAutoTargetAvailable > 0)
-	{
-		if (ticksUntilAutoTargetAvailable > ticks)
-		{
-			ticksUntilAutoTargetAvailable -= ticks;
-		}
-		else
-		{
-			ticksUntilAutoTargetAvailable = 0;
-		}
-	}
-
 	// FIXME: Regenerate stamina
 
 	// Stun removal
@@ -1118,26 +1149,8 @@ void BattleUnit::updateEvents(GameState &state)
 		}
 	}
 
-	// Process being hit or under fire
-	if (attackerPosition != NONE)
-	{
-		// Turn to attacker in real time if we're idle
-		if (!isBusy() && isConscious() && state.current_battle->mode == Battle::Mode::RealTime &&
-		    ticksUntilAutoTurnAvailable == 0)
-		{
-			setMission(state,
-			           BattleUnitMission::turn(*this, position + (Vec3<float>)attackerPosition));
-			ticksUntilAutoTurnAvailable = AUTO_TURN_COOLDOWN;
-		}
-		if (isAIControlled(state))
-		{
-			aiList.notifyUnderFire(attackerPosition);
-		}
-		attackerPosition = NONE;
-	}
-
 	// Process spotting an enemy
-	if (!visibleEnemies.empty() && isAIControlled(state))
+	if (!visibleEnemies.empty())
 	{
 		// our target has a priority over others if enemy
 		auto lastSeenEnemyPosition =
@@ -1249,155 +1262,6 @@ void BattleUnit::updateIdling(GameState &state)
 	} // End of Idling Check #1
 }
 
-void BattleUnit::updateAcquireTarget(GameState &state, unsigned int ticks)
-{
-	// Still idling and not attacking? Attack or face enemy
-	if (isConscious() && !isAttacking())
-	{
-		// See no enemies and have no mission - turn to focused or closest visible enemy
-		if (visibleEnemies.empty() && missions.empty())
-		{
-			if (ticksUntilAutoTurnAvailable == 0)
-			{
-				auto &units = state.current_battle->visibleEnemies[owner];
-				// Try focused unit
-				StateRef<BattleUnit> closestEnemy = focusUnit;
-				// If focused unit is unaccounted for, try for closest one
-				if (units.find(closestEnemy) == units.end())
-				{
-					closestEnemy.clear();
-					auto it = units.begin();
-					float minDistance = FLT_MAX;
-					while (it != units.end())
-					{
-						auto enemy = *it++;
-						auto distance = glm::distance(enemy->position, position);
-						if (distance < minDistance)
-						{
-							minDistance = distance;
-							closestEnemy = enemy;
-						}
-					}
-				}
-				if (closestEnemy && glm::distance(closestEnemy->position, position) < VIEW_DISTANCE)
-				{
-					setMission(state, BattleUnitMission::turn(*this, closestEnemy->position));
-					ticksUntilAutoTurnAvailable = AUTO_TURN_COOLDOWN;
-				}
-			}
-		}
-		// See enemy - turn or attack
-		else if (!visibleEnemies.empty() &&
-		         (missions.empty() || missions.front()->type != BattleUnitMission::Type::Snooze))
-		{
-			auto e1 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
-			auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
-			// Cannot or forbidden to attack:	Turn to enemy
-			if (fire_permission_mode == FirePermissionMode::CeaseFire ||
-			    ((!e1 || !e1->canFire()) && (!e2 || !e2->canFire())))
-			{
-				if (ticksUntilAutoTurnAvailable == 0)
-				{
-					// Look at focused unit or find closest enemy
-					auto targetEnemy = focusUnit;
-					if (visibleUnits.find(targetEnemy) == visibleUnits.end())
-					{
-						auto it = visibleEnemies.begin();
-						float minDistance = FLT_MAX;
-						while (it != visibleEnemies.end())
-						{
-							auto enemy = *it++;
-							auto distance = glm::distance(enemy->position, position);
-							if (distance < minDistance)
-							{
-								minDistance = distance;
-								targetEnemy = enemy;
-							}
-						}
-					}
-					setMission(state, BattleUnitMission::turn(*this, targetEnemy->position));
-					ticksUntilAutoTurnAvailable = AUTO_TURN_COOLDOWN;
-				}
-			}
-			// Can attack and allowed to:		Attack enemy
-			else
-			{
-				if (ticksUntilAutoTargetAvailable == 0)
-				{
-					// Find enemy we can attack amongst those visible
-					auto targetEnemy = focusUnit;
-					// Ensure we can attack focus
-					if (targetEnemy)
-					{
-						auto muzzleLocation = getMuzzleLocation();
-						auto targetPosition = targetEnemy->tileObject->getVoxelCentrePosition();
-						auto cMap = tileObject->map.findCollision(muzzleLocation, targetPosition,
-						                                          mapPartSet, tileObject);
-						auto cUnit = tileObject->map.findCollision(muzzleLocation, targetPosition,
-						                                           unitSet, tileObject);
-						if (cMap || (cUnit &&
-						             owner->isRelatedTo(
-						                 std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)
-						                     ->getUnit()
-						                     ->owner) != Organisation::Relation::Hostile))
-						{
-							targetEnemy.clear();
-						}
-					}
-					// If can't attack focus or have no focus - take closest attackable
-					if (visibleUnits.find(targetEnemy) == visibleUnits.end())
-					{
-						targetEnemy.clear();
-						// Make a list of enemies sorted by distance to them
-						std::map<float, StateRef<BattleUnit>> enemiesByDistance;
-						for (auto u : visibleEnemies)
-						{
-							// Ensure we add every unit
-							auto distance = glm::distance(u->position, position);
-							while (enemiesByDistance.find(distance) != enemiesByDistance.end())
-							{
-								distance += 0.01f;
-							}
-							enemiesByDistance[distance] = u;
-						}
-						// Pick enemy that is closest and can be attacked
-						for (auto entry : enemiesByDistance)
-						{
-							auto muzzleLocation = getMuzzleLocation();
-							auto targetPosition =
-							    entry.second->tileObject->getVoxelCentrePosition();
-							auto cMap = tileObject->map.findCollision(
-							    muzzleLocation, targetPosition, mapPartSet, tileObject);
-							auto cUnit = tileObject->map.findCollision(
-							    muzzleLocation, targetPosition, unitSet, tileObject);
-							if (!cMap &&
-							    (!cUnit ||
-							     owner->isRelatedTo(
-							         std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)
-							             ->getUnit()
-							             ->owner) == Organisation::Relation::Hostile))
-							{
-								targetEnemy = entry.second;
-								break;
-							}
-						}
-					}
-
-					// Attack if we can
-					if (targetEnemy)
-					{
-						startAttacking(state, targetEnemy);
-					}
-					else
-					{
-						ticksUntilAutoTargetAvailable = AUTO_TARGET_COOLDOWN;
-					}
-				}
-			}
-		}
-	}
-}
-
 void BattleUnit::updateCheckIfFalling(GameState &state)
 {
 	// Begin falling or changing stance to flying if appropriate
@@ -1433,7 +1297,8 @@ void BattleUnit::updateCheckIfFalling(GameState &state)
 				startFalling();
 			}
 			// If flying and not supported both on current and goal locations - start flying
-			if (!fullySupported && canFly())
+			// Note: Throwing units can "hover" in standing body state
+			if (!fullySupported && canFly() && (missions.empty() || missions.front()->type!=BattleUnitMission::Type::ThrowItem))
 			{
 				if (current_body_state == target_body_state)
 				{
@@ -1615,6 +1480,11 @@ void BattleUnit::updateMovement(GameState &state, unsigned int &moveTicksRemaini
 				atGoal = true;
 				// Pop finished missions if present
 				if (popFinishedMissions(state))
+				{
+					return;
+				}
+				// Quit if retreated as a result
+				if (retreated)
 				{
 					return;
 				}
@@ -2072,6 +1942,7 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 			    body_animation_ticks_remaining == 0 && current_hand_state != HandState::Aiming &&
 			    current_movement_state != MovementState::Running &&
 			    current_movement_state != MovementState::Strafing &&
+				current_body_state != BodyState::Throwing &&
 			    !(current_body_state == BodyState::Prone &&
 			      current_movement_state != MovementState::None))
 			{
@@ -2157,8 +2028,6 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	updateEvents(state);
 	// Idling #1: Auto-movement, auto-body change when idling
 	updateIdling(state);
-	// Acquire target
-	updateAcquireTarget(state, ticks);
 	// Main bulk - update movement, body, hands and turning
 	{
 		bool wasUsingLift = usingLift;
@@ -2196,6 +2065,11 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			updateBody(state, bodyTicksRemaining);
 			updateHands(state, handsTicksRemaining);
 			updateMovement(state, moveTicksRemaining, wasUsingLift);
+			// Quit if retreated as a result
+			if (retreated)
+			{
+				return;
+			}
 			updateTurning(state, turnTicksRemaining);
 			updateDisplayedItem();
 		}
@@ -2318,6 +2192,12 @@ void BattleUnit::executeGroupAIDecision(GameState &state, AIDecision &decision, 
 		switch (decision.movement->type)
 		{
 			case AIMovement::Type::Patrol:
+				// Stance change
+				for (auto u : units)
+				{
+					u->kneeling_mode = decision.movement->kneelingMode;
+					u->movement_mode = decision.movement->movementMode;
+				}
 				Battle::groupMove(state, units,
 					decision.movement->targetLocation, true);
 				break;
@@ -2345,15 +2225,53 @@ void BattleUnit::executeAIDecision(GameState &state, AIDecision &decision)
 
 void BattleUnit::executeAIAction(GameState &state, AIAction &action)
 {
+	// Equip item we're going to use
+	if (action.item)
+	{
+		UnitAIHelper::ensureItemInSlot(state, action.item, AEquipmentSlotType::RightHand);
+		if (action.type == AIAction::Type::AttackWeapon)
+		{
+			action.item = nullptr;
+			action.weaponStatus = WeaponStatus::FiringRightHand;
+		}
+
+	}
+
 	switch (action.type)
 	{
-	case AIAction::Type::AttackGrenade:
-		LogWarning("Implement acting on a Grenade action");
-		// Throw grenade
-		break;
 	case AIAction::Type::AttackWeapon:
-		LogWarning("Implement acting on a Weapon action");
-		// Attack with weapon
+		if (action.item)
+		{
+			auto rh = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+			auto lh = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+			if (action.item == rh)
+			{
+				startAttacking(state, { &state, action.targetUnit->id }, WeaponStatus::FiringRightHand);
+				LogWarning("Attack with a weapon has item specified instead of hand state! Should not reach unit in this state.");
+			}
+			else if (action.item == lh)
+			{
+				startAttacking(state, { &state, action.targetUnit->id }, WeaponStatus::FiringLeftHand);
+				LogWarning("Attack with a weapon has item specified instead of hand state! Should not reach unit in this state.");
+			}
+			else
+			{
+				LogError("Attack with a weapon has item specified that is not in unit's hands!");
+			}
+		}
+		else
+		{
+			startAttacking(state, { &state, action.targetUnit->id }, action.weaponStatus);
+		}
+		break;
+	case AIAction::Type::AttackGrenade:
+		if (action.item->getCanThrow(*this, action.targetUnit->position))
+		{
+			if (setMission(state, BattleUnitMission::throwItem(*this, action.item, action.targetUnit->position)))
+			{
+				action.item->prime();
+			}
+		}
 		break;
 	case AIAction::Type::AttackPsiMC:
 	case AIAction::Type::AttackPsiStun:
@@ -2397,6 +2315,18 @@ void BattleUnit::executeAIMovement(GameState &state, AIMovement &movement)
 	}
 	*/
 
+	// Stance change
+	switch (movement.type)
+	{
+		case AIMovement::Type::Stop:
+		case AIMovement::Type::Turn:
+			break;
+		default:
+			kneeling_mode = movement.kneelingMode;
+			movement_mode = movement.movementMode;
+			break;
+	}
+
 	// Do movement
 	switch (movement.type)
 	{
@@ -2410,7 +2340,14 @@ void BattleUnit::executeAIMovement(GameState &state, AIMovement &movement)
 				}
 			}
 			break;
+		case AIMovement::Type::ChangeStance:
+			// Nothing, already applied above
+			break;
+		case AIMovement::Type::Advance:
+		case AIMovement::Type::GetInRange:
+		case AIMovement::Type::TakeCover:
 		case AIMovement::Type::Patrol:
+		case AIMovement::Type::Pursue:
 			setMission(
 				state, BattleUnitMission::gotoLocation(
 					*this, movement.targetLocation));
@@ -2424,12 +2361,17 @@ void BattleUnit::executeAIMovement(GameState &state, AIMovement &movement)
 			setMission(state,
 				BattleUnitMission::turn(*this, movement.targetLocation));
 			break;
-		case AIMovement::Type::Advance:
-		case AIMovement::Type::GetInRange:
-		case AIMovement::Type::TakeCover:
-			LogWarning("Implement Advance/GetInRagnge/TakeCover AI movement's execution");
-			break;
 	}
+}
+
+void BattleUnit::notifyUnderFire(Vec3<int> position)
+{
+	aiList.notifyUnderFire(position);
+}
+
+void BattleUnit::notifyHit(Vec3<int> position)
+{
+	aiList.notifyHit(position);
 }
 
 void BattleUnit::tryToRiseUp(GameState &state)

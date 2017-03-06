@@ -124,10 +124,10 @@ class BattleView : public BattleTileView
 	void orderTeleport(Vec3<int> target, bool right);
 	void orderSelect(StateRef<BattleUnit> u, bool inverse = false, bool additive = false);
 	void orderFire(Vec3<int> target,
-	               BattleUnit::WeaponStatus status = BattleUnit::WeaponStatus::FiringBothHands,
+	               WeaponStatus status = WeaponStatus::FiringBothHands,
 	               bool modifier = false);
 	void orderFire(StateRef<BattleUnit> u,
-	               BattleUnit::WeaponStatus status = BattleUnit::WeaponStatus::FiringBothHands);
+	               WeaponStatus status = WeaponStatus::FiringBothHands);
 	void orderFocus(StateRef<BattleUnit> u);
 	void orderHeal(BodyPart part);
 

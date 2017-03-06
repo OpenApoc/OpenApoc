@@ -33,12 +33,9 @@
 
 namespace OpenApoc
 {
+
 // FIXME: Seems to correspond to vanilla behavior, but ensure it's right
 static const unsigned TICKS_PER_UNIT_EFFECT = TICKS_PER_TURN;
-// Delay before unit will turn automatically again after doing it once
-static const unsigned AUTO_TURN_COOLDOWN = TICKS_PER_TURN;
-// Delay before unit will target an enemy automatically again after failing to do so once
-static const unsigned AUTO_TARGET_COOLDOWN = TICKS_PER_TURN / 4;
 // How frequently unit tracks its target
 static const unsigned LOS_CHECK_INTERVAL_TRACKING = TICKS_PER_SECOND / 4;
 
@@ -77,6 +74,16 @@ enum class BattleUnitType
 	LargeWalker,
 	LargeFlyer
 };
+
+// Enum for tracking unit's weapon state
+enum class WeaponStatus
+{
+	NotFiring,
+	FiringLeftHand,
+	FiringRightHand,
+	FiringBothHands
+};
+
 static const std::list<BattleUnitType> BattleUnitTypeList = {
     BattleUnitType::LargeFlyer, BattleUnitType::LargeWalker, BattleUnitType::SmallFlyer,
     BattleUnitType::SmallWalker};
@@ -97,14 +104,6 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	{
 		AtWill,
 		CeaseFire
-	};
-	// Enum for tracking unit's weapon state
-	enum class WeaponStatus
-	{
-		NotFiring,
-		FiringLeftHand,
-		FiringRightHand,
-		FiringBothHands
 	};
 	// Enum for tracking unit's targeting mode
 	enum class TargetingMode
@@ -146,11 +145,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	std::list<StateRef<BattleUnit>> focusedByUnits;
 	// Ticks until we check if target is still valid, turn to it etc.
 	unsigned ticksUntillNextTargetCheck = 0;
-	// Ticks until we can auto-turn to hostile again
-	unsigned ticksUntilAutoTurnAvailable = 0;
-	// Ticks until we can auto-target hostile again
-	unsigned ticksUntilAutoTargetAvailable = 0;
-
+	
 	// Stats
 
 	// Accumulated xp points for each stat
@@ -240,10 +235,6 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// in order of priority that should be tried by it
 	std::list<Vec2<int>> giveWayRequestData;
 
-	// If unit was under attack, this will be filled with position of the attacker relative to us
-	// Otherwise it will be 0,0,0
-	Vec3<int> attackerPosition = {0, 0, 0};
-
 	// AI list
 	UnitAIList aiList;
 	
@@ -273,6 +264,14 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void startAttacking(GameState &state, Vec3<int> tile,
 	                    WeaponStatus status = WeaponStatus::FiringBothHands, bool atGround = false);
 	void stopAttacking();
+	// Returns which hands can be used for an attack (or none if attack cannot be made)
+	// Checks wether target unit is in range, and clear LOF exists to it
+	// Clear LOF means no friendly fire and no map part in between
+	WeaponStatus canAttackUnit(GameState &state, sp<BattleUnit> unit);
+	// Returns wether unit can be attacked by one of the two supplied weapons
+	// Checks wether target unit is in range, and clear LOF exists to it
+	// Clear LOF means no friendly fire and no map part in between
+	WeaponStatus canAttackUnit(GameState &state, sp<BattleUnit> unit, sp<AEquipment> rightHand, sp<AEquipment> leftHand = nullptr);
 
 	// Body
 
@@ -337,7 +336,10 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void executeAIAction(GameState &state, AIAction &action);
 	void executeAIMovement(GameState &state, AIMovement &movement);
 
-	
+	// Notifications
+	void notifyUnderFire(Vec3<int> position);
+	void notifyHit(Vec3<int> position);
+
 	// Misc
 
 	void requestGiveWay(const BattleUnit &requestor, const std::list<Vec3<int>> &plannedPath,
@@ -412,7 +414,6 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void updateStateAndStats(GameState &state, unsigned int ticks);
 	void updateEvents(GameState &state);
 	void updateIdling(GameState &state);
-	void updateAcquireTarget(GameState &state, unsigned int ticks);
 	void updateCheckIfFalling(GameState &state);
 	void updateBody(GameState &state, unsigned int &bodyTicksRemaining);
 	void updateHands(GameState &state, unsigned int &handsTicksRemaining);

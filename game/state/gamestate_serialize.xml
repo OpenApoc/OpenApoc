@@ -553,12 +553,9 @@
 		<member>falling</member>
 		<member>fallingSpeed</member>
 		<member>giveWayRequestData</member>
-		<member>attackerPosition</member>
 		<member>displayedItem</member>
 		<member>visibleUnits</member>
 		<member>visibleEnemies</member>
-		<member>ticksUntilAutoTurnAvailable</member>
-		<member>ticksUntilAutoTargetAvailable</member>
 		<member>aiList</member>
 	</object>
 	<object>
@@ -1185,7 +1182,7 @@
 		<value>Kneeling</value>
 	</enum>
 	<enum>
-		<name>BattleUnit::WeaponStatus</name>
+		<name>WeaponStatus</name>
 		<value>NotFiring</value>
 		<value>FiringLeftHand</value>
 		<value>FiringRightHand</value>
@@ -1395,6 +1392,7 @@
 	<enum>
 		<name>AIMovement::Type</name>
 		<value>Stop</value>
+		<value>ChangeStance</value>
 		<value>Patrol</value>
 		<value>Advance</value>
 		<value>Pursue</value>
@@ -1407,6 +1405,7 @@
 		<member>type</member>
 		<member>targetUnit</member>
 		<member>item</member>
+		<member>weaponStatus</member>
 	</object>
 	<object>
 		<name>AIMovement</name>
@@ -1436,6 +1435,9 @@
 	</object>
 	<object>
 		<name>DefaultUnitAI</name>
+		<member>ticksAutoTurnAvailable</member>
+		<member>ticksAutoTargetAvailable</member>
+		<member>attackerPosition</member>
 	</object>
 	<object>
 		<name>BehaviorUnitAI</name>
