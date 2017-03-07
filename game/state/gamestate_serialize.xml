@@ -135,6 +135,7 @@
 		<member>ownerOrganisation</member>
 		<member>ownerUnit</member>
 		<member>ammo</member>
+		<member>armor</member>
 		<member>primed</member>
 		<member>activated</member>
 		<member>triggerDelay</member>
@@ -523,6 +524,11 @@
 		<member>healingBodyPart</member>
 		<member>isHealing</member>
 		<member>woundTicksAccumulated</member>
+		<member>stunDamageInTicks</member>
+		<member>enzymeDebuffTicksAccumulated</member>
+		<member>fireDebuffTicksAccumulated</member>
+		<member>enzymeDebuffIntensity</member>
+		<member>fireDebuffIntensity</member>
 		<member>behavior_mode</member>
 		<member>fire_aiming_mode</member>
 		<member>fire_permission_mode</member>

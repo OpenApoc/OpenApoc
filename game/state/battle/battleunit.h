@@ -35,7 +35,9 @@ namespace OpenApoc
 {
 
 // FIXME: Seems to correspond to vanilla behavior, but ensure it's right
-static const unsigned TICKS_PER_UNIT_EFFECT = TICKS_PER_TURN;
+static const unsigned TICKS_PER_WOUND_EFFECT = TICKS_PER_TURN;
+static const unsigned TICKS_PER_ENZYME_EFFECT = TICKS_PER_SECOND / 9; 
+static const unsigned TICKS_PER_FIRE_EFFECT = TICKS_PER_SECOND;
 // How frequently unit tracks its target
 static const unsigned LOS_CHECK_INTERVAL_TRACKING = TICKS_PER_SECOND / 4;
 
@@ -160,6 +162,14 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	unsigned woundTicksAccumulated = 0;
 	// Stun damage acquired
 	int stunDamageInTicks = 0;
+	// Enzyme debuff time until next hit
+	int enzymeDebuffTicksAccumulated = 0;
+	// Enzyme debuff intensity remaining
+	int enzymeDebuffIntensity = 0;
+	// Fire debuff timer
+	int fireDebuffTicksAccumulated = 0;
+	// Fire debuff intensity remaining
+	int fireDebuffIntensity = 0;
 
 	// User set modes
 

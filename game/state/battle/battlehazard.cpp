@@ -18,12 +18,15 @@
 
 namespace OpenApoc
 {
-BattleHazard::BattleHazard(GameState &state, StateRef<DamageType> damageType)
+BattleHazard::BattleHazard(GameState &state, StateRef<DamageType> damageType, bool delayVisibility)
     : damageType(damageType), hazardType(damageType->hazardType)
 {
 	frame = randBoundsExclusive(state.rng, 0, HAZARD_FRAME_COUNT);
-	ticksUntilVisible =
+	if (delayVisibility)
+	{
+		ticksUntilVisible =
 	    std::max((unsigned)0, (hazardType->doodadType->lifetime - 4) * TICKS_MULTIPLIER);
+	}
 	ticksUntilNextEffect = TICKS_PER_HAZARD_EFFECT;
 	ticksUntilNextFrameChange =
 	    randBoundsInclusive(state.rng, (unsigned)0, TICKS_PER_HAZARD_EFFECT);
@@ -203,6 +206,10 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 
 void BattleHazard::grow(GameState &state)
 {
+	if (power == 0)
+	{
+		return;
+	}
 	if (randBoundsExclusive(state.rng, 0, 100) >= HAZARD_SPREAD_CHANCE)
 	{
 		return;

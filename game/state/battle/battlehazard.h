@@ -46,7 +46,7 @@ class BattleHazard : public std::enable_shared_from_this<BattleHazard>
 	void update(GameState &state, unsigned int ticks);
 
 	BattleHazard() = default;
-	BattleHazard(GameState &state, StateRef<DamageType> damageType);
+	BattleHazard(GameState &state, StateRef<DamageType> damageType, bool delayVisibility = true);
 	~BattleHazard() = default;
 
 	// Following members are not serialized, but rather are set up in the initBattle method

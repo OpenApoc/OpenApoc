@@ -2291,7 +2291,6 @@ void BattleView::updateItemInfo(bool right)
 				}
 			}
 		}
-		// Draw ammo
 		if (info.maxAmmo > 0 && info.curAmmo > 0)
 		{
 			int ammoDisplaySize = 90;
@@ -2361,6 +2360,9 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 						a.curAmmo = e->ammo;
 						break;
 					case AEquipmentType::Type::Armor:
+						a.maxAmmo = 30;
+						a.curAmmo = e->armor * 30 / p->armor;
+						break;
 					case AEquipmentType::Type::DisruptorShield:
 						a.maxAmmo = 30;
 						a.curAmmo = e->ammo * 30 / p->max_ammo;

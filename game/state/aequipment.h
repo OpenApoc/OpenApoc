@@ -42,8 +42,11 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	// Unit that threw or dropped the item last
 	StateRef<BattleUnit> ownerUnit;
 
-	// Ammunition for weapons, protection for armor, charge for items
+	// Ammunition for weapons, charge for items
 	int ammo = 0;
+
+	// Armor for armor, durability for other items (hidden)
+	int armor = 0;
 
 	// Explosives parameters
 

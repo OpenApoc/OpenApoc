@@ -460,9 +460,9 @@ sp<BattleItem> Battle::placeItem(GameState &state, sp<AEquipment> item, Vec3<flo
 
 sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<DamageType> type,
                                      Vec3<int> position, int ttl, int power,
-                                     int initialAgeTTLDivizor)
+                                     int initialAgeTTLDivizor, bool delayVisibility)
 {
-	auto hazard = mksp<BattleHazard>(state, type);
+	auto hazard = mksp<BattleHazard>(state, type, delayVisibility);
 	hazard->position = position;
 	hazard->position += Vec3<float>{0.5f, 0.5f, 0.5f};
 	hazard->lifetime = ttl;

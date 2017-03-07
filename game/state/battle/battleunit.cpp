@@ -825,7 +825,7 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 }
 
 bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> damageType,
-                             BodyPart bodyPart)
+	BodyPart bodyPart)
 {
 	if (damageType->doesImpactDamage())
 	{
@@ -866,10 +866,17 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 			{
 				agent->removeEquipment(shield);
 			}
-			state.current_battle->placeDoodad({&state, "DOODAD_27_SHIELD"},
-			                                  tileObject->getCenter());
+			state.current_battle->placeDoodad({ &state, "DOODAD_27_SHIELD" },
+				tileObject->getCenter());
 			return true;
 		}
+	}
+
+	// Apply enzyme if penetrated shields
+	if (damageType->effectType == DamageType::EffectType::Enzyme)
+	{
+		enzymeDebuffIntensity += power * 2;
+		enzymeDebuffTicksAccumulated = TICKS_PER_ENZYME_EFFECT;
 	}
 
 	// Calculate damage to armor type
@@ -878,7 +885,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	StateRef<DamageModifier> damageModifier;
 	if (armor)
 	{
-		armorValue = armor->ammo;
+		armorValue = armor->armor;
 		damageModifier = armor->type->damage_modifier;
 	}
 	else
@@ -888,9 +895,9 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	}
 	// Smoke ignores armor value but does not ignore damage modifier
 	damage = damageType->dealDamage(damage, damageModifier) -
-	         (damageType->ignoresArmorValue() ? 0 : armorValue);
+		(damageType->ignoresArmorValue() ? 0 : armorValue);
 
-	// No daamge
+	// No damage
 	if (damage <= 0)
 	{
 		return false;
@@ -901,9 +908,9 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	{
 		// Armor damage
 		int armorDamage = damage / 10 + 1;
-		armor->ammo -= armorDamage;
+		armor->armor -= armorDamage;
 		// Armor destroyed
-		if (armor->ammo <= 0)
+		if (armor->armor <= 0)
 		{
 			agent->removeEquipment(armor);
 		}
@@ -911,8 +918,8 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 
 	// Apply damage according to type
 	dealDamage(state, damage, damageType->dealsFatalWounds(), bodyPart,
-	           damageType->dealsStunDamage() ? power : 0);
-
+		damageType->dealsStunDamage() ? power : 0);
+	
 	return false;
 }
 
@@ -1012,9 +1019,9 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 	{
 		bool unconscious = isUnconscious();
 		woundTicksAccumulated += ticks;
-		while (woundTicksAccumulated >= TICKS_PER_UNIT_EFFECT)
+		while (woundTicksAccumulated >= TICKS_PER_WOUND_EFFECT)
 		{
-			woundTicksAccumulated -= TICKS_PER_UNIT_EFFECT;
+			woundTicksAccumulated -= TICKS_PER_WOUND_EFFECT;
 			for (auto &w : fatalWounds)
 			{
 				if (w.second > 0)
@@ -1052,6 +1059,52 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 	{
 		flyingSpeedModifier = 0;
 	}
+
+	// Process enzyme
+	if (enzymeDebuffIntensity > 0)
+	{
+		enzymeDebuffTicksAccumulated += ticks;
+		while (enzymeDebuffTicksAccumulated >= TICKS_PER_ENZYME_EFFECT && enzymeDebuffIntensity > 0)
+		{
+			enzymeDebuffTicksAccumulated -= TICKS_PER_ENZYME_EFFECT;
+
+			// Spawn smoke
+
+			// FIXME: Ensure this is proper, for now just emulating vanilla crudely
+			// This makes smoke spawned by enzyme grow smaller when debuff runs out
+			int divisor = std::max(1, 36 / enzymeDebuffIntensity);
+			StateRef<DamageType> smokeDamageType = { &state, "DAMAGETYPE_SMOKE" };
+			// Power of 0 means no spread
+			state.current_battle->placeHazard(state, smokeDamageType, position, smokeDamageType->hazardType->getLifetime(state), 0, divisor, false);
+
+			// Damage random item
+
+			if (!agent->equipment.empty())
+			{
+				auto item = listRandomiser(state.rng, agent->equipment);
+				item->armor -= enzymeDebuffIntensity / 2;
+
+				// Item destroyed
+				if (item->armor <= 0)
+				{
+					if (item->type->type == AEquipmentType::Type::Grenade)
+					{
+						item->explode(state);
+					}
+					else
+					{
+						agent->removeEquipment(item);
+					}
+				}
+			}
+
+			// Finally, reduce debuff
+
+			enzymeDebuffIntensity--;
+		}
+	}
+
+	// Process fire
 }
 
 void BattleUnit::updateEvents(GameState &state)
@@ -1082,6 +1135,7 @@ void BattleUnit::updateEvents(GameState &state)
 			else
 			{
 				auto from = tileObject->getOwningTile();
+				auto helper = BattleUnitTileHelper{ tileObject->map, *this };
 				for (auto newHeading : giveWayRequestData)
 				{
 					for (int z = -1; z <= 1; z++)
@@ -1096,17 +1150,16 @@ void BattleUnit::updateEvents(GameState &state)
 						auto to = tileObject->map.getTile(pos);
 						// Check if heading on our level is acceptable
 						bool acceptable =
-						    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(from, to) &&
-						    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(to, from);
+						    helper.canEnterTile(from, to) &&
+						    helper.canEnterTile(to, from);
 						// If not, check if we can go down one tile
 						if (!acceptable && pos.z - 1 >= 0)
 						{
 							pos -= Vec3<int>{0, 0, 1};
 							to = tileObject->map.getTile(pos);
 							acceptable =
-							    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(from,
-							                                                              to) &&
-							    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(to, from);
+							    helper.canEnterTile(from, to) &&
+								helper.canEnterTile(to, from);
 						}
 						// If not, check if we can go up one tile
 						if (!acceptable && pos.z + 2 < tileObject->map.size.z)
@@ -1114,9 +1167,8 @@ void BattleUnit::updateEvents(GameState &state)
 							pos += Vec3<int>{0, 0, 2};
 							to = tileObject->map.getTile(pos);
 							acceptable =
-							    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(from,
-							                                                              to) &&
-							    BattleUnitTileHelper{tileObject->map, *this}.canEnterTile(to, from);
+								helper.canEnterTile(from, to) &&
+								helper.canEnterTile(to, from);
 						}
 						if (acceptable)
 						{
@@ -2025,7 +2077,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	updateStateAndStats(state, ticks);
 	// Unit events - was under fire, was requested to give way etc.
 	updateEvents(state);
-	// Idling #1: Auto-movement, auto-body change when idling
+	// Idling: Auto-movement, auto-body change when idling
 	updateIdling(state);
 	// Main bulk - update movement, body, hands and turning
 	{

@@ -53,3 +53,7 @@ Brief AI description
 
 Turret AI? 
   Turrets just get 360 vision and aggressive AI, that's enough
+
+  
+Enzyme/Fire AI?
+  Run like chickens w/o heads when debuffed? Get out of the danger zone?

@@ -853,7 +853,15 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 				                                      ".raw:22050");
 			}
 
-			e->damage_type = {&state, data_t.getDTypeId(pdata.damage_type)};
+			if (id == "AEQUIPMENTTYPE_ENTROPY_POD")
+			{
+				// Change entropy pod's damage type to the one that applies debuff
+				e->damage_type = { &state, "DAMAGETYPE_ENTROPY_ENZYME_SPECIAL" };
+			}
+			else
+			{
+				e->damage_type = { &state, data_t.getDTypeId(pdata.damage_type) };
+			}
 			switch (pdata.trigger_type)
 			{
 				case AGENT_GRENADE_TRIGGER_TYPE_NORMAL:

@@ -514,6 +514,7 @@ void Agent::addEquipmentByType(GameState &state, Vec2<int> pos, StateRef<AEquipm
 {
 	auto equipment = mksp<AEquipment>();
 	equipment->type = type;
+	equipment->armor = type->armor;
 	if (type->ammo_types.size() > 0)
 	{
 		equipment->payloadType = *type->ammo_types.begin();

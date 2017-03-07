@@ -180,7 +180,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	sp<BattleUnit> placeUnit(GameState &state, StateRef<Agent> agent, Vec3<float> position);
 	sp<BattleItem> placeItem(GameState &state, sp<AEquipment> item, Vec3<float> position);
 	sp<BattleHazard> placeHazard(GameState &state, StateRef<DamageType> type, Vec3<int> position,
-	                             int ttl, int power, int initialAgeTTLDivizor = 1);
+	                             int ttl, int power, int initialAgeTTLDivizor = 1, bool delayVisibility = true);
 
 	static void accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
 	                                    Vec3<float> &target, int accuracy, bool thrown = false);

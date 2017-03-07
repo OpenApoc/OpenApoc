@@ -1130,6 +1130,43 @@ std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &
 		}
 	}
 
+	// Enzyme
+	if (u.enzymeDebuffIntensity > 0 && !u.isMoving())
+	{
+		// Move to a random adjacent tile
+		auto from = u.tileObject->getOwningTile();
+		auto &map = u.tileObject->map;
+		auto helper = BattleUnitTileHelper{ map, u };
+		std::list<Vec3<int>> possiblePositions;
+		for (int x = -1; x <= 1; x++)
+		{
+			for (int y = -1; y <= 1; y++)
+			{
+				for (int z = -1; z <= 1; z++)
+				{
+					if (x == 0 && y == 0 && z == 0)
+					{
+						continue;
+					}
+					Vec3<int> newPos = (Vec3<int>)u.position + Vec3<int>(x, y, z);
+					if (map.tileIsValid(newPos) && helper.canEnterTile(from, map.getTile(newPos)))
+					{
+						possiblePositions.push_back(newPos);
+					}
+				}
+			}
+		}
+		if (!possiblePositions.empty())
+		{
+			auto newPos = listRandomiser(state.rng, possiblePositions);
+			movement = mksp<AIMovement>();
+			movement->type = AIMovement::Type::Patrol;
+			movement->targetLocation = newPos;
+			movement->kneelingMode = u.kneeling_mode;
+			movement->movementMode = MovementMode::Running;
+		}
+	}
+
 	attackerPosition = NONE;
 
 	return std::make_tuple(AIDecision(action, movement), action || movement);
