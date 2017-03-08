@@ -45,16 +45,16 @@ sp<Control> RadioButton::copyTo(sp<Control> CopyParent)
 
 void RadioButton::setChecked(bool checked)
 {
-	if (checked && !Checked)
+	if (checked != Checked)
 	{
-		if (group)
+		if (group && checked)
 		{
 			for (auto &c : group->radioButtons)
 			{
 				auto button = c.lock();
 				if (button)
 				{
-					button->Checked = false;
+					button->setChecked(false);
 				}
 			}
 		}
