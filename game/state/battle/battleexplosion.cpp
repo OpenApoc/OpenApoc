@@ -166,8 +166,12 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 			}
 			else if (obj->getType() == TileObject::Type::Item)
 			{
-				auto i = std::static_pointer_cast<TileObjectBattleItem>(obj)->getItem();
-				i->applyDamage(state, damage, damageType);
+				// Special effects do not damage items, fire damages items differently and not on explosion impact
+				if (damageType->effectType == DamageType::EffectType::None)
+				{
+					auto i = std::static_pointer_cast<TileObjectBattleItem>(obj)->getItem();
+					i->applyDamage(state, damage, damageType);
+				}
 			}
 		}
 	}

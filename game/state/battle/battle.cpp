@@ -503,7 +503,7 @@ sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<DamageType> type
 		if (existingHazard)
 		{
 			// Fire cannot spread into another fire
-			if (fire)
+			if (fire && existingHazard->hazardType->fire)
 			{
 				return nullptr;
 			}

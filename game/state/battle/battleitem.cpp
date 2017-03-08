@@ -78,13 +78,32 @@ void BattleItem::hopTo(GameState &state, Vec3<float> targetPosition)
 // Returns true if sound and doodad were handled by it
 bool BattleItem::applyDamage(GameState &state, int power, StateRef<DamageType> damageType)
 {
-	if (damageType->explosive != true || damageType->effectType != DamageType::EffectType::None)
+	if (damageType->explosive != true)
 	{
 		return false;
 	}
-	if (item->type->armor <= power)
+	switch (damageType->effectType)
 	{
-		die(state);
+		case DamageType::EffectType::None:
+			if (item->armor <= power)
+			{
+				die(state);
+			}
+			break;
+		case DamageType::EffectType::Fire:
+			// Armor resists fire damage accordingly
+			if (item->type->type == AEquipmentType::Type::Armor)
+			{
+				power = damageType->dealDamage(power, item->type->damage_modifier);
+			}
+			item->armor -= power;
+			if (item->armor <= 0)
+			{
+				die(state);
+			}
+			break;
+		default:
+			return false;
 	}
 	return false;
 }

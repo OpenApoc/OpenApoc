@@ -3,9 +3,11 @@
 #include "framework/logger.h"
 #include "framework/sound.h"
 #include "game/state/battle/battle.h"
+#include "game/state/aequipment.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/battle/battleunit.h"
+#include "game/state/battle/battleitem.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/damage.h"
 #include "game/state/rules/doodad_type.h"
@@ -13,6 +15,7 @@
 #include "game/state/tileview/tileobject_battlehazard.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"
+#include "game/state/tileview/tileobject_battleitem.h"
 
 #include <cmath>
 
@@ -148,8 +151,10 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 		{
 			existingHazard = std::static_pointer_cast<TileObjectBattleHazard>(obj)->getHazard();
 			// Replace weaker hazards (if not smoke from fire or fire itself)
-			if (existingHazard->damageType == spreadDamageType && !hazardType->fire
-			    && existingHazard->lifetime - existingHazard->age < ttl)
+			// Replace non-fire hazards if fire
+			if ((hazardType->fire && !fireSmoke && existingHazard->damageType != spreadDamageType) 
+				|| (!hazardType->fire && existingHazard->damageType == spreadDamageType
+			    && existingHazard->lifetime - existingHazard->age < ttl))
 			{
 				replaceWeaker = true;
 			}
@@ -184,44 +189,53 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 		return false;
 	}
 
-	// If reached here try place hazard
-	if (replaceWeaker)
+	// If spreading fire
+	if (hazardType->fire && !fireSmoke)
 	{
-		existingHazard->lifetime = lifetime;
-		existingHazard->age = age;
-		existingHazard->ticksUntilVisible = 0;
+		// Find out if tile contains something flammable that we can penetrate
+		bool penetrationAchieved = false;
+		for (auto obj : targetTile->ownedObjects)
+		{
+			if (obj->getType() == TileObject::Type::Ground || obj->getType() == TileObject::Type::Feature)
+			{
+				auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(obj)->getOwner();
+				if (mp->canBurn(age))
+				{
+					penetrationAchieved = true;
+				}
+				break;
+			}
+		}
+
+		if (penetrationAchieved)
+		{
+			if (replaceWeaker)
+			{
+				existingHazard->die(state, false);
+			}
+			state.current_battle->placeHazard(
+				state, spreadDamageType, { to.x, to.y, to.z }, spreadDamageType->hazardType->getLifetime(state), 0,
+				1, false);
+		}
 	}
+	// If spreading something else
 	else
 	{
-		if (hazardType->fire && !fireSmoke)
+		// If reached here try place hazard
+		if (replaceWeaker)
 		{
-			// Explanation for how fire works is at the end of battlehazard.h
-			// What fire resist can we penetrate with this kind of fire
-			int penetrativePower = std::min(255.0f, 3.0f * std::pow(2.0f, 9.0f - age / 10.0f));
-			// Find out if tile contains something flammable that we can penetrate
-			bool penetrationAchieved = false;
-			for (auto obj : targetTile->ownedObjects)
+			if (fireSmoke)
 			{
-				if (obj->getType() == TileObject::Type::Ground || obj->getType() == TileObject::Type::Feature)
-				{
-					auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(obj)->getOwner();
-					if (penetrativePower > mp->type->fire_resist && mp->canBurn())
-					{
-						penetrationAchieved = true;
-					}
-					break;
-				}
+				LogError("Smoke from fire should never try to replace weaker hazards");
+				return true;
 			}
-			
-			if (penetrationAchieved)
-			{
-				state.current_battle->placeHazard(
-					state, spreadDamageType, { to.x, to.y, to.z }, spreadDamageType->hazardType->getLifetime(state), 0,
-					1, false);
-			}
+			existingHazard->lifetime = lifetime;
+			existingHazard->age = age;
+			existingHazard->ticksUntilVisible = 0;
 		}
 		else
 		{
+
 			auto hazard = state.current_battle->placeHazard(
 				state, spreadDamageType, { to.x, to.y, to.z }, fireSmoke ? ttl : lifetime, fireSmoke ? 1 : power,
 				fireSmoke ? 6 : 1, false);
@@ -231,6 +245,7 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 			}
 		}
 	}
+		
 	return true;
 }
 
@@ -332,7 +347,7 @@ void BattleHazard::applyEffect(GameState &state)
 			switch (damageType->effectType)
 			{
 				case DamageType::EffectType::Fire:
-					if (mp->applyBurning(state))
+					if (mp->applyBurning(state, age))
 					{
 						// Map part burned and provided fuel for our fire, keep the fire raging
 						if (power < 0 && age > 10)
@@ -344,6 +359,19 @@ void BattleHazard::applyEffect(GameState &state)
 				default:
 					mp->applyDamage(state, power, damageType);
 					break;
+			}
+		}
+		else if (obj->getType() == TileObject::Type::Item)
+		{
+			if (damageType->effectType ==  DamageType::EffectType::Fire)
+			{
+				// It was observed that armor resists fire damage deal to it
+				// It also appears that damage is applied gradually at a rate of around 1 damage per second
+				// In tests, marsec armor (20% modifier) was hurt by fire but X-Com armor (10% modifier) was not
+				// If we apply damage once per turn, we apply 4 at once. Since we round down, 4 * 20% will be rounded to 0
+				// while it should be 1. So we add 1 here
+				auto i = std::static_pointer_cast<TileObjectBattleItem>(obj)->getItem();
+				i->applyDamage(state, 2 * TICKS_PER_HAZARD_UPDATE / TICKS_PER_SECOND + 1, damageType);
 			}
 		}
 		else if (obj->getType() == TileObject::Type::Unit)
@@ -401,12 +429,7 @@ void BattleHazard::update(GameState &state, unsigned int ticks)
 	{
 		ticksUntilNextFrameChange += TICKS_PER_HAZARD_UPDATE;
 		frame++;
-		frame %= HAZARD_FRAME_COUNT;
-		// Do not show "dying flames" while growing
-		if (hazardType->fire && power > 0 && age > 90 && frame > 1)
-		{
-			frame = 0;
-		}
+		frame %= hazardType->fire ? 2 : HAZARD_FRAME_COUNT;
 	}
 
 	ticksUntilNextUpdate -= ticks;
@@ -432,12 +455,12 @@ void BattleHazard::update(GameState &state, unsigned int ticks)
 			if (power % 2)
 			{
 				applyEffect(state);
-				if (age < 120)
+				if (age < 130)
 				{
 					grow(state);
 				}
 			}
-			if (age >= 120)
+			if (age >= 130)
 			{
 				die(state);
 			}

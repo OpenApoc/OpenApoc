@@ -93,8 +93,8 @@ sp<Image> HazardType::getFrame(unsigned age, int offset)
 		// Round stage to nearest 0,5
 		int stage = (age + 2) / 5 * 5;
 		// Get min and max frames for this stage
-		int minFrame = std::max((stage - 5) / 10, 0);
-		int maxFrame = std::min((stage + 5 + 5) / 10, 11);
+		int minFrame = clamp((stage - 5) / 10, 0, 11);
+		int maxFrame = clamp((stage + 5 + 5) / 10, 0, 11);
 		// Trun offset if it's too big
 		if (minFrame + offset > maxFrame)
 		{

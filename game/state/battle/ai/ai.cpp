@@ -774,7 +774,7 @@ AIDecision VanillaUnitAI::thinkInternal(GameState &state, BattleUnit &u)
 	    || (attackerPosition != NONE &&
 	        (!lastDecision.movement || lastDecision.movement->type != AIMovement::Type::GetInRange))
 	    // We have enemies in sight, we are not attacking and we are not carrying out an action
-	    || (!u.visibleEnemies.empty() && !u.isAttacking() && !lastDecision.action);
+	    || (!u.visibleEnemies.empty() && !u.isAttacking() && (!lastDecision.action || !u.missions.empty()));
 
 	// Note: if no enemies are in sight, and we're idle, we will do nothing.
 	// This state is handled by tactical AI

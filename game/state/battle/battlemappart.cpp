@@ -139,30 +139,33 @@ int BattleMapPart::getAnimationFrame()
 	}
 }
 
-bool BattleMapPart::applyBurning(GameState &state)
+bool BattleMapPart::applyBurning(GameState &state, int age)
 {
 	if (this->falling)
 	{
 		// Already falling, just continue
 		return false;
 	}
-	if (!canBurn())
+	if (!canBurn(age))
 	{
 		// Cannot burn, ignore
 		return false;
 	}
 
 	burnTicksAccumulated += TICKS_PER_HAZARD_UPDATE * 2;
-	if (!canBurn())
+	if (!canBurn(age))
 	{
 		die(state);
 	}
 	return true;
 }
 
-bool BattleMapPart::canBurn()
+bool BattleMapPart::canBurn(int age)
 {
-	return type->fire_resist < 255 && type->fire_burn_time < 255 && burnTicksAccumulated < type->fire_burn_time * TICKS_PER_SECOND;
+	// Explanation for how fire works is at the end of battlehazard.h
+	int penetrativePower = std::min(255.0f, 3.0f * std::pow(2.0f, 9.0f - age / 10.0f));
+
+	return  penetrativePower > type->fire_resist && type->fire_burn_time < 255 && burnTicksAccumulated < type->fire_burn_time * TICKS_PER_SECOND;
 }
 
 bool BattleMapPart::applyDamage(GameState &state, int power, StateRef<DamageType> damageType)
