@@ -1226,25 +1226,22 @@ VanillaTacticalAI::think(GameState &state, StateRef<Organisation> o)
 	// Find an idle unit that needs orders
 	for (auto u : state.current_battle->units)
 	{
-		if (u.second->owner != o)
+		if (u.second->owner != o || !u.second->isConscious() || u.second->isBusy())
 		{
 			continue;
 		}
 
-		if (!u.second->isBusy())
-		{
-			// If unit found, try to get orders for him
-			auto decisions = getPatrolMovement(state, *u.second);
+		// If unit found, try to get orders for him
+		auto decisions = getPatrolMovement(state, *u.second);
 
-			auto units = std::get<0>(decisions);
-			AIDecision decision = {nullptr, std::get<1>(decisions)};
+		auto units = std::get<0>(decisions);
+		AIDecision decision = {nullptr, std::get<1>(decisions)};
 
-			std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>> result = {};
-			result.emplace_back(units, decision);
+		std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>> result = {};
+		result.emplace_back(units, decision);
 
-			// For now, stop after giving orders to one group of units
-			return result;
-		}
+		// For now, stop after giving orders to one group of units
+		return result;
 	}
 
 	return {};

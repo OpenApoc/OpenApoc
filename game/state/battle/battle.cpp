@@ -115,6 +115,7 @@ void Battle::initBattle(GameState &state, bool first)
 	for (auto &o : this->units)
 	{
 		o.second->strategyImages = state.battle_common_image_list->strategyImages;
+		o.second->burningDoodad = state.battle_common_image_list->burningDoodad;
 		o.second->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
 	}
 	if (forces.size() == 0)
@@ -462,19 +463,31 @@ sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<DamageType> type
                                      Vec3<int> position, int ttl, int power,
                                      int initialAgeTTLDivizor, bool delayVisibility)
 {
+	bool fire = type->hazardType->fire;
 	auto hazard = mksp<BattleHazard>(state, type, delayVisibility);
 	hazard->position = position;
 	hazard->position += Vec3<float>{0.5f, 0.5f, 0.5f};
-	hazard->lifetime = ttl;
-	hazard->age = hazard->lifetime * (initialAgeTTLDivizor - 1) / initialAgeTTLDivizor;
-	hazard->power = power;
+	if (fire)
+	{
+		// lifetime means nothing for fire
+		hazard->lifetime = 0;
+		// age means how "powerful" the fire is, where 10 is most powerful and 110 is almost dead
+		hazard->age = 100 - ttl * 6;
+		// Fire is growing, when fading this will be negative
+		hazard->power = randBoundsInclusive(state.rng,1,2);
+	}
+	else
+	{
+		hazard->lifetime = ttl;
+		hazard->age = hazard->lifetime * (initialAgeTTLDivizor - 1) / initialAgeTTLDivizor;
+		hazard->power = power;
+	}
 	// Remove existing hazard, ensure possible to do this, place this
 	if (map)
 	{
 		auto tile = map->getTile(position);
-		// Cannot add hazard if tile is blocked or if nothing is there to burn for fire
-		if (tile->height * 40.0f > 38.0f ||
-		    (tile->height * 40.0f < 1.0f && type->effectType == DamageType::EffectType::Fire))
+		// Cannot add non-fire hazard if tile is blocked or fire hazard if nothing is there to burn at
+		if ((!fire && tile->height * 40.0f > 38.0f) || (fire && tile->height * 40.0f < 1.0f))
 		{
 			return nullptr;
 		}
@@ -489,7 +502,20 @@ sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<DamageType> type
 		}
 		if (existingHazard)
 		{
-			existingHazard->die(state, false);
+			// Fire cannot spread into another fire
+			if (fire)
+			{
+				return nullptr;
+			}
+			else
+			{
+				// Nothing can spread into a fire that's eating up a feature
+				if (existingHazard->hazardType->fire)
+				{
+					LogWarning("Ensure we are not putting out a fire that is attached to a feature!");
+				}
+				existingHazard->die(state, false);
+			}
 		}
 		map->addObjectToMap(hazard);
 		hazard->updateTileVisionBlock(state);

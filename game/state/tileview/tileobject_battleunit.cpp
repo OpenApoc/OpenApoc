@@ -5,6 +5,7 @@
 #include "framework/renderer.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/battle/battleunitanimationpack.h"
+#include "game/state/rules/doodad_type.h"
 #include "game/state/tileview/tile.h"
 #include "library/voxel.h"
 #include <algorithm>
@@ -80,6 +81,20 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 			    unit->usingLift ? MovementState::None : unit->current_movement_state,
 			    unit->getBodyAnimationFrame(), unit->getHandAnimationFrame(),
 			    unit->getDistanceTravelled(), firingAngle, visible);
+			// Unit on fire
+			if (unit->fireDebuffTicksRemaining > 0)
+			{
+				Vec2<float> transformedScreenPos = screenPosition;
+				sp<Image> sprite;
+				
+				int age = unit->fireDebuffTicksRemaining;
+				int maxLifetime = 5 * TICKS_PER_TURN;
+				int frame = std::min(unit->burningDoodad->frames.size() - 1, unit->burningDoodad->frames.size() * age / maxLifetime);
+				sprite = unit->burningDoodad->frames[frame].image;
+				
+				transformedScreenPos -= unit->burningDoodad->imageOffset;
+				drawTinted(r, sprite, transformedScreenPos, visible);
+			}
 			break;
 		}
 		case TileViewMode::Strategy:

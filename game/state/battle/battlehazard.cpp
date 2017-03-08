@@ -27,9 +27,9 @@ BattleHazard::BattleHazard(GameState &state, StateRef<DamageType> damageType, bo
 		ticksUntilVisible =
 	    std::max((unsigned)0, (hazardType->doodadType->lifetime - 4) * TICKS_MULTIPLIER);
 	}
-	ticksUntilNextEffect = TICKS_PER_HAZARD_EFFECT;
+	ticksUntilNextUpdate = TICKS_PER_HAZARD_UPDATE;
 	ticksUntilNextFrameChange =
-	    randBoundsInclusive(state.rng, (unsigned)0, TICKS_PER_HAZARD_EFFECT);
+	    randBoundsInclusive(state.rng, (unsigned)0, TICKS_PER_HAZARD_UPDATE);
 }
 
 void BattleHazard::die(GameState &state, bool violently)
@@ -51,7 +51,7 @@ void BattleHazard::die(GameState &state, bool violently)
 	}
 }
 
-bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> &to, unsigned ttl)
+bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> &to, unsigned ttl, bool fireSmoke)
 {
 	// list of coordinates to check
 	static const std::map<Vec3<int>, std::list<std::pair<Vec3<int>, std::set<TileObject::Type>>>>
@@ -131,9 +131,10 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 	// Fire spreads smoke
 	// Actual spread of fire is handled in the effect application
 	auto spreadDamageType = damageType;
-	if (damageType->effectType == DamageType::EffectType::Fire)
+	if (fireSmoke)
 	{
 		spreadDamageType = {&state, "DAMAGETYPE_SMOKE"};
+		ttl = spreadDamageType->hazardType->getLifetime(state);
 	}
 
 	// Ensure no hazard already there
@@ -146,9 +147,9 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 		if (obj->getType() == TileObject::Type::Hazard)
 		{
 			existingHazard = std::static_pointer_cast<TileObjectBattleHazard>(obj)->getHazard();
-			// Replace weaker hazards
-			if (existingHazard->damageType == spreadDamageType &&
-			    existingHazard->lifetime - existingHazard->age < ttl)
+			// Replace weaker hazards (if not smoke from fire or fire itself)
+			if (existingHazard->damageType == spreadDamageType && !hazardType->fire
+			    && existingHazard->lifetime - existingHazard->age < ttl)
 			{
 				replaceWeaker = true;
 			}
@@ -178,7 +179,7 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 		}
 	}
 	// FIXME: Made up, ensure this fits vanilla behavior
-	if (power <= block)
+	if ((hazardType->fire && !fireSmoke && block == 255) || power <= block)
 	{
 		return false;
 	}
@@ -192,13 +193,42 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 	}
 	else
 	{
-		auto hazard = state.current_battle->placeHazard(
-		    state, spreadDamageType, {to.x, to.y, to.z}, lifetime, power,
-		    damageType->effectType == DamageType::EffectType::Fire ? 6 : 1);
-		if (hazard && damageType->effectType != DamageType::EffectType::Fire)
+		if (hazardType->fire && !fireSmoke)
 		{
-			hazard->age = age;
-			hazard->ticksUntilVisible = 0;
+			// Explanation for how fire works is at the end of battlehazard.h
+			// What fire resist can we penetrate with this kind of fire
+			int penetrativePower = std::min(255.0f, 3.0f * std::pow(2.0f, 9.0f - age / 10.0f));
+			// Find out if tile contains something flammable that we can penetrate
+			bool penetrationAchieved = false;
+			for (auto obj : targetTile->ownedObjects)
+			{
+				if (obj->getType() == TileObject::Type::Ground || obj->getType() == TileObject::Type::Feature)
+				{
+					auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(obj)->getOwner();
+					if (penetrativePower > mp->type->fire_resist && mp->canBurn())
+					{
+						penetrationAchieved = true;
+					}
+					break;
+				}
+			}
+			
+			if (penetrationAchieved)
+			{
+				state.current_battle->placeHazard(
+					state, spreadDamageType, { to.x, to.y, to.z }, spreadDamageType->hazardType->getLifetime(state), 0,
+					1, false);
+			}
+		}
+		else
+		{
+			auto hazard = state.current_battle->placeHazard(
+				state, spreadDamageType, { to.x, to.y, to.z }, fireSmoke ? ttl : lifetime, fireSmoke ? 1 : power,
+				fireSmoke ? 6 : 1, false);
+			if (hazard && !fireSmoke)
+			{
+				hazard->age = age;
+			}
 		}
 	}
 	return true;
@@ -206,32 +236,78 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 
 void BattleHazard::grow(GameState &state)
 {
-	if (power == 0)
+	if (hazardType->fire)
 	{
-		return;
-	}
-	if (randBoundsExclusive(state.rng, 0, 100) >= HAZARD_SPREAD_CHANCE)
-	{
-		return;
-	}
-	auto &map = tileObject->map;
-	int newTTL = lifetime - age;
+		auto &map = tileObject->map;
+		
+		// Try to light up adjacent stuff on fire
 
-	for (int x = position.x - 1; x <= position.x + 1; x++)
-	{
-		for (int y = position.y - 1; y <= position.y + 1; y++)
+		for (int x = position.x - 1; x <= position.x + 1; x++)
 		{
-			if (expand(state, map, {x, y, position.z}, newTTL))
+			for (int y = position.y - 1; y <= position.y + 1; y++)
+			{
+				expand(state, map, { x, y, position.z }, 0);
+			}
+		}
+		for (int z = position.z - 1; z <= position.z + 1; z++)
+		{
+			expand(state, map, { position.x, position.y, z }, 0);
+		}
+
+		// Now spread smoke
+
+		if (randBoundsExclusive(state.rng, 0, 100) >= HAZARD_SPREAD_CHANCE)
+		{
+			return;
+		}
+		
+		for (int x = position.x - 1; x <= position.x + 1; x++)
+		{
+			for (int y = position.y - 1; y <= position.y + 1; y++)
+			{
+				if (expand(state, map, { x, y, position.z }, 0, true))
+				{
+					return;
+				}
+			}
+		}
+		for (int z = position.z - 1; z <= position.z + 1; z++)
+		{
+			if (expand(state, map, { position.x, position.y, z }, 0, true))
 			{
 				return;
 			}
 		}
 	}
-	for (int z = position.z - 1; z <= position.z + 1; z++)
+	else
 	{
-		if (expand(state, map, {position.x, position.y, z}, newTTL))
+		if (power == 0)
 		{
 			return;
+		}
+		if (randBoundsExclusive(state.rng, 0, 100) >= HAZARD_SPREAD_CHANCE)
+		{
+			return;
+		}
+		auto &map = tileObject->map;
+		int newTTL = lifetime - age;
+
+		for (int x = position.x - 1; x <= position.x + 1; x++)
+		{
+			for (int y = position.y - 1; y <= position.y + 1; y++)
+			{
+				if (expand(state, map, { x, y, position.z }, newTTL))
+				{
+					return;
+				}
+			}
+		}
+		for (int z = position.z - 1; z <= position.z + 1; z++)
+		{
+			if (expand(state, map, { position.x, position.y, z }, newTTL))
+			{
+				return;
+			}
 		}
 	}
 }
@@ -256,7 +332,14 @@ void BattleHazard::applyEffect(GameState &state)
 			switch (damageType->effectType)
 			{
 				case DamageType::EffectType::Fire:
-					LogWarning("Set map part on fire!");
+					if (mp->applyBurning(state))
+					{
+						// Map part burned and provided fuel for our fire, keep the fire raging
+						if (power < 0 && age > 10)
+						{
+							power = -power;
+						}
+					}
 					break;
 				default:
 					mp->applyDamage(state, power, damageType);
@@ -267,44 +350,34 @@ void BattleHazard::applyEffect(GameState &state)
 		{
 			StateRef<BattleUnit> u = {
 			    &state, std::static_pointer_cast<TileObjectBattleUnit>(obj)->getUnit()->id};
-			switch (damageType->effectType)
+			// Determine direction of hit
+			Vec3<float> velocity = -position;
+			velocity -= Vec3<float>{0.5f, 0.5f, 0.5f};
+			velocity += u->position;
+			if (velocity.x == 0.0f && velocity.y == 0.0f)
 			{
-				case DamageType::EffectType::Fire:
-					LogWarning("Set unit on fire!");
-					break;
-				default:
-				{
-					// Determine direction of hit
-					Vec3<float> velocity = -position;
-					velocity -= Vec3<float>{0.5f, 0.5f, 0.5f};
-					velocity += u->position;
-					if (velocity.x == 0.0f && velocity.y == 0.0f)
-					{
-						velocity.z = 1.0f;
-					}
-					// Determine wether to hit head, legs or torso
-					auto cposition = u->position;
-					// Hit torso
-					if (sqrtf(velocity.x * velocity.x + velocity.y * velocity.y) >
-					    std::abs(velocity.z))
-					{
-						cposition.z += (float)u->getCurrentHeight() / 2.0f / 40.0f;
-					}
-					// Hit head
-					else if (velocity.z < 0)
-					{
-						cposition.z += (float)u->getCurrentHeight() / 40.0f;
-					}
-					else
-					{
-						// Legs are defeault already
-					}
-					// Apply
-					u->applyDamage(state, power, damageType,
-					               u->determineBodyPartHit(damageType, cposition, velocity));
-				}
-				break;
+				velocity.z = 1.0f;
 			}
+			// Determine wether to hit head, legs or torso
+			auto cposition = u->position;
+			// Hit torso
+			if (sqrtf(velocity.x * velocity.x + velocity.y * velocity.y) >
+				std::abs(velocity.z))
+			{
+				cposition.z += (float)u->getCurrentHeight() / 2.0f / 40.0f;
+			}
+			// Hit head
+			else if (velocity.z < 0)
+			{
+				cposition.z += (float)u->getCurrentHeight() / 40.0f;
+			}
+			else
+			{
+				// Legs are defeault already
+			}
+			// Apply
+			u->applyDamage(state, power, damageType,
+					        u->determineBodyPartHit(damageType, cposition, velocity), DamageSource::Hazard);
 		}
 	}
 }
@@ -326,25 +399,65 @@ void BattleHazard::update(GameState &state, unsigned int ticks)
 	ticksUntilNextFrameChange -= ticks;
 	if (ticksUntilNextFrameChange <= 0)
 	{
-		ticksUntilNextFrameChange += TICKS_PER_HAZARD_EFFECT;
+		ticksUntilNextFrameChange += TICKS_PER_HAZARD_UPDATE;
 		frame++;
 		frame %= HAZARD_FRAME_COUNT;
+		// Do not show "dying flames" while growing
+		if (hazardType->fire && power > 0 && age > 90 && frame > 1)
+		{
+			frame = 0;
+		}
 	}
 
-	ticksUntilNextEffect -= ticks;
-	if (ticksUntilNextEffect <= 0)
+	ticksUntilNextUpdate -= ticks;
+	if (ticksUntilNextUpdate <= 0)
 	{
-		ticksUntilNextEffect += TICKS_PER_HAZARD_EFFECT;
-		applyEffect(state);
-		age++;
-		updateTileVisionBlock(state);
-		if (age >= lifetime)
+		ticksUntilNextUpdate += TICKS_PER_HAZARD_UPDATE;
+		if (hazardType->fire)
 		{
-			die(state);
+			// Explanation for how fire works is at the end of battlehazard.h
+			if (power > 0)
+			{
+				age -= 6;
+				if (age <= 10)
+				{
+					power = -power;
+				}
+			}
+			else
+			{
+				age += 10;
+			}
+			power += power / std::abs(power);
+			if (power % 2)
+			{
+				applyEffect(state);
+				if (age < 120)
+				{
+					grow(state);
+				}
+			}
+			if (age >= 120)
+			{
+				die(state);
+			}
 		}
 		else
 		{
-			grow(state);
+			age++;
+			if (age % 2)
+			{
+				applyEffect(state);
+				updateTileVisionBlock(state);
+				if (age < lifetime)
+				{
+					grow(state);
+				}
+			}
+			if (age >= lifetime)
+			{
+				die(state);
+			}
 		}
 	}
 }

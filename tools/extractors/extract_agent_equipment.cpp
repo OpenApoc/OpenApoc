@@ -234,9 +234,10 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 		UString id = format("%s%s", HazardType::getPrefix(), "FIRE");
 		auto h = mksp<HazardType>();
 		h->doodadType = {&state, "DOODAD_17_FIRE"};
-		// FIXME: Confirm these values
-		h->minLifetime = 6;
-		h->maxLifetime = 10;
+		// Fire has a starting deviation of 0 to 2, fire's ttl works in a completely differnt way
+		h->minLifetime = 0;
+		h->maxLifetime = 1;
+		h->fire = true;
 		h->sound = fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/burning.raw:22050");
 		state.hazard_types[id] = h;
 	}

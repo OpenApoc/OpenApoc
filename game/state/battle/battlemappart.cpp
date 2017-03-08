@@ -139,6 +139,32 @@ int BattleMapPart::getAnimationFrame()
 	}
 }
 
+bool BattleMapPart::applyBurning(GameState &state)
+{
+	if (this->falling)
+	{
+		// Already falling, just continue
+		return false;
+	}
+	if (!canBurn())
+	{
+		// Cannot burn, ignore
+		return false;
+	}
+
+	burnTicksAccumulated += TICKS_PER_HAZARD_UPDATE * 2;
+	if (!canBurn())
+	{
+		die(state);
+	}
+	return true;
+}
+
+bool BattleMapPart::canBurn()
+{
+	return type->fire_resist < 255 && type->fire_burn_time < 255 && burnTicksAccumulated < type->fire_burn_time * TICKS_PER_SECOND;
+}
+
 bool BattleMapPart::applyDamage(GameState &state, int power, StateRef<DamageType> damageType)
 {
 	if (!this->tileObject)

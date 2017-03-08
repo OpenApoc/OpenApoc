@@ -48,6 +48,7 @@ class DamageType;
 class AIDecision;
 class AIAction;
 class AIMovement;
+enum class DamageSource;
 
 enum class MovementMode
 {
@@ -169,7 +170,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Fire debuff timer
 	int fireDebuffTicksAccumulated = 0;
 	// Fire debuff intensity remaining
-	int fireDebuffIntensity = 0;
+	int fireDebuffTicksRemaining = 0;
 
 	// User set modes
 
@@ -408,7 +409,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	                              Vec3<float> direction);
 	// Returns true if sound and doodad were handled by it
 	bool applyDamage(GameState &state, int power, StateRef<DamageType> damageType,
-	                 BodyPart bodyPart);
+	                 BodyPart bodyPart, DamageSource source);
 	// Returns true if sound and doodad were handled by it
 	bool handleCollision(GameState &state, Collision &c);
 
@@ -445,6 +446,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Following members are not serialized, but rather are set in initBattle method
 
 	sp<std::vector<sp<Image>>> strategyImages;
+	StateRef<DoodadType> burningDoodad;
 	sp<std::list<sp<Sample>>> genericHitSounds;
 	sp<TileObjectBattleUnit> tileObject;
 	sp<TileObjectShadow> shadowObject;

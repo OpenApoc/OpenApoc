@@ -468,6 +468,7 @@
 		<member>strategyImages</member>
 		<member>loadingImage</member>
 		<member>focusArrows</member>
+		<member>burningDoodad</member>
 	</object>
 	<object>
 		<name>BattleCommonSampleList</name>
@@ -528,7 +529,7 @@
 		<member>enzymeDebuffTicksAccumulated</member>
 		<member>fireDebuffTicksAccumulated</member>
 		<member>enzymeDebuffIntensity</member>
-		<member>fireDebuffIntensity</member>
+		<member>fireDebuffTicksRemaining</member>
 		<member>behavior_mode</member>
 		<member>fire_aiming_mode</member>
 		<member>fire_permission_mode</member>
@@ -585,7 +586,7 @@
 		<member>age</member>
 		<member>frame</member>
 		<member>ticksUntilNextFrameChange</member>
-		<member>ticksUntilNextEffect</member>
+		<member>ticksUntilNextUpdate</member>
 	</object>
 	<object>
 		<name>BattleExplosion</name>
@@ -607,6 +608,7 @@
 		<member>alternative_type</member>
 		<member>position</member>
 		<member>ticksUntilCollapse</member>
+		<member>burnTicksAccumulated</member>
 		<member>damaged</member>
 		<member>falling</member>
 		<member>fallingSpeed</member>
@@ -756,6 +758,7 @@
 		<member>sound</member>
 		<member>minLifetime</member>
 		<member>maxLifetime</member>
+		<member>fire</member>
 	</object>
 	<enum>
 		<name>DamageType::BlockType</name>

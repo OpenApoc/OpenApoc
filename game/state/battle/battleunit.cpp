@@ -825,7 +825,7 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 }
 
 bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> damageType,
-	BodyPart bodyPart)
+	BodyPart bodyPart, DamageSource source)
 {
 	if (damageType->doesImpactDamage())
 	{
@@ -839,6 +839,24 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	{
 		power = 2;
 		damage = randDamage050150(state.rng, power);
+	}
+	else if (damageType->effectType == DamageType::EffectType::Fire)
+	{
+		switch (source)
+		{
+			case DamageSource::Impact:
+			{
+				static const std::list<int> damageDistribution = { 0,5,6,7,8,9,10 };
+				damage = listRandomiser(state.rng, damageDistribution);
+				break;
+			}
+			case DamageSource::Hazard:
+				damage = randBoundsInclusive(state.rng, 1, 12);
+				break;
+			case DamageSource::Debuff:
+				damage = randBoundsInclusive(state.rng, 5, 10);
+				break;
+		}
 	}
 	else if (damageType->explosive) // explosive deals 50-150% damage
 	{
@@ -879,7 +897,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 		enzymeDebuffTicksAccumulated = TICKS_PER_ENZYME_EFFECT;
 	}
 
-	// Calculate damage to armor type
+	// Find out armor type
 	auto armor = agent->getArmor(bodyPart);
 	int armorValue = 0;
 	StateRef<DamageModifier> damageModifier;
@@ -893,9 +911,32 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 		armorValue = agent->type->armor.at(bodyPart);
 		damageModifier = agent->type->damage_modifier;
 	}
+
+	// Catch on fire
+	if (damageType->effectType == DamageType::EffectType::Fire)
+	{
+		bool catchOnFire = false;
+		switch (source)
+		{
+		case DamageSource::Impact:
+			catchOnFire = damage > 0;
+			break;
+		case DamageSource::Hazard:
+			catchOnFire = randBoundsExclusive(state.rng, 0, 100) < damageType->dealDamage(40, damageModifier);
+			break;
+		case DamageSource::Debuff:
+			break;
+		}
+		if (catchOnFire)
+		{
+			fireDebuffTicksRemaining = damageType->dealDamage(5 * TICKS_PER_TURN, damageModifier);
+			fireDebuffTicksAccumulated = 0;
+		}
+	}
 	// Smoke ignores armor value but does not ignore damage modifier
 	damage = damageType->dealDamage(damage, damageModifier) -
 		(damageType->ignoresArmorValue() ? 0 : armorValue);
+	
 
 	// No damage
 	if (damage <= 0)
@@ -983,7 +1024,7 @@ bool BattleUnit::handleCollision(GameState &state, Collision &c)
 
 		return applyDamage(
 		    state, projectile->damage, projectile->damageType,
-		    determineBodyPartHit(projectile->damageType, c.position, projectile->getVelocity()));
+		    determineBodyPartHit(projectile->damageType, c.position, projectile->getVelocity()), DamageSource::Impact);
 	}
 	return false;
 }
@@ -1105,6 +1146,22 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 	}
 
 	// Process fire
+	if (fireDebuffTicksRemaining > 0)
+	{
+		fireDebuffTicksAccumulated += ticks;
+		while (fireDebuffTicksAccumulated >= TICKS_PER_FIRE_EFFECT && fireDebuffTicksRemaining > 0)
+		{
+			fireDebuffTicksAccumulated -= TICKS_PER_FIRE_EFFECT;
+
+			// Damage (power is irrelevant here)
+
+			applyDamage(state, 1, { &state, "DAMAGETYPE_INCENDIARY" }, BodyPart::Body, DamageSource::Debuff);
+
+			// Finally, reduce debuff
+
+			fireDebuffTicksRemaining -= TICKS_PER_FIRE_EFFECT;
+		}
+	}
 }
 
 void BattleUnit::updateEvents(GameState &state)
@@ -2232,6 +2289,11 @@ void BattleUnit::requestGiveWay(const BattleUnit &requestor,
 void BattleUnit::executeGroupAIDecision(GameState &state, AIDecision &decision,
                                         std::list<StateRef<BattleUnit>> &units)
 {
+	if (units.size() == 1)
+	{
+		units.front()->executeAIDecision(state, decision);
+		return;
+	}
 	if (decision.action)
 	{
 		for (auto u : units)
@@ -2727,6 +2789,10 @@ void BattleUnit::beginHandStateChange(HandState state)
 	}
 	else
 	{
+		if (state == HandState::Aiming && current_movement_state != MovementState::None && current_body_state == BodyState::Prone)
+		{
+			LogError("WTF are you doing, trying to aim while moving prone!?");
+		}
 		setHandState(state);
 	}
 	aiming_ticks_remaining = 0;

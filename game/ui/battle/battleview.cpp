@@ -21,6 +21,7 @@
 #include "game/state/battle/ai/ai.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleitem.h"
+#include "game/state/battle/battlehazard.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/battle/battleunit.h"
@@ -31,6 +32,7 @@
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"
+#include "game/state/tileview/tileobject_battlehazard.h"
 #include "game/ui/base/basescreen.h"
 #include "game/ui/general/ingameoptions.h"
 #include "library/sp.h"
@@ -1981,13 +1983,13 @@ void BattleView::eventOccurred(Event *e)
 								auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)
 								              ->getOwner();
 								debug += format(
-								    "\n[%s] SBT %d STATUS %s", mp->type.id,
+								    "\n[%s] SBT %d STATUS %s\nFIRE Res=%d Tim=%d Burned=%D", mp->type.id,
 								    mp->type->getVanillaSupportedById(),
 								    !mp->isAlive()
 								        ? "DEAD "
 								        : (mp->damaged
 								               ? "DAMAGED"
-								               : (mp->providesHardSupport ? "HARD " : "SOFT ")));
+								               : (mp->providesHardSupport ? "HARD " : "SOFT ")), mp->type->fire_resist, mp->type->fire_burn_time, mp->burnTicksAccumulated);
 								for (int x = t.x - 1; x <= t.x + 1; x++)
 								{
 									for (int y = t.y - 1; y <= t.y + 1; y++)
@@ -2026,6 +2028,13 @@ void BattleView::eventOccurred(Event *e)
 										}
 									}
 								}
+							}
+							if (o->getType() == TileObject::Type::Hazard)
+							{
+								auto h = std::static_pointer_cast<TileObjectBattleHazard>(o)
+									->getHazard();
+								debug += format(
+									"\nHazard %s %s Pow=%d Age=%d LT=%d  ", h->damageType.id, h->damageType->hazardType.id, h->power, h->age, h->lifetime);
 							}
 						}
 
