@@ -1042,6 +1042,67 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 {
 	// FIXME: Regenerate stamina
 
+	// Morale
+	if (moraleStateTicksRemaining > 0)
+	{
+		if (moraleStateTicksRemaining > ticks)
+		{
+			moraleStateTicksRemaining -= ticks;
+		}
+		else
+		{
+			// It seems in Apoc unit keeps panicking until reaches positive morale
+			if (agent->modified_stats.morale >= 50)
+			{
+				moraleStateTicksRemaining = 0;
+				moraleState = MoraleState::Normal;
+				stopAttacking();
+				cancelMissions(state, true);
+				aiList.reset(state, *this);
+			}
+			else
+			{
+				moraleStateTicksRemaining += TICKS_PER_LOWMORALE_STATE - ticks;
+				agent->modified_stats.morale += 15;
+			}
+		}
+	}
+	else
+	{
+		moraleTicksAccumulated += ticks;
+		while (moraleTicksAccumulated >= LOWMORALE_CHECK_INTERVAL)
+		{
+			moraleTicksAccumulated -= LOWMORALE_CHECK_INTERVAL;
+
+			if (randBoundsExclusive(state.rng, 0, 100) < 100 - 2 * agent->modified_stats.morale)
+			{
+				moraleStateTicksRemaining = TICKS_PER_LOWMORALE_STATE;
+				moraleState = (MoraleState)randBoundsInclusive(state.rng, 1, 3);
+				agent->modified_stats.morale += 15;
+				stopAttacking();
+				cancelMissions(state, true);
+				aiList.reset(state, *this);
+				// Have a chance to drop items in hand
+				if (moraleState != MoraleState::Berserk)
+				{
+					if (randBool(state.rng))
+					{
+						auto e1 = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+						auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+						if (e1)
+						{
+							addMission(state, BattleUnitMission::dropItem(*this, e1));
+						}
+						if (e2)
+						{
+							addMission(state, BattleUnitMission::dropItem(*this, e2));
+						}
+					}
+				}
+			}
+		}
+	}
+
 	// Stun removal
 	if (stunDamageInTicks > 0)
 	{
@@ -2014,8 +2075,8 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 				}
 			}
 
-			// If fired weapon at ground or ally - stop firing that hand
-			if (weaponFired && (targetingMode != TargetingMode::Unit || targetUnit->owner == owner))
+			// If fired weapon at ground or ally - stop firing that hand (unless zerking, in which case go on)
+			if (weaponFired && moraleState != MoraleState::Berserk && (targetingMode != TargetingMode::Unit || targetUnit->owner == owner))
 			{
 				switch (weaponStatus)
 				{
@@ -2570,11 +2631,14 @@ void BattleUnit::tryToRiseUp(GameState &state)
 
 void BattleUnit::dropDown(GameState &state)
 {
+	// Reset state
 	aiList.reset(state, *this);
 	resetGoal();
 	setMovementState(MovementState::None);
 	setHandState(HandState::AtEase);
 	setBodyState(state, target_body_state);
+	fireDebuffTicksRemaining = 0;
+	enzymeDebuffIntensity = 0;
 	// Check if we can drop from current state
 	while (agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
 	                                                    BodyState::Downed, current_hand_state,
@@ -2616,20 +2680,7 @@ void BattleUnit::dropDown(GameState &state)
 			addMission(state, BattleUnitMission::dropItem(*this, agent->equipment.front()));
 		}
 	}
-	// Drop gear used by missions
-	std::list<sp<AEquipment>> itemsToDrop;
-	for (auto &m : missions)
-	{
-		if (m->item && m->item->ownerAgent)
-		{
-			itemsToDrop.push_back(m->item);
-		}
-	}
-	missions.clear();
-	for (auto it : itemsToDrop)
-	{
-		addMission(state, BattleUnitMission::dropItem(*this, it));
-	}
+	cancelMissions(state, true);
 	addMission(state, BattleUnitMission::changeStance(*this, BodyState::Downed));
 
 	// Remove from list of visible units
@@ -2997,83 +3048,104 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission::Type type)
 	return false;
 }
 
-bool BattleUnit::cancelMissions(GameState &state)
+bool BattleUnit::cancelMissions(GameState &state, bool forced)
 {
-	if (popFinishedMissions(state))
+	if (forced)
 	{
-		// Unit retreated
-		return false;
+		// Drop gear used by missions
+		std::list<sp<AEquipment>> itemsToDrop;
+		for (auto &m : missions)
+		{
+			if (m->item && m->item->ownerAgent)
+			{
+				itemsToDrop.push_back(m->item);
+			}
+		}
+		missions.clear();
+		for (auto it : itemsToDrop)
+		{
+			addMission(state, BattleUnitMission::dropItem(*this, it));
+		}
 	}
-	if (missions.empty())
+	else
 	{
-		return true;
-	}
 
-	// Figure out if we can cancel the mission in front
-	bool letFinish = false;
-	switch (missions.front()->type)
-	{
-		// Missions that cannot be cancelled
+		if (popFinishedMissions(state))
+		{
+			// Unit retreated
+			return false;
+		}
+		if (missions.empty())
+		{
+			return true;
+		}
+
+		// Figure out if we can cancel the mission in front
+		bool letFinish = false;
+		switch (missions.front()->type)
+		{
+			// Missions that cannot be cancelled
 		case BattleUnitMission::Type::ThrowItem:
 			return false;
-		// Drop Item can only be cancelled if item is in agent's inventory
+			// Drop Item can only be cancelled if item is in agent's inventory
 		case BattleUnitMission::Type::DropItem:
 			if (missions.front()->item && !missions.front()->item->ownerAgent)
 			{
 				return false;
 			}
 			break;
-		// Missions that must be let finish (unless forcing)
+			// Missions that must be let finish (unless forcing)
 		case BattleUnitMission::Type::ChangeBodyState:
 		case BattleUnitMission::Type::Turn:
 		case BattleUnitMission::Type::GotoLocation:
 		case BattleUnitMission::Type::ReachGoal:
 			letFinish = true;
 			break;
-		// Missions that can be cancelled
+			// Missions that can be cancelled
 		case BattleUnitMission::Type::Snooze:
 		case BattleUnitMission::Type::Teleport:
 		case BattleUnitMission::Type::RestartNextMission:
 		case BattleUnitMission::Type::AcquireTU:
 			break;
-	}
+		}
 
-	// Figure out what to do with the unfinished mission
-	if (letFinish)
-	{
-		auto &m = missions.front();
-		// If turning - downgrade to a turning mission
-		if (facing != goalFacing)
+		// Figure out what to do with the unfinished mission
+		if (letFinish)
 		{
-			m->type = BattleUnitMission::Type::Turn;
-			m->targetFacing = goalFacing;
-			if (m->costPaidUpFront > 0)
+			auto &m = missions.front();
+			// If turning - downgrade to a turning mission
+			if (facing != goalFacing)
 			{
-				// Refund queued action, subtract turning cost
-				agent->modified_stats.time_units += m->costPaidUpFront - 1;
+				m->type = BattleUnitMission::Type::Turn;
+				m->targetFacing = goalFacing;
+				if (m->costPaidUpFront > 0)
+				{
+					// Refund queued action, subtract turning cost
+					agent->modified_stats.time_units += m->costPaidUpFront - 1;
+				}
+			}
+			// If changing body - downgrade to a body state change mission
+			else if (current_body_state != target_body_state)
+			{
+				m->type = BattleUnitMission::Type::ChangeBodyState;
+				m->targetBodyState = target_body_state;
+			}
+			else
+			{
+				letFinish = false;
 			}
 		}
-		// If changing body - downgrade to a body state change mission
-		else if (current_body_state != target_body_state)
-		{
-			m->type = BattleUnitMission::Type::ChangeBodyState;
-			m->targetBodyState = target_body_state;
-		}
-		else
-		{
-			letFinish = false;
-		}
-	}
 
-	// Cancel missions
-	while (missions.size() > (letFinish ? 1 : 0))
-	{
-		agent->modified_stats.time_units += missions.back()->costPaidUpFront;
-		missions.pop_back();
-	}
-	if (missions.empty() && !atGoal)
-	{
-		addMission(state, BattleUnitMission::Type::ReachGoal);
+		// Cancel missions
+		while (missions.size() > (letFinish ? 1 : 0))
+		{
+			agent->modified_stats.time_units += missions.back()->costPaidUpFront;
+			missions.pop_back();
+		}
+		if (missions.empty() && !atGoal)
+		{
+			addMission(state, BattleUnitMission::Type::ReachGoal);
+		}
 	}
 	return true;
 }

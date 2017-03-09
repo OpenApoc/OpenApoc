@@ -39,7 +39,9 @@ static const unsigned TICKS_PER_WOUND_EFFECT = TICKS_PER_TURN;
 static const unsigned TICKS_PER_ENZYME_EFFECT = TICKS_PER_SECOND / 9; 
 static const unsigned TICKS_PER_FIRE_EFFECT = TICKS_PER_SECOND;
 // FIXME: Ensure correct
-static const unsigned TICKS_PER_LOWMORALE = TICKS_PER_TURN;
+static const unsigned TICKS_PER_LOWMORALE_STATE = TICKS_PER_TURN;
+// FIXME: Ensure correct
+static const unsigned LOWMORALE_CHECK_INTERVAL = TICKS_PER_TURN;
 // How frequently unit tracks its target
 static const unsigned LOS_CHECK_INTERVAL_TRACKING = TICKS_PER_SECOND / 4;
 
@@ -169,20 +171,24 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	BodyPart healingBodyPart = BodyPart::Body;
 	// Is using a medikit
 	bool isHealing = false;
-	// Ticks until next wound damage or medikit heal is applied
+	// Ticks towards next wound damage or medikit heal application
 	unsigned woundTicksAccumulated = 0;
 	// Stun damage acquired
 	int stunDamageInTicks = 0;
-	// Enzyme debuff time until next hit
+	// Ticks accumulated towards next enzyme hit
 	int enzymeDebuffTicksAccumulated = 0;
 	// Enzyme debuff intensity remaining
 	int enzymeDebuffIntensity = 0;
-	// Fire debuff timer
+	// Ticks accumulated towards next fire hit
 	int fireDebuffTicksAccumulated = 0;
 	// Fire debuff intensity remaining
 	int fireDebuffTicksRemaining = 0;
 	// State of unit's morale
 	MoraleState moraleState = MoraleState::Normal;
+	// How much time unit has to spend in low morale state
+	int moraleStateTicksRemaining = 0;
+	// Ticks accumulated towards next morale check
+	int moraleTicksAccumulated = 0;
 
 	// User set modes
 
@@ -342,7 +348,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	bool addMission(GameState &state, BattleUnitMission *mission, bool toBack = false);
 	bool addMission(GameState &state, BattleUnitMission::Type type);
 	// Attempt to cancel all unit missions, returns true if successful
-	bool cancelMissions(GameState &state);
+	bool cancelMissions(GameState &state, bool forced = false);
 	// Attempt to give unit a new mission, replacing others, returns true if successful
 	bool setMission(GameState &state, BattleUnitMission *mission);
 

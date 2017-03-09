@@ -1681,7 +1681,8 @@ void BattleView::eventOccurred(Event *e)
 	     e->keyboard().KeyCode == SDLK_LSHIFT || e->keyboard().KeyCode == SDLK_RALT ||
 	     e->keyboard().KeyCode == SDLK_LALT || e->keyboard().KeyCode == SDLK_RCTRL ||
 	     e->keyboard().KeyCode == SDLK_LCTRL || e->keyboard().KeyCode == SDLK_f ||
-	     e->keyboard().KeyCode == SDLK_r || e->keyboard().KeyCode == SDLK_a))
+	     e->keyboard().KeyCode == SDLK_r || e->keyboard().KeyCode == SDLK_a
+			|| e->keyboard().KeyCode == SDLK_p))
 	{
 		switch (e->keyboard().KeyCode)
 		{
@@ -1756,6 +1757,17 @@ void BattleView::eventOccurred(Event *e)
 			{
 				revealWholeMap = !revealWholeMap;
 				break;
+			}
+			case SDLK_p:
+			{
+				LogWarning("Panic mode engaged!");
+				for (auto &u : battle.units)
+				{
+					if (u.second->isConscious())
+					{
+						u.second->agent->modified_stats.morale = 25;
+					}
+				}
 			}
 			case SDLK_a:
 			{

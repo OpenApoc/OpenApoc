@@ -13,20 +13,36 @@ bool test_gamestate_serialization_roundtrip(sp<GameState> state, UString save_na
 {
 	if (!state->saveGame(save_name))
 	{
-		LogError("Failed to save packed gamestate");
+		LogWarning("Failed to save packed gamestate");
 		return false;
 	}
 
 	auto read_gamestate = mksp<GameState>();
 	if (!read_gamestate->loadGame(save_name))
 	{
-		LogError("Failed to load packed gamestate");
+		LogWarning("Failed to load packed gamestate");
 		return false;
 	}
 
 	if (*state != *read_gamestate)
 	{
-		LogError("Gamestate changed over serialization");
+		LogWarning("Gamestate changed over serialization");
+		if (*state->current_battle != *read_gamestate->current_battle)
+		{
+			LogWarning("Battle changed over serialization");
+			
+			if (*state->current_battle->units != *read_gamestate->current_battle->units)
+			{
+				LogWarning("Units changed over serialization");
+			}		
+			
+			if (*state->current_battle->aiBlock != *read_gamestate->current_battle->aiBlock)
+			{
+				LogWarning("AiBlock changed over serialization");
+			}		
+			
+		}
+		
 		return false;
 	}
 	return true;
@@ -41,7 +57,7 @@ bool test_gamestate_serialization(sp<GameState> state)
 	LogInfo("Writing temp state to \"%s\"", pathString);
 	if (!test_gamestate_serialization_roundtrip(state, pathString))
 	{
-		LogError("Packed save test failed");
+		LogWarning("Packed save test failed");
 		return false;
 	}
 

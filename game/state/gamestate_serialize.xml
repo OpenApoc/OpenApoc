@@ -531,6 +531,8 @@
 		<member>enzymeDebuffIntensity</member>
 		<member>fireDebuffTicksRemaining</member>
 		<member>moraleState</member>
+		<member>moraleStateTicksRemaining</member>
+		<member>moraleTicksAccumulated</member>
 		<member>behavior_mode</member>
 		<member>fire_aiming_mode</member>
 		<member>fire_permission_mode</member>

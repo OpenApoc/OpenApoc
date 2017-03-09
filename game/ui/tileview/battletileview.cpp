@@ -111,6 +111,13 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
 	                                                   196)));
 
+	lowMoraleIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal",
+		197)));
+	lowMoraleIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal",
+		198)));
+
 	targetLocationIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
 	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
@@ -242,7 +249,9 @@ void BattleTileView::render()
 	// Rotate Icons
 	{
 		healingIconTicksAccumulated++;
-		healingIconTicksAccumulated %= healingIcons.size() * HEALING_ICONS_ANIMATION_DELAY;
+		healingIconTicksAccumulated %= 2 * HEALING_ICON_ANIMATION_DELAY;
+		lowMoraleIconTicksAccumulated++;
+		lowMoraleIconTicksAccumulated %= 2 * LOWMORALE_ICON_ANIMATION_DELAY;
 		iconAnimationTicksAccumulated++;
 		iconAnimationTicksAccumulated %= targetLocationIcons.size() * TARGET_ICONS_ANIMATION_DELAY;
 		focusAnimationTicksAccumulated++;
@@ -440,6 +449,8 @@ void BattleTileView::render()
 			}
 			auto &waypointImageSource = darkenWaypoints ? waypointDarkIcons : waypointIcons;
 
+			static const Vec2<float> offsetMorale = { -7.0f, -1.0f };
+
 			for (int z = zFrom; z < zTo; z++)
 			{
 				int currentLevel = z - battle.battleViewZLevel + 1;
@@ -541,6 +552,8 @@ void BattleTileView::render()
 								auto &obj = tile->drawnObjects[layer][obj_id];
 								bool friendly = false;
 								bool hostile = false;
+								bool unitLowMorale = false;
+								Vec2<float> unitLowMoralePos;
 								bool objectVisible = visible;
 								switch (obj->getType())
 								{
@@ -572,6 +585,14 @@ void BattleTileView::render()
 										friendly = u->owner == battle.currentPlayer;
 										hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 										          Organisation::Relation::Hostile;
+										if (u->moraleState != MoraleState::Normal)
+										{
+											unitLowMorale = true;
+											unitLowMoralePos = tileToOffsetScreenCoords(
+												u->getPosition() +
+												Vec3<float>{0.0f, 0.0f,
+												(u->getCurrentHeight() - 4.0f) * 1.5f / 40.0f}) + offsetMorale;
+										}
 										if (!battle.battleViewSelectedUnits.empty())
 										{
 											auto selectedPos =
@@ -619,6 +640,12 @@ void BattleTileView::render()
 								obj->draw(r, *this, pos, this->viewMode,
 								          revealWholeMap || objectVisible, currentLevel, friendly,
 								          hostile);
+								if (unitLowMorale)
+								{
+									r.draw(lowMoraleIcons[lowMoraleIconTicksAccumulated /
+										LOWMORALE_ICON_ANIMATION_DELAY],unitLowMoralePos);
+
+								}
 								// Loop ends when "break" is reached above
 								obj_id++;
 							} while (true);
@@ -692,6 +719,8 @@ void BattleTileView::render()
 								bool friendly = false;
 								bool hostile = false;
 								bool draw = false;
+								bool unitLowMorale = false;
+								Vec2<float> unitLowMoralePos;
 								switch (obj->getType())
 								{
 									case TileObject::Type::Unit:
@@ -712,6 +741,14 @@ void BattleTileView::render()
 											hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 											          Organisation::Relation::Hostile;
 											draw = true;
+											if (u->moraleState != MoraleState::Normal)
+											{
+												unitLowMorale = true;
+												unitLowMoralePos = tileToOffsetScreenCoords(
+													u->getPosition() +
+													Vec3<float>{0.0f, 0.0f,
+													(u->getCurrentHeight() - 4.0f) * 1.5f / 40.0f}) + offsetMorale;
+											}
 											if (!battle.battleViewSelectedUnits.empty())
 											{
 												auto selectedPos = std::find(
@@ -785,7 +822,13 @@ void BattleTileView::render()
 									Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
 									obj->draw(r, *this, pos, this->viewMode,
 									          revealWholeMap || objectVisible, currentLevel,
-									          friendly, hostile);
+									          friendly, hostile);								
+									if (unitLowMorale)
+									{
+										r.draw(lowMoraleIcons[lowMoraleIconTicksAccumulated /
+											LOWMORALE_ICON_ANIMATION_DELAY], unitLowMoralePos);
+										
+									}
 								}
 								// Loop ends when "break" is reached above
 								obj_id++;
@@ -844,7 +887,7 @@ void BattleTileView::render()
 					if (obj.first->isHealing)
 					{
 						r.draw(healingIcons[healingIconTicksAccumulated /
-						                    HEALING_ICONS_ANIMATION_DELAY],
+						                    HEALING_ICON_ANIMATION_DELAY],
 						       pos + offsetHealing);
 					}
 					else

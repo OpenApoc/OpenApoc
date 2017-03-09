@@ -182,20 +182,19 @@ AIDecision UnitAIList::think(GameState &state, BattleUnit &u)
 		auto result = ai->think(state, u);
 		auto newDecision = std::get<0>(result);
 		auto halt = std::get<1>(result);
-		if (newDecision.isEmpty())
+		if (!newDecision.isEmpty())
 		{
-			continue;
+			// We can keep last decision's movement if this one is action only,
+			// because that would mean this decision may be possible to be done on the move
+			// We cannot take last decision's action because it might override
+			// our move or maulfunction otherwise
+			if (!newDecision.movement && decision.movement)
+			{
+				newDecision.movement = decision.movement;
+			}
+			decision = newDecision;
+			decision.ai = ai->getName();
 		}
-		// We can keep last decision's movement if this one is action only,
-		// because that would mean this decision may be possible to be done on the move
-		// We cannot take last decision's action because it might override
-		// our move or maulfunction otherwise
-		if (!newDecision.movement && decision.movement)
-		{
-			newDecision.movement = decision.movement;
-		}
-		decision = newDecision;
-		decision.ai = ai->getName();
 		if (halt)
 		{
 			break;
@@ -715,11 +714,24 @@ AIDecision VanillaUnitAI::thinkInternal(GameState &state, BattleUnit &u)
 {
 	static const Vec3<int> NONE = {0, 0, 0};
 
-	if (u.getAIType() == AIType::None)
+	switch (u.getAIType())
 	{
-		return {};
+		case AIType::None:
+			return{};
+		case AIType::Civilian:
+			LogWarning("Implement Civilian Unit AI");
+			return{};
+		case AIType::PanicFreeze:
+		case AIType::PanicRun:
+		case AIType::Berserk:
+			LogError("Calling VanillaUnitAI on panic/berserk unit!?");
+			return{};
+		case AIType::Loner:
+		case AIType::Group:
+			// Go on below
+			break;
 	}
-
+	
 	// Clear actions that are done
 	if (lastDecision.action)
 	{
@@ -994,8 +1006,8 @@ std::tuple<AIDecision, bool> LowMoraleUnitAI::think(GameState &state, BattleUnit
 		return NULLTUPLE2;
 	}
 
-	LogError("Implement Low Morale AI");
-	return NULLTUPLE2;
+	LogWarning("Implement Low Morale AI");
+	return std::make_tuple(AIDecision(), true);
 }
 
 void DefaultUnitAI::reset(GameState &state, BattleUnit &u) {}
@@ -1275,7 +1287,7 @@ VanillaTacticalAI::think(GameState &state, StateRef<Organisation> o)
 			case AIType::PanicFreeze:
 			case AIType::PanicRun:
 			case AIType::Berserk:
-				LogError("TacticalAI called on a unit in panic/berserk state!?");
+				// Do nothing
 				continue;
 			case AIType::Loner:
 			case AIType::Group:
