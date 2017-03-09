@@ -27,16 +27,16 @@ bool test_gamestate_serialization_roundtrip(sp<GameState> state, UString save_na
 	if (*state != *read_gamestate)
 	{
 		LogWarning("Gamestate changed over serialization");
-		if (*state->current_battle != *read_gamestate->current_battle)
+		if (state->current_battle != read_gamestate->current_battle)
 		{
 			LogWarning("Battle changed over serialization");
 			
-			if (*state->current_battle->units != *read_gamestate->current_battle->units)
+			if (state->current_battle->units != read_gamestate->current_battle->units)
 			{
 				LogWarning("Units changed over serialization");
 			}		
 			
-			if (*state->current_battle->aiBlock != *read_gamestate->current_battle->aiBlock)
+			if (state->current_battle->aiBlock != read_gamestate->current_battle->aiBlock)
 			{
 				LogWarning("AiBlock changed over serialization");
 			}		
