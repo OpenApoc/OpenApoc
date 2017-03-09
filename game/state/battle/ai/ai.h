@@ -9,6 +9,8 @@
 #include "library/vec.h"
 #include <list>
 
+// --- Read note about serialization at the end of the file ---
+
 namespace OpenApoc
 {
 
@@ -137,7 +139,16 @@ enum class AIType
 class UnitAI
 {
   public:
-	virtual const UString getName() { return ""; };
+	enum class Type
+	{
+		LowMorale,
+		Default,
+		Behavior,
+		Vanilla,
+		Hardcore
+	};
+	Type type; // cannot hide because serializer won't work
+	virtual const UString getName();
 
 	// Wether AI is currently active
 	bool active = false;
@@ -192,7 +203,7 @@ class UnitAIList
 class LowMoraleUnitAI : public UnitAI
 {
   public:
-	const UString getName() override { return "LowMorale"; };
+	LowMoraleUnitAI();
 
 	void reset(GameState &state, BattleUnit &u) override;
 	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) override;
@@ -205,7 +216,7 @@ class LowMoraleUnitAI : public UnitAI
 class DefaultUnitAI : public UnitAI
 {
   public:
-	const UString getName() override { return "Default"; };
+	DefaultUnitAI();
 
 	int ticksAutoTurnAvailable = 0;
 	int ticksAutoTargetAvailable = 0;
@@ -224,7 +235,7 @@ class DefaultUnitAI : public UnitAI
 class BehaviorUnitAI : public UnitAI
 {
   public:
-	const UString getName() override { return "Behavior"; };
+	BehaviorUnitAI();
 
 	void reset(GameState &state, BattleUnit &u) override;
 	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) override;
@@ -238,7 +249,7 @@ class BehaviorUnitAI : public UnitAI
 class VanillaUnitAI : public UnitAI
 {
   public:
-	const UString getName() override { return "VanillaUnit"; };
+	VanillaUnitAI();
 
 	unsigned int ticksLastThink = 0;
 	// Value of 0 means we will not re-think based on timer
@@ -291,7 +302,7 @@ class VanillaUnitAI : public UnitAI
 class HardcoreUnitAI : public UnitAI
 {
   public:
-	const UString getName() override { return "Hardcore"; };
+	HardcoreUnitAI();
 
 	void reset(GameState &state, BattleUnit &u) { active = true; };
 	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) override { return {}; };
@@ -305,7 +316,12 @@ class HardcoreUnitAI : public UnitAI
 class TacticalAI
 {
   public:
-	virtual const UString getName() { return ""; };
+	enum class Type
+	{
+		Vanilla
+	};
+	Type type; // cannot hide because serializer won't work
+	const UString getName();
 
 	virtual void reset(GameState &state, StateRef<Organisation> o){};
 	virtual std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>>
@@ -333,7 +349,7 @@ class TacticalAIBlock
 class VanillaTacticalAI : public TacticalAI
 {
   public:
-	const UString getName() override { return "VanillaTactical"; };
+	VanillaTacticalAI();
 
 	void reset(GameState &state, StateRef<Organisation> o);
 	std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>>
@@ -346,3 +362,14 @@ class VanillaTacticalAI : public TacticalAI
 	                                                                              BattleUnit &u);
 };
 }
+
+/*
+// Alexey Andronov (Istrebitel):
+
+Due to the way OpenAPoc serializes things, we do not know what class is stored in the file. 
+So when we have a pointer to derived class stored in a pointer to base class, and we serialized it,
+we have no way of knowing which class is stored there.
+Therefore, every AI has to have a UString attached to it that is it's class name, and method in 
+gamestate_serialize needs to be updated for any new AI introduced.
+
+*/

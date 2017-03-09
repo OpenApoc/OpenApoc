@@ -37,6 +37,7 @@ class SerializeObject
 	std::list<std::pair<std::string, SerializeNode>> members;
 	SerializeObject(std::string name) : name(name) {}
 	bool external = false;
+	bool full = false;
 };
 
 class SerializeEnum
@@ -121,6 +122,20 @@ bool readXml(std::istream &in, StateDefinition &state)
 						{
 							std::cerr << "Unknown object external attribute \"" << externalValue
 							          << "\"\n";
+						}
+					}
+					auto fullAttr = objectNode.attribute("full");
+					if (!fullAttr.empty())
+					{
+						std::string fullValue = fullAttr.as_string();
+						if (fullValue == "true")
+						{
+							obj.full = true;
+						}
+						else
+						{
+							std::cerr << "Unknown object full attribute \"" << fullValue
+								<< "\"\n";
 						}
 					}
 					auto memberNode = objectNode.first_child();
@@ -308,9 +323,18 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 					newNodeFn = "addSection";
 					break;
 			}
-			out << "\tif (obj." << member.first << " != ref." << member.first << ")" << serializeFn
-			    << "(node->" << newNodeFn << "(\"" << member.first << "\"), obj." << member.first
-			    << ", ref." << member.first << ");\n";
+			if (object.full)
+			{
+				out << "\t" << serializeFn
+					<< "(node->" << newNodeFn << "(\"" << member.first << "\"), obj." << member.first
+					<< ", ref." << member.first << ");\n";
+			}
+			else
+			{
+				out << "\tif (obj." << member.first << " != ref." << member.first << ")" << serializeFn
+					<< "(node->" << newNodeFn << "(\"" << member.first << "\"), obj." << member.first
+					<< ", ref." << member.first << ");\n";
+			}
 		}
 
 		out << "}\n";

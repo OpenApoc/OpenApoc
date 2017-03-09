@@ -674,8 +674,17 @@ bool BattleUnit::isAIControlled(GameState &state) const
 
 AIType BattleUnit::getAIType() const
 {
-	// FIXME: Check if unit's panicking or berserk
-	return agent->type->aiType;
+	switch (moraleState)
+	{
+		case MoraleState::Normal:
+			return agent->type->aiType;
+		case MoraleState::PanicFreeze:
+			return AIType::PanicFreeze;
+		case MoraleState::PanicRun:
+			return AIType::PanicRun;
+		case MoraleState::Berserk:
+			return AIType::Berserk;
+	}
 }
 
 bool BattleUnit::canFly() const

@@ -530,6 +530,7 @@
 		<member>fireDebuffTicksAccumulated</member>
 		<member>enzymeDebuffIntensity</member>
 		<member>fireDebuffTicksRemaining</member>
+		<member>moraleState</member>
 		<member>behavior_mode</member>
 		<member>fire_aiming_mode</member>
 		<member>fire_permission_mode</member>
@@ -1409,6 +1410,25 @@
 		<value>TakeCover</value>
 		<value>Retreat</value>
 	</enum>
+	<enum>
+		<name>UnitAI::Type</name>
+		<value>LowMorale</value>
+		<value>Default</value>
+		<value>Behavior</value>
+		<value>Vanilla</value>
+		<value>Hardcore</value>
+	</enum>
+	<enum>
+		<name>TacticalAI::Type</name>
+		<value>Vanilla</value>
+	</enum>
+	<enum>
+		<name>MoraleState</name>
+		<value>Normal</value>
+		<value>PanicFreeze</value>
+		<value>PanicRun</value>
+		<value>Berserk</value>
+	</enum>
 	<object>
 		<name>AIAction</name>
 		<member>type</member>
@@ -1428,31 +1448,35 @@
 		<member>action</member>
 		<member>movement</member>
 	</object>
-	<object>
-		<name>UnitAI</name>
-		<member>active</member>
-	</object>
-	<object>
+	<object full="true">
 		<name>UnitAIList</name>
 		<member>aiList</member>
 		<member>aiMap</member>
 		<member>ticksLastThink</member>
 		<member>ticksUntilReThink</member>
 	</object>
-	<object>
+	<object external="true" full="true">
 		<name>LowMoraleUnitAI</name>
+		<member>type</member>
+		<member>active</member>
 	</object>
-	<object>
+	<object external="true" full="true">
 		<name>DefaultUnitAI</name>
+		<member>type</member>
+		<member>active</member>
 		<member>ticksAutoTurnAvailable</member>
 		<member>ticksAutoTargetAvailable</member>
 		<member>attackerPosition</member>
 	</object>
-	<object>
+	<object external="true" full="true">
 		<name>BehaviorUnitAI</name>
+		<member>type</member>
+		<member>active</member>
 	</object>
-	<object>
+	<object external="true" full="true">
 		<name>VanillaUnitAI</name>
+		<member>type</member>
+		<member>active</member>
 		<member>ticksLastThink</member>
 		<member>ticksUntilReThink</member>
 		<member>lastDecision</member>
@@ -1461,17 +1485,20 @@
 		<member>attackerPosition</member>
 		<member>lastSeenEnemyPosition</member>
 	</object>
-	<object>
-		<name>TacticalAI</name>
+	<object external="true" full="true">
+		<name>HardcoreUnitAI</name>
+		<member>type</member>
+		<member>active</member>
 	</object>
-	<object>
+	<object full="true">
 		<name>TacticalAIBlock</name>
 		<member>aiList</member>
 		<member>ticksLastThink</member>
 		<member>ticksUntilReThink</member>
 	</object>
-	<object>
+	<object external="true" full="true">
 		<name>VanillaTacticalAI</name>
+		<member>type</member>
 		<member>ticksLastThink</member>
 		<member>ticksUntilReThink</member>
 	</object>

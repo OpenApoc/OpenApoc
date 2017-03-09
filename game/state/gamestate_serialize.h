@@ -344,6 +344,7 @@ void serializeOut(sp<SerializationNode> node, const VoxelMap &map, const VoxelMa
 void serializeOut(sp<SerializationNode> node, const Colour &c, const Colour &ref);
 void serializeOut(sp<SerializationNode> node, const Xorshift128Plus<uint32_t> &t,
                   const Xorshift128Plus<uint32_t> &ref);
+
 template <typename T>
 void serializeOut(sp<SerializationNode> node, const StateRef<T> &val, const StateRef<T> &)
 {
@@ -536,5 +537,19 @@ void serializeOut(sp<SerializationNode> node, const std::vector<T> &vector, cons
 	uint64_t sizeHintDefault = 0;
 	serializeOut(node->addNode("sizeHint"), sizeHint, sizeHintDefault);
 }
+
+void serializeIn(const GameState *state, sp<SerializationNode> node, UnitAI::Type &val);
+void serializeIn(const GameState *, sp<SerializationNode> node, sp<UnitAI> &ai);
+
+void serializeIn(const GameState *state, sp<SerializationNode> node, TacticalAI::Type &val);
+void serializeIn(const GameState *, sp<SerializationNode> node, sp<TacticalAI> &ai);
+
+void serializeOut(sp<SerializationNode> node, const sp<UnitAI> &ptr, const sp<UnitAI> &ref);
+bool operator==(const UnitAI &a, const UnitAI &b);
+bool operator!=(const UnitAI &a, const UnitAI &b);
+
+void serializeOut(sp<SerializationNode> node, const sp<TacticalAI> &ptr, const sp<TacticalAI> &ref);
+bool operator==(const TacticalAI &a, const TacticalAI &b);
+bool operator!=(const TacticalAI &a, const TacticalAI &b);
 
 } // namespace OpenApoc

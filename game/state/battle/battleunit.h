@@ -38,6 +38,8 @@ namespace OpenApoc
 static const unsigned TICKS_PER_WOUND_EFFECT = TICKS_PER_TURN;
 static const unsigned TICKS_PER_ENZYME_EFFECT = TICKS_PER_SECOND / 9; 
 static const unsigned TICKS_PER_FIRE_EFFECT = TICKS_PER_SECOND;
+// FIXME: Ensure correct
+static const unsigned TICKS_PER_LOWMORALE = TICKS_PER_TURN;
 // How frequently unit tracks its target
 static const unsigned LOS_CHECK_INTERVAL_TRACKING = TICKS_PER_SECOND / 4;
 
@@ -85,6 +87,14 @@ enum class WeaponStatus
 	FiringLeftHand,
 	FiringRightHand,
 	FiringBothHands
+};
+
+enum class MoraleState
+{
+	Normal,
+	PanicFreeze,
+	PanicRun,
+	Berserk
 };
 
 static const std::list<BattleUnitType> BattleUnitTypeList = {
@@ -171,6 +181,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	int fireDebuffTicksAccumulated = 0;
 	// Fire debuff intensity remaining
 	int fireDebuffTicksRemaining = 0;
+	// State of unit's morale
+	MoraleState moraleState = MoraleState::Normal;
 
 	// User set modes
 

@@ -88,8 +88,42 @@ AIAction::AIAction() : weaponStatus(WeaponStatus::NotFiring) {}
 AIMovement::AIMovement() : movementMode(MovementMode::Walking), kneelingMode(KneelingMode::None) {}
 
 AIDecision::AIDecision(sp<AIAction> action, sp<AIMovement> movement)
-    : action(action), movement(movement)
+    : action(action), movement(movement) {}
+
+LowMoraleUnitAI::LowMoraleUnitAI() { type = Type::LowMorale; }
+DefaultUnitAI::DefaultUnitAI() { type = Type::Default; }
+BehaviorUnitAI::BehaviorUnitAI() { type = Type::Behavior; }
+VanillaUnitAI::VanillaUnitAI() { type = Type::Vanilla; }
+HardcoreUnitAI::HardcoreUnitAI() { type = Type::Hardcore; }
+VanillaTacticalAI::VanillaTacticalAI() { type = Type::Vanilla; }
+
+const UString TacticalAI::getName()
 {
+	switch (type)
+	{
+		case Type::Vanilla:
+			return "VanillaTacticalAI";
+	}
+	LogError("Unimplemented getName for Tactical AI Type %d", (int)type);
+	return "";
+}
+const UString UnitAI::getName()
+{
+	switch (type)
+	{
+		case Type::LowMorale:
+			return "LowMoraleUnitAI";
+		case Type::Default:
+			return "DefaultUnitAI";
+		case Type::Behavior:
+			return "BehaviorUnitAI";
+		case Type::Vanilla:
+			return "VanillaUnitAI";
+		case Type::Hardcore:
+			return "HardcoreUnitAI";
+	}
+	LogError("Unimplemented getName for Unit AI Type %d", (int)type);
+	return "";
 }
 
 bool AIDecision::isEmpty() { return !action && !movement; }
@@ -750,7 +784,7 @@ AIDecision VanillaUnitAI::thinkInternal(GameState &state, BattleUnit &u)
 	// Conditions that prevent re-thinking:
 
 	// 1: Decision is never re-thought if currently throwing
-	if (u.missions.front()->type == BattleUnitMission::Type::ThrowItem)
+	if (!u.missions.empty() && u.missions.front()->type == BattleUnitMission::Type::ThrowItem)
 	{
 		return {};
 	}
@@ -1231,6 +1265,24 @@ VanillaTacticalAI::think(GameState &state, StateRef<Organisation> o)
 			continue;
 		}
 
+		switch (u.second->getAIType())
+		{
+			case AIType::None:
+				continue;
+			case AIType::Civilian:
+				LogWarning("Implement Civilian Tactical AI");
+				continue;
+			case AIType::PanicFreeze:
+			case AIType::PanicRun:
+			case AIType::Berserk:
+				LogError("TacticalAI called on a unit in panic/berserk state!?");
+				continue;
+			case AIType::Loner:
+			case AIType::Group:
+				// Go on below
+				break;
+		}
+
 		// If unit found, try to get orders for him
 		auto decisions = getPatrolMovement(state, *u.second);
 
@@ -1287,4 +1339,5 @@ TacticalAIBlock::think(GameState &state)
 	}
 	return result;
 }
+
 }
