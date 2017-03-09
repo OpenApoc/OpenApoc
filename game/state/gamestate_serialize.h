@@ -102,6 +102,7 @@ template <typename T> bool operator==(const sp<T> &a, const sp<T> &b)
 	{
 		return false;
 	}
+	
 	return *a == *b;
 }
 
