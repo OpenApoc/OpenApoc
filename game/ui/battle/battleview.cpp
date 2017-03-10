@@ -844,6 +844,11 @@ void BattleView::update()
 	updateSelectionMode();
 	updateSoldierButtons();
 
+	if (ticksUntilFireSound > 0)
+	{
+		ticksUntilFireSound--;
+	}
+
 	if (battle.mode == Battle::Mode::TurnBased)
 	{
 		if (previewedPathCost == -1)
@@ -996,11 +1001,12 @@ void BattleView::updateSelectedUnits()
 {
 	auto prevLSU = lastSelectedUnit;
 	auto it = battle.battleViewSelectedUnits.begin();
+	auto o = battle.currentPlayer;
 	while (it != battle.battleViewSelectedUnits.end())
 	{
 		auto u = *it;
-		auto o = battle.currentPlayer;
-		if (!u || u->isDead() || u->isUnconscious() || u->owner != o || u->retreated)
+		if (!u || u->isDead() || u->isUnconscious() || u->owner != o || u->retreated 
+			|| u->moraleState != MoraleState::Normal)
 		{
 			it = battle.battleViewSelectedUnits.erase(it);
 		}
@@ -1848,7 +1854,6 @@ void BattleView::eventOccurred(Event *e)
 	// Exclude mouse down events that are over the form
 	else if (e->type() == EVENT_MOUSE_DOWN)
 	{
-
 		if (this->getViewMode() == TileViewMode::Strategy && e->type() == EVENT_MOUSE_DOWN &&
 		    Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
 		{
@@ -1894,8 +1899,8 @@ void BattleView::eventOccurred(Event *e)
 					switch (buttonPressed)
 					{
 						case Event::MouseButton::Left:
-							// If unit is present, priority is to move if not occupied
-							if (unitPresent && unitPresent->owner == battle.currentPlayer)
+							// If friendly unit is present, priority is to move if not occupied
+							if (unitPresent && unitPresent->owner == battle.currentPlayer && unitPresent->moraleState == MoraleState::Normal)
 							{
 								// Move if units are selected and noone is occupying
 								if (!unitOccupying && battle.battleViewSelectedUnits.size() > 0)
@@ -1910,7 +1915,7 @@ void BattleView::eventOccurred(Event *e)
 									orderSelect({&*state, unitPresent->id});
 								}
 							}
-							// Move if empty
+							// Otherwise move if not occupied 
 							else if (!unitOccupying)
 							{
 								orderMove(t);
@@ -1955,7 +1960,7 @@ void BattleView::eventOccurred(Event *e)
 					{
 						// LMB = Add to selection
 						case Event::MouseButton::Left:
-							if (unitPresent && unitPresent->owner == battle.currentPlayer)
+							if (unitPresent && unitPresent->owner == battle.currentPlayer && unitPresent->moraleState == MoraleState::Normal)
 							{
 								orderSelect({&*state, unitPresent->id}, false, true);
 							}
@@ -1970,7 +1975,7 @@ void BattleView::eventOccurred(Event *e)
 							break;
 						// RMB = Remove from selection
 						case Event::MouseButton::Right:
-							if (unitPresent && unitPresent->owner == battle.currentPlayer)
+							if (unitPresent && unitPresent->owner == battle.currentPlayer && unitPresent->moraleState == MoraleState::Normal)
 							{
 								orderSelect({&*state, unitPresent->id}, true);
 							}
@@ -2055,6 +2060,7 @@ void BattleView::eventOccurred(Event *e)
 						{
 							auto u = uto->getUnit();
 							debug += format("\nContains unit %s.", u->id.cStr());
+							debug += format("\nMorale state: %d", (int) u->moraleState);
 							debug += format("\nPosition: %f, %f, %f", u->position.x, u->position.y,
 							                u->position.z);
 							debug += format("\nGoal: %f, %f, %f", u->goalPosition.x,

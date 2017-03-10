@@ -18,6 +18,7 @@ class BattleCommonSampleList
 	sp<Sample> door;
 	sp<Sample> brainsuckerHatch;
 	sp<Sample> teleport;
+	sp<Sample> burn;
 	sp<std::list<sp<Sample>>> genericHitSounds;
 	std::vector<sp<std::vector<sp<Sample>>>> walkSounds;
 	std::vector<sp<Sample>> objectDropSounds;

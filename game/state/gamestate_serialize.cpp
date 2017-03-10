@@ -355,6 +355,44 @@ void serializeOut(sp<SerializationNode> node, const sp<UnitAI> &ptr, const sp<Un
 
 bool operator==(const UnitAI &a, const UnitAI &b)
 {
+	if (a.type != b.type)
+	{
+		return false;
+	}
+	switch (a.type)
+	{
+		case UnitAI::Type::LowMorale:
+		{
+			const LowMoraleUnitAI &ca = static_cast<const LowMoraleUnitAI&>(a);
+			const LowMoraleUnitAI &cb = static_cast<const LowMoraleUnitAI&>(b);
+			return ca == cb;
+		}
+		case UnitAI::Type::Default:
+		{
+			const DefaultUnitAI &ca = static_cast<const DefaultUnitAI&>(a);
+			const DefaultUnitAI &cb = static_cast<const DefaultUnitAI&>(b);
+			return ca == cb;
+		}
+		case UnitAI::Type::Behavior:
+		{
+			const BehaviorUnitAI &ca = static_cast<const BehaviorUnitAI&>(a);
+			const BehaviorUnitAI &cb = static_cast<const BehaviorUnitAI&>(b);
+			return ca == cb;
+		}
+		case UnitAI::Type::Vanilla:
+		{
+			const VanillaUnitAI &ca = static_cast<const VanillaUnitAI&>(a);
+			const VanillaUnitAI &cb = static_cast<const VanillaUnitAI&>(b);
+			return ca == cb;
+		}
+		case UnitAI::Type::Hardcore:
+		{
+			const HardcoreUnitAI &ca = static_cast<const HardcoreUnitAI&>(a);
+			const HardcoreUnitAI &cb = static_cast<const HardcoreUnitAI&>(b);
+			return ca == cb;
+		}
+	}
+	LogError("Unsupported comparison for UserAI type %d", (int)a.type);
 	return false;
 }
 bool operator!=(const UnitAI &a, const UnitAI &b)
@@ -381,6 +419,20 @@ void serializeOut(sp<SerializationNode> node, const sp<TacticalAI> &ptr, const s
 
 bool operator==(const TacticalAI &a, const TacticalAI &b)
 {
+	if (a.type != b.type)
+	{
+		return false;
+	}
+	switch (a.type)
+	{
+		case TacticalAI::Type::Vanilla:
+		{
+			const VanillaTacticalAI &ca = static_cast<const VanillaTacticalAI&>(a);
+			const VanillaTacticalAI &cb = static_cast<const VanillaTacticalAI&>(b);
+			return ca == cb;
+		}
+	}
+	LogError("Unsupported comparison for Tactical type %d", (int)a.type);
 	return false;
 }
 bool operator!=(const TacticalAI &a, const TacticalAI &b)

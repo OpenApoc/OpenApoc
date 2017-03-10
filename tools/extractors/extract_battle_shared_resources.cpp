@@ -82,6 +82,8 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state) c
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/extra/brhatch.raw:22050");
 	state.battle_common_sample_list->teleport =
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/teleport.raw:22050");
+	state.battle_common_sample_list->burn =
+		fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/burning.raw:11025");
 
 	state.battle_common_sample_list->genericHitSounds = mksp<std::list<sp<Sample>>>();
 	state.battle_common_sample_list->genericHitSounds->push_back(

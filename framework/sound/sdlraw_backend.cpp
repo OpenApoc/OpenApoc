@@ -79,10 +79,15 @@ class SDLSampleData : public BackendSampleData
   public:
 	SDLSampleData(sp<Sample> sample, SDL_AudioSpec &output_spec)
 	{
-		unsigned int input_size =
+		unsigned long int input_size =
 		    sample->format.getSampleSize() * sample->format.channels * sample->sampleCount;
-		unsigned int output_size = (SDL_AUDIO_BITSIZE(output_spec.format) / 8) *
-		                           output_spec.channels * sample->sampleCount;
+		// This is a kludge but I dunno how to make it otherwise
+		// Just multiplying and dividing by frequencies overflows even unsigned long type
+		unsigned long int freqMult = std::max(1, output_spec.freq / sample->format.frequency);
+		unsigned long int freqDiv = std::max(1, sample->format.frequency / output_spec.freq);
+		unsigned long int output_size = (SDL_AUDIO_BITSIZE(output_spec.format) / 8) *
+		                           output_spec.channels * sample->sampleCount
+			* freqMult / freqDiv;
 		this->samples.resize(std::max(input_size, output_size));
 		memcpy(this->samples.data(), sample->data.get(), input_size);
 		if (!ConvertAudio(sample->format, output_spec, input_size, this->samples))

@@ -685,6 +685,8 @@ AIType BattleUnit::getAIType() const
 		case MoraleState::Berserk:
 			return AIType::Berserk;
 	}
+	LogError("Unhandled morale state in getAIType()");
+	return AIType::None;
 }
 
 bool BattleUnit::canFly() const
@@ -1043,59 +1045,64 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 	// FIXME: Regenerate stamina
 
 	// Morale
-	if (moraleStateTicksRemaining > 0)
+	if (isConscious())
 	{
-		if (moraleStateTicksRemaining > ticks)
+		if (moraleStateTicksRemaining > 0)
 		{
-			moraleStateTicksRemaining -= ticks;
-		}
-		else
-		{
-			// It seems in Apoc unit keeps panicking until reaches positive morale
-			if (agent->modified_stats.morale >= 50)
+			if (moraleStateTicksRemaining > ticks)
 			{
-				moraleStateTicksRemaining = 0;
-				moraleState = MoraleState::Normal;
-				stopAttacking();
-				cancelMissions(state, true);
-				aiList.reset(state, *this);
+				moraleStateTicksRemaining -= ticks;
 			}
 			else
 			{
-				moraleStateTicksRemaining += TICKS_PER_LOWMORALE_STATE - ticks;
-				agent->modified_stats.morale += 15;
+				// It seems in Apoc unit keeps panicking until reaches positive morale
+				if (agent->modified_stats.morale >= 50)
+				{
+					moraleStateTicksRemaining = 0;
+					moraleState = MoraleState::Normal;
+					stopAttacking();
+					cancelMissions(state, true);
+					aiList.reset(state, *this);
+				}
+				else
+				{
+					moraleStateTicksRemaining += TICKS_PER_LOWMORALE_STATE - ticks;
+					agent->modified_stats.morale += 15;
+				}
 			}
 		}
-	}
-	else
-	{
-		moraleTicksAccumulated += ticks;
-		while (moraleTicksAccumulated >= LOWMORALE_CHECK_INTERVAL)
+		else
 		{
-			moraleTicksAccumulated -= LOWMORALE_CHECK_INTERVAL;
-
-			if (randBoundsExclusive(state.rng, 0, 100) < 100 - 2 * agent->modified_stats.morale)
+			moraleTicksAccumulated += ticks;
+			while (moraleTicksAccumulated >= LOWMORALE_CHECK_INTERVAL)
 			{
-				moraleStateTicksRemaining = TICKS_PER_LOWMORALE_STATE;
-				moraleState = (MoraleState)randBoundsInclusive(state.rng, 1, 3);
-				agent->modified_stats.morale += 15;
-				stopAttacking();
-				cancelMissions(state, true);
-				aiList.reset(state, *this);
-				// Have a chance to drop items in hand
-				if (moraleState != MoraleState::Berserk)
+				moraleTicksAccumulated -= LOWMORALE_CHECK_INTERVAL;
+
+				if (randBoundsExclusive(state.rng, 0, 100) < 100 - 2 * agent->modified_stats.morale)
 				{
-					if (randBool(state.rng))
+					moraleStateTicksRemaining = TICKS_PER_LOWMORALE_STATE;
+					// I need Inclusive (1,3) here but apparently our rng is very bad at it
+					// Will generate only 1's and 3's and very seldom will you see a 2
+					moraleState = (MoraleState)(randBoundsExclusive(state.rng, 10, 40) / 10);
+					agent->modified_stats.morale += 15;
+					stopAttacking();
+					cancelMissions(state);
+					aiList.reset(state, *this);
+					// Have a chance to drop items in hand
+					if (moraleState != MoraleState::Berserk)
 					{
-						auto e1 = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
-						auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
-						if (e1)
+						if (randBool(state.rng))
 						{
-							addMission(state, BattleUnitMission::dropItem(*this, e1));
-						}
-						if (e2)
-						{
-							addMission(state, BattleUnitMission::dropItem(*this, e2));
+							auto e1 = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+							auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+							if (e1)
+							{
+								addMission(state, BattleUnitMission::dropItem(*this, e1));
+							}
+							if (e2)
+							{
+								addMission(state, BattleUnitMission::dropItem(*this, e2));
+							}
 						}
 					}
 				}
@@ -2412,44 +2419,19 @@ void BattleUnit::executeAIAction(GameState &state, AIAction &action)
 	if (action.item)
 	{
 		UnitAIHelper::ensureItemInSlot(state, action.item, AEquipmentSlotType::RightHand);
-		if (action.type == AIAction::Type::AttackWeapon)
+		if (action.type == AIAction::Type::AttackWeaponUnit || action.type == AIAction::Type::AttackWeaponTile)
 		{
 			action.item = nullptr;
 			action.weaponStatus = WeaponStatus::FiringRightHand;
 		}
 	}
-
 	switch (action.type)
 	{
-		case AIAction::Type::AttackWeapon:
-			if (action.item)
-			{
-				auto rh = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
-				auto lh = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
-				if (action.item == rh)
-				{
-					startAttacking(state, {&state, action.targetUnit->id},
-					               WeaponStatus::FiringRightHand);
-					LogWarning("Attack with a weapon has item specified instead of hand state! "
-					           "Should not reach unit in this state.");
-				}
-				else if (action.item == lh)
-				{
-					startAttacking(state, {&state, action.targetUnit->id},
-					               WeaponStatus::FiringLeftHand);
-					LogWarning("Attack with a weapon has item specified instead of hand state! "
-					           "Should not reach unit in this state.");
-				}
-				else
-				{
-					LogError(
-					    "Attack with a weapon has item specified that is not in unit's hands!");
-				}
-			}
-			else
-			{
-				startAttacking(state, {&state, action.targetUnit->id}, action.weaponStatus);
-			}
+		case AIAction::Type::AttackWeaponTile:
+			startAttacking(state, action.targetLocation, action.weaponStatus);
+			break;
+		case AIAction::Type::AttackWeaponUnit:
+			startAttacking(state, action.targetUnit, action.weaponStatus);
 			break;
 		case AIAction::Type::AttackGrenade:
 			if (action.item->getCanThrow(*this, action.targetUnit->position))
@@ -2639,6 +2621,7 @@ void BattleUnit::dropDown(GameState &state)
 	setBodyState(state, target_body_state);
 	fireDebuffTicksRemaining = 0;
 	enzymeDebuffIntensity = 0;
+	moraleState = MoraleState::Normal;
 	// Check if we can drop from current state
 	while (agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
 	                                                    BodyState::Downed, current_hand_state,

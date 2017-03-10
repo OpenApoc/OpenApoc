@@ -86,6 +86,7 @@ class BattleTileView : public TileView
 	sp<Image> pathPreviewUnreachable;
 	std::list<Vec3<int>> pathPreview;
 	int pathPreviewTicksAccumulated = 0;
+	int ticksUntilFireSound = 0;
 	// -3 = unreachable
 	// -2 = too far
 	// -1 = no previewed path stored

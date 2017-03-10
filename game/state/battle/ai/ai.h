@@ -15,6 +15,7 @@ namespace OpenApoc
 {
 
 static const int AI_THINK_INTERVAL = TICKS_PER_SECOND / 24;
+static const int LOWMORALE_AI_INTERVAL = TICKS_PER_SECOND * 2;
 
 class GameState;
 class AEquipment;
@@ -30,7 +31,8 @@ class AIAction
   public:
 	enum class Type
 	{
-		AttackWeapon,
+		AttackWeaponTile,
+		AttackWeaponUnit,
 		AttackGrenade,
 		AttackPsiPanic,
 		AttackPsiStun,
@@ -41,9 +43,11 @@ class AIAction
 	// Parameters that are stored for future reference
 
 	// Action type (an attack usually)
-	Type type = Type::AttackWeapon;
+	Type type = Type::AttackWeaponTile;
 	// Who to attack
-	sp<BattleUnit> targetUnit;
+	StateRef<BattleUnit> targetUnit;
+	// What location to attack
+	Vec3<int> targetLocation = { 0, 0, 0 };
 	// What to fire / what to throw / what to use for PSI
 	// For simply attacking with all weapons in hands, this can be null
 	sp<AEquipment> item;
@@ -205,6 +209,8 @@ class LowMoraleUnitAI : public UnitAI
   public:
 	LowMoraleUnitAI();
 
+	int ticksActionAvailable = 0;
+
 	void reset(GameState &state, BattleUnit &u) override;
 	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) override;
 };
@@ -288,12 +294,12 @@ class VanillaUnitAI : public UnitAI
 	std::tuple<AIDecision, float, unsigned> getAttackDecision(GameState &state, BattleUnit &u);
 
 	std::tuple<AIDecision, float, unsigned>
-	getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment> e, sp<BattleUnit> target);
+	getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment> e, StateRef<BattleUnit> target);
 	std::tuple<AIDecision, float, unsigned> getPsiDecision(GameState &state, BattleUnit &u,
-	                                                       sp<AEquipment> e, sp<BattleUnit> target,
+	                                                       sp<AEquipment> e, StateRef<BattleUnit> target,
 	                                                       AIAction::Type type);
 	std::tuple<AIDecision, float, unsigned>
-	getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment> e, sp<BattleUnit> target);
+	getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment> e, StateRef<BattleUnit> target);
 };
 
 // AI that tries to be as hard towards the player as possible, TBD

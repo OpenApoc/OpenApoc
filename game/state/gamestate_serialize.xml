@@ -476,6 +476,7 @@
 		<member>door</member>
 		<member>brainsuckerHatch</member>
 		<member>teleport</member>
+		<member>burn</member>
 		<member>genericHitSounds</member>
 		<member>walkSounds</member>
 		<member>objectDropSounds</member>
@@ -1395,7 +1396,8 @@
 	</enum>
 	<enum>
 		<name>AIAction::Type</name>
-		<value>AttackWeapon</value>
+		<value>AttackWeaponTile</value>
+		<value>AttackWeaponUnit</value>
 		<value>AttackGrenade</value>
 		<value>AttackPsiPanic</value>
 		<value>AttackPsiStun</value>
@@ -1461,6 +1463,7 @@
 		<name>LowMoraleUnitAI</name>
 		<member>type</member>
 		<member>active</member>
+		<member>ticksActionAvailable</member>
 	</object>
 	<object external="true" full="true">
 		<name>DefaultUnitAI</name>

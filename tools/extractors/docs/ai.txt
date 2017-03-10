@@ -55,5 +55,9 @@ Turret AI?
   Turrets just get 360 vision and aggressive AI, that's enough
 
   
-Enzyme/Fire AI?
-  Run like chickens w/o heads when debuffed? Get out of the danger zone?
+
+Fire sound
+1. Find wether we need to make a sound (fire hazard exists)
+2. Find wether we need to repeat the sound (previous sound finished)
+3. Find closest fire debuff to screen center
+4. Make a sound at that location

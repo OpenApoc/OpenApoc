@@ -10,7 +10,9 @@
 #include "framework/trace.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonimagelist.h"
+#include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battleitem.h"
+#include "game/state/battle/battlehazard.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battleunitmission.h"
 #include "game/state/gamestate.h"
@@ -18,8 +20,10 @@
 #include "game/state/tileview/tileobject_battleitem.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"
+#include "game/state/tileview/tileobject_battlehazard.h"
 #include "game/state/tileview/tileobject_shadow.h"
 #include "library/strings_format.h"
+#include <glm/glm.hpp>
 
 namespace OpenApoc
 {
@@ -291,71 +295,13 @@ void BattleTileView::render()
 			break;
 	}
 
-	// FIXME: A different algorithm is required in order to properly display big units.
-	/*
-	1) Rendering must go in diagonal lines. Illustration:
+	// This is also the place where we emit a burning sound, because we find out which fire is in the viewport and is closest to the screen center
+	bool fireEncountered = false;
+	float closestFireDistance = FLT_MAX;
+	Vec3<float> closestFirePosition;
 
-	CURRENT		TARGET
-
-	147			136
-	258			258
-	369			479
-
-	2) Objects must be located in the bottom-most, right-most tile they intersect
-	(already implemented)
-
-	3) Object can either occupy 1, 2 or 3 tiles on the X axis (only X matters)
-
-	- Tiny objects (items, projectiles) occupy 1 tile always
-	- Small typical objects (walls, sceneries, small units) occupy 1 tile when static,
-	2 when moving on X axis
-	- Large objects (large units) occupy 2 tiles when static, 3 when moving on x axis
-
-	How to determine this value is TBD.
-
-	4) When rendering we must check 1 tile ahead for 2-tile object
-	and 1 tile ahead and further on x axis for 3-tile object.
-
-	If present we must draw 1 tile ahead for 2-tile object
-	or 2 tiles ahead and one tile further on x-axis for 3 tile object
-	then resume normal draw order without drawing already drawn tiles
-
-	Illustration:
-
-	SMALL MOVING	LARGE STATIC	LARGE MOVING		LEGEND
-
-	xxxxx > xxxxx6.		x		= tile w/o  object drawn
-	xxxx > xxxx48	xxxx > xxxx48	x+++  > x+++59		+		= tile with object drawn
-	xxx  > xxx37	x++  > x++37	x++O  > x++28.		digit	= draw order
-	x+O  > x+16	x+O  > x+16		x+OO  > x+13.		o		= object yet to draw
-	x?   > x25		x?   > x25		x?	  > x47.		?		= current position
-
-	So, if we encounter a 2-tile (on x axis) object in the next position (x-1, y+1)
-	then we must first draw tile (x-1,y+1), and then draw our tile,
-	and then skip drawing next tile (as we have already drawn it!)
-
-	If we encounter a 3-tile (on x axis) object in the position (x-1,y+2)
-	then we must first draw (x-1,y+1), then (x-2,y+2), then (x-1,y+2), then draw our tile,
-	and then skip drawing next two tiles (as we have already drawn it) and skip drawing
-	the tile (x-1, y+2) on the next row
-
-	This is done best by having a set of Vec3<int>'s, and "skip next X tiles" variable.
-	When encountering a 2-tile object, we inrement "skip next X tiles" by 1.
-	When encountering a 3-tile object, we increment "skip next X tiles" by 2,
-	and we add (x-1, y+2) to the set.
-	When trying to draw a tile we first check the "skip next X tiles" variable,
-	if > 0 we decrement and continue.
-	Second, we check if our tile is in the set. If so, we remove from set and continue.
-	Third, we draw normally
-	*/
-
-	// FIXME: A different drawing algorithm is required for battle's strategic view
-	/*
-	First, draw everything except units and items
-	Then, draw items only on current z-level
-	Then, draw agents, bottom to top, drawing hollow sprites for non-current levels
-	*/
-
+	// FIXME: A different algorithm is required in order to properly display everything
+	// --- Read the note at the bottom of this file ---
 	// FIXME: Draw double selection bracket for big units?
 	switch (this->viewMode)
 	{
@@ -585,7 +531,7 @@ void BattleTileView::render()
 										friendly = u->owner == battle.currentPlayer;
 										hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 										          Organisation::Relation::Hostile;
-										if (u->moraleState != MoraleState::Normal)
+										if (objectVisible && u->moraleState != MoraleState::Normal)
 										{
 											unitLowMorale = true;
 											unitLowMoralePos = tileToOffsetScreenCoords(
@@ -632,6 +578,24 @@ void BattleTileView::render()
 											}
 										}
 										break;
+									}
+									case TileObject::Type::Hazard:
+									{
+										if (visible && ticksUntilFireSound == 0)
+										{
+											auto h = std::static_pointer_cast<TileObjectBattleHazard>(obj)
+												->getHazard();
+											if (h->hazardType->fire)
+											{
+												auto distance = glm::length(centerPos - h->position);
+												if (distance < closestFireDistance)
+												{
+													fireEncountered = true;
+													closestFireDistance = distance;
+													closestFirePosition = h->position;
+												}
+											}
+										}
 									}
 									default:
 										break;
@@ -741,7 +705,7 @@ void BattleTileView::render()
 											hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 											          Organisation::Relation::Hostile;
 											draw = true;
-											if (u->moraleState != MoraleState::Normal)
+											if (objectVisible && u->moraleState != MoraleState::Normal)
 											{
 												unitLowMorale = true;
 												unitLowMoralePos = tileToOffsetScreenCoords(
@@ -1042,6 +1006,24 @@ void BattleTileView::render()
 										}
 										continue;
 									}
+									case TileObject::Type::Hazard:
+									{
+										if (visible && ticksUntilFireSound == 0)
+										{
+											auto h = std::static_pointer_cast<TileObjectBattleHazard>(obj)
+												->getHazard();
+											if (h->hazardType->fire)
+											{
+												auto distance = glm::length(centerPos - h->position);
+												if (distance < closestFireDistance)
+												{
+													fireEncountered = true;
+													closestFireDistance = distance;
+													closestFirePosition = h->position;
+												}
+											}
+										}
+									}
 									default:
 										break;
 								}
@@ -1122,6 +1104,15 @@ void BattleTileView::render()
 		default:
 			LogError("Unexpected tile view mode \"%d\"", (int)this->viewMode);
 			break;
+	}
+
+	if (fireEncountered)
+	{
+		ticksUntilFireSound = 60 * state.battle_common_sample_list->burn->sampleCount 
+			/ state.battle_common_sample_list->burn->format.frequency 
+			/ state.battle_common_sample_list->burn->format.channels;
+		fw().soundBackend->playSample(state.battle_common_sample_list->burn,
+			closestFirePosition);
 	}
 }
 
@@ -1252,3 +1243,69 @@ void BattleTileView::updatePathPreview()
 	}
 }
 }
+
+// Alexey Andronov (Istrebitel)
+// A different algorithm is required in order to properly display big units.
+/*
+1) Rendering must go in diagonal lines. Illustration (on XY plane):
+
+CURRENT		TARGET
+
+147			136
+258			258
+369			479
+
+2) Objects must be located in the bottom-most, right-most tile they intersect
+(already implemented)
+
+3) Object can either occupy 1, 2 or 3 tiles on the X axis (only X matters)
+
+- Tiny objects (items, projectiles) occupy 1 tile always
+- Small typical objects (walls, sceneries, small units) occupy 1 tile when static,
+2 when moving on X axis
+- Large objects (large units) occupy 2 tiles when static, 3 when moving on x axis
+
+How to determine this value is TBD.
+
+4) When rendering we must check 1 tile ahead for 2-tile object
+and 1 tile ahead and further on x axis for 3-tile object.
+
+If present we must draw 1 tile ahead for 2-tile object
+or 2 tiles ahead and one tile further on x-axis for 3 tile object
+then resume normal draw order without drawing already drawn tiles
+
+Illustration:
+
+SMALL MOVING	LARGE STATIC	LARGE MOVING		LEGEND
+
+xxxxx > xxxxx6.		x		= tile w/o  object drawn
+xxxx > xxxx48	xxxx > xxxx48	x+++  > x+++59		+		= tile with object drawn
+xxx  > xxx37	x++  > x++37	x++O  > x++28.		digit	= draw order
+x+O  > x+16	x+O  > x+16		x+OO  > x+13.		o		= object yet to draw
+x?   > x25		x?   > x25		x?	  > x47.		?		= current position
+
+So, if we encounter a 2-tile (on x axis) object in the next position (x-1, y+1)
+then we must first draw tile (x-1,y+1), and then draw our tile,
+and then skip drawing next tile (as we have already drawn it!)
+
+If we encounter a 3-tile (on x axis) object in the position (x-1,y+2)
+then we must first draw (x-1,y+1), then (x-2,y+2), then (x-1,y+2), then draw our tile,
+and then skip drawing next two tiles (as we have already drawn it) and skip drawing
+the tile (x-1, y+2) on the next row
+
+This is done best by having a set of Vec3<int>'s, and "skip next X tiles" variable.
+When encountering a 2-tile object, we inrement "skip next X tiles" by 1.
+When encountering a 3-tile object, we increment "skip next X tiles" by 2,
+and we add (x-1, y+2) to the set.
+When trying to draw a tile we first check the "skip next X tiles" variable,
+if > 0 we decrement and continue.
+Second, we check if our tile is in the set. If so, we remove from set and continue.
+Third, we draw normally
+*/
+
+// FIXME: A different drawing algorithm is required for battle's strategic view
+/*
+First, draw everything except units and items
+Then, draw items only on current z-level
+Then, draw agents, bottom to top, drawing hollow sprites for non-current levels
+*/

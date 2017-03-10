@@ -8,13 +8,13 @@
 #include <sstream>
 
 
-// When I uncomment "using namespace" it says 
+// On windows VS it says
 /* Error	C2678	binary '==': no operator found which takes a left - hand operand of type 'Concurrency::details::_Task_impl<_ReturnType>' 
 (or there is no acceptable conversion)	test_serialize	E : \Projects\GitHub\OpenApoc\game\state\gamestate_serialize.h	106
 */
 
 
-/*using namespace OpenApoc;
+using namespace OpenApoc;
 
 bool test_gamestate_serialization_roundtrip(sp<GameState> state, UString save_name)
 {
@@ -75,11 +75,9 @@ bool test_gamestate_serialization(sp<GameState> state)
 	
 	return true;
 }
-*/
+
 int main(int argc, char **argv)
 {
-}
-/*
 	config().addPositionalArgument("common", "Common gamestate to load");
 	config().addPositionalArgument("gamestate", "Gamestate to load");
 	
@@ -210,4 +208,3 @@ int main(int argc, char **argv)
 	
 	return EXIT_SUCCESS;
 }
-*/
