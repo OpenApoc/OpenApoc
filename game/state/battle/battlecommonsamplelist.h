@@ -23,5 +23,7 @@ class BattleCommonSampleList
 	std::vector<sp<std::vector<sp<Sample>>>> walkSounds;
 	std::vector<sp<Sample>> objectDropSounds;
 	std::list<sp<Sample>> throwSounds;
+	sp<std::list<sp<Sample>>> psiSuccessSounds;
+	sp<std::list<sp<Sample>>> psiFailSounds;
 };
 }

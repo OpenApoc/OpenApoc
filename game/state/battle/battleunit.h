@@ -34,6 +34,7 @@
 namespace OpenApoc
 {
 
+static const unsigned TICKS_PER_PSI_CHECK = TICKS_PER_SECOND / 2;
 // FIXME: Seems to correspond to vanilla behavior, but ensure it's right
 static const unsigned TICKS_PER_WOUND_EFFECT = TICKS_PER_TURN;
 static const unsigned TICKS_PER_ENZYME_EFFECT = TICKS_PER_SECOND / 9; 
@@ -89,6 +90,15 @@ enum class WeaponStatus
 	FiringLeftHand,
 	FiringRightHand,
 	FiringBothHands
+};
+
+enum class PsiStatus
+{
+	NotEngaged,
+	Control,
+	Panic,
+	Stun,
+	Probe
 };
 
 enum class MoraleState
@@ -161,6 +171,18 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Ticks until we check if target is still valid, turn to it etc.
 	unsigned ticksUntillNextTargetCheck = 0;
 
+	// Psi
+
+	PsiStatus psiStatus = PsiStatus::NotEngaged;
+	// Unit in process of being psi attacked by this
+	StateRef<BattleUnit> psiTarget;
+	// Item used for psi attack
+	StateRef<AEquipmentType> psiItem;
+	// Ticks accumulated towards next psi check
+	unsigned ticksAccumulatedToNextPsiCheck = 0;
+	// Map of units and attacks in progress against this unit
+	std::map<UString, PsiStatus> psiAttackers;
+
 	// Stats
 
 	// Accumulated xp points for each stat
@@ -173,8 +195,10 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	bool isHealing = false;
 	// Ticks towards next wound damage or medikit heal application
 	unsigned woundTicksAccumulated = 0;
+	// Ticks towards next regeneration of stats (psi, stamina, stun)
+	int regenTicksAccumulated = 0;
 	// Stun damage acquired
-	int stunDamageInTicks = 0;
+	int stunDamage = 0;
 	// Ticks accumulated towards next enzyme hit
 	int enzymeDebuffTicksAccumulated = 0;
 	// Enzyme debuff intensity remaining
@@ -249,7 +273,9 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Vision
 
 	StateRef<AEquipmentType> displayedItem;
+	// Visible units from other orgs
 	std::set<StateRef<BattleUnit>> visibleUnits;
+	// Visible units that are hostile to us
 	std::list<StateRef<BattleUnit>> visibleEnemies;
 
 	// Miscellaneous
@@ -281,7 +307,6 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	bool isFatallyWounded();
 	void addFatalWound(BodyPart fatalWoundPart);
-	int getStunDamage() const;
 	void dealDamage(GameState &state, int damage, bool generateFatalWounds, BodyPart fatalWoundPart,
 	                int stunPower);
 
@@ -295,13 +320,25 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void stopAttacking();
 	// Returns which hands can be used for an attack (or none if attack cannot be made)
 	// Checks wether target unit is in range, and clear LOF exists to it
-	// Clear LOF means no friendly fire and no map part in between
 	WeaponStatus canAttackUnit(GameState &state, sp<BattleUnit> unit);
 	// Returns wether unit can be attacked by one of the two supplied weapons
 	// Checks wether target unit is in range, and clear LOF exists to it
-	// Clear LOF means no friendly fire and no map part in between
 	WeaponStatus canAttackUnit(GameState &state, sp<BattleUnit> unit, sp<AEquipment> rightHand,
 	                           sp<AEquipment> leftHand = nullptr);
+	// Clear LOF means no friendly fire and no map part in between
+	// Clear LOS means nothing in between
+	bool hasLineToUnit(GameState &state, sp<BattleUnit> unit, bool useLOS = false);
+
+	// Psi
+
+	// Get cost of psi attack or upkeep
+	int getPsiCost(PsiStatus status, bool attack = true);
+	int getPsiChance(GameState &state, StateRef<BattleUnit> target, PsiStatus status, StateRef<AEquipmentType> item);
+	// Starts attacking taget, returns if attack successful
+	bool startAttackPsi(GameState &state, StateRef<BattleUnit> target, PsiStatus status, StateRef<AEquipmentType> item);
+	void stopAttackPsi(GameState &state);
+	// Applies psi attack effects to this unit
+	void applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatus status, StateRef<AEquipmentType> item, bool impact);
 
 	// Body
 
@@ -452,6 +489,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void updateTurning(GameState &state, unsigned int &turnTicksRemaining);
 	void updateDisplayedItem();
 	void updateAttacking(GameState &state, unsigned int ticks);
+	void updatePsi(GameState &state, unsigned int ticks);
 	void updateAI(GameState &state, unsigned int ticks);
 
 	void triggerProximity(GameState &state);
@@ -466,6 +504,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	sp<std::vector<sp<Image>>> strategyImages;
 	StateRef<DoodadType> burningDoodad;
 	sp<std::list<sp<Sample>>> genericHitSounds;
+	sp<std::list<sp<Sample>>> psiSuccessSounds;
+	sp<std::list<sp<Sample>>> psiFailSounds;
 	sp<TileObjectBattleUnit> tileObject;
 	sp<TileObjectShadow> shadowObject;
 

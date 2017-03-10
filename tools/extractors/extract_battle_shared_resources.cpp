@@ -93,6 +93,22 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state) c
 	state.battle_common_sample_list->genericHitSounds->push_back(
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/hit3.raw:22050"));
 
+	state.battle_common_sample_list->psiSuccessSounds = mksp<std::list<sp<Sample>>>();
+	state.battle_common_sample_list->psiSuccessSounds->push_back(
+		fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/psionic1.raw:22050"));
+	state.battle_common_sample_list->psiSuccessSounds->push_back(
+		fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/psionic2.raw:22050"));
+
+	state.battle_common_sample_list->psiFailSounds = mksp<std::list<sp<Sample>>>();
+	state.battle_common_sample_list->psiFailSounds->push_back(
+		fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/psionic4.raw:22050"));
+	state.battle_common_sample_list->psiFailSounds->push_back(
+		fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/psionic5.raw:22050"));
+	state.battle_common_sample_list->psiFailSounds->push_back(
+		fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/psionic6.raw:22050"));
+	state.battle_common_sample_list->psiFailSounds->push_back(
+		fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/psionic7.raw:22050"));
+
 	UString sfx_name = "";
 	for (int i = 1; i <= 8; i++)
 	{

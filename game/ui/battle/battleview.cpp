@@ -1422,7 +1422,7 @@ void BattleView::orderUse(bool right, bool automatic)
 			break;
 		case AEquipmentType::Type::MindBender:
 			// Mind bender does not care for automatic mode
-			LogError("Implement psi interface!");
+			this->activeTab = this->psiTab;
 			break;
 		case AEquipmentType::Type::MotionScanner:
 			// Motion scanner has no automatic mode

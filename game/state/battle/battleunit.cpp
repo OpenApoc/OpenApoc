@@ -504,21 +504,8 @@ WeaponStatus BattleUnit::canAttackUnit(GameState &state, sp<BattleUnit> unit)
 WeaponStatus BattleUnit::canAttackUnit(GameState &state, sp<BattleUnit> unit,
                                        sp<AEquipment> rightHand, sp<AEquipment> leftHand)
 {
-	auto muzzleLocation = getMuzzleLocation();
 	auto targetPosition = unit->tileObject->getVoxelCentrePosition();
-	// Map part that prevents LOF to target
-	auto cMap =
-	    tileObject->map.findCollision(muzzleLocation, targetPosition, mapPartSet, tileObject);
-	// Unit that prevents LOF to target
-	auto cUnit = tileObject->map.findCollision(muzzleLocation, targetPosition, unitSet, tileObject);
-	// Condition:
-	// No map part blocks LOF
-	if (!cMap
-	    // No unit blocks LOF
-	    && (!cUnit ||
-	        owner->isRelatedTo(
-	            std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)->getUnit()->owner) ==
-	            Organisation::Relation::Hostile))
+	if (hasLineToUnit(state, unit))
 	{
 		// One of held weapons is in range
 		bool rightCanFire = rightHand && rightHand->canFire(targetPosition);
@@ -537,6 +524,161 @@ WeaponStatus BattleUnit::canAttackUnit(GameState &state, sp<BattleUnit> unit,
 		}
 	}
 	return WeaponStatus::NotFiring;
+}
+
+bool BattleUnit::hasLineToUnit(GameState &state, sp<BattleUnit> unit, bool useLOS)
+{
+	auto muzzleLocation = getMuzzleLocation();
+	auto targetPosition = unit->tileObject->getVoxelCentrePosition();
+	// Map part that prevents Line to target
+	auto cMap =
+		tileObject->map.findCollision(muzzleLocation, targetPosition, mapPartSet, tileObject, useLOS);
+	// Unit that prevents Line to target
+	auto cUnit = tileObject->map.findCollision(muzzleLocation, targetPosition, unitSet, tileObject, useLOS);
+	// Condition:
+	// No map part blocks Line
+	return !cMap
+		// No unit blocks Line
+		&& (!cUnit || (!useLOS &&
+			owner->isRelatedTo(
+				std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)->getUnit()->owner) ==
+			Organisation::Relation::Hostile));
+}
+
+int BattleUnit::getPsiCost(PsiStatus status, bool attack)
+{
+	switch (status)
+	{
+		case PsiStatus::NotEngaged:
+			LogError("Invalid value NotEngaged for psiStatus in getPsiCost()");
+			return 0;
+		case PsiStatus::Control:
+			return attack ? 32 : 4;
+		case PsiStatus::Panic:
+			return attack ? 10 : 2;
+		case PsiStatus::Stun:
+			return attack ? 16 : 5;
+		case PsiStatus::Probe:
+			return attack ? 8 : 3;
+	}
+	LogError("Unexpected Psi Status in getPsiCost()");
+	return 0;
+}
+
+int BattleUnit::getPsiChance(GameState &state, StateRef<BattleUnit> target, PsiStatus status, StateRef<AEquipmentType> item)
+{
+	if (status == PsiStatus::NotEngaged)
+	{
+		LogError("Invalid value NotEngaged for psiStatus in getPsiChance()");
+		return 0;
+	}
+	auto e1 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+	auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+	if (e1 && e1->type != item)
+	{
+		e1 = nullptr;
+	}
+	if (e2 && e2->type != item)
+	{
+		e2 = nullptr;
+	}
+	auto bender = e1 ? e1 : e2;
+	if (!bender
+		|| agent->modified_stats.psi_energy < getPsiCost(status)
+		|| !hasLineToUnit(state, target, true))
+	{
+		return 0;
+	}
+	// FIXME: Calculate psi chance
+	return 100;
+}
+
+bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, PsiStatus status, StateRef<AEquipmentType> item)
+{
+	if (randBoundsExclusive(state.rng, 0, 100) < getPsiChance(state, target, status, item))
+	{
+		if (agent->modified_stats.psi_energy >= getPsiCost(status))
+		{
+			agent->modified_stats.psi_energy -= getPsiCost(status);
+		}
+		fw().soundBackend->playSample(
+			listRandomiser(state.rng, *psiFailSounds),
+			position);
+		return false;
+	}
+	
+	// Attack hit, apply effects
+	
+	if (psiTarget)
+	{
+		stopAttackPsi(state);
+	}
+	psiTarget = target;
+	psiStatus = status;
+	psiItem = item;
+	target->psiAttackers[id] = status;
+	ticksAccumulatedToNextPsiCheck = 0;
+	target->applyPsiAttack(state, *this, status, item, true);
+	fw().soundBackend->playSample(
+		listRandomiser(state.rng, *psiSuccessSounds),
+		position);
+	return true;
+}
+
+void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatus status, StateRef<AEquipmentType> item, bool impact)
+{
+	// FIXME: Change to correct psi attack effects
+	switch (status)
+	{
+		case PsiStatus::Panic:
+			if (!impact)
+			{
+				agent->modified_stats.morale = std::max(0, agent->modified_stats.morale - 16);
+			}
+		case PsiStatus::Stun:
+			if (!impact)
+			{
+				dealDamage(state, 12, false, BodyPart::Body, 9001);
+			}
+			break;
+		case PsiStatus::Control:
+			if (impact)
+			{
+				LogWarning("Psi Control Success: Switch unit's ownership");
+			}
+			break;
+		case PsiStatus::Probe:
+			if (impact)
+			{
+				LogWarning("Psi Probe Success: Show unit's screen");
+			}
+			break;
+		case PsiStatus::NotEngaged:
+			LogError("Invalid value NotEngaged for psiStatus in applyPsiAttack()");
+			return;
+	}
+}
+
+void BattleUnit::stopAttackPsi(GameState &state)
+{
+	switch (psiStatus)
+	{
+		case PsiStatus::Control:
+			LogWarning("Psi Control Finished: Revert unit's ownership");
+			break;
+		case PsiStatus::Probe:
+		case PsiStatus::Panic:
+		case PsiStatus::Stun:
+			// Nothing immediate to be done
+			break;
+		case PsiStatus::NotEngaged:
+			return;
+	}
+	psiTarget->psiAttackers.erase(id);
+	psiStatus = PsiStatus::NotEngaged;
+	psiTarget.clear();
+	psiItem.clear();
+	ticksAccumulatedToNextPsiCheck = 0;
 }
 
 bool BattleUnit::canAfford(GameState &state, int cost) const
@@ -594,20 +736,13 @@ int BattleUnit::getShield() const
 	return curShield;
 }
 
-int BattleUnit::getStunDamage() const
-{
-	// FIXME: Figure out stun damage scale
-	int SCALE = TICKS_PER_SECOND;
-	return stunDamageInTicks / SCALE;
-}
-
 bool BattleUnit::isDead() const { return getHealth() <= 0 || destroyed; }
 
-bool BattleUnit::isUnconscious() const { return !isDead() && getStunDamage() >= getHealth(); }
+bool BattleUnit::isUnconscious() const { return !isDead() && stunDamage >= getHealth(); }
 
 bool BattleUnit::isConscious() const
 {
-	return !isDead() && getStunDamage() < getHealth() &&
+	return !isDead() && stunDamage < getHealth() &&
 	       (current_body_state != BodyState::Downed || target_body_state != BodyState::Downed);
 }
 
@@ -765,11 +900,8 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 	// Deal stun damage
 	if (stunPower > 0)
 	{
-		// FIXME: Figure out stun damage scale
-		int SCALE = TICKS_PER_SECOND;
-
-		stunDamageInTicks +=
-		    clamp(damage * SCALE, 0, std::max(0, stunPower * SCALE - stunDamageInTicks));
+		stunDamage +=
+		    clamp(damage, 0, std::max(0, stunPower - stunDamage));
 	}
 	// Deal health damage
 	else
@@ -1042,8 +1174,33 @@ bool BattleUnit::handleCollision(GameState &state, Collision &c)
 
 void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 {
-	// FIXME: Regenerate stamina
-
+	//Regeneration
+	regenTicksAccumulated += ticks;
+	while (regenTicksAccumulated >= TICKS_PER_SECOND)
+	{
+		regenTicksAccumulated -= TICKS_PER_SECOND;
+		// Stun removal
+		if (stunDamage > 0)
+		{
+			stunDamage--;
+		}
+		if (!isConscious() && !isUnconscious())
+		{
+			tryToRiseUp(state);
+		}
+		// Psi regen
+		if (agent->modified_stats.psi_energy < agent->current_stats.psi_energy)
+		{
+			agent->modified_stats.psi_energy++;
+		}
+		// Sta regen
+		if (agent->modified_stats.stamina < agent->current_stats.stamina)
+		{
+			// FIXME: Regenerate stamina properly (ensure this is proper)
+			agent->modified_stats.stamina++;
+		}
+	}
+	
 	// Morale
 	if (isConscious())
 	{
@@ -1108,12 +1265,6 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 				}
 			}
 		}
-	}
-
-	// Stun removal
-	if (stunDamageInTicks > 0)
-	{
-		stunDamageInTicks = std::max(0, stunDamageInTicks - (int)ticks);
 	}
 
 	// Ensure still have item if healing
@@ -1562,7 +1713,7 @@ void BattleUnit::updateMovement(GameState &state, unsigned int &moveTicksRemaini
 			        ->getUnitIfPresent(true, true, false, tileObject))
 			{
 				// FIXME: Proper stun damage (ensure it is!)
-				stunDamageInTicks = 0;
+				stunDamage = 0;
 				dealDamage(state, agent->current_stats.health * 3 / 2, false, BodyPart::Body, 9001);
 				fallUnconscious(state);
 			}
@@ -1866,7 +2017,7 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 	{
 		static const Vec3<float> offsetTile = {0.5f, 0.5f, 0.0f};
 		static const Vec3<float> offsetTileGround = {0.5f, 0.5f, 10.0f / 40.0f};
-		Vec3<float> muzzleLocation = getMuzzleLocation();
+ 		Vec3<float> muzzleLocation = getMuzzleLocation();
 		Vec3<float> targetPosition;
 		switch (targetingMode)
 		{
@@ -1957,9 +2108,10 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 				{
 					ticksUntillNextTargetCheck = 0;
 				}
-
-				if (visibleUnits.find(targetUnit) == visibleUnits.end())
+				// Lost sight of target
+				if (state.current_battle->visibleEnemies[owner].find(targetUnit) == state.current_battle->visibleEnemies[owner].end())
 				{
+					LogWarning("Unit %s can't fire at %s: lost contact", id, targetUnit->id);
 					canFire = false;
 				}
 			}
@@ -2153,6 +2305,28 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 	} // end if not Firing
 }
 
+void BattleUnit::updatePsi(GameState &state, unsigned int ticks)
+{
+	if (psiStatus != PsiStatus::NotEngaged)
+	{
+		ticksAccumulatedToNextPsiCheck += ticks;
+		while (ticksAccumulatedToNextPsiCheck >= TICKS_PER_PSI_CHECK)
+		{
+			ticksAccumulatedToNextPsiCheck -= TICKS_PER_PSI_CHECK;
+			auto cost = getPsiCost(psiStatus, false);
+			if (cost > agent->modified_stats.psi_energy)
+			{
+				stopAttackPsi(state);
+			}
+			else
+			{
+				agent->modified_stats.psi_energy -= cost;
+				psiTarget->applyPsiAttack(state, *this, psiStatus, psiItem, false);
+			}
+		}
+	}
+}
+
 void BattleUnit::updateAI(GameState &state, unsigned int ticks)
 {
 	static const Vec3<int> NONE = {0, 0, 0};
@@ -2261,6 +2435,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	}
 	// Unit's attacking state
 	updateAttacking(state, ticks);
+	// Unit's psi attack state
+	updatePsi(state, ticks);
 	// AI
 	updateAI(state, ticks);
 }
@@ -2613,7 +2789,13 @@ void BattleUnit::tryToRiseUp(GameState &state)
 
 void BattleUnit::dropDown(GameState &state)
 {
-	// Reset state
+	// Reset states, cancel actions
+	stopAttacking();
+	stopAttackPsi(state);
+	for (auto &a : psiAttackers)
+	{
+		StateRef<BattleUnit>(&state, a.first)->stopAttackPsi(state);
+	}
 	aiList.reset(state, *this);
 	resetGoal();
 	setMovementState(MovementState::None);

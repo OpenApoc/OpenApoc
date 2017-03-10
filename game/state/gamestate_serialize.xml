@@ -481,6 +481,8 @@
 		<member>walkSounds</member>
 		<member>objectDropSounds</member>
 		<member>throwSounds</member>
+		<member>psiFailSounds</member>
+		<member>psiSuccessSounds</member>
 	</object>
 	<object external="true">
 		<name>BattleUnitAnimationPack</name>
@@ -521,12 +523,16 @@
 		<member>focusUnit</member>
 		<member>focusedByUnits</member>
 		<member>ticksUntillNextTargetCheck</member>
+		<member>psiStatus</member>
+		<member>psiTarget</member>
+		<member>ticksAccumulatedToNextPsiCheck</member>
 		<member>experiencePoints</member>
 		<member>fatalWounds</member>
 		<member>healingBodyPart</member>
 		<member>isHealing</member>
 		<member>woundTicksAccumulated</member>
-		<member>stunDamageInTicks</member>
+		<member>regenTicksAccumulated</member>
+		<member>stunDamage</member>
 		<member>enzymeDebuffTicksAccumulated</member>
 		<member>fireDebuffTicksAccumulated</member>
 		<member>enzymeDebuffIntensity</member>
@@ -1200,6 +1206,14 @@
 		<value>FiringLeftHand</value>
 		<value>FiringRightHand</value>
 		<value>FiringBothHands</value>
+	</enum>
+	<enum>
+		<name>PsiStatus</name>
+		<value>NotEngaged</value>
+		<value>Control</value>
+		<value>Panic</value>
+		<value>Stun</value>
+		<value>Probe</value>
 	</enum>
 	<enum>
 		<name>BattleUnit::TargetingMode</name>

@@ -117,6 +117,8 @@ void Battle::initBattle(GameState &state, bool first)
 		o.second->strategyImages = state.battle_common_image_list->strategyImages;
 		o.second->burningDoodad = state.battle_common_image_list->burningDoodad;
 		o.second->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
+		o.second->psiSuccessSounds = state.battle_common_sample_list->psiSuccessSounds;
+		o.second->psiFailSounds = state.battle_common_sample_list->psiFailSounds;
 	}
 	if (forces.size() == 0)
 	{

@@ -1218,136 +1218,116 @@ std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &
 	}
 
 	// Attack or face enemy
-	if (u.isConscious() && !u.isAttacking())
+	if (u.isConscious() && !u.isAttacking() && !state.current_battle->visibleEnemies[u.owner].empty() 
+		&& (u.missions.empty() || u.missions.front()->type != BattleUnitMission::Type::Snooze))
 	{
-		// See no enemies and have no mission - turn to focused or closest visible enemy
-		if (u.visibleEnemies.empty() && u.missions.empty())
+		auto &enemies = state.current_battle->visibleEnemies[u.owner];
+		auto e1 = u.agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+		auto e2 = u.agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+		// Cannot or forbidden to attack:	Turn to enemy
+		if (u.fire_permission_mode == BattleUnit::FirePermissionMode::CeaseFire ||
+			((!e1 || !e1->canFire()) && (!e2 || !e2->canFire())))
 		{
 			if (ticksAutoTurnAvailable <= state.gameTime.getTicks())
 			{
-				auto &units = state.current_battle->visibleEnemies[u.owner];
-				// Try focused unit
-				StateRef<BattleUnit> closestEnemy = u.focusUnit;
-				// If focused unit is unaccounted for, try for closest one
-				if (units.find(closestEnemy) == units.end())
+				// Look at focused unit or find closest enemy
+				auto targetEnemy = u.focusUnit;
+				auto backupEnemy = targetEnemy;
+				if (!targetEnemy || !targetEnemy->isConscious() || enemies.find(targetEnemy) == enemies.end())
 				{
-					closestEnemy.clear();
-					auto it = units.begin();
+					targetEnemy.clear();
+					backupEnemy.clear();
+					auto it = enemies.begin();
 					float minDistance = FLT_MAX;
-					while (it != units.end())
+					while (it != enemies.end())
 					{
 						auto enemy = *it++;
+						if (!enemy->isConscious())
+						{
+							continue;
+						}
+						if (!u.hasLineToUnit(state, enemy))
+						{
+							// Track an enemy we can see but can't fire at,
+							// In case we can't fire at anybody
+							if (u.visibleUnits.find(enemy) != u.visibleUnits.end())
+							{
+								backupEnemy = enemy;
+							}
+							continue;
+						}
 						auto distance = glm::distance(enemy->position, u.position);
 						if (distance < minDistance)
 						{
 							minDistance = distance;
-							closestEnemy = enemy;
+							targetEnemy = enemy;
 						}
 					}
 				}
-				if (closestEnemy &&
-				    glm::distance(closestEnemy->position, u.position) < VIEW_DISTANCE)
+				if (!targetEnemy && backupEnemy)
 				{
-					movement = mksp<AIMovement>();
-					movement->type = AIMovement::Type::Turn;
-					movement->targetLocation = closestEnemy->position;
-					ticksAutoTurnAvailable = state.gameTime.getTicks() + AUTO_TURN_COOLDOWN;
+					targetEnemy = backupEnemy;
 				}
-			}
-		}
-		// See enemy - turn or attack
-		else if (!u.visibleEnemies.empty() &&
-		         (u.missions.empty() ||
-		          u.missions.front()->type != BattleUnitMission::Type::Snooze))
-		{
-			auto e1 = u.agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
-			auto e2 = u.agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
-			// Cannot or forbidden to attack:	Turn to enemy
-			if (u.fire_permission_mode == BattleUnit::FirePermissionMode::CeaseFire ||
-			    ((!e1 || !e1->canFire()) && (!e2 || !e2->canFire())))
-			{
-				if (ticksAutoTurnAvailable <= state.gameTime.getTicks())
+				if (targetEnemy)
 				{
-					// Look at focused unit or find closest enemy
-					auto targetEnemy = u.focusUnit;
-					if (u.visibleUnits.find(targetEnemy) == u.visibleUnits.end())
-					{
-						auto it = u.visibleEnemies.begin();
-						float minDistance = FLT_MAX;
-						while (it != u.visibleEnemies.end())
-						{
-							auto enemy = *it++;
-							auto distance = glm::distance(enemy->position, u.position);
-							if (distance < minDistance)
-							{
-								minDistance = distance;
-								targetEnemy = enemy;
-							}
-						}
-					}
-
 					movement = mksp<AIMovement>();
 					movement->type = AIMovement::Type::Turn;
 					movement->targetLocation = targetEnemy->position;
 					ticksAutoTurnAvailable = state.gameTime.getTicks() + AUTO_TURN_COOLDOWN;
 				}
 			}
-			// Can attack and allowed to:		Attack enemy
-			else
+		}
+		// Can attack and allowed to:		Attack enemy
+		else
+		{
+			if (ticksAutoTargetAvailable <= state.gameTime.getTicks())
 			{
-				if (ticksAutoTargetAvailable <= state.gameTime.getTicks())
+				// Find enemy we can attack amongst those visible
+				auto targetEnemy = u.focusUnit;
+				auto weaponStatus = WeaponStatus::NotFiring;
+				// Ensure we can see and attack focus, if can't attack focus or have no focus - take closest attackable
+				if (!targetEnemy || !targetEnemy->isConscious() || enemies.find(targetEnemy) == enemies.end() || u.canAttackUnit(state, targetEnemy) == WeaponStatus::NotFiring)
 				{
-					// Find enemy we can attack amongst those visible
-					auto targetEnemy = u.focusUnit;
-					auto weaponStatus = WeaponStatus::NotFiring;
-					// Ensure we can attack focus
-					if (targetEnemy)
+					targetEnemy.clear();
+					// Make a list of enemies sorted by distance to them
+					std::map<float, StateRef<BattleUnit>> enemiesByDistance;
+					for (auto enemy : enemies)
 					{
-						if (u.canAttackUnit(state, targetEnemy) == WeaponStatus::NotFiring)
+						if (!enemy->isConscious())
 						{
-							targetEnemy.clear();
+							continue;
+						}
+						// Ensure we add every unit
+						auto distance = glm::distance(enemy->position, u.position);
+						while (enemiesByDistance.find(distance) != enemiesByDistance.end())
+						{
+							distance += 0.01f;
+						}
+						enemiesByDistance[distance] = enemy;
+					}
+					// Pick enemy that is closest and can be attacked
+					for (auto entry : enemiesByDistance)
+					{
+						weaponStatus = u.canAttackUnit(state, entry.second);
+						if (weaponStatus != WeaponStatus::NotFiring)
+						{
+							targetEnemy = entry.second;
+							break;
 						}
 					}
-					// If can't attack focus or have no focus - take closest attackable
-					if (u.visibleUnits.find(targetEnemy) == u.visibleUnits.end())
-					{
-						targetEnemy.clear();
-						// Make a list of enemies sorted by distance to them
-						std::map<float, StateRef<BattleUnit>> enemiesByDistance;
-						for (auto enemy : u.visibleEnemies)
-						{
-							// Ensure we add every unit
-							auto distance = glm::distance(enemy->position, u.position);
-							while (enemiesByDistance.find(distance) != enemiesByDistance.end())
-							{
-								distance += 0.01f;
-							}
-							enemiesByDistance[distance] = enemy;
-						}
-						// Pick enemy that is closest and can be attacked
-						for (auto entry : enemiesByDistance)
-						{
-							weaponStatus = u.canAttackUnit(state, entry.second);
-							if (weaponStatus != WeaponStatus::NotFiring)
-							{
-								targetEnemy = entry.second;
-								break;
-							}
-						}
-					}
+				}
 
-					// Attack if we can
-					if (targetEnemy)
-					{
-						action = mksp<AIAction>();
-						action->type = AIAction::Type::AttackWeaponUnit;
-						action->targetUnit = targetEnemy;
-						action->weaponStatus = weaponStatus;
-					}
-					else
-					{
-						ticksAutoTargetAvailable = state.gameTime.getTicks() + AUTO_TARGET_COOLDOWN;
-					}
+				// Attack if we can
+				if (targetEnemy)
+				{
+					action = mksp<AIAction>();
+					action->type = AIAction::Type::AttackWeaponUnit;
+					action->targetUnit = targetEnemy;
+					action->weaponStatus = weaponStatus;
+				}
+				else
+				{
+					ticksAutoTargetAvailable = state.gameTime.getTicks() + AUTO_TARGET_COOLDOWN;
 				}
 			}
 		}

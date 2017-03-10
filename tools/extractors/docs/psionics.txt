@@ -1,0 +1,24 @@
+Vanilla seems to work this way:
+- Success chance of an attack applies when you attempt it. If fail nothing happens, spend energy. If success attack begins. Control immediately gained. Probe happens immediately. Panic/Stun is gradually applied over time, each second unit spends PSI and does its thing
+
+Regen: 1 / sec
+Control = 32, 8 / sec (applied each half second)
+Panic = 10, 4 / sec (applied each half second) (loss seems to depend on psi def, seen 16, 8)
+Stun = 16, 10 / sec (applied each half second) (loss seen only 12, regardless of def)
+Probe = 8, 6 / sec (applied each half second) (allows rightclick to probe again)
+
+Assume in TB its the same, just no need for upkeep, works immediately.
+
+Attack continues until cancelled or out of mana.
+
+enum class PsionicStatus
+
+NotAttacking
+Control
+Panic
+Stun
+Probe
+
+status, target, item used
+
+

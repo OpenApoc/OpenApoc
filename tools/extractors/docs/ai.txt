@@ -1,3 +1,6 @@
+OpenApoc X-Com Ufo Apocalypse Development Opensource Open Source XCom programming
+
+--
 
 Brief AI description
 
@@ -54,10 +57,3 @@ Brief AI description
 Turret AI? 
   Turrets just get 360 vision and aggressive AI, that's enough
 
-  
-
-Fire sound
-1. Find wether we need to make a sound (fire hazard exists)
-2. Find wether we need to repeat the sound (previous sound finished)
-3. Find closest fire debuff to screen center
-4. Make a sound at that location
