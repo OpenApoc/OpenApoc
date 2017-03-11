@@ -69,6 +69,28 @@ const std::vector<OpenApoc::UString> InitialGameStateExtractor::battleMapPaths =
 	{ "58ufo8" },
 };
 
+const std::map<OpenApoc::UString, std::set<int>> InitialGameStateExtractor::initialFires = {
+	{ "51ufo1",{ 25 } },
+	{ "52ufo2",{ 25 } },
+	{ "53ufo3",{ 25 } },
+	{ "54ufo4",{ 25 } },
+	{ "55ufo5",{ 25 } },
+	{ "56ufo6",{ 25 } },
+	{ "57ufo7",{ 25 } },
+	{ "58ufo8",{ 25 } },
+};
+
+const std::map<OpenApoc::UString, std::set<int>> InitialGameStateExtractor::initialSmokes = {
+	{ "51ufo1",{ 26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42 } },
+	{ "52ufo2",{ 26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42 } },
+	{ "53ufo3",{ 26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42 } },
+	{ "54ufo4",{ 26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42 } },
+	{ "55ufo5",{ 26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42 } },
+	{ "56ufo6",{ 26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42 } },
+	{ "57ufo7",{ 26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42 } },
+	{ "58ufo8",{ 26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42 } },
+};
+
 const std::map<OpenApoc::UString, OpenApoc::UString> InitialGameStateExtractor::unitImagePackPaths = {
 	{ "antrpa",		"unit/antrpa" },
 	{ "antrpb",		"unit/antrpb" },

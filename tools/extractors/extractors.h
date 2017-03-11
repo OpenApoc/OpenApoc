@@ -63,6 +63,10 @@ class InitialGameStateExtractor
 
 	// Lookup table of building function number -> battlemap path
 	static const std::vector<UString> battleMapPaths;
+	// Lookup table for battlemap path -> number of features that are converted to fires on map start
+	static const std::map<OpenApoc::UString, std::set<int>> initialFires;
+	// Lookup table for battlemap path -> number of features that are converted to smokes on map start
+	static const std::map<OpenApoc::UString, std::set<int>> initialSmokes;
 	// List of paths and names for unit image packs
 	static const std::map<OpenApoc::UString, OpenApoc::UString> unitImagePackPaths;
 	// List of paths and names for unit shadow packs
@@ -87,7 +91,7 @@ class InitialGameStateExtractor
 	void extractBattlescapeMapFromPath(GameState &state, const UString dirName,
 	                                   const int index) const;
 	void readBattleMapParts(GameState &state, const TACP &data_t, sp<BattleMapTileset> t,
-	                        BattleMapPartType::Type type, const UString &idPrefix,
+	                        BattleMapPartType::Type type, const UString &idPrefix, const UString &mapName,
 	                        const UString &dirName, const UString &datName, const UString &pckName,
 	                        const UString &stratPckName) const;
 

@@ -300,7 +300,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Squad
 
 	void removeFromSquad(Battle &b);
-	bool assignToSquad(Battle &b, int squadNumber);
+	bool assignToSquad(Battle &b, int squadNumber = -1);
 	void moveToSquadPosition(Battle &b, int squadPosition);
 
 	// Stats
@@ -337,8 +337,9 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Starts attacking taget, returns if attack successful
 	bool startAttackPsi(GameState &state, StateRef<BattleUnit> target, PsiStatus status, StateRef<AEquipmentType> item);
 	void stopAttackPsi(GameState &state);
-	// Applies psi attack effects to this unit
+	// Applies psi attack effects to this unit, returns false if attack must be terminated because of some failure 
 	void applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatus status, StateRef<AEquipmentType> item, bool impact);
+	void changeOwner(GameState &state, StateRef<Organisation> newOwner);
 
 	// Body
 
@@ -517,6 +518,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	friend class Battle;
 
 	void startAttacking(GameState &state, WeaponStatus status);
+	bool startAttackPsiInternal(GameState &state, StateRef<BattleUnit> target, PsiStatus status, StateRef<AEquipmentType> item);
 
 	// Visibility theory (* is implemented)
 	//
@@ -538,7 +540,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Update unit's vision of other units and terrain
 	void refreshUnitVisibility(GameState &state, Vec3<float> oldPosition);
 	// Update other units's vision of this unit
-	void refreshUnitVision(GameState &state);
+	void refreshUnitVision(GameState &state, bool forceBlind = false);
 	// Update both this unit's vision and other unit's vision of this unit
 	void refreshUnitVisibilityAndVision(GameState &state, Vec3<float> oldPosition);
 };

@@ -338,6 +338,7 @@
 	<object>
 		<name>BattleMapPartType</name>
 		<member>type</member>
+		<member>autoConvert</member>
 		<member>sprite</member>
 		<member>strategySprite</member>
 		<member>voxelMapLOF</member>
@@ -1241,6 +1242,12 @@
 		<value>LeftWall</value>
 		<value>RightWall</value>
 		<value>Feature</value>
+	</enum>
+	<enum>
+		<name>BattleMapPartType::AutoConvert</name>
+		<value>None</value>
+		<value>Fire</value>
+		<value>Smoke</value>
 	</enum>
 	<enum>
 		<name>Projectile::Type</name>

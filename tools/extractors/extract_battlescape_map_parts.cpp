@@ -15,7 +15,7 @@ namespace OpenApoc
 void InitialGameStateExtractor::readBattleMapParts(GameState &state, const TACP &data_t,
                                                    sp<BattleMapTileset> t,
                                                    BattleMapPartType::Type type,
-                                                   const UString &idPrefix, const UString &dirName,
+                                                   const UString &idPrefix, const UString &mapName, const UString &dirName,
                                                    const UString &datName, const UString &pckName,
                                                    const UString &stratPckName) const
 {
@@ -272,6 +272,19 @@ void InitialGameStateExtractor::readBattleMapParts(GameState &state, const TACP 
 		if (type == BattleMapPartType::Type::Ground && i >= firstExitIdx)
 			object->exit = true;
 
+		object->autoConvert = BattleMapPartType::AutoConvert::None;
+		if (type == BattleMapPartType::Type::Feature)
+		{
+			if (initialFires.find(mapName) != initialFires.end() && initialFires.at(mapName).find(i) != initialFires.at(mapName).end())
+			{
+				object->autoConvert = BattleMapPartType::AutoConvert::Fire;
+			}
+			else if (initialSmokes.find(mapName) != initialSmokes.end() && initialSmokes.at(mapName).find(i) != initialSmokes.at(mapName).end())
+			{
+				object->autoConvert = BattleMapPartType::AutoConvert::Smoke;
+			}
+		}
+
 		t->map_part_types[id] = object;
 	}
 }
@@ -291,28 +304,28 @@ sp<BattleMapTileset> InitialGameStateExtractor::extractTileSet(GameState &state,
 	// Read ground (tiles)
 	{
 		readBattleMapParts(state, this->tacp, t, BattleMapPartType::Type::Ground,
-		                   BattleMapPartType::getPrefix() + tilePrefix + "GD_",
+		                   BattleMapPartType::getPrefix() + tilePrefix + "GD_", name,
 		                   map_prefix + name + mapunits_suffix, "grounmap", "ground", "sground");
 	}
 
 	// Read left walls
 	{
 		readBattleMapParts(state, this->tacp, t, BattleMapPartType::Type::LeftWall,
-		                   BattleMapPartType::getPrefix() + tilePrefix + "LW_",
+		                   BattleMapPartType::getPrefix() + tilePrefix + "LW_", name,
 		                   map_prefix + name + mapunits_suffix, "leftmap", "left", "sleft");
 	}
 
 	// Read right walls
 	{
 		readBattleMapParts(state, this->tacp, t, BattleMapPartType::Type::RightWall,
-		                   BattleMapPartType::getPrefix() + tilePrefix + "RW_",
+		                   BattleMapPartType::getPrefix() + tilePrefix + "RW_", name,
 		                   map_prefix + name + mapunits_suffix, "rightmap", "right", "sright");
 	}
 
 	// Read feature
 	{
 		readBattleMapParts(state, this->tacp, t, BattleMapPartType::Type::Feature,
-		                   BattleMapPartType::getPrefix() + tilePrefix + "FT_",
+		                   BattleMapPartType::getPrefix() + tilePrefix + "FT_", name,
 		                   map_prefix + name + mapunits_suffix, "featmap", "feature", "sfeature");
 	}
 

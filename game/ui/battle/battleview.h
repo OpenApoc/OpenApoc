@@ -29,8 +29,10 @@ enum class BattleSelectionState
 	NormalAlt,
 	NormalCtrl,
 	NormalCtrlAlt,
-	PsiLeft,
-	PsiRight,
+	PsiControl,
+	PsiPanic,
+	PsiStun,
+	PsiProbe,
 	FireAny,
 	FireLeft,
 	FireRight,
@@ -52,6 +54,23 @@ class AgentEquipmentInfo
 	int maxAmmo = 0;
 	int accuracy = 0;
 	bool operator==(const AgentEquipmentInfo &other) const;
+	bool operator!=(const AgentEquipmentInfo &other) const;
+};
+
+// All the info required to draw psi page, kept together to make it easier to
+// track when something has changed and requires a re-draw
+class AgentPsiInfo
+{
+  public:
+	PsiStatus status;
+	int maxEnergy = 0;
+	int maxAttack = 0;
+	int maxDefense = 0;
+	int curEnergy = 0;
+	int curAttack = 0;
+	int curDefense = 0;
+	bool operator==(const AgentPsiInfo &other) const;
+	bool operator!=(const AgentPsiInfo &other) const;
 };
 
 class BattleView : public BattleTileView
@@ -81,6 +100,7 @@ class BattleView : public BattleTileView
 
 	AgentEquipmentInfo leftHandInfo;
 	AgentEquipmentInfo rightHandInfo;
+	AgentPsiInfo psiInfo;
 
 	bool followAgent = false;
 
@@ -106,8 +126,12 @@ class BattleView : public BattleTileView
 	void updateSoldierButtons();
 
 	AgentEquipmentInfo createItemOverlayInfo(bool rightHand);
+	AgentPsiInfo createPsiInfo();
 	void updateItemInfo(bool right);
+	void updatePsiInfo();
+	sp<RGBImage> drawPsiBar(int cur, int max);
 	sp<Image> selectedItemOverlay;
+	sp<Image> selectedPsiOverlay;
 
 	sp<Image> pauseIcon;
 	int pauseIconTimer = 0;
@@ -122,6 +146,8 @@ class BattleView : public BattleTileView
 	void orderDrop(bool right);
 	void orderThrow(Vec3<int> target, bool right);
 	void orderTeleport(Vec3<int> target, bool right);
+	void orderCancelPsi();
+	void orderPsiAttack(StateRef<BattleUnit> u, PsiStatus status, bool right);
 	void orderSelect(StateRef<BattleUnit> u, bool inverse = false, bool additive = false);
 	void orderFire(Vec3<int> target, WeaponStatus status = WeaponStatus::FiringBothHands,
 	               bool modifier = false);

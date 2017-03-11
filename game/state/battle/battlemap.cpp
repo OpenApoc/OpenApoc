@@ -903,29 +903,51 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 				}
 				for (auto &pair : tiles.initial_features)
 				{
-					auto s = mksp<BattleMapPart>();
-
-					auto initialPosition = pair.first + shift;
-					s->position = initialPosition;
-					s->queueCollapse();
-					s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
-					s->type = pair.second;
-
-					// Set spawnability and height
-					if (s->type->movement_cost == 255 || s->type->height == 39 ||
-					    b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] == -1)
+					switch (pair.second->autoConvert)
 					{
-						b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] = -1;
-					}
-					else
-					{
-						b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] =
-						    std::max(b->spawnMap[initialPosition.x][initialPosition.y]
-						                        [initialPosition.z],
-						             s->type->height);
-					}
+						case BattleMapPartType::AutoConvert::Fire:
+						{
+							StateRef<DamageType> dt = { &state, "DAMAGETYPE_INCENDIARY" };
+							b->placeHazard(state, dt, pair.first + shift, 
+								// Make it already hot
+								dt->hazardType->getLifetime(state) * 2, 0, 1, false);
+							break;
+						}
+						case BattleMapPartType::AutoConvert::Smoke:
+						{
+							StateRef<DamageType> dt = { &state, "DAMAGETYPE_SMOKE" };
+							b->placeHazard(state, dt, pair.first + shift,
+								dt->hazardType->getLifetime(state), 1, 2, false);
+							break;
+						}
+						case BattleMapPartType::AutoConvert::None:
+						{
+							auto s = mksp<BattleMapPart>();
 
-					b->map_parts.push_back(s);
+							auto initialPosition = pair.first + shift;
+							s->position = initialPosition;
+							s->queueCollapse();
+							s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
+							s->type = pair.second;
+
+							// Set spawnability and height
+							if (s->type->movement_cost == 255 || s->type->height == 39 ||
+								b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] == -1)
+							{
+								b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] = -1;
+							}
+							else
+							{
+								b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] =
+									std::max(b->spawnMap[initialPosition.x][initialPosition.y]
+										[initialPosition.z],
+										s->type->height);
+							}
+
+							b->map_parts.push_back(s);
+							break;
+						}
+					}
 				}
 				for (auto &pair : tiles.loot_locations)
 				{

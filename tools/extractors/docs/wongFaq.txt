@@ -1,0 +1,2774 @@
+From: Roger Wong <rogerw@bigfoot.com>
+Newsgroups: comp.sys.ibm.pc.games.strategic
+Subject: X-COM Apocalypse Internet FAQ v0.99 [1 of 1]
+Date: Sun, 28 Sep 1997 06:18:11 +0100
+
+[X-COM3-FAQ-v99.txt]
+                            The X-COM Apocalypse
+                                Internet FAQ
+                                    v0.99
+
+                             September 27, 1997
+              Copyright 1997 Roger Wong. All Rights Reserved.
+                              xcom3@bigfoot.com
+
+                              Visit the website:
+                   http://www.khan.org/~roger/games/xcom3
+
+
+DISCLAIMER
+The purpose of this strategy guide is to aid the public with strategies and
+tactics for use in the game X-COM Apocalypse, by Mythos Games Ltd., and
+MicroProse Ltd.  In no way should this strategy guide promote your killing
+yourself, killing others, or killing in any other fashion.
+     Roger Wong claims NO responsibility regarding any illegal activity
+concerning this strategy guide, or indirectly related to this strategy
+guide.
+
+TRADEMARK INFORMATION
+X-COM and X-COM Apocalypse are trademarks of MicroProse Ltd., and are so
+acknowledged. All other trademarks are the property of their respective
+holders.
+
+COPYRIGHT NOTICE
+This article is Copyright 1997 by Roger Wong. All rights reserved.
+You are granted the following rights:
+
+I.  To make copies of this work in original form, so long as
+      (a) the copies are exact and complete;
+      (b) the copies include the copyright notice and these paragraphs
+          in their entirety;
+      (c) the copies give obvious credit to the author, Roger Wong;
+      (d) the copies are in electronic form.
+II. To distribute this work, or copies made under the provisions
+    above, so long as
+      (a) this is the original work and not a derivative form;
+      (b) you do not charge a fee for copying or for distribution;
+      (c) you ensure that the distributed form includes the copyright
+          notice, this paragraph, the disclaimer of warranty in
+          their entirety and credit to the author;
+      (d) the distributed form is not in an electronic magazine or
+          within computer software (prior explicit permission may be
+          obtained from Roger Wong);
+      (e) the distributed form is the NEWEST version of the article to
+          the best of the knowledge of the distributor;
+      (f) the distributed form is electronic.
+
+        You may not distribute this work by any non-electronic media,
+including but not limited to books, newsletters, magazines, manuals,
+catalogs, and speech.  You may not distribute this work in electronic
+magazines or within computer software without prior written explicit
+permission.  These rights are temporary and revocable upon written, oral,
+or other notice by Roger Wong. This copyright notice shall be governed by
+the laws of the state of Texas.
+        If you would like additional rights beyond those granted above,
+write to the author at "rogerw@bigfoot.com" on the Internet.
+
+
+                             Table of Contents
+
+1. INTRODUCTION
+ 1.1 FOREWORD
+ 1.2 ABOUT THE APOCALYPSE FAQ
+ 1.3 ABOUT THE AUTHOR
+ 1.4 GETTING THE APOCALYPSE FAQ
+   1.4.1 Email
+   1.4.2 World-wide Web
+   1.4.3 Usenet Newsgroups
+ 1.5 NOTIFICATION OF UPDATES AND REVISIONS
+ 1.6 CONTRIBUTING TO THE APOCALYPSE FAQ
+ 1.7 ACKNOWLEDGEMENTS AND CREDITS
+ 1.8 ACCURATE INFORMATION
+
+
+2. QUICK HELP
+ 2.1 X-COM APOCALYPSE IS ALL ABOUT SEX
+ 2.2 QUICK AND DIRTY CITYSCAPE SOLUTIONS
+   2.2.1 Help, I want the cheat keys!
+   2.2.2 Help, It's the first week and I don't know what to do!
+   2.2.3 Help, I want more money!
+   2.2.4 Help, I want more ammo!
+   2.2.5 Help, I can't research X, Y, or Z!
+   2.2.6 Help, I failed to research UFO type XYZ and now I'm stuck!
+   2.2.7 Help, the aliens are spreading all over my city!
+   2.2.8 Help, my bases keep getting raided!
+ 2.3 QUICK AND DIRTY VEHICLE COMBAT SOLUTIONS
+   2.3.1 Help, I'm clueless when fighting UFOs!
+   2.3.2 Help, I can only launch two vehicles at a time!
+   2.3.3 Help, I can't capture any UFOs!
+   2.3.4 Help, my ships get destroyed in the alien dimension!
+   2.3.5 Help, my armored tank blew up with only one shot!
+ 2.4 QUICK AND DIRTY TACTICAL COMBAT SOLUTIONS
+   2.4.1 Help, my Agents can't survive a single battle!
+   2.4.2 Help, my Agents are doing their own thing!
+   2.4.3 Help, my medi-kits don't work!
+   2.4.4 Help, my armor keeps melting!
+   2.4.5 Help, I can't capture any cargo or aliens!
+   2.4.6 Help, I want to capture a live XYZ for bio-research!
+   2.4.7 Help, poppers and brainsuckers in turn-based combat kill me!
+   2.4.8 Help, my combat keeps slowing to a crawl!
+   2.4.9 Help, there are too many aliens in the alien dimension buildings!
+ 2.5 QUICK AND DIRTY DIPLOMATIC SOLUTIONS
+   2.5.1 Help, XYZ Corp is so hostile, they think aliens are their
+   friends!
+   2.5.2 Help, I don't want to read all 200 pages of the manual!
+   2.5.3 Help, Transtellar refuses to ferry my scientists!
+ 2.6 OTHER QUICK AND DIRTY SOLUTIONS
+   2.6.1 Help, my base storage is filled up with 65536 widgets!
+
+
+3. MONEY AND POLITICS
+ 3.1 THE COMMODITIES MARKET
+   3.1.1 Pricing and Availability
+ 3.2 FUNDING
+ 3.3 CORPORATIONS AND ORGANIZATIONS
+   3.3.1 Bribes
+   3.3.2 Drawbacks of Hostilities
+   3.3.3 Advantages of Alliances
+
+
+4. RESEARCH AND DEVELOPMENT
+ 4.1 QUANTUM PHYSICS RESEARCH TREE
+   4.1.1 Things You Can Research By Just Finding Them
+   4.1.2 Things You Can Make Out Of LEGO(tm)
+   4.1.3 Things That Make Scientists Earn Their Pay
+ 4.2 BIOLOGICAL RESEARCH TREE
+   4.2.1 Things You Can Research By Just Finding Them
+   4.2.2 Things That Stink Up the Lab for Days
+   4.2.3 Things They Don't Teach in High School (And Probably Never Will)
+
+
+5. CITYSCAPE COMBAT
+ 5.1 DESTROYING BUILDINGS
+   5.1.1 Manual Control
+ 5.2 DESTROYING VEHICLES
+   5.2.1 Swarm Combat
+   5.2.2 Attacking UFOs
+   5.2.3 Attacking Mega-Primus vehicles
+ 5.3 EFFECTS OF VEHICLE EQUIPMENT
+   5.3.1 Disruptor Shields
+   5.3.2 Cloaking Field
+   5.3.3 Teleporter
+
+
+6. TACTICAL COMBAT
+ 6.1 REAL-TIME COMBAT TACTICS
+   6.1.1 When to Use RT Combat
+   6.1.2 Agent Equipment
+   6.1.3 Combat Maneuvers
+ 6.2 TURN-BASED COMBAT TACTICS
+   6.2.1 When to Use TB Combat
+   6.2.2 Agent Equipment
+   6.2.3 Combat Maneuvers
+
+
+7. X-COM BASE LOGISTICS
+ 7.1 MULTIPLE BASES
+   7.1.1 Choosing a Base
+   7.1.2 Internal Layout
+ 7.2 DEFENSE
+   7.2.1 Against Hostile Agents
+   7.2.2 Against Air Attack
+
+
+8. THE ALIEN DIMENSION
+ 8.1 HOW TO ENTER ALIEN BUILDINGS
+ 8.2 GENERAL RULES IN THE ALIEN BUILDINGS
+
+
+9. AGENTS GUIDE
+ 9.1 X-COM AGENTS
+   9.1.1 Humans
+   9.1.2 Sectoid Hybrids
+   9.1.3 Androids
+ 9.2 HOSTILE AGENTS
+   9.2.1 Anthropods
+   9.2.2 Brainsuckers
+   9.2.3 Hyperworms
+   9.2.4 Megaspawns
+   9.2.5 Micronoids
+   9.2.6 Multiworms
+   9.2.7 Poppers
+   9.2.8 Psimorphs
+   9.2.9 Queenspawn
+   9.2.10 Skeletoids
+   9.2.11 Spitters
+   9.2.12 Megapol Officers
+   9.2.13 Cult Members
+   9.2.14 Gang Members
+   9.2.15 Rent-a-Cops
+
+
+10. VEHICLE GUIDE
+ 10.1 X-COM VEHICLES
+   10.1.1 Phoenix Hovercar
+   10.1.2 Hoverbike
+   10.1.3 Valkyrie Interceptor
+   10.1.4 Hawk Air Warrior
+   10.1.5 Dimension Probe
+   10.1.6 Biotrans
+   10.1.7 Explorer
+   10.1.8 Retaliator
+   10.1.9 Annihilator
+   10.1.10 Stormdog
+   10.1.11 Wolfhound APC
+   10.1.12 Blazer Turbo Bike
+   10.1.13 Griffon AFV
+ 10.2 ALIEN VEHICLES
+   10.2.1 Alien Probe
+   10.2.2 Alien Scout
+   10.2.3 Alien Transporter
+   10.2.4 Alien Fast Attack Ship
+   10.2.5 Alien Destroyer
+   10.2.6 Alien Assault Ship
+   10.2.7 Alien Bomber
+   10.2.8 Alien Escort
+   10.2.9 Alien Battleship
+   10.2.10 Alien Mothership
+
+
+11. EQUIPMENT GUIDE
+ 11.1 VEHICLE WEAPONS
+   11.1.1 Bolter 4000 Laser Gun
+   11.1.2 Lancer 7000 Laser Gun
+   11.1.3 Rendor Plasma Gun
+   11.1.4 Lineage Plasma Cannon
+   11.1.5 Plasma Multi-System
+   11.1.6 Light Disruptor Beam
+   11.1.7 Medium Disruptor Beam
+   11.1.8 Heavy Disruptor Beam
+   11.1.9 40mm Auto Cannon
+   11.1.10 Janitor Missile Array
+   11.1.11 Justice Missile Launcher
+   11.1.12 Prophet Missile Array
+   11.1.13 Retribution Missile Launcher
+   11.1.14 Disruptor Bomb Launcher
+   11.1.15 Stasis Bomb Launcher
+   11.1.16 Disruptor Multi-Bomb Launcher
+   11.1.17 Laser Defense Array
+   11.1.18 Plasma Defense Array
+   11.1.19 40mm Auto Cannon Turret
+   11.1.20 Airguard Anti-Air Cannon
+   11.1.21 GLM Array
+   11.1.22 Plasma Turret Cannon
+   11.1.23 GLM Air Defense
+   11.1.24 Rumble Cannon
+ 11.2 VEHICLE ENGINES
+   11.2.1 SD Standard
+   11.2.2 SD Deluxe
+   11.2.3 SD Sports
+   11.2.4 SD Turbo
+   11.2.5 SD Elite
+   11.2.6 SD Special
+   11.2.7 Metro Roadhog
+   11.2.8 Metro Roadgrav
+   11.2.9 Metro Turbograv
+   11.2.10 Metro Powergrav
+   11.2.11 Metro Multipower Plus
+ 11.3 VEHICLE EQUIPMENT
+   11.3.1 Light Weapons Control
+   11.3.2 Medium Weapons Control
+   11.3.3 Heavy Weapons Control
+   11.3.4 Cargo Module
+   11.3.5 Passenger Module
+   11.3.6 Bio-Transport Module
+   11.3.7 Missile Evasion Matrix
+   11.3.8 Small Disruption Shield
+   11.3.9 Large Disruption Shield
+   11.3.10 Cloaking Field
+   11.3.11 Teleporter
+ 11.4 PERSONAL WEAPONS
+   11.4.1 Megapol Lawpistol
+   11.4.2 Megapol Plasma Gun
+   11.4.3 Marsec M4000 Machine Gun
+   11.4.4 Megapol Laser Sniper Gun
+   11.4.5 Megapol Auto Cannon
+   11.4.6 Marsec Heavy Launcher
+   11.4.7 Marsec MiniLauncher
+   11.4.8 Toxigun
+   11.4.9 Disruptor Gun
+   11.4.10 Devastator Cannon
+   11.4.11 Brainsucker Launcher
+   11.4.12 Entropy Launcher
+   11.4.13 Dimension Missile Launcher
+   11.4.14 Power Sword
+   11.4.15 Mind Bender
+   11.4.16 Megapol Stun Grapple
+   11.4.17 Megapol AP Grenade
+   11.4.18 Megapol Stun Grenade
+   11.4.19 Megapol Smoke Grenade
+   11.4.20 Diablo Incendiary Grenade
+   11.4.21 Marsec Proximity Mine
+   11.4.22 Marsec High Explosive
+   11.4.23 Boomeroid
+   11.4.24 Vortex Mine
+   11.4.25 Alien Gas Grenade
+ 11.5 PERSONAL EQUIPMENT
+   11.5.1 Personal Disruptor Shield
+   11.5.2 Personal Teleporter
+   11.5.3 Personal Cloaking Field
+   11.5.4 Medi-kit
+   11.5.5 Motion Scanner
+   11.5.6 Psiclone
+   11.5.7 Elerium Pod
+   11.5.8 Megapol Armor
+   11.5.9 Marsec Armor
+   11.5.10 X-COM Armor
+ 11.6 ALIEN BIOLOGICAL WEAPONS
+   11.6.1 Megaspawn Disruptor
+   11.6.2 Megaspawn Launcher
+   11.6.3 Spitter Vomit
+   11.6.4 Multiworm Vomit
+   11.6.5 Alien Egg Vomit
+   11.6.6 Hyperworm Bite
+   11.6.7 Queenspawn Vomit
+   11.6.8 Popper Bomb
+
+
+12. INTERNAL GAMEPLAY MECHANICS
+ 12.1 EFFECTS OF DIFFICULTY LEVELS
+ 12.2 VEHICULAR COMBAT
+ 12.3 TACTICAL COMBAT
+   12.3.1 Map Generation
+   12.3.2 Weapons Accuracy
+   12.3.3 Grenade Accuracy
+   12.3.4 Damage
+     12.3.4.1 Bullets/Energy Beams
+     12.3.4.2 Stun Weapons
+     12.3.4.3 Explosives
+   12.3.5 Psionic Skills
+ 12.4 AGENTS
+   12.4.1 Stats & Improvements
+   12.4.2 Promotions and Medals
+   12.4.3 Healing
+   12.4.4 Morale
+   12.4.5 Encumbrance
+   12.4.6 Movement
+ 12.5 SCORING
+ 12.6 FUNDING
+
+
+13. BUGS, UPDATES, AND PATCHES
+
+
+14. THIRD PARTY SUPPORT
+ 14.1 INTERNET WEBSITES
+ 14.2 UTILITIES AND PROGRAMS
+
+
+15. CLOSING STATEMENT
+
+
+16. APPENDICES
+ 16.1 TABLES
+   16.1.1 Agent Weapons
+   16.1.2 Vehicle Weapons
+   16.1.3 UFOs
+   16.1.4 UFO Crew Complements
+   16.1.5 Aliens Beamed Down by UFOs
+   16.1.6 Aliens in Alien Buildings
+   16.1.7 Hostile Unit Statistics
+   16.1.8 Workshop Profit Ratings
+   16.1.9 Complete Commodities Market Pricing Guide
+
+
+17. REFERENCES
+
+
+18. REVISION HISTORY
+
+
+
+1.   INTRODUCTION
+
+1.1  FOREWORD
+The Apocalypse FAQ started out as a few pages of game notes hurriedly
+scribbled into a small, green, spiral-bound notebook. Later additions
+include the answers to questions asked by the Internet's newsgroup
+community.
+     This FAQ represents a significant investment of effort that could
+probably have been put to better use elsewhere. I only ask that you treat
+it with respect. Please don't cannibalize parts for your web page or charge
+money for other people to view it. If you are a publisher or editor, I
+implore you to take the time to arrange for reprints or translation rights.
+     Now, let the FAQ begin!
+
+
+1.2  ABOUT THE APOCALYPSE FAQ
+Welcome to v1.0 of the X-COM Apocalypse Internet FAQ. Version 1.0 is a
+first release. X-COM Apocalypse is the name of the game. Internet is the
+method of distribution. FAQs are (F)requently (A)sked (Q)uestions. For
+legal reasons, I wish to make it absolutely clear that the X-Com Apocalypse
+Internet FAQ is not supported by or associated with Mythos Games and
+Microprose.
+
+
+1.3  ABOUT THE AUTHOR
+Roger Wong is a freelance writer and computer consultant. With an honors
+degree in computer engineering from Brunel University in England, his
+computer interests include security & privacy, electronic payment
+protocols, computer graphics, website design, game design, and electronic
+music.
+    In his time away from dandruff-causing computer screens, Roger is an
+avid cyclist, a budding watercolor artist, and a frequent traveler. He
+enjoys photographing the landscape gardens of England, and often invites
+gorgeous Norwegian women over for nude picnics.
+     Other Internet strategy guides by Roger Wong include The Unofficial
+C&C Strategy FAQ and The Red Alert Internet Strategy Guide.
+     Away from his native home of Ft. Worth, Texas, Roger lives in the
+hilly countryside outside Oxford, England. He has no children, no wife, no
+mortgage and tries very hard to keep it that way.
+
+
+1.4  GETTING THE APOCALYPSE FAQ
+
+1.4.1     Email
+To receive the latest plain text version of this guide via email, send an
+email message to NerveGas-xcom3faq@inconnect.com.
+
+     This service is completely automated.
+
+     If you subscribe to an email provider such as Juno that restricts you
+from receiving large email messages, you may be unable to use this service.
+Please try the world-wide web.
+
+
+1.4.2     World-wide Web
+For the latest plain text, HTML, and Microsoft Word versions of this FAQ,
+visit:
+     http://www.khan.org/~roger/games/xcom3
+
+
+1.4.3     Usenet Newsgroups
+This FAQ is posted to comp.sys.ibm.pc.games.strategic at irregular
+intervals.
+
+
+1.5  NOTIFICATION OF UPDATES AND REVISIONS
+To be notified of updates to this FAQ, send an email message to
+xcom3@bigfoot.com and place the following phrase in your subject header:
+
+     XCOM3 Update
+
+
+1.6  CONTRIBUTING TO THE APOCALYPSE FAQ
+If you have something to add to the FAQ, please send email to
+xcom3@bigfoot.com, explaining what your addition is. It will be reviewed,
+and if accepted, added to the next FAQ version.  In the email, please
+supply your name and email address.
+     Please note that all submissions to the FAQ become property of the
+author (Roger Wong) and that they may or may not be acknowledged.  By
+submitting to the FAQ, you grant permission for use of your submission in
+any future publications of the FAQ in any media.  The author reserves the
+right to omit information from a submission or delete the submission
+entirely.
+
+
+1.7  ACKNOWLEDGEMENTS AND CREDITS
+I want to thank game designer Julian Gollop. He graciously provided the
+data structures and algorithms upon which much of this FAQ is based. The
+editors of Gamespot and PC Gamer UK deserve credit for funding my X-COM
+Apocalypse research. You, my readers, make it worth my while. My sister,
+Sherry, provided me with a steady stream of food and clean laundry during
+her summer break from college. Heaven knows I can't take care of myself.
+Finally, my deepest thanks goes to my mom, without whom I would not be
+possible.
+
+
+1.8  ACCURATE INFORMATION
+All attempts have been made to make the information in this strategy guide
+as accurate as possible. If any information in this strategy guide is
+incorrect, please let me know at xcom3@bigfoot.com.
+     Future updates, add-ons, bug fixes, and Internet address changes may
+render parts of this strategy guide obsolete. The information in this
+strategy guide is accurate as of version 1.00 of X-COM Apocalypse.
+     I have duplicated some information in the different sections as a
+reading aid. I hope it reduces the time you spend flipping back and forth
+between pages. If you have further time-saving suggestions, please send
+them to xcom3@bigfoot.com.
+
+
+2.   QUICK HELP
+
+2.1  X-COM APOCALYPSE IS ALL ABOUT SEX
+Many of the answers to your game play questions are listed below. Skim
+through the headings to see if any of them fit your circumstances.
+     If your question is not listed here, or if you wish for more
+information, please see the remaining chapters of this FAQ for detailed
+explanations of these concepts.
+
+
+2.2  QUICK AND DIRTY CITYSCAPE SOLUTIONS
+
+2.2.1     Help, I want the cheat keys!
+There aren't any. If you really want to cheat, search the Internet for a
+game editor.
+
+
+2.2.2     Help, It's the first week and I don't know what to do!
+There isn't one correct way to begin, but the following worked for me:
+
+Try building the following:
+     an extra set of physics and biology labs,
+     living quarters for your scientists.
+
+And then buy the following:
+     as many hoverbikes as you can,
+     janitor missile launchers for your hoverbikes. Equip them.
+
+To succesfully attack UFOs:
+Scramble all your hoverbikes and hovercars at once. With this combined
+force, attack each UFO one by one, starting with the UFO closest to you.
+
+To prevent aliens from infiltrating in your city:
+When you spot UFOs hovering and beaming aliens into a building, send five
+or six agents in a vehicle to that building and investigate.
+
+Equip your agents with the following:
+     1 medi-kit
+     2 stun grenades
+     2 AP grenades
+     2 machineguns, law pistols, or autocannons
+
+In combat, do the following:
+     Play in real-time so you can fire two weapons at once,
+     Use snap-shots or aimed shots. Never use auto-fire,
+     Kneel, or better yet, crawl to improve your accuracy,
+     Stay in front of a corridor or doorway and wait for the aliens to walk
+into your line of fire.
+
+When out of combat:
+     research any alien-equipment-you-have-but-you-don't-know-what-it-is,
+     research alien bodies and corpses.
+
+     (Note: If you don't bring back any alien bodies or equipment from
+combat, check the vehicle in which you sent your agents. To bring back
+equipment, the vehicle must be equipped with a Cargo Module. To bring back
+alien bodies, it must be equipped with a Bio-Transport Module. If you do
+not have a Bio-Transport Module, you must research and manufacture one
+yourself.)
+
+
+2.2.3     Help, I want more money!
+To increase your government funding:
+     score lots of points at the end of the week,
+     avoid purposefully destroying parts of the city.
+
+To increase your raw funds:
+     sell vehicles for which you have no use,
+     sell items for which you have no use,
+     raid Cult of Sirius temples for psiclone over and over again,
+     sell the psiclone you capture from the temple raids,
+     manufacture and sell items from your workshops.
+
+
+2.2.4     Help, I want more ammo!
+Since ammunition can be tight during the first few weeks of the game, you
+should follow a few short rules:
+     don't use auto-fire,
+     avoid long-range firefights,
+     research ammunition-free weapons as soon as possible,
+     arm your agents with weapons such as the machine gun and plasma
+pistols that have high bullet counts per clip.
+
+
+2.2.5     Help, I can't research X, Y, or Z!
+Whether or not you can research a particular item depends on both finding a
+particular object and upon previous research done in a related field. Check
+the research tree for more details.
+
+
+2.2.6     Help, I failed to research UFO type XYZ and now I'm stuck!
+After the first few weeks have passed, the aliens stop sending their
+smaller UFOs. If this happens before you've had a chance to capture one of
+the small UFO types, you may wait weeks without ever seeing one again.
+     Since X-COM vehicle research depends entirely upon the capture of
+alien UFO technology, a missing link in the chain can really set you back.
+     When all is said and done, the best course of action is to restart the
+game and make it a point to capture all the UFO types the second time
+around.
+     If you choose to wait it out, you could spend several game weeks
+waiting for a UFO type that may never come again.
+
+
+2.2.7     Help, the aliens are spreading all over my city!
+When you spot UFOs hovering and beaming aliens into a building, send your
+agents to that building and investigate. By the time you receive an
+official alert, the aliens will have already established themselves.
+     Destroy UFOs in the air before they beam any aliens down.
+
+
+2.2.8     Help, my bases keep getting raided!
+Be nicer to your neighbors. Install security stations around your entry
+portal and vehicle repair bay. Buy bases with entrances you can easily
+cover with security stations.
+
+
+2.3  QUICK AND DIRTY VEHICLE COMBAT SOLUTIONS
+
+2.3.1     Help, I'm clueless when fighting UFOs!
+Scramble all your hoverbikes and hovercars at once. With this combined
+force, attack each UFO one by one.
+     Some UFOs contain troops, while others are just escorts. Go for the
+troop carriers first. They are usually slower and less numerous than the
+escort ships.
+     Missile launchers are only useful against the slower UFOs. Against
+faster UFOs, missiles will run out of fuel before they hit. Use beam
+weapons against the fast UFO types.
+
+
+2.3.2     Help, I can only launch two vehicles at a time!
+This is because your base only has two vehicle launching bays. You could
+buy a new base with more bays, but it will cost money.
+     Better yet, place all your fighting vehicles in the Transtellar
+spaceport. There are so many vehicle bays there that once you send the
+scramble command, they will all launch at once.
+
+
+2.3.3     Help, I can't capture any UFOs!
+Only a crewed flying vehicle can capture a UFO. To capture large UFOs, you
+must first defeat the shipwrecked alien crew.
+
+
+2.3.4     Help, my ships get destroyed in the alien dimension!
+The Dimension Probe is only meant as an experiment. Send it back home as
+soon as it reaches the alien dimension.
+     There are a few things that you can do to prevent alien UFOs from
+destroying your troop carrying ships in the alien dimension.
+     On the way in, escort your troop carrier with a couple of Retaliator
+or Annihilator craft. Your escorts will force the aliens to divide their
+fire. Use a disruptor shield-laden Biotrans as a troop carrier. The X-COM
+Biotrans craft is both fast and durable.
+     On the way out, wait for a clean flight path before leaving the
+destroyed alien building. If you wish, switch to overhead mode and manually
+select flight waypoints that will steer your craft clear of enemy UFOs.
+     To solve all your entry and exit problems forever, send a flotilla of
+advanced X-COM craft and destroy every last UFO in the alien dimension.
+
+
+2.3.5     Help, my armored tank blew up with only one shot!
+It is unfortunate that the road is not as heavily armored as your tank. All
+road vehicles, tanks included, will blow up if the road underneath is
+destroyed.
+
+
+2.4  QUICK AND DIRTY TACTICAL COMBAT SOLUTIONS
+
+2.4.1     Help, my Agents can't survive a single battle!
+Take it easy. A laid-back approach to combat may work better for you.
+     Wear armor. Keep your agents together so they can cover one another.
+If you wait in one spot long enough, the aliens will come to you. Stake out
+a door or corridor through which the aliens absolutely have to come
+through. Lying prone or kneeling will increase your bullet accuracy while
+making you a harder target for the aliens to hit.
+
+
+2.4.2     Help, my Agents are doing their own thing!
+If you put your agents into aggressive attack mode, they will stand still
+even when under fire.
+
+
+2.4.3     Help, my medi-kits don't work!
+Medi-kits can only be used to heal the agents carrying them. They can't be
+used to heal other agents or aliens.
+    To use a medi-kit, place it into the hand of an agent, click on it, and
+select the body part that's lit up in red.
+
+
+2.4.4     Help, my armor keeps melting!
+You've been hit by the dread entropy gun. The entropy enzyme will consume
+your armor, your equipment, and if any is still left, your agent.
+     Personal shields will absorb 100% of the enzyme damage. However, if
+you don't have personal shields and you're playing in real-time, there is
+still hope. Try the following advice from Scott Silvey:
+
+     "If you see a missile on the way and your guy isn't right
+      next to cover, hit pause. Drop all your good equipment
+      except armor and wait for the missile to hit. Wait a
+      moment, then pause again. Strip off all the armor, drop
+      it, and get your guy the hell out of there.
+
+      By stripping your armor and dropping the equipment, you
+      save them. Sometimes when you strip the armor, the entropy
+      enzyme will chew on your agent instead -- but sometimes it
+      doesn't, and you can get away with little or no damage."
+
+
+2.4.5     Help, I can't capture any cargo or aliens!
+Check your agent-carrying vehicle. Only vehicles equipped with cargo or bio-
+transport modules may carry cargo or aliens back to base. Agents sent
+without vehicles can not carry cargo or aliens back to base.
+
+
+2.4.6     Help, I want to capture a live XYZ for bio-research!
+Anthropods, Brainsuckers, Hyperworms, Multiworms, Skeletoids, and Spitters
+can be stunned with a single stun gas grenade.
+     Megaspawn and Psimorphs are difficult to stun because of their vast
+amount of health. Knock their health down with a few shots of regular
+ordnance to make them easier to stun with either gas and grapple.
+     Queenspawn: It is difficult to approach the Queenspawn without being
+injured, so throw stun grenades at a distance. Wait until the gas from one
+begins to dissipate before throwing the next.
+     Micronoid Aggregate: Micronoids are completely immune to stun gas. Use
+the stun grappler instead.
+
+
+2.4.7     Help, poppers and brainsuckers in turn-based combat kill me!
+Pick up brainsucker pods and put them into your backpack to prevent them
+from hatching.
+     Wear flying suits to lift your units off the ground. Poppers can only
+track ground-based units.
+     Use real-time combat for popper and brainsucker rich combat
+environments.
+
+
+2.4.8     Help, my combat keeps slowing to a crawl!
+When the game draws a lot of transparent items such as smoke, fire, or
+explosions, the CPU will be bogged with calculations. To speed the game
+again, you merely need to reduce the required calculations.
+     You may either wait for the smoke and fire to subside, or you can tell
+the computer to only show you a "slice" of the display. To do this, click
+the button on the left side of the screen to toggle your display between
+the full-level views and the single-level view.
+
+
+2.4.9     Help, there are too many aliens in the alien dimension buildings!
+Alien buildings receive reinforcements at a rate of about one every 20
+seconds. If you have the means, destroy the orange reinforcement pads with
+copious amounts of alien explosives. Otherwise, finish your objectives
+quickly and don't loiter.
+
+
+2.5  QUICK AND DIRTY DIPLOMATIC SOLUTIONS
+
+2.5.1     Help, XYZ Corp is so hostile, they think aliens are their
+friends!
+Kind words seem to have more effect when you back them up with a big stick.
+If you attack the buildings of uncooperative organizations, they will
+sometimes see the light and come forth with a peace settlement. Pay what
+they ask to restore relations to neutral.
+
+
+2.5.2     Help, I don't want to read all 200 pages of the manual!
+Much of the information in the manual is duplicated in the FAQ. So, if you
+did not read the manual, and you missed such tidbits as
+     right-clicking on grenades makes them explode on contact,
+     vehicles can be controlled manually,
+     what happens when corporations get angry,
+don't worry, because you'll learn about them as you read this FAQ.
+
+
+2.5.3     Help, Transtellar refuses to ferry my scientists!
+There's no way around this. If you're not on friendly terms with
+Transtellar, you will never be able to move scientists around the city.
+
+
+2.6  OTHER QUICK AND DIRTY SOLUTIONS
+
+2.6.1     Help, my base storage is filled up with 65536 widgets!
+This is the "65536 widgets" bug. Others have reported it, but no one is
+exactly sure what causes it. I myself have not witnessed it, but Rob
+Fermier has, and this is his advice:
+
+     "I had the 65536 problem too, and found a work around.
+      Mine occurred when Transtellar went hostile to me as
+      a result of a mission. The problem went away when I
+      reloaded to a previous save game and gave money to
+      Transtellar before the battle."
+
+
+3.   MONEY AND POLITICS
+
+3.1  THE COMMODITIES MARKET
+When a corporation wishes to buy or sell items, it does so on the
+commodities market. Refer to the Appendix for a full list of market items.
+
+
+3.1.1     Pricing and Availability
+The commodities market always contains a stock level for each item. When
+you buy and sell items, the stock levels will naturally rise and fall.
+     At the beginning of each week, the stock levels and prices of the
+items undergo adjustments as follows:
+
+a. Mega-Primus Produced Items
+Stock Levels
+The new stock levels are determined by the formula below. However, the
+stock level will never rise or fall beyond the maximum and minimum stock
+levels given for each item. Refer to the Appendix for a full list of these
+minimum and maximum stock levels.
+
+Average_Stock_Level = (Min_Stock + Max_Stock) / 2
+New_Stock_Level = Random (Average_Stock_Level + Current_Stock_Level)
+
+Pricing
+If the new stock levels are higher than the average stock level, the
+current price will fall by up to 3%. If the new stock levels are lower, the
+current price can rise by up to 3%.
+     A price will never fall lower than half, or rise more than double the
+original market price. Refer to the Appendix for the original market price
+of an items.
+
+b. X-COM and Alien Produced Items
+Stock Levels
+At the start of each new week, it may appear as if the X-COM or alien
+produced items you sell have been bought up by other organizations. How
+much inventory disappears is determined as follows:
+    40% chance of nothing being bought.
+    30% chance of 1/5th the stock being bought.
+    30% chance of 1/3rd the stock being bought.
+
+Pricing
+The price of X-COM or alien produced items can only fall. How much a price
+falls depends on how much you sell. According to the game code, the price
+drops are calculated as follows:
+
+If more than half of Max_Stock is sold, the price falls 3% to 5%.
+If more than Max_Stock is sold, the price falls 5% to 10%.
+If more than twice Max_Stock is sold, the price falls 5% to 15%.
+
+     Under no circumstances will the price fall past 50% of an item's
+original market price. Please refer to the appendix for the Max_Stock
+values and original market prices of X-COM and alien produced items.
+
+
+3.2  FUNDING
+Your initial starting funds are determined by the difficulty level you
+choose at the beginning of the game.
+
+   Difficulty            Weekly
+        Level   Funds    Income
+       Novice  140000     92000
+     Beginner  130000     89000
+       Medium  120000     86000
+         Hard  110000     83000
+   Superhuman  100000     80000
+
+     If you do well enough during the week to have a high score, the
+government increases your income.
+
+   Weekly      Income
+    Score    Increase
+      401       5.00%
+      801       6.25%
+     1601       8.33%
+     3201      12.50%
+     6401      20.00%
+    12801      25.00%
+
+     However, if you do poorly, your income can be reduced, or even
+terminated. X-COM funding will also be terminated if the government becomes
+hostile for any reason. The decision to terminate is irrevocable.
+
+   Weekly      Income
+    Score    Decrease
+       -1       6.66%
+     -401      10.00%
+     -801      20.00%
+    -1600      25.00%
+    -2401   terminate
+
+     The government itself earns money each week from income tax. Every
+building you destroy puts people out of jobs, and reduces the government's
+income. If the government is low on funds, it will never give more than
+half its current balance to X-COM as income.
+
+
+3.3  CORPORATIONS AND ORGANIZATIONS
+All your neighbors expect a bit of consideration for their property. If you
+want to keep them civil, you'll have to refrain from executing any
+Hollywood-style demolition exercises inside other peoples' buildings. Aim
+high instead of low when firing at UFOs.
+     As you increase the difficulty level of your game, you will find it
+more difficult to hold stable diplomatic relations with your neighbors.
+
+
+3.3.1     Bribes
+There's nothing wrong with a bribe now and again to keep an organization
+off your back. In face of such benevolence, most organizations will become
+more friendly towards X-COM. The amount you have to pay depends on the size
+of the organization you are bribing, and the difficulty level at which you
+are playing.
+     If you've pissed an organization off to such a degree that it refuses
+your bribes, getting back on good terms will require some iron-fisted
+management. You'll have to beat them into submission by raiding and
+destroying their buildings. Eventually, they'll offer a settlement.
+     Organizations that have been infiltrated by aliens will refuse to have
+anything to do with you. Check the UFOpeadia to see whether an organization
+is under the influence of aliens or just being plain stubborn.
+
+
+3.3.2     Drawbacks of Hostilities
+Aside from the frequent raids on X-COM property, hostilities with Mega-
+Primus organizations have additional ill-effects:
+
+Organization        Consequence
+Any manufacturer    You will be unable to buy their goods.
+Megapol             Police patrol vehicles will attack you.
+Mutant Alliance     You will be unable to recruit Hybrids.
+S.E.L.F.            You will be unable to recruit Androids.
+Senate              Funding will be terminated.
+Transtellar         You will be unable to transport goods or any new
+                    scientists that you hire.
+
+
+3.3.3     Advantages of Alliances
+Allying is a good way of keeping important organizations friendly. On the
+whole, allied organizations are more tolerant of your activities and are
+less likely to take offense if you accidentally level their new corporate
+headquarters.
+     Apart from this, allying has little other effect on the game. Any
+improvements you may think you see in such things as the recruitment pool
+or the commodities market are coincidence.
+
+
+4.   RESEARCH AND DEVELOPMENT
+
+4.1  QUANTUM PHYSICS RESEARCH TREE
+
+4.1.1     Things You Can Research By Just Finding Them
+All UFO types
+Alien Control System
+Alien Energy Source
+Alien Propulsion System
+Boomeroid
+Dimension Launcher
+Dimension Launcher Missile
+Disruptor Gun
+Light Disruptor Beam
+Personal Cloaking Field
+Personal Shield
+Personal Teleporter
+Vortex Mine
+
+
+4.1.2     Things You Can Make Out Of LEGO(tm)
+Advanced Quantum Lab - Energy Source or Control System or Propulsion System
+Advanced Workshop - Dimension Probe
+Advanced Control System - Disruptor Bomb
+Cloaking Field - Large Disruption Shield
+Devastator Cannon - Disruptor Gun
+Disruptor Bomb - Light Disruptor Beam
+Disruptor Multi-Bomb - Light Disruptor Beam
+Heavy Disruptor Beam - Medium Disruptor Beam
+Large Disruption Shield - Heavy Disruptor Beam
+Medium Disruptor Beam - Light Disruptor Beam
+Small Disruption Shield - Medium Disruptor Beam
+Stasis Bomb - Light Disruptor Beam
+Teleporter - Light Disruptor Beam
+
+
+4.1.3     Things That Make Scientists Earn Their Pay
+Advanced Security System - Disruptor Bomb & Medium Disruptor Beam
+Annihilator - Retaliator & UFO Type 9
+Bio Transport - Dimension Probe & UFO Type 3
+Dimension Probe - Energy Source & Control System & Propulsion System
+Explorer - Biotrans & UFO Type 5
+Retaliator - Explorer & UFO Type 6
+X-COM Armor - Disruptor Gun & Small Disruption Shield & Personal Shield
+
+
+4.2  BIOLOGICAL RESEARCH TREE
+
+4.2.1     Things You Can Research By Just Finding Them
+Any Alien
+Brainsucker Launcher
+Entropy Launcher
+Entropy Pod
+
+
+4.2.2     Things That Stink Up the Lab for Days
+Advanced Biolab - Any Alien
+
+The Alien Genetic Structure - Multiworm Egg Autopsy, Multiworm Autopsy,
+Hyperworm Autopsy
+
+The Alien Life Cycle - Brainsucker Pods, Brainsucker, Brainsucker Autopsy,
+Multiworm Egg, Multiworm, Hyperworm, Chrysalis, Chrysalis Autopsy
+
+The Real Alien Threat - Anthropod & Anthropod Autopsy & Spitter & Spitter
+Autopsy & Skeletoid & Skeletoid Autopsy & Popper & Popper Autopsy &
+Megaspawn & Megaspawn Autopsy & Micronoid & Micronoid Autopsy & Psimorph &
+Psimorph Autopsy
+
+
+4.2.3     Things They Don't Teach in High School (And Probably Never Will)
+Biological Warfare - The Alien Genetic Structure
+Toxin B - Biological Warfare & The Alien Life Cycle
+Toxin C - Toxin B & The Real Alien Threat
+Alien Gas - Toxin C & Queenspawn & Queenspawn Autopsy
+
+
+5.   CITYSCAPE COMBAT
+
+5.1  DESTROYING BUILDINGS
+Every city block you deliberately destroy will hurt your score. If you need
+to teach a hostile organization a lesson, however, you may have no other
+choice.
+     Some structurally weak buildings collapse after a single shot. Others
+may take longer to destroy.
+
+
+5.1.1     Manual Control
+Manual control is the best way to destroy a building. With full control of
+the weapons, you can aim at the supporting structures and quickly level a
+building. On manual control, you can also open fire outside of the
+organizations patrol range, and fire away without fear of retaliation from
+any defending vehicles.
+     To invoke manual control, select the vehicle you wish to control and
+press "M". "PAGE UP" and "PAGE DOWN" control your speed, "HOME" and "END"
+control your altitude. To fire your weapons at a spot you target with your
+cursor, press the left mouse button. The right mouse button will adjust
+your heading.
+
+
+5.2  DESTROYING VEHICLES
+
+5.2.1     Swarm Combat
+Hovercars and hoverbikes are cost-efficient fighters. Since they cost so
+little, you can deploy them in large numbers. Because they weigh next to
+nothing, they are very maneuverable and can survive from one battle to the
+next.
+     Plasma cannons, lasers, and janitor missiles are very effective when
+deployed in large numbers. Go with the janitor missiles and lasers when
+fighting slow vehicles and small UFOs, but switch to plasma cannons if
+you're going after fast vehicles or heavily armored UFOs.
+
+
+5.2.2     Attacking UFOs
+The weapons you choose depend on the UFO type. The larger UFOs have thick
+armor that are impervious to some of the wimpy XCOM weapons. The minimum
+strength guns you should use to shoot down these chaps are the plasma
+cannons.
+     Other, smaller UFOs can outrun missiles. Beam weapons are a good
+choice for these swift opponents.
+
+
+5.2.3     Attacking Mega-Primus vehicles
+Hoverbikes are tough customers. They never stand still long enough to give
+them a good smacking. Even your Hovercar will feel like King Kong swatting
+at little model airplanes. If you want satisfaction against enemy bikers,
+use your own hoverbikes to take them down.
+     The other vehicles are easily destroyed by your regular swarm tactics.
+
+
+5.3  EFFECTS OF VEHICLE EQUIPMENT
+
+5.3.1     Disruptor Shields
+Shields absorb damage that would otherwise strike the vehicles armor. Small
+shields can absorb 200 points of damage while large shields absorb 400
+points. Shields can be added together for more protection. However, when
+the last point of shielding is gone, all the shields will disintegrate.
+
+
+5.3.2     Cloaking Field
+Cloaking fields make a vehicle both more difficult to see, and a more
+difficult target to hit.
+
+
+5.3.3     Teleporter
+A vehicle with a teleporter can instantly transport itself to a random part
+of the map.
+
+
+6.   TACTICAL COMBAT
+
+6.1  REAL-TIME COMBAT TACTICS
+
+6.1.1     When to Use RT Combat
+During base defense missions to make best use of your security stations.
+During combat missions where you want the firepower advantage of shooting
+two weapons at the same time.
+
+
+6.1.2     Agent Equipment
+
+
+6.1.3     Combat Maneuvers
+
+
+6.2  TURN-BASED COMBAT TACTICS
+
+6.2.1     When to Use TB Combat
+During XCOM raids in which you wish to capture psiclone.
+
+
+6.2.2     Agent Equipment
+
+
+6.2.3     Combat Maneuvers
+
+
+7.   X-COM BASE LOGISTICS
+
+7.1  MULTIPLE BASES
+
+7.1.1     Choosing a Base
+If you're worried about money, choose a base according to its internal
+layout, not by its cover. The large buildings come with large price tags
+that don't necessarily translate into square footage.
+     If you're worried about base attacks, you're better off with a
+warehouse than a slum. If you're lucky enough to grab a base with three or
+four vehicle ports, grab it - they'll come in handy when you respond to UFO
+threats.
+
+
+7.1.2     Internal Layout
+Many people choose to divide their workload amongst different bases. For
+example, they put their workshops into one base, and their labs into
+another.
+     If you're going to use security stations, situate them by the entry
+portal so they can shoot the bad guys as soon as they invade. Vehicle
+repair bays are also a type of entry portal. If you have any repair bays,
+place them by the entry portal and cordon off that section of base with a
+string of security stations.
+
+
+7.2  DEFENSE
+
+7.2.1     Against Hostile Agents
+Let security stations rip them to shreds. Situate them by the entry portal
+so they can shoot the bad guys as soon as they invade. Vehicle repair bays
+are also a type of entry portal. If you have any repair bays, place them by
+the entry portal and cordon off that section of base with a string of
+security stations.
+
+
+7.2.2     Against Air Attack
+Every base has a single grid square with a stick figure in it. This figure
+represents your agents. If the roof collapses on this stick figure during
+an attack, all your agents and scientists inside will die.
+     So, what can you do about this? For starters, you can house your men
+inside a hardened building such as a two-story warehouse. They can absorb
+more damage than slum housing. Slums are prone to catastrophic collapse.
+You'll lose ALL your base that way.
+     The best thing to do is kill the UFOs before they reach your X-COM
+base. But if you can't get there in time, see above.
+
+
+8.   THE ALIEN DIMENSION
+
+8.1  HOW TO ENTER ALIEN BUILDINGS
+You can not enter an alien building until you've researched it back at the
+lab.
+     Escort your main troop vessel with other vehicles to draw UFO fire
+away from your men. Retaliators are good for this.
+     Once you destroy an alien building, don't launch back home
+immediately. Wait for a lull in the UFO patrol pattern to make your escape.
+
+
+8.2  GENERAL RULES IN THE ALIEN BUILDINGS
+Don't loiter! New aliens arrive through orange teleporter gates every 10
+seconds or so. Get in and get out.
+     When asked to destroy objects, you don't have to destroy all the itty-
+bitty pods and mushrooms. Only the largest objects are marked for X-COM
+destruction. The exception is the Alien farm, in which all the white cubes
+must be destroyed.
+     You can destroy the orange teleporters with vortex bombs.
+
+
+9.   AGENTS GUIDE
+
+9.1  X-COM AGENTS
+
+9.1.1     Humans
+Humans seem wimpy, but their physical skills improve quickly through combat
+and training. The have little psionic ability to speak of.
+
+Choose your human recruits from those with the highest amounts of strength
+and speed.
+
+All human attributes have a base value to which a random value is added.
+The random value will vary from a minimum of 0 to a maximum stated below.
+
+ Time Units: 70 + 15
+     Health: 40 + 10
+    Stamina: 80 + 40
+   Accuracy: 65 + 20
+  Reactions: 10 + 30
+   Strength: 40 + 15
+    Bravery: 20 + 50
+ Psi-energy: 5 + 15
+ Psi-attack: 5 + 15
+Psi-defense: 15 + 15
+
+
+9.1.2     Sectoid Hybrids
+Hybrids have great psionic talents, but are not as strong or fast as
+humans. Their psi-abilities improve through both combat and training. Their
+physical abilities, however, improve better through combat.
+
+Choose the hybrid recruits with the highest speed, strength, psi-power, and
+psi-attack, in that order.
+
+All hybrid attributes have a base value to which a random value is added.
+This random value will vary from a minimum of 0 to a maximum stated below.
+
+ Time Units: 60 + 15
+     Health: 30 + 10
+    Stamina: 70 + 30
+   Accuracy: 60 + 20
+  Reactions: 15 + 30
+   Strength: 30 + 10
+    Bravery: 20 + 30
+ Psi-energy: 30 + 15
+ Psi-attack: 25 + 15
+Psi-defense: 25 + 15
+
+If the Mutant Alliance organization is angry with you, you will be unable
+to recruit Sectoid Hybrids.
+
+
+9.1.3     Androids
+Androids have great physical attributes, but are limited by their
+programming. Unlike their human or hybrid counterparts, their accuracy and
+reactions improve only in minuscule increments. Furthermore, only through
+combat will they ever show improvement; it is impossible to train an
+android.
+
+Because Androids are unable to train, from the outset you should recruit
+the androids with the highest accuracy and reactions.
+
+All android attributes have a base value to which a random value is added.
+This random value will vary from a minimum of 0 to a maximum stated below.
+
+ Time Units: 60 + 20
+     Health: 70 + 20
+    Stamina:  120 + 50
+   Accuracy: 50 + 20
+  Reactions: 15 + 25
+   Strength: 55 + 30
+    Bravery: 60 + 40
+ Psi-energy: 0 + 0
+ Psi-attack: 0 + 0
+Psi-defense: 100 + 0
+
+If the S.E.L.F. organization is angry with you, you will be unable to
+recruit Androids.
+
+
+9.2  HOSTILE AGENTS
+The threat rating is a subjective measure of how likely an alien is to maim
+or kill an X-COM agent.
+
+
+9.2.1     Anthropods
+Threat: Very Dangerous
+Nickname: Barney
+
+Common foot soldiers for the aliens, they carry a wide variety of weapons.
+In the early missions, the majority will be armed with brainsucker
+launchers. As the alien forces gain more technology, they will come packing
+boomeroids, devastator cannons, vortex bombs, and other advanced weaponry.
+
+They make "Growl" noises.
+
+
+9.2.2     Brainsuckers
+Threat: Medium (TB) Mostly Harmless (RT)
+
+The brainsucker will try to attach itself to the face of the nearest X-COM
+agent. After a window of about three seconds, the brainsucker will proceed
+to suck the brains out of its victim, replacing it with an alien organism
+that takes over the body of the X-COM agent. Regrettably, the brainsucking
+process is irreversible.
+
+In real-time combat, if there is no one available that can shoot the
+brainsucker off of an agent, prime and drop a gas grenade. If none are
+available, drop an explosive grenade.
+
+In turn-based combat, you will have to depend on your agents' reaction fire
+to protect yourself from brainsuckers.
+
+Brainsuckers have been known to leap 50 feet in the air just to suck on an
+X-COM agent's face.
+
+
+9.2.3     Hyperworms
+Threat: Dangerous
+
+Hyperworms are agile, land-based piranhas that emerge from the bellies of
+multiworms. They can not fly. Due to the unusual softness of their bodies,
+explosives do double the normal damage.
+
+They make "slither, slither" noises.
+
+
+9.2.4     Megaspawns
+Threat: Very Dangerous
+
+Megaspawns are large, hairy beasts armed with disruptor cannon and missile
+launchers. Fortunately, they will not fire their missiles if they are
+within their own  blast radius.
+
+They make "ker-thump, ker-thump" and "ROOOAAARR" noises.
+
+
+9.2.5     Micronoids
+Threat: Medium
+
+Since Micronoids are just puddles of ooze, projectile weapons aren't nearly
+as effective as you expect them to be. They are absolutely immune to stun
+grenades, so use stun grapples if you want to take one alive.
+
+Micronoids have no weapons, but have psi-ability, and will try to mind
+control your agents when they can.
+
+The Micronoids don't seem to make any kind of noise at all.
+
+
+9.2.6     Multiworms
+Threat: Mostly Harmless
+
+Slow and ungainly, each Multiworm carries inside it a brood of five
+hyperworms. Like the human cockroach, it will give birth to these
+hyperworms during its throes of death. It spits a green, acidic ooze.
+
+
+9.2.7     Poppers
+Nickname: Purple Chickens
+Threat: Very Dangerous(TB) Dangerous (RT)
+
+Poppers are suicide squads. Though fast, they lack finesse and will happily
+charge straight into a group of X-COM agents. Once one or two squares away,
+they explode.
+
+In turn-based combat, for the most part, you will depend on your agents'
+reaction fire to protect yourself from poppers. Some TB players use
+cleverly-placed proximity mines to kill poppers that would otherwise charge
+down a corridor.
+
+In real-time combat, you can simply direct all your weapons fire at the
+incoming poppers as they runs toward you.
+
+They can make "pitter patter" noises, but they usually just go "BOOM".
+
+
+9.2.8     Psimorphs
+Nickname: Marshmallow Puffs
+Threat: Medium
+
+Psimorphs have psionic skills that surpass those of your agents. Once you
+find them, however, it's not too difficult to fill their balloon-like
+bodies with lead.
+
+We think they make "banshee wailing" noises.
+
+
+9.2.9     Queenspawn
+Threat: Mostly Harmless
+
+There is only one Queenspawn in the game. She fires an extremely strong
+acid ooze that your agents would do well to avoid. Fortunately for them,
+the Queenspawn has lost the ability to move.
+
+Capture the Queenspawn with a string stun gas grenades, throwing one as
+soon as the other begins to dissipate.
+
+
+9.2.10    Skeletoids
+Threat: Dangerous
+
+The aliens use Skeletoids as elite troopers. They are more heavily armored
+than Anthropods, and can fly to boot. They too carry a wide variety of
+weaponry.
+
+They make "rattling bone" noises.
+
+
+9.2.11    Spitters
+Threat: Harmless
+Dressed in pink with no where to go, these headless wonders wander around
+spitting green acid ooze at your agents.
+
+They make "phlegm-filled throat" noises.
+
+
+9.2.12    Megapol Officers
+Threat: Dangerous
+Just two things. One, they are as heavily armed as you. Two, do you really
+want to piss off Megapol?
+
+
+9.2.13    Cult Members
+Threat: Dangerous
+
+Every temple is stocked with rocket launchers and autocannons. Could be
+worse -- they don't sell you flowers at the spaceport.
+
+
+9.2.14    Gang Members
+Threat: Dangerous
+
+Gang members sleep with their rocket launchers.
+
+
+9.2.15    Rent-a-Cops
+Threat: You Gotta Be Joking
+
+The in-house security for places like Sanctuary Clinic and the Electric
+Company, these guys aren't paid enough to risk their lives.
+
+
+10.  VEHICLE GUIDE
+
+10.1 X-COM VEHICLES
+
+10.1.1    Phoenix Hovercar
+ Top Speed: Engine
+    Health: 70
+     Armor: 24
+Passengers: 4
+      Cost: $12,000
+     Use the hovercars for UFO combat once you've researched and installed
+small shields.
+
+
+10.1.2    Hoverbike
+Top Speed: Engine + 4
+    Health: 25
+     Armor: 6
+Passengers: 2
+      Cost: $5,000
+     A great vehicle for intercepting the slower UFOs, hoverbikes only cost
+$5000 each. Buy as many as you can, and fit them with janitor missiles,
+lasers, or plasma cannons.
+
+
+10.1.3    Valkyrie Interceptor
+ Top Speed: Engine
+    Health: 280
+     Armor: 36
+Passengers: 8
+      Cost: $75,000
+     The Valkyrie costs over 70,000, yet only offers the same number of
+weapon bays as the phoenix hovercar. It does withstand more punishment in
+battle, but at the same time, it also makes a big, juicy target. If you
+wish, sell your original Valkyrie to buy hovercars.
+
+
+10.1.4    Hawk Air Warrior
+ Top Speed: Engine
+    Health: 460
+     Armor: 46
+Passengers: 10
+      Cost: $100,000
+
+
+10.1.5    Dimension Probe
+ Top Speed: 19
+    Health: 80
+     Armor: 48
+Passengers: 0
+     You'll build this once, and never ever use it again.
+
+
+10.1.6    Biotrans
+ Top Speed: 15
+    Health: 600
+     Armor: 47
+Passengers: 4
+     A versatile craft that can hold an enormous amount of equipment. Strip
+its normal complement of cargo and containment bays and refit the Biotrans
+with shielding. It's also has one of the highest profit ratios of any X-COM
+produced item. Make them in your workshop and sell them for loads of dosh.
+
+
+10.1.7    Explorer
+ Top Speed: 16
+    Health: 400
+     Armor: 50
+Passengers: 8
+     The Biotrans does it better.
+
+
+10.1.8    Retaliator
+ Top Speed: 15
+    Health: 450
+     Armor: 66
+Passengers: 4
+     A serious shift in philosophy. This is where you get to use all that
+nifty out-of-this-world gear you've been researching for the past several
+days.
+
+
+10.1.9    Annihilator
+ Top Speed: 18
+    Health: 700
+     Armor: 78
+Passengers: 8
+     Each has enough room for two mediums and one heavy disruptor beam.
+Awesome firepower.
+
+
+10.1.10   Stormdog
+ Top Speed: Engine
+    Health: 45
+     Armor: 18
+Passengers: 4
+      Cost: $6,000
+     Slow and ungainly, it's useless. If you have it, ditch it.
+
+
+10.1.11   Wolfhound APC
+ Top Speed: Engine
+    Health: 550
+     Armor: 168
+Passengers: 14
+      Cost: $9,000
+     Nope. This one isn't worth much either. Sell it.
+
+
+10.1.12   Blazer Turbo Bike
+ Top Speed: Engine + 4
+    Health: 20
+     Armor: 6
+Passengers: 1
+      Cost: $2,000
+     Hoverbikes will take your further.
+
+
+10.1.13   Griffon AFV
+ Top Speed: Engine
+    Health: 700
+     Armor: 192
+Passengers: 4
+      Cost: $16,000
+     Fun for a short-while. You see, it's huge armor protects the tank, not
+the road. If the road goes poof, so does the vehicle. Might have been very
+useful if it weren't for the brain-dead combat routine.
+
+
+10.2 ALIEN VEHICLES
+
+10.2.1    Alien Probe
+ Top Speed: 14
+    Health: 80
+     Armor: 12
+     Score: 50
+
+
+10.2.2    Alien Scout
+ Top Speed: 12
+    Health: 120
+     Armor: 27
+     Score: 100
+
+
+10.2.3    Alien Transporter
+ Top Speed: 8
+    Health: 400
+     Armor: 36
+     Score: 150
+     This is an important ship you must CAPTURE for research.
+
+
+10.2.4    Alien Fast Attack Ship
+ Top Speed: 20
+    Health: 80
+     Armor: 57
+     Score: 200
+
+
+10.2.5    Alien Destroyer
+ Top Speed: 12
+    Health: 600
+     Armor: 84
+     Score: 250
+     This is an important ship you must CAPTURE for research.
+
+
+10.2.6    Alien Assault Ship
+ Top Speed: 8
+    Health: 850
+     Armor: 48
+     Score: 300
+     This is an important ship you must CAPTURE for research.
+
+
+10.2.7    Alien Bomber
+ Top Speed: 14
+    Health: 700
+     Armor: 83
+     Score: 300
+
+
+10.2.8    Alien Escort
+ Top Speed: 16
+    Health: 500
+     Armor: 120
+     Score: 250
+
+
+10.2.9    Alien Battleship
+ Top Speed: 12
+    Health: 80
+     Armor: 102
+     Score: 500
+     This is an important ship you must CAPTURE for research.
+
+
+10.2.10   Alien Mothership
+ Top Speed: 8
+    Health: 2800
+     Armor: 85
+     Score: 700
+
+
+
+11.  EQUIPMENT GUIDE
+
+11.1 VEHICLE WEAPONS
+
+11.1.1    Bolter 4000 Laser Gun
+
+
+11.1.2    Lancer 7000 Laser Gun
+
+
+11.1.3    Rendor Plasma Gun
+
+
+11.1.4    Lineage Plasma Cannon
+The best weapon against UFOs, but its huge elerium chamber will really
+drain your reserves. This makes it a valuable weapon you should put into
+vehicles that won't be easily destroyed.
+
+
+11.1.5    Plasma Multi-System
+
+
+11.1.6    Light Disruptor Beam
+
+
+11.1.7    Medium Disruptor Beam
+
+
+11.1.8    Heavy Disruptor Beam
+
+
+11.1.9    40mm Auto Cannon
+Ditch it. Lasers are better.
+
+
+11.1.10   Janitor Missile Array
+A good early weapon for hoverbikes and hovercars.
+
+
+11.1.11   Justice Missile Launcher
+
+
+11.1.12   Prophet Missile Array
+Suffers from ammo shortages. Another good weapon for hoverbikes and
+hovercars.
+
+
+11.1.13   Retribution Missile Launcher
+
+
+11.1.14   Disruptor Bomb Launcher
+
+
+11.1.15   Stasis Bomb Launcher
+
+
+11.1.16   Disruptor Multi-Bomb Launcher
+
+
+11.1.17   Laser Defense Array
+Utterly useless.
+
+
+11.1.18   Plasma Defense Array
+More expensive than the laser defense array, but still utterly useless.
+
+
+11.1.19   40mm Auto Cannon Turret
+
+
+11.1.20   Airguard Anti-Air Cannon
+
+
+11.1.21   GLM Array
+
+
+11.1.22   Plasma Turret Cannon
+
+
+11.1.23   GLM Air Defense
+
+
+11.1.24   Rumble Cannon
+Unlimited ammo. Great weapon. Shame about the tank.
+
+
+11.2 VEHICLE ENGINES
+
+11.2.1    SD Standard
+
+
+11.2.2    SD Deluxe
+
+
+11.2.3    SD Sports
+
+
+11.2.4    SD Turbo
+
+
+11.2.5    SD Elite
+
+
+11.2.6    SD Special
+
+
+11.2.7    Metro Roadhog
+
+
+11.2.8    Metro Roadgrav
+
+
+11.2.9    Metro Turbograv
+
+
+11.2.10   Metro Powergrav
+
+
+11.2.11   Metro Multipower Plus
+
+
+11.3 VEHICLE EQUIPMENT
+
+11.3.1    Light Weapons Control
+Doesn't make that much of a difference. If your target moves, it doesn't
+matter HOW accurately you hit thin air.
+
+
+11.3.2    Medium Weapons Control
+Doesn't make that much of a difference. If your target moves, it doesn't
+matter HOW accurately you hit thin air.
+
+
+11.3.3    Heavy Weapons Control
+Doesn't make that much of a difference. If your target moves, it doesn't
+matter HOW accurately you hit thin air.
+
+
+11.3.4    Cargo Module
+
+
+11.3.5    Passenger Module
+
+
+11.3.6    Bio-Transport Module
+
+
+11.3.7    Missile Evasion Matrix
+
+
+11.3.8    Small Disruption Shield
+Load up on these! They really prolong the life of your combat vehicles.
+Shields absorb damage that would otherwise strike the vehicles armor. Small
+shields can absorb 200 points of damage. Shields can be added together for
+more protection. However, when the last point of shielding is gone, all the
+shields will disintegrate.
+
+
+11.3.9    Large Disruption Shield
+Load up on these! They really prolong the life of your combat vehicles.
+Shields absorb damage that would otherwise strike the vehicles armor. Large
+shields can absorb 400 points of damage. Shields can be added together for
+more protection. However, when the last point of shielding is gone, all the
+shields will disintegrate.
+
+
+11.3.10   Cloaking Field
+
+
+11.3.11   Teleporter
+
+
+11.4 PERSONAL WEAPONS
+
+11.4.1    Megapol Lawpistol
+
+
+11.4.2    Megapol Plasma Gun
+The plasma gun is an ace weapon. It has a high damage rating, a large ammo
+clip, and a fast firing rate. Suffers from ammo shortage, but the only
+weapons that come close in terms of effectiveness are the devastator cannon
+and toxigun.
+
+
+11.4.3    Marsec M4000 Machine Gun
+
+
+11.4.4    Megapol Laser Sniper Gun
+
+
+11.4.5    Megapol Auto Cannon
+At lower skill levels, you'll get more mileage from the lighter weapons.
+However, its one of the few X-COM weapons that can punch through the tough
+armor you'll encounter at the hard skill levels.
+
+
+11.4.6    Marsec Heavy Launcher
+Launcher rockets have built in homing devices.
+
+
+11.4.7    Marsec MiniLauncher
+Minilauncher rockets have built in homing devices.
+
+
+11.4.8    Toxigun
+Toxiguns can circumvent alien shields, making them the best tools to rid
+the world of the alien scourge. Toxi-B is good, Toxi-C is even better.
+
+
+11.4.9    Disruptor Gun
+It has a slow rate of fire and is rather inaccurate. Like the autocannon,
+it comes in handy against the heavily armored aliens.
+
+
+11.4.10   Devastator Cannon
+This is the most powerful beam weapon in the game. Fairly accurate even on
+full auto.
+
+
+11.4.11   Brainsucker Launcher
+
+
+11.4.12   Entropy Launcher
+
+
+11.4.13   Dimension Missile Launcher
+
+
+11.4.14   Power Sword
+
+
+11.4.15   Mind Bender
+
+
+11.4.16   Megapol Stun Grapple
+
+
+11.4.17   Megapol AP Grenade
+
+
+11.4.18   Megapol Stun Grenade
+
+
+11.4.19   Megapol Smoke Grenade
+
+
+11.4.20   Diablo Incendiary Grenade
+
+
+11.4.21   Marsec Proximity Mine
+
+
+11.4.22   Marsec High Explosive
+
+
+11.4.23   Boomeroid
+
+
+11.4.24   Vortex Mine
+
+
+11.4.25   Alien Gas Grenade
+
+
+11.5 PERSONAL EQUIPMENT
+
+11.5.1    Personal Disruptor Shield
+Will protect your agent from explosive decompression and the other nasty
+side effects of getting shot. You don't have to hold them in your hands;
+placing them into your backpack is good enough.
+
+
+11.5.2    Personal Teleporter
+These have to be held in the hand to do any good. Try carrying two. Use one
+to pop into an alien concentration, and use the other to pop out once they
+fire explosives at you. The aliens will end up killing themselves.
+
+
+11.5.3    Personal Cloaking Field
+Carried in the hand, it will make your agents *much* harder to hit and to
+see.
+
+
+11.5.4    Medi-kit
+Medi-kits can not be used to heal other agents or aliens. Only the holder
+can use a medi-kit.
+
+
+11.5.5    Motion Scanner
+
+
+11.5.6    Psiclone
+Sell it.
+
+
+11.5.7    Elerium Pod
+Sell it.
+
+
+11.5.8    Megapol Armor
+
+
+11.5.9    Marsec Armor
+The torso unit has an integral flight control system. No other armor piece
+is required to fly.
+
+
+11.5.10   X-COM Armor
+Good stuff.
+
+
+11.6 ALIEN BIOLOGICAL WEAPONS
+
+11.6.1    Megaspawn Disruptor
+
+
+11.6.2    Megaspawn Launcher
+
+
+11.6.3    Spitter Vomit
+
+
+11.6.4    Multiworm Vomit
+
+
+11.6.5    Alien Egg Vomit
+
+
+11.6.6    Hyperworm Bite
+
+
+11.6.7    Queenspawn Vomit
+
+
+11.6.8    Popper Bomb
+
+
+12.  INTERNAL GAMEPLAY MECHANICS
+
+12.1 EFFECTS OF DIFFICULTY LEVELS
+The harder the difficulty:
+     the higher an organization is infiltrated when aliens are left in a
+building,
+     the more money it takes to bribe organizations,
+     the sooner the aliens get better weapons and equipment,
+     the tougher enemy units become in combat,
+     the less money you receive at the start of the game,
+     the less frequently alerts are generated.
+
+12.2 VEHICULAR COMBAT
+When a vehicle is hit by a weapon:
+     (1) Subtract the weapon damage from the shields. If shields fall to
+zero, apply the remaining damage to (2)
+     (2) Divide the vehicle armor by 6.
+     (3) Subtract the weapon damage from the armor value.
+     (4) Apply the remaining damage to the vehicle's constitution.
+Note: No damage is ever done to the vehicle's armor.
+
+
+12.3 TACTICAL COMBAT
+
+12.3.1    Map Generation
+Mega-Primus buildings are built to randomly selected patterns every
+mission. UFO map layouts are the same for each mission. Buildings in the
+Alien Dimension are completely random apart from the critical areas.
+
+     Each tactical map square is 1.5 meters on each side.
+
+12.3.2    Weapons Accuracy
+A unit's basic accuracy is adjusted by the modifiers below, then added
+together with the weapons accuracy to give a final rating.
+
+Modifier                 Adjustment
+Unit is stationary       +20% unit accuracy
+Unit is walking          -25% unit accuracy
+Unit is kneeling         +20% unit accuracy
+Unit is prone            +40% unit accuracy
+Unit is flying           -15% unit accuracy
+Weapon on full-auto      -50% unit accuracy
+Weapon on aimed-shot     +100% unit accuracy
+
+Critical hits in either arm will severely affect shooting accuracy.
+
+
+12.3.3    Grenade Accuracy
+The unit's accuracy rating is adjusted by the modifiers below.
+
+Modifier                 Adjustment
+Unit is stationary       +10% unit accuracy
+Unit is walking          -12.5% unit accuracy
+
+Critical hits in either arm will severely affect throwing accuracy.
+
+
+12.3.4    Damage
+When a unit is hit by a weapon:
+     (1) Subtract the weapon damage from the shields. If shields fall to
+         zero, apply the remaining damage to (2)
+     (2) Find out what part of the body is hit
+     (3) Adjust the damage according to the damage matrix table.
+     (4) Absorb as many points of damage as there are armor points for that
+         part of the body. Apply the remaining damage to (6) (aliens have
+         the same armor value all over).
+     (5) Damage the armor. If armor rating falls to zero, destroy armor.
+         Armor damage = (weapon damage * 3) / armor points
+     (6) Subtract the remaining damage from the unit's health.
+     (7) If the damage down is greater than 1/8 of maximum health, test for
+         a critical wound. Percent chance of a critical wound is:
+         (100 * damage) / maximum health
+
+
+12.3.4.1  Bullets/Energy Beams
+The damage of these weapons can vary by up to 50% of the written damage
+rating. Thus, a bullet from a machine gun can be worth anywhere from 11-32
+points of damage.
+
+
+12.3.4.2  Stun Weapons
+If the stun damage from a weapon exceeds the health of a unit, the unit
+will become unconscious. Stun damage does not hurt armor. A stunned unit
+recovers one point of stun damage each second.
+
+
+12.3.4.3  Explosives
+An explosion does full damage only at its center. Its strength decreases
+linearly as you move away from the center until it hits zero strength at
+the edge of the blast radius.
+
+1/8th of explosive damage is applied as stun damage.
+
+
+12.3.5    Psionic Skills
+The success of a psionic attack is a percentage calculated as follows:
+
+                     100*attack*(100-defense)
+success rate = --------------------------------------
+                 attack*(100-defense) + 100*defense
+
+           psiattack rating * 40
+attack = ---------------------------
+          initiation cost of action
+
+defense = psidefense rating
+
+Mind control costs 32 psi to initiate, stun costs 16 psi, panic costs 10
+psi, and probe costs 8 psi.
+     All of these psionic attacks place a further drain on a unit's psi-
+energy in the form of a maintenance cost.
+
+
+12.4 AGENTS
+
+12.4.1    Stats & Improvements
+Only human and hybrid units can improve stats through training.
+     Every four hours, an agent has some chance of improving some physical
+stats by one point. This percentage is equal to (100 - value of stat).
+Thus, it becomes increasingly difficult to improve high stats through
+training.
+     Every four hours, an agent has some chance of improving some psionic
+stats. However, an agent can only increase psionic stats to three times
+their original levels. Furthermore, the amount of improvement depends on
+the unit's psi-energy. Humans that start with low psi-energy will therefore
+show almost no improvement even after hundreds of hours.
+     The chance that a skill will increase is a percentage calculated as:
+     100 - (3 * current_value - starting_value)
+     Psi-attack will increase by 1/20th of psi-energy. Psi-defense will
+increase by 1/20th of psi-energy. Psi-energy will increase by 1 point.
+
+
+12.4.2    Promotions and Medals
+
+Promotion Eligibility:
+Rank           Prerequisite
+Rookie         None
+Squaddie       Must earn over 8 combat rating points
+Squad Leader   (Rookies + Squaddies) / (Squad Leaders + 1) is more than 4
+Sergeant       Squad leaders / (Sergeant + 1) is more than 2
+Captain        Sergeants / (Captains + 1) is more than 2
+Colonel        Captains / (Colonels + 1) is more than 2
+Commander      No commander, and more than one Colonel
+
+Up to five units may be promoted after any given mission. The units with
+the highest combat rating are selected for promotion.
+     Rank isn't just for fun. It actually affects the morale of units.
+
+
+12.4.3    Healing
+Medi-kits will heal critical wounds and add 5 to the health of a unit. Back
+at the base, medical bays will restore 0.8 health points every hour, but
+only after the patients get a good night's rest.
+
+
+12.4.4    Morale
+A unit's morale goes up when bad guys die, and goes down when the good guys
+die, or if it is injured itself. The blow to a unit's morale score is
+cushioned by a high bravery score. Morale is affected more by the death of
+a highly ranked unit than it is by a lower ranked unit.
+     Highly ranked units aren't affected by morale as badly as the lower
+ranked units.
+     When hurt, a unit's morale will decrease according to this formula:
+
+     decrease = (damage * 50)     (15 - bravery)
+                -------------- * ---------------
+                  max_health           10
+                --------------------------------
+                               10
+
+     If a unit has less than 30 morale points left, he/she/it may panic. A
+panicked unit will either run away, freeze, or go completely bezerk.
+
+
+12.4.5    Encumbrance
+It's possible for a unit to carry weight up to four times its strength.
+However, as a unit becomes more encumbered, it will lose time units and
+speed at an ever-increasing rate.
+
+
+12.4.6    Movement
+In real-time games, movement is measured by its speed rating. Each frame of
+the game is 1/36 of a second. In that time, a unit can move as many steps
+as its speed. Each square is divided into 80 steps, so a unit with a speed
+of 10 would take 8 frames (8/36ths of a second) to cross a square.
+     Running takes place at full speed, walking at half speed, and crawling
+at 1/3rd speed.
+     Turning 45 degrees requires one frame. (1/36th of a second)
+     Changing posture from kneeling to standing requires 8 frames.
+     Throwing takes 22 frames.
+     Aiming takes 6 frames.
+     Firing takes 4 frames.
+     Reloading depends on the firing rate of the weapon.
+     Doors open in 12 frames.
+
+In turn-based games, movement ability is dictated by a unit's remaining
+time units.
+Movement Type                   TU Cost
+Running                         2
+Walking                         4
+Crawling                        6
+Changing Posture                10% of maximum TUs
+Turning 45 degrees              1
+Firing:                         
+ Aimed                          (36/Fire Rate)% of maximum TUs
+ Snap Shot                      (18/Fire Rate)% of maximum TUs
+ Automatic                      (9/Fire Rate)% of maximum TUs
+Picking up object               10% of maximum TUs
+Using motion scanner            10% of maximum TUs
+Throwing                        20% of maximum TUs
+Psionic attack                  10% of maximum TUs
+Using medi-kit                  37.5% of maximum TUs
+Teleporting                     55% of maximum TUs
+
+
+12.5 SCORING
+In combat, you gain points for killing enemy units and finding equipment
+and lose points for losing agents and X-COM equipment.
+     Enemy units each have a point value listed in the appendix. You don't
+get credit for kills caused by bleeding.
+     You lose double the points from your Combat Rating for getting an
+agent brainsucked. Its points are added to your Casualty Penalty. Getting
+killed the normal way just adds points (10 per agent) to your Casualty
+Penalty.
+     Leadership bonus is (100 - Casualty penalty * 3)% of (Combat rating -
+freindly fire + stunned hostiles).
+     Your total score is Combat Rating + Leadership Bonus - Casualty
+Penalty + Live Aliens Captured + Equipment Captured - Equipment Lost
+
+In the cityscape, you get points for completing research, shooting down
+UFOs, and destroying alien buildings. You lose 30 points for each alien
+alert in the city, points equal to 1/4 the value of any UFO that escapes
+through a dimension gate, the point value of any X-COM craft that is
+destroyed, and up to 20 points for a deliberately destroyed city block.
+
+Your cityscape and combat scores are tallied at the end of the week to
+determine the adjustments that are made to your funding.
+
+
+13.  BUGS, UPDATES, AND PATCHES
+None yet!
+
+
+14.  THIRD PARTY SUPPORT
+
+14.1 INTERNET WEBSITES
+Apocalypse Central
+     Maintainer: Leo Radvinsky
+     URL: http://www.gametemple.com/x-com/
+Message boards, on-line UFOpedia, cheating programs.
+
+Roger's X-COM Apocalypse FAQ Distribution Center
+     Maintainer: Roger Wong
+     URL: http://www.khan.org/~roger/games/xcom3/
+The home of this FAQ.
+
+Gamespot's Guide to X-COM Apocalypse
+     Maintainer: Spotmedia Communications
+     URL: http://www.gamespot.com/features/xcom
+A shortened, HTML version of this FAQ with illustrations and diagrams.
+
+
+14.2 UTILITIES AND PROGRAMS
+APOCUTIL
+     for MS-DOS
+     Author: Scott Jones
+     URL: http://members.aol.com/stones/xcomutil/
+Randomizes the effects of each weapon on each alien to make the game more
+difficult and more interesting.
+
+XeD
+     For MS-DOS
+     Author: Larze & Fds0ft
+     URL: http://www.gametemple.com/x-com/
+Edits agent statistics, equipment stores, internal base layouts, funds,
+graphics, etc.
+
+
+15.  CLOSING STATEMENT
+That's that. Read a good book every now and again, and don't get hurt!
+
+
+16.  APPENDICES
+
+16.1 TABLES
+
+16.1.1    Agent Weapons
+
+Accuracy
+--------
+Grenade accuracy depends on the accuracy of the unit.
+
+The accuracy of guided weapons such as missile launchers are misleading.
+If the target is equipped with a personal cloaking device, accuracy is
+reduced by an unknown, but significant, amount.
+
+Ammo
+----
+Weapons that recharge over time have a + sign next to their ammunition
+counter.
+
+Blast Radius
+------------
+Explosion damage decreases linearly until it reaches 0 at the very edge of
+the blast radius. i.e.- To an object three squares away, a Vortex Mine will
+do 85 points of damage according to the formula:
+ [Damage - ((Damage / Blast_Radius ) * Distance)].
+
+Score
+-----
+When two scores are listed, the first score refers to the weapon, and the
+second refers to the ammunition clip.
+
+                                             Rate                    
+                                               of             Blast  
+Name                Type        Ammo  Acc.   Fire   Damage    Radius Score
+AP Grenade          Explosive     --    --     --     48        4      1
+Stun Grenade        Stun          --    --     --     80        7      1
+Smoke Grenade       Smoke         --    --     --     90        8      1
+Incendiary Grenade  Incend.       --    --     --     80        6      1
+Proximity Mine      Explosive     --    --     --     75        8      2
+High Explosive      Explosive     --    --     --     90        6      2
+Boomeroid           Explosive     --    --     --     70        7      7
+Vortex Mine         Explosive     --    --     --    150        7      8
+Alien Gas Grenade   Gas           --    --     --     80        8      4
+
+M4000 Machine Gun   AP            36   30%   3.00  11 - 32      --    2/0
+Lawpistol           AP            16   45%   2.00  12 - 36      --    2/0
+Plasma Gun          Plasma        42   55%   1.20  18 - 53      --    4/1
+Laser Sniper Gun    Laser         30   95%   0.85  13 - 39      --    3/0
+Disruptor Gun       Disruptor    +28   30%   1.12  21 - 63      --     4
+Devastator Cannon   Disruptor    +34   75%   0.90  35 - 105     --     10
+Toxigun A-clip      Toxin A       16   40%   4.50  25 - 75      --    4/2
+Toxigun B-clip      Toxin B       16   40%   4.50  33 - 98      --    4/2
+Toxigun C-clip      Toxin C       16   40%   4.50  43 - 128     --    4/2
+
+Auto Cannon AP      AP            24   40%   1.05  20 - 60      --    3/0
+Auto Cannon HE      Explosive     24   40%   1.05     33        8     3/0
+Auto Cannon IN      Incend.       24   40%   1.05     37        7     3/0
+
+Mini Launcher HE    Explosive      5   30%   0.55     40        8     4/1
+Mini Launcher IN    Incend.        5   30%   0.55     40        8     4/1
+Heavy Launcher HE   Explosive      1   10%   0.45     90        8     4/1
+Heavy Launcher IN   Incend.        1   10%   0.45     90        8     4/1
+Dimension Launcher  Explosive      1   85%   0.37    110        8     10/8
+Entropy Launcher    Entropy        3    --   0.36   9 - 27      --    7/7
+
+Power Sword         Plasma       +15   95%   1.02  38 - 113     --     2
+Stun Grapple        Stun          +5   75%   0.81  45 - 135     --     1
+Mind Bender         --            --    --     --     --        --     5
+
+
+
+16.1.2    Vehicle Weapons
+Accuracy
+--------
+Refers to the probability of hitting a target spot. If a target moves out
+of a targeted spot, it's not the weapon's fault.
+
+Range
+-----
+Weapons fire will fizzle after covering the given range in meters. One city
+square is equal to 16 meters.
+
+Firing Arc
+----------
+Vehicle-mounted weapons point forward. The firing arc is in degrees.
+
+Turn Rate
+---------
+Weapons with a turn rate home in on their targets.
+
+Name                   Ammo  Acc.  Rate  Speed  Range  Firing  Turn Damage
+                                   of                  Arc     Rate
+                                   Fire
+Bolter 4000 Laser Gun  --    45%   3.0   38     200    90      --   12
+Lancer 7000 Laser Gun  --    40%   3.0   38     300    90      --   16
+Rendor Plasma Gun      70    36%   3.0   38     250    90      --   20
+Lineage Plasma Cannon  110   34%   3.0   38     400    90      --   25
+Plasma Multi-system    30    38%   6.0   38     175    180     --   14
+Light Disruptor Beam   --    50%   2.4   28     150    180     --   20
+Medium Disruptor Beam  --    40%   2.1   30     300    180     --   40
+Heavy Disruptor Beam   --    30%   1.8   32     600    180     --   80
+40mm Auto Cannon       300   30%   6.0   20     175    90      --   10
+Janitor Missile        24    24%   1.0   16     250    135     24   22
+Prophet Missile        26    24%   0.9   18     350    270     32   26
+Justice Missile        1     26%   0.5   10     1000   135     12   50
+Retribution Missile    1     22%   0.4   10     1150   135     10   68
+Disruptor Bomb         32    18%   0.4   16     450    270     34   94
+Stasis Bomb            5     20%   0.4   24     250    270     34   --
+Disruptor Multi-Bomb   12    16%   0.3   12     250    270     24   98
+Multi-Bomb Fragment    --    --    --    22     --     --      28   65
+Laser Defense Array    --    12%   9.0   38     64     360     --   8
+Plasma Defense Array   --    8%    9.0   38     84     360     --   12
+
+40mm AC Turret         500   30%   6.0   20     150    360     --   14
+Airguard AA Cannon     600   28%   2.0   15     180    360     --   16
+GLM Array              12    24%   1.5   17     225    360     12   26
+Plasma Turret Cannon   130   15%   4.5   38     400    360     --   30
+GLM Air Defense        16    25%   1.05  17     325    360     14   28
+Rumble Cannon          --    25%   5.1   20     250    90      --   34
+
+
+16.1.3    UFOs
+Armor
+-----
+The stated rating is an overall value. It is divided equally between the
+six sides of the vehicle (top, bottom, left, right, front, back).
+
+Weapons
+-------
+Items with a + sign denote optional devices that only appear at advanced
+game stages.
+
+Type              Armor  Health  Speed  Score   Weapons
+Probe             12     80      14     50      Light Disruptor Beam
+Scout             27     120     12     100     Light Disruptor Beam
+                                                +Small Disruption Shield
+Transporter       36     400     8      150     Light Disruptor Beam
+                                                +Small Disruption Shield
+Fast Attack Ship  57     80      20     200     Medium Disruptor Beam
+                                                +Small Disruption Shield
+Destroyer         84     600     12     250     Disruptor Bomb Launcher
+                                                +Small Disruption shield
+                                                +Teleporter
+Assault Ship      48     850     8      300     Medium Disruptor Beam
+                                                +Small Disruption Shield
+                                                +Cloaking Field
+                                                +Teleporter
+Bomber            84     700     14     300     Light Disruptor Beam
+                                                Disruptor Multi-Bomb
+                                                +Large Disruption Shield
+                                                +Teleporter
+                                                +Cloaking Field
+Escort            120    500     16     250     Stasis Bomb Launcher
+                                                +Large Disruption Shield
+                                                +Cloaking Field
+                                                +Teleporter
+Battleship        102    80      12     500     Heavy Disruptor Beam
+                                                Disruptor Bomb Launcher
+                                                +Large Disruption Shield
+                                                +Teleporter
+Mothership        84     2800    8      700     Heavy Disruptor Beam
+                                                Disruptor Multi-Bomb
+                                                Stasis Bomb Launcher
+                                                +Large Disruption Shield
+                                                +Teleporter
+Overspawn         102    1800    4      400     Smelly Feet
+                                                Bad Breath
+                                                Unclipped Toenails
+
+
+16.1.4    UFO Crew Complements
+Because aliens can die during crash landings or flee the battlefield, you
+may encounter less aliens than stated here.
+
+                  Alien Egg
+                    | Anthropod
+                    |   | Brainsucker
+                    |   |   | Chrysalis
+                    |   |   |   | Hyperworm
+                    |   |   |   |   | Megaspawn
+                    |   |   |   |   |   | Micronoid
+                    |   |   |   |   |   |   | Multiworm
+                    |   |   |   |   |   |   |   | Popper
+                    |   |   |   |   |   |   |   |   | Psimorph
+                    |   |   |   |   |   |   |   |   |   | Skeletoid
+                    |   |   |   |   |   |   |   |   |   |   | Spitter
+                    |   |   |   |   |   |   |   |   |   |   |   |
+Transporter         2   4   -   2   2   -   -   -   1   -   -   4
+Fast Attack Ship    -   6   2   -   -   -   -   -   1   -   -   2
+Destroyer           -   8   -   -   -   -   -   -   -   -   3   3
+Assault Ship        -   6   -   2   -   -   -   -   4   -   2   4
+Bomber              -   3   -   -   -   -   -   -   2   -   7   -
+Escort              -   3   -   -   -   1   -   -   2   -   7   -
+Battleship          -   8   -   -   -   3   3   -   5   1   5   5
+Mothership          -   4   -   -   -   2   3   -   5   2   9   -
+
+
+16.1.5    Aliens Beamed Down by UFOs
+Due to the alien life cycle, the nature of an alien infestation will change
+over time. Aliens may spread to other buildings, new aliens may hatch from
+eggs and chrysalises, or the aliens may simply die of old age.
+
+                  Alien Egg
+                    | Anthropod
+                    |   | Brainsucker
+                    |   |   | Multiworm
+                    |   |   |   | Popper
+                    |   |   |   |   | Skeletoid
+                    |   |   |   |   |   | Spitter
+                    |   |   |   |   |   |   |
+Probe               -   1   1   -   -   -   2
+Scout               3   1   2   2   -   -   5
+Transporter         5   5   3   3   1   -   3
+Fast Attack Ship    -   3   -   1   3   3   -
+Destroyer           5   8   4   1   -   4   -
+Assault Ship        5   6   5   2   2   5   2
+Bomber              -   5   -   -   -   -   3
+Escort              4   -   -   -   4   3   2
+Battleship          5   4   -   -   2   5   4
+Mothership          5   4   -   -   5   6   4
+
+
+16.1.6    Aliens in Alien Buildings
+Anthropods, skeletoids, and spitters are beamed into each building as
+reinforcements. The type selection is random, but the timing is precise.
+
+                  Alien Arrival Rate (every X seconds)
+                    |   Alien Egg
+                    |     | Anthropod
+                    |     |   | Hyperworm
+                    |     |   |   | Megaspawn
+                    |     |   |   |   | Micronoid
+                    |     |   |   |   |   | Multiworm
+                    |     |   |   |   |   |   | Popper
+                    |     |   |   |   |   |   |   | Psimorph
+                    |     |   |   |   |   |   |   |   | Skeletoid
+                    |     |   |   |   |   |   |   |   |   | Spitter
+                    |     |   |   |   |   |   |   |   |   |   | Queenspawn
+                    |     |   |   |   |   |   |   |   |   |   |   |
+Sleeping Chamber    40    -   6   6   -   2   -   -   -   6   2   -
+Food Chamber        35    -  12   -   -   -   -   -   2   6   -   -
+Alien Farm          12    -   6   -   -   -   3   6   2  12   -   -
+Maintenance Factory 30    -   6   -   2   -   2   6   -   6   -   -
+Incubator Chamber   20    -   6   -   -   -   4   -   -  12   2   -
+Control Chamber     10    -  12   -   -   -   2   -   -  12   2   -
+Spawning Chamber    18    6   6   -   3   -   -   -   2   6   -   1
+Organic Factory     20    -  12   -   -   -   1   -   2  12   2   -
+Megapod Chamber     10    -  12   -   2   -   -   -   2  12   2   -
+Dimension Gate       5    -   0   -   6   -   2   -   6  18   -   -
+
+
+16.1.7    Hostile Unit Statistics
+TU/Speed
+--------
+Time Units and speed are given for turn-based and real-time combat.
+
+Type                                TU/           Psi    Psi    Psi        
+            Health  Armor    Acc  Speed  Brave  Power  Attck    Def   Score
+Alien Egg       80      5     40   30/0      -      -      -    100       4
+Anthropod       60      5    100   56/7     80      -      -     40      10
+Brainsucker     20      5    100  90/11      -      -      -    100       4
+Chrysalis       86     12      -   30/0      -      -      -    100       3
+Hyperworm       44      7     70  82/10      -      -      -     90       5
+Megaspawn      260     31     50   50/4    100      -      -    100      30
+Micronoid       80      0     40   30/3      -     75     65     85      15
+Multiworm      340      6     50   45/5      -      -      -     75       8
+Popper          35      7      - 110/13      -      -      -    100       8
+Psimorph       420     10     70   36/4     80    170     85     80      30
+Queenspawn     600     30     60   45/0      -      -      -     90      50
+Skeletoid       34     14     70  86/10     70      -      -     55      14
+Spitter         65      7     38   56/7     80      -      -    100       8
+
+Cultist      40-50     15  60-80 60-75/  40-80   5-20  20-45  20-60      10
+                                    7-9
+Gang Member  40-50     20  60-80 60-75/  40-80   5-20   5-20  15-45      10
+                                    7-9
+Megapol      40-50     20  55-75 60-75/  40-80   5-20   5-20  15-35      10
+                                    7-9
+Rent-a-Cop   40-50     18  60-80 60-75/  40-80   5-20   5-20  20-50      10
+                                    7-9
+
+
+16.1.8    Workshop Profit Ratings
+
+Labor Cost
+----------
+Engineers are paid $4.76 an hour. Labor costs assume an average engineer
+rating of 85. Labor cost is calculated as ((LaborHours / 85) * $4.76).
+
+To reduce the cost of labor, hire engineers with the highest ratings.
+
+Total Cost
+----------
+The total cost of each item includes costs for both labor and for
+manufacture.
+
+Market Price
+------------
+This is the initial market price. The price will drop as more items of this
+type are sold.
+
+Profit hours
+------------
+The most profitable items have the highest Profit Hour ratings. These
+include the Stasis Bomb, Biotrans, Toxigun, and X-COM Body Shield.
+
+Item                   Labor Labor   Mfr.   Total Market            Profit
+                       Hours  Cost   Cost    Cost  Price   Profit    hours
+Alien Gas Grenade       1000    56    250     306    600      294     .294
+Toxigun                 3000   168   1200    1368   2780     1412     .470
+Toxigun A-clip           800    44    200     244    500      256     .320
+Toxigun B-Clip           900    50    300     350    700      350     .438
+Toxigun C-Clip          1000    56    400     456    900      444     .444
+Disruptor Gun           7000   392    600     992   2100     1108     .158
+Devastator Cannon      12000   672   1200    1872   4500     2630     .219
+Dimension Launcher      5500   308   1200    1508   3100     1592     .289
+Dimension Missile       4000   224    400     624   1300      676     .169
+Boomeroid               3000   168    230     398    840      442     .147
+Vortex Mine             5000   280    250     530   1130      600     .120
+
+Personal Shield        14000   782   2000    2782   5770     2988     .213
+Personal Teleporter    25000  1400   6000    7400  18200    10800     .432
+Personal Cloak Field   18000  1006   3000    4006   8300     4294     .238
+X-COM Leg Shields       3400   190   1200    1390   2830     1440     .423
+X-COM Body Shield       3800   212   1500    1712   3480     1770     .465
+X-COM Arm Shields       3400   190   1200    1390   2830     1440     .423
+X-COM Head Shield       3800   212   1500    1712   3480     1770     .465
+
+Adv. Control System    15000   840   4000    4840   8000     3160     .210
+Bio-Transport Module    4000   224    700     924    950       26     .006
+Small Shield           20000  1120   5000    6120  12500     6380     .319
+Large Shield           30000  1680   8000    9680  19800    10120     .337
+Cloaking Field         35000  1960   6000    7960  16450     8490     .242
+Teleporter             45000  2520  11000   13520  27700    14180     .315
+
+Light Disruptor Beam   12000   672   2000    2672   5600     2928     .244
+Med. Disruptor Beam    20000  1120   4000    5120  10500     5380     .269
+Heavy Disruptor Beam   35000  1960   8000    9960  20500    10540     .301
+Disruptor Launcher      8000   448   3000    3448   7000     3552     .444
+Disruptor Bomb          4000   224   1500    1724   3500     1776     .444
+Stasis Bomb Launcher    6000   336   2000    2336   4760     2424     .404
+Stasis Bomb             2000   112   1200    1312   2650     1338     .669
+Multi Launcher         10000   560   4000    4560   9260     4700     .470
+Disruptor Multi-Bomb    5000   280   1800    2080   4230     2150     .430
+
+Dimension Probe        25000  1400   6000    7400  10000     2600     .104
+Biotrans               35000  1960  12000   13960  34000    20040     .572
+Explorer               55000  3080  22000   25080  44000    18920     .344
+Retaliator             75000  4200  35000   39200  70000    30800     .410
+Annihilator           100000  5600  50000   55600 100000    44400     .444
+
+
+16.1.9    Complete Commodities Market Pricing Guide
+
+Price
+-----
+Initial starting price. The actual market price will vary according to
+supply and demand.
+
+Stocks (Minimum, Maximum)
+-----
+These hard-coded stock values are used to determine weekly stock levels.
+
+Week
+-----
+The week in which the item is first available for sale. If no week number
+is given, the item must be found or manufactured by X-COM.
+
+
+                                       Min.    Max.        
+Item                            Price Stocks  Stocks Week  Manufacturer
+
+Phoenix Hovercar                12000   4       15     1   Marsec
+Hoverbike                        5000   4       20     1   Marsec
+Valkyrie Interceptor            75000   2       8      1   Marsec
+Hawk Air Warrior               100000   2       6      2   Marsec
+Stormdog                         6000   5       20     1   Marsec
+Wolfhound APC                    9000   3       7      1   Marsec
+Blaser Turbo Bike                2000   4       8      1   General Metro
+Griffon AFV                     16000   3       8      1   Marsec
+Dimension Probe                 10000   -       2      -   X-COM
+Biotrans                        34000   -       2      -   X-COM
+Explorer                        44000   -       2      -   X-COM
+Retaliator                      70000   -       2      -   X-COM
+Annihilator                    100000   -       2      -   X-COM
+                                                           
+Bolter 4000 Laser Gun            1000   4       15     1   Megapol
+Lancer 7000 Laser Gun            1500   4       12     1   Megapol
+Rendor Plasma Gun                2500   3       8      1   Marsec
+Lineage Plasma Cannon            6000   3       12     3   Marsec
+Plasma Multi-System              5000   4       14     2   Marsec
+40mm Auto Cannon                  500   7       24     1   Megapol
+Janitor Missile Array            1200   6       22     1   Megapol
+Justice Missile Array             800   4       12     1   Megapol
+Prophet Missile Array            1500   5       16     1   Marsec
+Retribution Missile Launcher     1100   4       14     1   Marsec
+Laser Defense Array              1700   5       15     1   Megapol
+Plasma Defense Array             2300   4       11     3   Marsec
+Light Disruptor Beam             5600   -       5      -   X-COM
+Medium Disruptor Beam           10500   -       10     -   X-COM
+Heavy Disruptor Beam            20500   -       15     -   X-COM
+Disruptor Bomb Launcher          7000   -       8      -   X-COM
+Stasis Bomb Launcher             4760   -       10     -   X-COM
+Disruptor Multi-Bomb Launcher    9260   -       14     -   X-COM
+                                                           
+40mm Auto Cannon Turret           300   4       15     1   Megapol
+Airguard Anti-Air Cannon          400   4       13     1   Marsec
+GLM Array                         600   3       8      1   Marsec
+                                                           
+Plasma Turret Cannon             1800   2       5      1   Marsec
+GLM Air Defense                  2100   2       6      1   Marsec
+Rumble Cannon                    1000   3       8      1   Megapol
+                                                           
+Fusion Powerfuel                   10  200     1200    1   
+Elerium-115                        20  180     800     1   Solmine
+Multi-cannon Round                  5  400     1500    1   Megapol
+Janitor Missile                   110   50     260     1   Megapol
+Justice Missile                   330   10      60     1   Megapol
+Prophet Missile                   200   40     200     1   Marsec
+Retribution Missile               420   5       30     1   Marsec
+Repeater 40mm Cannon Round          6  400     1200    1   Megapol
+Airguard 52mm Cannon Round          8  400     1400    1   Marsec
+Ground Launched Missile           100   40     200     1   Marsec
+Air Defense Missile               180   35      50     1   Marsec
+Disruptor Bomb                   3500   -       25     -   X-COM
+Stasis Bomb                      2650   -       20     -   X-COM
+Disruptor Multi-Bomb             4230   -       30     -   X-COM
+                                                           
+SD Standard                      1000   4       10     1   Superdynamics
+SD Deluxe                        1500   4       9      1   Superdynamics
+SD Sports                        2000   3       8      1   Superdynamics
+SD Turbo                         3500   3       7      1   Superdynamics
+SD Elite                         5000   2       6      1   Superdynamics
+SD Special                       7000   2       5      1   Superdynamics
+                                                           
+Metro Roadhog                     400   4       12     1   General Metro
+Metro Roadgrav                    600   3       11     1   General Metro
+Metro Turbograv                   900   2       10     1   General Metro
+Metro Powergrav                  1200   2       9      1   General Metro
+Metro Multipower Plus            1600   2       8      1   General Metro
+                                                           
+Cargo Module                      300   4       12     1   Superdynamics
+Passenger Module                  400   4       12     1   General Metro
+Bio-Transport Module              950   -       4      -   X-COM
+Light Weapons Control            1000   3       5      1   Cyberweb
+Medium Weapons Control           3000   2       4      1   Cyberweb
+Heavy Weapons Control            6000   1       2      3   Cyberweb
+Advanced Control System          8000   -       6      -   X-COM
+Missile Evasion Matrix           4000   2       4      2   Cyberweb
+Small Disruption Shield         12500   -       10     -   X-COM
+Large Disruption Shield         19800   -       15     -   X-COM
+Cloaking Field                  16450   -       17     -   X-COM
+Teleporter                      27700   -       20     -   X-COM
+                                                           
+AP Grenade                         70   20      50     1   Megapol
+Stun Grenade                       50   20      60     1   Megapol
+Smoke Grenade                      30   25      60     1   Megapol
+Incendiary Grenade                 60   10      30     1   Diablo
+Proximity Mine                    300   10      30     2   Marsec
+High Explosive                    800   8       16     1   Marsec
+Lawpistol                         300   15      50     1   Megapol
+Lawpistol Clip                     10   20      80     1   Megapol
+M4000 Machine Gun                 800   9       24     1   Marsec
+M4000 Machine Gun Clip             20   40      70     1   Marsec
+Laser Sniper Gun                  900   5       15     1   Megapol
+Laser Pod                          40   30      55     1   Megapol
+Autocannon                       1200   3       8      1   Megapol
+Autocannon AP Clip                 30   20      40     1   Megapol
+Autocannon HE Clip                 40   20      40     1   Megapol
+Autocannon IN Clip                 30   20      40     1   Megapol
+Plasma Gun                       1600   3       6      2   Megapol
+Plasma Gun Pod                     50   15      40     2   Megapol
+Heavy Launcher                    800   2       4      2   Marsec
+Heavy Launcher HE Missile          40   5       20     2   Marsec
+Heavy Launcher IN Missile          40   5       20     2   Marsec
+Heavy Launcher AG Missile         700   -       15     -   Marsec
+Minilauncher                      900   2       6      3   Marsec
+Minilauncher HE Missile            35   10      30     3   Marsec
+Minilauncher IN Missile            35   10      30     3   Marsec
+Minilauncher AG Missile           900   -       30     -   Marsec
+Stun Grapple                      400   5       20     1   Megapol
+Powersword                        400   1       5      3   Marsec
+Mind Bender                      1200   3       12     1   Marsec
+Medi-kit                          250   4       14     1   Nanotech
+Motion Scanner                    900   2       6      1   Marsec
+Alien Gas Grenade                 600   -       15     -   X-COM
+Toxigun                          2780   -       8      -   X-COM
+Toxigun A-Clip                    500   -       16     -   X-COM
+Toxigun B-Clip                    700   -       16     -   X-COM
+Toxigun C-Clip                    900   -       16     -   X-COM
+Disruptor Gun                    2100   -       10     -   X-COM
+Devastator Cannon                4500   -       20     -   X-COM
+Boomeroid                         840   -       15     -   X-COM
+Brainsucker Launcher              200   -       6      -   X-COM
+Brainsucker Pod                   200   -       4      -   X-COM
+Entropy Launcher                  300   -       4      -   X-COM
+Entropy Pod                       100   -       10     -   X-COM
+Dimension Missile Launcher       3100   -       25     -   X-COM
+Dimension Missile                1300   -       30     -   X-COM
+Vortex Mine                      1130   -       25     -   X-COM
+Personal Disruptor Shield        5770   -       30     -   X-COM
+Personal Teleporter             18200   -       40     -   X-COM
+Personal Cloaking field          8300   -       30     -   X-COM
+Megapol Leg Armor                 400   8       24     1   Megapol
+Megapol Body Armor                400   8       24     1   Megapol
+Megapol Left Arm Armor            300   8       24     1   Megapol
+Megapol Right Arm Armor           300   8       24     1   Megapol
+Megapol Helmet                    400   8       24     1   Megapol
+Marsec Leg Unit                   600   2       15     2   Marsec
+Marsec Body Unit                 1200   2       15     2   Marsec
+Marsec Left Arm Unit              600   2       15     2   Marsec
+Marsec Right Arm Unit             600   2       15     2   Marsec
+Marsec Head Unit                  700   2       15     2   Marsec
+X-COM Leg Shield                 2830   -       20     -   X-COM
+X-COM Body Shield                3480   -       20     -   X-COM
+X-COM Left Arm Shield            2830   -       20     -   X-COM
+X-COM Right Arm Shield           2830   -       20     -   X-COM
+X-COM Head Shield                3480   -       20     -   X-COM
+Psiclone                         4500   -       40     -   Psyke
+Elerium Pod                      3000   -       40     -   Solmine
+
+
+17.  REFERENCES
+Fermier, R. XCOM3 storage problems. Usenet posts. July, 1997.
+Tokumura, C. Contact explosives. Usenet posts. July, 1997.
+Sens. Early vehicle combat. Usenet posts. August, 1997.
+Sens. Weapons comparisons. Usenet posts. August, 1997.
+Sens. Cult raid tactics. Usenet posts. July, 1997.
+Sens. Weapons control systems. Usenet posts. July, 1997.
+Silvey, S. Ineffective weapons systems. Usenet posts. August, 1997.
+Silvey, S. Entropy avoidance. Usenet posts. August, 1997.
+Wilhelm, S. Early base defense. Usenet posts. August, 1997
+
+
+
+18.  REVISION HISTORY
+
+A.   version 0.99. September 27, 1997. First release.

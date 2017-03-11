@@ -27,6 +27,13 @@ class BattleMapPartType : public StateObject
 		Feature
 	};
 	Type type = Type::Ground;
+	enum class AutoConvert
+	{
+		None,
+		Fire,
+		Smoke
+	};
+	AutoConvert autoConvert = AutoConvert::None;
 
 	sp<Image> sprite;
 	sp<Image> strategySprite;
@@ -63,7 +70,7 @@ class BattleMapPartType : public StateObject
 	bool provides_support = false;
 	bool independent_structure = false;
 	bool exit = false;
-
+	
 	// Support parameters
 	// (rules for support are explained in depth in BattleMapPart::findSupport() definition)
 

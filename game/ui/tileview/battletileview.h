@@ -17,12 +17,10 @@ class Image;
 class BattleTileView : public TileView
 {
 	// Formula: FPS / DESIRED_ANIMATIONS_PER_SECOND
+	
 	static const int TARGET_ICONS_ANIMATION_DELAY = 60 / 4;
-
-	// Formula: FPS / DESIRED_ANIMATIONS_PER_SECOND
 	static const int HEALING_ICON_ANIMATION_DELAY = 60 / 4;
-
-	// Formula: FPS / DESIRED_ANIMATIONS_PER_SECOND
+	static const int PSI_ICON_ANIMATION_DELAY = 60 / 4;
 	static const int LOWMORALE_ICON_ANIMATION_DELAY = 60 / 2;
 
 	// Total amount of different focus icon states
@@ -62,6 +60,7 @@ class BattleTileView : public TileView
 	sp<Image> bleedingIcon;
 	std::vector<sp<Image>> healingIcons;
 	std::vector<sp<Image>> lowMoraleIcons;
+	std::map<PsiStatus, std::vector<sp<Image>>>	psiIcons;
 	std::vector<sp<Image>> targetLocationIcons;
 	Vec2<float> targetLocationOffset;
 	std::vector<sp<Image>> tuIndicators;
@@ -71,6 +70,7 @@ class BattleTileView : public TileView
 	int iconAnimationTicksAccumulated = 0;
 	int healingIconTicksAccumulated = 0;
 	int lowMoraleIconTicksAccumulated = 0;
+	int psiIconTicksAccumulated = 0;
 	int focusAnimationTicksAccumulated = 0;
 
   public:

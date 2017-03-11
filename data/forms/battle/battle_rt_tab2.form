@@ -15,7 +15,7 @@
 	    <position x="232" y="68"/>
         <size width="16" height="8"/>
         <alignment horizontal="centre" vertical="centre"/>
-        <font>smalfont</font>
+        <font>smallset</font>
       </label>
 	  <label id="PSI_ATTACK_LABEL" text="223">
 	    <position x="232" y="78"/>
@@ -31,61 +31,63 @@
       </label>
 	  <graphic id="PSI_ENERGY_BAR">
         <size width="137" height="6"/>
-        <position x="262" y="69"/>
+        <position x="261" y="70"/>
       </graphic>
 	  <graphic id="PSI_ATTACK_BAR">
         <size width="137" height="6"/>
-        <position x="262" y="79"/>
+        <position x="261" y="80"/>
       </graphic>
 	  <graphic id="PSI_DEFENSE_BAR">
         <size width="137" height="6"/>
-        <position x="262" y="89"/>
+        <position x="261" y="90"/>
       </graphic>
-	  <graphicbutton id="BUTTON_CLOSE">
-        <position x="290" y="31"/>
+	  <checkbox id="RIGHTHANDUSED" visible="false">
+	  </checkbox>
+	  <graphicbutton id="BUTTON_CANCEL">
+        <position x="293" y="34"/>
         <size width="54" height="23"/>
         <image/>
         <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:316:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
 	  <radiobutton id="BUTTON_CONTROL" groupid="PSI">
-        <position x="200" y="97"/>
-        <size width="54" height="23"/>
+        <position x="202" y="101"/>
+        <size width="54" height="25"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:308:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
 	  <graphic id="OVERLAY_CONTROL">
-        <position x="200" y="97"/>
-        <size width="54" height="23"/>
+        <position x="202" y="101"/>
+        <size width="54" height="25"/>
       </graphic>	  
 	  <radiobutton id="BUTTON_PANIC" groupid="PSI">
-        <position x="260" y="97"/>
-        <size width="54" height="23"/>
+        <position x="263" y="101"/>
+        <size width="54" height="25"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:309:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
 	  <graphic id="OVERLAY_PANIC">
-        <position x="260" y="97"/>
-        <size width="54" height="23"/>
+        <position x="263" y="101"/>
+        <size width="54" height="25"/>
       </graphic>	  
 	  <radiobutton id="BUTTON_STUN" groupid="PSI">
-        <position x="322" y="97"/>
-        <size width="54" height="23"/>
+        <position x="324" y="101"/>
+        <size width="54" height="25"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:310:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
 	  <graphic id="OVERLAY_STUN">
-        <position x="322" y="97"/>
-        <size width="54" height="23"/>
+        <position x="324" y="101"/>
+        <size width="54" height="25"/>
       </graphic>	  
 	  <radiobutton id="BUTTON_PROBE" groupid="PSI">
-        <position x="383" y="97"/>
-        <size width="54" height="23"/>
+        <position x="385" y="101"/>
+        <size width="54" height="25"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:311:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
 	  <graphic id="OVERLAY_PROBE">
-        <position x="383" y="97"/>
-        <size width="54" height="23"/>
+        <position x="385" y="101"/>
+        <size width="54" height="25"/>
       </graphic>
     </style>
   </form>

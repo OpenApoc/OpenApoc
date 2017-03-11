@@ -95,6 +95,7 @@ BattleView::BattleView(sp<GameState> gameState)
 	}
 
 	selectedItemOverlay = fw().data->loadImage("battle/battle-item-select-icon.png");
+	selectedPsiOverlay = fw().data->loadImage("battle/battle-psi-select-icon.png");
 	pauseIcon = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
 	                                        "icons.tab:%d:xcom3/tacdata/tactical.pal",
 	                                        260));
@@ -544,6 +545,10 @@ BattleView::BattleView(sp<GameState> gameState)
 
 	std::function<void(FormsEvent * e)> dropLeftHand = [this](Event *) { orderDrop(false); };
 
+	std::function<void(FormsEvent * e)> cancel = [this](Event *) {
+		this->activeTab = this->mainTab;
+	};
+
 	std::function<void(bool right)> throwItem = [this](bool right) {
 		bool fail = false;
 		if (this->battle.battleViewSelectedUnits.size() == 0)
@@ -585,10 +590,6 @@ BattleView::BattleView(sp<GameState> gameState)
 
 	std::function<void(FormsEvent * e)> throwLeftHand = [this, throwItem](Event *) {
 		throwItem(false);
-	};
-
-	std::function<void(FormsEvent * e)> cancelPriming = [this, throwItem](Event *) {
-		this->activeTab = this->mainTab;
 	};
 
 	std::function<void(FormsEvent * e)> finishPriming = [this, throwItem](Event *) {
@@ -639,7 +640,7 @@ BattleView::BattleView(sp<GameState> gameState)
 	this->uiTabsRT[2]->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->Enabled = false;
 	this->uiTabsRT[2]
 	    ->findControlTyped<GraphicButton>("BUTTON_CANCEL")
-	    ->addCallback(FormEventType::ButtonClick, cancelPriming);
+	    ->addCallback(FormEventType::ButtonClick, cancel);
 	this->uiTabsRT[2]
 	    ->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick, finishPriming);
@@ -655,7 +656,7 @@ BattleView::BattleView(sp<GameState> gameState)
 	this->uiTabsTB[2]->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->Enabled = false;
 	this->uiTabsTB[2]
 	    ->findControlTyped<GraphicButton>("BUTTON_CANCEL")
-	    ->addCallback(FormEventType::ButtonClick, cancelPriming);
+	    ->addCallback(FormEventType::ButtonClick, cancel);
 	this->uiTabsTB[2]
 	    ->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick, finishPriming);
@@ -665,6 +666,56 @@ BattleView::BattleView(sp<GameState> gameState)
 	this->uiTabsTB[2]
 	    ->findControlTyped<ScrollBar>("RANGE_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, updateRange);
+
+	std::function<void(FormsEvent * e)> psiControl = [this](Event *) {
+		this->orderCancelPsi();
+		this->selectionState = BattleSelectionState::PsiControl;
+	};
+	std::function<void(FormsEvent * e)> psiPanic = [this](Event *) {
+		this->orderCancelPsi();
+		this->selectionState = BattleSelectionState::PsiPanic;
+	};
+	std::function<void(FormsEvent * e)> psiStun = [this](Event *) {
+		this->orderCancelPsi();
+		this->selectionState = BattleSelectionState::PsiStun;
+	};
+	std::function<void(FormsEvent * e)> psiProbe = [this](Event *) {
+		this->orderCancelPsi();
+		this->selectionState = BattleSelectionState::PsiProbe;
+	};
+
+	// Psi controls
+
+	this->uiTabsRT[1]
+		->findControlTyped<GraphicButton>("BUTTON_CANCEL")
+		->addCallback(FormEventType::ButtonClick, cancel);
+	this->uiTabsRT[1]
+		->findControlTyped<RadioButton>("BUTTON_CONTROL")
+		->addCallback(FormEventType::MouseClick, psiControl);
+	this->uiTabsRT[1]
+		->findControlTyped<RadioButton>("BUTTON_PANIC")
+		->addCallback(FormEventType::MouseClick, psiPanic);
+	this->uiTabsRT[1]
+		->findControlTyped<RadioButton>("BUTTON_STUN")
+		->addCallback(FormEventType::MouseClick, psiStun);
+	this->uiTabsRT[1]
+		->findControlTyped<RadioButton>("BUTTON_PROBE")
+		->addCallback(FormEventType::MouseClick, psiProbe);
+	this->uiTabsTB[1]
+		->findControlTyped<GraphicButton>("BUTTON_CANCEL")
+		->addCallback(FormEventType::ButtonClick, cancel);
+	this->uiTabsTB[1]
+		->findControlTyped<RadioButton>("BUTTON_CONTROL")
+		->addCallback(FormEventType::MouseClick, psiControl);
+	this->uiTabsTB[1]
+		->findControlTyped<RadioButton>("BUTTON_PANIC")
+		->addCallback(FormEventType::MouseClick, psiPanic);
+	this->uiTabsTB[1]
+		->findControlTyped<RadioButton>("BUTTON_STUN")
+		->addCallback(FormEventType::MouseClick, psiStun);
+	this->uiTabsTB[1]
+		->findControlTyped<RadioButton>("BUTTON_PROBE")
+		->addCallback(FormEventType::MouseClick, psiProbe);
 
 	// Hand controls
 
@@ -911,14 +962,14 @@ void BattleView::update()
 	// Update weapons if required
 
 	auto rightInfo = createItemOverlayInfo(true);
-	if (!(rightInfo == rightHandInfo) &&
+	if (rightInfo != rightHandInfo &&
 	    (this->activeTab == uiTabsRT[0] || this->activeTab == uiTabsTB[0]))
 	{
 		rightHandInfo = rightInfo;
 		updateItemInfo(true);
 	}
 	auto leftInfo = createItemOverlayInfo(false);
-	if (!(leftInfo == leftHandInfo) &&
+	if (leftInfo != leftHandInfo &&
 	    (this->activeTab == uiTabsRT[0] || this->activeTab == uiTabsTB[0]))
 	{
 		leftHandInfo = leftInfo;
@@ -974,8 +1025,19 @@ void BattleView::update()
 			}
 		}
 	}
+	
+	// Update psi
+	if (this->activeTab == uiTabsRT[1] || this->activeTab == uiTabsTB[1])
+	{
+		auto newPsiInfo = createPsiInfo();
+		if (psiInfo != newPsiInfo)
+		{
+			psiInfo = newPsiInfo;
+			updatePsiInfo();
+		}
+	}
 
-	// FIXME: Possibly more efficient ways than re-generating all controls every frame?
+	// Call forms->update()
 	for (auto f : itemForms)
 	{
 		if (f->Enabled)
@@ -1080,8 +1142,10 @@ void BattleView::updateSelectionMode()
 		    selectionState == BattleSelectionState::ThrowRight ||
 		    selectionState == BattleSelectionState::TeleportLeft ||
 		    selectionState == BattleSelectionState::TeleportRight ||
-		    selectionState == BattleSelectionState::PsiLeft ||
-		    selectionState == BattleSelectionState::PsiRight ||
+		    selectionState == BattleSelectionState::PsiControl ||
+		    selectionState == BattleSelectionState::PsiPanic ||
+			selectionState == BattleSelectionState::PsiStun ||
+			selectionState == BattleSelectionState::PsiProbe ||
 		    selectionState == BattleSelectionState::FireLeft ||
 		    selectionState == BattleSelectionState::FireRight)
 		{
@@ -1119,8 +1183,10 @@ void BattleView::updateSelectionMode()
 		case BattleSelectionState::FireRight:
 		case BattleSelectionState::ThrowLeft:
 		case BattleSelectionState::ThrowRight:
-		case BattleSelectionState::PsiLeft:
-		case BattleSelectionState::PsiRight:
+		case BattleSelectionState::PsiControl:
+		case BattleSelectionState::PsiPanic:
+		case BattleSelectionState::PsiStun:
+		case BattleSelectionState::PsiProbe:
 		case BattleSelectionState::TeleportLeft:
 		case BattleSelectionState::TeleportRight:
 			resetPathPreview();
@@ -1151,8 +1217,10 @@ void BattleView::updateSelectionMode()
 				fw().getCursor().CurrentType = ApocCursor::CursorType::ThrowTarget;
 			}
 			break;
-		case BattleSelectionState::PsiLeft:
-		case BattleSelectionState::PsiRight:
+		case BattleSelectionState::PsiControl:
+		case BattleSelectionState::PsiPanic:
+		case BattleSelectionState::PsiStun:
+		case BattleSelectionState::PsiProbe:
 			fw().getCursor().CurrentType = ApocCursor::CursorType::PsiTarget;
 			break;
 		case BattleSelectionState::Normal:
@@ -1422,7 +1490,13 @@ void BattleView::orderUse(bool right, bool automatic)
 			break;
 		case AEquipmentType::Type::MindBender:
 			// Mind bender does not care for automatic mode
+			selectionState = BattleSelectionState::Normal;
 			this->activeTab = this->psiTab;
+			this->activeTab->findControlTyped<RadioButton>("BUTTON_CONTROL")->setChecked(false);
+			this->activeTab->findControlTyped<RadioButton>("BUTTON_PANIC")->setChecked(false);
+			this->activeTab->findControlTyped<RadioButton>("BUTTON_STUN")->setChecked(false);
+			this->activeTab->findControlTyped<RadioButton>("BUTTON_PROBE")->setChecked(false);
+			this->activeTab->findControlTyped<CheckBox>("RIGHTHANDUSED")->setChecked(right);
 			break;
 		case AEquipmentType::Type::MotionScanner:
 			// Motion scanner has no automatic mode
@@ -1634,6 +1708,37 @@ void BattleView::orderFocus(StateRef<BattleUnit> u)
 	}
 }
 
+void BattleView::orderCancelPsi()
+{
+	if (battle.battleViewSelectedUnits.size() == 0)
+	{
+		return;
+	}
+
+	battle.battleViewSelectedUnits.front()->stopAttackPsi(*state);
+}
+
+void BattleView::orderPsiAttack(StateRef<BattleUnit> u, PsiStatus status, bool right)
+{
+	if (battle.battleViewSelectedUnits.size() == 0)
+	{
+		return;
+	}
+
+	auto unit = battle.battleViewSelectedUnits.front();
+	auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
+		: AEquipmentSlotType::LeftHand);
+
+	if (unit->startAttackPsi(*state, u, status, item->type))
+	{
+		this->activeTab->findControlTyped<RadioButton>("BUTTON_CONTROL")->setChecked(false);
+		this->activeTab->findControlTyped<RadioButton>("BUTTON_PANIC")->setChecked(false);
+		this->activeTab->findControlTyped<RadioButton>("BUTTON_STUN")->setChecked(false);
+		this->activeTab->findControlTyped<RadioButton>("BUTTON_PROBE")->setChecked(false);
+		this->selectionState = BattleSelectionState::Normal;
+	}
+}
+
 void BattleView::orderHeal(BodyPart part)
 {
 	auto unit = battle.battleViewSelectedUnits.front();
@@ -1688,7 +1793,7 @@ void BattleView::eventOccurred(Event *e)
 	     e->keyboard().KeyCode == SDLK_LALT || e->keyboard().KeyCode == SDLK_RCTRL ||
 	     e->keyboard().KeyCode == SDLK_LCTRL || e->keyboard().KeyCode == SDLK_f ||
 	     e->keyboard().KeyCode == SDLK_r || e->keyboard().KeyCode == SDLK_a
-			|| e->keyboard().KeyCode == SDLK_p))
+			|| e->keyboard().KeyCode == SDLK_p || e->keyboard().KeyCode == SDLK_h))
 	{
 		switch (e->keyboard().KeyCode)
 		{
@@ -1774,6 +1879,26 @@ void BattleView::eventOccurred(Event *e)
 						u.second->agent->modified_stats.morale = 25;
 					}
 				}
+				break;
+			}
+			case SDLK_h:
+			{
+				LogWarning("Heals for everybody!");
+				for (auto &u : battle.units)
+				{
+					if (u.second->isDead())
+					{
+						continue;
+					}
+					u.second->stunDamage = 0;
+					u.second->agent->modified_stats = u.second->agent->current_stats;
+					u.second->fatalWounds[BodyPart::Body] = 0;
+					u.second->fatalWounds[BodyPart::Helmet] = 0;
+					u.second->fatalWounds[BodyPart::LeftArm] = 0;
+					u.second->fatalWounds[BodyPart::Legs] = 0;
+					u.second->fatalWounds[BodyPart::RightArm] = 0;
+				}
+				break;
 			}
 			case SDLK_a:
 			{
@@ -2173,9 +2298,48 @@ void BattleView::eventOccurred(Event *e)
 							break;
 					}
 					break;
-				case BattleSelectionState::PsiLeft:
-				case BattleSelectionState::PsiRight:
-					LogError("Implement!");
+				case BattleSelectionState::PsiControl:
+				case BattleSelectionState::PsiPanic:
+				case BattleSelectionState::PsiStun:
+				case BattleSelectionState::PsiProbe:
+					switch (buttonPressed)
+					{
+						case Event::MouseButton::Left:
+						{
+							auto u = battle.battleViewSelectedUnits.front();
+							if (unitOccupying && unitOccupying != u.getSp())
+							{
+								bool right = this->activeTab->findControlTyped<CheckBox>("RIGHTHANDUSED")->isChecked();
+								switch (selectionState)
+								{
+								case BattleSelectionState::PsiControl:
+									orderPsiAttack({ &*state, unitOccupying->id }, PsiStatus::Control, right);
+									break;
+								case BattleSelectionState::PsiPanic:
+									orderPsiAttack({ &*state, unitOccupying->id }, PsiStatus::Panic, right);
+									break;
+								case BattleSelectionState::PsiStun:
+									orderPsiAttack({ &*state, unitOccupying->id }, PsiStatus::Stun, right);
+									break;
+								case BattleSelectionState::PsiProbe:
+									orderPsiAttack({ &*state, unitOccupying->id }, PsiStatus::Probe, right);
+									break;
+								default:
+									//Don't cry Travis
+									break;
+								}
+							}
+							break;
+						}
+						case Event::MouseButton::Right:
+						{
+							selectionState = BattleSelectionState::Normal;
+							break;
+						}
+						default:
+							LogError("Unhandled mouse button!");
+							break;
+					}
 					break;
 			}
 		}
@@ -2347,6 +2511,80 @@ void BattleView::updateItemInfo(bool right)
 	this->activeTab->findControlTyped<Graphic>("OVERLAY_" + name + "_HAND")->setImage(overlay);
 }
 
+void BattleView::updatePsiInfo()
+{
+	this->activeTab->findControlTyped<Graphic>("OVERLAY_CONTROL")
+		->setImage(psiInfo.status == PsiStatus::Control ? selectedPsiOverlay : nullptr);
+	this->activeTab->findControlTyped<Graphic>("OVERLAY_PANIC")
+		->setImage(psiInfo.status == PsiStatus::Panic ? selectedPsiOverlay : nullptr);
+	this->activeTab->findControlTyped<Graphic>("OVERLAY_STUN")
+		->setImage(psiInfo.status == PsiStatus::Stun ? selectedPsiOverlay : nullptr);
+	this->activeTab->findControlTyped<Graphic>("OVERLAY_PROBE")
+		->setImage(psiInfo.status == PsiStatus::Probe ? selectedPsiOverlay : nullptr);
+
+	this->activeTab->findControlTyped<Label>("PSI_ENERGY_LABEL")->setText(format("%d",psiInfo.curEnergy));
+	this->activeTab->findControlTyped<Label>("PSI_ATTACK_LABEL")->setText(format("%d", psiInfo.curAttack));
+	this->activeTab->findControlTyped<Label>("PSI_DEFENSE_LABEL")->setText(format("%d", psiInfo.curDefense));
+
+	// FIXME: Maybe pre-draw all 100 of them?
+
+	this->activeTab->findControlTyped<Graphic>("PSI_ENERGY_BAR")
+		->setImage(drawPsiBar(psiInfo.curEnergy, psiInfo.maxEnergy));
+	this->activeTab->findControlTyped<Graphic>("PSI_ATTACK_BAR")
+		->setImage(drawPsiBar(psiInfo.curAttack, psiInfo.maxAttack));
+	this->activeTab->findControlTyped<Graphic>("PSI_DEFENSE_BAR")
+		->setImage(drawPsiBar(psiInfo.curDefense, psiInfo.maxDefense));
+}
+
+sp<RGBImage> BattleView::drawPsiBar(int cur, int max)
+{
+	int width = 137;
+	int height = 6;
+	Colour border = { 150, 70, 150, 255 };
+	Colour bar = { 180, 120, 150, 255 };
+	Colour black = { 0, 0, 0, 255 };
+	auto psiBar = mksp<RGBImage>(Vec2<int>{width, height});
+	{
+		int curWidth = clamp((width - 3) * cur / 100, 0, (width - 3)) + 1;
+		int maxWidth = clamp((width - 3) * max / 100, 0, (width - 3)) + 2;
+		{
+			RGBImageLock l(psiBar);
+			// Content
+			for (int x = 1; x < maxWidth; x++)
+			{
+				for (int y = 1; y < height - 1; y++)
+				{
+					if (x <= curWidth)
+						l.set({ x, y }, bar);
+					else
+						l.set({ x, y }, black);
+				}
+			}
+			// Borders
+			for (int y = 1; y < height - 1; y++)
+			{
+				l.set({ 0, y }, border);
+				l.set({ maxWidth, y }, border);
+
+			}
+			for (int x = 0; x <= maxWidth; x++)
+			{
+				l.set({ x, 0 }, border);
+				l.set({ x, 5 }, border);
+			}
+			// Remainder
+			for (int x = maxWidth + 1; x < width; x++)
+			{
+				for (int y = 0; y < height;y++)
+				{
+					l.set({ x, y }, black);
+				}
+			}
+		}
+	}
+	return psiBar;
+}
+
 void BattleView::finish()
 {
 	fw().getCursor().CurrentType = ApocCursor::CursorType::Normal;
@@ -2402,6 +2640,7 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 						break;
 				}
 				a.selected = e->inUse || e->primed ||
+							 (u->psiStatus != PsiStatus::NotEngaged && e->type == u->psiItem) ||
 				             (selectionState == BattleSelectionState::FireRight && rightHand) ||
 				             (selectionState == BattleSelectionState::FireLeft && !rightHand) ||
 				             (selectionState == BattleSelectionState::TeleportRight && rightHand) ||
@@ -2422,6 +2661,26 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 	return a;
 }
 
+AgentPsiInfo BattleView::createPsiInfo()
+{
+	AgentPsiInfo a;
+
+	if (!battle.battleViewSelectedUnits.empty())
+	{
+		auto u = battle.battleViewSelectedUnits.front();
+
+		a.status = u->psiStatus;
+		a.curEnergy = u->agent->modified_stats.psi_energy;
+		a.curAttack = u->agent->modified_stats.psi_attack;
+		a.curDefense = u->agent->modified_stats.psi_defence;
+		a.maxEnergy = u->agent->current_stats.psi_energy;
+		a.maxAttack = u->agent->current_stats.psi_attack;
+		a.maxDefense = u->agent->current_stats.psi_defence;
+	}
+
+	return a;
+}
+
 bool AgentEquipmentInfo::operator==(const AgentEquipmentInfo &other) const
 {
 	return (this->accuracy == other.accuracy && this->curAmmo == other.curAmmo &&
@@ -2429,4 +2688,21 @@ bool AgentEquipmentInfo::operator==(const AgentEquipmentInfo &other) const
 	        this->selected == other.selected);
 }
 
+bool AgentEquipmentInfo::operator!=(const AgentEquipmentInfo &other) const
+{
+	return !(*this == other);
+}
+
+bool AgentPsiInfo::operator==(const AgentPsiInfo &other) const
+{
+	return (this->status == other.status && this->curEnergy == other.curEnergy &&
+		this->curAttack == other.curAttack && this->curDefense == other.curDefense &&
+		this->maxEnergy == other.maxEnergy &&
+		this->maxAttack == other.maxAttack && this->maxDefense == other.maxDefense);
+}
+
+bool AgentPsiInfo::operator!=(const AgentPsiInfo &other) const
+{
+	return !(*this == other);
+}
 }; // namespace OpenApoc

@@ -507,7 +507,7 @@ std::tuple<AIDecision, float, unsigned> VanillaUnitAI::getGrenadeDecision(GameSt
 	movement->type = AIMovement::Type::Stop;
 
 	// Properly get rethingdelay based on how far we must run to reach throwable plint
-	unsigned reThinkDelay = TICKS_PER_TURN * 4;
+	unsigned reThinkDelay = TICKS_PER_TURN * 2;
 	// For now, auto-throw if in range at closest enemy
 	float priority = FLT_MAX - glm::length(u.position - target->position);
 
@@ -817,7 +817,9 @@ AIDecision VanillaUnitAI::thinkInternal(GameState &state, BattleUnit &u)
 	    (enemySpotted && u.visibleEnemies.empty() &&
 	     (!lastDecision.movement || (lastDecision.movement->type != AIMovement::Type::Pursue &&
 	                                 lastDecision.movement->type != AIMovement::Type::GetInRange)))
-	    // We were attacked and we are not on a mission to get in range
+	    // We have throw action but we stopped moving
+		|| (lastDecision.action && lastDecision.action->type == AIAction::Type::AttackGrenade && u.missions.empty())
+		// We were attacked and we are not on a mission to get in range
 	    || (attackerPosition != NONE &&
 	        (!lastDecision.movement || lastDecision.movement->type != AIMovement::Type::GetInRange))
 	    // We have enemies in sight, we are not attacking and we are not carrying out an action
@@ -1228,7 +1230,7 @@ std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &
 		if (u.fire_permission_mode == BattleUnit::FirePermissionMode::CeaseFire ||
 			((!e1 || !e1->canFire()) && (!e2 || !e2->canFire())))
 		{
-			if (ticksAutoTurnAvailable <= state.gameTime.getTicks())
+			if (ticksAutoTurnAvailable <= state.gameTime.getTicks() && !u.isMoving())
 			{
 				// Look at focused unit or find closest enemy
 				auto targetEnemy = u.focusUnit;

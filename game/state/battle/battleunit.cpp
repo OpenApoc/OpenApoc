@@ -80,7 +80,22 @@ void BattleUnit::removeFromSquad(Battle &battle)
 
 bool BattleUnit::assignToSquad(Battle &battle, int squad)
 {
-	return battle.forces[owner].insert(squad, shared_from_this());
+	if (squad == -1)
+	{
+		for (int i = 0; i<battle.forces[owner].squads.size(); i++)
+		{
+			auto &squad = battle.forces[owner].squads[i];
+			if (squad.getNumUnits() < 6)
+			{
+				return battle.forces[owner].insert(i, shared_from_this());
+			}
+		}
+		return false;
+	}
+	else
+	{
+		return battle.forces[owner].insert(squad, shared_from_this());
+	}
 }
 
 void BattleUnit::moveToSquadPosition(Battle &battle, int position)
@@ -324,7 +339,7 @@ void BattleUnit::calculateVisionToUnits(GameState &state, Battle &battle, TileMa
 	}
 }
 
-void BattleUnit::refreshUnitVision(GameState &state)
+void BattleUnit::refreshUnitVision(GameState &state, bool forceBlind)
 {
 	auto &battle = *state.current_battle;
 	auto &map = *battle.map;
@@ -333,7 +348,7 @@ void BattleUnit::refreshUnitVision(GameState &state)
 	visibleEnemies.clear();
 
 	// Vision is actually updated only if conscious, otherwise we clear visible units and that's it
-	if (isConscious())
+	if (!forceBlind && isConscious())
 	{
 		// FIXME: This likely won't work properly for large units
 		// Idea here is to LOS from the center of the occupied tile
@@ -534,15 +549,14 @@ bool BattleUnit::hasLineToUnit(GameState &state, sp<BattleUnit> unit, bool useLO
 	auto cMap =
 		tileObject->map.findCollision(muzzleLocation, targetPosition, mapPartSet, tileObject, useLOS);
 	// Unit that prevents Line to target
-	auto cUnit = tileObject->map.findCollision(muzzleLocation, targetPosition, unitSet, tileObject, useLOS);
+	auto cUnit = useLOS ? Collision() :  tileObject->map.findCollision(muzzleLocation, targetPosition, unitSet, tileObject);
 	// Condition:
 	// No map part blocks Line
 	return !cMap
 		// No unit blocks Line
-		&& (!cUnit || (!useLOS &&
-			owner->isRelatedTo(
+		&& (!cUnit || owner->isRelatedTo(
 				std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)->getUnit()->owner) ==
-			Organisation::Relation::Hostile));
+			Organisation::Relation::Hostile);
 }
 
 int BattleUnit::getPsiCost(PsiStatus status, bool attack)
@@ -583,27 +597,64 @@ int BattleUnit::getPsiChance(GameState &state, StateRef<BattleUnit> target, PsiS
 		e2 = nullptr;
 	}
 	auto bender = e1 ? e1 : e2;
+	auto cost = getPsiCost(status);
 	if (!bender
-		|| agent->modified_stats.psi_energy < getPsiCost(status)
+		|| agent->modified_stats.psi_energy < cost
 		|| !hasLineToUnit(state, target, true))
 	{
 		return 0;
 	}
-	// FIXME: Calculate psi chance
-	return 100;
+
+	// Psi chance as per Wong's Guide (tested in Excel, seems legit)
+	/*
+		                 100*attack*(100-defense)
+	success rate = --------------------------------------
+			         attack*(100-defense) + 100*defense
+
+		       psiattack rating * 40
+	attack = ---------------------------
+			  initiation cost of action
+	*/
+	int attack = agent->modified_stats.psi_attack * 40 / cost;
+	int defense =  target->agent->modified_stats.psi_defence;
+	if (attack == 0 && defense == 0)
+	{
+		return 0;
+	}
+	return (100 * attack * (100 - defense)) / ( attack * (100 - defense) + 100 * defense);
 }
 
 bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, PsiStatus status, StateRef<AEquipmentType> item)
 {
-	if (randBoundsExclusive(state.rng, 0, 100) < getPsiChance(state, target, status, item))
+	if (agent->modified_stats.psi_energy < getPsiCost(status))
 	{
-		if (agent->modified_stats.psi_energy >= getPsiCost(status))
-		{
-			agent->modified_stats.psi_energy -= getPsiCost(status);
-		}
+		return false;
+	}
+	bool success = startAttackPsiInternal(state, target, status, item);
+	agent->modified_stats.psi_energy -= getPsiCost(status);
+	if (success)
+	{
+		fw().soundBackend->playSample(
+			listRandomiser(state.rng, *psiSuccessSounds),
+			position);
+		return true;
+	}
+	else
+	{
 		fw().soundBackend->playSample(
 			listRandomiser(state.rng, *psiFailSounds),
 			position);
+		return false;
+	}
+}
+
+bool BattleUnit::startAttackPsiInternal(GameState &state, StateRef<BattleUnit> target, PsiStatus status, StateRef<AEquipmentType> item)
+{
+	int chance = getPsiChance(state, target, status, item);
+	int roll = randBoundsExclusive(state.rng, 0, 100);
+	LogWarning("Psi Attack #%d Roll %d Chance %d %s Attacker %s Target %s", (int)status, roll, chance, roll < chance ? (UString)"SUCCESS" : (UString)"FAILURE", id, target->id);
+	if (roll >= chance)
+	{
 		return false;
 	}
 	
@@ -619,32 +670,32 @@ bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, P
 	target->psiAttackers[id] = status;
 	ticksAccumulatedToNextPsiCheck = 0;
 	target->applyPsiAttack(state, *this, status, item, true);
-	fw().soundBackend->playSample(
-		listRandomiser(state.rng, *psiSuccessSounds),
-		position);
+	
 	return true;
 }
 
 void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatus status, StateRef<AEquipmentType> item, bool impact)
 {
-	// FIXME: Change to correct psi attack effects
+	// FIXME: Change to correct psi stun / panic effects
 	switch (status)
 	{
 		case PsiStatus::Panic:
 			if (!impact)
 			{
-				agent->modified_stats.morale = std::max(0, agent->modified_stats.morale - 16);
+				// Observed values of 16 or 8, seems to depend on psi def? Need further research
+				agent->modified_stats.morale = std::max(0, agent->modified_stats.morale - 8 * randBoundsInclusive(state.rng, 1, 2));
 			}
 		case PsiStatus::Stun:
 			if (!impact)
 			{
+				// Observed value of 12 only, need further research
 				dealDamage(state, 12, false, BodyPart::Body, 9001);
 			}
 			break;
 		case PsiStatus::Control:
 			if (impact)
 			{
-				LogWarning("Psi Control Success: Switch unit's ownership");
+				changeOwner(state, attacker.owner);
 			}
 			break;
 		case PsiStatus::Probe:
@@ -664,7 +715,11 @@ void BattleUnit::stopAttackPsi(GameState &state)
 	switch (psiStatus)
 	{
 		case PsiStatus::Control:
-			LogWarning("Psi Control Finished: Revert unit's ownership");
+			if (psiTarget->owner == psiTarget->agent->owner)
+			{
+				break;
+			}
+			psiTarget->changeOwner(state, psiTarget->agent->owner);
 			break;
 		case PsiStatus::Probe:
 		case PsiStatus::Panic:
@@ -679,6 +734,22 @@ void BattleUnit::stopAttackPsi(GameState &state)
 	psiTarget.clear();
 	psiItem.clear();
 	ticksAccumulatedToNextPsiCheck = 0;
+}
+
+void BattleUnit::changeOwner(GameState &state, StateRef<Organisation> newOwner)
+{
+	if (owner == newOwner)
+	{
+		return;
+	}
+	refreshUnitVision(state, true);
+	stopAttacking();
+	stopAttackPsi(state);
+	cancelMissions(state);
+	removeFromSquad(*state.current_battle);
+	owner = newOwner;
+	assignToSquad(*state.current_battle);
+	refreshUnitVision(state);
 }
 
 bool BattleUnit::canAfford(GameState &state, int cost) const
@@ -1101,6 +1172,13 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	}
 
 	// Apply damage according to type
+	if (damageType->explosive && damageType->effectType == DamageType::EffectType::None)
+	{
+		// Deal 1/8 of explosive damage as stun
+		int stunDamage = damage / 8;
+		dealDamage(state, stunDamage, false, bodyPart, power);
+		damage -= stunDamage;
+	}
 	dealDamage(state, damage, damageType->dealsFatalWounds(), bodyPart,
 		damageType->dealsStunDamage() ? power : 0);
 	
@@ -1174,6 +1252,11 @@ bool BattleUnit::handleCollision(GameState &state, Collision &c)
 
 void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 {
+	if (isDead())
+	{
+		return;
+	}
+
 	//Regeneration
 	regenTicksAccumulated += ticks;
 	while (regenTicksAccumulated >= TICKS_PER_SECOND)
@@ -1760,7 +1843,7 @@ void BattleUnit::updateMovement(GameState &state, unsigned int &moveTicksRemaini
 			unsigned int distanceToGoal = (unsigned)ceilf(glm::length(
 			    vectorToGoal * VELOCITY_SCALE_BATTLE * (float)TICKS_PER_UNIT_TRAVELLED));
 			unsigned int moveTicksConsumeRate =
-			    current_movement_state == MovementState::Running ? 1 : 2;
+			    current_movement_state == MovementState::Running ? 1 : (current_body_state == BodyState::Prone ? 3 : 2);
 
 			// Quick check, if moving strictly vertical then using lift
 			if (distanceToGoal > 0 && current_body_state != BodyState::Flying &&
@@ -2309,19 +2392,37 @@ void BattleUnit::updatePsi(GameState &state, unsigned int ticks)
 {
 	if (psiStatus != PsiStatus::NotEngaged)
 	{
-		ticksAccumulatedToNextPsiCheck += ticks;
-		while (ticksAccumulatedToNextPsiCheck >= TICKS_PER_PSI_CHECK)
+		auto e1 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+		auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+		if (e1 && e1->type != psiItem)
 		{
-			ticksAccumulatedToNextPsiCheck -= TICKS_PER_PSI_CHECK;
-			auto cost = getPsiCost(psiStatus, false);
-			if (cost > agent->modified_stats.psi_energy)
+			e1 = nullptr;
+		}
+		if (e2 && e2->type != psiItem)
+		{
+			e2 = nullptr;
+		}
+		auto bender = e1 ? e1 : e2;
+		if (!bender)
+		{
+			stopAttackPsi(state);
+		}
+		else
+		{
+			ticksAccumulatedToNextPsiCheck += ticks;
+			while (ticksAccumulatedToNextPsiCheck >= TICKS_PER_PSI_CHECK)
 			{
-				stopAttackPsi(state);
-			}
-			else
-			{
-				agent->modified_stats.psi_energy -= cost;
-				psiTarget->applyPsiAttack(state, *this, psiStatus, psiItem, false);
+				ticksAccumulatedToNextPsiCheck -= TICKS_PER_PSI_CHECK;
+				auto cost = getPsiCost(psiStatus, false);
+				if (cost > agent->modified_stats.psi_energy)
+				{
+					stopAttackPsi(state);
+				}
+				else
+				{
+					agent->modified_stats.psi_energy -= cost;
+					psiTarget->applyPsiAttack(state, *this, psiStatus, psiItem, false);
+				}
 			}
 		}
 	}
@@ -2392,7 +2493,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		bool wasUsingLift = usingLift;
 		usingLift = false;
 
-		// If not running we will consume these twice as fast
+		// If not running we will consume these twice as fast, if prone thrice as
 		unsigned int moveTicksRemaining = ticks * agent->modified_stats.getActualSpeedValue() * 2;
 		unsigned int bodyTicksRemaining = ticks;
 		unsigned int handsTicksRemaining = ticks;

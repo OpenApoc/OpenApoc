@@ -121,6 +121,38 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 	lowMoraleIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
 		"icons.tab:%d:xcom3/tacdata/tactical.pal",
 		198)));
+	
+	psiIcons[PsiStatus::Probe].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal",
+		199)));
+	psiIcons[PsiStatus::Probe].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal",
+		200)));
+	psiIcons[PsiStatus::Panic].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal",
+		201)));
+	psiIcons[PsiStatus::Panic].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal",
+		202)));
+	psiIcons[PsiStatus::Stun].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal",
+		203)));
+	psiIcons[PsiStatus::Stun].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal",
+		204)));
+	psiIcons[PsiStatus::Control].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal",
+		205)));
+	psiIcons[PsiStatus::Control].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal",
+		206)));
+	psiIcons[PsiStatus::NotEngaged].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal",
+		207)));
+	psiIcons[PsiStatus::NotEngaged].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal",
+		208)));
+
 
 	targetLocationIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
@@ -256,6 +288,8 @@ void BattleTileView::render()
 		healingIconTicksAccumulated %= 2 * HEALING_ICON_ANIMATION_DELAY;
 		lowMoraleIconTicksAccumulated++;
 		lowMoraleIconTicksAccumulated %= 2 * LOWMORALE_ICON_ANIMATION_DELAY;
+		psiIconTicksAccumulated++;
+		psiIconTicksAccumulated %= 2 * PSI_ICON_ANIMATION_DELAY;
 		iconAnimationTicksAccumulated++;
 		iconAnimationTicksAccumulated %= targetLocationIcons.size() * TARGET_ICONS_ANIMATION_DELAY;
 		focusAnimationTicksAccumulated++;
@@ -395,7 +429,7 @@ void BattleTileView::render()
 			}
 			auto &waypointImageSource = darkenWaypoints ? waypointDarkIcons : waypointIcons;
 
-			static const Vec2<float> offsetMorale = { -7.0f, -1.0f };
+			static const Vec2<float> offsetFaceIcon = { -7.0f, -1.0f };
 
 			for (int z = zFrom; z < zTo; z++)
 			{
@@ -499,7 +533,9 @@ void BattleTileView::render()
 								bool friendly = false;
 								bool hostile = false;
 								bool unitLowMorale = false;
-								Vec2<float> unitLowMoralePos;
+								bool unitPsiAttacker = false;
+								PsiStatus unitPsiAttackedStatus = PsiStatus::NotEngaged;
+								Vec2<float> unitFaceIconPos;
 								bool objectVisible = visible;
 								switch (obj->getType())
 								{
@@ -531,13 +567,27 @@ void BattleTileView::render()
 										friendly = u->owner == battle.currentPlayer;
 										hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 										          Organisation::Relation::Hostile;
-										if (objectVisible && u->moraleState != MoraleState::Normal)
+										if (objectVisible)
 										{
-											unitLowMorale = true;
-											unitLowMoralePos = tileToOffsetScreenCoords(
-												u->getPosition() +
-												Vec3<float>{0.0f, 0.0f,
-												(u->getCurrentHeight() - 4.0f) * 1.5f / 40.0f}) + offsetMorale;
+											if (u->moraleState != MoraleState::Normal)
+											{
+												unitLowMorale = true;
+											}
+											else if (u->psiStatus!=PsiStatus::NotEngaged)
+											{
+												unitPsiAttacker = true;
+											}
+											if (!u->psiAttackers.empty())
+											{
+												unitPsiAttackedStatus = u->psiAttackers.begin()->second;
+											}
+											if (unitLowMorale || unitPsiAttacker || unitPsiAttackedStatus != PsiStatus::NotEngaged)
+											{
+												unitFaceIconPos = tileToOffsetScreenCoords(
+													u->getPosition() +
+													Vec3<float>{0.0f, 0.0f,
+													(u->getCurrentHeight() - 4.0f) * 1.5f / 40.0f}) + offsetFaceIcon;
+											}
 										}
 										if (!battle.battleViewSelectedUnits.empty())
 										{
@@ -604,11 +654,23 @@ void BattleTileView::render()
 								obj->draw(r, *this, pos, this->viewMode,
 								          revealWholeMap || objectVisible, currentLevel, friendly,
 								          hostile);
+								int faceShift = 0;
+								if (unitPsiAttacker)
+								{
+									r.draw(psiIcons[PsiStatus::NotEngaged][psiIconTicksAccumulated /
+										PSI_ICON_ANIMATION_DELAY], unitFaceIconPos);
+									faceShift = 1;
+								}
+								if (unitPsiAttackedStatus != PsiStatus::NotEngaged)
+								{
+									r.draw(psiIcons[unitPsiAttackedStatus][psiIconTicksAccumulated /
+										PSI_ICON_ANIMATION_DELAY], unitFaceIconPos + Vec2<float>{0, faceShift * 16.0f});
+									faceShift = -1;
+								}
 								if (unitLowMorale)
 								{
 									r.draw(lowMoraleIcons[lowMoraleIconTicksAccumulated /
-										LOWMORALE_ICON_ANIMATION_DELAY],unitLowMoralePos);
-
+										LOWMORALE_ICON_ANIMATION_DELAY], unitFaceIconPos + Vec2<float>{0, faceShift * 16.0f});
 								}
 								// Loop ends when "break" is reached above
 								obj_id++;
@@ -684,7 +746,9 @@ void BattleTileView::render()
 								bool hostile = false;
 								bool draw = false;
 								bool unitLowMorale = false;
-								Vec2<float> unitLowMoralePos;
+								bool unitPsiAttacker = false;
+								PsiStatus unitPsiAttackedStatus = PsiStatus::NotEngaged;
+								Vec2<float> unitFaceIconPos;
 								switch (obj->getType())
 								{
 									case TileObject::Type::Unit:
@@ -705,13 +769,27 @@ void BattleTileView::render()
 											hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 											          Organisation::Relation::Hostile;
 											draw = true;
-											if (objectVisible && u->moraleState != MoraleState::Normal)
+											if (objectVisible)
 											{
-												unitLowMorale = true;
-												unitLowMoralePos = tileToOffsetScreenCoords(
-													u->getPosition() +
-													Vec3<float>{0.0f, 0.0f,
-													(u->getCurrentHeight() - 4.0f) * 1.5f / 40.0f}) + offsetMorale;
+												if (u->moraleState != MoraleState::Normal)
+												{
+													unitLowMorale = true;
+												}
+												else if (u->psiStatus != PsiStatus::NotEngaged)
+												{
+													unitPsiAttacker = true;
+												}
+												if (!u->psiAttackers.empty())
+												{
+													unitPsiAttackedStatus = u->psiAttackers.begin()->second;
+												}
+												if (unitLowMorale || unitPsiAttacker || unitPsiAttackedStatus != PsiStatus::NotEngaged)
+												{
+													unitFaceIconPos = tileToOffsetScreenCoords(
+														u->getPosition() +
+														Vec3<float>{0.0f, 0.0f,
+														(u->getCurrentHeight() - 4.0f) * 1.5f / 40.0f}) + offsetFaceIcon;
+												}
 											}
 											if (!battle.battleViewSelectedUnits.empty())
 											{
@@ -787,11 +865,23 @@ void BattleTileView::render()
 									obj->draw(r, *this, pos, this->viewMode,
 									          revealWholeMap || objectVisible, currentLevel,
 									          friendly, hostile);								
+									int faceShift = 0;
+									if (unitPsiAttacker)
+									{
+										r.draw(psiIcons[PsiStatus::NotEngaged][psiIconTicksAccumulated /
+											PSI_ICON_ANIMATION_DELAY], unitFaceIconPos);
+										faceShift = 1;
+									}
+									if (unitPsiAttackedStatus != PsiStatus::NotEngaged)
+									{
+										r.draw(psiIcons[unitPsiAttackedStatus][psiIconTicksAccumulated /
+											PSI_ICON_ANIMATION_DELAY], unitFaceIconPos + Vec2<float>{0, faceShift * 16.0f});
+										faceShift = -1;
+									}
 									if (unitLowMorale)
 									{
 										r.draw(lowMoraleIcons[lowMoraleIconTicksAccumulated /
-											LOWMORALE_ICON_ANIMATION_DELAY], unitLowMoralePos);
-										
+											LOWMORALE_ICON_ANIMATION_DELAY], unitFaceIconPos + Vec2<float>{0, faceShift * 16.0f});
 									}
 								}
 								// Loop ends when "break" is reached above
