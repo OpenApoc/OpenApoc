@@ -954,26 +954,32 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			}
 			else
 			{
-				// Equipment sets (built-in) have complex structure with several possible items and
-				// weapons and clips defined, and unit types have 5 equipment sets to choose from.
-				// However, all that is irrelevant!
-				// Game only uses equipment sets for aliens who have no inventory, they are
-				// never defined for anyone else without inventory, all 5 sets are always the same
-				// and all sets only contain a built-in weapon which is always self-recharging.
-				// Therefore, we only need to store built-in weapons for both hands and that's it!
-				auto es_data = data_t.agent_equipment_set_built_in->get(data.equipment_sets[0]);
+				if (id == "AGENTTYPE_BRAINSUCKER")
+				{
+					a->built_in_weapon_right = { &state, "AEQUIPMENTTYPE_BRAINSUCKER_WEAPON" };
+				}
+				else
+				{
+					// Equipment sets (built-in) have complex structure with several possible items and
+					// weapons and clips defined, and unit types have 5 equipment sets to choose from.
+					// However, all that is irrelevant!
+					// Game only uses equipment sets for aliens who have no inventory, they are
+					// never defined for anyone else without inventory, all 5 sets are always the same
+					// and all sets only contain a built-in weapon which is always self-recharging.
+					// Therefore, we only need to store built-in weapons for both hands and that's it!
+					auto es_data = data_t.agent_equipment_set_built_in->get(data.equipment_sets[0]);
 
-				if (es_data.weapons[0].weapon_idx != 0xffffffff)
-					a->built_in_weapon_right = {
-					    &state, format("%s%s", AEquipmentType::getPrefix(),
-					                   canon_string(data_u.agent_equipment_names->get(
-					                       es_data.weapons[0].weapon_idx)))};
-				if (es_data.weapons[1].weapon_idx != 0xffffffff)
-					a->built_in_weapon_left = {
-
-					    &state, format("%s%s", AEquipmentType::getPrefix(),
-					                   canon_string(data_u.agent_equipment_names->get(
-					                       es_data.weapons[1].weapon_idx)))};
+					if (es_data.weapons[0].weapon_idx != 0xffffffff)
+						a->built_in_weapon_right = {
+							&state, format("%s%s", AEquipmentType::getPrefix(),
+										   canon_string(data_u.agent_equipment_names->get(
+											   es_data.weapons[0].weapon_idx))) };
+					if (es_data.weapons[1].weapon_idx != 0xffffffff)
+						a->built_in_weapon_left = {
+							&state, format("%s%s", AEquipmentType::getPrefix(),
+										   canon_string(data_u.agent_equipment_names->get(
+											   es_data.weapons[1].weapon_idx))) };
+				}
 				name = "BUILTIN";
 			}
 		}
@@ -1229,6 +1235,20 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 
 			// Non-humanoid aliens
 			case UNIT_TYPE_BRAINSUCKER:
+				height = 10;
+				a->allowed_movement_states.insert(MovementState::None);
+				a->allowed_movement_states.insert(MovementState::Normal);
+				a->allowed_movement_states.insert(MovementState::Running);
+				a->allowed_movement_states.insert(MovementState::Brainsucker);
+				a->allowed_body_states.insert(BodyState::Standing);
+				a->allowed_body_states.insert(BodyState::Throwing);
+				a->allowed_body_states.insert(BodyState::Flying);
+				a->allowed_body_states.insert(BodyState::Downed);
+				voxelInfo[BodyState::Standing] = { height, 3 };
+				voxelInfo[BodyState::Flying] = { height, 6 }; // Overlap agent's head
+				voxelInfo[BodyState::Throwing] = { 8, 3 };
+				voxelInfo[BodyState::Downed] = { 8, idx };
+				break;
 			case UNIT_TYPE_HYPERWORM:
 			case UNIT_TYPE_SPITTER:
 			case UNIT_TYPE_POPPER:

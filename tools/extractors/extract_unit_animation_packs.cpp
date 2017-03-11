@@ -221,20 +221,11 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 
 	if (name == "unit")
 	{
-		for (int x = -1; x <= 1; x++)
-		{
-			for (int y = -1; y <= 1; y++)
-			{
-				// 0, 0 facing does not exist
-				if (x == 0 && y == 0)
-					continue;
-
-				extractAnimationPackUnit(p, dataAD, dataUA, dataUF, x, y);
-			}
-		}
+		extractAnimationPackUnit(p, dataAD, dataUA, dataUF);
 	}
 	if (name == "bsk")
 	{
+
 	}
 	if (name == "chrys1")
 	{

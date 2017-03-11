@@ -1001,7 +1001,7 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 	if (isDead())
 	{
 		LogWarning("Handle violent deaths");
-		die(state, true);
+		die(state);
 		return;
 	}
 	else if (!isConscious() && wasConscious)
@@ -2540,6 +2540,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	updatePsi(state, ticks);
 	// AI
 	updateAI(state, ticks);
+	// Who else? :)
+	triggerBrainsuckers(state);
 }
 
 void BattleUnit::triggerProximity(GameState &state)
@@ -2555,7 +2557,8 @@ void BattleUnit::triggerProximity(GameState &state)
 		// Proximity explosion trigger
 		if ((i->item->triggerType == TriggerType::Proximity ||
 		     i->item->triggerType == TriggerType::Boomeroid) &&
-		    BattleUnitTileHelper::getDistanceStatic(position, i->position) <= i->item->triggerRange)
+		    BattleUnitTileHelper::getDistanceStatic(position, i->position) <= i->item->triggerRange &&
+			i->item->getPayloadType()->damage_type->effectType != DamageType::EffectType::Brainsucker)
 		{
 			i->die(state);
 		}
@@ -2564,6 +2567,30 @@ void BattleUnit::triggerProximity(GameState &state)
 		         BattleUnitTileHelper::getDistanceStatic(position, i->position) <= BOOMEROID_RANGE)
 		{
 			i->hopTo(state, position);
+		}
+	}
+}
+
+void BattleUnit::triggerBrainsuckers(GameState &state)
+{
+	StateRef<DamageType> brainsucker = { &state, "DAMAGETYPE_BRAINSUCKER" };
+	if (brainsucker->dealDamage(100, agent->type->damage_modifier) == 0)
+		return;
+
+	auto it = state.current_battle->items.begin();
+	while (it != state.current_battle->items.end())
+	{
+		auto i = *it++;
+		if (!i->item->primed || i->item->triggerDelay > 0)
+		{
+			continue;
+		}
+		if (i->item->triggerType == TriggerType::Proximity &&
+			BattleUnitTileHelper::getDistanceStatic(position, i->position) <= i->item->triggerRange &&
+			i->item->getPayloadType()->damage_type->effectType == DamageType::EffectType::Brainsucker &&
+			i->item->ownerUnit->owner->isRelatedTo(owner) == Organisation::Relation::Hostile)
+		{
+			i->die(state);
 		}
 	}
 }
@@ -2986,6 +3013,7 @@ void BattleUnit::retreat(GameState &state)
 
 void BattleUnit::die(GameState &state, bool violently, bool bledToDeath)
 {
+	agent->modified_stats.health = 0;
 	std::ignore = bledToDeath;
 	if (violently)
 	{

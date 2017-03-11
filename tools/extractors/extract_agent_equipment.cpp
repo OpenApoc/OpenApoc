@@ -48,6 +48,9 @@
 #define DT_BRAINSUCKER 18
 #define DT_ENTROPY 16
 
+#define DM_HUMAN 0
+#define DM_MUTANT 1
+
 namespace OpenApoc
 {
 
@@ -301,6 +304,9 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 				d->explosive = true;
 				d->blockType = DamageType::BlockType::Psionic;
 				break;
+			case DT_BRAINSUCKER:
+				d->effectType = DamageType::EffectType::Brainsucker;
+				break;
 		}
 
 		state.damage_types[id] = d;
@@ -348,6 +354,9 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 				    ->modifiers[{&state, id}] = ddata.damage_type_data[j];
 			}
 		}
+
+		state.damage_types[data_t.getDTypeId(DT_BRAINSUCKER)]->modifiers[{&state, id}] =
+			(i == DM_HUMAN || i == DM_MUTANT) ? 100 : 0;
 	}
 
 	for (unsigned i = 0; i < data_t.agent_equipment->count(); i++)
@@ -863,8 +872,14 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 			{
 				e->damage_type = { &state, data_t.getDTypeId(pdata.damage_type) };
 			}
-			switch (pdata.trigger_type)
+			if (id == "AEQUIPMENTTYPE_BRAINSUCKER_POD")
 			{
+				e->trigger_type = TriggerType::Proximity;
+			}
+			else
+			{
+				switch (pdata.trigger_type)
+				{
 				case AGENT_GRENADE_TRIGGER_TYPE_NORMAL:
 					e->trigger_type = TriggerType::Timed;
 					break;
@@ -876,7 +891,8 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 					break;
 				default:
 					LogError("Unexpected grenade trigger type %d for ID %s",
-					         (int)pdata.trigger_type, id);
+						(int)pdata.trigger_type, id);
+				}
 			}
 			e->explosion_depletion_rate = pdata.explosion_depletion_rate;
 

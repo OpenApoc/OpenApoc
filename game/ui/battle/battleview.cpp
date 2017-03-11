@@ -1793,7 +1793,8 @@ void BattleView::eventOccurred(Event *e)
 	     e->keyboard().KeyCode == SDLK_LALT || e->keyboard().KeyCode == SDLK_RCTRL ||
 	     e->keyboard().KeyCode == SDLK_LCTRL || e->keyboard().KeyCode == SDLK_f ||
 	     e->keyboard().KeyCode == SDLK_r || e->keyboard().KeyCode == SDLK_a
-			|| e->keyboard().KeyCode == SDLK_p || e->keyboard().KeyCode == SDLK_h))
+			|| e->keyboard().KeyCode == SDLK_p || e->keyboard().KeyCode == SDLK_h 
+			|| e->keyboard().KeyCode == SDLK_k))
 	{
 		switch (e->keyboard().KeyCode)
 		{
@@ -1867,6 +1868,22 @@ void BattleView::eventOccurred(Event *e)
 			case SDLK_r:
 			{
 				revealWholeMap = !revealWholeMap;
+				break;
+			}
+			case SDLK_k:
+			{
+				for (auto &u : battle.units)
+				{
+					if (u.second->isDead())
+					{
+						continue;
+					}
+					
+					if (u.second->tileObject->getOwningTile()->position == selectedTilePosition)
+					{
+						u.second->die(*state);
+					}
+				}
 				break;
 			}
 			case SDLK_p:

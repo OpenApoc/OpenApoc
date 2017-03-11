@@ -494,11 +494,12 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void updateAI(GameState &state, unsigned int ticks);
 
 	void triggerProximity(GameState &state);
+	void triggerBrainsuckers(GameState &state);
 	void retreat(GameState &state);
 	void dropDown(GameState &state);
 	void tryToRiseUp(GameState &state);
 	void fallUnconscious(GameState &state);
-	void die(GameState &state, bool violently, bool bledToDeath = false);
+	void die(GameState &state, bool violently = true, bool bledToDeath = false);
 
 	// Following members are not serialized, but rather are set in initBattle method
 

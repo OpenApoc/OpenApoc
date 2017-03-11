@@ -151,9 +151,21 @@ class InitialGameStateExtractor
 
 	// Unit animation pack extractors
 
+	// Template for copying to other files
+	void extractAnimationPackTemplate(sp<BattleUnitAnimationPack> p,
+								  const std::vector<AnimationDataAD> &dataAD,
+								  const std::vector<AnimationDataUA> &dataUA,
+								  std::vector<AnimationDataUF> &dataUF) const;
+
 	void extractAnimationPackUnit(sp<BattleUnitAnimationPack> p,
-	                              const std::vector<AnimationDataAD> &dataAD,
-	                              const std::vector<AnimationDataUA> &dataUA,
-	                              std::vector<AnimationDataUF> &dataUF, int x, int y) const;
+								  const std::vector<AnimationDataAD> &dataAD,
+								  const std::vector<AnimationDataUA> &dataUA,
+								  std::vector<AnimationDataUF> &dataUF) const;
+
+	void extractAnimationPackBsk(sp<BattleUnitAnimationPack> p,
+		const std::vector<AnimationDataAD> &dataAD,
+		const std::vector<AnimationDataUA> &dataUA,
+		std::vector<AnimationDataUF> &dataUF) const;
+
 };
 }

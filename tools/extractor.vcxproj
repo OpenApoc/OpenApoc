@@ -25,6 +25,7 @@
     <ClCompile Include="extractors\extractors.cpp" />
     <ClCompile Include="extractors\extract_agent_equipment.cpp" />
     <ClCompile Include="extractors\extract_agent_types.cpp" />
+    <ClCompile Include="extractors\extract_animation_pack_template.cpp" />
     <ClCompile Include="extractors\extract_base_layouts.cpp" />
     <ClCompile Include="extractors\extract_battlescape_map.cpp" />
     <ClCompile Include="extractors\extract_battlescape_map_parts.cpp" />
@@ -38,6 +39,7 @@
     <ClCompile Include="extractors\extract_organisations.cpp" />
     <ClCompile Include="extractors\extract_research.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_packs.cpp" />
+    <ClCompile Include="extractors\extract_unit_animation_pack_bsk.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_pack_unit.cpp" />
     <ClCompile Include="extractors\extract_unit_image_packs.cpp" />
     <ClCompile Include="extractors\extract_vehicles.cpp" />

@@ -785,6 +785,7 @@
 		<value>Smoke</value>
 		<value>Fire</value>
 		<value>Enzyme</value>
+		<value>Brainsucker</value>
 	</enum>
 	<object>
 		<name>DamageType</name>
@@ -1329,6 +1330,7 @@
 		<value>CloakingField</value>
 		<value>DimensionForceField</value>
 		<value>MediKit</value>
+		<value>Brainsucker</value>
 		<value>Loot</value>
 	</enum>
 	<enum>
@@ -1404,6 +1406,7 @@
 		<value>Normal</value>
 		<value>Running</value>
 		<value>Strafing</value>
+		<value>Brainsucker</value>
 	</enum>
 	<enum>
 		<name>AIType</name>

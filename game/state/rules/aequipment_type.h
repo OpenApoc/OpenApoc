@@ -54,6 +54,8 @@ class AEquipmentType : public StateObject
 		CloakingField,
 		DimensionForceField,
 		MediKit,
+		// This is not in the game files, but we need it to function
+		Brainsucker,
 		// For Psi-clones and stuff
 		Loot
 	};

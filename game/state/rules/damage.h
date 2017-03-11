@@ -66,7 +66,8 @@ class DamageType : public StateObject
 		Stun,
 		Smoke,
 		Fire,
-		Enzyme
+		Enzyme,
+		Brainsucker
 	};
 
 	bool ignore_shield = false;

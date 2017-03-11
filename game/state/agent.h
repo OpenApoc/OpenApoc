@@ -54,7 +54,8 @@ enum class MovementState
 	None,
 	Normal,
 	Running,
-	Strafing
+	Strafing,
+	Brainsucker
 };
 enum class AEquipmentSlotType
 {

@@ -330,8 +330,22 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 					}
 					case TriggerType::Proximity:
 					case TriggerType::Boomeroid:
-						// Nothing, triggered by moving units
+					{
+						auto item = ownerItem.lock();
+						if (item)
+						{
+							// Nothing, triggered by moving units
+						}
+						else
+						{
+							// Proxy trigger in inventory? Blow up!
+							if (payload->damage_type->effectType != DamageType::EffectType::Brainsucker)
+							{
+								explode(state);
+							}
+						}
 						break;
+					}
 					case TriggerType::Timed:
 					{
 						auto item = ownerItem.lock();
@@ -402,6 +416,11 @@ void AEquipment::explode(GameState &state)
 		case AEquipmentType::Type::Ammo:
 		{
 			auto payload = getPayloadType();
+			// If brainsucker then nothing
+			if (payload->damage_type->effectType == DamageType::EffectType::Brainsucker)
+			{
+				break;
+			}
 			// If explosive just blow up
 			if (payload->damage_type->explosive)
 			{
@@ -472,7 +491,14 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 		auto item = mksp<AEquipment>();
 		item->type = payload;
 		item->ammo = 1;
-		item->prime();
+		if (payload->damage_type->effectType == DamageType::EffectType::Brainsucker)
+		{
+			item->prime(false, TICKS_PER_TURN, 10.0f);
+		}
+		else
+		{
+			item->prime();
+		}
 		item->ownerUnit = ownerAgent->unit;
 		float velocityXY = 0.0f;
 		float velocityZ = 0.0f;
