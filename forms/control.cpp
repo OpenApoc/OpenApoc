@@ -102,6 +102,7 @@ void Control::eventOccured(Event *e)
 				if (mouseInside)
 				{
 					this->pushFormEvent(FormEventType::MouseLeave, e);
+					mouseDepressed = false;
 				}
 			}
 		}
@@ -846,6 +847,10 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 		// Mouse events fall-through
 		case FormEventType::MouseEnter:
 		case FormEventType::MouseLeave:
+			// Only mouseEnter/mouseLeave could cause a state change (e.g. stop highlighting a
+			// button)
+			this->setDirty();
+		// Fall-though
 		case FormEventType::MouseMove:
 		{
 			event = new FormsEvent();
