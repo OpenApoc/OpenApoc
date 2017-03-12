@@ -68,6 +68,13 @@ static bool ConvertAudio(AudioFormat input_format, SDL_AudioSpec &output_spec, i
 	else
 	{
 		cvt.len = input_size_bytes;
+		size_t neededSize = std::max(1, cvt.len_mult) * cvt.len;
+		if (samples.size() < neededSize)
+		{
+			LogInfo("Expanding sample output buffer from %zu to %zu bytes", samples.size(),
+			        neededSize);
+			samples.resize(neededSize);
+		}
 		cvt.buf = (Uint8 *)samples.data();
 		SDL_ConvertAudio(&cvt);
 		return true;
@@ -81,15 +88,12 @@ class SDLSampleData : public BackendSampleData
 	{
 		unsigned int input_size =
 		    sample->format.getSampleSize() * sample->format.channels * sample->sampleCount;
-		unsigned int output_size = (SDL_AUDIO_BITSIZE(output_spec.format) / 8) *
-		                           output_spec.channels * sample->sampleCount;
-		this->samples.resize(std::max(input_size, output_size));
+		this->samples.resize(input_size);
 		memcpy(this->samples.data(), sample->data.get(), input_size);
 		if (!ConvertAudio(sample->format, output_spec, input_size, this->samples))
 		{
 			LogWarning("Failed to convert sample data");
 		}
-		this->samples.resize(output_size);
 	}
 	~SDLSampleData() override = default;
 	std::vector<unsigned char> samples;
