@@ -42,7 +42,8 @@ class BattleHazard : public std::enable_shared_from_this<BattleHazard>
 	unsigned ticksUntilNextFrameChange = 0;
 	unsigned ticksUntilNextUpdate = 0;
 
-	bool expand(GameState &state, const TileMap &map, const Vec3<int> &to, unsigned ttl, bool fireSmoke = false);
+	bool expand(GameState &state, const TileMap &map, const Vec3<int> &to, unsigned ttl,
+	            bool fireSmoke = false);
 	void grow(GameState &state);
 	void applyEffect(GameState &state);
 	void die(GameState &state, bool violently = true);
@@ -60,11 +61,10 @@ class BattleHazard : public std::enable_shared_from_this<BattleHazard>
 };
 } // namespace OpenApoc
 
-
 /*
 // Alexey Andronov (Istrebitel):
 
-Okay, so I was trying to figure out how fire works, and I've studied videos and found out 
+Okay, so I was trying to figure out how fire works, and I've studied videos and found out
 that a very weird formula fits!
 
 Fire in the game starts small, gradually enlarges, then rages for a bit, and then dies out.
@@ -80,7 +80,7 @@ After it reached one, each 2 seconds Stage is increased by 1 until i reaches 11.
 After it reached 11, next time 2 seconds pass fire is extinguished completely.
 
 What this gives us is a progression that looks like this:
-	10 - 9,4 - 8,8 - 8,2 - 7,6 - 7,0 - ... 1,6 - 1 - 2 - 3 - ... - 10 - 11 - extinguished
+    10 - 9,4 - 8,8 - 8,2 - 7,6 - 7,0 - ... 1,6 - 1 - 2 - 3 - ... - 10 - 11 - extinguished
    (^ start here ^)
 
 Now, if we then round this value to nearest 0,5 we get progression that looks like this:
@@ -91,13 +91,13 @@ that the fire can show at every stage! One extra rule: frame 11 is reserved for 
 
 We get the following progression:
 
-	10-9 - 10-9 - 10-8 - 9-7 - 8-7 - 8-6 - 7-6 - ...
-	
+    10-9 - 10-9 - 10-8 - 9-7 - 8-7 - 8-6 - 7-6 - ...
+
 Which is exactly how it appears to work in the game!
 
 -- Fire spread --
 
-Now, fire can spread to an adjacent flammable object (only feature or ground). 
+Now, fire can spread to an adjacent flammable object (only feature or ground).
 When it does, it starts burning from 10, as usual.
 When it reaches past Stage 6 (value of 5,8) that's when object's "time to burn" (#9) timer starts
 When this timer ends, object is destroyed.
@@ -107,7 +107,7 @@ I don't know how it works for other resists so I will cheat and fake it
 
 Assume 255 = immune
 Otherwise "power" of current flame is 2 ^ (10 - Stage) * 3/2
-Therefore: 
+Therefore:
 - Stage 9 can penetrate 3
 - Stage 8 can penetrate 6
 - Stage 7 can penetrate 12
@@ -119,7 +119,8 @@ Therefore:
 
 Fire also never spreads to another fire
 
-Smoke cannot extinguish fire that is burning a scenery, but can extinguish fire that is burning a ground.
+Smoke cannot extinguish fire that is burning a scenery, but can extinguish fire that is burning a
+ground.
 Walls are apparently immune to fire.
 
 */

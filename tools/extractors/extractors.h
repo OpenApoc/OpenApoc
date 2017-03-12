@@ -63,9 +63,11 @@ class InitialGameStateExtractor
 
 	// Lookup table of building function number -> battlemap path
 	static const std::vector<UString> battleMapPaths;
-	// Lookup table for battlemap path -> number of features that are converted to fires on map start
+	// Lookup table for battlemap path -> number of features that are converted to fires on map
+	// start
 	static const std::map<OpenApoc::UString, std::set<int>> initialFires;
-	// Lookup table for battlemap path -> number of features that are converted to smokes on map start
+	// Lookup table for battlemap path -> number of features that are converted to smokes on map
+	// start
 	static const std::map<OpenApoc::UString, std::set<int>> initialSmokes;
 	// List of paths and names for unit image packs
 	static const std::map<OpenApoc::UString, OpenApoc::UString> unitImagePackPaths;
@@ -91,9 +93,9 @@ class InitialGameStateExtractor
 	void extractBattlescapeMapFromPath(GameState &state, const UString dirName,
 	                                   const int index) const;
 	void readBattleMapParts(GameState &state, const TACP &data_t, sp<BattleMapTileset> t,
-	                        BattleMapPartType::Type type, const UString &idPrefix, const UString &mapName,
-	                        const UString &dirName, const UString &datName, const UString &pckName,
-	                        const UString &stratPckName) const;
+	                        BattleMapPartType::Type type, const UString &idPrefix,
+	                        const UString &mapName, const UString &dirName, const UString &datName,
+	                        const UString &pckName, const UString &stratPckName) const;
 
 	void extractSharedBattleResources(GameState &state) const;
 
@@ -153,19 +155,18 @@ class InitialGameStateExtractor
 
 	// Template for copying to other files
 	void extractAnimationPackTemplate(sp<BattleUnitAnimationPack> p,
-								  const std::vector<AnimationDataAD> &dataAD,
-								  const std::vector<AnimationDataUA> &dataUA,
-								  std::vector<AnimationDataUF> &dataUF) const;
+	                                  const std::vector<AnimationDataAD> &dataAD,
+	                                  const std::vector<AnimationDataUA> &dataUA,
+	                                  std::vector<AnimationDataUF> &dataUF) const;
 
 	void extractAnimationPackUnit(sp<BattleUnitAnimationPack> p,
-								  const std::vector<AnimationDataAD> &dataAD,
-								  const std::vector<AnimationDataUA> &dataUA,
-								  std::vector<AnimationDataUF> &dataUF) const;
+	                              const std::vector<AnimationDataAD> &dataAD,
+	                              const std::vector<AnimationDataUA> &dataUA,
+	                              std::vector<AnimationDataUF> &dataUF) const;
 
 	void extractAnimationPackBsk(sp<BattleUnitAnimationPack> p,
-		const std::vector<AnimationDataAD> &dataAD,
-		const std::vector<AnimationDataUA> &dataUA,
-		std::vector<AnimationDataUF> &dataUF) const;
-
+	                             const std::vector<AnimationDataAD> &dataAD,
+	                             const std::vector<AnimationDataUA> &dataUA,
+	                             std::vector<AnimationDataUF> &dataUF) const;
 };
 }

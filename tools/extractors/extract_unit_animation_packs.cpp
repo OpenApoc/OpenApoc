@@ -225,7 +225,6 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 	}
 	if (name == "bsk")
 	{
-
 	}
 	if (name == "chrys1")
 	{

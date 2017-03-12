@@ -339,7 +339,8 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 						else
 						{
 							// Proxy trigger in inventory? Blow up!
-							if (payload->damage_type->effectType != DamageType::EffectType::Brainsucker)
+							if (payload->damage_type->effectType !=
+							    DamageType::EffectType::Brainsucker)
 							{
 								explode(state);
 							}

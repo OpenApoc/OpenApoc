@@ -11,16 +11,16 @@
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/battle/battlecommonsamplelist.h"
-#include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlehazard.h"
+#include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battleunitmission.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
+#include "game/state/tileview/tileobject_battlehazard.h"
 #include "game/state/tileview/tileobject_battleitem.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"
-#include "game/state/tileview/tileobject_battlehazard.h"
 #include "game/state/tileview/tileobject_shadow.h"
 #include "library/strings_format.h"
 #include <glm/glm.hpp>
@@ -115,44 +115,55 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
 	                                                   196)));
 
-	lowMoraleIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		"icons.tab:%d:xcom3/tacdata/tactical.pal",
-		197)));
-	lowMoraleIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		"icons.tab:%d:xcom3/tacdata/tactical.pal",
-		198)));
-	
-	psiIcons[PsiStatus::Probe].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		"icons.tab:%d:xcom3/tacdata/tactical.pal",
-		199)));
-	psiIcons[PsiStatus::Probe].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		"icons.tab:%d:xcom3/tacdata/tactical.pal",
-		200)));
-	psiIcons[PsiStatus::Panic].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		"icons.tab:%d:xcom3/tacdata/tactical.pal",
-		201)));
-	psiIcons[PsiStatus::Panic].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		"icons.tab:%d:xcom3/tacdata/tactical.pal",
-		202)));
-	psiIcons[PsiStatus::Stun].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		"icons.tab:%d:xcom3/tacdata/tactical.pal",
-		203)));
-	psiIcons[PsiStatus::Stun].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		"icons.tab:%d:xcom3/tacdata/tactical.pal",
-		204)));
-	psiIcons[PsiStatus::Control].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		"icons.tab:%d:xcom3/tacdata/tactical.pal",
-		205)));
-	psiIcons[PsiStatus::Control].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		"icons.tab:%d:xcom3/tacdata/tactical.pal",
-		206)));
-	psiIcons[PsiStatus::NotEngaged].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		"icons.tab:%d:xcom3/tacdata/tactical.pal",
-		207)));
-	psiIcons[PsiStatus::NotEngaged].push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		"icons.tab:%d:xcom3/tacdata/tactical.pal",
-		208)));
+	lowMoraleIcons.push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                197)));
+	lowMoraleIcons.push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                198)));
 
+	psiIcons[PsiStatus::Probe].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                199)));
+	psiIcons[PsiStatus::Probe].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                200)));
+	psiIcons[PsiStatus::Panic].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                201)));
+	psiIcons[PsiStatus::Panic].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                202)));
+	psiIcons[PsiStatus::Stun].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                203)));
+	psiIcons[PsiStatus::Stun].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                204)));
+	psiIcons[PsiStatus::Control].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                205)));
+	psiIcons[PsiStatus::Control].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                206)));
+	psiIcons[PsiStatus::NotEngaged].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                207)));
+	psiIcons[PsiStatus::NotEngaged].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                208)));
 
 	targetLocationIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
@@ -329,7 +340,8 @@ void BattleTileView::render()
 			break;
 	}
 
-	// This is also the place where we emit a burning sound, because we find out which fire is in the viewport and is closest to the screen center
+	// This is also the place where we emit a burning sound, because we find out which fire is in
+	// the viewport and is closest to the screen center
 	bool fireEncountered = false;
 	float closestFireDistance = FLT_MAX;
 	Vec3<float> closestFirePosition;
@@ -429,7 +441,7 @@ void BattleTileView::render()
 			}
 			auto &waypointImageSource = darkenWaypoints ? waypointDarkIcons : waypointIcons;
 
-			static const Vec2<float> offsetFaceIcon = { -7.0f, -1.0f };
+			static const Vec2<float> offsetFaceIcon = {-7.0f, -1.0f};
 
 			for (int z = zFrom; z < zTo; z++)
 			{
@@ -573,20 +585,25 @@ void BattleTileView::render()
 											{
 												unitLowMorale = true;
 											}
-											else if (u->psiStatus!=PsiStatus::NotEngaged)
+											else if (u->psiStatus != PsiStatus::NotEngaged)
 											{
 												unitPsiAttacker = true;
 											}
 											if (!u->psiAttackers.empty())
 											{
-												unitPsiAttackedStatus = u->psiAttackers.begin()->second;
+												unitPsiAttackedStatus =
+												    u->psiAttackers.begin()->second;
 											}
-											if (unitLowMorale || unitPsiAttacker || unitPsiAttackedStatus != PsiStatus::NotEngaged)
+											if (unitLowMorale || unitPsiAttacker ||
+											    unitPsiAttackedStatus != PsiStatus::NotEngaged)
 											{
-												unitFaceIconPos = tileToOffsetScreenCoords(
-													u->getPosition() +
-													Vec3<float>{0.0f, 0.0f,
-													(u->getCurrentHeight() - 4.0f) * 1.5f / 40.0f}) + offsetFaceIcon;
+												unitFaceIconPos =
+												    tileToOffsetScreenCoords(
+												        u->getPosition() +
+												        Vec3<float>{0.0f, 0.0f,
+												                    (u->getCurrentHeight() - 4.0f) *
+												                        1.5f / 40.0f}) +
+												    offsetFaceIcon;
 											}
 										}
 										if (!battle.battleViewSelectedUnits.empty())
@@ -633,11 +650,14 @@ void BattleTileView::render()
 									{
 										if (visible && ticksUntilFireSound == 0)
 										{
-											auto h = std::static_pointer_cast<TileObjectBattleHazard>(obj)
-												->getHazard();
+											auto h =
+											    std::static_pointer_cast<TileObjectBattleHazard>(
+											        obj)
+											        ->getHazard();
 											if (h->hazardType->fire)
 											{
-												auto distance = glm::length(centerPos - h->position);
+												auto distance =
+												    glm::length(centerPos - h->position);
 												if (distance < closestFireDistance)
 												{
 													fireEncountered = true;
@@ -657,20 +677,25 @@ void BattleTileView::render()
 								int faceShift = 0;
 								if (unitPsiAttacker)
 								{
-									r.draw(psiIcons[PsiStatus::NotEngaged][psiIconTicksAccumulated /
-										PSI_ICON_ANIMATION_DELAY], unitFaceIconPos);
+									r.draw(psiIcons[PsiStatus::NotEngaged]
+									               [psiIconTicksAccumulated /
+									                PSI_ICON_ANIMATION_DELAY],
+									       unitFaceIconPos);
 									faceShift = 1;
 								}
 								if (unitPsiAttackedStatus != PsiStatus::NotEngaged)
 								{
-									r.draw(psiIcons[unitPsiAttackedStatus][psiIconTicksAccumulated /
-										PSI_ICON_ANIMATION_DELAY], unitFaceIconPos + Vec2<float>{0, faceShift * 16.0f});
+									r.draw(psiIcons[unitPsiAttackedStatus]
+									               [psiIconTicksAccumulated /
+									                PSI_ICON_ANIMATION_DELAY],
+									       unitFaceIconPos + Vec2<float>{0, faceShift * 16.0f});
 									faceShift = -1;
 								}
 								if (unitLowMorale)
 								{
 									r.draw(lowMoraleIcons[lowMoraleIconTicksAccumulated /
-										LOWMORALE_ICON_ANIMATION_DELAY], unitFaceIconPos + Vec2<float>{0, faceShift * 16.0f});
+									                      LOWMORALE_ICON_ANIMATION_DELAY],
+									       unitFaceIconPos + Vec2<float>{0, faceShift * 16.0f});
 								}
 								// Loop ends when "break" is reached above
 								obj_id++;
@@ -781,14 +806,20 @@ void BattleTileView::render()
 												}
 												if (!u->psiAttackers.empty())
 												{
-													unitPsiAttackedStatus = u->psiAttackers.begin()->second;
+													unitPsiAttackedStatus =
+													    u->psiAttackers.begin()->second;
 												}
-												if (unitLowMorale || unitPsiAttacker || unitPsiAttackedStatus != PsiStatus::NotEngaged)
+												if (unitLowMorale || unitPsiAttacker ||
+												    unitPsiAttackedStatus != PsiStatus::NotEngaged)
 												{
-													unitFaceIconPos = tileToOffsetScreenCoords(
-														u->getPosition() +
-														Vec3<float>{0.0f, 0.0f,
-														(u->getCurrentHeight() - 4.0f) * 1.5f / 40.0f}) + offsetFaceIcon;
+													unitFaceIconPos =
+													    tileToOffsetScreenCoords(
+													        u->getPosition() +
+													        Vec3<float>{
+													            0.0f, 0.0f,
+													            (u->getCurrentHeight() - 4.0f) *
+													                1.5f / 40.0f}) +
+													    offsetFaceIcon;
 												}
 											}
 											if (!battle.battleViewSelectedUnits.empty())
@@ -864,24 +895,29 @@ void BattleTileView::render()
 									Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
 									obj->draw(r, *this, pos, this->viewMode,
 									          revealWholeMap || objectVisible, currentLevel,
-									          friendly, hostile);								
+									          friendly, hostile);
 									int faceShift = 0;
 									if (unitPsiAttacker)
 									{
-										r.draw(psiIcons[PsiStatus::NotEngaged][psiIconTicksAccumulated /
-											PSI_ICON_ANIMATION_DELAY], unitFaceIconPos);
+										r.draw(psiIcons[PsiStatus::NotEngaged]
+										               [psiIconTicksAccumulated /
+										                PSI_ICON_ANIMATION_DELAY],
+										       unitFaceIconPos);
 										faceShift = 1;
 									}
 									if (unitPsiAttackedStatus != PsiStatus::NotEngaged)
 									{
-										r.draw(psiIcons[unitPsiAttackedStatus][psiIconTicksAccumulated /
-											PSI_ICON_ANIMATION_DELAY], unitFaceIconPos + Vec2<float>{0, faceShift * 16.0f});
+										r.draw(psiIcons[unitPsiAttackedStatus]
+										               [psiIconTicksAccumulated /
+										                PSI_ICON_ANIMATION_DELAY],
+										       unitFaceIconPos + Vec2<float>{0, faceShift * 16.0f});
 										faceShift = -1;
 									}
 									if (unitLowMorale)
 									{
 										r.draw(lowMoraleIcons[lowMoraleIconTicksAccumulated /
-											LOWMORALE_ICON_ANIMATION_DELAY], unitFaceIconPos + Vec2<float>{0, faceShift * 16.0f});
+										                      LOWMORALE_ICON_ANIMATION_DELAY],
+										       unitFaceIconPos + Vec2<float>{0, faceShift * 16.0f});
 									}
 								}
 								// Loop ends when "break" is reached above
@@ -1100,11 +1136,14 @@ void BattleTileView::render()
 									{
 										if (visible && ticksUntilFireSound == 0)
 										{
-											auto h = std::static_pointer_cast<TileObjectBattleHazard>(obj)
-												->getHazard();
+											auto h =
+											    std::static_pointer_cast<TileObjectBattleHazard>(
+											        obj)
+											        ->getHazard();
 											if (h->hazardType->fire)
 											{
-												auto distance = glm::length(centerPos - h->position);
+												auto distance =
+												    glm::length(centerPos - h->position);
 												if (distance < closestFireDistance)
 												{
 													fireEncountered = true;
@@ -1198,11 +1237,10 @@ void BattleTileView::render()
 
 	if (fireEncountered)
 	{
-		ticksUntilFireSound = 60 * state.battle_common_sample_list->burn->sampleCount 
-			/ state.battle_common_sample_list->burn->format.frequency 
-			/ state.battle_common_sample_list->burn->format.channels;
-		fw().soundBackend->playSample(state.battle_common_sample_list->burn,
-			closestFirePosition);
+		ticksUntilFireSound = 60 * state.battle_common_sample_list->burn->sampleCount /
+		                      state.battle_common_sample_list->burn->format.frequency /
+		                      state.battle_common_sample_list->burn->format.channels;
+		fw().soundBackend->playSample(state.battle_common_sample_list->burn, closestFirePosition);
 	}
 }
 

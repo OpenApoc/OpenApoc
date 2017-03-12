@@ -17,7 +17,7 @@ class Image;
 class BattleTileView : public TileView
 {
 	// Formula: FPS / DESIRED_ANIMATIONS_PER_SECOND
-	
+
 	static const int TARGET_ICONS_ANIMATION_DELAY = 60 / 4;
 	static const int HEALING_ICON_ANIMATION_DELAY = 60 / 4;
 	static const int PSI_ICON_ANIMATION_DELAY = 60 / 4;
@@ -60,7 +60,7 @@ class BattleTileView : public TileView
 	sp<Image> bleedingIcon;
 	std::vector<sp<Image>> healingIcons;
 	std::vector<sp<Image>> lowMoraleIcons;
-	std::map<PsiStatus, std::vector<sp<Image>>>	psiIcons;
+	std::map<PsiStatus, std::vector<sp<Image>>> psiIcons;
 	std::vector<sp<Image>> targetLocationIcons;
 	Vec2<float> targetLocationOffset;
 	std::vector<sp<Image>> tuIndicators;

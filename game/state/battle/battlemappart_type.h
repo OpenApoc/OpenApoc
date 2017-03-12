@@ -70,7 +70,7 @@ class BattleMapPartType : public StateObject
 	bool provides_support = false;
 	bool independent_structure = false;
 	bool exit = false;
-	
+
 	// Support parameters
 	// (rules for support are explained in depth in BattleMapPart::findSupport() definition)
 

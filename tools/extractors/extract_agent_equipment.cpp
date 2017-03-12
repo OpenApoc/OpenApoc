@@ -356,7 +356,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 		}
 
 		state.damage_types[data_t.getDTypeId(DT_BRAINSUCKER)]->modifiers[{&state, id}] =
-			(i == DM_HUMAN || i == DM_MUTANT) ? 100 : 0;
+		    (i == DM_HUMAN || i == DM_MUTANT) ? 100 : 0;
 	}
 
 	for (unsigned i = 0; i < data_t.agent_equipment->count(); i++)
@@ -866,11 +866,11 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 			if (id == "AEQUIPMENTTYPE_ENTROPY_POD")
 			{
 				// Change entropy pod's damage type to the one that applies debuff
-				e->damage_type = { &state, "DAMAGETYPE_ENTROPY_ENZYME_SPECIAL" };
+				e->damage_type = {&state, "DAMAGETYPE_ENTROPY_ENZYME_SPECIAL"};
 			}
 			else
 			{
-				e->damage_type = { &state, data_t.getDTypeId(pdata.damage_type) };
+				e->damage_type = {&state, data_t.getDTypeId(pdata.damage_type)};
 			}
 			if (id == "AEQUIPMENTTYPE_BRAINSUCKER_POD")
 			{
@@ -880,18 +880,18 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 			{
 				switch (pdata.trigger_type)
 				{
-				case AGENT_GRENADE_TRIGGER_TYPE_NORMAL:
-					e->trigger_type = TriggerType::Timed;
-					break;
-				case AGENT_GRENADE_TRIGGER_TYPE_PROXIMITY:
-					e->trigger_type = TriggerType::Proximity;
-					break;
-				case AGENT_GRENADE_TRIGGER_TYPE_BOOMEROID:
-					e->trigger_type = TriggerType::Boomeroid;
-					break;
-				default:
-					LogError("Unexpected grenade trigger type %d for ID %s",
-						(int)pdata.trigger_type, id);
+					case AGENT_GRENADE_TRIGGER_TYPE_NORMAL:
+						e->trigger_type = TriggerType::Timed;
+						break;
+					case AGENT_GRENADE_TRIGGER_TYPE_PROXIMITY:
+						e->trigger_type = TriggerType::Proximity;
+						break;
+					case AGENT_GRENADE_TRIGGER_TYPE_BOOMEROID:
+						e->trigger_type = TriggerType::Boomeroid;
+						break;
+					default:
+						LogError("Unexpected grenade trigger type %d for ID %s",
+						         (int)pdata.trigger_type, id);
 				}
 			}
 			e->explosion_depletion_rate = pdata.explosion_depletion_rate;

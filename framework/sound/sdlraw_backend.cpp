@@ -86,8 +86,8 @@ class SDLSampleData : public BackendSampleData
 		unsigned long int freqMult = std::max(1, output_spec.freq / sample->format.frequency);
 		unsigned long int freqDiv = std::max(1, sample->format.frequency / output_spec.freq);
 		unsigned long int output_size = (SDL_AUDIO_BITSIZE(output_spec.format) / 8) *
-		                           output_spec.channels * sample->sampleCount
-			* freqMult / freqDiv;
+		                                output_spec.channels * sample->sampleCount * freqMult /
+		                                freqDiv;
 		this->samples.resize(std::max(input_size, output_size));
 		memcpy(this->samples.data(), sample->data.get(), input_size);
 		if (!ConvertAudio(sample->format, output_spec, input_size, this->samples))

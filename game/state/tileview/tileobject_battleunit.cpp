@@ -86,12 +86,13 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 			{
 				Vec2<float> transformedScreenPos = screenPosition;
 				sp<Image> sprite;
-				
+
 				int age = unit->fireDebuffTicksRemaining;
 				int maxLifetime = 5 * TICKS_PER_TURN;
-				int frame = std::min(unit->burningDoodad->frames.size() - 1, unit->burningDoodad->frames.size() * age / maxLifetime);
+				int frame = std::min(unit->burningDoodad->frames.size() - 1,
+				                     unit->burningDoodad->frames.size() * age / maxLifetime);
 				sprite = unit->burningDoodad->frames[frame].image;
-				
+
 				transformedScreenPos -= unit->burningDoodad->imageOffset;
 				drawTinted(r, sprite, transformedScreenPos, visible);
 			}

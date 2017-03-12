@@ -12,12 +12,10 @@
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::readBattleMapParts(GameState &state, const TACP &data_t,
-                                                   sp<BattleMapTileset> t,
-                                                   BattleMapPartType::Type type,
-                                                   const UString &idPrefix, const UString &mapName, const UString &dirName,
-                                                   const UString &datName, const UString &pckName,
-                                                   const UString &stratPckName) const
+void InitialGameStateExtractor::readBattleMapParts(
+    GameState &state, const TACP &data_t, sp<BattleMapTileset> t, BattleMapPartType::Type type,
+    const UString &idPrefix, const UString &mapName, const UString &dirName, const UString &datName,
+    const UString &pckName, const UString &stratPckName) const
 {
 	const UString loftempsFile = "xcom3/tacdata/loftemps.dat";
 	const UString loftempsTab = "xcom3/tacdata/loftemps.tab";
@@ -275,11 +273,13 @@ void InitialGameStateExtractor::readBattleMapParts(GameState &state, const TACP 
 		object->autoConvert = BattleMapPartType::AutoConvert::None;
 		if (type == BattleMapPartType::Type::Feature)
 		{
-			if (initialFires.find(mapName) != initialFires.end() && initialFires.at(mapName).find(i) != initialFires.at(mapName).end())
+			if (initialFires.find(mapName) != initialFires.end() &&
+			    initialFires.at(mapName).find(i) != initialFires.at(mapName).end())
 			{
 				object->autoConvert = BattleMapPartType::AutoConvert::Fire;
 			}
-			else if (initialSmokes.find(mapName) != initialSmokes.end() && initialSmokes.at(mapName).find(i) != initialSmokes.at(mapName).end())
+			else if (initialSmokes.find(mapName) != initialSmokes.end() &&
+			         initialSmokes.at(mapName).find(i) != initialSmokes.at(mapName).end())
 			{
 				object->autoConvert = BattleMapPartType::AutoConvert::Smoke;
 			}

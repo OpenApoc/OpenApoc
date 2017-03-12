@@ -134,8 +134,7 @@ bool readXml(std::istream &in, StateDefinition &state)
 						}
 						else
 						{
-							std::cerr << "Unknown object full attribute \"" << fullValue
-								<< "\"\n";
+							std::cerr << "Unknown object full attribute \"" << fullValue << "\"\n";
 						}
 					}
 					auto memberNode = objectNode.first_child();
@@ -325,15 +324,14 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 			}
 			if (object.full)
 			{
-				out << "\t" << serializeFn
-					<< "(node->" << newNodeFn << "(\"" << member.first << "\"), obj." << member.first
-					<< ", ref." << member.first << ");\n";
+				out << "\t" << serializeFn << "(node->" << newNodeFn << "(\"" << member.first
+				    << "\"), obj." << member.first << ", ref." << member.first << ");\n";
 			}
 			else
 			{
-				out << "\tif (obj." << member.first << " != ref." << member.first << ")" << serializeFn
-					<< "(node->" << newNodeFn << "(\"" << member.first << "\"), obj." << member.first
-					<< ", ref." << member.first << ");\n";
+				out << "\tif (obj." << member.first << " != ref." << member.first << ")"
+				    << serializeFn << "(node->" << newNodeFn << "(\"" << member.first << "\"), obj."
+				    << member.first << ", ref." << member.first << ");\n";
 			}
 		}
 

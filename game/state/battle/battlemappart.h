@@ -48,7 +48,8 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 
 	// Returns true if sound and doodad were handled by it
 	bool applyDamage(GameState &state, int power, StateRef<DamageType> damageType);
-	// Called when map part is burnt by fire. Returns true if burn was successful (provided fuel for the fire)
+	// Called when map part is burnt by fire. Returns true if burn was successful (provided fuel for
+	// the fire)
 	bool applyBurning(GameState &state, int age);
 	// Wether this map part can burn (due to resist, timer and already burnt state)
 	bool canBurn(int age);

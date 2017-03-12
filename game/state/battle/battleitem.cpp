@@ -4,8 +4,8 @@
 #include "framework/sound.h"
 #include "game/state/aequipment.h"
 #include "game/state/battle/battle.h"
-#include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlecommonsamplelist.h"
+#include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
@@ -34,7 +34,7 @@ void BattleItem::die(GameState &state, bool violently)
 		if (state.battle_common_sample_list->brainsuckerHatch)
 		{
 			fw().soundBackend->playSample(state.battle_common_sample_list->brainsuckerHatch,
-				position, 0.25f);
+			                              position, 0.25f);
 		}
 		LogWarning("Hatched! Spawn brainsucker!");
 		// spawn: throwing body facing 0,1

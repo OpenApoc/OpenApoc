@@ -363,42 +363,39 @@ bool operator==(const UnitAI &a, const UnitAI &b)
 	{
 		case UnitAI::Type::LowMorale:
 		{
-			const LowMoraleUnitAI &ca = static_cast<const LowMoraleUnitAI&>(a);
-			const LowMoraleUnitAI &cb = static_cast<const LowMoraleUnitAI&>(b);
+			const LowMoraleUnitAI &ca = static_cast<const LowMoraleUnitAI &>(a);
+			const LowMoraleUnitAI &cb = static_cast<const LowMoraleUnitAI &>(b);
 			return ca == cb;
 		}
 		case UnitAI::Type::Default:
 		{
-			const DefaultUnitAI &ca = static_cast<const DefaultUnitAI&>(a);
-			const DefaultUnitAI &cb = static_cast<const DefaultUnitAI&>(b);
+			const DefaultUnitAI &ca = static_cast<const DefaultUnitAI &>(a);
+			const DefaultUnitAI &cb = static_cast<const DefaultUnitAI &>(b);
 			return ca == cb;
 		}
 		case UnitAI::Type::Behavior:
 		{
-			const BehaviorUnitAI &ca = static_cast<const BehaviorUnitAI&>(a);
-			const BehaviorUnitAI &cb = static_cast<const BehaviorUnitAI&>(b);
+			const BehaviorUnitAI &ca = static_cast<const BehaviorUnitAI &>(a);
+			const BehaviorUnitAI &cb = static_cast<const BehaviorUnitAI &>(b);
 			return ca == cb;
 		}
 		case UnitAI::Type::Vanilla:
 		{
-			const VanillaUnitAI &ca = static_cast<const VanillaUnitAI&>(a);
-			const VanillaUnitAI &cb = static_cast<const VanillaUnitAI&>(b);
+			const VanillaUnitAI &ca = static_cast<const VanillaUnitAI &>(a);
+			const VanillaUnitAI &cb = static_cast<const VanillaUnitAI &>(b);
 			return ca == cb;
 		}
 		case UnitAI::Type::Hardcore:
 		{
-			const HardcoreUnitAI &ca = static_cast<const HardcoreUnitAI&>(a);
-			const HardcoreUnitAI &cb = static_cast<const HardcoreUnitAI&>(b);
+			const HardcoreUnitAI &ca = static_cast<const HardcoreUnitAI &>(a);
+			const HardcoreUnitAI &cb = static_cast<const HardcoreUnitAI &>(b);
 			return ca == cb;
 		}
 	}
 	LogError("Unsupported comparison for UserAI type %d", (int)a.type);
 	return false;
 }
-bool operator!=(const UnitAI &a, const UnitAI &b)
-{
-	return !(a == b);
-}
+bool operator!=(const UnitAI &a, const UnitAI &b) { return !(a == b); }
 
 void serializeOut(sp<SerializationNode> node, const sp<TacticalAI> &ptr, const sp<TacticalAI> &ref)
 {
@@ -427,18 +424,15 @@ bool operator==(const TacticalAI &a, const TacticalAI &b)
 	{
 		case TacticalAI::Type::Vanilla:
 		{
-			const VanillaTacticalAI &ca = static_cast<const VanillaTacticalAI&>(a);
-			const VanillaTacticalAI &cb = static_cast<const VanillaTacticalAI&>(b);
+			const VanillaTacticalAI &ca = static_cast<const VanillaTacticalAI &>(a);
+			const VanillaTacticalAI &cb = static_cast<const VanillaTacticalAI &>(b);
 			return ca == cb;
 		}
 	}
 	LogError("Unsupported comparison for Tactical type %d", (int)a.type);
 	return false;
 }
-bool operator!=(const TacticalAI &a, const TacticalAI &b)
-{
-	return !(a == b);
-}
+bool operator!=(const TacticalAI &a, const TacticalAI &b) { return !(a == b); }
 
 bool GameState::saveGame(const UString &path, bool pack, bool pretty)
 {
