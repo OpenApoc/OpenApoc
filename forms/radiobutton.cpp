@@ -43,6 +43,28 @@ sp<Control> RadioButton::copyTo(sp<Control> CopyParent)
 	return copy;
 }
 
+void RadioButton::eventOccured(Event *e)
+{
+	Control::eventOccured(e);
+
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
+	    e->forms().EventFlag == FormEventType::MouseDown)
+	{
+		if (buttonclick)
+		{
+			fw().soundBackend->playSample(buttonclick);
+		}
+	}
+
+	/* We have to handle click events slightly differently in radiobutton to checkbox, as clicking
+	 * on a selected radio button shouldn't deselect it, but instead just leave it selected */
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
+	    e->forms().EventFlag == FormEventType::MouseClick && !isChecked())
+	{
+		setChecked(true);
+	}
+}
+
 void RadioButton::setChecked(bool checked)
 {
 	if (checked != Checked)
