@@ -90,7 +90,7 @@ Vec3<int> rotate(Vec3<int> vec, int rotation)
 
 std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destinationStart,
                                                Vec3<int> destinationEnd,
-                                               unsigned int iterationLimit,
+                                               int iterationLimit,
                                                const CanEnterTileHelper &canEnterTile,
                                                bool approachOnly, bool ignoreStaticUnits,
                                                bool ignoreAllUnits, float *cost, float maxCost)

@@ -333,7 +333,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Get cost of psi attack or upkeep
 	int getPsiCost(PsiStatus status, bool attack = true);
-	int getPsiChance(GameState &state, StateRef<BattleUnit> target, PsiStatus status,
+	int getPsiChance(StateRef<BattleUnit> target, PsiStatus status,
 	                 StateRef<AEquipmentType> item);
 	// Starts attacking taget, returns if attack successful
 	bool startAttackPsi(GameState &state, StateRef<BattleUnit> target, PsiStatus status,

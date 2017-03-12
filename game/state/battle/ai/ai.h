@@ -243,10 +243,6 @@ class BehaviorUnitAI : public UnitAI
 
 	void reset(GameState &state, BattleUnit &u) override;
 	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) override;
-
-	void notifyUnderFire(Vec3<int> position) override{};
-	void notifyHit(Vec3<int> position) override{};
-	void notifyEnemySpotted(Vec3<int> position) override{};
 };
 
 // AI that handles vanilla alien and civilian behavior

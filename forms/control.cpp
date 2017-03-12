@@ -15,8 +15,8 @@ namespace OpenApoc
 
 Control::Control(bool takesFocus)
     : mouseInside(false), mouseDepressed(false), resolvedLocation(0, 0), Name("Control"),
-      Location(0, 0), Size(0, 0), BackgroundColour(0, 0, 0, 0), takesFocus(takesFocus),
-      Visible(true), showBounds(false), Enabled(true), canCopy(true)
+      Location(0, 0), Size(0, 0), BackgroundColour(0, 0, 0, 0), Visible(true), 
+	  takesFocus(takesFocus), showBounds(false), Enabled(true), canCopy(true)
 {
 }
 

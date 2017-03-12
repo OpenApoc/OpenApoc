@@ -492,6 +492,7 @@ VanillaUnitAI::getPsiDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
 {
 	std::ignore = state;
 	std::ignore = u;
+	std::ignore = e;
 	std::ignore = target;
 	std::ignore = type;
 
@@ -1206,7 +1207,12 @@ std::tuple<AIDecision, bool> LowMoraleUnitAI::think(GameState &state, BattleUnit
 	return std::make_tuple(AIDecision(), true);
 }
 
-void DefaultUnitAI::reset(GameState &state, BattleUnit &u) {}
+void DefaultUnitAI::reset(GameState &, BattleUnit &) 
+{
+	ticksAutoTargetAvailable = 0;
+	ticksAutoTurnAvailable = 0;
+	attackerPosition = { 0, 0, 0 };
+}
 
 void DefaultUnitAI::notifyUnderFire(Vec3<int> position) { attackerPosition = position; }
 

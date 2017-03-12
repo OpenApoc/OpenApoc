@@ -581,7 +581,7 @@ int BattleUnit::getPsiCost(PsiStatus status, bool attack)
 	return 0;
 }
 
-int BattleUnit::getPsiChance(GameState &state, StateRef<BattleUnit> target, PsiStatus status,
+int BattleUnit::getPsiChance(StateRef<BattleUnit> target, PsiStatus status,
                              StateRef<AEquipmentType> item)
 {
 	if (status == PsiStatus::NotEngaged)
@@ -649,7 +649,7 @@ bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, P
 bool BattleUnit::startAttackPsiInternal(GameState &state, StateRef<BattleUnit> target,
                                         PsiStatus status, StateRef<AEquipmentType> item)
 {
-	int chance = getPsiChance(state, target, status, item);
+	int chance = getPsiChance(target, status, item);
 	int roll = randBoundsExclusive(state.rng, 0, 100);
 	LogWarning("Psi Attack #%d Roll %d Chance %d %s Attacker %s Target %s", (int)status, roll,
 	           chance, roll < chance ? (UString) "SUCCESS" : (UString) "FAILURE", id, target->id);
@@ -1049,7 +1049,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	}
 
 	// Calculate damage
-	int damage;
+	int damage = 0;
 	bool USER_OPTION_UFO_DAMAGE_MODEL = false;
 	if (damageType->effectType == DamageType::EffectType::Smoke) // smoke deals 1-3 stun damage
 	{
@@ -1485,8 +1485,6 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 
 void BattleUnit::updateEvents(GameState &state)
 {
-	static const Vec3<int> NONE = {0, 0, 0};
-
 	// Try giving way if asked to
 	// FIXME: Ensure we're not in a firefight before giving way!
 	if (giveWayRequestData.size() > 0)
@@ -2440,8 +2438,6 @@ void BattleUnit::updatePsi(GameState &state, unsigned int ticks)
 
 void BattleUnit::updateAI(GameState &state, unsigned int)
 {
-	static const Vec3<int> NONE = {0, 0, 0};
-
 	if (!isConscious())
 	{
 		return;
