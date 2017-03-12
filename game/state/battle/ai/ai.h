@@ -14,8 +14,8 @@
 namespace OpenApoc
 {
 
-static const int AI_THINK_INTERVAL = TICKS_PER_SECOND / 24;
-static const int LOWMORALE_AI_INTERVAL = TICKS_PER_SECOND * 2;
+static const uint64_t AI_THINK_INTERVAL = TICKS_PER_SECOND / 24;
+static const uint64_t LOWMORALE_AI_INTERVAL = TICKS_PER_SECOND * 2;
 
 class GameState;
 class AEquipment;
@@ -47,7 +47,7 @@ class AIAction
 	// Who to attack
 	StateRef<BattleUnit> targetUnit;
 	// What location to attack
-	Vec3<int> targetLocation = { 0, 0, 0 };
+	Vec3<int> targetLocation = {0, 0, 0};
 	// What to fire / what to throw / what to use for PSI
 	// For simply attacking with all weapons in hands, this can be null
 	sp<AEquipment> item;
@@ -157,13 +157,13 @@ class UnitAI
 	// Wether AI is currently active
 	bool active = false;
 
-	virtual void reset(GameState &state, BattleUnit &u){};
+	virtual void reset(GameState &, BattleUnit &){};
 	// Returns decision that was made, and wether we should stop going forward on the AI chain
-	virtual std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) { return {}; };
+	virtual std::tuple<AIDecision, bool> think(GameState &, BattleUnit &) { return {}; };
 
-	virtual void notifyUnderFire(Vec3<int> position){};
-	virtual void notifyHit(Vec3<int> position){};
-	virtual void notifyEnemySpotted(Vec3<int> position){};
+	virtual void notifyUnderFire(Vec3<int>){};
+	virtual void notifyHit(Vec3<int>){};
+	virtual void notifyEnemySpotted(Vec3<int>){};
 };
 
 class UnitAIHelper
@@ -190,8 +190,8 @@ class UnitAIList
 	std::vector<sp<UnitAI>> aiList;
 	std::map<UString, unsigned> aiMap;
 
-	unsigned int ticksLastThink = 0;
-	unsigned int ticksUntilReThink = 0;
+	uint64_t ticksLastThink = 0;
+	uint64_t ticksUntilReThink = 0;
 
 	AIDecision think(GameState &state, BattleUnit &u);
 
@@ -209,7 +209,7 @@ class LowMoraleUnitAI : public UnitAI
   public:
 	LowMoraleUnitAI();
 
-	int ticksActionAvailable = 0;
+	uint64_t ticksActionAvailable = 0;
 
 	void reset(GameState &state, BattleUnit &u) override;
 	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) override;
@@ -222,8 +222,8 @@ class DefaultUnitAI : public UnitAI
   public:
 	DefaultUnitAI();
 
-	int ticksAutoTurnAvailable = 0;
-	int ticksAutoTargetAvailable = 0;
+	uint64_t ticksAutoTurnAvailable = 0;
+	uint64_t ticksAutoTargetAvailable = 0;
 
 	// Relative position of a person who attacked us since last think()
 	Vec3<int> attackerPosition = {0, 0, 0};
@@ -255,9 +255,9 @@ class VanillaUnitAI : public UnitAI
   public:
 	VanillaUnitAI();
 
-	unsigned int ticksLastThink = 0;
+	uint64_t ticksLastThink = 0;
 	// Value of 0 means we will not re-think based on timer
-	unsigned int ticksUntilReThink = 0;
+	uint64_t ticksUntilReThink = 0;
 
 	// What AI decided to do at last think()
 	AIDecision lastDecision;
@@ -284,7 +284,7 @@ class VanillaUnitAI : public UnitAI
   private:
 	AIDecision thinkInternal(GameState &state, BattleUnit &u);
 	// Do the AI routine - organise inventory, move speed, stance etc.
-	void routine(GameState &state, BattleUnit &u, const AIDecision &decision);
+	void routine(GameState &state, BattleUnit &u);
 
 	// Calculate AI's next decision in case no enemy is engaged
 	std::tuple<AIDecision, float, unsigned> thinkGreen(GameState &state, BattleUnit &u);
@@ -293,13 +293,16 @@ class VanillaUnitAI : public UnitAI
 
 	std::tuple<AIDecision, float, unsigned> getAttackDecision(GameState &state, BattleUnit &u);
 
-	std::tuple<AIDecision, float, unsigned>
-	getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment> e, StateRef<BattleUnit> target);
+	std::tuple<AIDecision, float, unsigned> getWeaponDecision(GameState &state, BattleUnit &u,
+	                                                          sp<AEquipment> e,
+	                                                          StateRef<BattleUnit> target);
 	std::tuple<AIDecision, float, unsigned> getPsiDecision(GameState &state, BattleUnit &u,
-	                                                       sp<AEquipment> e, StateRef<BattleUnit> target,
+	                                                       sp<AEquipment> e,
+	                                                       StateRef<BattleUnit> target,
 	                                                       AIAction::Type type);
-	std::tuple<AIDecision, float, unsigned>
-	getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment> e, StateRef<BattleUnit> target);
+	std::tuple<AIDecision, float, unsigned> getGrenadeDecision(GameState &state, BattleUnit &u,
+	                                                           sp<AEquipment> e,
+	                                                           StateRef<BattleUnit> target);
 };
 
 // AI that tries to be as hard towards the player as possible, TBD
@@ -307,13 +310,6 @@ class HardcoreUnitAI : public UnitAI
 {
   public:
 	HardcoreUnitAI();
-
-	void reset(GameState &state, BattleUnit &u) { active = true; };
-	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) override { return {}; };
-
-	void notifyUnderFire(Vec3<int> position) override{};
-	void notifyHit(Vec3<int> position) override{};
-	void notifyEnemySpotted(Vec3<int> position) override{};
 };
 
 // Represents an AI that controls all units on the tactical as a whole
@@ -327,9 +323,9 @@ class TacticalAI
 	Type type; // cannot hide because serializer won't work
 	const UString getName();
 
-	virtual void reset(GameState &state, StateRef<Organisation> o){};
+	virtual void reset(GameState &, StateRef<Organisation>){};
 	virtual std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>>
-	think(GameState &state, StateRef<Organisation> o)
+	think(GameState &, StateRef<Organisation>)
 	{
 		return {};
 	};
@@ -345,8 +341,8 @@ class TacticalAIBlock
 
 	std::map<StateRef<Organisation>, sp<TacticalAI>> aiList;
 
-	unsigned int ticksLastThink = 0;
-	unsigned int ticksUntilReThink = 0;
+	uint64_t ticksLastThink = 0;
+	uint64_t ticksUntilReThink = 0;
 };
 
 // Vanilla AI that tries to replicate how aliens/civilians/security moved around the map
@@ -355,12 +351,12 @@ class VanillaTacticalAI : public TacticalAI
   public:
 	VanillaTacticalAI();
 
-	void reset(GameState &state, StateRef<Organisation> o);
+	void reset(GameState &state, StateRef<Organisation> o) override;
 	std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>>
 	think(GameState &state, StateRef<Organisation> o) override;
 
-	unsigned int ticksLastThink = 0;
-	unsigned int ticksUntilReThink = 0;
+	uint64_t ticksLastThink = 0;
+	uint64_t ticksUntilReThink = 0;
 
 	std::tuple<std::list<StateRef<BattleUnit>>, sp<AIMovement>> getPatrolMovement(GameState &state,
 	                                                                              BattleUnit &u);
@@ -370,10 +366,10 @@ class VanillaTacticalAI : public TacticalAI
 /*
 // Alexey Andronov (Istrebitel):
 
-Due to the way OpenAPoc serializes things, we do not know what class is stored in the file. 
+Due to the way OpenAPoc serializes things, we do not know what class is stored in the file.
 So when we have a pointer to derived class stored in a pointer to base class, and we serialized it,
 we have no way of knowing which class is stored there.
-Therefore, every AI has to have a UString attached to it that is it's class name, and method in 
+Therefore, every AI has to have a UString attached to it that is it's class name, and method in
 gamestate_serialize needs to be updated for any new AI introduced.
 
 */

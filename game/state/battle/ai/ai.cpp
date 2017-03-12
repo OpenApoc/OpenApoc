@@ -88,7 +88,9 @@ AIAction::AIAction() : weaponStatus(WeaponStatus::NotFiring) {}
 AIMovement::AIMovement() : movementMode(MovementMode::Walking), kneelingMode(KneelingMode::None) {}
 
 AIDecision::AIDecision(sp<AIAction> action, sp<AIMovement> movement)
-    : action(action), movement(movement) {}
+    : action(action), movement(movement)
+{
+}
 
 LowMoraleUnitAI::LowMoraleUnitAI() { type = Type::LowMorale; }
 DefaultUnitAI::DefaultUnitAI() { type = Type::Default; }
@@ -146,7 +148,7 @@ void UnitAIList::init(GameState &state, BattleUnit &u)
 		aiList.push_back(mksp<VanillaUnitAI>());
 	}
 
-	for (int i = 0; i < aiList.size(); i++)
+	for (int i = 0; i < (int)aiList.size(); i++)
 	{
 		aiMap.emplace(aiList[i]->getName(), i);
 	}
@@ -385,7 +387,7 @@ sp<AIMovement> UnitAIHelper::getKneelMovement(GameState &state, BattleUnit &u, b
 	return result;
 }
 
-sp<AIMovement> UnitAIHelper::getTurnMovement(GameState &state, BattleUnit &u, Vec3<int> target)
+sp<AIMovement> UnitAIHelper::getTurnMovement(GameState &, BattleUnit &, Vec3<int> target)
 {
 	auto result = mksp<AIMovement>();
 
@@ -452,12 +454,11 @@ sp<AIMovement> UnitAIHelper::getPursueMovement(GameState &state, BattleUnit &u, 
 }
 
 // FIXME: IMPLEMENT PROPER WEAPON AI
-std::tuple<AIDecision, float, unsigned> VanillaUnitAI::getWeaponDecision(GameState &state,
-                                                                         BattleUnit &u,
-                                                                         sp<AEquipment> e,
-																	StateRef<BattleUnit> target)
+std::tuple<AIDecision, float, unsigned>
+VanillaUnitAI::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
+                                 StateRef<BattleUnit> target)
 {
-	if (u.canAttackUnit(state, target, e) != WeaponStatus::NotFiring)
+	if (u.canAttackUnit(target, e) != WeaponStatus::NotFiring)
 	{
 		auto action = mksp<AIAction>();
 		action->item = e;
@@ -487,16 +488,20 @@ std::tuple<AIDecision, float, unsigned> VanillaUnitAI::getWeaponDecision(GameSta
 // FIXME: IMPLEMENT PSI AI
 std::tuple<AIDecision, float, unsigned>
 VanillaUnitAI::getPsiDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
-	StateRef<BattleUnit> target, AIAction::Type type)
+                              StateRef<BattleUnit> target, AIAction::Type type)
 {
+	std::ignore = state;
+	std::ignore = u;
+	std::ignore = target;
+	std::ignore = type;
+
 	return NULLTUPLE3;
 }
 
 // FIXME: IMPLEMENT GRENADE AI
-std::tuple<AIDecision, float, unsigned> VanillaUnitAI::getGrenadeDecision(GameState &state,
-                                                                          BattleUnit &u,
-                                                                          sp<AEquipment> e,
-	StateRef<BattleUnit> target)
+std::tuple<AIDecision, float, unsigned>
+VanillaUnitAI::getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
+                                  StateRef<BattleUnit> target)
 {
 	auto action = mksp<AIAction>();
 	action->item = e;
@@ -717,28 +722,35 @@ AIDecision VanillaUnitAI::thinkInternal(GameState &state, BattleUnit &u)
 	switch (u.getAIType())
 	{
 		case AIType::None:
-			return{};
+			return {};
 		case AIType::Civilian:
 			LogWarning("Implement Civilian Unit AI");
-			return{};
+			return {};
 		case AIType::PanicFreeze:
 		case AIType::PanicRun:
 		case AIType::Berserk:
 			LogError("Calling VanillaUnitAI on panic/berserk unit!?");
-			return{};
+			return {};
 		case AIType::Loner:
 		case AIType::Group:
 			// Go on below
 			break;
 	}
-	
+
+	// Clear actions that are outdated
+	if (lastDecision.action && lastDecision.action->targetUnit &&
+	    !lastDecision.action->targetUnit->isConscious())
+	{
+		lastDecision.action = nullptr;
+	}
 	// Clear actions that are done
 	if (lastDecision.action)
 	{
 		switch (lastDecision.action->type)
 		{
 			case AIAction::Type::AttackGrenade:
-				if (!u.missions.empty() && u.missions.front()->type == BattleUnitMission::Type::ThrowItem)
+				if (!u.missions.empty() &&
+				    u.missions.front()->type == BattleUnitMission::Type::ThrowItem)
 				{
 					lastDecision.action = nullptr;
 				}
@@ -779,14 +791,8 @@ AIDecision VanillaUnitAI::thinkInternal(GameState &state, BattleUnit &u)
 					lastDecision.movement = nullptr;
 				}
 				break;
-				// We do not cancel other movement because
-				// we might need information as to what is our movement type
-				/*default:
-				    if (u.isMoving())
-				    {
-				        lastDecision.movement = nullptr;
-				    }
-				    break;*/
+			default:
+				break;
 		}
 	}
 
@@ -818,12 +824,14 @@ AIDecision VanillaUnitAI::thinkInternal(GameState &state, BattleUnit &u)
 	     (!lastDecision.movement || (lastDecision.movement->type != AIMovement::Type::Pursue &&
 	                                 lastDecision.movement->type != AIMovement::Type::GetInRange)))
 	    // We have throw action but we stopped moving
-		|| (lastDecision.action && lastDecision.action->type == AIAction::Type::AttackGrenade && u.missions.empty())
-		// We were attacked and we are not on a mission to get in range
+	    || (lastDecision.action && lastDecision.action->type == AIAction::Type::AttackGrenade &&
+	        u.missions.empty())
+	    // We were attacked and we are not on a mission to get in range
 	    || (attackerPosition != NONE &&
 	        (!lastDecision.movement || lastDecision.movement->type != AIMovement::Type::GetInRange))
 	    // We have enemies in sight, we are not attacking and we are not carrying out an action
-	    || (!u.visibleEnemies.empty() && !u.isAttacking() && (!lastDecision.action || !u.missions.empty()));
+	    || (!u.visibleEnemies.empty() && !u.isAttacking() &&
+	        (!lastDecision.action || !u.missions.empty()));
 
 	// Note: if no enemies are in sight, and we're idle, we will do nothing.
 	// This state is handled by tactical AI
@@ -845,7 +853,7 @@ AIDecision VanillaUnitAI::thinkInternal(GameState &state, BattleUnit &u)
 	ticksLastThink = state.gameTime.getTicks();
 	ticksUntilReThink = std::get<2>(result);
 
-	routine(state, u, decision);
+	routine(state, u);
 
 	return decision;
 }
@@ -869,7 +877,7 @@ std::tuple<AIDecision, bool> VanillaUnitAI::think(GameState &state, BattleUnit &
 	return std::make_tuple(decision, false);
 }
 
-void VanillaUnitAI::routine(GameState &state, BattleUnit &u, const AIDecision &decision)
+void VanillaUnitAI::routine(GameState &state, BattleUnit &u)
 {
 	static const Vec3<int> NONE = {0, 0, 0};
 
@@ -994,10 +1002,7 @@ UString AIDecision::getName()
 	              movement ? movement->getName() : "NULL");
 }
 
-void LowMoraleUnitAI::reset(GameState &state, BattleUnit &u) 
-{
-	ticksActionAvailable = 0;
-}
+void LowMoraleUnitAI::reset(GameState &, BattleUnit &) { ticksActionAvailable = 0; }
 
 std::tuple<AIDecision, bool> LowMoraleUnitAI::think(GameState &state, BattleUnit &u)
 {
@@ -1040,11 +1045,12 @@ std::tuple<AIDecision, bool> LowMoraleUnitAI::think(GameState &state, BattleUnit
 					auto &linkCost = state.current_battle->linkCost;
 					auto type = u.getType();
 					int lbCount = state.current_battle->losBlocks.size();
-					auto curLB = state.current_battle->getLosBlockID(u.position.x, u.position.y, u.position.z);
+					auto curLB = state.current_battle->getLosBlockID(u.position.x, u.position.y,
+					                                                 u.position.z);
 					std::list<int> adjacentBlocks;
-					for (int i = 0;i < lbCount;i++)
+					for (int i = 0; i < lbCount; i++)
 					{
-						if (i != curLB && state.current_battle->linkCost[type][curLB + i * lbCount] != -1)
+						if (i != curLB && linkCost[type][curLB + i * lbCount] != -1)
 						{
 							adjacentBlocks.push_back(i);
 						}
@@ -1053,15 +1059,17 @@ std::tuple<AIDecision, bool> LowMoraleUnitAI::think(GameState &state, BattleUnit
 					{
 						auto targetLB = listRandomiser(state.rng, adjacentBlocks);
 						auto targetPos = state.current_battle->blockCenterPos[type][targetLB];
-						//Try 10 times to pick a valid position in that block, otherwise run to it's center
+						// Try 10 times to pick a valid position in that block, otherwise run to
+						// it's center
 						auto lb = state.current_battle->losBlocks[curLB];
 						auto &map = u.tileObject->map;
 						auto helper = BattleUnitTileHelper(map, u);
-						for (int i = 0;i < 10;i++)
+						for (int i = 0; i < 10; i++)
 						{
-							auto randPos = Vec3<int>{ randBoundsExclusive(state.rng, lb->start.x, lb->end.x),
-								randBoundsExclusive(state.rng, lb->start.y, lb->end.y),
-								randBoundsExclusive(state.rng, lb->start.z, lb->end.z) };
+							auto randPos =
+							    Vec3<int>{randBoundsExclusive(state.rng, lb->start.x, lb->end.x),
+							              randBoundsExclusive(state.rng, lb->start.y, lb->end.y),
+							              randBoundsExclusive(state.rng, lb->start.z, lb->end.z)};
 							if (helper.canEnterTile(nullptr, map.getTile(randPos)))
 							{
 								targetPos = randPos;
@@ -1073,7 +1081,9 @@ std::tuple<AIDecision, bool> LowMoraleUnitAI::think(GameState &state, BattleUnit
 						decision.movement->targetLocation = targetPos;
 						decision.movement->kneelingMode = u.kneeling_mode;
 						// 33% chance to switch to run
-						decision.movement->movementMode = randBoundsExclusive(state.rng, 0, 100) < 33 ? MovementMode::Running : u.movement_mode;
+						decision.movement->movementMode =
+						    randBoundsExclusive(state.rng, 0, 100) < 33 ? MovementMode::Running
+						                                                : u.movement_mode;
 					}
 				}
 				return std::make_tuple(decision, true);
@@ -1086,7 +1096,8 @@ std::tuple<AIDecision, bool> LowMoraleUnitAI::think(GameState &state, BattleUnit
 				auto canFire = ((e1 && e1->canFire()) || (e2 && e2->canFire()));
 				// Roll for what kind of action we take with berserk
 				int roll = randBoundsExclusive(state.rng, 0, 100);
-				// 20% chance to attack a friendly, 40% chance to attack an enemy, 40% chance to attack random tile
+				// 20% chance to attack a friendly, 40% chance to attack an enemy, 40% chance to
+				// attack random tile
 				int shootType = roll < 20 ? 1 : (roll < 60 ? 2 : 3);
 				// Intentional fall-through in case we cannot find a vaild target
 				switch (shootType)
@@ -1119,11 +1130,11 @@ std::tuple<AIDecision, bool> LowMoraleUnitAI::think(GameState &state, BattleUnit
 							}
 							else
 							{
-								if (u.canAttackUnit(state, victim) != WeaponStatus::NotFiring)
+								if (u.canAttackUnit(victim) != WeaponStatus::NotFiring)
 								{
 									decision.action = mksp<AIAction>();
 									decision.action->type = AIAction::Type::AttackWeaponUnit;
-									decision.action->targetUnit = { &state, victim };
+									decision.action->targetUnit = {&state, victim};
 									decision.action->weaponStatus = WeaponStatus::FiringBothHands;
 									break;
 								}
@@ -1145,7 +1156,7 @@ std::tuple<AIDecision, bool> LowMoraleUnitAI::think(GameState &state, BattleUnit
 							}
 							else
 							{
-								if (u.canAttackUnit(state, target) != WeaponStatus::NotFiring)
+								if (u.canAttackUnit(target) != WeaponStatus::NotFiring)
 								{
 									decision.action = mksp<AIAction>();
 									decision.action->type = AIAction::Type::AttackWeaponUnit;
@@ -1165,12 +1176,18 @@ std::tuple<AIDecision, bool> LowMoraleUnitAI::think(GameState &state, BattleUnit
 						auto targetPos = (Vec3<int>)u.position + Vec3<int>{x, y, z};
 						auto &map = u.tileObject->map;
 
-						if (targetPos.x < 0) targetPos.x = 0;
-						if (targetPos.y < 0) targetPos.y = 0;
-						if (targetPos.z < 0) targetPos.z = 0;
-						if (targetPos.x >= map.size.x) targetPos.x = map.size.x - 1;
-						if (targetPos.y >= map.size.y) targetPos.y = map.size.y - 1;
-						if (targetPos.z >= map.size.z) targetPos.z = map.size.z - 1;
+						if (targetPos.x < 0)
+							targetPos.x = 0;
+						if (targetPos.y < 0)
+							targetPos.y = 0;
+						if (targetPos.z < 0)
+							targetPos.z = 0;
+						if (targetPos.x >= map.size.x)
+							targetPos.x = map.size.x - 1;
+						if (targetPos.y >= map.size.y)
+							targetPos.y = map.size.y - 1;
+						if (targetPos.z >= map.size.z)
+							targetPos.z = map.size.z - 1;
 
 						decision.action = mksp<AIAction>();
 						decision.action->type = AIAction::Type::AttackWeaponTile;
@@ -1220,22 +1237,24 @@ std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &
 	}
 
 	// Attack or face enemy
-	if (u.isConscious() && !u.isAttacking() && !state.current_battle->visibleEnemies[u.owner].empty() 
-		&& (u.missions.empty() || u.missions.front()->type != BattleUnitMission::Type::Snooze))
+	if (u.isConscious() && !u.isAttacking() &&
+	    !state.current_battle->visibleEnemies[u.owner].empty() &&
+	    (u.missions.empty() || u.missions.front()->type != BattleUnitMission::Type::Snooze))
 	{
 		auto &enemies = state.current_battle->visibleEnemies[u.owner];
 		auto e1 = u.agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
 		auto e2 = u.agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
 		// Cannot or forbidden to attack:	Turn to enemy
 		if (u.fire_permission_mode == BattleUnit::FirePermissionMode::CeaseFire ||
-			((!e1 || !e1->canFire()) && (!e2 || !e2->canFire())))
+		    ((!e1 || !e1->canFire()) && (!e2 || !e2->canFire())))
 		{
 			if (ticksAutoTurnAvailable <= state.gameTime.getTicks() && !u.isMoving())
 			{
 				// Look at focused unit or find closest enemy
 				auto targetEnemy = u.focusUnit;
 				auto backupEnemy = targetEnemy;
-				if (!targetEnemy || !targetEnemy->isConscious() || enemies.find(targetEnemy) == enemies.end())
+				if (!targetEnemy || !targetEnemy->isConscious() ||
+				    enemies.find(targetEnemy) == enemies.end())
 				{
 					targetEnemy.clear();
 					backupEnemy.clear();
@@ -1248,7 +1267,7 @@ std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &
 						{
 							continue;
 						}
-						if (!u.hasLineToUnit(state, enemy))
+						if (!u.hasLineToUnit(enemy))
 						{
 							// Track an enemy we can see but can't fire at,
 							// In case we can't fire at anybody
@@ -1287,8 +1306,11 @@ std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &
 				// Find enemy we can attack amongst those visible
 				auto targetEnemy = u.focusUnit;
 				auto weaponStatus = WeaponStatus::NotFiring;
-				// Ensure we can see and attack focus, if can't attack focus or have no focus - take closest attackable
-				if (!targetEnemy || !targetEnemy->isConscious() || enemies.find(targetEnemy) == enemies.end() || u.canAttackUnit(state, targetEnemy) == WeaponStatus::NotFiring)
+				// Ensure we can see and attack focus, if can't attack focus or have no focus - take
+				// closest attackable
+				if (!targetEnemy || !targetEnemy->isConscious() ||
+				    enemies.find(targetEnemy) == enemies.end() ||
+				    u.canAttackUnit(targetEnemy) == WeaponStatus::NotFiring)
 				{
 					targetEnemy.clear();
 					// Make a list of enemies sorted by distance to them
@@ -1310,7 +1332,7 @@ std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &
 					// Pick enemy that is closest and can be attacked
 					for (auto entry : enemiesByDistance)
 					{
-						weaponStatus = u.canAttackUnit(state, entry.second);
+						weaponStatus = u.canAttackUnit(entry.second);
 						if (weaponStatus != WeaponStatus::NotFiring)
 						{
 							targetEnemy = entry.second;
@@ -1341,7 +1363,7 @@ std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &
 		// Move to a random adjacent tile
 		auto from = u.tileObject->getOwningTile();
 		auto &map = u.tileObject->map;
-		auto helper = BattleUnitTileHelper{ map, u };
+		auto helper = BattleUnitTileHelper{map, u};
 		std::list<Vec3<int>> possiblePositions;
 		for (int x = -1; x <= 1; x++)
 		{
@@ -1377,10 +1399,12 @@ std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &
 	return std::make_tuple(AIDecision(action, movement), action || movement);
 }
 
-void BehaviorUnitAI::reset(GameState &state, BattleUnit &u) {}
+void BehaviorUnitAI::reset(GameState &, BattleUnit &) {}
 
 std::tuple<AIDecision, bool> BehaviorUnitAI::think(GameState &state, BattleUnit &u)
 {
+	std::ignore = state;
+	std::ignore = u;
 	active = false;
 
 	if (!active)
@@ -1392,7 +1416,7 @@ std::tuple<AIDecision, bool> BehaviorUnitAI::think(GameState &state, BattleUnit 
 	return NULLTUPLE2;
 }
 
-void VanillaUnitAI::reset(GameState &state, BattleUnit &u)
+void VanillaUnitAI::reset(GameState &state, BattleUnit &)
 {
 	ticksLastThink = state.gameTime.getTicks();
 	ticksUntilReThink = 0;
@@ -1408,10 +1432,10 @@ void VanillaUnitAI::notifyEnemySpotted(Vec3<int> position)
 	lastSeenEnemyPosition = position;
 }
 
-void VanillaTacticalAI::reset(GameState &state, StateRef<Organisation> o)
+void VanillaTacticalAI::reset(GameState &state, StateRef<Organisation>)
 {
 	ticksLastThink = state.gameTime.getTicks();
-	ticksUntilReThink = randBoundsExclusive(state.rng, 0, AI_THINK_INTERVAL * 4);
+	ticksUntilReThink = randBoundsExclusive(state.rng, (uint64_t)0, AI_THINK_INTERVAL * 4);
 }
 
 std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>>
@@ -1487,7 +1511,7 @@ void TacticalAIBlock::init(GameState &state)
 void TacticalAIBlock::reset(GameState &state)
 {
 	ticksLastThink = state.gameTime.getTicks();
-	ticksUntilReThink = randBoundsExclusive(state.rng, 0, AI_THINK_INTERVAL * 4);
+	ticksUntilReThink = randBoundsExclusive(state.rng, (uint64_t)0, AI_THINK_INTERVAL * 4);
 }
 
 std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>>
@@ -1510,5 +1534,4 @@ TacticalAIBlock::think(GameState &state)
 	}
 	return result;
 }
-
 }

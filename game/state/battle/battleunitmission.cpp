@@ -1115,7 +1115,7 @@ Vec2<int> BattleUnitMission::getFacing(BattleUnit &u, Vec3<float> from, Vec3<flo
 	Vec3<float> targetFacing = (Vec3<float>)(to - from);
 	if (targetFacing.x == 0.0f && targetFacing.y == 0.0f)
 	{
-		closestVector = {u.facing.x, u.facing.y, 0};
+		closestVector = {u.goalFacing.x, u.goalFacing.y, 0};
 	}
 	else
 	{

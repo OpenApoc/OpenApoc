@@ -476,7 +476,7 @@ sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<DamageType> type
 		// age means how "powerful" the fire is, where 10 is most powerful and 110 is almost dead
 		hazard->age = 100 - ttl * 6;
 		// Fire is growing, when fading this will be negative
-		hazard->power = randBoundsInclusive(state.rng,1,2);
+		hazard->power = randBoundsInclusive(state.rng, 1, 2);
 	}
 	else
 	{
@@ -488,7 +488,8 @@ sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<DamageType> type
 	if (map)
 	{
 		auto tile = map->getTile(position);
-		// Cannot add non-fire hazard if tile is blocked or fire hazard if nothing is there to burn at
+		// Cannot add non-fire hazard if tile is blocked or fire hazard if nothing is there to burn
+		// at
 		if ((!fire && tile->height * 40.0f > 38.0f) || (fire && tile->height * 40.0f < 1.0f))
 		{
 			return nullptr;
@@ -514,7 +515,8 @@ sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<DamageType> type
 				// Nothing can spread into a fire that's eating up a feature
 				if (existingHazard->hazardType->fire)
 				{
-					LogWarning("Ensure we are not putting out a fire that is attached to a feature!");
+					LogWarning(
+					    "Ensure we are not putting out a fire that is attached to a feature!");
 				}
 				existingHazard->die(state, false);
 			}
@@ -695,7 +697,7 @@ bool findLosBlockCenter(TileMap &map, BattleUnitType type,
 	return false;
 }
 
-void Battle::updatePathfinding(GameState &state)
+void Battle::updatePathfinding(GameState &)
 {
 	// How much attempts are given to the pathfinding until giving up and concluding that
 	// there is no path between two sectors. This is a multiplier for "distance", which is

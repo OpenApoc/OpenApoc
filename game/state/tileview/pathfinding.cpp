@@ -111,7 +111,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	Vec3<float> goalPositionStart;
 	Vec3<float> goalPositionEnd;
 	bool destinationIsSingleTile = destinationStart == destinationEnd - Vec3<int>{1, 1, 1};
-	unsigned int iterationCount = 0;
+	int iterationCount = 0;
 
 	// Approach Only makes no sense with pathing into a block, but we'll fix it anyway
 	if (approachOnly && !destinationIsSingleTile)
@@ -416,35 +416,35 @@ std::list<Vec3<int>> Battle::findShortestPath(Vec3<int> origin, Vec3<int> destin
 			{
 				possibleDestinations.push_back({origin.x + xSign, origin.y + ySign, origin.z});
 				possibleDestinations.push_back(
-				    {origin.x + xFirst ? xSign : 0, origin.y + xFirst ? 0 : ySign, origin.z});
+				    {origin.x + (xFirst ? xSign : 0), origin.y + (xFirst ? 0 : ySign), origin.z});
 				possibleDestinations.push_back(
-				    {origin.x + xFirst ? 0 : xSign, origin.y + xFirst ? ySign : 0, origin.z});
-				possibleDestinations.push_back({origin.x + xFirst ? xSign : -xSign,
-				                                origin.y + xFirst ? -ySign : ySign, origin.z});
-				possibleDestinations.push_back({origin.x + xFirst ? -xSign : xSign,
-				                                origin.y + xFirst ? ySign : -ySign, origin.z});
+				    {origin.x + (xFirst ? 0 : xSign), origin.y + (xFirst ? ySign : 0), origin.z});
+				possibleDestinations.push_back({origin.x + (xFirst ? xSign : -xSign),
+				                                origin.y + (xFirst ? -ySign : ySign), origin.z});
+				possibleDestinations.push_back({origin.x + (xFirst ? -xSign : xSign),
+				                                origin.y + (xFirst ? ySign : -ySign), origin.z});
 				possibleDestinations.push_back(
-				    {origin.x + xFirst ? 0 : -xSign, origin.y + xFirst ? -ySign : 0, origin.z});
+				    {origin.x + (xFirst ? 0 : -xSign), origin.y + (xFirst ? -ySign : 0), origin.z});
 				possibleDestinations.push_back(
-				    {origin.x + xFirst ? -xSign : 0, origin.y + xFirst ? 0 : -ySign, origin.z});
+				    {origin.x + (xFirst ? -xSign : 0), origin.y + (xFirst ? 0 : -ySign), origin.z});
 				possibleDestinations.push_back({origin.x - xSign, origin.y - ySign, origin.z});
 			}
 			else
 			{
 				possibleDestinations.push_back(
-				    {origin.x + xFirst ? xSign : 0, origin.y + xFirst ? 0 : ySign, origin.z});
+				    {origin.x + (xFirst ? xSign : 0), origin.y + (xFirst ? 0 : ySign), origin.z});
 				possibleDestinations.push_back({origin.x + xSign, origin.y + ySign, origin.z});
-				possibleDestinations.push_back({origin.x + xFirst ? xSign : -xSign,
-				                                origin.y + xFirst ? -ySign : ySign, origin.z});
+				possibleDestinations.push_back({origin.x + (xFirst ? xSign : -xSign),
+				                                origin.y + (xFirst ? -ySign : ySign), origin.z});
 				possibleDestinations.push_back(
-				    {origin.x + xFirst ? 0 : xSign, origin.y + xFirst ? ySign : 0, origin.z});
+				    {origin.x + (xFirst ? 0 : xSign), origin.y + (xFirst ? ySign : 0), origin.z});
 				possibleDestinations.push_back(
-				    {origin.x + xFirst ? 0 : -xSign, origin.y + xFirst ? -ySign : 0, origin.z});
-				possibleDestinations.push_back({origin.x + xFirst ? -xSign : xSign,
-				                                origin.y + xFirst ? ySign : -ySign, origin.z});
+				    {origin.x + (xFirst ? 0 : -xSign), origin.y + (xFirst ? -ySign : 0), origin.z});
+				possibleDestinations.push_back({origin.x + (xFirst ? -xSign : xSign),
+				                                origin.y + (xFirst ? ySign : -ySign), origin.z});
 				possibleDestinations.push_back({origin.x - xSign, origin.y - ySign, origin.z});
 				possibleDestinations.push_back(
-				    {origin.x + xFirst ? -xSign : 0, origin.y + xFirst ? 0 : -ySign, origin.z});
+				    {origin.x + (xFirst ? -xSign : 0), origin.y + (xFirst ? 0 : -ySign), origin.z});
 			}
 
 			// Store closest result that did not end up adjacent to target
@@ -467,17 +467,16 @@ std::list<Vec3<int>> Battle::findShortestPath(Vec3<int> origin, Vec3<int> destin
 					if (!destinationEncountered)
 					{
 						destinationEncountered = true;
-						result = findShortestPathUsingLB(
-						    origin, destination, canEnterTile, approachOnly, ignoreAllUnits,
-						    iterationLimitDirect, forceDirect, ignoreAllUnits, cost, maxCost);
+						result =
+						    findShortestPathUsingLB(origin, destination, canEnterTile, approachOnly,
+						                            ignoreAllUnits, ignoreAllUnits, cost, maxCost);
 					}
 				}
 				// Otherwise path specifically to the destination if it can be entered
 				else if (canEnterTile.canEnterTile(nullptr, map->getTile(curDest)))
 				{
 					result = findShortestPathUsingLB(origin, curDest, canEnterTile, false,
-					                                 ignoreAllUnits, iterationLimitDirect,
-					                                 forceDirect, ignoreAllUnits, cost, maxCost);
+					                                 ignoreAllUnits, ignoreAllUnits, cost, maxCost);
 				}
 				// Process results
 				if (result.empty())
@@ -507,14 +506,12 @@ std::list<Vec3<int>> Battle::findShortestPath(Vec3<int> origin, Vec3<int> destin
 	}
 
 	return findShortestPathUsingLB(origin, destination, canEnterTile, approachOnly, ignoreAllUnits,
-	                               iterationLimitDirect, forceDirect, ignoreAllUnits, cost,
-	                               maxCost);
+	                               ignoreAllUnits, cost, maxCost);
 }
 
 std::list<Vec3<int>> Battle::findShortestPathUsingLB(Vec3<int> origin, Vec3<int> destination,
                                                      const BattleUnitTileHelper &canEnterTile,
                                                      bool approachOnly, bool ignoreStaticUnits,
-                                                     int iterationLimitDirect, bool forceDirect,
                                                      bool ignoreAllUnits, float *cost,
                                                      float maxCost)
 {
@@ -650,7 +647,7 @@ std::list<int> Battle::findLosBlockPath(int origin, int destination, BattleUnitT
 	std::vector<bool> visitedBlocks = std::vector<bool>(lbCount, false);
 	std::list<LosNode *> nodesToDelete;
 	std::list<LosNode *> fringe;
-	unsigned int iterationCount = 0;
+	int iterationCount = 0;
 
 	LogInfo("Trying to route from lb %d to lb %d", origin, destination);
 
@@ -762,6 +759,7 @@ std::list<int> Battle::findLosBlockPath(int origin, int destination, BattleUnitT
 void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &selectedUnits,
                        Vec3<int> targetLocation, bool demandGiveWay, bool useTeleporter)
 {
+	std::ignore = useTeleporter;
 	// Legend:
 	//
 	// (arrive from the southwest)						(arrive from the south)

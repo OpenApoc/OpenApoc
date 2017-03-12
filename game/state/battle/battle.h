@@ -180,7 +180,8 @@ class Battle : public std::enable_shared_from_this<Battle>
 	sp<BattleUnit> placeUnit(GameState &state, StateRef<Agent> agent, Vec3<float> position);
 	sp<BattleItem> placeItem(GameState &state, sp<AEquipment> item, Vec3<float> position);
 	sp<BattleHazard> placeHazard(GameState &state, StateRef<DamageType> type, Vec3<int> position,
-	                             int ttl, int power, int initialAgeTTLDivizor = 1, bool delayVisibility = true);
+	                             int ttl, int power, int initialAgeTTLDivizor = 1,
+	                             bool delayVisibility = true);
 
 	static void accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
 	                                    Vec3<float> &target, int accuracy, bool thrown = false);
@@ -233,12 +234,12 @@ class Battle : public std::enable_shared_from_this<Battle>
 
   private:
 	// The part of findShortestPath that uses LBs
-	std::list<Vec3<int>>
-	findShortestPathUsingLB(Vec3<int> origin, Vec3<int> destination,
-	                        const BattleUnitTileHelper &canEnterTile, bool approachOnly = false,
-	                        bool ignoreStaticUnits = false, int iterationLimitDirect = 0,
-	                        bool forceDirect = false, bool ignoreAllUnits = false,
-	                        float *cost = nullptr, float maxCost = 0.0f);
+	std::list<Vec3<int>> findShortestPathUsingLB(Vec3<int> origin, Vec3<int> destination,
+	                                             const BattleUnitTileHelper &canEnterTile,
+	                                             bool approachOnly = false,
+	                                             bool ignoreStaticUnits = false,
+	                                             bool ignoreAllUnits = false, float *cost = nullptr,
+	                                             float maxCost = 0.0f);
 
   private:
 	void loadResources(GameState &state);

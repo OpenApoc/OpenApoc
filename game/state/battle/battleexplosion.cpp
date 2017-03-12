@@ -25,8 +25,8 @@ BattleExplosion::BattleExplosion(Vec3<int> position, StateRef<DamageType> damage
                                  int depletionRate, bool damageInTheEnd,
                                  StateRef<BattleUnit> ownerUnit)
     : position(position), power(power), ticksUntilExpansion(TICKS_MULTIPLIER * 2),
-      locationsToExpand({{{position, {power, power}}}, {}, {}}), locationsVisited({position}),
-      damageType(damageType), damageInTheEnd(damageInTheEnd), depletionRate(depletionRate),
+      locationsToExpand({{{position, {power, power}}}, {}, {}}), damageInTheEnd(damageInTheEnd),
+      locationsVisited({position}), damageType(damageType), depletionRate(depletionRate),
       ownerUnit(ownerUnit)
 {
 }
@@ -87,16 +87,15 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 	// Explosions with no hazard spawn smoke with half ttl
 	if (!damageType->hazardType)
 	{
-		StateRef<DamageType> dtSmoke = { &state, "DAMAGETYPE_SMOKE" };
+		StateRef<DamageType> dtSmoke = {&state, "DAMAGETYPE_SMOKE"};
 		state.current_battle->placeHazard(
-			state, dtSmoke, pos, dtSmoke->hazardType->getLifetime(state), damage, 2, false);
+		    state, dtSmoke, pos, dtSmoke->hazardType->getLifetime(state), damage, 2, false);
 	}
 	// Explosions with no custom explosion doodad spawn hazards when dealing damage
 	else if (!damageType->explosionDoodad)
 	{
-		state.current_battle->placeHazard(state, damageType, pos,
-			damageType->hazardType->getLifetime(state),
-			damage, 1, false);
+		state.current_battle->placeHazard(
+		    state, damageType, pos, damageType->hazardType->getLifetime(state), damage, 1, false);
 	}
 	// Gas does no direct damage
 	if (damageType->doesImpactDamage())
@@ -144,8 +143,7 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 				// Determine wether to hit head, legs or torso
 				auto cposition = u->position;
 				// Hit torso if coming from the side, not from above or below
-				if (sqrtf(velocity.x * velocity.x + velocity.y * velocity.y) >
-					std::abs(velocity.z))
+				if (sqrtf(velocity.x * velocity.x + velocity.y * velocity.y) > std::abs(velocity.z))
 				{
 					cposition.z += (float)u->getCurrentHeight() / 2.0f / 40.0f;
 				}
@@ -162,11 +160,13 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 				// Apply
 				// FIXME: Give experience
 				u->applyDamage(state, damage, damageType,
-					            u->determineBodyPartHit(damageType, cposition, velocity), DamageSource::Impact);
+				               u->determineBodyPartHit(damageType, cposition, velocity),
+				               DamageSource::Impact);
 			}
 			else if (obj->getType() == TileObject::Type::Item)
 			{
-				// Special effects do not damage items, fire damages items differently and not on explosion impact
+				// Special effects do not damage items, fire damages items differently and not on
+				// explosion impact
 				if (damageType->effectType == DamageType::EffectType::None)
 				{
 					auto i = std::static_pointer_cast<TileObjectBattleItem>(obj)->getItem();
@@ -246,7 +246,8 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 	    };
 
 	if (to.x < 0 || to.x >= map.size.x || to.y < 0 || to.y >= map.size.y || to.z < 0 ||
-	    to.z >= map.size.z || nextPower < 2 * depletionRate || locationsVisited.find(to) != locationsVisited.end())
+	    to.z >= map.size.z || nextPower < 2 * depletionRate ||
+	    locationsVisited.find(to) != locationsVisited.end())
 	{
 		return;
 	}

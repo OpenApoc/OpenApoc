@@ -82,7 +82,7 @@ bool BattleUnit::assignToSquad(Battle &battle, int squad)
 {
 	if (squad == -1)
 	{
-		for (int i = 0; i<battle.forces[owner].squads.size(); i++)
+		for (int i = 0; i < (int)battle.forces[owner].squads.size(); i++)
 		{
 			auto &squad = battle.forces[owner].squads[i];
 			if (squad.getNumUnits() < 6)
@@ -190,7 +190,7 @@ bool BattleUnit::isWithinVision(Vec3<int> pos)
 	return true;
 }
 
-void BattleUnit::calculateVisionToTerrain(GameState &state, Battle &battle, TileMap &map,
+void BattleUnit::calculateVisionToTerrain(GameState &, Battle &battle, TileMap &map,
                                           Vec3<float> eyesPos)
 {
 	std::set<int> discoveredBlocks;
@@ -207,7 +207,7 @@ void BattleUnit::calculateVisionToTerrain(GameState &state, Battle &battle, Tile
 	}
 
 	// Calc los to other blocks we haven't seen yet
-	for (int idx = 0; idx < visibleBlocks.size(); idx++)
+	for (int idx = 0; idx < (int)visibleBlocks.size(); idx++)
 	{
 		// Block already seen
 		if (visibleBlocks.at(idx))
@@ -367,13 +367,13 @@ void BattleUnit::refreshUnitVision(GameState &state, bool forceBlind)
 		// owner's visible units list
 		if (lastVisibleUnits.find(vu) == lastVisibleUnits.end())
 		{
-			state.current_battle->visibleUnits[owner].insert(vu);
+			battle.visibleUnits[owner].insert(vu);
 		}
 		// units's visible enemies list
 		if (owner->isRelatedTo(vu->owner) == Organisation::Relation::Hostile)
 		{
 			visibleEnemies.push_back(vu);
-			state.current_battle->visibleEnemies[owner].insert(vu);
+			battle.visibleEnemies[owner].insert(vu);
 		}
 	}
 
@@ -397,8 +397,8 @@ void BattleUnit::refreshUnitVision(GameState &state, bool forceBlind)
 			}
 			if (!someoneElseSees)
 			{
-				state.current_battle->visibleUnits[owner].erase(lvu);
-				state.current_battle->visibleEnemies[owner].erase(lvu);
+				battle.visibleUnits[owner].erase(lvu);
+				battle.visibleEnemies[owner].erase(lvu);
 			}
 		}
 	}
@@ -510,17 +510,17 @@ void BattleUnit::stopAttacking()
 	ticksUntillNextTargetCheck = 0;
 }
 
-WeaponStatus BattleUnit::canAttackUnit(GameState &state, sp<BattleUnit> unit)
+WeaponStatus BattleUnit::canAttackUnit(sp<BattleUnit> unit)
 {
-	return canAttackUnit(state, unit, agent->getFirstItemInSlot(AEquipmentSlotType::RightHand),
+	return canAttackUnit(unit, agent->getFirstItemInSlot(AEquipmentSlotType::RightHand),
 	                     agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand));
 }
 
-WeaponStatus BattleUnit::canAttackUnit(GameState &state, sp<BattleUnit> unit,
-                                       sp<AEquipment> rightHand, sp<AEquipment> leftHand)
+WeaponStatus BattleUnit::canAttackUnit(sp<BattleUnit> unit, sp<AEquipment> rightHand,
+                                       sp<AEquipment> leftHand)
 {
 	auto targetPosition = unit->tileObject->getVoxelCentrePosition();
-	if (hasLineToUnit(state, unit))
+	if (hasLineToUnit(unit))
 	{
 		// One of held weapons is in range
 		bool rightCanFire = rightHand && rightHand->canFire(targetPosition);
@@ -541,22 +541,24 @@ WeaponStatus BattleUnit::canAttackUnit(GameState &state, sp<BattleUnit> unit,
 	return WeaponStatus::NotFiring;
 }
 
-bool BattleUnit::hasLineToUnit(GameState &state, sp<BattleUnit> unit, bool useLOS)
+bool BattleUnit::hasLineToUnit(sp<BattleUnit> unit, bool useLOS)
 {
 	auto muzzleLocation = getMuzzleLocation();
 	auto targetPosition = unit->tileObject->getVoxelCentrePosition();
 	// Map part that prevents Line to target
-	auto cMap =
-		tileObject->map.findCollision(muzzleLocation, targetPosition, mapPartSet, tileObject, useLOS);
+	auto cMap = tileObject->map.findCollision(muzzleLocation, targetPosition, mapPartSet,
+	                                          tileObject, useLOS);
 	// Unit that prevents Line to target
-	auto cUnit = useLOS ? Collision() :  tileObject->map.findCollision(muzzleLocation, targetPosition, unitSet, tileObject);
+	auto cUnit = useLOS ? Collision() : tileObject->map.findCollision(
+	                                        muzzleLocation, targetPosition, unitSet, tileObject);
 	// Condition:
 	// No map part blocks Line
 	return !cMap
-		// No unit blocks Line
-		&& (!cUnit || owner->isRelatedTo(
-				std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)->getUnit()->owner) ==
-			Organisation::Relation::Hostile);
+	       // No unit blocks Line
+	       && (!cUnit ||
+	           owner->isRelatedTo(
+	               std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)->getUnit()->owner) ==
+	               Organisation::Relation::Hostile);
 }
 
 int BattleUnit::getPsiCost(PsiStatus status, bool attack)
@@ -579,7 +581,8 @@ int BattleUnit::getPsiCost(PsiStatus status, bool attack)
 	return 0;
 }
 
-int BattleUnit::getPsiChance(GameState &state, StateRef<BattleUnit> target, PsiStatus status, StateRef<AEquipmentType> item)
+int BattleUnit::getPsiChance(GameState &state, StateRef<BattleUnit> target, PsiStatus status,
+                             StateRef<AEquipmentType> item)
 {
 	if (status == PsiStatus::NotEngaged)
 	{
@@ -598,33 +601,32 @@ int BattleUnit::getPsiChance(GameState &state, StateRef<BattleUnit> target, PsiS
 	}
 	auto bender = e1 ? e1 : e2;
 	auto cost = getPsiCost(status);
-	if (!bender
-		|| agent->modified_stats.psi_energy < cost
-		|| !hasLineToUnit(state, target, true))
+	if (!bender || agent->modified_stats.psi_energy < cost || !hasLineToUnit(target, true))
 	{
 		return 0;
 	}
 
 	// Psi chance as per Wong's Guide (tested in Excel, seems legit)
 	/*
-		                 100*attack*(100-defense)
+	                     100*attack*(100-defense)
 	success rate = --------------------------------------
-			         attack*(100-defense) + 100*defense
+	                 attack*(100-defense) + 100*defense
 
-		       psiattack rating * 40
+	           psiattack rating * 40
 	attack = ---------------------------
-			  initiation cost of action
+	          initiation cost of action
 	*/
 	int attack = agent->modified_stats.psi_attack * 40 / cost;
-	int defense =  target->agent->modified_stats.psi_defence;
+	int defense = target->agent->modified_stats.psi_defence;
 	if (attack == 0 && defense == 0)
 	{
 		return 0;
 	}
-	return (100 * attack * (100 - defense)) / ( attack * (100 - defense) + 100 * defense);
+	return (100 * attack * (100 - defense)) / (attack * (100 - defense) + 100 * defense);
 }
 
-bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, PsiStatus status, StateRef<AEquipmentType> item)
+bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, PsiStatus status,
+                                StateRef<AEquipmentType> item)
 {
 	if (agent->modified_stats.psi_energy < getPsiCost(status))
 	{
@@ -634,32 +636,30 @@ bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, P
 	agent->modified_stats.psi_energy -= getPsiCost(status);
 	if (success)
 	{
-		fw().soundBackend->playSample(
-			listRandomiser(state.rng, *psiSuccessSounds),
-			position);
+		fw().soundBackend->playSample(listRandomiser(state.rng, *psiSuccessSounds), position);
 		return true;
 	}
 	else
 	{
-		fw().soundBackend->playSample(
-			listRandomiser(state.rng, *psiFailSounds),
-			position);
+		fw().soundBackend->playSample(listRandomiser(state.rng, *psiFailSounds), position);
 		return false;
 	}
 }
 
-bool BattleUnit::startAttackPsiInternal(GameState &state, StateRef<BattleUnit> target, PsiStatus status, StateRef<AEquipmentType> item)
+bool BattleUnit::startAttackPsiInternal(GameState &state, StateRef<BattleUnit> target,
+                                        PsiStatus status, StateRef<AEquipmentType> item)
 {
 	int chance = getPsiChance(state, target, status, item);
 	int roll = randBoundsExclusive(state.rng, 0, 100);
-	LogWarning("Psi Attack #%d Roll %d Chance %d %s Attacker %s Target %s", (int)status, roll, chance, roll < chance ? (UString)"SUCCESS" : (UString)"FAILURE", id, target->id);
+	LogWarning("Psi Attack #%d Roll %d Chance %d %s Attacker %s Target %s", (int)status, roll,
+	           chance, roll < chance ? (UString) "SUCCESS" : (UString) "FAILURE", id, target->id);
 	if (roll >= chance)
 	{
 		return false;
 	}
-	
+
 	// Attack hit, apply effects
-	
+
 	if (psiTarget)
 	{
 		stopAttackPsi(state);
@@ -670,12 +670,14 @@ bool BattleUnit::startAttackPsiInternal(GameState &state, StateRef<BattleUnit> t
 	target->psiAttackers[id] = status;
 	ticksAccumulatedToNextPsiCheck = 0;
 	target->applyPsiAttack(state, *this, status, item, true);
-	
+
 	return true;
 }
 
-void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatus status, StateRef<AEquipmentType> item, bool impact)
+void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatus status,
+                                StateRef<AEquipmentType> item, bool impact)
 {
+	std::ignore = item;
 	// FIXME: Change to correct psi stun / panic effects
 	switch (status)
 	{
@@ -683,7 +685,8 @@ void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatu
 			if (!impact)
 			{
 				// Observed values of 16 or 8, seems to depend on psi def? Need further research
-				agent->modified_stats.morale = std::max(0, agent->modified_stats.morale - 8 * randBoundsInclusive(state.rng, 1, 2));
+				agent->modified_stats.morale = std::max(
+				    0, agent->modified_stats.morale - 8 * randBoundsInclusive(state.rng, 1, 2));
 			}
 		case PsiStatus::Stun:
 			if (!impact)
@@ -971,8 +974,7 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 	// Deal stun damage
 	if (stunPower > 0)
 	{
-		stunDamage +=
-		    clamp(damage, 0, std::max(0, stunPower - stunDamage));
+		stunDamage += clamp(damage, 0, std::max(0, stunPower - stunDamage));
 	}
 	// Deal health damage
 	else
@@ -1039,7 +1041,7 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 }
 
 bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> damageType,
-	BodyPart bodyPart, DamageSource source)
+                             BodyPart bodyPart, DamageSource source)
 {
 	if (damageType->doesImpactDamage())
 	{
@@ -1060,7 +1062,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 		{
 			case DamageSource::Impact:
 			{
-				static const std::list<int> damageDistribution = { 0,5,6,7,8,9,10 };
+				static const std::list<int> damageDistribution = {0, 5, 6, 7, 8, 9, 10};
 				damage = listRandomiser(state.rng, damageDistribution);
 				break;
 			}
@@ -1098,8 +1100,8 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 			{
 				agent->removeEquipment(shield);
 			}
-			state.current_battle->placeDoodad({ &state, "DOODAD_27_SHIELD" },
-				tileObject->getCenter());
+			state.current_battle->placeDoodad({&state, "DOODAD_27_SHIELD"},
+			                                  tileObject->getCenter());
 			return true;
 		}
 	}
@@ -1108,7 +1110,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	if (damageType->effectType == DamageType::EffectType::Enzyme)
 	{
 		enzymeDebuffIntensity += power * 2;
-		enzymeDebuffTicksAccumulated = TICKS_PER_ENZYME_EFFECT;
+		enzymeDebuffTicksAccumulated = 0;
 	}
 
 	// Find out armor type
@@ -1132,25 +1134,26 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 		bool catchOnFire = false;
 		switch (source)
 		{
-		case DamageSource::Impact:
-			catchOnFire = damage > 0;
-			break;
-		case DamageSource::Hazard:
-			catchOnFire = randBoundsExclusive(state.rng, 0, 100) < damageType->dealDamage(40, damageModifier);
-			break;
-		case DamageSource::Debuff:
-			break;
+			case DamageSource::Impact:
+				catchOnFire = damage > 0;
+				break;
+			case DamageSource::Hazard:
+				catchOnFire = randBoundsExclusive(state.rng, 0, 100) <
+				              damageType->dealDamage(40, damageModifier);
+				break;
+			case DamageSource::Debuff:
+				break;
 		}
 		if (catchOnFire)
 		{
-			fireDebuffTicksRemaining = damageType->dealDamage(5 * TICKS_PER_TURN, damageModifier);
+			fireDebuffTicksRemaining =
+			    (unsigned int)damageType->dealDamage(5 * TICKS_PER_TURN, damageModifier);
 			fireDebuffTicksAccumulated = 0;
 		}
 	}
 	// Smoke ignores armor value but does not ignore damage modifier
 	damage = damageType->dealDamage(damage, damageModifier) -
-		(damageType->ignoresArmorValue() ? 0 : armorValue);
-	
+	         (damageType->ignoresArmorValue() ? 0 : armorValue);
 
 	// No damage
 	if (damage <= 0)
@@ -1180,8 +1183,8 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 		damage -= stunDamage;
 	}
 	dealDamage(state, damage, damageType->dealsFatalWounds(), bodyPart,
-		damageType->dealsStunDamage() ? power : 0);
-	
+	           damageType->dealsStunDamage() ? power : 0);
+
 	return false;
 }
 
@@ -1245,7 +1248,8 @@ bool BattleUnit::handleCollision(GameState &state, Collision &c)
 
 		return applyDamage(
 		    state, projectile->damage, projectile->damageType,
-		    determineBodyPartHit(projectile->damageType, c.position, projectile->getVelocity()), DamageSource::Impact);
+		    determineBodyPartHit(projectile->damageType, c.position, projectile->getVelocity()),
+		    DamageSource::Impact);
 	}
 	return false;
 }
@@ -1257,7 +1261,7 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 		return;
 	}
 
-	//Regeneration
+	// Regeneration
 	regenTicksAccumulated += ticks;
 	while (regenTicksAccumulated >= TICKS_PER_SECOND)
 	{
@@ -1283,7 +1287,7 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 			agent->modified_stats.stamina++;
 		}
 	}
-	
+
 	// Morale
 	if (isConscious())
 	{
@@ -1306,7 +1310,8 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 				}
 				else
 				{
-					moraleStateTicksRemaining += TICKS_PER_LOWMORALE_STATE - ticks;
+					moraleStateTicksRemaining += TICKS_PER_LOWMORALE_STATE;
+					moraleStateTicksRemaining -= ticks;
 					agent->modified_stats.morale += 15;
 				}
 			}
@@ -1425,9 +1430,11 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 			// FIXME: Ensure this is proper, for now just emulating vanilla crudely
 			// This makes smoke spawned by enzyme grow smaller when debuff runs out
 			int divisor = std::max(1, 36 / enzymeDebuffIntensity);
-			StateRef<DamageType> smokeDamageType = { &state, "DAMAGETYPE_SMOKE" };
+			StateRef<DamageType> smokeDamageType = {&state, "DAMAGETYPE_SMOKE"};
 			// Power of 0 means no spread
-			state.current_battle->placeHazard(state, smokeDamageType, position, smokeDamageType->hazardType->getLifetime(state), 0, divisor, false);
+			state.current_battle->placeHazard(state, smokeDamageType, position,
+			                                  smokeDamageType->hazardType->getLifetime(state), 0,
+			                                  divisor, false);
 
 			// Damage random item
 
@@ -1466,7 +1473,8 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 
 			// Damage (power is irrelevant here)
 
-			applyDamage(state, 1, { &state, "DAMAGETYPE_INCENDIARY" }, BodyPart::Body, DamageSource::Debuff);
+			applyDamage(state, 1, {&state, "DAMAGETYPE_INCENDIARY"}, BodyPart::Body,
+			            DamageSource::Debuff);
 
 			// Finally, reduce debuff
 
@@ -1503,7 +1511,7 @@ void BattleUnit::updateEvents(GameState &state)
 			else
 			{
 				auto from = tileObject->getOwningTile();
-				auto helper = BattleUnitTileHelper{ tileObject->map, *this };
+				auto helper = BattleUnitTileHelper{tileObject->map, *this};
 				for (auto newHeading : giveWayRequestData)
 				{
 					for (int z = -1; z <= 1; z++)
@@ -1518,16 +1526,14 @@ void BattleUnit::updateEvents(GameState &state)
 						auto to = tileObject->map.getTile(pos);
 						// Check if heading on our level is acceptable
 						bool acceptable =
-						    helper.canEnterTile(from, to) &&
-						    helper.canEnterTile(to, from);
+						    helper.canEnterTile(from, to) && helper.canEnterTile(to, from);
 						// If not, check if we can go down one tile
 						if (!acceptable && pos.z - 1 >= 0)
 						{
 							pos -= Vec3<int>{0, 0, 1};
 							to = tileObject->map.getTile(pos);
 							acceptable =
-							    helper.canEnterTile(from, to) &&
-								helper.canEnterTile(to, from);
+							    helper.canEnterTile(from, to) && helper.canEnterTile(to, from);
 						}
 						// If not, check if we can go up one tile
 						if (!acceptable && pos.z + 2 < tileObject->map.size.z)
@@ -1535,8 +1541,7 @@ void BattleUnit::updateEvents(GameState &state)
 							pos += Vec3<int>{0, 0, 2};
 							to = tileObject->map.getTile(pos);
 							acceptable =
-								helper.canEnterTile(from, to) &&
-								helper.canEnterTile(to, from);
+							    helper.canEnterTile(from, to) && helper.canEnterTile(to, from);
 						}
 						if (acceptable)
 						{
@@ -1843,7 +1848,9 @@ void BattleUnit::updateMovement(GameState &state, unsigned int &moveTicksRemaini
 			unsigned int distanceToGoal = (unsigned)ceilf(glm::length(
 			    vectorToGoal * VELOCITY_SCALE_BATTLE * (float)TICKS_PER_UNIT_TRAVELLED));
 			unsigned int moveTicksConsumeRate =
-			    current_movement_state == MovementState::Running ? 1 : (current_body_state == BodyState::Prone ? 3 : 2);
+			    current_movement_state == MovementState::Running
+			        ? 1
+			        : (current_body_state == BodyState::Prone ? 3 : 2);
 
 			// Quick check, if moving strictly vertical then using lift
 			if (distanceToGoal > 0 && current_body_state != BodyState::Flying &&
@@ -1990,7 +1997,7 @@ void BattleUnit::updateMovement(GameState &state, unsigned int &moveTicksRemaini
 	}
 }
 
-void BattleUnit::updateHands(GameState &state, unsigned int &handsTicksRemaining)
+void BattleUnit::updateHands(GameState &, unsigned int &handsTicksRemaining)
 {
 	if (handsTicksRemaining > 0)
 	{
@@ -2100,7 +2107,7 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 	{
 		static const Vec3<float> offsetTile = {0.5f, 0.5f, 0.0f};
 		static const Vec3<float> offsetTileGround = {0.5f, 0.5f, 10.0f / 40.0f};
- 		Vec3<float> muzzleLocation = getMuzzleLocation();
+		Vec3<float> muzzleLocation = getMuzzleLocation();
 		Vec3<float> targetPosition;
 		switch (targetingMode)
 		{
@@ -2192,7 +2199,8 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 					ticksUntillNextTargetCheck = 0;
 				}
 				// Lost sight of target
-				if (state.current_battle->visibleEnemies[owner].find(targetUnit) == state.current_battle->visibleEnemies[owner].end())
+				if (state.current_battle->visibleEnemies[owner].find(targetUnit) ==
+				    state.current_battle->visibleEnemies[owner].end())
 				{
 					LogWarning("Unit %s can't fire at %s: lost contact", id, targetUnit->id);
 					canFire = false;
@@ -2317,8 +2325,10 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 				}
 			}
 
-			// If fired weapon at ground or ally - stop firing that hand (unless zerking, in which case go on)
-			if (weaponFired && moraleState != MoraleState::Berserk && (targetingMode != TargetingMode::Unit || targetUnit->owner == owner))
+			// If fired weapon at ground or ally - stop firing that hand (unless zerking, in which
+			// case go on)
+			if (weaponFired && moraleState != MoraleState::Berserk &&
+			    (targetingMode != TargetingMode::Unit || targetUnit->owner == owner))
 			{
 				switch (weaponStatus)
 				{
@@ -2428,7 +2438,7 @@ void BattleUnit::updatePsi(GameState &state, unsigned int ticks)
 	}
 }
 
-void BattleUnit::updateAI(GameState &state, unsigned int ticks)
+void BattleUnit::updateAI(GameState &state, unsigned int)
 {
 	static const Vec3<int> NONE = {0, 0, 0};
 
@@ -2557,8 +2567,10 @@ void BattleUnit::triggerProximity(GameState &state)
 		// Proximity explosion trigger
 		if ((i->item->triggerType == TriggerType::Proximity ||
 		     i->item->triggerType == TriggerType::Boomeroid) &&
-		    BattleUnitTileHelper::getDistanceStatic(position, i->position) <= i->item->triggerRange &&
-			i->item->getPayloadType()->damage_type->effectType != DamageType::EffectType::Brainsucker)
+		    BattleUnitTileHelper::getDistanceStatic(position, i->position) <=
+		        i->item->triggerRange &&
+		    i->item->getPayloadType()->damage_type->effectType !=
+		        DamageType::EffectType::Brainsucker)
 		{
 			i->die(state);
 		}
@@ -2573,7 +2585,7 @@ void BattleUnit::triggerProximity(GameState &state)
 
 void BattleUnit::triggerBrainsuckers(GameState &state)
 {
-	StateRef<DamageType> brainsucker = { &state, "DAMAGETYPE_BRAINSUCKER" };
+	StateRef<DamageType> brainsucker = {&state, "DAMAGETYPE_BRAINSUCKER"};
 	if (brainsucker->dealDamage(100, agent->type->damage_modifier) == 0)
 		return;
 
@@ -2586,9 +2598,11 @@ void BattleUnit::triggerBrainsuckers(GameState &state)
 			continue;
 		}
 		if (i->item->triggerType == TriggerType::Proximity &&
-			BattleUnitTileHelper::getDistanceStatic(position, i->position) <= i->item->triggerRange &&
-			i->item->getPayloadType()->damage_type->effectType == DamageType::EffectType::Brainsucker &&
-			i->item->ownerUnit->owner->isRelatedTo(owner) == Organisation::Relation::Hostile)
+		    BattleUnitTileHelper::getDistanceStatic(position, i->position) <=
+		        i->item->triggerRange &&
+		    i->item->getPayloadType()->damage_type->effectType ==
+		        DamageType::EffectType::Brainsucker &&
+		    i->item->ownerUnit->owner->isRelatedTo(owner) == Organisation::Relation::Hostile)
 		{
 			i->die(state);
 		}
@@ -2723,7 +2737,8 @@ void BattleUnit::executeAIAction(GameState &state, AIAction &action)
 	if (action.item)
 	{
 		UnitAIHelper::ensureItemInSlot(state, action.item, AEquipmentSlotType::RightHand);
-		if (action.type == AIAction::Type::AttackWeaponUnit || action.type == AIAction::Type::AttackWeaponTile)
+		if (action.type == AIAction::Type::AttackWeaponUnit ||
+		    action.type == AIAction::Type::AttackWeaponTile)
 		{
 			action.item = nullptr;
 			action.weaponStatus = WeaponStatus::FiringRightHand;
@@ -3143,7 +3158,8 @@ void BattleUnit::beginHandStateChange(HandState state)
 	}
 	else
 	{
-		if (state == HandState::Aiming && current_movement_state != MovementState::None && current_body_state == BodyState::Prone)
+		if (state == HandState::Aiming && current_movement_state != MovementState::None &&
+		    current_body_state == BodyState::Prone)
 		{
 			LogError("WTF are you doing, trying to aim while moving prone!?");
 		}
@@ -3379,28 +3395,28 @@ bool BattleUnit::cancelMissions(GameState &state, bool forced)
 		switch (missions.front()->type)
 		{
 			// Missions that cannot be cancelled
-		case BattleUnitMission::Type::ThrowItem:
-			return false;
-			// Drop Item can only be cancelled if item is in agent's inventory
-		case BattleUnitMission::Type::DropItem:
-			if (missions.front()->item && !missions.front()->item->ownerAgent)
-			{
+			case BattleUnitMission::Type::ThrowItem:
 				return false;
-			}
-			break;
+			// Drop Item can only be cancelled if item is in agent's inventory
+			case BattleUnitMission::Type::DropItem:
+				if (missions.front()->item && !missions.front()->item->ownerAgent)
+				{
+					return false;
+				}
+				break;
 			// Missions that must be let finish (unless forcing)
-		case BattleUnitMission::Type::ChangeBodyState:
-		case BattleUnitMission::Type::Turn:
-		case BattleUnitMission::Type::GotoLocation:
-		case BattleUnitMission::Type::ReachGoal:
-			letFinish = true;
-			break;
+			case BattleUnitMission::Type::ChangeBodyState:
+			case BattleUnitMission::Type::Turn:
+			case BattleUnitMission::Type::GotoLocation:
+			case BattleUnitMission::Type::ReachGoal:
+				letFinish = true;
+				break;
 			// Missions that can be cancelled
-		case BattleUnitMission::Type::Snooze:
-		case BattleUnitMission::Type::Teleport:
-		case BattleUnitMission::Type::RestartNextMission:
-		case BattleUnitMission::Type::AcquireTU:
-			break;
+			case BattleUnitMission::Type::Snooze:
+			case BattleUnitMission::Type::Teleport:
+			case BattleUnitMission::Type::RestartNextMission:
+			case BattleUnitMission::Type::AcquireTU:
+				break;
 		}
 
 		// Figure out what to do with the unfinished mission
