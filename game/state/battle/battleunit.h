@@ -234,7 +234,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Time, in game ticks, until hands animation is finished
 	unsigned int hand_animation_ticks_remaining = 0;
 	// Time, in game ticks, until unit will lower it's weapon
-	unsigned int aiming_ticks_remaining = 0;
+	unsigned int residual_aiming_ticks_remaining = 0;
 	// Time, in game ticks, until firing animation is finished
 	unsigned int firing_animation_ticks_remaining = 0;
 	HandState current_hand_state = HandState::AtEase;
@@ -356,6 +356,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	unsigned int getHandAnimationFrame() const;
 	void setHandState(HandState state);
 	void beginHandStateChange(HandState state);
+	bool canHandStateChange(HandState state);
 
 	// Movement
 
@@ -490,9 +491,11 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void updateCheckIfFalling(GameState &state);
 	void updateBody(GameState &state, unsigned int &bodyTicksRemaining);
 	void updateHands(GameState &state, unsigned int &handsTicksRemaining);
-	void updateMovement(GameState &state, unsigned int &moveTicksRemaining, bool &wasUsingLift);
+	// Return true if retreated
+	bool updateMovement(GameState &state, unsigned int &moveTicksRemaining, bool &wasUsingLift);
 	void updateTurning(GameState &state, unsigned int &turnTicksRemaining);
 	void updateDisplayedItem();
+	bool runCanFireChecks(GameState &state, unsigned int ticks, sp<AEquipment> &weaponRight, sp<AEquipment> &weaponLeft, Vec3<float> &targetPosition);
 	void updateAttacking(GameState &state, unsigned int ticks);
 	void updatePsi(GameState &state, unsigned int ticks);
 	void updateAI(GameState &state, unsigned int ticks);

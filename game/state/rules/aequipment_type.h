@@ -56,6 +56,7 @@ class AEquipmentType : public StateObject
 		MediKit,
 		// This is not in the game files, but we need it to function
 		Brainsucker,
+		Popper,
 		// For Psi-clones and stuff
 		Loot
 	};

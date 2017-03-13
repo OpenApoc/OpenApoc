@@ -188,7 +188,6 @@ class UnitAIList
 {
   public:
 	std::vector<sp<UnitAI>> aiList;
-	std::map<UString, unsigned> aiMap;
 
 	uint64_t ticksLastThink = 0;
 	uint64_t ticksUntilReThink = 0;

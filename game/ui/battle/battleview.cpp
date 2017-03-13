@@ -1530,7 +1530,10 @@ void BattleView::orderUse(bool right, bool automatic)
 			break;
 		// Items that do nothing
 		case AEquipmentType::Type::Brainsucker:
-			// Implement brainsucker
+			LogError("Implement Brainsucker!");
+			break;
+		case AEquipmentType::Type::Popper:
+			LogError("Implement Popper!");
 			break;
 		case AEquipmentType::Type::AlienDetector:
 		case AEquipmentType::Type::Ammo:
@@ -1797,7 +1800,7 @@ void BattleView::eventOccurred(Event *e)
 	     e->keyboard().KeyCode == SDLK_LCTRL || e->keyboard().KeyCode == SDLK_f ||
 	     e->keyboard().KeyCode == SDLK_r || e->keyboard().KeyCode == SDLK_a ||
 	     e->keyboard().KeyCode == SDLK_p || e->keyboard().KeyCode == SDLK_h ||
-	     e->keyboard().KeyCode == SDLK_k))
+	     e->keyboard().KeyCode == SDLK_k || e->keyboard().KeyCode == SDLK_q))
 	{
 		switch (e->keyboard().KeyCode)
 		{
@@ -1873,7 +1876,7 @@ void BattleView::eventOccurred(Event *e)
 				revealWholeMap = !revealWholeMap;
 				break;
 			}
-			case SDLK_k:
+			case SDLK_q:
 			{
 				for (auto &u : battle.units)
 				{
@@ -1883,6 +1886,26 @@ void BattleView::eventOccurred(Event *e)
 					}
 
 					if (u.second->tileObject->getOwningTile()->position == selectedTilePosition)
+					{
+						auto movement = AIMovement();
+						movement.type = AIMovement::Type::ChangeStance;
+						movement.movementMode = MovementMode::Prone;
+						u.second->executeAIMovement(*state, movement);
+					}
+				}
+				break;
+			}
+			case SDLK_k:
+			{
+				bool inverse = modifierLShift || modifierRShift;
+				for (auto &u : battle.units)
+				{
+					if (u.second->isDead())
+					{
+						continue;
+					}
+
+					if ((u.second->tileObject->getOwningTile()->position == selectedTilePosition) == !inverse)
 					{
 						u.second->die(*state);
 					}
@@ -1923,39 +1946,25 @@ void BattleView::eventOccurred(Event *e)
 			case SDLK_a:
 			{
 				LogWarning("AI debug key currently disabled");
-				/*if (battle.units.empty())
+				if (battle.units.empty())
 				{
 				    break;
 				}
-				bool activeAIFound = false;
-				for (auto &u : battle.units)
+				bool activeAIFound = battle.units.begin()->second->aiList.aiList.size() > 3;
+				if (activeAIFound)
 				{
-				    if ((u.second->aiList.lastDecision.action &&
-				         u.second->aiList.lastDecision.action->type != AIAction::Type::None) ||
-				        (u.second->aiList.lastDecision.movement &&
-				         u.second->aiList.lastDecision.movement->type != AIMovement::Type::None))
-				    {
-				        activeAIFound = true;
-				        break;
-				    }
+					for (auto &u : battle.units)
+					{
+						u.second->aiList.aiList.pop_back();
+					}
 				}
-
-				for (auto &u : battle.units)
+				else
 				{
-				    if ((u.second->aiList.lastDecision.action &&
-				         u.second->aiList.lastDecision.action->type != AIAction::Type::None) ||
-				        (u.second->aiList.lastDecision.movement &&
-				         u.second->aiList.lastDecision.movement->type != AIMovement::Type::None))
-				    {
-				        u.second->cancelMissions(*state);
-				        u.second->stopAttacking();
-				    }
-				    u.second->aiList.reset(*state, *u.second);
-				    if (activeAIFound)
-				    {
-				        u.second->aiList.lastDecision.ticksUntilThinkAgain = TICKS_PER_DAY;
-				    }
-				}*/
+					for (auto &u : battle.units)
+					{
+						u.second->aiList.init(*state, *u.second);
+					}
+				}
 				break;
 			}
 		}

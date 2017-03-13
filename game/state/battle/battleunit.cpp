@@ -1757,8 +1757,8 @@ void BattleUnit::updateBody(GameState &state, unsigned int &bodyTicksRemaining)
 				return;
 			}
 			// Try to get new body state change
-			// Can do it if we're not firing and (either not changing hand state, or
-			// starting to aim)
+			// If hand state is changing, we can only interrupt "begin aiming"
+			// Also, we cannot interrupt firing animation
 			if (firing_animation_ticks_remaining == 0 &&
 			    (hand_animation_ticks_remaining == 0 || target_hand_state == HandState::Aiming))
 			{
@@ -1772,7 +1772,7 @@ void BattleUnit::updateBody(GameState &state, unsigned int &bodyTicksRemaining)
 	}
 }
 
-void BattleUnit::updateMovement(GameState &state, unsigned int &moveTicksRemaining,
+bool BattleUnit::updateMovement(GameState &state, unsigned int &moveTicksRemaining,
                                 bool &wasUsingLift)
 {
 	if (moveTicksRemaining > 0)
@@ -1905,12 +1905,7 @@ void BattleUnit::updateMovement(GameState &state, unsigned int &moveTicksRemaini
 				// Pop finished missions if present
 				if (popFinishedMissions(state))
 				{
-					return;
-				}
-				// Quit if retreated as a result
-				if (retreated)
-				{
-					return;
+					return true;
 				}
 				// Try to get new destination
 				Vec3<float> nextGoal;
@@ -1976,7 +1971,7 @@ void BattleUnit::updateMovement(GameState &state, unsigned int &moveTicksRemaini
 				// Pop finished missions if present
 				if (popFinishedMissions(state))
 				{
-					return;
+					return true;
 				}
 				// Try to get new destination
 				Vec3<float> nextGoal;
@@ -1993,6 +1988,7 @@ void BattleUnit::updateMovement(GameState &state, unsigned int &moveTicksRemaini
 			}
 		}
 	}
+	return false;
 }
 
 void BattleUnit::updateHands(GameState &, unsigned int &handsTicksRemaining)
@@ -2098,11 +2094,90 @@ void BattleUnit::updateDisplayedItem()
 	}
 }
 
+bool BattleUnit::runCanFireChecks(GameState &state, unsigned int ticks, sp<AEquipment> &weaponRight, sp<AEquipment> &weaponLeft, Vec3<float> &targetPosition)
+{
+	// Check if target unit is in sight
+	if (targetingMode == TargetingMode::Unit)
+	{
+		// We cannot fire if entire team lost sight of the target
+		if (state.current_battle->visibleEnemies[owner].find(targetUnit) ==
+			state.current_battle->visibleEnemies[owner].end())
+		{
+			LogWarning("Unit %s can't fire at %s: lost contact", id, targetUnit->id);
+			return false;
+		}
+		else
+		{
+			// Decrement target check timer if we aim at a unit
+			if (ticksUntillNextTargetCheck > ticks)
+			{
+				ticksUntillNextTargetCheck -= ticks;
+			}
+			else
+			{
+				ticksUntillNextTargetCheck = 0;
+			}
+		}
+	}
+
+	// We cannot fire if we have no weapon capable of firing
+	if (!weaponLeft && !weaponRight)
+	{
+		return false;
+	}
+
+	// We cannot fire if it's time to check target unit and it's not in LOS anymore 
+	// or fell unconscious or died
+	// Also, at this point we will turn to target tile if targeting tile
+	
+	// Note: 
+	// - If target is a unit, this check is done regularily
+	// - If target is a tile, this check will only be done once after start,
+	//   and again once each time this unit stops moving
+	if (ticksUntillNextTargetCheck == 0)
+	{
+		ticksUntillNextTargetCheck = LOS_CHECK_INTERVAL_TRACKING;
+		// Check LOF to target if it's a unit
+		if (targetingMode == TargetingMode::Unit)
+		{
+			if (!targetUnit->isConscious() || !hasLineToUnit(targetUnit))
+			{
+				return false;
+			}
+			targetTile = targetUnit->position;
+		}
+		// Check if we are in range
+		if (weaponRight && !weaponRight->canFire(targetPosition))
+		{
+			weaponRight = nullptr;
+		}
+		if (weaponLeft && !weaponLeft->canFire(targetPosition))
+		{
+			weaponLeft = nullptr;
+		}
+		// We cannot fire if both weapons are out of range
+		if (!weaponLeft && !weaponRight)
+		{
+			return false;
+		}
+		// Check if we should turn to target tile (only do this if we're stationary)
+		if (current_movement_state == MovementState::None)
+		{
+			if (BattleUnitMission::getFacing(*this, targetTile) != facing)
+			{
+				addMission(state, BattleUnitMission::turn(*this, targetTile));
+			}
+		}
+	}
+	return true;
+}
+
 void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 {
-	// Firing
+	// Process attacking
 	if (isAttacking())
 	{
+		// Prepare all needed positions
 		static const Vec3<float> offsetTile = {0.5f, 0.5f, 0.0f};
 		static const Vec3<float> offsetTileGround = {0.5f, 0.5f, 10.0f / 40.0f};
 		Vec3<float> muzzleLocation = getMuzzleLocation();
@@ -2125,13 +2200,12 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 				targetPosition = (Vec3<float>)targetTile + offsetTileGround;
 				break;
 			case TargetingMode::NoTarget:
-				// Ain't need to do anythin!
+				LogError("Invalid targeting mode NoTarget while targeting");
 				break;
 		}
 
-		// For simplicity, prepare weapons we can use
+		// Prepare weapons we can use
 		// We can use a weapon if we're set to fire this hand, and it's a weapon that can be fired
-
 		auto weaponRight = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
 		auto weaponLeft = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
 		switch (weaponStatus)
@@ -2177,102 +2251,24 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 				weaponRight = nullptr;
 				break;
 			case WeaponStatus::NotFiring:
-				// Ain't need to do anythin!
+				LogError("Invalid targeting mode NoTarget while targeting");
 				break;
 		}
 
-		// Firing - check if we should stop firing
+		// Firing - Make checks if we should stop firing, confirm target, turn to it etc.
+		if (!runCanFireChecks(state, ticks, weaponRight, weaponLeft, targetPosition))
 		{
-			// Do consequent checks if previous check is ok
-			bool canFire = true;
-
-			if (targetingMode == TargetingMode::Unit)
-			{
-				if (ticksUntillNextTargetCheck > ticks)
-				{
-					ticksUntillNextTargetCheck -= ticks;
-				}
-				else
-				{
-					ticksUntillNextTargetCheck = 0;
-				}
-				// Lost sight of target
-				if (state.current_battle->visibleEnemies[owner].find(targetUnit) ==
-				    state.current_battle->visibleEnemies[owner].end())
-				{
-					LogWarning("Unit %s can't fire at %s: lost contact", id, targetUnit->id);
-					canFire = false;
-				}
-			}
-
-			// We cannot fire if we have no weapon capable of firing
-			canFire = canFire && (weaponLeft || weaponRight);
-
-			// We cannot fire if it's time to check target unit and it's not in LOS anymore or not
-			// conscious
-			// Also, at this point we will turn to target tile if targeting tile
-			if (canFire)
-			{
-				// Note: If not targeting a unit, this will only be done once after start,
-				// and again once each time this unit stops moving
-				if (ticksUntillNextTargetCheck == 0)
-				{
-					ticksUntillNextTargetCheck = LOS_CHECK_INTERVAL_TRACKING;
-					if (targetingMode == TargetingMode::Unit)
-					{
-						auto cMap = tileObject->map.findCollision(muzzleLocation, targetPosition,
-						                                          mapPartSet, tileObject);
-						auto cUnit = tileObject->map.findCollision(muzzleLocation, targetPosition,
-						                                           unitSet, tileObject);
-						// Target is conscious, shot won't hit a map part, shot won't hit a
-						// non-hostile unit
-						canFire = canFire && targetUnit->isConscious() && !cMap &&
-						          (!cUnit ||
-						           owner->isRelatedTo(
-						               std::static_pointer_cast<TileObjectBattleUnit>(cUnit.obj)
-						                   ->getUnit()
-						                   ->owner) == Organisation::Relation::Hostile);
-						if (canFire)
-						{
-							targetTile = targetUnit->position;
-						}
-					}
-					// Check if we are in range
-					if (canFire)
-					{
-						if (weaponRight && !weaponRight->canFire(targetPosition))
-						{
-							weaponRight = nullptr;
-						}
-						if (weaponLeft && !weaponLeft->canFire(targetPosition))
-						{
-							weaponLeft = nullptr;
-						}
-						// We cannot fire if both weapons are out of range
-						canFire = canFire && (weaponLeft || weaponRight);
-					}
-					// Check if we should turn to target tile (only do this if stationary)
-					if (canFire && current_movement_state == MovementState::None)
-					{
-						if (BattleUnitMission::getFacing(*this, targetTile) != facing)
-						{
-							addMission(state, BattleUnitMission::turn(*this, targetTile));
-						}
-					}
-				}
-			}
-
-			// Finally if any of the checks failed - stop firing
-			if (!canFire)
-			{
-				stopAttacking();
-			}
+			stopAttacking();
 		}
-
-		// Still firing - process that
-		if (isAttacking())
+		else
 		{
-			// Should we start firing a gun?
+			// Should we start aiming?
+			if (canHandStateChange(HandState::Aiming))
+			{
+				beginHandStateChange(HandState::Aiming);
+			}
+
+			// Should we beging fire delay countdown?
 			if (target_hand_state == HandState::Aiming)
 			{
 				if (weaponRight && !weaponRight->isFiring())
@@ -2285,7 +2281,7 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 				}
 			}
 
-			// Is a gun ready to fire?
+			// Is a gun ready to fire now?
 			bool weaponFired = false;
 			if (firing_animation_ticks_remaining == 0 && target_hand_state == HandState::Aiming)
 			{
@@ -2300,33 +2296,28 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 					firingWeapon = weaponLeft;
 					weaponLeft = nullptr;
 				}
-				// Check if facing the right way
+				// Weapon ready to fire: check if facing the right way
 				if (firingWeapon)
 				{
 					auto targetVector = targetPosition - muzzleLocation;
 					targetVector = {targetVector.x, targetVector.y, 0.0f};
 					// Target must be within frontal arc
 					if (glm::angle(glm::normalize(targetVector),
-					               glm::normalize(Vec3<float>{facing.x, facing.y, 0})) >= M_PI / 2)
+						glm::normalize(Vec3<float>{facing.x, facing.y, 0})) < M_PI / 2)
 					{
-						firingWeapon = nullptr;
+						firingWeapon->fire(state, targetPosition,
+							targetingMode == TargetingMode::Unit ? targetUnit : nullptr);
+						displayedItem = firingWeapon->type;
+						setHandState(HandState::Firing);
+						weaponFired = true;
 					}
-				}
-				// If still OK - fire!
-				if (firingWeapon)
-				{
-					firingWeapon->fire(state, targetPosition,
-					                   targetingMode == TargetingMode::Unit ? targetUnit : nullptr);
-					displayedItem = firingWeapon->type;
-					setHandState(HandState::Firing);
-					weaponFired = true;
 				}
 			}
 
-			// If fired weapon at ground or ally - stop firing that hand (unless zerking, in which
-			// case go on)
-			if (weaponFired && moraleState != MoraleState::Berserk &&
-			    (targetingMode != TargetingMode::Unit || targetUnit->owner == owner))
+			// If fired weapon at ground or ally - stop firing that hand 
+			// (unless zerking, in which case go on)
+			if (weaponFired && moraleState != MoraleState::Berserk
+				&& (targetingMode != TargetingMode::Unit || targetUnit->owner == owner))
 			{
 				switch (weaponStatus)
 				{
@@ -2360,40 +2351,30 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 						}
 						break;
 					case WeaponStatus::NotFiring:
-						LogError("Weapon fired while not firing?");
+						LogError("Weapon fired while not firing!?");
 						break;
 				}
-			}
-
-			// Should we start aiming?
-			if (firing_animation_ticks_remaining == 0 && hand_animation_ticks_remaining == 0 &&
-			    body_animation_ticks_remaining == 0 && current_hand_state != HandState::Aiming &&
-			    current_movement_state != MovementState::Running &&
-			    current_movement_state != MovementState::Strafing &&
-			    current_body_state != BodyState::Throwing &&
-			    !(current_body_state == BodyState::Prone &&
-			      current_movement_state != MovementState::None))
-			{
-				beginHandStateChange(HandState::Aiming);
 			}
 
 		} // end if Firing - process firing
 	}
 
-	// Not Firing (or may have just stopped firing)
+	// Not firing:
+	// - was not firing
+	// - was firing but fire checks just failed
+	// - just fired and stopped firing
 	if (!isAttacking())
 	{
-		// Should we stop aiming?
-		if (aiming_ticks_remaining > 0)
+		// Decrement timer for residual aiming
+		if (residual_aiming_ticks_remaining > 0)
 		{
-			aiming_ticks_remaining -= ticks;
+			residual_aiming_ticks_remaining -= ticks;
 		}
-		else if (firing_animation_ticks_remaining == 0 && hand_animation_ticks_remaining == 0 &&
-		         current_hand_state == HandState::Aiming)
+		else if(canHandStateChange(HandState::AtEase))
 		{
 			beginHandStateChange(HandState::AtEase);
 		}
-	} // end if not Firing
+	} 
 }
 
 void BattleUnit::updatePsi(GameState &state, unsigned int ticks)
@@ -2530,9 +2511,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			updateCheckIfFalling(state);
 			updateBody(state, bodyTicksRemaining);
 			updateHands(state, handsTicksRemaining);
-			updateMovement(state, moveTicksRemaining, wasUsingLift);
 			// Quit if retreated as a result
-			if (retreated)
+			if (updateMovement(state, moveTicksRemaining, wasUsingLift))
 			{
 				return;
 			}
@@ -2618,13 +2598,9 @@ void BattleUnit::startMoving()
 	{
 		setMovementState(MovementState::Running);
 	}
-	else if (current_body_state != BodyState::Kneeling && current_body_state != BodyState::Throwing)
-	{
-		setMovementState(MovementState::Normal);
-	}
 	else
 	{
-		LogError("Trying to move while kneeling or throwing, wtf?");
+		setMovementState(MovementState::Normal);
 	}
 }
 
@@ -2752,9 +2728,9 @@ void BattleUnit::executeAIAction(GameState &state, AIAction &action)
 			if (action.item->getCanThrow(*this, action.targetUnit->position))
 			{
 				if (setMission(state, BattleUnitMission::throwItem(*this, action.item,
-				                                                   action.targetUnit->position)))
+					action.targetUnit->position)))
 				{
-					action.item->prime();
+					action.item->prime(action.item->getPayloadType()->trigger_type != TriggerType::Boomeroid);
 				}
 			}
 			break;
@@ -3057,6 +3033,17 @@ void BattleUnit::fallUnconscious(GameState &state)
 
 void BattleUnit::beginBodyStateChange(GameState &state, BodyState bodyState)
 {
+	// This is ONLY called from BattleUnit::updateBody, which already ensures that:
+	// - bodyState is legal for this unit
+	// - there is no current body change going on
+	// Therefore, we're not checking here for those conditions
+	
+	// Already in target body state -> Exit
+	if (target_body_state == bodyState)
+	{
+		return;
+	}
+
 	// Cease hand animation immediately
 	if (hand_animation_ticks_remaining != 0)
 		setHandState(target_hand_state);
@@ -3065,8 +3052,7 @@ void BattleUnit::beginBodyStateChange(GameState &state, BodyState bodyState)
 	int frameCount = agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
 	                                                              bodyState, current_hand_state,
 	                                                              current_movement_state, facing);
-	// No such animation
-	// Try stopping movement
+	// No such animation -> Try without movement
 	if (frameCount == 0 && current_movement_state != MovementState::None)
 	{
 		frameCount = agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
@@ -3077,7 +3063,7 @@ void BattleUnit::beginBodyStateChange(GameState &state, BodyState bodyState)
 			setMovementState(MovementState::None);
 		}
 	}
-	// Try stopping aiming
+	// No such animation -> Try without aiming
 	if (frameCount == 0 && current_hand_state != HandState::AtEase)
 	{
 		frameCount = agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
@@ -3088,9 +3074,20 @@ void BattleUnit::beginBodyStateChange(GameState &state, BodyState bodyState)
 			setHandState(HandState::AtEase);
 		}
 	}
-
+	// No such animation -> Try without both
+	if (frameCount == 0 && current_movement_state != MovementState::None&& current_hand_state != HandState::AtEase)
+	{
+		frameCount = agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
+			bodyState, HandState::AtEase,
+			MovementState::None, facing);
+		if (frameCount != 0)
+		{
+			setMovementState(MovementState::None);
+			setHandState(HandState::AtEase);
+		}
+	}
 	int ticks = frameCount * TICKS_PER_FRAME_UNIT;
-	if (ticks > 0 && current_body_state != bodyState)
+	if (ticks > 0)
 	{
 		target_body_state = bodyState;
 		body_animation_ticks_remaining = ticks;
@@ -3117,6 +3114,30 @@ void BattleUnit::setBodyState(GameState &state, BodyState bodyState)
 	current_body_state = bodyState;
 	target_body_state = bodyState;
 	body_animation_ticks_remaining = 0;
+	// Ensure we have frames in this state
+	if (agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state, target_body_state, current_hand_state, current_movement_state, facing) == 0)
+	{
+		// No animation for target state -> Try without movement
+		if (current_movement_state != MovementState::None 
+			&& agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state, target_body_state, current_hand_state, MovementState::None, facing) != 0)
+		{
+			setMovementState(MovementState::None);
+		}
+		// No animation for target state -> Try without aiming
+		else if (current_hand_state != HandState::AtEase 
+			&& agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state, target_body_state, HandState::AtEase, current_movement_state, facing) != 0)
+		{
+			setHandState(HandState::AtEase);
+		}
+		// We know for sure this body state is allowed,
+		// and we know for sure allowed body state has frames w/o aiming and moving
+		else
+		{
+			setMovementState(MovementState::None);
+			setHandState(HandState::AtEase);
+		}
+	}
+	// Update tileObject
 	if (tileObject)
 	{
 		// Updates bounds etc.
@@ -3136,32 +3157,43 @@ unsigned int BattleUnit::getHandAnimationFrame() const
 {
 	return ((firing_animation_ticks_remaining > 0 ? firing_animation_ticks_remaining
 	                                              : hand_animation_ticks_remaining) +
-	        TICKS_PER_FRAME_UNIT - 1) /
-	       TICKS_PER_FRAME_UNIT;
+	        TICKS_PER_FRAME_UNIT - 1) / TICKS_PER_FRAME_UNIT;
+}
+
+bool BattleUnit::canHandStateChange(HandState state)
+{
+	return (firing_animation_ticks_remaining == 0 && hand_animation_ticks_remaining == 0
+		&& body_animation_ticks_remaining == 0 && target_hand_state != state
+		&& (current_movement_state == MovementState::None || current_movement_state == MovementState::Normal)
+		&& (current_movement_state == MovementState::None || current_body_state != BodyState::Prone)
+		&& current_body_state != BodyState::Throwing);
 }
 
 void BattleUnit::beginHandStateChange(HandState state)
 {
+	// This is ONLY called after confirming with canHandStateChange that change is valid
+	// Therefore, we're not checking for conditions
+
+	if (target_hand_state == state)
+	{
+		return;
+	}
+
 	int frameCount = agent->getAnimationPack()->getFrameCountHands(
 	    displayedItem, current_body_state, current_hand_state, state, current_movement_state,
 	    facing);
 	int ticks = frameCount * TICKS_PER_FRAME_UNIT;
 
-	if (ticks > 0 && current_hand_state != state)
+	if (ticks > 0 && target_hand_state != state)
 	{
 		target_hand_state = state;
 		hand_animation_ticks_remaining = ticks;
 	}
 	else
 	{
-		if (state == HandState::Aiming && current_movement_state != MovementState::None &&
-		    current_body_state == BodyState::Prone)
-		{
-			LogError("WTF are you doing, trying to aim while moving prone!?");
-		}
 		setHandState(state);
 	}
-	aiming_ticks_remaining = 0;
+	residual_aiming_ticks_remaining = 0;
 }
 
 void BattleUnit::setHandState(HandState state)
@@ -3175,7 +3207,7 @@ void BattleUnit::setHandState(HandState state)
 	        : agent->getAnimationPack()->getFrameCountFiring(displayedItem, current_body_state,
 	                                                         current_movement_state, facing) *
 	              TICKS_PER_FRAME_UNIT;
-	aiming_ticks_remaining = state == HandState::Aiming ? TICKS_PER_SECOND / 3 : 0;
+	residual_aiming_ticks_remaining = state == HandState::Aiming ? TICKS_PER_SECOND / 3 : 0;
 }
 
 void BattleUnit::beginTurning(GameState &, Vec2<int> newFacing)
@@ -3198,7 +3230,7 @@ void BattleUnit::setMovementState(MovementState state)
 	{
 		return;
 	}
-	current_movement_state = state;
+	
 	switch (state)
 	{
 		case MovementState::None:
@@ -3207,15 +3239,35 @@ void BattleUnit::setMovementState(MovementState state)
 			ticksUntillNextTargetCheck = 0;
 			break;
 		case MovementState::Running:
-		case MovementState::Strafing:
 			if (current_hand_state != HandState::AtEase || target_hand_state != HandState::AtEase)
 			{
 				setHandState(HandState::AtEase);
 			}
 			break;
+		case MovementState::Strafing:
+			// Nothing TBD
+			break;
 		default:
 			break;
 	}
+
+	// Ensure we have frames in this state
+	if (agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state, target_body_state, current_hand_state, state, facing) == 0)
+	{
+		// No animation for target state -> Try without aiming
+		if (current_hand_state != HandState::AtEase 
+			&& agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state, target_body_state, HandState::AtEase, state, facing) != 0)
+		{
+			setHandState(HandState::AtEase);
+		}
+		else
+		{
+			LogError("setMovementState %d incompatible with current body states %d to %d", (int)state, (int)current_body_state, (int)target_body_state);
+			return;
+		}
+	}
+
+	current_movement_state = state;
 }
 
 unsigned int BattleUnit::getWalkSoundIndex()

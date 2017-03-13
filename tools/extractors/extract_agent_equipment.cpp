@@ -51,6 +51,19 @@
 #define DM_HUMAN 0
 #define DM_MUTANT 1
 
+#define IT_MACHINEGUN 7
+#define IT_LASERSNIPER 9
+#define IT_AUTOCANNON 11
+#define IT_HEAVYLAUNCHER 17
+#define IT_MINILAUNCHER 21
+#define IT_STUNGRAPPLE 25
+#define IT_TRACKERGUN 28
+#define IT_FORCEWEB 31
+#define IT_DEVASTATOR 41
+#define IT_BRAINSUCKERLAUNCHER 44
+#define IT_DIMENSIONLAUNCHER 46
+#define IT_POPPERBOMB 81 
+
 namespace OpenApoc
 {
 
@@ -372,28 +385,17 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 		// Mark two-handed items
 		switch (edata.sprite_idx)
 		{
-			// Minigun
-			case 7:
-			// Laser Sniper
-			case 9:
-			// Autocannon
-			case 11:
-			// Heavy Launcher
-			case 17:
-			// MiniLauncher
-			case 21:
-			// Stun Grapple
-			case 25:
-			// Tracker Gun
-			case 28:
-			// ForceWeb
-			case 31:
-			// Devastator Canon
-			case 41:
-			// Brainsucker
-			case 44:
-			// Dimension Missile Launcher
-			case 46:
+			case IT_MACHINEGUN:
+			case IT_LASERSNIPER:
+			case IT_AUTOCANNON:
+			case IT_HEAVYLAUNCHER:
+			case IT_MINILAUNCHER:
+			case IT_STUNGRAPPLE:
+			case IT_TRACKERGUN:
+			case IT_FORCEWEB:
+			case IT_DEVASTATOR:
+			case IT_BRAINSUCKERLAUNCHER:
+			case IT_DIMENSIONLAUNCHER:
 				e->two_handed = true;
 				break;
 			default:
@@ -494,13 +496,13 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 				}
 				else
 				{
-					e->type = AEquipmentType::Type::Weapon;
+					e->type = (edata.sprite_idx == IT_POPPERBOMB) ? AEquipmentType::Type::Popper : AEquipmentType::Type::Weapon;
 					bool has_ammo = false;
 					// Entry #0 is "EMPTY" so we skip it
 					for (unsigned j = 1; j < data_t.agent_general->count(); j++)
 					{
 						if (has_ammo)
-							continue;
+							break;
 						auto gdata = data_t.agent_general->get(j);
 						// Fix for buggy tracer gun ammo
 						if (gdata.ammo_type == 0xffff && gdata.ammo_type_duplicate == 1)

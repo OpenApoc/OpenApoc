@@ -135,6 +135,7 @@ void UnitAIList::init(GameState &state, BattleUnit &u)
 	// FIXME: Actually read this option
 	bool USER_OPTION_USE_HARDCORE_AI = false;
 
+	aiList.clear();
 	aiList.push_back(mksp<LowMoraleUnitAI>());
 	aiList.push_back(mksp<DefaultUnitAI>());
 	aiList.push_back(mksp<BehaviorUnitAI>());
@@ -146,11 +147,6 @@ void UnitAIList::init(GameState &state, BattleUnit &u)
 	else
 	{
 		aiList.push_back(mksp<VanillaUnitAI>());
-	}
-
-	for (int i = 0; i < (int)aiList.size(); i++)
-	{
-		aiMap.emplace(aiList[i]->getName(), i);
 	}
 
 	reset(state, u);
@@ -504,6 +500,9 @@ std::tuple<AIDecision, float, unsigned>
 VanillaUnitAI::getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
                                   StateRef<BattleUnit> target)
 {
+	// Temporarily disable grenades
+	return NULLTUPLE3;
+
 	auto action = mksp<AIAction>();
 	action->item = e;
 	action->targetUnit = target;
@@ -788,6 +787,13 @@ AIDecision VanillaUnitAI::thinkInternal(GameState &state, BattleUnit &u)
 				break;
 			case AIMovement::Type::Turn:
 				if (u.isDoing(BattleUnitMission::Type::Turn))
+				{
+					lastDecision.movement = nullptr;
+				}
+				break;
+			case AIMovement::Type::ChangeStance:
+				if (((u.target_body_state == BodyState::Kneeling || u.current_body_state == BodyState::Kneeling) &&  lastDecision.movement->kneelingMode == KneelingMode::Kneeling)
+					|| ((u.target_body_state == BodyState::Prone || u.current_body_state == BodyState::Prone) &&  lastDecision.movement->movementMode == MovementMode::Prone))
 				{
 					lastDecision.movement = nullptr;
 				}

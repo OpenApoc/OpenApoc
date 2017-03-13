@@ -164,6 +164,11 @@ void BattleUnitAnimationPack::drawShadow(
 		             : ItemWieldMode::None,
 		    currentHands, targetHands, movement, currentBody};
 		e = hand_state_animations[key][facing];
+		if (!e)
+		{
+			LogWarning("Body %d %d Hands %d %d Movement %d Frame missing!", (int)currentBody, (int)targetBody, (int)currentHands, (int)targetHands, (int)movement);
+			return;
+		}
 		frame = e->frame_count - hands_animation_delay;
 	}
 	else if (currentBody != targetBody)
@@ -173,6 +178,11 @@ void BattleUnitAnimationPack::drawShadow(
 		             : ItemWieldMode::None,
 		    currentHands, movement, currentBody, targetBody};
 		e = body_state_animations[key][facing];
+		if (!e)
+		{
+			LogWarning("Body %d %d Hands %d %d Movement %d Frame missing!", (int)currentBody, (int)targetBody, (int)currentHands, (int)targetHands, (int)movement);
+			return;
+		}
 		frame = e->frame_count - body_animation_delay;
 	}
 	else
@@ -183,6 +193,11 @@ void BattleUnitAnimationPack::drawShadow(
 		    currentHands, movement, currentBody};
 
 		e = standart_animations[key][facing];
+		if (!e)
+		{
+			LogWarning("Body %d %d Hands %d %d Movement %d Frame missing!", (int)currentBody, (int) targetBody, (int)currentHands, (int)targetHands, (int)movement);
+			return;
+		}
 		if (currentHands == HandState::Firing)
 			frame = e->frame_count - hands_animation_delay;
 		else
@@ -229,6 +244,11 @@ void BattleUnitAnimationPack::drawUnit(
 		             : ItemWieldMode::None,
 		    currentHands, targetHands, movement, currentBody};
 		e = hand_state_animations[key][facing];
+		if (!e)
+		{
+			LogWarning("Body %d %d Hands %d %d Movement %d Frame missing!", (int)currentBody, (int)targetBody, (int)currentHands, (int)targetHands, (int)movement);
+			return;
+		}
 		frame = e->frame_count - hands_animation_delay;
 		if (e->is_overlay)
 		{
@@ -248,6 +268,11 @@ void BattleUnitAnimationPack::drawUnit(
 		             : ItemWieldMode::None,
 		    currentHands, movement, currentBody, targetBody};
 		e = body_state_animations[key][facing];
+		if (!e)
+		{
+			LogWarning("Body %d %d Hands %d %d Movement %d Frame missing!", (int)currentBody, (int)targetBody, (int)currentHands, (int)targetHands, (int)movement);
+			return;
+		}
 		frame = e->frame_count - body_animation_delay;
 	}
 	else
@@ -258,6 +283,11 @@ void BattleUnitAnimationPack::drawUnit(
 			                                                          : ItemWieldMode::OneHanded)
 			                                  : ItemWieldMode::None,
 			                         firingAngle, movement, currentBody}][facing];
+			if (!e)
+			{
+				LogWarning("Body %d %d Hands %d %d Movement %d Frame missing!", (int)currentBody, (int)targetBody, (int)currentHands, (int)targetHands, (int)movement);
+				return;
+			}
 		}
 		else
 		{
@@ -266,6 +296,11 @@ void BattleUnitAnimationPack::drawUnit(
 			                             : ItemWieldMode::None,
 			                    currentHands, movement, currentBody};
 			e = standart_animations[key][facing];
+			if (!e)
+			{
+				LogWarning("Body %d %d Hands %d %d Movement %d Frame missing!", (int)currentBody, (int)targetBody, (int)currentHands, (int)targetHands, (int)movement);
+				return;
+			}
 		}
 		if (currentHands == HandState::Firing)
 			frame = e->frame_count - hands_animation_delay;

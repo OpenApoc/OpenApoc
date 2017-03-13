@@ -550,7 +550,7 @@
 		<member>current_body_state</member>
 		<member>target_body_state</member>
 		<member>hand_animation_ticks_remaining</member>
-		<member>aiming_ticks_remaining</member>
+		<member>residual_aiming_ticks_remaining</member>
 		<member>firing_animation_ticks_remaining</member>
 		<member>current_hand_state</member>
 		<member>target_hand_state</member>
@@ -1479,7 +1479,6 @@
 	<object full="true">
 		<name>UnitAIList</name>
 		<member>aiList</member>
-		<member>aiMap</member>
 		<member>ticksLastThink</member>
 		<member>ticksUntilReThink</member>
 	</object>
