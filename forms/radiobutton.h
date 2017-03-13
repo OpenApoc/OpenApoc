@@ -29,6 +29,7 @@ class RadioButton : public CheckBox
 	            sp<Image> ImageUnchecked = nullptr);
 	~RadioButton() override;
 	void setChecked(bool checked) override;
+	void eventOccured(Event *e) override;
 
 	sp<Control> copyTo(sp<Control> CopyParent) override;
 };

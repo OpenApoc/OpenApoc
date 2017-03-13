@@ -10,30 +10,17 @@
 
 // We can't just use 'using namespace OpenApoc;' as:
 // On windows VS it says
-/* Error	C2678	binary '==': no operator found which takes a left - hand operand of type 'Concurrency::details::_Task_impl<_ReturnType>'
-(or there is no acceptable conversion)	test_serialize	E : \Projects\GitHub\OpenApoc\game\state\gamestate_serialize.h	106
-My (JonnyH) assumption is that some part of the system library is defining some operator== for std::shared_ptr<SomeInternalConcurrencyType>, but it resolves to our OpenApoc operator== instead.
+/* Error	C2678	binary '==': no operator found which takes a left - hand operand of type
+'Concurrency::details::_Task_impl<_ReturnType>'
+(or there is no acceptable conversion)	test_serialize	E :
+\Projects\GitHub\OpenApoc\game\state\gamestate_serialize.h	106
+
+My (JonnyH) assumption is that some part of the system library is defining some operator== for
+std::shared_ptr<SomeInternalConcurrencyType>, but it resolves to our OpenApoc operator== instead.
 */
 
-
-using GameState = OpenApoc::GameState;
-using UString = OpenApoc::UString;
-using Organisation = OpenApoc::Organisation;
-using Vehicle = OpenApoc::Vehicle;
-using VehicleType = OpenApoc::VehicleType;
-using Agent = OpenApoc::Agent;
-using AgentType = OpenApoc::AgentType;
-using Battle = OpenApoc::Battle;
-template <typename T> using StateRef = OpenApoc::StateRef<T>;
-template <typename T> using sp = OpenApoc::sp<T>;
-
-//FIXME: Is there a 'using'-like alias for template functions?
-template <typename T, typename... Args> sp<T> mksp(Args &&... args)
-{
-	return OpenApoc::mksp<T>(std::forward<Args>(args)...);
-}
-
-bool test_gamestate_serialization_roundtrip(sp<GameState> state, UString save_name)
+bool test_gamestate_serialization_roundtrip(OpenApoc::sp<OpenApoc::GameState> state,
+                                            OpenApoc::UString save_name)
 {
 	if (!state->saveGame(save_name))
 	{
@@ -42,7 +29,7 @@ bool test_gamestate_serialization_roundtrip(sp<GameState> state, UString save_na
 		return false;
 	}
 
-	auto read_gamestate = OpenApoc::mksp<GameState>();
+	auto read_gamestate = OpenApoc::mksp<OpenApoc::GameState>();
 	if (!read_gamestate->loadGame(save_name))
 	{
 		LogWarning("Failed to load packed gamestate");
@@ -73,13 +60,13 @@ bool test_gamestate_serialization_roundtrip(sp<GameState> state, UString save_na
 	return true;
 }
 
-bool test_gamestate_serialization(sp<GameState> state)
+bool test_gamestate_serialization(OpenApoc::sp<OpenApoc::GameState> state)
 {
 
 	std::stringstream ss;
 	ss << "openapoc_test_serialize-" << std::this_thread::get_id();
 	auto tempPath = fs::temp_directory_path() / ss.str();
-	UString pathString(tempPath.string());
+	OpenApoc::UString pathString(tempPath.string());
 	LogInfo("Writing temp state to \"%s\"", pathString);
 	if (!test_gamestate_serialization_roundtrip(state, pathString))
 	{
@@ -122,10 +109,11 @@ int main(int argc, char **argv)
 
 	LogInfo("Loading \"%s\"", gamestate_name);
 
-	auto state = OpenApoc::mksp<GameState>();
+
+	auto state = OpenApoc::mksp<OpenApoc::GameState>();
 
 	{
-		auto state2 = OpenApoc::mksp<GameState>();
+		auto state2 = OpenApoc::mksp<OpenApoc::GameState>();
 		if (*state != *state2)
 		{
 			LogError("Empty gamestate failed comparison");
@@ -172,10 +160,11 @@ int main(int argc, char **argv)
 	LogInfo("Testing state with battle");
 	{
 
-		StateRef<Organisation> org = { state.get(), UString("ORG_ALIEN") };
-		auto v = OpenApoc::mksp<Vehicle>();
-		auto vID = Vehicle::generateObjectID(*state);
-		sp<VehicleType> vType;
+		OpenApoc::StateRef<OpenApoc::Organisation> org = {state.get(),
+		                                                  OpenApoc::UString("ORG_ALIEN")};
+		auto v = OpenApoc::mksp<OpenApoc::Vehicle>();
+		auto vID = OpenApoc::Vehicle::generateObjectID(*state);
+		OpenApoc::sp<OpenApoc::VehicleType> vType;
 
 		// Fine a vehicle type with a battlemap
 		for (auto &vTypePair : state->vehicle_types)
@@ -196,29 +185,30 @@ int main(int argc, char **argv)
 		v->name = format("%s %d", v->type->name, ++v->type->numCreated);
 		state->vehicles[vID] = v;
 
-		StateRef<Vehicle> enemyVehicle = { state.get(), vID };
-		StateRef<Vehicle> playerVehicle = {};
+		OpenApoc::StateRef<OpenApoc::Vehicle> enemyVehicle = {state.get(), vID};
+		OpenApoc::StateRef<OpenApoc::Vehicle> playerVehicle = {};
 
-		std::list<StateRef<Agent>> agents;
+		std::list<OpenApoc::StateRef<OpenApoc::Agent>> agents;
 		for (auto &a : state->agents)
 		{
-			if (a.second->type->role == AgentType::Role::Soldier &&
-				a.second->owner == state->getPlayer())
+
+			if (a.second->type->role == OpenApoc::AgentType::Role::Soldier &&
+			    a.second->owner == state->getPlayer())
 			{
 				agents.emplace_back(state.get(), a.second);
 			}
 		}
 
-		Battle::beginBattle(*state, org, agents, playerVehicle, enemyVehicle);
-		Battle::enterBattle(*state);
+		OpenApoc::Battle::beginBattle(*state, org, agents, playerVehicle, enemyVehicle);
+		OpenApoc::Battle::enterBattle(*state);
 
 		if (!test_gamestate_serialization(state))
 		{
 			LogError("Serialization test failed for in-battle game");
 			return EXIT_FAILURE;
 		}
-		Battle::finishBattle(*state);
-		Battle::exitBattle(*state);
+		OpenApoc::Battle::finishBattle(*state);
+		OpenApoc::Battle::exitBattle(*state);
 	}
 
 	LogInfo("test_serialize success");
