@@ -305,6 +305,10 @@
 		<member>targetBodyState</member>
 		<member>currentPlannedPath</member>
 		<member>allowRunningAway</member>
+		<member>targetUnit</member>
+		<member>attachedToHead</member>
+		<member>zImpulseRemaining</member>
+		<member>immuneToTarget</member>
 		<member>cancelled</member>
 	</object>
 	<object>
@@ -476,6 +480,7 @@
 		<member>gravlift</member>
 		<member>door</member>
 		<member>brainsuckerHatch</member>
+		<member>brainsuckerSuck</member>
 		<member>teleport</member>
 		<member>burn</member>
 		<member>genericHitSounds</member>
@@ -498,7 +503,7 @@
 		<member>frames</member>
 		<member>is_overlay</member>
 		<member>frame_count</member>
-		<member>frames_per_100_units</member>
+		<member>units_per_100_frames</member>
 	</object>
 	<object>
 		<name>BattleUnitAnimationPack::AnimationEntry::Frame</name>
@@ -520,13 +525,17 @@
 		<member>weaponStatus</member>
 		<member>targetingMode</member>
 		<member>targetTile</member>
+		<member>timesTargetMIA</member>
 		<member>targetUnit</member>
 		<member>focusUnit</member>
 		<member>focusedByUnits</member>
 		<member>ticksUntillNextTargetCheck</member>
 		<member>psiStatus</member>
 		<member>psiTarget</member>
+		<member>psiItem</member>
 		<member>ticksAccumulatedToNextPsiCheck</member>
+		<member>psiAttackers</member>
+		<member>brainSucker</member>
 		<member>experiencePoints</member>
 		<member>fatalWounds</member>
 		<member>healingBodyPart</member>
@@ -1124,6 +1133,7 @@
 		<value>Turn</value>
 		<value>ReachGoal</value>
 		<value>Teleport</value>
+		<value>Brainsuck</value>
 	</enum>
 	<enum>
 		<name>VEquipment::WeaponState</name>
@@ -1406,7 +1416,9 @@
 		<value>Normal</value>
 		<value>Running</value>
 		<value>Strafing</value>
-		<value>Brainsucker</value>
+		<value>Reverse</value>
+		<value>Brainleap</value>
+		<value>Brainsuck</value>
 	</enum>
 	<enum>
 		<name>AIType</name>

@@ -13,7 +13,7 @@
 		<type>Brainsucker</type>
 		<id>AEQUIPMENTTYPE_BRAINSUCKER_WEAPON</id>
         <name>Brainsuck</name>
-        <equipscreen_sprite>PCK:xcom3/ufodata/contico.pck:xcom3/ufodata/contico.tab:1:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:76:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
         <x>2</x>
         <y>5</y>

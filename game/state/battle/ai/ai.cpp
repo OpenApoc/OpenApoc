@@ -303,9 +303,10 @@ VanillaTacticalAI::getPatrolMovement(GameState &state, BattleUnit &u)
 		}
 
 		// Go there actually
-		// auto &lb = *state.current_battle->losBlocks.at(lbID); // <-- not needed?
+		// auto &lb = *state.current_battle->losBlocks.at(lbID); // <-- not needed yet?
 		result->type = AIMovement::Type::Patrol;
 		result->targetLocation = state.current_battle->blockCenterPos[u.getType()][lbID];
+		result->movementMode = MovementMode::Running;
 		break;
 	}
 

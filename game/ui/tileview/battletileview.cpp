@@ -468,11 +468,11 @@ void BattleTileView::render()
 					{
 						drawPathPreview = previewedPathCost != -1;
 						auto u = selTileOnCurLevel->getUnitIfPresent(true);
-						if (u)
+						if (u && battle.visibleUnits[battle.currentPlayer].find({ &state, u->getUnit() })
+							!= battle.visibleUnits[battle.currentPlayer].end())
 						{
-							// FIXME: Check if player can see unit, if not - do not change cursor!
 							if (battle.currentPlayer->isRelatedTo(u->getUnit()->owner) ==
-							    Organisation::Relation::Hostile)
+								Organisation::Relation::Hostile)
 							{
 								selectionImageBack = selectedTileFireImageBack;
 								selectionImageFront = selectedTileFireImageFront;

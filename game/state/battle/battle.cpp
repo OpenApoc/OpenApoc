@@ -1525,6 +1525,8 @@ void Battle::enterBattle(GameState &state)
 		}
 	}
 
+	state.current_battle->initBattle(state, true);
+
 	// Turn units towards map centre
 	// Also make sure they're facing in a valid direction
 	// And stand in a valid pose
@@ -1618,8 +1620,6 @@ void Battle::enterBattle(GameState &state)
 		// FIXME: Make X-COM hostile to target org for the duration of this mission
 		LogWarning("IMPLEMENT: Make X-COM hostile to target org for the duration of this mission");
 	}
-
-	state.current_battle->initBattle(state, true);
 }
 
 // To be called when battle must be finished and before showing score screen
@@ -1691,6 +1691,11 @@ void Battle::loadImagePacks(GameState &state)
 	}
 	// Find out all image packs used by map's units and items
 	std::set<UString> imagePacks;
+	UString brainsucker = "bsk";
+	bool brainsuckerFound = false;
+	UString hyperworm = "hypr";
+	UString multiworm = "multi";
+	bool hyperwormFound = false;
 	for (auto &p : units)
 	{
 		auto &bu = p.second;
@@ -1706,6 +1711,16 @@ void Battle::loadImagePacks(GameState &state)
 				auto packName = BattleUnitImagePack::getNameFromID(ip.second.id);
 				if (imagePacks.find(packName) == imagePacks.end())
 					imagePacks.insert(packName);
+				if (!hyperwormFound && packName == hyperworm)
+				{
+					imagePacks.insert(hyperworm);
+					imagePacks.insert(hyperworm+"s");
+					hyperwormFound = true;
+				}
+				if (packName == brainsucker)
+				{
+					brainsuckerFound = true;
+				}
 			}
 		}
 		for (auto &ae : bu->agent->equipment)
@@ -1719,6 +1734,14 @@ void Battle::loadImagePacks(GameState &state)
 				auto packName = BattleUnitImagePack::getNameFromID(ae->type->held_image_pack.id);
 				if (imagePacks.find(packName) == imagePacks.end())
 					imagePacks.insert(packName);
+			}
+			if (!brainsuckerFound && ae->getPayloadType()->damage_type 
+				&& ae->getPayloadType()->damage_type->effectType == DamageType::EffectType::Brainsucker)
+			{
+				imagePacks.insert(brainsucker);
+				imagePacks.insert(brainsucker + "s");
+				brainsuckerFound = true;
+				break;
 			}
 		}
 	}
@@ -1769,13 +1792,41 @@ void Battle::loadAnimationPacks(GameState &state)
 	}
 	// Find out all animation packs used by units
 	std::set<UString> animationPacks;
+	UString brainsucker = "bsk";
+	bool brainsuckerFound = false;
+	UString hyperworm = "hypr";
+	UString multiworm = "multi";
+	bool hyperwormFound = false;
 	for (auto &u : units)
 	{
 		for (auto &ap : u.second->agent->type->animation_packs)
 		{
 			auto packName = BattleUnitAnimationPack::getNameFromID(ap.id);
 			if (animationPacks.find(packName) == animationPacks.end())
+			{
 				animationPacks.insert(packName);
+			}
+			if (!hyperwormFound && packName == hyperworm)
+			{
+				animationPacks.insert(hyperworm);
+				hyperwormFound = true;
+			}
+			if (packName == brainsucker)
+			{
+				brainsuckerFound = true;
+			}
+		}
+		if (!brainsuckerFound)
+		{
+			for (auto &e : u.second->agent->equipment)
+			{
+				if (e->getPayloadType()->damage_type && e->getPayloadType()->damage_type->effectType == DamageType::EffectType::Brainsucker)
+				{
+					animationPacks.insert(brainsucker);
+					brainsuckerFound = true;
+					break;
+				}
+			}
 		}
 	}
 	// Load all used animation packs

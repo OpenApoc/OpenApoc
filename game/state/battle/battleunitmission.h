@@ -57,6 +57,7 @@ class BattleUnitMission
 
 	// Methods that calculate next action
 	bool advanceAlongPath(GameState &state, BattleUnit &u, Vec3<float> &dest);
+	bool advanceBrainsucker(GameState &state, BattleUnit &u, Vec3<float> &dest);
 	bool advanceFacing(GameState &state, BattleUnit &u, Vec2<int> &dest);
 	bool advanceBodyState(GameState &state, BattleUnit &u, BodyState targetState, BodyState &dest);
 
@@ -72,7 +73,8 @@ class BattleUnitMission
 		DropItem,
 		Turn,
 		ReachGoal,
-		Teleport
+		Teleport,
+		Brainsuck
 	};
 
 	// Methods (main)
@@ -92,16 +94,18 @@ class BattleUnitMission
 	bool getNextFacing(GameState &state, BattleUnit &u, Vec2<int> &dest);
 	// Request next body state
 	bool getNextBodyState(GameState &state, BattleUnit &u, BodyState &dest);
+	// Get next movement mode, returns None if default
+	MovementState getNextMovementState(GameState &state, BattleUnit &u);
 
 	// Spend agent TUs or append AcquireTU mission
 	bool spendAgentTUs(GameState &state, BattleUnit &u, int cost, bool cancel = false);
 
 	static int getBodyStateChangeCost(BattleUnit &u, BodyState from, BodyState to);
 	static int getThrowCost(BattleUnit &u);
-	static Vec2<int> getFacingStep(BattleUnit &u, Vec2<int> targetFacing);
+	static Vec2<int> getFacingStep(BattleUnit &u, Vec2<int> targetFacing, int facingDelta = 0);
 	// Used to determine target facings
-	static Vec2<int> getFacing(BattleUnit &u, Vec3<float> from, Vec3<float> to);
-	static Vec2<int> getFacing(BattleUnit &u, Vec3<int> to);
+	static Vec2<int> getFacing(BattleUnit &u, Vec3<float> from, Vec3<float> to, int facingDelta = 0);
+	static Vec2<int> getFacing(BattleUnit &u, Vec3<int> to, int facingDelta = 0);
 
 	// Methods to create new missions
 	static BattleUnitMission *gotoLocation(BattleUnit &u, Vec3<int> target, int facingDelta = 0,
@@ -119,8 +123,9 @@ class BattleUnitMission
 	static BattleUnitMission *turn(BattleUnit &u, Vec3<float> target, bool free = false,
 	                               bool requireGoal = false);
 	static BattleUnitMission *restartNextMission(BattleUnit &u);
-	static BattleUnitMission *reachGoal(BattleUnit &u);
+	static BattleUnitMission *reachGoal(BattleUnit &u, int facingDelta = 0);
 	static BattleUnitMission *teleport(BattleUnit &u, sp<AEquipment> item, Vec3<int> target);
+	static BattleUnitMission *brainsuck(BattleUnit &u, StateRef<BattleUnit> target);
 
 	UString getName();
 
@@ -141,7 +146,7 @@ class BattleUnitMission
 	bool demandGiveWay = false;
 	// Unit paid for movement before turning and will be refunded when actually moving
 	int costPaidUpFront = 0;
-
+	
 	// Turn
 	Vec2<int> targetFacing = {0, 0};
 	bool requireGoal = false;
@@ -162,6 +167,12 @@ class BattleUnitMission
 
 	// ChangeBodyState
 	BodyState targetBodyState = BodyState::Downed;
+
+	// Brainsuck
+	StateRef<BattleUnit> targetUnit;
+	bool attachedToHead = false;
+	bool immuneToTarget = false;
+	float zImpulseRemaining = 0.0f;
 
 	// Mission cancelled (due to unsufficient TUs or something else failing)
 	bool cancelled = false;

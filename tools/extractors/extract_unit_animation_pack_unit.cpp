@@ -23,11 +23,11 @@ void InitialGameStateExtractor::extractAnimationPackUnit(sp<BattleUnitAnimationP
 			if (x == 0 && y == 0)
 				continue;
 
-			// Frames per 100 units
+			// Units per 100 frames
 			static const int pFrames = 300; // Prone
 			static const int wFrames = 300; // Walk
 			static const int rFrames = 600; // Run
-			static const int sFrames = 300; // Strafe
+			static const int sFrames = 200; // Strafe
 			static const int jFrames = 300; // Jump
 
 			// Standart animations
@@ -86,7 +86,18 @@ void InitialGameStateExtractor::extractAnimationPackUnit(sp<BattleUnitAnimationP
 				p->standart_animations[{ItemWieldMode::TwoHanded, HandState::AtEase,
 				                        MovementState::Normal, BodyState::Standing}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 11, {x, y}, wFrames);
-
+				
+				// Reverse walking states: 9, 10, 11
+				p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
+				                        MovementState::Reverse, BodyState::Standing}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 9, {x, y}, wFrames);
+				p->standart_animations[{ItemWieldMode::OneHanded, HandState::AtEase,
+				                        MovementState::Reverse, BodyState::Standing}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 10, {x, y}, wFrames);
+				p->standart_animations[{ItemWieldMode::TwoHanded, HandState::AtEase,
+				                        MovementState::Reverse, BodyState::Standing}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 11, {x, y}, wFrames);
+				
 				// Standing strafing states: 12, 13, 14
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
 				                        MovementState::Strafing, BodyState::Standing}][{x, y}] =
@@ -152,6 +163,16 @@ void InitialGameStateExtractor::extractAnimationPackUnit(sp<BattleUnitAnimationP
 				p->standart_animations[{ItemWieldMode::TwoHanded, HandState::AtEase,
 				                        MovementState::Normal, BodyState::Flying}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 26, {x, y}, wFrames);
+				// "Reverse walking" in the air
+				p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
+				                        MovementState::Reverse, BodyState::Flying}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 24, {x, y}, wFrames);
+				p->standart_animations[{ItemWieldMode::OneHanded, HandState::AtEase,
+				                        MovementState::Reverse, BodyState::Flying}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 25, {x, y}, wFrames);
+				p->standart_animations[{ItemWieldMode::TwoHanded, HandState::AtEase,
+				                        MovementState::Reverse, BodyState::Flying}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 26, {x, y}, wFrames);
 				// "Running" in the air
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
 				                        MovementState::Running, BodyState::Flying}][{x, y}] =
@@ -212,20 +233,46 @@ void InitialGameStateExtractor::extractAnimationPackUnit(sp<BattleUnitAnimationP
 				p->standart_animations[{ItemWieldMode::TwoHanded, HandState::Aiming,
 				                        MovementState::Normal, BodyState::Flying}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 90, {x, y}, wFrames);
+				
+				// Flying aiming strafing animation: 86, 90
+				p->standart_animations[{ItemWieldMode::OneHanded, HandState::Aiming,
+				                        MovementState::Strafing, BodyState::Flying}][{x, y}] =
+				    getAnimationEntry(dataAD, dataUA, dataUF, 86, {x, y}, wFrames);
+				p->standart_animations[{ItemWieldMode::TwoHanded, HandState::Aiming,
+				                        MovementState::Strafing, BodyState::Flying}][{x, y}] =
+				    getAnimationEntry(dataAD, dataUA, dataUF, 90, {x, y}, wFrames);
+				
+				// Flying aiming reverse animation: 86, 90
+				p->standart_animations[{ItemWieldMode::OneHanded, HandState::Aiming,
+				                        MovementState::Reverse, BodyState::Flying}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 86, {x, y}, wFrames);
+				p->standart_animations[{ItemWieldMode::TwoHanded, HandState::Aiming,
+				                        MovementState::Reverse, BodyState::Flying}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 90, {x, y}, wFrames);
 
 				// Standing aiming moving overlay animation: 78, 82
 				p->standart_animations[{ItemWieldMode::OneHanded, HandState::Aiming,
 				                        MovementState::Normal, BodyState::Standing}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 78, {x, y}, true, wFrames);
+				    getAnimationEntry(dataAD, dataUA, dataUF, 78, {x, y}, wFrames, true);
 				p->standart_animations[{ItemWieldMode::TwoHanded, HandState::Aiming,
 				                        MovementState::Normal, BodyState::Standing}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 82, {x, y}, true, wFrames);
+				    getAnimationEntry(dataAD, dataUA, dataUF, 82, {x, y}, wFrames, true);
+				
+				// Standing aiming reverse overlay animation: 78, 82
+				p->standart_animations[{ItemWieldMode::OneHanded, HandState::Aiming,
+				                        MovementState::Reverse, BodyState::Standing}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 78, {x, y}, wFrames, true);
+				p->standart_animations[{ItemWieldMode::TwoHanded, HandState::Aiming,
+				                        MovementState::Reverse, BodyState::Standing}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 82, {x, y}, wFrames, true);
+				
+				// Standing aiming strafing overlay animation: 78, 82
 				p->standart_animations[{ItemWieldMode::OneHanded, HandState::Aiming,
 				                        MovementState::Strafing, BodyState::Standing}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 78, {x, y}, true, wFrames);
+				    getAnimationEntry(dataAD, dataUA, dataUF, 78, {x, y}, sFrames, true);
 				p->standart_animations[{ItemWieldMode::TwoHanded, HandState::Aiming,
 				                        MovementState::Strafing, BodyState::Standing}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 82, {x, y}, true, wFrames);
+				    getAnimationEntry(dataAD, dataUA, dataUF, 82, {x, y}, sFrames, true);
 
 				// Standing firing static animation: 53, 57
 				p->standart_animations[{ItemWieldMode::OneHanded, HandState::Firing,
@@ -267,21 +314,45 @@ void InitialGameStateExtractor::extractAnimationPackUnit(sp<BattleUnitAnimationP
 				                        MovementState::Normal, BodyState::Flying}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 89, {x, y}, wFrames);
 
+				// Flying firing "reverse" animation: 85, 89
+				p->standart_animations[{ItemWieldMode::OneHanded, HandState::Firing,
+				                        MovementState::Reverse, BodyState::Flying}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 85, {x, y}, wFrames);
+				p->standart_animations[{ItemWieldMode::TwoHanded, HandState::Firing,
+				                        MovementState::Reverse, BodyState::Flying}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 89, {x, y}, wFrames);
+
+				// Flying firing "strafing" animation: 85, 89
+				p->standart_animations[{ItemWieldMode::OneHanded, HandState::Firing,
+										MovementState::Strafing, BodyState::Flying}][{x, y}] =
+					getAnimationEntry(dataAD, dataUA, dataUF, 85, { x, y }, sFrames);
+				p->standart_animations[{ItemWieldMode::TwoHanded, HandState::Firing,
+										MovementState::Strafing, BodyState::Flying}][{x, y}] =
+					getAnimationEntry(dataAD, dataUA, dataUF, 89, { x, y }, sFrames);
+
 				// Standing firing moving overlay animation: 77, 81
 				p->standart_animations[{ItemWieldMode::OneHanded, HandState::Firing,
 				                        MovementState::Normal, BodyState::Standing}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 77, {x, y}, true, wFrames);
+				    getAnimationEntry(dataAD, dataUA, dataUF, 77, {x, y}, wFrames, true);
 				p->standart_animations[{ItemWieldMode::TwoHanded, HandState::Firing,
 				                        MovementState::Normal, BodyState::Standing}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 81, {x, y}, true, wFrames);
+				    getAnimationEntry(dataAD, dataUA, dataUF, 81, {x, y}, wFrames, true);
+
+				// Standing firing reverse overlay animation: 77, 81
+				p->standart_animations[{ItemWieldMode::OneHanded, HandState::Firing,
+				                        MovementState::Reverse, BodyState::Standing}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 77, {x, y}, wFrames, true);
+				p->standart_animations[{ItemWieldMode::TwoHanded, HandState::Firing,
+				                        MovementState::Reverse, BodyState::Standing}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 81, {x, y}, wFrames, true);
 
 				// Strafing firing moving overlay animation: 77, 81
 				p->standart_animations[{ItemWieldMode::OneHanded, HandState::Firing,
-					MovementState::Strafing, BodyState::Standing}][{x, y}] =
-					getAnimationEntry(dataAD, dataUA, dataUF, 77, { x, y }, true, wFrames);
+										MovementState::Strafing, BodyState::Standing}][{x, y}] =
+					getAnimationEntry(dataAD, dataUA, dataUF, 77, { x, y }, sFrames, true);
 				p->standart_animations[{ItemWieldMode::TwoHanded, HandState::Firing,
-					MovementState::Strafing, BodyState::Standing}][{x, y}] =
-					getAnimationEntry(dataAD, dataUA, dataUF, 81, { x, y }, true, wFrames);
+										MovementState::Strafing, BodyState::Standing}][{x, y}] =
+					getAnimationEntry(dataAD, dataUA, dataUF, 81, { x, y }, sFrames, true);
 				
 				// Throwing (taken from Body Standing -> Throwing and back animation: 41)
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
@@ -316,15 +387,15 @@ void InitialGameStateExtractor::extractAnimationPackUnit(sp<BattleUnitAnimationP
 				p->body_state_animations[{ItemWieldMode::None, HandState::AtEase,
 				                          MovementState::None, BodyState::Downed,
 				                          BodyState::Standing}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 47, {x, y}, true);
+					getAnimationEntryInv(dataAD, dataUA, dataUF, 47, {x, y});
 				p->body_state_animations[{ItemWieldMode::OneHanded, HandState::AtEase,
 				                          MovementState::None, BodyState::Downed,
 				                          BodyState::Standing}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 47, {x, y}, true);
+					getAnimationEntryInv(dataAD, dataUA, dataUF, 47, {x, y});
 				p->body_state_animations[{ItemWieldMode::TwoHanded, HandState::AtEase,
 				                          MovementState::None, BodyState::Downed,
 				                          BodyState::Standing}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 47, {x, y}, true);
+					getAnimationEntryInv(dataAD, dataUA, dataUF, 47, {x, y});
 
 				// Body Kneeling -> Downned animation: 49
 				p->body_state_animations[{ItemWieldMode::None, HandState::AtEase,
@@ -574,6 +645,16 @@ void InitialGameStateExtractor::extractAnimationPackUnit(sp<BattleUnitAnimationP
 				                          BodyState::Flying}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 91, {x, y}, wFrames);
 
+				// Hand Aiming -> Ease flying reverse animation: 87, 91
+				p->hand_state_animations[{ItemWieldMode::OneHanded, HandState::Aiming,
+				                          HandState::AtEase, MovementState::Reverse,
+				                          BodyState::Flying}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 87, {x, y}, wFrames);
+				p->hand_state_animations[{ItemWieldMode::TwoHanded, HandState::Aiming,
+				                          HandState::AtEase, MovementState::Reverse,
+				                          BodyState::Flying}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 91, {x, y}, wFrames);
+
 				// Hand Ease -> Aiming flying moving animation: 84, 88
 				p->hand_state_animations[{ItemWieldMode::OneHanded, HandState::AtEase,
 				                          HandState::Aiming, MovementState::Normal,
@@ -584,45 +665,95 @@ void InitialGameStateExtractor::extractAnimationPackUnit(sp<BattleUnitAnimationP
 				                          BodyState::Flying}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 88, {x, y}, wFrames);
 
+				// Hand Ease -> Aiming flying moving animation: 84, 88
+				p->hand_state_animations[{ItemWieldMode::OneHanded, HandState::AtEase,
+				                          HandState::Aiming, MovementState::Reverse,
+				                          BodyState::Flying}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 84, {x, y}, wFrames);
+				p->hand_state_animations[{ItemWieldMode::TwoHanded, HandState::AtEase,
+				                          HandState::Aiming, MovementState::Reverse,
+				                          BodyState::Flying}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 88, {x, y}, wFrames);
+
+				// Hand Aiming -> Ease flying strafing animation: 87, 91
+				p->hand_state_animations[{ItemWieldMode::OneHanded, HandState::Aiming,
+				                          HandState::AtEase, MovementState::Strafing,
+				                          BodyState::Flying}][{x, y}] =
+				    getAnimationEntry(dataAD, dataUA, dataUF, 87, {x, y}, sFrames);
+				p->hand_state_animations[{ItemWieldMode::TwoHanded, HandState::Aiming,
+				                          HandState::AtEase, MovementState::Strafing,
+				                          BodyState::Flying}][{x, y}] =
+				    getAnimationEntry(dataAD, dataUA, dataUF, 91, {x, y}, sFrames);
+
+				// Hand Ease -> Aiming flying strafing animation: 84, 88
+				p->hand_state_animations[{ItemWieldMode::OneHanded, HandState::AtEase,
+				                          HandState::Aiming, MovementState::Strafing,
+				                          BodyState::Flying}][{x, y}] =
+				    getAnimationEntry(dataAD, dataUA, dataUF, 84, {x, y}, sFrames);
+				p->hand_state_animations[{ItemWieldMode::TwoHanded, HandState::AtEase,
+				                          HandState::Aiming, MovementState::Strafing,
+				                          BodyState::Flying}][{x, y}] =
+				    getAnimationEntry(dataAD, dataUA, dataUF, 88, {x, y}, sFrames);
+
 				// Hand Aiming -> Ease standing overlay moving animation: 79, 83
 				p->hand_state_animations[{ItemWieldMode::OneHanded, HandState::Aiming,
 				                          HandState::AtEase, MovementState::Normal,
 				                          BodyState::Standing}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 79, {x, y}, true, wFrames);
+				    getAnimationEntry(dataAD, dataUA, dataUF, 79, {x, y}, wFrames, true);
 				p->hand_state_animations[{ItemWieldMode::TwoHanded, HandState::Aiming,
 				                          HandState::AtEase, MovementState::Normal,
 				                          BodyState::Standing}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 83, {x, y}, true, wFrames);
+				    getAnimationEntry(dataAD, dataUA, dataUF, 83, {x, y}, wFrames, true);
+
+				// Hand Aiming -> Ease standing overlay reverse animation: 79, 83
+				p->hand_state_animations[{ItemWieldMode::OneHanded, HandState::Aiming,
+				                          HandState::AtEase, MovementState::Reverse,
+				                          BodyState::Standing}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 79, {x, y}, wFrames, true);
+				p->hand_state_animations[{ItemWieldMode::TwoHanded, HandState::Aiming,
+				                          HandState::AtEase, MovementState::Reverse,
+				                          BodyState::Standing}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 83, {x, y}, wFrames, true);
 
 				// Hand Ease -> Aiming standing overlay moving animation: 76, 80
 				p->hand_state_animations[{ItemWieldMode::OneHanded, HandState::AtEase,
 				                          HandState::Aiming, MovementState::Normal,
 				                          BodyState::Standing}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 76, {x, y}, true, wFrames);
+				    getAnimationEntry(dataAD, dataUA, dataUF, 76, {x, y}, wFrames, true);
 				p->hand_state_animations[{ItemWieldMode::TwoHanded, HandState::AtEase,
 				                          HandState::Aiming, MovementState::Normal,
 				                          BodyState::Standing}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 80, {x, y}, true, wFrames);
+				    getAnimationEntry(dataAD, dataUA, dataUF, 80, {x, y}, wFrames, true);
+
+				// Hand Ease -> Aiming standing overlay moving animation: 76, 80
+				p->hand_state_animations[{ItemWieldMode::OneHanded, HandState::AtEase,
+				                          HandState::Aiming, MovementState::Reverse,
+				                          BodyState::Standing}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 76, {x, y}, wFrames, true);
+				p->hand_state_animations[{ItemWieldMode::TwoHanded, HandState::AtEase,
+				                          HandState::Aiming, MovementState::Reverse,
+				                          BodyState::Standing}][{x, y}] =
+				    getAnimationEntryInv(dataAD, dataUA, dataUF, 80, {x, y}, wFrames, true);
 
 				// Hand Aiming -> Ease standing overlay strafing animation: 79, 83
 				p->hand_state_animations[{ItemWieldMode::OneHanded, HandState::Aiming,
-					HandState::AtEase, MovementState::Strafing,
-					BodyState::Standing}][{x, y}] =
-					getAnimationEntry(dataAD, dataUA, dataUF, 79, { x, y }, true, wFrames);
+										  HandState::AtEase, MovementState::Strafing,
+										  BodyState::Standing}][{x, y}] =
+					getAnimationEntry(dataAD, dataUA, dataUF, 79, { x, y }, true, sFrames);
 				p->hand_state_animations[{ItemWieldMode::TwoHanded, HandState::Aiming,
-					HandState::AtEase, MovementState::Strafing,
-					BodyState::Standing}][{x, y}] =
-					getAnimationEntry(dataAD, dataUA, dataUF, 83, { x, y }, true, wFrames);
+										  HandState::AtEase, MovementState::Strafing,
+										  BodyState::Standing}][{x, y}] =
+					getAnimationEntry(dataAD, dataUA, dataUF, 83, { x, y }, true, sFrames);
 
 				// Hand Ease -> Aiming standing overlay strafing animation: 76, 80
 				p->hand_state_animations[{ItemWieldMode::OneHanded, HandState::AtEase,
-					HandState::Aiming, MovementState::Strafing,
-					BodyState::Standing}][{x, y}] =
-					getAnimationEntry(dataAD, dataUA, dataUF, 76, { x, y }, true, wFrames);
+										  HandState::Aiming, MovementState::Strafing,
+										  BodyState::Standing}][{x, y}] =
+					getAnimationEntry(dataAD, dataUA, dataUF, 76, { x, y }, true, sFrames);
 				p->hand_state_animations[{ItemWieldMode::TwoHanded, HandState::AtEase,
-					HandState::Aiming, MovementState::Strafing,
-					BodyState::Standing}][{x, y}] =
-					getAnimationEntry(dataAD, dataUA, dataUF, 80, { x, y }, true, wFrames);
+										  HandState::Aiming, MovementState::Strafing,
+										  BodyState::Standing}][{x, y}] =
+					getAnimationEntry(dataAD, dataUA, dataUF, 80, { x, y }, true, sFrames);
 			}
 		}
 	}

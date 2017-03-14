@@ -17,6 +17,7 @@ class BattleCommonSampleList
 	sp<Sample> gravlift;
 	sp<Sample> door;
 	sp<Sample> brainsuckerHatch;
+	sp<Sample> brainsuckerSuck;
 	sp<Sample> teleport;
 	sp<Sample> burn;
 	sp<std::list<sp<Sample>>> genericHitSounds;

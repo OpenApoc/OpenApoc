@@ -80,6 +80,8 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state) c
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/terrain/doorwhsh.raw:22050");
 	state.battle_common_sample_list->brainsuckerHatch =
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/extra/brhatch.raw:22050");
+	state.battle_common_sample_list->brainsuckerSuck=
+		fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/aliens/attacks/brainsuk.raw:22050");
 	state.battle_common_sample_list->teleport =
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/teleport.raw:22050");
 	state.battle_common_sample_list->burn =

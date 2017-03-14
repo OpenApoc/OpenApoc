@@ -28,18 +28,6 @@ void BattleItem::die(GameState &state, bool violently)
 	{
 		item->explode(state);
 	}
-	else if (item->getPayloadType()->damage_type->effectType == DamageType::EffectType::Brainsucker)
-	{
-		// Sound for hatching
-		if (state.battle_common_sample_list->brainsuckerHatch)
-		{
-			fw().soundBackend->playSample(state.battle_common_sample_list->brainsuckerHatch,
-			                              position, 0.25f);
-		}
-		LogWarning("Hatched! Spawn brainsucker!");
-		// spawn: throwing body facing 0,1
-		// set mission stand up
-	}
 	auto this_shared = shared_from_this();
 	state.current_battle->items.remove(this_shared);
 	this->tileObject->removeFromMap();

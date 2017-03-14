@@ -262,7 +262,12 @@ void TileObjectBattleUnit::setPosition(Vec3<float> newPosition)
 	// (theis positions only differ by 1 pixel)
 	// We could introduce an option to disallow this?
 	// Right now, here goes vanilla behavior
-	if (u->isLarge())
+	if (u->current_movement_state == MovementState::Brainleap
+		|| u->current_movement_state == MovementState::Brainsuck)
+	{
+		// Leaping headcrab occupies nothing
+	}
+	else if (u->isLarge())
 	{
 		// Large units occupy 2x2x2 box, where position is the point
 		// with max x, max y and min z

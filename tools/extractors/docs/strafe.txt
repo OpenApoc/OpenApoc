@@ -1,0 +1,32 @@
+Strafe is used in two cases:
+
+1) Player requests it 
+- Benefit: No need to turn to see enemy behind corner
+- Uncompatible with Running or being prone, Unit will always walk
+- Along whole way unit will keep relative facing to target
+
+2) Auto strafe in cautious/normal behavior
+- Only into adjacent tile
+- Unit will pop out when weapon ready to fire, fire, pop back immediately
+- Effectively, works like this:
+	- Unit chooses to go into "strafe fire mode" and has two tiles to remember: attack tile and cover tile
+	- If idle and not in on cover tile: Strafe into cover tile
+	- If weapon ready to fire: strafe into attack tile
+	
+	
+[Strafe Attack] is a new BattleUnitMission
+
+Start params:
+- Cover tile
+- Target
+
+Remember:
+- Attack tile (the one we're at)
+- Facing
+
+Stops when:
+- Unit is given order
+- Target is dead and we are on attack tile
+- Have LOF to target and we are on cover tile
+
+	

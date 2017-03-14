@@ -143,6 +143,11 @@ class Tile
 	                                          sp<TileObjectBattleUnit> exceptThis = nullptr,
 	                                          bool onlyLarge = false,
 	                                          bool checkLargeSpace = false) const;
+	std::list<sp<BattleUnit>> getUnits(bool onlyConscious, bool mustOccupy = false,
+		bool mustBeStatic = false,
+		sp<TileObjectBattleUnit> exceptThis = nullptr,
+		bool onlyLarge = false,
+		bool checkLargeSpace = false) const;
 	// Returns items that can be collected by standing in this tile)
 	std::list<sp<BattleItem>> getItems();
 	// Returns resting position for items and units in the tile

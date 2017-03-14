@@ -37,7 +37,7 @@ sp<BattleUnitAnimationPack::AnimationEntry> e2)
 
 sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimationEntry(
     const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
-    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction, int frames_per_100_units,
+    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction, int units_per_100_frames,
     int split_point, bool left_side, bool isOverlay, bool removeItem, Vec2<int> targetOffset,
     Vec2<int> beginOffset, bool inverse, int extraEndFrames, bool singleFrame) const
 {
@@ -123,7 +123,7 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimat
 
 	e->is_overlay = isOverlay;
 	e->frame_count = e->frames.size();
-	e->frames_per_100_units = frames_per_100_units;
+	e->units_per_100_frames = units_per_100_frames;
 
 	return e;
 }
@@ -225,6 +225,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 	}
 	if (name == "bsk")
 	{
+		extractAnimationPackBsk(p, dataAD, dataUA, dataUF);
 	}
 	if (name == "chrys1")
 	{

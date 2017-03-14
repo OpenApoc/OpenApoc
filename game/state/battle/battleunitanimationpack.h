@@ -64,8 +64,10 @@ class BattleUnitAnimationPack : public StateObject
 		bool is_overlay = false;
 		// Just for convenience
 		int frame_count = 0;
-		// In case we have non-integer amount of frames per unit
-		int frames_per_100_units = 0;
+		// Amount of ingame units that correspond to 100 frames of this animation
+		// The bigger the number, the slower the animation is played
+		// Nominated in case we have non-integer amount of units per frame
+		int units_per_100_frames = 0;
 	};
 
 	class AnimationKey

@@ -201,7 +201,7 @@ void BattleUnitAnimationPack::drawShadow(
 		if (currentHands == HandState::Firing)
 			frame = e->frame_count - hands_animation_delay;
 		else
-			frame = (distance_travelled * 100 / e->frames_per_100_units) % e->frame_count;
+			frame = (distance_travelled * 100 / e->units_per_100_frames) % e->frame_count;
 	}
 
 	if ((int)e->frames.size() <= frame)
@@ -258,7 +258,7 @@ void BattleUnitAnimationPack::drawUnit(
 			                            HandState::AtEase, movement, currentBody};
 			e_legs = standart_animations[standardKey][facing];
 			frame_legs =
-			    (distance_travelled * 100 / e_legs->frames_per_100_units) % e_legs->frame_count;
+			    (distance_travelled * 100 / e_legs->units_per_100_frames) % e_legs->frame_count;
 		}
 	}
 	else if (currentBody != targetBody)
@@ -305,7 +305,7 @@ void BattleUnitAnimationPack::drawUnit(
 		if (currentHands == HandState::Firing)
 			frame = e->frame_count - hands_animation_delay;
 		else
-			frame = (distance_travelled * 100 / e->frames_per_100_units) % e->frame_count;
+			frame = (distance_travelled * 100 / e->units_per_100_frames) % e->frame_count;
 		// Technically, if we're aiming, and this is overlay, we must always set frame to 0
 		// But since frame_count is 1, the previous line attains the same result, so why bother
 		if (e->is_overlay)
@@ -316,7 +316,7 @@ void BattleUnitAnimationPack::drawUnit(
 			                    HandState::AtEase, movement, currentBody};
 			e_legs = standart_animations[key][facing];
 			frame_legs =
-			    (distance_travelled * 100 / e_legs->frames_per_100_units) % e_legs->frame_count;
+			    (distance_travelled * 100 / e_legs->units_per_100_frames) % e_legs->frame_count;
 		}
 	}
 

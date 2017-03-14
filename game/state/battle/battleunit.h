@@ -45,6 +45,8 @@ static const unsigned TICKS_PER_LOWMORALE_STATE = TICKS_PER_TURN;
 static const unsigned LOWMORALE_CHECK_INTERVAL = TICKS_PER_TURN;
 // How frequently unit tracks its target
 static const unsigned LOS_CHECK_INTERVAL_TRACKING = TICKS_PER_SECOND / 4;
+// How many times to wait for MIA target to come back before giving up
+static const unsigned TIMES_TO_WAIT_FOR_MIA_TARGET = 2 * TICKS_PER_SECOND / LOS_CHECK_INTERVAL_TRACKING;
 
 class TileObjectBattleUnit;
 class TileObjectShadow;
@@ -162,6 +164,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	TargetingMode targetingMode = TargetingMode::NoTarget;
 	// Tile we're targeting right now (or tile with unit we're targeting, if targeting unit)
 	Vec3<int> targetTile;
+	// How many times we checked and target we are ready to fire on was MIA
+	int timesTargetMIA = 0;
 	// Unit we're targeting right now
 	StateRef<BattleUnit> targetUnit;
 	// Unit we're ordered to focus on (in real time)
@@ -182,6 +186,10 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	unsigned int ticksAccumulatedToNextPsiCheck = 0;
 	// Map of units and attacks in progress against this unit
 	std::map<UString, PsiStatus> psiAttackers;
+
+	// Brainsucking
+
+	StateRef<BattleUnit> brainSucker;
 
 	// Stats
 
@@ -272,6 +280,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Vision
 
+	// Item shown in unit's hands
+	// Units without inventory never show items in hands
 	StateRef<AEquipmentType> displayedItem;
 	// Visible units from other orgs
 	std::set<StateRef<BattleUnit>> visibleUnits;
@@ -365,7 +375,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	bool shouldPlaySoundNow();
 	unsigned int getWalkSoundIndex();
 	void startFalling();
-	void startMoving();
+	void startMoving(GameState &state);
 
 	// Turning
 
@@ -464,6 +474,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	Vec3<float> getMuzzleLocation() const;
 	// Get thrown item's departure location
 	Vec3<float> getThrownItemLocation() const;
+	// Get unit's head location (for brainsucker attachment)
+	Vec3<float> getHeadLocation() const;
 
 	// Determine body part hit
 	BodyPart determineBodyPartHit(StateRef<DamageType> damageType, Vec3<float> cposition,

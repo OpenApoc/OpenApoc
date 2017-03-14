@@ -368,7 +368,7 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 
 void AEquipment::prime(bool onImpact, int triggerDelay, float triggerRange)
 {
-	if (type->type != AEquipmentType::Type::Grenade)
+	if (type->type != AEquipmentType::Type::Grenade && type->type != AEquipmentType::Type::Ammo)
 	{
 		return;
 	}
@@ -522,6 +522,11 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 		// Fire
 		Vec3<float> velocity = targetPosition - unitPos;
 		velocity = glm::normalize(velocity);
+		// Move projectile a little bit forward so that it does not shoot from inside our chest
+		// We are protecting firer from collisison for first frames anyway, so this is redundant
+		// for all cases except when a unit fires with a brainsucker on it's head!
+		unitPos += velocity * 3.0f / 8.0f;
+		// Scale velocity according to speed
 		velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 		auto p = mksp<Projectile>(
 		    payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam, unit, targetUnit,

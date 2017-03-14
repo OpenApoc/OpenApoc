@@ -116,37 +116,40 @@ class InitialGameStateExtractor
 	sp<BattleUnitAnimationPack::AnimationEntry> getAnimationEntry(
 	    const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
 	    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
-	    int frames_per_100_units, int split_point, bool left_side, bool isOverlay = false,
+	    //
+		int units_per_100_frames, int split_point, bool left_side, bool isOverlay = false,
 	    bool removeItem = false, Vec2<int> targetOffset = {0, 0}, Vec2<int> beginOffset = {0, 0},
 	    bool inverse = false, int extraEndFrames = 0, bool singleFrame = false) const;
 
-	sp<BattleUnitAnimationPack::AnimationEntry>
-	getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
-	                  const std::vector<AnimationDataUA> &dataUA,
-	                  std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
-	                  int frames_per_100_units = 100, bool isOverlay = false,
-	                  Vec2<int> targetOffset = {0, 0}, Vec2<int> beginOffset = {0, 0}) const
+	sp<BattleUnitAnimationPack::AnimationEntry> getAnimationEntry(
+		const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
+	    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
+	    //
+		int units_per_100_frames = 100, bool isOverlay = false,
+	    Vec2<int> targetOffset = {0, 0}, Vec2<int> beginOffset = {0, 0}) const
 	{
-		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, frames_per_100_units, 0,
+		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, units_per_100_frames, 0,
 		                         false, isOverlay, false, targetOffset, beginOffset);
 	}
 
 	sp<BattleUnitAnimationPack::AnimationEntry> getAnimationEntry(
-	    const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
-	    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction, bool inverse) const
-	{
-		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, 100, 0, false, false,
-		                         false, {0, 0}, {0, 0}, inverse);
-	}
-
-	sp<BattleUnitAnimationPack::AnimationEntry>
-	getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
-	                  const std::vector<AnimationDataUA> &dataUA,
-	                  std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
-	                  Vec2<int> targetOffset, Vec2<int> beginOffset) const
+		const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
+	    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
+		//
+	    Vec2<int> targetOffset, Vec2<int> beginOffset) const
 	{
 		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, 100, 0, false, false,
 		                         false, targetOffset, beginOffset);
+	}
+
+	sp<BattleUnitAnimationPack::AnimationEntry> getAnimationEntryInv(
+		const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
+		std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
+		//
+		int units_per_100_frames = 100, bool isOverlay = false) const
+	{
+		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, units_per_100_frames, 0, false, isOverlay,
+			false, { 0, 0 }, { 0, 0 }, true);
 	}
 
 	Vec2<int> gPrOff(Vec2<int> facing) const;

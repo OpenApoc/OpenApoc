@@ -55,7 +55,9 @@ enum class MovementState
 	Normal,
 	Running,
 	Strafing,
-	Brainsucker
+	Reverse,
+	Brainleap,
+	Brainsuck,
 };
 enum class AEquipmentSlotType
 {
@@ -313,7 +315,7 @@ class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 	// Following members are not serialized, but rather are set up in the initBattle method
 
 	sp<AEquipment> leftHandItem;  // Left hand item, frequently accessed so will be stored here
-	sp<AEquipment> rightHandItem; // Left hand item, frequently accessed so will be stored here
+	sp<AEquipment> rightHandItem; // Right hand item, frequently accessed so will be stored here
 
 	void destroy() override;
 };

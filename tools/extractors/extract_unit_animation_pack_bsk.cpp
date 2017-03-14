@@ -32,14 +32,12 @@ void InitialGameStateExtractor::extractAnimationPackBsk(sp<BattleUnitAnimationPa
 				// Downed state: 5's last frame (#2)
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 				                        BodyState::Downed}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 5, {x, y}, 100, 2, false, false,
-				                      false, {0, 0}, {0, 0}, false, 0, true);
+				    getAnimationEntry(dataAD, dataUA, dataUF, 5, {x, y}, 100, 2, false);
 
 				// Standing state: 2's first frame
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 				                        BodyState::Standing}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 2, {x, y}, 100, 0, false, false,
-				                      false, {0, 0}, {0, 0}, false, 0, true);
+				    getAnimationEntry(dataAD, dataUA, dataUF, 2, {x, y}, 100, 1, true);
 
 				// Walking state: 2
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
@@ -51,16 +49,25 @@ void InitialGameStateExtractor::extractAnimationPackBsk(sp<BattleUnitAnimationPa
 				                        MovementState::Running, BodyState::Standing}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 2, {x, y}, wFrames);
 
-				// Flying state: 3's last frame (#9)
+				// Leaping starting state: 3's first frame
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
-				                        MovementState::Brainsucker, BodyState::Flying}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 3, {x, y}, 100, 9, false, false,
-				                      false, {0, 0}, {0, 0}, false, 0, true);
+					MovementState::Brainleap, BodyState::Standing}][{x, y}] =
+					getAnimationEntry(dataAD, dataUA, dataUF, 3, { x, y }, 100, 1, true);
+
+				// Jumping moving state: 3's last frame (#9)
+				p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
+				                        MovementState::Brainleap, BodyState::Jumping}][{x, y}] =
+				    getAnimationEntry(dataAD, dataUA, dataUF, 3, {x, y}, 100, 9, false);
+
+				// Jumping static state: 3's last frame (#9)
+				p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
+					MovementState::None, BodyState::Jumping}][{x, y}] =
+					getAnimationEntry(dataAD, dataUA, dataUF, 3, { x, y }, 100, 9, false);
 
 				// Sucking state: 4
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
-				                        MovementState::Brainsucker, BodyState::Flying}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 4, {x, y});
+				                        MovementState::Brainsuck, BodyState::Jumping}][{x, y}] =
+				    getAnimationEntry(dataAD, dataUA, dataUF, 4, {x, y}, 100);
 			}
 
 			// Body state change animations
@@ -71,14 +78,19 @@ void InitialGameStateExtractor::extractAnimationPackBsk(sp<BattleUnitAnimationPa
 				                          BodyState::Downed}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 5, {x, y});
 
-				// Body Standing -> Flying animation: 3
+				// Body Standing -> Jumping animation: 3
 				p->body_state_animations[{ItemWieldMode::None, HandState::AtEase,
-				                          MovementState::Brainsucker, BodyState::Standing,
-				                          BodyState::Flying}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 5, {x, y});
+				                          MovementState::Brainleap, BodyState::Standing,
+				                          BodyState::Jumping}][{x, y}] =
+				    getAnimationEntry(dataAD, dataUA, dataUF, 3, {x, y});
 			}
 		}
 	}
+
+	// Brainsucker ready to pop image
+	p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
+		BodyState::Throwing}][{0, 1}] =
+		getAnimationEntry(dataAD, dataUA, dataUF, 1, { 0, 1 }, 100, 1, true);
 
 	// Brainsucker popping up animation (Throwing - > Standing)
 	p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,

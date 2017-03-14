@@ -109,7 +109,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	// Move a group of units in formation
 	static void groupMove(GameState &state, std::list<StateRef<BattleUnit>> &selectedUnits,
-	                      Vec3<int> targetLocation, bool demandGiveWay = false,
+	                      Vec3<int> targetLocation, int facingDelta = 0, bool demandGiveWay = false,
 	                      bool useTeleporter = false);
 
 	int getLosBlockID(int x, int y, int z) const;

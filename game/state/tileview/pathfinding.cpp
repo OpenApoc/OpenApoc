@@ -757,7 +757,7 @@ std::list<int> Battle::findLosBlockPath(int origin, int destination, BattleUnitT
 
 // FIXME: Implement usage of teleporters in group move
 void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &selectedUnits,
-                       Vec3<int> targetLocation, bool demandGiveWay, bool useTeleporter)
+                       Vec3<int> targetLocation, int facingDelta, bool demandGiveWay, bool useTeleporter)
 {
 	std::ignore = useTeleporter;
 	// Legend:
@@ -857,7 +857,7 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 	else if (selectedUnits.size() == 1)
 	{
 		selectedUnits.front()->setMission(
-		    state, BattleUnitMission::gotoLocation(*selectedUnits.front(), targetLocation, 0,
+		    state, BattleUnitMission::gotoLocation(*selectedUnits.front(), targetLocation, facingDelta,
 		                                           demandGiveWay, true, 20, false));
 		return;
 	}
@@ -889,7 +889,7 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 		auto curUnit = *itUnit;
 		log += format("\nTrying unit %s for leader", curUnit.id);
 
-		auto mission = BattleUnitMission::gotoLocation(*curUnit, targetLocation, 0, demandGiveWay,
+		auto mission = BattleUnitMission::gotoLocation(*curUnit, targetLocation, facingDelta, demandGiveWay,
 		                                               true, 20, false);
 		bool missionAdded = curUnit->setMission(state, mission);
 		if (missionAdded)
@@ -1020,7 +1020,7 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 			{
 				log += format("\nLocation checks out, pathing to it");
 				unit->setMission(state,
-				                 BattleUnitMission::gotoLocation(*unit, targetLocationOffsetted, 0,
+				                 BattleUnitMission::gotoLocation(*unit, targetLocationOffsetted, facingDelta,
 				                                                 demandGiveWay, true, 20, false));
 				break;
 			}
