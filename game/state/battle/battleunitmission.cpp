@@ -164,7 +164,6 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 				&& jumped
 				&& canEnterTile(middle, to, false, jumped, cost, doorInTheWay, ignoreStaticUnits, ignoreAllUnits))
 			{
-				cost = (toPos.x != fromPos.x && toPos.y != fromPos.y) ? 6.0f : 4.0f;
 				return true;
 			}
 		}
@@ -991,24 +990,32 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 	}
 
 	// STEP 07: Calculate movement cost modifier
+	// If jumping then cost is preset (2x normal movement cost)
+	if (!allowJumping && jumped)
+	{
+		cost = (toPos.x != fromPos.x && toPos.y != fromPos.y) ? 9.0f : 6.0f;
+	}
+	else
 	// It costs 1x to move to adjacent tile, 1.5x to move diagonally,
 	// 2x to move diagonally to another layer.
 	// Also, it costs 0x to fall, but we have checked for that above
-	cost = (float)costInt;
-	float costModifier = 0.5f;
-	if (fromPos.x != toPos.x)
 	{
-		costModifier += 0.5f;
+		cost = (float)costInt;
+		float costModifier = 0.5f;
+		if (fromPos.x != toPos.x)
+		{
+			costModifier += 0.5f;
+		}
+		if (fromPos.y != toPos.y)
+		{
+			costModifier += 0.5f;
+		}
+		if (fromPos.z != toPos.z)
+		{
+			costModifier += 0.5f;
+		}
+		cost *= costModifier;
 	}
-	if (fromPos.y != toPos.y)
-	{
-		costModifier += 0.5f;
-	}
-	if (fromPos.z != toPos.z)
-	{
-		costModifier += 0.5f;
-	}
-	cost *= costModifier;
 
 	return true;
 }

@@ -16,8 +16,8 @@ namespace
 class PathNode
 {
   public:
-	PathNode(float costToGetHere, float distanceToGoal, PathNode *parentNode, Tile *thisTile)
-	    : costToGetHere(costToGetHere), parentNode(parentNode), thisTile(thisTile),
+	PathNode(float costToGetHere, float trueCost, float distanceToGoal, PathNode *parentNode, Tile *thisTile)
+	    : costToGetHere(costToGetHere), trueCost(trueCost), parentNode(parentNode), thisTile(thisTile),
 	      distanceToGoal(distanceToGoal)
 	{
 	}
@@ -37,6 +37,7 @@ class PathNode
 	}
 
 	float costToGetHere;
+	float trueCost;
 	PathNode *parentNode;
 	Tile *thisTile;
 	float distanceToGoal;
@@ -165,7 +166,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	}
 
 	auto startNode =
-	    new PathNode(0.0f, canEnterTile.getDistance(origin, goalPositionStart, goalPositionEnd),
+	    new PathNode(0.0f, 0.0f, canEnterTile.getDistance(origin, goalPositionStart, goalPositionEnd),
 	                 nullptr, startTile);
 	nodesToDelete.push_back(startNode);
 	fringe.emplace_back(startNode);
@@ -240,10 +241,10 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					{
 						continue;
 					}
-					float cost = 0.0f;
+					float thisCost = 0.0f;
 					bool unused = false;
 					bool jumped = false;
-					if (!canEnterTile.canEnterTile(nodeToExpand->thisTile, tile, true, jumped, cost, unused,
+					if (!canEnterTile.canEnterTile(nodeToExpand->thisTile, tile, true, jumped, thisCost, unused,
 					                               ignoreStaticUnits, ignoreAllUnits))
 						continue;
 					// Jumped flag set, must immediately land
@@ -251,19 +252,24 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					{
 						auto nextNextPosition = nextPosition + Vec3<int>{x, y, 0};
 						if (!tileIsValid(nextNextPosition))
+						{
 							continue;
+						}
 						auto nextTile = this->getTile(nextNextPosition);
-						if (!canEnterTile.canEnterTile(tile, nextTile, false, jumped, cost, unused,
+						if (!canEnterTile.canEnterTile(tile, nextTile, false, jumped, thisCost, unused,
 							ignoreStaticUnits, ignoreAllUnits))
+						{
 							continue;
-						// Jump success, cost of jump ignores tile penalties
+						}
+						// Jump success, replace values
 						nextPosition = nextNextPosition;
 						tile = nextTile;
-						cost = (x != 0 && y != 0) ? 6.0f : 4.0f;
 					}
 					float newNodeCost = nodeToExpand->costToGetHere;
+					float newTrueCost = nodeToExpand->trueCost;
 
-					newNodeCost += cost / canEnterTile.pathOverheadAlloawnce();
+					newNodeCost += thisCost * (jumped ? 2 : 1) / canEnterTile.pathOverheadAlloawnce();
+					newTrueCost += thisCost;
 
 					// make pathfinder biased towards vehicle's altitude preference
 					newNodeCost += canEnterTile.adjustCost(nextPosition, z);
@@ -273,7 +279,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 						continue;
 
 					auto newNode = new PathNode(
-					    newNodeCost, destinationIsSingleTile
+					    newNodeCost, newTrueCost, destinationIsSingleTile
 					                     ? canEnterTile.getDistance(nextPosition, goalPositionStart)
 					                     : canEnterTile.getDistance(nextPosition, goalPositionStart,
 					                                                goalPositionEnd),
@@ -336,7 +342,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	auto result = closestNodeSoFar->getPathToNode();
 	if (cost)
 	{
-		*cost = closestNodeSoFar->costToGetHere * canEnterTile.pathOverheadAlloawnce();
+		*cost = closestNodeSoFar->trueCost;
 	}
 
 	for (auto &p : nodesToDelete)
