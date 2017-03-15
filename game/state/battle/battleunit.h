@@ -30,6 +30,8 @@
 #define DISTANCE_TO_RELAY_VISIBLE_ENEMY_INFORMATION 5
 // How far does unit see
 #define VIEW_DISTANCE 20
+// Base movement ticks consumption rate, this allows us to divide by 2,3,4,5,6,8,9 or 10
+#define BASE_MOVETICKS_CONSUMPTION_RATE 72
 
 namespace OpenApoc
 {

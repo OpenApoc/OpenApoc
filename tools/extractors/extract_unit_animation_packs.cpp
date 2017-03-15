@@ -39,7 +39,7 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimat
     const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
     std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction, int units_per_100_frames,
     int split_point, bool left_side, bool isOverlay, bool removeItem, Vec2<int> targetOffset,
-    Vec2<int> beginOffset, bool inverse, int extraEndFrames, bool singleFrame) const
+    Vec2<int> beginOffset, bool inverse, int extraEndFrames, bool singleFrame, bool doubleFrames) const
 {
 	static const std::map<Vec2<int>, int> offset_dir_map = {
 	    {{0, -1}, 0}, {{1, -1}, 1}, {{1, 0}, 2},  {{1, 1}, 3},
@@ -68,7 +68,10 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimat
 		auto data = dataUF[offset_uf + k];
 
 		e->frames.push_back(BattleUnitAnimationPack::AnimationEntry::Frame());
-
+		if (doubleFrames)
+		{
+			e->frames.push_back(BattleUnitAnimationPack::AnimationEntry::Frame());
+		}
 		for (int j = 0; j < 7; j++)
 		{
 			int part_idx = data.draw_order[j];
@@ -108,11 +111,15 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimat
 					         part_idx, offset_uf, j);
 					break;
 			}
-			e->frames[i - from].unit_image_draw_order.push_back(part_type);
-			e->frames[i - from].unit_image_parts[part_type] =
-			    BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock(
-			        data.parts[part_idx].frame_idx, data.parts[part_idx].x_offset + x_offset,
-			        data.parts[part_idx].y_offset + y_offset);
+			for (int f = 0; f < (doubleFrames ? 2 : 1); f++)
+			{
+				e->frames[(i - from)*(doubleFrames ? 2 : 1) + f].unit_image_draw_order.push_back(part_type);
+				e->frames[(i - from)*(doubleFrames ? 2 : 1) + f].unit_image_parts[part_type] =
+					BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock(
+						data.parts[part_idx].frame_idx, data.parts[part_idx].x_offset + x_offset,
+						data.parts[part_idx].y_offset + y_offset);
+			}
+
 		}
 	}
 

@@ -32,12 +32,13 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 	                  bool ignoreAllUnits = false) const override
 	{
 		float nothing;
-		bool none;
-		return canEnterTile(from, to, nothing, none, ignoreStaticUnits, ignoreAllUnits);
+		bool none1;
+		bool none2;
+		return canEnterTile(from, to, false, none1, nothing, none2, ignoreStaticUnits, ignoreAllUnits);
 	}
 
 	// Support 'from' being nullptr for if a vehicle is being spawned in the map
-	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &, bool, bool) const override
+	bool canEnterTile(Tile *from, Tile *to, bool allowJumping, bool &jumped, float &cost, bool &, bool, bool) const override
 	{
 		Vec3<int> fromPos = {0, 0, 0};
 		if (from)

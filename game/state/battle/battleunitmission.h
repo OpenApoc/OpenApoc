@@ -37,7 +37,7 @@ class BattleUnitTileHelper : public CanEnterTileHelper
 
 	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
 	                  bool ignoreAllUnits = false) const override;
-	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay,
+	bool canEnterTile(Tile *from, Tile *to, bool allowJumping, bool &jumped, float &cost, bool &doorInTheWay,
 	                  bool ignoreStaticUnits = false, bool ignoreAllUnits = false) const override;
 
 	float pathOverheadAlloawnce() const override { return 1.25f; }

@@ -242,9 +242,25 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					}
 					float cost = 0.0f;
 					bool unused = false;
-					if (!canEnterTile.canEnterTile(nodeToExpand->thisTile, tile, cost, unused,
+					bool jumped = false;
+					if (!canEnterTile.canEnterTile(nodeToExpand->thisTile, tile, true, jumped, cost, unused,
 					                               ignoreStaticUnits, ignoreAllUnits))
 						continue;
+					// Jumped flag set, must immediately land
+					if (jumped)
+					{
+						auto nextNextPosition = nextPosition + Vec3<int>{x, y, 0};
+						if (!tileIsValid(nextNextPosition))
+							continue;
+						auto nextTile = this->getTile(nextNextPosition);
+						if (!canEnterTile.canEnterTile(tile, nextTile, false, jumped, cost, unused,
+							ignoreStaticUnits, ignoreAllUnits))
+							continue;
+						// Jump success, cost of jump ignores tile penalties
+						nextPosition = nextNextPosition;
+						tile = nextTile;
+						cost = (x != 0 && y != 0) ? 6.0f : 4.0f;
+					}
 					float newNodeCost = nodeToExpand->costToGetHere;
 
 					newNodeCost += cost / canEnterTile.pathOverheadAlloawnce();

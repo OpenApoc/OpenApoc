@@ -333,6 +333,7 @@ void Tile::updateBattlescapeUnitPresent()
 
 void Tile::updateBattlescapeParameters()
 {
+	bool providedGroundUpwards = solidGround && height >= 0.9625f;
 	height = 0.0f;
 	movementCostIn = -1; // -1 means empty, and will be set to 4 afterwards
 	movementCostOver = 255;
@@ -405,7 +406,7 @@ void Tile::updateBattlescapeParameters()
 		auto t = map.getTile(position.x, position.y, position.z - 1);
 		// Floating point precision is lacking somtimes so even though we have to compare with
 		// 0.975, we do this
-		canStand = t->solidGround && (t->height >= 0.9625f);
+		canStand = t->solidGround && t->height >= 0.9625f;
 		if (canStand)
 		{
 			movementCostIn = std::max(movementCostIn, t->movementCostOver);
@@ -432,6 +433,12 @@ void Tile::updateBattlescapeParameters()
 		}
 	}
 	height = height / (float)TILE_Z_BATTLE;
+	// Propagate update upwards if we provided ground and ceased to do so
+	if (!(solidGround && height >= 0.9625f) && providedGroundUpwards && position.z + 1 < map.size.z)
+	{
+		auto t = map.getTile(position.x, position.y, position.z + 1);
+		t->updateBattlescapeParameters();
+	}
 }
 
 bool Tile::updateVisionBlockage(int value)

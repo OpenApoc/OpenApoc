@@ -185,8 +185,8 @@ class CanEnterTileHelper
 {
   public:
 	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
-	virtual bool canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay,
-	                          bool ignoreStaticUnits = false,
+	virtual bool canEnterTile(Tile *from, Tile *to, bool allowJumping, bool &jumped, float &cost, bool &doorInTheWay,
+							  bool ignoreStaticUnits = false,
 	                          bool ignoreAllUnits = false) const = 0;
 	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
 	virtual bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,

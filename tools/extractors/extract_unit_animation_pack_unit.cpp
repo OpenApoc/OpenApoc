@@ -142,6 +142,17 @@ void InitialGameStateExtractor::extractAnimationPackUnit(sp<BattleUnitAnimationP
 				                        MovementState::Normal, BodyState::Jumping}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 22, {x, y}, jFrames);
 
+				//// Jumping static state: 22
+				//p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
+				//                        MovementState::None, BodyState::Jumping}][{x, y}] =
+				//    getAnimationEntry(dataAD, dataUA, dataUF, 22, {x, y}, jFrames);
+				//p->standart_animations[{ItemWieldMode::OneHanded, HandState::AtEase,
+				//                        MovementState::None, BodyState::Jumping}][{x, y}] =
+				//    getAnimationEntry(dataAD, dataUA, dataUF, 22, {x, y}, jFrames);
+				//p->standart_animations[{ItemWieldMode::TwoHanded, HandState::AtEase,
+				//                        MovementState::None, BodyState::Jumping}][{x, y}] =
+				//    getAnimationEntry(dataAD, dataUA, dataUF, 22, {x, y}, jFrames);
+
 				// Flying standing/moving/running/strafing state: 24, 25, 26
 				// Standing
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
@@ -443,15 +454,15 @@ void InitialGameStateExtractor::extractAnimationPackUnit(sp<BattleUnitAnimationP
 				p->body_state_animations[{ItemWieldMode::None, HandState::AtEase,
 				                          MovementState::Normal, BodyState::Standing,
 				                          BodyState::Jumping}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 21, {x, y}, jFrames);
+				    getAnimationEntryDbl(dataAD, dataUA, dataUF, 21, {x, y}, jFrames);
 				p->body_state_animations[{ItemWieldMode::OneHanded, HandState::AtEase,
 				                          MovementState::Normal, BodyState::Standing,
 				                          BodyState::Jumping}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 21, {x, y}, jFrames);
+				    getAnimationEntryDbl(dataAD, dataUA, dataUF, 21, {x, y}, jFrames);
 				p->body_state_animations[{ItemWieldMode::TwoHanded, HandState::AtEase,
 				                          MovementState::Normal, BodyState::Standing,
 				                          BodyState::Jumping}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 21, {x, y}, jFrames);
+				    getAnimationEntryDbl(dataAD, dataUA, dataUF, 21, {x, y}, jFrames);
 
 				// Body Jumping -> Standing animation: 23, 28, 29
 				p->body_state_animations[{ItemWieldMode::None, HandState::AtEase,
@@ -466,6 +477,20 @@ void InitialGameStateExtractor::extractAnimationPackUnit(sp<BattleUnitAnimationP
 				                          MovementState::Normal, BodyState::Jumping,
 				                          BodyState::Standing}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 29, {x, y}, jFrames);
+
+				// Body Jumping -> Standing animation (static): 23, 28, 29
+				/*p->body_state_animations[{ItemWieldMode::None, HandState::AtEase,
+				                          MovementState::None, BodyState::Jumping,
+				                          BodyState::Standing}][{x, y}] =
+				    getAnimationEntry(dataAD, dataUA, dataUF, 23, {x, y}, jFrames);
+				p->body_state_animations[{ItemWieldMode::OneHanded, HandState::AtEase,
+				                          MovementState::None, BodyState::Jumping,
+				                          BodyState::Standing}][{x, y}] =
+				    getAnimationEntry(dataAD, dataUA, dataUF, 28, {x, y}, jFrames);
+				p->body_state_animations[{ItemWieldMode::TwoHanded, HandState::AtEase,
+				                          MovementState::None, BodyState::Jumping,
+				                          BodyState::Standing}][{x, y}] =
+				    getAnimationEntry(dataAD, dataUA, dataUF, 29, {x, y}, jFrames);*/
 
 				// Body Standing -> Kneeling animation: 35, 36, 37
 				p->body_state_animations[{ItemWieldMode::None, HandState::AtEase,

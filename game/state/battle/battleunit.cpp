@@ -1864,7 +1864,7 @@ bool BattleUnit::updateMovement(GameState &state, unsigned int &moveTicksRemaini
 			if (!missions.empty() && missions.front()->type == BattleUnitMission::Type::Brainsuck && getNextDestination(state, nextGoal))
 			{
 				goalPosition = nextGoal;
-				movement_ticks_passed += moveTicksRemaining;
+				movement_ticks_passed += moveTicksRemaining / BASE_MOVETICKS_CONSUMPTION_RATE;
 				moveTicksRemaining = 0;
 				setPosition(state, goalPosition);
 				atGoal = true;
@@ -1883,14 +1883,26 @@ bool BattleUnit::updateMovement(GameState &state, unsigned int &moveTicksRemaini
 			{
 				speedModifier = std::max((unsigned)1, flyingSpeedModifier);
 			}
-
 			Vec3<float> vectorToGoal = goalPosition - getPosition();
 			unsigned int distanceToGoal = (unsigned)ceilf(glm::length(
 			    vectorToGoal * VELOCITY_SCALE_BATTLE * (float)TICKS_PER_UNIT_TRAVELLED));
-			unsigned int moveTicksConsumeRate =
-			    current_movement_state == MovementState::Running
-			        ? 1
-			        : (current_body_state == BodyState::Prone ? 3 : 2);
+			unsigned int moveTicksConsumeRate = BASE_MOVETICKS_CONSUMPTION_RATE;
+			if (current_body_state == BodyState::Jumping && target_body_state == BodyState::Jumping)
+			{
+				moveTicksConsumeRate = BASE_MOVETICKS_CONSUMPTION_RATE / 3;
+			}
+			else if (target_body_state == BodyState::Jumping)
+			{
+				moveTicksConsumeRate = BASE_MOVETICKS_CONSUMPTION_RATE / 2;
+			}
+			else if (current_movement_state == MovementState::Running)
+			{
+				moveTicksConsumeRate = BASE_MOVETICKS_CONSUMPTION_RATE / 2;
+			}
+			else if (current_body_state == BodyState::Prone)
+			{
+				moveTicksConsumeRate = BASE_MOVETICKS_CONSUMPTION_RATE * 3 / 2;
+			}
 
 			// Quick check, if moving strictly vertical then using lift
 			if (distanceToGoal > 0 && current_body_state != BodyState::Flying 
@@ -2568,7 +2580,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		usingLift = false;
 
 		// If not running we will consume these twice as fast, if prone thrice as
-		unsigned int moveTicksRemaining = ticks * agent->modified_stats.getActualSpeedValue() * 2;
+		unsigned int moveTicksRemaining = ticks * agent->modified_stats.getActualSpeedValue() * BASE_MOVETICKS_CONSUMPTION_RATE;
 		unsigned int bodyTicksRemaining = ticks;
 		unsigned int handsTicksRemaining = ticks;
 		unsigned int turnTicksRemaining = ticks;
@@ -3417,6 +3429,11 @@ unsigned int BattleUnit::getDistanceTravelled() const
 
 bool BattleUnit::shouldPlaySoundNow()
 {
+	if (current_body_state == BodyState::Jumping 
+		&& target_body_state == BodyState::Jumping)
+	{
+		return false;
+	}
 	bool play = false;
 	unsigned int sounds_to_play = getDistanceTravelled() / UNITS_TRAVELLED_PER_SOUND;
 	if (sounds_to_play != movement_sounds_played)
