@@ -305,10 +305,11 @@
 		<member>targetBodyState</member>
 		<member>currentPlannedPath</member>
 		<member>allowRunningAway</member>
+		<member>jumpTarget</member>
+		<member>jumped</member>
 		<member>targetUnit</member>
-		<member>attachedToHead</member>
-		<member>zImpulseRemaining</member>
-		<member>immuneToTarget</member>
+		<member>brainsuckTicksAccumulated</member>
+		<member>brainsuckSoundsPlayed</member>
 		<member>cancelled</member>
 	</object>
 	<object>
@@ -578,7 +579,11 @@
 		<member>retreated</member>
 		<member>destroyed</member>
 		<member>falling</member>
-		<member>fallingSpeed</member>
+		<member>launched</member>
+		<member>launchGoal</member>
+		<member>bounced</member>
+		<member>collisionIgnoredTicks</member>
+		<member>velocity</member>
 		<member>giveWayRequestData</member>
 		<member>displayedItem</member>
 		<member>visibleUnits</member>
@@ -1134,6 +1139,7 @@
 		<value>ReachGoal</value>
 		<value>Teleport</value>
 		<value>Brainsuck</value>
+		<value>Jump</value>
 	</enum>
 	<enum>
 		<name>VEquipment::WeaponState</name>
@@ -1417,7 +1423,6 @@
 		<value>Running</value>
 		<value>Strafing</value>
 		<value>Reverse</value>
-		<value>Brainleap</value>
 		<value>Brainsuck</value>
 	</enum>
 	<enum>

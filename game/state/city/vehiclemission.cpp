@@ -543,7 +543,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 			return false;
 		}
 		default:
-			LogWarning("TODO: Implement");
+			LogWarning("TODO: Implement getNextDestination");
 			return false;
 	}
 	return false;
@@ -726,7 +726,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 			return;
 		}
 		default:
-			LogWarning("TODO: Implement");
+			LogWarning("TODO: Implement update");
 			return;
 	}
 }
@@ -815,7 +815,7 @@ bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 		case MissionType::RestartNextMission:
 			return true;
 		default:
-			LogWarning("TODO: Implement");
+			LogWarning("TODO: Implement isFinishedInternal");
 			return false;
 	}
 }
@@ -1150,7 +1150,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 		}
 		default:
-			LogWarning("TODO: Implement");
+			LogWarning("TODO: Implement start");
 			return;
 	}
 }

@@ -556,8 +556,7 @@ void AEquipment::throwItem(GameState &state, Vec3<int> targetPosition, float vel
 	if (state.battle_common_sample_list->throwSounds.size() > 0)
 	{
 		fw().soundBackend->playSample(
-		    listRandomiser(state.rng, state.battle_common_sample_list->throwSounds), position,
-		    0.25f);
+		    listRandomiser(state.rng, state.battle_common_sample_list->throwSounds), position);
 	}
 
 	// This will be modified by the accuracy algorithm

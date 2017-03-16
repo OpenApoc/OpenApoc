@@ -401,7 +401,7 @@ sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position,
 	if (!damageType->explosionSounds.empty())
 	{
 		fw().soundBackend->playSample(listRandomiser(state.rng, damageType->explosionSounds),
-		                              position, 0.25f);
+		                              position);
 	}
 
 	// Explosion

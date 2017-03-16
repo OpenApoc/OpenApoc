@@ -49,20 +49,10 @@ void InitialGameStateExtractor::extractAnimationPackBsk(sp<BattleUnitAnimationPa
 				                        MovementState::Running, BodyState::Standing}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 2, {x, y}, wFrames);
 
-				// Leaping starting state: 3's first frame
+				// Jumping state: 3's last frame (#9)
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
-					MovementState::Brainleap, BodyState::Standing}][{x, y}] =
-					getAnimationEntry(dataAD, dataUA, dataUF, 3, { x, y }, 100, 1, true);
-
-				// Jumping moving state: 3's last frame (#9)
-				p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
-				                        MovementState::Brainleap, BodyState::Jumping}][{x, y}] =
+				                        MovementState::None, BodyState::Jumping}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 3, {x, y}, 100, 9, false);
-
-				// Jumping static state: 3's last frame (#9)
-				p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
-					MovementState::None, BodyState::Jumping}][{x, y}] =
-					getAnimationEntry(dataAD, dataUA, dataUF, 3, { x, y }, 100, 9, false);
 
 				// Sucking state: 4
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
@@ -80,7 +70,7 @@ void InitialGameStateExtractor::extractAnimationPackBsk(sp<BattleUnitAnimationPa
 
 				// Body Standing -> Jumping animation: 3
 				p->body_state_animations[{ItemWieldMode::None, HandState::AtEase,
-				                          MovementState::Brainleap, BodyState::Standing,
+				                          MovementState::None, BodyState::Standing,
 				                          BodyState::Jumping}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 3, {x, y});
 			}

@@ -32,6 +32,8 @@
 #define VIEW_DISTANCE 20
 // Base movement ticks consumption rate, this allows us to divide by 2,3,4,5,6,8,9 or 10
 #define BASE_MOVETICKS_CONSUMPTION_RATE 72
+// Movement cost in TUs for walking movement to adjacent (non-diagonal) tile
+#define STANDART_MOVE_TU_COST 2
 
 namespace OpenApoc
 {
@@ -49,6 +51,10 @@ static const unsigned LOWMORALE_CHECK_INTERVAL = TICKS_PER_TURN;
 static const unsigned LOS_CHECK_INTERVAL_TRACKING = TICKS_PER_SECOND / 4;
 // How many times to wait for MIA target to come back before giving up
 static const unsigned TIMES_TO_WAIT_FOR_MIA_TARGET = 2 * TICKS_PER_SECOND / LOS_CHECK_INTERVAL_TRACKING;
+// How many ticks are required to brainsuck a unit
+static const unsigned TICKS_TO_BRAINSUCK = TICKS_PER_SECOND * 2;
+// Chance out of 100 to be brainsucked
+static const unsigned BRAINSUCK_CHANCE = 66;
 
 class TileObjectBattleUnit;
 class TileObjectShadow;
@@ -265,8 +271,16 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	unsigned int flyingSpeedModifier = 0;
 	// Freefalling
 	bool falling = false;
+	// Launched (will check launch goal)
+	bool launched = false;
+	// Goal we launched for, after reaching this will set xy velocity to 0
+	Vec3<float> launchGoal;
+	// Bounced after falling
+	bool bounced = false;
+	// Ticks to ignore collision when launching
+	unsigned int collisionIgnoredTicks = 0;
 	// Current falling speed
-	float fallingSpeed = 0.0f;
+	Vec3<float> velocity;
 
 	// Turning
 
@@ -376,8 +390,13 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	unsigned int getDistanceTravelled() const;
 	bool shouldPlaySoundNow();
 	unsigned int getWalkSoundIndex();
+	bool calculateVelocityForLaunch(float distanceXY, float diffZ, float &velocityXY, float &velocityZ);
+	bool canLaunch(GameState &state, Vec3<float> targetPosition);
+	bool canLaunch(GameState &state, Vec3<float> targetPosition, Vec3<float> &targetVectorXY, float &velocityXY, float &velocityZ);
+	void launch(GameState &state, Vec3<float> targetPosition, BodyState bodyState = BodyState::Standing);
 	void startFalling();
 	void startMoving(GameState &state);
+	void setPosition(GameState &state, const Vec3<float> &pos);
 
 	// Turning
 
@@ -386,7 +405,6 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Movement and turning
 
-	void setPosition(GameState &state, const Vec3<float> &pos);
 	void resetGoal();
 
 	// Missions
@@ -476,9 +494,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	Vec3<float> getMuzzleLocation() const;
 	// Get thrown item's departure location
 	Vec3<float> getThrownItemLocation() const;
-	// Get unit's head location (for brainsucker attachment)
-	Vec3<float> getHeadLocation() const;
-
+	
 	// Determine body part hit
 	BodyPart determineBodyPartHit(StateRef<DamageType> damageType, Vec3<float> cposition,
 	                              Vec3<float> direction);
@@ -498,20 +514,40 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Update
 
+	// Main update function
 	void update(GameState &state, unsigned int ticks);
+	// Updates unit regeneration, bleeding, debuffs and morale states
 	void updateStateAndStats(GameState &state, unsigned int ticks);
+	// Updates unit give way request and events
 	void updateEvents(GameState &state);
+	// Updates unit that is idle
 	void updateIdling(GameState &state);
-	void updateCheckIfFalling(GameState &state);
+	// Checks if unit should begin falling
+	void updateCheckBeginFalling(GameState &state);
+	// Updates unit's body trainsition and acquires new target body state
 	void updateBody(GameState &state, unsigned int &bodyTicksRemaining);
+	// Updates unit's hands trainsition
 	void updateHands(GameState &state, unsigned int &handsTicksRemaining);
-	// Return true if retreated
+	// Updates unit's movement if unit is falling
+	// Return true if retreated or destroyed and we must halt immediately
+	bool updateMovementFalling(GameState &state, unsigned int &moveTicksRemaining, bool &wasUsingLift);
+	// Updates unit's movement if unit is moving normally
+	// Return true if retreated or destroyed and we must halt immediately
+	bool updateMovementNormal(GameState &state, unsigned int &moveTicksRemaining, bool &wasUsingLift);
+	// Updates unit's movement
+	// Return true if retreated or destroyed and we must halt immediately
 	bool updateMovement(GameState &state, unsigned int &moveTicksRemaining, bool &wasUsingLift);
+	// Updates unit's אפסרען trainsition and acquires new target אפסרען
 	void updateTurning(GameState &state, unsigned int &turnTicksRemaining);
+	// Updates unit's displayed item (which one will draw in unit's hands on screen)
 	void updateDisplayedItem();
-	bool runCanFireChecks(GameState &state, unsigned int ticks, sp<AEquipment> &weaponRight, sp<AEquipment> &weaponLeft, Vec3<float> &targetPosition);
+	// Runs all fire checks and returns false if we must stop attacking
+	bool updateAttackingRunCanFireChecks(GameState &state, unsigned int ticks, sp<AEquipment> &weaponRight, sp<AEquipment> &weaponLeft, Vec3<float> &targetPosition);
+	// Updates unit's attacking parameters (gun cooldown, hand states, aiming etc)
 	void updateAttacking(GameState &state, unsigned int ticks);
+	// Updates unit's psi attack (sustain payment, effect application etc.)
 	void updatePsi(GameState &state, unsigned int ticks);
+	// Updates unit's AI list
 	void updateAI(GameState &state, unsigned int ticks);
 
 	void triggerProximity(GameState &state);

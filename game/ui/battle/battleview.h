@@ -141,6 +141,8 @@ class BattleView : public BattleTileView
 	// Unit orers
 
 	void orderMove(Vec3<int> target, bool strafe = false, bool demandGiveWay = false);
+	void orderJump(Vec3<int> target, BodyState bodyState = BodyState::Standing);
+	void orderJump(Vec3<float> target, BodyState bodyState = BodyState::Standing);
 	void orderTurn(Vec3<int> target);
 	void orderUse(bool right, bool automatic);
 	void orderDrop(bool right);

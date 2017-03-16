@@ -56,7 +56,6 @@ enum class MovementState
 	Running,
 	Strafing,
 	Reverse,
-	Brainleap,
 	Brainsuck,
 };
 enum class AEquipmentSlotType

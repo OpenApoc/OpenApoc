@@ -324,6 +324,11 @@ sp<AIMovement> UnitAIHelper::getRetreatMovement(GameState &state, BattleUnit &u,
 
 	LogWarning("Implement retreat (for now kneeling instead)");
 
+	if (!u.agent->isBodyStateAllowed(BodyState::Kneeling))
+	{
+		return nullptr;
+	}
+
 	auto result = mksp<AIMovement>();
 	result->type = AIMovement::Type::Stop;
 	result->kneelingMode = KneelingMode::Kneeling;
@@ -351,6 +356,12 @@ sp<AIMovement> UnitAIHelper::getTakeCoverMovement(GameState &state, BattleUnit &
 
 	LogWarning("Implement take cover (for now proning instead)");
 
+	if (!u.agent->isBodyStateAllowed(BodyState::Prone))
+	{
+		return nullptr;
+	}
+
+
 	auto result = mksp<AIMovement>();
 	result->type = AIMovement::Type::ChangeStance;
 	result->movementMode = MovementMode::Prone;
@@ -361,6 +372,11 @@ sp<AIMovement> UnitAIHelper::getTakeCoverMovement(GameState &state, BattleUnit &
 
 sp<AIMovement> UnitAIHelper::getKneelMovement(GameState &state, BattleUnit &u, bool forced)
 {
+	if (!u.agent->isBodyStateAllowed(BodyState::Kneeling))
+	{
+		return nullptr;
+	}
+
 	if (!forced)
 	{
 		// Chance to kneel is 33% * sqrt(num_enemies_seen), if no one is seen then assume 3

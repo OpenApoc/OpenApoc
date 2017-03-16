@@ -74,7 +74,8 @@ class BattleUnitMission
 		Turn,
 		ReachGoal,
 		Teleport,
-		Brainsuck
+		Brainsuck,
+		Jump
 	};
 
 	// Methods (main)
@@ -106,6 +107,8 @@ class BattleUnitMission
 	// Used to determine target facings
 	static Vec2<int> getFacing(BattleUnit &u, Vec3<float> from, Vec3<float> to, int facingDelta = 0);
 	static Vec2<int> getFacing(BattleUnit &u, Vec3<int> to, int facingDelta = 0);
+	// Used to help with deltas
+	static int getFacingDelta(Vec2<int> curFacing, Vec2<int> tarFacing);
 
 	// Methods to create new missions
 	static BattleUnitMission *gotoLocation(BattleUnit &u, Vec3<int> target, int facingDelta = 0,
@@ -125,7 +128,8 @@ class BattleUnitMission
 	static BattleUnitMission *restartNextMission(BattleUnit &u);
 	static BattleUnitMission *reachGoal(BattleUnit &u, int facingDelta = 0);
 	static BattleUnitMission *teleport(BattleUnit &u, sp<AEquipment> item, Vec3<int> target);
-	static BattleUnitMission *brainsuck(BattleUnit &u, StateRef<BattleUnit> target);
+	static BattleUnitMission *brainsuck(BattleUnit &u, StateRef<BattleUnit> target, int facingDelta);
+	static BattleUnitMission *jump(BattleUnit &u, Vec3<float> target, BodyState state = BodyState::Standing);
 
 	UString getName();
 
@@ -168,11 +172,14 @@ class BattleUnitMission
 	// ChangeBodyState
 	BodyState targetBodyState = BodyState::Downed;
 
+	// Jump
+	Vec3<float> jumpTarget = { 0.0f, 0.0f, 0.0f };
+	bool jumped = false;
+
 	// Brainsuck
 	StateRef<BattleUnit> targetUnit;
-	bool attachedToHead = false;
-	bool immuneToTarget = false;
-	float zImpulseRemaining = 0.0f;
+	unsigned int brainsuckTicksAccumulated = 0;
+	unsigned int brainsuckSoundsPlayed = 0;
 
 	// Mission cancelled (due to unsufficient TUs or something else failing)
 	bool cancelled = false;

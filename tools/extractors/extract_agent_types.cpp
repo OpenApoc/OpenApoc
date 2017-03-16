@@ -1241,7 +1241,6 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 				a->allowed_movement_states.insert(MovementState::None);
 				a->allowed_movement_states.insert(MovementState::Normal);
 				a->allowed_movement_states.insert(MovementState::Running);
-				a->allowed_movement_states.insert(MovementState::Brainleap);
 				a->allowed_movement_states.insert(MovementState::Brainsuck);
 				a->allowed_body_states.insert(BodyState::Standing);
 				a->allowed_body_states.insert(BodyState::Throwing);

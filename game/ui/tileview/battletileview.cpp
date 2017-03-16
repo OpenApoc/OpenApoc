@@ -778,11 +778,12 @@ void BattleTileView::render()
 								{
 									case TileObject::Type::Unit:
 									{
-										if (obj->getPosition().z < zTo)
+										auto u =
+										std::static_pointer_cast<TileObjectBattleUnit>(obj)
+										->getUnit();
+										// || (u->position.z < (float)zTo + 0.075f && u->falling && u->target_body_state == BodyState::Jumping)
+										if (u->position.z < zTo)
 										{
-											auto u =
-											    std::static_pointer_cast<TileObjectBattleUnit>(obj)
-											        ->getUnit();
 											objectVisible =
 											    !u->isConscious() ||
 											    u->owner == battle.currentPlayer ||

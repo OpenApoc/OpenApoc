@@ -1349,6 +1349,21 @@ void BattleView::updateSoldierButtons()
 	                 throwing);
 }
 
+void BattleView::orderJump(Vec3<int> target, BodyState bodyState)
+{
+	orderJump((Vec3<float>)target + Vec3<float>{0.5f, 0.5f, 0.0f}, bodyState);
+}
+
+void BattleView::orderJump(Vec3<float> target, BodyState bodyState)
+{
+	if (battle.battleViewSelectedUnits.empty())
+	{
+		return;
+	}
+	auto unit = battle.battleViewSelectedUnits.front();
+	unit->setMission(*state, BattleUnitMission::jump(*unit, target, bodyState));
+}
+
 void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 {
 	if (battle.battleViewSelectedUnits.empty())
@@ -1359,29 +1374,10 @@ void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 	// Check if ordered to exit
 	bool runAway = map.getTile(target)->getHasExit();
 
-	// Check offset
-	int facingDelta = 0;
-	if (strafe)
-	{
-		auto u = battle.battleViewSelectedUnits.front();
-		// Facing delta is how many times we need to turn to face our goal
-		BattleUnit temp;
-		temp.agent = u->agent;
-		temp.facing = u->facing;
-		temp.position = u->position;
-
-		auto targetFacing = BattleUnitMission::getFacing(temp, target);
-		while (temp.facing != targetFacing)
-		{
-			facingDelta++;
-			temp.facing = BattleUnitMission::getFacingStep(temp, targetFacing);
-		}
-		// Finally, this is lazy programming but whatever
-		if (BattleUnitMission::getFacing(*u, target, facingDelta) != u->facing)
-		{
-			facingDelta = -facingDelta;
-		}
-	}
+	auto u = battle.battleViewSelectedUnits.front();
+	BattleUnit temp;
+	temp.agent = u->agent;
+	int facingDelta = strafe ? BattleUnitMission::getFacingDelta(u->facing, BattleUnitMission::getFacing(temp, target))  : 0;
 
 	if (battle.battleViewGroupMove && !runAway)
 	{
@@ -1588,7 +1584,7 @@ void BattleView::orderUse(bool right, bool automatic)
 						auto target = targetTile->firstUnitPresent->getUnit();
 						if (brainsucker->dealDamage(100, target->agent->type->damage_modifier) != 0)
 						{
-							unit->setMission(*state, BattleUnitMission::brainsuck(*unit, { &*state, target }));
+							orderJump(target->getMuzzleLocation() + Vec3<float>{0.0f, 0.0f, 0.0f}, BodyState::Jumping);
 							break;
 						}
 					}
@@ -1864,7 +1860,8 @@ void BattleView::eventOccurred(Event *e)
 	     e->keyboard().KeyCode == SDLK_LCTRL || e->keyboard().KeyCode == SDLK_f ||
 			e->keyboard().KeyCode == SDLK_r || e->keyboard().KeyCode == SDLK_a ||
 	     e->keyboard().KeyCode == SDLK_p || e->keyboard().KeyCode == SDLK_h ||
-	     e->keyboard().KeyCode == SDLK_k || e->keyboard().KeyCode == SDLK_q))
+	     e->keyboard().KeyCode == SDLK_k || e->keyboard().KeyCode == SDLK_q || 
+			e->keyboard().KeyCode == SDLK_j))
 	{
 		switch (e->keyboard().KeyCode)
 		{
@@ -2049,6 +2046,15 @@ void BattleView::eventOccurred(Event *e)
 					{
 						u.second->aiList.init(*state, *u.second);
 					}
+				}
+				break;
+			}
+			case SDLK_j:
+			{
+				if (!battle.battleViewSelectedUnits.empty())
+				{
+					auto t = this->getSelectedTilePosition();
+					orderJump(t);
 				}
 				break;
 			}

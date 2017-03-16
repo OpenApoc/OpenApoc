@@ -262,10 +262,9 @@ void TileObjectBattleUnit::setPosition(Vec3<float> newPosition)
 	// (theis positions only differ by 1 pixel)
 	// We could introduce an option to disallow this?
 	// Right now, here goes vanilla behavior
-	if (u->current_movement_state == MovementState::Brainleap
-		|| u->current_movement_state == MovementState::Brainsuck)
+	if (u->current_movement_state == MovementState::Brainsuck)
 	{
-		// Leaping headcrab occupies nothing
+		// Sucking headcrab occupies nothing
 	}
 	else if (u->isLarge())
 	{
