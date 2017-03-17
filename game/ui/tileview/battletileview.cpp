@@ -469,11 +469,13 @@ void BattleTileView::render()
 						drawPathPreview = previewedPathCost != -1;
 						auto u = selTileOnCurLevel->getUnitIfPresent(true);
 						auto unit = u ? u->getUnit() : nullptr;
-						if (unit && (unit->owner == battle.currentPlayer || battle.visibleUnits[battle.currentPlayer].find({ &state, unit->id})
-							!= battle.visibleUnits[battle.currentPlayer].end()))
+						if (unit &&
+						    (unit->owner == battle.currentPlayer ||
+						     battle.visibleUnits[battle.currentPlayer].find({&state, unit->id}) !=
+						         battle.visibleUnits[battle.currentPlayer].end()))
 						{
 							if (battle.currentPlayer->isRelatedTo(unit->owner) ==
-								Organisation::Relation::Hostile)
+							    Organisation::Relation::Hostile)
 							{
 								selectionImageBack = selectedTileFireImageBack;
 								selectionImageFront = selectedTileFireImageFront;
@@ -779,9 +781,8 @@ void BattleTileView::render()
 								{
 									case TileObject::Type::Unit:
 									{
-										auto u =
-										std::static_pointer_cast<TileObjectBattleUnit>(obj)
-										->getUnit();
+										auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
+										             ->getUnit();
 										if (u->position.z < zTo)
 										{
 											objectVisible =

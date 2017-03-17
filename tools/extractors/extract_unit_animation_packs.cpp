@@ -39,7 +39,8 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimat
     const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
     std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction, int units_per_100_frames,
     int split_point, bool left_side, bool isOverlay, bool removeItem, Vec2<int> targetOffset,
-    Vec2<int> beginOffset, bool inverse, int extraEndFrames, bool singleFrame, bool doubleFrames) const
+    Vec2<int> beginOffset, bool inverse, int extraEndFrames, bool singleFrame,
+    bool doubleFrames) const
 {
 	static const std::map<Vec2<int>, int> offset_dir_map = {
 	    {{0, -1}, 0}, {{1, -1}, 1}, {{1, 0}, 2},  {{1, 1}, 3},
@@ -113,13 +114,13 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimat
 			}
 			for (int f = 0; f < (doubleFrames ? 2 : 1); f++)
 			{
-				e->frames[(i - from)*(doubleFrames ? 2 : 1) + f].unit_image_draw_order.push_back(part_type);
-				e->frames[(i - from)*(doubleFrames ? 2 : 1) + f].unit_image_parts[part_type] =
-					BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock(
-						data.parts[part_idx].frame_idx, data.parts[part_idx].x_offset + x_offset,
-						data.parts[part_idx].y_offset + y_offset);
+				e->frames[(i - from) * (doubleFrames ? 2 : 1) + f].unit_image_draw_order.push_back(
+				    part_type);
+				e->frames[(i - from) * (doubleFrames ? 2 : 1) + f].unit_image_parts[part_type] =
+				    BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock(
+				        data.parts[part_idx].frame_idx, data.parts[part_idx].x_offset + x_offset,
+				        data.parts[part_idx].y_offset + y_offset);
 			}
-
 		}
 	}
 
@@ -142,9 +143,10 @@ Vec2<int> InitialGameStateExtractor::gPrOff(Vec2<int> facing) const
 	return {(facing.x - facing.y) * 48 / 8, (facing.x + facing.y) * 24 / 8};
 }
 
-sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::makeUpAnimationEntry(
-	int from, int count, int fromS, int countS, int partCount, Vec2<int> offset,
-	int units_per_100_frames) const
+sp<BattleUnitAnimationPack::AnimationEntry>
+InitialGameStateExtractor::makeUpAnimationEntry(int from, int count, int fromS, int countS,
+                                                int partCount, Vec2<int> offset,
+                                                int units_per_100_frames) const
 {
 	auto e = mksp<BattleUnitAnimationPack::AnimationEntry>();
 	int to = from + count;
@@ -161,7 +163,8 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::makeUpAni
 			switch (part_idx)
 			{
 				case 0:
-					part_type = BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Shadow;
+					part_type =
+					    BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Shadow;
 					frame = fromS + i;
 					while (frame >= fromS + countS)
 					{
@@ -172,7 +175,8 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::makeUpAni
 					part_type = BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Body;
 					break;
 				case 2:
-					part_type = BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Helmet;
+					part_type =
+					    BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Helmet;
 					break;
 				default:
 					LogError("If you reached this then OpenApoc programmers made a mistake");
@@ -180,7 +184,8 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::makeUpAni
 			}
 			e->frames[i].unit_image_draw_order.push_back(part_type);
 			e->frames[i].unit_image_parts[part_type] =
-				BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock(frame, offset.x, + offset.y);
+			    BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock(frame, offset.x,
+			                                                              +offset.y);
 		}
 	}
 

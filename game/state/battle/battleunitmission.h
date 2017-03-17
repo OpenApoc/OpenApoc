@@ -37,8 +37,9 @@ class BattleUnitTileHelper : public CanEnterTileHelper
 
 	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
 	                  bool ignoreAllUnits = false) const override;
-	bool canEnterTile(Tile *from, Tile *to, bool allowJumping, bool &jumped, float &cost, bool &doorInTheWay,
-	                  bool ignoreStaticUnits = false, bool ignoreAllUnits = false) const override;
+	bool canEnterTile(Tile *from, Tile *to, bool allowJumping, bool &jumped, float &cost,
+	                  bool &doorInTheWay, bool ignoreStaticUnits = false,
+	                  bool ignoreAllUnits = false) const override;
 
 	float pathOverheadAlloawnce() const override { return 1.25f; }
 
@@ -104,7 +105,8 @@ class BattleUnitMission
 	static int getBodyStateChangeCost(BattleUnit &u, BodyState from, BodyState to);
 	static Vec2<int> getFacingStep(BattleUnit &u, Vec2<int> targetFacing, int facingDelta = 0);
 	// Used to determine target facings
-	static Vec2<int> getFacing(BattleUnit &u, Vec3<float> from, Vec3<float> to, int facingDelta = 0);
+	static Vec2<int> getFacing(BattleUnit &u, Vec3<float> from, Vec3<float> to,
+	                           int facingDelta = 0);
 	static Vec2<int> getFacing(BattleUnit &u, Vec3<int> to, int facingDelta = 0);
 	// Used to help with deltas
 	static int getFacingDelta(Vec2<int> curFacing, Vec2<int> tarFacing);
@@ -127,8 +129,10 @@ class BattleUnitMission
 	static BattleUnitMission *restartNextMission(BattleUnit &u);
 	static BattleUnitMission *reachGoal(BattleUnit &u, int facingDelta = 0);
 	static BattleUnitMission *teleport(BattleUnit &u, sp<AEquipment> item, Vec3<int> target);
-	static BattleUnitMission *brainsuck(BattleUnit &u, StateRef<BattleUnit> target, int facingDelta);
-	static BattleUnitMission *jump(BattleUnit &u, Vec3<float> target, BodyState state = BodyState::Standing);
+	static BattleUnitMission *brainsuck(BattleUnit &u, StateRef<BattleUnit> target,
+	                                    int facingDelta);
+	static BattleUnitMission *jump(BattleUnit &u, Vec3<float> target,
+	                               BodyState state = BodyState::Standing);
 
 	UString getName();
 
@@ -149,7 +153,7 @@ class BattleUnitMission
 	bool demandGiveWay = false;
 	// Unit paid for movement before turning and will be refunded when actually moving
 	int costPaidUpFront = 0;
-	
+
 	// Turn
 	Vec2<int> targetFacing = {0, 0};
 	bool requireGoal = false;
@@ -172,7 +176,7 @@ class BattleUnitMission
 	BodyState targetBodyState = BodyState::Downed;
 
 	// Jump
-	Vec3<float> jumpTarget = { 0.0f, 0.0f, 0.0f };
+	Vec3<float> jumpTarget = {0.0f, 0.0f, 0.0f};
 	bool jumped = false;
 
 	// Brainsuck

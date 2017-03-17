@@ -1,8 +1,8 @@
 #include "library/sp.h"
 
 #include "forms/radiobutton.h"
-#include "framework/framework.h"
 #include "framework/event.h"
+#include "framework/framework.h"
 #include "framework/sound.h"
 
 namespace OpenApoc

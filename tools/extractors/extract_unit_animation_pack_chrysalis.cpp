@@ -10,8 +10,9 @@
 namespace OpenApoc
 {
 
-sp<BattleUnitAnimationPack::AnimationEntry> makeUpChrysalisAnimationEntry(
-	int from, int count, int fromB, int countB, bool bidirectional, Vec2<int> offset, bool first = false) 
+sp<BattleUnitAnimationPack::AnimationEntry>
+makeUpChrysalisAnimationEntry(int from, int count, int fromB, int countB, bool bidirectional,
+                              Vec2<int> offset, bool first = false)
 {
 	auto e = mksp<BattleUnitAnimationPack::AnimationEntry>();
 	bool noHead = count == 0;
@@ -34,24 +35,26 @@ sp<BattleUnitAnimationPack::AnimationEntry> makeUpChrysalisAnimationEntry(
 			auto part_type = BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Shadow;
 			switch (part_idx)
 			{
-			case 1:
-				part_type = BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Body;
-				frame = fromB + f;
-				while (frame >= fromB + countB)
-				{
-					frame -= countB;
-				}
-				break;
-			case 2:
-				part_type = BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Helmet;
-				break;
-			default:
-				LogError("If you reached this then OpenApoc programmers made a mistake");
-				break;
+				case 1:
+					part_type = BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Body;
+					frame = fromB + f;
+					while (frame >= fromB + countB)
+					{
+						frame -= countB;
+					}
+					break;
+				case 2:
+					part_type =
+					    BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Helmet;
+					break;
+				default:
+					LogError("If you reached this then OpenApoc programmers made a mistake");
+					break;
 			}
 			e->frames[i].unit_image_draw_order.push_back(part_type);
 			e->frames[i].unit_image_parts[part_type] =
-				BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock(frame, offset.x, (j == 2 ? (first ? 4 : 9) : 0) + offset.y);
+			    BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock(
+			        frame, offset.x, (j == 2 ? (first ? 4 : 9) : 0) + offset.y);
 		}
 	}
 
@@ -62,30 +65,29 @@ sp<BattleUnitAnimationPack::AnimationEntry> makeUpChrysalisAnimationEntry(
 	return e;
 }
 
-
 void extractAnimationPackChrysalisInternal(sp<BattleUnitAnimationPack> p, bool first)
 {
 	int x = first ? 0 : -1;
 	int y = first ? 1 : 0;
 
-	// Prone state: 
+	// Prone state:
 	p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
-		BodyState::Prone}][{x, y}] =
-		makeUpChrysalisAnimationEntry(first ? 0 : 5, 5, first ? 0 : 1, 1, true, {-17,-24}, first);
+	                        BodyState::Prone}][{x, y}] =
+	    makeUpChrysalisAnimationEntry(first ? 0 : 5, 5, first ? 0 : 1, 1, true, {-17, -24}, first);
 
-	// Dying state: 
+	// Dying state:
 	p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
-		BodyState::Prone, BodyState::Downed}][{x, y}] =
-		makeUpChrysalisAnimationEntry(0, 0, first ? 2 : 8, 6, false, { -17, first ? -16 : -8 });
+	                          BodyState::Prone, BodyState::Downed}][{x, y}] =
+	    makeUpChrysalisAnimationEntry(0, 0, first ? 2 : 8, 6, false, {-17, first ? -16 : -8});
 
-	// Downed state: 
+	// Downed state:
 	p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
-		BodyState::Downed}][{x, y}] =
-		makeUpChrysalisAnimationEntry(0, 0, first ? 7 : 13, 1, false, { -5, first ? -22 : -2 }); 
+	                        BodyState::Downed}][{x, y}] =
+	    makeUpChrysalisAnimationEntry(0, 0, first ? 7 : 13, 1, false, {-5, first ? -22 : -2});
 }
 
-void InitialGameStateExtractor::extractAnimationPackChrysalis(
-	sp<BattleUnitAnimationPack> p, bool first) const
+void InitialGameStateExtractor::extractAnimationPackChrysalis(sp<BattleUnitAnimationPack> p,
+                                                              bool first) const
 {
 	extractAnimationPackChrysalisInternal(p, first);
 }

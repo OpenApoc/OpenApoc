@@ -340,20 +340,15 @@ bool Agent::isMovementStateAllowed(MovementState movementState) const
 
 bool Agent::isFacingAllowed(Vec2<int> facing) const
 {
-	return type->bodyType->allowed_facing.empty() || type->bodyType->allowed_facing[appearance].find(facing) != type->bodyType->allowed_facing[appearance].end();
+	return type->bodyType->allowed_facing.empty() ||
+	       type->bodyType->allowed_facing[appearance].find(facing) !=
+	           type->bodyType->allowed_facing[appearance].end();
 }
 
-const std::set<Vec2<int>>* Agent::getAllowedFacings() const
+const std::set<Vec2<int>> *Agent::getAllowedFacings() const
 {
-	static const std::set<Vec2<int>> allFacings = 
-		{{ 0, -1 }
-		, { 1, -1 }
-		, { 1, 0 }
-		, { 1, 1 }
-		, { 0, 1 }
-		, { -1, 1 }
-		, { -1, 0 }
-		, { -1, -1 }};
+	static const std::set<Vec2<int>> allFacings = {{0, -1}, {1, -1}, {1, 0},  {1, 1},
+	                                               {0, 1},  {-1, 1}, {-1, 0}, {-1, -1}};
 
 	if (type->bodyType->allowed_facing.empty())
 	{

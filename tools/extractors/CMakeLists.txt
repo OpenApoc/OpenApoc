@@ -33,6 +33,10 @@ set (DATAEXTRACTOR_SOURCE_FILES
 	extract_unit_image_packs.cpp
 	extract_unit_animation_packs.cpp
 	extract_unit_animation_pack_unit.cpp
+	extract_unit_animation_pack_template.cpp
+	extract_unit_animation_pack_bsk.cpp
+	extract_unit_animation_pack_popper.cpp
+	extract_unit_animation_pack_chrysalis.cpp
 	main.cpp)
 
 source_group(dataextractor\\sources FILES ${DATAEXTRACTOR_SOURCE_FILES})

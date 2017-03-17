@@ -382,7 +382,9 @@ sp<Doodad> Battle::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 	return doodad;
 }
 
-sp<BattleUnit> Battle::spawnUnit(GameState & state, StateRef<Organisation> owner, StateRef<AgentType> agentType, Vec3<float> position, Vec2<int> facing, BodyState curState, BodyState tarState)
+sp<BattleUnit> Battle::spawnUnit(GameState &state, StateRef<Organisation> owner,
+                                 StateRef<AgentType> agentType, Vec3<float> position,
+                                 Vec2<int> facing, BodyState curState, BodyState tarState)
 {
 	auto agent = state.agent_generator.createAgent(state, owner, agentType);
 	auto unit = state.current_battle->placeUnit(state, agent, position);
@@ -1407,26 +1409,27 @@ void Battle::enterBattle(GameState &state)
 								               z + ((float)height) / (float)TILE_Z_BATTLE};
 							}
 							// Prone-only unit occupies a 3x3x1 space
-							else if (!u->agent->isBodyStateAllowed(BodyState::Standing) 
-								&& !u->agent->isBodyStateAllowed(BodyState::Flying)
-								&& !u->agent->isBodyStateAllowed(BodyState::Kneeling))
+							else if (!u->agent->isBodyStateAllowed(BodyState::Standing) &&
+							         !u->agent->isBodyStateAllowed(BodyState::Flying) &&
+							         !u->agent->isBodyStateAllowed(BodyState::Kneeling))
 							{
 								if (!u->agent->isBodyStateAllowed(BodyState::Prone))
 								{
-									LogError("Unit %s agent %s is not allowed to stand/fly/kneel/prone?", u->id, u->agent->type->id	);
+									LogError(
+									    "Unit %s agent %s is not allowed to stand/fly/kneel/prone?",
+									    u->id, u->agent->type->id);
 								}
 
 								if (x < 1 || y < 1 || x >= (b->size.x - 1) ||
-									y >= (b->size.y - 1) ||
-									b->spawnMap[x][y][z] == -1 || 
-									b->spawnMap[x - 1][y][z] == -1 ||
-									b->spawnMap[x][y - 1][z] == -1 ||
-									b->spawnMap[x - 1][y - 1][z] == -1 ||
-									b->spawnMap[x + 1][y][z] == -1 ||
-									b->spawnMap[x][y + 1][z] == -1 ||
-									b->spawnMap[x + 1][y + 1][z] == -1||
-									b->spawnMap[x - 1][y + 1][z] == -1 || 
-									b->spawnMap[x + 1][y - 1][z] == -1)
+								    y >= (b->size.y - 1) || b->spawnMap[x][y][z] == -1 ||
+								    b->spawnMap[x - 1][y][z] == -1 ||
+								    b->spawnMap[x][y - 1][z] == -1 ||
+								    b->spawnMap[x - 1][y - 1][z] == -1 ||
+								    b->spawnMap[x + 1][y][z] == -1 ||
+								    b->spawnMap[x][y + 1][z] == -1 ||
+								    b->spawnMap[x + 1][y + 1][z] == -1 ||
+								    b->spawnMap[x - 1][y + 1][z] == -1 ||
+								    b->spawnMap[x + 1][y - 1][z] == -1)
 									continue;
 								int height = b->spawnMap[x][y][z];
 								height = std::max(b->spawnMap[x][y - 1][z], height);
@@ -1442,8 +1445,8 @@ void Battle::enterBattle(GameState &state)
 								b->spawnMap[x + 1][y + 1][z] = -1;
 								b->spawnMap[x - 1][y + 1][z] = -1;
 								b->spawnMap[x + 1][y - 1][z] = -1;
-								u->position = { x + 0.5f, y + 0.5f,
-									z + ((float)height) / (float)TILE_Z_BATTLE };
+								u->position = {x + 0.5f, y + 0.5f,
+								               z + ((float)height) / (float)TILE_Z_BATTLE};
 							}
 							else
 							{
@@ -1644,7 +1647,7 @@ void Battle::enterBattle(GameState &state)
 	}
 
 	state.current_battle->initBattle(state, true);
-	
+
 	// Find first player unit
 	sp<BattleUnit> firstPlayerUnit = nullptr;
 	for (auto f : state.current_battle->forces[state.getPlayer()].squads)
@@ -1767,7 +1770,7 @@ void Battle::loadImagePacks(GameState &state)
 				if (!hyperwormFound && packName == hyperworm)
 				{
 					imagePacks.insert(hyperworm);
-					imagePacks.insert(hyperworm+"s");
+					imagePacks.insert(hyperworm + "s");
 					hyperwormFound = true;
 				}
 				if (packName == brainsucker)
@@ -1788,8 +1791,9 @@ void Battle::loadImagePacks(GameState &state)
 				if (imagePacks.find(packName) == imagePacks.end())
 					imagePacks.insert(packName);
 			}
-			if (!brainsuckerFound && ae->getPayloadType()->damage_type 
-				&& ae->getPayloadType()->damage_type->effectType == DamageType::EffectType::Brainsucker)
+			if (!brainsuckerFound && ae->getPayloadType()->damage_type &&
+			    ae->getPayloadType()->damage_type->effectType ==
+			        DamageType::EffectType::Brainsucker)
 			{
 				imagePacks.insert(brainsucker);
 				imagePacks.insert(brainsucker + "s");
@@ -1873,7 +1877,9 @@ void Battle::loadAnimationPacks(GameState &state)
 		{
 			for (auto &e : u.second->agent->equipment)
 			{
-				if (e->getPayloadType()->damage_type && e->getPayloadType()->damage_type->effectType == DamageType::EffectType::Brainsucker)
+				if (e->getPayloadType()->damage_type &&
+				    e->getPayloadType()->damage_type->effectType ==
+				        DamageType::EffectType::Brainsucker)
 				{
 					animationPacks.insert(brainsucker);
 					brainsuckerFound = true;

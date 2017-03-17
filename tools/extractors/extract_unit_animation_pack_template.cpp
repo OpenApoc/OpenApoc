@@ -11,9 +11,10 @@ namespace OpenApoc
 {
 
 void extractAnimationPack_Internal(sp<BattleUnitAnimationPack> p,
-	const std::vector<AnimationDataAD> &dataAD,
-	const std::vector<AnimationDataUA> &dataUA,
-	std::vector<AnimationDataUF> &dataUF, int x, int y, const InitialGameStateExtractor &e)
+                                   const std::vector<AnimationDataAD> &dataAD,
+                                   const std::vector<AnimationDataUA> &dataUA,
+                                   std::vector<AnimationDataUF> &dataUF, int x, int y,
+                                   const InitialGameStateExtractor &e)
 {
 	// Units per 100 frames
 	static const int pFrames = 300; // Prone
@@ -25,16 +26,17 @@ void extractAnimationPack_Internal(sp<BattleUnitAnimationPack> p,
 	/*
 	// Standart animations
 	{
-		// Downed state: 27
-		p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
-			BodyState::Downed}][{x, y}] =
-			e.getAnimationEntry(dataAD, dataUA, dataUF, 27, { x, y });
+	    // Downed state: 27
+	    p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
+	        BodyState::Downed}][{x, y}] =
+	        e.getAnimationEntry(dataAD, dataUA, dataUF, 27, { x, y });
 	}
 	*/
 }
-void InitialGameStateExtractor::extractAnimationPack_(
-    sp<BattleUnitAnimationPack> p, const std::vector<AnimationDataAD> &dataAD,
-    const std::vector<AnimationDataUA> &dataUA, std::vector<AnimationDataUF> &dataUF) const
+void InitialGameStateExtractor::extractAnimationPack_(sp<BattleUnitAnimationPack> p,
+                                                      const std::vector<AnimationDataAD> &dataAD,
+                                                      const std::vector<AnimationDataUA> &dataUA,
+                                                      std::vector<AnimationDataUF> &dataUF) const
 {
 	for (int x = -1; x <= 1; x++)
 	{

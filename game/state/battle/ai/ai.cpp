@@ -361,7 +361,6 @@ sp<AIMovement> UnitAIHelper::getTakeCoverMovement(GameState &state, BattleUnit &
 		return nullptr;
 	}
 
-
 	auto result = mksp<AIMovement>();
 	result->type = AIMovement::Type::ChangeStance;
 	result->movementMode = MovementMode::Prone;
@@ -809,8 +808,12 @@ AIDecision VanillaUnitAI::thinkInternal(GameState &state, BattleUnit &u)
 				}
 				break;
 			case AIMovement::Type::ChangeStance:
-				if (((u.target_body_state == BodyState::Kneeling || u.current_body_state == BodyState::Kneeling) &&  lastDecision.movement->kneelingMode == KneelingMode::Kneeling)
-					|| ((u.target_body_state == BodyState::Prone || u.current_body_state == BodyState::Prone) &&  lastDecision.movement->movementMode == MovementMode::Prone))
+				if (((u.target_body_state == BodyState::Kneeling ||
+				      u.current_body_state == BodyState::Kneeling) &&
+				     lastDecision.movement->kneelingMode == KneelingMode::Kneeling) ||
+				    ((u.target_body_state == BodyState::Prone ||
+				      u.current_body_state == BodyState::Prone) &&
+				     lastDecision.movement->movementMode == MovementMode::Prone))
 				{
 					lastDecision.movement = nullptr;
 				}
@@ -1230,11 +1233,11 @@ std::tuple<AIDecision, bool> LowMoraleUnitAI::think(GameState &state, BattleUnit
 	return std::make_tuple(AIDecision(), true);
 }
 
-void DefaultUnitAI::reset(GameState &, BattleUnit &) 
+void DefaultUnitAI::reset(GameState &, BattleUnit &)
 {
 	ticksAutoTargetAvailable = 0;
 	ticksAutoTurnAvailable = 0;
-	attackerPosition = { 0, 0, 0 };
+	attackerPosition = {0, 0, 0};
 }
 
 void DefaultUnitAI::notifyUnderFire(Vec3<int> position) { attackerPosition = position; }

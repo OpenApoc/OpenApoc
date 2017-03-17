@@ -16,9 +16,10 @@ namespace
 class PathNode
 {
   public:
-	PathNode(float costToGetHere, float trueCost, float distanceToGoal, PathNode *parentNode, Tile *thisTile)
-	    : costToGetHere(costToGetHere), trueCost(trueCost), parentNode(parentNode), thisTile(thisTile),
-	      distanceToGoal(distanceToGoal)
+	PathNode(float costToGetHere, float trueCost, float distanceToGoal, PathNode *parentNode,
+	         Tile *thisTile)
+	    : costToGetHere(costToGetHere), trueCost(trueCost), parentNode(parentNode),
+	      thisTile(thisTile), distanceToGoal(distanceToGoal)
 	{
 	}
 
@@ -90,8 +91,7 @@ Vec3<int> rotate(Vec3<int> vec, int rotation)
 } // anonymous namespace
 
 std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destinationStart,
-                                               Vec3<int> destinationEnd,
-                                               int iterationLimit,
+                                               Vec3<int> destinationEnd, int iterationLimit,
                                                const CanEnterTileHelper &canEnterTile,
                                                bool approachOnly, bool ignoreStaticUnits,
                                                bool ignoreAllUnits, float *cost, float maxCost)
@@ -165,9 +165,9 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 		return {startTile->position};
 	}
 
-	auto startNode =
-	    new PathNode(0.0f, 0.0f, canEnterTile.getDistance(origin, goalPositionStart, goalPositionEnd),
-	                 nullptr, startTile);
+	auto startNode = new PathNode(
+	    0.0f, 0.0f, canEnterTile.getDistance(origin, goalPositionStart, goalPositionEnd), nullptr,
+	    startTile);
 	nodesToDelete.push_back(startNode);
 	fringe.emplace_back(startNode);
 
@@ -244,8 +244,9 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					float thisCost = 0.0f;
 					bool unused = false;
 					bool jumped = false;
-					if (!canEnterTile.canEnterTile(nodeToExpand->thisTile, tile, true, jumped, thisCost, unused,
-					                               ignoreStaticUnits, ignoreAllUnits))
+					if (!canEnterTile.canEnterTile(nodeToExpand->thisTile, tile, true, jumped,
+					                               thisCost, unused, ignoreStaticUnits,
+					                               ignoreAllUnits))
 						continue;
 					// Jumped flag set, must immediately land
 					if (jumped)
@@ -256,8 +257,8 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 							continue;
 						}
 						auto nextTile = this->getTile(nextNextPosition);
-						if (!canEnterTile.canEnterTile(tile, nextTile, false, jumped, thisCost, unused,
-							ignoreStaticUnits, ignoreAllUnits))
+						if (!canEnterTile.canEnterTile(tile, nextTile, false, jumped, thisCost,
+						                               unused, ignoreStaticUnits, ignoreAllUnits))
 						{
 							continue;
 						}
@@ -268,7 +269,8 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					float newNodeCost = nodeToExpand->costToGetHere;
 					float newTrueCost = nodeToExpand->trueCost;
 
-					newNodeCost += thisCost * (jumped ? 2 : 1) / canEnterTile.pathOverheadAlloawnce();
+					newNodeCost +=
+					    thisCost * (jumped ? 2 : 1) / canEnterTile.pathOverheadAlloawnce();
 					newTrueCost += thisCost;
 
 					// make pathfinder biased towards vehicle's altitude preference
@@ -278,12 +280,13 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					if (maxCost != 0.0f && newNodeCost >= maxCost)
 						continue;
 
-					auto newNode = new PathNode(
-					    newNodeCost, newTrueCost, destinationIsSingleTile
+					auto newNode =
+					    new PathNode(newNodeCost, newTrueCost,
+					                 destinationIsSingleTile
 					                     ? canEnterTile.getDistance(nextPosition, goalPositionStart)
 					                     : canEnterTile.getDistance(nextPosition, goalPositionStart,
 					                                                goalPositionEnd),
-					    nodeToExpand, tile);
+					                 nodeToExpand, tile);
 					nodesToDelete.push_back(newNode);
 
 					// Put node at appropriate place in the list
@@ -779,7 +782,8 @@ std::list<int> Battle::findLosBlockPath(int origin, int destination, BattleUnitT
 
 // FIXME: Implement usage of teleporters in group move
 void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &selectedUnits,
-                       Vec3<int> targetLocation, int facingDelta, bool demandGiveWay, bool useTeleporter)
+                       Vec3<int> targetLocation, int facingDelta, bool demandGiveWay,
+                       bool useTeleporter)
 {
 	std::ignore = useTeleporter;
 	// Legend:
@@ -879,8 +883,8 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 	else if (selectedUnits.size() == 1)
 	{
 		selectedUnits.front()->setMission(
-		    state, BattleUnitMission::gotoLocation(*selectedUnits.front(), targetLocation, facingDelta,
-		                                           demandGiveWay, true, 20, false));
+		    state, BattleUnitMission::gotoLocation(*selectedUnits.front(), targetLocation,
+		                                           facingDelta, demandGiveWay, true, 20, false));
 		return;
 	}
 
@@ -911,8 +915,8 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 		auto curUnit = *itUnit;
 		log += format("\nTrying unit %s for leader", curUnit.id);
 
-		auto mission = BattleUnitMission::gotoLocation(*curUnit, targetLocation, facingDelta, demandGiveWay,
-		                                               true, 20, false);
+		auto mission = BattleUnitMission::gotoLocation(*curUnit, targetLocation, facingDelta,
+		                                               demandGiveWay, true, 20, false);
 		bool missionAdded = curUnit->setMission(state, mission);
 		if (missionAdded)
 		{
@@ -1041,9 +1045,9 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 			if (!path.empty() && path.back() == targetLocationOffsetted)
 			{
 				log += format("\nLocation checks out, pathing to it");
-				unit->setMission(state,
-				                 BattleUnitMission::gotoLocation(*unit, targetLocationOffsetted, facingDelta,
-				                                                 demandGiveWay, true, 20, false));
+				unit->setMission(state, BattleUnitMission::gotoLocation(
+				                            *unit, targetLocationOffsetted, facingDelta,
+				                            demandGiveWay, true, 20, false));
 				break;
 			}
 			log += format("\nLocation was unreachable, trying next one");

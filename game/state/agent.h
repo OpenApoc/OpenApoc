@@ -234,7 +234,8 @@ class AgentBodyType : public StateObject
 	// overriden by use of certain armor
 	std::set<BodyState> allowed_body_states;
 	// Allowed movement states for the unit
-	// If unit is to be allowed to move at all, it should have at least Normal or Running movement state allowed
+	// If unit is to be allowed to move at all, it should have at least Normal or Running movement
+	// state allowed
 	std::set<MovementState> allowed_movement_states;
 	// Allowed facings, for every appearance. Empty means every facing is allowed
 	std::vector<std::set<Vec2<int>>> allowed_facing;
@@ -279,7 +280,7 @@ class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 	bool isBodyStateAllowed(BodyState bodyState) const;
 	bool isMovementStateAllowed(MovementState movementState) const;
 	bool isFacingAllowed(Vec2<int> facing) const;
-	const std::set<Vec2<int>> * getAllowedFacings() const;
+	const std::set<Vec2<int>> *getAllowedFacings() const;
 
 	StateRef<Base> home_base;
 	StateRef<Organisation> owner;

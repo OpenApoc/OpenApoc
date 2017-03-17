@@ -62,7 +62,7 @@
 #define IT_DEVASTATOR 41
 #define IT_BRAINSUCKERLAUNCHER 44
 #define IT_DIMENSIONLAUNCHER 46
-#define IT_POPPERBOMB 81 
+#define IT_POPPERBOMB 81
 
 namespace OpenApoc
 {
@@ -489,9 +489,8 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 				auto wdata = data_t.agent_weapons->get(edata.data_idx);
 				if (wdata.ammo_effect[0] == 255)
 				{
-					e->type = (edata.sprite_idx == IT_POPPERBOMB) ?
-						AEquipmentType::Type::Popper :
-						AEquipmentType::Type::Grenade;
+					e->type = (edata.sprite_idx == IT_POPPERBOMB) ? AEquipmentType::Type::Popper
+					                                              : AEquipmentType::Type::Grenade;
 					payload_idx = wdata.grenade_effect;
 					e->max_ammo = 1;
 					e->recharge = 0;

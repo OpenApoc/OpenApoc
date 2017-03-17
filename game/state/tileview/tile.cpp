@@ -506,10 +506,9 @@ sp<TileObjectBattleUnit> Tile::getUnitIfPresent(bool onlyConscious, bool mustOcc
 	return nullptr;
 }
 
-std::list<sp<BattleUnit>> Tile::getUnits(bool onlyConscious, bool mustOccupy,
-	bool mustBeStatic,
-	sp<TileObjectBattleUnit> exceptThis, bool onlyLarge,
-	bool checkLargeSpace) const
+std::list<sp<BattleUnit>> Tile::getUnits(bool onlyConscious, bool mustOccupy, bool mustBeStatic,
+                                         sp<TileObjectBattleUnit> exceptThis, bool onlyLarge,
+                                         bool checkLargeSpace) const
 {
 	std::list<sp<BattleUnit>> result;
 
@@ -530,8 +529,8 @@ std::list<sp<BattleUnit>> Tile::getUnits(bool onlyConscious, bool mustOccupy,
 						continue;
 					}
 					auto uts = map.getTile(position.x + x, position.y + y, position.z + z)
-						->getUnits(onlyConscious, mustOccupy, mustBeStatic,
-							exceptThis, onlyLarge, false);
+					               ->getUnits(onlyConscious, mustOccupy, mustBeStatic, exceptThis,
+					                          onlyLarge, false);
 					for (auto u : uts)
 					{
 						result.push_back(u);
@@ -548,10 +547,10 @@ std::list<sp<BattleUnit>> Tile::getUnits(bool onlyConscious, bool mustOccupy,
 			auto unitTileObject = std::static_pointer_cast<TileObjectBattleUnit>(o);
 			auto unit = unitTileObject->getUnit();
 			if ((onlyConscious && !unit->isConscious()) || (exceptThis == unitTileObject) ||
-				(mustOccupy &&
-					unitTileObject->occupiedTiles.find(position) ==
-					unitTileObject->occupiedTiles.end()) ||
-					(mustBeStatic && !unit->isStatic()) || (onlyLarge && !unit->isLarge()))
+			    (mustOccupy &&
+			     unitTileObject->occupiedTiles.find(position) ==
+			         unitTileObject->occupiedTiles.end()) ||
+			    (mustBeStatic && !unit->isStatic()) || (onlyLarge && !unit->isLarge()))
 			{
 				continue;
 			}

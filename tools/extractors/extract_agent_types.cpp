@@ -752,7 +752,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 		// Hazards
 		if (i == UNIT_TYPE_POPPER)
 		{
-			a->spreadHazardDamageType = { &state, "DAMAGETYPE_SMOKE" };
+			a->spreadHazardDamageType = {&state, "DAMAGETYPE_SMOKE"};
 			a->spreadHazardMinPower = 1;
 			a->spreadHazardMaxPower = 1;
 			a->spreadHazardTTLDivizor = 2;
@@ -958,9 +958,9 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 		{
 			if (id == "AGENTTYPE_BRAINSUCKER")
 			{
-				a->built_in_weapon_right = { &state, "AEQUIPMENTTYPE_BRAINSUCKER_WEAPON" };
+				a->built_in_weapon_right = {&state, "AEQUIPMENTTYPE_BRAINSUCKER_WEAPON"};
 				name = "BUILTIN";
-			} 
+			}
 			else if (data.equipment_sets[0] == 0xff)
 			{
 				// Units with no inventory and no built-in equipment sets do not have any slots
@@ -983,18 +983,18 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 
 				if (es_data.weapons[0].weapon_idx != 0xffffffff)
 					a->built_in_weapon_right = {
-						&state, format("%s%s", AEquipmentType::getPrefix(),
-						                canon_string(data_u.agent_equipment_names->get(
-						                    es_data.weapons[0].weapon_idx)))};
+					    &state, format("%s%s", AEquipmentType::getPrefix(),
+					                   canon_string(data_u.agent_equipment_names->get(
+					                       es_data.weapons[0].weapon_idx)))};
 				if (id == "AGENTTYPE_MULTIWORM")
 				{
-					a->built_in_weapon_left = { &state, "AEQUIPMENTTYPE_MULTIWORM_BURST" };
+					a->built_in_weapon_left = {&state, "AEQUIPMENTTYPE_MULTIWORM_BURST"};
 				}
 				else if (es_data.weapons[1].weapon_idx != 0xffffffff)
 					a->built_in_weapon_left = {
-						&state, format("%s%s", AEquipmentType::getPrefix(),
-						                canon_string(data_u.agent_equipment_names->get(
-						                    es_data.weapons[1].weapon_idx)))};
+					    &state, format("%s%s", AEquipmentType::getPrefix(),
+					                   canon_string(data_u.agent_equipment_names->get(
+					                       es_data.weapons[1].weapon_idx)))};
 				name = "BUILTIN";
 			}
 		}
@@ -1181,8 +1181,8 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 			case UNIT_TYPE_CHRYSALIS:
 				a->allowed_facing.push_back({});
 				a->allowed_facing.push_back({});
-				a->allowed_facing[0].insert({ 0, 1});
-				a->allowed_facing[1].insert({ -1, 0 });
+				a->allowed_facing[0].insert({0, 1});
+				a->allowed_facing[1].insert({-1, 0});
 				break;
 			case UNIT_TYPE_QUEENSPAWN:
 				a->allowed_facing.push_back({});
@@ -1238,9 +1238,11 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 						break;
 				}
 				a->allowed_movement_states.insert(MovementState::None);
-				a->allowed_body_states.insert(i == UNIT_TYPE_CHRYSALIS ? BodyState::Prone : BodyState::Standing);
+				a->allowed_body_states.insert(i == UNIT_TYPE_CHRYSALIS ? BodyState::Prone
+				                                                       : BodyState::Standing);
 				a->allowed_body_states.insert(BodyState::Downed);
-				voxelInfo[i == UNIT_TYPE_CHRYSALIS ? BodyState::Prone : BodyState::Standing] = {height, idx};
+				voxelInfo[i == UNIT_TYPE_CHRYSALIS ? BodyState::Prone : BodyState::Standing] = {
+				    height, idx};
 				voxelInfo[BodyState::Downed] = {(i == UNIT_TYPE_QUEENSPAWN) ? 16 : 8, idx};
 				break;
 

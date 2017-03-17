@@ -144,10 +144,9 @@ class Tile
 	                                          bool onlyLarge = false,
 	                                          bool checkLargeSpace = false) const;
 	std::list<sp<BattleUnit>> getUnits(bool onlyConscious, bool mustOccupy = false,
-		bool mustBeStatic = false,
-		sp<TileObjectBattleUnit> exceptThis = nullptr,
-		bool onlyLarge = false,
-		bool checkLargeSpace = false) const;
+	                                   bool mustBeStatic = false,
+	                                   sp<TileObjectBattleUnit> exceptThis = nullptr,
+	                                   bool onlyLarge = false, bool checkLargeSpace = false) const;
 	// Returns items that can be collected by standing in this tile)
 	std::list<sp<BattleItem>> getItems();
 	// Returns resting position for items and units in the tile
@@ -185,8 +184,8 @@ class CanEnterTileHelper
 {
   public:
 	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
-	virtual bool canEnterTile(Tile *from, Tile *to, bool allowJumping, bool &jumped, float &cost, bool &doorInTheWay,
-							  bool ignoreStaticUnits = false,
+	virtual bool canEnterTile(Tile *from, Tile *to, bool allowJumping, bool &jumped, float &cost,
+	                          bool &doorInTheWay, bool ignoreStaticUnits = false,
 	                          bool ignoreAllUnits = false) const = 0;
 	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
 	virtual bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,

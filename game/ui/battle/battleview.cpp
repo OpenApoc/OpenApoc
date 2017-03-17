@@ -783,8 +783,10 @@ BattleView::BattleView(sp<GameState> gameState)
 
 	// We need this in TB because we will be able to allow pausing then
 	this->baseForm->findControl("BUTTON_SPEED0")
-	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->lastSpeed = this->updateSpeed; this->updateSpeed = BattleUpdateSpeed::Pause; });
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    this->lastSpeed = this->updateSpeed;
+		    this->updateSpeed = BattleUpdateSpeed::Pause;
+		});
 	this->baseForm->findControl("BUTTON_SPEED1")
 	    ->addCallback(FormEventType::CheckBoxSelected,
 	                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed1; });
@@ -1397,11 +1399,14 @@ void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 	auto u = battle.battleViewSelectedUnits.front();
 	BattleUnit temp;
 	temp.agent = u->agent;
-	int facingDelta = strafe ? BattleUnitMission::getFacingDelta(u->facing, BattleUnitMission::getFacing(temp, target))  : 0;
+	int facingDelta = strafe ? BattleUnitMission::getFacingDelta(
+	                               u->facing, BattleUnitMission::getFacing(temp, target))
+	                         : 0;
 
 	if (battle.battleViewGroupMove && !runAway)
 	{
-		Battle::groupMove(*state, battle.battleViewSelectedUnits, target, facingDelta, demandGiveWay);
+		Battle::groupMove(*state, battle.battleViewSelectedUnits, target, facingDelta,
+		                  demandGiveWay);
 	}
 	else
 	{
@@ -1418,8 +1423,8 @@ void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 			if (runAway)
 			{
 				// Running away units are impatient!
-				mission = BattleUnitMission::gotoLocation(*unit, target, facingDelta,
-				                                          demandGiveWay, true, 1, true);
+				mission = BattleUnitMission::gotoLocation(*unit, target, facingDelta, demandGiveWay,
+				                                          true, 1, true);
 			}
 			else // not running away
 			{
@@ -1551,7 +1556,7 @@ void BattleView::orderUse(bool right, bool automatic)
 		case AEquipmentType::Type::Teleporter:
 			// Teleporter does not care for automatic mode
 			selectionState =
-				right ? BattleSelectionState::TeleportRight : BattleSelectionState::TeleportLeft;
+			    right ? BattleSelectionState::TeleportRight : BattleSelectionState::TeleportLeft;
 			break;
 		// Usable items that have no automatic mode
 		case AEquipmentType::Type::MotionScanner:
@@ -1814,10 +1819,10 @@ void BattleView::eventOccurred(Event *e)
 	     e->keyboard().KeyCode == SDLK_LSHIFT || e->keyboard().KeyCode == SDLK_RALT ||
 	     e->keyboard().KeyCode == SDLK_LALT || e->keyboard().KeyCode == SDLK_RCTRL ||
 	     e->keyboard().KeyCode == SDLK_LCTRL || e->keyboard().KeyCode == SDLK_f ||
-			e->keyboard().KeyCode == SDLK_r || e->keyboard().KeyCode == SDLK_a ||
+	     e->keyboard().KeyCode == SDLK_r || e->keyboard().KeyCode == SDLK_a ||
 	     e->keyboard().KeyCode == SDLK_p || e->keyboard().KeyCode == SDLK_h ||
-	     e->keyboard().KeyCode == SDLK_k || e->keyboard().KeyCode == SDLK_q || 
-			e->keyboard().KeyCode == SDLK_j))
+	     e->keyboard().KeyCode == SDLK_k || e->keyboard().KeyCode == SDLK_q ||
+	     e->keyboard().KeyCode == SDLK_j))
 	{
 		switch (e->keyboard().KeyCode)
 		{
@@ -1923,8 +1928,12 @@ void BattleView::eventOccurred(Event *e)
 						continue;
 					}
 
-					if (((local && u.second->tileObject->getOwningTile()->position == selectedTilePosition)
-						|| (!local && glm::length(u.second->position - (Vec3<float>)selectedTilePosition) < 5.0f)) == !inverse)
+					if (((local &&
+					      u.second->tileObject->getOwningTile()->position ==
+					          selectedTilePosition) ||
+					     (!local &&
+					      glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
+					          5.0f)) == !inverse)
 					{
 						u.second->die(*state);
 						u.second->destroyed = true;
@@ -1986,7 +1995,7 @@ void BattleView::eventOccurred(Event *e)
 				LogWarning("AI debug key currently disabled");
 				if (battle.units.empty())
 				{
-				    break;
+					break;
 				}
 				bool activeAIFound = battle.units.begin()->second->aiList.aiList.size() > 3;
 				if (activeAIFound)
@@ -2087,7 +2096,7 @@ void BattleView::eventOccurred(Event *e)
 			auto unitPresent = objsPresent.empty() ? nullptr : objsPresent.front();
 			auto objsOccupying = map.getTile(t.x, t.y, t.z)->getUnits(true, true);
 			auto unitOccupying = objsOccupying.empty() ? nullptr : objsOccupying.front();
-			if (unitOccupying) 
+			if (unitOccupying)
 			{
 				unitPresent = unitOccupying;
 			}
@@ -2175,8 +2184,10 @@ void BattleView::eventOccurred(Event *e)
 						case Event::MouseButton::Right:
 							// Turn if no enemy unit present under cursor
 							// or if holding alt
-							if (!attackTarget || player->isRelatedTo(attackTarget->owner) != Organisation::Relation::Hostile 
-								|| selectionState == BattleSelectionState::NormalAlt)
+							if (!attackTarget ||
+							    player->isRelatedTo(attackTarget->owner) !=
+							        Organisation::Relation::Hostile ||
+							    selectionState == BattleSelectionState::NormalAlt)
 							{
 								orderTurn(t);
 							}
@@ -2454,8 +2465,8 @@ void BattleView::eventOccurred(Event *e)
 										               PsiStatus::Panic, right);
 										break;
 									case BattleSelectionState::PsiStun:
-										orderPsiAttack({&*state, attackTarget->id},
-										               PsiStatus::Stun, right);
+										orderPsiAttack({&*state, attackTarget->id}, PsiStatus::Stun,
+										               right);
 										break;
 									case BattleSelectionState::PsiProbe:
 										orderPsiAttack({&*state, attackTarget->id},
@@ -2477,10 +2488,14 @@ void BattleView::eventOccurred(Event *e)
 							}
 							else
 							{
-								this->activeTab->findControlTyped<RadioButton>("BUTTON_CONTROL")->setChecked(false);
-								this->activeTab->findControlTyped<RadioButton>("BUTTON_PANIC")->setChecked(false);
-								this->activeTab->findControlTyped<RadioButton>("BUTTON_STUN")->setChecked(false);
-								this->activeTab->findControlTyped<RadioButton>("BUTTON_PROBE")->setChecked(false);
+								this->activeTab->findControlTyped<RadioButton>("BUTTON_CONTROL")
+								    ->setChecked(false);
+								this->activeTab->findControlTyped<RadioButton>("BUTTON_PANIC")
+								    ->setChecked(false);
+								this->activeTab->findControlTyped<RadioButton>("BUTTON_STUN")
+								    ->setChecked(false);
+								this->activeTab->findControlTyped<RadioButton>("BUTTON_PROBE")
+								    ->setChecked(false);
 							}
 							break;
 						}
