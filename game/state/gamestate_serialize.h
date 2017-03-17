@@ -539,10 +539,7 @@ void serializeOut(sp<SerializationNode> node, const std::vector<T> &vector, cons
 	serializeOut(node->addNode("sizeHint"), sizeHint, sizeHintDefault);
 }
 
-void serializeIn(const GameState *state, sp<SerializationNode> node, UnitAI::Type &val);
 void serializeIn(const GameState *, sp<SerializationNode> node, sp<UnitAI> &ai);
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, TacticalAI::Type &val);
 void serializeIn(const GameState *, sp<SerializationNode> node, sp<TacticalAI> &ai);
 
 void serializeOut(sp<SerializationNode> node, const sp<UnitAI> &ptr, const sp<UnitAI> &ref);

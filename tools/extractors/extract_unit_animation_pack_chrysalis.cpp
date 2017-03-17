@@ -54,7 +54,7 @@ makeUpChrysalisAnimationEntry(int from, int count, int fromB, int countB, bool b
 			e->frames[i].unit_image_draw_order.push_back(part_type);
 			e->frames[i].unit_image_parts[part_type] =
 			    BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock(
-			        frame, offset.x, (j == 2 ? (first ? 4 : 9) : 0) + offset.y);
+			        frame, offset.x, (j == 2 ? (first ? -4 : 9) : 0) + offset.y);
 		}
 	}
 

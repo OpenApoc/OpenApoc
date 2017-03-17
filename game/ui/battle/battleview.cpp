@@ -2106,7 +2106,7 @@ void BattleView::eventOccurred(Event *e)
 			{
 				for (auto u : objsOccupying)
 				{
-					if (player->isRelatedTo(u->owner) == Organisation::Relation::Hostile)
+					if (player->isRelatedTo(u->owner) == Organisation::Relation::Hostile && battle.visibleUnits[player].find({ &*state, u->id }) != battle.visibleUnits[player].end())
 					{
 						attackTarget = u;
 						break;
@@ -2117,14 +2117,14 @@ void BattleView::eventOccurred(Event *e)
 			{
 				for (auto u : objsPresent)
 				{
-					if (player->isRelatedTo(u->owner) == Organisation::Relation::Hostile)
+					if (player->isRelatedTo(u->owner) == Organisation::Relation::Hostile && battle.visibleUnits[player].find({ &*state, u->id }) != battle.visibleUnits[player].end())
 					{
 						attackTarget = u;
 						break;
 					}
 				}
 			}
-			if (!attackTarget)
+			if (!attackTarget && unitPresent && battle.visibleUnits[player].find({ &*state, unitPresent->id }) != battle.visibleUnits[player].end())
 			{
 				attackTarget = unitPresent;
 			}

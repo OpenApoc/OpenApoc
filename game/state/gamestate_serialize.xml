@@ -1464,7 +1464,7 @@
 		<value>TakeCover</value>
 		<value>Retreat</value>
 	</enum>
-	<enum>
+	<enum external = "true">
 		<name>UnitAI::Type</name>
 		<value>LowMorale</value>
 		<value>Default</value>
@@ -1472,7 +1472,7 @@
 		<value>Vanilla</value>
 		<value>Hardcore</value>
 	</enum>
-	<enum>
+	<enum external = "true">
 		<name>TacticalAI::Type</name>
 		<value>Vanilla</value>
 	</enum>
