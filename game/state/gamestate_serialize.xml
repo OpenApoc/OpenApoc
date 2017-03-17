@@ -557,6 +557,7 @@
 		<member>movement_mode</member>
 		<member>kneeling_mode</member>
 		<member>body_animation_ticks_remaining</member>
+		<member>body_animation_ticks_total</member>
 		<member>current_body_state</member>
 		<member>target_body_state</member>
 		<member>hand_animation_ticks_remaining</member>

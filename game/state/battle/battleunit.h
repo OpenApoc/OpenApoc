@@ -242,6 +242,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Time, in game ticks, until body animation is finished
 	unsigned int body_animation_ticks_remaining = 0;
+	// Required for transition of derived params, like muzzle location
+	unsigned int body_animation_ticks_total = 0;
 	BodyState current_body_state = BodyState::Standing;
 	BodyState target_body_state = BodyState::Standing;
 

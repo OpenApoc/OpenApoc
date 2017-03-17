@@ -3455,6 +3455,7 @@ void BattleUnit::beginBodyStateChange(GameState &state, BodyState bodyState)
 	if (ticks > 0)
 	{
 		target_body_state = bodyState;
+		body_animation_ticks_total = ticks;
 		body_animation_ticks_remaining = ticks;
 		// Updates bounds etc.
 		if (tileObject)
@@ -3480,6 +3481,7 @@ void BattleUnit::setBodyState(GameState &state, BodyState bodyState)
 	current_body_state = bodyState;
 	target_body_state = bodyState;
 	body_animation_ticks_remaining = 0;
+	body_animation_ticks_total = 1;
 	// Ensure we have frames in this state
 	if (agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state, target_body_state, current_hand_state, current_movement_state, facing) == 0)
 	{
@@ -3655,8 +3657,11 @@ Vec3<float> BattleUnit::getMuzzleLocation() const
 {
 	return position +
 	       Vec3<float>{0.0f, 0.0f,
-	                   ((float)agent->type->bodyType->muzzleZPosition.at(current_body_state)) /
-	                       40.0f};
+	        ((float)agent->type->bodyType->muzzleZPosition.at(current_body_state) 
+				* (body_animation_ticks_remaining)
+				+ (float)agent->type->bodyType->muzzleZPosition.at(target_body_state)
+				* (body_animation_ticks_total - body_animation_ticks_remaining)) 
+				/ (float)body_animation_ticks_total / 40.0f};
 }
 
 Vec3<float> BattleUnit::getThrownItemLocation() const

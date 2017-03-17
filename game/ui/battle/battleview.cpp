@@ -668,19 +668,39 @@ BattleView::BattleView(sp<GameState> gameState)
 	    ->addCallback(FormEventType::ScrollBarChange, updateRange);
 
 	std::function<void(FormsEvent * e)> psiControl = [this](Event *) {
+		bool control = this->psiInfo.status == PsiStatus::Control;
 		this->orderCancelPsi();
+		if (control)
+		{
+			this->state->current_battle->updateVision(*this->state);
+		}
 		this->selectionState = BattleSelectionState::PsiControl;
 	};
 	std::function<void(FormsEvent * e)> psiPanic = [this](Event *) {
+		bool control = this->psiInfo.status == PsiStatus::Control;
 		this->orderCancelPsi();
+		if (control)
+		{
+			this->state->current_battle->updateVision(*this->state);
+		}
 		this->selectionState = BattleSelectionState::PsiPanic;
 	};
 	std::function<void(FormsEvent * e)> psiStun = [this](Event *) {
+		bool control = this->psiInfo.status == PsiStatus::Control;
 		this->orderCancelPsi();
+		if (control)
+		{
+			this->state->current_battle->updateVision(*this->state);
+		}
 		this->selectionState = BattleSelectionState::PsiStun;
 	};
 	std::function<void(FormsEvent * e)> psiProbe = [this](Event *) {
+		bool control = this->psiInfo.status == PsiStatus::Control;
 		this->orderCancelPsi();
+		if (control)
+		{
+			this->state->current_battle->updateVision(*this->state);
+		}
 		this->selectionState = BattleSelectionState::PsiProbe;
 	};
 
