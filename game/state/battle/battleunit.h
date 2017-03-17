@@ -244,6 +244,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	unsigned int body_animation_ticks_remaining = 0;
 	// Required for transition of derived params, like muzzle location
 	unsigned int body_animation_ticks_total = 0;
+	// Animations ticks for static body state (no body state change is in progress)
+	unsigned int body_animation_ticks_static = 0;
 	BodyState current_body_state = BodyState::Standing;
 	BodyState target_body_state = BodyState::Standing;
 
@@ -355,7 +357,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	                           sp<AEquipment> leftHand = nullptr);
 	// Clear LOF means no friendly fire and no map part in between
 	// Clear LOS means nothing in between
-	bool hasLineToUnit(sp<BattleUnit> unit, bool useLOS = false);
+	bool hasLineToUnit(const sp<BattleUnit> unit, bool useLOS = false) const;
 
 	// Psi
 
@@ -372,6 +374,12 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatus status,
 	                    StateRef<AEquipmentType> item, bool impact);
 	void changeOwner(GameState &state, StateRef<Organisation> newOwner);
+
+	// Items
+
+	// Attempts to use item, returns if success
+	bool useItem(GameState &state, sp<AEquipment> item);
+	bool useMedikit(GameState &state, BodyPart part);
 
 	// Body
 
@@ -433,6 +441,9 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	bool canAfford(GameState &state, int cost) const;
 	// Returns if unit did spend (false if unsufficient TUs)
 	bool spendTU(GameState &state, int cost);
+	int getThrowCost();
+	int getMedikitCost();
+	int getMotionScannerCost();
 
 	// AI execution
 

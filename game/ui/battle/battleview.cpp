@@ -1548,71 +1548,24 @@ void BattleView::orderUse(bool right, bool automatic)
 			this->activeTab->findControlTyped<RadioButton>("BUTTON_PROBE")->setChecked(false);
 			this->activeTab->findControlTyped<CheckBox>("RIGHTHANDUSED")->setChecked(right);
 			break;
-		case AEquipmentType::Type::MotionScanner:
-			// Motion scanner has no automatic mode
-			if (automatic)
-			{
-				break;
-			}
-			if (!item->inUse && battle.mode == Battle::Mode::TurnBased)
-			{
-				int cost = 5;
-				if (!item->ownerAgent->unit->spendTU(*state, cost))
-				{
-					LogWarning("Notify unsufficient TU for motion scanner");
-					break;
-				}
-			}
-			item->inUse = !item->inUse;
-			break;
-		case AEquipmentType::Type::MediKit:
-			// Medikit has no automatic mode
-			if (automatic)
-			{
-				break;
-			}
-			item->inUse = !item->inUse;
-			break;
 		case AEquipmentType::Type::Teleporter:
 			// Teleporter does not care for automatic mode
 			selectionState =
-			    right ? BattleSelectionState::TeleportRight : BattleSelectionState::TeleportLeft;
+				right ? BattleSelectionState::TeleportRight : BattleSelectionState::TeleportLeft;
 			break;
-		case AEquipmentType::Type::Brainsucker:
+		// Usable items that have no automatic mode
+		case AEquipmentType::Type::MotionScanner:
+		case AEquipmentType::Type::MediKit:
+			if (automatic)
 			{
-				StateRef<DamageType> brainsucker = { &*state, "DAMAGETYPE_BRAINSUCKER" };
-				Vec3<int> targetPos = unit->position;
-				std::list<Vec3<int>> targetList;
-				targetList.push_back(targetPos + Vec3<int>(unit->facing.x, unit->facing.y, 0));
-				targetList.push_back(targetPos + Vec3<int>(unit->facing.x, unit->facing.y, 1));
-				targetList.push_back(targetPos + Vec3<int>(unit->facing.x, unit->facing.y, -1));
-				auto &map = unit->tileObject->map;
-				auto helper = BattleUnitTileHelper(map, *unit);
-				for (auto &pos : targetList)
-				{
-					if (!map.tileIsValid(pos))
-					{
-						continue;
-					}
-					auto targetTile = map.getTile(pos);
-					if (!helper.canEnterTile(unit->tileObject->getOwningTile(), targetTile, false, true))
-					{
-						continue;
-					}
-					if (targetTile->firstUnitPresent)
-					{
-						auto target = targetTile->firstUnitPresent->getUnit();
-						if (brainsucker->dealDamage(100, target->agent->type->damage_modifier) != 0)
-						{
-							orderJump(target->getMuzzleLocation() + Vec3<float>{0.0f, 0.0f, 0.0f}, BodyState::Jumping);
-							break;
-						}
-					}
-				}
+				break;
 			}
+			unit->useItem(*state, item);
 			break;
+		// Usable items that care not for automatic mode
 		case AEquipmentType::Type::Popper:
-			LogError("Implement Popper!");
+		case AEquipmentType::Type::Brainsucker:
+			unit->useItem(*state, item);
 			break;
 		// Items that do nothing
 		case AEquipmentType::Type::AlienDetector:
@@ -1829,24 +1782,7 @@ void BattleView::orderHeal(BodyPart part)
 {
 	auto unit = battle.battleViewSelectedUnits.front();
 
-	if (unit->fatalWounds[part] == 0)
-	{
-		return;
-	}
-
-	if (battle.mode == Battle::Mode::TurnBased)
-	{
-		int cost = 18;
-		if (!unit->spendTU(*state, cost))
-		{
-			LogWarning("Notify unsufficient TU for medikit");
-			return;
-		}
-		unit->fatalWounds[part]--;
-	}
-
-	unit->isHealing = true;
-	unit->healingBodyPart = part;
+	unit->useMedikit(*state, part);
 }
 
 void BattleView::eventOccurred(Event *e)

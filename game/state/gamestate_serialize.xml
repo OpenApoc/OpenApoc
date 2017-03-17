@@ -110,6 +110,10 @@
 		<member>can_improve</member>
 		<member>playable</member>
 		<member>allowsDirectControl</member>
+		<member>spreadHazardDamageType</member>
+		<member>spreadHazardMinPower</member>
+		<member>spreadHazardMaxPower</member>
+		<member>spreadHazardTTLDivizor</member>
 		<member>aiType</member>
 		<member>score</member>
 		<member>walkSfx</member>
@@ -558,6 +562,7 @@
 		<member>kneeling_mode</member>
 		<member>body_animation_ticks_remaining</member>
 		<member>body_animation_ticks_total</member>
+		<member>body_animation_ticks_static</member>
 		<member>current_body_state</member>
 		<member>target_body_state</member>
 		<member>hand_animation_ticks_remaining</member>
@@ -858,6 +863,7 @@
 		<member>damage_type</member>
 		<member>trigger_type</member>
 		<member>explosion_depletion_rate</member>
+		<member>spawnList</member>
 	</object>
 	<object>
 		<name>VEquipmentType</name>
@@ -1348,6 +1354,8 @@
 		<value>DimensionForceField</value>
 		<value>MediKit</value>
 		<value>Brainsucker</value>
+		<value>Popper</value>
+		<value>Spawner</value>
 		<value>Loot</value>
 	</enum>
 	<enum>

@@ -1287,12 +1287,11 @@ std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &
 				{
 					targetEnemy.clear();
 					backupEnemy.clear();
-					auto it = enemies.begin();
 					float minDistance = FLT_MAX;
-					while (it != enemies.end())
+					for (auto enemy : enemies)
 					{
-						auto enemy = *it++;
-						if (!enemy->isConscious())
+						// Do not auto-target harmless things
+						if (!enemy->isConscious() || enemy->getAIType() == AIType::None)
 						{
 							continue;
 						}
@@ -1346,7 +1345,8 @@ std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &
 					std::map<float, StateRef<BattleUnit>> enemiesByDistance;
 					for (auto enemy : enemies)
 					{
-						if (!enemy->isConscious())
+						// Do not auto-target harmless things
+						if (!enemy->isConscious() || enemy->getAIType() == AIType::None)
 						{
 							continue;
 						}

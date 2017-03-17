@@ -1437,21 +1437,46 @@ MovementState BattleUnitMission::getNextMovementState(GameState &state, BattleUn
 				|| u.target_body_state == BodyState::Jumping 
 				|| targetBodyState == BodyState::Jumping)
 			{
-				return MovementState::Normal;
+				if (u.agent->isMovementStateAllowed(MovementState::Normal))
+				{
+					return MovementState::Normal;
+				}
+				else
+				{
+					LogError("Agent with allowed Jumping body state does not have allowed Normal movement");
+					return u.current_movement_state;
+				}
 			}
 			switch (facingDelta)
 			{
 				case 0:
 				case 1:
 				case -1:
+					// Normal movement
 					return MovementState::None;
 				case 2:
 				case -2:
-					return MovementState::Strafing;
+					if (u.agent->isMovementStateAllowed(MovementState::Strafing))
+					{
+						return MovementState::Strafing;
+					}
+					else
+					{
+						cancelled = true;
+						break;
+					}
 				case 3:
 				case -3:
 				case 4:
-					return MovementState::Reverse;
+					if (u.agent->isMovementStateAllowed(MovementState::Reverse))
+					{
+						return MovementState::Reverse;
+					}
+					else
+					{
+						cancelled = true;
+						break;
+					}
 				default:
 					LogError("Invalid facingDelta %d", facingDelta);
 					break;
@@ -1743,6 +1768,11 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 		}
 		case Type::DropItem:
 		{
+			if (!u.agent->type->inventory)
+			{
+				cancelled = true;
+				return;
+			}
 			if (item)
 			{
 				if (item->ownerAgent)
@@ -1760,9 +1790,27 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 		}
 		case Type::ThrowItem:
 		{
+			if (!u.agent->type->inventory)
+			{
+				cancelled = true;
+				return;
+			}
 			return;
 		}
 		case Type::GotoLocation:
+			// Check if can move
+			if (!u.agent->isMovementStateAllowed(MovementState::Normal) && !u.agent->isMovementStateAllowed(MovementState::Running))
+			{
+				cancelled = true;
+				return;
+			}
+			// Check if can move in a requested manner
+			getNextMovementState(state, u);
+			if (cancelled)
+			{
+				return;
+			}
+			
 			// Reset target body state and facing
 			targetBodyState = u.target_body_state;
 			targetFacing = u.goalFacing;
@@ -2287,12 +2335,6 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodySt
 	return true;
 }
 
-int BattleUnitMission::getThrowCost(BattleUnit &u)
-{
-	// I *think* this is correct? 18 TUs at 100 time units to throw
-	return u.agent->current_stats.time_units * 18 / 100;
-}
-
 int BattleUnitMission::getBodyStateChangeCost(BattleUnit &u, BodyState from, BodyState to)
 {
 	// If not within these conditions, it costs nothing!
@@ -2333,7 +2375,7 @@ int BattleUnitMission::getBodyStateChangeCost(BattleUnit &u, BodyState from, Bod
 			}
 			break;
 		case BodyState::Throwing:
-			return getThrowCost(u);
+			return u.getThrowCost();
 		default:
 			return 0;
 	}

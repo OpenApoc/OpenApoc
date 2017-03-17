@@ -14,6 +14,18 @@
 namespace OpenApoc
 {
 
+namespace
+{
+// Proper value MUST be 24 on x, because width is 48, but no matter how I look at it, I just
+// can't accept it.
+// Voxel Maps ARE better suited for an offest of 23, period!
+const Vec2<float> BATTLE_IMAGE_OFFSET = { 23, 34 };
+const Vec2<float> BATTLE_SHADOW_OFFSET = { 23, 6 };
+
+const Vec2<float> CITY_IMAGE_OFFSET = { 32, 24 };
+
+}
+
 class BattleMapTileset;
 class BattleUnitAnimationPack;
 class GameState;
@@ -22,14 +34,6 @@ class BattleMapSectorTiles;
 
 class InitialGameStateExtractor
 {
-	// Proper value MUST be 24 on x, because width is 48, but no matter how I look at it, I just
-	// can't accept it.
-	// Voxel Maps ARE better suited for an offest of 23, period!
-	const Vec2<float> BATTLE_IMAGE_OFFSET = {23, 34};
-	const Vec2<float> BATTLE_SHADOW_OFFSET = {23, 6};
-
-	const Vec2<float> CITY_IMAGE_OFFSET = {32, 24};
-
   private:
 	UFO2P ufo2p;
 	TACP tacp;
@@ -111,6 +115,8 @@ class InitialGameStateExtractor
 	                        UString spriteFile, UString stratmapFile, UString lofFile,
 	                        UString ovrFile, sp<City> city) const;
 
+  public:
+
 	// Unit animation packs functions
 
 	sp<BattleUnitAnimationPack::AnimationEntry> getAnimationEntry(
@@ -165,10 +171,31 @@ class InitialGameStateExtractor
 
 	Vec2<int> gPrOff(Vec2<int> facing) const;
 
+	sp<BattleUnitAnimationPack::AnimationEntry> makeUpAnimationEntry(
+		int from, int count, int fromS, int countS, int partCount,
+		Vec2<int> offset, int units_per_100_frames = 100) const;
+
+	// This one automatically adjusts by direction
+	sp<BattleUnitAnimationPack::AnimationEntry> makeUpAnimationEntry(
+		int from, int count, int fromS, int countS, int partCount,
+		Vec2<int> direction, Vec2<int> offset, int units_per_100_frames = 100) const
+	{
+		static const std::map<Vec2<int>, int> offset_dir_map = {
+			{ { 0, -1 }, 4 },{ { 1, -1 }, 5 },{ { 1, 0 }, 6 },{ { 1, 1 }, 7 },
+			{ { 0, 1 }, 0 },{ { -1, 1 }, 1 },{ { -1, 0 }, 2 },{ { -1, -1 }, 3 },
+		};
+		from += offset_dir_map.at(direction) * count;
+		fromS += offset_dir_map.at(direction) * countS;
+		return makeUpAnimationEntry(from, count, fromS, countS, partCount, offset, units_per_100_frames);
+	}
+
+
 	// Unit animation pack extractors
 
+private:
+
 	// Template for copying to other files
-	void extractAnimationPackTemplate(sp<BattleUnitAnimationPack> p,
+	void extractAnimationPack_(sp<BattleUnitAnimationPack> p,
 	                                  const std::vector<AnimationDataAD> &dataAD,
 	                                  const std::vector<AnimationDataUA> &dataUA,
 	                                  std::vector<AnimationDataUF> &dataUF) const;
@@ -182,5 +209,9 @@ class InitialGameStateExtractor
 	                             const std::vector<AnimationDataAD> &dataAD,
 	                             const std::vector<AnimationDataUA> &dataUA,
 	                             std::vector<AnimationDataUF> &dataUF) const;
+
+	void extractAnimationPackPopper(sp<BattleUnitAnimationPack> p) const;
+
+	void extractAnimationPackChrysalis(sp<BattleUnitAnimationPack> p, bool first) const;
 };
 }

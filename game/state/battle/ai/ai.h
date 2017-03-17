@@ -130,7 +130,7 @@ class AIDecision
 // Unit's AI type (AI may check this and act differently based on values here)
 enum class AIType
 {
-	None,        // Crysalises
+	None,        // Chrysalises
 	Civilian,    // Civilians
 	Loner,       // Poppers, Large units
 	Group,       // Majority of the units

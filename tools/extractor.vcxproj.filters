@@ -90,7 +90,13 @@
     <ClCompile Include="extractors\extract_unit_animation_pack_bsk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="extractors\extract_animation_pack_template.cpp">
+    <ClCompile Include="extractors\extract_unit_animation_pack_template.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="extractors\extract_unit_animation_pack_popper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="extractors\extract_unit_animation_pack_chrysalis.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

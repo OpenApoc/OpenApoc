@@ -382,6 +382,19 @@ sp<Doodad> Battle::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 	return doodad;
 }
 
+sp<BattleUnit> Battle::spawnUnit(GameState & state, StateRef<Organisation> owner, StateRef<AgentType> agentType, Vec3<float> position, Vec2<int> facing, BodyState curState, BodyState tarState)
+{
+	auto agent = state.agent_generator.createAgent(state, owner, agentType);
+	auto unit = state.current_battle->placeUnit(state, agent, position);
+	unit->falling = true;
+	unit->setFacing(state, facing);
+	unit->setBodyState(state, curState);
+	unit->setMission(state, BattleUnitMission::changeStance(*unit, tarState));
+	unit->assignToSquad(*state.current_battle);
+	unit->refreshUnitVisibilityAndVision(state, unit->position);
+	return unit;
+}
+
 sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position,
                                          StateRef<DoodadType> doodadType,
                                          StateRef<DamageType> damageType, int power,
@@ -1347,7 +1360,7 @@ void Battle::enterBattle(GameState &state)
 					continue;
 				} // end of spawning units anywhere in case we can't find a block
 
-				// Actually spawn units
+				// Spawn units within a block
 				int startX = randBoundsExclusive(state.rng, block->start.x, block->end.x);
 				int startY = randBoundsExclusive(state.rng, block->start.y, block->end.y);
 				int z = block->start.z;
@@ -1366,6 +1379,7 @@ void Battle::enterBattle(GameState &state)
 								continue;
 
 							auto u = unitsToSpawn[unitsToSpawn.size() - 1];
+							// Large unit occupies 2x2x2 space
 							if (u->isLarge())
 							{
 								if (x < 1 || y < 1 || z >= (b->size.z - 1) ||
@@ -1391,6 +1405,45 @@ void Battle::enterBattle(GameState &state)
 								b->spawnMap[x - 1][y - 1][z + 1] = -1;
 								u->position = {x + 0.0f, y + 0.0f,
 								               z + ((float)height) / (float)TILE_Z_BATTLE};
+							}
+							// Prone-only unit occupies a 3x3x1 space
+							else if (!u->agent->isBodyStateAllowed(BodyState::Standing) 
+								&& !u->agent->isBodyStateAllowed(BodyState::Flying)
+								&& !u->agent->isBodyStateAllowed(BodyState::Kneeling))
+							{
+								if (!u->agent->isBodyStateAllowed(BodyState::Prone))
+								{
+									LogError("Unit %s agent %s is not allowed to stand/fly/kneel/prone?", u->id, u->agent->type->id	);
+								}
+
+								if (x < 1 || y < 1 || x >= (b->size.x - 1) ||
+									y >= (b->size.y - 1) ||
+									b->spawnMap[x][y][z] == -1 || 
+									b->spawnMap[x - 1][y][z] == -1 ||
+									b->spawnMap[x][y - 1][z] == -1 ||
+									b->spawnMap[x - 1][y - 1][z] == -1 ||
+									b->spawnMap[x + 1][y][z] == -1 ||
+									b->spawnMap[x][y + 1][z] == -1 ||
+									b->spawnMap[x + 1][y + 1][z] == -1||
+									b->spawnMap[x - 1][y + 1][z] == -1 || 
+									b->spawnMap[x + 1][y - 1][z] == -1)
+									continue;
+								int height = b->spawnMap[x][y][z];
+								height = std::max(b->spawnMap[x][y - 1][z], height);
+								height = std::max(b->spawnMap[x - 1][y][z], height);
+								height = std::max(b->spawnMap[x + 1][y][z], height);
+								height = std::max(b->spawnMap[x][y + 1][z], height);
+								b->spawnMap[x][y][z] = -1;
+								b->spawnMap[x - 1][y][z] = -1;
+								b->spawnMap[x][y - 1][z] = -1;
+								b->spawnMap[x - 1][y - 1][z] = -1;
+								b->spawnMap[x + 1][y][z] = -1;
+								b->spawnMap[x][y + 1][z] = -1;
+								b->spawnMap[x + 1][y + 1][z] = -1;
+								b->spawnMap[x - 1][y + 1][z] = -1;
+								b->spawnMap[x + 1][y - 1][z] = -1;
+								u->position = { x + 0.5f, y + 0.5f,
+									z + ((float)height) / (float)TILE_Z_BATTLE };
 							}
 							else
 							{
@@ -1525,8 +1578,6 @@ void Battle::enterBattle(GameState &state)
 		}
 	}
 
-	state.current_battle->initBattle(state, true);
-
 	// Turn units towards map centre
 	// Also make sure they're facing in a valid direction
 	// And stand in a valid pose
@@ -1560,28 +1611,28 @@ void Battle::enterBattle(GameState &state)
 		// Facing
 		if (!u->agent->isFacingAllowed(u->facing))
 		{
-			u->facing = setRandomizer(state.rng, u->agent->type->bodyType->allowed_facing);
+			u->facing = setRandomizer(state.rng, *u->agent->getAllowedFacings());
 		}
 		// Stance
 		if (u->agent->isBodyStateAllowed(BodyState::Standing))
 		{
 			u->setBodyState(state, BodyState::Standing);
+			u->movement_mode = MovementMode::Walking;
 		}
 		else if (u->agent->isBodyStateAllowed(BodyState::Flying))
 		{
 			u->setBodyState(state, BodyState::Flying);
+			u->movement_mode = MovementMode::Walking;
 		}
 		else if (u->agent->isBodyStateAllowed(BodyState::Kneeling))
 		{
 			u->setBodyState(state, BodyState::Kneeling);
+			u->movement_mode = MovementMode::Prone;
 		}
 		else if (u->agent->isBodyStateAllowed(BodyState::Prone))
 		{
 			u->setBodyState(state, BodyState::Prone);
-			if (u->canMove() && u->agent->type->bodyType->allowed_facing.size() > 1)
-			{
-				LogError("Unit %s cannot Stand, Fly or Kneel, but can turn!", u->agent->type.id);
-			}
+			u->movement_mode = MovementMode::Prone;
 		}
 		else
 		{
@@ -1592,6 +1643,8 @@ void Battle::enterBattle(GameState &state)
 		u->resetGoal();
 	}
 
+	state.current_battle->initBattle(state, true);
+	
 	// Find first player unit
 	sp<BattleUnit> firstPlayerUnit = nullptr;
 	for (auto f : state.current_battle->forces[state.getPlayer()].squads)

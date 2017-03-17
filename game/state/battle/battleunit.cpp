@@ -135,6 +135,12 @@ void BattleUnit::setPosition(GameState &state, const Vec3<float> &pos)
 	if ((Vec3<int>)oldPosition != (Vec3<int>)position)
 	{
 		refreshUnitVisibilityAndVision(state, oldPosition);
+		if (agent->type->spreadHazardDamageType)
+		{
+			state.current_battle->placeHazard(state, agent->type->spreadHazardDamageType,
+				oldPosition, agent->type->spreadHazardDamageType->hazardType->getLifetime(state),
+				randBoundsInclusive(state.rng, agent->type->spreadHazardMinPower, agent->type->spreadHazardMaxPower), agent->type->spreadHazardTTLDivizor, false);
+		}
 	}
 }
 
@@ -554,7 +560,7 @@ WeaponStatus BattleUnit::canAttackUnit(sp<BattleUnit> unit, sp<AEquipment> right
 	return WeaponStatus::NotFiring;
 }
 
-bool BattleUnit::hasLineToUnit(sp<BattleUnit> unit, bool useLOS)
+bool BattleUnit::hasLineToUnit(const sp<BattleUnit> unit, bool useLOS) const
 {
 	auto muzzleLocation = getMuzzleLocation();
 	auto targetPosition = unit->tileObject->getVoxelCentrePosition();
@@ -790,6 +796,21 @@ bool BattleUnit::spendTU(GameState &state, int cost)
 	}
 	agent->modified_stats.time_units -= cost;
 	return true;
+}
+
+int BattleUnit::getThrowCost()
+{
+	return agent->current_stats.time_units * 18 / 100;
+}
+
+int BattleUnit::getMedikitCost()
+{
+	return agent->current_stats.time_units * 375 / 1000;
+}
+
+int BattleUnit::getMotionScannerCost()
+{
+	return agent->current_stats.time_units * 10 / 100;
 }
 
 int BattleUnit::getMaxHealth() const { return this->agent->current_stats.health; }
@@ -1347,6 +1368,7 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 				if (randBoundsExclusive(state.rng, 0, 100) < 100 - 2 * agent->modified_stats.morale)
 				{
 					moraleStateTicksRemaining = TICKS_PER_LOWMORALE_STATE;
+					// FIXME: When rng is fixed we can remove this unnesecary kludge
 					// I need Inclusive (1,3) here but apparently our rng is very bad at it
 					// Will generate only 1's and 3's and very seldom will you see a 2
 					moraleState = (MoraleState)(randBoundsExclusive(state.rng, 10, 40) / 10);
@@ -1408,8 +1430,8 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 					if (isHealing && healingBodyPart == w.first)
 					{
 						w.second--;
-						// healing fatal wound heals 3hp, as well as 1hp we just dealt in damage
-						agent->modified_stats.health += 4;
+						// healing fatal wound heals 5hp, as well as 1hp we just dealt in damage
+						agent->modified_stats.health += 6;
 						agent->modified_stats.health =
 						    std::min(agent->modified_stats.health, agent->current_stats.health);
 					}
@@ -1668,7 +1690,7 @@ void BattleUnit::updateIdling(GameState &state)
 						           BattleUnitMission::changeStance(*this, BodyState::Standing));
 					}
 				}
-				else
+				else if(agent->isBodyStateAllowed(BodyState::Flying))
 				{
 					if (canAfford(state, BattleUnitMission::getBodyStateChangeCost(
 					                         *this, target_body_state, BodyState::Flying)))
@@ -1676,6 +1698,10 @@ void BattleUnit::updateIdling(GameState &state)
 						setMission(state,
 						           BattleUnitMission::changeStance(*this, BodyState::Flying));
 					}
+				}
+				else
+				{
+					LogError("Hmm? Agent ordered to move walking without a standing/flying valid body state?");
 				}
 			}
 			// Stop flying if we can stand
@@ -1688,7 +1714,7 @@ void BattleUnit::updateIdling(GameState &state)
 				setMission(state, BattleUnitMission::changeStance(*this, BodyState::Standing));
 			}
 			// Stop being prone if legs are no longer supported and we haven't taken a mission yet
-			if (current_body_state == BodyState::Prone && missions.empty())
+			if (current_body_state == BodyState::Prone && missions.empty() && agent->isBodyStateAllowed(BodyState::Kneeling))
 			{
 				bool hasSupport = true;
 				for (auto t : tileObject->occupiedTiles)
@@ -2709,6 +2735,9 @@ void BattleUnit::updateAI(GameState &state, unsigned int)
 
 void BattleUnit::update(GameState &state, unsigned int ticks)
 {
+	// Animate
+	body_animation_ticks_static += ticks;
+
 	// Destroyed or retreated units do not exist in the battlescape
 	if (destroyed || retreated)
 	{
@@ -2843,14 +2872,7 @@ void BattleUnit::triggerBrainsuckers(GameState &state)
 				{
 					fw().soundBackend->playSample(state.battle_common_sample_list->brainsuckerHatch, position);
 				}
-				auto suckerAgent = state.agent_generator.createAgent(state, aliens, {&state, "AGENTTYPE_BRAINSUCKER" });
-				auto suckerUnit = state.current_battle->placeUnit(state, suckerAgent, i->position);
-				suckerUnit->falling = true;
-				suckerUnit->setFacing(state, { 0, 1 });
-				suckerUnit->setBodyState(state, BodyState::Throwing);
-				suckerUnit->setMission(state, BattleUnitMission::changeStance(*suckerUnit, BodyState::Standing));
-				suckerUnit->assignToSquad(*state.current_battle);
-				suckerUnit->refreshUnitVisibilityAndVision(state, suckerUnit->position);
+				state.current_battle->spawnUnit(state, aliens, { &state, "AGENTTYPE_BRAINSUCKER" }, i->position, { 0, 1 }, BodyState::Throwing);
 				i->die(state, false);
 			}
 		}
@@ -3284,6 +3306,7 @@ void BattleUnit::dropDown(GameState &state)
 	enzymeDebuffIntensity = 0;
 	moraleState = MoraleState::Normal;
 	// Check if we can drop from current state
+	// Adjust current state so that we canthen drop down
 	while (agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
 	                                                    BodyState::Downed, current_hand_state,
 	                                                    current_movement_state, facing) == 0)
@@ -3311,7 +3334,7 @@ void BattleUnit::dropDown(GameState &state)
 				continue;
 			case BodyState::Prone:
 			case BodyState::Downed:
-				LogError("Not possible to reach this?");
+				// Unit has no down animation
 				break;
 		}
 		break;
@@ -3368,8 +3391,22 @@ void BattleUnit::die(GameState &state, bool violently, bool bledToDeath)
 	std::ignore = bledToDeath;
 	if (violently)
 	{
-		// FIXME: Explode if nessecary, or spawn shit
-		LogWarning("Implement violent deaths!");
+		for (auto e : agent->equipment)
+		{
+			switch (e->type->type)
+			{
+				// Blow up
+				case AEquipmentType::Type::Popper:
+					state.current_battle->addExplosion(state, position, e->type->damage_type->explosionDoodad, e->type->damage_type, e->type->damage, e->type->explosion_depletion_rate);
+					break;
+				case AEquipmentType::Type::Spawner:
+					LogError("Implement multiworm!");
+					//state.current_battle->spawnUnit(state, aliens, { &state, "AGENTTYPE_BRAINSUCKER" }, i->position, { 0, 1 }, BodyState::Throwing);
+					break;
+				default:
+					break;
+			}
+		}
 	}
 	// Clear focus
 	for (auto u : focusedByUnits)
@@ -3469,9 +3506,122 @@ void BattleUnit::beginBodyStateChange(GameState &state, BodyState bodyState)
 	}
 }
 
+bool BattleUnit::useItem(GameState & state, sp<AEquipment> item)
+{
+	if (item->ownerAgent != agent || (item->equippedSlotType != AEquipmentSlotType::RightHand && item->equippedSlotType != AEquipmentSlotType::LeftHand))
+	{
+		LogError("Unit %s attempting to use item that is not in hand or does not belong to us?", id);
+		return false;
+	}
+	switch (item->type->type)
+	{
+		// Items that cannot be used this way
+		case AEquipmentType::Type::Weapon:
+		case AEquipmentType::Type::Grenade:
+		case AEquipmentType::Type::MindBender:
+			return false;
+			// Items that do nothing
+		case AEquipmentType::Type::AlienDetector:
+		case AEquipmentType::Type::Ammo:
+		case AEquipmentType::Type::Armor:
+		case AEquipmentType::Type::CloakingField:
+		case AEquipmentType::Type::DimensionForceField:
+		case AEquipmentType::Type::DisruptorShield:
+		case AEquipmentType::Type::Loot:
+		case AEquipmentType::Type::MindShield:
+		case AEquipmentType::Type::MultiTracker:
+		case AEquipmentType::Type::StructureProbe:
+		case AEquipmentType::Type::VortexAnalyzer:
+			return false;
+		case AEquipmentType::Type::MotionScanner:
+			if (!item->inUse && state.current_battle->mode == Battle::Mode::TurnBased)
+			{
+				// 10% of max TUs
+				if (!spendTU(state, getMotionScannerCost()))
+				{
+					LogWarning("Notify unsufficient TU for motion scanner");
+					return false;
+				}
+			}
+			item->inUse = !item->inUse;
+			return true;
+		case AEquipmentType::Type::MediKit:
+			// Initial use of medikit just brings up interface, action and TU spent happens 
+			// when individual body part is clicked
+			item->inUse = !item->inUse;
+			return true;
+		case AEquipmentType::Type::Brainsucker:
+			{
+				StateRef<DamageType> brainsucker = { &state, "DAMAGETYPE_BRAINSUCKER" };
+				Vec3<int> targetPos = position;
+				std::list<Vec3<int>> targetList;
+				targetList.push_back(targetPos + Vec3<int>(facing.x, facing.y, 0));
+				targetList.push_back(targetPos + Vec3<int>(facing.x, facing.y, 1));
+				targetList.push_back(targetPos + Vec3<int>(facing.x, facing.y, -1));
+				auto &map = tileObject->map;
+				auto helper = BattleUnitTileHelper(map, *this);
+				for (auto &pos : targetList)
+				{
+					if (!map.tileIsValid(pos))
+					{
+						continue;
+					}
+					auto targetTile = map.getTile(pos);
+					if (!helper.canEnterTile(tileObject->getOwningTile(), targetTile, false, true))
+					{
+						continue;
+					}
+					if (targetTile->firstUnitPresent)
+					{
+						auto target = targetTile->firstUnitPresent->getUnit();
+						if (brainsucker->dealDamage(100, target->agent->type->damage_modifier) != 0)
+						{
+							setMission(state, BattleUnitMission::jump(*this, getMuzzleLocation(), BodyState::Jumping));
+							return true;
+						}
+					}
+				}
+			}
+			break;
+		case AEquipmentType::Type::Popper:
+		case AEquipmentType::Type::Spawner:
+			// Just suicide, explosion/spawn will happen automatically
+			die(state);
+			return true;
+	}
+
+	return false;
+}
+
+bool BattleUnit::useMedikit(GameState &state, BodyPart part)
+{
+	if (fatalWounds[part] == 0)
+	{
+		return false;
+	}
+
+	if (state.current_battle->mode == Battle::Mode::TurnBased)
+	{
+		// 37.5% of max TUs
+		if (!spendTU(state, getMedikitCost()))
+		{
+			LogWarning("Notify unsufficient TU for medikit");
+			return false;
+		}
+		fatalWounds[part]--;
+		agent->modified_stats.health += 5;
+	}
+	else
+	{
+		isHealing = true;
+		healingBodyPart = part;
+	}
+	return true;
+}
+
 unsigned int BattleUnit::getBodyAnimationFrame() const
 {
-	return (body_animation_ticks_remaining + TICKS_PER_FRAME_UNIT - 1) / TICKS_PER_FRAME_UNIT;
+	return body_animation_ticks_remaining > 0 ? (body_animation_ticks_remaining + TICKS_PER_FRAME_UNIT - 1) / TICKS_PER_FRAME_UNIT : body_animation_ticks_static / TICKS_PER_FRAME_UNIT;
 }
 
 void BattleUnit::setBodyState(GameState &state, BodyState bodyState)
@@ -3482,32 +3632,33 @@ void BattleUnit::setBodyState(GameState &state, BodyState bodyState)
 	target_body_state = bodyState;
 	body_animation_ticks_remaining = 0;
 	body_animation_ticks_total = 1;
-	// Ensure we have frames in this state
-	if (agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state, target_body_state, current_hand_state, current_movement_state, facing) == 0)
-	{
-		// No animation for target state -> Try without movement
-		if (current_movement_state != MovementState::None 
-			&& agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state, target_body_state, current_hand_state, MovementState::None, facing) != 0)
-		{
-			setMovementState(MovementState::None);
-		}
-		// No animation for target state -> Try without aiming
-		else if (current_hand_state != HandState::AtEase 
-			&& agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state, target_body_state, HandState::AtEase, current_movement_state, facing) != 0)
-		{
-			setHandState(HandState::AtEase);
-		}
-		// We know for sure this body state is allowed,
-		// and we know for sure allowed body state has frames w/o aiming and moving
-		else
-		{
-			setMovementState(MovementState::None);
-			setHandState(HandState::AtEase);
-		}
-	}
-	// Update tileObject
+	// Update things that require tileObject (or stuff loaded after battle::init)
 	if (tileObject)
 	{
+		// Ensure we have frames in this state
+		auto animationPack = agent->getAnimationPack();
+		if (animationPack->getFrameCountBody(displayedItem, current_body_state, target_body_state, current_hand_state, current_movement_state, facing) == 0)
+		{
+			// No animation for target state -> Try without movement
+			if (current_movement_state != MovementState::None
+				&& animationPack->getFrameCountBody(displayedItem, current_body_state, target_body_state, current_hand_state, MovementState::None, facing) != 0)
+			{
+				setMovementState(MovementState::None);
+			}
+			// No animation for target state -> Try without aiming
+			else if (current_hand_state != HandState::AtEase
+				&& animationPack->getFrameCountBody(displayedItem, current_body_state, target_body_state, HandState::AtEase, current_movement_state, facing) != 0)
+			{
+				setHandState(HandState::AtEase);
+			}
+			// We know for sure this body state is allowed,
+			// and we know for sure allowed body state has frames w/o aiming and moving
+			else
+			{
+				setMovementState(MovementState::None);
+				setHandState(HandState::AtEase);
+			}
+		}
 		// Updates bounds etc.
 		setPosition(state, position);
 		// Update vision since our head position may have changed
@@ -3595,6 +3746,12 @@ void BattleUnit::setFacing(GameState &state, Vec2<int> newFacing)
 
 void BattleUnit::setMovementState(MovementState state)
 {
+	if (!agent->isMovementStateAllowed(state))
+	{
+		LogError("WTF? Where the hell you're going?");
+		return;
+	}
+
 	if (current_movement_state == state)
 	{
 		return;
@@ -3907,14 +4064,6 @@ bool BattleUnit::setMission(GameState &state, BattleUnitMission *mission)
 		case BattleUnitMission::Type::Turn:
 			stopAttacking();
 			break;
-		case BattleUnitMission::Type::DropItem:
-		case BattleUnitMission::Type::ThrowItem:
-			if (!agent->type->inventory)
-			{
-				delete mission;
-				return false;
-			}
-			break;
 		default:
 			// Nothing to check for in other missions
 			break;
@@ -3946,7 +4095,7 @@ bool BattleUnit::setMission(GameState &state, BattleUnitMission *mission)
 				// FIXME: actually read the option
 				bool USER_OPTION_ALLOW_INSTANT_THROWS = true;
 				if (USER_OPTION_ALLOW_INSTANT_THROWS &&
-				    canAfford(state, BattleUnitMission::getThrowCost(*this)))
+				    canAfford(state, getThrowCost()))
 				{
 					setMovementState(MovementState::None);
 					setBodyState(state, BodyState::Standing);
@@ -4017,15 +4166,6 @@ bool BattleUnit::setMission(GameState &state, BattleUnitMission *mission)
 
 bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool toBack)
 {
-	if (!agent->type->inventory)
-	{
-		if (mission->type == BattleUnitMission::Type::DropItem ||
-		    mission->type == BattleUnitMission::Type::ThrowItem)
-		{
-			delete mission;
-			return false;
-		}
-	}
 	if (toBack)
 	{
 		missions.emplace_back(mission);
@@ -4088,6 +4228,6 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool t
 			mission->start(state, *this);
 			break;
 	}
-	return true;
+	return !mission->cancelled;
 }
 }

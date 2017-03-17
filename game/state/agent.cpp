@@ -218,7 +218,9 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	auto secondName = listRandomiser(state.rng, this->second_names);
 	agent->name = format("%s %s", firstName, secondName);
 
-	agent->appearance = randBoundsExclusive(state.rng, 0, type->appearance_count);
+	// FIXME: When rng is fixed we can remove this unnesecary kludge
+	// RNG is bad at generating small numbers, so we generate more and divide
+	agent->appearance = randBoundsExclusive(state.rng, 0, type->appearance_count * 10) / 10;
 
 	agent->portrait =
 	    randBoundsInclusive(state.rng, 0, (int)type->portraits[agent->gender].size() - 1);
@@ -338,7 +340,29 @@ bool Agent::isMovementStateAllowed(MovementState movementState) const
 
 bool Agent::isFacingAllowed(Vec2<int> facing) const
 {
-	return type->bodyType->allowed_facing.find(facing) != type->bodyType->allowed_facing.end();
+	return type->bodyType->allowed_facing.empty() || type->bodyType->allowed_facing[appearance].find(facing) != type->bodyType->allowed_facing[appearance].end();
+}
+
+const std::set<Vec2<int>>* Agent::getAllowedFacings() const
+{
+	static const std::set<Vec2<int>> allFacings = 
+		{{ 0, -1 }
+		, { 1, -1 }
+		, { 1, 0 }
+		, { 1, 1 }
+		, { 0, 1 }
+		, { -1, 1 }
+		, { -1, 0 }
+		, { -1, -1 }};
+
+	if (type->bodyType->allowed_facing.empty())
+	{
+		return &allFacings;
+	}
+	else
+	{
+		return &type->bodyType->allowed_facing[appearance];
+	}
 }
 
 sp<AEquipment> Agent::getArmor(BodyPart bodyPart) const

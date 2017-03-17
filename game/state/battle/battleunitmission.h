@@ -102,7 +102,6 @@ class BattleUnitMission
 	bool spendAgentTUs(GameState &state, BattleUnit &u, int cost, bool cancel = false);
 
 	static int getBodyStateChangeCost(BattleUnit &u, BodyState from, BodyState to);
-	static int getThrowCost(BattleUnit &u);
 	static Vec2<int> getFacingStep(BattleUnit &u, Vec2<int> targetFacing, int facingDelta = 0);
 	// Used to determine target facings
 	static Vec2<int> getFacing(BattleUnit &u, Vec3<float> from, Vec3<float> to, int facingDelta = 0);

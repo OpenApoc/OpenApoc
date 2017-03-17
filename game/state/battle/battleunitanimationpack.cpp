@@ -304,8 +304,10 @@ void BattleUnitAnimationPack::drawUnit(
 		}
 		if (currentHands == HandState::Firing)
 			frame = e->frame_count - hands_animation_delay;
-		else
+		else if (movement != MovementState::None)
 			frame = (distance_travelled * 100 / e->units_per_100_frames) % e->frame_count;
+		else
+			frame = body_animation_delay % e->frame_count;
 		// Technically, if we're aiming, and this is overlay, we must always set frame to 0
 		// But since frame_count is 1, the previous line attains the same result, so why bother
 		if (e->is_overlay)

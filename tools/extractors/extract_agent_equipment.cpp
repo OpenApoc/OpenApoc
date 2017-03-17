@@ -489,14 +489,16 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 				auto wdata = data_t.agent_weapons->get(edata.data_idx);
 				if (wdata.ammo_effect[0] == 255)
 				{
-					e->type = AEquipmentType::Type::Grenade;
+					e->type = (edata.sprite_idx == IT_POPPERBOMB) ?
+						AEquipmentType::Type::Popper :
+						AEquipmentType::Type::Grenade;
 					payload_idx = wdata.grenade_effect;
 					e->max_ammo = 1;
 					e->recharge = 0;
 				}
 				else
 				{
-					e->type = (edata.sprite_idx == IT_POPPERBOMB) ? AEquipmentType::Type::Popper : AEquipmentType::Type::Weapon;
+					e->type = AEquipmentType::Type::Weapon;
 					bool has_ammo = false;
 					// Entry #0 is "EMPTY" so we skip it
 					for (unsigned j = 1; j < data_t.agent_general->count(); j++)

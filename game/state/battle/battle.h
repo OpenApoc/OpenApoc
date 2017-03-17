@@ -4,6 +4,7 @@
 #include "game/state/battle/battleforces.h"
 #include "game/state/battle/battlemapsector.h"
 #include "game/state/gametime.h"
+#include "game/state/agent.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
@@ -176,6 +177,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	                                 StateRef<BattleUnit> ownerUnit = nullptr);
 	sp<BattleDoor> addDoor(GameState &state);
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
+	sp<BattleUnit> spawnUnit(GameState &state, StateRef<Organisation> owner, StateRef<AgentType> agentType, Vec3<float> position, Vec2<int> facing = { 0,0 }, BodyState curState = BodyState::Standing, BodyState tarState = BodyState::Standing);
 	sp<BattleUnit> placeUnit(GameState &state, StateRef<Agent> agent);
 	sp<BattleUnit> placeUnit(GameState &state, StateRef<Agent> agent, Vec3<float> position);
 	sp<BattleItem> placeItem(GameState &state, sp<AEquipment> item, Vec3<float> position);

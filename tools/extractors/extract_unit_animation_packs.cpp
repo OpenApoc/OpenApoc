@@ -141,6 +141,56 @@ Vec2<int> InitialGameStateExtractor::gPrOff(Vec2<int> facing) const
 	// 48 = tile_x, 24 = tile_y
 	return {(facing.x - facing.y) * 48 / 8, (facing.x + facing.y) * 24 / 8};
 }
+
+sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::makeUpAnimationEntry(
+	int from, int count, int fromS, int countS, int partCount, Vec2<int> offset,
+	int units_per_100_frames) const
+{
+	auto e = mksp<BattleUnitAnimationPack::AnimationEntry>();
+	int to = from + count;
+	bool shadow = countS > 0;
+
+	for (int i = 0; i < count; i++)
+	{
+		e->frames.push_back(BattleUnitAnimationPack::AnimationEntry::Frame());
+		for (int j = (shadow ? 0 : 1); j <= partCount; j++)
+		{
+			int part_idx = j;
+			int frame = from + i;
+			auto part_type = BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Shadow;
+			switch (part_idx)
+			{
+				case 0:
+					part_type = BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Shadow;
+					frame = fromS + i;
+					while (frame >= fromS + countS)
+					{
+						frame -= countS;
+					}
+					break;
+				case 1:
+					part_type = BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Body;
+					break;
+				case 2:
+					part_type = BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Helmet;
+					break;
+				default:
+					LogError("If you reached this then OpenApoc programmers made a mistake");
+					break;
+			}
+			e->frames[i].unit_image_draw_order.push_back(part_type);
+			e->frames[i].unit_image_parts[part_type] =
+				BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock(frame, offset.x, + offset.y);
+		}
+	}
+
+	e->is_overlay = false;
+	e->frame_count = e->frames.size();
+	e->units_per_100_frames = units_per_100_frames;
+
+	return e;
+}
+
 sp<BattleUnitAnimationPack>
 InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString &path,
                                                 const UString &name) const
@@ -236,9 +286,11 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 	}
 	if (name == "chrys1")
 	{
+		extractAnimationPackChrysalis(p, true);
 	}
 	if (name == "chrys2")
 	{
+		extractAnimationPackChrysalis(p, false);
 	}
 	if (name == "gun")
 	{
@@ -264,6 +316,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 	}
 	if (name == "popper")
 	{
+		extractAnimationPackPopper(p);
 	}
 	if (name == "psi")
 	{

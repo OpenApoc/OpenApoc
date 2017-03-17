@@ -62,7 +62,7 @@
 #define UNIT_TYPE_BRAINSUCKER 35
 #define UNIT_TYPE_MULTIWORM 36
 #define UNIT_TYPE_HYPERWORM 37
-#define UNIT_TYPE_CRYSALIS 38
+#define UNIT_TYPE_CHRYSALIS 38
 #define UNIT_TYPE_ANTHROPOD 39
 #define UNIT_TYPE_SKELETOID 40
 #define UNIT_TYPE_SPITTER 41
@@ -212,7 +212,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			case UNIT_TYPE_CORPORATE_BOSS:
 				a->aiType = AIType::Civilian;
 				break;
-			case UNIT_TYPE_CRYSALIS:
+			case UNIT_TYPE_CHRYSALIS:
 				a->aiType = AIType::None;
 				break;
 			case UNIT_TYPE_MULTIWORM:
@@ -308,7 +308,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			case UNIT_TYPE_BRAINSUCKER:
 			case UNIT_TYPE_MULTIWORM:
 			case UNIT_TYPE_HYPERWORM:
-			case UNIT_TYPE_CRYSALIS:
+			case UNIT_TYPE_CHRYSALIS:
 			case UNIT_TYPE_ANTHROPOD:
 			case UNIT_TYPE_SKELETOID:
 			case UNIT_TYPE_SPITTER:
@@ -403,13 +403,13 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "mwegg2"));
 				bodyTypeName = "MULTIWORM_EGG";
 				break;
-			case UNIT_TYPE_CRYSALIS:
+			case UNIT_TYPE_CHRYSALIS:
 				a->appearance_count = 2;
 				a->animation_packs.emplace_back(
 				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "chrys1"));
 				a->animation_packs.emplace_back(
 				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "chrys2"));
-				bodyTypeName = "CRYSALIS";
+				bodyTypeName = "CHRYSALIS";
 				break;
 			case UNIT_TYPE_QUEENSPAWN:
 				a->animation_packs.emplace_back(
@@ -518,7 +518,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				break;
 
 			// Aliens with no shadows
-			case UNIT_TYPE_CRYSALIS:
+			case UNIT_TYPE_CHRYSALIS:
 			case UNIT_TYPE_MULTIWORM_EGG:
 			case UNIT_TYPE_MULTIWORM:
 			case UNIT_TYPE_QUEENSPAWN:
@@ -705,7 +705,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "hypr")};
 				break;
-			case UNIT_TYPE_CRYSALIS:
+			case UNIT_TYPE_CHRYSALIS:
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "chrysa")};
 				a->image_packs[0][BodyPart::Helmet] = {
@@ -749,6 +749,15 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				break;
 		}
 
+		// Hazards
+		if (i == UNIT_TYPE_POPPER)
+		{
+			a->spreadHazardDamageType = { &state, "DAMAGETYPE_SMOKE" };
+			a->spreadHazardMinPower = 1;
+			a->spreadHazardMaxPower = 1;
+			a->spreadHazardTTLDivizor = 2;
+		}
+
 		// Sounds
 
 		// Aliens have no damage and fatal damage sounds
@@ -787,7 +796,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				crySfxCount = 0;
 				dieSfxName = "hypwrm01";
 				break;
-			case UNIT_TYPE_CRYSALIS:
+			case UNIT_TYPE_CHRYSALIS:
 				walkSfxCount = 0;
 				crySfxName = "saliscry";
 				crySfxNumbered = false;
@@ -851,7 +860,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			case UNIT_TYPE_BRAINSUCKER:
 			case UNIT_TYPE_MULTIWORM:
 			case UNIT_TYPE_HYPERWORM:
-			case UNIT_TYPE_CRYSALIS:
+			case UNIT_TYPE_CHRYSALIS:
 			case UNIT_TYPE_ANTHROPOD:
 			case UNIT_TYPE_SKELETOID:
 			case UNIT_TYPE_SPITTER:
@@ -977,7 +986,11 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 						&state, format("%s%s", AEquipmentType::getPrefix(),
 						                canon_string(data_u.agent_equipment_names->get(
 						                    es_data.weapons[0].weapon_idx)))};
-				if (es_data.weapons[1].weapon_idx != 0xffffffff)
+				if (id == "AGENTTYPE_MULTIWORM")
+				{
+					a->built_in_weapon_left = { &state, "AEQUIPMENTTYPE_MULTIWORM_BURST" };
+				}
+				else if (es_data.weapons[1].weapon_idx != 0xffffffff)
 					a->built_in_weapon_left = {
 						&state, format("%s%s", AEquipmentType::getPrefix(),
 						                canon_string(data_u.agent_equipment_names->get(
@@ -1113,8 +1126,8 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 			case UNIT_TYPE_MULTIWORM_EGG:
 				name = "MULTIWORM_EGG";
 				break;
-			case UNIT_TYPE_CRYSALIS:
-				name = "CRYSALIS";
+			case UNIT_TYPE_CHRYSALIS:
+				name = "CHRYSALIS";
 				break;
 			case UNIT_TYPE_QUEENSPAWN:
 				name = "QUEENSPAWN";
@@ -1162,28 +1175,24 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 
 		UString id = format("%s%s", AgentBodyType::getPrefix(), canon_string(name));
 
-		// Allowed facings
+		// Allowed facings (nothing means everything allowed)
 		switch (i)
 		{
-			case UNIT_TYPE_CRYSALIS:
-				a->allowed_facing.insert({0, 1});
+			case UNIT_TYPE_CHRYSALIS:
+				a->allowed_facing.push_back({});
+				a->allowed_facing.push_back({});
+				a->allowed_facing[0].insert({ 0, 1});
+				a->allowed_facing[1].insert({ -1, 0 });
 				break;
 			case UNIT_TYPE_QUEENSPAWN:
-				a->allowed_facing.insert({1, 0});
-				a->allowed_facing.insert({1, 1});
-				a->allowed_facing.insert({0, 1});
-				a->allowed_facing.insert({-1, 1});
-				a->allowed_facing.insert({-1, 0});
+				a->allowed_facing.push_back({});
+				a->allowed_facing[0].insert({1, 0});
+				a->allowed_facing[0].insert({1, 1});
+				a->allowed_facing[0].insert({0, 1});
+				a->allowed_facing[0].insert({-1, 1});
+				a->allowed_facing[0].insert({-1, 0});
 				break;
 			default:
-				a->allowed_facing.insert({0, -1});
-				a->allowed_facing.insert({1, -1});
-				a->allowed_facing.insert({1, 0});
-				a->allowed_facing.insert({1, 1});
-				a->allowed_facing.insert({0, 1});
-				a->allowed_facing.insert({-1, 1});
-				a->allowed_facing.insert({-1, 0});
-				a->allowed_facing.insert({-1, -1});
 				break;
 		}
 
@@ -1211,7 +1220,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 
 			// Stationary aliens
 			case UNIT_TYPE_MULTIWORM_EGG:
-			case UNIT_TYPE_CRYSALIS:
+			case UNIT_TYPE_CHRYSALIS:
 			case UNIT_TYPE_QUEENSPAWN:
 				switch (i)
 				{
@@ -1219,7 +1228,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 						height = 18;
 						idx = 10;
 						break;
-					case UNIT_TYPE_CRYSALIS:
+					case UNIT_TYPE_CHRYSALIS:
 						height = 20;
 						idx = 10;
 						break;
@@ -1229,9 +1238,9 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 						break;
 				}
 				a->allowed_movement_states.insert(MovementState::None);
-				a->allowed_body_states.insert(BodyState::Standing);
+				a->allowed_body_states.insert(i == UNIT_TYPE_CHRYSALIS ? BodyState::Prone : BodyState::Standing);
 				a->allowed_body_states.insert(BodyState::Downed);
-				voxelInfo[BodyState::Standing] = {height, idx};
+				voxelInfo[i == UNIT_TYPE_CHRYSALIS ? BodyState::Prone : BodyState::Standing] = {height, idx};
 				voxelInfo[BodyState::Downed] = {(i == UNIT_TYPE_QUEENSPAWN) ? 16 : 8, idx};
 				break;
 
@@ -1365,7 +1374,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 		//
 		// Game uses voxelmaps 3, 4, 5, 10, 19 and 20:
 		// - 3,4,5 are circles of various sizes. They're used by most units.
-		// - 10 is a vertical "log". It's used by multiworm, crysalis and egg.
+		// - 10 is a vertical "log". It's used by multiworm, chrysalis and egg.
 		//   It is obviously used when facing north and obviously when
 		//	 the worm is moving (considered to be prone)
 		// - 19 and 20 are horizontal "logs". They're used by big units
@@ -1381,7 +1390,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 		//
 		// Adjustments:
 		// - 3,4,5 obviously need no adjustments
-		// - crysalis and egg's are left as is, they're irrelevant
+		// - chrysalis and egg's are left as is, they're irrelevant
 		// - 10:
 		//   when facing N or S - 10 stacked twice
 		//	 when facing NE or SW - 45, 102, 102, 25

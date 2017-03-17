@@ -19,6 +19,7 @@ class BattleUnitImagePack;
 class Organisation;
 class DamageType;
 class DamageModifier;
+class AgentType;
 enum class BodyPart;
 
 enum class TriggerType
@@ -57,6 +58,7 @@ class AEquipmentType : public StateObject
 		// This is not in the game files, but we need it to function
 		Brainsucker,
 		Popper,
+		Spawner,
 		// For Psi-clones and stuff
 		Loot
 	};
@@ -146,6 +148,8 @@ class AEquipmentType : public StateObject
 	StateRef<DamageType> damage_type;
 	TriggerType trigger_type = TriggerType::None;
 	int explosion_depletion_rate = 0;
+
+	std::map<StateRef<AgentType>, std::vector<int>> spawnList;
 };
 
 class EquipmentSet : public StateObject
