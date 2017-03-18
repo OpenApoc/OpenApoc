@@ -3,6 +3,7 @@
 #include "framework/sound.h"
 #include "framework/trace.h"
 #include "game/state/aequipment.h"
+#include "game/state/battle/ai/ai.h"
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battledoor.h"
@@ -114,7 +115,10 @@ void Battle::initBattle(GameState &state, bool first)
 	for (auto &o : this->units)
 	{
 		o.second->strategyImages = state.battle_common_image_list->strategyImages;
+		o.second->burningDoodad = state.battle_common_image_list->burningDoodad;
 		o.second->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
+		o.second->psiSuccessSounds = state.battle_common_sample_list->psiSuccessSounds;
+		o.second->psiFailSounds = state.battle_common_sample_list->psiFailSounds;
 	}
 	if (forces.size() == 0)
 	{
@@ -186,7 +190,7 @@ void Battle::initBattle(GameState &state, bool first)
 	{
 		h->updateTileVisionBlock(state);
 	}
-	// On first run, init support links and items, do vsibility and pathfinding
+	// On first run, init support links and items, do vsibility and pathfinding, reset AI
 	if (first)
 	{
 		initialMapPartLinkUp();
@@ -201,6 +205,8 @@ void Battle::initBattle(GameState &state, bool first)
 		}
 		// Pathfinding
 		updatePathfinding(state);
+		// AI
+		aiBlock.init(state);
 	}
 }
 
@@ -376,6 +382,21 @@ sp<Doodad> Battle::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 	return doodad;
 }
 
+sp<BattleUnit> Battle::spawnUnit(GameState &state, StateRef<Organisation> owner,
+                                 StateRef<AgentType> agentType, Vec3<float> position,
+                                 Vec2<int> facing, BodyState curState, BodyState tarState)
+{
+	auto agent = state.agent_generator.createAgent(state, owner, agentType);
+	auto unit = state.current_battle->placeUnit(state, agent, position);
+	unit->falling = true;
+	unit->setFacing(state, facing);
+	unit->setBodyState(state, curState);
+	unit->setMission(state, BattleUnitMission::changeStance(*unit, tarState));
+	unit->assignToSquad(*state.current_battle);
+	unit->refreshUnitVisibilityAndVision(state, unit->position);
+	return unit;
+}
+
 sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position,
                                          StateRef<DoodadType> doodadType,
                                          StateRef<DamageType> damageType, int power,
@@ -395,7 +416,7 @@ sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position,
 	if (!damageType->explosionSounds.empty())
 	{
 		fw().soundBackend->playSample(listRandomiser(state.rng, damageType->explosionSounds),
-		                              position, 0.25f);
+		                              position);
 	}
 
 	// Explosion
@@ -415,6 +436,7 @@ sp<BattleUnit> Battle::placeUnit(GameState &state, StateRef<Agent> agent)
 	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
 	unit->squadNumber = -1;
 	units[id] = unit;
+	unit->init(state);
 	return unit;
 }
 
@@ -456,21 +478,34 @@ sp<BattleItem> Battle::placeItem(GameState &state, sp<AEquipment> item, Vec3<flo
 
 sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<DamageType> type,
                                      Vec3<int> position, int ttl, int power,
-                                     int initialAgeTTLDivizor)
+                                     int initialAgeTTLDivizor, bool delayVisibility)
 {
-	auto hazard = mksp<BattleHazard>(state, type);
+	bool fire = type->hazardType->fire;
+	auto hazard = mksp<BattleHazard>(state, type, delayVisibility);
 	hazard->position = position;
 	hazard->position += Vec3<float>{0.5f, 0.5f, 0.5f};
-	hazard->lifetime = ttl;
-	hazard->age = hazard->lifetime * (initialAgeTTLDivizor - 1) / initialAgeTTLDivizor;
-	hazard->power = power;
+	if (fire)
+	{
+		// lifetime means nothing for fire
+		hazard->lifetime = 0;
+		// age means how "powerful" the fire is, where 10 is most powerful and 110 is almost dead
+		hazard->age = 100 - ttl * 6;
+		// Fire is growing, when fading this will be negative
+		hazard->power = randBoundsInclusive(state.rng, 1, 2);
+	}
+	else
+	{
+		hazard->lifetime = ttl;
+		hazard->age = hazard->lifetime * (initialAgeTTLDivizor - 1) / initialAgeTTLDivizor;
+		hazard->power = power;
+	}
 	// Remove existing hazard, ensure possible to do this, place this
 	if (map)
 	{
 		auto tile = map->getTile(position);
-		// Cannot add hazard if tile is blocked or if nothing is there to burn for fire
-		if (tile->height * 40.0f > 38.0f ||
-		    (tile->height * 40.0f < 1.0f && type->effectType == DamageType::EffectType::Fire))
+		// Cannot add non-fire hazard if tile is blocked or fire hazard if nothing is there to burn
+		// at
+		if ((!fire && tile->height * 40.0f > 38.0f) || (fire && tile->height * 40.0f < 1.0f))
 		{
 			return nullptr;
 		}
@@ -485,7 +520,21 @@ sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<DamageType> type
 		}
 		if (existingHazard)
 		{
-			existingHazard->die(state, false);
+			// Fire cannot spread into another fire
+			if (fire && existingHazard->hazardType->fire)
+			{
+				return nullptr;
+			}
+			else
+			{
+				// Nothing can spread into a fire that's eating up a feature
+				if (existingHazard->hazardType->fire)
+				{
+					LogWarning(
+					    "Ensure we are not putting out a fire that is attached to a feature!");
+				}
+				existingHazard->die(state, false);
+			}
 		}
 		map->addObjectToMap(hazard);
 		hazard->updateTileVisionBlock(state);
@@ -508,13 +557,16 @@ void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 		auto c = p->checkProjectileCollision(*map);
 		if (c)
 		{
-			// Alert intended unit that he's on fire, if he cannot see the firer
+			// Alert intended unit that he's on fire
 			auto unit = c.projectile->trackedUnit;
-			if (unit &&
-			    unit->visibleUnits.find(c.projectile->firerUnit) == unit->visibleUnits.end())
+			if (unit)
 			{
-				LogWarning("Notify: unit %s that he's taking fire", c.projectile->trackedUnit.id);
-				unit->attackerPosition = c.projectile->firerUnit->position;
+				if (unit->visibleUnits.find(c.projectile->firerUnit) == unit->visibleUnits.end())
+				{
+					LogWarning("Notify: unit %s that he's taking fire",
+					           c.projectile->trackedUnit.id);
+				}
+				unit->notifyUnderFire(c.projectile->firerPosition);
 			}
 			// Handle collision
 			this->projectiles.erase(c.projectile);
@@ -660,7 +712,7 @@ bool findLosBlockCenter(TileMap &map, BattleUnitType type,
 	return false;
 }
 
-void Battle::updatePathfinding(GameState &state)
+void Battle::updatePathfinding(GameState &)
 {
 	// How much attempts are given to the pathfinding until giving up and concluding that
 	// there is no path between two sectors. This is a multiplier for "distance", which is
@@ -742,8 +794,8 @@ void Battle::updatePathfinding(GameState &state)
 
 				auto path = mapRef.findShortestPath(
 				    blockCenterPos[type][i], blockCenterPos[type][j],
-				    distance * PATH_ITERATION_LIMIT_MULTIPLIER, helperMap[(int)type], true, true,
-				    &cost, distance * 4 * PATH_COST_LIMIT_MULTIPLIER);
+				    distance * PATH_ITERATION_LIMIT_MULTIPLIER, helperMap[(int)type], false, true,
+				    true, &cost, distance * 4 * PATH_COST_LIMIT_MULTIPLIER);
 
 				if (path.empty() || (*path.rbegin()) != blockCenterPos[type][j])
 				{
@@ -819,6 +871,15 @@ void Battle::update(GameState &state, unsigned int ticks)
 		o.second->update(state, ticks);
 	}
 	Trace::end("Battle::update::units->update");
+	Trace::start("Battle::update::ai->think");
+	{
+		auto result = aiBlock.think(state);
+		for (auto entry : result)
+		{
+			BattleUnit::executeGroupAIDecision(state, entry.second, entry.first);
+		}
+	}
+	Trace::end("Battle::update::ai->think");
 
 	// Now after we called update() for everything, we update what needs to be updated last
 
@@ -1301,7 +1362,7 @@ void Battle::enterBattle(GameState &state)
 					continue;
 				} // end of spawning units anywhere in case we can't find a block
 
-				// Actually spawn units
+				// Spawn units within a block
 				int startX = randBoundsExclusive(state.rng, block->start.x, block->end.x);
 				int startY = randBoundsExclusive(state.rng, block->start.y, block->end.y);
 				int z = block->start.z;
@@ -1320,6 +1381,7 @@ void Battle::enterBattle(GameState &state)
 								continue;
 
 							auto u = unitsToSpawn[unitsToSpawn.size() - 1];
+							// Large unit occupies 2x2x2 space
 							if (u->isLarge())
 							{
 								if (x < 1 || y < 1 || z >= (b->size.z - 1) ||
@@ -1344,6 +1406,46 @@ void Battle::enterBattle(GameState &state)
 								b->spawnMap[x][y - 1][z + 1] = -1;
 								b->spawnMap[x - 1][y - 1][z + 1] = -1;
 								u->position = {x + 0.0f, y + 0.0f,
+								               z + ((float)height) / (float)TILE_Z_BATTLE};
+							}
+							// Prone-only unit occupies a 3x3x1 space
+							else if (!u->agent->isBodyStateAllowed(BodyState::Standing) &&
+							         !u->agent->isBodyStateAllowed(BodyState::Flying) &&
+							         !u->agent->isBodyStateAllowed(BodyState::Kneeling))
+							{
+								if (!u->agent->isBodyStateAllowed(BodyState::Prone))
+								{
+									LogError(
+									    "Unit %s agent %s is not allowed to stand/fly/kneel/prone?",
+									    u->id, u->agent->type->id);
+								}
+
+								if (x < 1 || y < 1 || x >= (b->size.x - 1) ||
+								    y >= (b->size.y - 1) || b->spawnMap[x][y][z] == -1 ||
+								    b->spawnMap[x - 1][y][z] == -1 ||
+								    b->spawnMap[x][y - 1][z] == -1 ||
+								    b->spawnMap[x - 1][y - 1][z] == -1 ||
+								    b->spawnMap[x + 1][y][z] == -1 ||
+								    b->spawnMap[x][y + 1][z] == -1 ||
+								    b->spawnMap[x + 1][y + 1][z] == -1 ||
+								    b->spawnMap[x - 1][y + 1][z] == -1 ||
+								    b->spawnMap[x + 1][y - 1][z] == -1)
+									continue;
+								int height = b->spawnMap[x][y][z];
+								height = std::max(b->spawnMap[x][y - 1][z], height);
+								height = std::max(b->spawnMap[x - 1][y][z], height);
+								height = std::max(b->spawnMap[x + 1][y][z], height);
+								height = std::max(b->spawnMap[x][y + 1][z], height);
+								b->spawnMap[x][y][z] = -1;
+								b->spawnMap[x - 1][y][z] = -1;
+								b->spawnMap[x][y - 1][z] = -1;
+								b->spawnMap[x - 1][y - 1][z] = -1;
+								b->spawnMap[x + 1][y][z] = -1;
+								b->spawnMap[x][y + 1][z] = -1;
+								b->spawnMap[x + 1][y + 1][z] = -1;
+								b->spawnMap[x - 1][y + 1][z] = -1;
+								b->spawnMap[x + 1][y - 1][z] = -1;
+								u->position = {x + 0.5f, y + 0.5f,
 								               z + ((float)height) / (float)TILE_Z_BATTLE};
 							}
 							else
@@ -1512,28 +1614,28 @@ void Battle::enterBattle(GameState &state)
 		// Facing
 		if (!u->agent->isFacingAllowed(u->facing))
 		{
-			u->facing = setRandomizer(state.rng, u->agent->type->bodyType->allowed_facing);
+			u->facing = setRandomizer(state.rng, *u->agent->getAllowedFacings());
 		}
 		// Stance
 		if (u->agent->isBodyStateAllowed(BodyState::Standing))
 		{
 			u->setBodyState(state, BodyState::Standing);
+			u->movement_mode = MovementMode::Walking;
 		}
 		else if (u->agent->isBodyStateAllowed(BodyState::Flying))
 		{
 			u->setBodyState(state, BodyState::Flying);
+			u->movement_mode = MovementMode::Walking;
 		}
 		else if (u->agent->isBodyStateAllowed(BodyState::Kneeling))
 		{
 			u->setBodyState(state, BodyState::Kneeling);
+			u->movement_mode = MovementMode::Prone;
 		}
 		else if (u->agent->isBodyStateAllowed(BodyState::Prone))
 		{
 			u->setBodyState(state, BodyState::Prone);
-			if (u->canMove() && u->agent->type->bodyType->allowed_facing.size() > 1)
-			{
-				LogError("Unit %s cannot Stand, Fly or Kneel, but can turn!", u->agent->type.id);
-			}
+			u->movement_mode = MovementMode::Prone;
 		}
 		else
 		{
@@ -1543,6 +1645,8 @@ void Battle::enterBattle(GameState &state)
 		u->agent->modified_stats.restoreTU();
 		u->resetGoal();
 	}
+
+	state.current_battle->initBattle(state, true);
 
 	// Find first player unit
 	sp<BattleUnit> firstPlayerUnit = nullptr;
@@ -1572,8 +1676,6 @@ void Battle::enterBattle(GameState &state)
 		// FIXME: Make X-COM hostile to target org for the duration of this mission
 		LogWarning("IMPLEMENT: Make X-COM hostile to target org for the duration of this mission");
 	}
-
-	state.current_battle->initBattle(state, true);
 }
 
 // To be called when battle must be finished and before showing score screen
@@ -1645,6 +1747,11 @@ void Battle::loadImagePacks(GameState &state)
 	}
 	// Find out all image packs used by map's units and items
 	std::set<UString> imagePacks;
+	UString brainsucker = "bsk";
+	bool brainsuckerFound = false;
+	UString hyperworm = "hypr";
+	UString multiworm = "multi";
+	bool hyperwormFound = false;
 	for (auto &p : units)
 	{
 		auto &bu = p.second;
@@ -1660,6 +1767,16 @@ void Battle::loadImagePacks(GameState &state)
 				auto packName = BattleUnitImagePack::getNameFromID(ip.second.id);
 				if (imagePacks.find(packName) == imagePacks.end())
 					imagePacks.insert(packName);
+				if (!hyperwormFound && packName == hyperworm)
+				{
+					imagePacks.insert(hyperworm);
+					imagePacks.insert(hyperworm + "s");
+					hyperwormFound = true;
+				}
+				if (packName == brainsucker)
+				{
+					brainsuckerFound = true;
+				}
 			}
 		}
 		for (auto &ae : bu->agent->equipment)
@@ -1673,6 +1790,15 @@ void Battle::loadImagePacks(GameState &state)
 				auto packName = BattleUnitImagePack::getNameFromID(ae->type->held_image_pack.id);
 				if (imagePacks.find(packName) == imagePacks.end())
 					imagePacks.insert(packName);
+			}
+			if (!brainsuckerFound && ae->getPayloadType()->damage_type &&
+			    ae->getPayloadType()->damage_type->effectType ==
+			        DamageType::EffectType::Brainsucker)
+			{
+				imagePacks.insert(brainsucker);
+				imagePacks.insert(brainsucker + "s");
+				brainsuckerFound = true;
+				break;
 			}
 		}
 	}
@@ -1723,13 +1849,43 @@ void Battle::loadAnimationPacks(GameState &state)
 	}
 	// Find out all animation packs used by units
 	std::set<UString> animationPacks;
+	UString brainsucker = "bsk";
+	bool brainsuckerFound = false;
+	UString hyperworm = "hypr";
+	UString multiworm = "multi";
+	bool hyperwormFound = false;
 	for (auto &u : units)
 	{
 		for (auto &ap : u.second->agent->type->animation_packs)
 		{
 			auto packName = BattleUnitAnimationPack::getNameFromID(ap.id);
 			if (animationPacks.find(packName) == animationPacks.end())
+			{
 				animationPacks.insert(packName);
+			}
+			if (!hyperwormFound && packName == hyperworm)
+			{
+				animationPacks.insert(hyperworm);
+				hyperwormFound = true;
+			}
+			if (packName == brainsucker)
+			{
+				brainsuckerFound = true;
+			}
+		}
+		if (!brainsuckerFound)
+		{
+			for (auto &e : u.second->agent->equipment)
+			{
+				if (e->getPayloadType()->damage_type &&
+				    e->getPayloadType()->damage_type->effectType ==
+				        DamageType::EffectType::Brainsucker)
+				{
+					animationPacks.insert(brainsucker);
+					brainsuckerFound = true;
+					break;
+				}
+			}
 		}
 	}
 	// Load all used animation packs

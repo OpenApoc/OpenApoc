@@ -86,7 +86,7 @@ class SDLSampleData : public BackendSampleData
   public:
 	SDLSampleData(sp<Sample> sample, SDL_AudioSpec &output_spec)
 	{
-		unsigned int input_size =
+		unsigned long int input_size =
 		    sample->format.getSampleSize() * sample->format.channels * sample->sampleCount;
 		this->samples.resize(input_size);
 		memcpy(this->samples.data(), sample->data.get(), input_size);

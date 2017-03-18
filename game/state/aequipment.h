@@ -42,8 +42,11 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	// Unit that threw or dropped the item last
 	StateRef<BattleUnit> ownerUnit;
 
-	// Ammunition for weapons, protection for armor, charge for items
+	// Ammunition for weapons, charge for items
 	int ammo = 0;
+
+	// Armor for armor, durability for other items (hidden)
+	int armor = 0;
 
 	// Explosives parameters
 
@@ -105,6 +108,8 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	                         float &velocityZ) const;
 	bool getVelocityForLaunch(const BattleUnit &unit, Vec3<int> target, float &velocityXY,
 	                          float &velocityZ) const;
+	bool getCanThrow(const TileMap &map, int strength, Vec3<float> startPos, Vec3<int> target);
+	bool getCanThrow(const BattleUnit &unit, Vec3<int> target);
 
   private:
 	static float getMaxThrowDistance(int weight, int strength, int heightDifference);

@@ -10,16 +10,20 @@
 #include "framework/trace.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonimagelist.h"
+#include "game/state/battle/battlecommonsamplelist.h"
+#include "game/state/battle/battlehazard.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battleunitmission.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
+#include "game/state/tileview/tileobject_battlehazard.h"
 #include "game/state/tileview/tileobject_battleitem.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_shadow.h"
 #include "library/strings_format.h"
+#include <glm/glm.hpp>
 
 namespace OpenApoc
 {
@@ -110,6 +114,56 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 	healingIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
 	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
 	                                                   196)));
+
+	lowMoraleIcons.push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                197)));
+	lowMoraleIcons.push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                198)));
+
+	psiIcons[PsiStatus::Probe].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                199)));
+	psiIcons[PsiStatus::Probe].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                200)));
+	psiIcons[PsiStatus::Panic].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                201)));
+	psiIcons[PsiStatus::Panic].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                202)));
+	psiIcons[PsiStatus::Stun].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                203)));
+	psiIcons[PsiStatus::Stun].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                204)));
+	psiIcons[PsiStatus::Control].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                205)));
+	psiIcons[PsiStatus::Control].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                206)));
+	psiIcons[PsiStatus::NotEngaged].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                207)));
+	psiIcons[PsiStatus::NotEngaged].push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                208)));
 
 	targetLocationIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
@@ -242,7 +296,11 @@ void BattleTileView::render()
 	// Rotate Icons
 	{
 		healingIconTicksAccumulated++;
-		healingIconTicksAccumulated %= healingIcons.size() * HEALING_ICONS_ANIMATION_DELAY;
+		healingIconTicksAccumulated %= 2 * HEALING_ICON_ANIMATION_DELAY;
+		lowMoraleIconTicksAccumulated++;
+		lowMoraleIconTicksAccumulated %= 2 * LOWMORALE_ICON_ANIMATION_DELAY;
+		psiIconTicksAccumulated++;
+		psiIconTicksAccumulated %= 2 * PSI_ICON_ANIMATION_DELAY;
 		iconAnimationTicksAccumulated++;
 		iconAnimationTicksAccumulated %= targetLocationIcons.size() * TARGET_ICONS_ANIMATION_DELAY;
 		focusAnimationTicksAccumulated++;
@@ -282,71 +340,14 @@ void BattleTileView::render()
 			break;
 	}
 
-	// FIXME: A different algorithm is required in order to properly display big units.
-	/*
-	1) Rendering must go in diagonal lines. Illustration:
+	// This is also the place where we emit a burning sound, because we find out which fire is in
+	// the viewport and is closest to the screen center
+	bool fireEncountered = false;
+	float closestFireDistance = FLT_MAX;
+	Vec3<float> closestFirePosition;
 
-	CURRENT		TARGET
-
-	147			136
-	258			258
-	369			479
-
-	2) Objects must be located in the bottom-most, right-most tile they intersect
-	(already implemented)
-
-	3) Object can either occupy 1, 2 or 3 tiles on the X axis (only X matters)
-
-	- Tiny objects (items, projectiles) occupy 1 tile always
-	- Small typical objects (walls, sceneries, small units) occupy 1 tile when static,
-	2 when moving on X axis
-	- Large objects (large units) occupy 2 tiles when static, 3 when moving on x axis
-
-	How to determine this value is TBD.
-
-	4) When rendering we must check 1 tile ahead for 2-tile object
-	and 1 tile ahead and further on x axis for 3-tile object.
-
-	If present we must draw 1 tile ahead for 2-tile object
-	or 2 tiles ahead and one tile further on x-axis for 3 tile object
-	then resume normal draw order without drawing already drawn tiles
-
-	Illustration:
-
-	SMALL MOVING	LARGE STATIC	LARGE MOVING		LEGEND
-
-	xxxxx > xxxxx6.		x		= tile w/o  object drawn
-	xxxx > xxxx48	xxxx > xxxx48	x+++  > x+++59		+		= tile with object drawn
-	xxx  > xxx37	x++  > x++37	x++O  > x++28.		digit	= draw order
-	x+O  > x+16	x+O  > x+16		x+OO  > x+13.		o		= object yet to draw
-	x?   > x25		x?   > x25		x?	  > x47.		?		= current position
-
-	So, if we encounter a 2-tile (on x axis) object in the next position (x-1, y+1)
-	then we must first draw tile (x-1,y+1), and then draw our tile,
-	and then skip drawing next tile (as we have already drawn it!)
-
-	If we encounter a 3-tile (on x axis) object in the position (x-1,y+2)
-	then we must first draw (x-1,y+1), then (x-2,y+2), then (x-1,y+2), then draw our tile,
-	and then skip drawing next two tiles (as we have already drawn it) and skip drawing
-	the tile (x-1, y+2) on the next row
-
-	This is done best by having a set of Vec3<int>'s, and "skip next X tiles" variable.
-	When encountering a 2-tile object, we inrement "skip next X tiles" by 1.
-	When encountering a 3-tile object, we increment "skip next X tiles" by 2,
-	and we add (x-1, y+2) to the set.
-	When trying to draw a tile we first check the "skip next X tiles" variable,
-	if > 0 we decrement and continue.
-	Second, we check if our tile is in the set. If so, we remove from set and continue.
-	Third, we draw normally
-	*/
-
-	// FIXME: A different drawing algorithm is required for battle's strategic view
-	/*
-	First, draw everything except units and items
-	Then, draw items only on current z-level
-	Then, draw agents, bottom to top, drawing hollow sprites for non-current levels
-	*/
-
+	// FIXME: A different algorithm is required in order to properly display everything
+	// --- Read the note at the bottom of this file ---
 	// FIXME: Draw double selection bracket for big units?
 	switch (this->viewMode)
 	{
@@ -440,6 +441,8 @@ void BattleTileView::render()
 			}
 			auto &waypointImageSource = darkenWaypoints ? waypointDarkIcons : waypointIcons;
 
+			static const Vec2<float> offsetFaceIcon = {-7.0f, -1.0f};
+
 			for (int z = zFrom; z < zTo; z++)
 			{
 				int currentLevel = z - battle.battleViewZLevel + 1;
@@ -465,10 +468,13 @@ void BattleTileView::render()
 					{
 						drawPathPreview = previewedPathCost != -1;
 						auto u = selTileOnCurLevel->getUnitIfPresent(true);
-						if (u)
+						auto unit = u ? u->getUnit() : nullptr;
+						if (unit &&
+						    (unit->owner == battle.currentPlayer ||
+						     battle.visibleUnits[battle.currentPlayer].find({&state, unit->id}) !=
+						         battle.visibleUnits[battle.currentPlayer].end()))
 						{
-							// FIXME: Check if player can see unit, if not - do not change cursor!
-							if (battle.currentPlayer->isRelatedTo(u->getUnit()->owner) ==
+							if (battle.currentPlayer->isRelatedTo(unit->owner) ==
 							    Organisation::Relation::Hostile)
 							{
 								selectionImageBack = selectedTileFireImageBack;
@@ -541,6 +547,10 @@ void BattleTileView::render()
 								auto &obj = tile->drawnObjects[layer][obj_id];
 								bool friendly = false;
 								bool hostile = false;
+								bool unitLowMorale = false;
+								bool unitPsiAttacker = false;
+								PsiStatus unitPsiAttackedStatus = PsiStatus::NotEngaged;
+								Vec2<float> unitFaceIconPos;
 								bool objectVisible = visible;
 								switch (obj->getType())
 								{
@@ -572,6 +582,33 @@ void BattleTileView::render()
 										friendly = u->owner == battle.currentPlayer;
 										hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 										          Organisation::Relation::Hostile;
+										if (objectVisible)
+										{
+											if (u->moraleState != MoraleState::Normal)
+											{
+												unitLowMorale = true;
+											}
+											else if (u->psiStatus != PsiStatus::NotEngaged)
+											{
+												unitPsiAttacker = true;
+											}
+											if (!u->psiAttackers.empty())
+											{
+												unitPsiAttackedStatus =
+												    u->psiAttackers.begin()->second;
+											}
+											if (unitLowMorale || unitPsiAttacker ||
+											    unitPsiAttackedStatus != PsiStatus::NotEngaged)
+											{
+												unitFaceIconPos =
+												    tileToOffsetScreenCoords(
+												        u->getPosition() +
+												        Vec3<float>{0.0f, 0.0f,
+												                    (u->getCurrentHeight() - 4.0f) *
+												                        1.5f / 40.0f}) +
+												    offsetFaceIcon;
+											}
+										}
 										if (!battle.battleViewSelectedUnits.empty())
 										{
 											auto selectedPos =
@@ -612,6 +649,27 @@ void BattleTileView::render()
 										}
 										break;
 									}
+									case TileObject::Type::Hazard:
+									{
+										if (visible && ticksUntilFireSound == 0)
+										{
+											auto h =
+											    std::static_pointer_cast<TileObjectBattleHazard>(
+											        obj)
+											        ->getHazard();
+											if (h->hazardType->fire)
+											{
+												auto distance =
+												    glm::length(centerPos - h->position);
+												if (distance < closestFireDistance)
+												{
+													fireEncountered = true;
+													closestFireDistance = distance;
+													closestFirePosition = h->position;
+												}
+											}
+										}
+									}
 									default:
 										break;
 								}
@@ -619,6 +677,29 @@ void BattleTileView::render()
 								obj->draw(r, *this, pos, this->viewMode,
 								          revealWholeMap || objectVisible, currentLevel, friendly,
 								          hostile);
+								int faceShift = 0;
+								if (unitPsiAttacker)
+								{
+									r.draw(psiIcons[PsiStatus::NotEngaged]
+									               [psiIconTicksAccumulated /
+									                PSI_ICON_ANIMATION_DELAY],
+									       unitFaceIconPos);
+									faceShift = 1;
+								}
+								if (unitPsiAttackedStatus != PsiStatus::NotEngaged)
+								{
+									r.draw(psiIcons[unitPsiAttackedStatus]
+									               [psiIconTicksAccumulated /
+									                PSI_ICON_ANIMATION_DELAY],
+									       unitFaceIconPos + Vec2<float>{0, faceShift * 16.0f});
+									faceShift = -1;
+								}
+								if (unitLowMorale)
+								{
+									r.draw(lowMoraleIcons[lowMoraleIconTicksAccumulated /
+									                      LOWMORALE_ICON_ANIMATION_DELAY],
+									       unitFaceIconPos + Vec2<float>{0, faceShift * 16.0f});
+								}
 								// Loop ends when "break" is reached above
 								obj_id++;
 							} while (true);
@@ -692,15 +773,18 @@ void BattleTileView::render()
 								bool friendly = false;
 								bool hostile = false;
 								bool draw = false;
+								bool unitLowMorale = false;
+								bool unitPsiAttacker = false;
+								PsiStatus unitPsiAttackedStatus = PsiStatus::NotEngaged;
+								Vec2<float> unitFaceIconPos;
 								switch (obj->getType())
 								{
 									case TileObject::Type::Unit:
 									{
-										if (obj->getPosition().z < zTo)
+										auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
+										             ->getUnit();
+										if (u->position.z < zTo)
 										{
-											auto u =
-											    std::static_pointer_cast<TileObjectBattleUnit>(obj)
-											        ->getUnit();
 											objectVisible =
 											    !u->isConscious() ||
 											    u->owner == battle.currentPlayer ||
@@ -712,6 +796,34 @@ void BattleTileView::render()
 											hostile = battle.currentPlayer->isRelatedTo(u->owner) ==
 											          Organisation::Relation::Hostile;
 											draw = true;
+											if (objectVisible)
+											{
+												if (u->moraleState != MoraleState::Normal)
+												{
+													unitLowMorale = true;
+												}
+												else if (u->psiStatus != PsiStatus::NotEngaged)
+												{
+													unitPsiAttacker = true;
+												}
+												if (!u->psiAttackers.empty())
+												{
+													unitPsiAttackedStatus =
+													    u->psiAttackers.begin()->second;
+												}
+												if (unitLowMorale || unitPsiAttacker ||
+												    unitPsiAttackedStatus != PsiStatus::NotEngaged)
+												{
+													unitFaceIconPos =
+													    tileToOffsetScreenCoords(
+													        u->getPosition() +
+													        Vec3<float>{
+													            0.0f, 0.0f,
+													            (u->getCurrentHeight() - 4.0f) *
+													                1.5f / 40.0f}) +
+													    offsetFaceIcon;
+												}
+											}
 											if (!battle.battleViewSelectedUnits.empty())
 											{
 												auto selectedPos = std::find(
@@ -786,6 +898,29 @@ void BattleTileView::render()
 									obj->draw(r, *this, pos, this->viewMode,
 									          revealWholeMap || objectVisible, currentLevel,
 									          friendly, hostile);
+									int faceShift = 0;
+									if (unitPsiAttacker)
+									{
+										r.draw(psiIcons[PsiStatus::NotEngaged]
+										               [psiIconTicksAccumulated /
+										                PSI_ICON_ANIMATION_DELAY],
+										       unitFaceIconPos);
+										faceShift = 1;
+									}
+									if (unitPsiAttackedStatus != PsiStatus::NotEngaged)
+									{
+										r.draw(psiIcons[unitPsiAttackedStatus]
+										               [psiIconTicksAccumulated /
+										                PSI_ICON_ANIMATION_DELAY],
+										       unitFaceIconPos + Vec2<float>{0, faceShift * 16.0f});
+										faceShift = -1;
+									}
+									if (unitLowMorale)
+									{
+										r.draw(lowMoraleIcons[lowMoraleIconTicksAccumulated /
+										                      LOWMORALE_ICON_ANIMATION_DELAY],
+										       unitFaceIconPos + Vec2<float>{0, faceShift * 16.0f});
+									}
 								}
 								// Loop ends when "break" is reached above
 								obj_id++;
@@ -844,7 +979,7 @@ void BattleTileView::render()
 					if (obj.first->isHealing)
 					{
 						r.draw(healingIcons[healingIconTicksAccumulated /
-						                    HEALING_ICONS_ANIMATION_DELAY],
+						                    HEALING_ICON_ANIMATION_DELAY],
 						       pos + offsetHealing);
 					}
 					else
@@ -999,6 +1134,27 @@ void BattleTileView::render()
 										}
 										continue;
 									}
+									case TileObject::Type::Hazard:
+									{
+										if (visible && ticksUntilFireSound == 0)
+										{
+											auto h =
+											    std::static_pointer_cast<TileObjectBattleHazard>(
+											        obj)
+											        ->getHazard();
+											if (h->hazardType->fire)
+											{
+												auto distance =
+												    glm::length(centerPos - h->position);
+												if (distance < closestFireDistance)
+												{
+													fireEncountered = true;
+													closestFireDistance = distance;
+													closestFirePosition = h->position;
+												}
+											}
+										}
+									}
 									default:
 										break;
 								}
@@ -1079,6 +1235,14 @@ void BattleTileView::render()
 		default:
 			LogError("Unexpected tile view mode \"%d\"", (int)this->viewMode);
 			break;
+	}
+
+	if (fireEncountered)
+	{
+		ticksUntilFireSound = 60 * state.battle_common_sample_list->burn->sampleCount /
+		                      state.battle_common_sample_list->burn->format.frequency /
+		                      state.battle_common_sample_list->burn->format.channels;
+		fw().soundBackend->playSample(state.battle_common_sample_list->burn, closestFirePosition);
 	}
 }
 
@@ -1179,7 +1343,7 @@ void BattleTileView::updatePathPreview()
 	    (float)lastSelectedUnit->agent->modified_stats.time_units * 2 / cost_multiplier_x_2;
 	pathPreview = map.findShortestPath(lastSelectedUnit->goalPosition, target, 1000,
 	                                   BattleUnitTileHelper{map, *lastSelectedUnit}, false, false,
-	                                   &cost, maxCost);
+	                                   false, &cost, maxCost);
 	if (pathPreview.empty())
 	{
 		LogError("Empty path returned for path preview!?");
@@ -1209,3 +1373,69 @@ void BattleTileView::updatePathPreview()
 	}
 }
 }
+
+// Alexey Andronov (Istrebitel)
+// A different algorithm is required in order to properly display big units.
+/*
+1) Rendering must go in diagonal lines. Illustration (on XY plane):
+
+CURRENT		TARGET
+
+147			136
+258			258
+369			479
+
+2) Objects must be located in the bottom-most, right-most tile they intersect
+(already implemented)
+
+3) Object can either occupy 1, 2 or 3 tiles on the X axis (only X matters)
+
+- Tiny objects (items, projectiles) occupy 1 tile always
+- Small typical objects (walls, sceneries, small units) occupy 1 tile when static,
+2 when moving on X axis
+- Large objects (large units) occupy 2 tiles when static, 3 when moving on x axis
+
+How to determine this value is TBD.
+
+4) When rendering we must check 1 tile ahead for 2-tile object
+and 1 tile ahead and further on x axis for 3-tile object.
+
+If present we must draw 1 tile ahead for 2-tile object
+or 2 tiles ahead and one tile further on x-axis for 3 tile object
+then resume normal draw order without drawing already drawn tiles
+
+Illustration:
+
+SMALL MOVING	LARGE STATIC	LARGE MOVING		LEGEND
+
+xxxxx > xxxxx6.		x		= tile w/o  object drawn
+xxxx > xxxx48	xxxx > xxxx48	x+++  > x+++59		+		= tile with object drawn
+xxx  > xxx37	x++  > x++37	x++O  > x++28.		digit	= draw order
+x+O  > x+16	x+O  > x+16		x+OO  > x+13.		o		= object yet to draw
+x?   > x25		x?   > x25		x?	  > x47.		?		= current position
+
+So, if we encounter a 2-tile (on x axis) object in the next position (x-1, y+1)
+then we must first draw tile (x-1,y+1), and then draw our tile,
+and then skip drawing next tile (as we have already drawn it!)
+
+If we encounter a 3-tile (on x axis) object in the position (x-1,y+2)
+then we must first draw (x-1,y+1), then (x-2,y+2), then (x-1,y+2), then draw our tile,
+and then skip drawing next two tiles (as we have already drawn it) and skip drawing
+the tile (x-1, y+2) on the next row
+
+This is done best by having a set of Vec3<int>'s, and "skip next X tiles" variable.
+When encountering a 2-tile object, we inrement "skip next X tiles" by 1.
+When encountering a 3-tile object, we increment "skip next X tiles" by 2,
+and we add (x-1, y+2) to the set.
+When trying to draw a tile we first check the "skip next X tiles" variable,
+if > 0 we decrement and continue.
+Second, we check if our tile is in the set. If so, we remove from set and continue.
+Third, we draw normally
+*/
+
+// FIXME: A different drawing algorithm is required for battle's strategic view
+/*
+First, draw everything except units and items
+Then, draw items only on current z-level
+Then, draw agents, bottom to top, drawing hollow sprites for non-current levels
+*/

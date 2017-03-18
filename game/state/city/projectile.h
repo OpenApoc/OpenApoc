@@ -83,6 +83,7 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	int depletionRate = 0;
 	StateRef<Vehicle> firerVehicle;
 	StateRef<BattleUnit> firerUnit;
+	Vec3<float> firerPosition;
 	StateRef<Vehicle> trackedVehicle;
 	StateRef<BattleUnit> trackedUnit;
 	Vec3<float> targetPosition;

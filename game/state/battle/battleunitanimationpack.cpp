@@ -164,6 +164,12 @@ void BattleUnitAnimationPack::drawShadow(
 		             : ItemWieldMode::None,
 		    currentHands, targetHands, movement, currentBody};
 		e = hand_state_animations[key][facing];
+		if (!e)
+		{
+			LogWarning("Body %d %d Hands %d %d Movement %d Frame missing!", (int)currentBody,
+			           (int)targetBody, (int)currentHands, (int)targetHands, (int)movement);
+			return;
+		}
 		frame = e->frame_count - hands_animation_delay;
 	}
 	else if (currentBody != targetBody)
@@ -173,6 +179,12 @@ void BattleUnitAnimationPack::drawShadow(
 		             : ItemWieldMode::None,
 		    currentHands, movement, currentBody, targetBody};
 		e = body_state_animations[key][facing];
+		if (!e)
+		{
+			LogWarning("Body %d %d Hands %d %d Movement %d Frame missing!", (int)currentBody,
+			           (int)targetBody, (int)currentHands, (int)targetHands, (int)movement);
+			return;
+		}
 		frame = e->frame_count - body_animation_delay;
 	}
 	else
@@ -183,10 +195,16 @@ void BattleUnitAnimationPack::drawShadow(
 		    currentHands, movement, currentBody};
 
 		e = standart_animations[key][facing];
+		if (!e)
+		{
+			LogWarning("Body %d %d Hands %d %d Movement %d Frame missing!", (int)currentBody,
+			           (int)targetBody, (int)currentHands, (int)targetHands, (int)movement);
+			return;
+		}
 		if (currentHands == HandState::Firing)
 			frame = e->frame_count - hands_animation_delay;
 		else
-			frame = (distance_travelled * 100 / e->frames_per_100_units) % e->frame_count;
+			frame = (distance_travelled * 100 / e->units_per_100_frames) % e->frame_count;
 	}
 
 	if ((int)e->frames.size() <= frame)
@@ -229,6 +247,12 @@ void BattleUnitAnimationPack::drawUnit(
 		             : ItemWieldMode::None,
 		    currentHands, targetHands, movement, currentBody};
 		e = hand_state_animations[key][facing];
+		if (!e)
+		{
+			LogWarning("Body %d %d Hands %d %d Movement %d Frame missing!", (int)currentBody,
+			           (int)targetBody, (int)currentHands, (int)targetHands, (int)movement);
+			return;
+		}
 		frame = e->frame_count - hands_animation_delay;
 		if (e->is_overlay)
 		{
@@ -238,7 +262,7 @@ void BattleUnitAnimationPack::drawUnit(
 			                            HandState::AtEase, movement, currentBody};
 			e_legs = standart_animations[standardKey][facing];
 			frame_legs =
-			    (distance_travelled * 100 / e_legs->frames_per_100_units) % e_legs->frame_count;
+			    (distance_travelled * 100 / e_legs->units_per_100_frames) % e_legs->frame_count;
 		}
 	}
 	else if (currentBody != targetBody)
@@ -248,6 +272,12 @@ void BattleUnitAnimationPack::drawUnit(
 		             : ItemWieldMode::None,
 		    currentHands, movement, currentBody, targetBody};
 		e = body_state_animations[key][facing];
+		if (!e)
+		{
+			LogWarning("Body %d %d Hands %d %d Movement %d Frame missing!", (int)currentBody,
+			           (int)targetBody, (int)currentHands, (int)targetHands, (int)movement);
+			return;
+		}
 		frame = e->frame_count - body_animation_delay;
 	}
 	else
@@ -258,6 +288,12 @@ void BattleUnitAnimationPack::drawUnit(
 			                                                          : ItemWieldMode::OneHanded)
 			                                  : ItemWieldMode::None,
 			                         firingAngle, movement, currentBody}][facing];
+			if (!e)
+			{
+				LogWarning("Body %d %d Hands %d %d Movement %d Frame missing!", (int)currentBody,
+				           (int)targetBody, (int)currentHands, (int)targetHands, (int)movement);
+				return;
+			}
 		}
 		else
 		{
@@ -266,11 +302,19 @@ void BattleUnitAnimationPack::drawUnit(
 			                             : ItemWieldMode::None,
 			                    currentHands, movement, currentBody};
 			e = standart_animations[key][facing];
+			if (!e)
+			{
+				LogWarning("Body %d %d Hands %d %d Movement %d Frame missing!", (int)currentBody,
+				           (int)targetBody, (int)currentHands, (int)targetHands, (int)movement);
+				return;
+			}
 		}
 		if (currentHands == HandState::Firing)
 			frame = e->frame_count - hands_animation_delay;
+		else if (movement != MovementState::None)
+			frame = (distance_travelled * 100 / e->units_per_100_frames) % e->frame_count;
 		else
-			frame = (distance_travelled * 100 / e->frames_per_100_units) % e->frame_count;
+			frame = body_animation_delay % e->frame_count;
 		// Technically, if we're aiming, and this is overlay, we must always set frame to 0
 		// But since frame_count is 1, the previous line attains the same result, so why bother
 		if (e->is_overlay)
@@ -281,7 +325,7 @@ void BattleUnitAnimationPack::drawUnit(
 			                    HandState::AtEase, movement, currentBody};
 			e_legs = standart_animations[key][facing];
 			frame_legs =
-			    (distance_travelled * 100 / e_legs->frames_per_100_units) % e_legs->frame_count;
+			    (distance_travelled * 100 / e_legs->units_per_100_frames) % e_legs->frame_count;
 		}
 	}
 

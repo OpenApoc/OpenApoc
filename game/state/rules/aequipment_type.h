@@ -1,6 +1,5 @@
 #pragma once
 
-#include "game/state/agent.h"
 #include "game/state/research.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
@@ -20,6 +19,8 @@ class BattleUnitImagePack;
 class Organisation;
 class DamageType;
 class DamageModifier;
+class AgentType;
+enum class BodyPart;
 
 enum class TriggerType
 {
@@ -54,10 +55,15 @@ class AEquipmentType : public StateObject
 		CloakingField,
 		DimensionForceField,
 		MediKit,
+		// This is not in the game files, but we need it to function
+		Brainsucker,
+		Popper,
+		Spawner,
 		// For Psi-clones and stuff
 		Loot
 	};
 
+	AEquipmentType();
 	~AEquipmentType() override = default;
 
 	// Shared stuff
@@ -86,7 +92,7 @@ class AEquipmentType : public StateObject
 	// Armor only
 	sp<Image> body_sprite;
 	StateRef<DamageModifier> damage_modifier;
-	BodyPart body_part = BodyPart::Body;
+	BodyPart body_part;
 	StateRef<BattleUnitImagePack> body_image_pack;
 	bool provides_flight = false;
 
@@ -142,6 +148,8 @@ class AEquipmentType : public StateObject
 	StateRef<DamageType> damage_type;
 	TriggerType trigger_type = TriggerType::None;
 	int explosion_depletion_rate = 0;
+
+	std::map<StateRef<AgentType>, std::vector<int>> spawnList;
 };
 
 class EquipmentSet : public StateObject

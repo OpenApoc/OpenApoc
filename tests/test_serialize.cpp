@@ -7,6 +7,7 @@
 #include <iostream>
 #include <sstream>
 
+
 // We can't just use 'using namespace OpenApoc;' as:
 // On windows VS it says
 /* Error	C2678	binary '==': no operator found which takes a left - hand operand of type
@@ -23,20 +24,37 @@ bool test_gamestate_serialization_roundtrip(OpenApoc::sp<OpenApoc::GameState> st
 {
 	if (!state->saveGame(save_name))
 	{
-		LogError("Failed to save packed gamestate");
+
+		LogWarning("Failed to save packed gamestate");
 		return false;
 	}
 
 	auto read_gamestate = OpenApoc::mksp<OpenApoc::GameState>();
 	if (!read_gamestate->loadGame(save_name))
 	{
-		LogError("Failed to load packed gamestate");
+		LogWarning("Failed to load packed gamestate");
 		return false;
 	}
 
 	if (*state != *read_gamestate)
 	{
-		LogError("Gamestate changed over serialization");
+		LogWarning("Gamestate changed over serialization");
+
+		//if (state->current_battle != read_gamestate->current_battle)
+		{
+			LogWarning("Battle changed over serialization");
+			//if (state->current_battle->units != read_gamestate->current_battle->units)
+			{
+				LogWarning("Units changed over serialization");
+			}
+
+			//if (state->current_battle->aiBlock != read_gamestate->current_battle->aiBlock)
+			{
+				LogWarning("AiBlock changed over serialization");
+			}
+		}
+
+
 		return false;
 	}
 	return true;
@@ -44,6 +62,7 @@ bool test_gamestate_serialization_roundtrip(OpenApoc::sp<OpenApoc::GameState> st
 
 bool test_gamestate_serialization(OpenApoc::sp<OpenApoc::GameState> state)
 {
+
 	std::stringstream ss;
 	ss << "openapoc_test_serialize-" << std::this_thread::get_id();
 	auto tempPath = fs::temp_directory_path() / ss.str();
@@ -51,11 +70,12 @@ bool test_gamestate_serialization(OpenApoc::sp<OpenApoc::GameState> state)
 	LogInfo("Writing temp state to \"%s\"", pathString);
 	if (!test_gamestate_serialization_roundtrip(state, pathString))
 	{
-		LogError("Packed save test failed");
+		LogWarning("Packed save test failed");
 		return false;
 	}
 
 	fs::remove(tempPath);
+
 
 	return true;
 }
@@ -88,6 +108,7 @@ int main(int argc, char **argv)
 	OpenApoc::Framework fw("OpenApoc", false);
 
 	LogInfo("Loading \"%s\"", gamestate_name);
+
 
 	auto state = OpenApoc::mksp<OpenApoc::GameState>();
 
@@ -160,7 +181,7 @@ int main(int argc, char **argv)
 			return EXIT_FAILURE;
 		}
 		LogInfo("Using vehicle map for \"%s\"", vType->name);
-		v->type = {state.get(), vType};
+		v->type = { state.get(), vType };
 		v->name = format("%s %d", v->type->name, ++v->type->numCreated);
 		state->vehicles[vID] = v;
 
@@ -170,6 +191,7 @@ int main(int argc, char **argv)
 		std::list<OpenApoc::StateRef<OpenApoc::Agent>> agents;
 		for (auto &a : state->agents)
 		{
+
 			if (a.second->type->role == OpenApoc::AgentType::Role::Soldier &&
 			    a.second->owner == state->getPlayer())
 			{

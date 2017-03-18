@@ -1,6 +1,7 @@
 #pragma once
 
 #include "framework/image.h"
+#include "game/state/rules/aequipment_type.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -15,13 +16,13 @@ namespace OpenApoc
 class Base;
 class Organisation;
 class AEquipment;
-class AEquipmentType;
 class BattleUnitAnimationPack;
 class BattleUnitImagePack;
 class Sample;
 class AgentBodyType;
 class BattleUnit;
 class DamageModifier;
+class DamageType;
 class VoxelMap;
 enum class AIType;
 
@@ -54,7 +55,9 @@ enum class MovementState
 	None,
 	Normal,
 	Running,
-	Strafing
+	Strafing,
+	Reverse,
+	Brainsuck,
 };
 enum class AEquipmentSlotType
 {
@@ -201,6 +204,11 @@ class AgentType : public StateObject
 	// AI type used by this
 	AIType aiType;
 
+	StateRef<DamageType> spreadHazardDamageType;
+	int spreadHazardMinPower = 0;
+	int spreadHazardMaxPower = 0;
+	int spreadHazardTTLDivizor = 0;
+
 	// Sounds unit makes when walking, overrides terrain's walk sounds if present
 	std::vector<sp<Sample>> walkSfx;
 	// Sounds unit randomly makes when acting, used by aliens
@@ -225,8 +233,12 @@ class AgentBodyType : public StateObject
 	// This, among others, determines wether unit has built-in hover capability, can can be
 	// overriden by use of certain armor
 	std::set<BodyState> allowed_body_states;
+	// Allowed movement states for the unit
+	// If unit is to be allowed to move at all, it should have at least Normal or Running movement
+	// state allowed
 	std::set<MovementState> allowed_movement_states;
-	std::set<Vec2<int>> allowed_facing;
+	// Allowed facings, for every appearance. Empty means every facing is allowed
+	std::vector<std::set<Vec2<int>>> allowed_facing;
 
 	// Unit is large and will be treated accordingly
 	bool large = false;
@@ -268,6 +280,7 @@ class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 	bool isBodyStateAllowed(BodyState bodyState) const;
 	bool isMovementStateAllowed(MovementState movementState) const;
 	bool isFacingAllowed(Vec2<int> facing) const;
+	const std::set<Vec2<int>> *getAllowedFacings() const;
 
 	StateRef<Base> home_base;
 	StateRef<Organisation> owner;
@@ -305,13 +318,14 @@ class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 	sp<AEquipment> getFirstItemInSlot(AEquipmentSlotType type, bool lazy = true) const;
 	sp<AEquipment> getFirstShield() const;
 	sp<AEquipment> getFirstItemByType(StateRef<AEquipmentType> type) const;
+	sp<AEquipment> getFirstItemByType(AEquipmentType::Type type) const;
 
 	StateRef<BattleUnitImagePack> getImagePack(BodyPart bodyPart) const;
 
 	// Following members are not serialized, but rather are set up in the initBattle method
 
 	sp<AEquipment> leftHandItem;  // Left hand item, frequently accessed so will be stored here
-	sp<AEquipment> rightHandItem; // Left hand item, frequently accessed so will be stored here
+	sp<AEquipment> rightHandItem; // Right hand item, frequently accessed so will be stored here
 
 	void destroy() override;
 };

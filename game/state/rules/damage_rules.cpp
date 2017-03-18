@@ -1,5 +1,5 @@
-#include "game/state/gamestate.h"
 #include "game/state/rules/damage.h"
+#include "game/state/gamestate.h"
 #include "game/state/rules/doodad_type.h"
 
 namespace OpenApoc
@@ -87,19 +87,39 @@ int DamageType::dealDamage(int damage, StateRef<DamageModifier> modifier) const
 
 sp<Image> HazardType::getFrame(unsigned age, int offset)
 {
-	if (age >= maxLifetime)
+	if (fire)
 	{
-		LogError("Age must be lower than max lifetime");
-		return nullptr;
+		// Explanation how fire frames work is at the end of battlehazard.h
+		// Round stage to nearest 0,5
+		int stage = (age + 2) / 5 * 5;
+		// Get min and max frames for this stage
+		int minFrame = clamp((stage - 5) / 10, 0, 11);
+		int maxFrame = clamp((stage + 5 + 5) / 10, 0, 11);
+		// Trun offset if it's too big
+		if (minFrame + offset > maxFrame)
+		{
+			offset = 0;
+		}
+		int frame = minFrame + offset;
+		// Scale to the actual frames of the doodad (crude support for more/less frames)
+		return doodadType->frames[frame * doodadType->frames.size() / 12].image;
 	}
-	int frame = age * doodadType->frames.size() / maxLifetime;
-	while (frame + offset >= (int)doodadType->frames.size())
-		offset -= (doodadType->frames.size() - frame);
-	return doodadType->frames[frame + offset].image;
+	else
+	{
+		if (age >= 2 * maxLifetime)
+		{
+			LogError("Age must be lower than max lifetime");
+			return nullptr;
+		}
+		int frame = age * doodadType->frames.size() / (2 * maxLifetime);
+		while (frame + offset >= (int)doodadType->frames.size())
+			offset -= (doodadType->frames.size() - frame);
+		return doodadType->frames[frame + offset].image;
+	}
 }
 
 int HazardType::getLifetime(GameState &state)
 {
-	return randBoundsInclusive(state.rng, minLifetime, maxLifetime);
+	return randBoundsInclusive(state.rng, 2 * minLifetime, 2 * maxLifetime);
 }
 }

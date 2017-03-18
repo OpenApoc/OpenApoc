@@ -37,8 +37,9 @@ class BattleUnitTileHelper : public CanEnterTileHelper
 
 	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
 	                  bool ignoreAllUnits = false) const override;
-	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay,
-	                  bool ignoreStaticUnits = false, bool ignoreAllUnits = false) const override;
+	bool canEnterTile(Tile *from, Tile *to, bool allowJumping, bool &jumped, float &cost,
+	                  bool &doorInTheWay, bool ignoreStaticUnits = false,
+	                  bool ignoreAllUnits = false) const override;
 
 	float pathOverheadAlloawnce() const override { return 1.25f; }
 
@@ -57,6 +58,7 @@ class BattleUnitMission
 
 	// Methods that calculate next action
 	bool advanceAlongPath(GameState &state, BattleUnit &u, Vec3<float> &dest);
+	bool advanceBrainsucker(GameState &state, BattleUnit &u, Vec3<float> &dest);
 	bool advanceFacing(GameState &state, BattleUnit &u, Vec2<int> &dest);
 	bool advanceBodyState(GameState &state, BattleUnit &u, BodyState targetState, BodyState &dest);
 
@@ -72,38 +74,47 @@ class BattleUnitMission
 		DropItem,
 		Turn,
 		ReachGoal,
-		Teleport
+		Teleport,
+		Brainsuck,
+		Jump
 	};
 
-	// Methods used in pathfinding etc.
+	// Methods (main)
+
+	// Called each owner's update, plus guaranteed to be called before finished/cancelled mission is
+	// removed
 	void update(GameState &state, BattleUnit &u, unsigned int ticks, bool finished = false);
 	bool isFinished(GameState &state, BattleUnit &u, bool callUpdateIfFinished = true);
 	void start(GameState &state, BattleUnit &u);
-	void setPathTo(GameState &state, BattleUnit &u, Vec3<int> target, int maxIterations);
+	void setPathTo(GameState &state, BattleUnit &u, Vec3<int> target);
 
 	// Methods to request next action
+
 	// Request next destination
 	bool getNextDestination(GameState &state, BattleUnit &u, Vec3<float> &dest);
 	// Request next facing
 	bool getNextFacing(GameState &state, BattleUnit &u, Vec2<int> &dest);
 	// Request next body state
 	bool getNextBodyState(GameState &state, BattleUnit &u, BodyState &dest);
+	// Get next movement mode, returns None if default
+	MovementState getNextMovementState(GameState &state, BattleUnit &u);
 
 	// Spend agent TUs or append AcquireTU mission
 	bool spendAgentTUs(GameState &state, BattleUnit &u, int cost, bool cancel = false);
 
 	static int getBodyStateChangeCost(BattleUnit &u, BodyState from, BodyState to);
-	static int getThrowCost(BattleUnit &u);
-	static Vec2<int> getFacingStep(BattleUnit &u, Vec2<int> targetFacing);
+	static Vec2<int> getFacingStep(BattleUnit &u, Vec2<int> targetFacing, int facingDelta = 0);
 	// Used to determine target facings
-	static Vec2<int> getFacing(BattleUnit &u, Vec3<float> from, Vec3<float> to);
-	static Vec2<int> getFacing(BattleUnit &u, Vec3<int> to);
+	static Vec2<int> getFacing(BattleUnit &u, Vec3<float> from, Vec3<float> to,
+	                           int facingDelta = 0);
+	static Vec2<int> getFacing(BattleUnit &u, Vec3<int> to, int facingDelta = 0);
+	// Used to help with deltas
+	static int getFacingDelta(Vec2<int> curFacing, Vec2<int> tarFacing);
 
 	// Methods to create new missions
 	static BattleUnitMission *gotoLocation(BattleUnit &u, Vec3<int> target, int facingDelta = 0,
 	                                       bool demandGiveWay = false, bool allowSkipNodes = true,
-	                                       int giveWayAttempts = 20, bool allowRunningAway = false,
-	                                       int maxIterations = 1000);
+	                                       int giveWayAttempts = 20, bool allowRunningAway = false);
 	static BattleUnitMission *snooze(BattleUnit &u, unsigned int ticks);
 	static BattleUnitMission *acquireTU(BattleUnit &u, unsigned int tu);
 	static BattleUnitMission *changeStance(BattleUnit &u, BodyState state);
@@ -116,8 +127,12 @@ class BattleUnitMission
 	static BattleUnitMission *turn(BattleUnit &u, Vec3<float> target, bool free = false,
 	                               bool requireGoal = false);
 	static BattleUnitMission *restartNextMission(BattleUnit &u);
-	static BattleUnitMission *reachGoal(BattleUnit &u);
+	static BattleUnitMission *reachGoal(BattleUnit &u, int facingDelta = 0);
 	static BattleUnitMission *teleport(BattleUnit &u, sp<AEquipment> item, Vec3<int> target);
+	static BattleUnitMission *brainsuck(BattleUnit &u, StateRef<BattleUnit> target,
+	                                    int facingDelta);
+	static BattleUnitMission *jump(BattleUnit &u, Vec3<float> target,
+	                               BodyState state = BodyState::Standing);
 
 	UString getName();
 
@@ -159,6 +174,15 @@ class BattleUnitMission
 
 	// ChangeBodyState
 	BodyState targetBodyState = BodyState::Downed;
+
+	// Jump
+	Vec3<float> jumpTarget = {0.0f, 0.0f, 0.0f};
+	bool jumped = false;
+
+	// Brainsuck
+	StateRef<BattleUnit> targetUnit;
+	unsigned int brainsuckTicksAccumulated = 0;
+	unsigned int brainsuckSoundsPlayed = 0;
 
 	// Mission cancelled (due to unsufficient TUs or something else failing)
 	bool cancelled = false;

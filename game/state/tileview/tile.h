@@ -143,6 +143,10 @@ class Tile
 	                                          sp<TileObjectBattleUnit> exceptThis = nullptr,
 	                                          bool onlyLarge = false,
 	                                          bool checkLargeSpace = false) const;
+	std::list<sp<BattleUnit>> getUnits(bool onlyConscious, bool mustOccupy = false,
+	                                   bool mustBeStatic = false,
+	                                   sp<TileObjectBattleUnit> exceptThis = nullptr,
+	                                   bool onlyLarge = false, bool checkLargeSpace = false) const;
 	// Returns items that can be collected by standing in this tile)
 	std::list<sp<BattleItem>> getItems();
 	// Returns resting position for items and units in the tile
@@ -180,8 +184,8 @@ class CanEnterTileHelper
 {
   public:
 	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
-	virtual bool canEnterTile(Tile *from, Tile *to, float &cost, bool &doorInTheWay,
-	                          bool ignoreStaticUnits = false,
+	virtual bool canEnterTile(Tile *from, Tile *to, bool allowJumping, bool &jumped, float &cost,
+	                          bool &doorInTheWay, bool ignoreStaticUnits = false,
 	                          bool ignoreAllUnits = false) const = 0;
 	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
 	virtual bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
@@ -245,20 +249,22 @@ class TileMap
 	~TileMap();
 
 	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destinationStart,
-	                                      Vec3<int> destinationEnd, unsigned int iterationLimit,
+	                                      Vec3<int> destinationEnd, int iterationLimit,
 	                                      const CanEnterTileHelper &canEnterTile,
-	                                      bool ignoreStaticUnits = false,
+	                                      bool approachOnly = false, bool ignoreStaticUnits = false,
 	                                      bool ignoreAllUnits = false, float *cost = nullptr,
 	                                      float maxCost = 0.0f);
 
-	std::list<Vec3<int>>
-	findShortestPath(Vec3<int> origin, Vec3<int> destination, unsigned int iterationLimit,
-	                 const CanEnterTileHelper &canEnterTile, bool ignoreStaticUnits = false,
-	                 bool ignoreAllUnits = false, float *cost = nullptr, float maxCost = 0.0f)
+	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destination,
+	                                      unsigned int iterationLimit,
+	                                      const CanEnterTileHelper &canEnterTile,
+	                                      bool approachOnly = false, bool ignoreStaticUnits = false,
+	                                      bool ignoreAllUnits = false, float *cost = nullptr,
+	                                      float maxCost = 0.0f)
 	{
 		return findShortestPath(origin, destination, destination + Vec3<int>{1, 1, 1},
-		                        iterationLimit, canEnterTile, ignoreStaticUnits, ignoreAllUnits,
-		                        cost, maxCost);
+		                        iterationLimit, canEnterTile, approachOnly, ignoreStaticUnits,
+		                        ignoreAllUnits, cost, maxCost);
 	}
 
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,

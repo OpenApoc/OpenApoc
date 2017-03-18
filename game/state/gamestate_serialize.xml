@@ -110,6 +110,10 @@
 		<member>can_improve</member>
 		<member>playable</member>
 		<member>allowsDirectControl</member>
+		<member>spreadHazardDamageType</member>
+		<member>spreadHazardMinPower</member>
+		<member>spreadHazardMaxPower</member>
+		<member>spreadHazardTTLDivizor</member>
 		<member>aiType</member>
 		<member>score</member>
 		<member>walkSfx</member>
@@ -135,6 +139,7 @@
 		<member>ownerOrganisation</member>
 		<member>ownerUnit</member>
 		<member>ammo</member>
+		<member>armor</member>
 		<member>primed</member>
 		<member>activated</member>
 		<member>triggerDelay</member>
@@ -304,7 +309,11 @@
 		<member>targetBodyState</member>
 		<member>currentPlannedPath</member>
 		<member>allowRunningAway</member>
-		<member>maxIterations</member>
+		<member>jumpTarget</member>
+		<member>jumped</member>
+		<member>targetUnit</member>
+		<member>brainsuckTicksAccumulated</member>
+		<member>brainsuckSoundsPlayed</member>
 		<member>cancelled</member>
 	</object>
 	<object>
@@ -338,6 +347,7 @@
 	<object>
 		<name>BattleMapPartType</name>
 		<member>type</member>
+		<member>autoConvert</member>
 		<member>sprite</member>
 		<member>strategySprite</member>
 		<member>voxelMapLOF</member>
@@ -400,6 +410,7 @@
 		<member>explosions</member>
 		<member>hazards</member>
 		<member>participants</member>
+		<member>aiBlock</member>
 		<member>currentPlayer</member>
 		<member>currentActiveOrganisation</member>
 		<member>currentTurn</member>
@@ -467,17 +478,22 @@
 		<member>strategyImages</member>
 		<member>loadingImage</member>
 		<member>focusArrows</member>
+		<member>burningDoodad</member>
 	</object>
 	<object>
 		<name>BattleCommonSampleList</name>
 		<member>gravlift</member>
 		<member>door</member>
 		<member>brainsuckerHatch</member>
+		<member>brainsuckerSuck</member>
 		<member>teleport</member>
+		<member>burn</member>
 		<member>genericHitSounds</member>
 		<member>walkSounds</member>
 		<member>objectDropSounds</member>
 		<member>throwSounds</member>
+		<member>psiFailSounds</member>
+		<member>psiSuccessSounds</member>
 	</object>
 	<object external="true">
 		<name>BattleUnitAnimationPack</name>
@@ -492,7 +508,7 @@
 		<member>frames</member>
 		<member>is_overlay</member>
 		<member>frame_count</member>
-		<member>frames_per_100_units</member>
+		<member>units_per_100_frames</member>
 	</object>
 	<object>
 		<name>BattleUnitAnimationPack::AnimationEntry::Frame</name>
@@ -514,25 +530,43 @@
 		<member>weaponStatus</member>
 		<member>targetingMode</member>
 		<member>targetTile</member>
+		<member>timesTargetMIA</member>
 		<member>targetUnit</member>
 		<member>focusUnit</member>
 		<member>focusedByUnits</member>
 		<member>ticksUntillNextTargetCheck</member>
+		<member>psiStatus</member>
+		<member>psiTarget</member>
+		<member>psiItem</member>
+		<member>ticksAccumulatedToNextPsiCheck</member>
+		<member>psiAttackers</member>
+		<member>brainSucker</member>
 		<member>experiencePoints</member>
 		<member>fatalWounds</member>
 		<member>healingBodyPart</member>
 		<member>isHealing</member>
 		<member>woundTicksAccumulated</member>
+		<member>regenTicksAccumulated</member>
+		<member>stunDamage</member>
+		<member>enzymeDebuffTicksAccumulated</member>
+		<member>fireDebuffTicksAccumulated</member>
+		<member>enzymeDebuffIntensity</member>
+		<member>fireDebuffTicksRemaining</member>
+		<member>moraleState</member>
+		<member>moraleStateTicksRemaining</member>
+		<member>moraleTicksAccumulated</member>
 		<member>behavior_mode</member>
 		<member>fire_aiming_mode</member>
 		<member>fire_permission_mode</member>
 		<member>movement_mode</member>
 		<member>kneeling_mode</member>
 		<member>body_animation_ticks_remaining</member>
+		<member>body_animation_ticks_total</member>
+		<member>body_animation_ticks_static</member>
 		<member>current_body_state</member>
 		<member>target_body_state</member>
 		<member>hand_animation_ticks_remaining</member>
-		<member>aiming_ticks_remaining</member>
+		<member>residual_aiming_ticks_remaining</member>
 		<member>firing_animation_ticks_remaining</member>
 		<member>current_hand_state</member>
 		<member>target_hand_state</member>
@@ -551,15 +585,16 @@
 		<member>retreated</member>
 		<member>destroyed</member>
 		<member>falling</member>
-		<member>fallingSpeed</member>
+		<member>launched</member>
+		<member>launchGoal</member>
+		<member>bounced</member>
+		<member>collisionIgnoredTicks</member>
+		<member>velocity</member>
 		<member>giveWayRequestData</member>
-		<member>attackerPosition</member>
 		<member>displayedItem</member>
 		<member>visibleUnits</member>
 		<member>visibleEnemies</member>
-		<member>ticksUntilAutoTurnAvailable</member>
-		<member>ticksUntilAutoTargetAvailable</member>
-		<member>aiState</member>
+		<member>aiList</member>
 	</object>
 	<object>
 		<name>BattleItem</name>
@@ -582,7 +617,7 @@
 		<member>age</member>
 		<member>frame</member>
 		<member>ticksUntilNextFrameChange</member>
-		<member>ticksUntilNextEffect</member>
+		<member>ticksUntilNextUpdate</member>
 	</object>
 	<object>
 		<name>BattleExplosion</name>
@@ -604,6 +639,7 @@
 		<member>alternative_type</member>
 		<member>position</member>
 		<member>ticksUntilCollapse</member>
+		<member>burnTicksAccumulated</member>
 		<member>damaged</member>
 		<member>falling</member>
 		<member>fallingSpeed</member>
@@ -753,6 +789,7 @@
 		<member>sound</member>
 		<member>minLifetime</member>
 		<member>maxLifetime</member>
+		<member>fire</member>
 	</object>
 	<enum>
 		<name>DamageType::BlockType</name>
@@ -768,6 +805,7 @@
 		<value>Smoke</value>
 		<value>Fire</value>
 		<value>Enzyme</value>
+		<value>Brainsucker</value>
 	</enum>
 	<object>
 		<name>DamageType</name>
@@ -825,6 +863,7 @@
 		<member>damage_type</member>
 		<member>trigger_type</member>
 		<member>explosion_depletion_rate</member>
+		<member>spawnList</member>
 	</object>
 	<object>
 		<name>VEquipmentType</name>
@@ -1106,6 +1145,8 @@
 		<value>Turn</value>
 		<value>ReachGoal</value>
 		<value>Teleport</value>
+		<value>Brainsuck</value>
+		<value>Jump</value>
 	</enum>
 	<enum>
 		<name>VEquipment::WeaponState</name>
@@ -1185,11 +1226,19 @@
 		<value>Kneeling</value>
 	</enum>
 	<enum>
-		<name>BattleUnit::WeaponStatus</name>
+		<name>WeaponStatus</name>
 		<value>NotFiring</value>
 		<value>FiringLeftHand</value>
 		<value>FiringRightHand</value>
 		<value>FiringBothHands</value>
+	</enum>
+	<enum>
+		<name>PsiStatus</name>
+		<value>NotEngaged</value>
+		<value>Control</value>
+		<value>Panic</value>
+		<value>Stun</value>
+		<value>Probe</value>
 	</enum>
 	<enum>
 		<name>BattleUnit::TargetingMode</name>
@@ -1217,6 +1266,12 @@
 		<value>LeftWall</value>
 		<value>RightWall</value>
 		<value>Feature</value>
+	</enum>
+	<enum>
+		<name>BattleMapPartType::AutoConvert</name>
+		<value>None</value>
+		<value>Fire</value>
+		<value>Smoke</value>
 	</enum>
 	<enum>
 		<name>Projectile::Type</name>
@@ -1298,6 +1353,9 @@
 		<value>CloakingField</value>
 		<value>DimensionForceField</value>
 		<value>MediKit</value>
+		<value>Brainsucker</value>
+		<value>Popper</value>
+		<value>Spawner</value>
 		<value>Loot</value>
 	</enum>
 	<enum>
@@ -1373,6 +1431,8 @@
 		<value>Normal</value>
 		<value>Running</value>
 		<value>Strafing</value>
+		<value>Reverse</value>
+		<value>Brainsuck</value>
 	</enum>
 	<enum>
 		<name>AIType</name>
@@ -1380,25 +1440,120 @@
 		<value>Civilian</value>
 		<value>Loner</value>
 		<value>Group</value>
-		<value>Panic</value>
+		<value>PanicFreeze</value>
+		<value>PanicRun</value>
 		<value>Berserk</value>
 	</enum>
 	<enum>
 		<name>AIAction::Type</name>
-		<value>Idle</value>
-		<value>AttackWeapon</value>
+		<value>AttackWeaponTile</value>
+		<value>AttackWeaponUnit</value>
 		<value>AttackGrenade</value>
 		<value>AttackPsiPanic</value>
 		<value>AttackPsiStun</value>
 		<value>AttackPsiMC</value>
-		<value>Move</value>
+	</enum>
+	<enum>
+		<name>AIMovement::Type</name>
+		<value>Stop</value>
+		<value>ChangeStance</value>
+		<value>Patrol</value>
+		<value>Advance</value>
+		<value>Pursue</value>
+		<value>GetInRange</value>
+		<value>TakeCover</value>
 		<value>Retreat</value>
 	</enum>
+	<enum external = "true">
+		<name>UnitAI::Type</name>
+		<value>LowMorale</value>
+		<value>Default</value>
+		<value>Behavior</value>
+		<value>Vanilla</value>
+		<value>Hardcore</value>
+	</enum>
+	<enum external = "true">
+		<name>TacticalAI::Type</name>
+		<value>Vanilla</value>
+	</enum>
+	<enum>
+		<name>MoraleState</name>
+		<value>Normal</value>
+		<value>PanicFreeze</value>
+		<value>PanicRun</value>
+		<value>Berserk</value>
+	</enum>
 	<object>
-		<name>AIState</name>
+		<name>AIAction</name>
 		<member>type</member>
-		<member>ticksUntilThinkAgain</member>
-		<member>waitForCompletion</member>
-		<member>offensive</member>
+		<member>targetUnit</member>
+		<member>item</member>
+		<member>weaponStatus</member>
+	</object>
+	<object>
+		<name>AIMovement</name>
+		<member>type</member>
+		<member>targetLocation</member>
+		<member>movementMode</member>
+		<member>kneelingMode</member>
+	</object>
+	<object>
+		<name>AIDecision</name>
+		<member>action</member>
+		<member>movement</member>
+	</object>
+	<object full="true">
+		<name>UnitAIList</name>
+		<member>aiList</member>
+		<member>ticksLastThink</member>
+		<member>ticksUntilReThink</member>
+	</object>
+	<object external="true" full="true">
+		<name>LowMoraleUnitAI</name>
+		<member>type</member>
+		<member>active</member>
+		<member>ticksActionAvailable</member>
+	</object>
+	<object external="true" full="true">
+		<name>DefaultUnitAI</name>
+		<member>type</member>
+		<member>active</member>
+		<member>ticksAutoTurnAvailable</member>
+		<member>ticksAutoTargetAvailable</member>
+		<member>attackerPosition</member>
+	</object>
+	<object external="true" full="true">
+		<name>BehaviorUnitAI</name>
+		<member>type</member>
+		<member>active</member>
+	</object>
+	<object external="true" full="true">
+		<name>VanillaUnitAI</name>
+		<member>type</member>
+		<member>active</member>
+		<member>ticksLastThink</member>
+		<member>ticksUntilReThink</member>
+		<member>lastDecision</member>
+		<member>enemySpotted</member>
+		<member>enemySpottedPrevious</member>
+		<member>attackerPosition</member>
+		<member>lastSeenEnemyPosition</member>
+	</object>
+	<object external="true" full="true">
+		<name>HardcoreUnitAI</name>
+		<member>type</member>
+		<member>active</member>
+	</object>
+	<object full="true">
+		<name>TacticalAIBlock</name>
+		<member>aiList</member>
+		<member>ticksLastThink</member>
+		<member>ticksUntilReThink</member>
+	</object>
+	<object external="true" full="true">
+		<name>VanillaTacticalAI</name>
+		<member>type</member>
+		<member>ticksLastThink</member>
+		<member>ticksUntilReThink</member>
 	</object>
 </openapoc_gamestate>

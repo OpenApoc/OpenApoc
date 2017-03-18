@@ -30,6 +30,8 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state) c
 
 	state.battle_common_image_list = mksp<BattleCommonImageList>();
 
+	state.battle_common_image_list->burningDoodad = {&state, "DOODAD_16_BURNING_OBJECT"};
+
 	state.battle_common_image_list->strategyImages = mksp<std::vector<sp<Image>>>();
 	for (size_t i = 0; i < gameObjectStrategySpriteCount; i++)
 	{
@@ -78,8 +80,12 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state) c
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/terrain/doorwhsh.raw:22050");
 	state.battle_common_sample_list->brainsuckerHatch =
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/extra/brhatch.raw:22050");
+	state.battle_common_sample_list->brainsuckerSuck =
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/aliens/attacks/brainsuk.raw:22050");
 	state.battle_common_sample_list->teleport =
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/explosns/teleport.raw:22050");
+	state.battle_common_sample_list->burn =
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/burning.raw:11025");
 
 	state.battle_common_sample_list->genericHitSounds = mksp<std::list<sp<Sample>>>();
 	state.battle_common_sample_list->genericHitSounds->push_back(
@@ -88,6 +94,22 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state) c
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/hit2.raw:22050"));
 	state.battle_common_sample_list->genericHitSounds->push_back(
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/hit3.raw:22050"));
+
+	state.battle_common_sample_list->psiSuccessSounds = mksp<std::list<sp<Sample>>>();
+	state.battle_common_sample_list->psiSuccessSounds->push_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/psionic1.raw:22050"));
+	state.battle_common_sample_list->psiSuccessSounds->push_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/psionic2.raw:22050"));
+
+	state.battle_common_sample_list->psiFailSounds = mksp<std::list<sp<Sample>>>();
+	state.battle_common_sample_list->psiFailSounds->push_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/psionic4.raw:22050"));
+	state.battle_common_sample_list->psiFailSounds->push_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/psionic5.raw:22050"));
+	state.battle_common_sample_list->psiFailSounds->push_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/psionic6.raw:22050"));
+	state.battle_common_sample_list->psiFailSounds->push_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/psionic7.raw:22050"));
 
 	UString sfx_name = "";
 	for (int i = 1; i <= 8; i++)

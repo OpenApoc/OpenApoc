@@ -25,6 +25,9 @@ class HazardType : public StateObject
 	unsigned minLifetime = 0;
 	unsigned maxLifetime = 0;
 
+	// Wether frames follow the logic of fire
+	bool fire = false;
+
 	// Get first frame used for age and offset
 	sp<Image> getFrame(unsigned age, int offset);
 
@@ -37,6 +40,13 @@ class DamageModifier : public StateObject
 	STATE_OBJECT(DamageModifier)
   public:
 	// nothing?
+};
+
+enum class DamageSource
+{
+	Impact,
+	Hazard,
+	Debuff
 };
 
 class DamageType : public StateObject
@@ -56,7 +66,8 @@ class DamageType : public StateObject
 		Stun,
 		Smoke,
 		Fire,
-		Enzyme
+		Enzyme,
+		Brainsucker
 	};
 
 	bool ignore_shield = false;
@@ -73,8 +84,6 @@ class DamageType : public StateObject
 
 	// True if explosive damage should reduce with distance (gas deals full damage everywhere)
 	bool hasDamageDissipation() const { return blockType != BlockType::Gas; }
-	// True if this damage type does something on it's initial impact
-	bool hasImpact() const { return blockType != BlockType::Gas && effectType != EffectType::Fire; }
 	// True if this damage type deals damage on initial impact
 	bool doesImpactDamage() const { return blockType != BlockType::Gas; }
 	// True if this always impacts unit's head

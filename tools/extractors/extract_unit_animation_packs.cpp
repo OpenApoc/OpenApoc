@@ -37,9 +37,10 @@ sp<BattleUnitAnimationPack::AnimationEntry> e2)
 
 sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimationEntry(
     const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
-    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction, int frames_per_100_units,
+    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction, int units_per_100_frames,
     int split_point, bool left_side, bool isOverlay, bool removeItem, Vec2<int> targetOffset,
-    Vec2<int> beginOffset, bool inverse, int extraEndFrames, bool singleFrame) const
+    Vec2<int> beginOffset, bool inverse, int extraEndFrames, bool singleFrame,
+    bool doubleFrames) const
 {
 	static const std::map<Vec2<int>, int> offset_dir_map = {
 	    {{0, -1}, 0}, {{1, -1}, 1}, {{1, 0}, 2},  {{1, 1}, 3},
@@ -68,7 +69,10 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimat
 		auto data = dataUF[offset_uf + k];
 
 		e->frames.push_back(BattleUnitAnimationPack::AnimationEntry::Frame());
-
+		if (doubleFrames)
+		{
+			e->frames.push_back(BattleUnitAnimationPack::AnimationEntry::Frame());
+		}
 		for (int j = 0; j < 7; j++)
 		{
 			int part_idx = data.draw_order[j];
@@ -108,11 +112,15 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimat
 					         part_idx, offset_uf, j);
 					break;
 			}
-			e->frames[i - from].unit_image_draw_order.push_back(part_type);
-			e->frames[i - from].unit_image_parts[part_type] =
-			    BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock(
-			        data.parts[part_idx].frame_idx, data.parts[part_idx].x_offset + x_offset,
-			        data.parts[part_idx].y_offset + y_offset);
+			for (int f = 0; f < (doubleFrames ? 2 : 1); f++)
+			{
+				e->frames[(i - from) * (doubleFrames ? 2 : 1) + f].unit_image_draw_order.push_back(
+				    part_type);
+				e->frames[(i - from) * (doubleFrames ? 2 : 1) + f].unit_image_parts[part_type] =
+				    BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock(
+				        data.parts[part_idx].frame_idx, data.parts[part_idx].x_offset + x_offset,
+				        data.parts[part_idx].y_offset + y_offset);
+			}
 		}
 	}
 
@@ -123,7 +131,7 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimat
 
 	e->is_overlay = isOverlay;
 	e->frame_count = e->frames.size();
-	e->frames_per_100_units = frames_per_100_units;
+	e->units_per_100_frames = units_per_100_frames;
 
 	return e;
 }
@@ -134,6 +142,60 @@ Vec2<int> InitialGameStateExtractor::gPrOff(Vec2<int> facing) const
 	// 48 = tile_x, 24 = tile_y
 	return {(facing.x - facing.y) * 48 / 8, (facing.x + facing.y) * 24 / 8};
 }
+
+sp<BattleUnitAnimationPack::AnimationEntry>
+InitialGameStateExtractor::makeUpAnimationEntry(int from, int count, int fromS, int countS,
+                                                int partCount, Vec2<int> offset,
+                                                int units_per_100_frames) const
+{
+	auto e = mksp<BattleUnitAnimationPack::AnimationEntry>();
+	int to = from + count;
+	bool shadow = countS > 0;
+
+	for (int i = 0; i < count; i++)
+	{
+		e->frames.push_back(BattleUnitAnimationPack::AnimationEntry::Frame());
+		for (int j = (shadow ? 0 : 1); j <= partCount; j++)
+		{
+			int part_idx = j;
+			int frame = from + i;
+			auto part_type = BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Shadow;
+			switch (part_idx)
+			{
+				case 0:
+					part_type =
+					    BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Shadow;
+					frame = fromS + i;
+					while (frame >= fromS + countS)
+					{
+						frame -= countS;
+					}
+					break;
+				case 1:
+					part_type = BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Body;
+					break;
+				case 2:
+					part_type =
+					    BattleUnitAnimationPack::AnimationEntry::Frame::UnitImagePart::Helmet;
+					break;
+				default:
+					LogError("If you reached this then OpenApoc programmers made a mistake");
+					break;
+			}
+			e->frames[i].unit_image_draw_order.push_back(part_type);
+			e->frames[i].unit_image_parts[part_type] =
+			    BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock(frame, offset.x,
+			                                                              +offset.y);
+		}
+	}
+
+	e->is_overlay = false;
+	e->frame_count = e->frames.size();
+	e->units_per_100_frames = units_per_100_frames;
+
+	return e;
+}
+
 sp<BattleUnitAnimationPack>
 InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString &path,
                                                 const UString &name) const
@@ -221,26 +283,19 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 
 	if (name == "unit")
 	{
-		for (int x = -1; x <= 1; x++)
-		{
-			for (int y = -1; y <= 1; y++)
-			{
-				// 0, 0 facing does not exist
-				if (x == 0 && y == 0)
-					continue;
-
-				extractAnimationPackUnit(p, dataAD, dataUA, dataUF, x, y);
-			}
-		}
+		extractAnimationPackUnit(p, dataAD, dataUA, dataUF);
 	}
 	if (name == "bsk")
 	{
+		extractAnimationPackBsk(p, dataAD, dataUA, dataUF);
 	}
 	if (name == "chrys1")
 	{
+		extractAnimationPackChrysalis(p, true);
 	}
 	if (name == "chrys2")
 	{
+		extractAnimationPackChrysalis(p, false);
 	}
 	if (name == "gun")
 	{
@@ -266,6 +321,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 	}
 	if (name == "popper")
 	{
+		extractAnimationPackPopper(p);
 	}
 	if (name == "psi")
 	{

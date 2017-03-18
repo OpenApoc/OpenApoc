@@ -333,6 +333,7 @@ void Tile::updateBattlescapeUnitPresent()
 
 void Tile::updateBattlescapeParameters()
 {
+	bool providedGroundUpwards = solidGround && height >= 0.9625f;
 	height = 0.0f;
 	movementCostIn = -1; // -1 means empty, and will be set to 4 afterwards
 	movementCostOver = 255;
@@ -405,7 +406,7 @@ void Tile::updateBattlescapeParameters()
 		auto t = map.getTile(position.x, position.y, position.z - 1);
 		// Floating point precision is lacking somtimes so even though we have to compare with
 		// 0.975, we do this
-		canStand = t->solidGround && (t->height >= 0.9625f);
+		canStand = t->solidGround && t->height >= 0.9625f;
 		if (canStand)
 		{
 			movementCostIn = std::max(movementCostIn, t->movementCostOver);
@@ -432,6 +433,12 @@ void Tile::updateBattlescapeParameters()
 		}
 	}
 	height = height / (float)TILE_Z_BATTLE;
+	// Propagate update upwards if we provided ground and ceased to do so
+	if (!(solidGround && height >= 0.9625f) && providedGroundUpwards && position.z + 1 < map.size.z)
+	{
+		auto t = map.getTile(position.x, position.y, position.z + 1);
+		t->updateBattlescapeParameters();
+	}
 }
 
 bool Tile::updateVisionBlockage(int value)
@@ -497,6 +504,60 @@ sp<TileObjectBattleUnit> Tile::getUnitIfPresent(bool onlyConscious, bool mustOcc
 		}
 	}
 	return nullptr;
+}
+
+std::list<sp<BattleUnit>> Tile::getUnits(bool onlyConscious, bool mustOccupy, bool mustBeStatic,
+                                         sp<TileObjectBattleUnit> exceptThis, bool onlyLarge,
+                                         bool checkLargeSpace) const
+{
+	std::list<sp<BattleUnit>> result;
+
+	if (checkLargeSpace)
+	{
+		for (int x = -1; x >= 0; x++)
+		{
+			for (int y = -1; y >= 0; y++)
+			{
+				for (int z = 0; z <= 1; z++)
+				{
+					if (x == 0 && y == 0 && z == 0)
+					{
+						continue;
+					}
+					if (position.x + x < 0 || position.y + y < 0 || position.z + z >= map.size.z)
+					{
+						continue;
+					}
+					auto uts = map.getTile(position.x + x, position.y + y, position.z + z)
+					               ->getUnits(onlyConscious, mustOccupy, mustBeStatic, exceptThis,
+					                          onlyLarge, false);
+					for (auto u : uts)
+					{
+						result.push_back(u);
+					}
+				}
+			}
+		}
+	}
+
+	for (auto o : intersectingObjects)
+	{
+		if (o->getType() == TileObject::Type::Unit)
+		{
+			auto unitTileObject = std::static_pointer_cast<TileObjectBattleUnit>(o);
+			auto unit = unitTileObject->getUnit();
+			if ((onlyConscious && !unit->isConscious()) || (exceptThis == unitTileObject) ||
+			    (mustOccupy &&
+			     unitTileObject->occupiedTiles.find(position) ==
+			         unitTileObject->occupiedTiles.end()) ||
+			    (mustBeStatic && !unit->isStatic()) || (onlyLarge && !unit->isLarge()))
+			{
+				continue;
+			}
+			result.push_back(unitTileObject->getUnit());
+		}
+	}
+	return result;
 }
 
 std::list<sp<BattleItem>> Tile::getItems()

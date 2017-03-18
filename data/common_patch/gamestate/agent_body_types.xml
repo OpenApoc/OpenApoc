@@ -11,38 +11,6 @@
         <entry>None</entry>
       </allowed_movement_states>
       <allowed_facing>
-        <entry>
-          <x>-1</x>
-          <y>-1</y>
-        </entry>
-        <entry>
-          <x>-1</x>
-          <y>0</y>
-        </entry>
-        <entry>
-          <x>-1</x>
-          <y>1</y>
-        </entry>
-        <entry>
-          <x>0</x>
-          <y>-1</y>
-        </entry>
-        <entry>
-          <x>0</x>
-          <y>1</y>
-        </entry>
-        <entry>
-          <x>1</x>
-          <y>-1</y>
-        </entry>
-        <entry>
-          <x>1</x>
-          <y>0</y>
-        </entry>
-        <entry>
-          <x>1</x>
-          <y>1</y>
-        </entry>
       </allowed_facing>
       <maxHeight>32</maxHeight>
       <height>

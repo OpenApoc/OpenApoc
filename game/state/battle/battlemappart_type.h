@@ -27,6 +27,13 @@ class BattleMapPartType : public StateObject
 		Feature
 	};
 	Type type = Type::Ground;
+	enum class AutoConvert
+	{
+		None,
+		Fire,
+		Smoke
+	};
+	AutoConvert autoConvert = AutoConvert::None;
 
 	sp<Image> sprite;
 	sp<Image> strategySprite;

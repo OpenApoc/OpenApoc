@@ -242,6 +242,198 @@ void serializeOut(sp<SerializationNode> node, const Xorshift128Plus<uint32_t> &t
 	serializeOut(node->addNode("s1"), s[1], sr[1]);
 }
 
+void serializeIn(const GameState *state, sp<SerializationNode> node, sp<UnitAI> &ai)
+{
+	if (!node)
+		return;
+
+	UnitAI::Type type;
+	serializeIn(state, node->getNode("type"), type);
+	switch (type)
+	{
+		case UnitAI::Type::LowMorale:
+		{
+			auto sai = std::make_shared<LowMoraleUnitAI>();
+			serializeIn(state, node, sai);
+			ai = sai;
+			break;
+		}
+		case UnitAI::Type::Default:
+		{
+			auto sai = std::make_shared<DefaultUnitAI>();
+			serializeIn(state, node, sai);
+			ai = sai;
+			break;
+		}
+		case UnitAI::Type::Behavior:
+		{
+			auto sai = std::make_shared<BehaviorUnitAI>();
+			serializeIn(state, node, sai);
+			ai = sai;
+			break;
+		}
+		case UnitAI::Type::Vanilla:
+		{
+			auto sai = std::make_shared<VanillaUnitAI>();
+			serializeIn(state, node, sai);
+			ai = sai;
+			break;
+		}
+		case UnitAI::Type::Hardcore:
+		{
+			auto sai = std::make_shared<HardcoreUnitAI>();
+			serializeIn(state, node, sai);
+			ai = sai;
+			break;
+		}
+	}
+}
+
+void serializeIn(const GameState *state, sp<SerializationNode> node, sp<TacticalAI> &ai)
+{
+	if (!node)
+		return;
+
+	TacticalAI::Type type;
+	serializeIn(state, node->getNode("type"), type);
+	switch (type)
+	{
+		case TacticalAI::Type::Vanilla:
+		{
+			auto sai = sp<VanillaTacticalAI>();
+			serializeIn(state, node, sai);
+			ai = sai;
+			break;
+		}
+	}
+}
+
+void serializeOut(sp<SerializationNode> node, const sp<UnitAI> &ptr, const sp<UnitAI> &ref)
+{
+	if (ptr)
+	{
+		switch (ptr->type)
+		{
+			case UnitAI::Type::LowMorale:
+			{
+				auto ptrCast = std::static_pointer_cast<LowMoraleUnitAI>(ptr);
+				auto refCast = ref ? std::static_pointer_cast<LowMoraleUnitAI>(ref) : nullptr;
+				serializeOut(node, ptrCast, refCast);
+				break;
+			}
+			case UnitAI::Type::Default:
+			{
+				auto ptrCast = std::static_pointer_cast<DefaultUnitAI>(ptr);
+				auto refCast = ref ? std::static_pointer_cast<DefaultUnitAI>(ref) : nullptr;
+				serializeOut(node, ptrCast, refCast);
+				break;
+			}
+			case UnitAI::Type::Behavior:
+			{
+				auto ptrCast = std::static_pointer_cast<BehaviorUnitAI>(ptr);
+				auto refCast = ref ? std::static_pointer_cast<BehaviorUnitAI>(ref) : nullptr;
+				serializeOut(node, ptrCast, refCast);
+				break;
+			}
+			case UnitAI::Type::Vanilla:
+			{
+				auto ptrCast = std::static_pointer_cast<VanillaUnitAI>(ptr);
+				auto refCast = ref ? std::static_pointer_cast<VanillaUnitAI>(ref) : nullptr;
+				serializeOut(node, ptrCast, refCast);
+				break;
+			}
+			case UnitAI::Type::Hardcore:
+			{
+				auto ptrCast = std::static_pointer_cast<HardcoreUnitAI>(ptr);
+				auto refCast = ref ? std::static_pointer_cast<HardcoreUnitAI>(ref) : nullptr;
+				serializeOut(node, ptrCast, refCast);
+				break;
+			}
+		}
+	}
+}
+
+bool operator==(const UnitAI &a, const UnitAI &b)
+{
+	if (a.type != b.type)
+	{
+		return false;
+	}
+	switch (a.type)
+	{
+		case UnitAI::Type::LowMorale:
+		{
+			const LowMoraleUnitAI &ca = static_cast<const LowMoraleUnitAI &>(a);
+			const LowMoraleUnitAI &cb = static_cast<const LowMoraleUnitAI &>(b);
+			return ca == cb;
+		}
+		case UnitAI::Type::Default:
+		{
+			const DefaultUnitAI &ca = static_cast<const DefaultUnitAI &>(a);
+			const DefaultUnitAI &cb = static_cast<const DefaultUnitAI &>(b);
+			return ca == cb;
+		}
+		case UnitAI::Type::Behavior:
+		{
+			const BehaviorUnitAI &ca = static_cast<const BehaviorUnitAI &>(a);
+			const BehaviorUnitAI &cb = static_cast<const BehaviorUnitAI &>(b);
+			return ca == cb;
+		}
+		case UnitAI::Type::Vanilla:
+		{
+			const VanillaUnitAI &ca = static_cast<const VanillaUnitAI &>(a);
+			const VanillaUnitAI &cb = static_cast<const VanillaUnitAI &>(b);
+			return ca == cb;
+		}
+		case UnitAI::Type::Hardcore:
+		{
+			const HardcoreUnitAI &ca = static_cast<const HardcoreUnitAI &>(a);
+			const HardcoreUnitAI &cb = static_cast<const HardcoreUnitAI &>(b);
+			return ca == cb;
+		}
+	}
+	LogError("Unsupported comparison for UserAI type %d", (int)a.type);
+	return false;
+}
+bool operator!=(const UnitAI &a, const UnitAI &b) { return !(a == b); }
+
+void serializeOut(sp<SerializationNode> node, const sp<TacticalAI> &ptr, const sp<TacticalAI> &ref)
+{
+	if (ptr)
+	{
+		switch (ptr->type)
+		{
+			case TacticalAI::Type::Vanilla:
+			{
+				auto ptrCast = std::static_pointer_cast<VanillaTacticalAI>(ptr);
+				auto refCast = ref ? std::static_pointer_cast<VanillaTacticalAI>(ref) : nullptr;
+				serializeOut(node, ptrCast, refCast);
+				break;
+			}
+		}
+	}
+}
+
+bool operator==(const TacticalAI &a, const TacticalAI &b)
+{
+	if (a.type != b.type)
+	{
+		return false;
+	}
+	switch (a.type)
+	{
+		case TacticalAI::Type::Vanilla:
+		{
+			const VanillaTacticalAI &ca = static_cast<const VanillaTacticalAI &>(a);
+			const VanillaTacticalAI &cb = static_cast<const VanillaTacticalAI &>(b);
+			return ca == cb;
+		}
+	}
+	LogError("Unsupported comparison for Tactical type %d", (int)a.type);
+	return false;
+}
+bool operator!=(const TacticalAI &a, const TacticalAI &b) { return !(a == b); }
+
 bool GameState::saveGame(const UString &path, bool pack, bool pretty)
 {
 	TRACE_FN_ARGS1("path", path);

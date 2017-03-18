@@ -14,6 +14,17 @@
 namespace OpenApoc
 {
 
+namespace
+{
+// Proper value MUST be 24 on x, because width is 48, but no matter how I look at it, I just
+// can't accept it.
+// Voxel Maps ARE better suited for an offest of 23, period!
+const Vec2<float> BATTLE_IMAGE_OFFSET = {23, 34};
+const Vec2<float> BATTLE_SHADOW_OFFSET = {23, 6};
+
+const Vec2<float> CITY_IMAGE_OFFSET = {32, 24};
+}
+
 class BattleMapTileset;
 class BattleUnitAnimationPack;
 class GameState;
@@ -22,14 +33,6 @@ class BattleMapSectorTiles;
 
 class InitialGameStateExtractor
 {
-	// Proper value MUST be 24 on x, because width is 48, but no matter how I look at it, I just
-	// can't accept it.
-	// Voxel Maps ARE better suited for an offest of 23, period!
-	const Vec2<float> BATTLE_IMAGE_OFFSET = {23, 34};
-	const Vec2<float> BATTLE_SHADOW_OFFSET = {23, 6};
-
-	const Vec2<float> CITY_IMAGE_OFFSET = {32, 24};
-
   private:
 	UFO2P ufo2p;
 	TACP tacp;
@@ -63,6 +66,12 @@ class InitialGameStateExtractor
 
 	// Lookup table of building function number -> battlemap path
 	static const std::vector<UString> battleMapPaths;
+	// Lookup table for battlemap path -> number of features that are converted to fires on map
+	// start
+	static const std::map<OpenApoc::UString, std::set<int>> initialFires;
+	// Lookup table for battlemap path -> number of features that are converted to smokes on map
+	// start
+	static const std::map<OpenApoc::UString, std::set<int>> initialSmokes;
 	// List of paths and names for unit image packs
 	static const std::map<OpenApoc::UString, OpenApoc::UString> unitImagePackPaths;
 	// List of paths and names for unit shadow packs
@@ -88,8 +97,8 @@ class InitialGameStateExtractor
 	                                   const int index) const;
 	void readBattleMapParts(GameState &state, const TACP &data_t, sp<BattleMapTileset> t,
 	                        BattleMapPartType::Type type, const UString &idPrefix,
-	                        const UString &dirName, const UString &datName, const UString &pckName,
-	                        const UString &stratPckName) const;
+	                        const UString &mapName, const UString &dirName, const UString &datName,
+	                        const UString &pckName, const UString &stratPckName) const;
 
 	void extractSharedBattleResources(GameState &state) const;
 
@@ -105,51 +114,108 @@ class InitialGameStateExtractor
 	                        UString spriteFile, UString stratmapFile, UString lofFile,
 	                        UString ovrFile, sp<City> city) const;
 
+  public:
 	// Unit animation packs functions
 
 	sp<BattleUnitAnimationPack::AnimationEntry> getAnimationEntry(
 	    const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
 	    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
-	    int frames_per_100_units, int split_point, bool left_side, bool isOverlay = false,
+	    //
+	    int units_per_100_frames, int split_point, bool left_side, bool isOverlay = false,
 	    bool removeItem = false, Vec2<int> targetOffset = {0, 0}, Vec2<int> beginOffset = {0, 0},
-	    bool inverse = false, int extraEndFrames = 0, bool singleFrame = false) const;
+	    bool inverse = false, int extraEndFrames = 0, bool singleFrame = false,
+	    bool doubleFrames = false) const;
 
 	sp<BattleUnitAnimationPack::AnimationEntry>
 	getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
 	                  const std::vector<AnimationDataUA> &dataUA,
 	                  std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
-	                  int frames_per_100_units = 100, bool isOverlay = false,
+	                  //
+	                  int units_per_100_frames = 100, bool isOverlay = false,
 	                  Vec2<int> targetOffset = {0, 0}, Vec2<int> beginOffset = {0, 0}) const
 	{
-		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, frames_per_100_units, 0,
+		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, units_per_100_frames, 0,
 		                         false, isOverlay, false, targetOffset, beginOffset);
 	}
 
-	sp<BattleUnitAnimationPack::AnimationEntry> getAnimationEntry(
-	    const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
-	    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction, bool inverse) const
-	{
-		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, 100, 0, false, false,
-		                         false, {0, 0}, {0, 0}, inverse);
-	}
-
 	sp<BattleUnitAnimationPack::AnimationEntry>
 	getAnimationEntry(const std::vector<AnimationDataAD> &dataAD,
 	                  const std::vector<AnimationDataUA> &dataUA,
 	                  std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
+	                  //
 	                  Vec2<int> targetOffset, Vec2<int> beginOffset) const
 	{
 		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, 100, 0, false, false,
 		                         false, targetOffset, beginOffset);
 	}
 
+	sp<BattleUnitAnimationPack::AnimationEntry>
+	getAnimationEntryInv(const std::vector<AnimationDataAD> &dataAD,
+	                     const std::vector<AnimationDataUA> &dataUA,
+	                     std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
+	                     //
+	                     int units_per_100_frames = 100, bool isOverlay = false) const
+	{
+		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, units_per_100_frames, 0,
+		                         false, isOverlay, false, {0, 0}, {0, 0}, true);
+	}
+
+	sp<BattleUnitAnimationPack::AnimationEntry>
+	getAnimationEntryDbl(const std::vector<AnimationDataAD> &dataAD,
+	                     const std::vector<AnimationDataUA> &dataUA,
+	                     std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
+	                     //
+	                     int units_per_100_frames = 100, bool isOverlay = false,
+	                     Vec2<int> targetOffset = {0, 0}, Vec2<int> beginOffset = {0, 0}) const
+	{
+		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, units_per_100_frames, 0,
+		                         false, isOverlay, false, targetOffset, beginOffset, false, 0,
+		                         false, true);
+	}
+
 	Vec2<int> gPrOff(Vec2<int> facing) const;
 
+	sp<BattleUnitAnimationPack::AnimationEntry>
+	makeUpAnimationEntry(int from, int count, int fromS, int countS, int partCount,
+	                     Vec2<int> offset, int units_per_100_frames = 100) const;
+
+	// This one automatically adjusts by direction
+	sp<BattleUnitAnimationPack::AnimationEntry>
+	makeUpAnimationEntry(int from, int count, int fromS, int countS, int partCount,
+	                     Vec2<int> direction, Vec2<int> offset,
+	                     int units_per_100_frames = 100) const
+	{
+		static const std::map<Vec2<int>, int> offset_dir_map = {
+		    {{0, -1}, 4}, {{1, -1}, 5}, {{1, 0}, 6},  {{1, 1}, 7},
+		    {{0, 1}, 0},  {{-1, 1}, 1}, {{-1, 0}, 2}, {{-1, -1}, 3},
+		};
+		from += offset_dir_map.at(direction) * count;
+		fromS += offset_dir_map.at(direction) * countS;
+		return makeUpAnimationEntry(from, count, fromS, countS, partCount, offset,
+		                            units_per_100_frames);
+	}
+
 	// Unit animation pack extractors
+
+  private:
+	// Template for copying to other files
+	void extractAnimationPack_(sp<BattleUnitAnimationPack> p,
+	                           const std::vector<AnimationDataAD> &dataAD,
+	                           const std::vector<AnimationDataUA> &dataUA,
+	                           std::vector<AnimationDataUF> &dataUF) const;
 
 	void extractAnimationPackUnit(sp<BattleUnitAnimationPack> p,
 	                              const std::vector<AnimationDataAD> &dataAD,
 	                              const std::vector<AnimationDataUA> &dataUA,
-	                              std::vector<AnimationDataUF> &dataUF, int x, int y) const;
+	                              std::vector<AnimationDataUF> &dataUF) const;
+
+	void extractAnimationPackBsk(sp<BattleUnitAnimationPack> p,
+	                             const std::vector<AnimationDataAD> &dataAD,
+	                             const std::vector<AnimationDataUA> &dataUA,
+	                             std::vector<AnimationDataUF> &dataUF) const;
+
+	void extractAnimationPackPopper(sp<BattleUnitAnimationPack> p) const;
+
+	void extractAnimationPackChrysalis(sp<BattleUnitAnimationPack> p, bool first) const;
 };
 }

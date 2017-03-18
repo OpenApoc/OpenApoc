@@ -50,7 +50,7 @@ TACP::TACP(std::string file_name)
 		vec.emplace_back("Alien Egg");
 		vec.emplace_back("Multiworm");
 		vec.emplace_back("Hyperworm");
-		vec.emplace_back("Crysalis");
+		vec.emplace_back("Chrysalis");
 		vec.emplace_back("Brainsucker");
 		vec.emplace_back("Queenspawn");
 		vec.emplace_back("Anthropod");

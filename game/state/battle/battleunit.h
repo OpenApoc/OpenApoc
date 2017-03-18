@@ -3,9 +3,10 @@
 #define _USE_MATH_DEFINES
 #endif
 #include "game/state/agent.h"
-#include "game/state/battle/ai.h"
+#include "game/state/battle/ai/ai.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunitmission.h"
+#include "game/state/gametime.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
@@ -29,22 +30,41 @@
 #define DISTANCE_TO_RELAY_VISIBLE_ENEMY_INFORMATION 5
 // How far does unit see
 #define VIEW_DISTANCE 20
+// Base movement ticks consumption rate, this allows us to divide by 2,3,4,5,6,8,9 or 10
+#define BASE_MOVETICKS_CONSUMPTION_RATE 72
+// Movement cost in TUs for walking movement to adjacent (non-diagonal) tile
+#define STANDART_MOVE_TU_COST 2
 
 namespace OpenApoc
 {
+
+static const unsigned TICKS_PER_PSI_CHECK = TICKS_PER_SECOND / 2;
 // FIXME: Seems to correspond to vanilla behavior, but ensure it's right
-static const unsigned TICKS_PER_UNIT_EFFECT = TICKS_PER_TURN;
-// Delay before unit will turn automatically again after doing it once
-static const unsigned AUTO_TURN_COOLDOWN = TICKS_PER_TURN;
-// Delay before unit will target an enemy automatically again after failing to do so once
-static const unsigned AUTO_TARGET_COOLDOWN = TICKS_PER_TURN / 4;
+static const unsigned TICKS_PER_WOUND_EFFECT = TICKS_PER_TURN;
+static const unsigned TICKS_PER_ENZYME_EFFECT = TICKS_PER_SECOND / 9;
+static const unsigned TICKS_PER_FIRE_EFFECT = TICKS_PER_SECOND;
+// FIXME: Ensure correct
+static const unsigned TICKS_PER_LOWMORALE_STATE = TICKS_PER_TURN;
+// FIXME: Ensure correct
+static const unsigned LOWMORALE_CHECK_INTERVAL = TICKS_PER_TURN;
 // How frequently unit tracks its target
 static const unsigned LOS_CHECK_INTERVAL_TRACKING = TICKS_PER_SECOND / 4;
+// How many times to wait for MIA target to come back before giving up
+static const unsigned TIMES_TO_WAIT_FOR_MIA_TARGET =
+    2 * TICKS_PER_SECOND / LOS_CHECK_INTERVAL_TRACKING;
+// How many ticks are required to brainsuck a unit
+static const unsigned TICKS_TO_BRAINSUCK = TICKS_PER_SECOND * 2;
+// Chance out of 100 to be brainsucked
+static const unsigned BRAINSUCK_CHANCE = 66;
 
 class TileObjectBattleUnit;
 class TileObjectShadow;
 class Battle;
 class DamageType;
+class AIDecision;
+class AIAction;
+class AIMovement;
+enum class DamageSource;
 
 enum class MovementMode
 {
@@ -73,6 +93,33 @@ enum class BattleUnitType
 	LargeWalker,
 	LargeFlyer
 };
+
+// Enum for tracking unit's weapon state
+enum class WeaponStatus
+{
+	NotFiring,
+	FiringLeftHand,
+	FiringRightHand,
+	FiringBothHands
+};
+
+enum class PsiStatus
+{
+	NotEngaged,
+	Control,
+	Panic,
+	Stun,
+	Probe
+};
+
+enum class MoraleState
+{
+	Normal,
+	PanicFreeze,
+	PanicRun,
+	Berserk
+};
+
 static const std::list<BattleUnitType> BattleUnitTypeList = {
     BattleUnitType::LargeFlyer, BattleUnitType::LargeWalker, BattleUnitType::SmallFlyer,
     BattleUnitType::SmallWalker};
@@ -93,14 +140,6 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	{
 		AtWill,
 		CeaseFire
-	};
-	// Enum for tracking unit's weapon state
-	enum class WeaponStatus
-	{
-		NotFiring,
-		FiringLeftHand,
-		FiringRightHand,
-		FiringBothHands
 	};
 	// Enum for tracking unit's targeting mode
 	enum class TargetingMode
@@ -134,6 +173,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	TargetingMode targetingMode = TargetingMode::NoTarget;
 	// Tile we're targeting right now (or tile with unit we're targeting, if targeting unit)
 	Vec3<int> targetTile;
+	// How many times we checked and target we are ready to fire on was MIA
+	int timesTargetMIA = 0;
 	// Unit we're targeting right now
 	StateRef<BattleUnit> targetUnit;
 	// Unit we're ordered to focus on (in real time)
@@ -142,10 +183,22 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	std::list<StateRef<BattleUnit>> focusedByUnits;
 	// Ticks until we check if target is still valid, turn to it etc.
 	unsigned ticksUntillNextTargetCheck = 0;
-	// Ticks until we can auto-turn to hostile again
-	unsigned ticksUntilAutoTurnAvailable = 0;
-	// Ticks until we can auto-target hostile again
-	unsigned ticksUntilAutoTargetAvailable = 0;
+
+	// Psi
+
+	PsiStatus psiStatus = PsiStatus::NotEngaged;
+	// Unit in process of being psi attacked by this
+	StateRef<BattleUnit> psiTarget;
+	// Item used for psi attack
+	StateRef<AEquipmentType> psiItem;
+	// Ticks accumulated towards next psi check
+	unsigned int ticksAccumulatedToNextPsiCheck = 0;
+	// Map of units and attacks in progress against this unit
+	std::map<UString, PsiStatus> psiAttackers;
+
+	// Brainsucking
+
+	StateRef<BattleUnit> brainSucker;
 
 	// Stats
 
@@ -157,10 +210,26 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	BodyPart healingBodyPart = BodyPart::Body;
 	// Is using a medikit
 	bool isHealing = false;
-	// Ticks until next wound damage or medikit heal is applied
-	unsigned woundTicksAccumulated = 0;
+	// Ticks towards next wound damage or medikit heal application
+	unsigned int woundTicksAccumulated = 0;
+	// Ticks towards next regeneration of stats (psi, stamina, stun)
+	unsigned int regenTicksAccumulated = 0;
 	// Stun damage acquired
-	int stunDamageInTicks = 0;
+	int stunDamage = 0;
+	// Ticks accumulated towards next enzyme hit
+	unsigned int enzymeDebuffTicksAccumulated = 0;
+	// Enzyme debuff intensity remaining
+	int enzymeDebuffIntensity = 0;
+	// Ticks accumulated towards next fire hit
+	unsigned int fireDebuffTicksAccumulated = 0;
+	// Fire debuff intensity remaining
+	unsigned int fireDebuffTicksRemaining = 0;
+	// State of unit's morale
+	MoraleState moraleState = MoraleState::Normal;
+	// How much time unit has to spend in low morale state
+	unsigned int moraleStateTicksRemaining = 0;
+	// Ticks accumulated towards next morale check
+	unsigned int moraleTicksAccumulated = 0;
 
 	// User set modes
 
@@ -174,6 +243,10 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Time, in game ticks, until body animation is finished
 	unsigned int body_animation_ticks_remaining = 0;
+	// Required for transition of derived params, like muzzle location
+	unsigned int body_animation_ticks_total = 0;
+	// Animations ticks for static body state (no body state change is in progress)
+	unsigned int body_animation_ticks_static = 0;
 	BodyState current_body_state = BodyState::Standing;
 	BodyState target_body_state = BodyState::Standing;
 
@@ -182,7 +255,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Time, in game ticks, until hands animation is finished
 	unsigned int hand_animation_ticks_remaining = 0;
 	// Time, in game ticks, until unit will lower it's weapon
-	unsigned int aiming_ticks_remaining = 0;
+	unsigned int residual_aiming_ticks_remaining = 0;
 	// Time, in game ticks, until firing animation is finished
 	unsigned int firing_animation_ticks_remaining = 0;
 	HandState current_hand_state = HandState::AtEase;
@@ -203,8 +276,16 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	unsigned int flyingSpeedModifier = 0;
 	// Freefalling
 	bool falling = false;
+	// Launched (will check launch goal)
+	bool launched = false;
+	// Goal we launched for, after reaching this will set xy velocity to 0
+	Vec3<float> launchGoal;
+	// Bounced after falling
+	bool bounced = false;
+	// Ticks to ignore collision when launching
+	unsigned int collisionIgnoredTicks = 0;
 	// Current falling speed
-	float fallingSpeed = 0.0f;
+	Vec3<float> velocity;
 
 	// Turning
 
@@ -220,8 +301,12 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Vision
 
+	// Item shown in unit's hands
+	// Units without inventory never show items in hands
 	StateRef<AEquipmentType> displayedItem;
+	// Visible units from other orgs
 	std::set<StateRef<BattleUnit>> visibleUnits;
+	// Visible units that are hostile to us
 	std::list<StateRef<BattleUnit>> visibleEnemies;
 
 	// Miscellaneous
@@ -236,26 +321,23 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// in order of priority that should be tried by it
 	std::list<Vec2<int>> giveWayRequestData;
 
-	// If unit was under attack, this will be filled with position of the attacker relative to us
-	// Otherwise it will be 0,0,0
-	Vec3<int> attackerPosition = {0, 0, 0};
-
-	// AI
-	AIState aiState;
+	// AI list
+	UnitAIList aiList;
 
 	// [Methods]
+
+	void init(GameState &state);
 
 	// Squad
 
 	void removeFromSquad(Battle &b);
-	bool assignToSquad(Battle &b, int squadNumber);
+	bool assignToSquad(Battle &b, int squadNumber = -1);
 	void moveToSquadPosition(Battle &b, int squadPosition);
 
 	// Stats
 
 	bool isFatallyWounded();
 	void addFatalWound(BodyPart fatalWoundPart);
-	int getStunDamage() const;
 	void dealDamage(GameState &state, int damage, bool generateFatalWounds, BodyPart fatalWoundPart,
 	                int stunPower);
 
@@ -267,6 +349,37 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void startAttacking(GameState &state, Vec3<int> tile,
 	                    WeaponStatus status = WeaponStatus::FiringBothHands, bool atGround = false);
 	void stopAttacking();
+	// Returns which hands can be used for an attack (or none if attack cannot be made)
+	// Checks wether target unit is in range, and clear LOF exists to it
+	WeaponStatus canAttackUnit(sp<BattleUnit> unit);
+	// Returns wether unit can be attacked by one of the two supplied weapons
+	// Checks wether target unit is in range, and clear LOF exists to it
+	WeaponStatus canAttackUnit(sp<BattleUnit> unit, sp<AEquipment> rightHand,
+	                           sp<AEquipment> leftHand = nullptr);
+	// Clear LOF means no friendly fire and no map part in between
+	// Clear LOS means nothing in between
+	bool hasLineToUnit(const sp<BattleUnit> unit, bool useLOS = false) const;
+
+	// Psi
+
+	// Get cost of psi attack or upkeep
+	int getPsiCost(PsiStatus status, bool attack = true);
+	int getPsiChance(StateRef<BattleUnit> target, PsiStatus status, StateRef<AEquipmentType> item);
+	// Starts attacking taget, returns if attack successful
+	bool startAttackPsi(GameState &state, StateRef<BattleUnit> target, PsiStatus status,
+	                    StateRef<AEquipmentType> item);
+	void stopAttackPsi(GameState &state);
+	// Applies psi attack effects to this unit, returns false if attack must be terminated because
+	// of some failure
+	void applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatus status,
+	                    StateRef<AEquipmentType> item, bool impact);
+	void changeOwner(GameState &state, StateRef<Organisation> newOwner);
+
+	// Items
+
+	// Attempts to use item, returns if success
+	bool useItem(GameState &state, sp<AEquipment> item);
+	bool useMedikit(GameState &state, BodyPart part);
 
 	// Body
 
@@ -279,6 +392,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	unsigned int getHandAnimationFrame() const;
 	void setHandState(HandState state);
 	void beginHandStateChange(HandState state);
+	bool canHandStateChange(HandState state);
 
 	// Movement
 
@@ -286,8 +400,16 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	unsigned int getDistanceTravelled() const;
 	bool shouldPlaySoundNow();
 	unsigned int getWalkSoundIndex();
+	bool calculateVelocityForLaunch(float distanceXY, float diffZ, float &velocityXY,
+	                                float &velocityZ);
+	bool canLaunch(GameState &state, Vec3<float> targetPosition);
+	bool canLaunch(GameState &state, Vec3<float> targetPosition, Vec3<float> &targetVectorXY,
+	               float &velocityXY, float &velocityZ);
+	void launch(GameState &state, Vec3<float> targetPosition,
+	            BodyState bodyState = BodyState::Standing);
 	void startFalling();
-	void startMoving();
+	void startMoving(GameState &state);
+	void setPosition(GameState &state, const Vec3<float> &pos);
 
 	// Turning
 
@@ -296,7 +418,6 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Movement and turning
 
-	void setPosition(GameState &state, const Vec3<float> &pos);
 	void resetGoal();
 
 	// Missions
@@ -313,7 +434,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	bool addMission(GameState &state, BattleUnitMission *mission, bool toBack = false);
 	bool addMission(GameState &state, BattleUnitMission::Type type);
 	// Attempt to cancel all unit missions, returns true if successful
-	bool cancelMissions(GameState &state);
+	bool cancelMissions(GameState &state, bool forced = false);
 	// Attempt to give unit a new mission, replacing others, returns true if successful
 	bool setMission(GameState &state, BattleUnitMission *mission);
 
@@ -323,6 +444,21 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	bool canAfford(GameState &state, int cost) const;
 	// Returns if unit did spend (false if unsufficient TUs)
 	bool spendTU(GameState &state, int cost);
+	int getThrowCost();
+	int getMedikitCost();
+	int getMotionScannerCost();
+
+	// AI execution
+
+	static void executeGroupAIDecision(GameState &state, AIDecision &decision,
+	                                   std::list<StateRef<BattleUnit>> &units);
+	void executeAIDecision(GameState &state, AIDecision &decision);
+	void executeAIAction(GameState &state, AIAction &action);
+	void executeAIMovement(GameState &state, AIMovement &movement);
+
+	// Notifications
+	void notifyUnderFire(Vec3<int> position);
+	void notifyHit(Vec3<int> position);
 
 	// Misc
 
@@ -348,10 +484,16 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	bool isAttacking() const;
 	// Wether unit is throwing an item
 	bool isThrowing() const;
+	// Wether unit is moving (has Goto Location queued)
+	bool isMoving() const;
+	// Wether unit is doing a specific mission (has it queued)
+	bool isDoing(BattleUnitMission::Type missionType) const;
 	// Return unit's general type
 	BattleUnitType getType() const;
 	// Wether unit is AI controlled
 	bool isAIControlled(GameState &state) const;
+	// Unit's current AI type (can be modified by panic etc.)
+	AIType getAIType() const;
 
 	// Returns true if the unit is conscious and can fly
 	bool canFly() const;
@@ -374,7 +516,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	                              Vec3<float> direction);
 	// Returns true if sound and doodad were handled by it
 	bool applyDamage(GameState &state, int power, StateRef<DamageType> damageType,
-	                 BodyPart bodyPart);
+	                 BodyPart bodyPart, DamageSource source);
 	// Returns true if sound and doodad were handled by it
 	bool handleCollision(GameState &state, Collision &c);
 
@@ -388,35 +530,61 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Update
 
+	// Main update function
 	void update(GameState &state, unsigned int ticks);
+	// Updates unit regeneration, bleeding, debuffs and morale states
 	void updateStateAndStats(GameState &state, unsigned int ticks);
+	// Updates unit give way request and events
 	void updateEvents(GameState &state);
+	// Updates unit that is idle
 	void updateIdling(GameState &state);
-	void updateAcquireTarget(GameState &state, unsigned int ticks);
-	void updateCheckIfFalling(GameState &state);
+	// Checks if unit should begin falling
+	void updateCheckBeginFalling(GameState &state);
+	// Updates unit's body trainsition and acquires new target body state
 	void updateBody(GameState &state, unsigned int &bodyTicksRemaining);
+	// Updates unit's hands trainsition
 	void updateHands(GameState &state, unsigned int &handsTicksRemaining);
-	void updateMovement(GameState &state, unsigned int &moveTicksRemaining, bool &wasUsingLift);
+	// Updates unit's movement if unit is falling
+	// Return true if retreated or destroyed and we must halt immediately
+	bool updateMovementFalling(GameState &state, unsigned int &moveTicksRemaining,
+	                           bool &wasUsingLift);
+	// Updates unit's movement if unit is moving normally
+	// Return true if retreated or destroyed and we must halt immediately
+	bool updateMovementNormal(GameState &state, unsigned int &moveTicksRemaining,
+	                          bool &wasUsingLift);
+	// Updates unit's movement
+	// Return true if retreated or destroyed and we must halt immediately
+	bool updateMovement(GameState &state, unsigned int &moveTicksRemaining, bool &wasUsingLift);
+	// Updates unit's אפסרען trainsition and acquires new target אפסרען
 	void updateTurning(GameState &state, unsigned int &turnTicksRemaining);
+	// Updates unit's displayed item (which one will draw in unit's hands on screen)
 	void updateDisplayedItem();
+	// Runs all fire checks and returns false if we must stop attacking
+	bool updateAttackingRunCanFireChecks(GameState &state, unsigned int ticks,
+	                                     sp<AEquipment> &weaponRight, sp<AEquipment> &weaponLeft,
+	                                     Vec3<float> &targetPosition);
+	// Updates unit's attacking parameters (gun cooldown, hand states, aiming etc)
 	void updateAttacking(GameState &state, unsigned int ticks);
+	// Updates unit's psi attack (sustain payment, effect application etc.)
+	void updatePsi(GameState &state, unsigned int ticks);
+	// Updates unit's AI list
 	void updateAI(GameState &state, unsigned int ticks);
 
 	void triggerProximity(GameState &state);
+	void triggerBrainsuckers(GameState &state);
 	void retreat(GameState &state);
 	void dropDown(GameState &state);
 	void tryToRiseUp(GameState &state);
 	void fallUnconscious(GameState &state);
-	void die(GameState &state, bool violently, bool bledToDeath = false);
-
-	// Move a group of units in formation
-	static void groupMove(GameState &state, std::list<StateRef<BattleUnit>> &selectedUnits,
-	                      Vec3<int> targetLocation, bool demandGiveWay, int maxIterations = 1000);
+	void die(GameState &state, bool violently = true, bool bledToDeath = false);
 
 	// Following members are not serialized, but rather are set in initBattle method
 
 	sp<std::vector<sp<Image>>> strategyImages;
+	StateRef<DoodadType> burningDoodad;
 	sp<std::list<sp<Sample>>> genericHitSounds;
+	sp<std::list<sp<Sample>>> psiSuccessSounds;
+	sp<std::list<sp<Sample>>> psiFailSounds;
 	sp<TileObjectBattleUnit> tileObject;
 	sp<TileObjectShadow> shadowObject;
 
@@ -428,6 +596,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	friend class Battle;
 
 	void startAttacking(GameState &state, WeaponStatus status);
+	bool startAttackPsiInternal(GameState &state, StateRef<BattleUnit> target, PsiStatus status,
+	                            StateRef<AEquipmentType> item);
 
 	// Visibility theory (* is implemented)
 	//
@@ -449,7 +619,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Update unit's vision of other units and terrain
 	void refreshUnitVisibility(GameState &state, Vec3<float> oldPosition);
 	// Update other units's vision of this unit
-	void refreshUnitVision(GameState &state);
+	void refreshUnitVision(GameState &state, bool forceBlind = false);
 	// Update both this unit's vision and other unit's vision of this unit
 	void refreshUnitVisibilityAndVision(GameState &state, Vec3<float> oldPosition);
 };

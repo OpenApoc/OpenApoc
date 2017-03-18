@@ -32,12 +32,15 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 	                  bool ignoreAllUnits = false) const override
 	{
 		float nothing;
-		bool none;
-		return canEnterTile(from, to, nothing, none, ignoreStaticUnits, ignoreAllUnits);
+		bool none1;
+		bool none2;
+		return canEnterTile(from, to, false, none1, nothing, none2, ignoreStaticUnits,
+		                    ignoreAllUnits);
 	}
 
 	// Support 'from' being nullptr for if a vehicle is being spawned in the map
-	bool canEnterTile(Tile *from, Tile *to, float &cost, bool &, bool, bool) const override
+	bool canEnterTile(Tile *from, Tile *to, bool allowJumping, bool &jumped, float &cost, bool &,
+	                  bool, bool) const override
 	{
 		Vec3<int> fromPos = {0, 0, 0};
 		if (from)
@@ -542,7 +545,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 			return false;
 		}
 		default:
-			LogWarning("TODO: Implement");
+			LogWarning("TODO: Implement getNextDestination");
 			return false;
 	}
 	return false;
@@ -725,7 +728,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 			return;
 		}
 		default:
-			LogWarning("TODO: Implement");
+			LogWarning("TODO: Implement update");
 			return;
 	}
 }
@@ -814,7 +817,7 @@ bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 		case MissionType::RestartNextMission:
 			return true;
 		default:
-			LogWarning("TODO: Implement");
+			LogWarning("TODO: Implement isFinishedInternal");
 			return false;
 	}
 }
@@ -1149,7 +1152,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 		}
 		default:
-			LogWarning("TODO: Implement");
+			LogWarning("TODO: Implement start");
 			return;
 	}
 }

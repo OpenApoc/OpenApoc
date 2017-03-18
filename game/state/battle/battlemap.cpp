@@ -78,6 +78,17 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> orga
 	                               StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
 	otherParticipants.emplace_back(organisation,
 	                               StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
+	otherParticipants.emplace_back(organisation,
+	                               StateRef<AgentType>{&state, "AGENTTYPE_BRAINSUCKER"});
+	otherParticipants.emplace_back(organisation, StateRef<AgentType>{&state, "AGENTTYPE_POPPER"});
+	otherParticipants.emplace_back(organisation,
+	                               StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
+	otherParticipants.emplace_back(organisation,
+	                               StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
+	otherParticipants.emplace_back(organisation,
+	                               StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
+	otherParticipants.emplace_back(organisation,
+	                               StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
 
 	for (auto &pair : otherParticipants)
 	{
@@ -421,6 +432,11 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
                             std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
                             Battle::MissionType mission_type, UString mission_location_id)
 {
+	std::ignore = target_organisation;
+	std::ignore = agents;
+	std::ignore = player_craft;
+	std::ignore = mission_type;
+	std::ignore = mission_location_id;
 
 	// Vanilla had vertical stacking of sectors planned, but not implemented. I will implement both
 	// algorithms because I think that would be great to have. We could make it an extended game
@@ -766,6 +782,8 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
                    std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
                    Battle::MissionType mission_type, UString mission_location_id)
 {
+	std::ignore = agents;
+
 	auto b = mksp<Battle>();
 
 	b->currentPlayer = state.getPlayer();
@@ -903,29 +921,54 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 				}
 				for (auto &pair : tiles.initial_features)
 				{
-					auto s = mksp<BattleMapPart>();
-
-					auto initialPosition = pair.first + shift;
-					s->position = initialPosition;
-					s->queueCollapse();
-					s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
-					s->type = pair.second;
-
-					// Set spawnability and height
-					if (s->type->movement_cost == 255 || s->type->height == 39 ||
-					    b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] == -1)
+					switch (pair.second->autoConvert)
 					{
-						b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] = -1;
-					}
-					else
-					{
-						b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] =
-						    std::max(b->spawnMap[initialPosition.x][initialPosition.y]
-						                        [initialPosition.z],
-						             s->type->height);
-					}
+						case BattleMapPartType::AutoConvert::Fire:
+						{
+							StateRef<DamageType> dt = {&state, "DAMAGETYPE_INCENDIARY"};
+							b->placeHazard(state, dt, pair.first + shift,
+							               // Make it already hot
+							               dt->hazardType->getLifetime(state) * 2, 0, 1, false);
+							break;
+						}
+						case BattleMapPartType::AutoConvert::Smoke:
+						{
+							StateRef<DamageType> dt = {&state, "DAMAGETYPE_SMOKE"};
+							b->placeHazard(state, dt, pair.first + shift,
+							               dt->hazardType->getLifetime(state), 1, 2, false);
+							break;
+						}
+						case BattleMapPartType::AutoConvert::None:
+						{
+							auto s = mksp<BattleMapPart>();
 
-					b->map_parts.push_back(s);
+							auto initialPosition = pair.first + shift;
+							s->position = initialPosition;
+							s->queueCollapse();
+							s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
+							s->type = pair.second;
+
+							// Set spawnability and height
+							if (s->type->movement_cost == 255 || s->type->height == 39 ||
+							    b->spawnMap[initialPosition.x][initialPosition.y]
+							               [initialPosition.z] == -1)
+							{
+								b->spawnMap[initialPosition.x][initialPosition.y]
+								           [initialPosition.z] = -1;
+							}
+							else
+							{
+								b->spawnMap[initialPosition.x][initialPosition.y]
+								           [initialPosition.z] =
+								    std::max(b->spawnMap[initialPosition.x][initialPosition.y]
+								                        [initialPosition.z],
+								             s->type->height);
+							}
+
+							b->map_parts.push_back(s);
+							break;
+						}
+					}
 				}
 				for (auto &pair : tiles.loot_locations)
 				{
@@ -1049,8 +1092,6 @@ void BattleMap::fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state,
 
 		auto u = b->placeUnit(state, a);
 
-		u->agent->unit = {&state, u->id};
-		u->owner = a->owner;
 		u->updateDisplayedItem();
 		if (!spawnCivilians && a->owner == state.getCivilian())
 		{

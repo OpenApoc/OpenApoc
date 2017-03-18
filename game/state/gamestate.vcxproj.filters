@@ -198,7 +198,7 @@
     <ClCompile Include="battle\battlemaptileset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="battle\ai.cpp">
+    <ClCompile Include="battle\ai\ai.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -398,7 +398,7 @@
     <ClInclude Include="gamestate_serialize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battle\ai.h">
+    <ClInclude Include="battle\ai\ai.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

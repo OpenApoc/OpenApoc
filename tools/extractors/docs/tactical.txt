@@ -145,11 +145,11 @@ Explosion data
 
 02/02[2]: 
 --------
-Explosion Power. Seems to corellate with in-game weapon values. Typically 50, 100 or 150.
+Explosion Power at GZ
 
 04/04[2]:
 ------ 
-Explosion depletion rate. Controls the radius of the explosion. Typically 25, 50, 70 or 100.
+Explosion depletion rate. This is subtracted every time explosion spreads to adjacent tile.
 
 06/06[2]: 
 --------
@@ -161,37 +161,7 @@ Explosion Type. Index into Damage Type table. Typically usable values:
  04 = High Explosive
  05 = Stun
  06 = Psionic Blast
-
-Notes:
-
-02 and 04 determine the radius of the explosion. 
-
-The bigger 02 is and the smaller 04 is, the bigger the radius. Following are some values tested. They are presented in a format "3x3 | 2 | 1", showing size of the explosion, radius, and distance from center to edge.
-
- 255,100 -> 3x3 | 2 | 1 (or bigger, not certain)
- 255,050 -> 5x5 | 3 | 2
-
- 200,050 -> 5x5 | 3 | 2
-
- 150,150 -> 1x1 | 0
- 150,100 -> 3x3 | 2 | 1
- 150,050 -> 5x5 | 3 | 2
- 150,025 -> 7x7 | 4 | 3
- 150,010 -> huge explosion (9x9 or more)
-
- 100,150 -> 1x1 | 0
- 100,100 -> 1x1 | 0
- 100,050 -> 3x3 | 2 | 1
- 100,025 -> 7x7 | 4 | 3
- 100,010 -> huge explosion (9x9 or more)
- 100,005 -> huge explosion (9x9 or more)
-
- 050,050 -> 1x1 | 0
- 050,025 -> 3x3 | 2 | 1
- 050,010 -> 3x3 | 2 | 1
-
-It seems that 04 is subtracted from 02 for every tile explosion passes? Seems to be that radius of the explosion is quite similar to the value of 02 divided by 04. For huge explosions, the animation is often glitchy or simple 7x7, but that might be due to the engine failing to display it. Walls still get damaged pretty far away from the epicenter.
-
+ 
 (08-0A/08-10)[3]:
 -------------------
 Related to objects catching fire and burning. 
@@ -202,7 +172,8 @@ Fire Resistance.
 
 Notes: 
 
-Unknown how does it work. Probably the same logic as for when explosive damage destroys objects. If force of incendary damage at object location is enough to overcome it's Fire Resistance, object is set on fire, otherwise, it is not.
+Unknown how does it work. Obviously a signed value, meaning values over 128 are negatives (from -127 to -1). Obviously -1 (255) is immune, but it is observed, for example, that ceramic floors always have a value of -76, and machinery has -96. and kitchen fridges and alien city's columns have a value of -126?
+Maybe it's not signed, but 255 is hardcoded immune? Seeing as values higher than 128 are multiples of 10 usually (130,140,180) it makes sense.
 
 09/09[1]:
 ---------

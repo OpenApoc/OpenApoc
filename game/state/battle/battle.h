@@ -1,5 +1,7 @@
 #pragma once
 
+#include "game/state/agent.h"
+#include "game/state/battle/ai/ai.h"
 #include "game/state/battle/battleforces.h"
 #include "game/state/battle/battlemapsector.h"
 #include "game/state/gametime.h"
@@ -106,14 +108,10 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// Queue relevant los blocks for refresh
 	void queuePathfindingRefresh(Vec3<int> tile);
 
-	std::list<int> findLosBlockPath(int origin, int destination, BattleUnitType type,
-	                                int iterationLimit = 1000);
-
-	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destination,
-	                                      const BattleUnitTileHelper &canEnterTile,
-	                                      bool ignoreStaticUnits = false,
-	                                      bool ignoreAllUnits = false, float *cost = nullptr,
-	                                      float maxCost = 0.0f);
+	// Move a group of units in formation
+	static void groupMove(GameState &state, std::list<StateRef<BattleUnit>> &selectedUnits,
+	                      Vec3<int> targetLocation, int facingDelta = 0, bool demandGiveWay = false,
+	                      bool useTeleporter = false);
 
 	int getLosBlockID(int x, int y, int z) const;
 	bool getVisible(StateRef<Organisation> org, int x, int y, int z) const;
@@ -147,6 +145,8 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	std::set<StateRef<Organisation>> participants;
 
+	TacticalAIBlock aiBlock;
+
 	// Current player in control of the interface (will only change if we're going multiplayer)
 	StateRef<Organisation> currentPlayer;
 
@@ -177,11 +177,16 @@ class Battle : public std::enable_shared_from_this<Battle>
 	                                 StateRef<BattleUnit> ownerUnit = nullptr);
 	sp<BattleDoor> addDoor(GameState &state);
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
+	sp<BattleUnit> spawnUnit(GameState &state, StateRef<Organisation> owner,
+	                         StateRef<AgentType> agentType, Vec3<float> position,
+	                         Vec2<int> facing = {0, 0}, BodyState curState = BodyState::Standing,
+	                         BodyState tarState = BodyState::Standing);
 	sp<BattleUnit> placeUnit(GameState &state, StateRef<Agent> agent);
 	sp<BattleUnit> placeUnit(GameState &state, StateRef<Agent> agent, Vec3<float> position);
 	sp<BattleItem> placeItem(GameState &state, sp<AEquipment> item, Vec3<float> position);
 	sp<BattleHazard> placeHazard(GameState &state, StateRef<DamageType> type, Vec3<int> position,
-	                             int ttl, int power, int initialAgeTTLDivizor = 1);
+	                             int ttl, int power, int initialAgeTTLDivizor = 1,
+	                             bool delayVisibility = true);
 
 	static void accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
 	                                    Vec3<float> &target, int accuracy, bool thrown = false);
@@ -216,6 +221,30 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	// To be called after battle was finished and before returning to cityscape
 	static void exitBattle(GameState &state);
+
+	// Pathfinding functions
+
+  public:
+	// Find shortest path, using los blocks as a guide if going far
+	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destination,
+	                                      const BattleUnitTileHelper &canEnterTile,
+	                                      bool approachOnly = false, bool ignoreStaticUnits = false,
+	                                      int iterationLimitDirect = 0, bool forceDirect = false,
+	                                      bool ignoreAllUnits = false, float *cost = nullptr,
+	                                      float maxCost = 0.0f);
+
+	// Find path over the graph of los blocks
+	std::list<int> findLosBlockPath(int origin, int destination, BattleUnitType type,
+	                                int iterationLimit = 1000);
+
+  private:
+	// The part of findShortestPath that uses LBs
+	std::list<Vec3<int>> findShortestPathUsingLB(Vec3<int> origin, Vec3<int> destination,
+	                                             const BattleUnitTileHelper &canEnterTile,
+	                                             bool approachOnly = false,
+	                                             bool ignoreStaticUnits = false,
+	                                             bool ignoreAllUnits = false, float *cost = nullptr,
+	                                             float maxCost = 0.0f);
 
   private:
 	void loadResources(GameState &state);

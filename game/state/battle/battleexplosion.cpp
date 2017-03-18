@@ -25,8 +25,8 @@ BattleExplosion::BattleExplosion(Vec3<int> position, StateRef<DamageType> damage
                                  int depletionRate, bool damageInTheEnd,
                                  StateRef<BattleUnit> ownerUnit)
     : position(position), power(power), ticksUntilExpansion(TICKS_MULTIPLIER * 2),
-      locationsToExpand({{{position, {power, power}}}, {}, {}}), locationsVisited({position}),
-      damageType(damageType), damageInTheEnd(damageInTheEnd), depletionRate(depletionRate),
+      locationsToExpand({{{position, {power, power}}}, {}, {}}), damageInTheEnd(damageInTheEnd),
+      locationsVisited({position}), damageType(damageType), depletionRate(depletionRate),
       ownerUnit(ownerUnit)
 {
 }
@@ -60,7 +60,7 @@ void BattleExplosion::die(GameState &state)
 		}
 		if (existingHazard)
 		{
-			existingHazard->ticksUntilNextEffect = TICKS_PER_HAZARD_EFFECT;
+			existingHazard->ticksUntilNextUpdate = TICKS_PER_HAZARD_UPDATE;
 		}
 	}
 }
@@ -88,15 +88,17 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 	if (!damageType->hazardType)
 	{
 		StateRef<DamageType> dtSmoke = {&state, "DAMAGETYPE_SMOKE"};
-		auto hazard = state.current_battle->placeHazard(
-		    state, dtSmoke, pos, dtSmoke->hazardType->getLifetime(state), damage, 2);
-		if (hazard)
-		{
-			hazard->ticksUntilVisible = 0;
-		}
+		state.current_battle->placeHazard(
+		    state, dtSmoke, pos, dtSmoke->hazardType->getLifetime(state), damage, 2, false);
+	}
+	// Explosions with no custom explosion doodad spawn hazards when dealing damage
+	else if (!damageType->explosionDoodad)
+	{
+		state.current_battle->placeHazard(
+		    state, damageType, pos, damageType->hazardType->getLifetime(state), damage, 1, false);
 	}
 	// Gas does no direct damage
-	if (damageType->hasImpact())
+	if (damageType->doesImpactDamage())
 	{
 		auto set = tile->ownedObjects;
 		for (auto obj : set)
@@ -114,14 +116,11 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 				switch (damageType->effectType)
 				{
 					case DamageType::EffectType::Fire:
-						LogWarning("Set map part on fire!");
+						// Nothing, map parts are not damaged by fire at explosion time
 						break;
 					default:
+						mp->applyDamage(state, damage, damageType);
 						break;
-				}
-				if (damageType->doesImpactDamage())
-				{
-					mp->applyDamage(state, damage, damageType);
 				}
 			}
 			else if (obj->getType() == TileObject::Type::Unit)
@@ -133,52 +132,46 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 					continue;
 				}
 				affectedUnits.insert(u);
-				switch (damageType->effectType)
+				// Determine direction of hit
+				Vec3<float> velocity = -position;
+				velocity -= Vec3<float>{0.5f, 0.5f, 0.5f};
+				velocity += u->position;
+				if (velocity.x == 0.0f && velocity.y == 0.0f)
 				{
-					case DamageType::EffectType::Fire:
-						LogWarning("Set unit on fire!");
-						break;
-					default:
-						break;
+					velocity.z = 1.0f;
 				}
-				if (damageType->doesImpactDamage())
+				// Determine wether to hit head, legs or torso
+				auto cposition = u->position;
+				// Hit torso if coming from the side, not from above or below
+				if (sqrtf(velocity.x * velocity.x + velocity.y * velocity.y) > std::abs(velocity.z))
 				{
-					// Determine direction of hit
-					Vec3<float> velocity = -position;
-					velocity -= Vec3<float>{0.5f, 0.5f, 0.5f};
-					velocity += u->position;
-					if (velocity.x == 0.0f && velocity.y == 0.0f)
-					{
-						velocity.z = 1.0f;
-					}
-					// Determine wether to hit head, legs or torso
-					auto cposition = u->position;
-					// Hit torso if coming from the side, not from above or below
-					if (sqrtf(velocity.x * velocity.x + velocity.y * velocity.y) >
-					    std::abs(velocity.z))
-					{
-						cposition.z += (float)u->getCurrentHeight() / 2.0f / 40.0f;
-					}
-					// Hit head if coming from above
-					else if (velocity.z < 0)
-					{
-						cposition.z += (float)u->getCurrentHeight() / 40.0f;
-					}
-					// Hit legs if coming from below
-					else
-					{
-						// Legs are defeault already
-					}
-					// Apply
-					// FIXME: Give experience
-					u->applyDamage(state, damage, damageType,
-					               u->determineBodyPartHit(damageType, cposition, velocity));
+					cposition.z += (float)u->getCurrentHeight() / 2.0f / 40.0f;
 				}
+				// Hit head if coming from above
+				else if (velocity.z < 0)
+				{
+					cposition.z += (float)u->getCurrentHeight() / 40.0f;
+				}
+				// Hit legs if coming from below
+				else
+				{
+					// Legs are defeault already
+				}
+				// Apply
+				// FIXME: Give experience
+				u->applyDamage(state, damage, damageType,
+				               u->determineBodyPartHit(damageType, cposition, velocity),
+				               DamageSource::Impact);
 			}
 			else if (obj->getType() == TileObject::Type::Item)
 			{
-				auto i = std::static_pointer_cast<TileObjectBattleItem>(obj)->getItem();
-				i->applyDamage(state, damage, damageType);
+				// Special effects do not damage items, fire damages items differently and not on
+				// explosion impact
+				if (damageType->effectType == DamageType::EffectType::None)
+				{
+					auto i = std::static_pointer_cast<TileObjectBattleItem>(obj)->getItem();
+					i->applyDamage(state, damage, damageType);
+				}
 			}
 		}
 	}
@@ -253,7 +246,8 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 	    };
 
 	if (to.x < 0 || to.x >= map.size.x || to.y < 0 || to.y >= map.size.y || to.z < 0 ||
-	    to.z >= map.size.z || nextPower <= 0 || locationsVisited.find(to) != locationsVisited.end())
+	    to.z >= map.size.z || nextPower < 2 * depletionRate ||
+	    locationsVisited.find(to) != locationsVisited.end())
 	{
 		return;
 	}
@@ -341,7 +335,7 @@ void BattleExplosion::grow(GameState &state)
 		// Deal damage and expand in four straight directions
 		for (auto pos : locationsToExpand[0])
 		{
-			if (damageType->hazardType)
+			if (damageType->hazardType && damageType->explosionDoodad)
 			{
 				state.current_battle->placeHazard(state, damageType, pos.first,
 				                                  damageType->hazardType->getLifetime(state),

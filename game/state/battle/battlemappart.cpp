@@ -134,10 +134,39 @@ int BattleMapPart::getAnimationFrame()
 	}
 	else
 	{
-		return type->animation_frames.size() == 0
-		           ? -1
-		           : animation_frame_ticks / TICKS_PER_FRAME_MAP_PART;
+		return type->animation_frames.size() == 0 ? -1 : animation_frame_ticks /
+		                                                     TICKS_PER_FRAME_MAP_PART;
 	}
+}
+
+bool BattleMapPart::applyBurning(GameState &state, int age)
+{
+	if (this->falling)
+	{
+		// Already falling, just continue
+		return false;
+	}
+	if (!canBurn(age))
+	{
+		// Cannot burn, ignore
+		return false;
+	}
+
+	burnTicksAccumulated += TICKS_PER_HAZARD_UPDATE * 2;
+	if (!canBurn(age))
+	{
+		die(state);
+	}
+	return true;
+}
+
+bool BattleMapPart::canBurn(int age)
+{
+	// Explanation for how fire works is at the end of battlehazard.h
+	int penetrativePower = std::min(255.0f, 3.0f * std::pow(2.0f, 9.0f - age / 10.0f));
+
+	return penetrativePower > type->fire_resist && type->fire_burn_time < 255 &&
+	       burnTicksAccumulated < type->fire_burn_time * (int)TICKS_PER_SECOND;
 }
 
 bool BattleMapPart::applyDamage(GameState &state, int power, StateRef<DamageType> damageType)
@@ -1311,9 +1340,8 @@ void BattleMapPart::update(GameState &state, unsigned int ticks)
 	}
 }
 
-void BattleMapPart::setPosition(GameState &state, const Vec3<float> &pos)
+void BattleMapPart::setPosition(GameState &, const Vec3<float> &pos)
 {
-	auto oldPosition = position;
 	position = pos;
 	if (!this->tileObject)
 	{

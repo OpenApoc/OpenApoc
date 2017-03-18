@@ -234,9 +234,8 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 			{
 				// Check if we're still firing
 				case AEquipmentSlotType::LeftHand:
-					if (ownerAgent->unit->weaponStatus !=
-					        BattleUnit::WeaponStatus::FiringBothHands &&
-					    ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringLeftHand)
+					if (ownerAgent->unit->weaponStatus != WeaponStatus::FiringBothHands &&
+					    ownerAgent->unit->weaponStatus != WeaponStatus::FiringLeftHand)
 					{
 						stopFiring();
 					}
@@ -246,9 +245,8 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 					}
 					break;
 				case AEquipmentSlotType::RightHand:
-					if (ownerAgent->unit->weaponStatus !=
-					        BattleUnit::WeaponStatus::FiringBothHands &&
-					    ownerAgent->unit->weaponStatus != BattleUnit::WeaponStatus::FiringRightHand)
+					if (ownerAgent->unit->weaponStatus != WeaponStatus::FiringBothHands &&
+					    ownerAgent->unit->weaponStatus != WeaponStatus::FiringRightHand)
 					{
 						stopFiring();
 					}
@@ -332,8 +330,23 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 					}
 					case TriggerType::Proximity:
 					case TriggerType::Boomeroid:
-						// Nothing, triggered by moving units
+					{
+						auto item = ownerItem.lock();
+						if (item)
+						{
+							// Nothing, triggered by moving units
+						}
+						else
+						{
+							// Proxy trigger in inventory? Blow up!
+							if (payload->damage_type->effectType !=
+							    DamageType::EffectType::Brainsucker)
+							{
+								explode(state);
+							}
+						}
 						break;
+					}
 					case TriggerType::Timed:
 					{
 						auto item = ownerItem.lock();
@@ -355,7 +368,7 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 
 void AEquipment::prime(bool onImpact, int triggerDelay, float triggerRange)
 {
-	if (type->type != AEquipmentType::Type::Grenade)
+	if (type->type != AEquipmentType::Type::Grenade && type->type != AEquipmentType::Type::Ammo)
 	{
 		return;
 	}
@@ -404,6 +417,11 @@ void AEquipment::explode(GameState &state)
 		case AEquipmentType::Type::Ammo:
 		{
 			auto payload = getPayloadType();
+			// If brainsucker then nothing
+			if (payload->damage_type->effectType == DamageType::EffectType::Brainsucker)
+			{
+				break;
+			}
 			// If explosive just blow up
 			if (payload->damage_type->explosive)
 			{
@@ -474,7 +492,14 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 		auto item = mksp<AEquipment>();
 		item->type = payload;
 		item->ammo = 1;
-		item->prime();
+		if (payload->damage_type->effectType == DamageType::EffectType::Brainsucker)
+		{
+			item->prime(false, TICKS_PER_TURN, 10.0f);
+		}
+		else
+		{
+			item->prime();
+		}
 		item->ownerUnit = ownerAgent->unit;
 		float velocityXY = 0.0f;
 		float velocityZ = 0.0f;
@@ -497,6 +522,11 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 		// Fire
 		Vec3<float> velocity = targetPosition - unitPos;
 		velocity = glm::normalize(velocity);
+		// Move projectile a little bit forward so that it does not shoot from inside our chest
+		// We are protecting firer from collisison for first frames anyway, so this is redundant
+		// for all cases except when a unit fires with a brainsucker on it's head!
+		unitPos += velocity * 3.0f / 8.0f;
+		// Scale velocity according to speed
 		velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 		auto p = mksp<Projectile>(
 		    payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam, unit, targetUnit,
@@ -526,8 +556,7 @@ void AEquipment::throwItem(GameState &state, Vec3<int> targetPosition, float vel
 	if (state.battle_common_sample_list->throwSounds.size() > 0)
 	{
 		fw().soundBackend->playSample(
-		    listRandomiser(state.rng, state.battle_common_sample_list->throwSounds), position,
-		    0.25f);
+		    listRandomiser(state.rng, state.battle_common_sample_list->throwSounds), position);
 	}
 
 	// This will be modified by the accuracy algorithm
@@ -717,6 +746,13 @@ bool AEquipment::getVelocityForThrowLaunch(const BattleUnit *unit, const TileMap
 	}
 	return valid;
 }
+bool AEquipment::getCanThrow(const TileMap &map, int strength, Vec3<float> startPos,
+                             Vec3<int> target)
+{
+	float nothing1 = 0.0f;
+	float nothing2 = 0.0f;
+	return getVelocityForThrow(map, strength, startPos, target, nothing1, nothing2);
+}
 
 bool AEquipment::getVelocityForThrow(const TileMap &map, int strength, Vec3<float> startPos,
                                      Vec3<int> target, float &velocityXY, float &velocityZ) const
@@ -724,6 +760,13 @@ bool AEquipment::getVelocityForThrow(const TileMap &map, int strength, Vec3<floa
 	return getVelocityForThrowLaunch(nullptr, map, strength,
 	                                 type->weight + (payloadType ? payloadType->weight : 0),
 	                                 startPos, target, velocityXY, velocityZ);
+}
+
+bool AEquipment::getCanThrow(const BattleUnit &unit, Vec3<int> target)
+{
+	float nothing1 = 0.0f;
+	float nothing2 = 0.0f;
+	return getVelocityForThrow(unit, target, nothing1, nothing2);
 }
 
 bool AEquipment::getVelocityForThrow(const BattleUnit &unit, Vec3<int> target, float &velocityXY,

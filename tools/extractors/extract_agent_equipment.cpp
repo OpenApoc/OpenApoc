@@ -48,6 +48,22 @@
 #define DT_BRAINSUCKER 18
 #define DT_ENTROPY 16
 
+#define DM_HUMAN 0
+#define DM_MUTANT 1
+
+#define IT_MACHINEGUN 7
+#define IT_LASERSNIPER 9
+#define IT_AUTOCANNON 11
+#define IT_HEAVYLAUNCHER 17
+#define IT_MINILAUNCHER 21
+#define IT_STUNGRAPPLE 25
+#define IT_TRACKERGUN 28
+#define IT_FORCEWEB 31
+#define IT_DEVASTATOR 41
+#define IT_BRAINSUCKERLAUNCHER 44
+#define IT_DIMENSIONLAUNCHER 46
+#define IT_POPPERBOMB 81
+
 namespace OpenApoc
 {
 
@@ -234,9 +250,10 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 		UString id = format("%s%s", HazardType::getPrefix(), "FIRE");
 		auto h = mksp<HazardType>();
 		h->doodadType = {&state, "DOODAD_17_FIRE"};
-		// FIXME: Confirm these values
-		h->minLifetime = 6;
-		h->maxLifetime = 10;
+		// Fire has a starting deviation of 0 to 2, fire's ttl works in a completely differnt way
+		h->minLifetime = 0;
+		h->maxLifetime = 1;
+		h->fire = true;
 		h->sound = fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/burning.raw:22050");
 		state.hazard_types[id] = h;
 	}
@@ -300,6 +317,9 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 				d->explosive = true;
 				d->blockType = DamageType::BlockType::Psionic;
 				break;
+			case DT_BRAINSUCKER:
+				d->effectType = DamageType::EffectType::Brainsucker;
+				break;
 		}
 
 		state.damage_types[id] = d;
@@ -347,6 +367,9 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 				    ->modifiers[{&state, id}] = ddata.damage_type_data[j];
 			}
 		}
+
+		state.damage_types[data_t.getDTypeId(DT_BRAINSUCKER)]->modifiers[{&state, id}] =
+		    (i == DM_HUMAN || i == DM_MUTANT) ? 100 : 0;
 	}
 
 	for (unsigned i = 0; i < data_t.agent_equipment->count(); i++)
@@ -362,28 +385,17 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 		// Mark two-handed items
 		switch (edata.sprite_idx)
 		{
-			// Minigun
-			case 7:
-			// Laser Sniper
-			case 9:
-			// Autocannon
-			case 11:
-			// Heavy Launcher
-			case 17:
-			// MiniLauncher
-			case 21:
-			// Stun Grapple
-			case 25:
-			// Tracker Gun
-			case 28:
-			// ForceWeb
-			case 31:
-			// Devastator Canon
-			case 41:
-			// Brainsucker
-			case 44:
-			// Dimension Missile Launcher
-			case 46:
+			case IT_MACHINEGUN:
+			case IT_LASERSNIPER:
+			case IT_AUTOCANNON:
+			case IT_HEAVYLAUNCHER:
+			case IT_MINILAUNCHER:
+			case IT_STUNGRAPPLE:
+			case IT_TRACKERGUN:
+			case IT_FORCEWEB:
+			case IT_DEVASTATOR:
+			case IT_BRAINSUCKERLAUNCHER:
+			case IT_DIMENSIONLAUNCHER:
 				e->two_handed = true;
 				break;
 			default:
@@ -477,7 +489,8 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 				auto wdata = data_t.agent_weapons->get(edata.data_idx);
 				if (wdata.ammo_effect[0] == 255)
 				{
-					e->type = AEquipmentType::Type::Grenade;
+					e->type = (edata.sprite_idx == IT_POPPERBOMB) ? AEquipmentType::Type::Popper
+					                                              : AEquipmentType::Type::Grenade;
 					payload_idx = wdata.grenade_effect;
 					e->max_ammo = 1;
 					e->recharge = 0;
@@ -490,7 +503,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 					for (unsigned j = 1; j < data_t.agent_general->count(); j++)
 					{
 						if (has_ammo)
-							continue;
+							break;
 						auto gdata = data_t.agent_general->get(j);
 						// Fix for buggy tracer gun ammo
 						if (gdata.ammo_type == 0xffff && gdata.ammo_type_duplicate == 1)
@@ -853,21 +866,36 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 				                                      ".raw:22050");
 			}
 
-			e->damage_type = {&state, data_t.getDTypeId(pdata.damage_type)};
-			switch (pdata.trigger_type)
+			if (id == "AEQUIPMENTTYPE_ENTROPY_POD")
 			{
-				case AGENT_GRENADE_TRIGGER_TYPE_NORMAL:
-					e->trigger_type = TriggerType::Timed;
-					break;
-				case AGENT_GRENADE_TRIGGER_TYPE_PROXIMITY:
-					e->trigger_type = TriggerType::Proximity;
-					break;
-				case AGENT_GRENADE_TRIGGER_TYPE_BOOMEROID:
-					e->trigger_type = TriggerType::Boomeroid;
-					break;
-				default:
-					LogError("Unexpected grenade trigger type %d for ID %s",
-					         (int)pdata.trigger_type, id);
+				// Change entropy pod's damage type to the one that applies debuff
+				e->damage_type = {&state, "DAMAGETYPE_ENTROPY_ENZYME_SPECIAL"};
+			}
+			else
+			{
+				e->damage_type = {&state, data_t.getDTypeId(pdata.damage_type)};
+			}
+			if (id == "AEQUIPMENTTYPE_BRAINSUCKER_POD")
+			{
+				e->trigger_type = TriggerType::Proximity;
+			}
+			else
+			{
+				switch (pdata.trigger_type)
+				{
+					case AGENT_GRENADE_TRIGGER_TYPE_NORMAL:
+						e->trigger_type = TriggerType::Timed;
+						break;
+					case AGENT_GRENADE_TRIGGER_TYPE_PROXIMITY:
+						e->trigger_type = TriggerType::Proximity;
+						break;
+					case AGENT_GRENADE_TRIGGER_TYPE_BOOMEROID:
+						e->trigger_type = TriggerType::Boomeroid;
+						break;
+					default:
+						LogError("Unexpected grenade trigger type %d for ID %s",
+						         (int)pdata.trigger_type, id);
+				}
 			}
 			e->explosion_depletion_rate = pdata.explosion_depletion_rate;
 

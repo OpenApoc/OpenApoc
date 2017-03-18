@@ -24,10 +24,11 @@ Projectile::Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> tar
                        std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
                        StateRef<DoodadType> doodadType)
     : type(type), position(position), velocity(velocity), turnRate(turnRate), age(0),
-      lifetime(lifetime), damage(damage), firerVehicle(firer), trackedVehicle(target),
-      previousPosition(position), spritePositions({position}), tail_length(tail_length),
-      projectile_sprites(projectile_sprites), sprite_distance(1.0f / TILE_Y_CITY),
-      impactSfx(impactSfx), doodadType(doodadType), velocityScale(VELOCITY_SCALE_CITY)
+      lifetime(lifetime), damage(damage), firerVehicle(firer), firerPosition(firer->position),
+      trackedVehicle(target), previousPosition(position), spritePositions({position}),
+      tail_length(tail_length), projectile_sprites(projectile_sprites),
+      sprite_distance(1.0f / TILE_Y_CITY), impactSfx(impactSfx), doodadType(doodadType),
+      velocityScale(VELOCITY_SCALE_CITY)
 {
 	// 36 / (velocity length) = enough ticks to pass 1 whole tile
 	ownerInvulnerableTicks = (int)ceilf(36.0f / glm::length(velocity / velocityScale)) + 1;
@@ -42,10 +43,11 @@ Projectile::Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUni
                        StateRef<DamageType> damageType)
     : type(type), position(position), velocity(velocity), turnRate(turnRate), age(0),
       lifetime(lifetime), damage(damage), depletionRate(depletionRate), firerUnit(firer),
-      trackedUnit(target), targetPosition(targetPosition), previousPosition(position),
-      spritePositions({position}), tail_length(tail_length), projectile_sprites(projectile_sprites),
-      sprite_distance(1.0f / TILE_Y_BATTLE), impactSfx(impactSfx), doodadType(doodadType),
-      damageType(damageType), velocityScale(VELOCITY_SCALE_BATTLE)
+      firerPosition(firer->position), trackedUnit(target), targetPosition(targetPosition),
+      previousPosition(position), spritePositions({position}), tail_length(tail_length),
+      projectile_sprites(projectile_sprites), sprite_distance(1.0f / TILE_Y_BATTLE),
+      impactSfx(impactSfx), doodadType(doodadType), damageType(damageType),
+      velocityScale(VELOCITY_SCALE_BATTLE)
 {
 	// 36 / (velocity length) = enough ticks to pass 1 whole tile
 	ownerInvulnerableTicks = (int)ceilf(36.0f / glm::length(velocity / velocityScale)) + 1;
