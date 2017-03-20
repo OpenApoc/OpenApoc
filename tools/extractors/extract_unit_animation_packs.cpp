@@ -324,6 +324,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 	}
 	if (name == "psi")
 	{
+		extractAnimationPackPsi(p, dataAD, dataUA, dataUF);
 	}
 	if (name == "queen")
 	{

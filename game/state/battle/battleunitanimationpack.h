@@ -154,6 +154,9 @@ class BattleUnitAnimationPack : public StateObject
 	// Wether unit has alternative firing animations - upwards and downwards (2 versions each)
 	bool hasAlternativeFiringAnimations = false;
 
+	// Wether unit should play it's firing animation when using psionics
+	bool useFiringAnimationForPsi = false;
+
 	// Animation for alternative aiming/firing. HandState must be "Firing" or "Aiming",
 	// second parameter is firing angle, which can be +/-1 or +/-2
 	// where + is firing upwards and - is downwards,

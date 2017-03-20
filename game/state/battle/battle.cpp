@@ -193,6 +193,7 @@ void Battle::initBattle(GameState &state, bool first)
 	// On first run, init support links and items, do vsibility and pathfinding, reset AI
 	if (first)
 	{
+		initialMapPartRemoval(state);
 		initialMapPartLinkUp();
 		for (auto &o : this->items)
 		{
@@ -281,6 +282,40 @@ void linkUpList(std::list<BattleMapPart *> list)
 	{
 		(*cur)->cancelCollapse();
 		(*prev)->supportedParts.emplace_back((*cur)->position, (*cur)->type->type);
+	}
+}
+
+// Remove all solid walls and ground that ended up inside large units
+// For now, removes only ground
+void Battle::initialMapPartRemoval(GameState &state)
+{
+	for (auto u : units)
+	{
+		if (!u.second->isLarge())
+			continue;
+		for (int x = 0; x < 1; x++)
+		{
+			for (int y = 0; y < 1; y++)
+			{
+				auto t = map->getTile(u.second->position + Vec3<float>{-x, -y, 1.0f});
+				if (t->solidGround)
+				{
+					std::list<sp<TileObjectBattleMapPart>> partsToKill;
+					for (auto o : t->ownedObjects)
+					{
+						if (o->getType() == TileObject::Type::Ground)
+						{
+							partsToKill.push_back(std::static_pointer_cast<TileObjectBattleMapPart>(o));
+						}
+					}
+					for (auto p : partsToKill)
+					{
+						LogWarning("Removing MP %s at %s as it's blocking unit %s", p->getOwner()->type.id, p->getPosition(), u.first);
+						p->getOwner()->die(state, false, false);
+					}
+				}
+			}
+		}
 	}
 }
 

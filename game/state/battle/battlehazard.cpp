@@ -360,7 +360,15 @@ void BattleHazard::applyEffect(GameState &state)
 					}
 					break;
 				default:
-					mp->applyDamage(state, power, damageType);
+					switch (damageType->blockType)
+					{
+						case DamageType::BlockType::Gas:
+						case DamageType::BlockType::Psionic:
+							break;
+						default:
+							mp->applyDamage(state, power, damageType);
+							break;
+					}
 					break;
 			}
 		}

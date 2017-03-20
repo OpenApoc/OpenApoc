@@ -91,6 +91,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> orga
 	                               StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
 	otherParticipants.emplace_back(organisation,
 	                               StateRef<AgentType>{&state, "AGENTTYPE_MEGASPAWN"});
+	otherParticipants.emplace_back(organisation,
+	                               StateRef<AgentType>{&state, "AGENTTYPE_PSIMORPH"});
 
 	for (auto &pair : otherParticipants)
 	{

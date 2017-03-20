@@ -2119,7 +2119,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 				{
 					auto t = u.tileObject->getOwningTile();
 					targetBodyState =
-					    t->getCanStand(u.isLarge()) && t->map.getTile(pos)->getCanStand(u.isLarge())
+					    u.agent->isBodyStateAllowed(BodyState::Standing) && t->getCanStand(u.isLarge()) && t->map.getTile(pos)->getCanStand(u.isLarge())
 					        ? BodyState::Standing
 					        : BodyState::Flying;
 					if (targetBodyState != u.current_body_state)

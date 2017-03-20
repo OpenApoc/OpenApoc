@@ -70,6 +70,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	void initBattle(GameState &state, bool first = false);
 	void initMap();
+	void initialMapPartRemoval(GameState &state);
 	void initialMapPartLinkUp();
 
 	Vec3<int> size;

@@ -35,6 +35,8 @@ set (DATAEXTRACTOR_SOURCE_FILES
 	extract_unit_animation_pack_unit.cpp
 	extract_unit_animation_pack_template.cpp
 	extract_unit_animation_pack_bsk.cpp
+	extract_unit_animation_pack_psi.cpp
+	extract_unit_animation_pack_mega.cpp
 	extract_unit_animation_pack_popper.cpp
 	extract_unit_animation_pack_chrysalis.cpp
 	main.cpp)

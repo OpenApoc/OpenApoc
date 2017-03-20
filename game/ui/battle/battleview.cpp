@@ -2120,9 +2120,9 @@ void BattleView::eventOccurred(Event *e)
 					}
 				}
 			}
-			if (!attackTarget && unitPresent &&
+			if (!attackTarget && unitPresent && (unitPresent->owner == player ||
 			    battle.visibleUnits[player].find({&*state, unitPresent->id}) !=
-			        battle.visibleUnits[player].end())
+			        battle.visibleUnits[player].end()))
 			{
 				attackTarget = unitPresent;
 			}

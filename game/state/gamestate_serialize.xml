@@ -502,6 +502,7 @@
 		<member type="Section">hand_state_animations</member>
 		<member type="Section">body_state_animations</member>
 		<member>hasAlternativeFiringAnimations</member>
+		<member>useFiringAnimationForPsi</member>
 		<member type="Section">alt_fire_animations</member>
 	</object>
 	<object>

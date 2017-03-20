@@ -278,7 +278,9 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 			}
 		}
 	}
-	int distance = (1 + (dir.x != 0 ? 1 : 0) + (dir.y != 0 ? 1 : 0) + (dir.z != 0 ? 1 : 0));
+	// FIXME: Actually read this option
+	bool USER_OPTION_FULLY_3D_EXPLOSIONS = false;
+	int distance = (1 + (dir.x != 0 ? 1 : 0) + (dir.y != 0 ? 1 : 0) + (dir.z != 0 ? (USER_OPTION_FULLY_3D_EXPLOSIONS ? 1 : 2) : 0));
 	nextPower -= depletionRate * distance / 2;
 
 	// If we reach the tile, and our type has no range dissipation, just apply power
@@ -375,7 +377,7 @@ void BattleExplosion::grow(GameState &state)
 			int minY = dir.y <= 0 ? -1 : 0;
 			int maxY = dir.y >= 0 ? 1 : 0;
 
-			for (int z = -1; z <= 1; z++)
+			for (int z = -1; z <= 1; z+=2)
 			{
 				expand(state, map, pos.first, {pos.first.x, pos.first.y, pos.first.z + z},
 				       pos.second.y);

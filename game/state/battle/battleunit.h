@@ -49,6 +49,8 @@ static const unsigned TICKS_PER_LOWMORALE_STATE = TICKS_PER_TURN;
 static const unsigned LOWMORALE_CHECK_INTERVAL = TICKS_PER_TURN;
 // How frequently unit tracks its target
 static const unsigned LOS_CHECK_INTERVAL_TRACKING = TICKS_PER_SECOND / 4;
+// How many ticks to skip after weapon that was ready to fire could not fire
+static const unsigned WEAPON_MISFIRE_DELAY_TICKS = TICKS_PER_SECOND / 16;
 // How many times to wait for MIA target to come back before giving up
 static const unsigned TIMES_TO_WAIT_FOR_MIA_TARGET =
     2 * TICKS_PER_SECOND / LOS_CHECK_INTERVAL_TRACKING;

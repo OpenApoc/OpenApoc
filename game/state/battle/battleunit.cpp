@@ -338,12 +338,15 @@ void BattleUnit::calculateVisionToUnits(GameState &state, Battle &battle, TileMa
 		{
 			continue;
 		}
-		// FIXME: This likely won't work properly for large units
-		// Idea here is to LOS to the center of the occupied tile
-		auto target = u.tileObject->getCenter();
-		target.x = (int)target.x + 0.5f;
-		target.y = (int)target.y + 0.5f;
-		target.z = (int)target.z + 0.5f;
+ 		auto target = u.tileObject->getCenter();
+		if (u.isLarge())
+		{
+			// Offset search for large units as they can get caught up in ground
+			// that is supposed to allow units to go through it but blocks LOS
+			auto targetvVectorDelta = glm::normalize( target - eyesPos) * 0.75f;
+			target -= targetvVectorDelta;
+
+		}
 		auto c =
 		    map.findCollision(eyesPos, target, mapPartSet, tileObject, true, false, VIEW_DISTANCE);
 		if (c || c.outOfRange)
@@ -567,6 +570,14 @@ bool BattleUnit::hasLineToUnit(const sp<BattleUnit> unit, bool useLOS) const
 {
 	auto muzzleLocation = getMuzzleLocation();
 	auto targetPosition = unit->tileObject->getVoxelCentrePosition();
+	if (unit->isLarge())
+	{
+		// Offset search for large units as they can get caught up in ground
+		// that is supposed to allow units to go through it but blocks LOS
+		auto targetvVectorDelta = glm::normalize(targetPosition - muzzleLocation) * 0.75f;
+		targetPosition -= targetvVectorDelta;
+
+	}
 	// Map part that prevents Line to target
 	auto cMap = tileObject->map.findCollision(muzzleLocation, targetPosition, mapPartSet,
 	                                          tileObject, useLOS);
@@ -652,7 +663,7 @@ int BattleUnit::getPsiChance(StateRef<BattleUnit> target, PsiStatus status,
 bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, PsiStatus status,
                                 StateRef<AEquipmentType> item)
 {
-	if (agent->modified_stats.psi_energy < getPsiCost(status))
+ 	if (agent->modified_stats.psi_energy < getPsiCost(status))
 	{
 		return false;
 	}
@@ -673,6 +684,10 @@ bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, P
 bool BattleUnit::startAttackPsiInternal(GameState &state, StateRef<BattleUnit> target,
                                         PsiStatus status, StateRef<AEquipmentType> item)
 {
+	if (agent->getAnimationPack()->useFiringAnimationForPsi)
+	{
+		setHandState(HandState::Firing);
+	}
 	int chance = getPsiChance(target, status, item);
 	int roll = randBoundsExclusive(state.rng, 0, 100);
 	LogWarning("Psi Attack #%d Roll %d Chance %d %s Attacker %s Target %s", (int)status, roll,
@@ -2249,7 +2264,14 @@ void BattleUnit::updateHands(GameState &, unsigned int &handsTicksRemaining)
 			{
 				handsTicksRemaining -= firing_animation_ticks_remaining;
 				firing_animation_ticks_remaining = 0;
-				setHandState(HandState::Aiming);
+				if (canHandStateChange(HandState::Aiming))
+				{
+					setHandState(HandState::Aiming);
+				}
+				else
+				{
+					setHandState(HandState::AtEase);
+				}
 			}
 		}
 		else
@@ -2440,6 +2462,22 @@ bool BattleUnit::updateAttackingRunCanFireChecks(GameState &state, unsigned int 
 			{
 				addMission(state, BattleUnitMission::turn(*this, targetTile));
 			}
+		}
+	
+	}
+	// Even if it's not time we must check if ready weapons can fire
+	else
+	{
+		if (weaponRight && weaponRight->readyToFire && !weaponRight->canFire(targetPosition))
+		{
+			// Introduce small delay so we're not re-checking every frame
+			weaponRight->weapon_fire_ticks_remaining += WEAPON_MISFIRE_DELAY_TICKS;
+			weaponRight = nullptr;
+		}
+		if (weaponLeft && weaponLeft->readyToFire && !weaponLeft->canFire(targetPosition))
+		{
+			weaponLeft->weapon_fire_ticks_remaining += WEAPON_MISFIRE_DELAY_TICKS;
+			weaponLeft = nullptr;
 		}
 	}
 	return true;
