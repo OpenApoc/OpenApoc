@@ -47,7 +47,7 @@ void InitialGameStateExtractor::extractAnimationPackBsk(sp<BattleUnitAnimationPa
 				// Running state: 2
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
 				                        MovementState::Running, BodyState::Standing}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 2, {x, y}, wFrames);
+				    getAnimationEntry(dataAD, dataUA, dataUF, 2, {x, y}, rFrames);
 
 				// Jumping state: 3's last frame (#9)
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,

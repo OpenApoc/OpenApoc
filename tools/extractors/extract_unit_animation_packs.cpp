@@ -149,7 +149,6 @@ InitialGameStateExtractor::makeUpAnimationEntry(int from, int count, int fromS, 
                                                 int units_per_100_frames) const
 {
 	auto e = mksp<BattleUnitAnimationPack::AnimationEntry>();
-	int to = from + count;
 	bool shadow = countS > 0;
 
 	for (int i = 0; i < count; i++)
@@ -305,7 +304,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 	}
 	if (name == "mega")
 	{
-		// Buggy death animations, take last frame from dropping animation
+		extractAnimationPackMega(p, dataAD, dataUA, dataUF);
 	}
 	if (name == "micro")
 	{

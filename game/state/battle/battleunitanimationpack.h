@@ -154,29 +154,31 @@ class BattleUnitAnimationPack : public StateObject
 	// Wether unit has alternative firing animations - upwards and downwards (2 versions each)
 	bool hasAlternativeFiringAnimations = false;
 
-	// Animation for alternative firing. HandState must be "Firing",
+	// Animation for alternative aiming/firing. HandState must be "Firing" or "Aiming",
 	// second parameter is firing angle, which can be +/-1 or +/-2
 	// where + is firing upwards and - is downwards,
-	// 1 is angles 15-30 (degrees) and 2 is 30 and further
+	// 1 is angles 10-20 (degrees) and 2 is 20 and further
 	class AltFireAnimationKey
 	{
 	  public:
 		ItemWieldMode itemWieldMode = ItemWieldMode::None;
+		HandState handState = HandState::Aiming;
 		int angle = 0;
 		MovementState movementState = MovementState::None;
 		BodyState bodyState = BodyState::Standing;
 		AltFireAnimationKey() = default;
 
-		AltFireAnimationKey(ItemWieldMode itemWieldMode, int angle, MovementState movementState,
-		                    BodyState bodyState)
-		    : itemWieldMode(itemWieldMode), angle(angle), movementState(movementState),
-		      bodyState(bodyState)
+		AltFireAnimationKey(ItemWieldMode itemWieldMode, HandState handState, int angle,
+		                    MovementState movementState, BodyState bodyState)
+		    : itemWieldMode(itemWieldMode), handState(handState), angle(angle),
+		      movementState(movementState), bodyState(bodyState)
 		{
 		}
 		bool operator<(const AltFireAnimationKey &other) const
 		{
-			return std::tie(itemWieldMode, angle, movementState, bodyState) <
-			       std::tie(other.itemWieldMode, other.angle, other.movementState, other.bodyState);
+			return std::tie(itemWieldMode, handState, angle, movementState, bodyState) <
+			       std::tie(other.itemWieldMode, other.handState, other.angle, other.movementState,
+			                other.bodyState);
 		}
 	};
 	std::map<AltFireAnimationKey, std::map<Vec2<int>, sp<AnimationEntry>>> alt_fire_animations;

@@ -310,15 +310,17 @@ void Tile::updateBattlescapeUnitPresent()
 	{
 		if (o->getType() == TileObject::Type::Unit)
 		{
+			auto u = std::static_pointer_cast<TileObjectBattleUnit>(o);
 			if (!firstUnitPresent)
 			{
-				firstUnitPresent = std::static_pointer_cast<TileObjectBattleUnit>(o);
+				firstUnitPresent = u;
 			}
 			auto pos = o->getPosition();
 			auto x = pos.x - position.x;
 			auto y = pos.y - position.y;
 			doorOpeningUnitPresent =
-			    doorOpeningUnitPresent || (x > 0.45f && x < 0.55f && y > 0.45f && y < 0.55f);
+			    doorOpeningUnitPresent | (x > 0.45f && x < 0.55f && y > 0.45f && y < 0.55f) ||
+			    u->getUnit()->isLarge();
 			if (firstUnitPresent && doorOpeningUnitPresent)
 			{
 				break;

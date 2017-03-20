@@ -378,32 +378,21 @@ BattleView::BattleView(sp<GameState> gameState)
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
 		    for (auto u : this->battle.battleViewSelectedUnits)
 		    {
-			    if (u->agent->isBodyStateAllowed(BodyState::Prone))
-			    {
-				    u->movement_mode = MovementMode::Prone;
-			    }
+			    u->setMovementMode(MovementMode::Prone);
 		    }
 		});
 	this->baseForm->findControl("BUTTON_WALK")
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
 		    for (auto u : this->battle.battleViewSelectedUnits)
 		    {
-			    if (u->agent->isBodyStateAllowed(BodyState::Standing) ||
-			        u->agent->isBodyStateAllowed(BodyState::Flying))
-			    {
-				    u->movement_mode = MovementMode::Walking;
-			    }
+			    u->setMovementMode(MovementMode::Walking);
 		    }
 		});
 	this->baseForm->findControl("BUTTON_RUN")
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
 		    for (auto u : this->battle.battleViewSelectedUnits)
 		    {
-			    if (u->agent->isBodyStateAllowed(BodyState::Standing) ||
-			        u->agent->isBodyStateAllowed(BodyState::Flying))
-			    {
-				    u->movement_mode = MovementMode::Running;
-			    }
+			    u->setMovementMode(MovementMode::Running);
 		    }
 		});
 	this->baseForm->findControl("BUTTON_EVASIVE")
@@ -1570,6 +1559,7 @@ void BattleView::orderUse(bool right, bool automatic)
 		// Usable items that care not for automatic mode
 		case AEquipmentType::Type::Popper:
 		case AEquipmentType::Type::Brainsucker:
+		case AEquipmentType::Type::Spawner:
 			unit->useItem(*state, item);
 			break;
 		// Items that do nothing
@@ -1936,6 +1926,7 @@ void BattleView::eventOccurred(Event *e)
 					          5.0f)) == !inverse)
 					{
 						u.second->die(*state);
+						u.second->tileObject->removeFromMap();
 						u.second->destroyed = true;
 					}
 				}
@@ -1955,6 +1946,7 @@ void BattleView::eventOccurred(Event *e)
 
 						u.second->agent->modified_stats.psi_defence = 0;
 						u.second->agent->modified_stats.psi_attack = 100;
+						u.second->agent->modified_stats.psi_energy = 100;
 					}
 					break;
 				}
@@ -2106,7 +2098,9 @@ void BattleView::eventOccurred(Event *e)
 			{
 				for (auto u : objsOccupying)
 				{
-					if (player->isRelatedTo(u->owner) == Organisation::Relation::Hostile && battle.visibleUnits[player].find({ &*state, u->id }) != battle.visibleUnits[player].end())
+					if (player->isRelatedTo(u->owner) == Organisation::Relation::Hostile &&
+					    battle.visibleUnits[player].find({&*state, u->id}) !=
+					        battle.visibleUnits[player].end())
 					{
 						attackTarget = u;
 						break;
@@ -2117,14 +2111,18 @@ void BattleView::eventOccurred(Event *e)
 			{
 				for (auto u : objsPresent)
 				{
-					if (player->isRelatedTo(u->owner) == Organisation::Relation::Hostile && battle.visibleUnits[player].find({ &*state, u->id }) != battle.visibleUnits[player].end())
+					if (player->isRelatedTo(u->owner) == Organisation::Relation::Hostile &&
+					    battle.visibleUnits[player].find({&*state, u->id}) !=
+					        battle.visibleUnits[player].end())
 					{
 						attackTarget = u;
 						break;
 					}
 				}
 			}
-			if (!attackTarget && unitPresent && battle.visibleUnits[player].find({ &*state, unitPresent->id }) != battle.visibleUnits[player].end())
+			if (!attackTarget && unitPresent &&
+			    battle.visibleUnits[player].find({&*state, unitPresent->id}) !=
+			        battle.visibleUnits[player].end())
 			{
 				attackTarget = unitPresent;
 			}

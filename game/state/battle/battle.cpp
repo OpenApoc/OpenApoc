@@ -1620,22 +1620,22 @@ void Battle::enterBattle(GameState &state)
 		if (u->agent->isBodyStateAllowed(BodyState::Standing))
 		{
 			u->setBodyState(state, BodyState::Standing);
-			u->movement_mode = MovementMode::Walking;
+			u->setMovementMode(MovementMode::Walking);
 		}
 		else if (u->agent->isBodyStateAllowed(BodyState::Flying))
 		{
 			u->setBodyState(state, BodyState::Flying);
-			u->movement_mode = MovementMode::Walking;
+			u->setMovementMode(MovementMode::Walking);
 		}
 		else if (u->agent->isBodyStateAllowed(BodyState::Kneeling))
 		{
 			u->setBodyState(state, BodyState::Kneeling);
-			u->movement_mode = MovementMode::Prone;
+			u->setMovementMode(MovementMode::Prone);
 		}
 		else if (u->agent->isBodyStateAllowed(BodyState::Prone))
 		{
 			u->setBodyState(state, BodyState::Prone);
-			u->movement_mode = MovementMode::Prone;
+			u->setMovementMode(MovementMode::Prone);
 		}
 		else
 		{

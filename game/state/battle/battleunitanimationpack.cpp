@@ -282,12 +282,13 @@ void BattleUnitAnimationPack::drawUnit(
 	}
 	else
 	{
-		if (currentHands == HandState::Firing && hasAlternativeFiringAnimations && firingAngle != 0)
+		if ((currentHands == HandState::Firing || currentHands == HandState::Aiming) &&
+		    hasAlternativeFiringAnimations && firingAngle != 0)
 		{
 			e = alt_fire_animations[{heldItem ? (heldItem->two_handed ? ItemWieldMode::TwoHanded
 			                                                          : ItemWieldMode::OneHanded)
 			                                  : ItemWieldMode::None,
-			                         firingAngle, movement, currentBody}][facing];
+			                         currentHands, firingAngle, movement, currentBody}][facing];
 			if (!e)
 			{
 				LogWarning("Body %d %d Hands %d %d Movement %d Frame missing!", (int)currentBody,

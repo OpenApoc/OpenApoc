@@ -74,6 +74,7 @@
 		<name>AgentBodyType</name>
 		<member>allowed_body_states</member>
 		<member>allowed_movement_states</member>
+		<member>allowed_fire_movement_states</member>
 		<member>allowed_facing</member>
 		<member>large</member>
 		<member>maxHeight</member>
@@ -1016,6 +1017,7 @@
 	<object>
 	<name>BattleUnitAnimationPack::AltFireAnimationKey</name>
 		<member>itemWieldMode</member>
+		<member>handState</member>
 		<member>angle</member>
 		<member>movementState</member>
 		<member>bodyState</member>

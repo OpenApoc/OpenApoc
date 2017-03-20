@@ -1427,7 +1427,7 @@ bool BattleUnitMission::getNextBodyState(GameState &state, BattleUnit &u, BodySt
 	}
 }
 
-MovementState BattleUnitMission::getNextMovementState(GameState &state, BattleUnit &u)
+MovementState BattleUnitMission::getNextMovementState(GameState &, BattleUnit &u)
 {
 	if (cancelled)
 	{
@@ -1809,8 +1809,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 		}
 		case Type::GotoLocation:
 			// Check if can move
-			if (!u.agent->isMovementStateAllowed(MovementState::Normal) &&
-			    !u.agent->isMovementStateAllowed(MovementState::Running))
+			if (!u.canMove())
 			{
 				cancelled = true;
 				return;
@@ -1862,9 +1861,15 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 		case Type::ReachGoal:
 			// Reset target body state
 			targetBodyState = u.target_body_state;
+			// If can't move reach immediately
+			if (!u.canMove())
+			{
+				u.setPosition(state, u.goalPosition);
+				u.atGoal = true;
+			}
 			return;
 		case Type::Jump:
-			cancelled = u.isLarge() || !u.canLaunch(state, jumpTarget);
+			cancelled = u.isLarge() || !u.canLaunch(jumpTarget);
 			return;
 		case Type::ChangeBodyState:
 		case Type::AcquireTU:

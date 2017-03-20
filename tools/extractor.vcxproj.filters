@@ -99,6 +99,9 @@
     <ClCompile Include="extractors\extract_unit_animation_pack_chrysalis.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="extractors\extract_unit_animation_pack_mega.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="extractors\extractors.h">

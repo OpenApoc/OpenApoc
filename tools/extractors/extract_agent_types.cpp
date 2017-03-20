@@ -732,6 +732,8 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				break;
 			case UNIT_TYPE_MEGASPAWN:
 				fillAgentImagePacksByDefault(state, a, "mega");
+				// Megaspawn has no head (stupid!)
+				a->image_packs[0][BodyPart::Helmet].clear();
 				break;
 			case UNIT_TYPE_PSIMORPH:
 				a->image_packs[0][BodyPart::Body] = {
@@ -778,9 +780,10 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				dieSfxName = "wormegg";
 				break;
 			case UNIT_TYPE_BRAINSUCKER:
-				walkSfxName = "scuttle";
-				walkSfxNumbered = false;
-				walkSfxCount = 1;
+				// walkSfxName = "scuttle";
+				// walkSfxNumbered = false;
+				// walkSfxCount = 1;
+				walkSfxCount = 0;
 				crySfxName = "brnsukr";
 				dieSfxName = "brnsukr2";
 				break;
@@ -1238,6 +1241,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 						break;
 				}
 				a->allowed_movement_states.insert(MovementState::None);
+				a->allowed_fire_movement_states.insert(MovementState::None);
 				a->allowed_body_states.insert(i == UNIT_TYPE_CHRYSALIS ? BodyState::Prone
 				                                                       : BodyState::Standing);
 				a->allowed_body_states.insert(BodyState::Downed);
@@ -1292,6 +1296,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 				a->allowed_movement_states.insert(MovementState::None);
 				a->allowed_movement_states.insert(MovementState::Normal);
 				a->allowed_movement_states.insert(MovementState::Running);
+				a->allowed_fire_movement_states.insert(MovementState::None);
 				a->allowed_body_states.insert(BodyState::Standing);
 				a->allowed_body_states.insert(BodyState::Downed);
 				voxelInfo[BodyState::Standing] = {height, idx};
@@ -1304,6 +1309,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 				idx = 10;
 				a->allowed_movement_states.insert(MovementState::None);
 				a->allowed_movement_states.insert(MovementState::Normal);
+				a->allowed_fire_movement_states.insert(MovementState::None);
 				a->allowed_body_states.insert(BodyState::Kneeling);
 				a->allowed_body_states.insert(BodyState::Prone);
 				a->allowed_body_states.insert(BodyState::Downed);
@@ -1318,6 +1324,8 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 				idx = 19;
 				a->allowed_movement_states.insert(MovementState::None);
 				a->allowed_movement_states.insert(MovementState::Normal);
+				a->allowed_movement_states.insert(MovementState::Running);
+				a->allowed_fire_movement_states.insert(MovementState::None);
 				a->allowed_body_states.insert(BodyState::Standing);
 				a->allowed_body_states.insert(BodyState::Downed);
 				voxelInfo[BodyState::Standing] = {height, idx};
@@ -1352,6 +1360,8 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 				a->allowed_movement_states.insert(MovementState::Normal);
 				a->allowed_movement_states.insert(MovementState::Running);
 				a->allowed_movement_states.insert(MovementState::Strafing);
+				a->allowed_fire_movement_states.insert(MovementState::None);
+				a->allowed_fire_movement_states.insert(MovementState::Normal);
 				a->allowed_body_states.insert(BodyState::Standing);
 				a->allowed_body_states.insert(BodyState::Kneeling);
 				a->allowed_body_states.insert(BodyState::Prone);

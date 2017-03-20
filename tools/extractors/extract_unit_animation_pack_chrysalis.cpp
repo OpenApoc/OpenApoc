@@ -21,7 +21,6 @@ makeUpChrysalisAnimationEntry(int from, int count, int fromB, int countB, bool b
 		from = fromB;
 		count = countB;
 	}
-	int to = from + count;
 
 	for (int i = 0; i < (bidirectional ? count * 2 : count); i++)
 	{

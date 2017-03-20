@@ -55,7 +55,7 @@ static const unsigned TIMES_TO_WAIT_FOR_MIA_TARGET =
 // How many ticks are required to brainsuck a unit
 static const unsigned TICKS_TO_BRAINSUCK = TICKS_PER_SECOND * 2;
 // Chance out of 100 to be brainsucked
-static const unsigned BRAINSUCK_CHANCE = 66;
+static const int BRAINSUCK_CHANCE = 66;
 
 class TileObjectBattleUnit;
 class TileObjectShadow;
@@ -174,7 +174,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Tile we're targeting right now (or tile with unit we're targeting, if targeting unit)
 	Vec3<int> targetTile;
 	// How many times we checked and target we are ready to fire on was MIA
-	int timesTargetMIA = 0;
+	unsigned int timesTargetMIA = 0;
 	// Unit we're targeting right now
 	StateRef<BattleUnit> targetUnit;
 	// Unit we're ordered to focus on (in real time)
@@ -397,14 +397,15 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Movement
 
 	void setMovementState(MovementState state);
+	void setMovementMode(MovementMode mode);
 	unsigned int getDistanceTravelled() const;
 	bool shouldPlaySoundNow();
 	unsigned int getWalkSoundIndex();
 	bool calculateVelocityForLaunch(float distanceXY, float diffZ, float &velocityXY,
 	                                float &velocityZ);
-	bool canLaunch(GameState &state, Vec3<float> targetPosition);
-	bool canLaunch(GameState &state, Vec3<float> targetPosition, Vec3<float> &targetVectorXY,
-	               float &velocityXY, float &velocityZ);
+	bool canLaunch(Vec3<float> targetPosition);
+	bool canLaunch(Vec3<float> targetPosition, Vec3<float> &targetVectorXY, float &velocityXY,
+	               float &velocityZ);
 	void launch(GameState &state, Vec3<float> targetPosition,
 	            BodyState bodyState = BodyState::Standing);
 	void startFalling();

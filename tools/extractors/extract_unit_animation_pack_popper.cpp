@@ -14,8 +14,8 @@ void extractAnimationPackPopperInternal(sp<BattleUnitAnimationPack> p, int x, in
                                         const InitialGameStateExtractor &e)
 {
 	// Units per 100 frames
-	static const int wFrames = 300; // Walk
-	static const int rFrames = 300; // Run
+	static const int wFrames = 400; // Walk
+	static const int rFrames = 400; // Run
 
 	// Standing state:
 	p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,

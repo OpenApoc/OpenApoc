@@ -338,6 +338,12 @@ bool Agent::isMovementStateAllowed(MovementState movementState) const
 	       type->bodyType->allowed_movement_states.end();
 }
 
+bool Agent::isFireDuringMovementStateAllowed(MovementState movementState) const
+{
+	return type->bodyType->allowed_fire_movement_states.find(movementState) !=
+	       type->bodyType->allowed_fire_movement_states.end();
+}
+
 bool Agent::isFacingAllowed(Vec2<int> facing) const
 {
 	return type->bodyType->allowed_facing.empty() ||

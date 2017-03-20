@@ -1465,7 +1465,6 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 			enzymeDebuffTicksAccumulated -= TICKS_PER_ENZYME_EFFECT;
 
 			// Spawn smoke
-
 			// FIXME: Ensure this is proper, for now just emulating vanilla crudely
 			// This makes smoke spawned by enzyme grow smaller when debuff runs out
 			int divisor = std::max(1, 36 / enzymeDebuffIntensity);
@@ -1476,8 +1475,7 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 			                                  divisor, false);
 
 			// Damage random item
-
-			if (!agent->equipment.empty())
+			if (agent->type->inventory && !agent->equipment.empty())
 			{
 				auto item = listRandomiser(state.rng, agent->equipment);
 				item->armor -= enzymeDebuffIntensity / 2;
@@ -1827,8 +1825,7 @@ void BattleUnit::updateBody(GameState &state, unsigned int &bodyTicksRemaining)
 	}
 }
 
-bool BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicksRemaining,
-                                       bool &wasUsingLift)
+bool BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicksRemaining, bool &)
 {
 	// Falling consumes remaining move ticks
 	auto fallTicksRemaining = moveTicksRemaining / (agent->modified_stats.getActualSpeedValue() *
@@ -2393,9 +2390,8 @@ bool BattleUnit::updateAttackingRunCanFireChecks(GameState &state, unsigned int 
 			// Stop firing if target went unconscious
 			if (!targetUnit->isConscious()
 			    // Stop firing if target became friendly and we're not berserk
-			    ||
-			    moraleState != MoraleState::Berserk &&
-			        owner->isRelatedTo(targetUnit->owner) != Organisation::Relation::Hostile)
+			    || (moraleState != MoraleState::Berserk &&
+			        owner->isRelatedTo(targetUnit->owner) != Organisation::Relation::Hostile))
 			{
 				return false;
 			}
@@ -2933,16 +2929,16 @@ bool BattleUnit::calculateVelocityForLaunch(float distanceXY, float diffZ, float
 	return false;
 }
 
-bool BattleUnit::canLaunch(GameState &state, Vec3<float> targetPosition)
+bool BattleUnit::canLaunch(Vec3<float> targetPosition)
 {
 	Vec3<float> targetVectorXY;
 	float velocityXY;
 	float velocityZ;
-	return canLaunch(state, targetPosition, targetVectorXY, velocityXY, velocityZ);
+	return canLaunch(targetPosition, targetVectorXY, velocityXY, velocityZ);
 }
 
-bool BattleUnit::canLaunch(GameState &state, Vec3<float> targetPosition,
-                           Vec3<float> &targetVectorXY, float &velocityXY, float &velocityZ)
+bool BattleUnit::canLaunch(Vec3<float> targetPosition, Vec3<float> &targetVectorXY,
+                           float &velocityXY, float &velocityZ)
 {
 	// Flying units cannot jump
 	if (canFly())
@@ -2957,7 +2953,7 @@ bool BattleUnit::canLaunch(GameState &state, Vec3<float> targetPosition,
 	}
 	// Cannot jump if target too far away
 	Vec3<int> posDiff = (Vec3<int>)position - (Vec3<int>)targetPosition;
-	if (std::abs(posDiff.x) > 1 || std::abs(posDiff.y) > 1 || std::abs(posDiff.z > 1))
+	if (std::abs(posDiff.x) > 1 || std::abs(posDiff.y) > 1 || std::abs(posDiff.z) > 1)
 	{
 		return false;
 	}
@@ -2976,7 +2972,7 @@ void BattleUnit::launch(GameState &state, Vec3<float> targetPosition, BodyState 
 	Vec3<float> targetVectorXY;
 	float velocityXY;
 	float velocityZ;
-	if (!canLaunch(state, targetPosition, targetVectorXY, velocityXY, velocityZ))
+	if (!canLaunch(targetPosition, targetVectorXY, velocityXY, velocityZ))
 	{
 		return;
 	}
@@ -3081,7 +3077,7 @@ void BattleUnit::executeGroupAIDecision(GameState &state, AIDecision &decision,
 				for (auto u : units)
 				{
 					u->kneeling_mode = decision.movement->kneelingMode;
-					u->movement_mode = decision.movement->movementMode;
+					u->setMovementMode(decision.movement->movementMode);
 				}
 				Battle::groupMove(state, units, decision.movement->targetLocation);
 				break;
@@ -3189,7 +3185,12 @@ void BattleUnit::executeAIMovement(GameState &state, AIMovement &movement)
 			break;
 		default:
 			kneeling_mode = movement.kneelingMode;
-			movement_mode = movement.movementMode;
+			if (movement.movementMode == MovementMode::Prone &&
+			    !agent->isBodyStateAllowed(BodyState::Prone))
+			{
+				LogError("WTF? Prone order without prone body state!?!?!");
+			}
+			setMovementMode(movement.movementMode);
 			break;
 	}
 
@@ -3544,6 +3545,7 @@ bool BattleUnit::useItem(GameState &state, sp<AEquipment> item)
 		case AEquipmentType::Type::Weapon:
 		case AEquipmentType::Type::Grenade:
 		case AEquipmentType::Type::MindBender:
+		case AEquipmentType::Type::Teleporter:
 			return false;
 		// Items that do nothing
 		case AEquipmentType::Type::AlienDetector:
@@ -3716,13 +3718,13 @@ unsigned int BattleUnit::getHandAnimationFrame() const
 
 bool BattleUnit::canHandStateChange(HandState state)
 {
-	return (
-	    firing_animation_ticks_remaining == 0 && hand_animation_ticks_remaining == 0 &&
-	    body_animation_ticks_remaining == 0 && target_hand_state != state &&
-	    current_movement_state != MovementState::Running &&
-	    current_movement_state != MovementState::Brainsuck &&
-	    (current_movement_state == MovementState::None || current_body_state != BodyState::Prone) &&
-	    current_body_state != BodyState::Throwing);
+	return firing_animation_ticks_remaining == 0 && hand_animation_ticks_remaining == 0 &&
+	       body_animation_ticks_remaining == 0 && target_hand_state != state &&
+	       (state == HandState::AtEase ||
+	        (agent->isFireDuringMovementStateAllowed(current_movement_state) &&
+	         current_body_state != BodyState::Throwing &&
+	         (current_movement_state == MovementState::None ||
+	          current_body_state != BodyState::Prone)));
 }
 
 void BattleUnit::beginHandStateChange(HandState state)
@@ -3837,6 +3839,32 @@ void BattleUnit::setMovementState(MovementState state)
 	current_movement_state = state;
 }
 
+void BattleUnit::setMovementMode(MovementMode mode)
+{
+	switch (mode)
+	{
+		case MovementMode::Prone:
+			if (agent->isBodyStateAllowed(BodyState::Prone))
+			{
+				movement_mode = MovementMode::Prone;
+			}
+			break;
+		case MovementMode::Walking:
+			if (agent->isBodyStateAllowed(BodyState::Standing) ||
+			    agent->isBodyStateAllowed(BodyState::Flying))
+			{
+				movement_mode = MovementMode::Walking;
+			}
+			break;
+		case MovementMode::Running:
+			if (agent->isMovementStateAllowed(MovementState::Running))
+			{
+				movement_mode = MovementMode::Running;
+			}
+			break;
+	}
+}
+
 unsigned int BattleUnit::getWalkSoundIndex()
 {
 	if (current_movement_state == MovementState::Running)
@@ -3886,8 +3914,7 @@ bool BattleUnit::shouldPlaySoundNow()
 	if (sounds_to_play != movement_sounds_played)
 	{
 		unsigned int divisor = (current_movement_state == MovementState::Running)
-		                           ? UNITS_TRAVELLED_PER_SOUND_RUNNING_DIVISOR
-		                           : 1;
+		                ? UNITS_TRAVELLED_PER_SOUND_RUNNING_DIVISOR : 1;
 		play = ((sounds_to_play + divisor - 1) % divisor) == 0;
 		movement_sounds_played = sounds_to_play;
 	}
@@ -3972,6 +3999,8 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission::Type type)
 		case BattleUnitMission::Type::Snooze:
 		case BattleUnitMission::Type::ChangeBodyState:
 		case BattleUnitMission::Type::Turn:
+		case BattleUnitMission::Type::Brainsuck:
+		case BattleUnitMission::Type::Jump:
 		case BattleUnitMission::Type::AcquireTU:
 		case BattleUnitMission::Type::GotoLocation:
 		case BattleUnitMission::Type::Teleport:
@@ -4230,6 +4259,7 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool t
 					case BattleUnitMission::Type::DropItem:
 					case BattleUnitMission::Type::Teleport:
 					case BattleUnitMission::Type::RestartNextMission:
+					case BattleUnitMission::Type::Brainsuck:
 					case BattleUnitMission::Type::GotoLocation:
 					case BattleUnitMission::Type::Turn:
 						delete mission;

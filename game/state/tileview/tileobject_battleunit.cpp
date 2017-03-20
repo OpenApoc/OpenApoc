@@ -54,16 +54,17 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 		case TileViewMode::Isometric:
 		{
 			int firingAngle = 0;
-			if (unit->current_hand_state == HandState::Firing)
+			if (unit->current_hand_state == HandState::Firing ||
+			    unit->target_hand_state == HandState::Aiming)
 			{
-				Vec3<float> targetVector = unit->targetTile - owningTile->position;
+				Vec3<float> targetVector = unit->targetTile - (Vec3<int>)unit->position -
+				                           Vec3<int>{0, 0, unit->isLarge() ? 1 : 0};
 				Vec3<float> targetVectorZeroZ = {targetVector.x, targetVector.y, 0.0f};
-				// Firing angle is 0 for -15..15, +-1  for -30..-15 and 15..30, and 2 for everything
-				// else
+				// Firing angle is 0 for -10..10, +-1  for -20..-10 and 10..20, and 2 for else
 				firingAngle = (int)((glm::angle(glm::normalize(targetVector),
 				                                glm::normalize(targetVectorZeroZ)) *
 				                     360.0f / 2.0f / M_PI) /
-				                    15.0f);
+				                    10.0f);
 				if (targetVector.z < 0)
 				{
 					firingAngle = -firingAngle;

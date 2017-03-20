@@ -154,10 +154,11 @@ class InitialGameStateExtractor
 	                     const std::vector<AnimationDataUA> &dataUA,
 	                     std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
 	                     //
-	                     int units_per_100_frames = 100, bool isOverlay = false) const
+	                     int units_per_100_frames = 100, bool isOverlay = false,
+	                     Vec2<int> targetOffset = {0, 0}, Vec2<int> beginOffset = {0, 0}) const
 	{
 		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, units_per_100_frames, 0,
-		                         false, isOverlay, false, {0, 0}, {0, 0}, true);
+		                         false, isOverlay, false, targetOffset, beginOffset, true);
 	}
 
 	sp<BattleUnitAnimationPack::AnimationEntry>
@@ -213,6 +214,11 @@ class InitialGameStateExtractor
 	                             const std::vector<AnimationDataAD> &dataAD,
 	                             const std::vector<AnimationDataUA> &dataUA,
 	                             std::vector<AnimationDataUF> &dataUF) const;
+
+	void extractAnimationPackMega(sp<BattleUnitAnimationPack> p,
+	                              const std::vector<AnimationDataAD> &dataAD,
+	                              const std::vector<AnimationDataUA> &dataUA,
+	                              std::vector<AnimationDataUF> &dataUF) const;
 
 	void extractAnimationPackPopper(sp<BattleUnitAnimationPack> p) const;
 
