@@ -39,6 +39,7 @@ set (DATAEXTRACTOR_SOURCE_FILES
 	extract_unit_animation_pack_mega.cpp
 	extract_unit_animation_pack_egg.cpp
 	extract_unit_animation_pack_gun.cpp
+	extract_unit_animation_pack_multi.cpp
 	extract_unit_animation_pack_popper.cpp
 	extract_unit_animation_pack_chrysalis.cpp
 	main.cpp)

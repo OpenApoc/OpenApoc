@@ -105,6 +105,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> orga
 	                               StateRef<AgentType>{&state, "AGENTTYPE_X-COM_BASE_TURRET_LASER"});
 	otherParticipants.emplace_back(organisation,
 	                               StateRef<AgentType>{&state, "AGENTTYPE_X-COM_BASE_TURRET_DISRUPTOR"});
+	otherParticipants.emplace_back(organisation,
+	                               StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM"});
 	
 	for (auto &pair : otherParticipants)
 	{

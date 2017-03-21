@@ -2306,7 +2306,7 @@ bool BattleUnitMission::advanceFacing(GameState &state, BattleUnit &u, Vec2<int>
 bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodyState targetState,
                                          BodyState &dest)
 {
-	if (targetState == u.target_body_state)
+ 	if (targetState == u.target_body_state)
 	{
 		return false;
 	}
@@ -2317,35 +2317,37 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodySt
 	}
 
 	// Transition for stance changes
-
-	// If trying to fly stand up first
-	if (targetState == BodyState::Flying && u.current_body_state != BodyState::Standing &&
-		u.agent->isBodyStateAllowed(BodyState::Standing))
+	if (targetBodyState != BodyState::Dead && targetBodyState != BodyState::Downed)
 	{
-		return advanceBodyState(state, u, BodyState::Standing, dest);
-	}
-	// If trying to stop flying stand up first
-	if (targetState != BodyState::Standing && u.current_body_state == BodyState::Flying &&
-	    u.agent->isBodyStateAllowed(BodyState::Standing))
-	{
-		return advanceBodyState(state, u, BodyState::Standing, dest);
-	}
-	// If trying to stand up from prone go kneel first
-	if (targetState != BodyState::Kneeling && u.current_body_state == BodyState::Prone &&
-	    u.agent->isBodyStateAllowed(BodyState::Kneeling))
-	{
-		return advanceBodyState(state, u, BodyState::Kneeling, dest);
-	}
-	// If trying to go prone from not kneeling then kneel first
-	if (targetState == BodyState::Prone && u.current_body_state != BodyState::Kneeling &&
-	    u.agent->isBodyStateAllowed(BodyState::Kneeling))
-	{
-		return advanceBodyState(state, u, BodyState::Kneeling, dest);
-	}
-	// If trying to throw then stand first
-	if (targetState == BodyState::Throwing && u.current_body_state != BodyState::Standing)
-	{
-		return advanceBodyState(state, u, BodyState::Standing, dest);
+		// If trying to fly stand up first
+		if (targetState == BodyState::Flying && u.current_body_state != BodyState::Standing &&
+			u.agent->isBodyStateAllowed(BodyState::Standing))
+		{
+			return advanceBodyState(state, u, BodyState::Standing, dest);
+		}
+		// If trying to stop flying stand up first
+		if (targetState != BodyState::Standing && u.current_body_state == BodyState::Flying &&
+			u.agent->isBodyStateAllowed(BodyState::Standing))
+		{
+			return advanceBodyState(state, u, BodyState::Standing, dest);
+		}
+		// If trying to go anywhere from prone go kneel first
+		if (targetState != BodyState::Kneeling && u.current_body_state == BodyState::Prone &&
+			u.agent->isBodyStateAllowed(BodyState::Kneeling))
+		{
+			return advanceBodyState(state, u, BodyState::Kneeling, dest);
+		}
+		// If trying to go prone from anywhere then kneel first
+		if (targetState == BodyState::Prone && u.current_body_state != BodyState::Kneeling &&
+			u.agent->isBodyStateAllowed(BodyState::Kneeling))
+		{
+			return advanceBodyState(state, u, BodyState::Kneeling, dest);
+		}
+		// If trying to throw then stand up first
+		if (targetState == BodyState::Throwing && u.current_body_state != BodyState::Standing)
+		{
+			return advanceBodyState(state, u, BodyState::Standing, dest);
+		}
 	}
 
 	// Calculate and spend cost

@@ -13,7 +13,7 @@
 		<type>Brainsucker</type>
 		<id>AEQUIPMENTTYPE_BRAINSUCKER_WEAPON</id>
         <name>Brainsuck</name>
-        <equipscreen_sprite>PCK:xcom3/tacdata/alien/bsk-.pck:xcom3/tacdata/alien/bsk-.tab:143:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_sprite>battle/suck.png</equipscreen_sprite>
         <equipscreen_size>
         <x>2</x>
         <y>5</y>
@@ -27,7 +27,7 @@
 		<type>Spawner</type>
 		<id>AEQUIPMENTTYPE_MULTIWORM_BURST</id>
         <name>Spawn Hyperworms</name>
-        <equipscreen_sprite>PCK:xcom3/tacdata/alien/multi-.pck:xcom3/tacdata/alien/multi-.tab:120:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_sprite>battle/burst.png</equipscreen_sprite>
         <equipscreen_size>
         <x>2</x>
         <y>5</y>

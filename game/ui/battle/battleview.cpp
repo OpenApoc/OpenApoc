@@ -2397,13 +2397,17 @@ void BattleView::eventOccurred(Event *e)
 									// Do nothing
 									break;
 							}
-							if (attackTarget)
+							bool modified = (modifierLAlt || modifierRAlt);
+							if (modified)
+							{
+								orderFire(t, status, modified);
+							}
+							else if (attackTarget)
 							{
 								orderFire({&*state, attackTarget->id}, status);
 							}
 							else
 							{
-								bool modified = (modifierLAlt || modifierRAlt);
 								orderFire(t, status, modified);
 							}
 							break;

@@ -229,6 +229,11 @@ class InitialGameStateExtractor
 	                              const std::vector<AnimationDataUA> &dataUA,
 	                              std::vector<AnimationDataUF> &dataUF) const;
 
+	void extractAnimationPackMulti(sp<BattleUnitAnimationPack> p,
+	                              const std::vector<AnimationDataAD> &dataAD,
+	                              const std::vector<AnimationDataUA> &dataUA,
+	                              std::vector<AnimationDataUF> &dataUF) const;
+
 	void extractAnimationPackPopper(sp<BattleUnitAnimationPack> p) const;
 
 	void extractAnimationPackGun(sp<BattleUnitAnimationPack> p) const;

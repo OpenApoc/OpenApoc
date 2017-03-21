@@ -3507,7 +3507,7 @@ void BattleUnit::die(GameState &state, bool violently, bool bledToDeath)
 					    e->type->damage_type, e->type->damage, e->type->explosion_depletion_rate);
 					break;
 				case AEquipmentType::Type::Spawner:
-					LogError("Implement multiworm!");
+					LogWarning("Implement multiworm!");
 					// state.current_battle->spawnUnit(state, aliens, { &state,
 					// "AGENTTYPE_BRAINSUCKER" }, i->position, { 0, 1 }, BodyState::Throwing);
 					break;

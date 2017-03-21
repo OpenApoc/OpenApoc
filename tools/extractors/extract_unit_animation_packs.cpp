@@ -309,6 +309,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 	}
 	if (name == "multi")
 	{
+		extractAnimationPackMulti(p, dataAD, dataUA, dataUF);
 	}
 	if (name == "mwegg1")
 	{

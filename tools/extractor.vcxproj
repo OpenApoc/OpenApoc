@@ -29,6 +29,7 @@
     <ClCompile Include="extractors\extract_unit_animation_pack_egg.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_pack_gun.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_pack_mega.cpp" />
+    <ClCompile Include="extractors\extract_unit_animation_pack_multi.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_pack_popper.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_pack_psi.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_pack_template.cpp" />

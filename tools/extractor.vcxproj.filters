@@ -111,6 +111,9 @@
     <ClCompile Include="extractors\extract_unit_animation_pack_gun.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="extractors\extract_unit_animation_pack_multi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="extractors\extractors.h">
