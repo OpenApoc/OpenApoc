@@ -93,7 +93,19 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> orga
 	                               StateRef<AgentType>{&state, "AGENTTYPE_MEGASPAWN"});
 	otherParticipants.emplace_back(organisation,
 	                               StateRef<AgentType>{&state, "AGENTTYPE_PSIMORPH"});
-
+	otherParticipants.emplace_back(organisation,
+	                               StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
+	otherParticipants.emplace_back(organisation,
+	                               StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
+	otherParticipants.emplace_back(organisation,
+	                               StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
+	otherParticipants.emplace_back(organisation,
+	                               StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
+	otherParticipants.emplace_back(organisation,
+	                               StateRef<AgentType>{&state, "AGENTTYPE_X-COM_BASE_TURRET_LASER"});
+	otherParticipants.emplace_back(organisation,
+	                               StateRef<AgentType>{&state, "AGENTTYPE_X-COM_BASE_TURRET_DISRUPTOR"});
+	
 	for (auto &pair : otherParticipants)
 	{
 		player_agents.push_back(state.agent_generator.createAgent(state, pair.first, pair.second));

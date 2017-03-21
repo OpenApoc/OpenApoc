@@ -80,6 +80,7 @@ class AgentStats
 	int reactions = 0;
 	int speed = 0;
 	int getActualSpeedValue() const { return (speed + 3) / 8; }
+	int getMovementSpeed() const { return std::max(3, getActualSpeedValue()); }
 	int getDisplaySpeedValue() const { return 8 * getActualSpeedValue(); }
 	int time_units = 0;
 	void restoreTU() { time_units = speed; }

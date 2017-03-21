@@ -316,8 +316,10 @@ bool Agent::isBodyStateAllowed(BodyState bodyState) const
 	    AEquipmentSlotType::ArmorRightHand};
 
 	if (type->bodyType->allowed_body_states.find(bodyState) !=
-	    type->bodyType->allowed_body_states.end())
+		type->bodyType->allowed_body_states.end())
+	{
 		return true;
+	}
 	if (bodyState == BodyState::Flying)
 	{
 		for (auto t : armorslots)

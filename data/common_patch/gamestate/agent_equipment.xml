@@ -97,12 +97,16 @@
         <entry>bulletsprites/battle/09.png</entry>
       </projectile_sprites>
       <damage>26</damage>
-      <accuracy>5</accuracy>
-      <fire_delay>42</fire_delay>
-      <tail_size>36</tail_size>
-      <range>1200</range>
-      <explosion_graphic>22</explosion_graphic>
-      <damage_type>DAMAGETYPE_LASER_BEAM</damage_type>
+      <accuracy>95</accuracy>
+	  <fire_delay>42</fire_delay>
+	  <tail_size>36</tail_size>
+	  <range>1200</range>
+	  <ttl>3600</ttl>
+	  <explosion_graphic>DOODAD_22_LASER</explosion_graphic>
+	  <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/sniper.raw:22050</fire_sfx>
+	  <impact_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/zaphit.raw:22050</impact_sfx>
+	  <damage_type>DAMAGETYPE_LASER_BEAM</damage_type>
+	  <trigger_type>Timed</trigger_type>
     </value>
   </entry>
   <entry>
@@ -158,12 +162,15 @@
         <entry>bulletsprites/battle/50.png</entry>
       </projectile_sprites>
       <damage>70</damage>
-      <accuracy>25</accuracy>
-      <fire_delay>40</fire_delay>
-      <tail_size>35</tail_size>
-      <range>1000</range>
-      <explosion_graphic>25</explosion_graphic>
-      <damage_type>DAMAGETYPE_DISRUPTOR_BEAM</damage_type>
+	  <accuracy>75</accuracy>
+	  <fire_delay>40</fire_delay>
+	  <tail_size>35</tail_size>
+	  <range>1000</range>
+	  <ttl>3000</ttl>
+	  <explosion_graphic>DOODAD_25_DEVASTATOR</explosion_graphic>
+	  <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/dcannon1.raw:22050</fire_sfx>
+	  <damage_type>DAMAGETYPE_DISRUPTOR_BEAM</damage_type>
+	  <trigger_type>Timed</trigger_type>
     </value>
   </entry>
   <entry>

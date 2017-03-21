@@ -227,6 +227,10 @@ class InitialGameStateExtractor
 
 	void extractAnimationPackPopper(sp<BattleUnitAnimationPack> p) const;
 
+	void extractAnimationPackGun(sp<BattleUnitAnimationPack> p) const;
+
 	void extractAnimationPackChrysalis(sp<BattleUnitAnimationPack> p, bool first) const;
+	
+	void extractAnimationPackEgg(sp<BattleUnitAnimationPack> p, bool first) const;
 };
 }

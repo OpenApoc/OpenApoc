@@ -420,15 +420,15 @@ void extractAnimationPackUnitInternal(sp<BattleUnitAnimationPack> p,
 		// Body Standing -> Jumping animation: 21
 		p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::Normal,
 		                          BodyState::Standing, BodyState::Jumping}][{x, y}] =
-		    e.getAnimationEntryDbl(dataAD, dataUA, dataUF, 21, {x, y}, jFrames);
+		    e.getAnimationEntry(dataAD, dataUA, dataUF, 21, {x, y}, jFrames);
 		p->body_state_animations[{ItemWieldMode::OneHanded, HandState::AtEase,
 		                          MovementState::Normal, BodyState::Standing, BodyState::Jumping}]
 		                        [{x, y}] =
-		    e.getAnimationEntryDbl(dataAD, dataUA, dataUF, 21, {x, y}, jFrames);
+		    e.getAnimationEntry(dataAD, dataUA, dataUF, 21, {x, y}, jFrames);
 		p->body_state_animations[{ItemWieldMode::TwoHanded, HandState::AtEase,
 		                          MovementState::Normal, BodyState::Standing, BodyState::Jumping}]
 		                        [{x, y}] =
-		    e.getAnimationEntryDbl(dataAD, dataUA, dataUF, 21, {x, y}, jFrames);
+		    e.getAnimationEntry(dataAD, dataUA, dataUF, 21, {x, y}, jFrames);
 
 		// Body Jumping -> Standing animation: 23, 28, 29
 		p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::Normal,

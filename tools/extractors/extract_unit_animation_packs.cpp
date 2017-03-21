@@ -298,6 +298,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 	}
 	if (name == "gun")
 	{
+		extractAnimationPackGun(p);
 	}
 	if (name == "hypr")
 	{
@@ -314,9 +315,11 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 	}
 	if (name == "mwegg1")
 	{
+		extractAnimationPackEgg(p, true);
 	}
 	if (name == "mwegg2")
 	{
+		extractAnimationPackEgg(p, false);
 	}
 	if (name == "popper")
 	{

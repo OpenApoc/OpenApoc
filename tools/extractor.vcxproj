@@ -26,6 +26,8 @@
     <ClCompile Include="extractors\extract_agent_equipment.cpp" />
     <ClCompile Include="extractors\extract_agent_types.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_pack_chrysalis.cpp" />
+    <ClCompile Include="extractors\extract_unit_animation_pack_egg.cpp" />
+    <ClCompile Include="extractors\extract_unit_animation_pack_gun.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_pack_mega.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_pack_popper.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_pack_psi.cpp" />

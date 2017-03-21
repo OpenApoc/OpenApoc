@@ -225,7 +225,7 @@ const std::map<OpenApoc::UString, OpenApoc::UString> InitialGameStateExtractor::
 	{ "micro",		"" },
 	{ "multi",		"alien/multi" },
 	{ "mwegg1",		"" }, // facing #1
-	{ "mwegg1",		"" }, // facing #2
+	{ "mwegg2",		"" }, // facing #2
 	{ "popper",		"" },
 	{ "psi",		"alien/psi" },
 	{ "queen",		"alien/queen", },

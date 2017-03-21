@@ -2023,12 +2023,13 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 
 	// See if we can actually go there
 	auto tFrom = u.tileObject->getOwningTile();
-	auto tTo = tFrom->map.getTile(pos);
+	auto &map = tFrom->map;
+	auto tTo = map.getTile(pos);
 	float cost = 0;
 	bool jumped = false;
 	bool closedDoorInTheWay = false;
 	if (tFrom->position != pos &&
-	    !BattleUnitTileHelper{tFrom->map, u}.canEnterTile(tFrom, tTo, !u.canFly(), jumped, cost,
+	    !BattleUnitTileHelper{map, u}.canEnterTile(tFrom, tTo, !u.canFly(), jumped, cost,
 	                                                      closedDoorInTheWay, true))
 	{
 		// Next tile became impassable, pick a new path
@@ -2048,20 +2049,22 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 	// then update current position and iterator
 	float newCost = 0;
 	bool newDoorInWay = false;
+	bool newJumped = false;
 	while (it != currentPlannedPath.end() &&
 	       (tFrom->position == *it ||
 	        (allowSkipNodes &&
-	         BattleUnitTileHelper{tFrom->map, u}.canEnterTile(
-	             tFrom, tFrom->map.getTile(*it), !u.canFly(), jumped, newCost, newDoorInWay))))
+	         BattleUnitTileHelper{map, u}.canEnterTile(
+	             tFrom, map.getTile(*it), !u.canFly(), newJumped, newCost, newDoorInWay))))
 	{
 		currentPlannedPath.pop_front();
 		it = ++currentPlannedPath.begin();
 		pos = *it++;
-		tTo = tFrom->map.getTile(pos);
+		tTo = map.getTile(pos);
 		cost = newCost;
 		closedDoorInTheWay = newDoorInWay;
-		if (jumped)
+		if (newJumped)
 		{
+			jumped = true;
 			break;
 		}
 	}
@@ -2078,11 +2081,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 				targetBodyState = BodyState::Standing;
 				return false;
 			}
-			else
-			{
-				// Can change to jumping on-the-go
-				targetBodyState = BodyState::Jumping;
-			}
+			// We will change to jumping after we ensure noone is blocking
 		}
 		else
 		{
@@ -2119,7 +2118,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 				{
 					auto t = u.tileObject->getOwningTile();
 					targetBodyState =
-					    u.agent->isBodyStateAllowed(BodyState::Standing) && t->getCanStand(u.isLarge()) && t->map.getTile(pos)->getCanStand(u.isLarge())
+					    u.agent->isBodyStateAllowed(BodyState::Standing) && t->getCanStand(u.isLarge()) && map.getTile(pos)->getCanStand(u.isLarge())
 					        ? BodyState::Standing
 					        : BodyState::Flying;
 					if (targetBodyState != u.current_body_state)
@@ -2220,10 +2219,17 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 		return false;
 	}
 
+	// Now finally we can go jumping
+	if (jumped)
+	{		
+		// Can change to jumping on-the-go
+		targetBodyState = BodyState::Jumping;
+	}
+
 	// Finally, we're moving!
 	currentPlannedPath.pop_front();
 
-	dest = u.tileObject->map.getTile(pos)->getRestingPosition(u.isLarge());
+	dest = map.getTile(pos)->getRestingPosition(u.isLarge());
 
 	// Land on the edge if jumping
 	if (jumped)

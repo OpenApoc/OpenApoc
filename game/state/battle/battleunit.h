@@ -30,8 +30,8 @@
 #define DISTANCE_TO_RELAY_VISIBLE_ENEMY_INFORMATION 5
 // How far does unit see
 #define VIEW_DISTANCE 20
-// Base movement ticks consumption rate, this allows us to divide by 2,3,4,5,6,8,9 or 10
-#define BASE_MOVETICKS_CONSUMPTION_RATE 72
+// Base movement ticks consumption rate, this allows us to divide by 2,3,4,5,6,8,9,10,12,15,18,20..
+#define BASE_MOVETICKS_CONSUMPTION_RATE 360
 // Movement cost in TUs for walking movement to adjacent (non-diagonal) tile
 #define STANDART_MOVE_TU_COST 2
 
@@ -278,7 +278,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	unsigned int flyingSpeedModifier = 0;
 	// Freefalling
 	bool falling = false;
-	// Launched (will check launch goal)
+	// Launched (will check launch goal if falling, will travel by parabola if moving)
 	bool launched = false;
 	// Goal we launched for, after reaching this will set xy velocity to 0
 	Vec3<float> launchGoal;
@@ -403,8 +403,12 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	unsigned int getDistanceTravelled() const;
 	bool shouldPlaySoundNow();
 	unsigned int getWalkSoundIndex();
+	// Return true if retreated and we have to exit
+	bool getNewGoal(GameState &state);
 	bool calculateVelocityForLaunch(float distanceXY, float diffZ, float &velocityXY,
 	                                float &velocityZ);
+	void calculateVelocityForJump(float distanceXY, float diffZ, float &velocityXY,
+	                                float &velocityZ, bool diagonAlley);
 	bool canLaunch(Vec3<float> targetPosition);
 	bool canLaunch(Vec3<float> targetPosition, Vec3<float> &targetVectorXY, float &velocityXY,
 	               float &velocityZ);
@@ -550,6 +554,12 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Updates unit's movement if unit is falling
 	// Return true if retreated or destroyed and we must halt immediately
 	bool updateMovementFalling(GameState &state, unsigned int &moveTicksRemaining,
+	                           bool &wasUsingLift);
+	// Return true if retreated or destroyed and we must halt immediately
+	bool updateMovementBrainsucker(GameState &state, unsigned int &moveTicksRemaining,
+	                           bool &wasUsingLift);
+	// Return true if retreated or destroyed and we must halt immediately
+	bool updateMovementJumping(GameState &state, unsigned int &moveTicksRemaining,
 	                           bool &wasUsingLift);
 	// Updates unit's movement if unit is moving normally
 	// Return true if retreated or destroyed and we must halt immediately
