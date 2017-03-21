@@ -117,6 +117,10 @@ class InitialGameStateExtractor
   public:
 	// Unit animation packs functions
 
+	sp<BattleUnitAnimationPack::AnimationEntry>
+		  InitialGameStateExtractor::combineAnimationEntries(sp<BattleUnitAnimationPack::AnimationEntry> e1,
+			  sp<BattleUnitAnimationPack::AnimationEntry> e2) const;
+
 	sp<BattleUnitAnimationPack::AnimationEntry> getAnimationEntry(
 	    const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
 	    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,

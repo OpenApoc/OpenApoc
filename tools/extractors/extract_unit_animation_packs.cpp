@@ -10,13 +10,10 @@
 
 namespace OpenApoc
 {
-/*
-// May be required in order to join together animations to create a longer one, i.e. Standing->Prone
-from Standing->Kneeling and Kneeling->Prone
-// But for now, not used
+// Combines two animation entries, used to create an entry from two glued together
 sp<BattleUnitAnimationPack::AnimationEntry>
-combineAnimationEntries(sp<BattleUnitAnimationPack::AnimationEntry> e1,
-sp<BattleUnitAnimationPack::AnimationEntry> e2)
+InitialGameStateExtractor::combineAnimationEntries(sp<BattleUnitAnimationPack::AnimationEntry> e1,
+sp<BattleUnitAnimationPack::AnimationEntry> e2) const
 {
     auto e = mksp<BattleUnitAnimationPack::AnimationEntry>();
 
@@ -33,7 +30,7 @@ sp<BattleUnitAnimationPack::AnimationEntry> e2)
 
     return e;
 }
-*/
+
 
 sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimationEntry(
     const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,

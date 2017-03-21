@@ -861,8 +861,9 @@ bool BattleUnit::isUnconscious() const { return !isDead() && stunDamage >= getHe
 
 bool BattleUnit::isConscious() const
 {
-	return !isDead() && stunDamage < getHealth() &&
-	       (current_body_state != BodyState::Downed || target_body_state != BodyState::Downed);
+	return !isDead() && stunDamage < getHealth()
+		&& (current_body_state != BodyState::Downed || target_body_state != BodyState::Downed)
+		&& target_body_state != BodyState::Dead;
 }
 
 bool BattleUnit::isStatic() const
@@ -1011,6 +1012,10 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 	if (isDead())
 	{
 		return;
+	}
+	if (generateFatalWounds && agent->type->immuneToFatalWounds)
+	{
+		generateFatalWounds = false;
 	}
 
 	bool wasConscious = isConscious();
@@ -3317,8 +3322,7 @@ void BattleUnit::tryToRiseUp(GameState &state)
 
 	// Find state we can rise into (with animation)
 	auto targetState = BodyState::Standing;
-	while (targetState != BodyState::Downed &&
-	       agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
+	while (agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
 	                                                    targetState, current_hand_state,
 	                                                    current_movement_state, facing) == 0)
 	{
@@ -3348,13 +3352,15 @@ void BattleUnit::tryToRiseUp(GameState &state)
 			case BodyState::Prone:
 				// If we arrived here then we have no animation for standing up
 				targetState = BodyState::Downed;
-				continue;
+				break;
 			case BodyState::Downed:
+			case BodyState::Dead:
 			case BodyState::Jumping:
 			case BodyState::Throwing:
 				LogError("Not possible to reach this?");
 				break;
 		}
+		break;
 	}
 	// Find state we can rise into (with no animation)
 	if (targetState == BodyState::Downed)
@@ -3371,13 +3377,10 @@ void BattleUnit::tryToRiseUp(GameState &state)
 		{
 			targetState = BodyState::Kneeling;
 		}
-		else if (canProne(position, facing))
+		else 
 		{
+			// Prone only unit ignores wether prone is allowed
 			targetState = BodyState::Prone;
-		}
-		else
-		{
-			LogError("Unit cannot stand up???");
 		}
 	}
 
@@ -3403,11 +3406,12 @@ void BattleUnit::dropDown(GameState &state)
 	fireDebuffTicksRemaining = 0;
 	enzymeDebuffIntensity = 0;
 	moraleState = MoraleState::Normal;
+	BodyState targetState = isDead() ? BodyState::Dead : BodyState::Downed;
 	// Check if we can drop from current state
 	// Adjust current state so that we canthen drop down
 	BodyState proposedBodyState = current_body_state;
 	while (agent->getAnimationPack()->getFrameCountBody(displayedItem, proposedBodyState,
-	                                                    BodyState::Downed, current_hand_state,
+	                                                    targetState, current_hand_state,
 	                                                    current_movement_state, facing) == 0)
 	{
 		switch (proposedBodyState)
@@ -3449,7 +3453,7 @@ void BattleUnit::dropDown(GameState &state)
 		}
 	}
 	cancelMissions(state, true);
-	addMission(state, BattleUnitMission::changeStance(*this, BodyState::Downed));
+	addMission(state, BattleUnitMission::changeStance(*this, targetState));
 
 	// Remove from list of visible units
 	StateRef<BattleUnit> srThis = {&state, id};

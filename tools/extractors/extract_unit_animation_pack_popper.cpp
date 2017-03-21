@@ -22,9 +22,12 @@ void extractAnimationPackPopperInternal(sp<BattleUnitAnimationPack> p, int x, in
 	                        BodyState::Standing}][{x, y}] =
 	    e.makeUpAnimationEntry(48, 2, 48, 1, 1, {x, y}, {0, 0});
 
-	// Downed state:
+	// Downed/Dead state:
 	p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 	                        BodyState::Downed}][{x, y}] =
+	    e.makeUpAnimationEntry(64, 1, 0, 0, 1, {x, y}, {0, 0});
+	p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
+	                        BodyState::Dead}][{x, y}] =
 	    e.makeUpAnimationEntry(64, 1, 0, 0, 1, {x, y}, {0, 0});
 
 	// Moving state normal:

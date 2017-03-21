@@ -97,13 +97,22 @@ namespace OpenApoc
 				
 				// Dying state:
 				p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
-					BodyState::Standing, BodyState::Downed}][{x, y}] =
+					BodyState::Standing, BodyState::Dead}][{x, y}] =
+					makeUpEggAnimationEntry(0, 0, first ? 2 : 9, 7, { 0, 0 }, { 0, 0 });
+				p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
+					BodyState::Downed, BodyState::Dead}][{x, y}] =
 					makeUpEggAnimationEntry(0, 0, first ? 2 : 9, 7, { 0, 0 }, { 0, 0 });
 
-				// Downed state:
+				// Dead state:
+				p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
+					BodyState::Dead}][{x, y}] =
+					makeUpEggAnimationEntry(0, 0, first ? 8 : 15, 1, { 0, 0 }, { 0, 0 });
+
+				// Downed state: (same as standing)
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 					BodyState::Downed}][{x, y}] =
-					makeUpEggAnimationEntry(0, 0, first ? 8 : 15, 1, { 0, 0 }, { 0, 0 });
+					makeUpEggAnimationEntry(offset_dir_map.at({ x,y }), 1, first ? 0 : 1, 1, { 0, 0 }, first ? Vec2<int>{0, 4} : Vec2<int>{ -12, -8 }, first);
+
 			}
 		}
 	}

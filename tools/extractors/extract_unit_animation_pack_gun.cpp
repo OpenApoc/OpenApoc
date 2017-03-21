@@ -26,6 +26,9 @@ namespace OpenApoc
 		p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 			BodyState::Downed}][{x, y}] =
 			e.makeUpAnimationEntry(0, 1, 0, 0, 1, { x, y }, { 0, 0 });
+		p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
+			BodyState::Dead}][{x, y}] =
+			e.makeUpAnimationEntry(0, 1, 0, 0, 1, { x, y }, { 0, 0 });
 	}
 
 	void InitialGameStateExtractor::extractAnimationPackGun(sp<BattleUnitAnimationPack> p) const

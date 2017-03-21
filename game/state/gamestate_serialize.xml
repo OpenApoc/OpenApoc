@@ -111,11 +111,12 @@
 		<member>can_improve</member>
 		<member>playable</member>
 		<member>allowsDirectControl</member>
+		<member>aiType</member>
+		<member>immuneToFatalWounds</member>
 		<member>spreadHazardDamageType</member>
 		<member>spreadHazardMinPower</member>
 		<member>spreadHazardMaxPower</member>
 		<member>spreadHazardTTLDivizor</member>
-		<member>aiType</member>
 		<member>score</member>
 		<member>walkSfx</member>
 		<member>crySfx</member>
@@ -1421,6 +1422,7 @@
 		<value>Jumping</value>
 		<value>Throwing</value>
 		<value>Downed</value>
+		<value>Dead</value>
 	</enum>
 	<enum>
 		<name>HandState</name>

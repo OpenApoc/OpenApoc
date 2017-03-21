@@ -22,17 +22,20 @@ namespace OpenApoc
 
 										// Standart animations
 		{
-			// Standing state: 0
+			// Flying state: 0
 			p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 				BodyState::Flying}][{x, y}] =
 				e.getAnimationEntry(dataAD, dataUA, dataUF, 0, { x, y }, offset, offset);
 
-			// Downed state: 4 
+			// Downed/Dead state: 4 
 			p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 				BodyState::Downed}][{x, y}] =
 				e.getAnimationEntry(dataAD, dataUA, dataUF, 4, { x, y }, offset, offset);
+			p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
+				BodyState::Dead}][{x, y}] =
+				e.getAnimationEntry(dataAD, dataUA, dataUF, 4, { x, y }, offset, offset);
 
-			// Standing walking/running states: 1
+			// Flying walking/running states: 1
 			p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::Normal,
 				BodyState::Flying}][{x, y}] =
 				e.getAnimationEntry(dataAD, dataUA, dataUF, 1, { x, y }, wFrames, false, offset, offset);
@@ -54,10 +57,15 @@ namespace OpenApoc
 
 		// Body state change animations
 		{
-			// Body Standing -> Downned animation: 2
+			// Body Flying -> Downned/Dead animation: 2
 			p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 				BodyState::Flying, BodyState::Downed}][{x, y}] =
 				e.getAnimationEntry(dataAD, dataUA, dataUF, 2, { x, y }, offset, offset);
+			p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
+				BodyState::Flying, BodyState::Dead}][{x, y}] =
+				e.getAnimationEntry(dataAD, dataUA, dataUF, 2, { x, y }, offset, offset);
+			
+			// Body Downned -> Flying animation: 2
 			p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 				BodyState::Downed, BodyState::Flying}][{x, y}] =
 				e.getAnimationEntryInv(dataAD, dataUA, dataUF, 2, { x, y }, 100, false, offset, offset);

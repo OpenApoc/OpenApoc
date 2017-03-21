@@ -1812,7 +1812,7 @@ void BattleView::eventOccurred(Event *e)
 	     e->keyboard().KeyCode == SDLK_r || e->keyboard().KeyCode == SDLK_a ||
 	     e->keyboard().KeyCode == SDLK_p || e->keyboard().KeyCode == SDLK_h ||
 	     e->keyboard().KeyCode == SDLK_k || e->keyboard().KeyCode == SDLK_q ||
-	     e->keyboard().KeyCode == SDLK_j))
+		  e->keyboard().KeyCode == SDLK_s || e->keyboard().KeyCode == SDLK_j))
 	{
 		switch (e->keyboard().KeyCode)
 		{
@@ -1907,10 +1907,10 @@ void BattleView::eventOccurred(Event *e)
 				}
 				break;
 			}
-			case SDLK_k:
+			case SDLK_s:
 			{
 				bool inverse = modifierLShift || modifierRShift;
-				bool local = modifierLCtrl || modifierRCtrl;
+				bool local = !(modifierLCtrl || modifierRCtrl);
 				for (auto &u : battle.units)
 				{
 					if (u.second->isDead())
@@ -1924,6 +1924,29 @@ void BattleView::eventOccurred(Event *e)
 					     (!local &&
 					      glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
 					          5.0f)) == !inverse)
+					{
+						u.second->dealDamage(*state, 9001, false, BodyPart::Helmet, u.second->getHealth() + 4);
+					}
+				}
+				break;
+			}
+			case SDLK_k:
+			{
+				bool inverse = modifierLShift || modifierRShift;
+				bool local = !(modifierLCtrl || modifierRCtrl);
+				for (auto &u : battle.units)
+				{
+					if (u.second->isDead())
+					{
+						continue;
+					}
+
+					if (((local &&
+						u.second->tileObject->getOwningTile()->position ==
+						selectedTilePosition) ||
+						(!local &&
+							glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
+							5.0f)) == !inverse)
 					{
 						u.second->die(*state);
 						u.second->tileObject->removeFromMap();

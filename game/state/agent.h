@@ -43,6 +43,7 @@ enum class BodyState
 	Jumping,
 	Throwing,
 	Downed,
+	Dead
 };
 enum class HandState
 {
@@ -204,6 +205,8 @@ class AgentType : public StateObject
 	bool allowsDirectControl = false;
 	// AI type used by this
 	AIType aiType;
+	// Fatal woulds immunity
+	bool immuneToFatalWounds = false;
 
 	StateRef<DamageType> spreadHazardDamageType;
 	int spreadHazardMinPower = 0;

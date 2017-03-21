@@ -2319,7 +2319,8 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodySt
 	// Transition for stance changes
 
 	// If trying to fly stand up first
-	if (targetState == BodyState::Flying && u.current_body_state != BodyState::Standing)
+	if (targetState == BodyState::Flying && u.current_body_state != BodyState::Standing &&
+		u.agent->isBodyStateAllowed(BodyState::Standing))
 	{
 		return advanceBodyState(state, u, BodyState::Standing, dest);
 	}
