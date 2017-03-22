@@ -619,6 +619,7 @@
 		<member>lifetime</member>
 		<member>age</member>
 		<member>frame</member>
+		<member>ticksUntilVisible</member>
 		<member>ticksUntilNextFrameChange</member>
 		<member>ticksUntilNextUpdate</member>
 	</object>
