@@ -396,7 +396,7 @@ void BattleUnitAnimationPack::drawUnit(
 				       screenPosition - b->offset - heldItem->held_image_pack->image_offset);
 				break;
 			// Travis complains I'm not handling "Shadow"
-			default:
+			case AnimationEntry::Frame::UnitImagePart::Shadow:
 				break;
 		}
 	}

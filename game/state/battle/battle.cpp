@@ -429,6 +429,13 @@ sp<BattleUnit> Battle::spawnUnit(GameState &state, StateRef<Organisation> owner,
 	unit->setMission(state, BattleUnitMission::changeStance(*unit, tarState));
 	unit->assignToSquad(*state.current_battle);
 	unit->refreshUnitVisibilityAndVision(state, unit->position);
+
+	unit->strategyImages = state.battle_common_image_list->strategyImages;
+	unit->burningDoodad = state.battle_common_image_list->burningDoodad;
+	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
+	unit->psiSuccessSounds = state.battle_common_sample_list->psiSuccessSounds;
+	unit->psiFailSounds = state.battle_common_sample_list->psiFailSounds;
+
 	return unit;
 }
 
@@ -1802,7 +1809,11 @@ void Battle::loadImagePacks(GameState &state)
 				auto packName = BattleUnitImagePack::getNameFromID(ip.second.id);
 				if (imagePacks.find(packName) == imagePacks.end())
 					imagePacks.insert(packName);
-				if (!hyperwormFound && packName == hyperworm)
+				if (packName == hyperworm)
+				{
+					hyperwormFound = true;
+				}
+				if (!hyperwormFound && packName == multiworm)
 				{
 					imagePacks.insert(hyperworm);
 					imagePacks.insert(hyperworm + "s");
@@ -1898,7 +1909,11 @@ void Battle::loadAnimationPacks(GameState &state)
 			{
 				animationPacks.insert(packName);
 			}
-			if (!hyperwormFound && packName == hyperworm)
+			if (packName == hyperworm)
+			{
+				hyperwormFound = true;
+			}
+			if (!hyperwormFound && packName == multiworm)
 			{
 				animationPacks.insert(hyperworm);
 				hyperwormFound = true;

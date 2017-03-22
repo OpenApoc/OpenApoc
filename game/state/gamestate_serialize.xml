@@ -682,6 +682,7 @@
 		<member>turnRate</member>
 		<member>age</member>
 		<member>damage</member>
+		<member>delay_ticks_remaining</member>
 		<member>depletionRate</member>
 		<member>lifetime</member>
 		<member>firerVehicle</member>
@@ -855,6 +856,7 @@
 		<member>damage</member>
 		<member>accuracy</member>
 		<member>fire_delay</member>
+		<member>projectile_delay</member>
 		<member>tail_size</member>
 		<member>guided</member>
 		<member>turn_rate</member>

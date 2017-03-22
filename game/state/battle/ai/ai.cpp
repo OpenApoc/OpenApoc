@@ -1511,14 +1511,12 @@ VanillaTacticalAI::think(GameState &state, StateRef<Organisation> o)
 			case AIType::None:
 				// Do nothing
 				continue;
-			case AIType::Civilian:
-				LogWarning("Implement Civilian Tactical AI");
-				continue;
 			case AIType::PanicFreeze:
 			case AIType::PanicRun:
 			case AIType::Berserk:
 				// Do nothing
 				continue;
+			case AIType::Civilian:
 			case AIType::Loner:
 			case AIType::Group:
 				// Go on below
@@ -1530,6 +1528,19 @@ VanillaTacticalAI::think(GameState &state, StateRef<Organisation> o)
 
 		auto units = std::get<0>(decisions);
 		AIDecision decision = {nullptr, std::get<1>(decisions)};
+
+		// Randomize civ movement
+		if (u.second->getAIType() == AIType::Civilian && decision.movement)
+		{
+			if (randBoundsExclusive(state.rng, 0, 100) < 50)
+			{
+				decision.movement->movementMode = MovementMode::Walking;
+			}
+			else
+			{
+				decision.movement->movementMode = MovementMode::Running;
+			}
+		}
 
 		std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>> result = {};
 		result.emplace_back(units, decision);

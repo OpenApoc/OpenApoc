@@ -299,6 +299,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 	}
 	if (name == "hypr")
 	{
+		extractAnimationPackHyper(p, dataAD, dataUA, dataUF);
 	}
 	if (name == "mega")
 	{
@@ -306,6 +307,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 	}
 	if (name == "micro")
 	{
+		extractAnimationPackMicro(p);
 	}
 	if (name == "multi")
 	{
@@ -329,12 +331,15 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 	}
 	if (name == "queen")
 	{
+		extractAnimationPackQ(p);
 	}
 	if (name == "spitr")
 	{
+		extractAnimationPackSpitter(p, dataAD, dataUA, dataUF);
 	}
 	if (name == "civ")
 	{
+		extractAnimationPackCiv(p, dataAD, dataUA, dataUF);
 	}
 
 	return p;

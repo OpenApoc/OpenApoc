@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <agent_equipment>
-  <entry>
+  <entry><!-- DEBUG ENTRY -->
     <key>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL_CLIP</key>
     <value>
       <max_ammo>9001</max_ammo>
       <damage>9001</damage>
     </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_SPITTER_S_VOMIT_FUNNEL</key>
+	<value>
+	  <projectile_delay>64</projectile_delay>
+	</value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_BRAINSUCKER_WEAPON</key>

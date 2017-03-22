@@ -2323,11 +2323,20 @@ void BattleUnit::updateHands(GameState &, unsigned int &handsTicksRemaining)
 	}
 }
 
-void BattleUnit::updateTurning(GameState &state, unsigned int &turnTicksRemaining)
+void BattleUnit::updateTurning(GameState &state, unsigned int &turnTicksRemaining, unsigned int const handsTicksRemaining)
 {
 	// Try turning
 	if (turnTicksRemaining > 0)
 	{
+		// If firing then consume turning ticks since we can't turn while firing
+		if (firing_animation_ticks_remaining > 0)
+		{
+			// If firing animation will be finished this time, then substract 
+			// the amount of ticks required to finish it
+			// Otherwise substract all ticks
+			turnTicksRemaining -= handsTicksRemaining >= firing_animation_ticks_remaining 
+				? firing_animation_ticks_remaining : turnTicksRemaining;
+		}
 		if (turning_animation_ticks_remaining > turnTicksRemaining)
 		{
 			turning_animation_ticks_remaining -= turnTicksRemaining;
@@ -2878,7 +2887,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			{
 				return;
 			}
-			updateTurning(state, turnTicksRemaining);
+			updateTurning(state, turnTicksRemaining, handsTicksRemaining);
 			updateDisplayedItem();
 		}
 	}
@@ -3507,10 +3516,48 @@ void BattleUnit::die(GameState &state, bool violently, bool bledToDeath)
 					    e->type->damage_type, e->type->damage, e->type->explosion_depletion_rate);
 					break;
 				case AEquipmentType::Type::Spawner:
-					LogWarning("Implement multiworm!");
-					// state.current_battle->spawnUnit(state, aliens, { &state,
-					// "AGENTTYPE_BRAINSUCKER" }, i->position, { 0, 1 }, BodyState::Throwing);
+				{
+					std::list<Vec3<int>> posToCheck;
+					Vec3<int> curPos = position;
+					posToCheck.push_back(curPos + Vec3<int>{1, 0, 0});
+					posToCheck.push_back(curPos + Vec3<int>{0, 1, 0});
+					posToCheck.push_back(curPos + Vec3<int>{-1, 0, 0});
+					posToCheck.push_back(curPos + Vec3<int>{0, -1, 0});
+					posToCheck.push_back(curPos + Vec3<int>{1, 1, 0});
+					posToCheck.push_back(curPos + Vec3<int>{1, -1, 0});
+					posToCheck.push_back(curPos + Vec3<int>{-1, 1, 0});
+					posToCheck.push_back(curPos + Vec3<int>{-1,-1, 0});
+					posToCheck.push_back(curPos + Vec3<int>{2, 0, 0});
+					posToCheck.push_back(curPos + Vec3<int>{0, 2, 0});
+					posToCheck.push_back(curPos + Vec3<int>{-2, 0, 0});
+					posToCheck.push_back(curPos + Vec3<int>{0, -2, 0});
+					std::list<Vec3<int>> posToSpawn;
+					posToSpawn.push_back(curPos);
+					int numToSpawn = 3;
+					auto &map = tileObject->map;
+					auto helper = BattleUnitTileHelper(map, *this);
+					while (numToSpawn > 0 && !posToCheck.empty())
+					{
+						auto pos = posToCheck.front();
+						posToCheck.pop_front();
+						if (!map.tileIsValid(pos))
+						{
+							continue;
+						}
+						if (state.current_battle->findShortestPath(curPos, pos, helper, false, false, 0, true).back() == pos)
+						{
+							numToSpawn--;
+							posToSpawn.push_back(pos);
+						}
+					}
+					auto aliens = state.getAliens();
+					for (auto &pos : posToSpawn)
+					{
+						state.current_battle->spawnUnit(state, aliens, { &state,
+							"AGENTTYPE_HYPERWORM" }, { pos.x + 0.5f, pos.y + 0.5f,pos.z + 0.1f }, facing, BodyState::Standing);
+					}
 					break;
+				}
 				default:
 					break;
 			}

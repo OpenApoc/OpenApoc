@@ -450,7 +450,7 @@ void AEquipment::explode(GameState &state)
 				                                          : Projectile::Type::Beam,
 				                          ownerUnit, nullptr, Vec3<float>{0.0f, 0.0f, 0.0f},
 				                          position + Vec3<float>{0.0f, 0.0f, 0.33f}, velocity, 0,
-				                          payload->ttl * TICKS_MULTIPLIER, payload->damage,
+				                          payload->ttl * TICKS_MULTIPLIER, payload->damage, /*delay*/0,
 				                          payload->explosion_depletion_rate, payload->tail_size,
 				                          payload->projectile_sprites, payload->impact_sfx,
 				                          payload->explosion_graphic, payload->damage_type);
@@ -531,7 +531,7 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 		auto p = mksp<Projectile>(
 		    payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam, unit, targetUnit,
 		    originalTarget, unitPos, velocity, payload->turn_rate, payload->ttl * TICKS_MULTIPLIER,
-		    payload->damage, payload->explosion_depletion_rate, payload->tail_size,
+		    payload->damage, payload->projectile_delay, payload->explosion_depletion_rate, payload->tail_size,
 		    payload->projectile_sprites, payload->impact_sfx, payload->explosion_graphic,
 		    payload->damage_type);
 		state.current_battle->map->addObjectToMap(p);

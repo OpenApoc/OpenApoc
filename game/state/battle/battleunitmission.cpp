@@ -2110,6 +2110,8 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 				// - If we are in strafe mode - we never go prone
 				// - If we want to go prone but cannot go prone - we should act as if
 				//    we're told to walk/run
+				// - We can expect that we can enter the target tile
+				// - We can expect agent to be able to either stand, fly or prone
 				// ----
 				// If we want to move standing up but not standing/flying - go standing/flying
 				// appropriately to the terrain
@@ -2118,9 +2120,23 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 				{
 					auto t = u.tileObject->getOwningTile();
 					targetBodyState =
-					    u.agent->isBodyStateAllowed(BodyState::Standing) && t->getCanStand(u.isLarge()) && map.getTile(pos)->getCanStand(u.isLarge())
-					        ? BodyState::Standing
-					        : BodyState::Flying;
+						t->getCanStand(u.isLarge()) && map.getTile(pos)->getCanStand(u.isLarge())
+						? BodyState::Standing
+						: BodyState::Flying;
+					if (!u.agent->isBodyStateAllowed(targetBodyState))
+					{
+						if (u.agent->isBodyStateAllowed(BodyState::Flying))
+						{
+							targetBodyState = BodyState::Flying;
+						}
+						else
+						{
+							// We have to move standing up, but we cannot as we can only prone
+							// This will temporarily allow us to go prone violating prone rules
+							// Otherwise prone units would be immobile when cornered
+							targetBodyState = BodyState::Prone;
+						}
+					}
 					if (targetBodyState != u.current_body_state)
 					{
 						return false;

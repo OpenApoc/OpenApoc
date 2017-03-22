@@ -1113,7 +1113,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 	const UString loftempsFile = "xcom3/tacdata/loftemps.dat";
 	const UString loftempsTab = "xcom3/tacdata/loftemps.tab";
 
-	for (int i = 0; i < 46; i++)
+	for (int i = 0; i <= 46; i++)
 	{
 		UString name = "";
 		switch (i)
@@ -1254,6 +1254,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 			// Non-humanoid aliens
 			case UNIT_TYPE_BRAINSUCKER:
 				height = 10;
+				idx = 3;
 				a->allowed_movement_states.insert(MovementState::Normal);
 				a->allowed_movement_states.insert(MovementState::Running);
 				a->allowed_movement_states.insert(MovementState::Brainsuck);
@@ -1261,9 +1262,9 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 				a->allowed_body_states.insert(BodyState::Throwing);
 				a->allowed_body_states.insert(BodyState::Jumping);
 				a->allowed_body_states.insert(BodyState::Downed);
-				voxelInfo[BodyState::Standing] = {height, 3};
-				voxelInfo[BodyState::Jumping] = {height, 3};
-				voxelInfo[BodyState::Throwing] = {8, 3};
+				voxelInfo[BodyState::Standing] = {height, idx };
+				voxelInfo[BodyState::Jumping] = {height, idx};
+				voxelInfo[BodyState::Throwing] = {8, idx };
 				voxelInfo[BodyState::Downed] = {8, idx};
 				voxelInfo[BodyState::Dead] = { 1, idx };
 				break;
@@ -1273,17 +1274,16 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 			case UNIT_TYPE_MICRONOID:
 				switch (i)
 				{
-					case UNIT_TYPE_BRAINSUCKER:
-						height = 10;
-						idx = 3;
-						break;
 					case UNIT_TYPE_HYPERWORM:
 						height = 10;
 						idx = 4;
+						a->allowed_fire_movement_states.insert(MovementState::None);
+						a->allowed_fire_movement_states.insert(MovementState::Normal);
 						break;
 					case UNIT_TYPE_SPITTER:
 						height = 32;
 						idx = 5;
+						a->allowed_fire_movement_states.insert(MovementState::None);
 						break;
 					case UNIT_TYPE_POPPER:
 						height = 16;
@@ -1296,7 +1296,6 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 				}
 				a->allowed_movement_states.insert(MovementState::Normal);
 				a->allowed_movement_states.insert(MovementState::Running);
-				a->allowed_fire_movement_states.insert(MovementState::None);
 				a->allowed_body_states.insert(BodyState::Standing);
 				a->allowed_body_states.insert(BodyState::Downed);
 				voxelInfo[BodyState::Standing] = {height, idx};

@@ -569,7 +569,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Return true if retreated or destroyed and we must halt immediately
 	bool updateMovement(GameState &state, unsigned int &moveTicksRemaining, bool &wasUsingLift);
 	// Updates unit's אפסרען trainsition and acquires new target אפסרען
-	void updateTurning(GameState &state, unsigned int &turnTicksRemaining);
+	void updateTurning(GameState &state, unsigned int &turnTicksRemaining, unsigned int const handsTicksRemaining);
 	// Updates unit's displayed item (which one will draw in unit's hands on screen)
 	void updateDisplayedItem();
 	// Runs all fire checks and returns false if we must stop attacking

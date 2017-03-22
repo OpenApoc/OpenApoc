@@ -118,7 +118,7 @@ class InitialGameStateExtractor
 	// Unit animation packs functions
 
 	sp<BattleUnitAnimationPack::AnimationEntry>
-		  InitialGameStateExtractor::combineAnimationEntries(sp<BattleUnitAnimationPack::AnimationEntry> e1,
+		  combineAnimationEntries(sp<BattleUnitAnimationPack::AnimationEntry> e1,
 			  sp<BattleUnitAnimationPack::AnimationEntry> e2) const;
 
 	sp<BattleUnitAnimationPack::AnimationEntry> getAnimationEntry(
@@ -234,7 +234,26 @@ class InitialGameStateExtractor
 	                              const std::vector<AnimationDataUA> &dataUA,
 	                              std::vector<AnimationDataUF> &dataUF) const;
 
+	void extractAnimationPackHyper(sp<BattleUnitAnimationPack> p,
+	                              const std::vector<AnimationDataAD> &dataAD,
+	                              const std::vector<AnimationDataUA> &dataUA,
+	                              std::vector<AnimationDataUF> &dataUF) const;
+
+	void extractAnimationPackSpitter(sp<BattleUnitAnimationPack> p,
+	                              const std::vector<AnimationDataAD> &dataAD,
+	                              const std::vector<AnimationDataUA> &dataUA,
+	                              std::vector<AnimationDataUF> &dataUF) const;
+
+	void extractAnimationPackCiv(sp<BattleUnitAnimationPack> p,
+	                              const std::vector<AnimationDataAD> &dataAD,
+	                              const std::vector<AnimationDataUA> &dataUA,
+	                              std::vector<AnimationDataUF> &dataUF) const;
+
 	void extractAnimationPackPopper(sp<BattleUnitAnimationPack> p) const;
+	
+	void extractAnimationPackMicro(sp<BattleUnitAnimationPack> p) const;
+
+	void extractAnimationPackQ(sp<BattleUnitAnimationPack> p) const;
 
 	void extractAnimationPackGun(sp<BattleUnitAnimationPack> p) const;
 

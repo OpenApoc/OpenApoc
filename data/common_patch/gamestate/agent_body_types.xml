@@ -6,6 +6,7 @@
       <allowed_body_states>
         <entry>Standing</entry>
         <entry>Downed</entry>
+		<entry>Dead</entry>
       </allowed_body_states>
       <allowed_movement_states>
         <entry>None</entry>

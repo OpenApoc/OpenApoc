@@ -134,6 +134,10 @@ class AEquipmentType : public StateObject
 	* of ticks required to fire
 	*/
 	int fire_delay = 0;
+	// This is used for aliens with firing animations that have pre-fire frames
+	// Like spitter that first throws his tube forward and only then emits a shot
+	// This will 
+	int projectile_delay = 0;
 	int tail_size = 0;
 	bool guided = false;
 	int turn_rate = 0;

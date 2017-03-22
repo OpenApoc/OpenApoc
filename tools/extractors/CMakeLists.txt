@@ -40,6 +40,11 @@ set (DATAEXTRACTOR_SOURCE_FILES
 	extract_unit_animation_pack_egg.cpp
 	extract_unit_animation_pack_gun.cpp
 	extract_unit_animation_pack_multi.cpp
+	extract_unit_animation_pack_civ.cpp
+	extract_unit_animation_pack_hyper.cpp
+	extract_unit_animation_pack_spitter.cpp
+	extract_unit_animation_pack_micro.cpp
+	extract_unit_animation_pack_q.cpp
 	extract_unit_animation_pack_popper.cpp
 	extract_unit_animation_pack_chrysalis.cpp
 	main.cpp)
