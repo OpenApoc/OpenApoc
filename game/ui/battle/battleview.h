@@ -80,7 +80,7 @@ class MotionScannerInfo
 	// 0 = up, then clockwise
     int direction = 0;
 	UString id = "";
-	unsigned long version = 0;
+	uint64_t version = 0;
 
 	bool operator==(const MotionScannerInfo &other) const;
 	bool operator!=(const MotionScannerInfo &other) const;

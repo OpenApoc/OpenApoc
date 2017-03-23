@@ -33,7 +33,7 @@ class BattleScanner : public StateObject
 	// 2d map, amount of movement for each coordinate, stored in y * size.x + x order
     std::vector<int> movementTicks;
 	// Updated every update, this indicates conetnt has changed
-	unsigned long version = 0;
+	uint64_t version = 0;
 	int updateTicksAccumulated = 0;
 	Vec3<int> lastPosition;
 	StateRef<BattleUnit> holder;

@@ -184,7 +184,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Units focusing this unit
 	std::list<StateRef<BattleUnit>> focusedByUnits;
 	// Ticks until we check if target is still valid, turn to it etc.
-	unsigned ticksUntillNextTargetCheck = 0;
+	unsigned int ticksUntillNextTargetCheck = 0;
 
 	// Psi
 
