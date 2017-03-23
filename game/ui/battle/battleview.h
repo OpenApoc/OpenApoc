@@ -14,6 +14,7 @@ class GraphicButton;
 class Control;
 class AEquipment;
 class AEquipmentType;
+class Graphic;
 
 enum class BattleUpdateSpeed
 {
@@ -73,6 +74,18 @@ class AgentPsiInfo
 	bool operator!=(const AgentPsiInfo &other) const;
 };
 
+class MotionScannerInfo
+{
+  public:
+	// 0 = up, then clockwise
+    int direction = 0;
+	UString id = "";
+	unsigned long long version = 0;
+
+	bool operator==(const MotionScannerInfo &other) const;
+	bool operator!=(const MotionScannerInfo &other) const;
+};
+
 class BattleView : public BattleTileView
 {
   private:
@@ -93,6 +106,8 @@ class BattleView : public BattleTileView
 	std::map<bool, sp<Form>> medikitForms;
 	// right/left, bodypart, healing or wounded ( false = wounded, true = healing)
 	std::map<bool, std::map<BodyPart, std::map<bool, sp<Control>>>> medikitBodyParts;
+	std::map<bool, sp<Graphic>> motionScannerData;
+	std::map<bool, sp<Graphic>> motionScannerUnit;
 
 	sp<GameState> state;
 
@@ -101,6 +116,7 @@ class BattleView : public BattleTileView
 	AgentEquipmentInfo leftHandInfo;
 	AgentEquipmentInfo rightHandInfo;
 	AgentPsiInfo psiInfo;
+	MotionScannerInfo motionInfo;
 
 	bool followAgent = false;
 
@@ -127,11 +143,15 @@ class BattleView : public BattleTileView
 
 	AgentEquipmentInfo createItemOverlayInfo(bool rightHand);
 	AgentPsiInfo createPsiInfo();
+	MotionScannerInfo createMotionInfo(BattleScanner &scanner);
 	void updateItemInfo(bool right);
 	void updatePsiInfo();
+	void updateMotionInfo(bool right, BattleScanner &scanner);
 	sp<RGBImage> drawPsiBar(int cur, int max);
+	sp<RGBImage> drawMotionScanner(BattleScanner &scanner);
 	sp<Image> selectedItemOverlay;
 	sp<Image> selectedPsiOverlay;
+	std::vector<sp<Image>> motionScannerDirectionIcons;
 
 	sp<Image> pauseIcon;
 	int pauseIconTimer = 0;

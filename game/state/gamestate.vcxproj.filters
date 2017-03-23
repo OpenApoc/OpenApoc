@@ -201,6 +201,9 @@
     <ClCompile Include="battle\ai\ai.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="battle\battlescanner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agent.h">
@@ -399,6 +402,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="battle\ai\ai.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\battlescanner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -24,6 +24,7 @@
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
+#include "game/state/battle/battlescanner.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
@@ -93,6 +94,23 @@ BattleView::BattleView(sp<GameState> gameState)
 
 		modPalette.push_back(newPal);
 	}
+
+	motionScannerDirectionIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal", 88)));
+	motionScannerDirectionIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal", 89)));
+	motionScannerDirectionIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal", 90)));
+	motionScannerDirectionIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal", 91)));
+	motionScannerDirectionIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal", 92)));
+	motionScannerDirectionIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal", 93)));
+	motionScannerDirectionIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal", 94)));
+	motionScannerDirectionIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+		"icons.tab:%d:xcom3/tacdata/tactical.pal", 95)));
 
 	selectedItemOverlay = fw().data->loadImage("battle/battle-item-select-icon.png");
 	selectedPsiOverlay = fw().data->loadImage("battle/battle-psi-select-icon.png");
@@ -199,6 +217,12 @@ BattleView::BattleView(sp<GameState> gameState)
 	    medikitForms[true]->findControl("MEDIKIT_RIGHT_HAND_GREEN");
 	medikitBodyParts[true][BodyPart::Helmet][true] =
 	    medikitForms[true]->findControl("MEDIKIT_HEAD_GREEN");
+
+	motionScannerData[false] = motionScannerForms[false]->findControlTyped<Graphic>("MOTION_SCANNER_DATA");
+	motionScannerData[true] = motionScannerForms[true]->findControlTyped<Graphic>("MOTION_SCANNER_DATA");
+	motionScannerUnit[false] = motionScannerForms[false]->findControlTyped<Graphic>("MOTION_SCANNER_UNIT");
+	motionScannerUnit[true] = motionScannerForms[true]->findControlTyped<Graphic>("MOTION_SCANNER_UNIT");
+
 
 	std::function<void(FormsEvent * e)> medikitButtonHead = [this](Event *) {
 		orderHeal(BodyPart::Helmet);
@@ -1016,9 +1040,20 @@ void BattleView::update()
 			switch (item->type->type)
 			{
 				case AEquipmentType::Type::MotionScanner:
+				{
 					motionScannerForms[right]->Enabled = true;
+
+					auto newMotionInfo = createMotionInfo(*item->battleScanner);
+					if (motionInfo != newMotionInfo)
+					{
+						motionInfo = newMotionInfo;
+						updateMotionInfo(right, *item->battleScanner);
+					}
+
 					break;
+				}
 				case AEquipmentType::Type::MediKit:
+				{
 					medikitForms[right]->Enabled = true;
 					for (auto c : medikitBodyParts[right])
 					{
@@ -1035,6 +1070,7 @@ void BattleView::update()
 						}
 					}
 					break;
+				}
 				default:
 					LogError("Using an item other than the motion scanner / medikit?");
 			}
@@ -2727,6 +2763,12 @@ void BattleView::updatePsiInfo()
 	    ->setImage(drawPsiBar(psiInfo.curDefense, psiInfo.maxDefense));
 }
 
+void BattleView::updateMotionInfo(bool right, BattleScanner &scanner)
+{
+	motionScannerUnit[right]->setImage(motionScannerDirectionIcons[motionInfo.direction]);
+	motionScannerData[right]->setImage(drawMotionScanner(scanner));
+}
+
 sp<RGBImage> BattleView::drawPsiBar(int cur, int max)
 {
 	int width = 137;
@@ -2773,6 +2815,36 @@ sp<RGBImage> BattleView::drawPsiBar(int cur, int max)
 		}
 	}
 	return psiBar;
+}
+
+sp<RGBImage> BattleView::drawMotionScanner(BattleScanner &scanner)
+{
+	static const std::vector<Colour> colors = 
+	{ {0,0,0,},{ 16,16,16,255 },{ 32,32,32,255 },{ 48,48,48,255 },
+	{ 64,64,64,255 },{ 80,80,80,255 },{ 96,96,96,255 },{ 112,112,112,255 },
+	{ 128,128,128,255 },{ 144,144,144,255 },{ 160,160,160,255 },{ 176,176,176,255 },
+	{ 192,192,192,255 },{ 208,208,208,255 },{ 224,224,224,255 },{ 240,240,240,255 } };
+
+	auto scannerDisplay = mksp<RGBImage>(Vec2<int>{MOTION_SCANNER_X * 2, MOTION_SCANNER_Y * 2});
+	{
+		RGBImageLock l(scannerDisplay);
+		// Content
+		for (int x = 0; x < MOTION_SCANNER_X; x++)
+		{
+			for (int y = 0; y < MOTION_SCANNER_Y; y++)
+			{
+				auto &color = colors.at(std::min(15, scanner.movementTicks[y * MOTION_SCANNER_X + x] * 16 / (int)TICKS_SCANNER_REMAIN_LIT));
+				for (int i = 0;i <= 1;i++)
+				{
+					for (int j = 0;j <= 1;j++) 
+					{
+						l.set({ 2 * x + i, 2 * y + j }, color);
+					}
+				}
+			}
+		}
+	}
+	return scannerDisplay;
 }
 
 void BattleView::finish()
@@ -2871,6 +2943,23 @@ AgentPsiInfo BattleView::createPsiInfo()
 	return a;
 }
 
+
+MotionScannerInfo BattleView::createMotionInfo(BattleScanner &scanner)
+{
+	static const std::map<Vec2<int>, int> offset_dir_map = {
+		{ { 0, -1 }, 0 },{ { 1, -1 }, 1 },{ { 1, 0 }, 2 },{ { 1, 1 }, 3 },
+		{ { 0, 1 }, 4 },{ { -1, 1 }, 5 },{ { -1, 0 }, 6 },{ { -1, -1 }, 7 },
+	};
+
+	MotionScannerInfo a;
+
+	a.direction = offset_dir_map.at(battle.battleViewSelectedUnits.front()->facing);
+	a.id = scanner.holder.id;
+	a.version = scanner.version;
+	
+	return a;
+}
+
 bool AgentEquipmentInfo::operator==(const AgentEquipmentInfo &other) const
 {
 	return (this->accuracy == other.accuracy && this->curAmmo == other.curAmmo &&
@@ -2891,5 +2980,20 @@ bool AgentPsiInfo::operator==(const AgentPsiInfo &other) const
 	        this->maxDefense == other.maxDefense);
 }
 
-bool AgentPsiInfo::operator!=(const AgentPsiInfo &other) const { return !(*this == other); }
+bool AgentPsiInfo::operator!=(const AgentPsiInfo &other) const 
+{ 
+	return !(*this == other);
+}
+
+bool MotionScannerInfo::operator==(const MotionScannerInfo &other) const
+{
+	return (this->direction == other.direction && this->id == other.id &&
+		this->version == other.version);
+}
+
+bool MotionScannerInfo::operator!=(const MotionScannerInfo &other) const
+{
+	return !(*this == other);
+}
+
 }; // namespace OpenApoc

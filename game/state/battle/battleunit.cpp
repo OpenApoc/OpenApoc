@@ -134,6 +134,7 @@ void BattleUnit::setPosition(GameState &state, const Vec3<float> &pos)
 	}
 	if ((Vec3<int>)oldPosition != (Vec3<int>)position)
 	{
+		state.current_battle->notifyScanners(position);
 		refreshUnitVisibilityAndVision(state, oldPosition);
 		if (agent->type->spreadHazardDamageType)
 		{
@@ -3693,14 +3694,22 @@ bool BattleUnit::useItem(GameState &state, sp<AEquipment> item)
 		case AEquipmentType::Type::VortexAnalyzer:
 			return false;
 		case AEquipmentType::Type::MotionScanner:
-			if (!item->inUse && state.current_battle->mode == Battle::Mode::TurnBased)
+			if (item->inUse)
 			{
-				// 10% of max TUs
-				if (!spendTU(state, getMotionScannerCost()))
+				state.current_battle->removeScanner(state, *item);
+			}
+			else
+			{
+				if (state.current_battle->mode == Battle::Mode::TurnBased)
 				{
-					LogWarning("Notify unsufficient TU for motion scanner");
-					return false;
+					// 10% of max TUs
+					if (!spendTU(state, getMotionScannerCost()))
+					{
+						LogWarning("Notify unsufficient TU for motion scanner");
+						return false;
+					}
 				}
+				state.current_battle->addScanner(state, *item);
 			}
 			item->inUse = !item->inUse;
 			return true;

@@ -13,6 +13,7 @@
 #include "game/state/battle/battlemap.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
+#include "game/state/battle/battlescanner.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/battle/battleunitanimationpack.h"
 #include "game/state/battle/battleunitimagepack.h"
@@ -586,6 +587,23 @@ sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<DamageType> type
 	return hazard;
 }
 
+sp<BattleScanner> Battle::addScanner(GameState & state, AEquipment &item)
+{
+	auto scanner = mksp<BattleScanner>();
+	UString id = BattleScanner::generateObjectID(state);
+	item.battleScanner = { &state, id };
+	scanner->holder = item.ownerAgent->unit;
+	scanner->lastPosition = scanner->holder->position;
+	scanners[id] = scanner;
+	return scanner;
+}
+
+void Battle::removeScanner(GameState & state, AEquipment &item)
+{
+	state.current_battle->scanners.erase(item.battleScanner.id);
+	item.battleScanner.clear();
+}
+
 void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 {
 	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
@@ -907,6 +925,12 @@ void Battle::update(GameState &state, unsigned int ticks)
 		p->update(state, ticks);
 	}
 	Trace::end("Battle::update::items->update");
+	Trace::start("Battle::update::scanners->update");
+	Trace::end("Battle::update::scanners->update");
+	for (auto &o : this->scanners)
+	{
+		o.second->update(state, ticks);
+	}
 	Trace::start("Battle::update::units->update");
 	for (auto &o : this->units)
 	{
@@ -950,6 +974,14 @@ void Battle::setVisible(StateRef<Organisation> org, int x, int y, int z, bool va
 }
 
 void Battle::queueVisionRefresh(Vec3<int> tile) { tilesChangedForVision.insert(tile); }
+
+void Battle::notifyScanners(Vec3<int> position)
+{
+	for (auto &s : scanners)
+	{
+		s.second->notifyMovement(position);
+	}
+}
 
 void Battle::queuePathfindingRefresh(Vec3<int> tile)
 {
@@ -1730,6 +1762,16 @@ void Battle::finishBattle(GameState &state)
 	}
 
 	state.current_battle->unloadResources(state);
+	
+	// Remove active battle scanners
+	for (auto u : state.current_battle->units)
+	{
+		for (auto e : u.second->agent->equipment)
+		{
+			e->battleScanner.clear();
+		}
+	}
+	
 	//  - Identify how battle ended(if enemies present then Failure, otherwise Success)
 	//	- (Failure) Determine surviving player agents(kill all player agents that are too far from
 	// exits)

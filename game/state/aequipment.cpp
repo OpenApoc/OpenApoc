@@ -6,6 +6,7 @@
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battleitem.h"
+#include "game/state/battle/battlescanner.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/city/projectile.h"
 #include "game/state/gamestate.h"
@@ -269,6 +270,10 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 		if (!ownerAgent)
 		{
 			inUse = false;
+			if (battleScanner)
+			{
+				state.current_battle->removeScanner(state, *this);
+			}
 		}
 		// If in use - confirm we're still in the right place
 		else
@@ -280,6 +285,10 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 					break;
 				default:
 					inUse = false;
+					if (battleScanner)
+					{
+						state.current_battle->removeScanner(state, *this);
+					}
 					break;
 			}
 		}

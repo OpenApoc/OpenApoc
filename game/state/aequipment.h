@@ -14,6 +14,7 @@ static const unsigned TICKS_PER_RECHARGE = TICKS_PER_TURN;
 static const unsigned MAX_PAYLOAD_EXPLOSION_SHOTS = 10;
 
 class BattleItem;
+class BattleScanner;
 class BattleUnit;
 class Organisation;
 class Projectile;
@@ -78,6 +79,8 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 
 	// In use, for medikit and motion scanner
 	bool inUse = false;
+
+	StateRef<BattleScanner> battleScanner;
 
 	int getAccuracy(BodyState bodyState, MovementState movementState, WeaponAimingMode fireMode,
 	                bool thrown = false);

@@ -35,6 +35,7 @@ set (GAMESTATE_SOURCE_FILES
 	battle/battlemappart.cpp
 	battle/battlemappart_type.cpp
 	battle/battlemapsector.cpp
+	battle/battlescanner.cpp
 	battle/battleunit.cpp
 	battle/battleunitanimationpack.cpp
 	battle/battleunitimagepack.cpp
@@ -104,6 +105,7 @@ set (GAMESTATE_HEADER_FILES
 	battle/battlemappart_type.h
 	battle/battlemapsector.h
 	battle/battlemaptileset.h
+	battle/battlescanner.h
 	battle/battleunit.h
 	battle/battleunitanimationpack.h
 	battle/battleunitimagepack.h

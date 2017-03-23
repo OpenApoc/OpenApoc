@@ -43,6 +43,7 @@ class DoodadType;
 class BattleMap;
 class Vehicle;
 class Building;
+class BattleScanner;
 class Agent;
 enum class BattleUnitType;
 class BattleUnitTileHelper;
@@ -126,6 +127,9 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// Queue tile for vision update
 	void queueVisionRefresh(Vec3<int> tile);
 
+	// Notify scanners about movement at position
+	void notifyScanners(Vec3<int> position);
+
 	MissionType mission_type = MissionType::AlienExtermination;
 	UString mission_location_id;
 	Mode mode = Mode::RealTime;
@@ -136,6 +140,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	std::list<sp<BattleMapPart>> map_parts;
 	std::list<sp<BattleItem>> items;
 	StateRefMap<BattleUnit> units;
+	StateRefMap<BattleScanner> scanners;
 	std::list<sp<Doodad>> doodads;
 	std::set<sp<Projectile>> projectiles;
 	StateRefMap<BattleDoor> doors;
@@ -188,7 +193,9 @@ class Battle : public std::enable_shared_from_this<Battle>
 	sp<BattleHazard> placeHazard(GameState &state, StateRef<DamageType> type, Vec3<int> position,
 	                             int ttl, int power, int initialAgeTTLDivizor = 1,
 	                             bool delayVisibility = true);
-
+	sp<BattleScanner> addScanner(GameState &state, AEquipment &item);
+	void removeScanner(GameState &state, AEquipment &item);
+	
 	static void accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
 	                                    Vec3<float> &target, int accuracy, bool thrown = false);
 

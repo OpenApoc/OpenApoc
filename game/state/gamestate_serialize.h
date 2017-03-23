@@ -20,6 +20,7 @@
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/battle/battlemaptileset.h"
+#include "game/state/battle/battlescanner.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/battle/battleunitanimationpack.h"
 #include "game/state/battle/battleunitimagepack.h"

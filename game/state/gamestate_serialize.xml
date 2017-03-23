@@ -152,6 +152,7 @@
 		<member>weapon_fire_ticks_remaining</member>
 		<member>aimingMode</member>
 		<member>inUse</member>
+		<member>battleScanner</member>
 	</object>
 	<object>
 		<name>EquipmentSet</name>
@@ -405,6 +406,7 @@
 		<member>player_craft</member>
 		<member type="Section">map_parts</member>
 		<member type="Section">units</member>
+		<member type="Section">scanners</member>
 		<member>items</member>
 		<member>doodads</member>
 		<member>projectiles</member>
@@ -1563,5 +1565,13 @@
 		<member>type</member>
 		<member>ticksLastThink</member>
 		<member>ticksUntilReThink</member>
+	</object>
+	<object>
+		<name>BattleScanner</name>
+		<member>movementTicks</member>
+		<member>version</member>
+		<member>updateTicksAccumulated</member>
+		<member>lastPosition</member>
+		<member>holder</member>
 	</object>
 </openapoc_gamestate>
