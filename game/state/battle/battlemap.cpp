@@ -54,46 +54,120 @@ const UString &BattleMap::getId(const GameState &state, const sp<BattleMap> ptr)
 	return emptyString;
 }
 
+void addDebugTroops(GameState &state, std::list<StateRef<Agent>> &player_agents)
+{
+	std::list<std::pair<StateRef<Organisation>, StateRef<AgentType>>> otherParticipants;
+	auto aliens = state.getAliens();
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_SKELETOID"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_SKELETOID"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_SKELETOID"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_BRAINSUCKER"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_POPPER"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_MEGASPAWN"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_PSIMORPH"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_X-COM_BASE_TURRET_LASER"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_X-COM_BASE_TURRET_DISRUPTOR"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_SPITTER"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_MICRONOID_AGGREGATE"});
+	otherParticipants.emplace_back(aliens,
+									StateRef<AgentType>{&state, "AGENTTYPE_QUEENSPAWN"});
+	auto civilian = state.getCivilian();
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_ALIEN_GREY"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_ANDROID"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_FEMALE"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_FEMALE_1"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_FEMALE_2"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_MALE"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_MALE_1"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_MALE_2"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE_1"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE_2"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_POLITICIAN"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_FEMALE"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_FEMALE_1"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_FEMALE_2"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE_1"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE_2"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_MALE"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_MALE_1"});
+	otherParticipants.emplace_back(civilian,
+									StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_MALE_2"});
+	for (auto &pair : otherParticipants)
+	{
+		player_agents.push_back(state.agent_generator.createAgent(state, pair.first, pair.second));
+	}
+
+	// Just for lulz
+	aliens->current_relations[civilian] = -100.0f;
+}
+
 sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> organisation,
                                    std::list<StateRef<Agent>> &player_agents,
                                    StateRef<Vehicle> craft, StateRef<Vehicle> ufo)
 {
 	// FIXME: Generate list of agent types for enemies (and civs) properly
-	std::list<std::pair<StateRef<Organisation>, StateRef<AgentType>>> otherParticipants;
-	otherParticipants.emplace_back(organisation,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-	otherParticipants.emplace_back(organisation,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-	otherParticipants.emplace_back(organisation,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-	otherParticipants.emplace_back(organisation,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_SKELETOID"});
-	otherParticipants.emplace_back(organisation,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_SKELETOID"});
-	otherParticipants.emplace_back(organisation,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_SKELETOID"});
-	otherParticipants.emplace_back(organisation,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-	otherParticipants.emplace_back(organisation,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-	otherParticipants.emplace_back(organisation,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-	otherParticipants.emplace_back(organisation,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_BRAINSUCKER"});
-	otherParticipants.emplace_back(organisation, StateRef<AgentType>{&state, "AGENTTYPE_POPPER"});
-	otherParticipants.emplace_back(organisation,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
-	otherParticipants.emplace_back(organisation,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
-	otherParticipants.emplace_back(organisation,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
-	otherParticipants.emplace_back(organisation,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
+	addDebugTroops(state, player_agents);
 
-	for (auto &pair : otherParticipants)
-	{
-		player_agents.push_back(state.agent_generator.createAgent(state, pair.first, pair.second));
-	}
 	return ufo->type->battle_map->createBattle(state, organisation, player_agents, craft,
 	                                           Battle::MissionType::UfoRecovery, ufo.id);
 }
@@ -119,25 +193,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> orga
 	}
 	else
 	{
-		// FIXME: Generate list of aliens in the building properly
-		otherParticipants.emplace_back(state.getAliens(),
-		                               StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-		otherParticipants.emplace_back(state.getAliens(),
-		                               StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-		otherParticipants.emplace_back(state.getAliens(),
-		                               StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-		otherParticipants.emplace_back(state.getAliens(),
-		                               StateRef<AgentType>{&state, "AGENTTYPE_SKELETOID"});
-		otherParticipants.emplace_back(state.getAliens(),
-		                               StateRef<AgentType>{&state, "AGENTTYPE_SKELETOID"});
-		otherParticipants.emplace_back(state.getAliens(),
-		                               StateRef<AgentType>{&state, "AGENTTYPE_SKELETOID"});
-		otherParticipants.emplace_back(state.getAliens(),
-		                               StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-		otherParticipants.emplace_back(state.getAliens(),
-		                               StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-		otherParticipants.emplace_back(state.getAliens(),
-		                               StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
+		// FIXME: Generate list of agent types for enemies (and civs) properly
+		addDebugTroops(state, player_agents);
 
 		if (organisation == state.getAliens())
 		{
@@ -1080,6 +1137,13 @@ void BattleMap::fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state,
 	// We will assign their positions and "spawn" them in "BeginBattle" function
 	for (auto &a : agents)
 	{
+		if (!spawnCivilians && a->owner == state.getCivilian())
+		{
+			// Delete agent
+			state.agents.erase(a.id);
+			a->destroy();
+			continue;
+		}
 		if (b->participants.find(a->owner) == b->participants.end())
 		{
 			b->participants.insert(a->owner);
@@ -1093,10 +1157,6 @@ void BattleMap::fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state,
 		auto u = b->placeUnit(state, a);
 
 		u->updateDisplayedItem();
-		if (!spawnCivilians && a->owner == state.getCivilian())
-		{
-			u->retreated = true;
-		}
 	}
 
 	// Find out number of agents in each org

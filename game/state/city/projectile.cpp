@@ -20,11 +20,11 @@ namespace OpenApoc
 
 Projectile::Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> target,
                        Vec3<float> position, Vec3<float> velocity, int turnRate,
-                       unsigned int lifetime, int damage, unsigned int tail_length,
+                       unsigned int lifetime, int damage, int delay, unsigned int tail_length,
                        std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
                        StateRef<DoodadType> doodadType)
     : type(type), position(position), velocity(velocity), turnRate(turnRate), age(0),
-      lifetime(lifetime), damage(damage), firerVehicle(firer), firerPosition(firer->position),
+      lifetime(lifetime), damage(damage), delay_ticks_remaining(delay), firerVehicle(firer), firerPosition(firer->position),
       trackedVehicle(target), previousPosition(position), spritePositions({position}),
       tail_length(tail_length), projectile_sprites(projectile_sprites),
       sprite_distance(1.0f / TILE_Y_CITY), impactSfx(impactSfx), doodadType(doodadType),
@@ -37,12 +37,12 @@ Projectile::Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> tar
 }
 Projectile::Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target,
                        Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity,
-                       int turnRate, unsigned int lifetime, int damage, int depletionRate,
+                       int turnRate, unsigned int lifetime, int damage, int delay, int depletionRate,
                        unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
                        sp<Sample> impactSfx, StateRef<DoodadType> doodadType,
                        StateRef<DamageType> damageType)
     : type(type), position(position), velocity(velocity), turnRate(turnRate), age(0),
-      lifetime(lifetime), damage(damage), depletionRate(depletionRate), firerUnit(firer),
+      lifetime(lifetime), damage(damage), delay_ticks_remaining(delay), depletionRate(depletionRate), firerUnit(firer),
       firerPosition(firer->position), trackedUnit(target), targetPosition(targetPosition),
       previousPosition(position), spritePositions({position}), tail_length(tail_length),
       projectile_sprites(projectile_sprites), sprite_distance(1.0f / TILE_Y_BATTLE),
@@ -63,6 +63,22 @@ Projectile::Projectile()
 
 void Projectile::update(GameState &state, unsigned int ticks)
 {
+	// Delay the projectile accordingly
+	if (delay_ticks_remaining > ticks)
+	{
+		delay_ticks_remaining -= ticks;
+		return;
+	}
+	else
+	{
+		ticks -= delay_ticks_remaining;
+		delay_ticks_remaining = 0;
+		if (ticks == 0)
+		{
+			return;
+		}
+	}
+
 	if (ownerInvulnerableTicks > ticks)
 	{
 		ownerInvulnerableTicks -= ticks;

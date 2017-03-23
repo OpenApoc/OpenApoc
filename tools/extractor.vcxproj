@@ -26,7 +26,17 @@
     <ClCompile Include="extractors\extract_agent_equipment.cpp" />
     <ClCompile Include="extractors\extract_agent_types.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_pack_chrysalis.cpp" />
+    <ClCompile Include="extractors\extract_unit_animation_pack_civ.cpp" />
+    <ClCompile Include="extractors\extract_unit_animation_pack_egg.cpp" />
+    <ClCompile Include="extractors\extract_unit_animation_pack_gun.cpp" />
+    <ClCompile Include="extractors\extract_unit_animation_pack_hyper.cpp" />
+    <ClCompile Include="extractors\extract_unit_animation_pack_mega.cpp" />
+    <ClCompile Include="extractors\extract_unit_animation_pack_micro.cpp" />
+    <ClCompile Include="extractors\extract_unit_animation_pack_multi.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_pack_popper.cpp" />
+    <ClCompile Include="extractors\extract_unit_animation_pack_psi.cpp" />
+    <ClCompile Include="extractors\extract_unit_animation_pack_q.cpp" />
+    <ClCompile Include="extractors\extract_unit_animation_pack_spitter.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_pack_template.cpp" />
     <ClCompile Include="extractors\extract_base_layouts.cpp" />
     <ClCompile Include="extractors\extract_battlescape_map.cpp" />

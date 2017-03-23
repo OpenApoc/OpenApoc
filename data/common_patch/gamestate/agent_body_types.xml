@@ -6,10 +6,14 @@
       <allowed_body_states>
         <entry>Standing</entry>
         <entry>Downed</entry>
+		<entry>Dead</entry>
       </allowed_body_states>
       <allowed_movement_states>
         <entry>None</entry>
       </allowed_movement_states>
+      <allowed_fire_movement_states>
+        <entry>None</entry>
+      </allowed_fire_movement_states>
       <allowed_facing>
       </allowed_facing>
       <maxHeight>32</maxHeight>

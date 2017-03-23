@@ -185,7 +185,7 @@ bool readXml(std::istream &in, StateDefinition &state)
 						else
 						{
 							std::cerr << "Unknown enum external attribute \"" << externalValue
-								<< "\"\n";
+							          << "\"\n";
 						}
 					}
 					auto valueNode = objectNode.first_child();

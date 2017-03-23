@@ -39,8 +39,8 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 	}
 
 	// Support 'from' being nullptr for if a vehicle is being spawned in the map
-	bool canEnterTile(Tile *from, Tile *to, bool allowJumping, bool &jumped, float &cost, bool &,
-	                  bool, bool) const override
+	bool canEnterTile(Tile *from, Tile *to, bool, bool &, float &cost, bool &, bool,
+	                  bool) const override
 	{
 		Vec3<int> fromPos = {0, 0, 0};
 		if (from)

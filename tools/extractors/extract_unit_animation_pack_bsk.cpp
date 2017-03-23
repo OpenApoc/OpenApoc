@@ -29,10 +29,15 @@ void InitialGameStateExtractor::extractAnimationPackBsk(sp<BattleUnitAnimationPa
 
 			// Standart animations
 			{
-				// Downed state: 5's last frame (#2)
+				// Dead state: 5's last frame (#2)
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
-				                        BodyState::Downed}][{x, y}] =
+				                        BodyState::Dead}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 5, {x, y}, 100, 2, false);
+
+				// Downed state: frozen frame 143, regardless of where it looks
+				p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
+										BodyState::Downed}][{x, y}] =
+					makeUpAnimationEntry(143, 1, 0, 0, 1, { 0,0 }, 100);
 
 				// Standing state: 2's first frame
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
@@ -47,7 +52,7 @@ void InitialGameStateExtractor::extractAnimationPackBsk(sp<BattleUnitAnimationPa
 				// Running state: 2
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
 				                        MovementState::Running, BodyState::Standing}][{x, y}] =
-				    getAnimationEntry(dataAD, dataUA, dataUF, 2, {x, y}, wFrames);
+				    getAnimationEntry(dataAD, dataUA, dataUF, 2, {x, y}, rFrames);
 
 				// Jumping state: 3's last frame (#9)
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
@@ -62,10 +67,10 @@ void InitialGameStateExtractor::extractAnimationPackBsk(sp<BattleUnitAnimationPa
 
 			// Body state change animations
 			{
-				// Body Standing -> Downned animation: 5
+				// Body Standing -> Dead animation: 5
 				p->body_state_animations[{ItemWieldMode::None, HandState::AtEase,
 				                          MovementState::None, BodyState::Standing,
-				                          BodyState::Downed}][{x, y}] =
+				                          BodyState::Dead}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 5, {x, y});
 
 				// Body Standing -> Jumping animation: 3

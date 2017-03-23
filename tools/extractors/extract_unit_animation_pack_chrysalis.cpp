@@ -21,7 +21,6 @@ makeUpChrysalisAnimationEntry(int from, int count, int fromB, int countB, bool b
 		from = fromB;
 		count = countB;
 	}
-	int to = from + count;
 
 	for (int i = 0; i < (bidirectional ? count * 2 : count); i++)
 	{
@@ -77,13 +76,21 @@ void extractAnimationPackChrysalisInternal(sp<BattleUnitAnimationPack> p, bool f
 
 	// Dying state:
 	p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
-	                          BodyState::Prone, BodyState::Downed}][{x, y}] =
+	                          BodyState::Prone, BodyState::Dead}][{x, y}] =
 	    makeUpChrysalisAnimationEntry(0, 0, first ? 2 : 8, 6, false, {-17, first ? -16 : -8});
+	p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
+	                          BodyState::Downed, BodyState::Dead}][{x, y}] =
+	    makeUpChrysalisAnimationEntry(0, 0, first ? 2 : 8, 6, false, {-17, first ? -16 : -8});
+
+	// Dead state:
+	p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
+	                        BodyState::Dead}][{x, y}] =
+	    makeUpChrysalisAnimationEntry(0, 0, first ? 7 : 13, 1, false, {-5, first ? -22 : -2});
 
 	// Downed state:
 	p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
-	                        BodyState::Downed}][{x, y}] =
-	    makeUpChrysalisAnimationEntry(0, 0, first ? 7 : 13, 1, false, {-5, first ? -22 : -2});
+		BodyState::Downed}][{x, y}] =
+		makeUpChrysalisAnimationEntry(first ? 0 : 5, 1, first ? 0 : 1, 1, true, { -5, first ? -30 : -18 }, first);
 }
 
 void InitialGameStateExtractor::extractAnimationPackChrysalis(sp<BattleUnitAnimationPack> p,

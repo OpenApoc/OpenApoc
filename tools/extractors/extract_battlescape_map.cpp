@@ -312,7 +312,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 				// values
 				if (los_block->spawn_priority > 0)
 				{
-					los_block->spawn_large_units = ldata.spawn_large == 1;
+					los_block->spawn_large_units = ldata.spawn_large == 1 && z_min != z_max;
 					los_block->spawn_walking_units = ldata.spawn_walkers == 1;
 					switch (ldata.spawn_type)
 					{

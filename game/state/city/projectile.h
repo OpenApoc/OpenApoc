@@ -50,12 +50,12 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	// FIXME: Make this a non-constant colour?
 	// FIXME: Width is currently just used for drawing - TODO What is "collision" size of beams?
 	Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> target, Vec3<float> position,
-	           Vec3<float> velocity, int turnRate, unsigned int lifetime, int damage,
+	           Vec3<float> velocity, int turnRate, unsigned int lifetime, int damage, int delay,
 	           unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
 	           sp<Sample> impactSfx, StateRef<DoodadType> doodadType);
 	Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target,
 	           Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity, int turnRate,
-	           unsigned int lifetime, int damage, int depletionRate, unsigned int tail_length,
+	           unsigned int lifetime, int damage, int delay, int depletionRate, unsigned int tail_length,
 	           std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
 	           StateRef<DoodadType> doodadType, StateRef<DamageType> damageType);
 	Projectile();
@@ -80,6 +80,7 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	unsigned int age = 0;
 	unsigned int lifetime = 0;
 	int damage = 0;
+	int delay_ticks_remaining = 0;
 	int depletionRate = 0;
 	StateRef<Vehicle> firerVehicle;
 	StateRef<BattleUnit> firerUnit;

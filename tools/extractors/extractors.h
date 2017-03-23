@@ -117,6 +117,10 @@ class InitialGameStateExtractor
   public:
 	// Unit animation packs functions
 
+	sp<BattleUnitAnimationPack::AnimationEntry>
+		  combineAnimationEntries(sp<BattleUnitAnimationPack::AnimationEntry> e1,
+			  sp<BattleUnitAnimationPack::AnimationEntry> e2) const;
+
 	sp<BattleUnitAnimationPack::AnimationEntry> getAnimationEntry(
 	    const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
 	    std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
@@ -154,10 +158,11 @@ class InitialGameStateExtractor
 	                     const std::vector<AnimationDataUA> &dataUA,
 	                     std::vector<AnimationDataUF> &dataUF, int index, Vec2<int> direction,
 	                     //
-	                     int units_per_100_frames = 100, bool isOverlay = false) const
+	                     int units_per_100_frames = 100, bool isOverlay = false,
+	                     Vec2<int> targetOffset = {0, 0}, Vec2<int> beginOffset = {0, 0}) const
 	{
 		return getAnimationEntry(dataAD, dataUA, dataUF, index, direction, units_per_100_frames, 0,
-		                         false, isOverlay, false, {0, 0}, {0, 0}, true);
+		                         false, isOverlay, false, targetOffset, beginOffset, true);
 	}
 
 	sp<BattleUnitAnimationPack::AnimationEntry>
@@ -214,8 +219,46 @@ class InitialGameStateExtractor
 	                             const std::vector<AnimationDataUA> &dataUA,
 	                             std::vector<AnimationDataUF> &dataUF) const;
 
+	void extractAnimationPackMega(sp<BattleUnitAnimationPack> p,
+	                              const std::vector<AnimationDataAD> &dataAD,
+	                              const std::vector<AnimationDataUA> &dataUA,
+	                              std::vector<AnimationDataUF> &dataUF) const;
+
+	void extractAnimationPackPsi(sp<BattleUnitAnimationPack> p,
+	                              const std::vector<AnimationDataAD> &dataAD,
+	                              const std::vector<AnimationDataUA> &dataUA,
+	                              std::vector<AnimationDataUF> &dataUF) const;
+
+	void extractAnimationPackMulti(sp<BattleUnitAnimationPack> p,
+	                              const std::vector<AnimationDataAD> &dataAD,
+	                              const std::vector<AnimationDataUA> &dataUA,
+	                              std::vector<AnimationDataUF> &dataUF) const;
+
+	void extractAnimationPackHyper(sp<BattleUnitAnimationPack> p,
+	                              const std::vector<AnimationDataAD> &dataAD,
+	                              const std::vector<AnimationDataUA> &dataUA,
+	                              std::vector<AnimationDataUF> &dataUF) const;
+
+	void extractAnimationPackSpitter(sp<BattleUnitAnimationPack> p,
+	                              const std::vector<AnimationDataAD> &dataAD,
+	                              const std::vector<AnimationDataUA> &dataUA,
+	                              std::vector<AnimationDataUF> &dataUF) const;
+
+	void extractAnimationPackCiv(sp<BattleUnitAnimationPack> p,
+	                              const std::vector<AnimationDataAD> &dataAD,
+	                              const std::vector<AnimationDataUA> &dataUA,
+	                              std::vector<AnimationDataUF> &dataUF) const;
+
 	void extractAnimationPackPopper(sp<BattleUnitAnimationPack> p) const;
+	
+	void extractAnimationPackMicro(sp<BattleUnitAnimationPack> p) const;
+
+	void extractAnimationPackQ(sp<BattleUnitAnimationPack> p) const;
+
+	void extractAnimationPackGun(sp<BattleUnitAnimationPack> p) const;
 
 	void extractAnimationPackChrysalis(sp<BattleUnitAnimationPack> p, bool first) const;
+	
+	void extractAnimationPackEgg(sp<BattleUnitAnimationPack> p, bool first) const;
 };
 }

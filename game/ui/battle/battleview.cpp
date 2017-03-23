@@ -378,32 +378,21 @@ BattleView::BattleView(sp<GameState> gameState)
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
 		    for (auto u : this->battle.battleViewSelectedUnits)
 		    {
-			    if (u->agent->isBodyStateAllowed(BodyState::Prone))
-			    {
-				    u->movement_mode = MovementMode::Prone;
-			    }
+			    u->setMovementMode(MovementMode::Prone);
 		    }
 		});
 	this->baseForm->findControl("BUTTON_WALK")
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
 		    for (auto u : this->battle.battleViewSelectedUnits)
 		    {
-			    if (u->agent->isBodyStateAllowed(BodyState::Standing) ||
-			        u->agent->isBodyStateAllowed(BodyState::Flying))
-			    {
-				    u->movement_mode = MovementMode::Walking;
-			    }
+			    u->setMovementMode(MovementMode::Walking);
 		    }
 		});
 	this->baseForm->findControl("BUTTON_RUN")
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
 		    for (auto u : this->battle.battleViewSelectedUnits)
 		    {
-			    if (u->agent->isBodyStateAllowed(BodyState::Standing) ||
-			        u->agent->isBodyStateAllowed(BodyState::Flying))
-			    {
-				    u->movement_mode = MovementMode::Running;
-			    }
+			    u->setMovementMode(MovementMode::Running);
 		    }
 		});
 	this->baseForm->findControl("BUTTON_EVASIVE")
@@ -1570,6 +1559,7 @@ void BattleView::orderUse(bool right, bool automatic)
 		// Usable items that care not for automatic mode
 		case AEquipmentType::Type::Popper:
 		case AEquipmentType::Type::Brainsucker:
+		case AEquipmentType::Type::Spawner:
 			unit->useItem(*state, item);
 			break;
 		// Items that do nothing
@@ -1822,7 +1812,7 @@ void BattleView::eventOccurred(Event *e)
 	     e->keyboard().KeyCode == SDLK_r || e->keyboard().KeyCode == SDLK_a ||
 	     e->keyboard().KeyCode == SDLK_p || e->keyboard().KeyCode == SDLK_h ||
 	     e->keyboard().KeyCode == SDLK_k || e->keyboard().KeyCode == SDLK_q ||
-	     e->keyboard().KeyCode == SDLK_j))
+		  e->keyboard().KeyCode == SDLK_s || e->keyboard().KeyCode == SDLK_j))
 	{
 		switch (e->keyboard().KeyCode)
 		{
@@ -1917,10 +1907,10 @@ void BattleView::eventOccurred(Event *e)
 				}
 				break;
 			}
-			case SDLK_k:
+			case SDLK_s:
 			{
 				bool inverse = modifierLShift || modifierRShift;
-				bool local = modifierLCtrl || modifierRCtrl;
+				bool local = !(modifierLCtrl || modifierRCtrl);
 				for (auto &u : battle.units)
 				{
 					if (u.second->isDead())
@@ -1935,7 +1925,31 @@ void BattleView::eventOccurred(Event *e)
 					      glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
 					          5.0f)) == !inverse)
 					{
+						u.second->dealDamage(*state, 9001, false, BodyPart::Helmet, u.second->getHealth() + 4);
+					}
+				}
+				break;
+			}
+			case SDLK_k:
+			{
+				bool inverse = modifierLShift || modifierRShift;
+				bool local = !(modifierLCtrl || modifierRCtrl);
+				for (auto &u : battle.units)
+				{
+					if (u.second->isDead())
+					{
+						continue;
+					}
+
+					if (((local &&
+						u.second->tileObject->getOwningTile()->position ==
+						selectedTilePosition) ||
+						(!local &&
+							glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
+							5.0f)) == !inverse)
+					{
 						u.second->die(*state);
+						u.second->tileObject->removeFromMap();
 						u.second->destroyed = true;
 					}
 				}
@@ -1955,6 +1969,7 @@ void BattleView::eventOccurred(Event *e)
 
 						u.second->agent->modified_stats.psi_defence = 0;
 						u.second->agent->modified_stats.psi_attack = 100;
+						u.second->agent->modified_stats.psi_energy = 100;
 					}
 					break;
 				}
@@ -2106,7 +2121,9 @@ void BattleView::eventOccurred(Event *e)
 			{
 				for (auto u : objsOccupying)
 				{
-					if (player->isRelatedTo(u->owner) == Organisation::Relation::Hostile && battle.visibleUnits[player].find({ &*state, u->id }) != battle.visibleUnits[player].end())
+					if (player->isRelatedTo(u->owner) == Organisation::Relation::Hostile &&
+					    battle.visibleUnits[player].find({&*state, u->id}) !=
+					        battle.visibleUnits[player].end())
 					{
 						attackTarget = u;
 						break;
@@ -2117,14 +2134,18 @@ void BattleView::eventOccurred(Event *e)
 			{
 				for (auto u : objsPresent)
 				{
-					if (player->isRelatedTo(u->owner) == Organisation::Relation::Hostile && battle.visibleUnits[player].find({ &*state, u->id }) != battle.visibleUnits[player].end())
+					if (player->isRelatedTo(u->owner) == Organisation::Relation::Hostile &&
+					    battle.visibleUnits[player].find({&*state, u->id}) !=
+					        battle.visibleUnits[player].end())
 					{
 						attackTarget = u;
 						break;
 					}
 				}
 			}
-			if (!attackTarget && unitPresent && battle.visibleUnits[player].find({ &*state, unitPresent->id }) != battle.visibleUnits[player].end())
+			if (!attackTarget && unitPresent && (unitPresent->owner == player ||
+			    battle.visibleUnits[player].find({&*state, unitPresent->id}) !=
+			        battle.visibleUnits[player].end()))
 			{
 				attackTarget = unitPresent;
 			}
@@ -2376,13 +2397,17 @@ void BattleView::eventOccurred(Event *e)
 									// Do nothing
 									break;
 							}
-							if (attackTarget)
+							bool modified = (modifierLAlt || modifierRAlt);
+							if (modified)
+							{
+								orderFire(t, status, modified);
+							}
+							else if (attackTarget)
 							{
 								orderFire({&*state, attackTarget->id}, status);
 							}
 							else
 							{
-								bool modified = (modifierLAlt || modifierRAlt);
 								orderFire(t, status, modified);
 							}
 							break;

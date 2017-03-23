@@ -1427,7 +1427,7 @@ bool BattleUnitMission::getNextBodyState(GameState &state, BattleUnit &u, BodySt
 	}
 }
 
-MovementState BattleUnitMission::getNextMovementState(GameState &state, BattleUnit &u)
+MovementState BattleUnitMission::getNextMovementState(GameState &, BattleUnit &u)
 {
 	if (cancelled)
 	{
@@ -1809,8 +1809,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 		}
 		case Type::GotoLocation:
 			// Check if can move
-			if (!u.agent->isMovementStateAllowed(MovementState::Normal) &&
-			    !u.agent->isMovementStateAllowed(MovementState::Running))
+			if (!u.canMove())
 			{
 				cancelled = true;
 				return;
@@ -1862,9 +1861,15 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 		case Type::ReachGoal:
 			// Reset target body state
 			targetBodyState = u.target_body_state;
+			// If can't move reach immediately
+			if (!u.canMove())
+			{
+				u.setPosition(state, u.goalPosition);
+				u.atGoal = true;
+			}
 			return;
 		case Type::Jump:
-			cancelled = u.isLarge() || !u.canLaunch(state, jumpTarget);
+			cancelled = u.isLarge() || !u.canLaunch(jumpTarget);
 			return;
 		case Type::ChangeBodyState:
 		case Type::AcquireTU:
@@ -2018,12 +2023,13 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 
 	// See if we can actually go there
 	auto tFrom = u.tileObject->getOwningTile();
-	auto tTo = tFrom->map.getTile(pos);
+	auto &map = tFrom->map;
+	auto tTo = map.getTile(pos);
 	float cost = 0;
 	bool jumped = false;
 	bool closedDoorInTheWay = false;
 	if (tFrom->position != pos &&
-	    !BattleUnitTileHelper{tFrom->map, u}.canEnterTile(tFrom, tTo, !u.canFly(), jumped, cost,
+	    !BattleUnitTileHelper{map, u}.canEnterTile(tFrom, tTo, !u.canFly(), jumped, cost,
 	                                                      closedDoorInTheWay, true))
 	{
 		// Next tile became impassable, pick a new path
@@ -2043,20 +2049,22 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 	// then update current position and iterator
 	float newCost = 0;
 	bool newDoorInWay = false;
+	bool newJumped = false;
 	while (it != currentPlannedPath.end() &&
 	       (tFrom->position == *it ||
 	        (allowSkipNodes &&
-	         BattleUnitTileHelper{tFrom->map, u}.canEnterTile(
-	             tFrom, tFrom->map.getTile(*it), !u.canFly(), jumped, newCost, newDoorInWay))))
+	         BattleUnitTileHelper{map, u}.canEnterTile(
+	             tFrom, map.getTile(*it), !u.canFly(), newJumped, newCost, newDoorInWay))))
 	{
 		currentPlannedPath.pop_front();
 		it = ++currentPlannedPath.begin();
 		pos = *it++;
-		tTo = tFrom->map.getTile(pos);
+		tTo = map.getTile(pos);
 		cost = newCost;
 		closedDoorInTheWay = newDoorInWay;
-		if (jumped)
+		if (newJumped)
 		{
+			jumped = true;
 			break;
 		}
 	}
@@ -2073,11 +2081,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 				targetBodyState = BodyState::Standing;
 				return false;
 			}
-			else
-			{
-				// Can change to jumping on-the-go
-				targetBodyState = BodyState::Jumping;
-			}
+			// We will change to jumping after we ensure noone is blocking
 		}
 		else
 		{
@@ -2106,6 +2110,8 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 				// - If we are in strafe mode - we never go prone
 				// - If we want to go prone but cannot go prone - we should act as if
 				//    we're told to walk/run
+				// - We can expect that we can enter the target tile
+				// - We can expect agent to be able to either stand, fly or prone
 				// ----
 				// If we want to move standing up but not standing/flying - go standing/flying
 				// appropriately to the terrain
@@ -2114,9 +2120,23 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 				{
 					auto t = u.tileObject->getOwningTile();
 					targetBodyState =
-					    t->getCanStand(u.isLarge()) && t->map.getTile(pos)->getCanStand(u.isLarge())
-					        ? BodyState::Standing
-					        : BodyState::Flying;
+						t->getCanStand(u.isLarge()) && map.getTile(pos)->getCanStand(u.isLarge())
+						? BodyState::Standing
+						: BodyState::Flying;
+					if (!u.agent->isBodyStateAllowed(targetBodyState))
+					{
+						if (u.agent->isBodyStateAllowed(BodyState::Flying))
+						{
+							targetBodyState = BodyState::Flying;
+						}
+						else
+						{
+							// We have to move standing up, but we cannot as we can only prone
+							// This will temporarily allow us to go prone violating prone rules
+							// Otherwise prone units would be immobile when cornered
+							targetBodyState = BodyState::Prone;
+						}
+					}
 					if (targetBodyState != u.current_body_state)
 					{
 						return false;
@@ -2215,10 +2235,17 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 		return false;
 	}
 
+	// Now finally we can go jumping
+	if (jumped)
+	{		
+		// Can change to jumping on-the-go
+		targetBodyState = BodyState::Jumping;
+	}
+
 	// Finally, we're moving!
 	currentPlannedPath.pop_front();
 
-	dest = u.tileObject->map.getTile(pos)->getRestingPosition(u.isLarge());
+	dest = map.getTile(pos)->getRestingPosition(u.isLarge());
 
 	// Land on the edge if jumping
 	if (jumped)
@@ -2295,7 +2322,7 @@ bool BattleUnitMission::advanceFacing(GameState &state, BattleUnit &u, Vec2<int>
 bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodyState targetState,
                                          BodyState &dest)
 {
-	if (targetState == u.target_body_state)
+ 	if (targetState == u.target_body_state)
 	{
 		return false;
 	}
@@ -2306,34 +2333,37 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodySt
 	}
 
 	// Transition for stance changes
-
-	// If trying to fly stand up first
-	if (targetState == BodyState::Flying && u.current_body_state != BodyState::Standing)
+	if (targetBodyState != BodyState::Dead && targetBodyState != BodyState::Downed)
 	{
-		return advanceBodyState(state, u, BodyState::Standing, dest);
-	}
-	// If trying to stop flying stand up first
-	if (targetState != BodyState::Standing && u.current_body_state == BodyState::Flying &&
-	    u.agent->isBodyStateAllowed(BodyState::Standing))
-	{
-		return advanceBodyState(state, u, BodyState::Standing, dest);
-	}
-	// If trying to stand up from prone go kneel first
-	if (targetState != BodyState::Kneeling && u.current_body_state == BodyState::Prone &&
-	    u.agent->isBodyStateAllowed(BodyState::Kneeling))
-	{
-		return advanceBodyState(state, u, BodyState::Kneeling, dest);
-	}
-	// If trying to go prone from not kneeling then kneel first
-	if (targetState == BodyState::Prone && u.current_body_state != BodyState::Kneeling &&
-	    u.agent->isBodyStateAllowed(BodyState::Kneeling))
-	{
-		return advanceBodyState(state, u, BodyState::Kneeling, dest);
-	}
-	// If trying to throw then stand first
-	if (targetState == BodyState::Throwing && u.current_body_state != BodyState::Standing)
-	{
-		return advanceBodyState(state, u, BodyState::Standing, dest);
+		// If trying to fly stand up first
+		if (targetState == BodyState::Flying && u.current_body_state != BodyState::Standing &&
+			u.agent->isBodyStateAllowed(BodyState::Standing))
+		{
+			return advanceBodyState(state, u, BodyState::Standing, dest);
+		}
+		// If trying to stop flying stand up first
+		if (targetState != BodyState::Standing && u.current_body_state == BodyState::Flying &&
+			u.agent->isBodyStateAllowed(BodyState::Standing))
+		{
+			return advanceBodyState(state, u, BodyState::Standing, dest);
+		}
+		// If trying to go anywhere from prone go kneel first
+		if (targetState != BodyState::Kneeling && u.current_body_state == BodyState::Prone &&
+			u.agent->isBodyStateAllowed(BodyState::Kneeling))
+		{
+			return advanceBodyState(state, u, BodyState::Kneeling, dest);
+		}
+		// If trying to go prone from anywhere then kneel first
+		if (targetState == BodyState::Prone && u.current_body_state != BodyState::Kneeling &&
+			u.agent->isBodyStateAllowed(BodyState::Kneeling))
+		{
+			return advanceBodyState(state, u, BodyState::Kneeling, dest);
+		}
+		// If trying to throw then stand up first
+		if (targetState == BodyState::Throwing && u.current_body_state != BodyState::Standing)
+		{
+			return advanceBodyState(state, u, BodyState::Standing, dest);
+		}
 	}
 
 	// Calculate and spend cost

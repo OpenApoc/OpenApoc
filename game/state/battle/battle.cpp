@@ -193,6 +193,7 @@ void Battle::initBattle(GameState &state, bool first)
 	// On first run, init support links and items, do vsibility and pathfinding, reset AI
 	if (first)
 	{
+		initialMapPartRemoval(state);
 		initialMapPartLinkUp();
 		for (auto &o : this->items)
 		{
@@ -281,6 +282,40 @@ void linkUpList(std::list<BattleMapPart *> list)
 	{
 		(*cur)->cancelCollapse();
 		(*prev)->supportedParts.emplace_back((*cur)->position, (*cur)->type->type);
+	}
+}
+
+// Remove all solid walls and ground that ended up inside large units
+// For now, removes only ground
+void Battle::initialMapPartRemoval(GameState &state)
+{
+	for (auto u : units)
+	{
+		if (!u.second->isLarge())
+			continue;
+		for (int x = 0; x < 1; x++)
+		{
+			for (int y = 0; y < 1; y++)
+			{
+				auto t = map->getTile(u.second->position + Vec3<float>{-x, -y, 1.0f});
+				if (t->solidGround)
+				{
+					std::list<sp<TileObjectBattleMapPart>> partsToKill;
+					for (auto o : t->ownedObjects)
+					{
+						if (o->getType() == TileObject::Type::Ground)
+						{
+							partsToKill.push_back(std::static_pointer_cast<TileObjectBattleMapPart>(o));
+						}
+					}
+					for (auto p : partsToKill)
+					{
+						LogWarning("Removing MP %s at %s as it's blocking unit %s", p->getOwner()->type.id, p->getPosition(), u.first);
+						p->getOwner()->die(state, false, false);
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -394,6 +429,13 @@ sp<BattleUnit> Battle::spawnUnit(GameState &state, StateRef<Organisation> owner,
 	unit->setMission(state, BattleUnitMission::changeStance(*unit, tarState));
 	unit->assignToSquad(*state.current_battle);
 	unit->refreshUnitVisibilityAndVision(state, unit->position);
+
+	unit->strategyImages = state.battle_common_image_list->strategyImages;
+	unit->burningDoodad = state.battle_common_image_list->burningDoodad;
+	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
+	unit->psiSuccessSounds = state.battle_common_sample_list->psiSuccessSounds;
+	unit->psiFailSounds = state.battle_common_sample_list->psiFailSounds;
+
 	return unit;
 }
 
@@ -1620,22 +1662,22 @@ void Battle::enterBattle(GameState &state)
 		if (u->agent->isBodyStateAllowed(BodyState::Standing))
 		{
 			u->setBodyState(state, BodyState::Standing);
-			u->movement_mode = MovementMode::Walking;
+			u->setMovementMode(MovementMode::Walking);
 		}
 		else if (u->agent->isBodyStateAllowed(BodyState::Flying))
 		{
 			u->setBodyState(state, BodyState::Flying);
-			u->movement_mode = MovementMode::Walking;
+			u->setMovementMode(MovementMode::Walking);
 		}
 		else if (u->agent->isBodyStateAllowed(BodyState::Kneeling))
 		{
 			u->setBodyState(state, BodyState::Kneeling);
-			u->movement_mode = MovementMode::Prone;
+			u->setMovementMode(MovementMode::Prone);
 		}
 		else if (u->agent->isBodyStateAllowed(BodyState::Prone))
 		{
 			u->setBodyState(state, BodyState::Prone);
-			u->movement_mode = MovementMode::Prone;
+			u->setMovementMode(MovementMode::Prone);
 		}
 		else
 		{
@@ -1767,7 +1809,11 @@ void Battle::loadImagePacks(GameState &state)
 				auto packName = BattleUnitImagePack::getNameFromID(ip.second.id);
 				if (imagePacks.find(packName) == imagePacks.end())
 					imagePacks.insert(packName);
-				if (!hyperwormFound && packName == hyperworm)
+				if (packName == hyperworm)
+				{
+					hyperwormFound = true;
+				}
+				if (!hyperwormFound && packName == multiworm)
 				{
 					imagePacks.insert(hyperworm);
 					imagePacks.insert(hyperworm + "s");
@@ -1863,7 +1909,11 @@ void Battle::loadAnimationPacks(GameState &state)
 			{
 				animationPacks.insert(packName);
 			}
-			if (!hyperwormFound && packName == hyperworm)
+			if (packName == hyperworm)
+			{
+				hyperwormFound = true;
+			}
+			if (!hyperwormFound && packName == multiworm)
 			{
 				animationPacks.insert(hyperworm);
 				hyperwormFound = true;

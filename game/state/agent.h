@@ -43,6 +43,7 @@ enum class BodyState
 	Jumping,
 	Throwing,
 	Downed,
+	Dead
 };
 enum class HandState
 {
@@ -80,6 +81,7 @@ class AgentStats
 	int reactions = 0;
 	int speed = 0;
 	int getActualSpeedValue() const { return (speed + 3) / 8; }
+	int getMovementSpeed() const { return std::max(3, getActualSpeedValue()); }
 	int getDisplaySpeedValue() const { return 8 * getActualSpeedValue(); }
 	int time_units = 0;
 	void restoreTU() { time_units = speed; }
@@ -203,6 +205,8 @@ class AgentType : public StateObject
 	bool allowsDirectControl = false;
 	// AI type used by this
 	AIType aiType;
+	// Fatal woulds immunity
+	bool immuneToFatalWounds = false;
 
 	StateRef<DamageType> spreadHazardDamageType;
 	int spreadHazardMinPower = 0;
@@ -237,6 +241,8 @@ class AgentBodyType : public StateObject
 	// If unit is to be allowed to move at all, it should have at least Normal or Running movement
 	// state allowed
 	std::set<MovementState> allowed_movement_states;
+	// Allowed movement stats from which unit can fire
+	std::set<MovementState> allowed_fire_movement_states;
 	// Allowed facings, for every appearance. Empty means every facing is allowed
 	std::vector<std::set<Vec2<int>>> allowed_facing;
 
@@ -279,6 +285,7 @@ class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 	sp<AEquipment> getArmor(BodyPart bodyPart) const;
 	bool isBodyStateAllowed(BodyState bodyState) const;
 	bool isMovementStateAllowed(MovementState movementState) const;
+	bool isFireDuringMovementStateAllowed(MovementState movementState) const;
 	bool isFacingAllowed(Vec2<int> facing) const;
 	const std::set<Vec2<int>> *getAllowedFacings() const;
 

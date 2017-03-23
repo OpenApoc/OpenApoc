@@ -338,12 +338,15 @@ void BattleUnit::calculateVisionToUnits(GameState &state, Battle &battle, TileMa
 		{
 			continue;
 		}
-		// FIXME: This likely won't work properly for large units
-		// Idea here is to LOS to the center of the occupied tile
-		auto target = u.tileObject->getCenter();
-		target.x = (int)target.x + 0.5f;
-		target.y = (int)target.y + 0.5f;
-		target.z = (int)target.z + 0.5f;
+ 		auto target = u.tileObject->getCenter();
+		if (u.isLarge())
+		{
+			// Offset search for large units as they can get caught up in ground
+			// that is supposed to allow units to go through it but blocks LOS
+			auto targetvVectorDelta = glm::normalize( target - eyesPos) * 0.75f;
+			target -= targetvVectorDelta;
+
+		}
 		auto c =
 		    map.findCollision(eyesPos, target, mapPartSet, tileObject, true, false, VIEW_DISTANCE);
 		if (c || c.outOfRange)
@@ -567,6 +570,14 @@ bool BattleUnit::hasLineToUnit(const sp<BattleUnit> unit, bool useLOS) const
 {
 	auto muzzleLocation = getMuzzleLocation();
 	auto targetPosition = unit->tileObject->getVoxelCentrePosition();
+	if (unit->isLarge())
+	{
+		// Offset search for large units as they can get caught up in ground
+		// that is supposed to allow units to go through it but blocks LOS
+		auto targetvVectorDelta = glm::normalize(targetPosition - muzzleLocation) * 0.75f;
+		targetPosition -= targetvVectorDelta;
+
+	}
 	// Map part that prevents Line to target
 	auto cMap = tileObject->map.findCollision(muzzleLocation, targetPosition, mapPartSet,
 	                                          tileObject, useLOS);
@@ -652,7 +663,7 @@ int BattleUnit::getPsiChance(StateRef<BattleUnit> target, PsiStatus status,
 bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, PsiStatus status,
                                 StateRef<AEquipmentType> item)
 {
-	if (agent->modified_stats.psi_energy < getPsiCost(status))
+ 	if (agent->modified_stats.psi_energy < getPsiCost(status))
 	{
 		return false;
 	}
@@ -673,6 +684,10 @@ bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, P
 bool BattleUnit::startAttackPsiInternal(GameState &state, StateRef<BattleUnit> target,
                                         PsiStatus status, StateRef<AEquipmentType> item)
 {
+	if (agent->getAnimationPack()->useFiringAnimationForPsi)
+	{
+		setHandState(HandState::Firing);
+	}
 	int chance = getPsiChance(target, status, item);
 	int roll = randBoundsExclusive(state.rng, 0, 100);
 	LogWarning("Psi Attack #%d Roll %d Chance %d %s Attacker %s Target %s", (int)status, roll,
@@ -846,8 +861,9 @@ bool BattleUnit::isUnconscious() const { return !isDead() && stunDamage >= getHe
 
 bool BattleUnit::isConscious() const
 {
-	return !isDead() && stunDamage < getHealth() &&
-	       (current_body_state != BodyState::Downed || target_body_state != BodyState::Downed);
+	return !isDead() && stunDamage < getHealth()
+		&& (current_body_state != BodyState::Downed || target_body_state != BodyState::Downed)
+		&& target_body_state != BodyState::Dead;
 }
 
 bool BattleUnit::isStatic() const
@@ -996,6 +1012,10 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 	if (isDead())
 	{
 		return;
+	}
+	if (generateFatalWounds && agent->type->immuneToFatalWounds)
+	{
+		generateFatalWounds = false;
 	}
 
 	bool wasConscious = isConscious();
@@ -1465,7 +1485,6 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 			enzymeDebuffTicksAccumulated -= TICKS_PER_ENZYME_EFFECT;
 
 			// Spawn smoke
-
 			// FIXME: Ensure this is proper, for now just emulating vanilla crudely
 			// This makes smoke spawned by enzyme grow smaller when debuff runs out
 			int divisor = std::max(1, 36 / enzymeDebuffIntensity);
@@ -1476,8 +1495,7 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 			                                  divisor, false);
 
 			// Damage random item
-
-			if (!agent->equipment.empty())
+			if (agent->type->inventory && !agent->equipment.empty())
 			{
 				auto item = listRandomiser(state.rng, agent->equipment);
 				item->armor -= enzymeDebuffIntensity / 2;
@@ -1827,11 +1845,10 @@ void BattleUnit::updateBody(GameState &state, unsigned int &bodyTicksRemaining)
 	}
 }
 
-bool BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicksRemaining,
-                                       bool &wasUsingLift)
+bool BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicksRemaining, bool &)
 {
 	// Falling consumes remaining move ticks
-	auto fallTicksRemaining = moveTicksRemaining / (agent->modified_stats.getActualSpeedValue() *
+	auto fallTicksRemaining = moveTicksRemaining / (agent->modified_stats.getMovementSpeed() *
 	                                                BASE_MOVETICKS_CONSUMPTION_RATE);
 	moveTicksRemaining = 0;
 
@@ -2031,26 +2048,8 @@ bool BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 bool BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksRemaining,
                                       bool &wasUsingLift)
 {
-	if (current_movement_state == MovementState::Brainsuck)
-	{
-		Vec3<float> nextGoal;
-		if (!missions.empty() && missions.front()->type == BattleUnitMission::Type::Brainsuck &&
-		    getNextDestination(state, nextGoal))
-		{
-			goalPosition = nextGoal;
-			movement_ticks_passed += moveTicksRemaining / BASE_MOVETICKS_CONSUMPTION_RATE;
-			moveTicksRemaining = 0;
-			setPosition(state, goalPosition);
-			atGoal = true;
-		}
-		else
-		{
-			resetGoal();
-			startFalling();
-		}
-	}
 	// We are moving and not falling
-	else if (current_movement_state != MovementState::None)
+	if (current_movement_state != MovementState::None)
 	{
 		unsigned int speedModifier = 100;
 		if (current_body_state == BodyState::Flying)
@@ -2061,13 +2060,11 @@ bool BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 		unsigned int distanceToGoal = (unsigned)ceilf(
 		    glm::length(vectorToGoal * VELOCITY_SCALE_BATTLE * (float)TICKS_PER_UNIT_TRAVELLED));
 		unsigned int moveTicksConsumeRate = BASE_MOVETICKS_CONSUMPTION_RATE;
-		if (current_body_state == BodyState::Jumping && target_body_state == BodyState::Jumping)
+		if (target_body_state == BodyState::Jumping)
 		{
-			moveTicksConsumeRate = BASE_MOVETICKS_CONSUMPTION_RATE / 3;
-		}
-		else if (target_body_state == BodyState::Jumping)
-		{
-			moveTicksConsumeRate = BASE_MOVETICKS_CONSUMPTION_RATE / 2;
+			// Bring all jumpers to constant speed so that we can align leg animation with the edge	
+			moveTicksConsumeRate = agent->modified_stats.getMovementSpeed()
+				* BASE_MOVETICKS_CONSUMPTION_RATE / 15;
 		}
 		else if (current_movement_state == MovementState::Running)
 		{
@@ -2130,23 +2127,9 @@ bool BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 				triggerProximity(state);
 				goalPosition = getPosition();
 			}
-			atGoal = true;
-			// Pop finished missions if present
-			if (popFinishedMissions(state))
+			if (getNewGoal(state))
 			{
 				return true;
-			}
-			// Try to get new destination
-			Vec3<float> nextGoal;
-			if (getNextDestination(state, nextGoal))
-			{
-				startMoving(state);
-				goalPosition = nextGoal;
-				atGoal = false;
-			}
-			else if (!hasMovementQueued())
-			{
-				setMovementState(MovementState::None);
 			}
 		}
 
@@ -2197,25 +2180,74 @@ bool BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 		atGoal = goalPosition == getPosition();
 		if (atGoal)
 		{
-			// Pop finished missions if present
-			if (popFinishedMissions(state))
+			if (getNewGoal(state))
 			{
 				return true;
 			}
-			// Try to get new destination
-			Vec3<float> nextGoal;
-			if (getNextDestination(state, nextGoal))
-			{
-				startMoving(state);
-				goalPosition = nextGoal;
-				atGoal = false;
-			}
-			else if (!hasMovementQueued())
-			{
-				setMovementState(MovementState::None);
-			}
 		}
 	}
+	return false;
+}
+
+bool BattleUnit::updateMovementBrainsucker(GameState &state, unsigned int &moveTicksRemaining,
+	bool &wasUsingLift)
+{
+	Vec3<float> nextGoal;
+	if (!missions.empty() && missions.front()->type == BattleUnitMission::Type::Brainsuck &&
+		getNextDestination(state, nextGoal))
+	{
+		goalPosition = nextGoal;
+		// Just increment ticks passed to play animation
+		movement_ticks_passed += moveTicksRemaining / BASE_MOVETICKS_CONSUMPTION_RATE;
+		moveTicksRemaining = 0;
+		setPosition(state, goalPosition);
+		atGoal = true;
+	}
+	else
+	{
+		resetGoal();
+		startFalling();
+	}
+	return false;
+}
+
+bool BattleUnit::updateMovementJumping(GameState &state, unsigned int &moveTicksRemaining,
+	bool &wasUsingLift)
+{
+	// Check if jump complete
+	if (launched)
+	{
+		// Jump complete, await body state change
+		if (position.z <= goalPosition.z && velocity.z < 0.0f)
+		{
+			return getNewGoal(state);
+		}
+	}
+	// Launch us in the air
+	else
+	{
+		launched = true;
+		Vec3<float> targetVector = goalPosition - position;
+		// Calculate starting velocity
+		Vec3<float> targetVectorXY = { targetVector.x, targetVector.y, 0.0f };
+		float distance = glm::length(targetVectorXY);
+		float velocityXY;
+		float velocityZ;
+		calculateVelocityForJump(distance, position.z - goalPosition.z, velocityXY, velocityZ, distance > 1.0f);
+		velocity = (glm::normalize(targetVectorXY) * velocityXY + Vec3<float>{0.0f, 0.0f, velocityZ}) *
+			VELOCITY_SCALE_BATTLE;
+	}
+
+	auto jumpTicksRemaining = moveTicksRemaining / (agent->modified_stats.getMovementSpeed() *
+		BASE_MOVETICKS_CONSUMPTION_RATE);
+	moveTicksRemaining = 0;
+	auto newPosition = position;
+	while (jumpTicksRemaining-- > 0)
+	{
+		velocity.z -= FALLING_ACCELERATION_UNIT;
+		newPosition += this->velocity / (float)TICK_SCALE / VELOCITY_SCALE_BATTLE;
+	}
+	setPosition(state, newPosition);
 	return false;
 }
 
@@ -2228,6 +2260,15 @@ bool BattleUnit::updateMovement(GameState &state, unsigned int &moveTicksRemaini
 		if (falling)
 		{
 			return updateMovementFalling(state, moveTicksRemaining, wasUsingLift);
+		}
+		// If brainsucking simply stay on head
+		else if (current_movement_state == MovementState::Brainsuck)
+		{
+			return updateMovementBrainsucker(state, moveTicksRemaining, wasUsingLift);
+		}
+		else if (current_body_state == BodyState::Jumping && target_body_state == BodyState::Jumping)
+		{
+			return updateMovementJumping(state, moveTicksRemaining, wasUsingLift);
 		}
 		else
 		{
@@ -2252,7 +2293,14 @@ void BattleUnit::updateHands(GameState &, unsigned int &handsTicksRemaining)
 			{
 				handsTicksRemaining -= firing_animation_ticks_remaining;
 				firing_animation_ticks_remaining = 0;
-				setHandState(HandState::Aiming);
+				if (canHandStateChange(HandState::Aiming))
+				{
+					setHandState(HandState::Aiming);
+				}
+				else
+				{
+					setHandState(HandState::AtEase);
+				}
 			}
 		}
 		else
@@ -2275,11 +2323,20 @@ void BattleUnit::updateHands(GameState &, unsigned int &handsTicksRemaining)
 	}
 }
 
-void BattleUnit::updateTurning(GameState &state, unsigned int &turnTicksRemaining)
+void BattleUnit::updateTurning(GameState &state, unsigned int &turnTicksRemaining, unsigned int const handsTicksRemaining)
 {
 	// Try turning
 	if (turnTicksRemaining > 0)
 	{
+		// If firing then consume turning ticks since we can't turn while firing
+		if (firing_animation_ticks_remaining > 0)
+		{
+			// If firing animation will be finished this time, then substract 
+			// the amount of ticks required to finish it
+			// Otherwise substract all ticks
+			turnTicksRemaining -= handsTicksRemaining >= firing_animation_ticks_remaining 
+				? firing_animation_ticks_remaining : turnTicksRemaining;
+		}
 		if (turning_animation_ticks_remaining > turnTicksRemaining)
 		{
 			turning_animation_ticks_remaining -= turnTicksRemaining;
@@ -2393,9 +2450,8 @@ bool BattleUnit::updateAttackingRunCanFireChecks(GameState &state, unsigned int 
 			// Stop firing if target went unconscious
 			if (!targetUnit->isConscious()
 			    // Stop firing if target became friendly and we're not berserk
-			    ||
-			    moraleState != MoraleState::Berserk &&
-			        owner->isRelatedTo(targetUnit->owner) != Organisation::Relation::Hostile)
+			    || (moraleState != MoraleState::Berserk &&
+			        owner->isRelatedTo(targetUnit->owner) != Organisation::Relation::Hostile))
 			{
 				return false;
 			}
@@ -2444,6 +2500,22 @@ bool BattleUnit::updateAttackingRunCanFireChecks(GameState &state, unsigned int 
 			{
 				addMission(state, BattleUnitMission::turn(*this, targetTile));
 			}
+		}
+	
+	}
+	// Even if it's not time we must check if ready weapons can fire
+	else
+	{
+		if (weaponRight && weaponRight->readyToFire && !weaponRight->canFire(targetPosition))
+		{
+			// Introduce small delay so we're not re-checking every frame
+			weaponRight->weapon_fire_ticks_remaining += WEAPON_MISFIRE_DELAY_TICKS;
+			weaponRight = nullptr;
+		}
+		if (weaponLeft && weaponLeft->readyToFire && !weaponLeft->canFire(targetPosition))
+		{
+			weaponLeft->weapon_fire_ticks_remaining += WEAPON_MISFIRE_DELAY_TICKS;
+			weaponLeft = nullptr;
 		}
 	}
 	return true;
@@ -2780,7 +2852,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 
 		// If not running we will consume these twice as fast, if prone thrice as
 		unsigned int moveTicksRemaining =
-		    ticks * agent->modified_stats.getActualSpeedValue() * BASE_MOVETICKS_CONSUMPTION_RATE;
+		    ticks * agent->modified_stats.getMovementSpeed() * BASE_MOVETICKS_CONSUMPTION_RATE;
 		unsigned int bodyTicksRemaining = ticks;
 		unsigned int handsTicksRemaining = ticks;
 		unsigned int turnTicksRemaining = ticks;
@@ -2815,7 +2887,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			{
 				return;
 			}
-			updateTurning(state, turnTicksRemaining);
+			updateTurning(state, turnTicksRemaining, handsTicksRemaining);
 			updateDisplayedItem();
 		}
 	}
@@ -2898,6 +2970,7 @@ void BattleUnit::startFalling()
 {
 	setMovementState(MovementState::None);
 	falling = true;
+	launched = false;
 }
 
 // Calculate starting velocity among xy and z to reach target
@@ -2915,10 +2988,9 @@ bool BattleUnit::calculateVelocityForLaunch(float distanceXY, float diffZ, float
 	float t = 0.0f;
 
 	// We will continue reducing velocityXY  until we find such a trajectory
-	// that makes the item fall on top of the tile
+	// that makes the agent fall on top of the tile
 	while (velocityXY > 0.0f)
 	{
-		// FIXME: Should we prevent very high Z-trajectories, unreallistic for heavy items?
 		t = distanceXY * TICK_SCALE / (velocityXY);
 		velocityZ = TICK_SCALE * ((-c - a * t * t) / t - a);
 		if (velocityZ - (FALLING_ACCELERATION_UNIT / VELOCITY_SCALE_BATTLE.z) * t < -0.125f)
@@ -2933,16 +3005,32 @@ bool BattleUnit::calculateVelocityForLaunch(float distanceXY, float diffZ, float
 	return false;
 }
 
-bool BattleUnit::canLaunch(GameState &state, Vec3<float> targetPosition)
+// Calculate starting velocity among xy and z to reach target
+// For explanation how it works look @ AEquipment::calculateNextVelocityForThrow
+void BattleUnit::calculateVelocityForJump(float distanceXY, float diffZ, float &velocityXY,
+	float &velocityZ, bool diagonAlley)
+{
+	velocityXY = diagonAlley ? 0.75f : 0.5f;
+
+	float a = -FALLING_ACCELERATION_UNIT / VELOCITY_SCALE_BATTLE.z / 2.0f / TICK_SCALE;
+	float c = diffZ;
+	float t = 0.0f;
+
+	t = distanceXY * TICK_SCALE / (velocityXY);
+	velocityZ = TICK_SCALE * ((-c - a * t * t) / t - a);
+	return;
+}
+
+bool BattleUnit::canLaunch(Vec3<float> targetPosition)
 {
 	Vec3<float> targetVectorXY;
 	float velocityXY;
 	float velocityZ;
-	return canLaunch(state, targetPosition, targetVectorXY, velocityXY, velocityZ);
+	return canLaunch(targetPosition, targetVectorXY, velocityXY, velocityZ);
 }
 
-bool BattleUnit::canLaunch(GameState &state, Vec3<float> targetPosition,
-                           Vec3<float> &targetVectorXY, float &velocityXY, float &velocityZ)
+bool BattleUnit::canLaunch(Vec3<float> targetPosition, Vec3<float> &targetVectorXY,
+                           float &velocityXY, float &velocityZ)
 {
 	// Flying units cannot jump
 	if (canFly())
@@ -2957,7 +3045,7 @@ bool BattleUnit::canLaunch(GameState &state, Vec3<float> targetPosition,
 	}
 	// Cannot jump if target too far away
 	Vec3<int> posDiff = (Vec3<int>)position - (Vec3<int>)targetPosition;
-	if (std::abs(posDiff.x) > 1 || std::abs(posDiff.y) > 1 || std::abs(posDiff.z > 1))
+	if (std::abs(posDiff.x) > 1 || std::abs(posDiff.y) > 1 || std::abs(posDiff.z) > 1)
 	{
 		return false;
 	}
@@ -2976,7 +3064,7 @@ void BattleUnit::launch(GameState &state, Vec3<float> targetPosition, BodyState 
 	Vec3<float> targetVectorXY;
 	float velocityXY;
 	float velocityZ;
-	if (!canLaunch(state, targetPosition, targetVectorXY, velocityXY, velocityZ))
+	if (!canLaunch(targetPosition, targetVectorXY, velocityXY, velocityZ))
 	{
 		return;
 	}
@@ -3081,7 +3169,7 @@ void BattleUnit::executeGroupAIDecision(GameState &state, AIDecision &decision,
 				for (auto u : units)
 				{
 					u->kneeling_mode = decision.movement->kneelingMode;
-					u->movement_mode = decision.movement->movementMode;
+					u->setMovementMode(decision.movement->movementMode);
 				}
 				Battle::groupMove(state, units, decision.movement->targetLocation);
 				break;
@@ -3189,7 +3277,12 @@ void BattleUnit::executeAIMovement(GameState &state, AIMovement &movement)
 			break;
 		default:
 			kneeling_mode = movement.kneelingMode;
-			movement_mode = movement.movementMode;
+			if (movement.movementMode == MovementMode::Prone &&
+			    !agent->isBodyStateAllowed(BodyState::Prone))
+			{
+				LogError("WTF? Prone order without prone body state!?!?!");
+			}
+			setMovementMode(movement.movementMode);
 			break;
 	}
 
@@ -3238,8 +3331,7 @@ void BattleUnit::tryToRiseUp(GameState &state)
 
 	// Find state we can rise into (with animation)
 	auto targetState = BodyState::Standing;
-	while (targetState != BodyState::Downed &&
-	       agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
+	while (agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
 	                                                    targetState, current_hand_state,
 	                                                    current_movement_state, facing) == 0)
 	{
@@ -3269,13 +3361,15 @@ void BattleUnit::tryToRiseUp(GameState &state)
 			case BodyState::Prone:
 				// If we arrived here then we have no animation for standing up
 				targetState = BodyState::Downed;
-				continue;
+				break;
 			case BodyState::Downed:
+			case BodyState::Dead:
 			case BodyState::Jumping:
 			case BodyState::Throwing:
 				LogError("Not possible to reach this?");
 				break;
 		}
+		break;
 	}
 	// Find state we can rise into (with no animation)
 	if (targetState == BodyState::Downed)
@@ -3292,13 +3386,10 @@ void BattleUnit::tryToRiseUp(GameState &state)
 		{
 			targetState = BodyState::Kneeling;
 		}
-		else if (canProne(position, facing))
+		else 
 		{
+			// Prone only unit ignores wether prone is allowed
 			targetState = BodyState::Prone;
-		}
-		else
-		{
-			LogError("Unit cannot stand up???");
 		}
 	}
 
@@ -3324,40 +3415,44 @@ void BattleUnit::dropDown(GameState &state)
 	fireDebuffTicksRemaining = 0;
 	enzymeDebuffIntensity = 0;
 	moraleState = MoraleState::Normal;
+	BodyState targetState = isDead() ? BodyState::Dead : BodyState::Downed;
 	// Check if we can drop from current state
 	// Adjust current state so that we canthen drop down
-	while (agent->getAnimationPack()->getFrameCountBody(displayedItem, current_body_state,
-	                                                    BodyState::Downed, current_hand_state,
+	BodyState proposedBodyState = current_body_state;
+	while (agent->getAnimationPack()->getFrameCountBody(displayedItem, proposedBodyState,
+	                                                    targetState, current_hand_state,
 	                                                    current_movement_state, facing) == 0)
 	{
-		switch (current_body_state)
+		switch (proposedBodyState)
 		{
 			case BodyState::Jumping:
 			case BodyState::Throwing:
 			case BodyState::Flying:
 				if (agent->isBodyStateAllowed(BodyState::Standing))
 				{
-					setBodyState(state, BodyState::Standing);
+					proposedBodyState = BodyState::Standing;
 					continue;
 				}
 			// Intentional fall-through
 			case BodyState::Standing:
 				if (agent->isBodyStateAllowed(BodyState::Kneeling))
 				{
-					setBodyState(state, BodyState::Kneeling);
+					proposedBodyState = BodyState::Kneeling;
 					continue;
 				}
 			// Intentional fall-through
 			case BodyState::Kneeling:
-				setBodyState(state, BodyState::Prone);
+				proposedBodyState = BodyState::Prone;
 				continue;
+			// Unit has no downed animation, abort
 			case BodyState::Prone:
 			case BodyState::Downed:
-				// Unit has no down animation
+				proposedBodyState = BodyState::Downed;
 				break;
 		}
 		break;
 	}
+	setBodyState(state, proposedBodyState);
 	// Drop all gear
 	if (agent->type->inventory)
 	{
@@ -3367,7 +3462,7 @@ void BattleUnit::dropDown(GameState &state)
 		}
 	}
 	cancelMissions(state, true);
-	addMission(state, BattleUnitMission::changeStance(*this, BodyState::Downed));
+	addMission(state, BattleUnitMission::changeStance(*this, targetState));
 
 	// Remove from list of visible units
 	StateRef<BattleUnit> srThis = {&state, id};
@@ -3421,10 +3516,48 @@ void BattleUnit::die(GameState &state, bool violently, bool bledToDeath)
 					    e->type->damage_type, e->type->damage, e->type->explosion_depletion_rate);
 					break;
 				case AEquipmentType::Type::Spawner:
-					LogError("Implement multiworm!");
-					// state.current_battle->spawnUnit(state, aliens, { &state,
-					// "AGENTTYPE_BRAINSUCKER" }, i->position, { 0, 1 }, BodyState::Throwing);
+				{
+					std::list<Vec3<int>> posToCheck;
+					Vec3<int> curPos = position;
+					posToCheck.push_back(curPos + Vec3<int>{1, 0, 0});
+					posToCheck.push_back(curPos + Vec3<int>{0, 1, 0});
+					posToCheck.push_back(curPos + Vec3<int>{-1, 0, 0});
+					posToCheck.push_back(curPos + Vec3<int>{0, -1, 0});
+					posToCheck.push_back(curPos + Vec3<int>{1, 1, 0});
+					posToCheck.push_back(curPos + Vec3<int>{1, -1, 0});
+					posToCheck.push_back(curPos + Vec3<int>{-1, 1, 0});
+					posToCheck.push_back(curPos + Vec3<int>{-1,-1, 0});
+					posToCheck.push_back(curPos + Vec3<int>{2, 0, 0});
+					posToCheck.push_back(curPos + Vec3<int>{0, 2, 0});
+					posToCheck.push_back(curPos + Vec3<int>{-2, 0, 0});
+					posToCheck.push_back(curPos + Vec3<int>{0, -2, 0});
+					std::list<Vec3<int>> posToSpawn;
+					posToSpawn.push_back(curPos);
+					int numToSpawn = 3;
+					auto &map = tileObject->map;
+					auto helper = BattleUnitTileHelper(map, *this);
+					while (numToSpawn > 0 && !posToCheck.empty())
+					{
+						auto pos = posToCheck.front();
+						posToCheck.pop_front();
+						if (!map.tileIsValid(pos))
+						{
+							continue;
+						}
+						if (state.current_battle->findShortestPath(curPos, pos, helper, false, false, 0, true).back() == pos)
+						{
+							numToSpawn--;
+							posToSpawn.push_back(pos);
+						}
+					}
+					auto aliens = state.getAliens();
+					for (auto &pos : posToSpawn)
+					{
+						state.current_battle->spawnUnit(state, aliens, { &state,
+							"AGENTTYPE_HYPERWORM" }, { pos.x + 0.5f, pos.y + 0.5f,pos.z + 0.1f }, facing, BodyState::Standing);
+					}
 					break;
+				}
 				default:
 					break;
 			}
@@ -3544,6 +3677,7 @@ bool BattleUnit::useItem(GameState &state, sp<AEquipment> item)
 		case AEquipmentType::Type::Weapon:
 		case AEquipmentType::Type::Grenade:
 		case AEquipmentType::Type::MindBender:
+		case AEquipmentType::Type::Teleporter:
 			return false;
 		// Items that do nothing
 		case AEquipmentType::Type::AlienDetector:
@@ -3654,7 +3788,11 @@ unsigned int BattleUnit::getBodyAnimationFrame() const
 
 void BattleUnit::setBodyState(GameState &state, BodyState bodyState)
 {
-	LogWarning("SetBodyState called on %s with %d", id, (int)bodyState);
+	if (!agent->isBodyStateAllowed(bodyState))
+	{
+		LogError("SetBodyState called on %s with %d", id, (int)bodyState);
+		return;
+	}
 	bool roseUp = current_body_state == BodyState::Downed;
 	current_body_state = bodyState;
 	target_body_state = bodyState;
@@ -3716,13 +3854,14 @@ unsigned int BattleUnit::getHandAnimationFrame() const
 
 bool BattleUnit::canHandStateChange(HandState state)
 {
-	return (
-	    firing_animation_ticks_remaining == 0 && hand_animation_ticks_remaining == 0 &&
-	    body_animation_ticks_remaining == 0 && target_hand_state != state &&
-	    current_movement_state != MovementState::Running &&
-	    current_movement_state != MovementState::Brainsuck &&
-	    (current_movement_state == MovementState::None || current_body_state != BodyState::Prone) &&
-	    current_body_state != BodyState::Throwing);
+	return firing_animation_ticks_remaining == 0 && hand_animation_ticks_remaining == 0 &&
+	       body_animation_ticks_remaining == 0 && target_hand_state != state &&
+	       (state == HandState::AtEase ||
+	        (agent->isFireDuringMovementStateAllowed(current_movement_state) &&
+	         current_body_state != BodyState::Throwing &&
+			current_body_state != BodyState::Jumping &&
+	         (current_movement_state == MovementState::None ||
+	          current_body_state != BodyState::Prone)));
 }
 
 void BattleUnit::beginHandStateChange(HandState state)
@@ -3837,6 +3976,32 @@ void BattleUnit::setMovementState(MovementState state)
 	current_movement_state = state;
 }
 
+void BattleUnit::setMovementMode(MovementMode mode)
+{
+	switch (mode)
+	{
+		case MovementMode::Prone:
+			if (agent->isBodyStateAllowed(BodyState::Prone))
+			{
+				movement_mode = MovementMode::Prone;
+			}
+			break;
+		case MovementMode::Walking:
+			if (agent->isBodyStateAllowed(BodyState::Standing) ||
+			    agent->isBodyStateAllowed(BodyState::Flying))
+			{
+				movement_mode = MovementMode::Walking;
+			}
+			break;
+		case MovementMode::Running:
+			if (agent->isMovementStateAllowed(MovementState::Running))
+			{
+				movement_mode = MovementMode::Running;
+			}
+			break;
+	}
+}
+
 unsigned int BattleUnit::getWalkSoundIndex()
 {
 	if (current_movement_state == MovementState::Running)
@@ -3849,6 +4014,30 @@ unsigned int BattleUnit::getWalkSoundIndex()
 	{
 		return movement_sounds_played % 2;
 	}
+}
+
+bool BattleUnit::getNewGoal(GameState & state)
+{
+	atGoal = true;
+	launched = false;
+	// Pop finished missions if present
+	if (popFinishedMissions(state))
+	{
+		return true;
+	}
+	// Try to get new destination
+	Vec3<float> nextGoal;
+	if (getNextDestination(state, nextGoal))
+	{
+		goalPosition = nextGoal;
+		atGoal = false;
+		startMoving(state);
+	}
+	else if (!hasMovementQueued())
+	{
+		setMovementState(MovementState::None);
+	}
+	return false;
 }
 
 Vec3<float> BattleUnit::getMuzzleLocation() const
@@ -3886,8 +4075,7 @@ bool BattleUnit::shouldPlaySoundNow()
 	if (sounds_to_play != movement_sounds_played)
 	{
 		unsigned int divisor = (current_movement_state == MovementState::Running)
-		                           ? UNITS_TRAVELLED_PER_SOUND_RUNNING_DIVISOR
-		                           : 1;
+		                ? UNITS_TRAVELLED_PER_SOUND_RUNNING_DIVISOR : 1;
 		play = ((sounds_to_play + divisor - 1) % divisor) == 0;
 		movement_sounds_played = sounds_to_play;
 	}
@@ -3972,6 +4160,8 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission::Type type)
 		case BattleUnitMission::Type::Snooze:
 		case BattleUnitMission::Type::ChangeBodyState:
 		case BattleUnitMission::Type::Turn:
+		case BattleUnitMission::Type::Brainsuck:
+		case BattleUnitMission::Type::Jump:
 		case BattleUnitMission::Type::AcquireTU:
 		case BattleUnitMission::Type::GotoLocation:
 		case BattleUnitMission::Type::Teleport:
@@ -4230,6 +4420,7 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool t
 					case BattleUnitMission::Type::DropItem:
 					case BattleUnitMission::Type::Teleport:
 					case BattleUnitMission::Type::RestartNextMission:
+					case BattleUnitMission::Type::Brainsuck:
 					case BattleUnitMission::Type::GotoLocation:
 					case BattleUnitMission::Type::Turn:
 						delete mission;

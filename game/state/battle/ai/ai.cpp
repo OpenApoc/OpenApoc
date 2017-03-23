@@ -255,7 +255,8 @@ VanillaTacticalAI::getPatrolMovement(GameState &state, BattleUnit &u)
 		for (auto &unit : state.current_battle->forces[u.owner].squads[u.squadNumber].units)
 		{
 			if (unit != sft && unit->isConscious() && unit->getAIType() == AIType::Group &&
-			    unit->agent->type->allowsDirectControl && unit->visibleEnemies.empty() &&
+			    unit->agent->type->allowsDirectControl && unit->canMove() &&
+			    unit->visibleEnemies.empty() &&
 			    glm::distance(unit->position, u.position) < SQUAD_RANGE)
 			{
 				// If unit is busy and moving to a point within range - wait for him
@@ -306,7 +307,16 @@ VanillaTacticalAI::getPatrolMovement(GameState &state, BattleUnit &u)
 		// auto &lb = *state.current_battle->losBlocks.at(lbID); // <-- not needed yet?
 		result->type = AIMovement::Type::Patrol;
 		result->targetLocation = state.current_battle->blockCenterPos[u.getType()][lbID];
-		result->movementMode = MovementMode::Running;
+		bool canRun = true;
+		for (auto unit : units)
+		{
+			if (!unit->agent->isMovementStateAllowed(MovementState::Running))
+			{
+				canRun = false;
+				break;
+			}
+		}
+		result->movementMode = canRun ? MovementMode::Running : MovementMode::Walking;
 		break;
 	}
 
@@ -1390,7 +1400,7 @@ std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &
 	}
 
 	// Enzyme
-	if (u.enzymeDebuffIntensity > 0 && !u.isMoving())
+	if (u.enzymeDebuffIntensity > 0 && !u.isMoving() && u.canMove())
 	{
 		// Move to a random adjacent tile
 		auto from = u.tileObject->getOwningTile();
@@ -1422,7 +1432,9 @@ std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &
 			movement->type = AIMovement::Type::Patrol;
 			movement->targetLocation = newPos;
 			movement->kneelingMode = u.kneeling_mode;
-			movement->movementMode = MovementMode::Running;
+			movement->movementMode = u.agent->isMovementStateAllowed(MovementState::Running)
+			                             ? MovementMode::Running
+			                             : MovementMode::Walking;
 		}
 	}
 
@@ -1487,7 +1499,9 @@ VanillaTacticalAI::think(GameState &state, StateRef<Organisation> o)
 	// Find an idle unit that needs orders
 	for (auto u : state.current_battle->units)
 	{
-		if (u.second->owner != o || !u.second->isConscious() || u.second->isBusy())
+		// Skip: if wrong owner, unconscious, busy or immobile
+		if (u.second->owner != o || !u.second->isConscious() || u.second->isBusy() ||
+		    !u.second->canMove())
 		{
 			continue;
 		}
@@ -1495,15 +1509,14 @@ VanillaTacticalAI::think(GameState &state, StateRef<Organisation> o)
 		switch (u.second->getAIType())
 		{
 			case AIType::None:
-				continue;
-			case AIType::Civilian:
-				LogWarning("Implement Civilian Tactical AI");
+				// Do nothing
 				continue;
 			case AIType::PanicFreeze:
 			case AIType::PanicRun:
 			case AIType::Berserk:
 				// Do nothing
 				continue;
+			case AIType::Civilian:
 			case AIType::Loner:
 			case AIType::Group:
 				// Go on below
@@ -1515,6 +1528,19 @@ VanillaTacticalAI::think(GameState &state, StateRef<Organisation> o)
 
 		auto units = std::get<0>(decisions);
 		AIDecision decision = {nullptr, std::get<1>(decisions)};
+
+		// Randomize civ movement
+		if (u.second->getAIType() == AIType::Civilian && decision.movement)
+		{
+			if (randBoundsExclusive(state.rng, 0, 100) < 50)
+			{
+				decision.movement->movementMode = MovementMode::Walking;
+			}
+			else
+			{
+				decision.movement->movementMode = MovementMode::Running;
+			}
+		}
 
 		std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>> result = {};
 		result.emplace_back(units, decision);

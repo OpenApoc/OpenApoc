@@ -10,13 +10,10 @@
 
 namespace OpenApoc
 {
-/*
-// May be required in order to join together animations to create a longer one, i.e. Standing->Prone
-from Standing->Kneeling and Kneeling->Prone
-// But for now, not used
+// Combines two animation entries, used to create an entry from two glued together
 sp<BattleUnitAnimationPack::AnimationEntry>
-combineAnimationEntries(sp<BattleUnitAnimationPack::AnimationEntry> e1,
-sp<BattleUnitAnimationPack::AnimationEntry> e2)
+InitialGameStateExtractor::combineAnimationEntries(sp<BattleUnitAnimationPack::AnimationEntry> e1,
+sp<BattleUnitAnimationPack::AnimationEntry> e2) const
 {
     auto e = mksp<BattleUnitAnimationPack::AnimationEntry>();
 
@@ -33,7 +30,7 @@ sp<BattleUnitAnimationPack::AnimationEntry> e2)
 
     return e;
 }
-*/
+
 
 sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimationEntry(
     const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,
@@ -149,7 +146,6 @@ InitialGameStateExtractor::makeUpAnimationEntry(int from, int count, int fromS, 
                                                 int units_per_100_frames) const
 {
 	auto e = mksp<BattleUnitAnimationPack::AnimationEntry>();
-	int to = from + count;
 	bool shadow = countS > 0;
 
 	for (int i = 0; i < count; i++)
@@ -299,25 +295,31 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 	}
 	if (name == "gun")
 	{
+		extractAnimationPackGun(p);
 	}
 	if (name == "hypr")
 	{
+		extractAnimationPackHyper(p, dataAD, dataUA, dataUF);
 	}
 	if (name == "mega")
 	{
-		// Buggy death animations, take last frame from dropping animation
+		extractAnimationPackMega(p, dataAD, dataUA, dataUF);
 	}
 	if (name == "micro")
 	{
+		extractAnimationPackMicro(p);
 	}
 	if (name == "multi")
 	{
+		extractAnimationPackMulti(p, dataAD, dataUA, dataUF);
 	}
 	if (name == "mwegg1")
 	{
+		extractAnimationPackEgg(p, true);
 	}
 	if (name == "mwegg2")
 	{
+		extractAnimationPackEgg(p, false);
 	}
 	if (name == "popper")
 	{
@@ -325,15 +327,19 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 	}
 	if (name == "psi")
 	{
+		extractAnimationPackPsi(p, dataAD, dataUA, dataUF);
 	}
 	if (name == "queen")
 	{
+		extractAnimationPackQ(p);
 	}
 	if (name == "spitr")
 	{
+		extractAnimationPackSpitter(p, dataAD, dataUA, dataUF);
 	}
 	if (name == "civ")
 	{
+		extractAnimationPackCiv(p, dataAD, dataUA, dataUF);
 	}
 
 	return p;

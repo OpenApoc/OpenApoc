@@ -15,7 +15,7 @@
 	    <position x="232" y="68"/>
         <size width="16" height="8"/>
         <alignment horizontal="centre" vertical="centre"/>
-        <font>smallset</font>
+        <font>smalfont</font>
       </label>
 	  <label id="PSI_ATTACK_LABEL" text="223">
 	    <position x="232" y="78"/>
