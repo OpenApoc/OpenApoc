@@ -95,11 +95,14 @@ class BattleView : public BattleTileView
 	};
 	const Colour ammoColour = {158, 24, 12};
 
-	sp<Form> activeTab, mainTab, psiTab, primingTab, baseForm;
+	sp<Form> activeTab, mainTab, psiTab, primingTab, notMyTurnTab, executePlanTab, baseForm;
 	std::vector<sp<Form>> uiTabsRT;
 	std::vector<sp<Form>> uiTabsTB;
 	BattleUpdateSpeed updateSpeed;
 	BattleUpdateSpeed lastSpeed;
+
+	// Units selected before control was taken away
+	std::list<StateRef<BattleUnit>> lastSelectedUnits;
 
 	std::list<sp<Form>> itemForms;
 	std::map<bool, sp<Form>> motionScannerForms;

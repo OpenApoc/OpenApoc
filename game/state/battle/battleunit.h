@@ -309,7 +309,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Visible units from other orgs
 	std::set<StateRef<BattleUnit>> visibleUnits;
 	// Visible units that are hostile to us
-	std::list<StateRef<BattleUnit>> visibleEnemies;
+	std::set<StateRef<BattleUnit>> visibleEnemies;
 
 	// Miscellaneous
 

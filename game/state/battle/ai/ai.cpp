@@ -1183,7 +1183,7 @@ std::tuple<AIDecision, bool> LowMoraleUnitAI::think(GameState &state, BattleUnit
 						// Pick a random visible enemy
 						if (!u.visibleEnemies.empty())
 						{
-							auto target = listRandomiser(state.rng, u.visibleEnemies);
+							auto target = setRandomiser(state.rng, u.visibleEnemies);
 							if (!canFire)
 							{
 								decision.movement = mksp<AIMovement>();

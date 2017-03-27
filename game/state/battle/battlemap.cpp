@@ -1133,6 +1133,9 @@ void BattleMap::linkDoors(sp<Battle> b,
 void BattleMap::fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state,
                            std::list<StateRef<Agent>> &agents)
 {
+	// Ensure player goes first
+	b->participants.push_back(state.getPlayer());
+
 	// Agents are just added to squads in a default way here.
 	// Player will be allowed a chance to equip them and assign to squads how they prefer
 	// We will assign their positions and "spawn" them in "BeginBattle" function
@@ -1145,9 +1148,9 @@ void BattleMap::fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state,
 			a->destroy();
 			continue;
 		}
-		if (b->participants.find(a->owner) == b->participants.end())
+		if (std::find(b->participants.begin(), b->participants.end(), a->owner)== b->participants.end())
 		{
-			b->participants.insert(a->owner);
+			b->participants.push_back(a->owner);
 		}
 
 		for (auto i : a->equipment)

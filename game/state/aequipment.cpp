@@ -28,6 +28,11 @@ AEquipment::AEquipment()
 {
 }
 
+/* 
+// Alexey Andronov (Istrebitel):
+// Just in case we need to check, here's old formula I have hand-calculated
+// based on values tested from the game
+
 int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
                             WeaponAimingMode fireMode, bool thrown)
 {
@@ -38,13 +43,19 @@ int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
 		accuracy = agent->modified_stats.accuracy;
 	}
 
+	if (thrown)
+	{
+		return (int)accuracy;
+		// Throwing accuracy is unaffected by movement, stance or mode of fire
+	}
+
 	StateRef<AEquipmentType> payload = getPayloadType();
 	if (!payload)
 	{
 		payload = *type->ammo_types.begin();
 	}
 
-	if (this->type->type != AEquipmentType::Type::Weapon && !thrown)
+	if (this->type->type != AEquipmentType::Type::Weapon)
 	{
 		LogError("getAccuracy (non-thrown) called on non-weapon");
 		return 0;
@@ -56,43 +67,36 @@ int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
 
 	auto agentAccuracy = accuracy;
 	auto payloadAccuracy =
-	    type->type == AEquipmentType::Type::Weapon ? (float)payload->accuracy : 100.0f;
+		type->type == AEquipmentType::Type::Weapon ? (float)payload->accuracy : 100.0f;
 
 	// Calculate dispersion, the inverse of accuracy, and scale values to 0-1 for simplicity
 
 	float agentDispersion = 1.0f - agentAccuracy / 100.0f;
 	float weaponDispersion = 1.0f - payloadAccuracy / 100.0f;
 
-	if (thrown)
+	
+	// Snap and Auto increase agent's dispersion by 2x and 4x respectively
+	agentDispersion *= (float)fireMode;
+
+	// Moving also increase it: Moving or flying by 1,35x running by 1,70x
+	agentDispersion *= movementState == MovementState::None && bodyState != BodyState::Flying
+		? 1.00f
+		: (movementState == MovementState::Running ? 1.70f : 1.35f);
+
+	// Having both hands busy also increases it by another 1,5x
+	if (ownerAgent && (equippedSlotType == AEquipmentSlotType::LeftHand ||
+		equippedSlotType == AEquipmentSlotType::RightHand) &&
+		ownerAgent->getFirstItemInSlot(AEquipmentSlotType::LeftHand) &&
+		ownerAgent->getFirstItemInSlot(AEquipmentSlotType::RightHand))
 	{
-		return (int)agentAccuracy;
-		// Throwing accuracy is unaffected by movement, stance or mode of fire
+		agentDispersion *= 1.5f;
 	}
-	else
+
+	// Kneeling decreases agent's and weapon's dispersion, multiplying it by 0,8x
+	if (bodyState == BodyState::Kneeling)
 	{
-		// Snap and Auto increase agent's dispersion by 2x and 4x respectively
-		agentDispersion *= (float)fireMode;
-
-		// Moving also increase it: Moving or flying by 1,35x running by 1,70x
-		agentDispersion *= movementState == MovementState::None && bodyState != BodyState::Flying
-		                       ? 1.00f
-		                       : (movementState == MovementState::Running ? 1.70f : 1.35f);
-
-		// Having both hands busy also increases it by another 1,5x
-		if (ownerAgent && (equippedSlotType == AEquipmentSlotType::LeftHand ||
-		                   equippedSlotType == AEquipmentSlotType::RightHand) &&
-		    ownerAgent->getFirstItemInSlot(AEquipmentSlotType::LeftHand) &&
-		    ownerAgent->getFirstItemInSlot(AEquipmentSlotType::RightHand))
-		{
-			agentDispersion *= 1.5f;
-		}
-
-		// Kneeling decreases agent's and weapon's dispersion, multiplying it by 0,8x
-		if (bodyState == BodyState::Kneeling)
-		{
-			agentDispersion *= 0.8f;
-			weaponDispersion *= 0.8f;
-		}
+		agentDispersion *= 0.8f;
+		weaponDispersion *= 0.8f;
 	}
 
 	// Calculate total dispersion based on agent and weapon dispersion
@@ -106,8 +110,139 @@ int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
 	// which can be further simplified to:
 	//   tD = qrt((agentDispersion / 5) ^ 3/2 + weaponDispersion / 10)
 	float totalDispersion =
-	    powf(powf(agentDispersion / 5.0f, 3.0f / 2.0f) + weaponDispersion / 10.0f, 1.0f / 3.0f);
+		powf(powf(agentDispersion / 5.0f, 3.0f / 2.0f) + weaponDispersion / 10.0f, 1.0f / 3.0f);
 
+	return std::max(0, (int)(100.0f - totalDispersion * 100.0f));
+}
+
+*/
+
+int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
+	WeaponAimingMode fireMode, bool thrown, float cloakingDispersion)
+{
+	float accuracy = 0.0f;
+	auto agent = ownerAgent ? ownerAgent : (ownerUnit ? ownerUnit->agent : nullptr);
+	if (agent)
+	{
+		accuracy = agent->modified_stats.accuracy;
+	}
+
+	if (thrown)
+	{
+		return (int)accuracy;
+		// Throwing accuracy is unaffected by movement, stance or mode of fire
+	}
+
+	StateRef<AEquipmentType> payload = getPayloadType();
+	if (!payload)
+	{
+		payload = *type->ammo_types.begin();
+	}
+
+	if (this->type->type != AEquipmentType::Type::Weapon)
+	{
+		LogError("getAccuracy (non-thrown) called on non-weapon");
+		return 0;
+	}
+
+	// Accuracy calculation algorithm
+
+	// Take agent and weapon's accuracy
+
+	auto agentAccuracy = accuracy;
+	auto payloadAccuracy =
+		type->type == AEquipmentType::Type::Weapon ? (float)payload->accuracy : 100.0f;
+
+	// Calculate dispersion, the inverse of accuracy, and scale values to 0-1 for simplicity
+
+	float agentDispersion = 1.0f - agentAccuracy / 100.0f;
+	float weaponDispersion = 1.0f - payloadAccuracy / 100.0f;
+
+	// Weapon dispersion is half as important
+	weaponDispersion *= 0.5f;
+
+	// Firing mode: Auto increases dispersion and Aimed decreases by factors of 2
+	agentDispersion *= 0.5f * (float)fireMode;
+
+	// Moving affects dispersion
+	switch (movementState)
+	{
+		case MovementState::None:
+			LogWarning("Before *0.8f %f", agentDispersion);
+			agentDispersion *= 0.8f;
+			LogWarning("After *0.8f %f", agentDispersion);
+			break;
+		case MovementState::Running:
+			agentDispersion *= 1.25f;
+			break;
+		default:
+			agentDispersion *= 0.95f;
+			break;
+	}
+
+	// Body state affects dispersion
+	switch (bodyState)
+	{
+		case BodyState::Flying:
+			agentDispersion *= 1.15f;
+			break;
+		case BodyState::Kneeling:
+			agentDispersion *= 0.8f;
+			break;
+		case BodyState::Prone:
+			agentDispersion *= 0.6f;
+			break;
+		default:
+			// no change
+			break;
+	}
+
+	// Checks that apply only if weapon is in agent inventory
+	float healthDispersion = 0.0f;
+	float woundDispersion = 0.0f;
+	float berserkDispersion = 0.0f;
+	if (ownerAgent)
+	{
+		auto unit = ownerAgent->unit;
+
+		// Checks that apply only if weapon is in hand
+		if (equippedSlotType == AEquipmentSlotType::LeftHand ||
+			equippedSlotType == AEquipmentSlotType::RightHand)
+		{
+			// Big guns have a penalty if other hand is occupied : 1.4x dispersion
+			if (type->equipscreen_size.x * type->equipscreen_size.y > 4 &&
+				ownerAgent->getFirstItemInSlot(AEquipmentSlotType::LeftHand) &&
+				ownerAgent->getFirstItemInSlot(AEquipmentSlotType::RightHand))
+			{
+				agentDispersion *= 1.4f;
+			}
+		}
+
+		// 1.5 dispersion for every fatal wound in the arm used to hold the weapon
+		// Assume right hand if not yet holding it in hands
+		if (ownerAgent->type->inventory)
+		{
+			woundDispersion = 1.5f * (float)(equippedSlotType == AEquipmentSlotType::LeftHand ? unit->fatalWounds[BodyPart::LeftArm] : unit->fatalWounds[BodyPart::RightArm]);
+		}
+		// Wound dispersion for aliens without inventory
+		else
+		{
+			int totalWounds = 0;
+			for (auto entry : unit->fatalWounds)
+			{
+				totalWounds += entry.second;
+			}
+			woundDispersion = totalWounds;
+		}
+
+		// Health penalty
+		healthDispersion = (float)(ownerAgent->current_stats.health - ownerAgent->modified_stats.health) / (float)ownerAgent->modified_stats.health;
+		
+		// Berserk penalty
+		berserkDispersion = unit->moraleState == MoraleState::Berserk ? 2.0f : 0.0f;
+	}
+
+	float totalDispersion = sqrtf(agentDispersion * agentDispersion + weaponDispersion * weaponDispersion + healthDispersion * healthDispersion + woundDispersion * woundDispersion + berserkDispersion * berserkDispersion + cloakingDispersion * cloakingDispersion);
 	return std::max(0, (int)(100.0f - totalDispersion * 100.0f));
 }
 

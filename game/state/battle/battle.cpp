@@ -1089,9 +1089,45 @@ void Battle::endTurn()
 	LogWarning("Implement ending turn!");
 
 	// Pass turn to next org, if final org - increment turn counter and pass to first org
-
-	currentTurn++;
+	auto it = std::find(participants.begin(), participants.end(), currentActiveOrganisation)++;
+	if (it == participants.end())
+	{
+		currentTurn++;
+		it = participants.begin();
+	}
+	currentActiveOrganisation = *it;
 	beginTurn();
+}
+
+void Battle::giveInterruptChanceToUnits(GameState &state, StateRef<BattleUnit> giver, int reactionValue)
+{
+	if (mode != Mode::TurnBased)
+	{
+		return;
+	}
+	for (auto &u : units)
+	{
+		if (u.second->visibleEnemies.find(giver) != u.second->visibleEnemies.end())
+		{
+			giveInterruptChanceToUnit({ &state, u.second->id }, reactionValue);
+		}
+	}
+}
+
+void Battle::giveInterruptChanceToUnit(StateRef<BattleUnit> receiver, int reactionValue)
+{
+	if (mode != Mode::TurnBased)
+	{
+		return;
+	}
+	if (receiver->owner == currentActiveOrganisation)
+	{
+		return;
+	}
+	if (receiver->agent->getReactionValue() > reactionValue)
+	{
+		interruptQueue.emplace(receiver, receiver->agent->getTULimit(reactionValue));
+	}
 }
 
 // To be called when battle must be started, before showing battle briefing screen

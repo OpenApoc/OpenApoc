@@ -992,10 +992,10 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 	}
 
 	// STEP 07: Calculate movement cost modifier
-	// If jumping then cost is preset (1.5x normal movement cost)
+	// If jumping then cost is preset (2x normal movement cost)
 	if (!allowJumping && jumped)
 	{
-		cost = 1.5f * (float)STANDART_MOVE_TU_COST *
+		cost = 2.0f * (float)STANDART_MOVE_TU_COST *
 		       ((toPos.x != fromPos.x && toPos.y != fromPos.y) ? 3.0f : 2.0f);
 	}
 	else
@@ -1650,7 +1650,12 @@ bool BattleUnitMission::isFinishedInternal(GameState &, BattleUnit &u)
 	switch (this->type)
 	{
 		case Type::AcquireTU:
-			return u.agent->modified_stats.time_units >= (int)timeUnits;
+			// This mission is never finished. It stays indefinetly.
+			// When player ends his turn only then game manually checks
+			// wether agents have TUs to continue their actions and allows
+			// to do so by manually removing this mission from the queue
+			//return u.agent->modified_stats.time_units >= (int)timeUnits;
+			return false;
 		case Type::ReachGoal:
 			return u.atGoal || u.falling;
 		case Type::GotoLocation:

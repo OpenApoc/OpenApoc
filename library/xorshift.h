@@ -219,6 +219,27 @@ template <typename T, typename Generator> T listRandomiser(Generator &g, const s
 	return *it;
 }
 
+template <typename T, typename Generator> T setRandomiser(Generator &g, const std::set<T> &set)
+{
+	// we can't do index lookups in a set, so we just have to iterate N times
+	if (set.size() == 1)
+		return *set.begin();
+	else if (set.empty())
+	{
+		throw std::runtime_error("Trying to randomize within empty list");
+	}
+	auto count = randBoundsExclusive(g, (unsigned)0, (unsigned)set.size());
+
+	auto it = set.begin();
+	while (count)
+	{
+		it++;
+		count--;
+	}
+	return *it;
+}
+
+
 template <typename T, typename Generator>
 T vectorRandomizer(Generator &g, const std::vector<T> &vector)
 {

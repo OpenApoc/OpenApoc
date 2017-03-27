@@ -50,7 +50,7 @@ static const std::vector<UString> TAB_FORM_NAMES_RT = {
     "battle/battle_rt_tab1", "battle/battle_rt_tab2", "battle/battle_rt_tab3",
 };
 static const std::vector<UString> TAB_FORM_NAMES_TB = {
-    "battle/battle_tb_tab1", "battle/battle_tb_tab2", "battle/battle_tb_tab3",
+    "battle/battle_tb_tab1", "battle/battle_tb_tab2", "battle/battle_tb_tab3", "battle/battle_tb_tab4", "battle/battle_tb_tab5"
 };
 static const std::set<BodyPart> bodyParts{BodyPart::Body, BodyPart::Helmet, BodyPart::LeftArm,
                                           BodyPart::Legs, BodyPart::RightArm};
@@ -157,6 +157,8 @@ BattleView::BattleView(sp<GameState> gameState)
 			this->mainTab = this->uiTabsTB[0];
 			this->psiTab = this->uiTabsTB[1];
 			this->primingTab = this->uiTabsTB[2];
+			this->notMyTurnTab = this->uiTabsTB[3];
+			this->executePlanTab = this->uiTabsTB[4];
 			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED2")->setChecked(true);
 			updateSpeed = BattleUpdateSpeed::Speed2;
 			lastSpeed = BattleUpdateSpeed::Pause;
@@ -930,6 +932,24 @@ void BattleView::update()
 	// FIXME: Is there a more efficient way? But TileView does not know about battle or state!
 	battle.battleViewScreenCenter = centerPos;
 
+	// Update turn based stuff
+	if (battle.mode == Battle::Mode::TurnBased)
+	{
+		bool notMyTurn = !battle.interruptUnits.empty() || battle.currentActiveOrganisation != battle.currentPlayer;
+		if (notMyTurn && activeTab != notMyTurnTab)
+		{
+			activeTab = notMyTurnTab;
+			lastSelectedUnits = battle.battleViewSelectedUnits;
+			// Do other stuff that should be done when control is taken away?
+		}
+		else if (!notMyTurn && activeTab == notMyTurnTab)
+		{
+			activeTab = mainTab;
+			battle.battleViewSelectedUnits = lastSelectedUnits;
+			// Do other stuff that should be done when control is regained?
+		}
+	}
+
 	updateSelectedUnits();
 	updateSelectionMode();
 	updateSoldierButtons();
@@ -938,7 +958,15 @@ void BattleView::update()
 	{
 		ticksUntilFireSound--;
 	}
-
+	if (leftThrowDelay > 0)
+	{
+		leftThrowDelay--;
+	}
+	if (rightThrowDelay > 0)
+	{
+		rightThrowDelay--;
+	}
+	// Update path preview in TB mode
 	if (battle.mode == Battle::Mode::TurnBased)
 	{
 		if (previewedPathCost == -1)
@@ -950,15 +978,6 @@ void BattleView::update()
 				updatePathPreview();
 			}
 		}
-	}
-
-	if (leftThrowDelay > 0)
-	{
-		leftThrowDelay--;
-	}
-	if (rightThrowDelay > 0)
-	{
-		rightThrowDelay--;
 	}
 
 	unsigned int ticks = 0;
@@ -1112,6 +1131,10 @@ void BattleView::update()
 
 void BattleView::updateSelectedUnits()
 {
+	if (activeTab == notMyTurnTab)
+	{
+		return;
+	}
 	auto prevLSU = lastSelectedUnit;
 	auto it = battle.battleViewSelectedUnits.begin();
 	auto o = battle.currentPlayer;
@@ -2908,6 +2931,14 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 				             (selectionState == BattleSelectionState::TeleportRight && rightHand) ||
 				             (selectionState == BattleSelectionState::TeleportLeft && !rightHand);
 			}
+			a.accuracy = std::max(0, e->getAccuracy(u->current_body_state, u->current_movement_state,
+				u->fire_aiming_mode,
+				a.itemType->type != AEquipmentType::Type::Weapon) / 2);
+
+			/*
+			// Alexey Andronov (Istrebitel):
+			// I used to believe erf is used when displaying accuracy
+			// I might be wrong but until we make sure it's right, I leave this here
 
 			auto accuracy =
 			    (float)e->getAccuracy(u->current_body_state, u->current_movement_state,
@@ -2918,6 +2949,7 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 			// we need it to take values 0 to 1 and return 0 to 1
 			// val -> val * 4 - 2, result -> result /2 + 0,5
 			a.accuracy = (int)(((erf(accuracy * 4.0f - 2.0f)) / 2.0f + 0.5f) * 50.0f);
+			*/
 		}
 	}
 	return a;

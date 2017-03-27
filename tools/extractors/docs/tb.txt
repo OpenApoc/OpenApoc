@@ -1,0 +1,28 @@
+Turn Based:
+
+- There is currentActiveOrg, one that is taking its turn
+- There is a list of interruptUnits - units that are currently interrupting current org's turn
+- TacticalAI decides for other orgs when to give up it's turn. Player decides for players.
+
+When not our turn:
+
+- No AI functions
+- No advancement available in missions
+- No control available
+
+When our interrupt:
+
+- Only LowMorale, Default, Behavior AI functions, and only up to a TU limit (if TU lower than limit then no function)
+- LowBehavior AI additionally wastes all remaining TUs of a unit if no TU
+- When unit on interrupt not active for more than a second it is removed from interrupt units list
+- When interrupt units list is clear interrupt is over and control resumes for currentActiveOrg
+
+Interrupt triggers:
+
+- After morale checks are done at the beginning of the turn, each lowmorale unit makes a notification and is given interrupt
+- Units from active org are not given chance to interrupt (except condition above)
+- When we change position, give interrupt chance to every unit that sees us
+- When unit is hit, give interrupt chance to that unit
+- Interrupt chance includes RemainingTU * Reaction value. Unit only accepts interrupt if it's value is greater, and only up to TU value that still makes it greater.
+  Ex: 40/80 TU 20R unit fires at 20/60 40R unit. Value 10 vs 13,333 allows interrupt, but only up to 10 which is 15 TU. 
+  Therefore unit's interrupt TUs limit is 15. When unit' TUs go below this level his interrupt will end.

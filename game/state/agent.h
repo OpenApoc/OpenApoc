@@ -80,8 +80,8 @@ class AgentStats
 	int accuracy = 0;
 	int reactions = 0;
 	int speed = 0;
-	int getActualSpeedValue() const { return (speed + 3) / 8; }
-	int getMovementSpeed() const { return std::max(3, getActualSpeedValue()); }
+	int getActualSpeedValue() const { return (speed + 4) / 8; }
+	int getMovementSpeed() const { return clamp(getActualSpeedValue(), 5, 14); }
 	int getDisplaySpeedValue() const { return 8 * getActualSpeedValue(); }
 	int time_units = 0;
 	void restoreTU() { time_units = speed; }
@@ -288,6 +288,8 @@ class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 	bool isFireDuringMovementStateAllowed(MovementState movementState) const;
 	bool isFacingAllowed(Vec2<int> facing) const;
 	const std::set<Vec2<int>> *getAllowedFacings() const;
+	int getReactionValue() const;
+	int getTULimit(int reactionValue) const;
 
 	StateRef<Base> home_base;
 	StateRef<Organisation> owner;

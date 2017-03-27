@@ -269,8 +269,8 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					float newNodeCost = nodeToExpand->costToGetHere;
 					float newTrueCost = nodeToExpand->trueCost;
 
-					newNodeCost +=
-					    thisCost * (jumped ? 2 : 1) / canEnterTile.pathOverheadAlloawnce();
+					newNodeCost += thisCost /* * (jumped ? 2 : 1) */
+						/ canEnterTile.pathOverheadAlloawnce();
 					newTrueCost += thisCost;
 
 					// make pathfinder biased towards vehicle's altitude preference

@@ -149,18 +149,20 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	up<TileMap> map;
 
-	std::set<StateRef<Organisation>> participants;
+	std::list<StateRef<Organisation>> participants;
 
 	TacticalAIBlock aiBlock;
 
 	// Current player in control of the interface (will only change if we're going multiplayer)
 	StateRef<Organisation> currentPlayer;
-
 	// Who's turn is it
 	StateRef<Organisation> currentActiveOrganisation;
-
 	// Turn number
 	int currentTurn = 0;
+	// Units queued to get interrupt after this update
+	std::map<StateRef<BattleUnit>, int> interruptQueue;
+	// Units currently interrupting
+	std::map<StateRef<BattleUnit>, int> interruptUnits;
 
 	// BattleView and BattleTileView settings, saved here so that we can return to them
 
@@ -203,9 +205,12 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	// Called when new organisation's turn is starting
 	void beginTurn();
-
 	// Called when current active organisation decides to end their turn
 	void endTurn();
+	// Give interrupt chance to hostile units that see this unit
+	void giveInterruptChanceToUnits(GameState &state, StateRef<BattleUnit> giver, int reactionValue);
+	// Give interrupt chance to a unit
+	void giveInterruptChanceToUnit(StateRef<BattleUnit> receiver, int reactionValue);
 
 	// Battle Start Functions
 

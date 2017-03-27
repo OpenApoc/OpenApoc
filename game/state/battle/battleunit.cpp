@@ -136,6 +136,7 @@ void BattleUnit::setPosition(GameState &state, const Vec3<float> &pos)
 	{
 		state.current_battle->notifyScanners(position);
 		refreshUnitVisibilityAndVision(state, oldPosition);
+		state.current_battle->giveInterruptChanceToUnits(state, { &state, id }, agent->getReactionValue());
 		if (agent->type->spreadHazardDamageType)
 		{
 			state.current_battle->placeHazard(
@@ -391,7 +392,7 @@ void BattleUnit::refreshUnitVision(GameState &state, bool forceBlind)
 		// units's visible enemies list
 		if (owner->isRelatedTo(vu->owner) == Organisation::Relation::Hostile)
 		{
-			visibleEnemies.push_back(vu);
+			visibleEnemies.insert(vu);
 			battle.visibleEnemies[owner].insert(vu);
 		}
 	}
@@ -1305,6 +1306,7 @@ bool BattleUnit::handleCollision(GameState &state, Collision &c)
 		}
 		else
 		{
+			state.current_battle->giveInterruptChanceToUnit({ &state, id }, projectile->firerUnit->agent->getReactionValue());
 			notifyHit(-projectile->getVelocity());
 			return applyDamage(state, projectile->damage, projectile->damageType, partHit,
 			                   DamageSource::Impact);
@@ -1639,11 +1641,9 @@ void BattleUnit::updateEvents(GameState &state)
 	{
 		// our target has a priority over others if enemy
 		auto lastSeenEnemyPosition =
-		    (targetUnit &&
-		             std::find(visibleEnemies.begin(), visibleEnemies.end(), targetUnit) !=
-		                 visibleEnemies.end()
+		    ((targetUnit && state.current_battle->visibleEnemies[owner].find(targetUnit) != visibleEnemies.end())
 		         ? targetUnit->position
-		         : visibleEnemies.front()->position) -
+		         : (*visibleEnemies.begin())->position) -
 		    position;
 
 		aiList.notifyEnemySpotted(lastSeenEnemyPosition);
@@ -3320,9 +3320,15 @@ void BattleUnit::executeAIMovement(GameState &state, AIMovement &movement)
 	}
 }
 
-void BattleUnit::notifyUnderFire(Vec3<int> position) { aiList.notifyUnderFire(position); }
+void BattleUnit::notifyUnderFire(Vec3<int> position) 
+{ 
+	aiList.notifyUnderFire(position); 
+}
 
-void BattleUnit::notifyHit(Vec3<int> position) { aiList.notifyHit(position); }
+void BattleUnit::notifyHit(Vec3<int> position) 
+{ 
+	aiList.notifyHit(position); 
+}
 
 void BattleUnit::tryToRiseUp(GameState &state)
 {
@@ -3486,7 +3492,7 @@ void BattleUnit::dropDown(GameState &state)
 		if (unit.second->owner != owner)
 		{
 			unit.second->visibleUnits.erase(srThis);
-			unit.second->visibleEnemies.remove(srThis);
+			unit.second->visibleEnemies.erase(srThis);
 		}
 	}
 }

@@ -418,6 +418,8 @@
 		<member>currentPlayer</member>
 		<member>currentActiveOrganisation</member>
 		<member>currentTurn</member>
+		<member>interruptQueue</member>
+		<member>interruptUnits</member>
 		<member>battleViewZLevel</member>
 		<member>battleViewScreenCenter</member>
 		<member>battleViewGroupMove</member>

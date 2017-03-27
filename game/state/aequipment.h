@@ -83,7 +83,7 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	StateRef<BattleScanner> battleScanner;
 
 	int getAccuracy(BodyState bodyState, MovementState movementState, WeaponAimingMode fireMode,
-	                bool thrown = false);
+	                bool thrown = false, float cloakingDispersion = 0.0f);
 
 	bool isFiring() const { return weapon_fire_ticks_remaining > 0 || readyToFire; };
 	bool canFire() const;

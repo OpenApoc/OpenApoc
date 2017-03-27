@@ -231,6 +231,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	s.reactions =
 	    randBoundsInclusive(state.rng, type->min_stats.reactions, type->max_stats.reactions);
 	s.speed = randBoundsInclusive(state.rng, type->min_stats.speed, type->max_stats.speed);
+	s.restoreTU();
 	s.stamina = randBoundsInclusive(state.rng, type->min_stats.stamina, type->max_stats.stamina);
 	s.bravery =
 	    randBoundsInclusive(state.rng, type->min_stats.bravery / 10, type->max_stats.bravery / 10) *
@@ -365,6 +366,27 @@ const std::set<Vec2<int>> *Agent::getAllowedFacings() const
 	else
 	{
 		return &type->bodyType->allowed_facing[appearance];
+	}
+}
+
+int Agent::getReactionValue() const
+{
+	return modified_stats.reactions * modified_stats.time_units / current_stats.time_units;
+}
+
+int Agent::getTULimit(int reactionValue) const
+{
+	if (reactionValue == 0)
+	{
+		return 0;
+	}
+	else if (reactionValue >= getReactionValue())
+	{
+		return modified_stats.time_units + 1;
+	}
+	else
+	{
+		return current_stats.time_units * reactionValue / modified_stats.reactions;
 	}
 }
 
