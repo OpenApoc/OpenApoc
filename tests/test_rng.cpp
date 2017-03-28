@@ -10,39 +10,39 @@ int main(int argc, char **argv)
 	{
 		return EXIT_FAILURE;
 	}
-	Xorshift128Plus<uint32_t> rng{};
+	Xorshift128Plus<uint64_t> rng{};
 
-	uint32_t r1 = rng();
-	uint32_t r2 = rng();
+	uint64_t r1 = rng();
+	uint64_t r2 = rng();
 
-	uint32_t expected_r1 = 0x2f919517;
-	uint32_t expected_r2 = 0x2766980d;
-	uint32_t expected_r3 = 0x68192db7;
+	uint64_t expected_r1 = 0x03aacfee1f751183;
+	uint64_t expected_r2 = 0xcb8aa3521c8fc259;
+	uint64_t expected_r3 = 0xdd420b258a17fa82;
 
 	if (r1 != expected_r1)
 	{
-		LogError("unexpected r1 0x%08x, expected 0x%08x", r1, expected_r1);
+		LogError("unexpected r1 0x%016x, expected 0x%016x", r1, expected_r1);
 		return EXIT_FAILURE;
 	}
 
 	if (r2 != expected_r2)
 	{
-		LogError("unexpected r2 0x%08x, expected 0x%08x", r2, expected_r2);
+		LogError("unexpected r2 0x%016x, expected 0x%016x", r2, expected_r2);
 		return EXIT_FAILURE;
 	}
 
 	// Save the state to another rng and check that result matches
 
-	uint32_t s[2];
-	Xorshift128Plus<uint32_t> rng2{};
+	uint64_t s[2];
+	Xorshift128Plus<uint64_t> rng2{};
 
 	rng.getState(s);
 	rng2.setState(s);
 
-	uint32_t r3 = rng2();
+	uint64_t r3 = rng2();
 	if (r3 != expected_r3)
 	{
-		LogError("unexpected r3 0x%08x, expected 0x%08x", r3, expected_r3);
+		LogError("unexpected r3 0x%016x, expected 0x%016x", r3, expected_r3);
 		return EXIT_FAILURE;
 	}
 

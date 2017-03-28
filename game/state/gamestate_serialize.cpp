@@ -135,7 +135,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, Xorshift128
 	if (!node)
 		return;
 
-	uint32_t s[2] = {0, 0};
+	uint64_t s[2] = {0, 0};
 	serializeIn(state, node->getNode("s0"), s[0]);
 	serializeIn(state, node->getNode("s1"), s[1]);
 	t.setState(s);
@@ -234,8 +234,8 @@ void serializeOut(sp<SerializationNode> node, const Xorshift128Plus<uint32_t> &t
 	if (!node)
 		return;
 
-	uint32_t s[2] = {0, 0};
-	uint32_t sr[2] = {0, 0};
+	uint64_t s[2] = {0, 0};
+	uint64_t sr[2] = {0, 0};
 	t.getState(s);
 	ref.getState(sr);
 	serializeOut(node->addNode("s0"), s[0], sr[0]);
