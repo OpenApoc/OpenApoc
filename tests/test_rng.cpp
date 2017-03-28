@@ -46,5 +46,26 @@ int main(int argc, char **argv)
 		return EXIT_FAILURE;
 	}
 
+	constexpr int num_test_buckets = 4;
+	constexpr int num_test_iterations = 500000;
+
+	unsigned buckets[num_test_buckets];
+	for (int i = 0; i < num_test_buckets; i++)
+	{
+		buckets[i] = 0;
+	}
+
+	for (int i = 0; i < num_test_iterations; i++)
+	{
+		auto value = randBoundsExclusive(rng, 0, num_test_buckets);
+		buckets[value]++;
+	}
+
+	LogWarning("RNG buckets:");
+	for (int i = 0; i < num_test_buckets; i++)
+	{
+		LogWarning("%d:\t%u", i, buckets[i]);
+	}
+
 	return EXIT_SUCCESS;
 }
