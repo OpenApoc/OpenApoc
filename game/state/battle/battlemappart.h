@@ -18,6 +18,7 @@ class Collision;
 class TileObjectBattleMapPart;
 class BattleItem;
 class BattleDoor;
+class Organisation;
 
 class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 {
@@ -40,6 +41,7 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 
 	bool supportedItems = false;
 	std::list<std::pair<Vec3<int>, BattleMapPartType::Type>> supportedParts;
+	StateRef<Organisation> owner;
 
 	// Ticks for animation of non-doors
 	int animation_frame_ticks = 0;

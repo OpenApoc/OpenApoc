@@ -13,6 +13,7 @@ set (GAMEUI_SOURCE_FILES
 	battle/battlebriefing.cpp
 	battle/battledebriefing.cpp
 	battle/battleprestart.cpp
+	battle/battleturnbasedconfirmbox.cpp
 	battle/battleview.cpp
 	base/basegraphics.cpp
 	base/basescreen.cpp
@@ -52,6 +53,7 @@ set (GAMEUI_HEADER_FILES
 	battle/battlebriefing.h
 	battle/battledebriefing.h
 	battle/battleprestart.h
+	battle/battleturnbasedconfirmbox.h
 	battle/battleview.h
 	base/basegraphics.h
 	base/basescreen.h

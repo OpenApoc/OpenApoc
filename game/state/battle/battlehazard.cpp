@@ -30,8 +30,7 @@ BattleHazard::BattleHazard(GameState &state, StateRef<DamageType> damageType, bo
 		ticksUntilVisible =
 		    std::max((unsigned)0, (hazardType->doodadType->lifetime - 4) * TICKS_MULTIPLIER);
 	}
-	ticksUntilNextUpdate = TICKS_PER_HAZARD_UPDATE;
-	ticksUntilNextFrameChange =
+	frameChangeTicksAccumulated =
 	    randBoundsInclusive(state.rng, (unsigned)0, TICKS_PER_HAZARD_UPDATE);
 }
 
@@ -39,8 +38,10 @@ void BattleHazard::die(GameState &state, bool violently)
 {
 	auto this_shared = shared_from_this();
 	state.current_battle->hazards.erase(this_shared);
-	this->tileObject->removeFromMap();
-	this->tileObject.reset();
+
+	tileObject->removeFromMap();
+	tileObject.reset();
+	
 	if (!violently)
 	{
 		return;
@@ -49,7 +50,7 @@ void BattleHazard::die(GameState &state, bool violently)
 	if (damageType->effectType == DamageType::EffectType::Fire)
 	{
 		StateRef<DamageType> dtSmoke = {&state, "DAMAGETYPE_SMOKE"};
-		state.current_battle->placeHazard(state, dtSmoke, position,
+		state.current_battle->placeHazard(state, owner, dtSmoke, position,
 		                                  dtSmoke->hazardType->getLifetime(state), power, 6);
 	}
 }
@@ -216,7 +217,7 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 			{
 				existingHazard->die(state, false);
 			}
-			state.current_battle->placeHazard(state, spreadDamageType, {to.x, to.y, to.z},
+			state.current_battle->placeHazard(state, owner, spreadDamageType, {to.x, to.y, to.z},
 			                                  spreadDamageType->hazardType->getLifetime(state), 0,
 			                                  1, false);
 		}
@@ -240,7 +241,7 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 		{
 
 			auto hazard = state.current_battle->placeHazard(
-			    state, spreadDamageType, {to.x, to.y, to.z}, fireSmoke ? ttl : lifetime,
+			    state, owner, spreadDamageType, {to.x, to.y, to.z}, fireSmoke ? ttl : lifetime,
 			    fireSmoke ? 1 : power, fireSmoke ? 6 : 1, false);
 			if (hazard && !fireSmoke)
 			{
@@ -425,32 +426,12 @@ void BattleHazard::applyEffect(GameState &state)
 	}
 }
 
-void BattleHazard::update(GameState &state, unsigned int ticks)
+void BattleHazard::updateInner(GameState &state, unsigned int ticks)
 {
-	if (ticksUntilVisible > 0)
+	nextUpdateTicksAccumulated += ticks;
+	while (nextUpdateTicksAccumulated >= TICKS_PER_HAZARD_UPDATE)
 	{
-		if (ticksUntilVisible > ticks)
-		{
-			ticksUntilVisible -= ticks;
-		}
-		else
-		{
-			ticksUntilVisible = 0;
-		}
-	}
-
-	ticksUntilNextFrameChange -= ticks;
-	if (ticksUntilNextFrameChange <= 0)
-	{
-		ticksUntilNextFrameChange += TICKS_PER_HAZARD_UPDATE;
-		frame++;
-		frame %= hazardType->fire ? 2 : HAZARD_FRAME_COUNT;
-	}
-
-	ticksUntilNextUpdate -= ticks;
-	if (ticksUntilNextUpdate <= 0)
-	{
-		ticksUntilNextUpdate += TICKS_PER_HAZARD_UPDATE;
+		nextUpdateTicksAccumulated -= TICKS_PER_HAZARD_UPDATE;
 		if (hazardType->fire)
 		{
 			// Explanation for how fire works is at the end of battlehazard.h
@@ -478,6 +459,7 @@ void BattleHazard::update(GameState &state, unsigned int ticks)
 			if (age >= 130)
 			{
 				die(state);
+				return;
 			}
 		}
 		else
@@ -495,9 +477,46 @@ void BattleHazard::update(GameState &state, unsigned int ticks)
 			if (age >= lifetime)
 			{
 				die(state);
+				return;
 			}
 		}
 	}
+}
+
+void BattleHazard::update(GameState &state, unsigned int ticks)
+{
+	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
+
+	if (ticksUntilVisible > 0)
+	{
+		if (ticksUntilVisible > ticks)
+		{
+			ticksUntilVisible -= ticks;
+		}
+		else
+		{
+			ticksUntilVisible = 0;
+		}
+	}
+
+	frameChangeTicksAccumulated += ticks;
+	while (frameChangeTicksAccumulated >= TICKS_PER_HAZARD_UPDATE)
+	{
+		frameChangeTicksAccumulated -= TICKS_PER_HAZARD_UPDATE;
+		frame++;
+		frame %= hazardType->fire ? 2 : HAZARD_FRAME_COUNT;
+	}
+
+	if (realTime)
+	{
+		updateInner(state, ticks);
+	}
+}
+
+
+void BattleHazard::updateTB(GameState &state)
+{
+	updateInner(state, TICKS_PER_TURN);
 }
 
 void BattleHazard::updateTileVisionBlock(GameState &state)

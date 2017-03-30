@@ -26,7 +26,7 @@ void BattleMapPart::die(GameState &state, bool explosive, bool violently)
 		{
 			state.current_battle->addExplosion(state, position, nullptr, type->explosion_type,
 			                                   type->explosion_power,
-			                                   type->explosion_depletion_rate);
+			                                   type->explosion_depletion_rate, owner);
 			// Make it die so that it doesn't blow up twice!
 			explosive = false;
 		}
@@ -1287,7 +1287,7 @@ void BattleMapPart::update(GameState &state, unsigned int ticks)
 			{
 				StateRef<DamageType> dtSmoke = {&state, "DAMAGETYPE_SMOKE"};
 				auto hazard = state.current_battle->placeHazard(
-				    state, dtSmoke, position, dtSmoke->hazardType->getLifetime(state), 2,
+				    state, owner, dtSmoke, position, dtSmoke->hazardType->getLifetime(state), 2,
 				    destroyed ? 6 : 12);
 				if (hazard)
 				{
@@ -1305,6 +1305,7 @@ void BattleMapPart::update(GameState &state, unsigned int ticks)
 						auto rubble = mksp<BattleMapPart>();
 						Vec3<int> initialPosition = position;
 						rubble->damaged = true;
+						rubble->owner = owner;
 						rubble->position = initialPosition;
 						rubble->position += Vec3<float>(0.5f, 0.5f, 0.0f);
 						rubble->type = type->rubble.front();

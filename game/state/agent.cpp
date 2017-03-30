@@ -382,7 +382,7 @@ int Agent::getTULimit(int reactionValue) const
 	}
 	else if (reactionValue >= getReactionValue())
 	{
-		return modified_stats.time_units + 1;
+		return modified_stats.time_units;
 	}
 	else
 	{

@@ -58,6 +58,9 @@ void InitialGameStateExtractor::extractAnimationPackBsk(sp<BattleUnitAnimationPa
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 				                        BodyState::Jumping}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 3, {x, y}, 100, 9, false);
+				p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::Normal,
+				                        BodyState::Jumping}][{x, y}] =
+				    getAnimationEntry(dataAD, dataUA, dataUF, 3, {x, y}, 100, 9, false);
 
 				// Sucking state: 4
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
@@ -76,6 +79,10 @@ void InitialGameStateExtractor::extractAnimationPackBsk(sp<BattleUnitAnimationPa
 				// Body Standing -> Jumping animation: 3
 				p->body_state_animations[{ItemWieldMode::None, HandState::AtEase,
 				                          MovementState::None, BodyState::Standing,
+				                          BodyState::Jumping}][{x, y}] =
+				    getAnimationEntry(dataAD, dataUA, dataUF, 3, {x, y});
+				p->body_state_animations[{ItemWieldMode::None, HandState::AtEase,
+				                          MovementState::Normal, BodyState::Standing,
 				                          BodyState::Jumping}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 3, {x, y});
 			}

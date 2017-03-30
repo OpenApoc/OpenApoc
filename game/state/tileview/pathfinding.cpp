@@ -244,7 +244,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					float thisCost = 0.0f;
 					bool unused = false;
 					bool jumped = false;
-					if (!canEnterTile.canEnterTile(nodeToExpand->thisTile, tile, true, jumped,
+					if (!canEnterTile.canEnterTile(nodeToExpand->thisTile, tile, canEnterTile.allowJumping, jumped,
 					                               thisCost, unused, ignoreStaticUnits,
 					                               ignoreAllUnits))
 						continue;

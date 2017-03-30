@@ -159,7 +159,7 @@ class UnitAI
 
 	virtual void reset(GameState &, BattleUnit &){};
 	// Returns decision that was made, and wether we should stop going forward on the AI chain
-	virtual std::tuple<AIDecision, bool> think(GameState &, BattleUnit &) { return {}; };
+	virtual std::tuple<AIDecision, bool> think(GameState &, BattleUnit &, bool interrupt) { return {}; };
 
 	virtual void notifyUnderFire(Vec3<int>){};
 	virtual void notifyHit(Vec3<int>){};
@@ -184,7 +184,7 @@ class UnitAIHelper
 	static void ensureItemInSlot(GameState &state, sp<AEquipment> item, AEquipmentSlotType slot);
 };
 
-class UnitAIList
+class UnitAIBlock
 {
   public:
 	std::vector<sp<UnitAI>> aiList;
@@ -211,7 +211,7 @@ class LowMoraleUnitAI : public UnitAI
 	uint64_t ticksActionAvailable = 0;
 
 	void reset(GameState &state, BattleUnit &u) override;
-	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) override;
+	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u, bool interrupt) override;
 };
 
 // AI that handles unit's automatic actions (turning to attacker, visible enemy, firing held
@@ -228,7 +228,7 @@ class DefaultUnitAI : public UnitAI
 	Vec3<int> attackerPosition = {0, 0, 0};
 
 	void reset(GameState &state, BattleUnit &u) override;
-	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) override;
+	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u, bool interrupt) override;
 
 	void notifyUnderFire(Vec3<int> position) override;
 	void notifyHit(Vec3<int> position) override;
@@ -241,7 +241,7 @@ class BehaviorUnitAI : public UnitAI
 	BehaviorUnitAI();
 
 	void reset(GameState &state, BattleUnit &u) override;
-	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) override;
+	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u, bool interrupt) override;
 };
 
 // AI that handles vanilla alien and civilian behavior
@@ -270,7 +270,7 @@ class VanillaUnitAI : public UnitAI
 
 	// Calculate AI's next decision, then do the routine
 	// If unit has group AI, and patrol decision is made, the group will move together
-	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u) override;
+	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u, bool interrupt) override;
 
 	void notifyUnderFire(Vec3<int> position) override;
 	void notifyHit(Vec3<int> position) override;

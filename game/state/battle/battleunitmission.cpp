@@ -17,23 +17,24 @@
 namespace OpenApoc
 {
 
-BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, BattleUnitType type)
+BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, BattleUnitType type, bool allowJumping)
     : BattleUnitTileHelper(
           map, (type == BattleUnitType::LargeFlyer || type == BattleUnitType::LargeWalker),
-          (type == BattleUnitType::LargeFlyer || type == BattleUnitType::SmallFlyer),
+          (type == BattleUnitType::LargeFlyer || type == BattleUnitType::SmallFlyer), allowJumping,
           (type == BattleUnitType::LargeFlyer || type == BattleUnitType::LargeWalker) ? 70 : 32,
           nullptr)
 {
 }
 
-BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, bool large, bool flying, int maxHeight,
+BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, bool large, bool flying, bool allowJumping, int maxHeight,
                                            sp<TileObjectBattleUnit> tileObject)
     : map(map), large(large), flying(flying), maxHeight(maxHeight), tileObject(tileObject)
 {
+	this->allowJumping = allowJumping && !flying;
 }
 
 BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, BattleUnit &u)
-    : BattleUnitTileHelper(map, u.isLarge(), u.canFly(), u.agent->type->bodyType->maxHeight,
+    : BattleUnitTileHelper(map, u.isLarge(), u.canFly(), u.agent->isBodyStateAllowed(BodyState::Jumping), u.agent->type->bodyType->maxHeight,
                            u.tileObject)
 {
 }
@@ -1036,6 +1037,10 @@ BattleUnitMission *BattleUnitMission::gotoLocation(BattleUnit &u, Vec3<int> targ
 	mission->allowRunningAway = allowRunningAway;
 	mission->targetBodyState = u.target_body_state;
 	mission->targetFacing = u.goalFacing;
+	if (facingDelta > 4)
+	{
+		facingDelta -= 8;
+	}
 	mission->facingDelta = facingDelta;
 
 	return mission;
@@ -1056,11 +1061,11 @@ BattleUnitMission *BattleUnitMission::restartNextMission(BattleUnit &)
 	return mission;
 }
 
-BattleUnitMission *BattleUnitMission::acquireTU(BattleUnit &, unsigned int acquireTU)
+BattleUnitMission *BattleUnitMission::acquireTU(BattleUnit &, bool allowContinue)
 {
 	auto *mission = new BattleUnitMission();
 	mission->type = Type::AcquireTU;
-	mission->timeUnits = acquireTU;
+	mission->allowContinue = allowContinue;
 	return mission;
 }
 
@@ -1293,7 +1298,7 @@ BattleUnitMission *BattleUnitMission::jump(BattleUnit &u, Vec3<float> target, Bo
 	return mission;
 }
 
-bool BattleUnitMission::spendAgentTUs(GameState &state, BattleUnit &u, int cost, bool cancel)
+bool BattleUnitMission::spendAgentTUs(GameState &state, BattleUnit &u, int cost, bool cancel, bool ignoreKneelReserve, bool allowInterrupt)
 {
 	if (costPaidUpFront > 0)
 	{
@@ -1309,7 +1314,7 @@ bool BattleUnitMission::spendAgentTUs(GameState &state, BattleUnit &u, int cost,
 		}
 	}
 
-	if (u.spendTU(state, cost))
+	if (u.spendTU(state, cost, ignoreKneelReserve, false, allowInterrupt))
 	{
 		return true;
 	}
@@ -1319,7 +1324,7 @@ bool BattleUnitMission::spendAgentTUs(GameState &state, BattleUnit &u, int cost,
 	}
 	else
 	{
-		u.addMission(state, acquireTU(u, cost));
+		u.addMission(state, BattleUnitMission::Type::AcquireTU);
 	}
 	return false;
 }
@@ -1346,6 +1351,15 @@ bool BattleUnitMission::getNextDestination(GameState &state, BattleUnit &u, Vec3
 	switch (this->type)
 	{
 		case Type::GotoLocation:
+			if (state.current_battle->mode == Battle::Mode::TurnBased
+				&& ((!state.current_battle->interruptQueue.empty())
+					|| (u.owner == state.current_battle->currentActiveOrganisation && !state.current_battle->interruptUnits.empty())
+					|| (u.owner != state.current_battle->currentActiveOrganisation &&
+						state.current_battle->interruptUnits.find({ &state, u.id }) == state.current_battle->interruptUnits.end())))
+			{
+				u.addMission(state, BattleUnitMission::acquireTU(u, true));
+				return false;
+			}
 			return advanceAlongPath(state, u, dest);
 		case Type::Brainsuck:
 			return advanceBrainsucker(state, u, dest);
@@ -1391,6 +1405,15 @@ bool BattleUnitMission::getNextFacing(GameState &state, BattleUnit &u, Vec2<int>
 		case Type::ReachGoal:
 		case Type::Jump:
 		case Type::Brainsuck:
+			if (state.current_battle->mode == Battle::Mode::TurnBased
+				&& ((!state.current_battle->interruptQueue.empty())
+					|| (u.owner == state.current_battle->currentActiveOrganisation && !state.current_battle->interruptUnits.empty())
+					|| (u.owner != state.current_battle->currentActiveOrganisation &&
+						state.current_battle->interruptUnits.find({ &state, u.id }) == state.current_battle->interruptUnits.end())))
+			{
+				u.addMission(state, BattleUnitMission::acquireTU(u, true));
+				return false;
+			}
 			return advanceFacing(state, u, dest);
 		default:
 			return false;
@@ -1575,6 +1598,14 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 		case Type::Teleport:
 			return;
 		case Type::Brainsuck:
+			// Unit fell down, cancel brainsucker
+			if (!targetUnit->isConscious())
+			{
+				cancelled = true;
+				u.resetGoal();
+				u.startFalling(state);
+				return;
+			}
 			// Do not get stuck during brainsuck, move!
 			if (!finished && u.current_movement_state == MovementState::None)
 			{
@@ -1611,7 +1642,7 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 				}
 				brainsuckSoundsPlayed++;
 			}
-			if (brainsuckTicksAccumulated >= TICKS_TO_BRAINSUCK)
+			if (brainsuckTicksAccumulated >= TICKS_TO_BRAINSUCK && state.current_battle->interruptQueue.empty() && state.current_battle->interruptUnits.empty())
 			{
 				if (randBoundsExclusive(state.rng, 0, 100) < BRAINSUCK_CHANCE)
 				{
@@ -1650,11 +1681,6 @@ bool BattleUnitMission::isFinishedInternal(GameState &, BattleUnit &u)
 	switch (this->type)
 	{
 		case Type::AcquireTU:
-			// This mission is never finished. It stays indefinetly.
-			// When player ends his turn only then game manually checks
-			// wether agents have TUs to continue their actions and allows
-			// to do so by manually removing this mission from the queue
-			//return u.agent->modified_stats.time_units >= (int)timeUnits;
 			return false;
 		case Type::ReachGoal:
 			return u.atGoal || u.falling;
@@ -1730,8 +1756,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 					cancelled = true;
 					return;
 				}
-				// Teleportation cost is 55% TUs
-				int cost = u.agent->current_stats.time_units * 55 / 100;
+				int cost = u.getTeleporterCost();
 				if (!spendAgentTUs(state, u, cost, true))
 				{
 					return;
@@ -1769,7 +1794,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 		}
 		case Type::Brainsuck:
 		{
-			if (targetUnit->brainSucker)
+			if (targetUnit->brainSucker && targetUnit->brainSucker.id != u.id)
 			{
 				cancelled = true;
 				return;
@@ -2305,7 +2330,7 @@ bool BattleUnitMission::advanceFacing(GameState &state, BattleUnit &u, Vec2<int>
 	if (targetBodyState == BodyState::Throwing)
 	{
 		int cost = getBodyStateChangeCost(u, u.current_body_state, targetBodyState);
-		if (!spendAgentTUs(state, u, cost, true))
+		if (!spendAgentTUs(state, u, cost, true, true, true))
 		{
 			return false;
 		}
@@ -2315,7 +2340,7 @@ bool BattleUnitMission::advanceFacing(GameState &state, BattleUnit &u, Vec2<int>
 	dest = getFacingStep(u, targetFacing);
 
 	// Calculate and spend cost
-	int cost = freeTurn ? 0 : 1;
+	int cost = freeTurn ? 0 : getTurnCost(u);
 	if (!spendAgentTUs(state, u, cost, true))
 	{
 		return false;
@@ -2377,7 +2402,7 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodySt
 	int cost =
 	    type == Type::ReachGoal ? 0 : getBodyStateChangeCost(u, u.target_body_state, targetState);
 	// If unsufficient TUs - cancel missions other than GotoLocation
-	if (!spendAgentTUs(state, u, cost, type != Type::GotoLocation))
+	if (!spendAgentTUs(state, u, cost, type != Type::GotoLocation, targetState == BodyState::Kneeling))
 	{
 		return false;
 	}
@@ -2387,7 +2412,12 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodySt
 	return true;
 }
 
-int BattleUnitMission::getBodyStateChangeCost(BattleUnit &u, BodyState from, BodyState to)
+int BattleUnitMission::getTurnCost(BattleUnit & )
+{
+	return 1;
+}
+
+int BattleUnitMission::getBodyStateChangeCost(const BattleUnit &u, BodyState from, BodyState to)
 {
 	// If not within these conditions, it costs nothing!
 	switch (to)
@@ -2439,7 +2469,7 @@ UString BattleUnitMission::getName()
 	switch (this->type)
 	{
 		case Type::AcquireTU:
-			name = "AcquireTUs " + format(" %u", timeUnits);
+			name = "AcquireTUs";
 			break;
 		case Type::GotoLocation:
 			name = "GotoLocation " + format(" %s", targetLocation);

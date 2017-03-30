@@ -26,9 +26,9 @@ class BattleUnitTileHelper : public CanEnterTileHelper
 
   public:
 	BattleUnitTileHelper(TileMap &map, BattleUnit &u);
-	BattleUnitTileHelper(TileMap &map, bool large, bool flying, int maxHeight,
+	BattleUnitTileHelper(TileMap &map, bool large, bool flying, bool allowJumping, int maxHeight,
 	                     sp<TileObjectBattleUnit> tileObject);
-	BattleUnitTileHelper(TileMap &map, BattleUnitType type);
+	BattleUnitTileHelper(TileMap &map, BattleUnitType type, bool allowJumping = false);
 
 	static float getDistanceStatic(Vec3<float> from, Vec3<float> to);
 	static float getDistanceStatic(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd);
@@ -100,9 +100,10 @@ class BattleUnitMission
 	MovementState getNextMovementState(GameState &state, BattleUnit &u);
 
 	// Spend agent TUs or append AcquireTU mission
-	bool spendAgentTUs(GameState &state, BattleUnit &u, int cost, bool cancel = false);
+	bool spendAgentTUs(GameState &state, BattleUnit &u, int cost, bool cancel = false, bool ignoreKneelReserve = false, bool allowInterrupt = false);
 
-	static int getBodyStateChangeCost(BattleUnit &u, BodyState from, BodyState to);
+	static int getTurnCost(BattleUnit &u);
+	static int getBodyStateChangeCost(const BattleUnit &u, BodyState from, BodyState to);
 	static Vec2<int> getFacingStep(BattleUnit &u, Vec2<int> targetFacing, int facingDelta = 0);
 	// Used to determine target facings
 	static Vec2<int> getFacing(BattleUnit &u, Vec3<float> from, Vec3<float> to,
@@ -116,7 +117,7 @@ class BattleUnitMission
 	                                       bool demandGiveWay = false, bool allowSkipNodes = true,
 	                                       int giveWayAttempts = 20, bool allowRunningAway = false);
 	static BattleUnitMission *snooze(BattleUnit &u, unsigned int ticks);
-	static BattleUnitMission *acquireTU(BattleUnit &u, unsigned int tu);
+	static BattleUnitMission *acquireTU(BattleUnit &u, bool allowContinue = false);
 	static BattleUnitMission *changeStance(BattleUnit &u, BodyState state);
 	static BattleUnitMission *throwItem(BattleUnit &u, sp<AEquipment> item, Vec3<int> target);
 	static BattleUnitMission *dropItem(BattleUnit &u, sp<AEquipment> item);
@@ -170,7 +171,7 @@ class BattleUnitMission
 	unsigned int timeToSnooze = 0;
 
 	// AcquireTU
-	unsigned int timeUnits = 0;
+	bool allowContinue = false;
 
 	// ChangeBodyState
 	BodyState targetBodyState = BodyState::Downed;
@@ -183,6 +184,8 @@ class BattleUnitMission
 	StateRef<BattleUnit> targetUnit;
 	unsigned int brainsuckTicksAccumulated = 0;
 	unsigned int brainsuckSoundsPlayed = 0;
+
+
 
 	// Mission cancelled (due to unsufficient TUs or something else failing)
 	bool cancelled = false;

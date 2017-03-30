@@ -29,6 +29,7 @@
     <ClCompile Include="battle\battlebriefing.cpp" />
     <ClCompile Include="battle\battledebriefing.cpp" />
     <ClCompile Include="battle\battleprestart.cpp" />
+    <ClCompile Include="battle\battleturnbasedconfirmbox.cpp" />
     <ClCompile Include="battle\battleview.cpp" />
     <ClCompile Include="boot.cpp" />
     <ClCompile Include="city\basebuyscreen.cpp" />
@@ -68,6 +69,7 @@
     <ClInclude Include="battle\battlebriefing.h" />
     <ClInclude Include="battle\battledebriefing.h" />
     <ClInclude Include="battle\battleprestart.h" />
+    <ClInclude Include="battle\battleturnbasedconfirmbox.h" />
     <ClInclude Include="battle\battleview.h" />
     <ClInclude Include="boot.h" />
     <ClInclude Include="city\basebuyscreen.h" />

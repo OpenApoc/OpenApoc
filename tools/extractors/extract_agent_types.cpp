@@ -1347,18 +1347,16 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 
 			// Skeletoid and Anthropod are both humanoids
 			case UNIT_TYPE_SKELETOID:
-			// Other humans
+				// Skeletoid only differs from other humanods by having built-in flight capabilities
+				a->allowed_body_states.insert(BodyState::Flying);
+				// Other humans
 			case UNIT_TYPE_ANTHROPOD:
 				height = 32;
 				idx = 5;
-				// Skeletoid only differs from other humanods by having built-in flight capabilities
-				if (i == UNIT_TYPE_SKELETOID)
-				{
-					a->allowed_body_states.insert(BodyState::Flying);
-				}
 				a->allowed_movement_states.insert(MovementState::Normal);
 				a->allowed_movement_states.insert(MovementState::Running);
 				a->allowed_movement_states.insert(MovementState::Strafing);
+				a->allowed_movement_states.insert(MovementState::Reverse);
 				a->allowed_fire_movement_states.insert(MovementState::None);
 				a->allowed_fire_movement_states.insert(MovementState::Normal);
 				a->allowed_body_states.insert(BodyState::Standing);

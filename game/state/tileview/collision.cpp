@@ -15,7 +15,7 @@ namespace OpenApoc
 Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
                                  const std::set<TileObject::Type> validTypes,
                                  sp<TileObject> ignoredObject, bool useLOS, bool check_full_path,
-                                 unsigned maxRange) const
+                                 unsigned maxRange, bool recordPassedTiles) const
 {
 	bool typeChecking = validTypes.size() > 0;
 	bool rangeChecking = maxRange > 0.0f;
@@ -58,12 +58,20 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 			if (!lastT)
 			{
 				lastT = t;
+				if (recordPassedTiles)
+				{
+					c.passedTiles.push_back(tile);
+				}
 			}
 			else
 			{
 				if (t != lastT)
 				{
 					lastT = t;
+					if (recordPassedTiles)
+					{
+						c.passedTiles.push_back(tile);
+					}
 					auto vec = t->position;
 					// Apply vision blockage if we passed at least 1 tile
 					auto thisDistance =

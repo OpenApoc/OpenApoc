@@ -85,17 +85,22 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	int getAccuracy(BodyState bodyState, MovementState movementState, WeaponAimingMode fireMode,
 	                bool thrown = false, float cloakingDispersion = 0.0f);
 
+	// Returned value assumes 100 max TU and must be scaled
+	int getFireCost(WeaponAimingMode fireMode);
+	int getFireCost(WeaponAimingMode fireMode, int maxTU);
 	bool isFiring() const { return weapon_fire_ticks_remaining > 0 || readyToFire; };
 	bool canFire() const;
 	bool canFire(Vec3<float> to) const;
 	bool needsReload() const;
 	void stopFiring();
-	void startFiring(WeaponAimingMode fireMode);
+	void startFiring(WeaponAimingMode fireMode, bool instant);
 
 	// Support nullptr ammoItem for auto-reloading
 	void loadAmmo(GameState &state, sp<AEquipment> ammoItem = nullptr);
 
 	void update(GameState &state, unsigned int ticks);
+	void updateTB(GameState &state);
+	void updateInner(GameState &state, unsigned int ticks);
 
 	// Wether this weapon works like brainsucker launcher, throwing it's ammunition instead of
 	// firing a projectile

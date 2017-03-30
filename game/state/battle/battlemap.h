@@ -60,7 +60,7 @@ class BattleMap : public StateObject
 	                               StateRef<Vehicle> player_craft,
 	                               StateRef<Building> target_building);
 
-	sp<Battle> createBattle(GameState &state, StateRef<Organisation> target_organisation,
+	sp<Battle> createBattle(GameState &state, StateRef<Organisation> propertyOwner, StateRef<Organisation> target_organisation,
 	                        std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
 	                        Battle::MissionType mission_type, UString mission_location_id);
 
@@ -71,7 +71,7 @@ class BattleMap : public StateObject
 
 	sp<Battle> fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>> &doors,
 	                   bool &spawnCivilians, std::vector<sp<BattleMapSector>> sec_map,
-	                   Vec3<int> size, GameState &state, StateRef<Organisation> target_organisation,
+	                   Vec3<int> size, GameState &state, StateRef<Organisation> propertyOwner, StateRef<Organisation> target_organisation,
 	                   std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
 	                   Battle::MissionType mission_type, UString mission_location_id);
 

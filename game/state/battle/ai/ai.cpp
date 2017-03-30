@@ -130,7 +130,7 @@ const UString UnitAI::getName()
 
 bool AIDecision::isEmpty() { return !action && !movement; }
 
-void UnitAIList::init(GameState &state, BattleUnit &u)
+void UnitAIBlock::init(GameState &state, BattleUnit &u)
 {
 	// FIXME: Actually read this option
 	bool USER_OPTION_USE_HARDCORE_AI = false;
@@ -152,7 +152,7 @@ void UnitAIList::init(GameState &state, BattleUnit &u)
 	reset(state, u);
 }
 
-void UnitAIList::reset(GameState &state, BattleUnit &u)
+void UnitAIBlock::reset(GameState &state, BattleUnit &u)
 {
 	ticksLastThink = state.gameTime.getTicks();
 	ticksUntilReThink = randBoundsExclusive(state.rng, 0, (int)TICKS_PER_SECOND);
@@ -163,21 +163,37 @@ void UnitAIList::reset(GameState &state, BattleUnit &u)
 	}
 }
 
-AIDecision UnitAIList::think(GameState &state, BattleUnit &u)
+AIDecision UnitAIBlock::think(GameState &state, BattleUnit &u)
 {
 	auto curTicks = state.gameTime.getTicks();
 	if (ticksLastThink + ticksUntilReThink > curTicks)
 	{
 		return {};
 	}
-
+	bool interrupt = false;
+	if (state.current_battle->mode == Battle::Mode::TurnBased)
+	{
+		if (!state.current_battle->interruptQueue.empty())
+		{
+			return{};
+		}
+		if (u.owner != state.current_battle->currentActiveOrganisation || !state.current_battle->interruptUnits.empty())
+		{
+			auto it = state.current_battle->interruptUnits.find({ &state, u.id });
+			interrupt = it != state.current_battle->interruptUnits.end() && u.agent->modified_stats.time_units > it->second;
+			if (!interrupt)
+			{
+				return{};
+			}
+		}
+	}
 	ticksLastThink = curTicks;
 	ticksUntilReThink = AI_THINK_INTERVAL;
 
 	AIDecision decision = {};
 	for (auto ai : aiList)
 	{
-		auto result = ai->think(state, u);
+		auto result = ai->think(state, u, interrupt);
 		auto newDecision = std::get<0>(result);
 		auto halt = std::get<1>(result);
 		if (!newDecision.isEmpty())
@@ -201,7 +217,7 @@ AIDecision UnitAIList::think(GameState &state, BattleUnit &u)
 	return decision;
 }
 
-void UnitAIList::notifyUnderFire(Vec3<int> position)
+void UnitAIBlock::notifyUnderFire(Vec3<int> position)
 {
 	for (auto &ai : aiList)
 	{
@@ -213,7 +229,7 @@ void UnitAIList::notifyUnderFire(Vec3<int> position)
 	}
 }
 
-void UnitAIList::notifyHit(Vec3<int> position)
+void UnitAIBlock::notifyHit(Vec3<int> position)
 {
 	for (auto &ai : aiList)
 	{
@@ -225,7 +241,7 @@ void UnitAIList::notifyHit(Vec3<int> position)
 	}
 }
 
-void UnitAIList::notifyEnemySpotted(Vec3<int> position)
+void UnitAIBlock::notifyEnemySpotted(Vec3<int> position)
 {
 	for (auto &ai : aiList)
 	{
@@ -480,7 +496,7 @@ std::tuple<AIDecision, float, unsigned>
 VanillaUnitAI::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
                                  StateRef<BattleUnit> target)
 {
-	if (u.canAttackUnit(target, e) != WeaponStatus::NotFiring)
+	if (state, u.canAttackUnit(state, target, e) != WeaponStatus::NotFiring)
 	{
 		auto action = mksp<AIAction>();
 		action->item = e;
@@ -875,12 +891,14 @@ AIDecision VanillaUnitAI::thinkInternal(GameState &state, BattleUnit &u)
 
 	if (!reThink)
 	{
+		routine(state, u);
 		return lastDecision;
 	}
 
 	auto result = u.visibleEnemies.empty() ? thinkGreen(state, u) : thinkRed(state, u);
 	auto decision = std::get<0>(result);
 	lastDecision = decision;
+	routine(state, u);
 
 	if (decision.isEmpty())
 	{
@@ -890,14 +908,12 @@ AIDecision VanillaUnitAI::thinkInternal(GameState &state, BattleUnit &u)
 	ticksLastThink = state.gameTime.getTicks();
 	ticksUntilReThink = std::get<2>(result);
 
-	routine(state, u);
-
 	return decision;
 }
 
-std::tuple<AIDecision, bool> VanillaUnitAI::think(GameState &state, BattleUnit &u)
+std::tuple<AIDecision, bool> VanillaUnitAI::think(GameState &state, BattleUnit &u, bool interrupt)
 {
-	active = u.isAIControlled(state);
+	active = u.isAIControlled(state) && !interrupt;
 
 	if (!active)
 	{
@@ -916,7 +932,7 @@ std::tuple<AIDecision, bool> VanillaUnitAI::think(GameState &state, BattleUnit &
 
 void VanillaUnitAI::routine(GameState &state, BattleUnit &u)
 {
-	static const Vec3<int> NONE = {0, 0, 0};
+	static const Vec3<int> NONE = { 0, 0, 0 };
 
 	// Reload all guns
 	for (auto &e : u.agent->equipment)
@@ -949,7 +965,7 @@ void VanillaUnitAI::routine(GameState &state, BattleUnit &u)
 				continue;
 			}
 			if ((e->getPayloadType()->range > maxRange) ||
-			    (e->getPayloadType()->range == maxRange && e->getPayloadType()->damage > maxDamage))
+				(e->getPayloadType()->range == maxRange && e->getPayloadType()->damage > maxDamage))
 			{
 				maxRange = e->getPayloadType()->range;
 				maxDamage = e->getPayloadType()->damage;
@@ -959,6 +975,25 @@ void VanillaUnitAI::routine(GameState &state, BattleUnit &u)
 		if (newItem != rhItem)
 		{
 			UnitAIHelper::ensureItemInSlot(state, newItem, AEquipmentSlotType::RightHand);
+		}
+	}
+
+	// AI preferences
+	u.fire_aiming_mode = WeaponAimingMode::Snap;
+	u.fire_permission_mode = BattleUnit::FirePermissionMode::AtWill;
+	if (state.current_battle->mode == Battle::Mode::TurnBased)
+	{
+		// Ensure at least half of move is available for moving
+		u.setReserveKneelMode(KneelingMode::Kneeling);
+		u.setReserveShotMode(ReserveShotMode::Aimed);
+		int kneelCost = u.reserve_kneel_mode == KneelingMode::None ? 0 : BattleUnitMission::getBodyStateChangeCost(u, BodyState::Standing, BodyState::Kneeling);
+		if (u.reserveShotCost + kneelCost > u.initialTU / 2)
+		{
+			u.setReserveShotMode(ReserveShotMode::Snap);
+		}
+		if (u.reserveShotCost + kneelCost> u.initialTU / 2)
+		{
+			u.setReserveKneelMode(KneelingMode::None);
 		}
 	}
 
@@ -1041,7 +1076,7 @@ UString AIDecision::getName()
 
 void LowMoraleUnitAI::reset(GameState &, BattleUnit &) { ticksActionAvailable = 0; }
 
-std::tuple<AIDecision, bool> LowMoraleUnitAI::think(GameState &state, BattleUnit &u)
+std::tuple<AIDecision, bool> LowMoraleUnitAI::think(GameState &state, BattleUnit &u, bool interrupt)
 {
 	switch (u.getAIType())
 	{
@@ -1167,7 +1202,7 @@ std::tuple<AIDecision, bool> LowMoraleUnitAI::think(GameState &state, BattleUnit
 							}
 							else
 							{
-								if (u.canAttackUnit(victim) != WeaponStatus::NotFiring)
+								if (u.canAttackUnit(state, victim) != WeaponStatus::NotFiring)
 								{
 									decision.action = mksp<AIAction>();
 									decision.action->type = AIAction::Type::AttackWeaponUnit;
@@ -1193,7 +1228,7 @@ std::tuple<AIDecision, bool> LowMoraleUnitAI::think(GameState &state, BattleUnit
 							}
 							else
 							{
-								if (u.canAttackUnit(target) != WeaponStatus::NotFiring)
+								if (u.canAttackUnit(state, target) != WeaponStatus::NotFiring)
 								{
 									decision.action = mksp<AIAction>();
 									decision.action->type = AIAction::Type::AttackWeaponUnit;
@@ -1254,11 +1289,15 @@ void DefaultUnitAI::notifyUnderFire(Vec3<int> position) { attackerPosition = pos
 
 void DefaultUnitAI::notifyHit(Vec3<int> position) { attackerPosition = position; }
 
-std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &u)
+std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &u, bool interrupt)
 {
 	static const Vec3<int> NONE = {0, 0, 0};
 
-	active = true;
+	// Default AI should not work in turn based when it's our turn to act
+	// We can assume that if it's not our turn then we're interrupting
+	// Otherwise no AI would work
+	active = state.current_battle->mode == Battle::Mode::RealTime 
+		|| u.owner != state.current_battle->currentActiveOrganisation;
 
 	if (!active)
 	{
@@ -1351,7 +1390,7 @@ std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &
 				// closest attackable
 				if (!targetEnemy || !targetEnemy->isConscious() ||
 				    enemies.find(targetEnemy) == enemies.end() ||
-				    u.canAttackUnit(targetEnemy) == WeaponStatus::NotFiring)
+				    u.canAttackUnit(state, targetEnemy) == WeaponStatus::NotFiring)
 				{
 					targetEnemy.clear();
 					// Make a list of enemies sorted by distance to them
@@ -1374,7 +1413,7 @@ std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &
 					// Pick enemy that is closest and can be attacked
 					for (auto entry : enemiesByDistance)
 					{
-						weaponStatus = u.canAttackUnit(entry.second);
+						weaponStatus = u.canAttackUnit(state, entry.second);
 						if (weaponStatus != WeaponStatus::NotFiring)
 						{
 							targetEnemy = entry.second;
@@ -1399,8 +1438,8 @@ std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &
 		}
 	}
 
-	// Enzyme
-	if (u.enzymeDebuffIntensity > 0 && !u.isMoving() && u.canMove())
+	// Enzyme random running (only works in real time)
+	if (state.current_battle->mode == Battle::Mode::RealTime && u.enzymeDebuffIntensity > 0 && !u.isMoving() && u.canMove())
 	{
 		// Move to a random adjacent tile
 		auto from = u.tileObject->getOwningTile();
@@ -1445,7 +1484,7 @@ std::tuple<AIDecision, bool> DefaultUnitAI::think(GameState &state, BattleUnit &
 
 void BehaviorUnitAI::reset(GameState &, BattleUnit &) {}
 
-std::tuple<AIDecision, bool> BehaviorUnitAI::think(GameState &state, BattleUnit &u)
+std::tuple<AIDecision, bool> BehaviorUnitAI::think(GameState &state, BattleUnit &u, bool interrupt)
 {
 	std::ignore = state;
 	std::ignore = u;
@@ -1486,7 +1525,6 @@ std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>>
 VanillaTacticalAI::think(GameState &state, StateRef<Organisation> o)
 {
 	static const int VANILLA_TACTICAL_AI_THINK_INTERVAL = TICKS_PER_SECOND / 8;
-
 	auto curTicks = state.gameTime.getTicks();
 	if (ticksLastThink + ticksUntilReThink > curTicks)
 	{
@@ -1495,6 +1533,21 @@ VanillaTacticalAI::think(GameState &state, StateRef<Organisation> o)
 
 	ticksLastThink = curTicks;
 	ticksUntilReThink = VANILLA_TACTICAL_AI_THINK_INTERVAL;
+	
+	// If turn based allow turn end when we're finished
+	// Also cancel all missions
+	if (state.current_battle->mode == Battle::Mode::TurnBased && state.current_battle->ticksWithoutAction >= TICKS_END_TURN)
+	{
+		state.current_battle->turnEndAllowed = true;
+		for (auto u : state.current_battle->units)
+		{
+			if (u.second->owner != o || !u.second->isConscious())
+			{
+				continue;
+			}
+			u.second->cancelMissions(state);
+		}
+	}
 
 	// Find an idle unit that needs orders
 	for (auto u : state.current_battle->units)
@@ -1581,12 +1634,21 @@ TacticalAIBlock::think(GameState &state)
 		return {};
 	}
 
+	if (state.current_battle->mode == Battle::Mode::TurnBased && (!state.current_battle->interruptUnits.empty() || !state.current_battle->interruptQueue.empty()))
+	{
+		return{};
+	}
+
 	ticksLastThink = curTicks;
 	ticksUntilReThink = AI_THINK_INTERVAL;
 
 	std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>> result;
 	for (auto &o : this->aiList)
 	{
+		if (state.current_battle->mode == Battle::Mode::TurnBased && o.first != state.current_battle->currentActiveOrganisation)
+		{
+			continue;
+		}
 		auto decisions = o.second->think(state, o.first);
 		result.insert(result.end(), decisions.begin(), decisions.end());
 	}

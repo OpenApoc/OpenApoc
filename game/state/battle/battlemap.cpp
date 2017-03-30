@@ -169,7 +169,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> orga
 	// FIXME: Generate list of agent types for enemies (and civs) properly
 	addDebugTroops(state, player_agents);
 
-	return ufo->type->battle_map->createBattle(state, organisation, player_agents, craft,
+	return ufo->type->battle_map->createBattle(state, ufo->owner, organisation, player_agents, craft,
 	                                           Battle::MissionType::UfoRecovery, ufo.id);
 }
 
@@ -271,7 +271,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> orga
 		player_agents.push_back(state.agent_generator.createAgent(state, pair.first, pair.second));
 	}
 
-	return building->battle_map->createBattle(state, organisation, player_agents, craft,
+	return building->battle_map->createBattle(state,building->owner, organisation, player_agents, craft,
 	                                          missionType, building.id);
 }
 
@@ -836,7 +836,7 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 sp<Battle>
 BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>> &doors,
                    bool &spawnCivilians, std::vector<sp<BattleMapSector>> sec_map, Vec3<int> size,
-                   GameState &state, StateRef<Organisation> target_organisation,
+                   GameState &state, StateRef<Organisation> propertyOwner, StateRef<Organisation> target_organisation,
                    std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
                    Battle::MissionType mission_type, UString mission_location_id)
 {
@@ -887,6 +887,7 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 					auto s = mksp<BattleMapPart>();
 
 					auto initialPosition = pair.first + shift;
+					s->owner = propertyOwner;
 					s->position = initialPosition;
 					s->queueCollapse();
 					s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
@@ -948,6 +949,7 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 					auto s = mksp<BattleMapPart>();
 
 					auto initialPosition = pair.first + shift;
+					s->owner = propertyOwner;
 					s->position = initialPosition;
 					s->queueCollapse();
 					s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
@@ -965,6 +967,7 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 					auto s = mksp<BattleMapPart>();
 
 					auto initialPosition = pair.first + shift;
+					s->owner = propertyOwner;
 					s->position = initialPosition;
 					s->queueCollapse();
 					s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
@@ -984,7 +987,7 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 						case BattleMapPartType::AutoConvert::Fire:
 						{
 							StateRef<DamageType> dt = {&state, "DAMAGETYPE_INCENDIARY"};
-							b->placeHazard(state, dt, pair.first + shift,
+							b->placeHazard(state, propertyOwner, dt, pair.first + shift,
 							               // Make it already hot
 							               dt->hazardType->getLifetime(state) * 2, 0, 1, false);
 							break;
@@ -992,7 +995,7 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 						case BattleMapPartType::AutoConvert::Smoke:
 						{
 							StateRef<DamageType> dt = {&state, "DAMAGETYPE_SMOKE"};
-							b->placeHazard(state, dt, pair.first + shift,
+							b->placeHazard(state, propertyOwner, dt, pair.first + shift,
 							               dt->hazardType->getLifetime(state), 1, 2, false);
 							break;
 						}
@@ -1001,6 +1004,7 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 							auto s = mksp<BattleMapPart>();
 
 							auto initialPosition = pair.first + shift;
+							s->owner = propertyOwner;
 							s->position = initialPosition;
 							s->queueCollapse();
 							s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
@@ -1279,7 +1283,7 @@ void BattleMap::unloadTiles()
 	LogInfo("Unloaded sector tiles.");
 }
 
-sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> target_organisation,
+sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> propertyOwner, StateRef<Organisation> target_organisation,
                                    std::list<StateRef<Agent>> &agents,
                                    StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
                                    UString mission_location_id)
@@ -1297,7 +1301,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 	}
 
 	// Step 02: Fill map with map parts
-	auto b = fillMap(doors, spawnCivilians, sec_map, size, state, target_organisation, agents,
+	auto b = fillMap(doors, spawnCivilians, sec_map, size, state, propertyOwner, target_organisation, agents,
 	                 player_craft, mission_type, mission_location_id);
 
 	// Step 03: Link adjacent doors

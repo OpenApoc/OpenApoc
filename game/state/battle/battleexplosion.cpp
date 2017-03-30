@@ -22,12 +22,12 @@
 namespace OpenApoc
 {
 BattleExplosion::BattleExplosion(Vec3<int> position, StateRef<DamageType> damageType, int power,
-                                 int depletionRate, bool damageInTheEnd,
+                                 int depletionRate, bool damageInTheEnd,StateRef<Organisation> ownerOrg,
                                  StateRef<BattleUnit> ownerUnit)
     : position(position), power(power), ticksUntilExpansion(TICKS_MULTIPLIER * 2),
       locationsToExpand({{{position, {power, power}}}, {}, {}}), damageInTheEnd(damageInTheEnd),
       locationsVisited({position}), damageType(damageType), depletionRate(depletionRate),
-      ownerUnit(ownerUnit)
+      ownerUnit(ownerUnit), ownerOrganisation(ownerOrg)
 {
 }
 
@@ -60,7 +60,7 @@ void BattleExplosion::die(GameState &state)
 		}
 		if (existingHazard)
 		{
-			existingHazard->ticksUntilNextUpdate = TICKS_PER_HAZARD_UPDATE;
+			existingHazard->nextUpdateTicksAccumulated = 0;
 		}
 	}
 }
@@ -89,13 +89,13 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 	{
 		StateRef<DamageType> dtSmoke = {&state, "DAMAGETYPE_SMOKE"};
 		state.current_battle->placeHazard(
-		    state, dtSmoke, pos, dtSmoke->hazardType->getLifetime(state), damage, 2, false);
+		    state, ownerOrganisation, dtSmoke, pos, dtSmoke->hazardType->getLifetime(state), damage, 2, false);
 	}
 	// Explosions with no custom explosion doodad spawn hazards when dealing damage
 	else if (!damageType->explosionDoodad)
 	{
 		state.current_battle->placeHazard(
-		    state, damageType, pos, damageType->hazardType->getLifetime(state), damage, 1, false);
+		    state, ownerOrganisation, damageType, pos, damageType->hazardType->getLifetime(state), damage, 1, false);
 	}
 	// Gas does no direct damage
 	if (damageType->doesImpactDamage())
@@ -331,6 +331,8 @@ void BattleExplosion::grow(GameState &state)
 {
 	auto &map = *state.current_battle->map;
 
+	state.current_battle->ticksWithoutAction = 0;
+
 	for (int i = 0; i < 2; i++)
 	{
 		locationsToExpand.emplace_back();
@@ -339,7 +341,7 @@ void BattleExplosion::grow(GameState &state)
 		{
 			if (damageType->hazardType && damageType->explosionDoodad)
 			{
-				state.current_battle->placeHazard(state, damageType, pos.first,
+				state.current_battle->placeHazard(state, ownerOrganisation, damageType, pos.first,
 				                                  damageType->hazardType->getLifetime(state),
 				                                  pos.second.x);
 			}

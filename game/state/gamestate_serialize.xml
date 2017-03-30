@@ -308,7 +308,7 @@
 		<member>velocityXY</member>
 		<member>velocityZ</member>
 		<member>timeToSnooze</member>
-		<member>timeUnits</member>
+		<member>allowContinue</member>
 		<member>targetBodyState</member>
 		<member>currentPlannedPath</member>
 		<member>allowRunningAway</member>
@@ -418,6 +418,8 @@
 		<member>currentPlayer</member>
 		<member>currentActiveOrganisation</member>
 		<member>currentTurn</member>
+		<member>ticksWithoutAction</member>
+		<member>turnEndAllowed</member>
 		<member>interruptQueue</member>
 		<member>interruptUnits</member>
 		<member>battleViewZLevel</member>
@@ -562,11 +564,15 @@
 		<member>moraleState</member>
 		<member>moraleStateTicksRemaining</member>
 		<member>moraleTicksAccumulated</member>
+		<member>initialTU</member>
+		<member>reserveShotCost</member>
 		<member>behavior_mode</member>
 		<member>fire_aiming_mode</member>
 		<member>fire_permission_mode</member>
 		<member>movement_mode</member>
 		<member>kneeling_mode</member>
+		<member>reserve_shot_mode</member>
+		<member>reserve_kneel_mode</member>
 		<member>body_animation_ticks_remaining</member>
 		<member>body_animation_ticks_total</member>
 		<member>body_animation_ticks_static</member>
@@ -597,6 +603,7 @@
 		<member>bounced</member>
 		<member>collisionIgnoredTicks</member>
 		<member>velocity</member>
+		<member>tilesMoved</member>
 		<member>giveWayRequestData</member>
 		<member>displayedItem</member>
 		<member>visibleUnits</member>
@@ -613,6 +620,7 @@
 		<member>ownerInvulnerableTicks</member>
 		<member>collisionIgnoredTicks</member>
 		<member>ticksUntilCollapse</member>
+		<member>owner</member>
 	</object>
 	<object>
 		<name>BattleHazard</name>
@@ -624,8 +632,9 @@
 		<member>age</member>
 		<member>frame</member>
 		<member>ticksUntilVisible</member>
-		<member>ticksUntilNextFrameChange</member>
-		<member>ticksUntilNextUpdate</member>
+		<member>frameChangeTicksAccumulated</member>
+		<member>nextUpdateTicksAccumulated</member>
+		<member>owner</member>
 	</object>
 	<object>
 		<name>BattleExplosion</name>
@@ -639,6 +648,7 @@
 		<member>damageType</member>
 		<member>depletionRate</member>
 		<member>ownerUnit</member>
+		<member>ownerOrganisation</member>
 		<member>affectedUnits</member>
 	</object>
 	<object>
@@ -656,6 +666,7 @@
 		<member>door</member>
 		<member>supportedItems</member>
 		<member>supportedParts</member>
+		<member>owner</member>
 	</object>
 	<object>
 		<name>BattleDoor</name>
@@ -1221,6 +1232,13 @@
 		<value>Auto</value>
 	</enum>
 	<enum>
+		<name>ReserveShotMode</name>
+		<value>Aimed</value>
+		<value>Snap</value>
+		<value>Auto</value>
+		<value>None</value>
+	</enum>
+	<enum>
 		<name>BattleUnit::FirePermissionMode</name>
 		<value>AtWill</value>
 		<value>CeaseFire</value>
@@ -1236,6 +1254,7 @@
 		<value>None</value>
 		<value>Kneeling</value>
 	</enum>
+	
 	<enum>
 		<name>WeaponStatus</name>
 		<value>NotFiring</value>
@@ -1515,7 +1534,7 @@
 		<member>movement</member>
 	</object>
 	<object full="true">
-		<name>UnitAIList</name>
+		<name>UnitAIBlock</name>
 		<member>aiList</member>
 		<member>ticksLastThink</member>
 		<member>ticksUntilReThink</member>

@@ -141,6 +141,11 @@ Collision BattleItem::checkItemCollision(Vec3<float> previousPosition, Vec3<floa
 	return c;
 }
 
+void BattleItem::updateTB(GameState &state)
+{
+	item->updateTB(state);
+}
+
 void BattleItem::update(GameState &state, unsigned int ticks)
 {
 	item->update(state, ticks);

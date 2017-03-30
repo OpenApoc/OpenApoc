@@ -19,6 +19,7 @@ class Battle;
 class BattleUnit;
 class AEquipment;
 class Image;
+class Organisation;
 class DamageType;
 
 class BattleItem : public std::enable_shared_from_this<BattleItem>
@@ -45,6 +46,8 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 
 	unsigned int ticksUntilCollapse = 0;
 
+	StateRef<Organisation> owner;
+
 	// Check if we are still supported, and collapse if not
 	void tryCollapse();
 	void collapse();
@@ -57,6 +60,7 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 	void hopTo(GameState &state, Vec3<float> targetPosition);
 
 	void update(GameState &state, unsigned int ticks);
+	void updateTB(GameState &state);
 
 	BattleItem() = default;
 	~BattleItem() = default;

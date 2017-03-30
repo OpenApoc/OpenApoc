@@ -135,6 +135,10 @@ void Battle::initBattle(GameState &state, bool first)
 		// Place units into squads directly to their positions
 		for (auto &u : this->units)
 		{
+			if (u.second->squadNumber == -1)
+			{
+				continue;
+			}
 			forces[u.second->owner].squads[u.second->squadNumber].units[u.second->squadPosition] =
 			    u.second;
 		}
@@ -429,7 +433,7 @@ sp<BattleUnit> Battle::spawnUnit(GameState &state, StateRef<Organisation> owner,
 	unit->setBodyState(state, curState);
 	unit->setMission(state, BattleUnitMission::changeStance(*unit, tarState));
 	unit->assignToSquad(*state.current_battle);
-	unit->refreshUnitVisibilityAndVision(state, unit->position);
+	unit->refreshUnitVisibilityAndVision(state);
 
 	unit->strategyImages = state.battle_common_image_list->strategyImages;
 	unit->burningDoodad = state.battle_common_image_list->burningDoodad;
@@ -443,7 +447,7 @@ sp<BattleUnit> Battle::spawnUnit(GameState &state, StateRef<Organisation> owner,
 sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position,
                                          StateRef<DoodadType> doodadType,
                                          StateRef<DamageType> damageType, int power,
-                                         int depletionRate, StateRef<BattleUnit> ownerUnit)
+                                         int depletionRate, StateRef<Organisation> ownerOrg, StateRef<BattleUnit> ownerUnit)
 {
 	// FIXME: Actually read this option
 	bool USER_OPTION_EXPLOSIONS_DAMAGE_IN_THE_END = true;
@@ -464,7 +468,7 @@ sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position,
 
 	// Explosion
 	auto explosion = mksp<BattleExplosion>(position, damageType, power, depletionRate,
-	                                       USER_OPTION_EXPLOSIONS_DAMAGE_IN_THE_END, ownerUnit);
+	                                       USER_OPTION_EXPLOSIONS_DAMAGE_IN_THE_END, ownerOrg, ownerUnit);
 	explosions.insert(explosion);
 	return explosion;
 }
@@ -510,6 +514,18 @@ sp<BattleItem> Battle::placeItem(GameState &state, sp<AEquipment> item, Vec3<flo
 	bitem->strategySprite = state.battle_common_image_list->strategyImages->at(480);
 	bitem->item = item;
 	item->ownerItem = bitem;
+	if (item->ownerUnit)
+	{
+		bitem->owner = item->ownerUnit->owner;
+	}
+	else if (item->ownerAgent)
+	{
+		bitem->owner = item->ownerAgent->owner;
+	}
+	else
+	{
+		bitem->owner = item->ownerOrganisation;
+	}
 	bitem->position = position;
 	if (map)
 	{
@@ -519,12 +535,13 @@ sp<BattleItem> Battle::placeItem(GameState &state, sp<AEquipment> item, Vec3<flo
 	return bitem;
 }
 
-sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<DamageType> type,
+sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<Organisation> owner, StateRef<DamageType> type,
                                      Vec3<int> position, int ttl, int power,
                                      int initialAgeTTLDivizor, bool delayVisibility)
 {
 	bool fire = type->hazardType->fire;
 	auto hazard = mksp<BattleHazard>(state, type, delayVisibility);
+	hazard->owner = owner;
 	hazard->position = position;
 	hazard->position += Vec3<float>{0.5f, 0.5f, 0.5f};
 	if (fire)
@@ -613,6 +630,7 @@ void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 	}
 	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
 	{
+		state.current_battle->ticksWithoutAction = 0;
 		auto &p = *it++;
 		auto c = p->checkProjectileCollision(*map);
 		if (c)
@@ -636,7 +654,7 @@ void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 			{
 				auto explosion = addExplosion(state, c.position, c.projectile->doodadType,
 				                              c.projectile->damageType, c.projectile->damage,
-				                              c.projectile->depletionRate, c.projectile->firerUnit);
+				                              c.projectile->depletionRate, c.projectile->firerUnit->owner, c.projectile->firerUnit);
 				displayDoodad = false;
 			}
 			else
@@ -882,6 +900,65 @@ void Battle::update(GameState &state, unsigned int ticks)
 {
 	TRACE_FN_ARGS1("ticks", Strings::fromInteger(static_cast<int>(ticks)));
 
+	if (mode == Mode::TurnBased)
+	{
+		ticksWithoutAction += ticks;
+		// Interrupt for lowmorales
+		if (!lowMoraleProcessed && interruptQueue.empty() && interruptUnits.empty())
+		{
+			lowMoraleProcessed = true;
+			for (auto &u : units)
+			{
+				if (u.second->owner != currentActiveOrganisation || !u.second->isConscious() || u.second->moraleState == MoraleState::Normal || u.second->agent->modified_stats.time_units == 0)
+				{
+					continue;
+				}
+				lowMoraleProcessed = false;
+				ticksWithoutAction = TICKS_BEGIN_INTERRUPT;
+				interruptQueue.emplace(StateRef<BattleUnit>(&state, u.first), 0);
+				LogWarning("Message! Unit on lowmorale is going nuts!");
+				break;
+			}
+		}
+		// Add units from queue to interrupt list
+		if (!interruptQueue.empty() && ticksWithoutAction >= TICKS_BEGIN_INTERRUPT)
+		{
+			for (auto &e : interruptQueue)
+			{
+				interruptUnits.emplace(e.first, e.second);
+			}
+			interruptQueue.clear();
+			ticksWithoutAction = 0;
+			turnEndAllowed = false;
+		}
+		// Turn end condition
+		if (ticksWithoutAction >= TICKS_END_TURN)
+		{
+			if (interruptUnits.empty())
+			{
+				if (turnEndAllowed)
+				{
+					endTurn(state);
+				}
+			}
+			else
+			{ 
+				// Spend remaining TUs of low morale units
+				for (auto &e : interruptUnits)
+				{
+					if (e.first->moraleState != MoraleState::Normal)
+					{
+						// Complains about const?...
+						e.first.getSp()->spendRemainingTU(state);
+					}
+				}
+				interruptUnits.clear();
+				ticksWithoutAction = 0;
+				turnEndAllowed = false;
+			}
+		}
+	}
+
 	Trace::start("Battle::update::projectiles->update");
 	updateProjectiles(state, ticks);
 	Trace::end("Battle::update::projectiles->update");
@@ -926,11 +1003,11 @@ void Battle::update(GameState &state, unsigned int ticks)
 	}
 	Trace::end("Battle::update::items->update");
 	Trace::start("Battle::update::scanners->update");
-	Trace::end("Battle::update::scanners->update");
 	for (auto &o : this->scanners)
 	{
 		o.second->update(state, ticks);
 	}
+	Trace::end("Battle::update::scanners->update");
 	Trace::start("Battle::update::units->update");
 	for (auto &o : this->units)
 	{
@@ -956,6 +1033,47 @@ void Battle::update(GameState &state, unsigned int ticks)
 	Trace::start("Battle::update::pathfinding");
 	updatePathfinding(state);
 	Trace::end("Battle::update::pathfinding");
+}
+
+void Battle::updateTBBegin(GameState & state)
+{
+	ticksWithoutAction = 0;
+	turnEndAllowed = false;
+	lowMoraleProcessed = false;
+
+	Trace::start("Battle::updateTBBegin::units->update");
+	for (auto &o : this->units)
+	{
+		if (o.second->owner == currentActiveOrganisation)
+		{
+			o.second->updateTB(state);
+		}
+	}
+	Trace::end("Battle::updateTBBegin::units->update");
+}
+
+void Battle::updateTBEnd(GameState & state)
+{
+	Trace::start("Battle::updateTBEnd::hazards->update");
+	for (auto it = this->hazards.begin(); it != this->hazards.end();)
+	{
+		auto d = *it++;
+		if (d->owner == currentActiveOrganisation)
+		{
+			d->updateTB(state);
+		}
+	}
+	Trace::end("Battle::updateTBEnd::hazards->update");
+	Trace::start("Battle::updateTBEnd::items->update");
+	for (auto it = this->items.begin(); it != this->items.end();)
+	{
+		auto p = *it++;
+		if (p->owner == currentActiveOrganisation)
+		{
+			p->updateTB(state);
+		}
+	}
+	Trace::end("Battle::updateTBEnd::items->update");
 }
 
 int Battle::getLosBlockID(int x, int y, int z) const
@@ -1040,25 +1158,24 @@ void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
 		}
 	}
 
-	// Vertical misses always go down
-	float k1 = rnd[1] * std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
-	// Horizontal misses go left or right randomly
+	float k1 = (2 * randBoundsInclusive(state.rng, 0, 1) - 1)  *rnd[1] * std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
 	float k2 = (2 * randBoundsInclusive(state.rng, 0, 1) - 1) * rnd[2] *
 	           std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
 
+	// Vertical misses only go down
 	auto diffVertical =
 	    Vec3<float>{length_vector * delta.x * delta.z, length_vector * delta.y * delta.z,
-	                -length_vector * (delta.x * delta.x + delta.y * delta.y)} *
+	               std::min(0.0f, -length_vector * (delta.x * delta.x + delta.y * delta.y))} *
 	    k1;
 	auto diffHorizontal = Vec3<float>{-delta.y, delta.x, 0.0f} * k2;
 
 	auto diff = (diffVertical + diffHorizontal) *
 	            (thrown ? Vec3<float>{3.0f, 3.0f, 0.0f} : Vec3<float>{1.0f, 1.0f, 0.33f});
-
+	LogWarning("Offset %s Diff %s Target %s Becomes %s", delta, diff, target, target+diff);
 	target += diff;
 }
 
-void Battle::beginTurn()
+void Battle::beginTurn(GameState &state)
 {
 	if (mode != Mode::TurnBased)
 	{
@@ -1066,37 +1183,41 @@ void Battle::beginTurn()
 		return;
 	}
 
-	LogWarning("Implement beginning turn!");
-
+	// Cancel mind control and stuff
 	for (auto &u : units)
 	{
 		if (u.second->owner != currentActiveOrganisation)
 		{
 			continue;
 		}
-		u.second->agent->modified_stats.restoreTU();
+		u.second->stopAttackPsi(state);
 	}
+	for (auto &u : units)
+	{
+		if (u.second->owner != currentActiveOrganisation)
+		{
+			continue;
+		}
+		u.second->beginTurn(state);
+	}
+
+	updateTBBegin(state);
 }
 
-void Battle::endTurn()
+void Battle::endTurn(GameState &state)
 {
-	if (mode != Mode::TurnBased)
-	{
-		LogError("endTurn called in real time?");
-		return;
-	}
-
-	LogWarning("Implement ending turn!");
+	updateTBEnd(state);
 
 	// Pass turn to next org, if final org - increment turn counter and pass to first org
-	auto it = std::find(participants.begin(), participants.end(), currentActiveOrganisation)++;
+	auto it = ++std::find(participants.begin(), participants.end(), currentActiveOrganisation);
 	if (it == participants.end())
 	{
 		currentTurn++;
 		it = participants.begin();
 	}
 	currentActiveOrganisation = *it;
-	beginTurn();
+
+	beginTurn(state);
 }
 
 void Battle::giveInterruptChanceToUnits(GameState &state, StateRef<BattleUnit> giver, int reactionValue)
@@ -1116,14 +1237,11 @@ void Battle::giveInterruptChanceToUnits(GameState &state, StateRef<BattleUnit> g
 
 void Battle::giveInterruptChanceToUnit(StateRef<BattleUnit> receiver, int reactionValue)
 {
-	if (mode != Mode::TurnBased)
+	if (mode != Mode::TurnBased || receiver->owner == currentActiveOrganisation || receiver->getAIType() == AIType::None)
 	{
 		return;
 	}
-	if (receiver->owner == currentActiveOrganisation)
-	{
-		return;
-	}
+
 	if (receiver->agent->getReactionValue() > reactionValue)
 	{
 		interruptQueue.emplace(receiver, receiver->agent->getTULimit(reactionValue));
@@ -1752,10 +1870,10 @@ void Battle::enterBattle(GameState &state)
 			LogError("Unit %s cannot Stand, Fly, Kneel or go Prone!", u->agent->type.id);
 		}
 		// Miscellaneous
-		u->agent->modified_stats.restoreTU();
+		u->beginTurn(state);
 		u->resetGoal();
 	}
-
+	
 	state.current_battle->initBattle(state, true);
 
 	// Find first player unit

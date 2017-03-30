@@ -168,9 +168,7 @@ int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
 	switch (movementState)
 	{
 		case MovementState::None:
-			LogWarning("Before *0.8f %f", agentDispersion);
 			agentDispersion *= 0.8f;
-			LogWarning("After *0.8f %f", agentDispersion);
 			break;
 		case MovementState::Running:
 			agentDispersion *= 1.25f;
@@ -246,17 +244,34 @@ int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
 	return std::max(0, (int)(100.0f - totalDispersion * 100.0f));
 }
 
+int AEquipment::getFireCost(WeaponAimingMode fireMode)
+{
+	return getPayloadType()->fire_delay / (int)fireMode;
+}
+
+int AEquipment::getFireCost(WeaponAimingMode fireMode, int maxTU)
+{
+	return getFireCost(fireMode) * maxTU / 100;
+}
+
 void AEquipment::stopFiring()
 {
 	weapon_fire_ticks_remaining = 0;
 	readyToFire = false;
 }
 
-void AEquipment::startFiring(WeaponAimingMode fireMode)
+void AEquipment::startFiring(WeaponAimingMode fireMode, bool instant)
 {
 	if (ammo == 0)
 		return;
-	weapon_fire_ticks_remaining = getPayloadType()->fire_delay * 4 / (int)fireMode;
+	if (instant)
+	{
+		weapon_fire_ticks_remaining = TICKS_PER_SECOND / 4;
+	}
+	else
+	{
+		weapon_fire_ticks_remaining = getPayloadType()->fire_delay * TICKS_MULTIPLIER / (int)fireMode;
+	}
 	readyToFire = false;
 	aimingMode = fireMode;
 }
@@ -326,7 +341,7 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 	}
 }
 
-void AEquipment::update(GameState &state, unsigned int ticks)
+void AEquipment::updateInner(GameState &state, unsigned int ticks)
 {
 	// Recharge update
 	auto payload = getPayloadType();
@@ -340,6 +355,24 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 			ammo = std::min(payload->max_ammo, ammo);
 		}
 	}
+
+	// Process primed explosives
+	if (primed && activated)
+	{
+		if (triggerDelay > ticks)
+		{
+			triggerDelay -= ticks;
+		}
+		else
+		{
+			triggerDelay = 0;
+		}
+	}
+}
+
+void AEquipment::update(GameState &state, unsigned int ticks)
+{
+	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
 
 	// Firing update
 	if (weapon_fire_ticks_remaining > 0)
@@ -377,7 +410,7 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 					}
 					else if (ownerAgent->unit->fire_aiming_mode != aimingMode)
 					{
-						startFiring(ownerAgent->unit->fire_aiming_mode);
+						startFiring(ownerAgent->unit->fire_aiming_mode, !realTime);
 					}
 					break;
 				case AEquipmentSlotType::RightHand:
@@ -388,7 +421,7 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 					}
 					else if (ownerAgent->unit->fire_aiming_mode != aimingMode)
 					{
-						startFiring(ownerAgent->unit->fire_aiming_mode);
+						startFiring(ownerAgent->unit->fire_aiming_mode, !realTime);
 					}
 					break;
 				// If weapon was moved to any other slot from hands, stop firing
@@ -429,85 +462,80 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 		}
 	}
 
-	// Process primed explosives
-	if (primed)
+	if (primed && !activated && !ownerAgent)
 	{
-		if (!activated && !ownerAgent)
-		{
-			activated = true;
-		}
+		activated = true;
+	}
 
-		if (activated)
+	if (realTime)
+	{
+		updateInner(state, ticks);
+	}
+
+	if (primed && activated && triggerDelay == 0)
+	{
+		auto payload = getPayloadType();
+		switch (triggerType)
 		{
-			if (triggerDelay > ticks)
+		case TriggerType::None:
+			LogError("Primed activated item with no trigger?");
+			break;
+		case TriggerType::Contact:
+		{
+			auto item = ownerItem.lock();
+			if (item)
 			{
-				triggerDelay -= ticks;
+				if (!item->falling)
+				{
+					item->die(state);
+				}
 			}
 			else
 			{
-				triggerDelay = 0;
+				// Contact trigger in inventory? Blow up!
+				explode(state);
 			}
-
-			if (triggerDelay == 0)
+			break;
+		}
+		case TriggerType::Proximity:
+		case TriggerType::Boomeroid:
+		{
+			auto item = ownerItem.lock();
+			if (item)
 			{
-				switch (triggerType)
+				// Nothing, triggered by moving units
+			}
+			else
+			{
+				// Proxy trigger in inventory? Blow up!
+				if (payload->damage_type->effectType !=
+					DamageType::EffectType::Brainsucker)
 				{
-					case TriggerType::None:
-						LogError("Primed activated item with no trigger?");
-						break;
-					case TriggerType::Contact:
-					{
-						auto item = ownerItem.lock();
-						if (item)
-						{
-							if (!item->falling)
-							{
-								item->die(state);
-							}
-						}
-						else
-						{
-							// Contact trigger in inventory? Blow up!
-							explode(state);
-						}
-						break;
-					}
-					case TriggerType::Proximity:
-					case TriggerType::Boomeroid:
-					{
-						auto item = ownerItem.lock();
-						if (item)
-						{
-							// Nothing, triggered by moving units
-						}
-						else
-						{
-							// Proxy trigger in inventory? Blow up!
-							if (payload->damage_type->effectType !=
-							    DamageType::EffectType::Brainsucker)
-							{
-								explode(state);
-							}
-						}
-						break;
-					}
-					case TriggerType::Timed:
-					{
-						auto item = ownerItem.lock();
-						if (item)
-						{
-							item->die(state);
-						}
-						else
-						{
-							explode(state);
-						}
-						break;
-					}
+					explode(state);
 				}
 			}
+			break;
+		}
+		case TriggerType::Timed:
+		{
+			auto item = ownerItem.lock();
+			if (item)
+			{
+				item->die(state);
+			}
+			else
+			{
+				explode(state);
+			}
+			break;
+		}
 		}
 	}
+}
+
+void AEquipment::updateTB(GameState &state)
+{
+	updateInner(state, TICKS_PER_TURN);
 }
 
 void AEquipment::prime(bool onImpact, int triggerDelay, float triggerRange)
@@ -555,7 +583,7 @@ void AEquipment::explode(GameState &state)
 		case AEquipmentType::Type::Grenade:
 			state.current_battle->addExplosion(state, position, type->explosion_graphic,
 			                                   type->damage_type, type->damage,
-			                                   type->explosion_depletion_rate, ownerUnit);
+			                                   type->explosion_depletion_rate, ownerUnit ? ownerUnit->owner : (ownerAgent ? ownerAgent->owner : ownerOrganisation), ownerUnit);
 			break;
 		case AEquipmentType::Type::Weapon:
 		case AEquipmentType::Type::Ammo:
@@ -571,7 +599,7 @@ void AEquipment::explode(GameState &state)
 			{
 				state.current_battle->addExplosion(state, position, payload->explosion_graphic,
 				                                   payload->damage_type, payload->damage,
-				                                   payload->explosion_depletion_rate, ownerUnit);
+				                                   payload->explosion_depletion_rate, ownerUnit ? ownerUnit->owner : (ownerAgent ? ownerAgent->owner : ownerOrganisation), ownerUnit);
 				break;
 			}
 			// Otherwise shoot stray shots into air

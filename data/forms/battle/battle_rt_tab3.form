@@ -27,13 +27,13 @@
         <image/>
         <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:317:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
-      <label id="DELAY_TEXT" text="Delay  =  6.5s.">
+      <label id="DELAY_TEXT">
         <position x="262" y="40"/>
         <size width="116" height="12"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>
-      <label id="RANGE_TEXT" text="Range  =  4.5m.">
+      <label id="RANGE_TEXT">
         <position x="262" y="91"/>
         <size width="116" height="12"/>
         <alignment horizontal="centre" vertical="centre"/>

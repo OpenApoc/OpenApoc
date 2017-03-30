@@ -30,26 +30,26 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
       </graphicbutton>
       <checkbox id="BUTTON_FOLLOW_AGENT">
         <position x="4" y="7"/>
-        <size width="53" height="21"/>
+        <size width="54" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:141:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
       <checkbox id="BUTTON_TOGGLE_STRATMAP">
         <position x="4" y="30"/>
-        <size width="53" height="21"/>
+        <size width="54" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:133:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
       <tristatebox id="BUTTON_LAYERING">
         <position x="4" y="53"/>
-        <size width="53" height="21"/>
+        <size width="54" height="21"/>
         <image/>
         <image2>battle/battlescape-icons-fixed-139.png</image2>
         <image3>battle/battlescape-icons-fixed-138.png</image3>
       </tristatebox>
       <graphicbutton id="BUTTON_SHOW_OPTIONS">
         <position x="4" y="99"/>
-        <size width="53" height="21"/>
+        <size width="54" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:136:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
@@ -146,25 +146,25 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
       <!-- Time Controls (Disabled in Turn Based) -->
       <radiobutton id="BUTTON_SPEED0" groupid="SPEED">
         <position x="583" y="7"/>
-        <size width="53" height="21"/>
+        <size width="54" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:144:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_SPEED1" groupid="SPEED">
         <position x="583" y="53"/>
-        <size width="53" height="21"/>
+        <size width="54" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:146:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_SPEED2" groupid="SPEED">
         <position x="583" y="76"/>
-        <size width="53" height="21"/>
+        <size width="54" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:148:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_SPEED3" groupid="SPEED">
         <position x="583" y="99"/>
-        <size width="53" height="21"/>
+        <size width="54" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:150:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
@@ -175,9 +175,37 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <font>smalfont</font>
       </label>
       <!-- Turn Controls (Disabled in Real Time) -->
-      <graphicbutton id="BUTTON_ENDTURN">
+      <tristatebox id="BUTTON_RESERVE_AIMED">
+        <position x="583" y="7"/>
+        <size width="54" height="21"/>
+        <image/>
+        <image2>battle/battlescape-icons-fixed-305.png</image2>
+		<image3>battle/battlescape-buttons-res-aim.png</image3>
+      </tristatebox>
+      <tristatebox id="BUTTON_RESERVE_SNAP">
+        <position x="583" y="30"/>
+        <size width="54" height="21"/>
+        <image/>
+        <image2>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:304:xcom3/tacdata/tactical.pal</image2>
+		<image3>battle/battlescape-buttons-res-snap.png</image3>
+      </tristatebox>
+      <tristatebox id="BUTTON_RESERVE_AUTO">
+        <position x="583" y="53"/>
+        <size width="54" height="21"/>
+        <image/>
+        <image2>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:303:xcom3/tacdata/tactical.pal</image2>
+		<image3>battle/battlescape-buttons-res-auto.png</image3>
+      </tristatebox>
+      <tristatebox id="BUTTON_RESERVE_KNEEL">
+        <position x="583" y="76"/>
+        <size width="54" height="21"/>
+        <image/>
+        <image2>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:306:xcom3/tacdata/tactical.pal</image2>
+		<image3>battle/battlescape-buttons-res-kneel.png</image3>
+      </tristatebox>
+	  <graphicbutton id="BUTTON_ENDTURN">
         <position x="583" y="99"/>
-        <size width="53" height="21"/>
+        <size width="54" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:307:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>

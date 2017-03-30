@@ -201,7 +201,7 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 
 	auto font = ui().getFont("smallset");
 
-	for (int i = 0; i <= 99; i++)
+	for (int i = 0; i <= 255; i++)
 	{
 		tuIndicators.push_back(font->getString(format("%d", i)));
 	}
@@ -989,6 +989,28 @@ void BattleTileView::render()
 				}
 			}
 
+			if (revealWholeMap)
+			{
+				static const Vec2<float> offset = { -13.0f, -19.0f };
+				static const Vec2<float> offsetTU = { 13.0f, -5.0f };
+
+				for (auto &u : battle.units)
+				{
+					if (!u.second->isConscious())
+					{
+						continue;
+					}
+					Vec2<float> pos =
+						tileToOffsetScreenCoords(
+							u.second->getPosition() +
+							Vec3<float>{0.0f, 0.0f,
+							(u.second->getCurrentHeight() - 4.0f) * 1.5f / 40.0f}) + offset;
+
+					auto &img = tuIndicators[u.second->agent->modified_stats.time_units];
+					r.draw(img, pos + offsetTU - Vec2<float>{img->size.x / 2, img->size.y / 2});
+				}
+			}
+
 			// Draw unit focus arrows
 			if (!unitsToDrawFocusArrows.empty())
 			{
@@ -1296,6 +1318,7 @@ void BattleTileView::updatePathPreview()
 		LogError("Trying to update path preview with no unit selected!?");
 		return;
 	}
+
 	if (!lastSelectedUnit->canMove())
 		return;
 	auto &map = lastSelectedUnit->tileObject->map;
