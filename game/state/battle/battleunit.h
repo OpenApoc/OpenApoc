@@ -3,7 +3,7 @@
 #define _USE_MATH_DEFINES
 #endif
 #include "game/state/agent.h"
-#include "game/state/battle/ai/ai.h"
+#include "game/state/battle/ai/unitai.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunitmission.h"
 #include "game/state/gametime.h"
@@ -341,7 +341,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	std::list<Vec2<int>> giveWayRequestData;
 
 	// AI list
-	UnitAIBlock aiList;
+	AIBlockUnit aiList;
 
 	// [Methods]
 

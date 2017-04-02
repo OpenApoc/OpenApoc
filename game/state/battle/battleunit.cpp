@@ -6,6 +6,7 @@
 #include "framework/sound.h"
 #include "game/state/aequipment.h"
 #include "game/state/battle/battle.h"
+#include "game/state/battle/ai/unitaihelper.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battleunitanimationpack.h"
@@ -1191,7 +1192,7 @@ bool BattleUnit::isStatic() const
 
 bool BattleUnit::isBusy() const
 {
-	return !missions.empty() || isAttacking() || (getAIType()!=AIType::Civilian && getAIType()!=AIType::None && !visibleEnemies.empty());
+	return !missions.empty() || isAttacking() || (getAIType() != AIType::Civilian && getAIType() != AIType::None && !visibleEnemies.empty());
 }
 
 bool BattleUnit::isAttacking() const { return weaponStatus != WeaponStatus::NotFiring; }
@@ -3572,6 +3573,11 @@ void BattleUnit::executeAIDecision(GameState &state, AIDecision &decision)
 
 void BattleUnit::executeAIAction(GameState &state, AIAction &action)
 {
+	if (action.inProgress(*this))
+	{
+		return;
+	}
+
 	// Equip item we're going to use
 	if (action.item)
 	{
@@ -3583,6 +3589,8 @@ void BattleUnit::executeAIAction(GameState &state, AIAction &action)
 			action.weaponStatus = WeaponStatus::FiringRightHand;
 		}
 	}
+
+	//Do it
 	switch (action.type)
 	{
 		case AIAction::Type::AttackWeaponTile:
@@ -3603,15 +3611,24 @@ void BattleUnit::executeAIAction(GameState &state, AIAction &action)
 			}
 			break;
 		case AIAction::Type::AttackPsiMC:
+			startAttackPsi(state, action.targetUnit, PsiStatus::Control, action.item->type);
+			break;
 		case AIAction::Type::AttackPsiStun:
+			startAttackPsi(state, action.targetUnit, PsiStatus::Stun, action.item->type);
+			break;
 		case AIAction::Type::AttackPsiPanic:
-			LogWarning("Implement acting on a Psi AI action");
+			startAttackPsi(state, action.targetUnit, PsiStatus::Panic, action.item->type);
 			break;
 	}
 }
 
 void BattleUnit::executeAIMovement(GameState &state, AIMovement &movement)
 {
+	if (movement.inProgress(*this))
+	{
+		return;
+	}
+
 	// FIXME: USE teleporter to move?
 	// Or maybe this is done in AI?
 
@@ -3652,15 +3669,13 @@ void BattleUnit::executeAIMovement(GameState &state, AIMovement &movement)
 			break;
 		default:
 			kneeling_mode = movement.kneelingMode;
-			if (movement.movementMode == MovementMode::Prone &&
-			    !agent->isBodyStateAllowed(BodyState::Prone))
+			if (movement_mode != movement.movementMode)
 			{
-				LogError("WTF? Prone order without prone body state!?!?!");
+				setMovementMode(movement.movementMode);
 			}
-			setMovementMode(movement.movementMode);
 			break;
 	}
-
+	
 	// Do movement
 	switch (movement.type)
 	{
@@ -3669,13 +3684,11 @@ void BattleUnit::executeAIMovement(GameState &state, AIMovement &movement)
 			{
 				if (m->type == BattleUnitMission::Type::GotoLocation)
 				{
+					// Soft cancel
 					m->targetLocation = goalPosition;
 					m->currentPlannedPath.clear();
 				}
 			}
-			break;
-		case AIMovement::Type::ChangeStance:
-			// Nothing, already applied above
 			break;
 		case AIMovement::Type::Advance:
 		case AIMovement::Type::GetInRange:
@@ -3691,6 +3704,10 @@ void BattleUnit::executeAIMovement(GameState &state, AIMovement &movement)
 		case AIMovement::Type::Turn:
 			setMission(state, BattleUnitMission::turn(*this, movement.targetLocation));
 			break;
+		case AIMovement::Type::ChangeStance:
+			// Nothing, already applied above
+			break;
+
 	}
 }
 

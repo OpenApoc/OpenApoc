@@ -1,6 +1,6 @@
 #include "game/state/agent.h"
 #include "game/state/aequipment.h"
-#include "game/state/battle/ai/ai.h"
+#include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
@@ -638,11 +638,7 @@ void Agent::updateSpeed()
 	int encumbrance = 0;
 	for (auto &item : equipment)
 	{
-		encumbrance += item->type->weight;
-		if (item->payloadType && item->ammo > 0)
-		{
-			encumbrance += item->payloadType->weight;
-		}
+		encumbrance += item->getWeight();
 	}
 	encumbrance *= encumbrance;
 

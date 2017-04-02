@@ -84,6 +84,7 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 
 	int getAccuracy(BodyState bodyState, MovementState movementState, WeaponAimingMode fireMode,
 	                bool thrown = false, float cloakingDispersion = 0.0f);
+	int getWeight() const;
 
 	// Returned value assumes 100 max TU and must be scaled
 	int getFireCost(WeaponAimingMode fireMode);

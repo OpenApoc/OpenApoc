@@ -1520,6 +1520,8 @@
 		<member>targetUnit</member>
 		<member>item</member>
 		<member>weaponStatus</member>
+		<member>psiEnergySnapshot</member>
+		<member>executed</member>
 	</object>
 	<object>
 		<name>AIMovement</name>
@@ -1527,6 +1529,8 @@
 		<member>targetLocation</member>
 		<member>movementMode</member>
 		<member>kneelingMode</member>
+		<member>executed</member>
+		<member>subordinate</member>
 	</object>
 	<object>
 		<name>AIDecision</name>
@@ -1534,19 +1538,19 @@
 		<member>movement</member>
 	</object>
 	<object full="true">
-		<name>UnitAIBlock</name>
+		<name>AIBlockUnit</name>
 		<member>aiList</member>
 		<member>ticksLastThink</member>
 		<member>ticksUntilReThink</member>
 	</object>
 	<object external="true" full="true">
-		<name>LowMoraleUnitAI</name>
+		<name>UnitAILowMorale</name>
 		<member>type</member>
 		<member>active</member>
 		<member>ticksActionAvailable</member>
 	</object>
 	<object external="true" full="true">
-		<name>DefaultUnitAI</name>
+		<name>UnitAIDefault</name>
 		<member>type</member>
 		<member>active</member>
 		<member>ticksAutoTurnAvailable</member>
@@ -1554,12 +1558,12 @@
 		<member>attackerPosition</member>
 	</object>
 	<object external="true" full="true">
-		<name>BehaviorUnitAI</name>
+		<name>UnitAIBehavior</name>
 		<member>type</member>
 		<member>active</member>
 	</object>
 	<object external="true" full="true">
-		<name>VanillaUnitAI</name>
+		<name>UnitAIVanilla</name>
 		<member>type</member>
 		<member>active</member>
 		<member>ticksLastThink</member>
@@ -1571,21 +1575,19 @@
 		<member>lastSeenEnemyPosition</member>
 	</object>
 	<object external="true" full="true">
-		<name>HardcoreUnitAI</name>
+		<name>UnitAIHardcore</name>
 		<member>type</member>
 		<member>active</member>
 	</object>
 	<object full="true">
-		<name>TacticalAIBlock</name>
+		<name>AIBlockTactical</name>
 		<member>aiList</member>
 		<member>ticksLastThink</member>
 		<member>ticksUntilReThink</member>
 	</object>
 	<object external="true" full="true">
-		<name>VanillaTacticalAI</name>
+		<name>TacticalAIVanilla</name>
 		<member>type</member>
-		<member>ticksLastThink</member>
-		<member>ticksUntilReThink</member>
 	</object>
 	<object>
 		<name>BattleScanner</name>

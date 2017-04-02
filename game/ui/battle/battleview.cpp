@@ -19,7 +19,7 @@
 #include "framework/renderer.h"
 #include "framework/trace.h"
 #include "game/state/aequipment.h"
-#include "game/state/battle/ai/ai.h"
+#include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlehazard.h"
 #include "game/state/battle/battleitem.h"

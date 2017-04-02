@@ -1,7 +1,7 @@
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "game/state/agent.h"
-#include "game/state/battle/ai/ai.h"
+#include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battleunitimagepack.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"

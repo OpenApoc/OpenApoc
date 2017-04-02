@@ -244,6 +244,11 @@ int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
 	return std::max(0, (int)(100.0f - totalDispersion * 100.0f));
 }
 
+int AEquipment::getWeight() const
+{
+	return  type->weight + ((payloadType && ammo > 0) ? payloadType->weight : 0);
+}
+
 int AEquipment::getFireCost(WeaponAimingMode fireMode)
 {
 	return getPayloadType()->fire_delay / (int)fireMode;
@@ -929,8 +934,7 @@ bool AEquipment::getCanThrow(const TileMap &map, int strength, Vec3<float> start
 bool AEquipment::getVelocityForThrow(const TileMap &map, int strength, Vec3<float> startPos,
                                      Vec3<int> target, float &velocityXY, float &velocityZ) const
 {
-	return getVelocityForThrowLaunch(nullptr, map, strength,
-	                                 type->weight + (payloadType ? payloadType->weight : 0),
+	return getVelocityForThrowLaunch(nullptr, map, strength, getWeight(),
 	                                 startPos, target, velocityXY, velocityZ);
 }
 
@@ -945,8 +949,7 @@ bool AEquipment::getVelocityForThrow(const BattleUnit &unit, Vec3<int> target, f
                                      float &velocityZ) const
 {
 	return getVelocityForThrowLaunch(&unit, unit.tileObject->map,
-	                                 unit.agent->modified_stats.strength,
-	                                 type->weight + (payloadType ? payloadType->weight : 0),
+	                                 unit.agent->modified_stats.strength, getWeight(),
 	                                 unit.getThrownItemLocation(), target, velocityXY, velocityZ);
 }
 

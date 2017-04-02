@@ -3,7 +3,7 @@
 #include "framework/sound.h"
 #include "framework/trace.h"
 #include "game/state/aequipment.h"
-#include "game/state/battle/ai/ai.h"
+#include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battledoor.h"
@@ -1168,10 +1168,8 @@ void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
 	               std::min(0.0f, -length_vector * (delta.x * delta.x + delta.y * delta.y))} *
 	    k1;
 	auto diffHorizontal = Vec3<float>{-delta.y, delta.x, 0.0f} * k2;
-
 	auto diff = (diffVertical + diffHorizontal) *
 	            (thrown ? Vec3<float>{3.0f, 3.0f, 0.0f} : Vec3<float>{1.0f, 1.0f, 0.33f});
-	LogWarning("Offset %s Diff %s Target %s Becomes %s", delta, diff, target, target+diff);
 	target += diff;
 }
 
@@ -1200,6 +1198,8 @@ void Battle::beginTurn(GameState &state)
 		}
 		u.second->beginTurn(state);
 	}
+
+	aiBlock.beginTurnRoutine(state, currentActiveOrganisation);
 
 	updateTBBegin(state);
 }
