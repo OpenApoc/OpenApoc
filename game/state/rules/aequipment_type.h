@@ -136,7 +136,7 @@ class AEquipmentType : public StateObject
 	int fire_delay = 0;
 	// This is used for aliens with firing animations that have pre-fire frames
 	// Like spitter that first throws his tube forward and only then emits a shot
-	// This will 
+	// This will
 	int projectile_delay = 0;
 	int tail_size = 0;
 	bool guided = false;
@@ -147,6 +147,7 @@ class AEquipmentType : public StateObject
 	// Projectile's Time To Live, in vanilla ticks (36/sec) (multiply by 4 for OpenApoc ticks)
 	int ttl = 0;
 	StateRef<DoodadType> explosion_graphic;
+	StateRef<DoodadType> shield_graphic;
 	sp<Sample> fire_sfx;
 	sp<Sample> impact_sfx;
 	StateRef<DamageType> damage_type;

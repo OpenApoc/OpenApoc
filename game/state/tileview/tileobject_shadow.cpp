@@ -97,7 +97,7 @@ void TileObjectShadow::addToDrawnTiles(Tile *tile)
 	if (ownerBattleUnit.lock())
 	{
 		Vec3<int> maxCoords = {-1, -1, -1};
-		for (auto intersectingTile : intersectingTiles)
+		for (auto &intersectingTile : intersectingTiles)
 		{
 			int x = intersectingTile->position.x;
 			int y = intersectingTile->position.y;

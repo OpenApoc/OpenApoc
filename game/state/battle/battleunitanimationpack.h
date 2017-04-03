@@ -217,7 +217,7 @@ class BattleUnitAnimationPack : public StateObject
 	              StateRef<AEquipmentType> heldItem, Vec2<int> facing, BodyState currentBody,
 	              BodyState targetBody, HandState currentHands, HandState targetHands,
 	              MovementState movement, int body_animation_delay, int hands_animation_delay,
-	              int distance_travelled, int firingAngle, bool visible);
+	              int distance_travelled, int firingAngle, bool visible, bool stealth);
 
 	// high level api for loading
 	bool loadAnimationPack(GameState &state, const UString &path);

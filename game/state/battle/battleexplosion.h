@@ -52,8 +52,7 @@ class BattleExplosion : public std::enable_shared_from_this<BattleExplosion>
 	void update(GameState &state, unsigned int ticks);
 
 	BattleExplosion(Vec3<int> position, StateRef<DamageType> damageType, int power,
-	                int depletionRate, bool damageInTheEnd,
-					StateRef<Organisation> ownerOrg,
+	                int depletionRate, bool damageInTheEnd, StateRef<Organisation> ownerOrg,
 	                StateRef<BattleUnit> ownerUnit = nullptr);
 	BattleExplosion() = default;
 	~BattleExplosion() = default;

@@ -76,8 +76,11 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	void initBattle(GameState &state, bool first = false);
 	void initMap();
+	bool initialMapCheck(GameState &state, std::list<StateRef<Agent>> agents);
 	void initialMapPartRemoval(GameState &state);
 	void initialMapPartLinkUp();
+
+	void initialUnitSpawn(GameState &state);
 
 	Vec3<int> size;
 
@@ -134,6 +137,9 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	// Notify scanners about movement at position
 	void notifyScanners(Vec3<int> position);
+
+	// Notify about action happening
+	void notifyAction();
 
 	MissionType mission_type = MissionType::AlienExtermination;
 	UString mission_location_id;
@@ -194,8 +200,8 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	sp<BattleExplosion> addExplosion(GameState &state, Vec3<int> position,
 	                                 StateRef<DoodadType> doodadType,
-	                                 StateRef<DamageType> damageType, int power, int depletionRate, 
-									 StateRef<Organisation> ownerOrg,
+	                                 StateRef<DamageType> damageType, int power, int depletionRate,
+	                                 StateRef<Organisation> ownerOrg,
 	                                 StateRef<BattleUnit> ownerUnit = nullptr);
 	sp<BattleDoor> addDoor(GameState &state);
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
@@ -206,12 +212,12 @@ class Battle : public std::enable_shared_from_this<Battle>
 	sp<BattleUnit> placeUnit(GameState &state, StateRef<Agent> agent);
 	sp<BattleUnit> placeUnit(GameState &state, StateRef<Agent> agent, Vec3<float> position);
 	sp<BattleItem> placeItem(GameState &state, sp<AEquipment> item, Vec3<float> position);
-	sp<BattleHazard> placeHazard(GameState &state, StateRef<Organisation> owner, StateRef<DamageType> type, Vec3<int> position,
-	                             int ttl, int power, int initialAgeTTLDivizor = 1,
-	                             bool delayVisibility = true);
+	sp<BattleHazard> placeHazard(GameState &state, StateRef<Organisation> owner,
+	                             StateRef<DamageType> type, Vec3<int> position, int ttl, int power,
+	                             int initialAgeTTLDivizor = 1, bool delayVisibility = true);
 	sp<BattleScanner> addScanner(GameState &state, AEquipment &item);
 	void removeScanner(GameState &state, AEquipment &item);
-	
+
 	static void accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
 	                                    Vec3<float> &target, int accuracy, bool thrown = false);
 
@@ -222,9 +228,11 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// End current org's turn
 	void endTurn(GameState &state);
 	// Give interrupt chance to hostile units that see this unit
-	void giveInterruptChanceToUnits(GameState &state, StateRef<BattleUnit> giver, int reactionValue);
+	void giveInterruptChanceToUnits(GameState &state, StateRef<BattleUnit> giver,
+	                                int reactionValue);
 	// Give interrupt chance to a unit
-	void giveInterruptChanceToUnit(StateRef<BattleUnit> receiver, int reactionValue);
+	void giveInterruptChanceToUnit(GameState &state, StateRef<BattleUnit> giver,
+	                               StateRef<BattleUnit> receiver, int reactionValue);
 
 	// Battle Start Functions
 
@@ -297,10 +305,6 @@ class Battle : public std::enable_shared_from_this<Battle>
 	std::vector<int> losBlockRandomizer;
 	// Vector of indexes to los blocks, for each tile (index is like tile's location in tilemap)
 	std::vector<int> tileToLosBlock;
-
-	// Contains height at which to spawn units, or -1 if spawning is not possible
-	// No need to serialize this, as we cannot save/load during briefing
-	std::vector<std::vector<std::vector<int>>> spawnMap;
 };
 
 }; // namespace OpenApoc

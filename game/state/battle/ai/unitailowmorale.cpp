@@ -1,9 +1,9 @@
-#include "game/state/battle/ai/aitype.h"
-#include "game/state/battle/ai/aidecision.h"
 #include "game/state/battle/ai/unitailowmorale.h"
-#include "game/state/gamestate.h"
-#include "game/state/battle/battleunit.h"
 #include "game/state/aequipment.h"
+#include "game/state/battle/ai/aidecision.h"
+#include "game/state/battle/ai/aitype.h"
+#include "game/state/battle/battleunit.h"
+#include "game/state/gamestate.h"
 #include <glm/glm.hpp>
 
 namespace OpenApoc
@@ -122,7 +122,7 @@ std::tuple<AIDecision, bool> UnitAILowMorale::think(GameState &state, BattleUnit
 					{
 						// Pick a random friendly within 5 tiles of us
 						std::list<sp<BattleUnit>> victims;
-						for (auto unit : state.current_battle->units)
+						for (auto &unit : state.current_battle->units)
 						{
 							if (unit.second->owner != u.owner)
 							{
@@ -221,5 +221,4 @@ std::tuple<AIDecision, bool> UnitAILowMorale::think(GameState &state, BattleUnit
 	}
 	return std::make_tuple(AIDecision(), true);
 }
-
 }

@@ -35,14 +35,14 @@ sp<BattleScanner> BattleScanner::get(const GameState &state, const UString &id)
 
 void BattleScanner::update(GameState &state, unsigned int ticks)
 {
-	static const Vec3<int> midPos = { MOTION_SCANNER_X / 2, MOTION_SCANNER_Y / 2, 0 };
+	static const Vec3<int> midPos = {MOTION_SCANNER_X / 2, MOTION_SCANNER_Y / 2, 0};
 
 	updateTicksAccumulated += ticks;
 	bool changed = false;
 	while (updateTicksAccumulated >= TICKS_PER_SCANNER_UPDATE)
 	{
 		updateTicksAccumulated -= TICKS_PER_SCANNER_UPDATE;
-		for (size_t i = 0; i < movementTicks.size();i++)
+		for (size_t i = 0; i < movementTicks.size(); i++)
 		{
 			if (movementTicks[i] > TICKS_PER_SCANNER_UPDATE)
 			{
@@ -68,20 +68,21 @@ void BattleScanner::update(GameState &state, unsigned int ticks)
 		auto posShift = newPosition - lastPosition;
 		for (int x = 0; x < MOTION_SCANNER_X; x++)
 		{
-			int oX = x + posShift.x;
-			for (int y = 0; y < MOTION_SCANNER_Y; y++)
-			{
-				int oY = y + posShift.y;
-				if (oX < 0 || oY < 0 || oX >= MOTION_SCANNER_X || oY >= MOTION_SCANNER_Y)
-				{
-					continue;
-				}
-				movementTicks[y * MOTION_SCANNER_X + x] = lastMovementTicks[oY * MOTION_SCANNER_X + oX];
-			}
+		    int oX = x + posShift.x;
+		    for (int y = 0; y < MOTION_SCANNER_Y; y++)
+		    {
+		        int oY = y + posShift.y;
+		        if (oX < 0 || oY < 0 || oX >= MOTION_SCANNER_X || oY >= MOTION_SCANNER_Y)
+		        {
+		            continue;
+		        }
+		        movementTicks[y * MOTION_SCANNER_X + x] = lastMovementTicks[oY * MOTION_SCANNER_X +
+		oX];
+		    }
 		}*/
 
 		// Introduce movement ticks for every unit
-		for (auto u : state.current_battle->units)
+		for (auto &u : state.current_battle->units)
 		{
 			if (u.second->destroyed)
 			{
@@ -102,13 +103,12 @@ void BattleScanner::update(GameState &state, unsigned int ticks)
 	{
 		version++;
 	}
-
 }
 
 void BattleScanner::notifyMovement(Vec3<int> position)
 {
-	static const Vec3<int> midPos = { MOTION_SCANNER_X / 2, MOTION_SCANNER_Y / 2, 0 };
-	
+	static const Vec3<int> midPos = {MOTION_SCANNER_X / 2, MOTION_SCANNER_Y / 2, 0};
+
 	// FIXME: Fix display of big units
 	auto pos = position - lastPosition + midPos;
 	if (pos.x < 0 || pos.y < 0 || pos.x >= MOTION_SCANNER_X || pos.y >= MOTION_SCANNER_Y)
@@ -118,5 +118,4 @@ void BattleScanner::notifyMovement(Vec3<int> position)
 	version++;
 	movementTicks[pos.y * MOTION_SCANNER_X + pos.x] = TICKS_SCANNER_REMAIN_LIT;
 }
-
 }

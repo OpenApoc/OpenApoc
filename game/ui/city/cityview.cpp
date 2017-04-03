@@ -470,7 +470,7 @@ void CityView::render()
 		CityTileView::render();
 		if (state->showVehiclePath)
 		{
-			for (auto pair : state->vehicles)
+			for (auto &pair : state->vehicles)
 			{
 				auto v = pair.second;
 				if (v->city != state->current_city)
@@ -480,7 +480,7 @@ void CityView::render()
 					continue;
 				auto &path = v->missions.front()->currentPlannedPath;
 				Vec3<float> prevPos = vTile->getPosition();
-				for (auto pos : path)
+				for (auto &pos : path)
 				{
 					Vec2<float> screenPosA = this->tileToOffsetScreenCoords(prevPos);
 					Vec2<float> screenPosB = this->tileToOffsetScreenCoords(pos);

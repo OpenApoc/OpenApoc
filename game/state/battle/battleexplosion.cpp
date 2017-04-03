@@ -22,8 +22,8 @@
 namespace OpenApoc
 {
 BattleExplosion::BattleExplosion(Vec3<int> position, StateRef<DamageType> damageType, int power,
-                                 int depletionRate, bool damageInTheEnd,StateRef<Organisation> ownerOrg,
-                                 StateRef<BattleUnit> ownerUnit)
+                                 int depletionRate, bool damageInTheEnd,
+                                 StateRef<Organisation> ownerOrg, StateRef<BattleUnit> ownerUnit)
     : position(position), power(power), ticksUntilExpansion(TICKS_MULTIPLIER * 2),
       locationsToExpand({{{position, {power, power}}}, {}, {}}), damageInTheEnd(damageInTheEnd),
       locationsVisited({position}), damageType(damageType), depletionRate(depletionRate),
@@ -46,11 +46,11 @@ void BattleExplosion::die(GameState &state)
 	}
 	// Hack to make all hazards update at once
 	auto &map = *state.current_battle->map;
-	for (auto pos : locationsVisited)
+	for (auto &pos : locationsVisited)
 	{
 		auto tile = map.getTile(pos.x, pos.y, pos.z);
 		sp<BattleHazard> existingHazard;
-		for (auto obj : tile->ownedObjects)
+		for (auto &obj : tile->ownedObjects)
 		{
 			if (obj->getType() == TileObject::Type::Hazard)
 			{
@@ -88,20 +88,22 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 	if (!damageType->hazardType)
 	{
 		StateRef<DamageType> dtSmoke = {&state, "DAMAGETYPE_SMOKE"};
-		state.current_battle->placeHazard(
-		    state, ownerOrganisation, dtSmoke, pos, dtSmoke->hazardType->getLifetime(state), damage, 2, false);
+		state.current_battle->placeHazard(state, ownerOrganisation, dtSmoke, pos,
+		                                  dtSmoke->hazardType->getLifetime(state), damage, 2,
+		                                  false);
 	}
 	// Explosions with no custom explosion doodad spawn hazards when dealing damage
 	else if (!damageType->explosionDoodad)
 	{
-		state.current_battle->placeHazard(
-		    state, ownerOrganisation, damageType, pos, damageType->hazardType->getLifetime(state), damage, 1, false);
+		state.current_battle->placeHazard(state, ownerOrganisation, damageType, pos,
+		                                  damageType->hazardType->getLifetime(state), damage, 1,
+		                                  false);
 	}
 	// Gas does no direct damage
 	if (damageType->doesImpactDamage())
 	{
 		auto set = tile->ownedObjects;
-		for (auto obj : set)
+		for (auto &obj : set)
 		{
 			if (tile->ownedObjects.find(obj) == tile->ownedObjects.end())
 			{
@@ -261,7 +263,7 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 	{
 		auto pos = pair.first + from;
 		auto tile = map.getTile(pos);
-		for (auto obj : tile->ownedObjects)
+		for (auto &obj : tile->ownedObjects)
 		{
 			if (pair.second.find(obj->getType()) != pair.second.end())
 			{
@@ -280,7 +282,8 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 	}
 	// FIXME: Actually read this option
 	bool USER_OPTION_FULLY_3D_EXPLOSIONS = false;
-	int distance = (1 + (dir.x != 0 ? 1 : 0) + (dir.y != 0 ? 1 : 0) + (dir.z != 0 ? (USER_OPTION_FULLY_3D_EXPLOSIONS ? 1 : 2) : 0));
+	int distance = (1 + (dir.x != 0 ? 1 : 0) + (dir.y != 0 ? 1 : 0) +
+	                (dir.z != 0 ? (USER_OPTION_FULLY_3D_EXPLOSIONS ? 1 : 2) : 0));
 	nextPower -= depletionRate * distance / 2;
 
 	// If we reach the tile, and our type has no range dissipation, just apply power
@@ -331,13 +334,13 @@ void BattleExplosion::grow(GameState &state)
 {
 	auto &map = *state.current_battle->map;
 
-	state.current_battle->ticksWithoutAction = 0;
+	state.current_battle->notifyAction();
 
 	for (int i = 0; i < 2; i++)
 	{
 		locationsToExpand.emplace_back();
 		// Deal damage and expand in four straight directions
-		for (auto pos : locationsToExpand[0])
+		for (auto &pos : locationsToExpand[0])
 		{
 			if (damageType->hazardType && damageType->explosionDoodad)
 			{
@@ -371,7 +374,7 @@ void BattleExplosion::grow(GameState &state)
 			}
 		}
 		// Expand in diagonal directions that were left, as well as vertically
-		for (auto pos : locationsToExpand[0])
+		for (auto &pos : locationsToExpand[0])
 		{
 			auto dir = pos.first - position;
 			int minX = dir.x <= 0 ? -1 : 0;
@@ -379,7 +382,7 @@ void BattleExplosion::grow(GameState &state)
 			int minY = dir.y <= 0 ? -1 : 0;
 			int maxY = dir.y >= 0 ? 1 : 0;
 
-			for (int z = -1; z <= 1; z+=2)
+			for (int z = -1; z <= 1; z += 2)
 			{
 				expand(state, map, pos.first, {pos.first.x, pos.first.y, pos.first.z + z},
 				       pos.second.y);

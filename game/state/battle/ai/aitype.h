@@ -16,8 +16,6 @@ enum class AIType
 	PanicRun,    // During Panic (the one that makes you drop weapon and run)
 	Berserk,     // During Berserk
 };
-
-
 }
 
 /*

@@ -4,6 +4,4 @@ namespace OpenApoc
 {
 
 UnitAIHardcore::UnitAIHardcore() { type = Type::Hardcore; }
-
-
 }

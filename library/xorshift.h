@@ -241,7 +241,6 @@ template <typename T, typename Generator> T setRandomiser(Generator &g, const st
 	return *it;
 }
 
-
 template <typename T, typename Generator>
 T vectorRandomizer(Generator &g, const std::vector<T> &vector)
 {

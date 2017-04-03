@@ -62,6 +62,7 @@ class UnitAIVanilla : public UnitAI
 	std::tuple<AIDecision, float, unsigned> getGrenadeDecision(GameState &state, BattleUnit &u,
 	                                                           sp<AEquipment> e,
 	                                                           StateRef<BattleUnit> target);
+	std::tuple<AIDecision, float, unsigned> getBrainsuckerDecision(GameState &state, BattleUnit &u);
+	std::tuple<AIDecision, float, unsigned> getSuicideDecision(GameState &state, BattleUnit &u);
 };
-
 }

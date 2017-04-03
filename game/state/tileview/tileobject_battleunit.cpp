@@ -81,7 +81,7 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 			    unit->target_hand_state,
 			    unit->usingLift ? MovementState::None : unit->current_movement_state,
 			    unit->getBodyAnimationFrame(), unit->getHandAnimationFrame(),
-			    unit->getDistanceTravelled(), firingAngle, visible);
+			    unit->getDistanceTravelled(), firingAngle, visible, false);
 			// Unit on fire
 			if (unit->fireDebuffTicksRemaining > 0)
 			{
@@ -201,7 +201,7 @@ void TileObjectBattleUnit::removeFromMap()
 {
 	bool requireRecalc = owningTile != nullptr;
 	std::set<Tile *> prevIntersectingTiles;
-	for (auto t : intersectingTiles)
+	for (auto &t : intersectingTiles)
 	{
 		prevIntersectingTiles.insert(t);
 	}
@@ -209,11 +209,11 @@ void TileObjectBattleUnit::removeFromMap()
 	TileObject::removeFromMap();
 	if (requireRecalc)
 	{
-		for (auto t : intersectingTiles)
+		for (auto &t : intersectingTiles)
 		{
 			prevIntersectingTiles.erase(t);
 		}
-		for (auto t : prevIntersectingTiles)
+		for (auto &t : prevIntersectingTiles)
 		{
 			t->updateBattlescapeUnitPresent();
 		}
@@ -250,7 +250,7 @@ void TileObjectBattleUnit::setPosition(Vec3<float> newPosition)
 	occupiedTiles.clear();
 
 	TileObject::setPosition(newPosition);
-	for (auto t : intersectingTiles)
+	for (auto &t : intersectingTiles)
 	{
 		t->updateBattlescapeUnitPresent();
 	}
@@ -324,7 +324,7 @@ void TileObjectBattleUnit::addToDrawnTiles(Tile *tile)
 		return;
 	}
 	Vec3<int> maxCoords = {-1, -1, -1};
-	for (auto intersectingTile : intersectingTiles)
+	for (auto &intersectingTile : intersectingTiles)
 	{
 		int x = intersectingTile->position.x;
 		int y = intersectingTile->position.y;

@@ -41,7 +41,7 @@ void BattleHazard::die(GameState &state, bool violently)
 
 	tileObject->removeFromMap();
 	tileObject.reset();
-	
+
 	if (!violently)
 	{
 		return;
@@ -147,7 +147,7 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 	sp<BattleHazard> existingHazard;
 	bool replaceWeaker = false;
 	auto targetTile = map.getTile(to.x, to.y, to.z);
-	for (auto obj : targetTile->ownedObjects)
+	for (auto &obj : targetTile->ownedObjects)
 	{
 		if (obj->getType() == TileObject::Type::Hazard)
 		{
@@ -177,7 +177,7 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 	{
 		auto pos = pair.first + (Vec3<int>)position;
 		auto tile = map.getTile(pos);
-		for (auto obj : tile->ownedObjects)
+		for (auto &obj : tile->ownedObjects)
 		{
 			if (pair.second.find(obj->getType()) != pair.second.end())
 			{
@@ -197,7 +197,7 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 	{
 		// Find out if tile contains something flammable that we can penetrate
 		bool penetrationAchieved = false;
-		for (auto obj : targetTile->ownedObjects)
+		for (auto &obj : targetTile->ownedObjects)
 		{
 			if (obj->getType() == TileObject::Type::Ground ||
 			    obj->getType() == TileObject::Type::Feature)
@@ -336,7 +336,7 @@ void BattleHazard::applyEffect(GameState &state)
 	auto tile = tileObject->getOwningTile();
 
 	auto set = tile->ownedObjects;
-	for (auto obj : set)
+	for (auto &obj : set)
 	{
 		if (tile->ownedObjects.find(obj) == tile->ownedObjects.end())
 		{
@@ -513,11 +513,7 @@ void BattleHazard::update(GameState &state, unsigned int ticks)
 	}
 }
 
-
-void BattleHazard::updateTB(GameState &state)
-{
-	updateInner(state, TICKS_PER_TURN);
-}
+void BattleHazard::updateTB(GameState &state) { updateInner(state, TICKS_PER_TURN); }
 
 void BattleHazard::updateTileVisionBlock(GameState &state)
 {

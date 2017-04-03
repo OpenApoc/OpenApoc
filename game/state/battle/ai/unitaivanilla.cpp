@@ -1,17 +1,17 @@
-#include "game/state/battle/ai/aidecision.h"
 #include "game/state/battle/ai/unitaivanilla.h"
-#include "game/state/battle/battleunitanimationpack.h"
+#include "game/state/aequipment.h"
+#include "game/state/battle/ai/aidecision.h"
 #include "game/state/battle/ai/unitaihelper.h"
+#include "game/state/battle/battleunit.h"
+#include "game/state/battle/battleunitanimationpack.h"
 #include "game/state/gamestate.h"
-#include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/gametime.h"
 #include "game/state/rules/damage.h"
-#include "game/state/battle/battleunit.h"
-#include "game/state/aequipment.h"
+#include "game/state/tileview/tileobject_battleunit.h"
 
 namespace OpenApoc
 {
-	
+
 namespace
 {
 static const std::set<TileObject::Type> mapPartSet = {
@@ -20,7 +20,7 @@ static const std::set<TileObject::Type> mapPartSet = {
 static const std::set<TileObject::Type> unitSet = {TileObject::Type::Unit};
 static const std::tuple<AIDecision, bool> NULLTUPLE2 = std::make_tuple(AIDecision(), false);
 static const std::tuple<AIDecision, float, unsigned> NULLTUPLE3 =
-std::make_tuple(AIDecision(), FLT_MIN, 0);
+    std::make_tuple(AIDecision(), -FLT_MAX, 0);
 }
 
 /* AI LOGIC: attack()
@@ -77,10 +77,7 @@ options (checked for every visible target):
 //	   Then just divide distance by velocity (scaled) to get ticks
 // - every second delay divides value gotten above by 2
 
-
 UnitAIVanilla::UnitAIVanilla() { type = Type::Vanilla; }
-
-
 
 // Priority is CTH * DAMAGE / TIME
 // - Assume chance to miss is Dispersion * Distance / 10, CTH = 100 - chance to miss
@@ -105,7 +102,7 @@ UnitAIVanilla::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment>
 
 	auto payload = e->getPayloadType();
 	float distance = BattleUnitTileHelper::getDistanceStatic(u.position, target->position);
-	
+
 	float damage = (float)payload->damage;
 	auto armor = target->agent->getArmor(BodyPart::Legs);
 	int armorValue = 0;
@@ -129,11 +126,18 @@ UnitAIVanilla::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment>
 		movement->kneelingMode = KneelingMode::None;
 		movement->movementMode = MovementMode::Running;
 
-		return std::make_tuple(AIDecision(action, movement), damage / 100.0f / distance, reThinkDelay);
+		return std::make_tuple(AIDecision(action, movement), damage / 100.0f / distance,
+		                       reThinkDelay);
 	}
-		
-	float time = (float)payload->fire_delay * (float)TICKS_MULTIPLIER / (float)u.fire_aiming_mode / (float)TICKS_PER_SECOND;
-	float cth = std::max(1.0f, 100.f - (float)(100 - e->getAccuracy(u.target_body_state, u.current_movement_state, u.fire_aiming_mode)) * distance / 40.0f);
+
+	float time = (float)payload->fire_delay * (float)TICKS_MULTIPLIER / (float)u.fire_aiming_mode /
+	             (float)TICKS_PER_SECOND;
+	float cth =
+	    std::max(1.0f, 100.f -
+	                       (float)(100 -
+	                               e->getAccuracy(u.target_body_state, u.current_movement_state,
+	                                              u.fire_aiming_mode)) *
+	                           distance / 40.0f);
 	float priority = cth * damage / time;
 
 	// Chance to advance is equal to chance to miss
@@ -166,6 +170,7 @@ UnitAIVanilla::getPsiDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
 	auto action = mksp<AIAction>();
 	action->item = e;
 	action->targetUnit = target;
+	action->preventOutOfTurnReThink = true;
 	switch (status)
 	{
 		case PsiStatus::Control:
@@ -185,19 +190,22 @@ UnitAIVanilla::getPsiDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
 			return NULLTUPLE3;
 	}
 	action->psiEnergySnapshot = u.agent->modified_stats.psi_energy;
-	
+
 	return std::make_tuple(AIDecision(action, nullptr), priority, reThinkDelay);
 }
 
-// Look at every unit in 4 tile AOE, approximate damage dealt to it, add up all damage to hostiles, subtracting damage to non-hostiles.
+// Look at every unit in 4 tile AOE, approximate damage dealt to it, add up all damage to hostiles,
+// subtracting damage to non-hostiles.
 // Priority is CTH * DAMAGE / TIME
 // - Assume CTH is 80%
 // - Assume damage is 150% for armor penetration (for simplicity), hit to the legs
-// - Assume time to perform attack is equal to the time to animate a throw, or 2x that if not in a correct posture (quick hack instead of figuring out how many frames it would take to actually do that)
+// - Assume time to perform attack is equal to the time to animate a throw, or 2x that if not in a
+// correct posture (quick hack instead of figuring out how many frames it would take to actually do
+// that)
 // - If out of range, halve the priority
 std::tuple<AIDecision, float, unsigned>
 UnitAIVanilla::getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
-	StateRef<BattleUnit> target)
+                                  StateRef<BattleUnit> target)
 {
 	auto action = mksp<AIAction>();
 	action->item = e;
@@ -206,15 +214,22 @@ UnitAIVanilla::getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment
 
 	auto movement = mksp<AIMovement>();
 	movement->type = AIMovement::Type::Stop;
-	
-	// In case something goes wrong with throw, rethink in a second (should be enough to change pose and turn to throw
+
+	// In case something goes wrong with throw, rethink in a second (should be enough to change pose
+	// and turn to throw
 	unsigned reThinkDelay = TICKS_PER_SECOND;
 
 	auto payload = e->getPayloadType();
 	float cth = 0.8f;
-	float time = (u.current_body_state == BodyState::Standing  ? 1.0f : 2.0f) * (float)(u.agent->getAnimationPack()->getFrameCountBody(e->type, BodyState::Standing, BodyState::Throwing, HandState::AtEase, MovementState::None, { 1,1 })
-		+ u.agent->getAnimationPack()->getFrameCountBody(e->type, BodyState::Throwing, BodyState::Standing, HandState::AtEase, MovementState::None, { 1,1 })) * (float)TICKS_PER_FRAME_UNIT / (float)TICKS_PER_SECOND;
-	
+	float time = (u.current_body_state == BodyState::Standing ? 1.0f : 2.0f) *
+	             (float)(u.agent->getAnimationPack()->getFrameCountBody(
+	                         e->type, BodyState::Standing, BodyState::Throwing, HandState::AtEase,
+	                         MovementState::None, {1, 1}) +
+	                     u.agent->getAnimationPack()->getFrameCountBody(
+	                         e->type, BodyState::Throwing, BodyState::Standing, HandState::AtEase,
+	                         MovementState::None, {1, 1})) *
+	             (float)TICKS_PER_FRAME_UNIT / (float)TICKS_PER_SECOND;
+
 	float damage = 0.0f;
 	for (auto &t : state.current_battle->units)
 	{
@@ -227,7 +242,8 @@ UnitAIVanilla::getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment
 		{
 			continue;
 		}
-		float localDamage = (float)payload->damage - (float)payload->explosion_depletion_rate * distance / 4.0f;
+		float localDamage =
+		    (float)payload->damage - (float)payload->explosion_depletion_rate * distance / 4.0f;
 		if (localDamage < 0.0f)
 		{
 			continue;
@@ -246,7 +262,10 @@ UnitAIVanilla::getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment
 			damageModifier = t.second->agent->type->damage_modifier;
 		}
 		localDamage = payload->damage_type->dealDamage(localDamage * 1.5f, damageModifier);
-		damage += (u.owner->isRelatedTo(t.second->owner) == Organisation::Relation::Hostile ? 1.0f : -1.0f) * localDamage;
+		damage +=
+		    (u.owner->isRelatedTo(t.second->owner) == Organisation::Relation::Hostile ? 1.0f
+		                                                                              : -1.0f) *
+		    localDamage;
 	}
 	if (damage < 0.0f)
 	{
@@ -268,6 +287,96 @@ UnitAIVanilla::getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment
 	return std::make_tuple(AIDecision(action, movement), priority, reThinkDelay);
 }
 
+std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getBrainsuckerDecision(GameState &state,
+                                                                              BattleUnit &u)
+{
+	auto action = mksp<AIAction>();
+	action->type = AIAction::Type::AttackBrainsucker;
+
+	unsigned reThinkDelay = TICKS_PER_SECOND;
+	float distance = FLT_MAX;
+
+	StateRef<DamageType> brainsucker = {&state, "DAMAGETYPE_BRAINSUCKER"};
+	auto &visibleEnemies = state.current_battle->visibleEnemies[u.owner];
+	for (auto &target : visibleEnemies)
+	{
+		if (brainsucker->dealDamage(100, target->agent->type->damage_modifier) == 0)
+		{
+			continue;
+		}
+		auto newDistance = BattleUnitTileHelper::getDistanceStatic(u.position, target->position);
+		if (newDistance >= distance)
+		{
+			continue;
+		}
+		distance = newDistance;
+		action->targetUnit = {&state, target->id};
+	}
+
+	if (!action->targetUnit)
+	{
+		return NULLTUPLE3;
+	}
+
+	auto movement = mksp<AIMovement>();
+	movement->type = AIMovement::Type::GetInRange;
+	movement->movementMode = MovementMode::Running;
+	movement->targetLocation = action->targetUnit->position;
+	movement->subordinate = true;
+
+	Vec3<int> ourPos = u.position;
+	Vec3<int> tarPos = action->targetUnit->position;
+	if (std::abs(ourPos.x - tarPos.x) > 1 || std::abs(ourPos.y - tarPos.y) > 1 ||
+	    std::abs(ourPos.z - tarPos.z) > 1)
+	{
+		action = nullptr;
+	}
+
+	return std::make_tuple(AIDecision(action, movement), 0.0f, reThinkDelay);
+}
+
+std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getSuicideDecision(GameState &state,
+                                                                          BattleUnit &u)
+{
+	std::tuple<AIDecision, float, unsigned> decision = NULLTUPLE3;
+
+	auto action = mksp<AIAction>();
+	action->type = AIAction::Type::AttackSuicide;
+
+	unsigned reThinkDelay = TICKS_PER_SECOND;
+	float distance = FLT_MAX;
+
+	auto &visibleEnemies = state.current_battle->visibleEnemies[u.owner];
+	for (auto &target : visibleEnemies)
+	{
+		auto newDistance = BattleUnitTileHelper::getDistanceStatic(u.position, target->position);
+		if (newDistance >= distance)
+		{
+			continue;
+		}
+		distance = newDistance;
+		action->targetUnit = {&state, target->id};
+	}
+
+	if (!action->targetUnit)
+	{
+		return decision;
+	}
+
+	auto movement = mksp<AIMovement>();
+	movement->type = AIMovement::Type::GetInRange;
+	movement->movementMode = MovementMode::Running;
+	movement->targetLocation = action->targetUnit->position;
+	movement->subordinate = true;
+
+	if (BattleUnitTileHelper::getDistanceStatic(u.position, action->targetUnit->position) > 8.0f)
+	{
+		action = nullptr;
+	}
+
+	return std::make_tuple(AIDecision(action, movement), 0.0f, reThinkDelay);
+}
+
 std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getAttackDecision(GameState &state,
                                                                          BattleUnit &u)
 {
@@ -278,16 +387,19 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getAttackDecision(GameSta
 	// Try each item for a weapon/grenade/psi attack
 	// If out of range - advance
 	// If cannot attack at all - take cover!
-	
+
 	// With mindbender just find first encountered mindbender
 	sp<AEquipment> mindBender;
-	
+
 	// With grenades skip trying every single one and try only the best
 	// Best being lightest with explosive damage type, and if weight is same, more powerful
 	sp<AEquipment> grenade;
 
 	// List of stuff to actually use
 	std::list<sp<AEquipment>> items;
+
+	bool brainsucker = false;
+	bool suicider = false;
 
 	for (auto &e : u.agent->equipment)
 	{
@@ -313,8 +425,8 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getAttackDecision(GameSta
 					break;
 				}
 				// Do not replace explosive one with gas one
-				if (!e->type->damage_type->doesImpactDamage()
-					&& grenade->type->damage_type->doesImpactDamage())
+				if (!e->type->damage_type->doesImpactDamage() &&
+				    grenade->type->damage_type->doesImpactDamage())
 				{
 					break;
 				}
@@ -322,10 +434,10 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getAttackDecision(GameSta
 				// - new one weights less
 				// - new one is explsive and old one is not
 				// - new one deals more damage
-				if (e->getWeight() < grenade->getWeight() 
-					|| (e->type->damage_type->doesImpactDamage() 
-						&& !grenade->type->damage_type->doesImpactDamage())
-					|| (e->type->damage > grenade->type->damage ))
+				if (e->getWeight() < grenade->getWeight() ||
+				    (e->type->damage_type->doesImpactDamage() &&
+				     !grenade->type->damage_type->doesImpactDamage()) ||
+				    (e->type->damage > grenade->type->damage))
 				{
 					grenade = e;
 					break;
@@ -338,8 +450,30 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getAttackDecision(GameSta
 					break;
 				}
 				break;
+			case AEquipmentType::Type::Brainsucker:
+				brainsucker = true;
+				break;
+			case AEquipmentType::Type::Popper:
+				suicider = true;
+				break;
 			default:
 				break;
+		}
+	}
+	if (brainsucker)
+	{
+		auto newDecision = getBrainsuckerDecision(state, u);
+		if (std::get<1>(newDecision) > std::get<1>(decision))
+		{
+			decision = newDecision;
+		}
+	}
+	if (suicider)
+	{
+		auto newDecision = getSuicideDecision(state, u);
+		if (std::get<1>(newDecision) > std::get<1>(decision))
+		{
+			decision = newDecision;
 		}
 	}
 	if (grenade)
@@ -357,20 +491,17 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getAttackDecision(GameSta
 	{
 		for (auto &target : visibleEnemies)
 		{
-			auto newDecision =
-				getPsiDecision(state, u, mindBender, target, PsiStatus::Control);
+			auto newDecision = getPsiDecision(state, u, mindBender, target, PsiStatus::Control);
 			if (std::get<1>(newDecision) > std::get<1>(decision))
 			{
 				decision = newDecision;
 			}
-			newDecision =
-				getPsiDecision(state, u, mindBender, target, PsiStatus::Panic);
+			newDecision = getPsiDecision(state, u, mindBender, target, PsiStatus::Panic);
 			if (std::get<1>(newDecision) > std::get<1>(decision))
 			{
 				decision = newDecision;
 			}
-			newDecision =
-				getPsiDecision(state, u, mindBender, target, PsiStatus::Stun);
+			newDecision = getPsiDecision(state, u, mindBender, target, PsiStatus::Stun);
 			if (std::get<1>(newDecision) > std::get<1>(decision))
 			{
 				decision = newDecision;
@@ -602,6 +733,10 @@ std::tuple<AIDecision, bool> UnitAIVanilla::think(GameState &state, BattleUnit &
 	if (!decision.isEmpty())
 	{
 		lastDecision = decision;
+		if (decision.action && decision.action->preventOutOfTurnReThink)
+		{
+			u.aiList.ticksLastOutOfOrderThink = state.gameTime.getTicks();
+		}
 	}
 
 	return std::make_tuple(decision, false);
@@ -609,7 +744,7 @@ std::tuple<AIDecision, bool> UnitAIVanilla::think(GameState &state, BattleUnit &
 
 void UnitAIVanilla::routine(GameState &state, BattleUnit &u)
 {
-	static const Vec3<int> NONE = { 0, 0, 0 };
+	static const Vec3<int> NONE = {0, 0, 0};
 
 	// Reload all guns
 	for (auto &e : u.agent->equipment)
@@ -642,7 +777,7 @@ void UnitAIVanilla::routine(GameState &state, BattleUnit &u)
 				continue;
 			}
 			if ((e->getPayloadType()->range > maxRange) ||
-				(e->getPayloadType()->range == maxRange && e->getPayloadType()->damage > maxDamage))
+			    (e->getPayloadType()->range == maxRange && e->getPayloadType()->damage > maxDamage))
 			{
 				maxRange = e->getPayloadType()->range;
 				maxDamage = e->getPayloadType()->damage;
@@ -663,12 +798,15 @@ void UnitAIVanilla::routine(GameState &state, BattleUnit &u)
 		// Ensure at least half of move is available for moving
 		u.setReserveKneelMode(KneelingMode::Kneeling);
 		u.setReserveShotMode(ReserveShotMode::Aimed);
-		int kneelCost = u.reserve_kneel_mode == KneelingMode::None ? 0 : BattleUnitMission::getBodyStateChangeCost(u, BodyState::Standing, BodyState::Kneeling);
+		int kneelCost = u.reserve_kneel_mode == KneelingMode::None
+		                    ? 0
+		                    : BattleUnitMission::getBodyStateChangeCost(u, BodyState::Standing,
+		                                                                BodyState::Kneeling);
 		if (u.reserveShotCost + kneelCost > u.initialTU / 2)
 		{
 			u.setReserveShotMode(ReserveShotMode::Snap);
 		}
-		if (u.reserveShotCost + kneelCost> u.initialTU / 2)
+		if (u.reserveShotCost + kneelCost > u.initialTU / 2)
 		{
 			u.setReserveKneelMode(KneelingMode::None);
 		}
@@ -683,11 +821,9 @@ void UnitAIVanilla::routine(GameState &state, BattleUnit &u)
 	}
 }
 
-
-
-
 void UnitAIVanilla::reset(GameState &state, BattleUnit &)
 {
+	lastDecision = {};
 	ticksLastThink = state.gameTime.getTicks();
 	ticksUntilReThink = 0;
 }
@@ -701,5 +837,4 @@ void UnitAIVanilla::notifyEnemySpotted(Vec3<int> position)
 	enemySpotted = true;
 	lastSeenEnemyPosition = position;
 }
-
 }

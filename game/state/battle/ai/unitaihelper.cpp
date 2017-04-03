@@ -1,12 +1,12 @@
 #include "game/state/battle/ai/unitaihelper.h"
-#include "game/state/gamestate.h"
-#include "game/state/battle/ai/aidecision.h"
 #include "game/state/aequipment.h"
+#include "game/state/battle/ai/aidecision.h"
 #include "game/state/battle/battleunit.h"
+#include "game/state/gamestate.h"
 
 namespace OpenApoc
 {
-	
+
 sp<AIMovement> UnitAIHelper::getRetreatMovement(GameState &state, BattleUnit &u, bool forced)
 {
 	// Chance to take retreat is 1% per morale point below 20
@@ -122,7 +122,7 @@ void UnitAIHelper::ensureItemInSlot(GameState &state, sp<AEquipment> item, AEqui
 		// Equip back the item removed earlier
 		if (curItem)
 		{
-			for (auto s : u->agent->type->equipment_layout->slots)
+			for (auto &s : u->agent->type->equipment_layout->slots)
 			{
 				if (u->agent->canAddEquipment(s.bounds.p0, curItem->type))
 				{
@@ -158,6 +158,4 @@ sp<AIMovement> UnitAIHelper::getPursueMovement(GameState &state, BattleUnit &u, 
 
 	return result;
 }
-
-
 }

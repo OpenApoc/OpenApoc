@@ -59,100 +59,74 @@ void addDebugTroops(GameState &state, std::list<StateRef<Agent>> &player_agents)
 {
 	std::list<std::pair<StateRef<Organisation>, StateRef<AgentType>>> otherParticipants;
 	auto aliens = state.getAliens();
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_SKELETOID"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_SKELETOID"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_SKELETOID"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_BRAINSUCKER"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_SKELETOID"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_SKELETOID"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_SKELETOID"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_BRAINSUCKER"});
 	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_POPPER"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_MEGASPAWN"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_PSIMORPH"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
+	otherParticipants.emplace_back(
+	    aliens, StateRef<AgentType>{&state, "AGENTTYPE_X-COM_BASE_TURRET_LASER"});
+	otherParticipants.emplace_back(
+	    aliens, StateRef<AgentType>{&state, "AGENTTYPE_X-COM_BASE_TURRET_DISRUPTOR"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_SPITTER"});
 	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_MEGASPAWN"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_PSIMORPH"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_X-COM_BASE_TURRET_LASER"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_X-COM_BASE_TURRET_DISRUPTOR"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_SPITTER"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_MICRONOID_AGGREGATE"});
-	otherParticipants.emplace_back(aliens,
-									StateRef<AgentType>{&state, "AGENTTYPE_QUEENSPAWN"});
+	                               StateRef<AgentType>{&state, "AGENTTYPE_MICRONOID_AGGREGATE"});
+	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_QUEENSPAWN"});
 	auto civilian = state.getCivilian();
+	otherParticipants.emplace_back(civilian, StateRef<AgentType>{&state, "AGENTTYPE_ALIEN_GREY"});
+	otherParticipants.emplace_back(civilian, StateRef<AgentType>{&state, "AGENTTYPE_ANDROID"});
 	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_ALIEN_GREY"});
+	                               StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_FEMALE"});
 	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_ANDROID"});
+	                               StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_FEMALE_1"});
 	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_FEMALE"});
+	                               StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_FEMALE_2"});
 	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_FEMALE_1"});
+	                               StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_MALE"});
 	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_FEMALE_2"});
+	                               StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_MALE_1"});
 	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_MALE"});
+	                               StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_MALE_2"});
 	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_MALE_1"});
+	                               StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE"});
 	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_MALE_2"});
+	                               StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE_1"});
 	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE"});
+	                               StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE_2"});
+	otherParticipants.emplace_back(civilian, StateRef<AgentType>{&state, "AGENTTYPE_POLITICIAN"});
 	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE_1"});
+	                               StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_FEMALE"});
 	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE_2"});
+	                               StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_FEMALE_1"});
 	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_POLITICIAN"});
+	                               StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_FEMALE_2"});
 	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_FEMALE"});
+	                               StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE_1"});
 	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_FEMALE_1"});
+	                               StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE_2"});
 	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_FEMALE_2"});
+	                               StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_MALE"});
 	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE_1"});
+	                               StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_MALE_1"});
 	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE_2"});
-	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_MALE"});
-	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_MALE_1"});
-	otherParticipants.emplace_back(civilian,
-									StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_MALE_2"});
+	                               StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_MALE_2"});
 	for (auto &pair : otherParticipants)
 	{
 		player_agents.push_back(state.agent_generator.createAgent(state, pair.first, pair.second));
@@ -169,8 +143,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> orga
 	// FIXME: Generate list of agent types for enemies (and civs) properly
 	addDebugTroops(state, player_agents);
 
-	return ufo->type->battle_map->createBattle(state, ufo->owner, organisation, player_agents, craft,
-	                                           Battle::MissionType::UfoRecovery, ufo.id);
+	return ufo->type->battle_map->createBattle(state, ufo->owner, organisation, player_agents,
+	                                           craft, Battle::MissionType::UfoRecovery, ufo.id);
 }
 
 sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> organisation,
@@ -186,8 +160,6 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> orga
 		// Base defense mission
 
 		// FIXME: Generate list of agent types for enemies properly
-		// otherParticipants.emplace_back(organisation, StateRef<AgentType>{ &state,
-		// "AGENTTYPE_ANTHROPOD" });
 		// Also add non-combat personell
 
 		missionType = Battle::MissionType::BaseDefense;
@@ -271,8 +243,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> orga
 		player_agents.push_back(state.agent_generator.createAgent(state, pair.first, pair.second));
 	}
 
-	return building->battle_map->createBattle(state,building->owner, organisation, player_agents, craft,
-	                                          missionType, building.id);
+	return building->battle_map->createBattle(state, building->owner, organisation, player_agents,
+	                                          craft, missionType, building.id);
 }
 
 namespace
@@ -486,16 +458,8 @@ bool placeSector(GameState &state, std::vector<sp<BattleMapSector>> &sec_map,
 } // anonymous-namespace
 
 bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int> &size,
-                            GameState &state, StateRef<Organisation> target_organisation,
-                            std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
-                            Battle::MissionType mission_type, UString mission_location_id)
+                            GameState &state, GenerationSize genSize)
 {
-	std::ignore = target_organisation;
-	std::ignore = agents;
-	std::ignore = player_craft;
-	std::ignore = mission_type;
-	std::ignore = mission_location_id;
-
 	// Vanilla had vertical stacking of sectors planned, but not implemented. I will implement both
 	// algorithms because I think that would be great to have. We could make it an extended game
 	// option in the future.
@@ -504,7 +468,7 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 	// This switch will allow larger maps, +2 in size, which vanilla never did I think, and which is
 	// required for some vertical stacking maps to actually spawn because they contain too many
 	// mandatory sectors to fit into battle size even when enlarged by 1 on the smaller side
-	bool allow_larger_maps = true;
+	bool allow_very_large_maps = true;
 
 	// This switch allows maps to spawn only one of the mandatory sectos instead of every single one
 	// This provides for vertical stacking maps to be possible without huge sizes, but may
@@ -520,12 +484,24 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 	// OTOH, 14ACNORM has 2x2 max size, but often spawns 3x2 because it's only 2 layers high, and
 	// 2nd layer is just air (high ceiliing)
 	// As we do not know them yet, I will generate maps in 3 modes for now: small, normal, big
-	// Small being a -1 on the larger side and Big being +1 or +2 on the larger side.
+	// Small being a -1 on the larger side and Big being +1 or +2 on a random side.
 	// +2 is required for some maps with vertical stacking to fit all the mandatory sectors
 	// For now, this is random, in the future, this will be tied to the amount of troops
-	int size_mod = randBoundsInclusive(state.rng, -1, 1);
-	if (allow_larger_maps && size_mod == 1)
-		size_mod += randBoundsInclusive(state.rng, 0, 1);
+	int size_mod =
+	    genSize == GenerationSize::Small ? -1 : (genSize == GenerationSize::Normal ? 0 : 1);
+	if (genSize == GenerationSize::VeryLarge)
+	{
+		if (allow_very_large_maps)
+		{
+			size_mod++;
+		}
+		else
+		{
+			LogWarning("Cannot generate a map %s with gen size %d since generating large maps is "
+			           "disabled", );
+			return false;
+		}
+	}
 	// Vertical stacking is also randomized, and disabled if the map does not allow it
 	allow_vertical_stacking =
 	    allow_vertical_stacking && max_battle_size.z > 1 && randBool(state.rng);
@@ -578,7 +554,6 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 		if (foundUnstackedSector)
 			size.z = 1;
 	}
-	auto normal_size = size;
 
 	// Apply size modification
 	int size_mod_x = 0;
@@ -602,46 +577,32 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 	auto modded_size = size;
 
 	// Now let's see if we can actually make a map out of this
-	for (int attempt_make_map = 1; attempt_make_map <= 6; attempt_make_map++)
+	for (int attempt_make_map = 1; attempt_make_map <= 4; attempt_make_map++)
 	{
 		bool random_generation = false;
 		switch (attempt_make_map)
 		{
-			// If we reached second attempt, it means we failed to create a map with modded size,
-			// and must revert to normal
-			case 2:
-				size = normal_size;
-				break;
-			// If we reached third attempt, it means we failed to create a stacked map with normal
+			// If we reached second attempt, it means we failed to create a stacked map with normal
 			// size, and should cancel vertical stacking.
 			// If there was no vertical stacking, skip this attempt
-			case 3:
+			case 2:
 				if (!allow_vertical_stacking)
 					continue;
 				size = modded_size;
 				size.z = 1;
 				break;
-			// If we reached fourth attempt, it means we failed to create a map with modded size
-			// without vertical stacking, and should try normal without stacking
-			// If there was no vertical stacking, skip this attempt
+			// If we reached third attempt, it means we failed to create a random map and should
+			// try a non-random map, filling sectors in big-to-small order, with vertical stacking
+			case 3:
+				size = modded_size;
+				random_generation = false;
+				break;
+			// If we reached fourth attempt, it means we failed to create a random map and should
+			// try a non-random map, filling sectors in big-to-small order, without vert. stacking
 			case 4:
 				if (!allow_vertical_stacking)
 					continue;
-				size = normal_size;
-				size.z = 1;
-				break;
-			// If we reached fifth attempt, it means we failed to create a random map and should
-			// try a non-random map, filling sectors in big-to-small order, with vertical stacking
-			case 5:
-				size = normal_size;
-				random_generation = false;
-				break;
-			// If we reached sixth attempt, it means we failed to create a random map and should
-			// try a non-random map, filling sectors in big-to-small order, without vert. stacking
-			case 6:
-				if (!allow_vertical_stacking)
-					continue;
-				size = normal_size;
+				size = modded_size;
 				size.z = 1;
 				random_generation = false;
 				break;
@@ -829,16 +790,17 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 		return true;
 	}
 
-	LogError("Failed to generate a map %s", id);
+	LogWarning("Failed (totally) to generate a map %s with gen size %d", id, (int)genSize);
 	return false;
 }
 
 sp<Battle>
 BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>> &doors,
                    bool &spawnCivilians, std::vector<sp<BattleMapSector>> sec_map, Vec3<int> size,
-                   GameState &state, StateRef<Organisation> propertyOwner, StateRef<Organisation> target_organisation,
-                   std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
-                   Battle::MissionType mission_type, UString mission_location_id)
+                   GameState &state, StateRef<Organisation> propertyOwner,
+                   StateRef<Organisation> target_organisation, std::list<StateRef<Agent>> &agents,
+                   StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
+                   UString mission_location_id)
 {
 	std::ignore = agents;
 
@@ -848,8 +810,6 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 	b->currentActiveOrganisation = state.getPlayer();
 	b->currentTurn = 1;
 	b->size = {chunk_size.x * size.x, chunk_size.y * size.y, chunk_size.z * size.z};
-	b->spawnMap = {(unsigned)b->size.x,
-	               {(unsigned)b->size.y, std::vector<int>((unsigned)b->size.z, 0)}};
 	b->battle_map = {&state, id};
 	b->mission_type = mission_type;
 	b->mission_location_id = mission_location_id;
@@ -889,7 +849,6 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 					auto initialPosition = pair.first + shift;
 					s->owner = propertyOwner;
 					s->position = initialPosition;
-					s->queueCollapse();
 					s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
 
 					// Check wether this is an exit location, and if so,
@@ -928,20 +887,6 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 							s->type = pair.second;
 					}
 
-					// Set spawnability and height
-					if (s->type->movement_cost == 255 || s->type->height == 39 ||
-					    b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] == -1)
-					{
-						b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] = -1;
-					}
-					else
-					{
-						b->spawnMap[initialPosition.x][initialPosition.y][initialPosition.z] =
-						    std::max(b->spawnMap[initialPosition.x][initialPosition.y]
-						                        [initialPosition.z],
-						             s->type->height);
-					}
-
 					b->map_parts.push_back(s);
 				}
 				for (auto &pair : tiles.initial_left_walls)
@@ -951,7 +896,6 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 					auto initialPosition = pair.first + shift;
 					s->owner = propertyOwner;
 					s->position = initialPosition;
-					s->queueCollapse();
 					s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
 					s->type = pair.second;
 
@@ -969,7 +913,6 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 					auto initialPosition = pair.first + shift;
 					s->owner = propertyOwner;
 					s->position = initialPosition;
-					s->queueCollapse();
 					s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
 					s->type = pair.second;
 
@@ -1006,26 +949,8 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 							auto initialPosition = pair.first + shift;
 							s->owner = propertyOwner;
 							s->position = initialPosition;
-							s->queueCollapse();
 							s->position += Vec3<float>(0.5f, 0.5f, 0.0f);
 							s->type = pair.second;
-
-							// Set spawnability and height
-							if (s->type->movement_cost == 255 || s->type->height == 39 ||
-							    b->spawnMap[initialPosition.x][initialPosition.y]
-							               [initialPosition.z] == -1)
-							{
-								b->spawnMap[initialPosition.x][initialPosition.y]
-								           [initialPosition.z] = -1;
-							}
-							else
-							{
-								b->spawnMap[initialPosition.x][initialPosition.y]
-								           [initialPosition.z] =
-								    std::max(b->spawnMap[initialPosition.x][initialPosition.y]
-								                        [initialPosition.z],
-								             s->type->height);
-							}
 
 							b->map_parts.push_back(s);
 							break;
@@ -1050,15 +975,14 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 					auto lb = tlb->clone(shift);
 					b->losBlocks.push_back(lb);
 					// At least one civilian spawner required for map to spawn civilians
-					if (lb->spawn_type == BattleMapSector::LineOfSightBlock::SpawnType::Civilian)
+					if (lb->spawn_type == SpawnType::Civilian)
 					{
 						spawnCivilians = true;
 					}
 					// Los block must touch map edge, and it's lowest z must be within spawn
 					// allowance
 					// in order for it to qualify for spawning X-Com agents
-					else if (lb->spawn_priority > 0 &&
-					         lb->spawn_type == BattleMapSector::LineOfSightBlock::SpawnType::Player)
+					else if (lb->spawn_priority > 0 && lb->spawn_type == SpawnType::Player)
 					{
 						bool canSpawn =
 						    lb->start.z >= entrance_level_min && lb->start.z < entrance_level_max;
@@ -1152,14 +1076,15 @@ void BattleMap::fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state,
 			a->destroy();
 			continue;
 		}
-		if (std::find(b->participants.begin(), b->participants.end(), a->owner)== b->participants.end())
+		if (std::find(b->participants.begin(), b->participants.end(), a->owner) ==
+		    b->participants.end())
 		{
 			b->participants.push_back(a->owner);
 		}
 
-		for (auto i : a->equipment)
+		for (auto &e : a->equipment)
 		{
-			i->ownerOrganisation = a->owner;
+			e->ownerOrganisation = a->owner;
 		}
 
 		auto u = b->placeUnit(state, a);
@@ -1251,10 +1176,10 @@ void BattleMap::initNewMap(sp<Battle> b)
 
 	// Init which blocks are adjacent (this never changes)
 	linkAvailable = std::vector<bool>(size * size, false);
-	for (auto i = 0; i < size - 1; i++)
+	for (int i = 0; i < size - 1; i++)
 	{
 		auto &b1 = *losBlocks[i];
-		for (auto j = i + 1; j < size; j++)
+		for (int j = i + 1; j < size; j++)
 		{
 			auto &b2 = *losBlocks[j];
 			if (doTwoSectorsIntersect(
@@ -1268,7 +1193,7 @@ void BattleMap::initNewMap(sp<Battle> b)
 	}
 
 	// Init arrays for further use
-	for (auto type : BattleUnitTypeList)
+	for (auto &type : BattleUnitTypeList)
 	{
 		b->blockAvailable[type] = std::vector<bool>(size, false);
 		b->blockCenterPos[type] = std::vector<Vec3<int>>(size, Vec3<int>());
@@ -1283,7 +1208,8 @@ void BattleMap::unloadTiles()
 	LogInfo("Unloaded sector tiles.");
 }
 
-sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> propertyOwner, StateRef<Organisation> target_organisation,
+sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> propertyOwner,
+                                   StateRef<Organisation> target_organisation,
                                    std::list<StateRef<Agent>> &agents,
                                    StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
                                    UString mission_location_id)
@@ -1293,27 +1219,52 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> prop
 	auto doors = std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>>(2);
 	bool spawnCivilians = false;
 
-	// Step 01: Generate map layout
-	if (!generateMap(sec_map, size, state, target_organisation, agents, player_craft, mission_type,
-	                 mission_location_id))
+	sp<Battle> b;
+	sp<Battle> lastB;
+	int genSize = 0;
+	GenerationSize genSizeEnum;
+	do
 	{
-		return nullptr;
+		// Step 01: Generate map layout
+		genSizeEnum = (GenerationSize)genSize;
+		if (!generateMap(sec_map, size, state, genSizeEnum))
+		{
+			continue;
+		}
+
+		// Step 02: Fill map with map parts
+		b = fillMap(doors, spawnCivilians, sec_map, size, state, propertyOwner, target_organisation,
+		            agents, player_craft, mission_type, mission_location_id);
+
+		// Step 03: Ensure enough space exists
+		if (!b->initialMapCheck(state, agents))
+		{
+			lastB = b;
+			b = nullptr;
+		}
+	} while (!b && genSizeEnum != GenerationSize::VeryLarge && ++genSize);
+	if (!b)
+	{
+		if (lastB)
+		{
+			b = lastB;
+		}
+		else
+		{
+			return nullptr;
+		}
 	}
 
-	// Step 02: Fill map with map parts
-	auto b = fillMap(doors, spawnCivilians, sec_map, size, state, propertyOwner, target_organisation, agents,
-	                 player_craft, mission_type, mission_location_id);
-
-	// Step 03: Link adjacent doors
+	// Step 04: Link adjacent doors
 	linkDoors(b, doors, state);
 
-	// Step 04: Fill squads initially (and remove civilians if there's no spawns for them)
+	// Step 05: Fill squads initially (and remove civilians if there's no spawns for them)
 	fillSquads(b, spawnCivilians, state, agents);
 
-	// Step 05: Fill up initial map parameters
+	// Step 06: Fill up initial map parameters
 	initNewMap(b);
 
-	// Step 06: Unload sector tiles
+	// Step 07: Unload sector tiles
 	unloadTiles();
 
 	return b;

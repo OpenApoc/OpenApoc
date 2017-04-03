@@ -53,7 +53,7 @@ City::~City()
 	}
 	// FIXME: Due to tiles possibly being cross-supported we need to clear that sp<> to avoid leaks
 	// Should this be pushed into a weak_ptr<> or some other ref?
-	for (auto s : this->scenery)
+	for (auto &s : this->scenery)
 	{
 		s->supports.clear();
 		s->supportedBy.clear();

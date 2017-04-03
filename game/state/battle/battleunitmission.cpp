@@ -26,16 +26,17 @@ BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, BattleUnitType type, bo
 {
 }
 
-BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, bool large, bool flying, bool allowJumping, int maxHeight,
-                                           sp<TileObjectBattleUnit> tileObject)
+BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, bool large, bool flying, bool allowJumping,
+                                           int maxHeight, sp<TileObjectBattleUnit> tileObject)
     : map(map), large(large), flying(flying), maxHeight(maxHeight), tileObject(tileObject)
 {
 	this->allowJumping = allowJumping && !flying;
 }
 
 BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, BattleUnit &u)
-    : BattleUnitTileHelper(map, u.isLarge(), u.canFly(), u.agent->isBodyStateAllowed(BodyState::Jumping), u.agent->type->bodyType->maxHeight,
-                           u.tileObject)
+    : BattleUnitTileHelper(map, u.isLarge(), u.canFly(),
+                           u.agent->isBodyStateAllowed(BodyState::Jumping),
+                           u.agent->type->bodyType->maxHeight, u.tileObject)
 {
 }
 
@@ -1298,7 +1299,8 @@ BattleUnitMission *BattleUnitMission::jump(BattleUnit &u, Vec3<float> target, Bo
 	return mission;
 }
 
-bool BattleUnitMission::spendAgentTUs(GameState &state, BattleUnit &u, int cost, bool cancel, bool ignoreKneelReserve, bool allowInterrupt)
+bool BattleUnitMission::spendAgentTUs(GameState &state, BattleUnit &u, int cost, bool cancel,
+                                      bool ignoreKneelReserve, bool allowInterrupt)
 {
 	if (costPaidUpFront > 0)
 	{
@@ -1351,11 +1353,13 @@ bool BattleUnitMission::getNextDestination(GameState &state, BattleUnit &u, Vec3
 	switch (this->type)
 	{
 		case Type::GotoLocation:
-			if (state.current_battle->mode == Battle::Mode::TurnBased
-				&& ((!state.current_battle->interruptQueue.empty())
-					|| (u.owner == state.current_battle->currentActiveOrganisation && !state.current_battle->interruptUnits.empty())
-					|| (u.owner != state.current_battle->currentActiveOrganisation &&
-						state.current_battle->interruptUnits.find({ &state, u.id }) == state.current_battle->interruptUnits.end())))
+			if (state.current_battle->mode == Battle::Mode::TurnBased &&
+			    ((!state.current_battle->interruptQueue.empty()) ||
+			     (u.owner == state.current_battle->currentActiveOrganisation &&
+			      !state.current_battle->interruptUnits.empty()) ||
+			     (u.owner != state.current_battle->currentActiveOrganisation &&
+			      state.current_battle->interruptUnits.find({&state, u.id}) ==
+			          state.current_battle->interruptUnits.end())))
 			{
 				u.addMission(state, BattleUnitMission::acquireTU(u, true));
 				return false;
@@ -1405,11 +1409,13 @@ bool BattleUnitMission::getNextFacing(GameState &state, BattleUnit &u, Vec2<int>
 		case Type::ReachGoal:
 		case Type::Jump:
 		case Type::Brainsuck:
-			if (state.current_battle->mode == Battle::Mode::TurnBased
-				&& ((!state.current_battle->interruptQueue.empty())
-					|| (u.owner == state.current_battle->currentActiveOrganisation && !state.current_battle->interruptUnits.empty())
-					|| (u.owner != state.current_battle->currentActiveOrganisation &&
-						state.current_battle->interruptUnits.find({ &state, u.id }) == state.current_battle->interruptUnits.end())))
+			if (state.current_battle->mode == Battle::Mode::TurnBased &&
+			    ((!state.current_battle->interruptQueue.empty()) ||
+			     (u.owner == state.current_battle->currentActiveOrganisation &&
+			      !state.current_battle->interruptUnits.empty()) ||
+			     (u.owner != state.current_battle->currentActiveOrganisation &&
+			      state.current_battle->interruptUnits.find({&state, u.id}) ==
+			          state.current_battle->interruptUnits.end())))
 			{
 				u.addMission(state, BattleUnitMission::acquireTU(u, true));
 				return false;
@@ -1642,7 +1648,9 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 				}
 				brainsuckSoundsPlayed++;
 			}
-			if (brainsuckTicksAccumulated >= TICKS_TO_BRAINSUCK && state.current_battle->interruptQueue.empty() && state.current_battle->interruptUnits.empty())
+			if (brainsuckTicksAccumulated >= TICKS_TO_BRAINSUCK &&
+			    state.current_battle->interruptQueue.empty() &&
+			    state.current_battle->interruptUnits.empty())
 			{
 				if (randBoundsExclusive(state.rng, 0, 100) < BRAINSUCK_CHANCE)
 				{
@@ -1707,8 +1715,7 @@ bool BattleUnitMission::isFinishedInternal(GameState &, BattleUnit &u)
 		case Type::DropItem:
 			if (item)
 			{
-				LogError("%s's item still present, was isFinished called before its start?",
-				         getName());
+				return false;
 			}
 			return true;
 		case Type::Jump:
@@ -1822,7 +1829,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				item->ownerUnit = {&state, u.id};
 				// Drop item
 				auto bi = state.current_battle->placeItem(state, item,
-				                                          u.position + Vec3<float>{0.0, 0.0, 0.5f});
+				                                          u.position + Vec3<float>{0.0, 0.0, (float)u.getCurrentHeight()/80.0f});
 				bi->falling = true;
 			}
 			item = nullptr;
@@ -1932,7 +1939,8 @@ void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> tar
 				return;
 			}
 			// If target occupied - try to find an adjacent unoccupied tile
-			if (!to->getPassable(u.isLarge(), u.agent->type->bodyType->maxHeight))
+			if (!to->getPassable(u.isLarge(), u.agent->type->bodyType->maxHeight) ||
+			    to->getUnitIfPresent(true, true, false, u.tileObject, false, u.isLarge()))
 			{
 				approachOnly = false;
 				for (int x = -1; x <= 1; x++)
@@ -1946,11 +1954,18 @@ void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> tar
 								continue;
 							}
 							auto targetPos = target + Vec3<int>(x, y, z);
-							if (map.tileIsValid(targetPos) &&
-							    map.getTile(targetPos)->getPassable(
-							        u.isLarge(), u.agent->type->bodyType->maxHeight))
+							if (!map.tileIsValid(targetPos))
 							{
-								LogInfo("Cannot move to %d %d %d, moving to adjacent tile",
+								continue;
+							}
+							auto targetTile = map.getTile(targetPos);
+							if (targetTile->getPassable(u.isLarge(),
+							                            u.agent->type->bodyType->maxHeight) &&
+							    !targetTile->getUnitIfPresent(true, true, false, u.tileObject,
+							                                  false, u.isLarge()))
+							{
+								LogInfo("Cannot move to %d %d %d, found an adjacent free tile, "
+								        "moving to an adjacent tile",
 								        target.x, target.y, target.z);
 								approachOnly = true;
 								break;
@@ -2060,7 +2075,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 	bool closedDoorInTheWay = false;
 	if (tFrom->position != pos &&
 	    !BattleUnitTileHelper{map, u}.canEnterTile(tFrom, tTo, !u.canFly(), jumped, cost,
-	                                                      closedDoorInTheWay, true))
+	                                               closedDoorInTheWay, true))
 	{
 		// Next tile became impassable, pick a new path
 		currentPlannedPath.clear();
@@ -2083,8 +2098,8 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 	while (it != currentPlannedPath.end() &&
 	       (tFrom->position == *it ||
 	        (allowSkipNodes &&
-	         BattleUnitTileHelper{map, u}.canEnterTile(
-	             tFrom, map.getTile(*it), !u.canFly(), newJumped, newCost, newDoorInWay))))
+	         BattleUnitTileHelper{map, u}.canEnterTile(tFrom, map.getTile(*it), !u.canFly(),
+	                                                   newJumped, newCost, newDoorInWay))))
 	{
 		currentPlannedPath.pop_front();
 		it = ++currentPlannedPath.begin();
@@ -2150,9 +2165,9 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 				{
 					auto t = u.tileObject->getOwningTile();
 					targetBodyState =
-						t->getCanStand(u.isLarge()) && map.getTile(pos)->getCanStand(u.isLarge())
-						? BodyState::Standing
-						: BodyState::Flying;
+					    t->getCanStand(u.isLarge()) && map.getTile(pos)->getCanStand(u.isLarge())
+					        ? BodyState::Standing
+					        : BodyState::Flying;
 					if (!u.agent->isBodyStateAllowed(targetBodyState))
 					{
 						if (u.agent->isBodyStateAllowed(BodyState::Flying))
@@ -2267,7 +2282,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 
 	// Now finally we can go jumping
 	if (jumped)
-	{		
+	{
 		// Can change to jumping on-the-go
 		targetBodyState = BodyState::Jumping;
 	}
@@ -2352,7 +2367,7 @@ bool BattleUnitMission::advanceFacing(GameState &state, BattleUnit &u, Vec2<int>
 bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodyState targetState,
                                          BodyState &dest)
 {
- 	if (targetState == u.target_body_state)
+	if (targetState == u.target_body_state)
 	{
 		return false;
 	}
@@ -2367,25 +2382,25 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodySt
 	{
 		// If trying to fly stand up first
 		if (targetState == BodyState::Flying && u.current_body_state != BodyState::Standing &&
-			u.agent->isBodyStateAllowed(BodyState::Standing))
+		    u.agent->isBodyStateAllowed(BodyState::Standing))
 		{
 			return advanceBodyState(state, u, BodyState::Standing, dest);
 		}
 		// If trying to stop flying stand up first
 		if (targetState != BodyState::Standing && u.current_body_state == BodyState::Flying &&
-			u.agent->isBodyStateAllowed(BodyState::Standing))
+		    u.agent->isBodyStateAllowed(BodyState::Standing))
 		{
 			return advanceBodyState(state, u, BodyState::Standing, dest);
 		}
 		// If trying to go anywhere from prone go kneel first
 		if (targetState != BodyState::Kneeling && u.current_body_state == BodyState::Prone &&
-			u.agent->isBodyStateAllowed(BodyState::Kneeling))
+		    u.agent->isBodyStateAllowed(BodyState::Kneeling))
 		{
 			return advanceBodyState(state, u, BodyState::Kneeling, dest);
 		}
 		// If trying to go prone from anywhere then kneel first
 		if (targetState == BodyState::Prone && u.current_body_state != BodyState::Kneeling &&
-			u.agent->isBodyStateAllowed(BodyState::Kneeling))
+		    u.agent->isBodyStateAllowed(BodyState::Kneeling))
 		{
 			return advanceBodyState(state, u, BodyState::Kneeling, dest);
 		}
@@ -2402,7 +2417,8 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodySt
 	int cost =
 	    type == Type::ReachGoal ? 0 : getBodyStateChangeCost(u, u.target_body_state, targetState);
 	// If unsufficient TUs - cancel missions other than GotoLocation
-	if (!spendAgentTUs(state, u, cost, type != Type::GotoLocation, targetState == BodyState::Kneeling))
+	if (!spendAgentTUs(state, u, cost, type != Type::GotoLocation,
+	                   targetState == BodyState::Kneeling))
 	{
 		return false;
 	}
@@ -2412,10 +2428,7 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodySt
 	return true;
 }
 
-int BattleUnitMission::getTurnCost(BattleUnit & )
-{
-	return 1;
-}
+int BattleUnitMission::getTurnCost(BattleUnit &) { return 1; }
 
 int BattleUnitMission::getBodyStateChangeCost(const BattleUnit &u, BodyState from, BodyState to)
 {

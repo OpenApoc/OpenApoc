@@ -113,7 +113,7 @@ void BaseSelectScreen::update()
 void BaseSelectScreen::render()
 {
 	CityTileView::render();
-	for (auto b : state->current_city->buildings)
+	for (auto &b : state->current_city->buildings)
 	{
 		auto building = b.second;
 		if (building->base_layout)

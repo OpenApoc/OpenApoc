@@ -473,6 +473,7 @@
 		<member>ai_target_priority</member>
 		<member>spawn_type</member>
 		<member>spawn_priority</member>
+		<member>low_priority</member>
 		<member>spawn_large_units</member>
 		<member>spawn_walking_units</member>
 	</object>
@@ -879,6 +880,7 @@
 		<member>range</member>
 		<member>ttl</member>
 		<member>explosion_graphic</member>
+		<member>shield_graphic</member>
 		<member>fire_sfx</member>
 		<member>impact_sfx</member>
 		<member>damage_type</member>
@@ -1198,7 +1200,7 @@
 		<value>TurnBased</value>
 	</enum>
 	<enum>
-		<name>BattleMapSector::LineOfSightBlock::SpawnType</name>
+		<name>SpawnType</name>
 		<value>Player</value>
 		<value>Enemy</value>
 		<value>Civilian</value>
@@ -1483,6 +1485,8 @@
 		<value>AttackPsiPanic</value>
 		<value>AttackPsiStun</value>
 		<value>AttackPsiMC</value>
+		<value>AttackBrainsucker</value>
+		<value>AttackSuicide</value>
 	</enum>
 	<enum>
 		<name>AIMovement::Type</name>
@@ -1521,6 +1525,7 @@
 		<member>item</member>
 		<member>weaponStatus</member>
 		<member>psiEnergySnapshot</member>
+		<member>preventOutOfTurnReThink</member>
 		<member>executed</member>
 	</object>
 	<object>
@@ -1541,6 +1546,7 @@
 		<name>AIBlockUnit</name>
 		<member>aiList</member>
 		<member>ticksLastThink</member>
+		<member>ticksLastOutOfOrderThink</member>
 		<member>ticksUntilReThink</member>
 	</object>
 	<object external="true" full="true">

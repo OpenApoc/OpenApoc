@@ -100,7 +100,8 @@ class BattleUnitMission
 	MovementState getNextMovementState(GameState &state, BattleUnit &u);
 
 	// Spend agent TUs or append AcquireTU mission
-	bool spendAgentTUs(GameState &state, BattleUnit &u, int cost, bool cancel = false, bool ignoreKneelReserve = false, bool allowInterrupt = false);
+	bool spendAgentTUs(GameState &state, BattleUnit &u, int cost, bool cancel = false,
+	                   bool ignoreKneelReserve = false, bool allowInterrupt = false);
 
 	static int getTurnCost(BattleUnit &u);
 	static int getBodyStateChangeCost(const BattleUnit &u, BodyState from, BodyState to);
@@ -184,8 +185,6 @@ class BattleUnitMission
 	StateRef<BattleUnit> targetUnit;
 	unsigned int brainsuckTicksAccumulated = 0;
 	unsigned int brainsuckSoundsPlayed = 0;
-
-
 
 	// Mission cancelled (due to unsufficient TUs or something else failing)
 	bool cancelled = false;

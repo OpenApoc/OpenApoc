@@ -1,17 +1,19 @@
 #include "game/state/battle/ai/tacticalai.h"
 #include "game/state/battle/ai/tacticalaivanilla.h"
-#include "game/state/gamestate.h"
 #include "game/state/battle/battle.h"
+#include "game/state/gamestate.h"
 
 namespace OpenApoc
 {
+
+static const uint64_t TACTICAL_AI_THINK_INTERVAL = TICKS_PER_SECOND / 4;
 
 const UString TacticalAI::getName()
 {
 	switch (type)
 	{
-	case Type::Vanilla:
-		return "TacticalAIVanilla";
+		case Type::Vanilla:
+			return "TacticalAIVanilla";
 	}
 	LogError("Unimplemented getName for Tactical AI Type %d", (int)type);
 	return "";
@@ -19,7 +21,7 @@ const UString TacticalAI::getName()
 
 void AIBlockTactical::init(GameState &state)
 {
-	for (auto o : state.current_battle->participants)
+	for (auto &o : state.current_battle->participants)
 	{
 		if (o == state.getPlayer())
 		{
@@ -43,12 +45,14 @@ AIBlockTactical::think(GameState &state)
 	auto curTicks = state.gameTime.getTicks();
 	if (ticksLastThink + ticksUntilReThink > curTicks)
 	{
-		return{};
+		return {};
 	}
 
-	if (state.current_battle->mode == Battle::Mode::TurnBased && (!state.current_battle->interruptUnits.empty() || !state.current_battle->interruptQueue.empty()))
+	if (state.current_battle->mode == Battle::Mode::TurnBased &&
+	    (!state.current_battle->interruptUnits.empty() ||
+	     !state.current_battle->interruptQueue.empty()))
 	{
-		return{};
+		return {};
 	}
 
 	ticksLastThink = curTicks;
@@ -57,7 +61,8 @@ AIBlockTactical::think(GameState &state)
 	std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>> result;
 	for (auto &o : this->aiList)
 	{
-		if (state.current_battle->mode == Battle::Mode::TurnBased && o.first != state.current_battle->currentActiveOrganisation)
+		if (state.current_battle->mode == Battle::Mode::TurnBased &&
+		    o.first != state.current_battle->currentActiveOrganisation)
 		{
 			continue;
 		}
@@ -67,12 +72,11 @@ AIBlockTactical::think(GameState &state)
 	return result;
 }
 
-void AIBlockTactical::beginTurnRoutine(GameState & state, StateRef<Organisation> org)
+void AIBlockTactical::beginTurnRoutine(GameState &state, StateRef<Organisation> org)
 {
 	if (aiList.find(org) != aiList.end())
 	{
 		aiList[org]->beginTurnRoutine(state, org);
 	}
 }
-
 }

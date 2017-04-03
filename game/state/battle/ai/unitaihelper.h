@@ -28,6 +28,4 @@ class UnitAIHelper
 
 	static void ensureItemInSlot(GameState &state, sp<AEquipment> item, AEquipmentSlotType slot);
 };
-
-
 }

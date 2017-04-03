@@ -28,5 +28,4 @@ std::tuple<AIDecision, bool> UnitAIBehavior::think(GameState &state, BattleUnit 
 	LogError("Implement Behavior AI");
 	return NULLTUPLE2;
 }
-
 }

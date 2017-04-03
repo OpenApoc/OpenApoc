@@ -48,17 +48,17 @@ MapSelector::MapSelector(sp<GameState> state)
 
 MapSelector::~MapSelector() = default;
 
-std::future<void> loadBattleBuilding(sp<Building> building, sp<GameState> state)
+std::future<void> loadBattleBuilding(sp<Building> building, sp<GameState> state, bool raid)
 {
 
-	auto loadTask = fw().threadPoolEnqueue([building, state]() -> void {
+	auto loadTask = fw().threadPoolEnqueue([building, state, raid]() -> void {
 		std::list<StateRef<Agent>> agents;
 		for (auto &a : state->agents)
 			if (a.second->type->role == AgentType::Role::Soldier &&
 			    a.second->owner == state->getPlayer())
 				agents.emplace_back(state.get(), a.second);
 
-		StateRef<Organisation> org = building->owner;
+		StateRef<Organisation> org = raid ? building->owner : state->getAliens();
 		StateRef<Building> bld = {state.get(), building};
 		StateRef<Vehicle> veh = {};
 
@@ -98,8 +98,19 @@ sp<Control> MapSelector::createMapRowBuilding(sp<Building> building, sp<GameStat
 		btnLocation->addCallback(FormEventType::ButtonClick, [building, state](Event *) {
 			fw().stageQueueCommand(
 			    {StageCmd::Command::PUSH,
-			     mksp<BattleBriefing>(state, loadBattleBuilding(building, state))});
+			     mksp<BattleBriefing>(state, loadBattleBuilding(building, state, true))});
 		});
+		if (building->owner != state->getAliens())
+		{
+			btnLocation = control->createChild<GraphicButton>(btnImage, btnImage);
+			btnLocation->Location = text->Location + Vec2<int>{text->Size.x - 22, 0};
+			btnLocation->Size = {22, HEIGHT};
+			btnLocation->addCallback(FormEventType::ButtonClick, [building, state](Event *) {
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<BattleBriefing>(state, loadBattleBuilding(building, state, false))});
+			});
+		}
 	}
 
 	return control;

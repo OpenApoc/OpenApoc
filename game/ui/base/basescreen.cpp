@@ -328,11 +328,11 @@ void BaseScreen::eventOccurred(Event *e)
 
 	selText->setText("");
 	selGraphic->setImage(nullptr);
-	for (auto label : statsLabels)
+	for (auto &label : statsLabels)
 	{
 		label->setText("");
 	}
-	for (auto value : statsValues)
+	for (auto &value : statsValues)
 	{
 		value->setText("");
 	}

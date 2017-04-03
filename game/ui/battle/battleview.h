@@ -79,7 +79,7 @@ class MotionScannerInfo
 {
   public:
 	// 0 = up, then clockwise
-    int direction = 0;
+	int direction = 0;
 	UString id = "";
 	uint64_t version = 0;
 	Vec2<int> position;
@@ -190,8 +190,10 @@ class BattleView : public BattleTileView
 	void orderSelect(StateRef<BattleUnit> u, bool inverse = false, bool additive = false);
 	void orderFire(Vec3<int> target, WeaponStatus status = WeaponStatus::FiringBothHands,
 	               bool modifier = false);
-	void orderFire(StateRef<BattleUnit> u, WeaponStatus status = WeaponStatus::FiringBothHands, bool forced = false);
-	void orderFire(StateRef<BattleUnit> shooter, Vec3<int> target, WeaponStatus status = WeaponStatus::FiringBothHands);
+	void orderFire(StateRef<BattleUnit> u, WeaponStatus status = WeaponStatus::FiringBothHands,
+	               bool forced = false);
+	void orderFire(StateRef<BattleUnit> shooter, Vec3<int> target,
+	               WeaponStatus status = WeaponStatus::FiringBothHands);
 	void orderFocus(StateRef<BattleUnit> u);
 	void orderHeal(BodyPart part);
 

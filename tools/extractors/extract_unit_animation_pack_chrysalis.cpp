@@ -89,8 +89,9 @@ void extractAnimationPackChrysalisInternal(sp<BattleUnitAnimationPack> p, bool f
 
 	// Downed state:
 	p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
-		BodyState::Downed}][{x, y}] =
-		makeUpChrysalisAnimationEntry(first ? 0 : 5, 1, first ? 0 : 1, 1, true, { -5, first ? -30 : -18 }, first);
+	                        BodyState::Downed}][{x, y}] =
+	    makeUpChrysalisAnimationEntry(first ? 0 : 5, 1, first ? 0 : 1, 1, true,
+	                                  {-5, first ? -30 : -18}, first);
 }
 
 void InitialGameStateExtractor::extractAnimationPackChrysalis(sp<BattleUnitAnimationPack> p,

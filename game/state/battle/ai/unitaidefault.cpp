@@ -1,8 +1,8 @@
+#include "game/state/battle/ai/unitaidefault.h"
+#include "game/state/aequipment.h"
+#include "game/state/battle/ai/aidecision.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battleunit.h"
-#include "game/state/battle/ai/unitaidefault.h"
-#include "game/state/battle/ai/aidecision.h"
-#include "game/state/aequipment.h"
 #include "game/state/gamestate.h"
 #include <glm/glm.hpp>
 
@@ -36,11 +36,12 @@ std::tuple<AIDecision, bool> UnitAIDefault::think(GameState &state, BattleUnit &
 {
 	static const Vec3<int> NONE = {0, 0, 0};
 
+	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
+
 	// Default AI should not work in turn based when it's our turn to act
 	// We can assume that if it's not our turn then we're interrupting
 	// Otherwise no AI would work
-	active = state.current_battle->mode == Battle::Mode::RealTime 
-		|| u.owner != state.current_battle->currentActiveOrganisation;
+	active = realTime || u.owner != state.current_battle->currentActiveOrganisation;
 
 	if (!active)
 	{
@@ -82,29 +83,32 @@ std::tuple<AIDecision, bool> UnitAIDefault::think(GameState &state, BattleUnit &
 				{
 					targetEnemy.clear();
 					backupEnemy.clear();
-					float minDistance = FLT_MAX;
-					for (auto enemy : enemies)
+					if (realTime) // In TB having focusUnit means we can only attack him
 					{
-						// Do not auto-target harmless things
-						if (!enemy->isConscious() || enemy->getAIType() == AIType::None)
+						float minDistance = FLT_MAX;
+						for (auto &enemy : enemies)
 						{
-							continue;
-						}
-						if (!u.hasLineToUnit(enemy))
-						{
-							// Track an enemy we can see but can't fire at,
-							// In case we can't fire at anybody
-							if (u.visibleUnits.find(enemy) != u.visibleUnits.end())
+							// Do not auto-target harmless things
+							if (!enemy->isConscious() || enemy->getAIType() == AIType::None)
 							{
-								backupEnemy = enemy;
+								continue;
 							}
-							continue;
-						}
-						auto distance = glm::distance(enemy->position, u.position);
-						if (distance < minDistance)
-						{
-							minDistance = distance;
-							targetEnemy = enemy;
+							if (!u.hasLineToUnit(enemy))
+							{
+								// Track an enemy we can see but can't fire at,
+								// In case we can't fire at anybody
+								if (u.visibleUnits.find(enemy) != u.visibleUnits.end())
+								{
+									backupEnemy = enemy;
+								}
+								continue;
+							}
+							auto distance = glm::distance(enemy->position, u.position);
+							if (distance < minDistance)
+							{
+								minDistance = distance;
+								targetEnemy = enemy;
+							}
 						}
 					}
 				}
@@ -128,39 +132,43 @@ std::tuple<AIDecision, bool> UnitAIDefault::think(GameState &state, BattleUnit &
 			{
 				// Find enemy we can attack amongst those visible
 				auto targetEnemy = u.focusUnit;
-				auto weaponStatus = WeaponStatus::NotFiring;
+				auto weaponStatus =
+				    targetEnemy ? u.canAttackUnit(state, targetEnemy) : WeaponStatus::NotFiring;
 				// Ensure we can see and attack focus, if can't attack focus or have no focus - take
 				// closest attackable
 				if (!targetEnemy || !targetEnemy->isConscious() ||
 				    enemies.find(targetEnemy) == enemies.end() ||
-				    u.canAttackUnit(state, targetEnemy) == WeaponStatus::NotFiring)
+				    weaponStatus == WeaponStatus::NotFiring)
 				{
 					targetEnemy.clear();
-					// Make a list of enemies sorted by distance to them
-					std::map<float, StateRef<BattleUnit>> enemiesByDistance;
-					for (auto enemy : enemies)
+					if (realTime) // In TB having focusUnit means we can only attack him
 					{
-						// Do not auto-target harmless things
-						if (!enemy->isConscious() || enemy->getAIType() == AIType::None)
+						// Make a list of enemies sorted by distance to them
+						std::map<float, StateRef<BattleUnit>> enemiesByDistance;
+						for (auto &enemy : enemies)
 						{
-							continue;
+							// Do not auto-target harmless things
+							if (!enemy->isConscious() || enemy->getAIType() == AIType::None)
+							{
+								continue;
+							}
+							// Ensure we add every unit
+							auto distance = glm::distance(enemy->position, u.position);
+							while (enemiesByDistance.find(distance) != enemiesByDistance.end())
+							{
+								distance += 0.01f;
+							}
+							enemiesByDistance[distance] = enemy;
 						}
-						// Ensure we add every unit
-						auto distance = glm::distance(enemy->position, u.position);
-						while (enemiesByDistance.find(distance) != enemiesByDistance.end())
+						// Pick enemy that is closest and can be attacked
+						for (auto &entry : enemiesByDistance)
 						{
-							distance += 0.01f;
-						}
-						enemiesByDistance[distance] = enemy;
-					}
-					// Pick enemy that is closest and can be attacked
-					for (auto entry : enemiesByDistance)
-					{
-						weaponStatus = u.canAttackUnit(state, entry.second);
-						if (weaponStatus != WeaponStatus::NotFiring)
-						{
-							targetEnemy = entry.second;
-							break;
+							weaponStatus = u.canAttackUnit(state, entry.second);
+							if (weaponStatus != WeaponStatus::NotFiring)
+							{
+								targetEnemy = entry.second;
+								break;
+							}
 						}
 					}
 				}
@@ -182,7 +190,8 @@ std::tuple<AIDecision, bool> UnitAIDefault::think(GameState &state, BattleUnit &
 	}
 
 	// Enzyme random running (only works in real time)
-	if (state.current_battle->mode == Battle::Mode::RealTime && u.enzymeDebuffIntensity > 0 && !u.isMoving() && u.canMove())
+	if (state.current_battle->mode == Battle::Mode::RealTime && u.enzymeDebuffIntensity > 0 &&
+	    !u.isMoving() && u.canMove())
 	{
 		// Move to a random adjacent tile
 		auto from = u.tileObject->getOwningTile();
@@ -224,5 +233,4 @@ std::tuple<AIDecision, bool> UnitAIDefault::think(GameState &state, BattleUnit &
 
 	return std::make_tuple(AIDecision(action, movement), action || movement);
 }
-
 }

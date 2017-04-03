@@ -14,6 +14,13 @@ namespace OpenApoc
 class BattleMapSectorTiles;
 class BattleMapPartType;
 
+enum class SpawnType
+{
+	Player,
+	Enemy,
+	Civilian
+};
+
 class BattleMapSector : public StateObject
 {
 	STATE_OBJECT(BattleMapSector)
@@ -24,13 +31,6 @@ class BattleMapSector : public StateObject
 	class LineOfSightBlock
 	{
 	  public:
-		enum class SpawnType
-		{
-			Player,
-			Enemy,
-			Civilian
-		};
-
 		// Inclusive lower boundary
 		Vec3<int> start;
 		// Exclusive upper boundary
@@ -41,6 +41,7 @@ class BattleMapSector : public StateObject
 
 		SpawnType spawn_type = SpawnType::Player;
 		int spawn_priority = 0;
+		bool low_priority = false;
 		bool spawn_large_units = false;
 		bool spawn_walking_units = false;
 

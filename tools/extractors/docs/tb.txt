@@ -8,13 +8,10 @@ What do we need still:
 - When screen is shown fast forward updates and cull walking sounds
 - When action first visible to player move camera to center on action and remove screen
 - When interrupting center on the first interrupting unit
-- When unit accepts interrupt set it's focus unit, change default ai so that it can only attack focus unit if interrupting, clear focus unit when clearing interrupt units
-- (this is wrong!) When unit accepts interrupt check it's behavior and movement, if aggressive or can't move, ensure it has lof to triggering unit, and in range, and can afford an attack, otherwise order turn and do not accept
-- Instead, we should think() and only give interrupt if decision was made
-- MDGA! decisions!
 
-Proper handling of decisions:
-- Decision is something unit is doing currently
-- What does AI do?
-	LowMoraleAI: simply does it's thing, cares not for what was going on before
-	DefaultAI: turns to attacker, start firing on enemy if not firing, prefer focus enemy
+Order for proper map generation:
+- Generate smallest map
+- Init map with map parts only
+- For every player los block, LOS to every enemy LOS block (adhering to limit of range 20), and remove spawn for blocks that are visible.
+- Calculate amount of spawn tiles for enemies, compare to required amount multiplied by some constant (like 2x)
+- If not enough and map has variable size then increase map size and try again

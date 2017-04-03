@@ -7,7 +7,7 @@
 
 namespace OpenApoc
 {
-	
+
 class AEquipment;
 class BattleUnit;
 enum class MovementMode;
@@ -16,7 +16,7 @@ enum class WeaponStatus;
 
 class AIAction
 {
-public:
+  public:
 	enum class Type
 	{
 		AttackWeaponTile,
@@ -25,6 +25,8 @@ public:
 		AttackPsiPanic,
 		AttackPsiStun,
 		AttackPsiMC,
+		AttackBrainsucker,
+		AttackSuicide,
 	};
 	AIAction();
 
@@ -35,7 +37,7 @@ public:
 	// Who to attack
 	StateRef<BattleUnit> targetUnit;
 	// What location to attack
-	Vec3<int> targetLocation = { 0, 0, 0 };
+	Vec3<int> targetLocation = {0, 0, 0};
 	// What to fire / what to throw / what to use for PSI
 	// For simply attacking with all weapons in hands, this can be null
 	sp<AEquipment> item;
@@ -44,6 +46,8 @@ public:
 	WeaponStatus weaponStatus;
 	// Psi energy value, used to track wether unit psi attacked
 	int psiEnergySnapshot = 0;
+	// Prevent out of turn re-thinking
+	bool preventOutOfTurnReThink = false;
 	bool executed = false;
 
 	// Methods
@@ -55,13 +59,13 @@ public:
 	// Returns wether action was in progress and is no longer
 	bool isFinished(BattleUnit &u);
 
-private:
+  private:
 	bool inProgressInternal(BattleUnit &u);
 };
 
 class AIMovement
 {
-public:
+  public:
 	enum class Type
 	{
 		// Stop moving
@@ -91,7 +95,7 @@ public:
 	// Movement type
 	Type type = Type::Stop;
 	// Where to move / face
-	Vec3<int> targetLocation = { 0, 0, 0 };
+	Vec3<int> targetLocation = {0, 0, 0};
 	// Preferred movement speed (not used for Stop or Turn)
 	// (init in constructor since it's undefined here)
 	MovementMode movementMode;
@@ -112,14 +116,13 @@ public:
 	// Returns wether movement was in progress and is no longer
 	bool isFinished(BattleUnit &u);
 
-private:
+  private:
 	bool inProgressInternal(BattleUnit &u);
-
 };
 
 class AIDecision
 {
-public:
+  public:
 	AIDecision() = default;
 	AIDecision(sp<AIAction> action, sp<AIMovement> movement);
 	bool isEmpty();
@@ -128,7 +131,7 @@ public:
 
 	UString ai; // AI that made the decision
 
-				// Action to be taken (nullptr = carry on with previous action)
+	// Action to be taken (nullptr = carry on with previous action)
 	sp<AIAction> action;
 
 	// Movement to be done (nullptr = carry on with previous movement)
@@ -138,5 +141,4 @@ public:
 
 	UString getName();
 };
-
 }

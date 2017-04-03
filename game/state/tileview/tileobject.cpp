@@ -152,7 +152,7 @@ void TileObject::setPosition(Vec3<float> newPosition)
 		}
 	}
 	// Quick sanity check
-	for (auto *t : this->intersectingTiles)
+	for (auto &t : this->intersectingTiles)
 	{
 		if (t->intersectingObjects.find(shared_from_this()) == t->intersectingObjects.end())
 		{

@@ -37,6 +37,7 @@
 #include "library/strings_format.h"
 #include "library/xorshift.h"
 #include <algorithm>
+#include <glm/glm.hpp>
 #include <limits>
 
 namespace OpenApoc
@@ -205,7 +206,7 @@ void Battle::initBattle(GameState &state, bool first)
 			o->tryCollapse();
 		}
 		// Check which blocks and tiles are visible
-		for (auto u : units)
+		for (auto &u : units)
 		{
 			u.second->refreshUnitVision(state);
 		}
@@ -218,20 +219,24 @@ void Battle::initBattle(GameState &state, bool first)
 
 void Battle::initMap()
 {
-	if (this->map)
+	// If we were generating the map, then map parts are already initiated and we need to init the
+	// rest
+	if (!this->map)
 	{
-		LogError("Called on battle with existing map");
-		return;
-	}
-	this->map.reset(new TileMap(this->size, VELOCITY_SCALE_BATTLE,
-	                            {VOXEL_X_BATTLE, VOXEL_Y_BATTLE, VOXEL_Z_BATTLE}, layerMap));
-	for (auto &s : this->map_parts)
-	{
-		if (s->destroyed)
+		this->map.reset(new TileMap(this->size, VELOCITY_SCALE_BATTLE,
+		                            {VOXEL_X_BATTLE, VOXEL_Y_BATTLE, VOXEL_Z_BATTLE}, layerMap));
+		for (auto &s : this->map_parts)
 		{
-			continue;
+			if (s->destroyed)
+			{
+				continue;
+			}
+			this->map->addObjectToMap(s);
 		}
-		this->map->addObjectToMap(s);
+		for (auto &h : this->hazards)
+		{
+			this->map->addObjectToMap(h);
+		}
 	}
 	for (auto &o : this->items)
 	{
@@ -253,10 +258,73 @@ void Battle::initMap()
 	{
 		this->map->addObjectToMap(d);
 	}
-	for (auto &h : this->hazards)
+}
+
+bool Battle::initialMapCheck(GameState &state, std::list<StateRef<Agent>> agents)
+{
+	initMap();
+
+	// Mark as low-priority all the enemy spawn los blocks that are seen from any player spawn block
+	for (auto &playerSpawn : losBlocks)
 	{
-		this->map->addObjectToMap(h);
+		if (playerSpawn->spawn_type != SpawnType::Player)
+		{
+			continue;
+		}
+		auto sPos = Vec3<float>((playerSpawn->start.x + playerSpawn->end.x) / 2.0f + 0.5f,
+		                        (playerSpawn->start.y + playerSpawn->end.y) / 2.0f + 0.5f,
+		                        playerSpawn->start.z + 0.5f);
+		for (auto &enemySpawn : losBlocks)
+		{
+			if (enemySpawn->spawn_type != SpawnType::Enemy || enemySpawn->low_priority)
+			{
+				continue;
+			}
+			auto ePos = Vec3<float>((enemySpawn->start.x + enemySpawn->end.x) / 2.0f + 0.5f,
+			                        (enemySpawn->start.y + enemySpawn->end.y) / 2.0f + 0.5f,
+			                        enemySpawn->start.z + 0.5f);
+			if (glm::length(ePos - sPos) > VIEW_DISTANCE ||
+			    map->findCollision(sPos, ePos, {}, nullptr, true))
+			{
+				continue;
+			}
+			enemySpawn->low_priority = true;
+		}
 	}
+
+	// Find out spawn point ratio for enemies
+	int spawnPoints = 0;
+	int spawnPointsRequired = 0;
+
+	for (auto &enemySpawn : losBlocks)
+	{
+		if (enemySpawn->spawn_type != SpawnType::Enemy || enemySpawn->low_priority)
+		{
+			continue;
+		}
+		for (int x = enemySpawn->start.x; x < enemySpawn->end.x; x++)
+		{
+			for (int y = enemySpawn->start.y; y < enemySpawn->end.y; y++)
+			{
+				auto tile = map->getTile(x, y, enemySpawn->start.z);
+				if (tile->getCanStand())
+				{
+					spawnPoints++;
+				}
+			}
+		}
+	}
+	auto player = state.getPlayer();
+	auto civilian = state.getCivilian();
+	for (auto &u : agents)
+	{
+		if (u->owner != player && u->owner != civilian)
+		{
+			spawnPointsRequired += u->type->bodyType->large ? 4 : 1;
+		}
+	}
+
+	return spawnPoints / spawnPointsRequired >= 2;
 }
 
 void linkUpList(std::list<BattleMapPart *> list)
@@ -294,7 +362,7 @@ void linkUpList(std::list<BattleMapPart *> list)
 // For now, removes only ground
 void Battle::initialMapPartRemoval(GameState &state)
 {
-	for (auto u : units)
+	for (auto &u : units)
 	{
 		if (!u.second->isLarge())
 			continue;
@@ -306,17 +374,22 @@ void Battle::initialMapPartRemoval(GameState &state)
 				if (t->solidGround)
 				{
 					std::list<sp<TileObjectBattleMapPart>> partsToKill;
-					for (auto o : t->ownedObjects)
+					for (auto &o : t->ownedObjects)
 					{
 						if (o->getType() == TileObject::Type::Ground)
 						{
-							partsToKill.push_back(std::static_pointer_cast<TileObjectBattleMapPart>(o));
+							partsToKill.push_back(
+							    std::static_pointer_cast<TileObjectBattleMapPart>(o));
 						}
 					}
-					for (auto p : partsToKill)
+					for (auto &p : partsToKill)
 					{
-						LogWarning("Removing MP %s at %s as it's blocking unit %s", p->getOwner()->type.id, p->getPosition(), u.first);
-						p->getOwner()->die(state, false, false);
+						LogWarning("Removing MP %s at %s as it's blocking unit %s",
+						           p->getOwner()->type.id, p->getPosition(), u.first);
+						auto mp = p->getOwner();
+						mp->destroyed = true;
+						mp->tileObject->removeFromMap();
+						mp->tileObject.reset();
 					}
 				}
 			}
@@ -329,11 +402,19 @@ void Battle::initialMapPartLinkUp()
 	LogWarning("Begun initial map parts link up!");
 	auto &mapref = *map;
 
+	for (auto &s : this->map_parts)
+	{
+		if (!s->destroyed)
+		{
+			s->queueCollapse();
+		}
+	}
+
 	for (int z = 0; z < mapref.size.z; z++)
 	{
 		for (auto &s : this->map_parts)
 		{
-			if ((int)s->position.z == z && s->findSupport())
+			if ((int)s->position.z == z && !s->destroyed && s->findSupport())
 			{
 				s->cancelCollapse();
 			}
@@ -409,6 +490,490 @@ void Battle::initialMapPartLinkUp()
 	LogWarning("Link up finished!");
 }
 
+void Battle::initialUnitSpawn(GameState &state)
+{
+	enum class UnitSize
+	{
+		Small,
+		Large,
+		Any
+	};
+	enum class UnitMovement
+	{
+		Walking,
+		Flying,
+		Any
+	};
+	class SpawnBlock
+	{
+	  public:
+		// true = walker, false = flyer
+		std::map<bool, std::set<Vec3<int>>> positions;
+		Vec3<int> start;
+		Vec3<int> end;
+	};
+
+	std::map<SpawnType,
+	         std::map<UnitSize, std::map<UnitMovement, std::map<bool, std::list<sp<SpawnBlock>>>>>>
+	    spawnMaps;
+	std::map<SpawnType,
+	         std::map<UnitSize, std::map<UnitMovement, std::map<bool, std::list<sp<SpawnBlock>>>>>>
+	    spawnInverse;
+	// Other blocks that have 0 spawn priority, to be used when all others are exhausted
+	std::list<sp<SpawnBlock>> spawnOther;
+	std::map<StateRef<Organisation>, SpawnType> spawnTypeMap;
+
+	// Fill organisation -> spawnType maps
+	for (auto &o : participants)
+	{
+		SpawnType spawnType = SpawnType::Enemy;
+		if (o == state.getPlayer())
+		{
+			spawnType = SpawnType::Player;
+		}
+		else if (o == state.getCivilian())
+		{
+			spawnType = SpawnType::Civilian;
+		}
+		spawnTypeMap[o] = spawnType;
+	}
+
+	// Fill spawn blocks
+	std::vector<sp<SpawnBlock>> spawnBlocks;
+	for (int i = 0; i < losBlocks.size(); i++)
+	{
+		auto sb = mksp<SpawnBlock>();
+		auto &lb = losBlocks[i];
+		for (int x = lb->start.x; x < lb->end.x; x++)
+		{
+			for (int y = lb->start.y; y < lb->end.y; y++)
+			{
+				auto tile = map->getTile(x, y, lb->start.z);
+				if (tile->getPassable(false, 32))
+				{
+					sb->positions[false].emplace(x, y, lb->start.z);
+					if (tile->getCanStand())
+					{
+						sb->positions[true].emplace(x, y, lb->start.z);
+					}
+				}
+			}
+		}
+		sb->start = lb->start;
+		sb->end = lb->end;
+		spawnBlocks.push_back(sb);
+
+		if (lb->spawn_priority == 0)
+		{
+			spawnOther.push_back(sb);
+			continue;
+		}
+		for (int i = 0; i < lb->spawn_priority; i++)
+		{
+			spawnMaps[lb->spawn_type][lb->spawn_large_units ? UnitSize::Large : UnitSize::Small]
+			         [lb->spawn_walking_units ? UnitMovement::Walking : UnitMovement::Flying]
+			         [lb->low_priority]
+			             .push_back(sb);
+			spawnMaps[lb->spawn_type][lb->spawn_large_units ? UnitSize::Large : UnitSize::Small]
+			         [UnitMovement::Any][lb->low_priority]
+			             .push_back(sb);
+			spawnMaps[lb->spawn_type][UnitSize::Any]
+			         [lb->spawn_walking_units ? UnitMovement::Walking : UnitMovement::Flying]
+			         [lb->low_priority]
+			             .push_back(sb);
+			spawnMaps[lb->spawn_type][UnitSize::Any][UnitMovement::Any][lb->low_priority].push_back(
+			    sb);
+			for (int j = 0; j < 3; j++)
+			{
+				auto st = (SpawnType)j;
+				if (st == lb->spawn_type)
+				{
+					continue;
+				}
+				spawnInverse[st][lb->spawn_large_units ? UnitSize::Large : UnitSize::Small]
+				            [lb->spawn_walking_units ? UnitMovement::Walking : UnitMovement::Flying]
+				            [lb->low_priority]
+				                .push_back(sb);
+				spawnInverse[st][lb->spawn_large_units ? UnitSize::Large : UnitSize::Small]
+				            [UnitMovement::Any][lb->low_priority]
+				                .push_back(sb);
+				spawnInverse[st][UnitSize::Any]
+				            [lb->spawn_walking_units ? UnitMovement::Walking : UnitMovement::Flying]
+				            [lb->low_priority]
+				                .push_back(sb);
+				spawnInverse[st][UnitSize::Any][UnitMovement::Any][lb->low_priority].push_back(sb);
+			}
+		}
+	}
+
+	// Actually spawn agents
+	for (auto &f : state.current_battle->forces)
+	{
+		for (auto &s : f.second.squads)
+		{
+			std::vector<sp<BattleUnit>> unitsToSpawn;
+			for (auto &u : s.units)
+			{
+				unitsToSpawn.push_back(u);
+			}
+
+			while (unitsToSpawn.size() > 0)
+			{
+				// Determine what kind of units we're trying to spawn
+				bool needWalker = false;
+				bool needLarge = false;
+				for (auto &u : s.units)
+				{
+					if (u->isLarge())
+					{
+						needLarge = true;
+					}
+					if (!u->canFly())
+					{
+						needWalker = true;
+					}
+				}
+
+				// Make a list of priorities, in which order will we try to find a block
+				sp<SpawnBlock> block = nullptr;
+				std::list<std::list<sp<SpawnBlock>> *> priorityList;
+				if (needWalker && needLarge)
+				{
+					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Large]
+					                                 [UnitMovement::Walking][false]);
+					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Large]
+					                                 [UnitMovement::Walking][true]);
+					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Large]
+					                                    [UnitMovement::Walking][false]);
+					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Large]
+					                                    [UnitMovement::Walking][true]);
+
+					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Large]
+					                                 [UnitMovement::Flying][false]);
+					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Large]
+					                                 [UnitMovement::Flying][true]);
+					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Large]
+					                                    [UnitMovement::Flying][false]);
+					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Large]
+					                                    [UnitMovement::Flying][true]);
+
+					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Small]
+					                                 [UnitMovement::Walking][false]);
+					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Small]
+					                                 [UnitMovement::Walking][true]);
+					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Small]
+					                                    [UnitMovement::Walking][false]);
+					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Small]
+					                                    [UnitMovement::Walking][true]);
+
+					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Small]
+					                                 [UnitMovement::Flying][false]);
+					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Small]
+					                                 [UnitMovement::Flying][true]);
+					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Small]
+					                                    [UnitMovement::Flying][false]);
+					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Small]
+					                                    [UnitMovement::Flying][true]);
+				}
+				else if (needLarge)
+				{
+					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Large]
+					                                 [UnitMovement::Any][false]);
+					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Large]
+					                                 [UnitMovement::Any][true]);
+					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Large]
+					                                    [UnitMovement::Any][false]);
+					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Large]
+					                                    [UnitMovement::Any][true]);
+
+					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Small]
+					                                 [UnitMovement::Any][false]);
+					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Small]
+					                                 [UnitMovement::Any][true]);
+					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Small]
+					                                    [UnitMovement::Any][false]);
+					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Small]
+					                                    [UnitMovement::Any][true]);
+				}
+				else if (needWalker)
+				{
+					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Any]
+					                                 [UnitMovement::Walking][false]);
+					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Any]
+					                                 [UnitMovement::Walking][true]);
+					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Any]
+					                                    [UnitMovement::Walking][false]);
+					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Any]
+					                                    [UnitMovement::Walking][true]);
+
+					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Any]
+					                                 [UnitMovement::Flying][false]);
+					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Any]
+					                                 [UnitMovement::Flying][true]);
+					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Any]
+					                                    [UnitMovement::Flying][false]);
+					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Any]
+					                                    [UnitMovement::Flying][true]);
+				}
+				else
+				{
+					priorityList.push_back(
+					    &spawnMaps[spawnTypeMap[f.first]][UnitSize::Any][UnitMovement::Any][false]);
+					priorityList.push_back(
+					    &spawnMaps[spawnTypeMap[f.first]][UnitSize::Any][UnitMovement::Any][true]);
+					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Any]
+					                                    [UnitMovement::Any][false]);
+					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Any]
+					                                    [UnitMovement::Any][true]);
+				}
+				priorityList.push_back(&spawnOther);
+
+				// Select a block randomly
+				for (auto &l : priorityList)
+				{
+					if (l->size() == 0)
+						continue;
+					block = listRandomiser(state.rng, *l);
+					if (block)
+						break;
+				}
+
+				// If there is no block then just spawn anywhere
+				if (!block)
+				{
+					LogWarning("Map has not enough blocks with spawn points!?!?!?");
+
+					for (int x = 0; x < size.x; x++)
+					{
+						for (int y = 0; y < size.y; y++)
+						{
+							for (int z = 0; z < size.z; z++)
+							{
+								auto tile = map->getTile(x, y, z);
+								auto u = unitsToSpawn[unitsToSpawn.size() - 1];
+								if (!tile->getPassable(u->isLarge(),
+								                       u->agent->type->bodyType->maxHeight) ||
+								    (!u->canFly() && !tile->getCanStand(u->isLarge())))
+								{
+									continue;
+								}
+								u->position = tile->getRestingPosition(u->isLarge());
+								unitsToSpawn.pop_back();
+								if (unitsToSpawn.size() == 0)
+									break;
+							}
+							if (unitsToSpawn.size() == 0)
+								break;
+						}
+						if (unitsToSpawn.size() == 0)
+							break;
+					}
+
+					if (unitsToSpawn.size() > 0)
+					{
+						LogError("Map has not big enough to spawn all units!?!?!?");
+						return;
+					}
+					continue;
+				} // end of spawning units anywhere in case we can't find a block
+
+				// Spawn units within a block
+				int numSpawned = 0;
+				if (!block->positions[needWalker].empty())
+				{
+					auto spawnPos = setRandomiser(state.rng, block->positions[needWalker]);
+					int z = spawnPos.z;
+					int offset = 0;
+					bool stopSpawning = false;
+					// While we're not completely out of bounds for this block
+					// Keep enlarging the offset and spawning units
+					while (spawnPos.x - offset >= block->start.x ||
+					       spawnPos.y - offset >= block->start.y ||
+					       spawnPos.x + offset < block->end.x || spawnPos.y + offset < block->end.y)
+					{
+						for (int x = spawnPos.x - offset; x <= spawnPos.x + offset; x++)
+						{
+							for (int y = spawnPos.y - offset; y <= spawnPos.y + offset; y++)
+							{
+								auto pos = Vec3<int>{x, y, z};
+								if (block->positions[needWalker].find(pos) ==
+								    block->positions[needWalker].end())
+									continue;
+
+								auto tile = map->getTile(pos);
+								auto u = unitsToSpawn[unitsToSpawn.size() - 1];
+								if (!tile->getPassable(u->isLarge(),
+								                       u->agent->type->bodyType->maxHeight) ||
+								    (!u->canFly() && !tile->getCanStand(u->isLarge())))
+								{
+									continue;
+								}
+								u->position = tile->getRestingPosition(u->isLarge());
+								// Clear positions from list
+								if (u->isLarge())
+								{
+									for (int dx = -1; dx <= 0; dx++)
+									{
+										for (int dy = -1; dy <= 0; dy++)
+										{
+											auto nPos = pos + Vec3<int>{dx, dy, 0};
+											if (block->positions[false].find(nPos) !=
+											    block->positions[false].end())
+											{
+												block->positions[false].erase(nPos);
+											}
+											if (block->positions[true].find(nPos) !=
+											    block->positions[true].end())
+											{
+												block->positions[true].erase(nPos);
+											}
+										}
+									}
+								}
+								else
+								{
+									if (block->positions[false].find(pos) !=
+									    block->positions[false].end())
+									{
+										block->positions[false].erase(pos);
+									}
+									if (block->positions[true].find(pos) !=
+									    block->positions[true].end())
+									{
+										block->positions[true].erase(pos);
+									}
+								}
+								// FIXME: Consider prone units
+								/*
+								((!u->agent->isBodyStateAllowed(BodyState::Standing) &&
+								!u->agent->isBodyStateAllowed(BodyState::Flying) &&
+								!u->agent->isBodyStateAllowed(BodyState::Kneeling)) &&
+								!u->canProne(...)
+								*/
+								unitsToSpawn.pop_back();
+								numSpawned++;
+								if (unitsToSpawn.size() == 0
+								    // This makes us spawn every civilian individually
+								    || (numSpawned > 0 && (u->getAIType() == AIType::None ||
+								                           u->getAIType() == AIType::Loner ||
+								                           u->getAIType() == AIType::Civilian)))
+								{
+									stopSpawning = true;
+									break;
+								}
+							}
+							if (stopSpawning)
+								break;
+						}
+						if (stopSpawning)
+							break;
+						offset++;
+					} // end of spawning within a block cycle
+				}     // end of if we have a position in a set
+
+				// If failed to spawn anything, then this block is no longer appropriate
+				if (numSpawned == 0)
+				{
+					for (auto &l1 : spawnMaps)
+					{
+						for (auto &l2 : l1.second)
+						{
+							for (auto &l3 : l2.second)
+							{
+								for (auto &l : l3.second)
+								{
+									while (true)
+									{
+										auto pos =
+										    std::find(l.second.begin(), l.second.end(), block);
+										if (pos == l.second.end())
+											break;
+										l.second.erase(pos);
+									}
+								}
+							}
+						}
+					}
+					{
+						while (true)
+						{
+							auto pos = std::find(spawnOther.begin(), spawnOther.end(), block);
+							if (pos == spawnOther.end())
+								break;
+							spawnOther.erase(pos);
+						}
+					}
+				} // finished erasing filled block
+			}
+		}
+	}
+
+	// Turn units towards map centre
+	// Also make sure they're facing in a valid direction
+	// And stand in a valid pose
+	for (auto &p : units)
+	{
+		auto u = p.second;
+		int x_diff = (int)(u->position.x - size.x / 2);
+		int y_diff = (int)(u->position.y - size.y / 2);
+		if (std::abs(x_diff) > std::abs(y_diff))
+		{
+			if (x_diff > 0)
+			{
+				u->facing.x = -1;
+			}
+			else
+			{
+				u->facing.x = 1;
+			}
+		}
+		else
+		{
+			if (y_diff > 0)
+			{
+				u->facing.y = -1;
+			}
+			else
+			{
+				u->facing.y = 1;
+			}
+		}
+		// Facing
+		if (!u->agent->isFacingAllowed(u->facing))
+		{
+			u->facing = setRandomizer(state.rng, *u->agent->getAllowedFacings());
+		}
+		// Stance
+		if (u->agent->isBodyStateAllowed(BodyState::Standing))
+		{
+			u->setBodyState(state, BodyState::Standing);
+			u->setMovementMode(MovementMode::Walking);
+		}
+		else if (u->agent->isBodyStateAllowed(BodyState::Flying))
+		{
+			u->setBodyState(state, BodyState::Flying);
+			u->setMovementMode(MovementMode::Walking);
+		}
+		else if (u->agent->isBodyStateAllowed(BodyState::Kneeling))
+		{
+			u->setBodyState(state, BodyState::Kneeling);
+			u->setMovementMode(MovementMode::Prone);
+		}
+		else if (u->agent->isBodyStateAllowed(BodyState::Prone))
+		{
+			u->setBodyState(state, BodyState::Prone);
+			u->setMovementMode(MovementMode::Prone);
+		}
+		else
+		{
+			LogError("Unit %s cannot Stand, Fly, Kneel or go Prone!", u->agent->type.id);
+		}
+		// Miscellaneous
+		u->beginTurn(state);
+		u->resetGoal();
+	}
+}
+
 void Battle::setMode(Mode mode) { this->mode = mode; }
 
 sp<Doodad> Battle::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
@@ -447,7 +1012,8 @@ sp<BattleUnit> Battle::spawnUnit(GameState &state, StateRef<Organisation> owner,
 sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position,
                                          StateRef<DoodadType> doodadType,
                                          StateRef<DamageType> damageType, int power,
-                                         int depletionRate, StateRef<Organisation> ownerOrg, StateRef<BattleUnit> ownerUnit)
+                                         int depletionRate, StateRef<Organisation> ownerOrg,
+                                         StateRef<BattleUnit> ownerUnit)
 {
 	// FIXME: Actually read this option
 	bool USER_OPTION_EXPLOSIONS_DAMAGE_IN_THE_END = true;
@@ -467,8 +1033,9 @@ sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position,
 	}
 
 	// Explosion
-	auto explosion = mksp<BattleExplosion>(position, damageType, power, depletionRate,
-	                                       USER_OPTION_EXPLOSIONS_DAMAGE_IN_THE_END, ownerOrg, ownerUnit);
+	auto explosion =
+	    mksp<BattleExplosion>(position, damageType, power, depletionRate,
+	                          USER_OPTION_EXPLOSIONS_DAMAGE_IN_THE_END, ownerOrg, ownerUnit);
 	explosions.insert(explosion);
 	return explosion;
 }
@@ -535,9 +1102,9 @@ sp<BattleItem> Battle::placeItem(GameState &state, sp<AEquipment> item, Vec3<flo
 	return bitem;
 }
 
-sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<Organisation> owner, StateRef<DamageType> type,
-                                     Vec3<int> position, int ttl, int power,
-                                     int initialAgeTTLDivizor, bool delayVisibility)
+sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<Organisation> owner,
+                                     StateRef<DamageType> type, Vec3<int> position, int ttl,
+                                     int power, int initialAgeTTLDivizor, bool delayVisibility)
 {
 	bool fire = type->hazardType->fire;
 	auto hazard = mksp<BattleHazard>(state, type, delayVisibility);
@@ -571,7 +1138,7 @@ sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<Organisation> ow
 		}
 		// Clear existing hazards
 		sp<BattleHazard> existingHazard;
-		for (auto obj : tile->ownedObjects)
+		for (auto &obj : tile->ownedObjects)
 		{
 			if (obj->getType() == TileObject::Type::Hazard)
 			{
@@ -604,18 +1171,18 @@ sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<Organisation> ow
 	return hazard;
 }
 
-sp<BattleScanner> Battle::addScanner(GameState & state, AEquipment &item)
+sp<BattleScanner> Battle::addScanner(GameState &state, AEquipment &item)
 {
 	auto scanner = mksp<BattleScanner>();
 	UString id = BattleScanner::generateObjectID(state);
-	item.battleScanner = { &state, id };
+	item.battleScanner = {&state, id};
 	scanner->holder = item.ownerAgent->unit;
 	scanner->lastPosition = scanner->holder->position;
 	scanners[id] = scanner;
 	return scanner;
 }
 
-void Battle::removeScanner(GameState & state, AEquipment &item)
+void Battle::removeScanner(GameState &state, AEquipment &item)
 {
 	state.current_battle->scanners.erase(item.battleScanner.id);
 	item.battleScanner.clear();
@@ -630,7 +1197,7 @@ void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 	}
 	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
 	{
-		state.current_battle->ticksWithoutAction = 0;
+		state.current_battle->notifyAction();
 		auto &p = *it++;
 		auto c = p->checkProjectileCollision(*map);
 		if (c)
@@ -652,9 +1219,10 @@ void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 			bool displayDoodad = true;
 			if (c.projectile->damageType->explosive)
 			{
-				auto explosion = addExplosion(state, c.position, c.projectile->doodadType,
-				                              c.projectile->damageType, c.projectile->damage,
-				                              c.projectile->depletionRate, c.projectile->firerUnit->owner, c.projectile->firerUnit);
+				auto explosion = addExplosion(
+				    state, c.position, c.projectile->doodadType, c.projectile->damageType,
+				    c.projectile->damage, c.projectile->depletionRate,
+				    c.projectile->firerUnit->owner, c.projectile->firerUnit);
 				displayDoodad = false;
 			}
 			else
@@ -832,7 +1400,7 @@ void Battle::updatePathfinding(GameState &)
 		// Find closest to center valid position for every kind of unit
 		auto &lb = *losBlocks[i];
 		auto center = (lb.start + lb.end) / 2;
-		for (auto type : BattleUnitTypeList)
+		for (auto &type : BattleUnitTypeList)
 		{
 			blockAvailable[type][i] =
 			    findLosBlockCenter(mapRef, type, lb, center, blockCenterPos[type][i]);
@@ -840,9 +1408,9 @@ void Battle::updatePathfinding(GameState &)
 	}
 
 	// Now update all paths
-	for (auto i = 0; i < lbCount - 1; i++)
+	for (int i = 0; i < lbCount - 1; i++)
 	{
-		for (auto j = i + 1; j < lbCount; j++)
+		for (int j = i + 1; j < lbCount; j++)
 		{
 			if (!linkNeedsUpdate[i + j * lbCount])
 			{
@@ -851,7 +1419,7 @@ void Battle::updatePathfinding(GameState &)
 			linkNeedsUpdate[i + j * lbCount] = false;
 
 			// Update link for every kind of unit
-			for (auto type : BattleUnitTypeList)
+			for (auto &type : BattleUnitTypeList)
 			{
 				// Do not try if one of blocks is unavailable
 				if (!blockAvailable[type][i] || !blockAvailable[type][j])
@@ -909,7 +1477,9 @@ void Battle::update(GameState &state, unsigned int ticks)
 			lowMoraleProcessed = true;
 			for (auto &u : units)
 			{
-				if (u.second->owner != currentActiveOrganisation || !u.second->isConscious() || u.second->moraleState == MoraleState::Normal || u.second->agent->modified_stats.time_units == 0)
+				if (u.second->owner != currentActiveOrganisation || !u.second->isConscious() ||
+				    u.second->moraleState == MoraleState::Normal ||
+				    u.second->agent->modified_stats.time_units == 0)
 				{
 					continue;
 				}
@@ -928,7 +1498,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 				interruptUnits.emplace(e.first, e.second);
 			}
 			interruptQueue.clear();
-			ticksWithoutAction = 0;
+			notifyAction();
 			turnEndAllowed = false;
 		}
 		// Turn end condition
@@ -942,18 +1512,18 @@ void Battle::update(GameState &state, unsigned int ticks)
 				}
 			}
 			else
-			{ 
+			{
 				// Spend remaining TUs of low morale units
 				for (auto &e : interruptUnits)
 				{
 					if (e.first->moraleState != MoraleState::Normal)
 					{
-						// Complains about const?...
 						e.first.getSp()->spendRemainingTU(state);
+						e.first.getSp()->focusUnit.clear();
 					}
 				}
 				interruptUnits.clear();
-				ticksWithoutAction = 0;
+				notifyAction();
 				turnEndAllowed = false;
 			}
 		}
@@ -1017,7 +1587,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 	Trace::start("Battle::update::ai->think");
 	{
 		auto result = aiBlock.think(state);
-		for (auto entry : result)
+		for (auto &entry : result)
 		{
 			BattleUnit::executeGroupAIDecision(state, entry.second, entry.first);
 		}
@@ -1035,9 +1605,9 @@ void Battle::update(GameState &state, unsigned int ticks)
 	Trace::end("Battle::update::pathfinding");
 }
 
-void Battle::updateTBBegin(GameState & state)
+void Battle::updateTBBegin(GameState &state)
 {
-	ticksWithoutAction = 0;
+	notifyAction();
 	turnEndAllowed = false;
 	lowMoraleProcessed = false;
 
@@ -1052,7 +1622,7 @@ void Battle::updateTBBegin(GameState & state)
 	Trace::end("Battle::updateTBBegin::units->update");
 }
 
-void Battle::updateTBEnd(GameState & state)
+void Battle::updateTBEnd(GameState &state)
 {
 	Trace::start("Battle::updateTBEnd::hazards->update");
 	for (auto it = this->hazards.begin(); it != this->hazards.end();)
@@ -1100,6 +1670,8 @@ void Battle::notifyScanners(Vec3<int> position)
 		s.second->notifyMovement(position);
 	}
 }
+
+void Battle::notifyAction() { ticksWithoutAction = 0; }
 
 void Battle::queuePathfindingRefresh(Vec3<int> tile)
 {
@@ -1158,14 +1730,15 @@ void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
 		}
 	}
 
-	float k1 = (2 * randBoundsInclusive(state.rng, 0, 1) - 1)  *rnd[1] * std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
+	float k1 = (2 * randBoundsInclusive(state.rng, 0, 1) - 1) * rnd[1] *
+	           std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
 	float k2 = (2 * randBoundsInclusive(state.rng, 0, 1) - 1) * rnd[2] *
 	           std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
 
 	// Vertical misses only go down
 	auto diffVertical =
 	    Vec3<float>{length_vector * delta.x * delta.z, length_vector * delta.y * delta.z,
-	               std::min(0.0f, -length_vector * (delta.x * delta.x + delta.y * delta.y))} *
+	                std::min(0.0f, -length_vector * (delta.x * delta.x + delta.y * delta.y))} *
 	    k1;
 	auto diffHorizontal = Vec3<float>{-delta.y, delta.x, 0.0f} * k2;
 	auto diff = (diffVertical + diffHorizontal) *
@@ -1220,7 +1793,8 @@ void Battle::endTurn(GameState &state)
 	beginTurn(state);
 }
 
-void Battle::giveInterruptChanceToUnits(GameState &state, StateRef<BattleUnit> giver, int reactionValue)
+void Battle::giveInterruptChanceToUnits(GameState &state, StateRef<BattleUnit> giver,
+                                        int reactionValue)
 {
 	if (mode != Mode::TurnBased)
 	{
@@ -1230,21 +1804,32 @@ void Battle::giveInterruptChanceToUnits(GameState &state, StateRef<BattleUnit> g
 	{
 		if (u.second->visibleEnemies.find(giver) != u.second->visibleEnemies.end())
 		{
-			giveInterruptChanceToUnit({ &state, u.second->id }, reactionValue);
+			giveInterruptChanceToUnit(state, giver, {&state, u.second->id}, reactionValue);
 		}
 	}
 }
 
-void Battle::giveInterruptChanceToUnit(StateRef<BattleUnit> receiver, int reactionValue)
+void Battle::giveInterruptChanceToUnit(GameState &state, StateRef<BattleUnit> giver,
+                                       StateRef<BattleUnit> receiver, int reactionValue)
 {
-	if (mode != Mode::TurnBased || receiver->owner == currentActiveOrganisation || receiver->getAIType() == AIType::None)
+	if (mode != Mode::TurnBased || receiver->owner == currentActiveOrganisation ||
+	    receiver->getAIType() == AIType::None)
 	{
 		return;
 	}
 
 	if (receiver->agent->getReactionValue() > reactionValue)
 	{
-		interruptQueue.emplace(receiver, receiver->agent->getTULimit(reactionValue));
+		receiver->focusUnit = giver;
+		auto decision = receiver->aiList.think(state, *receiver, true);
+		if (decision.isEmpty())
+		{
+			receiver->focusUnit.clear();
+		}
+		else
+		{
+			interruptQueue.emplace(receiver, receiver->agent->getTULimit(reactionValue));
+		}
 	}
 }
 
@@ -1293,592 +1878,13 @@ void Battle::enterBattle(GameState &state)
 
 	auto &b = state.current_battle;
 
-	// FIXME: Spawn units so that hostiles do not have LOS of eacah other
+	state.current_battle->initialUnitSpawn(state);
 
-	// Create spawn maps
-	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
-	         std::list<sp<BattleMapSector::LineOfSightBlock>>>
-	    spawnMapsSmallWalker;
-	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
-	         std::list<sp<BattleMapSector::LineOfSightBlock>>>
-	    spawnMapsSmallFlying;
-	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
-	         std::list<sp<BattleMapSector::LineOfSightBlock>>>
-	    spawnMapsSmallAny;
-	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
-	         std::list<sp<BattleMapSector::LineOfSightBlock>>>
-	    spawnMapsLargeFlying;
-	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
-	         std::list<sp<BattleMapSector::LineOfSightBlock>>>
-	    spawnMapsLargeWalker;
-	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
-	         std::list<sp<BattleMapSector::LineOfSightBlock>>>
-	    spawnMapsLargeAny;
-	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
-	         std::list<sp<BattleMapSector::LineOfSightBlock>>>
-	    spawnMapsAnyWalker;
-	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
-	         std::list<sp<BattleMapSector::LineOfSightBlock>>>
-	    spawnMapsAnyFlying;
-	std::map<BattleMapSector::LineOfSightBlock::SpawnType,
-	         std::list<sp<BattleMapSector::LineOfSightBlock>>>
-	    spawnMapsAnyAny;
-	std::list<sp<BattleMapSector::LineOfSightBlock>> spawnMapOther;
-	std::map<StateRef<Organisation>, BattleMapSector::LineOfSightBlock::SpawnType> spawnTypeMap;
-
-	// Fill organisation to spawn type maps
-	for (auto &o : b->participants)
-	{
-		BattleMapSector::LineOfSightBlock::SpawnType spawnType =
-		    BattleMapSector::LineOfSightBlock::SpawnType::Enemy;
-		if (o == state.getPlayer())
-		{
-			spawnType = BattleMapSector::LineOfSightBlock::SpawnType::Player;
-		}
-		else if (o == state.getCivilian())
-		{
-			spawnType = BattleMapSector::LineOfSightBlock::SpawnType::Civilian;
-		}
-		spawnTypeMap[o] = spawnType;
-	}
-
-	// Fill spawn maps
-	for (auto &l : b->losBlocks)
-	{
-		if (l->spawn_priority == 0)
-		{
-			spawnMapOther.push_back(l);
-			continue;
-		}
-		for (int i = 0; i < l->spawn_priority; i++)
-		{
-			if (l->spawn_large_units)
-			{
-				if (l->spawn_walking_units)
-				{
-					spawnMapsLargeWalker[l->spawn_type].push_back(l);
-					spawnMapsLargeAny[l->spawn_type].push_back(l);
-				}
-				else
-				{
-					spawnMapsLargeFlying[l->spawn_type].push_back(l);
-					spawnMapsLargeAny[l->spawn_type].push_back(l);
-				}
-			}
-			else
-			{
-				if (l->spawn_walking_units)
-				{
-					spawnMapsSmallWalker[l->spawn_type].push_back(l);
-					spawnMapsSmallAny[l->spawn_type].push_back(l);
-				}
-				else
-				{
-					spawnMapsSmallFlying[l->spawn_type].push_back(l);
-					spawnMapsSmallAny[l->spawn_type].push_back(l);
-				}
-			}
-			if (l->spawn_walking_units)
-			{
-				spawnMapsAnyWalker[l->spawn_type].push_back(l);
-				spawnMapsAnyAny[l->spawn_type].push_back(l);
-			}
-			else
-			{
-				spawnMapsAnyFlying[l->spawn_type].push_back(l);
-				spawnMapsAnyAny[l->spawn_type].push_back(l);
-			}
-		}
-	}
-
-	// Actually spawn agents
-	for (auto &f : state.current_battle->forces)
-	{
-		for (auto &s : f.second.squads)
-		{
-			std::vector<sp<BattleUnit>> unitsToSpawn;
-			for (auto u : s.units)
-				unitsToSpawn.push_back(u);
-
-			while (unitsToSpawn.size() > 0)
-			{
-				// Determine what kind of units we're trying to spawn
-				int neededSpace = 0;
-				bool needWalker = false;
-				bool needLarge = false;
-				for (auto &u : s.units)
-				{
-					neededSpace++;
-					if (u->isLarge())
-					{
-						needLarge = true;
-						neededSpace += 3;
-					}
-					if (!u->canFly())
-					{
-						needWalker = true;
-					}
-				}
-
-				// Make a list of priorities, in which order will we try to find a block
-				sp<BattleMapSector::LineOfSightBlock> block = nullptr;
-				std::list<std::list<sp<BattleMapSector::LineOfSightBlock>> *> priorityList;
-				if (needWalker && needLarge)
-				{
-					priorityList.push_back(&spawnMapsLargeWalker[spawnTypeMap[f.first]]);
-					for (auto l : spawnMapsLargeWalker)
-					{
-						if (l.first != spawnTypeMap[f.first])
-						{
-							priorityList.push_back(&spawnMapsLargeWalker[l.first]);
-						}
-					}
-					priorityList.push_back(&spawnMapsLargeFlying[spawnTypeMap[f.first]]);
-					for (auto l : spawnMapsLargeFlying)
-					{
-						if (l.first != spawnTypeMap[f.first])
-						{
-							priorityList.push_back(&spawnMapsLargeFlying[l.first]);
-						}
-					}
-					priorityList.push_back(&spawnMapsSmallWalker[spawnTypeMap[f.first]]);
-					for (auto l : spawnMapsSmallWalker)
-					{
-						if (l.first != spawnTypeMap[f.first])
-						{
-							priorityList.push_back(&spawnMapsSmallWalker[l.first]);
-						}
-					}
-					priorityList.push_back(&spawnMapsSmallFlying[spawnTypeMap[f.first]]);
-					for (auto l : spawnMapsSmallFlying)
-					{
-						if (l.first != spawnTypeMap[f.first])
-						{
-							priorityList.push_back(&spawnMapsSmallFlying[l.first]);
-						}
-					}
-					priorityList.push_back(&spawnMapOther);
-				}
-				else if (needLarge)
-				{
-					priorityList.push_back(&spawnMapsLargeAny[spawnTypeMap[f.first]]);
-					for (auto l : spawnMapsLargeAny)
-					{
-						if (l.first != spawnTypeMap[f.first])
-						{
-							priorityList.push_back(&spawnMapsLargeAny[l.first]);
-						}
-					}
-					priorityList.push_back(&spawnMapsSmallAny[spawnTypeMap[f.first]]);
-					for (auto l : spawnMapsSmallAny)
-					{
-						if (l.first != spawnTypeMap[f.first])
-						{
-							priorityList.push_back(&spawnMapsSmallAny[l.first]);
-						}
-					}
-					priorityList.push_back(&spawnMapOther);
-				}
-				else if (needWalker)
-				{
-					priorityList.push_back(&spawnMapsAnyWalker[spawnTypeMap[f.first]]);
-					for (auto l : spawnMapsAnyWalker)
-					{
-						if (l.first != spawnTypeMap[f.first])
-						{
-							priorityList.push_back(&spawnMapsAnyWalker[l.first]);
-						}
-					}
-					priorityList.push_back(&spawnMapsAnyFlying[spawnTypeMap[f.first]]);
-					for (auto l : spawnMapsAnyFlying)
-					{
-						if (l.first != spawnTypeMap[f.first])
-						{
-							priorityList.push_back(&spawnMapsAnyFlying[l.first]);
-						}
-					}
-					priorityList.push_back(&spawnMapOther);
-				}
-				else
-				{
-					priorityList.push_back(&spawnMapsAnyAny[spawnTypeMap[f.first]]);
-					for (auto l : spawnMapsAnyAny)
-					{
-						if (l.first != spawnTypeMap[f.first])
-						{
-							priorityList.push_back(&spawnMapsAnyAny[l.first]);
-						}
-					}
-					priorityList.push_back(&spawnMapOther);
-				}
-
-				// Select a block randomly
-				for (auto l : priorityList)
-				{
-					if (l->size() == 0)
-						continue;
-					block = listRandomiser(state.rng, *l);
-					if (block)
-						break;
-				}
-
-				// If there is no block then just spawn anywhere
-				if (!block)
-				{
-					LogWarning("Map has not enough blocks with spawn points!?!?!?");
-
-					for (int x = 0; x < b->size.x; x++)
-					{
-						for (int y = 0; y < b->size.y; y++)
-						{
-							for (int z = 0; z < b->size.z; z++)
-							{
-								auto u = unitsToSpawn[unitsToSpawn.size() - 1];
-								if (u->isLarge())
-								{
-									if (x < 1 || y < 1 || z >= (b->size.z - 1) ||
-									    b->spawnMap[x][y][z] == -1 ||
-									    b->spawnMap[x - 1][y][z] == -1 ||
-									    b->spawnMap[x][y - 1][z] == -1 ||
-									    b->spawnMap[x - 1][y - 1][z] == -1 ||
-									    b->spawnMap[x][y][z + 1] == -1 ||
-									    b->spawnMap[x - 1][y][z + 1] == -1 ||
-									    b->spawnMap[x][y - 1][z + 1] == -1 ||
-									    b->spawnMap[x - 1][y - 1][z + 1] == -1)
-										continue;
-									int height = b->spawnMap[x][y][z];
-									height = std::max(b->spawnMap[x][y - 1][z], height);
-									height = std::max(b->spawnMap[x - 1][y][z], height);
-									height = std::max(b->spawnMap[x - 1][y - 1][z], height);
-									b->spawnMap[x][y][z] = -1;
-									b->spawnMap[x - 1][y][z] = -1;
-									b->spawnMap[x][y - 1][z] = -1;
-									b->spawnMap[x - 1][y - 1][z] = -1;
-									b->spawnMap[x][y][z + 1] = -1;
-									b->spawnMap[x - 1][y][z + 1] = -1;
-									b->spawnMap[x][y - 1][z + 1] = -1;
-									b->spawnMap[x - 1][y - 1][z + 1] = -1;
-									u->position = {x + 0.0f, y + 0.0f,
-									               z + ((float)height) / (float)TILE_Z_BATTLE};
-									unitsToSpawn.pop_back();
-								}
-								else
-								{
-									if (b->spawnMap[x][y][z] == -1)
-										continue;
-									int height = b->spawnMap[x][y][z];
-									b->spawnMap[x][y][z] = -1;
-									u->position = {x + 0.5f, y + 0.5f,
-									               z + ((float)height) / (float)TILE_Z_BATTLE};
-									unitsToSpawn.pop_back();
-								}
-								if (unitsToSpawn.size() == 0)
-									break;
-							}
-							if (unitsToSpawn.size() == 0)
-								break;
-						}
-						if (unitsToSpawn.size() == 0)
-							break;
-					}
-
-					if (unitsToSpawn.size() > 0)
-					{
-						LogError("Map has not big enough to spawn all units!?!?!?");
-						return;
-					}
-					continue;
-				} // end of spawning units anywhere in case we can't find a block
-
-				// Spawn units within a block
-				int startX = randBoundsExclusive(state.rng, block->start.x, block->end.x);
-				int startY = randBoundsExclusive(state.rng, block->start.y, block->end.y);
-				int z = block->start.z;
-				int offset = 0;
-				int numSpawned = 0;
-				// While we're not completely out of bounds for this block
-				// Keep enlarging the offset and spawning units
-				while (startX - offset >= block->start.x || startY - offset >= block->start.y ||
-				       startX + offset < block->end.x || startY + offset < block->end.y)
-				{
-					for (int x = startX - offset; x <= startX + offset; x++)
-					{
-						for (int y = startY - offset; y <= startY + offset; y++)
-						{
-							if (!block->contains(Vec3<int>{x, y, z}))
-								continue;
-
-							auto u = unitsToSpawn[unitsToSpawn.size() - 1];
-							// Large unit occupies 2x2x2 space
-							if (u->isLarge())
-							{
-								if (x < 1 || y < 1 || z >= (b->size.z - 1) ||
-								    b->spawnMap[x][y][z] == -1 || b->spawnMap[x - 1][y][z] == -1 ||
-								    b->spawnMap[x][y - 1][z] == -1 ||
-								    b->spawnMap[x - 1][y - 1][z] == -1 ||
-								    b->spawnMap[x][y][z + 1] == -1 ||
-								    b->spawnMap[x - 1][y][z + 1] == -1 ||
-								    b->spawnMap[x][y - 1][z + 1] == -1 ||
-								    b->spawnMap[x - 1][y - 1][z + 1] == -1)
-									continue;
-								int height = b->spawnMap[x][y][z];
-								height = std::max(b->spawnMap[x][y - 1][z], height);
-								height = std::max(b->spawnMap[x - 1][y][z], height);
-								height = std::max(b->spawnMap[x - 1][y - 1][z], height);
-								b->spawnMap[x][y][z] = -1;
-								b->spawnMap[x - 1][y][z] = -1;
-								b->spawnMap[x][y - 1][z] = -1;
-								b->spawnMap[x - 1][y - 1][z] = -1;
-								b->spawnMap[x][y][z + 1] = -1;
-								b->spawnMap[x - 1][y][z + 1] = -1;
-								b->spawnMap[x][y - 1][z + 1] = -1;
-								b->spawnMap[x - 1][y - 1][z + 1] = -1;
-								u->position = {x + 0.0f, y + 0.0f,
-								               z + ((float)height) / (float)TILE_Z_BATTLE};
-							}
-							// Prone-only unit occupies a 3x3x1 space
-							else if (!u->agent->isBodyStateAllowed(BodyState::Standing) &&
-							         !u->agent->isBodyStateAllowed(BodyState::Flying) &&
-							         !u->agent->isBodyStateAllowed(BodyState::Kneeling))
-							{
-								if (!u->agent->isBodyStateAllowed(BodyState::Prone))
-								{
-									LogError(
-									    "Unit %s agent %s is not allowed to stand/fly/kneel/prone?",
-									    u->id, u->agent->type->id);
-								}
-
-								if (x < 1 || y < 1 || x >= (b->size.x - 1) ||
-								    y >= (b->size.y - 1) || b->spawnMap[x][y][z] == -1 ||
-								    b->spawnMap[x - 1][y][z] == -1 ||
-								    b->spawnMap[x][y - 1][z] == -1 ||
-								    b->spawnMap[x - 1][y - 1][z] == -1 ||
-								    b->spawnMap[x + 1][y][z] == -1 ||
-								    b->spawnMap[x][y + 1][z] == -1 ||
-								    b->spawnMap[x + 1][y + 1][z] == -1 ||
-								    b->spawnMap[x - 1][y + 1][z] == -1 ||
-								    b->spawnMap[x + 1][y - 1][z] == -1)
-									continue;
-								int height = b->spawnMap[x][y][z];
-								height = std::max(b->spawnMap[x][y - 1][z], height);
-								height = std::max(b->spawnMap[x - 1][y][z], height);
-								height = std::max(b->spawnMap[x + 1][y][z], height);
-								height = std::max(b->spawnMap[x][y + 1][z], height);
-								b->spawnMap[x][y][z] = -1;
-								b->spawnMap[x - 1][y][z] = -1;
-								b->spawnMap[x][y - 1][z] = -1;
-								b->spawnMap[x - 1][y - 1][z] = -1;
-								b->spawnMap[x + 1][y][z] = -1;
-								b->spawnMap[x][y + 1][z] = -1;
-								b->spawnMap[x + 1][y + 1][z] = -1;
-								b->spawnMap[x - 1][y + 1][z] = -1;
-								b->spawnMap[x + 1][y - 1][z] = -1;
-								u->position = {x + 0.5f, y + 0.5f,
-								               z + ((float)height) / (float)TILE_Z_BATTLE};
-							}
-							else
-							{
-								if (b->spawnMap[x][y][z] == -1)
-									continue;
-								int height = b->spawnMap[x][y][z];
-								b->spawnMap[x][y][z] = -1;
-								u->position = {x + 0.5f, y + 0.5f,
-								               z + ((float)height) / (float)TILE_Z_BATTLE};
-							}
-							unitsToSpawn.pop_back();
-							numSpawned++;
-							if (unitsToSpawn.size() == 0
-							    // This makes us spawn every civilian individually
-							    || (numSpawned > 0 && f.first == state.getCivilian()))
-								break;
-						}
-						if (unitsToSpawn.size() == 0 ||
-						    (numSpawned > 0 && f.first == state.getCivilian()))
-							break;
-					}
-					if (unitsToSpawn.size() == 0 ||
-					    (numSpawned > 0 && f.first == state.getCivilian()))
-						break;
-					offset++;
-				} // end of spawning within a block cycle
-
-				// If failed to spawn anything, then this block is no longer appropriate
-				if (numSpawned == 0)
-				{
-					for (auto l : spawnMapsLargeWalker)
-					{
-						while (true)
-						{
-							auto pos = std::find(l.second.begin(), l.second.end(), block);
-							if (pos == l.second.end())
-								break;
-							l.second.erase(pos);
-						}
-					}
-					for (auto l : spawnMapsSmallWalker)
-					{
-						while (true)
-						{
-							auto pos = std::find(l.second.begin(), l.second.end(), block);
-							if (pos == l.second.end())
-								break;
-							l.second.erase(pos);
-						}
-					}
-					for (auto l : spawnMapsAnyWalker)
-					{
-						while (true)
-						{
-							auto pos = std::find(l.second.begin(), l.second.end(), block);
-							if (pos == l.second.end())
-								break;
-							l.second.erase(pos);
-						}
-					}
-					for (auto l : spawnMapsLargeFlying)
-					{
-						while (true)
-						{
-							auto pos = std::find(l.second.begin(), l.second.end(), block);
-							if (pos == l.second.end())
-								break;
-							l.second.erase(pos);
-						}
-					}
-					for (auto l : spawnMapsSmallFlying)
-					{
-						while (true)
-						{
-							auto pos = std::find(l.second.begin(), l.second.end(), block);
-							if (pos == l.second.end())
-								break;
-							l.second.erase(pos);
-						}
-					}
-					for (auto l : spawnMapsAnyFlying)
-					{
-						while (true)
-						{
-							auto pos = std::find(l.second.begin(), l.second.end(), block);
-							if (pos == l.second.end())
-								break;
-							l.second.erase(pos);
-						}
-					}
-					for (auto l : spawnMapsLargeAny)
-					{
-						while (true)
-						{
-							auto pos = std::find(l.second.begin(), l.second.end(), block);
-							if (pos == l.second.end())
-								break;
-							l.second.erase(pos);
-						}
-					}
-					for (auto l : spawnMapsSmallAny)
-					{
-						while (true)
-						{
-							auto pos = std::find(l.second.begin(), l.second.end(), block);
-							if (pos == l.second.end())
-								break;
-							l.second.erase(pos);
-						}
-					}
-					for (auto l : spawnMapsAnyAny)
-					{
-						while (true)
-						{
-							auto pos = std::find(l.second.begin(), l.second.end(), block);
-							if (pos == l.second.end())
-								break;
-							l.second.erase(pos);
-						}
-					}
-					{
-						while (true)
-						{
-							auto pos = std::find(spawnMapOther.begin(), spawnMapOther.end(), block);
-							if (pos == spawnMapOther.end())
-								break;
-							spawnMapOther.erase(pos);
-						}
-					}
-				} // finished erasing filled block
-			}
-		}
-	}
-
-	// Turn units towards map centre
-	// Also make sure they're facing in a valid direction
-	// And stand in a valid pose
-	for (auto p : b->units)
-	{
-		auto u = p.second;
-		int x_diff = (int)(u->position.x - b->size.x / 2);
-		int y_diff = (int)(u->position.y - b->size.y / 2);
-		if (std::abs(x_diff) > std::abs(y_diff))
-		{
-			if (x_diff > 0)
-			{
-				u->facing.x = -1;
-			}
-			else
-			{
-				u->facing.x = 1;
-			}
-		}
-		else
-		{
-			if (y_diff > 0)
-			{
-				u->facing.y = -1;
-			}
-			else
-			{
-				u->facing.y = 1;
-			}
-		}
-		// Facing
-		if (!u->agent->isFacingAllowed(u->facing))
-		{
-			u->facing = setRandomizer(state.rng, *u->agent->getAllowedFacings());
-		}
-		// Stance
-		if (u->agent->isBodyStateAllowed(BodyState::Standing))
-		{
-			u->setBodyState(state, BodyState::Standing);
-			u->setMovementMode(MovementMode::Walking);
-		}
-		else if (u->agent->isBodyStateAllowed(BodyState::Flying))
-		{
-			u->setBodyState(state, BodyState::Flying);
-			u->setMovementMode(MovementMode::Walking);
-		}
-		else if (u->agent->isBodyStateAllowed(BodyState::Kneeling))
-		{
-			u->setBodyState(state, BodyState::Kneeling);
-			u->setMovementMode(MovementMode::Prone);
-		}
-		else if (u->agent->isBodyStateAllowed(BodyState::Prone))
-		{
-			u->setBodyState(state, BodyState::Prone);
-			u->setMovementMode(MovementMode::Prone);
-		}
-		else
-		{
-			LogError("Unit %s cannot Stand, Fly, Kneel or go Prone!", u->agent->type.id);
-		}
-		// Miscellaneous
-		u->beginTurn(state);
-		u->resetGoal();
-	}
-	
 	state.current_battle->initBattle(state, true);
 
 	// Find first player unit
 	sp<BattleUnit> firstPlayerUnit = nullptr;
-	for (auto f : state.current_battle->forces[state.getPlayer()].squads)
+	for (auto &f : state.current_battle->forces[state.getPlayer()].squads)
 	{
 		if (f.getNumUnits() > 0)
 		{
@@ -1916,16 +1922,16 @@ void Battle::finishBattle(GameState &state)
 	}
 
 	state.current_battle->unloadResources(state);
-	
+
 	// Remove active battle scanners
-	for (auto u : state.current_battle->units)
+	for (auto &u : state.current_battle->units)
 	{
-		for (auto e : u.second->agent->equipment)
+		for (auto &e : u.second->agent->equipment)
 		{
 			e->battleScanner.clear();
 		}
 	}
-	
+
 	//  - Identify how battle ended(if enemies present then Failure, otherwise Success)
 	//	- (Failure) Determine surviving player agents(kill all player agents that are too far from
 	// exits)

@@ -289,7 +289,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	}
 
 	// Add initial equipment
-	for (auto t : initialEquipment)
+	for (auto &t : initialEquipment)
 	{
 		if (!t)
 			continue;
@@ -317,13 +317,13 @@ bool Agent::isBodyStateAllowed(BodyState bodyState) const
 	    AEquipmentSlotType::ArmorRightHand};
 
 	if (type->bodyType->allowed_body_states.find(bodyState) !=
-		type->bodyType->allowed_body_states.end())
+	    type->bodyType->allowed_body_states.end())
 	{
 		return true;
 	}
 	if (bodyState == BodyState::Flying)
 	{
-		for (auto t : armorslots)
+		for (auto &t : armorslots)
 		{
 			auto e = getFirstItemInSlot(t);
 			if (e && e->type->provides_flight)
@@ -718,9 +718,9 @@ sp<AEquipment> Agent::getFirstItemInSlot(AEquipmentSlotType type, bool lazy) con
 		if (type == AEquipmentSlotType::LeftHand)
 			return leftHandItem;
 	}
-	for (auto e : equipment)
+	for (auto &e : equipment)
 	{
-		for (auto s : this->type->equipment_layout->slots)
+		for (auto &s : this->type->equipment_layout->slots)
 		{
 			if (s.bounds.p0 == e->equippedPosition && s.type == type)
 			{
@@ -733,7 +733,7 @@ sp<AEquipment> Agent::getFirstItemInSlot(AEquipmentSlotType type, bool lazy) con
 
 sp<AEquipment> Agent::getFirstItemByType(StateRef<AEquipmentType> type) const
 {
-	for (auto e : equipment)
+	for (auto &e : equipment)
 	{
 		if (e->type == type)
 		{
@@ -745,7 +745,7 @@ sp<AEquipment> Agent::getFirstItemByType(StateRef<AEquipmentType> type) const
 
 sp<AEquipment> Agent::getFirstItemByType(AEquipmentType::Type type) const
 {
-	for (auto e : equipment)
+	for (auto &e : equipment)
 	{
 		if (e->type->type == type)
 		{
@@ -757,7 +757,7 @@ sp<AEquipment> Agent::getFirstItemByType(AEquipmentType::Type type) const
 
 sp<AEquipment> Agent::getFirstShield() const
 {
-	for (auto e : equipment)
+	for (auto &e : equipment)
 	{
 		if (e->type->type == AEquipmentType::Type::DisruptorShield)
 		{
