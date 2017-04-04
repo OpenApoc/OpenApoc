@@ -74,7 +74,7 @@ sp<Projectile> VEquipment::fire(Vec3<float> targetPosition, StateRef<Vehicle> ta
 	return mksp<Projectile>(type->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
 	                        owner, targetVehicle, vehicleMuzzle, velocity, type->turn_rate,
 	                        static_cast<int>(this->getRange() / type->speed * TICKS_MULTIPLIER),
-	                        type->damage, /*delay*/0, type->tail_size, type->projectile_sprites,
+	                        type->damage, /*delay*/ 0, type->tail_size, type->projectile_sprites,
 	                        type->impact_sfx, type->explosion_graphic);
 }
 

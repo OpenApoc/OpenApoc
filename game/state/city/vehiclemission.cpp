@@ -69,7 +69,7 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 		//{
 		//}
 
-		for (auto obj : to->ownedObjects)
+		for (auto &obj : to->ownedObjects)
 		{
 			if (obj->getType() == TileObject::Type::Vehicle)
 				return false;
@@ -160,7 +160,7 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 		{
 			for (int x = 0; x < xMax; x++)
 			{
-				for (auto obj : map.getTile(x + toPos.x, y + toPos.y, toPos.z)->ownedObjects)
+				for (auto &obj : map.getTile(x + toPos.x, y + toPos.y, toPos.z)->ownedObjects)
 				{
 					if (obj->getType() == TileObject::Type::Scenery)
 					{
@@ -197,7 +197,7 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 					{
 						auto tile = map.getTile(x, y, z);
 						bool hasScenery = false;
-						for (auto obj : tile->ownedObjects)
+						for (auto &obj : tile->ownedObjects)
 						{
 							if (obj->getType() == TileObject::Type::Scenery)
 							{
@@ -291,7 +291,7 @@ VehicleMission *VehicleMission::gotoPortal(GameState &state, Vehicle &v)
 	if (vTile)
 	{
 		float closestPortalRange = std::numeric_limits<float>::max();
-		for (auto p : v.city->portals)
+		for (auto &p : v.city->portals)
 		{
 			float distance = vTile->getDistanceTo(p->tileObject);
 			if (distance < closestPortalRange)
@@ -586,7 +586,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 				return;
 			}
 			auto &map = *city->map;
-			for (auto padLocation : b->landingPadLocations)
+			for (auto &padLocation : b->landingPadLocations)
 			{
 				auto padTile = map.getTile(padLocation);
 				auto abovePadLocation = padLocation;
@@ -605,7 +605,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 				                  !tileHelper.canEnterTile(padTile, tileAbovePad));
 				if (!padIsBusy)
 				{
-					for (auto obj : belowPadTile->ownedObjects)
+					for (auto &obj : belowPadTile->ownedObjects)
 					{
 						if (obj->getType() == TileObject::Type::Vehicle)
 						{
@@ -648,7 +648,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 			auto vTile = v.tileObject;
 			if (vTile && finished)
 			{
-				for (auto city : state.cities)
+				for (auto &city : state.cities)
 				{
 					if (city.second != v.city.getSp())
 					{
@@ -989,10 +989,11 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			/* Am I already above a landing pad? If so land */
 			auto position = vehicleTile->getOwningTile()->position;
 			LogInfo("Vehicle mission %s: at position %s", name, position);
-			for (auto padLocation : b->landingPadLocations)
+			for (auto &padLocation : b->landingPadLocations)
 			{
-				padLocation.z += 1;
-				if (padLocation == position)
+				auto abovePadLocation = padLocation;
+				abovePadLocation.z += 1;
+				if (abovePadLocation == position)
 				{
 					LogInfo("Mission %s: Landing on pad %s", name, padLocation);
 					auto *landMission = VehicleMission::land(v, b);
@@ -1008,22 +1009,23 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			Vec3<int> shortestPathPad = {0, 0, 0};
 			float shortestPathCost = std::numeric_limits<float>::max();
 
-			for (auto dest : b->landingPadLocations)
+			for (auto &dest : b->landingPadLocations)
 			{
 				// Simply find the nearest landing pad to the current location and route to that
 				// Don't pay attention to stuff that blocks us, as things will likely move anyway...
 
 				// We actually want the tile above the pad itself
-				dest.z = dest.z + 1;
-				if (position == dest)
+				auto aboveDest = dest;
+				aboveDest.z += 1;
+				if (position == aboveDest)
 					continue;
 				Vec3<float> currentPosition = position;
-				Vec3<float> landingPadPosition = dest;
+				Vec3<float> landingPadPosition = aboveDest;
 
 				float distance = glm::length(currentPosition - landingPadPosition);
 
 				if (distance < shortestPathCost)
-					shortestPathPad = dest;
+					shortestPathPad = aboveDest;
 			}
 
 			LogInfo("Vehicle mission %s: Pathing to pad at %s", name, shortestPathPad);
@@ -1173,7 +1175,7 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 			while (true)
 			{
 				bool containsScenery = false;
-				for (auto obj : to->ownedObjects)
+				for (auto &obj : to->ownedObjects)
 				{
 					if (obj->getType() == TileObject::Type::Scenery)
 					{
@@ -1212,7 +1214,7 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 			// Check if target tile has no vehicle termporarily blocking it
 			// If it does, find a random location around it that is not blocked
 			bool containsVehicle = false;
-			for (auto obj : to->ownedObjects)
+			for (auto &obj : to->ownedObjects)
 			{
 				if (obj->getType() == TileObject::Type::Vehicle)
 				{

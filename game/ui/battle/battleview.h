@@ -14,6 +14,8 @@ class GraphicButton;
 class Control;
 class AEquipment;
 class AEquipmentType;
+class Graphic;
+class BattleTurnBasedConfirmBox;
 
 enum class BattleUpdateSpeed
 {
@@ -73,6 +75,19 @@ class AgentPsiInfo
 	bool operator!=(const AgentPsiInfo &other) const;
 };
 
+class MotionScannerInfo
+{
+  public:
+	// 0 = up, then clockwise
+	int direction = 0;
+	UString id = "";
+	uint64_t version = 0;
+	Vec2<int> position;
+
+	bool operator==(const MotionScannerInfo &other) const;
+	bool operator!=(const MotionScannerInfo &other) const;
+};
+
 class BattleView : public BattleTileView
 {
   private:
@@ -82,17 +97,23 @@ class BattleView : public BattleTileView
 	};
 	const Colour ammoColour = {158, 24, 12};
 
-	sp<Form> activeTab, mainTab, psiTab, primingTab, baseForm;
+	sp<Form> activeTab, mainTab, psiTab, primingTab, notMyTurnTab, baseForm;
+	sp<BattleTurnBasedConfirmBox> executePlanPopup;
 	std::vector<sp<Form>> uiTabsRT;
 	std::vector<sp<Form>> uiTabsTB;
 	BattleUpdateSpeed updateSpeed;
 	BattleUpdateSpeed lastSpeed;
+
+	// Units selected before control was taken away
+	std::list<StateRef<BattleUnit>> lastSelectedUnits;
 
 	std::list<sp<Form>> itemForms;
 	std::map<bool, sp<Form>> motionScannerForms;
 	std::map<bool, sp<Form>> medikitForms;
 	// right/left, bodypart, healing or wounded ( false = wounded, true = healing)
 	std::map<bool, std::map<BodyPart, std::map<bool, sp<Control>>>> medikitBodyParts;
+	std::map<bool, sp<Graphic>> motionScannerData;
+	std::map<bool, sp<Graphic>> motionScannerUnit;
 
 	sp<GameState> state;
 
@@ -101,6 +122,7 @@ class BattleView : public BattleTileView
 	AgentEquipmentInfo leftHandInfo;
 	AgentEquipmentInfo rightHandInfo;
 	AgentPsiInfo psiInfo;
+	MotionScannerInfo motionInfo;
 
 	bool followAgent = false;
 
@@ -108,6 +130,10 @@ class BattleView : public BattleTileView
 	int colorCurrent = 0;
 	sp<Palette> palette;
 	std::vector<sp<Palette>> modPalette;
+
+	bool endTurnRequested = false;
+	sp<BattleUnit> unitPendingConfirmation;
+	std::set<sp<BattleUnit>> unitsSkipped;
 
 	BattleSelectionState selectionState;
 	bool modifierLShift = false;
@@ -124,14 +150,25 @@ class BattleView : public BattleTileView
 	void updateSelectedUnits();
 	void updateLayerButtons();
 	void updateSoldierButtons();
+	void updateTBButtons();
+
+	void refreshDelayText();
+	void refreshRangeText();
 
 	AgentEquipmentInfo createItemOverlayInfo(bool rightHand);
 	AgentPsiInfo createPsiInfo();
+	MotionScannerInfo createMotionInfo();
+	MotionScannerInfo createMotionInfo(BattleScanner &scanner);
 	void updateItemInfo(bool right);
 	void updatePsiInfo();
+	void updateMotionInfo(bool right, BattleScanner &scanner);
+	void updateMotionInfo(bool right, Vec2<int> position);
 	sp<RGBImage> drawPsiBar(int cur, int max);
+	sp<RGBImage> drawMotionScanner(BattleScanner &scanner);
+	sp<RGBImage> drawMotionScanner(Vec2<int> position);
 	sp<Image> selectedItemOverlay;
 	sp<Image> selectedPsiOverlay;
+	std::vector<sp<Image>> motionScannerDirectionIcons;
 
 	sp<Image> pauseIcon;
 	int pauseIconTimer = 0;
@@ -153,7 +190,10 @@ class BattleView : public BattleTileView
 	void orderSelect(StateRef<BattleUnit> u, bool inverse = false, bool additive = false);
 	void orderFire(Vec3<int> target, WeaponStatus status = WeaponStatus::FiringBothHands,
 	               bool modifier = false);
-	void orderFire(StateRef<BattleUnit> u, WeaponStatus status = WeaponStatus::FiringBothHands);
+	void orderFire(StateRef<BattleUnit> u, WeaponStatus status = WeaponStatus::FiringBothHands,
+	               bool forced = false);
+	void orderFire(StateRef<BattleUnit> shooter, Vec3<int> target,
+	               WeaponStatus status = WeaponStatus::FiringBothHands);
 	void orderFocus(StateRef<BattleUnit> u);
 	void orderHeal(BodyPart part);
 
@@ -166,6 +206,7 @@ class BattleView : public BattleTileView
 	void render() override;
 	void finish() override;
 	void eventOccurred(Event *e) override;
+	void handleMouseDown(Event *e);
 
 	void setUpdateSpeed(BattleUpdateSpeed updateSpeed);
 };

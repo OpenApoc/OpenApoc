@@ -22,7 +22,23 @@ class BattleMapSector;
 class BattleMap : public StateObject
 {
 	STATE_OBJECT(BattleMap)
+
   public:
+	// Different ways to alter map size for generation
+	enum class GenerationSize
+	{
+		// Subtract 1 from larger map side
+		Small = 0,
+		// Standart size
+		Normal = 1,
+		// Add 1 to random map side
+		Large = 2,
+		// Add 2 to random map side
+		VeryLarge = 3,
+		// Add 2 to smaller map side
+		Maximum = 4
+	};
+
 	BattleMap();
 	~BattleMap() override = default;
 
@@ -60,18 +76,18 @@ class BattleMap : public StateObject
 	                               StateRef<Vehicle> player_craft,
 	                               StateRef<Building> target_building);
 
-	sp<Battle> createBattle(GameState &state, StateRef<Organisation> target_organisation,
+	sp<Battle> createBattle(GameState &state, StateRef<Organisation> propertyOwner,
+	                        StateRef<Organisation> target_organisation,
 	                        std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
 	                        Battle::MissionType mission_type, UString mission_location_id);
 
 	bool generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int> &size, GameState &state,
-	                 StateRef<Organisation> target_organisation, std::list<StateRef<Agent>> &agents,
-	                 StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
-	                 UString mission_location_id);
+	                 GenerationSize genSize);
 
 	sp<Battle> fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>> &doors,
 	                   bool &spawnCivilians, std::vector<sp<BattleMapSector>> sec_map,
-	                   Vec3<int> size, GameState &state, StateRef<Organisation> target_organisation,
+	                   Vec3<int> size, GameState &state, StateRef<Organisation> propertyOwner,
+	                   StateRef<Organisation> target_organisation,
 	                   std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
 	                   Battle::MissionType mission_type, UString mission_location_id);
 

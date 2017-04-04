@@ -11,26 +11,25 @@
 namespace OpenApoc
 {
 // Combines two animation entries, used to create an entry from two glued together
-sp<BattleUnitAnimationPack::AnimationEntry>
-InitialGameStateExtractor::combineAnimationEntries(sp<BattleUnitAnimationPack::AnimationEntry> e1,
-sp<BattleUnitAnimationPack::AnimationEntry> e2) const
+sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::combineAnimationEntries(
+    sp<BattleUnitAnimationPack::AnimationEntry> e1,
+    sp<BattleUnitAnimationPack::AnimationEntry> e2) const
 {
-    auto e = mksp<BattleUnitAnimationPack::AnimationEntry>();
+	auto e = mksp<BattleUnitAnimationPack::AnimationEntry>();
 
-    if (e1->is_overlay != e2->is_overlay)
-        LogError("Incompatible entries: one is overlay, other isn't!");
+	if (e1->is_overlay != e2->is_overlay)
+		LogError("Incompatible entries: one is overlay, other isn't!");
 
-    e->is_overlay = e1->is_overlay;
-    e->frame_count = e1->frame_count + e2->frame_count;
+	e->is_overlay = e1->is_overlay;
+	e->frame_count = e1->frame_count + e2->frame_count;
 
-    for (auto &f : e1->frames)
-        e->frames.push_back(f);
-    for (auto &f : e2->frames)
-        e->frames.push_back(f);
+	for (auto &f : e1->frames)
+		e->frames.push_back(f);
+	for (auto &f : e2->frames)
+		e->frames.push_back(f);
 
-    return e;
+	return e;
 }
-
 
 sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimationEntry(
     const std::vector<AnimationDataAD> &dataAD, const std::vector<AnimationDataUA> &dataUA,

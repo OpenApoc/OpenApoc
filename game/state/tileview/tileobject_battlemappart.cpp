@@ -143,7 +143,7 @@ float TileObjectBattleMapPart::getZOrder() const
 void TileObjectBattleMapPart::addToDrawnTiles(Tile *tile)
 {
 	Vec3<int> maxCoords = {-1, -1, -1};
-	for (auto intersectingTile : intersectingTiles)
+	for (auto &intersectingTile : intersectingTiles)
 	{
 		int x = intersectingTile->position.x;
 		int y = intersectingTile->position.y;

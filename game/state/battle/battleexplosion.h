@@ -12,6 +12,7 @@ class TileMap;
 class Battle;
 class BattleUnit;
 class DamageType;
+class Organisation;
 class BattleUnit;
 
 class BattleExplosion : public std::enable_shared_from_this<BattleExplosion>
@@ -38,6 +39,7 @@ class BattleExplosion : public std::enable_shared_from_this<BattleExplosion>
 	StateRef<DamageType> damageType;
 	int depletionRate = 0;
 	StateRef<BattleUnit> ownerUnit;
+	StateRef<Organisation> ownerOrganisation;
 
 	std::set<StateRef<BattleUnit>> affectedUnits;
 
@@ -50,7 +52,7 @@ class BattleExplosion : public std::enable_shared_from_this<BattleExplosion>
 	void update(GameState &state, unsigned int ticks);
 
 	BattleExplosion(Vec3<int> position, StateRef<DamageType> damageType, int power,
-	                int depletionRate, bool damageInTheEnd,
+	                int depletionRate, bool damageInTheEnd, StateRef<Organisation> ownerOrg,
 	                StateRef<BattleUnit> ownerUnit = nullptr);
 	BattleExplosion() = default;
 	~BattleExplosion() = default;

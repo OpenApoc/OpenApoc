@@ -24,7 +24,16 @@ set (GAMESTATE_SOURCE_FILES
 	ufopaedia.cpp
 	base/base.cpp
 	base/facility.cpp
-	battle/ai/ai.cpp
+	battle/ai/aidecision.cpp
+	battle/ai/tacticalai.cpp
+	battle/ai/tacticalaivanilla.cpp
+	battle/ai/unitai.cpp
+	battle/ai/unitaibehavior.cpp
+	battle/ai/unitaidefault.cpp
+	battle/ai/unitaihardcore.cpp
+	battle/ai/unitaihelper.cpp
+	battle/ai/unitailowmorale.cpp
+	battle/ai/unitaivanilla.cpp
 	battle/battle.cpp
 	battle/battledoor.cpp
 	battle/battleexplosion.cpp
@@ -35,6 +44,7 @@ set (GAMESTATE_SOURCE_FILES
 	battle/battlemappart.cpp
 	battle/battlemappart_type.cpp
 	battle/battlemapsector.cpp
+	battle/battlescanner.cpp
 	battle/battleunit.cpp
 	battle/battleunitanimationpack.cpp
 	battle/battleunitimagepack.cpp
@@ -90,7 +100,17 @@ set (GAMESTATE_HEADER_FILES
 	ufopaedia.h
 	base/base.h
 	base/facility.h
-	battle/ai/ai.h
+	battle/ai/aidecision.h
+	battle/ai/aitype.h
+	battle/ai/tacticalai.h
+	battle/ai/tacticalaivanilla.h
+	battle/ai/unitai.h
+	battle/ai/unitaibehavior.h
+	battle/ai/unitaidefault.h
+	battle/ai/unitaihardcore.h
+	battle/ai/unitaihelper.h
+	battle/ai/unitailowmorale.h
+	battle/ai/unitaivanilla.h
 	battle/battle.h
 	battle/battlecommonimagelist.h
 	battle/battlecommonsamplelist.h
@@ -104,6 +124,7 @@ set (GAMESTATE_HEADER_FILES
 	battle/battlemappart_type.h
 	battle/battlemapsector.h
 	battle/battlemaptileset.h
+	battle/battlescanner.h
 	battle/battleunit.h
 	battle/battleunitanimationpack.h
 	battle/battleunitimagepack.h

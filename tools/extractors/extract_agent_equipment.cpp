@@ -591,6 +591,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 						e->damage_modifier = {&state, data_t.getDModId(16)};
 						e->max_ammo = 100;
 						e->recharge = 1;
+						e->shield_graphic = {&state, "DOODAD_27_SHIELD"};
 						break;
 					case AGENT_GENERAL_TYPE_TELEPORTER:
 						e->type = AEquipmentType::Type::Teleporter;

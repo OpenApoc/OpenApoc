@@ -222,6 +222,20 @@ void BattleUnitAnimationPack::drawShadow(
 	r.draw(shadow->images[b.index], screenPosition - b.offset - shadow->image_offset);
 }
 
+void draw(Renderer &r, sp<Image> sprite, Vec2<float> screenPosition, bool transparent)
+{
+	static const Colour COLOUR_TRANSPARENT = {255, 255, 255, 95};
+
+	if (transparent)
+	{
+		r.drawTinted(sprite, screenPosition, COLOUR_TRANSPARENT);
+	}
+	else
+	{
+		r.draw(sprite, screenPosition);
+	}
+}
+
 void BattleUnitAnimationPack::drawUnit(
     Renderer &r, Vec2<float> screenPosition, StateRef<BattleUnitImagePack> body,
     StateRef<BattleUnitImagePack> legs, StateRef<BattleUnitImagePack> helmet,
@@ -229,7 +243,7 @@ void BattleUnitAnimationPack::drawUnit(
     StateRef<AEquipmentType> heldItem, Vec2<int> facing, BodyState currentBody,
     BodyState targetBody, HandState currentHands, HandState targetHands, MovementState movement,
     int body_animation_delay, int hands_animation_delay, int distance_travelled, int firingAngle,
-    bool visible)
+    bool visible, bool stealth)
 {
 	if (!visible)
 	{
@@ -339,7 +353,7 @@ void BattleUnitAnimationPack::drawUnit(
 	AnimationEntry::Frame &f = e->frames[frame];
 
 	// Draw parts in order
-	for (auto ie : f.unit_image_draw_order)
+	for (auto &ie : f.unit_image_draw_order)
 	{
 		// Shadows are drawn elsewhere
 		if (ie == AnimationEntry::Frame::UnitImagePart::Shadow)
@@ -365,35 +379,38 @@ void BattleUnitAnimationPack::drawUnit(
 			case AnimationEntry::Frame::UnitImagePart::Body:
 				if (!body)
 					continue;
-				r.draw(body->images[b->index], screenPosition - b->offset - body->image_offset);
+				draw(r, body->images[b->index], screenPosition - b->offset - body->image_offset,
+				     stealth);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::Legs:
 				if (!legs)
 					continue;
-				r.draw(legs->images[b->index], screenPosition - b->offset - legs->image_offset);
+				draw(r, legs->images[b->index], screenPosition - b->offset - legs->image_offset,
+				     stealth);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::Helmet:
 				if (!helmet)
 					continue;
-				r.draw(helmet->images[b->index], screenPosition - b->offset - helmet->image_offset);
+				draw(r, helmet->images[b->index], screenPosition - b->offset - helmet->image_offset,
+				     stealth);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::LeftArm:
 				if (!leftHand)
 					continue;
-				r.draw(leftHand->images[b->index],
-				       screenPosition - b->offset - leftHand->image_offset);
+				draw(r, leftHand->images[b->index],
+				     screenPosition - b->offset - leftHand->image_offset, stealth);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::RightArm:
 				if (!rightHand)
 					continue;
-				r.draw(rightHand->images[b->index],
-				       screenPosition - b->offset - rightHand->image_offset);
+				draw(r, rightHand->images[b->index],
+				     screenPosition - b->offset - rightHand->image_offset, stealth);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::Weapon:
 				if (!heldItem)
 					continue;
-				r.draw(heldItem->held_image_pack->images[b->index],
-				       screenPosition - b->offset - heldItem->held_image_pack->image_offset);
+				draw(r, heldItem->held_image_pack->images[b->index],
+				     screenPosition - b->offset - heldItem->held_image_pack->image_offset, stealth);
 				break;
 			// Travis complains I'm not handling "Shadow"
 			case AnimationEntry::Frame::UnitImagePart::Shadow:

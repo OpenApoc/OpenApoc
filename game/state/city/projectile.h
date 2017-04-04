@@ -55,9 +55,10 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	           sp<Sample> impactSfx, StateRef<DoodadType> doodadType);
 	Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target,
 	           Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity, int turnRate,
-	           unsigned int lifetime, int damage, int delay, int depletionRate, unsigned int tail_length,
-	           std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
-	           StateRef<DoodadType> doodadType, StateRef<DamageType> damageType);
+	           unsigned int lifetime, int damage, int delay, int depletionRate,
+	           unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
+	           sp<Sample> impactSfx, StateRef<DoodadType> doodadType,
+	           StateRef<DamageType> damageType);
 	Projectile();
 	virtual void update(GameState &state, unsigned int ticks);
 

@@ -1,7 +1,7 @@
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "game/state/agent.h"
-#include "game/state/battle/ai/ai.h"
+#include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battleunitimagepack.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
@@ -1177,7 +1177,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 		auto a = mksp<AgentBodyType>();
 		a->allowed_movement_states.insert(MovementState::None);
 		a->allowed_body_states.insert(BodyState::Dead);
-		
+
 		UString id = format("%s%s", AgentBodyType::getPrefix(), canon_string(name));
 
 		// Allowed facings (nothing means everything allowed)
@@ -1220,7 +1220,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 				a->allowed_body_states.insert(BodyState::Downed);
 				voxelInfo[BodyState::Standing] = {height, idx};
 				voxelInfo[BodyState::Downed] = {8, idx};
-				voxelInfo[BodyState::Dead] = { 1, idx };
+				voxelInfo[BodyState::Dead] = {1, idx};
 				break;
 
 			// Stationary aliens
@@ -1262,11 +1262,11 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 				a->allowed_body_states.insert(BodyState::Throwing);
 				a->allowed_body_states.insert(BodyState::Jumping);
 				a->allowed_body_states.insert(BodyState::Downed);
-				voxelInfo[BodyState::Standing] = {height, idx };
+				voxelInfo[BodyState::Standing] = {height, idx};
 				voxelInfo[BodyState::Jumping] = {height, idx};
-				voxelInfo[BodyState::Throwing] = {8, idx };
+				voxelInfo[BodyState::Throwing] = {8, idx};
 				voxelInfo[BodyState::Downed] = {8, idx};
-				voxelInfo[BodyState::Dead] = { 1, idx };
+				voxelInfo[BodyState::Dead] = {1, idx};
 				break;
 			case UNIT_TYPE_HYPERWORM:
 			case UNIT_TYPE_SPITTER:
@@ -1300,7 +1300,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 				a->allowed_body_states.insert(BodyState::Downed);
 				voxelInfo[BodyState::Standing] = {height, idx};
 				voxelInfo[BodyState::Downed] = {8, idx};
-				voxelInfo[BodyState::Dead] = { 1, idx };
+				voxelInfo[BodyState::Dead] = {1, idx};
 				break;
 
 			// Special case: Multiworm, can only crawl
@@ -1315,7 +1315,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 				voxelInfo[BodyState::Kneeling] = {height, idx};
 				voxelInfo[BodyState::Prone] = {height, idx};
 				voxelInfo[BodyState::Downed] = {8, idx};
-				voxelInfo[BodyState::Dead] = { 1, idx };
+				voxelInfo[BodyState::Dead] = {1, idx};
 				break;
 
 			// Special case: Megaspawn, large walker
@@ -1329,7 +1329,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 				a->allowed_body_states.insert(BodyState::Downed);
 				voxelInfo[BodyState::Standing] = {height, idx};
 				voxelInfo[BodyState::Downed] = {16, idx};
-				voxelInfo[BodyState::Dead] = { 1, idx };
+				voxelInfo[BodyState::Dead] = {1, idx};
 				break;
 
 			// Special case: Psimorph, non-humanoid that can only fly
@@ -1342,23 +1342,21 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 				a->allowed_body_states.insert(BodyState::Downed);
 				voxelInfo[BodyState::Flying] = {height, idx};
 				voxelInfo[BodyState::Downed] = {16, idx};
-				voxelInfo[BodyState::Dead] = { 1, idx };
+				voxelInfo[BodyState::Dead] = {1, idx};
 				break;
 
 			// Skeletoid and Anthropod are both humanoids
 			case UNIT_TYPE_SKELETOID:
+				// Skeletoid only differs from other humanods by having built-in flight capabilities
+				a->allowed_body_states.insert(BodyState::Flying);
 			// Other humans
 			case UNIT_TYPE_ANTHROPOD:
 				height = 32;
 				idx = 5;
-				// Skeletoid only differs from other humanods by having built-in flight capabilities
-				if (i == UNIT_TYPE_SKELETOID)
-				{
-					a->allowed_body_states.insert(BodyState::Flying);
-				}
 				a->allowed_movement_states.insert(MovementState::Normal);
 				a->allowed_movement_states.insert(MovementState::Running);
 				a->allowed_movement_states.insert(MovementState::Strafing);
+				a->allowed_movement_states.insert(MovementState::Reverse);
 				a->allowed_fire_movement_states.insert(MovementState::None);
 				a->allowed_fire_movement_states.insert(MovementState::Normal);
 				a->allowed_body_states.insert(BodyState::Standing);
@@ -1373,7 +1371,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 				voxelInfo[BodyState::Jumping] = {std::max(8, height - 10), idx};
 				voxelInfo[BodyState::Throwing] = {height, idx};
 				voxelInfo[BodyState::Downed] = {8, idx};
-				voxelInfo[BodyState::Dead] = { 1, idx };
+				voxelInfo[BodyState::Dead] = {1, idx};
 				// Humanoids can possibly attain flight by use of armor, therefore include this here
 				voxelInfo[BodyState::Flying] = {height, idx};
 				break;
@@ -1414,7 +1412,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 		//	 when facing E or W - 10 (in each tile)
 		//	 when facing NW or SE - 102 (in each tile)
 
-		for (auto entry : voxelInfo)
+		for (auto &entry : voxelInfo)
 		{
 			a->height[entry.first] =
 			    entry.first == BodyState::Downed ? entry.second.x : entry.second.x + 4;
@@ -1438,7 +1436,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 						};
 
 						// For each facing
-						for (auto pair : facingToLoftemps)
+						for (auto &pair : facingToLoftemps)
 						{
 							// Large units are 2x2x2
 							a->size[entry.first][pair.first] = {2, 2, 2};
@@ -1543,7 +1541,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 						};
 
 						// For each facing
-						for (auto pair : facingToLoftemps)
+						for (auto &pair : facingToLoftemps)
 						{
 							// Fill unit size in this body state
 							a->size[entry.first][pair.first] = facingToSize.at(pair.first);

@@ -6,6 +6,7 @@
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battleitem.h"
+#include "game/state/battle/battlescanner.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/city/projectile.h"
 #include "game/state/gamestate.h"
@@ -27,8 +28,97 @@ AEquipment::AEquipment()
 {
 }
 
+/*
+// Alexey Andronov (Istrebitel):
+// Just in case we need to check, here's old formula I have hand-calculated
+// based on values tested from the game
+
 int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
                             WeaponAimingMode fireMode, bool thrown)
+{
+    float accuracy = 0.0f;
+    auto agent = ownerAgent ? ownerAgent : (ownerUnit ? ownerUnit->agent : nullptr);
+    if (agent)
+    {
+        accuracy = agent->modified_stats.accuracy;
+    }
+
+    if (thrown)
+    {
+        return (int)accuracy;
+        // Throwing accuracy is unaffected by movement, stance or mode of fire
+    }
+
+    StateRef<AEquipmentType> payload = getPayloadType();
+    if (!payload)
+    {
+        payload = *type->ammo_types.begin();
+    }
+
+    if (this->type->type != AEquipmentType::Type::Weapon)
+    {
+        LogError("getAccuracy (non-thrown) called on non-weapon");
+        return 0;
+    }
+
+    // Accuracy calculation algorithm
+
+    // Take agent and weapon's accuracy
+
+    auto agentAccuracy = accuracy;
+    auto payloadAccuracy =
+        type->type == AEquipmentType::Type::Weapon ? (float)payload->accuracy : 100.0f;
+
+    // Calculate dispersion, the inverse of accuracy, and scale values to 0-1 for simplicity
+
+    float agentDispersion = 1.0f - agentAccuracy / 100.0f;
+    float weaponDispersion = 1.0f - payloadAccuracy / 100.0f;
+
+
+    // Snap and Auto increase agent's dispersion by 2x and 4x respectively
+    agentDispersion *= (float)fireMode;
+
+    // Moving also increase it: Moving or flying by 1,35x running by 1,70x
+    agentDispersion *= movementState == MovementState::None && bodyState != BodyState::Flying
+        ? 1.00f
+        : (movementState == MovementState::Running ? 1.70f : 1.35f);
+
+    // Having both hands busy also increases it by another 1,5x
+    if (ownerAgent && (equippedSlotType == AEquipmentSlotType::LeftHand ||
+        equippedSlotType == AEquipmentSlotType::RightHand) &&
+        ownerAgent->getFirstItemInSlot(AEquipmentSlotType::LeftHand) &&
+        ownerAgent->getFirstItemInSlot(AEquipmentSlotType::RightHand))
+    {
+        agentDispersion *= 1.5f;
+    }
+
+    // Kneeling decreases agent's and weapon's dispersion, multiplying it by 0,8x
+    if (bodyState == BodyState::Kneeling)
+    {
+        agentDispersion *= 0.8f;
+        weaponDispersion *= 0.8f;
+    }
+
+    // Calculate total dispersion based on agent and weapon dispersion
+    // Let:
+    // * qrt(x) = qube root of x
+    // * aD = sqrt(agentDispersion / 5)
+    // * pD = qrt(weaponDispersion / 10)
+    //
+    // Then formula of total dispersion would be:
+    //   tD = qrt(ad^3 + pd^3)
+    // which can be further simplified to:
+    //   tD = qrt((agentDispersion / 5) ^ 3/2 + weaponDispersion / 10)
+    float totalDispersion =
+        powf(powf(agentDispersion / 5.0f, 3.0f / 2.0f) + weaponDispersion / 10.0f, 1.0f / 3.0f);
+
+    return std::max(0, (int)(100.0f - totalDispersion * 100.0f));
+}
+
+*/
+
+int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
+                            WeaponAimingMode fireMode, bool thrown, float cloakingDispersion)
 {
 	float accuracy = 0.0f;
 	auto agent = ownerAgent ? ownerAgent : (ownerUnit ? ownerUnit->agent : nullptr);
@@ -37,13 +127,19 @@ int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
 		accuracy = agent->modified_stats.accuracy;
 	}
 
+	if (thrown)
+	{
+		return (int)accuracy;
+		// Throwing accuracy is unaffected by movement, stance or mode of fire
+	}
+
 	StateRef<AEquipmentType> payload = getPayloadType();
 	if (!payload)
 	{
 		payload = *type->ammo_types.begin();
 	}
 
-	if (this->type->type != AEquipmentType::Type::Weapon && !thrown)
+	if (this->type->type != AEquipmentType::Type::Weapon)
 	{
 		LogError("getAccuracy (non-thrown) called on non-weapon");
 		return 0;
@@ -62,52 +158,112 @@ int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
 	float agentDispersion = 1.0f - agentAccuracy / 100.0f;
 	float weaponDispersion = 1.0f - payloadAccuracy / 100.0f;
 
-	if (thrown)
+	// Weapon dispersion is half as important
+	weaponDispersion *= 0.5f;
+
+	// Firing mode: Auto increases dispersion and Aimed decreases by factors of 2
+	agentDispersion *= 0.5f * (float)fireMode;
+
+	// Moving affects dispersion
+	switch (movementState)
 	{
-		return (int)agentAccuracy;
-		// Throwing accuracy is unaffected by movement, stance or mode of fire
-	}
-	else
-	{
-		// Snap and Auto increase agent's dispersion by 2x and 4x respectively
-		agentDispersion *= (float)fireMode;
-
-		// Moving also increase it: Moving or flying by 1,35x running by 1,70x
-		agentDispersion *= movementState == MovementState::None && bodyState != BodyState::Flying
-		                       ? 1.00f
-		                       : (movementState == MovementState::Running ? 1.70f : 1.35f);
-
-		// Having both hands busy also increases it by another 1,5x
-		if (ownerAgent && (equippedSlotType == AEquipmentSlotType::LeftHand ||
-		                   equippedSlotType == AEquipmentSlotType::RightHand) &&
-		    ownerAgent->getFirstItemInSlot(AEquipmentSlotType::LeftHand) &&
-		    ownerAgent->getFirstItemInSlot(AEquipmentSlotType::RightHand))
-		{
-			agentDispersion *= 1.5f;
-		}
-
-		// Kneeling decreases agent's and weapon's dispersion, multiplying it by 0,8x
-		if (bodyState == BodyState::Kneeling)
-		{
+		case MovementState::None:
 			agentDispersion *= 0.8f;
-			weaponDispersion *= 0.8f;
-		}
+			break;
+		case MovementState::Running:
+			agentDispersion *= 1.25f;
+			break;
+		default:
+			agentDispersion *= 0.95f;
+			break;
 	}
 
-	// Calculate total dispersion based on agent and weapon dispersion
-	// Let:
-	// * qrt(x) = qube root of x
-	// * aD = sqrt(agentDispersion / 5)
-	// * pD = qrt(weaponDispersion / 10)
-	//
-	// Then formula of total dispersion would be:
-	//   tD = qrt(ad^3 + pd^3)
-	// which can be further simplified to:
-	//   tD = qrt((agentDispersion / 5) ^ 3/2 + weaponDispersion / 10)
-	float totalDispersion =
-	    powf(powf(agentDispersion / 5.0f, 3.0f / 2.0f) + weaponDispersion / 10.0f, 1.0f / 3.0f);
+	// Body state affects dispersion
+	switch (bodyState)
+	{
+		case BodyState::Flying:
+			agentDispersion *= 1.15f;
+			break;
+		case BodyState::Kneeling:
+			agentDispersion *= 0.8f;
+			break;
+		case BodyState::Prone:
+			agentDispersion *= 0.6f;
+			break;
+		default:
+			// no change
+			break;
+	}
 
+	// Checks that apply only if weapon is in agent inventory
+	float healthDispersion = 0.0f;
+	float woundDispersion = 0.0f;
+	float berserkDispersion = 0.0f;
+	if (ownerAgent)
+	{
+		auto unit = ownerAgent->unit;
+
+		// Checks that apply only if weapon is in hand
+		if (equippedSlotType == AEquipmentSlotType::LeftHand ||
+		    equippedSlotType == AEquipmentSlotType::RightHand)
+		{
+			// Big guns have a penalty if other hand is occupied : 1.4x dispersion
+			if (type->equipscreen_size.x * type->equipscreen_size.y > 4 &&
+			    ownerAgent->getFirstItemInSlot(AEquipmentSlotType::LeftHand) &&
+			    ownerAgent->getFirstItemInSlot(AEquipmentSlotType::RightHand))
+			{
+				agentDispersion *= 1.4f;
+			}
+		}
+
+		// 1.5 dispersion for every fatal wound in the arm used to hold the weapon
+		// Assume right hand if not yet holding it in hands
+		if (ownerAgent->type->inventory)
+		{
+			woundDispersion = 1.5f * (float)(equippedSlotType == AEquipmentSlotType::LeftHand
+			                                     ? unit->fatalWounds[BodyPart::LeftArm]
+			                                     : unit->fatalWounds[BodyPart::RightArm]);
+		}
+		// Wound dispersion for aliens without inventory
+		else
+		{
+			int totalWounds = 0;
+			for (auto &entry : unit->fatalWounds)
+			{
+				totalWounds += entry.second;
+			}
+			woundDispersion = totalWounds;
+		}
+
+		// Health penalty
+		healthDispersion =
+		    (float)(ownerAgent->current_stats.health - ownerAgent->modified_stats.health) /
+		    (float)ownerAgent->modified_stats.health;
+
+		// Berserk penalty
+		berserkDispersion = unit->moraleState == MoraleState::Berserk ? 2.0f : 0.0f;
+	}
+
+	float totalDispersion =
+	    sqrtf(agentDispersion * agentDispersion + weaponDispersion * weaponDispersion +
+	          healthDispersion * healthDispersion + woundDispersion * woundDispersion +
+	          berserkDispersion * berserkDispersion + cloakingDispersion * cloakingDispersion);
 	return std::max(0, (int)(100.0f - totalDispersion * 100.0f));
+}
+
+int AEquipment::getWeight() const
+{
+	return type->weight + ((payloadType && ammo > 0) ? payloadType->weight : 0);
+}
+
+int AEquipment::getFireCost(WeaponAimingMode fireMode)
+{
+	return getPayloadType()->fire_delay / (int)fireMode;
+}
+
+int AEquipment::getFireCost(WeaponAimingMode fireMode, int maxTU)
+{
+	return getFireCost(fireMode) * maxTU / 100;
 }
 
 void AEquipment::stopFiring()
@@ -116,11 +272,19 @@ void AEquipment::stopFiring()
 	readyToFire = false;
 }
 
-void AEquipment::startFiring(WeaponAimingMode fireMode)
+void AEquipment::startFiring(WeaponAimingMode fireMode, bool instant)
 {
 	if (ammo == 0)
 		return;
-	weapon_fire_ticks_remaining = getPayloadType()->fire_delay * 4 / (int)fireMode;
+	if (instant)
+	{
+		weapon_fire_ticks_remaining = TICKS_PER_SECOND / 4;
+	}
+	else
+	{
+		weapon_fire_ticks_remaining =
+		    getPayloadType()->fire_delay * TICKS_MULTIPLIER / (int)fireMode;
+	}
 	readyToFire = false;
 	aimingMode = fireMode;
 }
@@ -190,7 +354,7 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 	}
 }
 
-void AEquipment::update(GameState &state, unsigned int ticks)
+void AEquipment::updateInner(GameState &state, unsigned int ticks)
 {
 	// Recharge update
 	auto payload = getPayloadType();
@@ -204,6 +368,24 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 			ammo = std::min(payload->max_ammo, ammo);
 		}
 	}
+
+	// Process primed explosives
+	if (primed && activated)
+	{
+		if (triggerDelay > ticks)
+		{
+			triggerDelay -= ticks;
+		}
+		else
+		{
+			triggerDelay = 0;
+		}
+	}
+}
+
+void AEquipment::update(GameState &state, unsigned int ticks)
+{
+	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
 
 	// Firing update
 	if (weapon_fire_ticks_remaining > 0)
@@ -241,7 +423,7 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 					}
 					else if (ownerAgent->unit->fire_aiming_mode != aimingMode)
 					{
-						startFiring(ownerAgent->unit->fire_aiming_mode);
+						startFiring(ownerAgent->unit->fire_aiming_mode, !realTime);
 					}
 					break;
 				case AEquipmentSlotType::RightHand:
@@ -252,7 +434,7 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 					}
 					else if (ownerAgent->unit->fire_aiming_mode != aimingMode)
 					{
-						startFiring(ownerAgent->unit->fire_aiming_mode);
+						startFiring(ownerAgent->unit->fire_aiming_mode, !realTime);
 					}
 					break;
 				// If weapon was moved to any other slot from hands, stop firing
@@ -269,6 +451,10 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 		if (!ownerAgent)
 		{
 			inUse = false;
+			if (battleScanner)
+			{
+				state.current_battle->removeScanner(state, *this);
+			}
 		}
 		// If in use - confirm we're still in the right place
 		else
@@ -280,91 +466,86 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 					break;
 				default:
 					inUse = false;
+					if (battleScanner)
+					{
+						state.current_battle->removeScanner(state, *this);
+					}
 					break;
 			}
 		}
 	}
 
-	// Process primed explosives
-	if (primed)
+	if (primed && !activated && !ownerAgent)
 	{
-		if (!activated && !ownerAgent)
-		{
-			activated = true;
-		}
+		activated = true;
+	}
 
-		if (activated)
-		{
-			if (triggerDelay > ticks)
-			{
-				triggerDelay -= ticks;
-			}
-			else
-			{
-				triggerDelay = 0;
-			}
+	if (realTime)
+	{
+		updateInner(state, ticks);
+	}
 
-			if (triggerDelay == 0)
+	if (primed && activated && triggerDelay == 0)
+	{
+		auto payload = getPayloadType();
+		switch (triggerType)
+		{
+			case TriggerType::None:
+				LogError("Primed activated item with no trigger?");
+				break;
+			case TriggerType::Contact:
 			{
-				switch (triggerType)
+				auto item = ownerItem.lock();
+				if (item)
 				{
-					case TriggerType::None:
-						LogError("Primed activated item with no trigger?");
-						break;
-					case TriggerType::Contact:
+					if (!item->falling)
 					{
-						auto item = ownerItem.lock();
-						if (item)
-						{
-							if (!item->falling)
-							{
-								item->die(state);
-							}
-						}
-						else
-						{
-							// Contact trigger in inventory? Blow up!
-							explode(state);
-						}
-						break;
-					}
-					case TriggerType::Proximity:
-					case TriggerType::Boomeroid:
-					{
-						auto item = ownerItem.lock();
-						if (item)
-						{
-							// Nothing, triggered by moving units
-						}
-						else
-						{
-							// Proxy trigger in inventory? Blow up!
-							if (payload->damage_type->effectType !=
-							    DamageType::EffectType::Brainsucker)
-							{
-								explode(state);
-							}
-						}
-						break;
-					}
-					case TriggerType::Timed:
-					{
-						auto item = ownerItem.lock();
-						if (item)
-						{
-							item->die(state);
-						}
-						else
-						{
-							explode(state);
-						}
-						break;
+						item->die(state);
 					}
 				}
+				else
+				{
+					// Contact trigger in inventory? Blow up!
+					explode(state);
+				}
+				break;
+			}
+			case TriggerType::Proximity:
+			case TriggerType::Boomeroid:
+			{
+				auto item = ownerItem.lock();
+				if (item)
+				{
+					// Nothing, triggered by moving units
+				}
+				else
+				{
+					// Proxy trigger in inventory? Blow up!
+					if (payload->damage_type->effectType != DamageType::EffectType::Brainsucker)
+					{
+						explode(state);
+					}
+				}
+				break;
+			}
+			case TriggerType::Timed:
+			{
+				auto item = ownerItem.lock();
+				if (item)
+				{
+					item->die(state);
+				}
+				else
+				{
+					explode(state);
+				}
+				break;
 			}
 		}
 	}
 }
+
+void AEquipment::updateTB(GameState &state) { updateInner(state, TICKS_PER_TURN); }
 
 void AEquipment::prime(bool onImpact, int triggerDelay, float triggerRange)
 {
@@ -409,9 +590,11 @@ void AEquipment::explode(GameState &state)
 	switch (type->type)
 	{
 		case AEquipmentType::Type::Grenade:
-			state.current_battle->addExplosion(state, position, type->explosion_graphic,
-			                                   type->damage_type, type->damage,
-			                                   type->explosion_depletion_rate, ownerUnit);
+			state.current_battle->addExplosion(
+			    state, position, type->explosion_graphic, type->damage_type, type->damage,
+			    type->explosion_depletion_rate,
+			    ownerUnit ? ownerUnit->owner : (ownerAgent ? ownerAgent->owner : ownerOrganisation),
+			    ownerUnit);
 			break;
 		case AEquipmentType::Type::Weapon:
 		case AEquipmentType::Type::Ammo:
@@ -425,9 +608,12 @@ void AEquipment::explode(GameState &state)
 			// If explosive just blow up
 			if (payload->damage_type->explosive)
 			{
-				state.current_battle->addExplosion(state, position, payload->explosion_graphic,
-				                                   payload->damage_type, payload->damage,
-				                                   payload->explosion_depletion_rate, ownerUnit);
+				state.current_battle->addExplosion(
+				    state, position, payload->explosion_graphic, payload->damage_type,
+				    payload->damage, payload->explosion_depletion_rate,
+				    ownerUnit ? ownerUnit->owner
+				              : (ownerAgent ? ownerAgent->owner : ownerOrganisation),
+				    ownerUnit);
 				break;
 			}
 			// Otherwise shoot stray shots into air
@@ -446,14 +632,14 @@ void AEquipment::explode(GameState &state)
 				                (float)randBoundsInclusive(state.rng, 1, 1000) / 1000.0f};
 				velocity = glm::normalize(velocity);
 				velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;
-				auto p = mksp<Projectile>(payload->guided ? Projectile::Type::Missile
-				                                          : Projectile::Type::Beam,
-				                          ownerUnit, nullptr, Vec3<float>{0.0f, 0.0f, 0.0f},
-				                          position + Vec3<float>{0.0f, 0.0f, 0.33f}, velocity, 0,
-				                          payload->ttl * TICKS_MULTIPLIER, payload->damage, /*delay*/0,
-				                          payload->explosion_depletion_rate, payload->tail_size,
-				                          payload->projectile_sprites, payload->impact_sfx,
-				                          payload->explosion_graphic, payload->damage_type);
+				auto p = mksp<Projectile>(
+				    payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam, ownerUnit,
+				    nullptr, Vec3<float>{0.0f, 0.0f, 0.0f},
+				    position + Vec3<float>{0.0f, 0.0f, 0.33f}, velocity, 0,
+				    payload->ttl * TICKS_MULTIPLIER, payload->damage, /*delay*/ 0,
+				    payload->explosion_depletion_rate, payload->tail_size,
+				    payload->projectile_sprites, payload->impact_sfx, payload->explosion_graphic,
+				    payload->damage_type);
 				state.current_battle->map->addObjectToMap(p);
 				state.current_battle->projectiles.insert(p);
 			}
@@ -526,16 +712,20 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 		// We are protecting firer from collisison for first frames anyway, so this is redundant
 		// for all cases except when a unit fires with a brainsucker on it's head!
 		unitPos += velocity * 3.0f / 8.0f;
-		// Scale velocity according to speed
-		velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;
-		auto p = mksp<Projectile>(
-		    payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam, unit, targetUnit,
-		    originalTarget, unitPos, velocity, payload->turn_rate, payload->ttl * TICKS_MULTIPLIER,
-		    payload->damage, payload->projectile_delay, payload->explosion_depletion_rate, payload->tail_size,
-		    payload->projectile_sprites, payload->impact_sfx, payload->explosion_graphic,
-		    payload->damage_type);
-		state.current_battle->map->addObjectToMap(p);
-		state.current_battle->projectiles.insert(p);
+
+		if (state.current_battle->map->tileIsValid(unitPos))
+		{
+			// Scale velocity according to speed
+			velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;
+			auto p = mksp<Projectile>(
+			    payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam, unit,
+			    targetUnit, originalTarget, unitPos, velocity, payload->turn_rate,
+			    payload->ttl * TICKS_MULTIPLIER, payload->damage, payload->projectile_delay,
+			    payload->explosion_depletion_rate, payload->tail_size, payload->projectile_sprites,
+			    payload->impact_sfx, payload->explosion_graphic, payload->damage_type);
+			state.current_battle->map->addObjectToMap(p);
+			state.current_battle->projectiles.insert(p);
+		}
 	}
 
 	readyToFire = false;
@@ -757,9 +947,8 @@ bool AEquipment::getCanThrow(const TileMap &map, int strength, Vec3<float> start
 bool AEquipment::getVelocityForThrow(const TileMap &map, int strength, Vec3<float> startPos,
                                      Vec3<int> target, float &velocityXY, float &velocityZ) const
 {
-	return getVelocityForThrowLaunch(nullptr, map, strength,
-	                                 type->weight + (payloadType ? payloadType->weight : 0),
-	                                 startPos, target, velocityXY, velocityZ);
+	return getVelocityForThrowLaunch(nullptr, map, strength, getWeight(), startPos, target,
+	                                 velocityXY, velocityZ);
 }
 
 bool AEquipment::getCanThrow(const BattleUnit &unit, Vec3<int> target)
@@ -773,8 +962,7 @@ bool AEquipment::getVelocityForThrow(const BattleUnit &unit, Vec3<int> target, f
                                      float &velocityZ) const
 {
 	return getVelocityForThrowLaunch(&unit, unit.tileObject->map,
-	                                 unit.agent->modified_stats.strength,
-	                                 type->weight + (payloadType ? payloadType->weight : 0),
+	                                 unit.agent->modified_stats.strength, getWeight(),
 	                                 unit.getThrownItemLocation(), target, velocityXY, velocityZ);
 }
 

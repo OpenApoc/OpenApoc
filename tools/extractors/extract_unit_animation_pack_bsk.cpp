@@ -36,8 +36,8 @@ void InitialGameStateExtractor::extractAnimationPackBsk(sp<BattleUnitAnimationPa
 
 				// Downed state: frozen frame 143, regardless of where it looks
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
-										BodyState::Downed}][{x, y}] =
-					makeUpAnimationEntry(143, 1, 0, 0, 1, { 0,0 }, 100);
+				                        BodyState::Downed}][{x, y}] =
+				    makeUpAnimationEntry(143, 1, 0, 0, 1, {0, 0}, 100);
 
 				// Standing state: 2's first frame
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
@@ -58,6 +58,9 @@ void InitialGameStateExtractor::extractAnimationPackBsk(sp<BattleUnitAnimationPa
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 				                        BodyState::Jumping}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 3, {x, y}, 100, 9, false);
+				p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
+				                        MovementState::Normal, BodyState::Jumping}][{x, y}] =
+				    getAnimationEntry(dataAD, dataUA, dataUF, 3, {x, y}, 100, 9, false);
 
 				// Sucking state: 4
 				p->standart_animations[{ItemWieldMode::None, HandState::AtEase,
@@ -76,6 +79,10 @@ void InitialGameStateExtractor::extractAnimationPackBsk(sp<BattleUnitAnimationPa
 				// Body Standing -> Jumping animation: 3
 				p->body_state_animations[{ItemWieldMode::None, HandState::AtEase,
 				                          MovementState::None, BodyState::Standing,
+				                          BodyState::Jumping}][{x, y}] =
+				    getAnimationEntry(dataAD, dataUA, dataUF, 3, {x, y});
+				p->body_state_animations[{ItemWieldMode::None, HandState::AtEase,
+				                          MovementState::Normal, BodyState::Standing,
 				                          BodyState::Jumping}][{x, y}] =
 				    getAnimationEntry(dataAD, dataUA, dataUF, 3, {x, y});
 			}

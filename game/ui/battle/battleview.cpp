@@ -18,12 +18,13 @@
 #include "framework/renderer.h"
 #include "framework/trace.h"
 #include "game/state/aequipment.h"
-#include "game/state/battle/ai/ai.h"
+#include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlehazard.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battlemappart_type.h"
+#include "game/state/battle/battlescanner.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
@@ -34,6 +35,7 @@
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "game/ui/base/basescreen.h"
+#include "game/ui/battle/battleturnbasedconfirmbox.h"
 #include "game/ui/general/ingameoptions.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
@@ -50,7 +52,8 @@ static const std::vector<UString> TAB_FORM_NAMES_RT = {
 };
 static const std::vector<UString> TAB_FORM_NAMES_TB = {
     "battle/battle_tb_tab1", "battle/battle_tb_tab2", "battle/battle_tb_tab3",
-};
+    "battle/battle_tb_tab4"};
+static const int TICKS_TRY_END_TURN = TICKS_PER_SECOND;
 static const std::set<BodyPart> bodyParts{BodyPart::Body, BodyPart::Helmet, BodyPart::LeftArm,
                                           BodyPart::Legs, BodyPart::RightArm};
 
@@ -65,7 +68,7 @@ BattleView::BattleView(sp<GameState> gameState)
       followAgent(false), palette(fw().data->loadPalette("xcom3/tacdata/tactical.pal")),
       selectionState(BattleSelectionState::Normal)
 {
-	this->pal = palette;
+	pal = palette;
 
 	for (int j = 0; j <= 15; j++)
 	{
@@ -94,6 +97,39 @@ BattleView::BattleView(sp<GameState> gameState)
 		modPalette.push_back(newPal);
 	}
 
+	motionScannerDirectionIcons.push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                88)));
+	motionScannerDirectionIcons.push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                89)));
+	motionScannerDirectionIcons.push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                90)));
+	motionScannerDirectionIcons.push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                91)));
+	motionScannerDirectionIcons.push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                92)));
+	motionScannerDirectionIcons.push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                93)));
+	motionScannerDirectionIcons.push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                94)));
+	motionScannerDirectionIcons.push_back(
+	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                95)));
+
 	selectedItemOverlay = fw().data->loadImage("battle/battle-item-select-icon.png");
 	selectedPsiOverlay = fw().data->loadImage("battle/battle-psi-select-icon.png");
 	pauseIcon = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
@@ -109,7 +145,7 @@ BattleView::BattleView(sp<GameState> gameState)
 			return;
 		}
 		f->takesFocus = false;
-		this->uiTabsRT.push_back(f);
+		uiTabsRT.push_back(f);
 	}
 	for (auto &formName : TAB_FORM_NAMES_TB)
 	{
@@ -120,25 +156,35 @@ BattleView::BattleView(sp<GameState> gameState)
 			return;
 		}
 		f->takesFocus = false;
-		this->uiTabsTB.push_back(f);
+		uiTabsTB.push_back(f);
+	}
+	{
+		executePlanPopup =
+		    mksp<BattleTurnBasedConfirmBox>(tr("Execute remaining movement orders for this unit?"),
+		                                    [this] {
+			                                    unitPendingConfirmation->missions.pop_front();
+			                                    unitPendingConfirmation = nullptr;
+			                                },
+		                                    [this] { unitPendingConfirmation = nullptr; });
 	}
 
 	switch (battle.mode)
 	{
 		case Battle::Mode::RealTime:
-			this->activeTab = this->uiTabsRT[0];
-			this->mainTab = this->uiTabsRT[0];
-			this->psiTab = this->uiTabsRT[1];
-			this->primingTab = this->uiTabsRT[2];
+			activeTab = uiTabsRT[0];
+			mainTab = uiTabsRT[0];
+			psiTab = uiTabsRT[1];
+			primingTab = uiTabsRT[2];
 			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED0")->setChecked(true);
 			updateSpeed = BattleUpdateSpeed::Pause;
 			lastSpeed = BattleUpdateSpeed::Speed1;
 			break;
 		case Battle::Mode::TurnBased:
-			this->activeTab = this->uiTabsTB[0];
-			this->mainTab = this->uiTabsTB[0];
-			this->psiTab = this->uiTabsTB[1];
-			this->primingTab = this->uiTabsTB[2];
+			activeTab = uiTabsTB[0];
+			mainTab = uiTabsTB[0];
+			psiTab = uiTabsTB[1];
+			primingTab = uiTabsTB[2];
+			notMyTurnTab = uiTabsTB[3];
 			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED2")->setChecked(true);
 			updateSpeed = BattleUpdateSpeed::Speed2;
 			lastSpeed = BattleUpdateSpeed::Pause;
@@ -154,7 +200,7 @@ BattleView::BattleView(sp<GameState> gameState)
 	itemForms.push_back(medikitForms[true]);
 	itemForms.push_back(motionScannerForms[false]);
 	itemForms.push_back(motionScannerForms[true]);
-	for (auto f : itemForms)
+	for (auto &f : itemForms)
 	{
 		f->Enabled = false;
 	}
@@ -199,6 +245,15 @@ BattleView::BattleView(sp<GameState> gameState)
 	    medikitForms[true]->findControl("MEDIKIT_RIGHT_HAND_GREEN");
 	medikitBodyParts[true][BodyPart::Helmet][true] =
 	    medikitForms[true]->findControl("MEDIKIT_HEAD_GREEN");
+
+	motionScannerData[false] =
+	    motionScannerForms[false]->findControlTyped<Graphic>("MOTION_SCANNER_DATA");
+	motionScannerData[true] =
+	    motionScannerForms[true]->findControlTyped<Graphic>("MOTION_SCANNER_DATA");
+	motionScannerUnit[false] =
+	    motionScannerForms[false]->findControlTyped<Graphic>("MOTION_SCANNER_UNIT");
+	motionScannerUnit[true] =
+	    motionScannerForms[true]->findControlTyped<Graphic>("MOTION_SCANNER_UNIT");
 
 	std::function<void(FormsEvent * e)> medikitButtonHead = [this](Event *) {
 		orderHeal(BodyPart::Helmet);
@@ -279,17 +334,17 @@ BattleView::BattleView(sp<GameState> gameState)
 	// Refresh base views
 	resume();
 
-	this->baseForm->findControl("BUTTON_FOLLOW_AGENT")
+	baseForm->findControl("BUTTON_FOLLOW_AGENT")
 	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
 		    this->followAgent =
 		        std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy)->isChecked();
 		});
-	this->baseForm->findControl("BUTTON_TOGGLE_STRATMAP")
+	baseForm->findControl("BUTTON_TOGGLE_STRATMAP")
 	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
 		    bool strategy = std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy)->isChecked();
 		    this->setViewMode(strategy ? TileViewMode::Strategy : TileViewMode::Isometric);
 		});
-	this->baseForm->findControl("BUTTON_LAYERING")
+	baseForm->findControl("BUTTON_LAYERING")
 	    ->addCallback(FormEventType::TriStateBoxChange, [this](Event *e) {
 		    int state = std::dynamic_pointer_cast<TriStateBox>(e->forms().RaisedBy)->getState();
 		    switch (state)
@@ -307,17 +362,17 @@ BattleView::BattleView(sp<GameState> gameState)
 
 		});
 
-	this->baseForm->findControl("BUTTON_CEASE_FIRE")
+	baseForm->findControl("BUTTON_CEASE_FIRE")
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
 		    bool at_will = false;
-		    for (auto u : this->battle.battleViewSelectedUnits)
+		    for (auto &u : this->battle.battleViewSelectedUnits)
 		    {
 			    if (u->fire_permission_mode == BattleUnit::FirePermissionMode::AtWill)
 			    {
 				    at_will = true;
 			    }
 		    }
-		    for (auto u : this->battle.battleViewSelectedUnits)
+		    for (auto &u : this->battle.battleViewSelectedUnits)
 		    {
 			    if (at_will)
 			    {
@@ -329,188 +384,311 @@ BattleView::BattleView(sp<GameState> gameState)
 			    }
 		    }
 		});
-	this->baseForm->findControl("BUTTON_AIMED")
-	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
-		    for (auto u : this->battle.battleViewSelectedUnits)
-		    {
-			    u->fire_aiming_mode = WeaponAimingMode::Aimed;
-		    }
-		});
-	this->baseForm->findControl("BUTTON_SNAP")
-	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
-		    for (auto u : this->battle.battleViewSelectedUnits)
-		    {
-			    u->fire_aiming_mode = WeaponAimingMode::Snap;
-		    }
-		});
-	this->baseForm->findControl("BUTTON_AUTO")
-	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
-		    for (auto u : this->battle.battleViewSelectedUnits)
-		    {
-			    u->fire_aiming_mode = WeaponAimingMode::Auto;
-		    }
-		});
-	this->baseForm->findControl("BUTTON_KNEEL")
-	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
-		    bool not_kneeling = false;
+	baseForm->findControl("BUTTON_AIMED")->addCallback(FormEventType::MouseClick, [this](Event *) {
+		for (auto &u : this->battle.battleViewSelectedUnits)
+		{
+			u->fire_aiming_mode = WeaponAimingMode::Aimed;
+		}
+	});
+	baseForm->findControl("BUTTON_SNAP")->addCallback(FormEventType::MouseClick, [this](Event *) {
+		for (auto &u : this->battle.battleViewSelectedUnits)
+		{
+			u->fire_aiming_mode = WeaponAimingMode::Snap;
+		}
+	});
+	baseForm->findControl("BUTTON_AUTO")->addCallback(FormEventType::MouseClick, [this](Event *) {
+		for (auto &u : this->battle.battleViewSelectedUnits)
+		{
+			u->fire_aiming_mode = WeaponAimingMode::Auto;
+		}
+	});
+	baseForm->findControl("BUTTON_KNEEL")->addCallback(FormEventType::MouseClick, [this](Event *) {
+		bool not_kneeling = false;
 
-		    for (auto u : this->battle.battleViewSelectedUnits)
-		    {
-			    if (u->kneeling_mode == KneelingMode::None &&
-			        u->agent->isBodyStateAllowed(BodyState::Kneeling))
-			    {
-				    not_kneeling = true;
-			    }
-		    }
-		    for (auto u : this->battle.battleViewSelectedUnits)
-		    {
-			    if (not_kneeling)
-			    {
-				    u->kneeling_mode = KneelingMode::Kneeling;
-			    }
-			    else
-			    {
-				    u->kneeling_mode = KneelingMode::None;
-			    }
-		    }
-		});
-	this->baseForm->findControl("BUTTON_PRONE")
+		for (auto &u : this->battle.battleViewSelectedUnits)
+		{
+			if (u->kneeling_mode == KneelingMode::None &&
+			    u->agent->isBodyStateAllowed(BodyState::Kneeling))
+			{
+				not_kneeling = true;
+			}
+		}
+		for (auto &u : this->battle.battleViewSelectedUnits)
+		{
+			if (not_kneeling)
+			{
+				u->kneeling_mode = KneelingMode::Kneeling;
+			}
+			else
+			{
+				u->kneeling_mode = KneelingMode::None;
+			}
+		}
+	});
+	baseForm->findControl("BUTTON_PRONE")->addCallback(FormEventType::MouseClick, [this](Event *) {
+		for (auto &u : this->battle.battleViewSelectedUnits)
+		{
+			u->setMovementMode(MovementMode::Prone);
+		}
+	});
+	baseForm->findControl("BUTTON_WALK")->addCallback(FormEventType::MouseClick, [this](Event *) {
+		for (auto &u : this->battle.battleViewSelectedUnits)
+		{
+			u->setMovementMode(MovementMode::Walking);
+		}
+	});
+	baseForm->findControl("BUTTON_RUN")->addCallback(FormEventType::MouseClick, [this](Event *) {
+		for (auto &u : this->battle.battleViewSelectedUnits)
+		{
+			u->setMovementMode(MovementMode::Running);
+		}
+	});
+	baseForm->findControl("BUTTON_EVASIVE")
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
-		    for (auto u : this->battle.battleViewSelectedUnits)
-		    {
-			    u->setMovementMode(MovementMode::Prone);
-		    }
-		});
-	this->baseForm->findControl("BUTTON_WALK")
-	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
-		    for (auto u : this->battle.battleViewSelectedUnits)
-		    {
-			    u->setMovementMode(MovementMode::Walking);
-		    }
-		});
-	this->baseForm->findControl("BUTTON_RUN")
-	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
-		    for (auto u : this->battle.battleViewSelectedUnits)
-		    {
-			    u->setMovementMode(MovementMode::Running);
-		    }
-		});
-	this->baseForm->findControl("BUTTON_EVASIVE")
-	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
-		    for (auto u : this->battle.battleViewSelectedUnits)
+		    for (auto &u : this->battle.battleViewSelectedUnits)
 		    {
 			    u->behavior_mode = BattleUnit::BehaviorMode::Evasive;
 		    }
 		});
-	this->baseForm->findControl("BUTTON_NORMAL")
+	baseForm->findControl("BUTTON_NORMAL")->addCallback(FormEventType::MouseClick, [this](Event *) {
+		for (auto &u : this->battle.battleViewSelectedUnits)
+		{
+			u->behavior_mode = BattleUnit::BehaviorMode::Normal;
+		}
+	});
+	baseForm->findControl("BUTTON_AGGRESSIVE")
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
-		    for (auto u : this->battle.battleViewSelectedUnits)
-		    {
-			    u->behavior_mode = BattleUnit::BehaviorMode::Normal;
-		    }
-		});
-	this->baseForm->findControl("BUTTON_AGGRESSIVE")
-	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
-		    for (auto u : this->battle.battleViewSelectedUnits)
+		    for (auto &u : this->battle.battleViewSelectedUnits)
 		    {
 			    u->behavior_mode = BattleUnit::BehaviorMode::Aggressive;
 		    }
 		});
 
-	this->baseForm->findControl("BUTTON_LAYER_UP")
+	baseForm->findControl("BUTTON_RESERVE_AIMED")
+	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
+		    bool pushed = false;
+		    for (auto &u : this->battle.battleViewSelectedUnits)
+		    {
+			    if (u->reserve_shot_mode == ReserveShotMode::Aimed)
+			    {
+				    pushed = true;
+			    }
+		    }
+		    for (auto &u : this->battle.battleViewSelectedUnits)
+		    {
+			    u->setReserveShotMode(pushed ? ReserveShotMode::None : ReserveShotMode::Aimed);
+		    }
+		});
+
+	baseForm->findControl("BUTTON_RESERVE_SNAP")
+	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
+		    bool pushed = false;
+		    for (auto &u : this->battle.battleViewSelectedUnits)
+		    {
+			    if (u->reserve_shot_mode == ReserveShotMode::Snap)
+			    {
+				    pushed = true;
+			    }
+		    }
+		    for (auto &u : this->battle.battleViewSelectedUnits)
+		    {
+			    u->setReserveShotMode(pushed ? ReserveShotMode::None : ReserveShotMode::Snap);
+		    }
+		});
+
+	baseForm->findControl("BUTTON_RESERVE_AUTO")
+	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
+		    bool pushed = false;
+		    for (auto &u : this->battle.battleViewSelectedUnits)
+		    {
+			    if (u->reserve_shot_mode == ReserveShotMode::Auto)
+			    {
+				    pushed = true;
+			    }
+		    }
+		    for (auto &u : this->battle.battleViewSelectedUnits)
+		    {
+			    u->setReserveShotMode(pushed ? ReserveShotMode::None : ReserveShotMode::Auto);
+		    }
+		});
+
+	baseForm->findControl("BUTTON_RESERVE_KNEEL")
+	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
+		    bool pushed = false;
+		    for (auto &u : this->battle.battleViewSelectedUnits)
+		    {
+			    if (u->reserve_kneel_mode == KneelingMode::Kneeling)
+			    {
+				    pushed = true;
+			    }
+		    }
+		    for (auto &u : this->battle.battleViewSelectedUnits)
+		    {
+			    u->setReserveKneelMode(pushed ? KneelingMode::None : KneelingMode::Kneeling);
+		    }
+		});
+
+	baseForm->findControl("BUTTON_LAYER_UP")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    this->setZLevel(getZLevel() + 1);
 		    updateLayerButtons();
 		});
-	this->baseForm->findControl("BUTTON_LAYER_DOWN")
+	baseForm->findControl("BUTTON_LAYER_DOWN")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    this->setZLevel(getZLevel() - 1);
 		    updateLayerButtons();
 		});
 
-	this->baseForm->findControl("BUTTON_MOVE_GROUP")
+	baseForm->findControl("BUTTON_MOVE_GROUP")
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *) { this->battle.battleViewGroupMove = true; });
-	this->baseForm->findControl("BUTTON_MOVE_INDIVIDUALLY")
+	baseForm->findControl("BUTTON_MOVE_INDIVIDUALLY")
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *) { this->battle.battleViewGroupMove = false; });
 	if (battle.battleViewGroupMove)
 	{
-		this->baseForm->findControlTyped<RadioButton>("BUTTON_MOVE_GROUP")->setChecked(true);
+		baseForm->findControlTyped<RadioButton>("BUTTON_MOVE_GROUP")->setChecked(true);
 	}
 	else
 	{
-		this->baseForm->findControlTyped<RadioButton>("BUTTON_MOVE_INDIVIDUALLY")->setChecked(true);
+		baseForm->findControlTyped<RadioButton>("BUTTON_MOVE_INDIVIDUALLY")->setChecked(true);
 	}
 
-	this->uiTabsRT[0]
+	uiTabsRT[0]
 	    ->findControl("BUTTON_LAYER_1")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(1); });
-	this->uiTabsRT[0]
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { setZLevel(1); });
+	uiTabsRT[0]
 	    ->findControl("BUTTON_LAYER_2")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(2); });
-	this->uiTabsRT[0]
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { setZLevel(2); });
+	uiTabsRT[0]
 	    ->findControl("BUTTON_LAYER_3")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(3); });
-	this->uiTabsRT[0]
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { setZLevel(3); });
+	uiTabsRT[0]
 	    ->findControl("BUTTON_LAYER_4")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(4); });
-	this->uiTabsRT[0]
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { setZLevel(4); });
+	uiTabsRT[0]
 	    ->findControl("BUTTON_LAYER_5")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(5); });
-	this->uiTabsRT[0]
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { setZLevel(5); });
+	uiTabsRT[0]
 	    ->findControl("BUTTON_LAYER_6")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(6); });
-	this->uiTabsRT[0]
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { setZLevel(6); });
+	uiTabsRT[0]
 	    ->findControl("BUTTON_LAYER_7")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(7); });
-	this->uiTabsRT[0]
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { setZLevel(7); });
+	uiTabsRT[0]
 	    ->findControl("BUTTON_LAYER_8")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(8); });
-	this->uiTabsRT[0]
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { setZLevel(8); });
+	uiTabsRT[0]
 	    ->findControl("BUTTON_LAYER_9")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(9); });
-	this->uiTabsTB[0]
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { setZLevel(9); });
+	uiTabsTB[0]
 	    ->findControl("BUTTON_LAYER_1")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(1); });
-	this->uiTabsTB[0]
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    setZLevel(1);
+		    uiTabsTB[3]->findControlTyped<RadioButton>("BUTTON_LAYER_1")->setChecked(true);
+		});
+	uiTabsTB[0]
 	    ->findControl("BUTTON_LAYER_2")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(2); });
-	this->uiTabsTB[0]
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    setZLevel(2);
+		    uiTabsTB[3]->findControlTyped<RadioButton>("BUTTON_LAYER_2")->setChecked(true);
+		});
+	uiTabsTB[0]
 	    ->findControl("BUTTON_LAYER_3")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(3); });
-	this->uiTabsTB[0]
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    setZLevel(3);
+		    uiTabsTB[3]->findControlTyped<RadioButton>("BUTTON_LAYER_3")->setChecked(true);
+		});
+	uiTabsTB[0]
 	    ->findControl("BUTTON_LAYER_4")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(4); });
-	this->uiTabsTB[0]
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    setZLevel(4);
+		    uiTabsTB[3]->findControlTyped<RadioButton>("BUTTON_LAYER_4")->setChecked(true);
+		});
+	uiTabsTB[0]
 	    ->findControl("BUTTON_LAYER_5")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(5); });
-	this->uiTabsTB[0]
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    setZLevel(5);
+		    uiTabsTB[3]->findControlTyped<RadioButton>("BUTTON_LAYER_5")->setChecked(true);
+		});
+	uiTabsTB[0]
 	    ->findControl("BUTTON_LAYER_6")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(6); });
-	this->uiTabsTB[0]
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    setZLevel(6);
+		    uiTabsTB[3]->findControlTyped<RadioButton>("BUTTON_LAYER_6")->setChecked(true);
+		});
+	uiTabsTB[0]
 	    ->findControl("BUTTON_LAYER_7")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(7); });
-	this->uiTabsTB[0]
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    setZLevel(7);
+		    uiTabsTB[3]->findControlTyped<RadioButton>("BUTTON_LAYER_7")->setChecked(true);
+		});
+	uiTabsTB[0]
 	    ->findControl("BUTTON_LAYER_8")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(8); });
-	this->uiTabsTB[0]
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    setZLevel(8);
+		    uiTabsTB[3]->findControlTyped<RadioButton>("BUTTON_LAYER_8")->setChecked(true);
+		});
+	uiTabsTB[0]
 	    ->findControl("BUTTON_LAYER_9")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { this->setZLevel(9); });
-	this->baseForm->findControl("BUTTON_FOLLOW_AGENT")
-	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
-		    this->followAgent =
-		        std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy)->isChecked();
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    setZLevel(9);
+		    uiTabsTB[3]->findControlTyped<RadioButton>("BUTTON_LAYER_9")->setChecked(true);
+		});
+	uiTabsTB[3]
+	    ->findControl("BUTTON_LAYER_1")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    uiTabsTB[0]->findControlTyped<RadioButton>("BUTTON_LAYER_1")->setChecked(true);
+		});
+	uiTabsTB[3]
+	    ->findControl("BUTTON_LAYER_2")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    uiTabsTB[0]->findControlTyped<RadioButton>("BUTTON_LAYER_2")->setChecked(true);
+		});
+	uiTabsTB[3]
+	    ->findControl("BUTTON_LAYER_3")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    uiTabsTB[0]->findControlTyped<RadioButton>("BUTTON_LAYER_3")->setChecked(true);
+		});
+	uiTabsTB[3]
+	    ->findControl("BUTTON_LAYER_4")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    uiTabsTB[0]->findControlTyped<RadioButton>("BUTTON_LAYER_4")->setChecked(true);
+		});
+	uiTabsTB[3]
+	    ->findControl("BUTTON_LAYER_5")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    uiTabsTB[0]->findControlTyped<RadioButton>("BUTTON_LAYER_5")->setChecked(true);
+		});
+	uiTabsTB[3]
+	    ->findControl("BUTTON_LAYER_6")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    uiTabsTB[0]->findControlTyped<RadioButton>("BUTTON_LAYER_6")->setChecked(true);
+		});
+	uiTabsTB[3]
+	    ->findControl("BUTTON_LAYER_7")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    uiTabsTB[0]->findControlTyped<RadioButton>("BUTTON_LAYER_7")->setChecked(true);
+		});
+	uiTabsTB[3]
+	    ->findControl("BUTTON_LAYER_8")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    uiTabsTB[0]->findControlTyped<RadioButton>("BUTTON_LAYER_8")->setChecked(true);
+		});
+	uiTabsTB[3]
+	    ->findControl("BUTTON_LAYER_9")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    uiTabsTB[0]->findControlTyped<RadioButton>("BUTTON_LAYER_9")->setChecked(true);
 		});
 
-	this->baseForm->findControl("BUTTON_SHOW_OPTIONS")
+	baseForm->findControl("BUTTON_SHOW_OPTIONS")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    fw().stageQueueCommand(
 		        {StageCmd::Command::PUSH, mksp<InGameOptions>(this->state->shared_from_this())});
 		});
-	this->baseForm->findControl("BUTTON_SHOW_LOG")
+	baseForm->findControl("BUTTON_SHOW_LOG")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { LogWarning("Show log"); });
-	this->baseForm->findControl("BUTTON_ZOOM_EVENT")
+	baseForm->findControl("BUTTON_ZOOM_EVENT")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { LogWarning("Zoom to event"); });
 
 	// FIXME: When clicking on items or weapons, activate them or go into fire / teleport mode
@@ -598,61 +776,50 @@ BattleView::BattleView(sp<GameState> gameState)
 		}
 		else
 		{
-			item->prime(false, delay * TICKS_PER_SECOND / 4, (range + 1) * 6);
+			if (this->battle.mode == Battle::Mode::TurnBased)
+			{
+				item->prime(false, delay * TICKS_PER_TURN, (range + 1) * 6);
+			}
+			else
+			{
+				item->prime(false, delay * TICKS_PER_SECOND / 4, (range + 1) * 6);
+			}
 		}
 		this->activeTab = this->mainTab;
 	};
 
-	std::function<void(FormsEvent * e)> updateDelay = [this, throwItem](Event *) {
-		int delay = this->primingTab->findControlTyped<ScrollBar>("DELAY_SLIDER")->getValue();
-		LogWarning("Delay %d", delay);
-		UString text;
-		if (delay == 0)
-			text = format(tr("Activates now."));
-		else
-			text = format(tr("Delay = %i"), (int)((float)delay / 4.0f));
-		this->primingTab->findControlTyped<Label>("DELAY_TEXT")->setText(text);
-	};
+	std::function<void(FormsEvent * e)> updateDelay = [this](Event *) { this->refreshDelayText(); };
 
-	std::function<void(FormsEvent * e)> updateRange = [this, throwItem](Event *) {
-		int range = this->primingTab->findControlTyped<ScrollBar>("RANGE_SLIDER")->getValue();
-
-		UString text = format(tr("Range = %2.1fm."), ((float)(range + 1) * 1.5f));
-		this->primingTab->findControlTyped<Label>("RANGE_TEXT")->setText(text);
-	};
+	std::function<void(FormsEvent * e)> updateRange = [this](Event *) { this->refreshRangeText(); };
 
 	// Priming controls
 
-	this->uiTabsRT[2]
-	    ->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")
-	    ->setClickSound(nullptr);
-	this->uiTabsRT[2]->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->Enabled = false;
-	this->uiTabsRT[2]
+	uiTabsRT[2]->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->setClickSound(nullptr);
+	uiTabsRT[2]->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->Enabled = false;
+	uiTabsRT[2]
 	    ->findControlTyped<GraphicButton>("BUTTON_CANCEL")
 	    ->addCallback(FormEventType::ButtonClick, cancelThrow);
-	this->uiTabsRT[2]
+	uiTabsRT[2]
 	    ->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick, finishPriming);
-	this->uiTabsRT[2]
+	uiTabsRT[2]
 	    ->findControlTyped<ScrollBar>("DELAY_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, updateDelay);
-	this->uiTabsRT[2]
+	uiTabsRT[2]
 	    ->findControlTyped<ScrollBar>("RANGE_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, updateRange);
-	this->uiTabsRT[2]
-	    ->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")
-	    ->setClickSound(nullptr);
-	this->uiTabsTB[2]->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->Enabled = false;
-	this->uiTabsTB[2]
+	uiTabsRT[2]->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->setClickSound(nullptr);
+	uiTabsTB[2]->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->Enabled = false;
+	uiTabsTB[2]
 	    ->findControlTyped<GraphicButton>("BUTTON_CANCEL")
 	    ->addCallback(FormEventType::ButtonClick, cancelThrow);
-	this->uiTabsTB[2]
+	uiTabsTB[2]
 	    ->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick, finishPriming);
-	this->uiTabsTB[2]
+	uiTabsTB[2]
 	    ->findControlTyped<ScrollBar>("DELAY_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, updateDelay);
-	this->uiTabsTB[2]
+	uiTabsTB[2]
 	    ->findControlTyped<ScrollBar>("RANGE_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, updateRange);
 
@@ -700,106 +867,111 @@ BattleView::BattleView(sp<GameState> gameState)
 
 	// Psi controls
 
-	this->uiTabsRT[1]
+	uiTabsRT[1]
 	    ->findControlTyped<GraphicButton>("BUTTON_CANCEL")
 	    ->addCallback(FormEventType::ButtonClick, cancelPsi);
-	this->uiTabsRT[1]
+	uiTabsRT[1]
 	    ->findControlTyped<RadioButton>("BUTTON_CONTROL")
 	    ->addCallback(FormEventType::MouseClick, psiControl);
-	this->uiTabsRT[1]
+	uiTabsRT[1]
 	    ->findControlTyped<RadioButton>("BUTTON_PANIC")
 	    ->addCallback(FormEventType::MouseClick, psiPanic);
-	this->uiTabsRT[1]
+	uiTabsRT[1]
 	    ->findControlTyped<RadioButton>("BUTTON_STUN")
 	    ->addCallback(FormEventType::MouseClick, psiStun);
-	this->uiTabsRT[1]
+	uiTabsRT[1]
 	    ->findControlTyped<RadioButton>("BUTTON_PROBE")
 	    ->addCallback(FormEventType::MouseClick, psiProbe);
-	this->uiTabsTB[1]
+	uiTabsTB[1]
 	    ->findControlTyped<GraphicButton>("BUTTON_CANCEL")
 	    ->addCallback(FormEventType::ButtonClick, cancelPsi);
-	this->uiTabsTB[1]
+	uiTabsTB[1]
 	    ->findControlTyped<RadioButton>("BUTTON_CONTROL")
 	    ->addCallback(FormEventType::MouseClick, psiControl);
-	this->uiTabsTB[1]
+	uiTabsTB[1]
 	    ->findControlTyped<RadioButton>("BUTTON_PANIC")
 	    ->addCallback(FormEventType::MouseClick, psiPanic);
-	this->uiTabsTB[1]
+	uiTabsTB[1]
 	    ->findControlTyped<RadioButton>("BUTTON_STUN")
 	    ->addCallback(FormEventType::MouseClick, psiStun);
-	this->uiTabsTB[1]
+	uiTabsTB[1]
 	    ->findControlTyped<RadioButton>("BUTTON_PROBE")
 	    ->addCallback(FormEventType::MouseClick, psiProbe);
 
 	// Hand controls
 
-	this->uiTabsRT[0]
+	uiTabsRT[0]
 	    ->findControlTyped<Graphic>("OVERLAY_RIGHT_HAND")
 	    ->addCallback(FormEventType::MouseDown, clickedRightHand);
-	this->uiTabsRT[0]
+	uiTabsRT[0]
 	    ->findControlTyped<Graphic>("OVERLAY_LEFT_HAND")
 	    ->addCallback(FormEventType::MouseDown, clickedLeftHand);
-	this->uiTabsTB[0]
+	uiTabsTB[0]
 	    ->findControlTyped<Graphic>("OVERLAY_RIGHT_HAND")
 	    ->addCallback(FormEventType::MouseDown, clickedRightHand);
-	this->uiTabsTB[0]
+	uiTabsTB[0]
 	    ->findControlTyped<Graphic>("OVERLAY_LEFT_HAND")
 	    ->addCallback(FormEventType::MouseDown, clickedLeftHand);
-	this->uiTabsRT[0]
+	uiTabsRT[0]
 	    ->findControlTyped<GraphicButton>("BUTTON_RIGHT_HAND_DROP")
 	    ->addCallback(FormEventType::MouseClick, dropRightHand);
-	this->uiTabsRT[0]
+	uiTabsRT[0]
 	    ->findControlTyped<GraphicButton>("BUTTON_LEFT_HAND_DROP")
 	    ->addCallback(FormEventType::MouseClick, dropLeftHand);
-	this->uiTabsTB[0]
+	uiTabsTB[0]
 	    ->findControlTyped<GraphicButton>("BUTTON_RIGHT_HAND_DROP")
 	    ->addCallback(FormEventType::MouseClick, dropRightHand);
-	this->uiTabsTB[0]
+	uiTabsTB[0]
 	    ->findControlTyped<GraphicButton>("BUTTON_LEFT_HAND_DROP")
 	    ->addCallback(FormEventType::MouseClick, dropLeftHand);
-	this->uiTabsRT[0]
+	uiTabsRT[0]
 	    ->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND_THROW")
 	    ->addCallback(FormEventType::MouseClick, throwRightHand);
-	this->uiTabsRT[0]
+	uiTabsRT[0]
 	    ->findControlTyped<CheckBox>("BUTTON_LEFT_HAND_THROW")
 	    ->addCallback(FormEventType::MouseClick, throwLeftHand);
-	this->uiTabsTB[0]
+	uiTabsTB[0]
 	    ->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND_THROW")
 	    ->addCallback(FormEventType::MouseClick, throwRightHand);
-	this->uiTabsTB[0]
+	uiTabsTB[0]
 	    ->findControlTyped<CheckBox>("BUTTON_LEFT_HAND_THROW")
 	    ->addCallback(FormEventType::MouseClick, throwLeftHand);
 
-	// We need this in TB because we will be able to allow pausing then
-	this->baseForm->findControl("BUTTON_SPEED0")
+	// We need these in TB because we will be able to allow pausing then
+
+	baseForm->findControl("BUTTON_SPEED0")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
 		    this->lastSpeed = this->updateSpeed;
 		    this->updateSpeed = BattleUpdateSpeed::Pause;
 		});
-	this->baseForm->findControl("BUTTON_SPEED1")
+	baseForm->findControl("BUTTON_SPEED1")
 	    ->addCallback(FormEventType::CheckBoxSelected,
 	                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed1; });
-	this->baseForm->findControl("BUTTON_SPEED2")
+	baseForm->findControl("BUTTON_SPEED2")
 	    ->addCallback(FormEventType::CheckBoxSelected,
 	                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed2; });
-	this->baseForm->findControl("BUTTON_SPEED3")
+	baseForm->findControl("BUTTON_SPEED3")
 	    ->addCallback(FormEventType::CheckBoxSelected,
 	                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed3; });
 
 	switch (battle.mode)
 	{
 		case Battle::Mode::RealTime:
-			this->baseForm->findControl("BUTTON_ENDTURN")->setVisible(false);
+			baseForm->findControl("BUTTON_RESERVE_AIMED")->setVisible(false);
+			baseForm->findControl("BUTTON_RESERVE_SNAP")->setVisible(false);
+			baseForm->findControl("BUTTON_RESERVE_AUTO")->setVisible(false);
+			baseForm->findControl("BUTTON_RESERVE_KNEEL")->setVisible(false);
+			baseForm->findControl("BUTTON_ENDTURN")->setVisible(false);
 			break;
 		case Battle::Mode::TurnBased:
-			this->baseForm->findControl("BUTTON_SPEED0")->setVisible(false);
-			this->baseForm->findControl("BUTTON_SPEED1")->setVisible(false);
-			this->baseForm->findControl("BUTTON_SPEED2")->setVisible(false);
-			this->baseForm->findControl("BUTTON_SPEED3")->setVisible(false);
-			this->baseForm->findControl("CLOCK")->setVisible(false);
-			this->baseForm->findControl("BUTTON_ENDTURN")
+			baseForm->findControl("BUTTON_SPEED0")->setVisible(false);
+			baseForm->findControl("BUTTON_SPEED1")->setVisible(false);
+			baseForm->findControl("BUTTON_SPEED2")->setVisible(false);
+			baseForm->findControl("BUTTON_SPEED3")->setVisible(false);
+			baseForm->findControl("CLOCK")->setVisible(false);
+			baseForm->findControl("BUTTON_ENDTURN")
 			    ->addCallback(FormEventType::ButtonClick,
-			                  [this](Event *) { this->battle.endTurn(); });
+			                  [this](Event *) { endTurnRequested = true; });
 			break;
 	}
 
@@ -810,27 +982,24 @@ BattleView::~BattleView() = default;
 
 void BattleView::begin()
 {
-	this->uiTabsRT[0]->findControl("BUTTON_LAYER_1")->setVisible(maxZDraw >= 1);
-	this->uiTabsRT[0]->findControl("BUTTON_LAYER_2")->setVisible(maxZDraw >= 2);
-	this->uiTabsRT[0]->findControl("BUTTON_LAYER_3")->setVisible(maxZDraw >= 3);
-	this->uiTabsRT[0]->findControl("BUTTON_LAYER_4")->setVisible(maxZDraw >= 4);
-	this->uiTabsRT[0]->findControl("BUTTON_LAYER_5")->setVisible(maxZDraw >= 5);
-	this->uiTabsRT[0]->findControl("BUTTON_LAYER_6")->setVisible(maxZDraw >= 6);
-	this->uiTabsRT[0]->findControl("BUTTON_LAYER_7")->setVisible(maxZDraw >= 7);
-	this->uiTabsRT[0]->findControl("BUTTON_LAYER_8")->setVisible(maxZDraw >= 8);
-	this->uiTabsRT[0]->findControl("BUTTON_LAYER_9")->setVisible(maxZDraw >= 9);
-	this->uiTabsTB[0]->findControl("BUTTON_LAYER_1")->setVisible(maxZDraw >= 1);
-	this->uiTabsTB[0]->findControl("BUTTON_LAYER_2")->setVisible(maxZDraw >= 2);
-	this->uiTabsTB[0]->findControl("BUTTON_LAYER_3")->setVisible(maxZDraw >= 3);
-	this->uiTabsTB[0]->findControl("BUTTON_LAYER_4")->setVisible(maxZDraw >= 4);
-	this->uiTabsTB[0]->findControl("BUTTON_LAYER_5")->setVisible(maxZDraw >= 5);
-	this->uiTabsTB[0]->findControl("BUTTON_LAYER_6")->setVisible(maxZDraw >= 6);
-	this->uiTabsTB[0]->findControl("BUTTON_LAYER_7")->setVisible(maxZDraw >= 7);
-	this->uiTabsTB[0]->findControl("BUTTON_LAYER_8")->setVisible(maxZDraw >= 8);
-	this->uiTabsTB[0]->findControl("BUTTON_LAYER_9")->setVisible(maxZDraw >= 9);
-
-	if (battle.mode == Battle::Mode::TurnBased)
-		onNewTurn();
+	uiTabsRT[0]->findControl("BUTTON_LAYER_1")->setVisible(maxZDraw >= 1);
+	uiTabsRT[0]->findControl("BUTTON_LAYER_2")->setVisible(maxZDraw >= 2);
+	uiTabsRT[0]->findControl("BUTTON_LAYER_3")->setVisible(maxZDraw >= 3);
+	uiTabsRT[0]->findControl("BUTTON_LAYER_4")->setVisible(maxZDraw >= 4);
+	uiTabsRT[0]->findControl("BUTTON_LAYER_5")->setVisible(maxZDraw >= 5);
+	uiTabsRT[0]->findControl("BUTTON_LAYER_6")->setVisible(maxZDraw >= 6);
+	uiTabsRT[0]->findControl("BUTTON_LAYER_7")->setVisible(maxZDraw >= 7);
+	uiTabsRT[0]->findControl("BUTTON_LAYER_8")->setVisible(maxZDraw >= 8);
+	uiTabsRT[0]->findControl("BUTTON_LAYER_9")->setVisible(maxZDraw >= 9);
+	uiTabsTB[0]->findControl("BUTTON_LAYER_1")->setVisible(maxZDraw >= 1);
+	uiTabsTB[0]->findControl("BUTTON_LAYER_2")->setVisible(maxZDraw >= 2);
+	uiTabsTB[0]->findControl("BUTTON_LAYER_3")->setVisible(maxZDraw >= 3);
+	uiTabsTB[0]->findControl("BUTTON_LAYER_4")->setVisible(maxZDraw >= 4);
+	uiTabsTB[0]->findControl("BUTTON_LAYER_5")->setVisible(maxZDraw >= 5);
+	uiTabsTB[0]->findControl("BUTTON_LAYER_6")->setVisible(maxZDraw >= 6);
+	uiTabsTB[0]->findControl("BUTTON_LAYER_7")->setVisible(maxZDraw >= 7);
+	uiTabsTB[0]->findControl("BUTTON_LAYER_8")->setVisible(maxZDraw >= 8);
+	uiTabsTB[0]->findControl("BUTTON_LAYER_9")->setVisible(maxZDraw >= 9);
 }
 
 void BattleView::resume() {}
@@ -846,7 +1015,7 @@ void BattleView::render()
 	int pauseIconOffsetX = 0;
 
 	// Item forms
-	for (auto f : itemForms)
+	for (auto &f : itemForms)
 	{
 		if (f->Enabled)
 		{
@@ -871,7 +1040,7 @@ void BattleView::render()
 	}
 
 	// If there's a modal dialog, darken the screen
-	if (fw().stageGetCurrent() != this->shared_from_this())
+	if (fw().stageGetCurrent() != shared_from_this())
 	{
 		fw().renderer->drawFilledRect({0, 0}, fw().displayGetSize(), Colour{0, 0, 0, 128});
 	}
@@ -902,9 +1071,59 @@ void BattleView::setUpdateSpeed(BattleUpdateSpeed updateSpeed)
 
 void BattleView::update()
 {
+	bool realTime = battle.mode == Battle::Mode::RealTime;
+
 	BattleTileView::update();
 	// FIXME: Is there a more efficient way? But TileView does not know about battle or state!
 	battle.battleViewScreenCenter = centerPos;
+
+	// Update turn based stuff
+	if (!realTime)
+	{
+		bool notMyTurn = endTurnRequested || battle.turnEndAllowed ||
+		                 !battle.interruptUnits.empty() || !battle.interruptQueue.empty() ||
+		                 battle.currentActiveOrganisation != battle.currentPlayer;
+		if (notMyTurn && activeTab != notMyTurnTab)
+		{
+			activeTab = notMyTurnTab;
+			lastSelectedUnits = battle.battleViewSelectedUnits;
+			battle.battleViewSelectedUnits.clear();
+			updateTBButtons();
+		}
+		else if (!notMyTurn && activeTab == notMyTurnTab)
+		{
+			activeTab = mainTab;
+			battle.battleViewSelectedUnits = lastSelectedUnits;
+			updateTBButtons();
+		}
+
+		if (endTurnRequested && !unitPendingConfirmation &&
+		    battle.ticksWithoutAction >= TICKS_TRY_END_TURN)
+		{
+			for (auto &u : battle.units)
+			{
+				if (u.second->owner != battle.currentActiveOrganisation ||
+				    u.second->missions.empty() ||
+				    u.second->missions.front()->type != BattleUnitMission::Type::AcquireTU ||
+				    !u.second->missions.front()->allowContinue ||
+				    unitsSkipped.find(u.second) != unitsSkipped.end())
+				{
+					continue;
+				}
+				unitPendingConfirmation = u.second;
+				battle.notifyAction();
+				unitsSkipped.insert(unitPendingConfirmation);
+				fw().stageQueueCommand({StageCmd::Command::PUSH, executePlanPopup});
+				break;
+			}
+			if (!unitPendingConfirmation)
+			{
+				battle.turnEndAllowed = true;
+				endTurnRequested = false;
+				unitsSkipped.clear();
+			}
+		}
+	}
 
 	updateSelectedUnits();
 	updateSelectionMode();
@@ -914,8 +1133,16 @@ void BattleView::update()
 	{
 		ticksUntilFireSound--;
 	}
-
-	if (battle.mode == Battle::Mode::TurnBased)
+	if (leftThrowDelay > 0)
+	{
+		leftThrowDelay--;
+	}
+	if (rightThrowDelay > 0)
+	{
+		rightThrowDelay--;
+	}
+	// Update path preview in TB mode
+	if (!realTime)
 	{
 		if (previewedPathCost == -1)
 		{
@@ -928,17 +1155,8 @@ void BattleView::update()
 		}
 	}
 
-	if (leftThrowDelay > 0)
-	{
-		leftThrowDelay--;
-	}
-	if (rightThrowDelay > 0)
-	{
-		rightThrowDelay--;
-	}
-
 	unsigned int ticks = 0;
-	switch (this->updateSpeed)
+	switch (updateSpeed)
 	{
 		case BattleUpdateSpeed::Pause:
 			ticks = 0;
@@ -955,7 +1173,7 @@ void BattleView::update()
 	}
 	while (ticks > 0)
 	{
-		this->state->update();
+		state->update();
 		ticks--;
 	}
 	if (battle.mode == Battle::Mode::RealTime)
@@ -972,20 +1190,18 @@ void BattleView::update()
 		colorCurrent = clamp(colorCurrent, 0, 15);
 		colorForward = !colorForward;
 	}
-	this->pal = modPalette[colorCurrent];
+	pal = modPalette[colorCurrent];
 
 	// Update weapons if required
 
 	auto rightInfo = createItemOverlayInfo(true);
-	if (rightInfo != rightHandInfo &&
-	    (this->activeTab == uiTabsRT[0] || this->activeTab == uiTabsTB[0]))
+	if (rightInfo != rightHandInfo && activeTab == mainTab)
 	{
 		rightHandInfo = rightInfo;
 		updateItemInfo(true);
 	}
 	auto leftInfo = createItemOverlayInfo(false);
-	if (leftInfo != leftHandInfo &&
-	    (this->activeTab == uiTabsRT[0] || this->activeTab == uiTabsTB[0]))
+	if (leftInfo != leftHandInfo && activeTab == mainTab)
 	{
 		leftHandInfo = leftInfo;
 		updateItemInfo(false);
@@ -993,11 +1209,12 @@ void BattleView::update()
 
 	// Update item forms
 
-	for (auto f : itemForms)
+	for (auto &f : itemForms)
 	{
 		f->Enabled = false;
 	}
-	if (leftHandInfo.selected || rightHandInfo.selected)
+	if ((leftHandInfo.selected || rightHandInfo.selected) &&
+	    !battle.battleViewSelectedUnits.empty())
 	{
 		auto unit = battle.battleViewSelectedUnits.front();
 		for (int i = 0; i < 2; i++)
@@ -1016,16 +1233,35 @@ void BattleView::update()
 			switch (item->type->type)
 			{
 				case AEquipmentType::Type::MotionScanner:
+				{
 					motionScannerForms[right]->Enabled = true;
+
+					auto newMotionInfo =
+					    realTime ? createMotionInfo(*item->battleScanner) : createMotionInfo();
+					if (motionInfo != newMotionInfo)
+					{
+						motionInfo = newMotionInfo;
+						if (realTime)
+						{
+							updateMotionInfo(right, *item->battleScanner);
+						}
+						else
+						{
+							updateMotionInfo(right, motionInfo.position);
+						}
+					}
+
 					break;
+				}
 				case AEquipmentType::Type::MediKit:
+				{
 					medikitForms[right]->Enabled = true;
-					for (auto c : medikitBodyParts[right])
+					for (auto &c : medikitBodyParts[right])
 					{
 						c.second[false]->setVisible(false);
 						c.second[true]->setVisible(false);
 					}
-					for (auto p : bodyParts)
+					for (auto &p : bodyParts)
 					{
 						if (unit->fatalWounds[p] > 0)
 						{
@@ -1035,6 +1271,7 @@ void BattleView::update()
 						}
 					}
 					break;
+				}
 				default:
 					LogError("Using an item other than the motion scanner / medikit?");
 			}
@@ -1042,7 +1279,7 @@ void BattleView::update()
 	}
 
 	// Update psi
-	if (this->activeTab == psiTab)
+	if (activeTab == psiTab)
 	{
 		auto newPsiInfo = createPsiInfo();
 		if (psiInfo != newPsiInfo)
@@ -1053,7 +1290,7 @@ void BattleView::update()
 	}
 
 	// Call forms->update()
-	for (auto f : itemForms)
+	for (auto &f : itemForms)
 	{
 		if (f->Enabled)
 		{
@@ -1065,7 +1302,7 @@ void BattleView::update()
 
 	// If we have 'follow agent' enabled we clobber any other movement that may have occurred in
 	// this frame
-	if (this->followAgent)
+	if (followAgent)
 	{
 		if (battle.battleViewSelectedUnits.size() > 0)
 		{
@@ -1076,6 +1313,11 @@ void BattleView::update()
 
 void BattleView::updateSelectedUnits()
 {
+	if (activeTab == notMyTurnTab)
+	{
+		resetPathPreview();
+		return;
+	}
 	auto prevLSU = lastSelectedUnit;
 	auto it = battle.battleViewSelectedUnits.begin();
 	auto o = battle.currentPlayer;
@@ -1111,10 +1353,10 @@ void BattleView::updateSelectedUnits()
 		switch (battle.mode)
 		{
 			case Battle::Mode::RealTime:
-				this->activeTab = this->uiTabsRT[0];
+				activeTab = uiTabsRT[0];
 				break;
 			case Battle::Mode::TurnBased:
-				this->activeTab = this->uiTabsTB[0];
+				activeTab = uiTabsTB[0];
 				break;
 		}
 	}
@@ -1131,8 +1373,6 @@ void BattleView::updateSelectedUnits()
 
 void BattleView::updateSelectionMode()
 {
-	// FIXME: Add Psi in the mix
-	// FIXME: Change cursor
 	if (battle.battleViewSelectedUnits.size() == 0)
 	{
 		if (modifierLCtrl || modifierRCtrl)
@@ -1214,7 +1454,6 @@ void BattleView::updateSelectionMode()
 			break;
 	}
 	// Change cursor
-	bool psiCursor = false;
 	switch (selectionState)
 	{
 		case BattleSelectionState::FireAny:
@@ -1238,7 +1477,6 @@ void BattleView::updateSelectionMode()
 		case BattleSelectionState::PsiStun:
 		case BattleSelectionState::PsiProbe:
 			fw().getCursor().CurrentType = ApocCursor::CursorType::PsiTarget;
-			psiCursor = true;
 			break;
 		case BattleSelectionState::Normal:
 		case BattleSelectionState::NormalAlt:
@@ -1278,8 +1516,13 @@ void BattleView::updateSoldierButtons()
 	bool evasive = false;
 	bool normal = false;
 	bool aggressive = false;
-
-	for (auto u : battle.battleViewSelectedUnits)
+	bool reserve_aimed_set = false;
+	bool reserve_snap_set = false;
+	bool reserve_auto_set = false;
+	bool reserve_kneel_set = false;
+	bool reserve_shot_unset = false;
+	bool reserve_kneel_unset = false;
+	for (auto &u : battle.battleViewSelectedUnits)
 	{
 		switch (u->fire_aiming_mode)
 		{
@@ -1333,31 +1576,126 @@ void BattleView::updateSoldierButtons()
 		{
 			not_kneeling = true;
 		}
+		switch (u->reserve_shot_mode)
+		{
+			case ReserveShotMode::Aimed:
+				reserve_aimed_set = true;
+				break;
+			case ReserveShotMode::Snap:
+				reserve_snap_set = true;
+				break;
+			case ReserveShotMode::Auto:
+				reserve_auto_set = true;
+				break;
+			case ReserveShotMode::None:
+				reserve_shot_unset = true;
+				break;
+		}
+		if (u->reserve_kneel_mode == KneelingMode::Kneeling)
+		{
+			reserve_kneel_set = true;
+		}
+		else
+		{
+			reserve_kneel_unset = true;
+		}
 	}
 
-	this->baseForm->findControlTyped<TriStateBox>("BUTTON_CEASE_FIRE")
+	baseForm->findControlTyped<TriStateBox>("BUTTON_CEASE_FIRE")
 	    ->setState(cease_fire && at_will ? 3 : (cease_fire ? 2 : 1));
-	this->baseForm->findControlTyped<CheckBox>("BUTTON_AIMED")->setChecked(aimed);
-	this->baseForm->findControlTyped<CheckBox>("BUTTON_SNAP")->setChecked(snap);
-	this->baseForm->findControlTyped<CheckBox>("BUTTON_AUTO")->setChecked(auto_fire);
-	this->baseForm->findControlTyped<TriStateBox>("BUTTON_KNEEL")
+	baseForm->findControlTyped<CheckBox>("BUTTON_AIMED")->setChecked(aimed);
+	baseForm->findControlTyped<CheckBox>("BUTTON_SNAP")->setChecked(snap);
+	baseForm->findControlTyped<CheckBox>("BUTTON_AUTO")->setChecked(auto_fire);
+	baseForm->findControlTyped<TriStateBox>("BUTTON_KNEEL")
 	    ->setState(kneeling && not_kneeling ? 3 : (kneeling ? 2 : 1));
-	this->baseForm->findControlTyped<CheckBox>("BUTTON_PRONE")->setChecked(prone);
-	this->baseForm->findControlTyped<CheckBox>("BUTTON_WALK")->setChecked(walk);
-	this->baseForm->findControlTyped<CheckBox>("BUTTON_RUN")->setChecked(run);
-	this->baseForm->findControlTyped<CheckBox>("BUTTON_EVASIVE")->setChecked(evasive);
-	this->baseForm->findControlTyped<CheckBox>("BUTTON_NORMAL")->setChecked(normal);
-	this->baseForm->findControlTyped<CheckBox>("BUTTON_AGGRESSIVE")->setChecked(aggressive);
+	baseForm->findControlTyped<CheckBox>("BUTTON_PRONE")->setChecked(prone);
+	baseForm->findControlTyped<CheckBox>("BUTTON_WALK")->setChecked(walk);
+	baseForm->findControlTyped<CheckBox>("BUTTON_RUN")->setChecked(run);
+	baseForm->findControlTyped<CheckBox>("BUTTON_EVASIVE")->setChecked(evasive);
+	baseForm->findControlTyped<CheckBox>("BUTTON_NORMAL")->setChecked(normal);
+	baseForm->findControlTyped<CheckBox>("BUTTON_AGGRESSIVE")->setChecked(aggressive);
+
+	baseForm->findControlTyped<TriStateBox>("BUTTON_RESERVE_AIMED")
+	    ->setState(reserve_aimed_set && reserve_shot_unset ? 3 : (reserve_aimed_set ? 2 : 1));
+	baseForm->findControlTyped<TriStateBox>("BUTTON_RESERVE_SNAP")
+	    ->setState(reserve_snap_set && reserve_shot_unset ? 3 : (reserve_snap_set ? 2 : 1));
+	baseForm->findControlTyped<TriStateBox>("BUTTON_RESERVE_AUTO")
+	    ->setState(reserve_auto_set && reserve_shot_unset ? 3 : (reserve_auto_set ? 2 : 1));
+	baseForm->findControlTyped<TriStateBox>("BUTTON_RESERVE_KNEEL")
+	    ->setState(reserve_kneel_set && reserve_kneel_unset ? 3 : (reserve_kneel_set ? 2 : 1));
 
 	bool throwing = !battle.battleViewSelectedUnits.empty() &&
 	                battle.battleViewSelectedUnits.front()->isThrowing();
 
-	this->mainTab->findControlTyped<CheckBox>("BUTTON_LEFT_HAND_THROW")
+	mainTab->findControlTyped<CheckBox>("BUTTON_LEFT_HAND_THROW")
 	    ->setChecked(selectionState == BattleSelectionState::ThrowLeft || leftThrowDelay > 0 ||
 	                 throwing);
-	this->mainTab->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND_THROW")
+	mainTab->findControlTyped<CheckBox>("BUTTON_RIGHT_HAND_THROW")
 	    ->setChecked(selectionState == BattleSelectionState::ThrowRight || rightThrowDelay > 0 ||
 	                 throwing);
+}
+
+void BattleView::updateTBButtons()
+{
+	bool visible = activeTab != notMyTurnTab;
+	baseForm->findControlTyped<CheckBox>("BUTTON_FOLLOW_AGENT")->setVisible(visible);
+	baseForm->findControlTyped<GraphicButton>("BUTTON_SHOW_OPTIONS")->setVisible(visible);
+	baseForm->findControlTyped<TriStateBox>("BUTTON_CEASE_FIRE")->setVisible(visible);
+	baseForm->findControlTyped<CheckBox>("BUTTON_AIMED")->setVisible(visible);
+	baseForm->findControlTyped<CheckBox>("BUTTON_SNAP")->setVisible(visible);
+	baseForm->findControlTyped<CheckBox>("BUTTON_AUTO")->setVisible(visible);
+	baseForm->findControlTyped<TriStateBox>("BUTTON_KNEEL")->setVisible(visible);
+	baseForm->findControlTyped<CheckBox>("BUTTON_PRONE")->setVisible(visible);
+	baseForm->findControlTyped<CheckBox>("BUTTON_WALK")->setVisible(visible);
+	baseForm->findControlTyped<CheckBox>("BUTTON_RUN")->setVisible(visible);
+	baseForm->findControlTyped<CheckBox>("BUTTON_EVASIVE")->setVisible(visible);
+	baseForm->findControlTyped<CheckBox>("BUTTON_NORMAL")->setVisible(visible);
+	baseForm->findControlTyped<CheckBox>("BUTTON_AGGRESSIVE")->setVisible(visible);
+	baseForm->findControlTyped<TriStateBox>("BUTTON_RESERVE_AIMED")->setVisible(visible);
+	baseForm->findControlTyped<TriStateBox>("BUTTON_RESERVE_SNAP")->setVisible(visible);
+	baseForm->findControlTyped<TriStateBox>("BUTTON_RESERVE_AUTO")->setVisible(visible);
+	baseForm->findControlTyped<TriStateBox>("BUTTON_RESERVE_KNEEL")->setVisible(visible);
+	baseForm->findControlTyped<GraphicButton>("BUTTON_ENDTURN")->setVisible(visible);
+	baseForm->findControlTyped<RadioButton>("BUTTON_MOVE_GROUP")->setVisible(visible);
+	baseForm->findControlTyped<RadioButton>("BUTTON_MOVE_INDIVIDUALLY")->setVisible(visible);
+}
+
+void BattleView::refreshDelayText()
+{
+	int delay = primingTab->findControlTyped<ScrollBar>("DELAY_SLIDER")->getValue();
+	LogWarning("Delay %d", delay);
+	UString text;
+	if (delay == 0)
+	{
+		text = format(tr("Activates now."));
+	}
+	else
+	{
+		if (battle.mode == Battle::Mode::TurnBased)
+		{
+			if (delay == 1)
+			{
+				text = format(tr("Activates at end of turn."));
+			}
+			else
+			{
+				text = format("%s %d", tr("Turns before activation:"), delay - 1);
+			}
+		}
+		else
+		{
+			text = format(tr("Delay = %i"), (int)((float)delay / 4.0f));
+		}
+	}
+	primingTab->findControlTyped<Label>("DELAY_TEXT")->setText(text);
+}
+
+void BattleView::refreshRangeText()
+{
+	int range = primingTab->findControlTyped<ScrollBar>("RANGE_SLIDER")->getValue();
+
+	UString text = format(tr("Range = %2.1fm."), ((float)(range + 1) * 1.5f));
+	primingTab->findControlTyped<Label>("RANGE_TEXT")->setText(text);
 }
 
 void BattleView::orderJump(Vec3<int> target, BodyState bodyState)
@@ -1388,6 +1726,7 @@ void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 	auto u = battle.battleViewSelectedUnits.front();
 	BattleUnit temp;
 	temp.agent = u->agent;
+	temp.position = u->position;
 	int facingDelta = strafe ? BattleUnitMission::getFacingDelta(
 	                               u->facing, BattleUnitMission::getFacing(temp, target))
 	                         : 0;
@@ -1400,7 +1739,7 @@ void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 	else
 	{
 		// FIXME: Handle group movement (don't forget to turn it off when running away)
-		for (auto unit : battle.battleViewSelectedUnits)
+		for (auto &unit : battle.battleViewSelectedUnits)
 		{
 			if (strafe)
 			{
@@ -1435,7 +1774,7 @@ void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 
 void BattleView::orderTurn(Vec3<int> target)
 {
-	for (auto unit : battle.battleViewSelectedUnits)
+	for (auto &unit : battle.battleViewSelectedUnits)
 	{
 		if (unit->setMission(*state, BattleUnitMission::turn(*unit, target)))
 		{
@@ -1506,7 +1845,7 @@ void BattleView::orderUse(bool right, bool automatic)
 				{
 					item->prime();
 				}
-				this->selectionState =
+				selectionState =
 				    right ? BattleSelectionState::ThrowRight : BattleSelectionState::ThrowLeft;
 			}
 			else
@@ -1515,9 +1854,11 @@ void BattleView::orderUse(bool right, bool automatic)
 				{
 					break;
 				}
-				this->activeTab = this->primingTab;
-				this->activeTab->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")
-				    ->setChecked(right);
+				activeTab = primingTab;
+				refreshDelayText();
+				refreshRangeText();
+				activeTab->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->setChecked(right);
+
 				bool range;
 				switch (item->type->trigger_type)
 				{
@@ -1528,19 +1869,19 @@ void BattleView::orderUse(bool right, bool automatic)
 					default:
 						range = false;
 				}
-				this->activeTab->findControl("RANGE_TEXT")->setVisible(range);
-				this->activeTab->findControl("RANGE_SLIDER")->setVisible(range);
+				activeTab->findControl("RANGE_TEXT")->setVisible(range);
+				activeTab->findControl("RANGE_SLIDER")->setVisible(range);
 			}
 			break;
 		case AEquipmentType::Type::MindBender:
 			// Mind bender does not care for automatic mode
 			selectionState = BattleSelectionState::Normal;
-			this->activeTab = this->psiTab;
-			this->activeTab->findControlTyped<RadioButton>("BUTTON_CONTROL")->setChecked(false);
-			this->activeTab->findControlTyped<RadioButton>("BUTTON_PANIC")->setChecked(false);
-			this->activeTab->findControlTyped<RadioButton>("BUTTON_STUN")->setChecked(false);
-			this->activeTab->findControlTyped<RadioButton>("BUTTON_PROBE")->setChecked(false);
-			this->activeTab->findControlTyped<CheckBox>("RIGHTHANDUSED")->setChecked(right);
+			activeTab = psiTab;
+			activeTab->findControlTyped<RadioButton>("BUTTON_CONTROL")->setChecked(false);
+			activeTab->findControlTyped<RadioButton>("BUTTON_PANIC")->setChecked(false);
+			activeTab->findControlTyped<RadioButton>("BUTTON_STUN")->setChecked(false);
+			activeTab->findControlTyped<RadioButton>("BUTTON_PROBE")->setChecked(false);
+			activeTab->findControlTyped<CheckBox>("RIGHTHANDUSED")->setChecked(right);
 			break;
 		case AEquipmentType::Type::Teleporter:
 			// Teleporter does not care for automatic mode
@@ -1717,26 +2058,79 @@ void BattleView::orderTeleport(Vec3<int> target, bool right)
 
 void BattleView::orderFire(Vec3<int> target, WeaponStatus status, bool modifier)
 {
-	// FIXME: If TB ensure enough TUs for turn and fire
-	for (auto unit : battle.battleViewSelectedUnits)
+	for (auto &unit : battle.battleViewSelectedUnits)
 	{
-		unit->startAttacking(*state, target, status, modifier);
+		if (!unit->startAttacking(*state, target, status, modifier))
+		{
+			LogWarning("Unsufficient TU to fire");
+		}
 	}
 }
 
-void BattleView::orderFire(StateRef<BattleUnit> u, WeaponStatus status)
+void BattleView::orderFire(StateRef<BattleUnit> shooter, Vec3<int> target, WeaponStatus status)
 {
-	// FIXME: If TB ensure enough TUs for turn and fire
-	for (auto unit : battle.battleViewSelectedUnits)
+	if (!shooter->startAttacking(*state, target, status))
 	{
-		unit->startAttacking(*state, u, status);
+		LogWarning("Unsufficient TU to fire");
+	}
+}
+
+void BattleView::orderFire(StateRef<BattleUnit> u, WeaponStatus status, bool forced)
+{
+	if (battle.battleViewSelectedUnits.empty())
+	{
+		return;
+	}
+	bool noLOF = false;
+	if (status == WeaponStatus::FiringBothHands)
+	{
+		for (auto &unit : battle.battleViewSelectedUnits)
+		{
+			if (unit->hasLineToUnit(u))
+			{
+				unit->startAttacking(*state, u, status);
+			}
+			else
+			{
+				if (forced)
+				{
+					orderFire(unit, u->position, status);
+				}
+				else
+				{
+					noLOF = true;
+				}
+			}
+		}
+	}
+	else
+	{
+		auto unit = battle.battleViewSelectedUnits.front();
+		if (unit->hasLineToUnit(u))
+		{
+			unit->startAttacking(*state, u, status);
+		}
+		else
+		{
+			if (forced)
+			{
+				orderFire(unit, u->position, status);
+			}
+			else
+			{
+				noLOF = true;
+			}
+		}
+	}
+	if (noLOF)
+	{
+		LogWarning("No LOF to target!");
 	}
 }
 
 void BattleView::orderFocus(StateRef<BattleUnit> u)
 {
-	// FIXME: Check if player can see unit
-	for (auto unit : battle.battleViewSelectedUnits)
+	for (auto &unit : battle.battleViewSelectedUnits)
 	{
 		unit->setFocus(*state, u);
 	}
@@ -1765,11 +2159,11 @@ void BattleView::orderPsiAttack(StateRef<BattleUnit> u, PsiStatus status, bool r
 
 	if (unit->startAttackPsi(*state, u, status, item->type))
 	{
-		this->activeTab->findControlTyped<RadioButton>("BUTTON_CONTROL")->setChecked(false);
-		this->activeTab->findControlTyped<RadioButton>("BUTTON_PANIC")->setChecked(false);
-		this->activeTab->findControlTyped<RadioButton>("BUTTON_STUN")->setChecked(false);
-		this->activeTab->findControlTyped<RadioButton>("BUTTON_PROBE")->setChecked(false);
-		this->selectionState = BattleSelectionState::Normal;
+		activeTab->findControlTyped<RadioButton>("BUTTON_CONTROL")->setChecked(false);
+		activeTab->findControlTyped<RadioButton>("BUTTON_PANIC")->setChecked(false);
+		activeTab->findControlTyped<RadioButton>("BUTTON_STUN")->setChecked(false);
+		activeTab->findControlTyped<RadioButton>("BUTTON_PROBE")->setChecked(false);
+		selectionState = BattleSelectionState::Normal;
 	}
 }
 
@@ -1785,7 +2179,7 @@ void BattleView::eventOccurred(Event *e)
 	activeTab->eventOccured(e);
 	baseForm->eventOccured(e);
 	bool eventWithin = false;
-	for (auto f : itemForms)
+	for (auto &f : itemForms)
 	{
 		if (f->Enabled)
 		{
@@ -1810,9 +2204,10 @@ void BattleView::eventOccurred(Event *e)
 	     e->keyboard().KeyCode == SDLK_LALT || e->keyboard().KeyCode == SDLK_RCTRL ||
 	     e->keyboard().KeyCode == SDLK_LCTRL || e->keyboard().KeyCode == SDLK_f ||
 	     e->keyboard().KeyCode == SDLK_r || e->keyboard().KeyCode == SDLK_a ||
+	     e->keyboard().KeyCode == SDLK_e || e->keyboard().KeyCode == SDLK_t ||
 	     e->keyboard().KeyCode == SDLK_p || e->keyboard().KeyCode == SDLK_h ||
 	     e->keyboard().KeyCode == SDLK_k || e->keyboard().KeyCode == SDLK_q ||
-		  e->keyboard().KeyCode == SDLK_s || e->keyboard().KeyCode == SDLK_j))
+	     e->keyboard().KeyCode == SDLK_s || e->keyboard().KeyCode == SDLK_j))
 	{
 		switch (e->keyboard().KeyCode)
 		{
@@ -1839,32 +2234,47 @@ void BattleView::eventOccurred(Event *e)
 				    {StageCmd::Command::PUSH, mksp<InGameOptions>(state->shared_from_this())});
 				return;
 			case SDLK_PAGEUP:
-				this->setZLevel(getZLevel() + 1);
+				setZLevel(getZLevel() + 1);
 				setSelectedTilePosition(
 				    {selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z + 1});
 				updateLayerButtons();
 				break;
 			case SDLK_PAGEDOWN:
-				this->setZLevel(getZLevel() - 1);
+				setZLevel(getZLevel() - 1);
 				setSelectedTilePosition(
 				    {selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z - 1});
 				updateLayerButtons();
 				break;
 			case SDLK_TAB:
-				this->baseForm->findControlTyped<CheckBox>("BUTTON_TOGGLE_STRATMAP")
-				    ->setChecked(
-				        !this->baseForm->findControlTyped<CheckBox>("BUTTON_TOGGLE_STRATMAP")
-				             ->isChecked());
+				baseForm->findControlTyped<CheckBox>("BUTTON_TOGGLE_STRATMAP")
+				    ->setChecked(!baseForm->findControlTyped<CheckBox>("BUTTON_TOGGLE_STRATMAP")
+				                      ->isChecked());
 				break;
 			case SDLK_SPACE:
-				if (this->updateSpeed != BattleUpdateSpeed::Pause)
+				if (updateSpeed != BattleUpdateSpeed::Pause)
 					setUpdateSpeed(BattleUpdateSpeed::Pause);
 				else
-					setUpdateSpeed(this->lastSpeed);
+					setUpdateSpeed(lastSpeed);
+				break;
+			case SDLK_e:
+				if (battle.mode == Battle::Mode::TurnBased)
+				{
+					battle.interruptUnits.clear();
+					for (auto &u : battle.units)
+					{
+						if (u.second->owner != battle.currentActiveOrganisation ||
+						    !u.second->isConscious())
+						{
+							continue;
+						}
+						u.second->cancelMissions(*state);
+					}
+					battle.endTurn(*state);
+				}
 				break;
 			case SDLK_f:
 			{
-				auto t = this->getSelectedTilePosition();
+				auto t = getSelectedTilePosition();
 				auto &map = *battle.map;
 				auto tile = map.getTile(t);
 				for (auto &o : tile->ownedObjects)
@@ -1925,7 +2335,8 @@ void BattleView::eventOccurred(Event *e)
 					      glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
 					          5.0f)) == !inverse)
 					{
-						u.second->dealDamage(*state, 9001, false, BodyPart::Helmet, u.second->getHealth() + 4);
+						u.second->dealDamage(*state, 9001, false, BodyPart::Helmet,
+						                     u.second->getHealth() + 4);
 					}
 				}
 				break;
@@ -1936,21 +2347,19 @@ void BattleView::eventOccurred(Event *e)
 				bool local = !(modifierLCtrl || modifierRCtrl);
 				for (auto &u : battle.units)
 				{
-					if (u.second->isDead())
+					if (u.second->isDead() || u.second->retreated)
 					{
 						continue;
 					}
 
 					if (((local &&
-						u.second->tileObject->getOwningTile()->position ==
-						selectedTilePosition) ||
-						(!local &&
-							glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
-							5.0f)) == !inverse)
+					      u.second->tileObject->getOwningTile()->position ==
+					          selectedTilePosition) ||
+					     (!local &&
+					      glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
+					          5.0f)) == !inverse)
 					{
-						u.second->die(*state);
-						u.second->tileObject->removeFromMap();
-						u.second->destroyed = true;
+						u.second->retreat(*state);
 					}
 				}
 				break;
@@ -2005,6 +2414,20 @@ void BattleView::eventOccurred(Event *e)
 				}
 				break;
 			}
+			case SDLK_t:
+			{
+				LogWarning("Restoring TU");
+				for (auto &u : battle.units)
+				{
+					if (!u.second->isConscious() ||
+					    u.second->owner != battle.currentActiveOrganisation)
+					{
+						continue;
+					}
+					u.second->agent->modified_stats.time_units = u.second->initialTU;
+				}
+				break;
+			}
 			case SDLK_a:
 			{
 				LogWarning("AI debug key currently disabled");
@@ -2033,7 +2456,7 @@ void BattleView::eventOccurred(Event *e)
 			{
 				if (!battle.battleViewSelectedUnits.empty())
 				{
-					auto t = this->getSelectedTilePosition();
+					auto t = getSelectedTilePosition();
 					orderJump(t);
 				}
 				break;
@@ -2042,10 +2465,10 @@ void BattleView::eventOccurred(Event *e)
 	}
 	else if (e->type() == EVENT_MOUSE_MOVE)
 	{
-		Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
+		Vec2<float> screenOffset = {getScreenOffset().x, getScreenOffset().y};
 		// Offset by 4 since ingame 4 is the typical height of the ground, and game displays cursor
 		// on top of the ground
-		setSelectedTilePosition(this->screenToTileCoords(
+		setSelectedTilePosition(screenToTileCoords(
 		    Vec2<float>((float)e->mouse().X, (float)e->mouse().Y + 4) - screenOffset,
 		    (float)getZLevel() - 1.0f));
 	}
@@ -2079,458 +2502,7 @@ void BattleView::eventOccurred(Event *e)
 	// Exclude mouse down events that are over the form
 	else if (e->type() == EVENT_MOUSE_DOWN)
 	{
-		if (this->getViewMode() == TileViewMode::Strategy && e->type() == EVENT_MOUSE_DOWN &&
-		    Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
-		{
-			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
-			auto clickTile = this->screenToTileCoords(
-			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
-			this->setScreenCenterTile({clickTile.x, clickTile.y});
-		}
-		else if (e->type() == EVENT_MOUSE_DOWN &&
-		         (Event::isPressed(e->mouse().Button, Event::MouseButton::Middle)))
-		{
-			// CHEAT - move unit to mouse
-			if (!battle.battleViewSelectedUnits.empty())
-			{
-				selectionState = BattleSelectionState::TeleportLeft;
-			}
-		}
-		else if (e->type() == EVENT_MOUSE_DOWN &&
-		         (Event::isPressed(e->mouse().Button, Event::MouseButton::Left) ||
-		          Event::isPressed(e->mouse().Button, Event::MouseButton::Right)))
-		{
-			auto buttonPressed = Event::isPressed(e->mouse().Button, Event::MouseButton::Left)
-			                         ? Event::MouseButton::Left
-			                         : Event::MouseButton::Right;
-
-			auto player = state->getPlayer();
-			// If a click has not been handled by a form it's in the map.
-			auto t = this->getSelectedTilePosition();
-			auto objsPresent = map.getTile(t.x, t.y, t.z)->getUnits(true);
-			auto unitPresent = objsPresent.empty() ? nullptr : objsPresent.front();
-			auto objsOccupying = map.getTile(t.x, t.y, t.z)->getUnits(true, true);
-			auto unitOccupying = objsOccupying.empty() ? nullptr : objsOccupying.front();
-			if (unitOccupying)
-			{
-				unitPresent = unitOccupying;
-			}
-			// Determine attack target
-			sp<BattleUnit> attackTarget = nullptr;
-			if (!attackTarget)
-			{
-				for (auto u : objsOccupying)
-				{
-					if (player->isRelatedTo(u->owner) == Organisation::Relation::Hostile &&
-					    battle.visibleUnits[player].find({&*state, u->id}) !=
-					        battle.visibleUnits[player].end())
-					{
-						attackTarget = u;
-						break;
-					}
-				}
-			}
-			if (!attackTarget)
-			{
-				for (auto u : objsPresent)
-				{
-					if (player->isRelatedTo(u->owner) == Organisation::Relation::Hostile &&
-					    battle.visibleUnits[player].find({&*state, u->id}) !=
-					        battle.visibleUnits[player].end())
-					{
-						attackTarget = u;
-						break;
-					}
-				}
-			}
-			if (!attackTarget && unitPresent && (unitPresent->owner == player ||
-			    battle.visibleUnits[player].find({&*state, unitPresent->id}) !=
-			        battle.visibleUnits[player].end()))
-			{
-				attackTarget = unitPresent;
-			}
-			// Determine selection/deselection target
-			sp<BattleUnit> selectionTarget = nullptr;
-			if (!selectionTarget)
-			{
-				for (auto u : objsOccupying)
-				{
-					if (player == u->owner && u->moraleState == MoraleState::Normal)
-					{
-						selectionTarget = u;
-						break;
-					}
-				}
-			}
-			if (!selectionTarget)
-			{
-				for (auto u : objsPresent)
-				{
-					if (player == u->owner && u->moraleState == MoraleState::Normal)
-					{
-						selectionTarget = u;
-						break;
-					}
-				}
-			}
-			// Determine course of action
-			LogWarning("Click at tile %d, %d, %d", t.x, t.y, t.z);
-			switch (selectionState)
-			{
-				case BattleSelectionState::Normal:
-				case BattleSelectionState::NormalAlt:
-					switch (buttonPressed)
-					{
-						case Event::MouseButton::Left:
-							// If selectable unit is present, priority is to move if not occupied
-							if (selectionTarget)
-							{
-								// Move if units are selected and noone is occupying
-								if (!unitOccupying && battle.battleViewSelectedUnits.size() > 0)
-								{
-									orderMove(t, selectionState == BattleSelectionState::NormalAlt);
-								}
-								// Select if friendly unit present under cursor
-								else
-								{
-									orderSelect({&*state, selectionTarget->id});
-								}
-							}
-							// Otherwise move if not occupied
-							else if (!unitOccupying)
-							{
-								orderMove(t, selectionState == BattleSelectionState::NormalAlt);
-							}
-							break;
-						case Event::MouseButton::Right:
-							// Turn if no enemy unit present under cursor
-							// or if holding alt
-							if (!attackTarget ||
-							    player->isRelatedTo(attackTarget->owner) !=
-							        Organisation::Relation::Hostile ||
-							    selectionState == BattleSelectionState::NormalAlt)
-							{
-								orderTurn(t);
-							}
-							// Focus fire RT / Fire TB
-							else
-							{
-								switch (battle.mode)
-								{
-									case Battle::Mode::TurnBased:
-										if (attackTarget)
-										{
-											orderFire({&*state, attackTarget->id});
-										}
-										break;
-									case Battle::Mode::RealTime:
-										if (attackTarget->isConscious())
-										{
-											orderFocus({&*state, attackTarget->id});
-										}
-										break;
-								}
-							}
-							break;
-						default:
-							LogError("Unhandled mouse button!");
-							break;
-					}
-					break;
-				case BattleSelectionState::NormalCtrl:
-				case BattleSelectionState::NormalCtrlAlt:
-					// Selection add/remove mode
-					switch (buttonPressed)
-					{
-						// LMB = Add to selection
-						case Event::MouseButton::Left:
-							if (selectionTarget)
-							{
-								orderSelect({&*state, selectionTarget->id}, false, true);
-							}
-							// If none occupying - order move if additional modifiers held
-							else if (!unitOccupying &&
-							         selectionState != BattleSelectionState::NormalCtrl)
-							{
-								// Move pathing through
-								orderMove(t, false, true);
-							}
-							break;
-						// RMB = Remove from selection
-						case Event::MouseButton::Right:
-							if (selectionTarget)
-							{
-								orderSelect({&*state, selectionTarget->id}, true);
-							}
-							break;
-						default:
-							LogError("Unhandled mouse button!");
-							break;
-					}
-					// Debug section below
-					if (true)
-					{
-						UString debug = "";
-						debug += format("\nDEBUG INFORMATION ABOUT TILE %d, %d, %d", t.x, t.y, t.z);
-						debug += format("\n LOS BLOCK %d", battle.getLosBlockID(t.x, t.y, t.z));
-						auto &map = *battle.map;
-						auto tile = map.getTile(t);
-						for (auto &o : tile->ownedObjects)
-						{
-							if (o->getType() == TileObject::Type::Ground ||
-							    o->getType() == TileObject::Type::Feature ||
-							    o->getType() == TileObject::Type::LeftWall ||
-							    o->getType() == TileObject::Type::RightWall)
-							{
-								auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)
-								              ->getOwner();
-								debug += format(
-								    "\n[%s] SBT %d STATUS %s\nFIRE Res=%d Tim=%d Burned=%D",
-								    mp->type.id, mp->type->getVanillaSupportedById(),
-								    !mp->isAlive()
-								        ? "DEAD "
-								        : (mp->damaged
-								               ? "DAMAGED"
-								               : (mp->providesHardSupport ? "HARD " : "SOFT ")),
-								    mp->type->fire_resist, mp->type->fire_burn_time,
-								    mp->burnTicksAccumulated);
-								for (int x = t.x - 1; x <= t.x + 1; x++)
-								{
-									for (int y = t.y - 1; y <= t.y + 1; y++)
-									{
-										for (int z = t.z - 1; z <= t.z + 1; z++)
-										{
-											if (x < 0 || x >= map.size.x || y < 0 ||
-											    y >= map.size.y || z < 0 || z >= map.size.z)
-											{
-												continue;
-											}
-											auto tile2 = map.getTile(x, y, z);
-											for (auto &o2 : tile2->ownedObjects)
-											{
-												if (o2->getType() == TileObject::Type::Ground ||
-												    o2->getType() == TileObject::Type::Feature ||
-												    o2->getType() == TileObject::Type::LeftWall ||
-												    o2->getType() == TileObject::Type::RightWall)
-												{
-													auto mp2 = std::static_pointer_cast<
-													               TileObjectBattleMapPart>(o2)
-													               ->getOwner();
-													for (auto &p : mp2->supportedParts)
-													{
-														if (p.first == t &&
-														    p.second == mp->type->type)
-														{
-															debug += format(
-															    "\nSupported by %s at %d %d %d",
-															    mp2->type.id, x - t.x, y - t.y,
-															    z - t.z);
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-							if (o->getType() == TileObject::Type::Hazard)
-							{
-								auto h = std::static_pointer_cast<TileObjectBattleHazard>(o)
-								             ->getHazard();
-								debug += format("\nHazard %s %s Pow=%d Age=%d LT=%d  ",
-								                h->damageType.id, h->damageType->hazardType.id,
-								                h->power, h->age, h->lifetime);
-							}
-						}
-
-						auto uto = tile->getUnitIfPresent();
-						if (uto)
-						{
-							auto u = uto->getUnit();
-							debug += format("\nContains unit %s.", u->id.cStr());
-							debug += format("\nMorale state: %d", (int)u->moraleState);
-							debug += format("\nPosition: %f, %f, %f", u->position.x, u->position.y,
-							                u->position.z);
-							debug += format("\nGoal: %f, %f, %f", u->goalPosition.x,
-							                u->goalPosition.y, u->goalPosition.z);
-							debug += format("\nCurrent movement: %d, falling: %d",
-							                (int)u->current_movement_state, (int)u->falling);
-							debug += format("\nMissions [%d]:", (int)u->missions.size());
-							for (auto &m : u->missions)
-							{
-								debug += format("\n%s", m->getName());
-							}
-							debug += format("\nSeen units [%d]:", (int)u->visibleUnits.size());
-							for (auto &unit : u->visibleUnits)
-							{
-								debug += format("\n%s", unit.id);
-							}
-							/*	debug += format(
-							        "\nCurrent ai state:\n  %s\n  enSp %d enSpPr %d attPos %s "
-							        "lasSnEnPos %s",
-							        u->aiList.lastDecision.getName(), (int)u->aiState.enemySpotted,
-							        (int)u->aiState.enemySpottedPrevious,
-							   u->aiState.attackerPosition,
-							        u->aiList.lastSeenEnemyPosition);*/
-						}
-						LogWarning("%s", debug);
-					}
-					break;
-				case BattleSelectionState::FireAny:
-				case BattleSelectionState::FireLeft:
-				case BattleSelectionState::FireRight:
-					switch (buttonPressed)
-					{
-						case Event::MouseButton::Left:
-						{
-							WeaponStatus status = WeaponStatus::FiringBothHands;
-							switch (selectionState)
-							{
-								case BattleSelectionState::FireLeft:
-									status = WeaponStatus::FiringLeftHand;
-									break;
-								case BattleSelectionState::FireRight:
-									status = WeaponStatus::FiringRightHand;
-									break;
-								case BattleSelectionState::FireAny:
-								default:
-									// Do nothing
-									break;
-							}
-							bool modified = (modifierLAlt || modifierRAlt);
-							if (modified)
-							{
-								orderFire(t, status, modified);
-							}
-							else if (attackTarget)
-							{
-								orderFire({&*state, attackTarget->id}, status);
-							}
-							else
-							{
-								orderFire(t, status, modified);
-							}
-							break;
-						}
-						case Event::MouseButton::Right:
-						{
-							if (selectionState != BattleSelectionState::FireAny)
-							{
-								selectionState = BattleSelectionState::Normal;
-							}
-							break;
-						}
-						default:
-							LogError("Unhandled mouse button!");
-							break;
-					}
-					break;
-				case BattleSelectionState::ThrowRight:
-				case BattleSelectionState::ThrowLeft:
-					switch (buttonPressed)
-					{
-						case Event::MouseButton::Left:
-						{
-							bool right = selectionState == BattleSelectionState::ThrowRight;
-							orderThrow(t, right);
-							break;
-						}
-						case Event::MouseButton::Right:
-						{
-							selectionState = BattleSelectionState::Normal;
-							break;
-						}
-						default:
-							LogError("Unhandled mouse button!");
-							break;
-					}
-					break;
-				case BattleSelectionState::TeleportLeft:
-				case BattleSelectionState::TeleportRight:
-					switch (buttonPressed)
-					{
-						case Event::MouseButton::Left:
-						{
-							bool right = selectionState == BattleSelectionState::TeleportRight;
-							orderTeleport(t, right);
-							break;
-						}
-						case Event::MouseButton::Right:
-						{
-							selectionState = BattleSelectionState::Normal;
-							break;
-						}
-						default:
-							LogError("Unhandled mouse button!");
-							break;
-					}
-					break;
-				case BattleSelectionState::PsiControl:
-				case BattleSelectionState::PsiPanic:
-				case BattleSelectionState::PsiStun:
-				case BattleSelectionState::PsiProbe:
-					switch (buttonPressed)
-					{
-						case Event::MouseButton::Left:
-						{
-							auto u = battle.battleViewSelectedUnits.front();
-							if (attackTarget && attackTarget != u.getSp())
-							{
-								bool right =
-								    this->activeTab->findControlTyped<CheckBox>("RIGHTHANDUSED")
-								        ->isChecked();
-								switch (selectionState)
-								{
-									case BattleSelectionState::PsiControl:
-										orderPsiAttack({&*state, attackTarget->id},
-										               PsiStatus::Control, right);
-										break;
-									case BattleSelectionState::PsiPanic:
-										orderPsiAttack({&*state, attackTarget->id},
-										               PsiStatus::Panic, right);
-										break;
-									case BattleSelectionState::PsiStun:
-										orderPsiAttack({&*state, attackTarget->id}, PsiStatus::Stun,
-										               right);
-										break;
-									case BattleSelectionState::PsiProbe:
-										orderPsiAttack({&*state, attackTarget->id},
-										               PsiStatus::Probe, right);
-										break;
-									default:
-										// Don't cry Travis
-										break;
-								}
-							}
-							break;
-						}
-						case Event::MouseButton::Right:
-						{
-							selectionState = BattleSelectionState::Normal;
-							if (this->activeTab != psiTab)
-							{
-								LogError("How come are we in psi mode but not in psi tab?");
-							}
-							else
-							{
-								this->activeTab->findControlTyped<RadioButton>("BUTTON_CONTROL")
-								    ->setChecked(false);
-								this->activeTab->findControlTyped<RadioButton>("BUTTON_PANIC")
-								    ->setChecked(false);
-								this->activeTab->findControlTyped<RadioButton>("BUTTON_STUN")
-								    ->setChecked(false);
-								this->activeTab->findControlTyped<RadioButton>("BUTTON_PROBE")
-								    ->setChecked(false);
-							}
-							break;
-						}
-						default:
-							LogError("Unhandled mouse button!");
-							break;
-					}
-					break;
-			}
-		}
+		handleMouseDown(e);
 	}
 	else if (e->type() == EVENT_GAME_STATE)
 	{
@@ -2560,36 +2532,501 @@ void BattleView::eventOccurred(Event *e)
 	}
 }
 
+void BattleView::handleMouseDown(Event *e)
+
+{
+	if (activeTab == notMyTurnTab)
+	{
+		return;
+	}
+
+	if (getViewMode() == TileViewMode::Strategy && e->type() == EVENT_MOUSE_DOWN &&
+	    Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
+	{
+		Vec2<float> screenOffset = {getScreenOffset().x, getScreenOffset().y};
+		auto clickTile =
+		    screenToTileCoords(Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
+		setScreenCenterTile({clickTile.x, clickTile.y});
+	}
+	else if (e->type() == EVENT_MOUSE_DOWN &&
+	         (Event::isPressed(e->mouse().Button, Event::MouseButton::Middle)))
+	{
+		// CHEAT - move unit to mouse
+		if (!battle.battleViewSelectedUnits.empty())
+		{
+			selectionState = BattleSelectionState::TeleportLeft;
+		}
+	}
+	else if (e->type() == EVENT_MOUSE_DOWN &&
+	         (Event::isPressed(e->mouse().Button, Event::MouseButton::Left) ||
+	          Event::isPressed(e->mouse().Button, Event::MouseButton::Right)))
+	{
+		auto buttonPressed = Event::isPressed(e->mouse().Button, Event::MouseButton::Left)
+		                         ? Event::MouseButton::Left
+		                         : Event::MouseButton::Right;
+
+		auto player = state->getPlayer();
+		// If a click has not been handled by a form it's in the map.
+		auto t = getSelectedTilePosition();
+		auto objsPresent = map.getTile(t.x, t.y, t.z)->getUnits(true);
+		auto unitPresent = objsPresent.empty() ? nullptr : objsPresent.front();
+		auto objsOccupying = map.getTile(t.x, t.y, t.z)->getUnits(true, true);
+		auto unitOccupying = objsOccupying.empty() ? nullptr : objsOccupying.front();
+		if (unitOccupying)
+		{
+			unitPresent = unitOccupying;
+		}
+		// Determine attack target
+		sp<BattleUnit> attackTarget = nullptr;
+		if (!attackTarget)
+		{
+			for (auto &u : objsOccupying)
+			{
+				if (player->isRelatedTo(u->owner) == Organisation::Relation::Hostile &&
+				    battle.visibleUnits[player].find({&*state, u->id}) !=
+				        battle.visibleUnits[player].end())
+				{
+					attackTarget = u;
+					break;
+				}
+			}
+		}
+		if (!attackTarget)
+		{
+			for (auto &u : objsPresent)
+			{
+				if (player->isRelatedTo(u->owner) == Organisation::Relation::Hostile &&
+				    battle.visibleUnits[player].find({&*state, u->id}) !=
+				        battle.visibleUnits[player].end())
+				{
+					attackTarget = u;
+					break;
+				}
+			}
+		}
+		if (!attackTarget && unitPresent &&
+		    (unitPresent->owner == player ||
+		     battle.visibleUnits[player].find({&*state, unitPresent->id}) !=
+		         battle.visibleUnits[player].end()))
+		{
+			attackTarget = unitPresent;
+		}
+		// Determine selection/deselection target
+		sp<BattleUnit> selectionTarget = nullptr;
+		if (!selectionTarget)
+		{
+			for (auto &u : objsOccupying)
+			{
+				if (player == u->owner && u->moraleState == MoraleState::Normal)
+				{
+					selectionTarget = u;
+					break;
+				}
+			}
+		}
+		if (!selectionTarget)
+		{
+			for (auto &u : objsPresent)
+			{
+				if (player == u->owner && u->moraleState == MoraleState::Normal)
+				{
+					selectionTarget = u;
+					break;
+				}
+			}
+		}
+		// Determine course of action
+		LogWarning("Click at tile %d, %d, %d", t.x, t.y, t.z);
+		switch (selectionState)
+		{
+			case BattleSelectionState::Normal:
+			case BattleSelectionState::NormalAlt:
+				switch (buttonPressed)
+				{
+					case Event::MouseButton::Left:
+						// If selectable unit is present, priority is to move if not occupied
+						if (selectionTarget)
+						{
+							// Move if units are selected and noone is occupying
+							if (!unitOccupying && battle.battleViewSelectedUnits.size() > 0)
+							{
+								orderMove(t, selectionState == BattleSelectionState::NormalAlt);
+							}
+							// Select if friendly unit present under cursor
+							else
+							{
+								orderSelect({&*state, selectionTarget->id});
+							}
+						}
+						// Otherwise move if not occupied
+						else if (!unitOccupying)
+						{
+							orderMove(t, selectionState == BattleSelectionState::NormalAlt);
+						}
+						break;
+					case Event::MouseButton::Right:
+						// Turn if no enemy unit present under cursor
+						// or if holding alt
+						if (!attackTarget ||
+						    player->isRelatedTo(attackTarget->owner) !=
+						        Organisation::Relation::Hostile ||
+						    selectionState == BattleSelectionState::NormalAlt)
+						{
+							orderTurn(t);
+						}
+						// Focus fire RT / Fire TB
+						else
+						{
+							switch (battle.mode)
+							{
+								case Battle::Mode::TurnBased:
+									if (attackTarget)
+									{
+										orderFire({&*state, attackTarget->id},
+										          WeaponStatus::FiringBothHands,
+										          modifierLShift || modifierRShift);
+									}
+									break;
+								case Battle::Mode::RealTime:
+									if (attackTarget->isConscious())
+									{
+										orderFocus({&*state, attackTarget->id});
+									}
+									break;
+							}
+						}
+						break;
+					default:
+						LogError("Unhandled mouse button!");
+						break;
+				}
+				break;
+			case BattleSelectionState::NormalCtrl:
+			case BattleSelectionState::NormalCtrlAlt:
+				// Selection add/remove mode
+				switch (buttonPressed)
+				{
+					// LMB = Add to selection
+					case Event::MouseButton::Left:
+						if (selectionTarget)
+						{
+							orderSelect({&*state, selectionTarget->id}, false, true);
+						}
+						// If none occupying - order move if additional modifiers held
+						else if (!unitOccupying &&
+						         selectionState != BattleSelectionState::NormalCtrl)
+						{
+							// Move pathing through
+							orderMove(t, false, true);
+						}
+						break;
+					// RMB = Remove from selection
+					case Event::MouseButton::Right:
+						if (selectionTarget)
+						{
+							orderSelect({&*state, selectionTarget->id}, true);
+						}
+						break;
+					default:
+						LogError("Unhandled mouse button!");
+						break;
+				}
+				// Debug section below
+				if (true)
+				{
+					UString debug = "";
+					debug += format("\nDEBUG INFORMATION ABOUT TILE %d, %d, %d", t.x, t.y, t.z);
+					debug += format("\n LOS BLOCK %d", battle.getLosBlockID(t.x, t.y, t.z));
+					auto &map = *battle.map;
+					auto tile = map.getTile(t);
+					debug += format("\n STAND %d PASS %d", (int)tile->canStand,
+					                (int)tile->getPassable());
+					for (auto &o : tile->ownedObjects)
+					{
+						if (o->getType() == TileObject::Type::Ground ||
+						    o->getType() == TileObject::Type::Feature ||
+						    o->getType() == TileObject::Type::LeftWall ||
+						    o->getType() == TileObject::Type::RightWall)
+						{
+							auto mp =
+							    std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+							debug += format(
+							    "\n[%s] SBT %d STATUS %s\nFIRE Res=%d Tim=%d Burned=%D",
+							    mp->type.id, mp->type->getVanillaSupportedById(),
+							    !mp->isAlive()
+							        ? "DEAD "
+							        : (mp->damaged ? "DAMAGED"
+							                       : (mp->providesHardSupport ? "HARD " : "SOFT ")),
+							    mp->type->fire_resist, mp->type->fire_burn_time,
+							    mp->burnTicksAccumulated);
+							for (int x = t.x - 1; x <= t.x + 1; x++)
+							{
+								for (int y = t.y - 1; y <= t.y + 1; y++)
+								{
+									for (int z = t.z - 1; z <= t.z + 1; z++)
+									{
+										if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y ||
+										    z < 0 || z >= map.size.z)
+										{
+											continue;
+										}
+										auto tile2 = map.getTile(x, y, z);
+										for (auto &o2 : tile2->ownedObjects)
+										{
+											if (o2->getType() == TileObject::Type::Ground ||
+											    o2->getType() == TileObject::Type::Feature ||
+											    o2->getType() == TileObject::Type::LeftWall ||
+											    o2->getType() == TileObject::Type::RightWall)
+											{
+												auto mp2 = std::static_pointer_cast<
+												               TileObjectBattleMapPart>(o2)
+												               ->getOwner();
+												for (auto &p : mp2->supportedParts)
+												{
+													if (p.first == t && p.second == mp->type->type)
+													{
+														debug +=
+														    format("\nSupported by %s at %d %d %d",
+														           mp2->type.id, x - t.x, y - t.y,
+														           z - t.z);
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+						if (o->getType() == TileObject::Type::Hazard)
+						{
+							auto h =
+							    std::static_pointer_cast<TileObjectBattleHazard>(o)->getHazard();
+							debug +=
+							    format("\nHazard %s %s Pow=%d Age=%d LT=%d  ", h->damageType.id,
+							           h->damageType->hazardType.id, h->power, h->age, h->lifetime);
+						}
+					}
+
+					auto uto = tile->getUnitIfPresent();
+					if (uto)
+					{
+						auto u = uto->getUnit();
+						debug += format("\nContains unit %s.", u->id.cStr());
+						debug += format("\nMorale state: %d", (int)u->moraleState);
+						debug += format("\nPosition: %f, %f, %f", u->position.x, u->position.y,
+						                u->position.z);
+						debug += format("\nGoal: %f, %f, %f", u->goalPosition.x, u->goalPosition.y,
+						                u->goalPosition.z);
+						debug += format("\nCurrent movement: %d, falling: %d",
+						                (int)u->current_movement_state, (int)u->falling);
+						debug += format("\nMissions [%d]:", (int)u->missions.size());
+						for (auto &m : u->missions)
+						{
+							debug += format("\n%s", m->getName());
+						}
+						debug += format("\nSeen units [%d]:", (int)u->visibleUnits.size());
+						for (auto &unit : u->visibleUnits)
+						{
+							debug += format("\n%s", unit.id);
+						}
+						/*	debug += format(
+						"\nCurrent ai state:\n  %s\n  enSp %d enSpPr %d attPos %s "
+						"lasSnEnPos %s",
+						u->aiList.lastDecision.getName(), (int)u->aiState.enemySpotted,
+						(int)u->aiState.enemySpottedPrevious,
+						u->aiState.attackerPosition,
+						u->aiList.lastSeenEnemyPosition);*/
+					}
+					LogWarning("%s", debug);
+				}
+				break;
+			case BattleSelectionState::FireAny:
+			case BattleSelectionState::FireLeft:
+			case BattleSelectionState::FireRight:
+				switch (buttonPressed)
+				{
+					case Event::MouseButton::Left:
+					{
+						WeaponStatus status = WeaponStatus::FiringBothHands;
+						switch (selectionState)
+						{
+							case BattleSelectionState::FireLeft:
+								status = WeaponStatus::FiringLeftHand;
+								break;
+							case BattleSelectionState::FireRight:
+								status = WeaponStatus::FiringRightHand;
+								break;
+							case BattleSelectionState::FireAny:
+							default:
+								// Do nothing
+								break;
+						}
+						bool modified = (modifierLAlt || modifierRAlt);
+						if (modified)
+						{
+							orderFire(t, status, modified);
+						}
+						else if (attackTarget)
+						{
+							orderFire({&*state, attackTarget->id}, status,
+							          modifierRShift || modifierLShift);
+						}
+						else
+						{
+							orderFire(t, status, modified);
+						}
+						break;
+					}
+					case Event::MouseButton::Right:
+					{
+						if (selectionState != BattleSelectionState::FireAny)
+						{
+							selectionState = BattleSelectionState::Normal;
+						}
+						break;
+					}
+					default:
+						LogError("Unhandled mouse button!");
+						break;
+				}
+				break;
+			case BattleSelectionState::ThrowRight:
+			case BattleSelectionState::ThrowLeft:
+				switch (buttonPressed)
+				{
+					case Event::MouseButton::Left:
+					{
+						bool right = selectionState == BattleSelectionState::ThrowRight;
+						orderThrow(t, right);
+						break;
+					}
+					case Event::MouseButton::Right:
+					{
+						selectionState = BattleSelectionState::Normal;
+						break;
+					}
+					default:
+						LogError("Unhandled mouse button!");
+						break;
+				}
+				break;
+			case BattleSelectionState::TeleportLeft:
+			case BattleSelectionState::TeleportRight:
+				switch (buttonPressed)
+				{
+					case Event::MouseButton::Left:
+					{
+						bool right = selectionState == BattleSelectionState::TeleportRight;
+						orderTeleport(t, right);
+						break;
+					}
+					case Event::MouseButton::Right:
+					{
+						selectionState = BattleSelectionState::Normal;
+						break;
+					}
+					default:
+						LogError("Unhandled mouse button!");
+						break;
+				}
+				break;
+			case BattleSelectionState::PsiControl:
+			case BattleSelectionState::PsiPanic:
+			case BattleSelectionState::PsiStun:
+			case BattleSelectionState::PsiProbe:
+				switch (buttonPressed)
+				{
+					case Event::MouseButton::Left:
+					{
+						auto u = battle.battleViewSelectedUnits.front();
+						if (attackTarget && attackTarget != u.getSp())
+						{
+							bool right =
+							    activeTab->findControlTyped<CheckBox>("RIGHTHANDUSED")->isChecked();
+							switch (selectionState)
+							{
+								case BattleSelectionState::PsiControl:
+									orderPsiAttack({&*state, attackTarget->id}, PsiStatus::Control,
+									               right);
+									break;
+								case BattleSelectionState::PsiPanic:
+									orderPsiAttack({&*state, attackTarget->id}, PsiStatus::Panic,
+									               right);
+									break;
+								case BattleSelectionState::PsiStun:
+									orderPsiAttack({&*state, attackTarget->id}, PsiStatus::Stun,
+									               right);
+									break;
+								case BattleSelectionState::PsiProbe:
+									orderPsiAttack({&*state, attackTarget->id}, PsiStatus::Probe,
+									               right);
+									break;
+								default:
+									// Don't cry Travis
+									break;
+							}
+						}
+						break;
+					}
+					case Event::MouseButton::Right:
+					{
+						selectionState = BattleSelectionState::Normal;
+						if (activeTab != psiTab)
+						{
+							LogError("How come are we in psi mode but not in psi tab?");
+						}
+						else
+						{
+							activeTab->findControlTyped<RadioButton>("BUTTON_CONTROL")
+							    ->setChecked(false);
+							activeTab->findControlTyped<RadioButton>("BUTTON_PANIC")
+							    ->setChecked(false);
+							activeTab->findControlTyped<RadioButton>("BUTTON_STUN")
+							    ->setChecked(false);
+							activeTab->findControlTyped<RadioButton>("BUTTON_PROBE")
+							    ->setChecked(false);
+						}
+						break;
+					}
+					default:
+						LogError("Unhandled mouse button!");
+						break;
+				}
+				break;
+		}
+	}
+}
+
 void BattleView::updateLayerButtons()
 {
-	switch (this->getZLevel())
+	switch (getZLevel())
 	{
 		case 1:
-			this->mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_1")->setChecked(true);
+			mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_1")->setChecked(true);
 			break;
 		case 2:
-			this->mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_2")->setChecked(true);
+			mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_2")->setChecked(true);
 			break;
 		case 3:
-			this->mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_3")->setChecked(true);
+			mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_3")->setChecked(true);
 			break;
 		case 4:
-			this->mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_4")->setChecked(true);
+			mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_4")->setChecked(true);
 			break;
 		case 5:
-			this->mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_5")->setChecked(true);
+			mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_5")->setChecked(true);
 			break;
 		case 6:
-			this->mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_6")->setChecked(true);
+			mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_6")->setChecked(true);
 			break;
 		case 7:
-			this->mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_7")->setChecked(true);
+			mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_7")->setChecked(true);
 			break;
 		case 8:
-			this->mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_8")->setChecked(true);
+			mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_8")->setChecked(true);
 			break;
 		case 9:
-			this->mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_9")->setChecked(true);
+			mainTab->findControlTyped<RadioButton>("BUTTON_LAYER_9")->setChecked(true);
 			break;
 	}
 }
@@ -2611,36 +3048,34 @@ void BattleView::updateItemInfo(bool right)
 	// Item info
 	if (info.itemType)
 	{
-		this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND")
+		activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND")
 		    ->setImage(info.itemType->equipscreen_sprite);
 		if (info.damageType)
 		{
-			this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_DAMAGETYPE")
+			activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_DAMAGETYPE")
 			    ->setImage(info.damageType->icon_sprite);
 		}
 		else
 		{
-			this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_DAMAGETYPE")
+			activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_DAMAGETYPE")
 			    ->setImage(nullptr);
 		}
 	}
 	else
 	{
-		this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND")->setImage(nullptr);
-		this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_DAMAGETYPE")
-		    ->setImage(nullptr);
+		activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND")->setImage(nullptr);
+		activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_DAMAGETYPE")->setImage(nullptr);
 	}
 
 	// Selection bracket
 	if (info.selected)
 	{
-		this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND_SELECTED")
+		activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND_SELECTED")
 		    ->setImage(selectedItemOverlay);
 	}
 	else
 	{
-		this->activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND_SELECTED")
-		    ->setImage(nullptr);
+		activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND_SELECTED")->setImage(nullptr);
 	}
 
 	auto overlay = mksp<RGBImage>(Vec2<int>{50, 95});
@@ -2696,35 +3131,47 @@ void BattleView::updateItemInfo(bool right)
 			}
 		}
 	}
-	this->activeTab->findControlTyped<Graphic>("OVERLAY_" + name + "_HAND")->setImage(overlay);
+	activeTab->findControlTyped<Graphic>("OVERLAY_" + name + "_HAND")->setImage(overlay);
 }
 
 void BattleView::updatePsiInfo()
 {
-	this->activeTab->findControlTyped<Graphic>("OVERLAY_CONTROL")
+	activeTab->findControlTyped<Graphic>("OVERLAY_CONTROL")
 	    ->setImage(psiInfo.status == PsiStatus::Control ? selectedPsiOverlay : nullptr);
-	this->activeTab->findControlTyped<Graphic>("OVERLAY_PANIC")
+	activeTab->findControlTyped<Graphic>("OVERLAY_PANIC")
 	    ->setImage(psiInfo.status == PsiStatus::Panic ? selectedPsiOverlay : nullptr);
-	this->activeTab->findControlTyped<Graphic>("OVERLAY_STUN")
+	activeTab->findControlTyped<Graphic>("OVERLAY_STUN")
 	    ->setImage(psiInfo.status == PsiStatus::Stun ? selectedPsiOverlay : nullptr);
-	this->activeTab->findControlTyped<Graphic>("OVERLAY_PROBE")
+	activeTab->findControlTyped<Graphic>("OVERLAY_PROBE")
 	    ->setImage(psiInfo.status == PsiStatus::Probe ? selectedPsiOverlay : nullptr);
 
-	this->activeTab->findControlTyped<Label>("PSI_ENERGY_LABEL")
+	activeTab->findControlTyped<Label>("PSI_ENERGY_LABEL")
 	    ->setText(format("%d", psiInfo.curEnergy));
-	this->activeTab->findControlTyped<Label>("PSI_ATTACK_LABEL")
+	activeTab->findControlTyped<Label>("PSI_ATTACK_LABEL")
 	    ->setText(format("%d", psiInfo.curAttack));
-	this->activeTab->findControlTyped<Label>("PSI_DEFENSE_LABEL")
+	activeTab->findControlTyped<Label>("PSI_DEFENSE_LABEL")
 	    ->setText(format("%d", psiInfo.curDefense));
 
 	// FIXME: Maybe pre-draw all 100 of them?
 
-	this->activeTab->findControlTyped<Graphic>("PSI_ENERGY_BAR")
+	activeTab->findControlTyped<Graphic>("PSI_ENERGY_BAR")
 	    ->setImage(drawPsiBar(psiInfo.curEnergy, psiInfo.maxEnergy));
-	this->activeTab->findControlTyped<Graphic>("PSI_ATTACK_BAR")
+	activeTab->findControlTyped<Graphic>("PSI_ATTACK_BAR")
 	    ->setImage(drawPsiBar(psiInfo.curAttack, psiInfo.maxAttack));
-	this->activeTab->findControlTyped<Graphic>("PSI_DEFENSE_BAR")
+	activeTab->findControlTyped<Graphic>("PSI_DEFENSE_BAR")
 	    ->setImage(drawPsiBar(psiInfo.curDefense, psiInfo.maxDefense));
+}
+
+void BattleView::updateMotionInfo(bool right, BattleScanner &scanner)
+{
+	motionScannerUnit[right]->setImage(motionScannerDirectionIcons[motionInfo.direction]);
+	motionScannerData[right]->setImage(drawMotionScanner(scanner));
+}
+
+void BattleView::updateMotionInfo(bool right, Vec2<int> position)
+{
+	motionScannerUnit[right]->setImage(motionScannerDirectionIcons[motionInfo.direction]);
+	motionScannerData[right]->setImage(drawMotionScanner(position));
 }
 
 sp<RGBImage> BattleView::drawPsiBar(int cur, int max)
@@ -2773,6 +3220,118 @@ sp<RGBImage> BattleView::drawPsiBar(int cur, int max)
 		}
 	}
 	return psiBar;
+}
+
+sp<RGBImage> BattleView::drawMotionScanner(BattleScanner &scanner)
+{
+	static const std::vector<Colour> colors = {{
+	                                               0, 0, 0,
+	                                           },
+	                                           {16, 16, 16, 255},
+	                                           {32, 32, 32, 255},
+	                                           {48, 48, 48, 255},
+	                                           {64, 64, 64, 255},
+	                                           {80, 80, 80, 255},
+	                                           {96, 96, 96, 255},
+	                                           {112, 112, 112, 255},
+	                                           {128, 128, 128, 255},
+	                                           {144, 144, 144, 255},
+	                                           {160, 160, 160, 255},
+	                                           {176, 176, 176, 255},
+	                                           {192, 192, 192, 255},
+	                                           {208, 208, 208, 255},
+	                                           {224, 224, 224, 255},
+	                                           {240, 240, 240, 255}};
+
+	auto scannerDisplay = mksp<RGBImage>(Vec2<int>{MOTION_SCANNER_X * 2, MOTION_SCANNER_Y * 2});
+	{
+		RGBImageLock l(scannerDisplay);
+
+		for (int x = 0; x < MOTION_SCANNER_X; x++)
+		{
+			for (int y = 0; y < MOTION_SCANNER_Y; y++)
+			{
+				auto &color =
+				    colors.at(std::min(15, scanner.movementTicks[y * MOTION_SCANNER_X + x] * 16 /
+				                               (int)TICKS_SCANNER_REMAIN_LIT));
+				for (int i = 0; i <= 1; i++)
+				{
+					for (int j = 0; j <= 1; j++)
+					{
+						l.set({2 * x + i, 2 * y + j}, color);
+					}
+				}
+			}
+		}
+	}
+	return scannerDisplay;
+}
+
+sp<RGBImage> BattleView::drawMotionScanner(Vec2<int> position)
+{
+	static const std::vector<Colour> colors = {{
+	                                               0, 0, 0,
+	                                           },
+	                                           {16, 16, 16, 255},
+	                                           {32, 32, 32, 255},
+	                                           {48, 48, 48, 255},
+	                                           {64, 64, 64, 255},
+	                                           {80, 80, 80, 255},
+	                                           {96, 96, 96, 255},
+	                                           {112, 112, 112, 255},
+	                                           {128, 128, 128, 255},
+	                                           {144, 144, 144, 255},
+	                                           {160, 160, 160, 255},
+	                                           {176, 176, 176, 255},
+	                                           {192, 192, 192, 255},
+	                                           {208, 208, 208, 255},
+	                                           {224, 224, 224, 255},
+	                                           {240, 240, 240, 255}};
+	static const Vec2<int> midPos = {MOTION_SCANNER_X / 2, MOTION_SCANNER_Y / 2};
+	auto scannerDisplay = mksp<RGBImage>(Vec2<int>{MOTION_SCANNER_X * 2, MOTION_SCANNER_Y * 2});
+	{
+		RGBImageLock l(scannerDisplay);
+
+		auto movementTicks = std::vector<int>(MOTION_SCANNER_X * MOTION_SCANNER_Y);
+
+		for (auto &u : battle.units)
+		{
+			if (!u.second->isConscious() || u.second->tilesMoved == 0)
+			{
+				continue;
+			}
+			auto pos = Vec2<int>(u.second->position.x, u.second->position.y) - position + midPos;
+			if (pos.x < 0 || pos.y < 0 || pos.x >= MOTION_SCANNER_X || pos.y >= MOTION_SCANNER_Y)
+			{
+				continue;
+			}
+			if (movementTicks[pos.y * MOTION_SCANNER_X + pos.x] < u.second->tilesMoved)
+			{
+				movementTicks[pos.y * MOTION_SCANNER_X + pos.x] = u.second->tilesMoved;
+			}
+		}
+
+		for (int x = 0; x < MOTION_SCANNER_X; x++)
+		{
+			for (int y = 0; y < MOTION_SCANNER_Y; y++)
+			{
+				if (movementTicks[y * MOTION_SCANNER_X + x] > 0)
+				{
+					movementTicks[y * MOTION_SCANNER_X + x] =
+					    5 + movementTicks[y * MOTION_SCANNER_X + x] * 2 / 3;
+				}
+				auto &color = colors.at(std::min(15, movementTicks[y * MOTION_SCANNER_X + x]));
+				for (int i = 0; i <= 1; i++)
+				{
+					for (int j = 0; j <= 1; j++)
+					{
+						l.set({2 * x + i, 2 * y + j}, color);
+					}
+				}
+			}
+		}
+	}
+	return scannerDisplay;
 }
 
 void BattleView::finish()
@@ -2836,6 +3395,16 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 				             (selectionState == BattleSelectionState::TeleportRight && rightHand) ||
 				             (selectionState == BattleSelectionState::TeleportLeft && !rightHand);
 			}
+			a.accuracy =
+			    std::max(0, e->getAccuracy(u->current_body_state, u->current_movement_state,
+			                               u->fire_aiming_mode,
+			                               a.itemType->type != AEquipmentType::Type::Weapon) /
+			                    2);
+
+			/*
+			// Alexey Andronov (Istrebitel):
+			// I used to believe erf is used when displaying accuracy
+			// I might be wrong but until we make sure it's right, I leave this here
 
 			auto accuracy =
 			    (float)e->getAccuracy(u->current_body_state, u->current_movement_state,
@@ -2846,6 +3415,7 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 			// we need it to take values 0 to 1 and return 0 to 1
 			// val -> val * 4 - 2, result -> result /2 + 0,5
 			a.accuracy = (int)(((erf(accuracy * 4.0f - 2.0f)) / 2.0f + 0.5f) * 50.0f);
+			*/
 		}
 	}
 	return a;
@@ -2871,6 +3441,41 @@ AgentPsiInfo BattleView::createPsiInfo()
 	return a;
 }
 
+MotionScannerInfo BattleView::createMotionInfo(BattleScanner &scanner)
+{
+	static const std::map<Vec2<int>, int> offset_dir_map = {
+	    {{0, -1}, 0}, {{1, -1}, 1}, {{1, 0}, 2},  {{1, 1}, 3},
+	    {{0, 1}, 4},  {{-1, 1}, 5}, {{-1, 0}, 6}, {{-1, -1}, 7},
+	};
+
+	MotionScannerInfo a;
+
+	a.direction = offset_dir_map.at(battle.battleViewSelectedUnits.front()->facing);
+	a.id = scanner.holder.id;
+	a.version = scanner.version;
+
+	return a;
+}
+
+MotionScannerInfo BattleView::createMotionInfo()
+{
+	static const std::map<Vec2<int>, int> offset_dir_map = {
+	    {{0, -1}, 0}, {{1, -1}, 1}, {{1, 0}, 2},  {{1, 1}, 3},
+	    {{0, 1}, 4},  {{-1, 1}, 5}, {{-1, 0}, 6}, {{-1, -1}, 7},
+	};
+
+	MotionScannerInfo a;
+
+	auto u = battle.battleViewSelectedUnits.front();
+	a.direction = offset_dir_map.at(u->facing);
+	a.id = u.id;
+	a.position = {u->position.x, u->position.y};
+	// Update every other second
+	a.version = state->gameTime.getTicks() / TICKS_PER_SECOND / 2;
+
+	return a;
+}
+
 bool AgentEquipmentInfo::operator==(const AgentEquipmentInfo &other) const
 {
 	return (this->accuracy == other.accuracy && this->curAmmo == other.curAmmo &&
@@ -2892,4 +3497,16 @@ bool AgentPsiInfo::operator==(const AgentPsiInfo &other) const
 }
 
 bool AgentPsiInfo::operator!=(const AgentPsiInfo &other) const { return !(*this == other); }
+
+bool MotionScannerInfo::operator==(const MotionScannerInfo &other) const
+{
+	return (this->direction == other.direction && this->id == other.id &&
+	        this->version == other.version && this->position == other.position);
+}
+
+bool MotionScannerInfo::operator!=(const MotionScannerInfo &other) const
+{
+	return !(*this == other);
+}
+
 }; // namespace OpenApoc

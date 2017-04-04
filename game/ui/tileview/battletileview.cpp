@@ -201,7 +201,7 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 
 	auto font = ui().getFont("smallset");
 
-	for (int i = 0; i <= 99; i++)
+	for (int i = 0; i <= 255; i++)
 	{
 		tuIndicators.push_back(font->getString(format("%d", i)));
 	}
@@ -372,8 +372,12 @@ void BattleTileView::render()
 			std::list<StateRef<BattleUnit>> allUnits;
 			if (revealWholeMap)
 			{
-				for (auto entry : battle.units)
+				for (auto &entry : battle.units)
 				{
+					if (entry.second->isDead() || entry.second->retreated)
+					{
+						continue;
+					}
 					auto &u = entry.second;
 					for (auto &m : u->missions)
 					{
@@ -388,7 +392,7 @@ void BattleTileView::render()
 							targetIconLocations.insert(m->targetLocation);
 							if (USER_OPTION_DRAW_WAYPOINTS)
 							{
-								for (auto w : m->currentPlannedPath)
+								for (auto &w : m->currentPlannedPath)
 								{
 									if (w != m->targetLocation)
 									{
@@ -403,7 +407,7 @@ void BattleTileView::render()
 			}
 			else
 			{
-				for (auto u : battle.battleViewSelectedUnits)
+				for (auto &u : battle.battleViewSelectedUnits)
 				{
 					for (auto &m : u->missions)
 					{
@@ -418,7 +422,7 @@ void BattleTileView::render()
 							targetIconLocations.insert(m->targetLocation);
 							if (USER_OPTION_DRAW_WAYPOINTS)
 							{
-								for (auto w : m->currentPlannedPath)
+								for (auto &w : m->currentPlannedPath)
 								{
 									if (w != m->targetLocation)
 									{
@@ -434,7 +438,7 @@ void BattleTileView::render()
 			if (previewedPathCost != -1 && USER_OPTION_DRAW_WAYPOINTS && waypointLocations.empty())
 			{
 				darkenWaypoints = true;
-				for (auto w : pathPreview)
+				for (auto &w : pathPreview)
 				{
 					waypointLocations.insert(w);
 				}
@@ -630,7 +634,7 @@ void BattleTileView::render()
 											if (objectVisible)
 											{
 												bool focusedBySelectedUnits = false;
-												for (auto su : battle.battleViewSelectedUnits)
+												for (auto &su : battle.battleViewSelectedUnits)
 												{
 													if (std::find(u->focusedByUnits.begin(),
 													              u->focusedByUnits.end(),
@@ -845,7 +849,7 @@ void BattleTileView::render()
 												if (objectVisible)
 												{
 													bool focusedBySelectedUnits = false;
-													for (auto su : battle.battleViewSelectedUnits)
+													for (auto &su : battle.battleViewSelectedUnits)
 													{
 														if (std::find(u->focusedByUnits.begin(),
 														              u->focusedByUnits.end(),
@@ -931,7 +935,7 @@ void BattleTileView::render()
 			}
 
 			// Draw selected unit arrows
-			for (auto obj : unitsToDrawSelectionArrows)
+			for (auto &obj : unitsToDrawSelectionArrows)
 			{
 				static const Vec2<float> offset = {-13.0f, -19.0f};
 				static const Vec2<float> offsetRunning = {0.0f, 0.0f};
@@ -985,6 +989,37 @@ void BattleTileView::render()
 					else
 					{
 						r.draw(bleedingIcon, pos + offsetBleed);
+					}
+				}
+			}
+
+			if (revealWholeMap)
+			{
+				static const Vec2<float> offset = {-13.0f, -19.0f};
+				static const Vec2<float> offsetTU = {13.0f, -5.0f};
+
+				for (auto &u : battle.units)
+				{
+					if (!u.second->isConscious())
+					{
+						continue;
+					}
+					Vec2<float> pos = tileToOffsetScreenCoords(
+					    u.second->getPosition() +
+					    Vec3<float>{0.0f, 0.0f,
+					                (u.second->getCurrentHeight() - 4.0f) * 1.5f / 40.0f});
+
+					auto &img = tuIndicators[u.second->agent->modified_stats.time_units];
+					r.draw(img,
+					       pos + offset + offsetTU - Vec2<float>{img->size.x / 2, img->size.y / 2});
+
+					for (auto &t : u.second->visibleEnemies)
+					{
+						auto tarPos = tileToOffsetScreenCoords(t->getPosition());
+						auto tarVec = tarPos - pos;
+						tarVec *= 0.75f;
+						r.drawLine(pos, pos + tarVec, this->strategyViewBoxColour,
+						           this->strategyViewBoxThickness);
 					}
 				}
 			}
@@ -1222,7 +1257,7 @@ void BattleTileView::render()
 				std::get<0>(obj)->draw(r, *this, pos, this->viewMode, std::get<1>(obj),
 				                       std::get<2>(obj), std::get<3>(obj), std::get<4>(obj));
 			}
-			for (auto obj : itemsToDraw)
+			for (auto &obj : itemsToDraw)
 			{
 				Vec2<float> pos = tileToOffsetScreenCoords(std::get<0>(obj)->getCenter());
 				std::get<0>(obj)->draw(r, *this, pos, this->viewMode, std::get<1>(obj),
@@ -1296,6 +1331,7 @@ void BattleTileView::updatePathPreview()
 		LogError("Trying to update path preview with no unit selected!?");
 		return;
 	}
+
 	if (!lastSelectedUnit->canMove())
 		return;
 	auto &map = lastSelectedUnit->tileObject->map;

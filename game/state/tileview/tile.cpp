@@ -306,7 +306,7 @@ void Tile::updateBattlescapeUIDrawOrder()
 void Tile::updateBattlescapeUnitPresent()
 {
 	firstUnitPresent = nullptr;
-	for (auto o : intersectingObjects)
+	for (auto &o : intersectingObjects)
 	{
 		if (o->getType() == TileObject::Type::Unit)
 		{
@@ -350,7 +350,7 @@ void Tile::updateBattlescapeParameters()
 	supportProviderForItems = nullptr;
 	closedDoorLeft = false;
 	closedDoorRight = false;
-	for (auto o : ownedObjects)
+	for (auto &o : ownedObjects)
 	{
 		if (o->getType() == TileObject::Type::Ground || o->getType() == TileObject::Type::Feature)
 		{
@@ -488,7 +488,7 @@ sp<TileObjectBattleUnit> Tile::getUnitIfPresent(bool onlyConscious, bool mustOcc
 		}
 	}
 
-	for (auto o : intersectingObjects)
+	for (auto &o : intersectingObjects)
 	{
 		if (o->getType() == TileObject::Type::Unit)
 		{
@@ -533,7 +533,7 @@ std::list<sp<BattleUnit>> Tile::getUnits(bool onlyConscious, bool mustOccupy, bo
 					auto uts = map.getTile(position.x + x, position.y + y, position.z + z)
 					               ->getUnits(onlyConscious, mustOccupy, mustBeStatic, exceptThis,
 					                          onlyLarge, false);
-					for (auto u : uts)
+					for (auto &u : uts)
 					{
 						result.push_back(u);
 					}
@@ -542,7 +542,7 @@ std::list<sp<BattleUnit>> Tile::getUnits(bool onlyConscious, bool mustOccupy, bo
 		}
 	}
 
-	for (auto o : intersectingObjects)
+	for (auto &o : intersectingObjects)
 	{
 		if (o->getType() == TileObject::Type::Unit)
 		{
@@ -565,7 +565,7 @@ std::list<sp<BattleUnit>> Tile::getUnits(bool onlyConscious, bool mustOccupy, bo
 std::list<sp<BattleItem>> Tile::getItems()
 {
 	std::list<sp<BattleItem>> result;
-	for (auto o : ownedObjects)
+	for (auto &o : ownedObjects)
 	{
 		if (o->getType() == TileObject::Type::Item)
 		{
@@ -588,7 +588,7 @@ std::list<sp<BattleItem>> Tile::getItems()
 			if (pos.x < 0 || pos.x >= map.size.x || pos.y < 0 || pos.y >= map.size.y)
 				continue;
 			auto t = map.getTile(pos);
-			for (auto o : t->ownedObjects)
+			for (auto &o : t->ownedObjects)
 			{
 				if (o->getType() == TileObject::Type::Item)
 				{

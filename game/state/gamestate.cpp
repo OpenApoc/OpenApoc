@@ -153,7 +153,7 @@ void GameState::initState()
 	// Fill links for weapon's ammo
 	for (auto &t : this->agent_equipment)
 	{
-		for (auto w : t.second->weapon_types)
+		for (auto &w : t.second->weapon_types)
 		{
 			w->ammo_types.emplace_back(this, t.first);
 		}
@@ -195,7 +195,7 @@ void GameState::startGame()
 	// Create some random vehicles
 	for (int i = 0; i < 5; i++)
 	{
-		for (auto vehicleType : this->vehicle_types)
+		for (auto &vehicleType : this->vehicle_types)
 		{
 			auto &type = vehicleType.second;
 			if (type->type != VehicleType::Type::Flying)
@@ -305,7 +305,7 @@ void GameState::fillPlayerStartingProperty()
 			count--;
 			if (type == AgentType::Role::Soldier && it != initial_agent_equipment.end())
 			{
-				for (auto t : *it)
+				for (auto &t : *it)
 				{
 					if (t->type == AEquipmentType::Type::Armor)
 					{
@@ -502,7 +502,7 @@ void GameState::updateEndOfWeek()
 		StateRef<Organisation> alienOrg = {this, "ORG_ALIEN"};
 		std::uniform_int_distribution<int> xyPos(20, 120);
 
-		for (auto vehicleEntry : growth->second->vehicleTypeList)
+		for (auto &vehicleEntry : growth->second->vehicleTypeList)
 		{
 			auto vehicleType = this->vehicle_types.find(vehicleEntry.first);
 			if (vehicleType != this->vehicle_types.end())

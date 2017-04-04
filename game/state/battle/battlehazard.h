@@ -21,6 +21,7 @@ class TileObjectBattleHazard;
 class DamageType;
 class HazardType;
 class GameState;
+class Organisation;
 class TileMap;
 
 class BattleHazard : public std::enable_shared_from_this<BattleHazard>
@@ -39,8 +40,9 @@ class BattleHazard : public std::enable_shared_from_this<BattleHazard>
 	unsigned age = 0;
 	unsigned int frame = 0;
 	unsigned ticksUntilVisible = 0;
-	unsigned ticksUntilNextFrameChange = 0;
-	unsigned ticksUntilNextUpdate = 0;
+	unsigned frameChangeTicksAccumulated = 0;
+	unsigned nextUpdateTicksAccumulated = 0;
+	StateRef<Organisation> owner;
 
 	bool expand(GameState &state, const TileMap &map, const Vec3<int> &to, unsigned ttl,
 	            bool fireSmoke = false);
@@ -50,6 +52,8 @@ class BattleHazard : public std::enable_shared_from_this<BattleHazard>
 	void updateTileVisionBlock(GameState &state);
 
 	void update(GameState &state, unsigned int ticks);
+	void updateInner(GameState &state, unsigned int ticks);
+	void updateTB(GameState &state);
 
 	BattleHazard() = default;
 	BattleHazard(GameState &state, StateRef<DamageType> damageType, bool delayVisibility = true);

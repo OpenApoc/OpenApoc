@@ -80,7 +80,7 @@ std::list<sp<AEquipmentType>> EquipmentSet::generateEquipmentList(GameState &sta
 	if (equipment.size() > 0)
 	{
 		auto ed = equipment[randBoundsExclusive(state.rng, 0, (int)equipment.size())];
-		for (auto e : ed.equipment)
+		for (auto &e : ed.equipment)
 			output.push_back(e);
 	}
 

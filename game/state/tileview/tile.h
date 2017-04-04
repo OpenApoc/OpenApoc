@@ -199,6 +199,7 @@ class CanEnterTileHelper
 	// Value here defines how much, in percent, can resulting path afford to be unoptimal
 	// For example 1.05 means resulting path can be 5% longer than an optimal one
 	virtual float pathOverheadAlloawnce() const { return 1.0f; }
+	bool allowJumping = false;
 };
 
 class TileMap
@@ -213,7 +214,7 @@ class TileMap
 
 		if (!((x >= 0) && (x < size.x) && (y >= 0) && (y < size.y) && (z >= 0) && (z < size.z)))
 		{
-			LogError("Incorrect tile coordinates %d,%d,%d", x, y, z);
+			LogError("Incorrect tile coordinates (const) %d,%d,%d", x, y, z);
 			return nullptr;
 		}
 		return &this->tiles[z * size.x * size.y + y * size.x + x];
@@ -270,7 +271,8 @@ class TileMap
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
 	                        const std::set<TileObject::Type> validTypes = {},
 	                        sp<TileObject> ignoredObject = nullptr, bool useLOS = false,
-	                        bool check_full_path = false, unsigned maxRange = 0) const;
+	                        bool check_full_path = false, unsigned maxRange = 0,
+	                        bool recordPassedTiles = false) const;
 
 	bool checkThrowTrajectory(const sp<TileObject> thrower, Vec3<float> start, Vec3<int> end,
 	                          Vec3<float> targetVectorXY, float velocityXY, float velocityZ) const;

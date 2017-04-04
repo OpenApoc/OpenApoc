@@ -1,6 +1,6 @@
 #include "game/state/agent.h"
 #include "game/state/aequipment.h"
-#include "game/state/battle/ai/ai.h"
+#include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
@@ -231,6 +231,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	s.reactions =
 	    randBoundsInclusive(state.rng, type->min_stats.reactions, type->max_stats.reactions);
 	s.speed = randBoundsInclusive(state.rng, type->min_stats.speed, type->max_stats.speed);
+	s.restoreTU();
 	s.stamina = randBoundsInclusive(state.rng, type->min_stats.stamina, type->max_stats.stamina);
 	s.bravery =
 	    randBoundsInclusive(state.rng, type->min_stats.bravery / 10, type->max_stats.bravery / 10) *
@@ -288,7 +289,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	}
 
 	// Add initial equipment
-	for (auto t : initialEquipment)
+	for (auto &t : initialEquipment)
 	{
 		if (!t)
 			continue;
@@ -316,13 +317,13 @@ bool Agent::isBodyStateAllowed(BodyState bodyState) const
 	    AEquipmentSlotType::ArmorRightHand};
 
 	if (type->bodyType->allowed_body_states.find(bodyState) !=
-		type->bodyType->allowed_body_states.end())
+	    type->bodyType->allowed_body_states.end())
 	{
 		return true;
 	}
 	if (bodyState == BodyState::Flying)
 	{
-		for (auto t : armorslots)
+		for (auto &t : armorslots)
 		{
 			auto e = getFirstItemInSlot(t);
 			if (e && e->type->provides_flight)
@@ -365,6 +366,27 @@ const std::set<Vec2<int>> *Agent::getAllowedFacings() const
 	else
 	{
 		return &type->bodyType->allowed_facing[appearance];
+	}
+}
+
+int Agent::getReactionValue() const
+{
+	return modified_stats.reactions * modified_stats.time_units / current_stats.time_units;
+}
+
+int Agent::getTULimit(int reactionValue) const
+{
+	if (reactionValue == 0)
+	{
+		return 0;
+	}
+	else if (reactionValue >= getReactionValue())
+	{
+		return modified_stats.time_units;
+	}
+	else
+	{
+		return current_stats.time_units * reactionValue / modified_stats.reactions;
 	}
 }
 
@@ -616,11 +638,7 @@ void Agent::updateSpeed()
 	int encumbrance = 0;
 	for (auto &item : equipment)
 	{
-		encumbrance += item->type->weight;
-		if (item->payloadType && item->ammo > 0)
-		{
-			encumbrance += item->payloadType->weight;
-		}
+		encumbrance += item->getWeight();
 	}
 	encumbrance *= encumbrance;
 
@@ -700,9 +718,9 @@ sp<AEquipment> Agent::getFirstItemInSlot(AEquipmentSlotType type, bool lazy) con
 		if (type == AEquipmentSlotType::LeftHand)
 			return leftHandItem;
 	}
-	for (auto e : equipment)
+	for (auto &e : equipment)
 	{
-		for (auto s : this->type->equipment_layout->slots)
+		for (auto &s : this->type->equipment_layout->slots)
 		{
 			if (s.bounds.p0 == e->equippedPosition && s.type == type)
 			{
@@ -715,7 +733,7 @@ sp<AEquipment> Agent::getFirstItemInSlot(AEquipmentSlotType type, bool lazy) con
 
 sp<AEquipment> Agent::getFirstItemByType(StateRef<AEquipmentType> type) const
 {
-	for (auto e : equipment)
+	for (auto &e : equipment)
 	{
 		if (e->type == type)
 		{
@@ -727,7 +745,7 @@ sp<AEquipment> Agent::getFirstItemByType(StateRef<AEquipmentType> type) const
 
 sp<AEquipment> Agent::getFirstItemByType(AEquipmentType::Type type) const
 {
-	for (auto e : equipment)
+	for (auto &e : equipment)
 	{
 		if (e->type->type == type)
 		{
@@ -739,7 +757,7 @@ sp<AEquipment> Agent::getFirstItemByType(AEquipmentType::Type type) const
 
 sp<AEquipment> Agent::getFirstShield() const
 {
-	for (auto e : equipment)
+	for (auto &e : equipment)
 	{
 		if (e->type->type == AEquipmentType::Type::DisruptorShield)
 		{

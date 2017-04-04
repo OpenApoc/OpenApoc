@@ -253,35 +253,35 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, sp<UnitAI> 
 	{
 		case UnitAI::Type::LowMorale:
 		{
-			auto sai = std::make_shared<LowMoraleUnitAI>();
+			auto sai = std::make_shared<UnitAILowMorale>();
 			serializeIn(state, node, sai);
 			ai = sai;
 			break;
 		}
 		case UnitAI::Type::Default:
 		{
-			auto sai = std::make_shared<DefaultUnitAI>();
+			auto sai = std::make_shared<UnitAIDefault>();
 			serializeIn(state, node, sai);
 			ai = sai;
 			break;
 		}
 		case UnitAI::Type::Behavior:
 		{
-			auto sai = std::make_shared<BehaviorUnitAI>();
+			auto sai = std::make_shared<UnitAIBehavior>();
 			serializeIn(state, node, sai);
 			ai = sai;
 			break;
 		}
 		case UnitAI::Type::Vanilla:
 		{
-			auto sai = std::make_shared<VanillaUnitAI>();
+			auto sai = std::make_shared<UnitAIVanilla>();
 			serializeIn(state, node, sai);
 			ai = sai;
 			break;
 		}
 		case UnitAI::Type::Hardcore:
 		{
-			auto sai = std::make_shared<HardcoreUnitAI>();
+			auto sai = std::make_shared<UnitAIHardcore>();
 			serializeIn(state, node, sai);
 			ai = sai;
 			break;
@@ -300,7 +300,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, sp<Tactical
 	{
 		case TacticalAI::Type::Vanilla:
 		{
-			auto sai = sp<VanillaTacticalAI>();
+			auto sai = sp<TacticalAIVanilla>();
 			serializeIn(state, node, sai);
 			ai = sai;
 			break;
@@ -316,36 +316,36 @@ void serializeOut(sp<SerializationNode> node, const sp<UnitAI> &ptr, const sp<Un
 		{
 			case UnitAI::Type::LowMorale:
 			{
-				auto ptrCast = std::static_pointer_cast<LowMoraleUnitAI>(ptr);
-				auto refCast = ref ? std::static_pointer_cast<LowMoraleUnitAI>(ref) : nullptr;
+				auto ptrCast = std::static_pointer_cast<UnitAILowMorale>(ptr);
+				auto refCast = ref ? std::static_pointer_cast<UnitAILowMorale>(ref) : nullptr;
 				serializeOut(node, ptrCast, refCast);
 				break;
 			}
 			case UnitAI::Type::Default:
 			{
-				auto ptrCast = std::static_pointer_cast<DefaultUnitAI>(ptr);
-				auto refCast = ref ? std::static_pointer_cast<DefaultUnitAI>(ref) : nullptr;
+				auto ptrCast = std::static_pointer_cast<UnitAIDefault>(ptr);
+				auto refCast = ref ? std::static_pointer_cast<UnitAIDefault>(ref) : nullptr;
 				serializeOut(node, ptrCast, refCast);
 				break;
 			}
 			case UnitAI::Type::Behavior:
 			{
-				auto ptrCast = std::static_pointer_cast<BehaviorUnitAI>(ptr);
-				auto refCast = ref ? std::static_pointer_cast<BehaviorUnitAI>(ref) : nullptr;
+				auto ptrCast = std::static_pointer_cast<UnitAIBehavior>(ptr);
+				auto refCast = ref ? std::static_pointer_cast<UnitAIBehavior>(ref) : nullptr;
 				serializeOut(node, ptrCast, refCast);
 				break;
 			}
 			case UnitAI::Type::Vanilla:
 			{
-				auto ptrCast = std::static_pointer_cast<VanillaUnitAI>(ptr);
-				auto refCast = ref ? std::static_pointer_cast<VanillaUnitAI>(ref) : nullptr;
+				auto ptrCast = std::static_pointer_cast<UnitAIVanilla>(ptr);
+				auto refCast = ref ? std::static_pointer_cast<UnitAIVanilla>(ref) : nullptr;
 				serializeOut(node, ptrCast, refCast);
 				break;
 			}
 			case UnitAI::Type::Hardcore:
 			{
-				auto ptrCast = std::static_pointer_cast<HardcoreUnitAI>(ptr);
-				auto refCast = ref ? std::static_pointer_cast<HardcoreUnitAI>(ref) : nullptr;
+				auto ptrCast = std::static_pointer_cast<UnitAIHardcore>(ptr);
+				auto refCast = ref ? std::static_pointer_cast<UnitAIHardcore>(ref) : nullptr;
 				serializeOut(node, ptrCast, refCast);
 				break;
 			}
@@ -363,32 +363,32 @@ bool operator==(const UnitAI &a, const UnitAI &b)
 	{
 		case UnitAI::Type::LowMorale:
 		{
-			const LowMoraleUnitAI &ca = static_cast<const LowMoraleUnitAI &>(a);
-			const LowMoraleUnitAI &cb = static_cast<const LowMoraleUnitAI &>(b);
+			const UnitAILowMorale &ca = static_cast<const UnitAILowMorale &>(a);
+			const UnitAILowMorale &cb = static_cast<const UnitAILowMorale &>(b);
 			return ca == cb;
 		}
 		case UnitAI::Type::Default:
 		{
-			const DefaultUnitAI &ca = static_cast<const DefaultUnitAI &>(a);
-			const DefaultUnitAI &cb = static_cast<const DefaultUnitAI &>(b);
+			const UnitAIDefault &ca = static_cast<const UnitAIDefault &>(a);
+			const UnitAIDefault &cb = static_cast<const UnitAIDefault &>(b);
 			return ca == cb;
 		}
 		case UnitAI::Type::Behavior:
 		{
-			const BehaviorUnitAI &ca = static_cast<const BehaviorUnitAI &>(a);
-			const BehaviorUnitAI &cb = static_cast<const BehaviorUnitAI &>(b);
+			const UnitAIBehavior &ca = static_cast<const UnitAIBehavior &>(a);
+			const UnitAIBehavior &cb = static_cast<const UnitAIBehavior &>(b);
 			return ca == cb;
 		}
 		case UnitAI::Type::Vanilla:
 		{
-			const VanillaUnitAI &ca = static_cast<const VanillaUnitAI &>(a);
-			const VanillaUnitAI &cb = static_cast<const VanillaUnitAI &>(b);
+			const UnitAIVanilla &ca = static_cast<const UnitAIVanilla &>(a);
+			const UnitAIVanilla &cb = static_cast<const UnitAIVanilla &>(b);
 			return ca == cb;
 		}
 		case UnitAI::Type::Hardcore:
 		{
-			const HardcoreUnitAI &ca = static_cast<const HardcoreUnitAI &>(a);
-			const HardcoreUnitAI &cb = static_cast<const HardcoreUnitAI &>(b);
+			const UnitAIHardcore &ca = static_cast<const UnitAIHardcore &>(a);
+			const UnitAIHardcore &cb = static_cast<const UnitAIHardcore &>(b);
 			return ca == cb;
 		}
 	}
@@ -405,8 +405,8 @@ void serializeOut(sp<SerializationNode> node, const sp<TacticalAI> &ptr, const s
 		{
 			case TacticalAI::Type::Vanilla:
 			{
-				auto ptrCast = std::static_pointer_cast<VanillaTacticalAI>(ptr);
-				auto refCast = ref ? std::static_pointer_cast<VanillaTacticalAI>(ref) : nullptr;
+				auto ptrCast = std::static_pointer_cast<TacticalAIVanilla>(ptr);
+				auto refCast = ref ? std::static_pointer_cast<TacticalAIVanilla>(ref) : nullptr;
 				serializeOut(node, ptrCast, refCast);
 				break;
 			}
@@ -424,8 +424,8 @@ bool operator==(const TacticalAI &a, const TacticalAI &b)
 	{
 		case TacticalAI::Type::Vanilla:
 		{
-			const VanillaTacticalAI &ca = static_cast<const VanillaTacticalAI &>(a);
-			const VanillaTacticalAI &cb = static_cast<const VanillaTacticalAI &>(b);
+			const TacticalAIVanilla &ca = static_cast<const TacticalAIVanilla &>(a);
+			const TacticalAIVanilla &cb = static_cast<const TacticalAIVanilla &>(b);
 			return ca == cb;
 		}
 	}

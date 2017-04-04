@@ -1,7 +1,8 @@
 #pragma once
 
 #include "game/state/agent.h"
-#include "game/state/battle/ai/ai.h"
+#include "game/state/battle/ai/aitype.h"
+#include "game/state/battle/ai/tacticalai.h"
 #include "game/state/battle/battleforces.h"
 #include "game/state/battle/battlemapsector.h"
 #include "game/state/gametime.h"
@@ -24,6 +25,10 @@ namespace OpenApoc
 #define VOXEL_Z_BATTLE (20)
 
 static const unsigned TICKS_PER_TURN = TICKS_PER_SECOND * 4;
+// Amount of ticks that must pass without any action in order for turn end to trigger
+static const unsigned TICKS_END_TURN = TICKS_PER_SECOND * 2;
+// Amount of ticks that must pass for interrupt to begin
+static const unsigned TICKS_BEGIN_INTERRUPT = TICKS_PER_SECOND / 2;
 
 class BattleCommonImageList;
 class BattleCommonSampleList;
@@ -43,6 +48,7 @@ class DoodadType;
 class BattleMap;
 class Vehicle;
 class Building;
+class BattleScanner;
 class Agent;
 enum class BattleUnitType;
 class BattleUnitTileHelper;
@@ -70,8 +76,11 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	void initBattle(GameState &state, bool first = false);
 	void initMap();
+	bool initialMapCheck(GameState &state, std::list<StateRef<Agent>> agents);
 	void initialMapPartRemoval(GameState &state);
 	void initialMapPartLinkUp();
+
+	void initialUnitSpawn(GameState &state);
 
 	Vec3<int> size;
 
@@ -126,6 +135,12 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// Queue tile for vision update
 	void queueVisionRefresh(Vec3<int> tile);
 
+	// Notify scanners about movement at position
+	void notifyScanners(Vec3<int> position);
+
+	// Notify about action happening
+	void notifyAction();
+
 	MissionType mission_type = MissionType::AlienExtermination;
 	UString mission_location_id;
 	Mode mode = Mode::RealTime;
@@ -136,6 +151,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	std::list<sp<BattleMapPart>> map_parts;
 	std::list<sp<BattleItem>> items;
 	StateRefMap<BattleUnit> units;
+	StateRefMap<BattleScanner> scanners;
 	std::list<sp<Doodad>> doodads;
 	std::set<sp<Projectile>> projectiles;
 	StateRefMap<BattleDoor> doors;
@@ -144,18 +160,26 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	up<TileMap> map;
 
-	std::set<StateRef<Organisation>> participants;
+	std::list<StateRef<Organisation>> participants;
 
-	TacticalAIBlock aiBlock;
+	AIBlockTactical aiBlock;
 
 	// Current player in control of the interface (will only change if we're going multiplayer)
 	StateRef<Organisation> currentPlayer;
-
 	// Who's turn is it
 	StateRef<Organisation> currentActiveOrganisation;
-
 	// Turn number
-	int currentTurn = 0;
+	unsigned int currentTurn = 0;
+	// Ticks without action in TB
+	unsigned int ticksWithoutAction = 0;
+	// Turn end allowed by current org
+	bool turnEndAllowed = false;
+	// Low morale units were processed at turn start
+	bool lowMoraleProcessed = false;
+	// Units queued to get interrupt after this update
+	std::map<StateRef<BattleUnit>, int> interruptQueue;
+	// Units currently interrupting
+	std::map<StateRef<BattleUnit>, int> interruptUnits;
 
 	// BattleView and BattleTileView settings, saved here so that we can return to them
 
@@ -165,6 +189,8 @@ class Battle : public std::enable_shared_from_this<Battle>
 	std::list<StateRef<BattleUnit>> battleViewSelectedUnits;
 
 	void update(GameState &state, unsigned int ticks);
+	void updateTBBegin(GameState &state);
+	void updateTBEnd(GameState &state);
 
 	void updateProjectiles(GameState &state, unsigned int ticks);
 	void updateVision(GameState &state);
@@ -175,6 +201,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	sp<BattleExplosion> addExplosion(GameState &state, Vec3<int> position,
 	                                 StateRef<DoodadType> doodadType,
 	                                 StateRef<DamageType> damageType, int power, int depletionRate,
+	                                 StateRef<Organisation> ownerOrg,
 	                                 StateRef<BattleUnit> ownerUnit = nullptr);
 	sp<BattleDoor> addDoor(GameState &state);
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
@@ -185,20 +212,27 @@ class Battle : public std::enable_shared_from_this<Battle>
 	sp<BattleUnit> placeUnit(GameState &state, StateRef<Agent> agent);
 	sp<BattleUnit> placeUnit(GameState &state, StateRef<Agent> agent, Vec3<float> position);
 	sp<BattleItem> placeItem(GameState &state, sp<AEquipment> item, Vec3<float> position);
-	sp<BattleHazard> placeHazard(GameState &state, StateRef<DamageType> type, Vec3<int> position,
-	                             int ttl, int power, int initialAgeTTLDivizor = 1,
-	                             bool delayVisibility = true);
+	sp<BattleHazard> placeHazard(GameState &state, StateRef<Organisation> owner,
+	                             StateRef<DamageType> type, Vec3<int> position, int ttl, int power,
+	                             int initialAgeTTLDivizor = 1, bool delayVisibility = true);
+	sp<BattleScanner> addScanner(GameState &state, AEquipment &item);
+	void removeScanner(GameState &state, AEquipment &item);
 
 	static void accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
 	                                    Vec3<float> &target, int accuracy, bool thrown = false);
 
 	// Turn based functions
 
-	// Called when new organisation's turn is starting
-	void beginTurn();
-
-	// Called when current active organisation decides to end their turn
-	void endTurn();
+	// Begin new org's turn
+	void beginTurn(GameState &state);
+	// End current org's turn
+	void endTurn(GameState &state);
+	// Give interrupt chance to hostile units that see this unit
+	void giveInterruptChanceToUnits(GameState &state, StateRef<BattleUnit> giver,
+	                                int reactionValue);
+	// Give interrupt chance to a unit
+	void giveInterruptChanceToUnit(GameState &state, StateRef<BattleUnit> giver,
+	                               StateRef<BattleUnit> receiver, int reactionValue);
 
 	// Battle Start Functions
 
@@ -271,10 +305,6 @@ class Battle : public std::enable_shared_from_this<Battle>
 	std::vector<int> losBlockRandomizer;
 	// Vector of indexes to los blocks, for each tile (index is like tile's location in tilemap)
 	std::vector<int> tileToLosBlock;
-
-	// Contains height at which to spawn units, or -1 if spawning is not possible
-	// No need to serialize this, as we cannot save/load during briefing
-	std::vector<std::vector<std::vector<int>>> spawnMap;
 };
 
 }; // namespace OpenApoc

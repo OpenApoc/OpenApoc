@@ -3,7 +3,7 @@
 #define _USE_MATH_DEFINES
 #endif
 #include "game/state/agent.h"
-#include "game/state/battle/ai/ai.h"
+#include "game/state/battle/ai/unitai.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunitmission.h"
 #include "game/state/gametime.h"
@@ -33,7 +33,7 @@
 // Base movement ticks consumption rate, this allows us to divide by 2,3,4,5,6,8,9,10,12,15,18,20..
 #define BASE_MOVETICKS_CONSUMPTION_RATE 360
 // Movement cost in TUs for walking movement to adjacent (non-diagonal) tile
-#define STANDART_MOVE_TU_COST 2
+#define STANDART_MOVE_TU_COST 4
 
 namespace OpenApoc
 {
@@ -85,6 +85,14 @@ enum class WeaponAimingMode
 	Aimed = 1,
 	Snap = 2,
 	Auto = 4
+};
+
+enum class ReserveShotMode
+{
+	Aimed = 1,
+	Snap = 2,
+	Auto = 4,
+	None = 0
 };
 
 // Unit's general type, used in pathfinding
@@ -184,7 +192,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Units focusing this unit
 	std::list<StateRef<BattleUnit>> focusedByUnits;
 	// Ticks until we check if target is still valid, turn to it etc.
-	unsigned ticksUntillNextTargetCheck = 0;
+	unsigned int ticksUntillNextTargetCheck = 0;
 
 	// Psi
 
@@ -232,6 +240,10 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	unsigned int moraleStateTicksRemaining = 0;
 	// Ticks accumulated towards next morale check
 	unsigned int moraleTicksAccumulated = 0;
+	// TU at turn start (used to calculate percentage of TU)
+	int initialTU = 0;
+	// TU to reserve for shot
+	int reserveShotCost = 0;
 
 	// User set modes
 
@@ -240,6 +252,9 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	FirePermissionMode fire_permission_mode = FirePermissionMode::AtWill;
 	MovementMode movement_mode = MovementMode::Walking;
 	KneelingMode kneeling_mode = KneelingMode::None;
+
+	ReserveShotMode reserve_shot_mode = ReserveShotMode::None;
+	KneelingMode reserve_kneel_mode = KneelingMode::None;
 
 	// Body
 
@@ -288,6 +303,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	unsigned int collisionIgnoredTicks = 0;
 	// Current falling speed
 	Vec3<float> velocity;
+	// Movement counter for TB motion scanner
+	unsigned int tilesMoved = 0;
 
 	// Turning
 
@@ -309,7 +326,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Visible units from other orgs
 	std::set<StateRef<BattleUnit>> visibleUnits;
 	// Visible units that are hostile to us
-	std::list<StateRef<BattleUnit>> visibleEnemies;
+	std::set<StateRef<BattleUnit>> visibleEnemies;
 
 	// Miscellaneous
 
@@ -324,7 +341,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	std::list<Vec2<int>> giveWayRequestData;
 
 	// AI list
-	UnitAIList aiList;
+	AIBlockUnit aiList;
 
 	// [Methods]
 
@@ -345,18 +362,20 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Attacking and turning to hostiles
 
+	// Get full cost of attacking (including turn and pose change)
+	int getAttackCost(GameState &state, AEquipment &item, Vec3<int> tile);
 	void setFocus(GameState &state, StateRef<BattleUnit> unit);
-	void startAttacking(GameState &state, StateRef<BattleUnit> unit,
+	bool startAttacking(GameState &state, StateRef<BattleUnit> unit,
 	                    WeaponStatus status = WeaponStatus::FiringBothHands);
-	void startAttacking(GameState &state, Vec3<int> tile,
+	bool startAttacking(GameState &state, Vec3<int> tile,
 	                    WeaponStatus status = WeaponStatus::FiringBothHands, bool atGround = false);
 	void stopAttacking();
 	// Returns which hands can be used for an attack (or none if attack cannot be made)
 	// Checks wether target unit is in range, and clear LOF exists to it
-	WeaponStatus canAttackUnit(sp<BattleUnit> unit);
+	WeaponStatus canAttackUnit(GameState &state, sp<BattleUnit> unit);
 	// Returns wether unit can be attacked by one of the two supplied weapons
 	// Checks wether target unit is in range, and clear LOF exists to it
-	WeaponStatus canAttackUnit(sp<BattleUnit> unit, sp<AEquipment> rightHand,
+	WeaponStatus canAttackUnit(GameState &state, sp<BattleUnit> unit, sp<AEquipment> rightHand,
 	                           sp<AEquipment> leftHand = nullptr);
 	// Clear LOF means no friendly fire and no map part in between
 	// Clear LOS means nothing in between
@@ -382,6 +401,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Attempts to use item, returns if success
 	bool useItem(GameState &state, sp<AEquipment> item);
 	bool useMedikit(GameState &state, BodyPart part);
+	bool useBrainsucker(GameState &state);
 
 	// Body
 
@@ -403,20 +423,20 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	unsigned int getDistanceTravelled() const;
 	bool shouldPlaySoundNow();
 	unsigned int getWalkSoundIndex();
-	// Return true if retreated and we have to exit
+	// Returns true if retreated
 	bool getNewGoal(GameState &state);
 	bool calculateVelocityForLaunch(float distanceXY, float diffZ, float &velocityXY,
 	                                float &velocityZ);
 	void calculateVelocityForJump(float distanceXY, float diffZ, float &velocityXY,
-	                                float &velocityZ, bool diagonAlley);
+	                              float &velocityZ, bool diagonAlley);
 	bool canLaunch(Vec3<float> targetPosition);
 	bool canLaunch(Vec3<float> targetPosition, Vec3<float> &targetVectorXY, float &velocityXY,
 	               float &velocityZ);
 	void launch(GameState &state, Vec3<float> targetPosition,
 	            BodyState bodyState = BodyState::Standing);
-	void startFalling();
+	void startFalling(GameState &state);
 	void startMoving(GameState &state);
-	void setPosition(GameState &state, const Vec3<float> &pos);
+	void setPosition(GameState &state, const Vec3<float> &pos, bool goal = false);
 
 	// Turning
 
@@ -426,6 +446,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Movement and turning
 
 	void resetGoal();
+	// Updates to do when unit reached goal
+	void onReachGoal(GameState &state);
 
 	// Missions
 
@@ -445,15 +467,25 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Attempt to give unit a new mission, replacing others, returns true if successful
 	bool setMission(GameState &state, BattleUnitMission *mission);
 
-	// TU functions
+	// TB / TU functions
 
+	void setReserveShotMode(ReserveShotMode mode);
+	void setReserveKneelMode(KneelingMode mode);
+	void refreshReserveCost();
 	// Wether unit can afford action
-	bool canAfford(GameState &state, int cost) const;
+	bool canAfford(GameState &state, int cost, bool ignoreKneelReserve = false,
+	               bool ignoreShootReserve = false) const;
 	// Returns if unit did spend (false if unsufficient TUs)
-	bool spendTU(GameState &state, int cost);
-	int getThrowCost();
-	int getMedikitCost();
-	int getMotionScannerCost();
+	bool spendTU(GameState &state, int cost, bool ignoreKneelReserve = false,
+	             bool ignoreShootReserve = false, bool allowInterrupt = false);
+	// Spend all tu
+	void spendRemainingTU(GameState &state, bool allowInterrupt = false);
+	int getThrowCost() const;
+	int getMedikitCost() const;
+	int getMotionScannerCost() const;
+	int getTeleporterCost() const;
+	// Do routine that must be done at unit's turn start
+	void beginTurn(GameState &state);
 
 	// AI execution
 
@@ -471,6 +503,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	void requestGiveWay(const BattleUnit &requestor, const std::list<Vec3<int>> &plannedPath,
 	                    Vec3<int> pos);
+	void applyEnzymeEffect(GameState &state);
+	void spawnEnzymeSmoke(GameState &state, Vec3<int> pos);
 
 	// Unit state queries
 
@@ -539,6 +573,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Main update function
 	void update(GameState &state, unsigned int ticks);
+	// Update function for TB
+	void updateTB(GameState &state);
 	// Updates unit regeneration, bleeding, debuffs and morale states
 	void updateStateAndStats(GameState &state, unsigned int ticks);
 	// Updates unit give way request and events
@@ -552,24 +588,23 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Updates unit's hands trainsition
 	void updateHands(GameState &state, unsigned int &handsTicksRemaining);
 	// Updates unit's movement if unit is falling
-	// Return true if retreated or destroyed and we must halt immediately
-	bool updateMovementFalling(GameState &state, unsigned int &moveTicksRemaining,
+	void updateMovementFalling(GameState &state, unsigned int &moveTicksRemaining,
 	                           bool &wasUsingLift);
-	// Return true if retreated or destroyed and we must halt immediately
-	bool updateMovementBrainsucker(GameState &state, unsigned int &moveTicksRemaining,
-	                           bool &wasUsingLift);
-	// Return true if retreated or destroyed and we must halt immediately
-	bool updateMovementJumping(GameState &state, unsigned int &moveTicksRemaining,
+	// Updates unit's movement if unit is sucking brain
+	void updateMovementBrainsucker(GameState &state, unsigned int &moveTicksRemaining,
+	                               bool &wasUsingLift);
+	// Updates unit's movement if unit is jumping
+	void updateMovementJumping(GameState &state, unsigned int &moveTicksRemaining,
 	                           bool &wasUsingLift);
 	// Updates unit's movement if unit is moving normally
-	// Return true if retreated or destroyed and we must halt immediately
-	bool updateMovementNormal(GameState &state, unsigned int &moveTicksRemaining,
+	void updateMovementNormal(GameState &state, unsigned int &moveTicksRemaining,
 	                          bool &wasUsingLift);
 	// Updates unit's movement
 	// Return true if retreated or destroyed and we must halt immediately
-	bool updateMovement(GameState &state, unsigned int &moveTicksRemaining, bool &wasUsingLift);
+	void updateMovement(GameState &state, unsigned int &moveTicksRemaining, bool &wasUsingLift);
 	// Updates unit's אפסרען trainsition and acquires new target אפסרען
-	void updateTurning(GameState &state, unsigned int &turnTicksRemaining, unsigned int const handsTicksRemaining);
+	void updateTurning(GameState &state, unsigned int &turnTicksRemaining,
+	                   unsigned int const handsTicksRemaining);
 	// Updates unit's displayed item (which one will draw in unit's hands on screen)
 	void updateDisplayedItem();
 	// Runs all fire checks and returns false if we must stop attacking
@@ -608,7 +643,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
   private:
 	friend class Battle;
 
-	void startAttacking(GameState &state, WeaponStatus status);
+	bool startAttacking(GameState &state, WeaponStatus status);
 	bool startAttackPsiInternal(GameState &state, StateRef<BattleUnit> target, PsiStatus status,
 	                            StateRef<AEquipmentType> item);
 
@@ -625,15 +660,28 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	void calculateVisionToTerrain(GameState &state, Battle &battle, TileMap &map,
 	                              Vec3<float> eyesPos);
+	// Calculate unit's vision to LBs checking every one independently
+	// Figure out a center tile of a block and check if it's visible (no collision)
+	void calculateVisionToLosBlocks(GameState &state, Battle &battle, TileMap &map,
+	                                Vec3<float> eyesPos, std::set<int> &discoveredBlocks,
+	                                std::set<int> &blocksToCheck);
+	// Calculate unit's vision to LBs using "shotgun" approach:
+	// Shoot 25 beams and include everything that was passed through into list of visible blocks
+	void calculateVisionToLosBlocksLazy(GameState &state, Battle &battle, TileMap &map,
+	                                    Vec3<float> eyesPos, std::set<int> &discoveredBlocks);
 	void calculateVisionToUnits(GameState &state, Battle &battle, TileMap &map,
 	                            Vec3<float> eyesPos);
+	bool calculateVisionToUnit(GameState &state, Battle &battle, TileMap &map, Vec3<float> eyesPos,
+	                           BattleUnit &u);
+
 	bool isWithinVision(Vec3<int> pos);
 
 	// Update unit's vision of other units and terrain
-	void refreshUnitVisibility(GameState &state, Vec3<float> oldPosition);
+	void refreshUnitVisibility(GameState &state);
 	// Update other units's vision of this unit
-	void refreshUnitVision(GameState &state, bool forceBlind = false);
+	void refreshUnitVision(GameState &state, bool forceBlind = false,
+	                       StateRef<BattleUnit> targetUnit = StateRef<BattleUnit>());
 	// Update both this unit's vision and other unit's vision of this unit
-	void refreshUnitVisibilityAndVision(GameState &state, Vec3<float> oldPosition);
+	void refreshUnitVisibilityAndVision(GameState &state);
 };
 }

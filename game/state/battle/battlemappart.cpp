@@ -26,7 +26,7 @@ void BattleMapPart::die(GameState &state, bool explosive, bool violently)
 		{
 			state.current_battle->addExplosion(state, position, nullptr, type->explosion_type,
 			                                   type->explosion_power,
-			                                   type->explosion_depletion_rate);
+			                                   type->explosion_depletion_rate, owner);
 			// Make it die so that it doesn't blow up twice!
 			explosive = false;
 		}
@@ -551,7 +551,7 @@ bool BattleMapPart::findSupport()
 		// Every type is supported by it's type on the same level
 		typeList.emplace_back(0, tileType);
 		// Add other supported by types
-		for (auto t : type->supportedByTypes)
+		for (auto &t : type->supportedByTypes)
 		{
 			switch (t)
 			{
@@ -570,9 +570,9 @@ bool BattleMapPart::findSupport()
 			}
 		}
 		// Fill parts list based on direction
-		for (auto d : type->supportedByDirections)
+		for (auto &d : type->supportedByDirections)
 		{
-			for (auto p : typeList)
+			for (auto &p : typeList)
 			{
 				// Feature to feature on the same level also allows for a matching wall
 				if (type->type == BattleMapPartType::Type::Feature && p.first == 0 &&
@@ -639,7 +639,7 @@ bool BattleMapPart::findSupport()
 				partList.emplace_back(Vec3<int>{pos.x + dx, pos.y + dy, pos.z + p.first}, p.second);
 
 				// Get diagonal directions
-				for (auto d2 : type->supportedByDirections)
+				for (auto &d2 : type->supportedByDirections)
 				{
 					if (d2 == d || p.second == TileObject::Type::LeftWall ||
 					    p.second == TileObject::Type::RightWall)
@@ -685,7 +685,7 @@ bool BattleMapPart::findSupport()
 			}
 		}
 		// Look for parts
-		for (auto pair : partList)
+		for (auto &pair : partList)
 		{
 			if (pair.first.x < 0 || pair.first.x >= map.size.x || pair.first.y < 0 ||
 			    pair.first.y >= map.size.y || pair.first.z < 0 || pair.first.z >= map.size.z)
@@ -795,7 +795,7 @@ bool BattleMapPart::findSupport()
 	// Get support if we have enough
 	if (supportCount >= 2)
 	{
-		for (auto mp : supports)
+		for (auto &mp : supports)
 		{
 			mp->supportedParts.emplace_back(position, type->type);
 		}
@@ -974,7 +974,7 @@ sp<std::set<BattleMapPart *>> BattleMapPart::getSupportedParts()
 	for (auto &p : this->supportedParts)
 	{
 		auto tile = map.getTile(p.first);
-		for (auto obj : tile->ownedObjects)
+		for (auto &obj : tile->ownedObjects)
 		{
 			if (obj->getType() == TileObjectBattleMapPart::convertType(p.second))
 			{
@@ -1043,7 +1043,7 @@ void BattleMapPart::ceaseSupportProvision()
 	supportedParts.clear();
 	if (supportedItems)
 	{
-		for (auto obj : this->tileObject->getOwningTile()->ownedObjects)
+		for (auto &obj : this->tileObject->getOwningTile()->ownedObjects)
 		{
 			if (obj->getType() == TileObject::Type::Item)
 			{
@@ -1064,7 +1064,7 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> set)
 	UString log = "ATTEMPTING RE-LINK OF SUPPORTS";
 
 	// First mark all those in list as about to fall
-	for (auto mp : *set)
+	for (auto &mp : *set)
 	{
 		mp->queueCollapse();
 		mp->ceaseBeingSupported();
@@ -1078,7 +1078,7 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> set)
 		LogWarning("%s", log);
 		log = "";
 		log += format("\nIteration begins. List contains %d items:", (int)set->size());
-		for (auto mp : *set)
+		for (auto &mp : *set)
 		{
 			auto pos = mp->tileObject->getOwningTile()->position;
 			log += format("\n %s at %d %d %d", mp->type.id, pos.x, pos.y, pos.z);
@@ -1088,11 +1088,11 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> set)
 		auto nextSet = mksp<std::set<BattleMapPart *>>();
 		listChanged = false;
 		// Attempt to re-link every entry in set
-		for (auto mp : *set)
+		for (auto &mp : *set)
 		{
 			// Unsupport every map part supported by this
 			auto supportedByThisMp = mp->getSupportedParts();
-			for (auto newmp : *supportedByThisMp)
+			for (auto &newmp : *supportedByThisMp)
 			{
 				newmp->queueCollapse(mp->ticksUntilCollapse);
 			}
@@ -1144,7 +1144,7 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> set)
 				}
 				// Cancel collapse of this part and every part supported by it
 				mp->cancelCollapse();
-				for (auto newmp : *supportedByThisMp)
+				for (auto &newmp : *supportedByThisMp)
 				{
 					newmp->cancelCollapse();
 				}
@@ -1156,7 +1156,7 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> set)
 				              mp->type.id, pos.x, pos.y, pos.z);
 				nextSet->insert(mp);
 				mp->supportedParts.clear();
-				for (auto newmp : *supportedByThisMp)
+				for (auto &newmp : *supportedByThisMp)
 				{
 					auto newpos = newmp->tileObject->getOwningTile()->position;
 					log += format("\n - %s at %d %d %d added to next iteration", newmp->type.id,
@@ -1287,7 +1287,7 @@ void BattleMapPart::update(GameState &state, unsigned int ticks)
 			{
 				StateRef<DamageType> dtSmoke = {&state, "DAMAGETYPE_SMOKE"};
 				auto hazard = state.current_battle->placeHazard(
-				    state, dtSmoke, position, dtSmoke->hazardType->getLifetime(state), 2,
+				    state, owner, dtSmoke, position, dtSmoke->hazardType->getLifetime(state), 2,
 				    destroyed ? 6 : 12);
 				if (hazard)
 				{
@@ -1305,6 +1305,7 @@ void BattleMapPart::update(GameState &state, unsigned int ticks)
 						auto rubble = mksp<BattleMapPart>();
 						Vec3<int> initialPosition = position;
 						rubble->damaged = true;
+						rubble->owner = owner;
 						rubble->position = initialPosition;
 						rubble->position += Vec3<float>(0.5f, 0.5f, 0.0f);
 						rubble->type = type->rubble.front();

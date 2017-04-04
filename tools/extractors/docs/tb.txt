@@ -1,0 +1,17 @@
+What do we want:
+- Vanilla experience 100% sans bugs and inconviniences
+
+What do we need still:
+- A system for moving camera to events in battle (callback?)
+- When enemy spotted for the first time we pause mission and give event
+- When no action visible to player happens for 1 second hide behind screen
+- When screen is shown fast forward updates and cull walking sounds
+- When action first visible to player move camera to center on action and remove screen
+- When interrupting center on the first interrupting unit
+
+Order for proper map generation:
+- Generate smallest map
+- Init map with map parts only
+- For every player los block, LOS to every enemy LOS block (adhering to limit of range 20), and remove spawn for blocks that are visible.
+- Calculate amount of spawn tiles for enemies, compare to required amount multiplied by some constant (like 2x)
+- If not enough and map has variable size then increase map size and try again

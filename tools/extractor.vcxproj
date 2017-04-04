@@ -37,7 +37,6 @@
     <ClCompile Include="extractors\extract_unit_animation_pack_psi.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_pack_q.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_pack_spitter.cpp" />
-    <ClCompile Include="extractors\extract_unit_animation_pack_template.cpp" />
     <ClCompile Include="extractors\extract_base_layouts.cpp" />
     <ClCompile Include="extractors\extract_battlescape_map.cpp" />
     <ClCompile Include="extractors\extract_battlescape_map_parts.cpp" />

@@ -17,6 +17,7 @@ class Collision
 	sp<TileObject> obj;
 	sp<Projectile> projectile;
 	Vec3<float> position;
+	std::list<Vec3<int>> passedTiles;
 	bool outOfRange = false;
 	explicit operator bool() const { return obj != nullptr; }
 };

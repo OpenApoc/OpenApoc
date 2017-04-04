@@ -317,16 +317,13 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 					switch (ldata.spawn_type)
 					{
 						case SPAWN_TYPE_PLAYER:
-							los_block->spawn_type =
-							    BattleMapSector::LineOfSightBlock::SpawnType::Player;
+							los_block->spawn_type = SpawnType::Player;
 							break;
 						case SPAWN_TYPE_ENEMY:
-							los_block->spawn_type =
-							    BattleMapSector::LineOfSightBlock::SpawnType::Enemy;
+							los_block->spawn_type = SpawnType::Enemy;
 							break;
 						case SPAWN_TYPE_CIVILIAN:
-							los_block->spawn_type =
-							    BattleMapSector::LineOfSightBlock::SpawnType::Civilian;
+							los_block->spawn_type = SpawnType::Civilian;
 							break;
 						// TacEdit (map editor from vanilla creators) allows values up to 8, but
 						// they
