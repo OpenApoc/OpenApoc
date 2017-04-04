@@ -3900,13 +3900,30 @@ void BattleUnit::dropDown(GameState &state)
 	}
 	setBodyState(state, proposedBodyState);
 	cancelMissions(state, true);
-	addMission(state, BattleUnitMission::changeStance(*this, targetState));
 	// Drop all gear
+	if (agent->type->inventory)
+	{
+		auto it = agent->equipment.begin();
+		while (it!= agent->equipment.end())
+		{
+			auto e = *it++;
+			if (e->type->type != AEquipmentType::Type::Armor)
+			{
+				addMission(state, BattleUnitMission::dropItem(*this, e));
+			}
+		}
+	}
+	// Drop down
+	addMission(state, BattleUnitMission::changeStance(*this, targetState));
+	// Drop all armor after going down
 	if (agent->type->inventory)
 	{
 		for (auto e : agent->equipment)
 		{
-			addMission(state, BattleUnitMission::dropItem(*this, e), true);
+			if (e->type->type == AEquipmentType::Type::Armor)
+			{
+				addMission(state, BattleUnitMission::dropItem(*this, e), true);
+			}
 		}
 	}
 	

@@ -1829,7 +1829,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				item->ownerUnit = {&state, u.id};
 				// Drop item
 				auto bi = state.current_battle->placeItem(state, item,
-				                                          u.position + Vec3<float>{0.0, 0.0, (float)u.getCurrentHeight()/80.0f});
+				                                          u.position + Vec3<float>{0.0, 0.0, (u.current_body_state == BodyState::Downed || u.current_body_state == BodyState::Dead ) ? 0.0f : (float)u.getCurrentHeight()/80.0f});
 				bi->falling = true;
 			}
 			item = nullptr;

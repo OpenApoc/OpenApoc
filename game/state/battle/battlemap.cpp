@@ -498,7 +498,7 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 		else
 		{
 			LogWarning("Cannot generate a map %s with gen size %d since generating large maps is "
-			           "disabled", );
+			           "disabled", id, (int)genSize);
 			return false;
 		}
 	}
