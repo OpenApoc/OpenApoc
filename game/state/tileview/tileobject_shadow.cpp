@@ -53,7 +53,7 @@ void TileObjectShadow::draw(Renderer &r, TileTransform &transform, Vec2<float> s
 				}
 				if (!closestImage)
 				{
-					LogError("No image found for vehicle");
+					LogError("No image found for vehicle %s", vehicle->type.id);
 					return;
 				}
 				r.draw(closestImage, screenPosition - vehicle->type->shadow_offset);

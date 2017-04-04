@@ -324,7 +324,7 @@ bool Battle::initialMapCheck(GameState &state, std::list<StateRef<Agent>> agents
 		}
 	}
 
-	return spawnPoints / spawnPointsRequired >= 2;
+	return spawnPoints / spawnPointsRequired >= 4;
 }
 
 void linkUpList(std::list<BattleMapPart *> list)

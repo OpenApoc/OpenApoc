@@ -991,8 +991,9 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			LogInfo("Vehicle mission %s: at position %s", name, position);
 			for (auto &padLocation : b->landingPadLocations)
 			{
-				padLocation.z += 1;
-				if (padLocation == position)
+				auto abovePadLocation = padLocation;
+				abovePadLocation.z += 1;
+				if (abovePadLocation == position)
 				{
 					LogInfo("Mission %s: Landing on pad %s", name, padLocation);
 					auto *landMission = VehicleMission::land(v, b);
@@ -1014,16 +1015,17 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				// Don't pay attention to stuff that blocks us, as things will likely move anyway...
 
 				// We actually want the tile above the pad itself
-				dest.z = dest.z + 1;
-				if (position == dest)
+				auto aboveDest = dest;
+				aboveDest.z += 1;
+				if (position == aboveDest)
 					continue;
 				Vec3<float> currentPosition = position;
-				Vec3<float> landingPadPosition = dest;
+				Vec3<float> landingPadPosition = aboveDest;
 
 				float distance = glm::length(currentPosition - landingPadPosition);
 
 				if (distance < shortestPathCost)
-					shortestPathPad = dest;
+					shortestPathPad = aboveDest;
 			}
 
 			LogInfo("Vehicle mission %s: Pathing to pad at %s", name, shortestPathPad);
