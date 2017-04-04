@@ -33,8 +33,8 @@ bool ScrollBar::setValue(int newValue)
 	if (newValue == Value)
 		return false;
 
-	this->pushFormEvent(FormEventType::ScrollBarChange, nullptr);
 	Value = newValue;
+	this->pushFormEvent(FormEventType::ScrollBarChange, nullptr);
 	return true;
 }
 
