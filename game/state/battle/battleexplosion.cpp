@@ -160,7 +160,6 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 					// Legs are defeault already
 				}
 				// Apply
-				// FIXME: Give experience
 				u->applyDamage(state, damage, damageType,
 				               u->determineBodyPartHit(damageType, cposition, velocity),
 				               DamageSource::Impact, ownerUnit);

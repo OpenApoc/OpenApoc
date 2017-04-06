@@ -964,12 +964,16 @@ bool BattleUnit::startAttackPsiInternal(GameState &state, StateRef<BattleUnit> t
 	}
 	int chance = getPsiChance(target, status, item);
 	int roll = randBoundsExclusive(state.rng, 0, 100);
+	experiencePoints.psi_attack++;
+	experiencePoints.psi_energy++;
 	LogWarning("Psi Attack #%d Roll %d Chance %d %s Attacker %s Target %s", (int)status, roll,
 	           chance, roll < chance ? (UString) "SUCCESS" : (UString) "FAILURE", id, target->id);
 	if (roll >= chance)
 	{
 		return false;
 	}
+	experiencePoints.psi_attack += 2;
+	experiencePoints.psi_energy += 2;
 
 	// Attack hit, apply effects
 
@@ -983,7 +987,7 @@ bool BattleUnit::startAttackPsiInternal(GameState &state, StateRef<BattleUnit> t
 	target->psiAttackers[id] = status;
 	ticksAccumulatedToNextPsiCheck = 0;
 	target->applyPsiAttack(state, *this, status, item, true);
-
+	
 	return true;
 }
 
@@ -1668,8 +1672,12 @@ bool BattleUnit::handleCollision(GameState &state, Collision &c)
 			    state, {&state, id}, {&state, id},
 			    projectile->firerUnit->agent->getReactionValue());
 			notifyHit(-projectile->getVelocity());
+			if (projectile->firerUnit)
+			{
+				projectile->firerUnit->experiencePoints.accuracy++;
+			}
 			return applyDamage(state, projectile->damage, projectile->damageType, partHit,
-			                   DamageSource::Impact);
+			                   DamageSource::Impact, projectile->firerUnit);
 		}
 	}
 	return false;
@@ -1748,7 +1756,11 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 			{
 				moraleTicksAccumulated -= LOWMORALE_CHECK_INTERVAL;
 
-				if (randBoundsExclusive(state.rng, 0, 100) < 100 - 2 * agent->modified_stats.morale)
+				if (randBoundsExclusive(state.rng, 0, 100) >= 100 - 2 * agent->modified_stats.morale)
+				{
+					experiencePoints.bravery++;
+				}
+				else
 				{
 					moraleStateTicksRemaining = TICKS_PER_LOWMORALE_STATE;
 					moraleState = (MoraleState)(randBoundsInclusive(state.rng, 1, 3));
@@ -3603,6 +3615,87 @@ void BattleUnit::sendAgentEvent(GameState &state, GameEventType type, bool check
 	}
 }
 
+int BattleUnit::rollForPrimaryStat(GameState & state, int experience)
+{
+	if (experience > 10)
+	{
+		return randBoundsInclusive(state.rng, 2, 6);
+	}
+	else if (experience > 5)
+	{
+		return randBoundsInclusive(state.rng, 1, 4);
+	}
+	if (experience > 2)
+	{
+		return randBoundsInclusive(state.rng, 1, 3);
+	}
+	if (experience > 0)
+	{
+		return randBoundsInclusive(state.rng, 0, 1);
+	}
+	return 0;
+}
+
+// FIXME: Ensure correct
+// For now, using X-Com 1/2 system of primary/secondary stats, 
+// except psi which assumes it's same 3x limit that is applied when using psi gym
+void BattleUnit::processExperience(GameState &state)
+{
+	int secondaryXP = experiencePoints.accuracy + experiencePoints.bravery + experiencePoints.psi_attack + experiencePoints.psi_energy + experiencePoints.reactions;
+	if (agent->current_stats.accuracy < 100)
+	{
+		agent->current_stats.accuracy += rollForPrimaryStat(state, experiencePoints.accuracy);
+	}
+	if (agent->current_stats.psi_attack < 100 
+		&& agent->current_stats.psi_attack <  agent->initial_stats.psi_attack * 3)
+	{
+		agent->current_stats.psi_attack += rollForPrimaryStat(state, experiencePoints.psi_attack);
+	}
+	if (agent->current_stats.psi_energy < 100
+		&& agent->current_stats.psi_energy <agent->initial_stats.psi_energy * 3)
+	{
+		agent->current_stats.psi_energy += rollForPrimaryStat(state, experiencePoints.psi_energy);
+	}
+	if (agent->current_stats.reactions < 100)
+	{
+		if (state.current_battle->mode == Battle::Mode::TurnBased)
+		{
+			agent->current_stats.reactions += rollForPrimaryStat(state, experiencePoints.reactions);
+		}
+		else
+		{ 
+			agent->current_stats.reactions += rollForPrimaryStat(state, std::min(3, secondaryXP));
+		}
+	}
+	if (agent->current_stats.bravery < 100)
+	{
+		agent->current_stats.bravery += 10 * randBoundsExclusive(state.rng, 0, 99) < experiencePoints.bravery * 9;
+	}
+	if (secondaryXP > 0)
+	{
+		if (agent->current_stats.health < 100)
+		{
+			agent->current_stats.health += randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.health) / 10;
+		}
+		if (agent->current_stats.speed < 100)
+		{
+			agent->current_stats.speed += randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.speed) / 10;
+		}
+		if (agent->current_stats.stamina < 100)
+		{
+			agent->current_stats.stamina += randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.stamina) / 10;
+		}
+		if (agent->current_stats.strength < 100)
+		{
+			agent->current_stats.strength += randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.strength) / 10;
+		}
+	}
+	int health = agent->modified_stats.health;
+	agent->modified_stats = agent->current_stats;
+	agent->modified_stats.health = health;
+	agent->updateSpeed();
+}
+
 void BattleUnit::executeGroupAIDecision(GameState &state, AIDecision &decision,
                                         std::list<StateRef<BattleUnit>> &units)
 {
@@ -4063,6 +4156,7 @@ bool BattleUnit::useSpawner(GameState &state, sp<AEquipmentType> item)
 			                                BodyState::Standing);
 		}
 	}
+	return true;
 }
 
 void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool violently,

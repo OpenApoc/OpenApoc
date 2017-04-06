@@ -508,6 +508,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void spawnEnzymeSmoke(GameState &state, Vec3<int> pos);
 	void sendAgentEvent(GameState &state, GameEventType type, bool checkOwnership = false,
 	                    bool checkVisibility = false) const;
+	int rollForPrimaryStat(GameState &state, int experience);
+	void processExperience(GameState &state);
 
 	// Unit state queries
 
