@@ -58,6 +58,7 @@ static const unsigned TIMES_TO_WAIT_FOR_MIA_TARGET =
 static const unsigned TICKS_TO_BRAINSUCK = TICKS_PER_SECOND * 2;
 // Chance out of 100 to be brainsucked
 static const int BRAINSUCK_CHANCE = 66;
+static const unsigned TICKS_SUPPRESS_SPOTTED_MESSAGES = TICKS_PER_TURN;
 
 class TileObjectBattleUnit;
 class TileObjectShadow;
@@ -66,6 +67,7 @@ class DamageType;
 class AIDecision;
 class AIAction;
 class AIMovement;
+enum class GameEventType;
 enum class DamageSource;
 
 enum class MovementMode
@@ -357,9 +359,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	bool isFatallyWounded();
 	void addFatalWound(BodyPart fatalWoundPart);
-	void dealDamage(GameState &state, int damage, bool generateFatalWounds, BodyPart fatalWoundPart,
-	                int stunPower);
-
+	
 	// Attacking and turning to hostiles
 
 	// Get full cost of attacking (including turn and pose change)
@@ -402,6 +402,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	bool useItem(GameState &state, sp<AEquipment> item);
 	bool useMedikit(GameState &state, BodyPart part);
 	bool useBrainsucker(GameState &state);
+	bool useSpawner(GameState &state, sp<AEquipmentType> item);
 
 	// Body
 
@@ -496,7 +497,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void executeAIMovement(GameState &state, AIMovement &movement);
 
 	// Notifications
-	void notifyUnderFire(Vec3<int> position);
+	void notifyUnderFire(GameState &state, Vec3<int> position, bool visible);
 	void notifyHit(Vec3<int> position);
 
 	// Misc
@@ -505,6 +506,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	                    Vec3<int> pos);
 	void applyEnzymeEffect(GameState &state);
 	void spawnEnzymeSmoke(GameState &state, Vec3<int> pos);
+	void sendAgentEvent(GameState &state, GameEventType type, bool checkOwnership = false,
+	                    bool checkVisibility = false) const;
 
 	// Unit state queries
 
@@ -557,7 +560,10 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	                              Vec3<float> direction);
 	// Returns true if sound and doodad were handled by it
 	bool applyDamage(GameState &state, int power, StateRef<DamageType> damageType,
-	                 BodyPart bodyPart, DamageSource source);
+	                 BodyPart bodyPart, DamageSource source, StateRef<BattleUnit> attacker = nullptr);
+	void applyDamageDirect(GameState &state, int damage, bool generateFatalWounds, BodyPart fatalWoundPart,
+		int stunPower, StateRef<BattleUnit> attacker = nullptr);
+
 	// Returns true if sound and doodad were handled by it
 	bool handleCollision(GameState &state, Collision &c);
 
@@ -624,7 +630,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void dropDown(GameState &state);
 	void tryToRiseUp(GameState &state);
 	void fallUnconscious(GameState &state);
-	void die(GameState &state, bool violently = true, bool bledToDeath = false);
+	void die(GameState &state, StateRef<BattleUnit> attacker = nullptr, bool violently = true, bool bledToDeath = false);
 
 	// Following members are not serialized, but rather are set in initBattle method
 

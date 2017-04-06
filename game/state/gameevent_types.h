@@ -25,6 +25,7 @@ enum class GameEventType
 	NotEnoughFuel,
 
 	// Base events
+	AgentRearmed,
 	CargoArrived,
 	TransferArrived,
 	RecoveryArrived,
@@ -43,8 +44,8 @@ enum class GameEventType
 
 	// Agent events
 	AgentArrived,
-	AgentRearmed,
 	HostileSpotted,
+	AgentBrainsucked,
 	AgentDied,
 	HostileDied,
 	UnknownDied,
@@ -61,7 +62,11 @@ enum class GameEventType
 	AgentPsiAttacked,
 	AgentPsiControlled,
 	AgentPsiOver,
-	DestinationBlocked,
+	NoLOF,
+
+	// Battle events
+
+	NewTurn,
 
 	// Misc
 	ResearchCompleted,

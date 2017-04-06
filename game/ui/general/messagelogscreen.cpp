@@ -10,6 +10,7 @@
 #include "framework/keycodes.h"
 #include "game/state/gamestate.h"
 #include "game/state/message.h"
+#include "game/ui/battle/battleview.h"
 #include "game/ui/city/cityview.h"
 
 namespace OpenApoc
@@ -25,10 +26,38 @@ MessageLogScreen::MessageLogScreen(sp<GameState> state, CityView &cityView)
 	}
 }
 
+MessageLogScreen::MessageLogScreen(sp<GameState> state, BattleView &battleView)
+    : Stage(), menuform(ui().getForm("messagelog")), state(state)
+{
+	auto listbox = menuform->findControlTyped<ListBox>("LISTBOX_MESSAGES");
+	for (EventMessage message : state->messages)
+	{
+		listbox->addItem(createMessageRow(message, state, battleView));
+	}
+}
+
 MessageLogScreen::~MessageLogScreen() = default;
 
 sp<Control> MessageLogScreen::createMessageRow(EventMessage message, sp<GameState> state,
                                                CityView &cityView)
+{
+	return createMessageRow(message, state, [message, state, &cityView](Event *) {
+		cityView.setScreenCenterTile(message.location);
+		fw().stageQueueCommand({StageCmd::Command::POP});
+	});
+}
+
+sp<Control> MessageLogScreen::createMessageRow(EventMessage message, sp<GameState> state,
+                                               BattleView &battleView)
+{
+	return createMessageRow(message, state, [message, state, &battleView](Event *) {
+		battleView.setScreenCenterTile(message.location);
+		fw().stageQueueCommand({StageCmd::Command::POP});
+	});
+}
+
+sp<Control> MessageLogScreen::createMessageRow(EventMessage message, sp<GameState> state,
+                                               std::function<void(FormsEvent *e)> callback)
 {
 	auto control = mksp<Control>();
 
@@ -50,17 +79,14 @@ sp<Control> MessageLogScreen::createMessageRow(EventMessage message, sp<GameStat
 	text->Size = {328, HEIGHT};
 	text->TextVAlign = VerticalAlignment::Centre;
 
-	if (message.getMapLocation(*state) != EventMessage::NO_LOCATION)
+	if (message.location != EventMessage::NO_LOCATION)
 	{
 		auto btnImage = fw().data->loadImage(
 		    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:57:ui/menuopt.pal");
 		auto btnLocation = control->createChild<GraphicButton>(btnImage, btnImage);
 		btnLocation->Location = text->Location + Vec2<int>{text->Size.x, 0};
 		btnLocation->Size = {22, HEIGHT};
-		btnLocation->addCallback(FormEventType::ButtonClick, [message, state, &cityView](Event *) {
-			cityView.setScreenCenterTile(message.getMapLocation(*state));
-			fw().stageQueueCommand({StageCmd::Command::POP});
-		});
+		btnLocation->addCallback(FormEventType::ButtonClick, callback);
 	}
 
 	return control;

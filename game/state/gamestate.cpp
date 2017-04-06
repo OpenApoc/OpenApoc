@@ -227,6 +227,7 @@ void GameState::startGame()
 	}
 
 	gameTime = GameTime::midday();
+	newGame = true;
 }
 
 // Fills out initial player property
@@ -557,10 +558,24 @@ void GameState::logEvent(GameEvent *ev)
 	{
 		messages.pop_front();
 	}
-	UString location;
+	Vec3<int> location = EventMessage::NO_LOCATION;
 	if (GameVehicleEvent *gve = dynamic_cast<GameVehicleEvent *>(ev))
 	{
-		location = gve->vehicle.id;
+		location = gve->vehicle->position;
+	}
+	else if (GameAgentEvent *gae = dynamic_cast<GameAgentEvent *>(ev))
+	{
+		if (gae->agent->unit)
+		{
+			location = gae->agent->unit->position;
+		}
+		// FIXME: Introduce agent position when in city
+	}
+	else if (GameBaseEvent *gbe = dynamic_cast<GameBaseEvent *>(ev))
+	{
+		location = {gbe->base->building->bounds.p0.x + gbe->base->building->bounds.p1.x,
+		            gbe->base->building->bounds.p0.y + gbe->base->building->bounds.p1.y, 0} /
+		           2;
 	}
 	// TODO: Other event types
 	messages.emplace_back(EventMessage{gameTime, ev->message(), location});

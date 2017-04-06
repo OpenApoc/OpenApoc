@@ -28,6 +28,7 @@
 #include "game/state/battle/battleunit.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
+#include "game/state/message.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
 #include "game/state/tileview/collision.h"
@@ -37,6 +38,7 @@
 #include "game/ui/base/basescreen.h"
 #include "game/ui/battle/battleturnbasedconfirmbox.h"
 #include "game/ui/general/ingameoptions.h"
+#include "game/ui/general/messagelogscreen.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
 #include <cmath>
@@ -686,10 +688,19 @@ BattleView::BattleView(sp<GameState> gameState)
 		    fw().stageQueueCommand(
 		        {StageCmd::Command::PUSH, mksp<InGameOptions>(this->state->shared_from_this())});
 		});
-	baseForm->findControl("BUTTON_SHOW_LOG")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { LogWarning("Show log"); });
-	baseForm->findControl("BUTTON_ZOOM_EVENT")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { LogWarning("Zoom to event"); });
+	this->baseForm->findControl("BUTTON_SHOW_LOG")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    fw().stageQueueCommand(
+		        {StageCmd::Command::PUSH, mksp<MessageLogScreen>(this->state, *this)});
+		});
+	this->baseForm->findControl("BUTTON_ZOOM_EVENT")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    if (baseForm->findControlTyped<Ticker>("NEWS_TICKER")->hasMessages())
+		    {
+			    LogWarning("Has Messages!");
+			    this->zoomLastEvent();
+		    }
+		});
 
 	// FIXME: When clicking on items or weapons, activate them or go into fire / teleport mode
 	// accordingly
@@ -1000,6 +1011,20 @@ void BattleView::begin()
 	uiTabsTB[0]->findControl("BUTTON_LAYER_7")->setVisible(maxZDraw >= 7);
 	uiTabsTB[0]->findControl("BUTTON_LAYER_8")->setVisible(maxZDraw >= 8);
 	uiTabsTB[0]->findControl("BUTTON_LAYER_9")->setVisible(maxZDraw >= 9);
+	uiTabsTB[3]->findControl("BUTTON_LAYER_1")->setVisible(maxZDraw >= 1);
+	uiTabsTB[3]->findControl("BUTTON_LAYER_2")->setVisible(maxZDraw >= 2);
+	uiTabsTB[3]->findControl("BUTTON_LAYER_3")->setVisible(maxZDraw >= 3);
+	uiTabsTB[3]->findControl("BUTTON_LAYER_4")->setVisible(maxZDraw >= 4);
+	uiTabsTB[3]->findControl("BUTTON_LAYER_5")->setVisible(maxZDraw >= 5);
+	uiTabsTB[3]->findControl("BUTTON_LAYER_6")->setVisible(maxZDraw >= 6);
+	uiTabsTB[3]->findControl("BUTTON_LAYER_7")->setVisible(maxZDraw >= 7);
+	uiTabsTB[3]->findControl("BUTTON_LAYER_8")->setVisible(maxZDraw >= 8);
+	uiTabsTB[3]->findControl("BUTTON_LAYER_9")->setVisible(maxZDraw >= 9);
+	if (battle.mode == Battle::Mode::TurnBased)
+	{
+		auto event = GameBattleEvent(GameEventType::NewTurn, battle.shared_from_this());
+		baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(event.message());
+	}
 }
 
 void BattleView::resume() {}
@@ -1731,22 +1756,15 @@ void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 	                               u->facing, BattleUnitMission::getFacing(temp, target))
 	                         : 0;
 
-	if (battle.battleViewGroupMove && !runAway)
+	if (battle.battleViewGroupMove && battle.battleViewSelectedUnits.size() > 1 && !runAway)
 	{
 		Battle::groupMove(*state, battle.battleViewSelectedUnits, target, facingDelta,
 		                  demandGiveWay);
 	}
 	else
 	{
-		// FIXME: Handle group movement (don't forget to turn it off when running away)
 		for (auto &unit : battle.battleViewSelectedUnits)
 		{
-			if (strafe)
-			{
-				// FIXME: handle strafe movement
-				LogWarning("Implement strafing!");
-			}
-
 			BattleUnitMission *mission;
 			if (runAway)
 			{
@@ -1762,11 +1780,11 @@ void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 
 			if (unit->setMission(*state, mission))
 			{
-				LogWarning("BattleUnit \"%s\" going to location %s", unit->agent->name, target);
+				LogInfo("BattleUnit \"%s\" going to location %s", unit->agent->name, target);
 			}
 			else
 			{
-				LogWarning("BattleUnit \"%s\" could not receive order to move", unit->agent->name);
+				LogInfo("BattleUnit \"%s\" could not receive order to move", unit->agent->name);
 			}
 		}
 	}
@@ -2124,7 +2142,7 @@ void BattleView::orderFire(StateRef<BattleUnit> u, WeaponStatus status, bool for
 	}
 	if (noLOF)
 	{
-		LogWarning("No LOF to target!");
+		u->sendAgentEvent(*state, GameEventType::NoLOF, true);
 	}
 }
 
@@ -2230,8 +2248,11 @@ void BattleView::eventOccurred(Event *e)
 				modifierLCtrl = true;
 				break;
 			case SDLK_ESCAPE:
-				fw().stageQueueCommand(
-				    {StageCmd::Command::PUSH, mksp<InGameOptions>(state->shared_from_this())});
+				if (activeTab != notMyTurnTab)
+				{
+					fw().stageQueueCommand(
+					    {StageCmd::Command::PUSH, mksp<InGameOptions>(state->shared_from_this())});
+				}
 				return;
 			case SDLK_PAGEUP:
 				setZLevel(getZLevel() + 1);
@@ -2335,7 +2356,7 @@ void BattleView::eventOccurred(Event *e)
 					      glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
 					          5.0f)) == !inverse)
 					{
-						u.second->dealDamage(*state, 9001, false, BodyPart::Helmet,
+						u.second->applyDamageDirect(*state, 9001, false, BodyPart::Helmet,
 						                     u.second->getHealth() + 4);
 					}
 				}
@@ -2512,14 +2533,17 @@ void BattleView::eventOccurred(Event *e)
 			LogError("Invalid game state event");
 			return;
 		}
-		/*if (!gameEvent->message().empty())
+		if (!gameEvent->message().empty())
 		{
-		    state->logEvent(gameEvent);
-		    baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
-		    auto notification = mksp<NotificationScreen>(state, *this, gameEvent->message());
-		    stageCmd.cmd = StageCmd::Command::PUSH;
-		    stageCmd.nextStage = notification;
-		}*/
+			state->logEvent(gameEvent);
+			baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
+			if (battle.mode == Battle::Mode::RealTime)
+			{
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<NotificationScreen>(state, *this, gameEvent->message())});
+			}
+		}
 		switch (gameEvent->type)
 		{
 			default:
@@ -3031,16 +3055,6 @@ void BattleView::updateLayerButtons()
 	}
 }
 
-void BattleView::onNewTurn()
-{
-	if (battle.currentActiveOrganisation == battle.currentPlayer)
-	{
-		baseForm->findControlTyped<Ticker>("NEWS_TICKER")
-		    ->addMessage(tr("Turn:") + " " + format("%d", battle.currentTurn) + "   " +
-		                 tr("Side:") + "  " + tr(battle.currentActiveOrganisation->name));
-	}
-}
-
 void BattleView::updateItemInfo(bool right)
 {
 	UString name = right ? "RIGHT" : "LEFT";
@@ -3509,4 +3523,17 @@ bool MotionScannerInfo::operator!=(const MotionScannerInfo &other) const
 	return !(*this == other);
 }
 
+void BattleView::zoomLastEvent()
+{
+	if (!state->messages.empty())
+	{
+		auto message = state->messages.back();
+		if (message.location != EventMessage::NO_LOCATION)
+		{
+			setScreenCenterTile(message.location);
+			setZLevel(message.location.z + 1);
+			updateLayerButtons();
+		}
+	}
+}
 }; // namespace OpenApoc

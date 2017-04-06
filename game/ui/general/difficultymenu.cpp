@@ -95,7 +95,7 @@ void DifficultyMenu::eventOccurred(Event *e)
 
 		fw().stageQueueCommand(
 		    {StageCmd::Command::PUSH,
-		     mksp<LoadingScreen>(loadGame(initialStatePath, loadedState),
+		     mksp<LoadingScreen>(nullptr, loadGame(initialStatePath, loadedState),
 		                         [loadedState]() { return mksp<CityView>(loadedState); })});
 		return;
 	}

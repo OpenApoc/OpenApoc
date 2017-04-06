@@ -6,6 +6,7 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "game/state/gamestate.h"
+#include "game/ui/battle/battleview.h"
 #include "game/ui/city/cityview.h"
 
 namespace OpenApoc
@@ -24,6 +25,23 @@ NotificationScreen::NotificationScreen(sp<GameState> state, CityView &cityView,
 	    ->addCallback(FormEventType::ButtonClick, [&cityView](Event *) {
 		    cityView.zoomLastEvent();
 		    cityView.setUpdateSpeed(UpdateSpeed::Pause);
+		    fw().stageQueueCommand({StageCmd::Command::POP});
+		});
+}
+
+NotificationScreen::NotificationScreen(sp<GameState> state, BattleView &battleView,
+                                       const UString &message)
+    : Stage(), menuform(ui().getForm("notification")), state(state)
+{
+	menuform->findControlTyped<Label>("TEXT_NOTIFICATION")->setText(message);
+
+	menuform->findControl("BUTTON_RESUME")->addCallback(FormEventType::ButtonClick, [](Event *) {
+		fw().stageQueueCommand({StageCmd::Command::POP});
+	});
+	menuform->findControl("BUTTON_PAUSE")
+	    ->addCallback(FormEventType::ButtonClick, [&battleView](Event *) {
+		    battleView.zoomLastEvent();
+		    battleView.setUpdateSpeed(BattleUpdateSpeed::Pause);
 		    fw().stageQueueCommand({StageCmd::Command::POP});
 		});
 }

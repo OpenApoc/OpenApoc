@@ -4,8 +4,10 @@
 #include "game/ui/general/loadingscreen.h"
 #include "framework/configfile.h"
 #include "framework/data.h"
+#include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/renderer.h"
+#include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/ui/battle/battleview.h"
 #include "game/ui/city/cityview.h"
@@ -18,9 +20,10 @@ namespace OpenApoc
 ConfigOptionBool asyncLoading("Game", "ASyncLoading",
                               "Load in background while displaying animated loading screen", true);
 
-LoadingScreen::LoadingScreen(std::future<void> task, std::function<sp<Stage>()> nextScreenFn,
-                             sp<Image> background, int scaleDivisor, bool showRotatingImage)
-    : Stage(), loadingTask(std::move(task)), nextScreenFn(std::move(nextScreenFn)),
+LoadingScreen::LoadingScreen(sp<GameState> state, std::future<void> task,
+                             std::function<sp<Stage>()> nextScreenFn, sp<Image> background,
+                             int scaleDivisor, bool showRotatingImage)
+    : Stage(), state(state), loadingTask(std::move(task)), nextScreenFn(std::move(nextScreenFn)),
       backgroundimage(background), showRotatingImage(showRotatingImage), scaleDivisor(scaleDivisor)
 {
 }
@@ -50,7 +53,31 @@ void LoadingScreen::resume() {}
 
 void LoadingScreen::finish() {}
 
-void LoadingScreen::eventOccurred(Event *e) { std::ignore = e; }
+void LoadingScreen::eventOccurred(Event *e)
+{
+	if (!state)
+	{
+		return;
+	}
+	if (e->type() == EVENT_GAME_STATE)
+	{
+		auto gameEvent = dynamic_cast<GameEvent *>(e);
+		if (!gameEvent)
+		{
+			LogError("Invalid game state event");
+			return;
+		}
+		if (!gameEvent->message().empty())
+		{
+			state->logEvent(gameEvent);
+		}
+		switch (gameEvent->type)
+		{
+			default:
+				break;
+		}
+	}
+}
 
 void LoadingScreen::update()
 {

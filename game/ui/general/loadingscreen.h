@@ -21,11 +21,12 @@ class LoadingScreen : public Stage
 	float loadingimageangle;
 	bool showRotatingImage = false;
 	int scaleDivisor = 0;
+	sp<GameState> state;
 
   public:
-	LoadingScreen(std::future<void> task, std::function<sp<Stage>()> nextScreenFn,
-	              sp<Image> background = nullptr, int scaleDivisor = 3,
-	              bool showRotatingImage = true);
+	LoadingScreen(sp<GameState> state, std::future<void> task,
+	              std::function<sp<Stage>()> nextScreenFn, sp<Image> background = nullptr,
+	              int scaleDivisor = 3, bool showRotatingImage = true);
 	// Stage control
 	void begin() override;
 	void pause() override;

@@ -419,9 +419,12 @@ CityView::~CityView() = default;
 
 void CityView::begin()
 {
-	// FIXME: Do we do this every time we switch to cityscape???
-	baseForm->findControlTyped<Ticker>("NEWS_TICKER")
-	    ->addMessage(tr("Welcome to X-COM Apocalypse"));
+	if (state->newGame)
+	{
+		state->newGame = false;
+		baseForm->findControlTyped<Ticker>("NEWS_TICKER")
+		    ->addMessage(tr("Welcome to X-COM Apocalypse"));
+	}
 }
 
 void CityView::resume()
@@ -1316,9 +1319,9 @@ void CityView::zoomLastEvent()
 	if (!state->messages.empty())
 	{
 		auto message = state->messages.back();
-		if (message.getMapLocation(*state) != EventMessage::NO_LOCATION)
+		if (message.location != EventMessage::NO_LOCATION)
 		{
-			setScreenCenterTile(message.getMapLocation(*state));
+			setScreenCenterTile(message.location);
 		}
 	}
 }

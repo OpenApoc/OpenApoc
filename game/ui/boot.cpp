@@ -64,20 +64,21 @@ void BootUp::update()
 	sp<Stage> nextScreen;
 	if (loadGame == true)
 	{
-		nextScreen = mksp<LoadingScreen>(std::move(loadTask), [loadedState]() -> sp<Stage> {
-			if (loadedState->current_battle)
-			{
-				return mksp<BattleView>(loadedState);
-			}
-			else
-			{
-				return mksp<CityView>(loadedState);
-			}
-		});
+		nextScreen =
+		    mksp<LoadingScreen>(nullptr, std::move(loadTask), [loadedState]() -> sp<Stage> {
+			    if (loadedState->current_battle)
+			    {
+				    return mksp<BattleView>(loadedState);
+			    }
+			    else
+			    {
+				    return mksp<CityView>(loadedState);
+			    }
+			});
 	}
 	else
 	{
-		nextScreen = mksp<LoadingScreen>(std::move(loadTask),
+		nextScreen = mksp<LoadingScreen>(nullptr, std::move(loadTask),
 		                                 []() -> sp<Stage> { return mksp<MainMenu>(); });
 	}
 

@@ -53,6 +53,19 @@ class Agent;
 enum class BattleUnitType;
 class BattleUnitTileHelper;
 
+class BattleScore
+{
+  public:
+	int combatRating = 0;
+	int casualtyPenalty = 0;
+	int getLeadershipBonus();
+	int friendlyFire = 0;
+	int liveAlienCaptured = 0;
+	int equipmentCaptured = 0;
+	int equipmentLost = 0;
+	int getTotal();
+};
+
 class Battle : public std::enable_shared_from_this<Battle>
 {
   public:
@@ -70,17 +83,6 @@ class Battle : public std::enable_shared_from_this<Battle>
 		RealTime,
 		TurnBased
 	};
-
-	Battle() = default;
-	~Battle();
-
-	void initBattle(GameState &state, bool first = false);
-	void initMap();
-	bool initialMapCheck(GameState &state, std::list<StateRef<Agent>> agents);
-	void initialMapPartRemoval(GameState &state);
-	void initialMapPartLinkUp();
-
-	void initialUnitSpawn(GameState &state);
 
 	Vec3<int> size;
 
@@ -115,37 +117,18 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// Example: If there's a link update required between ids 2 and 3,
 	// we will set only [2 + 3 * size] to true
 	std::vector<bool> linkNeedsUpdate;
-	// Queue relevant los blocks for refresh
-	void queuePathfindingRefresh(Vec3<int> tile);
-
-	// Move a group of units in formation
-	static void groupMove(GameState &state, std::list<StateRef<BattleUnit>> &selectedUnits,
-	                      Vec3<int> targetLocation, int facingDelta = 0, bool demandGiveWay = false,
-	                      bool useTeleporter = false);
-
-	int getLosBlockID(int x, int y, int z) const;
-	bool getVisible(StateRef<Organisation> org, int x, int y, int z) const;
-	void setVisible(StateRef<Organisation> org, int x, int y, int z, bool val = true);
+	
 	// Tiles that have something changed inside them and require to re-calculate vision
 	// of every soldier who has them in LOS. Triggers include:
 	// - Map part changing tiles
 	// - Map part dying or getting damaged
 	// - Map part which is door opening/closing
 	std::set<Vec3<int>> tilesChangedForVision;
-	// Queue tile for vision update
-	void queueVisionRefresh(Vec3<int> tile);
-
-	// Notify scanners about movement at position
-	void notifyScanners(Vec3<int> position);
-
-	// Notify about action happening
-	void notifyAction();
-
 	MissionType mission_type = MissionType::AlienExtermination;
 	UString mission_location_id;
 	Mode mode = Mode::RealTime;
-	void setMode(Mode mode);
-
+	BattleScore score = {};
+	
 	StateRef<Vehicle> player_craft;
 
 	std::list<sp<BattleMapPart>> map_parts;
@@ -161,6 +144,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	up<TileMap> map;
 
 	std::list<StateRef<Organisation>> participants;
+	std::map<StateRef<Organisation>, int> leadershipBonus;
 
 	AIBlockTactical aiBlock;
 
@@ -183,10 +167,49 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	// BattleView and BattleTileView settings, saved here so that we can return to them
 
+	// Need separate one because float does not work
 	int battleViewZLevel = 0;
 	Vec3<float> battleViewScreenCenter;
 	bool battleViewGroupMove = false;
 	std::list<StateRef<BattleUnit>> battleViewSelectedUnits;
+
+	// Methods
+
+	Battle() = default;
+	~Battle();
+
+	void initBattle(GameState &state, bool first = false);
+	void initMap();
+	bool initialMapCheck(GameState &state, std::list<StateRef<Agent>> agents);
+	void initialMapPartRemoval(GameState &state);
+	void initialMapPartLinkUp();
+
+	void initialUnitSpawn(GameState &state);
+
+	void setMode(Mode mode);
+
+	// Queue relevant los blocks for refresh
+	void queuePathfindingRefresh(Vec3<int> tile);
+
+	// Move a group of units in formation
+	static void groupMove(GameState &state, std::list<StateRef<BattleUnit>> &selectedUnits,
+		Vec3<int> targetLocation, int facingDelta = 0, bool demandGiveWay = false,
+		bool useTeleporter = false);
+
+	int getLosBlockID(int x, int y, int z) const;
+	bool getVisible(StateRef<Organisation> org, int x, int y, int z) const;
+	void setVisible(StateRef<Organisation> org, int x, int y, int z, bool val = true);
+
+	// Queue tile for vision update
+	void queueVisionRefresh(Vec3<int> tile);
+
+	// Notify scanners about movement at position
+	void notifyScanners(Vec3<int> position);
+
+	// Notify about action happening
+	void notifyAction();
+
+	void refreshLeadershipBonus(StateRef<Organisation> org);
 
 	void update(GameState &state, unsigned int ticks);
 	void updateTBBegin(GameState &state);
@@ -212,7 +235,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	sp<BattleUnit> placeUnit(GameState &state, StateRef<Agent> agent);
 	sp<BattleUnit> placeUnit(GameState &state, StateRef<Agent> agent, Vec3<float> position);
 	sp<BattleItem> placeItem(GameState &state, sp<AEquipment> item, Vec3<float> position);
-	sp<BattleHazard> placeHazard(GameState &state, StateRef<Organisation> owner,
+	sp<BattleHazard> placeHazard(GameState &state, StateRef<Organisation> owner, StateRef<BattleUnit> unit,
 	                             StateRef<DamageType> type, Vec3<int> position, int ttl, int power,
 	                             int initialAgeTTLDivizor = 1, bool delayVisibility = true);
 	sp<BattleScanner> addScanner(GameState &state, AEquipment &item);
@@ -294,6 +317,13 @@ class Battle : public std::enable_shared_from_this<Battle>
 	friend class BattleMap;
 
   public:
+	// Following members are not serialized
+
+	// Timestamp when we last saw a hostile unit
+	// We are not saving it because when player loads he may have no recollection of which
+	// enemies are hiding where, and so we need to pop notifications again for every enemy
+	std::map<StateRef<Organisation>, std::map<StateRef<BattleUnit>, uint64_t>> lastVisibleTime;
+
 	// Following members are not serialized, but rather are set in initBattle method
 
 	sp<BattleCommonImageList> common_image_list;

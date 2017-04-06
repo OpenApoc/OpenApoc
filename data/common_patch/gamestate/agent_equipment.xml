@@ -42,9 +42,7 @@
 		<spawnList>
 		<entry>
 		<key>AGENTTYPE_HYPERWORM</key>
-		<value>
-		<entry>4</entry>
-		</value>
+		<value>4</value>
 		</entry>
 		</spawnList>
     </value>

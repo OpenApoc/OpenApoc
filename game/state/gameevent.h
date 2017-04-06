@@ -14,6 +14,7 @@ class Base;
 class Building;
 class Organisation;
 class Agent;
+class Battle;
 class ResearchTopic;
 class Lab;
 class Facility;
@@ -32,8 +33,10 @@ class GameVehicleEvent : public GameEvent
 {
   public:
 	StateRef<Vehicle> vehicle;
+	StateRef<Vehicle> actor;
 
-	GameVehicleEvent(GameEventType type, StateRef<Vehicle> vehicle);
+	GameVehicleEvent(GameEventType type, StateRef<Vehicle> vehicle,
+	                 StateRef<Vehicle> actor = nullptr);
 	~GameVehicleEvent() override = default;
 	UString message() override;
 };
@@ -45,6 +48,7 @@ class GameBaseEvent : public GameEvent
 
 	GameBaseEvent(GameEventType type, StateRef<Base> base);
 	~GameBaseEvent() override = default;
+	UString message() override;
 };
 
 class GameBuildingEvent : public GameEvent
@@ -72,6 +76,7 @@ class GameAgentEvent : public GameEvent
 
 	GameAgentEvent(GameEventType type, StateRef<Agent> agent);
 	~GameAgentEvent() override = default;
+	UString message() override;
 };
 
 class GameResearchEvent : public GameEvent
@@ -105,5 +110,15 @@ class GameFacilityEvent : public GameEvent
 
 	GameFacilityEvent(GameEventType type, sp<Base> base, sp<Facility> facility);
 	~GameFacilityEvent() override = default;
+};
+
+class GameBattleEvent : public GameEvent
+{
+  public:
+	sp<Battle> battle;
+
+	GameBattleEvent(GameEventType type, sp<Battle> battle);
+	~GameBattleEvent() override = default;
+	UString message() override;
 };
 }

@@ -11,6 +11,7 @@
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battleunitanimationpack.h"
 #include "game/state/city/projectile.h"
+#include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/damage.h"
 #include "game/state/tileview/collision.h"
@@ -144,7 +145,7 @@ void BattleUnit::setPosition(GameState &state, const Vec3<float> &pos, bool goal
 		if (agent->type->spreadHazardDamageType)
 		{
 			state.current_battle->placeHazard(
-			    state, owner, agent->type->spreadHazardDamageType, oldPosition,
+				state, owner, { &state, id }, agent->type->spreadHazardDamageType, oldPosition,
 			    agent->type->spreadHazardDamageType->hazardType->getLifetime(state),
 			    randBoundsInclusive(state.rng, agent->type->spreadHazardMinPower,
 			                        agent->type->spreadHazardMaxPower),
@@ -484,6 +485,7 @@ void BattleUnit::refreshUnitVision(GameState &state, bool forceBlind,
 	auto &battle = *state.current_battle;
 	auto &map = *battle.map;
 	auto lastVisibleUnits = visibleUnits;
+	auto ticks = state.gameTime.getTicks();
 	visibleUnits.clear();
 	visibleEnemies.clear();
 
@@ -528,11 +530,18 @@ void BattleUnit::refreshUnitVision(GameState &state, bool forceBlind,
 	for (auto &vu : visibleUnits)
 	{
 		// owner's visible units list
-		if (lastVisibleUnits.find(vu) == lastVisibleUnits.end())
+		if (lastVisibleUnits.find(vu) == lastVisibleUnits.end() && battle.visibleUnits[owner].find(vu) == battle.visibleUnits[owner].end())
 		{
 			battle.visibleUnits[owner].insert(vu);
+			if (owner == state.current_battle->currentPlayer &&
+			    owner->isRelatedTo(vu->owner) == Organisation::Relation::Hostile &&
+			    (battle.lastVisibleTime[owner].find(vu) == battle.lastVisibleTime[owner].end() ||
+			     battle.lastVisibleTime[owner][vu] + TICKS_SUPPRESS_SPOTTED_MESSAGES <= ticks))
+			{
+				vu->sendAgentEvent(state, GameEventType::HostileSpotted);
+			}
 		}
-		// units's visible enemies list
+		// battle and units's visible enemies list
 		if (owner->isRelatedTo(vu->owner) == Organisation::Relation::Hostile)
 		{
 			visibleEnemies.insert(vu);
@@ -562,6 +571,7 @@ void BattleUnit::refreshUnitVision(GameState &state, bool forceBlind,
 			{
 				battle.visibleUnits[owner].erase(lvu);
 				battle.visibleEnemies[owner].erase(lvu);
+				battle.lastVisibleTime[owner][lvu] = ticks;
 			}
 		}
 	}
@@ -989,6 +999,9 @@ void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatu
                                 StateRef<AEquipmentType> item, bool impact)
 {
 	std::ignore = item;
+	sendAgentEvent(state, status == PsiStatus::Control ? GameEventType::AgentPsiControlled
+	                                                   : GameEventType::AgentPsiAttacked,
+	               true);
 	// FIXME: Change to correct psi stun / panic effects
 	switch (status)
 	{
@@ -1003,13 +1016,14 @@ void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatu
 			if (!impact)
 			{
 				// Observed value of 12 only, need further research
-				dealDamage(state, 12, false, BodyPart::Body, 9001);
+				applyDamageDirect(state, 12, false, BodyPart::Body, 9001);
 			}
 			break;
 		case PsiStatus::Control:
 			if (impact)
 			{
 				changeOwner(state, attacker.owner);
+				agent->modified_stats.loseMorale(100);
 			}
 			break;
 		case PsiStatus::Probe:
@@ -1034,6 +1048,7 @@ void BattleUnit::stopAttackPsi(GameState &state)
 				break;
 			}
 			psiTarget->changeOwner(state, psiTarget->agent->owner);
+			psiTarget->sendAgentEvent(state, GameEventType::AgentPsiOver, true);
 			break;
 		case PsiStatus::Probe:
 		case PsiStatus::Panic:
@@ -1303,7 +1318,7 @@ bool BattleUnit::canFly() const
 
 bool BattleUnit::canMove() const
 {
-	if (!isConscious())
+	if (!isConscious() || agent->overEncumbred)
 	{
 		return false;
 	}
@@ -1358,8 +1373,8 @@ bool BattleUnit::canKneel() const
 
 void BattleUnit::addFatalWound(BodyPart fatalWoundPart) { fatalWounds[fatalWoundPart]++; }
 
-void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWounds,
-                            BodyPart fatalWoundPart, int stunPower)
+void BattleUnit::applyDamageDirect(GameState &state, int damage, bool generateFatalWounds,
+                            BodyPart fatalWoundPart, int stunPower, StateRef<BattleUnit> attacker)
 {
 	if (isDead())
 	{
@@ -1381,31 +1396,29 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 	// Deal health damage
 	else
 	{
+		bool lessThanOneThird = agent->modified_stats.health * 3 / agent->current_stats.health == 0;
 		agent->modified_stats.health -= damage;
+		agent->modified_stats.loseMorale(damage * 50 * (15 - agent->modified_stats.bravery / 10) / agent->current_stats.health / 100);
+		sendAgentEvent(state, (agent->modified_stats.health * 3 / agent->current_stats.health ==
+		                       0) && !lessThanOneThird
+		                          ? GameEventType::AgentBadlyInjured
+		                          : GameEventType::AgentInjured, true);
 	}
 
 	// Generate fatal wounds
-	if (generateFatalWounds)
+	if (generateFatalWounds 
+		&& damage > agent->current_stats.health / 8 
+		&& randBoundsExclusive(state.rng, 0, 100) < 100 * damage / agent->current_stats.health)
 	{
-		int woundDamageRemaining = damage;
-		while (woundDamageRemaining > 10)
-		{
-			woundDamageRemaining -= 10;
-			addFatalWound(fatalWoundPart);
-			fatal = true;
-		}
-		if (randBoundsExclusive(state.rng, 0, 10) < woundDamageRemaining)
-		{
-			addFatalWound(fatalWoundPart);
-			fatal = true;
-		}
+		addFatalWound(fatalWoundPart);
+		fatal = true;
+		sendAgentEvent(state, GameEventType::AgentCriticallyWounded, true);
 	}
 
 	// Die or go unconscious
 	if (isDead())
 	{
-		LogWarning("Handle violent deaths");
-		die(state);
+		die(state, attacker);
 		return;
 	}
 	else if (!isConscious() && wasConscious)
@@ -1443,7 +1456,7 @@ void BattleUnit::dealDamage(GameState &state, int damage, bool generateFatalWoun
 }
 
 bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> damageType,
-                             BodyPart bodyPart, DamageSource source)
+                             BodyPart bodyPart, DamageSource source, StateRef<BattleUnit> attacker)
 {
 	if (damageType->doesImpactDamage())
 	{
@@ -1582,11 +1595,11 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	{
 		// Deal 1/8 of explosive damage as stun
 		int stunDamage = damage / 8;
-		dealDamage(state, stunDamage, false, bodyPart, power);
+		applyDamageDirect(state, stunDamage, false, bodyPart, power, attacker);
 		damage -= stunDamage;
 	}
-	dealDamage(state, damage, damageType->dealsFatalWounds(), bodyPart,
-	           damageType->dealsStunDamage() ? power : 0);
+	applyDamageDirect(state, damage, damageType->dealsFatalWounds(), bodyPart,
+	           damageType->dealsStunDamage() ? power : 0, attacker);
 
 	return false;
 }
@@ -1704,8 +1717,8 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 		}
 	}
 
-	// Morale
-	if ((realTime || owner == state.current_battle->currentActiveOrganisation) && isConscious())
+	// Morale (units under mind control cannot have low morale event)
+	if ((realTime || owner == state.current_battle->currentActiveOrganisation) && isConscious() && owner == agent->owner)
 	{
 		if (moraleStateTicksRemaining > 0)
 		{
@@ -1720,6 +1733,7 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 				{
 					moraleStateTicksRemaining = 0;
 					moraleState = MoraleState::Normal;
+					sendAgentEvent(state, GameEventType::AgentPanicOver, true);
 					stopAttacking();
 					cancelMissions(state, true);
 					aiList.reset(state, *this);
@@ -1742,14 +1756,26 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 				if (randBoundsExclusive(state.rng, 0, 100) < 100 - 2 * agent->modified_stats.morale)
 				{
 					moraleStateTicksRemaining = TICKS_PER_LOWMORALE_STATE;
-					// FIXME: When rng is fixed we can remove this unnesecary kludge
-					// I need Inclusive (1,3) here but apparently our rng is very bad at it
-					// Will generate only 1's and 3's and very seldom will you see a 2
-					moraleState = (MoraleState)(randBoundsExclusive(state.rng, 10, 40) / 10);
+					moraleState = (MoraleState)(randBoundsInclusive(state.rng, 1, 3));
 					agent->modified_stats.morale += 15;
 					stopAttacking();
 					cancelMissions(state);
 					aiList.reset(state, *this);
+					// Notify
+					switch (moraleState)
+					{
+						case MoraleState::PanicFreeze:
+							sendAgentEvent(state, GameEventType::AgentFrozen, true);
+							break;
+						case MoraleState::PanicRun:
+							sendAgentEvent(state, GameEventType::AgentPanicked, true);
+							break;
+						case MoraleState::Berserk:
+							sendAgentEvent(state, GameEventType::AgentBerserk, true);
+							break;
+						default:
+							break;
+					}
 					// Have a chance to drop items in hand
 					if (moraleState != MoraleState::Berserk)
 					{
@@ -1800,7 +1826,7 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 			{
 				if (w.second > 0)
 				{
-					dealDamage(state, w.second, false, BodyPart::Body, 0);
+					applyDamageDirect(state, w.second, false, BodyPart::Body, 0);
 					if (isHealing && healingBodyPart == w.first)
 					{
 						w.second--;
@@ -1820,7 +1846,7 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 		// If died or went unconscious
 		if (isDead())
 		{
-			die(state, true, true);
+			die(state, nullptr, true, true);
 		}
 		if (!unconscious && isUnconscious())
 		{
@@ -2204,7 +2230,6 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 	}
 
 	// Check if new position is valid
-	// FIXME: Collide with units but not with us
 	bool collision = false;
 	auto c = (collisionIgnoredTicks > 0 || isConscious())
 	             ? Collision()
@@ -2267,7 +2292,7 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 					if (!unit->brainSucker &&
 					    brainsucker->dealDamage(100, unit->agent->type->damage_modifier) == 0)
 					{
-						dealDamage(state, 9001, false, BodyPart::Body,
+						applyDamageDirect(state, 9001, false, BodyPart::Body,
 						           agent->current_stats.health + TICKS_PER_TURN);
 					}
 					else
@@ -2282,7 +2307,7 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 			}
 			else
 			{
-				dealDamage(state, 9001, false, BodyPart::Body, agent->current_stats.health * 3 / 2);
+				applyDamageDirect(state, 9001, false, BodyPart::Body, agent->current_stats.health * 3 / 2);
 			}
 		}
 	}
@@ -2313,7 +2338,7 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 		if (newPosition.z < 0)
 		{
 			LogError("Unit at %f %f fell off the end of the world!?", newPosition.x, newPosition.y);
-			die(state, false);
+			die(state, nullptr, false);
 			destroyed = true;
 			return;
 		}
@@ -3564,9 +3589,22 @@ void BattleUnit::spawnEnzymeSmoke(GameState &state, Vec3<int> pos)
 	int divisor = std::max(1, 36 / enzymeDebuffIntensity);
 	StateRef<DamageType> smokeDamageType = {&state, "DAMAGETYPE_SMOKE"};
 	// Power of 0 means no spread
-	state.current_battle->placeHazard(state, owner, smokeDamageType, position,
+	state.current_battle->placeHazard(state, owner, { &state, id }, smokeDamageType, position,
 	                                  smokeDamageType->hazardType->getLifetime(state), 0, divisor,
 	                                  false);
+}
+
+void BattleUnit::sendAgentEvent(GameState &state, GameEventType type, bool checkOwnership,
+                                bool checkVisibility) const
+{
+	if ((!checkOwnership || owner == state.current_battle->currentPlayer) &&
+	    (!checkVisibility || owner == state.current_battle->currentPlayer ||
+	     state.current_battle->visibleUnits[state.current_battle->currentPlayer].find(
+	         {&state, id}) !=
+	         state.current_battle->visibleUnits[state.current_battle->currentPlayer].end()))
+	{
+		fw().pushEvent(new GameAgentEvent(type, {&state, agent.id}));
+	}
 }
 
 void BattleUnit::executeGroupAIDecision(GameState &state, AIDecision &decision,
@@ -3764,7 +3802,14 @@ void BattleUnit::executeAIMovement(GameState &state, AIMovement &movement)
 	}
 }
 
-void BattleUnit::notifyUnderFire(Vec3<int> position) { aiList.notifyUnderFire(position); }
+void BattleUnit::notifyUnderFire(GameState &state, Vec3<int> position, bool visible)
+{
+	if (visible)
+	{
+		sendAgentEvent(state, GameEventType::AgentUnderFire, true);
+	}
+	aiList.notifyUnderFire(position);
+}
 
 void BattleUnit::notifyHit(Vec3<int> position) { aiList.notifyHit(position); }
 
@@ -3904,7 +3949,7 @@ void BattleUnit::dropDown(GameState &state)
 	if (agent->type->inventory)
 	{
 		auto it = agent->equipment.begin();
-		while (it!= agent->equipment.end())
+		while (it != agent->equipment.end())
 		{
 			auto e = *it++;
 			if (e->type->type != AEquipmentType::Type::Armor)
@@ -3926,7 +3971,7 @@ void BattleUnit::dropDown(GameState &state)
 			}
 		}
 	}
-	
+
 	// Remove from list of visible units
 	StateRef<BattleUnit> srThis = {&state, id};
 	for (auto &units : state.current_battle->visibleUnits)
@@ -3955,7 +4000,6 @@ void BattleUnit::dropDown(GameState &state)
 
 void BattleUnit::retreat(GameState &state)
 {
-	std::ignore = state;
 	if (shadowObject)
 	{
 		shadowObject->removeFromMap();
@@ -3963,10 +4007,71 @@ void BattleUnit::retreat(GameState &state)
 	tileObject->removeFromMap();
 	retreated = true;
 	removeFromSquad(*state.current_battle);
-	// FIXME: Trigger retreated event
+	state.current_battle->refreshLeadershipBonus(agent->owner);
+	sendAgentEvent(state, GameEventType::AgentLeftCombat, true);
 }
 
-void BattleUnit::die(GameState &state, bool violently, bool bledToDeath)
+bool BattleUnit::useSpawner(GameState &state, sp<AEquipmentType> item)
+{
+	std::list<Vec3<int>> posToCheck;
+	Vec3<int> curPos = position;
+	posToCheck.push_back(curPos + Vec3<int>{1, 0, 0});
+	posToCheck.push_back(curPos + Vec3<int>{0, 1, 0});
+	posToCheck.push_back(curPos + Vec3<int>{-1, 0, 0});
+	posToCheck.push_back(curPos + Vec3<int>{0, -1, 0});
+	posToCheck.push_back(curPos + Vec3<int>{1, 1, 0});
+	posToCheck.push_back(curPos + Vec3<int>{1, -1, 0});
+	posToCheck.push_back(curPos + Vec3<int>{-1, 1, 0});
+	posToCheck.push_back(curPos + Vec3<int>{-1, -1, 0});
+	posToCheck.push_back(curPos + Vec3<int>{2, 0, 0});
+	posToCheck.push_back(curPos + Vec3<int>{0, 2, 0});
+	posToCheck.push_back(curPos + Vec3<int>{-2, 0, 0});
+	posToCheck.push_back(curPos + Vec3<int>{0, -2, 0});
+	std::list<Vec3<int>> posToSpawn;
+	posToSpawn.push_back(curPos);
+	int numToSpawn = -1;
+	for (auto &entry : item->spawnList)
+	{
+		numToSpawn += entry.second;
+	}
+	auto &map = tileObject->map;
+	auto helper = BattleUnitTileHelper(map, *this);
+	while (numToSpawn > 0 && !posToCheck.empty())
+	{
+		auto pos = posToCheck.front();
+		posToCheck.pop_front();
+		if (!map.tileIsValid(pos))
+		{
+			continue;
+		}
+		if (state.current_battle
+			->findShortestPath(curPos, pos, helper, false, false, 0, true)
+			.back() == pos)
+		{
+			numToSpawn--;
+			posToSpawn.push_back(pos);
+		}
+	}
+	auto aliens = state.getAliens();
+	for (auto &entry : item->spawnList)
+	{
+		for (int i = 0; i < entry.second; i++)
+		{
+			if (posToSpawn.empty())
+			{
+				break;
+			}
+			auto pos = posToSpawn.front();
+			posToSpawn.pop_front();
+			state.current_battle->spawnUnit(state, aliens,
+				entry.first,
+				{ pos.x + 0.5f, pos.y + 0.5f, pos.z + 0.1f },
+				facing, BodyState::Standing);
+		}
+	}
+}
+
+void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool violently, bool bledToDeath)
 {
 	agent->modified_stats.health = 0;
 	std::ignore = bledToDeath;
@@ -3985,49 +4090,7 @@ void BattleUnit::die(GameState &state, bool violently, bool bledToDeath)
 					break;
 				case AEquipmentType::Type::Spawner:
 				{
-					std::list<Vec3<int>> posToCheck;
-					Vec3<int> curPos = position;
-					posToCheck.push_back(curPos + Vec3<int>{1, 0, 0});
-					posToCheck.push_back(curPos + Vec3<int>{0, 1, 0});
-					posToCheck.push_back(curPos + Vec3<int>{-1, 0, 0});
-					posToCheck.push_back(curPos + Vec3<int>{0, -1, 0});
-					posToCheck.push_back(curPos + Vec3<int>{1, 1, 0});
-					posToCheck.push_back(curPos + Vec3<int>{1, -1, 0});
-					posToCheck.push_back(curPos + Vec3<int>{-1, 1, 0});
-					posToCheck.push_back(curPos + Vec3<int>{-1, -1, 0});
-					posToCheck.push_back(curPos + Vec3<int>{2, 0, 0});
-					posToCheck.push_back(curPos + Vec3<int>{0, 2, 0});
-					posToCheck.push_back(curPos + Vec3<int>{-2, 0, 0});
-					posToCheck.push_back(curPos + Vec3<int>{0, -2, 0});
-					std::list<Vec3<int>> posToSpawn;
-					posToSpawn.push_back(curPos);
-					int numToSpawn = 3;
-					auto &map = tileObject->map;
-					auto helper = BattleUnitTileHelper(map, *this);
-					while (numToSpawn > 0 && !posToCheck.empty())
-					{
-						auto pos = posToCheck.front();
-						posToCheck.pop_front();
-						if (!map.tileIsValid(pos))
-						{
-							continue;
-						}
-						if (state.current_battle
-						        ->findShortestPath(curPos, pos, helper, false, false, 0, true)
-						        .back() == pos)
-						{
-							numToSpawn--;
-							posToSpawn.push_back(pos);
-						}
-					}
-					auto aliens = state.getAliens();
-					for (auto &pos : posToSpawn)
-					{
-						state.current_battle->spawnUnit(state, aliens,
-						                                {&state, "AGENTTYPE_HYPERWORM"},
-						                                {pos.x + 0.5f, pos.y + 0.5f, pos.z + 0.1f},
-						                                facing, BodyState::Standing);
-					}
+					useSpawner(state, e->type);
 					break;
 				}
 				default:
@@ -4048,14 +4111,72 @@ void BattleUnit::die(GameState &state, bool violently, bool bledToDeath)
 		fw().soundBackend->playSample(
 		    listRandomiser(state.rng, agent->type->dieSfx.at(agent->gender)), position);
 	}
-	// FIXME: do what has to be done when unit dies
-	LogWarning("Implement a UNIT DIED notification!");
+	// Morale and score
+	auto player = state.getPlayer();
+	// Find next highest ranking officer
+	state.current_battle->refreshLeadershipBonus(agent->owner);
+	// Penalty for teamkills or bonus for eliminating a hostile
+	if (attacker && attacker->agent->owner == agent->owner)
+	{
+		// Teamkill penalty morale
+		attacker->agent->modified_stats.loseMorale(20);
+		// Teamkill penalty score
+		if (agent->owner == player)
+		{
+			state.current_battle->score.friendlyFire -= 10;
+		}
+	}
+	else if (attacker && attacker->agent->owner->isRelatedTo(agent->owner) == Organisation::Relation::Hostile)
+	{
+		// Bonus for killing a hostile
+		attacker->agent->modified_stats.gainMorale(20 * state.current_battle->leadershipBonus[attacker->agent->owner]);
+		for (auto &u : state.current_battle->units)
+		{
+			if (u.first != attacker.id || !u.second->isConscious() || u.second->agent->owner != attacker->agent->owner)
+			{
+				continue;
+			}
+			// Agents from attacker team gain morale
+			u.second->agent->modified_stats.gainMorale(10 * state.current_battle->leadershipBonus[attacker->agent->owner]);
+		}
+	}
+	// Score for death/kill
+	if (agent->owner == player)
+	{
+		state.current_battle->score.casualtyPenalty -= agent->type->score;
+	}
+	else if (attacker && attacker->agent->owner == player && player->isRelatedTo(agent->owner) == Organisation::Relation::Hostile)
+	{
+		state.current_battle->score.combatRating += agent->type->score;
+	}
+	// Penalty for unit in squad dying
+	int moraleLossPenalty = 100;// FIXME: Implement morale loss based on rank of dying unit
+	for (auto &u : state.current_battle->units)
+	{
+		if (u.second->agent->owner != agent->owner)
+		{
+			continue;
+		}
+		// Surviving units lose morale
+		u.second->agent->modified_stats.loseMorale((110 - u.second->agent->modified_stats.bravery) * state.current_battle->leadershipBonus[agent->owner] * moraleLossPenalty / 500);
+	}
+	//Events
+	if (owner == state.current_battle->currentPlayer)
+	{
+		sendAgentEvent(state, GameEventType::AgentDied);
+	}
+	else if (state.current_battle->currentPlayer->isRelatedTo(owner) ==
+	         Organisation::Relation::Hostile)
+	{
+		sendAgentEvent(state, GameEventType::HostileDied);
+	}
+	//Animate body
 	dropDown(state);
 }
 
 void BattleUnit::fallUnconscious(GameState &state)
 {
-	// FIXME: do what has to be done when unit goes unconscious
+	sendAgentEvent(state, GameEventType::AgentUnconscious, true);
 	dropDown(state);
 }
 
@@ -4377,8 +4498,7 @@ void BattleUnit::setBodyState(GameState &state, BodyState bodyState)
 		// If rose up - update vision for units that see this
 		if (roseUp)
 		{
-			// FIXME: Do this properly? Only update vision to this unit, not to everything?
-			state.current_battle->queueVisionRefresh(position);
+			refreshUnitVisibilityAndVision(state);
 		}
 	}
 }
