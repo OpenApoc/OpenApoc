@@ -1343,8 +1343,10 @@ void BattleTileView::updatePathPreview()
 	// Standart check for passability
 	while (true)
 	{
+		// FIXME: Check visibility of that tile
 		if (!to->getPassable(lastSelectedUnit->isLarge(),
-		                     lastSelectedUnit->agent->type->bodyType->maxHeight))
+		                     lastSelectedUnit->agent->type->bodyType->maxHeight) 
+			|| to->getUnitIfPresent(true, true, false,nullptr,false,true))
 		{
 			previewedPathCost = -3;
 			return;
