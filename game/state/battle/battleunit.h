@@ -359,7 +359,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	bool isFatallyWounded();
 	void addFatalWound(BodyPart fatalWoundPart);
-	
+
 	// Attacking and turning to hostiles
 
 	// Get full cost of attacking (including turn and pose change)
@@ -560,9 +560,11 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	                              Vec3<float> direction);
 	// Returns true if sound and doodad were handled by it
 	bool applyDamage(GameState &state, int power, StateRef<DamageType> damageType,
-	                 BodyPart bodyPart, DamageSource source, StateRef<BattleUnit> attacker = nullptr);
-	void applyDamageDirect(GameState &state, int damage, bool generateFatalWounds, BodyPart fatalWoundPart,
-		int stunPower, StateRef<BattleUnit> attacker = nullptr);
+	                 BodyPart bodyPart, DamageSource source,
+	                 StateRef<BattleUnit> attacker = nullptr);
+	void applyDamageDirect(GameState &state, int damage, bool generateFatalWounds,
+	                       BodyPart fatalWoundPart, int stunPower,
+	                       StateRef<BattleUnit> attacker = nullptr);
 
 	// Returns true if sound and doodad were handled by it
 	bool handleCollision(GameState &state, Collision &c);
@@ -630,7 +632,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void dropDown(GameState &state);
 	void tryToRiseUp(GameState &state);
 	void fallUnconscious(GameState &state);
-	void die(GameState &state, StateRef<BattleUnit> attacker = nullptr, bool violently = true, bool bledToDeath = false);
+	void die(GameState &state, StateRef<BattleUnit> attacker = nullptr, bool violently = true,
+	         bool bledToDeath = false);
 
 	// Following members are not serialized, but rather are set in initBattle method
 

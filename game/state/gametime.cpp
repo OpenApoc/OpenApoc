@@ -17,7 +17,8 @@ namespace OpenApoc
 {
 
 static const ptime GAME_START = ptime(date(2084, Mar, 7), time_duration(0, 0, 0));
-static std::locale *TIME_FORMAT = nullptr;
+static std::locale *TIME_LONG_FORMAT = nullptr;
+static std::locale *TIME_SHORT_FORMAT = nullptr;
 static std::locale *DATE_LONG_FORMAT = nullptr;
 static std::locale *DATE_SHORT_FORMAT = nullptr;
 
@@ -36,16 +37,30 @@ static boost::posix_time::ptime getPtime(uint64_t ticks)
 	return GAME_START + ticksToPosix(ticks);
 }
 
-UString GameTime::getTimeString() const
+UString GameTime::getLongTimeString() const
 {
 	std::stringstream ss;
-	if (TIME_FORMAT == nullptr)
+	if (TIME_LONG_FORMAT == nullptr)
 	{
 		// locale controls the facet
 		time_facet *timeFacet = new time_facet("%H:%M:%S");
-		TIME_FORMAT = new std::locale(std::locale::classic(), timeFacet);
+		TIME_LONG_FORMAT = new std::locale(std::locale::classic(), timeFacet);
 	}
-	ss.imbue(*TIME_FORMAT);
+	ss.imbue(*TIME_LONG_FORMAT);
+	ss << getPtime(this->ticks);
+	return ss.str();
+}
+
+UString GameTime::getShortTimeString() const
+{
+	std::stringstream ss;
+	if (TIME_SHORT_FORMAT == nullptr)
+	{
+		// locale controls the facet
+		time_facet *timeFacet = new time_facet("%H:%M");
+		TIME_SHORT_FORMAT = new std::locale(std::locale::classic(), timeFacet);
+	}
+	ss.imbue(*TIME_SHORT_FORMAT);
 	ss << getPtime(this->ticks);
 	return ss.str();
 }

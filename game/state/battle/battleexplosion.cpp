@@ -344,9 +344,9 @@ void BattleExplosion::grow(GameState &state)
 		{
 			if (damageType->hazardType && damageType->explosionDoodad)
 			{
-				state.current_battle->placeHazard(state, ownerOrganisation, ownerUnit, damageType, pos.first,
-				                                  damageType->hazardType->getLifetime(state),
-				                                  pos.second.x);
+				state.current_battle->placeHazard(
+				    state, ownerOrganisation, ownerUnit, damageType, pos.first,
+				    damageType->hazardType->getLifetime(state), pos.second.x);
 			}
 			if (damageInTheEnd)
 			{

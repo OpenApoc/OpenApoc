@@ -217,9 +217,9 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 			{
 				existingHazard->die(state, false);
 			}
-			state.current_battle->placeHazard(state, ownerOrganisation, ownerUnit, spreadDamageType, {to.x, to.y, to.z},
-			                                  spreadDamageType->hazardType->getLifetime(state), 0,
-			                                  1, false);
+			state.current_battle->placeHazard(
+			    state, ownerOrganisation, ownerUnit, spreadDamageType, {to.x, to.y, to.z},
+			    spreadDamageType->hazardType->getLifetime(state), 0, 1, false);
 		}
 	}
 	// If spreading something else
@@ -241,8 +241,8 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 		{
 
 			auto hazard = state.current_battle->placeHazard(
-			    state, ownerOrganisation, ownerUnit, spreadDamageType, {to.x, to.y, to.z}, fireSmoke ? ttl : lifetime,
-			    fireSmoke ? 1 : power, fireSmoke ? 6 : 1, false);
+			    state, ownerOrganisation, ownerUnit, spreadDamageType, {to.x, to.y, to.z},
+			    fireSmoke ? ttl : lifetime, fireSmoke ? 1 : power, fireSmoke ? 6 : 1, false);
 			if (hazard && !fireSmoke)
 			{
 				hazard->age = age;

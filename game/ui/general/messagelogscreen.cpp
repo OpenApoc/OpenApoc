@@ -69,7 +69,8 @@ sp<Control> MessageLogScreen::createMessageRow(EventMessage message, sp<GameStat
 	date->Size = {100, HEIGHT};
 	date->TextVAlign = VerticalAlignment::Centre;
 
-	auto time = control->createChild<Label>(message.time.getTimeString(), ui().getFont("smalfont"));
+	auto time =
+	    control->createChild<Label>(message.time.getLongTimeString(), ui().getFont("smalfont"));
 	time->Location = date->Location + Vec2<int>{date->Size.x, 0};
 	time->Size = {60, HEIGHT};
 	time->TextVAlign = VerticalAlignment::Centre;

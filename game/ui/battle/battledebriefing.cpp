@@ -1,11 +1,14 @@
 #include "game/ui/battle/battledebriefing.h"
 #include "forms/form.h"
 #include "forms/graphicbutton.h"
+#include "forms/label.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/battle/battle.h"
+#include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonimagelist.h"
+#include "game/state/gamestate.h"
 #include "game/ui/city/cityview.h"
 #include <cmath>
 
@@ -17,9 +20,25 @@ BattleDebriefing::BattleDebriefing(sp<GameState> state)
 	menuform->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    Battle::exitBattle(*this->state);
-
 		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<CityView>(this->state)});
 		});
+
+	menuform->findControlTyped<Label>("TEXT_SCORE_COMBAT_RATING")
+	    ->setText(format("%d", state->current_battle->score.combatRating));
+	menuform->findControlTyped<Label>("TEXT_SCORE_CASUALTY_PENALTY")
+	    ->setText(format("%d", state->current_battle->score.casualtyPenalty));
+	menuform->findControlTyped<Label>("TEXT_SCORE_LEADERSHIP_BONUS")
+	    ->setText(format("%d", state->current_battle->score.getLeadershipBonus()));
+	menuform->findControlTyped<Label>("TEXT_SCORE_LIVE_ALIENS_CAPTURED")
+	    ->setText(format("%d", state->current_battle->score.liveAlienCaptured));
+	menuform->findControlTyped<Label>("TEXT_SCORE_EQUIPMENT_CAPTURED")
+	    ->setText(format("%d", state->current_battle->score.equipmentCaptured));
+	menuform->findControlTyped<Label>("TEXT_SCORE_EQUIPMENT_LOST")
+	    ->setText(format("%d", state->current_battle->score.equipmentLost));
+	menuform->findControlTyped<Label>("TEXT_SCORE_TOTAL")
+	    ->setText(format("%d", state->current_battle->score.getTotal()));
+	menuform->findControlTyped<Label>("TEXT_MISSION_PERFORMANCE")
+	    ->setText(format("%s", state->current_battle->score.getText()));
 }
 
 void BattleDebriefing::begin() {}

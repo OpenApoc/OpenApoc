@@ -145,7 +145,7 @@ void BattleUnit::setPosition(GameState &state, const Vec3<float> &pos, bool goal
 		if (agent->type->spreadHazardDamageType)
 		{
 			state.current_battle->placeHazard(
-				state, owner, { &state, id }, agent->type->spreadHazardDamageType, oldPosition,
+			    state, owner, {&state, id}, agent->type->spreadHazardDamageType, oldPosition,
 			    agent->type->spreadHazardDamageType->hazardType->getLifetime(state),
 			    randBoundsInclusive(state.rng, agent->type->spreadHazardMinPower,
 			                        agent->type->spreadHazardMaxPower),
@@ -171,16 +171,7 @@ void BattleUnit::refreshUnitVisibility(GameState &state)
 		{
 			continue;
 		}
-		auto vec = (Vec3<int>)position - (Vec3<int>)unit->position;
-		bool canNotSee = false;
-		// Quick check it's to the right side of us and in range
-		if ((vec.x > 0 && unit->facing.x < 0) || (vec.y > 0 && unit->facing.y < 0) ||
-		    (vec.x < 0 && unit->facing.x > 0) || (vec.y < 0 && unit->facing.y > 0) ||
-		    (vec.x * vec.x + vec.y * vec.y + vec.z * vec.z > 400))
-		{
-			canNotSee = true;
-		}
-		unit->refreshUnitVision(state, canNotSee, {&state, id});
+		unit->refreshUnitVision(state, !unit->isWithinVision(position), {&state, id});
 	}
 }
 
@@ -530,7 +521,8 @@ void BattleUnit::refreshUnitVision(GameState &state, bool forceBlind,
 	for (auto &vu : visibleUnits)
 	{
 		// owner's visible units list
-		if (lastVisibleUnits.find(vu) == lastVisibleUnits.end() && battle.visibleUnits[owner].find(vu) == battle.visibleUnits[owner].end())
+		if (lastVisibleUnits.find(vu) == lastVisibleUnits.end() &&
+		    battle.visibleUnits[owner].find(vu) == battle.visibleUnits[owner].end())
 		{
 			battle.visibleUnits[owner].insert(vu);
 			if (owner == state.current_battle->currentPlayer &&
@@ -1374,7 +1366,8 @@ bool BattleUnit::canKneel() const
 void BattleUnit::addFatalWound(BodyPart fatalWoundPart) { fatalWounds[fatalWoundPart]++; }
 
 void BattleUnit::applyDamageDirect(GameState &state, int damage, bool generateFatalWounds,
-                            BodyPart fatalWoundPart, int stunPower, StateRef<BattleUnit> attacker)
+                                   BodyPart fatalWoundPart, int stunPower,
+                                   StateRef<BattleUnit> attacker)
 {
 	if (isDead())
 	{
@@ -1398,17 +1391,18 @@ void BattleUnit::applyDamageDirect(GameState &state, int damage, bool generateFa
 	{
 		bool lessThanOneThird = agent->modified_stats.health * 3 / agent->current_stats.health == 0;
 		agent->modified_stats.health -= damage;
-		agent->modified_stats.loseMorale(damage * 50 * (15 - agent->modified_stats.bravery / 10) / agent->current_stats.health / 100);
+		agent->modified_stats.loseMorale(damage * 50 * (15 - agent->modified_stats.bravery / 10) /
+		                                 agent->current_stats.health / 100);
 		sendAgentEvent(state, (agent->modified_stats.health * 3 / agent->current_stats.health ==
 		                       0) && !lessThanOneThird
 		                          ? GameEventType::AgentBadlyInjured
-		                          : GameEventType::AgentInjured, true);
+		                          : GameEventType::AgentInjured,
+		               true);
 	}
 
 	// Generate fatal wounds
-	if (generateFatalWounds 
-		&& damage > agent->current_stats.health / 8 
-		&& randBoundsExclusive(state.rng, 0, 100) < 100 * damage / agent->current_stats.health)
+	if (generateFatalWounds && damage > agent->current_stats.health / 8 &&
+	    randBoundsExclusive(state.rng, 0, 100) < 100 * damage / agent->current_stats.health)
 	{
 		addFatalWound(fatalWoundPart);
 		fatal = true;
@@ -1599,7 +1593,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 		damage -= stunDamage;
 	}
 	applyDamageDirect(state, damage, damageType->dealsFatalWounds(), bodyPart,
-	           damageType->dealsStunDamage() ? power : 0, attacker);
+	                  damageType->dealsStunDamage() ? power : 0, attacker);
 
 	return false;
 }
@@ -1718,7 +1712,8 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 	}
 
 	// Morale (units under mind control cannot have low morale event)
-	if ((realTime || owner == state.current_battle->currentActiveOrganisation) && isConscious() && owner == agent->owner)
+	if ((realTime || owner == state.current_battle->currentActiveOrganisation) && isConscious() &&
+	    owner == agent->owner)
 	{
 		if (moraleStateTicksRemaining > 0)
 		{
@@ -2293,7 +2288,7 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 					    brainsucker->dealDamage(100, unit->agent->type->damage_modifier) == 0)
 					{
 						applyDamageDirect(state, 9001, false, BodyPart::Body,
-						           agent->current_stats.health + TICKS_PER_TURN);
+						                  agent->current_stats.health + TICKS_PER_TURN);
 					}
 					else
 					{
@@ -2307,7 +2302,8 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 			}
 			else
 			{
-				applyDamageDirect(state, 9001, false, BodyPart::Body, agent->current_stats.health * 3 / 2);
+				applyDamageDirect(state, 9001, false, BodyPart::Body,
+				                  agent->current_stats.health * 3 / 2);
 			}
 		}
 	}
@@ -3589,7 +3585,7 @@ void BattleUnit::spawnEnzymeSmoke(GameState &state, Vec3<int> pos)
 	int divisor = std::max(1, 36 / enzymeDebuffIntensity);
 	StateRef<DamageType> smokeDamageType = {&state, "DAMAGETYPE_SMOKE"};
 	// Power of 0 means no spread
-	state.current_battle->placeHazard(state, owner, { &state, id }, smokeDamageType, position,
+	state.current_battle->placeHazard(state, owner, {&state, id}, smokeDamageType, position,
 	                                  smokeDamageType->hazardType->getLifetime(state), 0, divisor,
 	                                  false);
 }
@@ -4044,9 +4040,8 @@ bool BattleUnit::useSpawner(GameState &state, sp<AEquipmentType> item)
 		{
 			continue;
 		}
-		if (state.current_battle
-			->findShortestPath(curPos, pos, helper, false, false, 0, true)
-			.back() == pos)
+		if (state.current_battle->findShortestPath(curPos, pos, helper, false, false, 0, true)
+		        .back() == pos)
 		{
 			numToSpawn--;
 			posToSpawn.push_back(pos);
@@ -4063,15 +4058,15 @@ bool BattleUnit::useSpawner(GameState &state, sp<AEquipmentType> item)
 			}
 			auto pos = posToSpawn.front();
 			posToSpawn.pop_front();
-			state.current_battle->spawnUnit(state, aliens,
-				entry.first,
-				{ pos.x + 0.5f, pos.y + 0.5f, pos.z + 0.1f },
-				facing, BodyState::Standing);
+			state.current_battle->spawnUnit(state, aliens, entry.first,
+			                                {pos.x + 0.5f, pos.y + 0.5f, pos.z + 0.1f}, facing,
+			                                BodyState::Standing);
 		}
 	}
 }
 
-void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool violently, bool bledToDeath)
+void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool violently,
+                     bool bledToDeath)
 {
 	agent->modified_stats.health = 0;
 	std::ignore = bledToDeath;
@@ -4126,18 +4121,22 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 			state.current_battle->score.friendlyFire -= 10;
 		}
 	}
-	else if (attacker && attacker->agent->owner->isRelatedTo(agent->owner) == Organisation::Relation::Hostile)
+	else if (attacker &&
+	         attacker->agent->owner->isRelatedTo(agent->owner) == Organisation::Relation::Hostile)
 	{
 		// Bonus for killing a hostile
-		attacker->agent->modified_stats.gainMorale(20 * state.current_battle->leadershipBonus[attacker->agent->owner]);
+		attacker->agent->modified_stats.gainMorale(
+		    20 * state.current_battle->leadershipBonus[attacker->agent->owner]);
 		for (auto &u : state.current_battle->units)
 		{
-			if (u.first != attacker.id || !u.second->isConscious() || u.second->agent->owner != attacker->agent->owner)
+			if (u.first != attacker.id || !u.second->isConscious() ||
+			    u.second->agent->owner != attacker->agent->owner)
 			{
 				continue;
 			}
 			// Agents from attacker team gain morale
-			u.second->agent->modified_stats.gainMorale(10 * state.current_battle->leadershipBonus[attacker->agent->owner]);
+			u.second->agent->modified_stats.gainMorale(
+			    10 * state.current_battle->leadershipBonus[attacker->agent->owner]);
 		}
 	}
 	// Score for death/kill
@@ -4145,12 +4144,13 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 	{
 		state.current_battle->score.casualtyPenalty -= agent->type->score;
 	}
-	else if (attacker && attacker->agent->owner == player && player->isRelatedTo(agent->owner) == Organisation::Relation::Hostile)
+	else if (attacker && attacker->agent->owner == player &&
+	         player->isRelatedTo(agent->owner) == Organisation::Relation::Hostile)
 	{
 		state.current_battle->score.combatRating += agent->type->score;
 	}
 	// Penalty for unit in squad dying
-	int moraleLossPenalty = 100;// FIXME: Implement morale loss based on rank of dying unit
+	int moraleLossPenalty = 100; // FIXME: Implement morale loss based on rank of dying unit
 	for (auto &u : state.current_battle->units)
 	{
 		if (u.second->agent->owner != agent->owner)
@@ -4158,9 +4158,11 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 			continue;
 		}
 		// Surviving units lose morale
-		u.second->agent->modified_stats.loseMorale((110 - u.second->agent->modified_stats.bravery) * state.current_battle->leadershipBonus[agent->owner] * moraleLossPenalty / 500);
+		u.second->agent->modified_stats.loseMorale(
+		    (110 - u.second->agent->modified_stats.bravery) *
+		    state.current_battle->leadershipBonus[agent->owner] * moraleLossPenalty / 500);
 	}
-	//Events
+	// Events
 	if (owner == state.current_battle->currentPlayer)
 	{
 		sendAgentEvent(state, GameEventType::AgentDied);
@@ -4170,7 +4172,7 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 	{
 		sendAgentEvent(state, GameEventType::HostileDied);
 	}
-	//Animate body
+	// Animate body
 	dropDown(state);
 }
 

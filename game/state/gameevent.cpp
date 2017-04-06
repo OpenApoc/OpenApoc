@@ -1,9 +1,9 @@
-#include "game/state/battle/battle.h"
 #include "game/state/gameevent.h"
 #include "city/vehicle.h"
 #include "framework/logger.h"
 #include "game/state/agent.h"
 #include "game/state/base/base.h"
+#include "game/state/battle/battle.h"
 #include "game/state/organisation.h"
 #include "game/state/rules/vehicle_type.h"
 #include "library/strings_format.h"
@@ -149,8 +149,8 @@ UString GameBattleEvent::message()
 	switch (type)
 	{
 		case GameEventType::NewTurn:
-			return tr("Turn:") + " " + format("%d", battle->currentTurn) + "   " + tr("Side:") + "  " +
-			       tr(battle->currentActiveOrganisation->name);
+			return tr("Turn:") + " " + format("%d", battle->currentTurn) + "   " + tr("Side:") +
+			       "  " + tr(battle->currentActiveOrganisation->name);
 		default:
 			LogError("Invalid event type");
 			break;
@@ -197,6 +197,10 @@ GameFacilityEvent::GameFacilityEvent(GameEventType type, sp<Base> base, sp<Facil
 
 GameBattleEvent::GameBattleEvent(GameEventType type, sp<Battle> battle)
     : GameEvent(type), battle(battle)
+{
+}
+GameLocationEvent::GameLocationEvent(GameEventType type, Vec3<int> location)
+    : GameEvent(type), location(location)
 {
 }
 }

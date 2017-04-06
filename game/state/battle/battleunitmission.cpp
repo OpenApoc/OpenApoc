@@ -1,11 +1,11 @@
 #include "game/state/battle/battleunitmission.h"
 #include "framework/framework.h"
 #include "framework/sound.h"
-#include "game/state/gameevent.h"
 #include "game/state/aequipment.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battleunit.h"
+#include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/tileview/tileobject_battleitem.h"
@@ -1658,7 +1658,8 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 					targetUnit->sendAgentEvent(state, GameEventType::AgentBrainsucked, true);
 					if (state.getPlayer() == targetUnit->agent->owner)
 					{
-						state.current_battle->score.casualtyPenalty -= targetUnit->agent->type->score;
+						state.current_battle->score.casualtyPenalty -=
+						    targetUnit->agent->type->score;
 					}
 					targetUnit->changeOwner(state, state.getAliens());
 					targetUnit->agent->modified_stats.psi_defence = 100;
@@ -1781,7 +1782,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				// Teleport unit
 				u.missions.clear();
 				u.stopAttacking();
-				u.setPosition(state, t->getRestingPosition(u.isLarge()));
+				u.setPosition(state, t->getRestingPosition(u.isLarge()), true);
 				u.resetGoal();
 				BodyState teleBodyState = canStand ? BodyState::Standing : BodyState::Flying;
 				if (!u.agent->isBodyStateAllowed(teleBodyState))

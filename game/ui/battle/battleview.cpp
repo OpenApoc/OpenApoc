@@ -1204,7 +1204,7 @@ void BattleView::update()
 	if (battle.mode == Battle::Mode::RealTime)
 	{
 		auto clockControl = baseForm->findControlTyped<Label>("CLOCK");
-		clockControl->setText(state->gameTime.getTimeString());
+		clockControl->setText(state->gameTime.getLongTimeString());
 	}
 
 	// Pulsate palette colors
@@ -2357,7 +2357,7 @@ void BattleView::eventOccurred(Event *e)
 					          5.0f)) == !inverse)
 					{
 						u.second->applyDamageDirect(*state, 9001, false, BodyPart::Helmet,
-						                     u.second->getHealth() + 4);
+						                            u.second->getHealth() + 4);
 					}
 				}
 				break;
@@ -2546,6 +2546,11 @@ void BattleView::eventOccurred(Event *e)
 		}
 		switch (gameEvent->type)
 		{
+			case GameEventType::ZoomView:
+				if (GameLocationEvent *gle = dynamic_cast<GameLocationEvent *>(gameEvent))
+				{
+					zoomAt(gle->location);
+				}
 			default:
 				break;
 		}
@@ -3523,6 +3528,13 @@ bool MotionScannerInfo::operator!=(const MotionScannerInfo &other) const
 	return !(*this == other);
 }
 
+void BattleView::zoomAt(Vec3<int> location)
+{
+	setScreenCenterTile(location);
+	setZLevel(location.z + 1);
+	updateLayerButtons();
+}
+
 void BattleView::zoomLastEvent()
 {
 	if (!state->messages.empty())
@@ -3530,9 +3542,7 @@ void BattleView::zoomLastEvent()
 		auto message = state->messages.back();
 		if (message.location != EventMessage::NO_LOCATION)
 		{
-			setScreenCenterTile(message.location);
-			setZLevel(message.location.z + 1);
-			updateLayerButtons();
+			zoomAt(message.location);
 		}
 	}
 }

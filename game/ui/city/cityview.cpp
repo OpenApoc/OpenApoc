@@ -585,7 +585,7 @@ void CityView::update()
 	}
 	auto clockControl = baseForm->findControlTyped<Label>("CLOCK");
 
-	clockControl->setText(state->gameTime.getTimeString());
+	clockControl->setText(state->gameTime.getLongTimeString());
 
 	// The palette fades from pal_03 at 3am to pal_02 at 6am then pal_01 at 9am
 	// The reverse for 3pm, 6pm & 9pm

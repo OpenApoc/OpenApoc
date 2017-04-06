@@ -19,8 +19,13 @@ BattleBriefing::BattleBriefing(sp<GameState> state, std::future<void> gameStateT
     : Stage(), menuform(ui().getForm("battle/briefing")), loading_task(std::move(gameStateTask)),
       state(state)
 {
-	menuform->findControlTyped<Label>("TEXT_DATE")->setText("Friday, 14th  July, 2084      17:35");
-	menuform->findControlTyped<Label>("TEXT_BRIEFING")->setText("You must lorem ipisum etc.");
+
+	menuform->findControlTyped<Label>("TEXT_DATE")
+	    ->setText(format("%s      %s", state->gameTime.getLongDateString(),
+	                     state->gameTime.getShortTimeString()));
+	// FIXME: Introduce breifing text
+	menuform->findControlTyped<Label>("TEXT_BRIEFING")
+	    ->setText("You must lorem ipisum etc. (Here be briefing text)");
 	menuform->findControlTyped<GraphicButton>("BUTTON_REAL_TIME")->setVisible(false);
 	menuform->findControlTyped<GraphicButton>("BUTTON_TURN_BASED")->setVisible(false);
 

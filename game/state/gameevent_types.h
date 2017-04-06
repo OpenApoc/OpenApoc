@@ -68,6 +68,10 @@ enum class GameEventType
 
 	NewTurn,
 
+	// Special events
+
+	ZoomView,
+
 	// Misc
 	ResearchCompleted,
 	ManufactureCompleted,
@@ -78,6 +82,6 @@ enum class GameEventType
 	EnterAlienDimension,
 	LeaveAlienDimension,
 	MissionStarted,
-	MissionCompleted
+	MissionCompleted,
 };
 }

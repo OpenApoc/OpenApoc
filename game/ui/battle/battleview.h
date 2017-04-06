@@ -208,6 +208,7 @@ class BattleView : public BattleTileView
 	void handleMouseDown(Event *e);
 
 	void setUpdateSpeed(BattleUpdateSpeed updateSpeed);
+	void zoomAt(Vec3<int> location);
 	void zoomLastEvent();
 };
 

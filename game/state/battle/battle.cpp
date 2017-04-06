@@ -1133,9 +1133,10 @@ sp<BattleItem> Battle::placeItem(GameState &state, sp<AEquipment> item, Vec3<flo
 	return bitem;
 }
 
-sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<Organisation> owner, StateRef<BattleUnit> unit,
-                                     StateRef<DamageType> type, Vec3<int> position, int ttl,
-                                     int power, int initialAgeTTLDivizor, bool delayVisibility)
+sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<Organisation> owner,
+                                     StateRef<BattleUnit> unit, StateRef<DamageType> type,
+                                     Vec3<int> position, int ttl, int power,
+                                     int initialAgeTTLDivizor, bool delayVisibility)
 {
 	bool fire = type->hazardType->fire;
 	auto hazard = mksp<BattleHazard>(state, type, delayVisibility);
@@ -1522,7 +1523,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 				lowMoraleProcessed = false;
 				ticksWithoutAction = TICKS_BEGIN_INTERRUPT;
 				interruptQueue.emplace(StateRef<BattleUnit>(&state, u.first), 0);
-				LogWarning("Message! Unit on lowmorale is going nuts!");
+				fw().pushEvent(new GameLocationEvent(GameEventType::ZoomView, u.second->position));
 				break;
 			}
 		}
@@ -1818,8 +1819,7 @@ void Battle::beginTurn(GameState &state)
 
 	updateTBBegin(state);
 
-	fw().pushEvent(
-	    new GameBattleEvent(GameEventType::NewTurn, shared_from_this()));
+	fw().pushEvent(new GameBattleEvent(GameEventType::NewTurn, shared_from_this()));
 }
 
 void Battle::endTurn(GameState &state)
@@ -1873,6 +1873,10 @@ void Battle::giveInterruptChanceToUnit(GameState &state, StateRef<BattleUnit> gi
 		}
 		else
 		{
+			if (interruptQueue.empty())
+			{
+				fw().pushEvent(new GameLocationEvent(GameEventType::ZoomView, receiver->position));
+			}
 			interruptQueue.emplace(receiver, receiver->agent->getTULimit(reactionValue));
 		}
 	}
@@ -2217,7 +2221,33 @@ int BattleScore::getLeadershipBonus()
 
 int BattleScore::getTotal()
 {
-	return combatRating + casualtyPenalty + getLeadershipBonus() + liveAlienCaptured + equipmentCaptured + equipmentLost;
+	return combatRating + casualtyPenalty + getLeadershipBonus() + liveAlienCaptured +
+	       equipmentCaptured + equipmentLost;
+}
+
+UString BattleScore::getText()
+{
+	auto total = getTotal();
+	if (total > 500)
+	{
+		return tr("Very Good");
+	}
+	else if (total > 200)
+	{
+		return tr("Good");
+	}
+	else if (total > 0)
+	{
+		return tr("OK");
+	}
+	else if (total > -200)
+	{
+		return tr("Poor");
+	}
+	else
+	{
+		return tr("Very Poor");
+	}
 }
 
 } // namespace OpenApoc

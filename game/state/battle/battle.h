@@ -64,6 +64,7 @@ class BattleScore
 	int equipmentCaptured = 0;
 	int equipmentLost = 0;
 	int getTotal();
+	UString getText();
 };
 
 class Battle : public std::enable_shared_from_this<Battle>
@@ -117,7 +118,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// Example: If there's a link update required between ids 2 and 3,
 	// we will set only [2 + 3 * size] to true
 	std::vector<bool> linkNeedsUpdate;
-	
+
 	// Tiles that have something changed inside them and require to re-calculate vision
 	// of every soldier who has them in LOS. Triggers include:
 	// - Map part changing tiles
@@ -128,7 +129,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	UString mission_location_id;
 	Mode mode = Mode::RealTime;
 	BattleScore score = {};
-	
+
 	StateRef<Vehicle> player_craft;
 
 	std::list<sp<BattleMapPart>> map_parts;
@@ -193,8 +194,8 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	// Move a group of units in formation
 	static void groupMove(GameState &state, std::list<StateRef<BattleUnit>> &selectedUnits,
-		Vec3<int> targetLocation, int facingDelta = 0, bool demandGiveWay = false,
-		bool useTeleporter = false);
+	                      Vec3<int> targetLocation, int facingDelta = 0, bool demandGiveWay = false,
+	                      bool useTeleporter = false);
 
 	int getLosBlockID(int x, int y, int z) const;
 	bool getVisible(StateRef<Organisation> org, int x, int y, int z) const;
@@ -235,8 +236,9 @@ class Battle : public std::enable_shared_from_this<Battle>
 	sp<BattleUnit> placeUnit(GameState &state, StateRef<Agent> agent);
 	sp<BattleUnit> placeUnit(GameState &state, StateRef<Agent> agent, Vec3<float> position);
 	sp<BattleItem> placeItem(GameState &state, sp<AEquipment> item, Vec3<float> position);
-	sp<BattleHazard> placeHazard(GameState &state, StateRef<Organisation> owner, StateRef<BattleUnit> unit,
-	                             StateRef<DamageType> type, Vec3<int> position, int ttl, int power,
+	sp<BattleHazard> placeHazard(GameState &state, StateRef<Organisation> owner,
+	                             StateRef<BattleUnit> unit, StateRef<DamageType> type,
+	                             Vec3<int> position, int ttl, int power,
 	                             int initialAgeTTLDivizor = 1, bool delayVisibility = true);
 	sp<BattleScanner> addScanner(GameState &state, AEquipment &item);
 	void removeScanner(GameState &state, AEquipment &item);

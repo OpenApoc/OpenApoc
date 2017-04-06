@@ -140,7 +140,7 @@ void SaveMenu::begin()
 				}
 				else
 				{
-					gameTimeLabel->setText(gameTime.getTimeString());
+					gameTimeLabel->setText(gameTime.getLongTimeString());
 				}
 			}
 

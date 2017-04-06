@@ -91,8 +91,18 @@ class AgentStats
 	int bravery = 0;
 	int strength = 0;
 	int morale = 0;
-	void loseMorale(int value) { morale -= value;if (morale < 0) morale = 0; }
-	void gainMorale(int value) { morale += value;if (morale > 100) morale = 100; }
+	void loseMorale(int value)
+	{
+		morale -= value;
+		if (morale < 0)
+			morale = 0;
+	}
+	void gainMorale(int value)
+	{
+		morale += value;
+		if (morale > 100)
+			morale = 100;
+	}
 	int psi_energy = 0;
 	int psi_attack = 0;
 	int psi_defence = 0;

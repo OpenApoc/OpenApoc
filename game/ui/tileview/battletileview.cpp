@@ -1009,9 +1009,12 @@ void BattleTileView::render()
 					    Vec3<float>{0.0f, 0.0f,
 					                (u.second->getCurrentHeight() - 4.0f) * 1.5f / 40.0f});
 
-					auto &img = tuIndicators[u.second->agent->modified_stats.time_units];
-					r.draw(img,
-					       pos + offset + offsetTU - Vec2<float>{img->size.x / 2, img->size.y / 2});
+					if (battle.mode == Battle::Mode::TurnBased)
+					{
+						auto &img = tuIndicators[u.second->agent->modified_stats.time_units];
+						r.draw(img, pos + offset + offsetTU -
+						                Vec2<float>{img->size.x / 2, img->size.y / 2});
+					}
 
 					for (auto &t : u.second->visibleEnemies)
 					{
@@ -1299,7 +1302,7 @@ void BattleTileView::setScreenCenterTile(Vec3<float> center)
 
 void BattleTileView::setScreenCenterTile(Vec2<float> center)
 {
-	this->setScreenCenterTile(Vec3<float>{center.x, center.y, 1});
+	this->setScreenCenterTile(Vec3<float>{center.x, center.y, battle.battleViewZLevel - 1});
 }
 
 void BattleTileView::setSelectedTilePosition(Vec3<int> newPosition)

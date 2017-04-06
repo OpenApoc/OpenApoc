@@ -40,8 +40,11 @@ class GameTime
 	// returns week with prefix
 	UString getWeekString() const;
 
+	// returns formatted time in format hh:mm
+	UString getShortTimeString() const;
+
 	// returns formatted time in format hh:mm:ss
-	UString getTimeString() const;
+	UString getLongTimeString() const;
 
 	// returns formatted date in format a, d m, y
 	UString getLongDateString() const;

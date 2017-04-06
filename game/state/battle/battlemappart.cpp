@@ -1287,8 +1287,8 @@ void BattleMapPart::update(GameState &state, unsigned int ticks)
 			{
 				StateRef<DamageType> dtSmoke = {&state, "DAMAGETYPE_SMOKE"};
 				auto hazard = state.current_battle->placeHazard(
-				    state, owner, nullptr, dtSmoke, position, dtSmoke->hazardType->getLifetime(state), 2,
-				    destroyed ? 6 : 12);
+				    state, owner, nullptr, dtSmoke, position,
+				    dtSmoke->hazardType->getLifetime(state), 2, destroyed ? 6 : 12);
 				if (hazard)
 				{
 					hazard->ticksUntilVisible = 0;

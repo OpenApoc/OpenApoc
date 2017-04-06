@@ -121,4 +121,13 @@ class GameBattleEvent : public GameEvent
 	~GameBattleEvent() override = default;
 	UString message() override;
 };
+
+class GameLocationEvent : public GameEvent
+{
+  public:
+	Vec3<int> location;
+
+	GameLocationEvent(GameEventType type, Vec3<int> location);
+	~GameLocationEvent() override = default;
+};
 }
