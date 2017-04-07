@@ -9,9 +9,3 @@ What do we need still:
 - When action first visible to player move camera to center on action and remove screen
 - When interrupting center on the first interrupting unit
 
-Order for proper map generation:
-- Generate smallest map
-- Init map with map parts only
-- For every player los block, LOS to every enemy LOS block (adhering to limit of range 20), and remove spawn for blocks that are visible.
-- Calculate amount of spawn tiles for enemies, compare to required amount multiplied by some constant (like 2x)
-- If not enough and map has variable size then increase map size and try again

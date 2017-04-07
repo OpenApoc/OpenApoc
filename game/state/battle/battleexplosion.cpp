@@ -333,7 +333,7 @@ void BattleExplosion::grow(GameState &state)
 {
 	auto &map = *state.current_battle->map;
 
-	state.current_battle->notifyAction();
+	state.current_battle->notifyAction(position);
 
 	for (int i = 0; i < 2; i++)
 	{

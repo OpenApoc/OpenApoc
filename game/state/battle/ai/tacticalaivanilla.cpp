@@ -1,4 +1,5 @@
 #include "game/state/battle/ai/tacticalaivanilla.h"
+#include "game/state/battle/ai/unitaihelper.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
@@ -31,6 +32,23 @@ TacticalAIVanilla::think(GameState &state, StateRef<Organisation> o)
 		state.current_battle->turnEndAllowed = true;
 	}
 
+	int unitsTotal = 0;
+	int unitsActive = 0;
+	for (auto &u : state.current_battle->units)
+	{
+		if (u.second->owner != o)
+		{
+			continue;
+		}
+		unitsTotal++;
+		if (u.second->isConscious())
+		{
+			unitsActive++;
+		}
+	}
+	// Chance to retreat is [0 to 50]% as number of neutralised allies goes [50 to 100]%
+	bool retreat = randBoundsExclusive(state.rng, 0, 100) < (unitsActive - unitsTotal / 2) / unitsTotal;
+
 	// Find an idle unit that needs orders
 	for (auto &u : state.current_battle->units)
 	{
@@ -59,7 +77,11 @@ TacticalAIVanilla::think(GameState &state, StateRef<Organisation> o)
 		}
 
 		// If unit found, try to get orders for him
-		auto decisions = getPatrolMovement(state, *u.second);
+		auto decisions = retreat 
+			? std::make_tuple(
+				std::list<StateRef<BattleUnit>>{StateRef<BattleUnit>(&state, u.first)}, 
+				UnitAIHelper::getRetreatMovement(state, *u.second, true)) 
+			: getPatrolMovement(state, *u.second);
 
 		auto units = std::get<0>(decisions);
 		if (units.empty())
@@ -68,7 +90,7 @@ TacticalAIVanilla::think(GameState &state, StateRef<Organisation> o)
 		}
 		AIDecision decision = {nullptr, std::get<1>(decisions)};
 
-		// Randomize civ movement
+		// Randomize civ movement kind
 		if (u.second->getAIType() == AIType::Civilian && decision.movement)
 		{
 			if (randBoundsExclusive(state.rng, 0, 100) < 50)

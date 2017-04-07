@@ -392,7 +392,6 @@ std::list<Vec3<int>> Battle::findShortestPath(Vec3<int> origin, Vec3<int> destin
 		    iterationLimitDirect > 0 ? iterationLimitDirect
 		                             : distance * PATH_ITERATION_LIMIT_MULTIPLIER,
 		    canEnterTile, approachOnly, ignoreStaticUnits, ignoreAllUnits, cost, maxCost);
-
 		auto finalTile = result.back();
 		if (forceDirect || finalTile == destination ||
 		    (approachOnly &&

@@ -42,6 +42,11 @@ std::tuple<AIDecision, bool> UnitAILowMorale::think(GameState &state, BattleUnit
 		return NULLTUPLE2;
 	}
 
+	if (u.agent->modified_stats.time_units == 0)
+	{
+		return NULLTUPLE2;
+	}
+
 	if (ticksActionAvailable <= state.gameTime.getTicks())
 	{
 		ticksActionAvailable = state.gameTime.getTicks() + LOWMORALE_AI_INTERVAL;

@@ -157,6 +157,8 @@ class Battle : public std::enable_shared_from_this<Battle>
 	unsigned int currentTurn = 0;
 	// Ticks without action in TB
 	unsigned int ticksWithoutAction = 0;
+	std::map<StateRef<Organisation>, unsigned> ticksWithoutSeenAction;
+	std::map<StateRef<Organisation>, Vec3<int>> lastSeenActionLocation;
 	// Turn end allowed by current org
 	bool turnEndAllowed = false;
 	// Low morale units were processed at turn start
@@ -208,7 +210,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	void notifyScanners(Vec3<int> position);
 
 	// Notify about action happening
-	void notifyAction();
+	void notifyAction(Vec3<int> location = { -1,-1,-1 }, StateRef<BattleUnit> actorUnit = nullptr);
 
 	void refreshLeadershipBonus(StateRef<Organisation> org);
 
@@ -327,6 +329,8 @@ class Battle : public std::enable_shared_from_this<Battle>
 	std::map<StateRef<Organisation>, std::map<StateRef<BattleUnit>, uint64_t>> lastVisibleTime;
 
 	// Following members are not serialized, but rather are set in initBattle method
+
+	std::set<Vec3<int>> exits;
 
 	sp<BattleCommonImageList> common_image_list;
 	sp<BattleCommonSampleList> common_sample_list;

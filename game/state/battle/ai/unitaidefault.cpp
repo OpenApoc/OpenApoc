@@ -53,7 +53,7 @@ std::tuple<AIDecision, bool> UnitAIDefault::think(GameState &state, BattleUnit &
 
 	// Turn to attacker in real time if we're idle
 	if (attackerPosition != NONE && !u.isBusy() && u.isConscious() &&
-	    ticksAutoTurnAvailable <= state.gameTime.getTicks())
+	    ticksAutoTurnAvailable <= state.gameTime.getTicks() && BattleUnitMission::getFacing(u, u.position + (Vec3<float>)attackerPosition) != u.goalFacing)
 	{
 		movement = mksp<AIMovement>();
 		movement->type = AIMovement::Type::Turn;
@@ -81,9 +81,10 @@ std::tuple<AIDecision, bool> UnitAIDefault::think(GameState &state, BattleUnit &
 				if (!targetEnemy || !targetEnemy->isConscious() ||
 				    enemies.find(targetEnemy) == enemies.end())
 				{
+					bool hadFocus = targetEnemy != nullptr;
 					targetEnemy.clear();
 					backupEnemy.clear();
-					if (realTime) // In TB having focusUnit means we can only attack him
+					if (realTime || !hadFocus) // In TB having focusUnit means we can only attack him
 					{
 						float minDistance = FLT_MAX;
 						for (auto &enemy : enemies)
@@ -116,7 +117,7 @@ std::tuple<AIDecision, bool> UnitAIDefault::think(GameState &state, BattleUnit &
 				{
 					targetEnemy = backupEnemy;
 				}
-				if (targetEnemy)
+				if (targetEnemy && BattleUnitMission::getFacing(u, targetEnemy->position) != u.goalFacing)
 				{
 					movement = mksp<AIMovement>();
 					movement->type = AIMovement::Type::Turn;
@@ -140,8 +141,9 @@ std::tuple<AIDecision, bool> UnitAIDefault::think(GameState &state, BattleUnit &
 				    enemies.find(targetEnemy) == enemies.end() ||
 				    weaponStatus == WeaponStatus::NotFiring)
 				{
+					bool hadFocus = targetEnemy != nullptr;
 					targetEnemy.clear();
-					if (realTime) // In TB having focusUnit means we can only attack him
+					if (realTime || !hadFocus) // In TB having focusUnit means we can only attack him
 					{
 						// Make a list of enemies sorted by distance to them
 						std::map<float, StateRef<BattleUnit>> enemiesByDistance;

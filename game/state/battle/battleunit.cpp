@@ -136,7 +136,7 @@ void BattleUnit::setPosition(GameState &state, const Vec3<float> &pos, bool goal
 	}
 	if (oldPosition != position)
 	{
-		state.current_battle->notifyAction();
+		state.current_battle->notifyAction(position, { &state, id });
 	}
 	if ((Vec3<int>)oldPosition != (Vec3<int>)position)
 	{
@@ -531,6 +531,7 @@ void BattleUnit::refreshUnitVision(GameState &state, bool forceBlind,
 			     battle.lastVisibleTime[owner][vu] + TICKS_SUPPRESS_SPOTTED_MESSAGES <= ticks))
 			{
 				vu->sendAgentEvent(state, GameEventType::HostileSpotted);
+				state.current_battle->notifyAction(vu->position, vu);
 			}
 		}
 		// battle and units's visible enemies list
@@ -1135,7 +1136,7 @@ bool BattleUnit::canAfford(GameState &state, int cost, bool ignoreKneelReserve,
 bool BattleUnit::spendTU(GameState &state, int cost, bool ignoreKneelReserve,
                          bool ignoreShootReserve, bool allowInterrupt)
 {
-	if (state.current_battle->mode == Battle::Mode::RealTime || !isConscious())
+	if (state.current_battle->mode == Battle::Mode::RealTime || !isConscious() || cost == 0)
 	{
 		return true;
 	}
@@ -1144,7 +1145,7 @@ bool BattleUnit::spendTU(GameState &state, int cost, bool ignoreKneelReserve,
 		return false;
 	}
 	agent->modified_stats.time_units -= cost;
-	state.current_battle->notifyAction();
+	state.current_battle->notifyAction(position, { &state, id });
 	// If doing any action other than moving that triggers reaction, we give interrupt chance here
 	// If moving we do not give it here, and instead give interrupt chance when changing tiles
 	if (allowInterrupt)

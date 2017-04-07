@@ -431,6 +431,8 @@
 		<member>currentActiveOrganisation</member>
 		<member>currentTurn</member>
 		<member>ticksWithoutAction</member>
+		<member>ticksWithoutSeenAction</member>
+		<member>lastSeenActionLocation</member>
 		<member>turnEndAllowed</member>
 		<member>interruptQueue</member>
 		<member>interruptUnits</member>

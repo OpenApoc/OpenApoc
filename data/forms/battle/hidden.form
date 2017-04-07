@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_BATTLE_HIDDEN">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="644" height="484"/>
+      <backcolour r="128" g="80" b="80"/>
+      <graphic id="HIDDEN_IMAGE">
+        <image>xcom3/tacdata/hidden1.pcx</image>
+        <position x="2" y="2"/>
+        <size width="640" height="480"/>
+      </graphic>
+      <label text="Game Turn:">
+        <position x="30" y="30"/>
+        <size width="100" height="17"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+	   <label id="TEXT_TURN" text="1">
+        <position x="130" y="30"/>
+        <size width="200" height="17"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+	  <label text="Side:">
+        <position x="30" y="47"/>
+        <size width="100" height="17"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+	   <label id="TEXT_SIDE" text="Aliens">
+        <position x="130" y="47"/>
+        <size width="200" height="17"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+	  <label text="Player:">
+        <position x="30" y="64"/>
+        <size width="100" height="17"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+	  <label id="TEXT_PLAYER" text="Computer">
+        <position x="130" y="64"/>
+        <size width="200" height="17"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+	  <graphic id="GRAPHIC_HIDDEN">
+        <position x="160" y="392"/>
+        <size width="321" height="33"/>
+        <alignment horizontal="centre" vertical="centre"/>
+      </graphic>
+	  <label text="Hidden Movement">
+        <position x="160" y="392"/>
+        <size width="321" height="33"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+    </style>
+  </form>
+</openapoc>

@@ -14,6 +14,8 @@ enum class AEquipmentSlotType;
 class UnitAIHelper
 {
   public:
+	static sp<AIMovement> getFallbackMovement(GameState &state, BattleUnit &u, bool forced = false);
+
 	static sp<AIMovement> getRetreatMovement(GameState &state, BattleUnit &u, bool forced = false);
 
 	static sp<AIMovement> getTakeCoverMovement(GameState &state, BattleUnit &u,
