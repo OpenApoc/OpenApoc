@@ -573,9 +573,10 @@ void GameState::logEvent(GameEvent *ev)
 	}
 	else if (GameBaseEvent *gbe = dynamic_cast<GameBaseEvent *>(ev))
 	{
-		location = Vec3<int>(gbe->base->building->bounds.p0.x + gbe->base->building->bounds.p1.x,
-		            gbe->base->building->bounds.p0.y + gbe->base->building->bounds.p1.y, 0) /
-		           2;
+		location =
+		    Vec3<int>(gbe->base->building->bounds.p0.x + gbe->base->building->bounds.p1.x,
+		              gbe->base->building->bounds.p0.y + gbe->base->building->bounds.p1.y, 0) /
+		    2;
 	}
 	// TODO: Other event types
 	messages.emplace_back(EventMessage{gameTime, ev->message(), location});

@@ -174,6 +174,9 @@ class BattleView : public BattleTileView
 	sp<Image> pauseIcon;
 	int pauseIconTimer = 0;
 
+	void updatePathPreview();
+	void updateAttackCost();
+
 	// Unit orers
 
 	void orderMove(Vec3<int> target, bool strafe = false, bool demandGiveWay = false);

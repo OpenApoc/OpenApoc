@@ -103,9 +103,6 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	void updateTB(GameState &state);
 	void updateInner(GameState &state, unsigned int ticks);
 
-	// Wether this weapon works like brainsucker launcher, throwing it's ammunition instead of
-	// firing a projectile
-	bool isLauncher();
 	void fire(GameState &state, Vec3<float> targetPosition,
 	          StateRef<BattleUnit> targetUnit = nullptr);
 	void throwItem(GameState &state, Vec3<int> targetPosition, float velocityXY, float velocityZ,

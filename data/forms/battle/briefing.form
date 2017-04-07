@@ -6,7 +6,7 @@
       <size width="644" height="484"/>
       <backcolour r="128" g="80" b="80"/>
       <graphic id="BRIEFING_IMAGE">
-        <image>xcom3/tacdata/brief.pcx</image>
+        <image>xcom3/tacdata/brief5.pcx</image>
         <position x="2" y="2"/>
         <size width="640" height="480"/>
       </graphic>

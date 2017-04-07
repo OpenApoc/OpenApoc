@@ -780,21 +780,6 @@ void AEquipment::throwItem(GameState &state, Vec3<int> targetPosition, float vel
 	    (int)ceilf(36.0f / glm::length(bi->velocity / VELOCITY_SCALE_BATTLE)) + 1;
 }
 
-bool AEquipment::isLauncher()
-{
-	if (this->type->type != AEquipmentType::Type::Weapon)
-	{
-		LogError("isLauncher() called on non-Weapon");
-		return false;
-	}
-	if (!readyToFire)
-	{
-		LogError("isLauncher() called on non-ready Weapon");
-		return false;
-	}
-	return type->launcher;
-}
-
 StateRef<AEquipmentType> AEquipment::getPayloadType() const
 {
 	if (type->type == AEquipmentType::Type::Weapon && type->ammo_types.size() > 0)

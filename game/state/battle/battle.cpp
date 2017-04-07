@@ -1523,7 +1523,13 @@ void Battle::update(GameState &state, unsigned int ticks)
 				lowMoraleProcessed = false;
 				ticksWithoutAction = TICKS_BEGIN_INTERRUPT;
 				interruptQueue.emplace(StateRef<BattleUnit>(&state, u.first), 0);
-				fw().pushEvent(new GameLocationEvent(GameEventType::ZoomView, u.second->position));
+				if (u.second->owner == currentPlayer ||
+				    visibleUnits[currentPlayer].find({&state, u.first}) !=
+				        visibleUnits[currentPlayer].end())
+				{
+					fw().pushEvent(
+					    new GameLocationEvent(GameEventType::ZoomView, u.second->position));
+				}
 				break;
 			}
 		}
@@ -1988,7 +1994,7 @@ void Battle::finishBattle(GameState &state)
 	//	- Prepare list of surviving aliens
 	//	- (Success) Prepare list of alien bodies
 	//	- Remove dead player agents and all enemy agents from the game and vehicles
-	//	- Apply experience to stats of living agents
+	//	- Apply experience to stats of living agents // unit->processExperience()
 	//	- (Success) Prepare list of loot(including alien saucer equipment)
 	//	- Calculate score
 

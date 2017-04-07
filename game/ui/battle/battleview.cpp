@@ -1178,6 +1178,14 @@ void BattleView::update()
 				updatePathPreview();
 			}
 		}
+		if (calculatedAttackCost == -1)
+		{
+			attackCostTicksAccumulated++;
+			if (attackCostTicksAccumulated > 5)
+			{
+				updateAttackCost();
+			}
+		}
 	}
 
 	unsigned int ticks = 0;
@@ -1341,6 +1349,7 @@ void BattleView::updateSelectedUnits()
 	if (activeTab == notMyTurnTab)
 	{
 		resetPathPreview();
+		resetAttackCost();
 		return;
 	}
 	auto prevLSU = lastSelectedUnit;
@@ -1375,6 +1384,7 @@ void BattleView::updateSelectedUnits()
 	if (prevLSU != lastSelectedUnit || !lastSelectedUnit)
 	{
 		resetPathPreview();
+		resetAttackCost();
 		switch (battle.mode)
 		{
 			case Battle::Mode::RealTime:
@@ -1388,11 +1398,18 @@ void BattleView::updateSelectedUnits()
 	else
 	{
 		auto p = lastSelectedUnit->tileObject->getOwningTile()->position;
+		auto f = lastSelectedUnit->goalFacing;
 		if (lastSelectedUnitPosition != p)
 		{
 			resetPathPreview();
+			resetAttackCost();
+		}
+		if (lastSelectedUnitFacing != f)
+		{
+			resetAttackCost();
 		}
 		lastSelectedUnitPosition = p;
+		lastSelectedUnitFacing = f;
 	}
 }
 
@@ -1475,6 +1492,29 @@ void BattleView::updateSelectionMode()
 		case BattleSelectionState::NormalAlt:
 		case BattleSelectionState::NormalCtrl:
 		case BattleSelectionState::NormalCtrlAlt:
+			// Fine, don't need to
+			break;
+	}
+	// Reset attack cost
+	switch (selectionState)
+	{
+		case BattleSelectionState::Normal:
+		case BattleSelectionState::NormalAlt:
+		case BattleSelectionState::NormalCtrl:
+		case BattleSelectionState::NormalCtrlAlt:
+		case BattleSelectionState::ThrowLeft:
+		case BattleSelectionState::ThrowRight:
+		case BattleSelectionState::PsiControl:
+		case BattleSelectionState::PsiPanic:
+		case BattleSelectionState::PsiStun:
+		case BattleSelectionState::PsiProbe:
+		case BattleSelectionState::TeleportLeft:
+		case BattleSelectionState::TeleportRight:
+			resetAttackCost();
+			break;
+		case BattleSelectionState::FireAny:
+		case BattleSelectionState::FireLeft:
+		case BattleSelectionState::FireRight:
 			// Fine, don't need to
 			break;
 	}
@@ -1736,6 +1776,158 @@ void BattleView::orderJump(Vec3<float> target, BodyState bodyState)
 	}
 	auto unit = battle.battleViewSelectedUnits.front();
 	unit->setMission(*state, BattleUnitMission::jump(*unit, target, bodyState));
+}
+
+void BattleView::updatePathPreview()
+{
+	auto target = selectedTilePosition;
+	if (!lastSelectedUnit)
+	{
+		LogError("Trying to update path preview with no unit selected!?");
+		return;
+	}
+
+	if (!lastSelectedUnit->canMove())
+		return;
+	auto &map = lastSelectedUnit->tileObject->map;
+	auto to = map.getTile(target);
+
+	// Standart check for passability
+	while (true)
+	{
+		auto u = to->getUnitIfPresent(true, true, false, nullptr, false, true);
+		auto unit = u ? u->getUnit() : nullptr;
+		if (unit && unit->owner != battle.currentPlayer &&
+		    battle.visibleUnits[battle.currentPlayer].find({&*state, unit->id}) ==
+		        battle.visibleUnits[battle.currentPlayer].end())
+		{
+			unit = nullptr;
+		}
+		if (!to->getPassable(lastSelectedUnit->isLarge(),
+		                     lastSelectedUnit->agent->type->bodyType->maxHeight) ||
+		    unit)
+		{
+			previewedPathCost = -3;
+			return;
+		}
+		if (lastSelectedUnit->canFly() || to->getCanStand(lastSelectedUnit->isLarge()))
+		{
+			break;
+		}
+		target.z--;
+		if (target.z == -1)
+		{
+			LogError("Solid ground missing on level 0? Reached %d %d %d", target.x, target.y,
+			         target.z);
+			return;
+		}
+		to = map.getTile(target);
+	}
+
+	// Cost to move is 1.5x if prone and 0.5x if running, to keep things in integer
+	// we use a value that is then divided by 2
+	float cost = 0.0f;
+	int cost_multiplier_x_2 = 2;
+	if (lastSelectedUnit->agent->canRun() &&
+	    lastSelectedUnit->movement_mode == MovementMode::Running)
+	{
+		cost_multiplier_x_2 = 1;
+	}
+	if (lastSelectedUnit->movement_mode == MovementMode::Prone)
+	{
+		cost_multiplier_x_2 = 3;
+	}
+
+	// Get path
+	float maxCost =
+	    (float)lastSelectedUnit->agent->modified_stats.time_units * 2 / cost_multiplier_x_2;
+	pathPreview = map.findShortestPath(lastSelectedUnit->goalPosition, target, 1000,
+	                                   BattleUnitTileHelper{map, *lastSelectedUnit}, false, false,
+	                                   false, &cost, maxCost);
+	if (pathPreview.empty())
+	{
+		LogError("Empty path returned for path preview!?");
+		return;
+	}
+	// If we have not reached the target - then show "Too Far"
+	// Otherwise, show amount of TUs remaining at arrival
+	if (pathPreview.back() != target)
+	{
+		previewedPathCost = -2;
+	}
+	else
+	{
+		previewedPathCost = (int)roundf(cost * cost_multiplier_x_2 / 2);
+		previewedPathCost = lastSelectedUnit->agent->modified_stats.time_units - previewedPathCost;
+		if (previewedPathCost < 0)
+		{
+			// Sometimes it might happen that we barely miss goal after all calculations
+			// In this case, properly display "Too far" and subtract cost
+			previewedPathCost = -2;
+			pathPreview.pop_back();
+		}
+	}
+	if (pathPreview.front() == (Vec3<int>)lastSelectedUnit->position)
+	{
+		pathPreview.pop_front();
+	}
+}
+
+void BattleView::updateAttackCost()
+{
+	auto target = selectedTilePosition;
+	if (!lastSelectedUnit)
+	{
+		LogError("Trying to update path attack cost with no unit selected!?");
+		return;
+	}
+	WeaponStatus status;
+	switch (selectionState)
+	{
+		case BattleSelectionState::FireLeft:
+			status = WeaponStatus::FiringLeftHand;
+			break;
+		case BattleSelectionState::FireRight:
+			status = WeaponStatus::FiringRightHand;
+			break;
+		case BattleSelectionState::FireAny:
+			status = WeaponStatus::FiringBothHands;
+			break;
+		default:
+			// Do nothing
+			break;
+	}
+	if (status == WeaponStatus::FiringBothHands)
+	{
+		// Right hand has priority
+		auto rhItem = lastSelectedUnit->agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+		if (rhItem && rhItem->canFire())
+		{
+			status = WeaponStatus::FiringRightHand;
+		}
+		else
+		{
+			// We don't care what's in the left hand,
+			// we will just cancel firing in update() if there's nothing to fire
+			status = WeaponStatus::FiringLeftHand;
+		}
+	}
+	auto weapon = (status == WeaponStatus::FiringRightHand)
+	                  ? lastSelectedUnit->agent->getFirstItemInSlot(AEquipmentSlotType::RightHand)
+	                  : lastSelectedUnit->agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+	if (!weapon)
+	{
+		calculatedAttackCost = -4;
+	}
+	else if (!weapon->canFire(target))
+	{
+		calculatedAttackCost = weapon->type->launcher ? -3 : -2;
+	}
+	else
+	{
+		calculatedAttackCost =
+		    lastSelectedUnit->getAttackCost(*state, *weapon, selectedTilePosition);
+	}
 }
 
 void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)

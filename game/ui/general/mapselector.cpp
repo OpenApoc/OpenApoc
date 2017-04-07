@@ -98,7 +98,8 @@ sp<Control> MapSelector::createMapRowBuilding(sp<Building> building, sp<GameStat
 		btnLocation->addCallback(FormEventType::ButtonClick, [building, state](Event *) {
 			fw().stageQueueCommand(
 			    {StageCmd::Command::PUSH,
-			     mksp<BattleBriefing>(state, loadBattleBuilding(building, state, true))});
+			     mksp<BattleBriefing>(state, building->owner, Building::getId(*state, building),
+			                          true, true, loadBattleBuilding(building, state, true))});
 		});
 		if (building->owner != state->getAliens())
 		{
@@ -108,7 +109,9 @@ sp<Control> MapSelector::createMapRowBuilding(sp<Building> building, sp<GameStat
 			btnLocation->addCallback(FormEventType::ButtonClick, [building, state](Event *) {
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
-				     mksp<BattleBriefing>(state, loadBattleBuilding(building, state, false))});
+				     mksp<BattleBriefing>(state, state->getAliens(),
+				                          Building::getId(*state, building), true, false,
+				                          loadBattleBuilding(building, state, false))});
 			});
 		}
 	}
@@ -174,7 +177,9 @@ sp<Control> MapSelector::createMapRowVehicle(sp<VehicleType> vehicle, sp<GameSta
 		btnLocation->addCallback(FormEventType::ButtonClick, [vehicle, state](Event *) {
 			fw().stageQueueCommand(
 			    {StageCmd::Command::PUSH,
-			     mksp<BattleBriefing>(state, loadBattleVehicle(vehicle, state))});
+			     mksp<BattleBriefing>(state, state->getAliens(),
+			                          VehicleType::getId(*state, vehicle), false, false,
+			                          loadBattleVehicle(vehicle, state))});
 		});
 	}
 
