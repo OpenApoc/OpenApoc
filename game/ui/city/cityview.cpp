@@ -419,9 +419,12 @@ CityView::~CityView() = default;
 
 void CityView::begin()
 {
-	// FIXME: Do we do this every time we switch to cityscape???
-	baseForm->findControlTyped<Ticker>("NEWS_TICKER")
-	    ->addMessage(tr("Welcome to X-COM Apocalypse"));
+	if (state->newGame)
+	{
+		state->newGame = false;
+		baseForm->findControlTyped<Ticker>("NEWS_TICKER")
+		    ->addMessage(tr("Welcome to X-COM Apocalypse"));
+	}
 }
 
 void CityView::resume()
@@ -582,7 +585,7 @@ void CityView::update()
 	}
 	auto clockControl = baseForm->findControlTyped<Label>("CLOCK");
 
-	clockControl->setText(state->gameTime.getTimeString());
+	clockControl->setText(state->gameTime.getLongTimeString());
 
 	// The palette fades from pal_03 at 3am to pal_02 at 6am then pal_01 at 9am
 	// The reverse for 3pm, 6pm & 9pm
@@ -1316,9 +1319,9 @@ void CityView::zoomLastEvent()
 	if (!state->messages.empty())
 	{
 		auto message = state->messages.back();
-		if (message.getMapLocation(*state) != EventMessage::NO_LOCATION)
+		if (message.location != EventMessage::NO_LOCATION)
 		{
-			setScreenCenterTile(message.getMapLocation(*state));
+			setScreenCenterTile(message.location);
 		}
 	}
 }

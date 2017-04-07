@@ -82,6 +82,37 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 			case 33:
 				battle_map_index = 10; // 11 Procreation Park
 				break;
+			// Unfortunately, alien building function indexes are not properly ordered
+			case 38:
+				battle_map_index = 42;
+				break;
+			case 39:
+				battle_map_index = 44;
+				break;
+			case 40:
+				battle_map_index = 39;
+				break;
+			case 41:
+				battle_map_index = 46;
+				break;
+			case 42:
+				battle_map_index = 38;
+				break;
+			case 43:
+				battle_map_index = 45;
+				break;
+			case 44:
+				battle_map_index = 40;
+				break;
+			case 45:
+				battle_map_index = 43;
+				break;
+			case 46:
+				battle_map_index = 41;
+				break;
+			case 47:
+				battle_map_index = 47;
+				break;
 		}
 		b->battle_map = {
 		    &state, format("%s%s", BattleMap::getPrefix(), this->battleMapPaths[battle_map_index])};

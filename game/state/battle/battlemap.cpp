@@ -498,7 +498,8 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 		else
 		{
 			LogWarning("Cannot generate a map %s with gen size %d since generating large maps is "
-			           "disabled", id, (int)genSize);
+			           "disabled",
+			           id, (int)genSize);
 			return false;
 		}
 	}
@@ -930,7 +931,7 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 						case BattleMapPartType::AutoConvert::Fire:
 						{
 							StateRef<DamageType> dt = {&state, "DAMAGETYPE_INCENDIARY"};
-							b->placeHazard(state, propertyOwner, dt, pair.first + shift,
+							b->placeHazard(state, propertyOwner, nullptr, dt, pair.first + shift,
 							               // Make it already hot
 							               dt->hazardType->getLifetime(state) * 2, 0, 1, false);
 							break;
@@ -938,7 +939,7 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 						case BattleMapPartType::AutoConvert::Smoke:
 						{
 							StateRef<DamageType> dt = {&state, "DAMAGETYPE_SMOKE"};
-							b->placeHazard(state, propertyOwner, dt, pair.first + shift,
+							b->placeHazard(state, propertyOwner, nullptr, dt, pair.first + shift,
 							               dt->hazardType->getLifetime(state), 1, 2, false);
 							break;
 						}

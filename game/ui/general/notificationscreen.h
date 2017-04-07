@@ -9,6 +9,7 @@ namespace OpenApoc
 
 class GameState;
 class CityView;
+class BattleView;
 class Form;
 
 class NotificationScreen : public Stage
@@ -20,6 +21,7 @@ class NotificationScreen : public Stage
 
   public:
 	NotificationScreen(sp<GameState> state, CityView &cityView, const UString &message);
+	NotificationScreen(sp<GameState> state, BattleView &battleView, const UString &message);
 	~NotificationScreen() override;
 	// Stage control
 	void begin() override;

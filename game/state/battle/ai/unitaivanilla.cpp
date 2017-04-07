@@ -304,6 +304,10 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getBrainsuckerDecision(Ga
 		{
 			continue;
 		}
+		if (target->current_body_state == BodyState::Flying)
+		{
+			continue;
+		}
 		auto newDistance = BattleUnitTileHelper::getDistanceStatic(u.position, target->position);
 		if (newDistance >= distance)
 		{
@@ -349,6 +353,10 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getSuicideDecision(GameSt
 	auto &visibleEnemies = state.current_battle->visibleEnemies[u.owner];
 	for (auto &target : visibleEnemies)
 	{
+		if (target->current_body_state == BodyState::Flying)
+		{
+			continue;
+		}
 		auto newDistance = BattleUnitTileHelper::getDistanceStatic(u.position, target->position);
 		if (newDistance >= distance)
 		{

@@ -82,18 +82,30 @@ class BattleTileView : public TileView
 	// time
 	StateRef<BattleUnit> lastSelectedUnit;
 	Vec3<int> lastSelectedUnitPosition;
+	Vec2<int> lastSelectedUnitFacing;
+	int ticksUntilFireSound = 0;
+
 	sp<Image> pathPreviewTooFar;
 	sp<Image> pathPreviewUnreachable;
 	std::list<Vec3<int>> pathPreview;
 	int pathPreviewTicksAccumulated = 0;
-	int ticksUntilFireSound = 0;
 	// -3 = unreachable
 	// -2 = too far
 	// -1 = no previewed path stored
 	// 0+ = path cost
 	int previewedPathCost = -1;
 	void resetPathPreview();
-	void updatePathPreview();
+
+	sp<Image> attackCostOutOfRange;
+	sp<Image> attackCostNoArc;
+	int attackCostTicksAccumulated = 0;
+	// -4 = no weapon
+	// -3 = no arc
+	// -2 = out of range
+	// -1 = no attack cost stored
+	int calculatedAttackCost = -1;
+	void resetAttackCost();
+	// updateAttackCost is in battleView as it requires data about selection mode
 
 	bool revealWholeMap = false;
 

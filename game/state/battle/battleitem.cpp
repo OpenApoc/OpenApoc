@@ -28,6 +28,14 @@ void BattleItem::die(GameState &state, bool violently)
 	{
 		item->explode(state);
 	}
+	if (item->ownerOrganisation && state.getPlayer() == item->ownerOrganisation)
+	{
+		state.current_battle->score.equipmentLost -= item->type->score;
+		if (item->payloadType)
+		{
+			state.current_battle->score.equipmentLost -= item->payloadType->score;
+		}
+	}
 	auto this_shared = shared_from_this();
 	state.current_battle->items.remove(this_shared);
 	this->tileObject->removeFromMap();

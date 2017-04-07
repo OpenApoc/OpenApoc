@@ -5,6 +5,7 @@
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battleunit.h"
+#include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/tileview/tileobject_battleitem.h"
@@ -1654,7 +1655,12 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 			{
 				if (randBoundsExclusive(state.rng, 0, 100) < BRAINSUCK_CHANCE)
 				{
-					LogWarning("Event! Unit brainsucked!");
+					targetUnit->sendAgentEvent(state, GameEventType::AgentBrainsucked, true);
+					if (state.getPlayer() == targetUnit->agent->owner)
+					{
+						state.current_battle->score.casualtyPenalty -=
+						    targetUnit->agent->type->score;
+					}
 					targetUnit->changeOwner(state, state.getAliens());
 					targetUnit->agent->modified_stats.psi_defence = 100;
 				}
@@ -1776,7 +1782,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				// Teleport unit
 				u.missions.clear();
 				u.stopAttacking();
-				u.setPosition(state, t->getRestingPosition(u.isLarge()));
+				u.setPosition(state, t->getRestingPosition(u.isLarge()), true);
 				u.resetGoal();
 				BodyState teleBodyState = canStand ? BodyState::Standing : BodyState::Flying;
 				if (!u.agent->isBodyStateAllowed(teleBodyState))
@@ -1828,8 +1834,12 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				}
 				item->ownerUnit = {&state, u.id};
 				// Drop item
-				auto bi = state.current_battle->placeItem(state, item,
-				                                          u.position + Vec3<float>{0.0, 0.0, (u.current_body_state == BodyState::Downed || u.current_body_state == BodyState::Dead ) ? 0.0f : (float)u.getCurrentHeight()/80.0f});
+				auto bi = state.current_battle->placeItem(
+				    state, item,
+				    u.position + Vec3<float>{0.0, 0.0, (u.current_body_state == BodyState::Downed ||
+				                                        u.current_body_state == BodyState::Dead)
+				                                           ? 0.0f
+				                                           : (float)u.getCurrentHeight() / 80.0f});
 				bi->falling = true;
 			}
 			item = nullptr;

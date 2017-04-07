@@ -188,6 +188,7 @@
 		<member>initial_stats</member>
 		<member>current_stats</member>
 		<member>modified_stats</member>
+		<member>overEncumbred</member>
 		<member>home_base</member>
 		<member>owner</member>
 		<member>assigned_to_lab</member>
@@ -385,6 +386,15 @@
 		<member>exit</member>
 	</object>
 	<object>
+		<name>BattleScore</name>
+		<member>combatRating</member>
+		<member>casualtyPenalty</member>
+		<member>friendlyFire</member>
+		<member>liveAlienCaptured</member>
+		<member>equipmentCaptured</member>
+		<member>equipmentLost</member>
+	</object>
+	<object>
 		<name>Battle</name>
 		<member>size</member>
 		<member>battle_map</member>
@@ -403,6 +413,7 @@
 		<member>mission_type</member>
 		<member>mission_location_id</member>
 		<member>mode</member>
+		<member>score</member>
 		<member>player_craft</member>
 		<member type="Section">map_parts</member>
 		<member type="Section">units</member>
@@ -414,6 +425,7 @@
 		<member>explosions</member>
 		<member>hazards</member>
 		<member>participants</member>
+		<member>leadershipBonus</member>
 		<member>aiBlock</member>
 		<member>currentPlayer</member>
 		<member>currentActiveOrganisation</member>
@@ -635,7 +647,8 @@
 		<member>ticksUntilVisible</member>
 		<member>frameChangeTicksAccumulated</member>
 		<member>nextUpdateTicksAccumulated</member>
-		<member>owner</member>
+		<member>ownerOrganisation</member>
+		<member>ownerUnit</member>
 	</object>
 	<object>
 		<name>BattleExplosion</name>
@@ -1256,7 +1269,6 @@
 		<value>None</value>
 		<value>Kneeling</value>
 	</enum>
-	
 	<enum>
 		<name>WeaponStatus</name>
 		<value>NotFiring</value>

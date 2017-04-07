@@ -140,7 +140,7 @@ void SaveMenu::begin()
 				}
 				else
 				{
-					gameTimeLabel->setText(gameTime.getTimeString());
+					gameTimeLabel->setText(gameTime.getLongTimeString());
 				}
 			}
 
@@ -233,7 +233,7 @@ void SaveMenu::loadWithWarning(sp<Control> parent)
 				auto task = saveManager.loadGame(*slot, state);
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
-				     mksp<LoadingScreen>(std::move(task), [state]() -> sp<Stage> {
+				     mksp<LoadingScreen>(nullptr, std::move(task), [state]() -> sp<Stage> {
 					     if (state->current_battle)
 					     {
 						     return mksp<BattleView>(state);
@@ -262,17 +262,18 @@ void SaveMenu::tryToLoadGame(sp<Control> slotControl)
 		{
 			auto state = mksp<GameState>();
 			auto task = saveManager.loadGame(*slot, state);
-			fw().stageQueueCommand({StageCmd::Command::PUSH,
-			                        mksp<LoadingScreen>(std::move(task), [state]() -> sp<Stage> {
-				                        if (state->current_battle)
-				                        {
-					                        return mksp<BattleView>(state);
-				                        }
-				                        else
-				                        {
-					                        return mksp<CityView>(state);
-				                        }
-				                    })});
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH,
+			     mksp<LoadingScreen>(nullptr, std::move(task), [state]() -> sp<Stage> {
+				     if (state->current_battle)
+				     {
+					     return mksp<BattleView>(state);
+				     }
+				     else
+				     {
+					     return mksp<CityView>(state);
+				     }
+				 })});
 		}
 	}
 }

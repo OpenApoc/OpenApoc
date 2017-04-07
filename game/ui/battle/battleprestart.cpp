@@ -15,7 +15,6 @@ namespace OpenApoc
 
 std::future<void> enterBattle(sp<GameState> state)
 {
-
 	auto loadTask =
 	    fw().threadPoolEnqueue([state]() -> void { Battle::enterBattle(*state.get()); });
 
@@ -32,7 +31,7 @@ BattlePreStart::BattlePreStart(sp<GameState> state)
 
 		    fw().stageQueueCommand(
 		        {StageCmd::Command::PUSH,
-		         mksp<LoadingScreen>(enterBattle(gameState),
+		         mksp<LoadingScreen>(gameState, enterBattle(gameState),
 		                             [gameState]() { return mksp<BattleView>(gameState); },
 		                             this->state->battle_common_image_list->loadingImage, 1)});
 		});

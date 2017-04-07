@@ -88,14 +88,14 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 	if (!damageType->hazardType)
 	{
 		StateRef<DamageType> dtSmoke = {&state, "DAMAGETYPE_SMOKE"};
-		state.current_battle->placeHazard(state, ownerOrganisation, dtSmoke, pos,
+		state.current_battle->placeHazard(state, ownerOrganisation, ownerUnit, dtSmoke, pos,
 		                                  dtSmoke->hazardType->getLifetime(state), damage, 2,
 		                                  false);
 	}
 	// Explosions with no custom explosion doodad spawn hazards when dealing damage
 	else if (!damageType->explosionDoodad)
 	{
-		state.current_battle->placeHazard(state, ownerOrganisation, damageType, pos,
+		state.current_battle->placeHazard(state, ownerOrganisation, ownerUnit, damageType, pos,
 		                                  damageType->hazardType->getLifetime(state), damage, 1,
 		                                  false);
 	}
@@ -160,10 +160,9 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 					// Legs are defeault already
 				}
 				// Apply
-				// FIXME: Give experience
 				u->applyDamage(state, damage, damageType,
 				               u->determineBodyPartHit(damageType, cposition, velocity),
-				               DamageSource::Impact);
+				               DamageSource::Impact, ownerUnit);
 			}
 			else if (obj->getType() == TileObject::Type::Item)
 			{
@@ -344,9 +343,9 @@ void BattleExplosion::grow(GameState &state)
 		{
 			if (damageType->hazardType && damageType->explosionDoodad)
 			{
-				state.current_battle->placeHazard(state, ownerOrganisation, damageType, pos.first,
-				                                  damageType->hazardType->getLifetime(state),
-				                                  pos.second.x);
+				state.current_battle->placeHazard(
+				    state, ownerOrganisation, ownerUnit, damageType, pos.first,
+				    damageType->hazardType->getLifetime(state), pos.second.x);
 			}
 			if (damageInTheEnd)
 			{

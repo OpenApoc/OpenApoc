@@ -22,6 +22,7 @@ class DamageType;
 class HazardType;
 class GameState;
 class Organisation;
+class BattleUnit;
 class TileMap;
 
 class BattleHazard : public std::enable_shared_from_this<BattleHazard>
@@ -42,7 +43,8 @@ class BattleHazard : public std::enable_shared_from_this<BattleHazard>
 	unsigned ticksUntilVisible = 0;
 	unsigned frameChangeTicksAccumulated = 0;
 	unsigned nextUpdateTicksAccumulated = 0;
-	StateRef<Organisation> owner;
+	StateRef<Organisation> ownerOrganisation;
+	StateRef<BattleUnit> ownerUnit;
 
 	bool expand(GameState &state, const TileMap &map, const Vec3<int> &to, unsigned ttl,
 	            bool fireSmoke = false);

@@ -640,6 +640,7 @@ void Agent::updateSpeed()
 	{
 		encumbrance += item->getWeight();
 	}
+	overEncumbred = current_stats.strength * 4 < encumbrance;
 	encumbrance *= encumbrance;
 
 	// Expecting str to never be 0

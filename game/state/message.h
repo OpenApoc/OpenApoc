@@ -16,9 +16,11 @@ class EventMessage
 
 	GameTime time;
 	UString text;
-	UString location;
+	Vec3<int> location;
 
-	Vec3<int> getMapLocation(GameState &state) const;
+	EventMessage(GameTime time, UString text, Vec3<int> location);
+	EventMessage(GameTime time, UString text);
+	EventMessage() = default;
 };
 
 }; // namespace OpenApoc

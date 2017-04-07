@@ -207,6 +207,8 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 	}
 	pathPreviewTooFar = font->getString(tr("Too Far"));
 	pathPreviewUnreachable = font->getString(tr("Blocked"));
+	attackCostOutOfRange = font->getString(tr("Out of range"));
+	attackCostNoArc = font->getString(tr("No arc of throw"));
 
 	for (int i = 0; i < 16; i++)
 	{
@@ -457,7 +459,7 @@ void BattleTileView::render()
 				sp<Image> selectionImageBack;
 				sp<Image> selectionImageFront;
 				bool drawPathPreview = false;
-
+				bool drawAttackCost = false;
 				if (selectedTilePosition.z >= z && selectedTilePosition.x >= minX &&
 				    selectedTilePosition.x < maxX && selectedTilePosition.y >= minY &&
 				    selectedTilePosition.y < maxY)
@@ -471,6 +473,7 @@ void BattleTileView::render()
 					if (selectedTilePosition.z == z)
 					{
 						drawPathPreview = previewedPathCost != -1;
+						drawAttackCost = calculatedAttackCost != -1;
 						auto u = selTileOnCurLevel->getUnitIfPresent(true);
 						auto unit = u ? u->getUnit() : nullptr;
 						if (unit &&
@@ -730,9 +733,37 @@ void BattleTileView::render()
 											img = tuIndicators[previewedPathCost];
 											break;
 									}
-									r.draw(img, tileToOffsetScreenCoords(selTilePosOnCurLevel) +
-									                offset -
-									                Vec2<int>{img->size.x / 2, img->size.y / 2});
+									if (img)
+									{
+										r.draw(img, tileToOffsetScreenCoords(selTilePosOnCurLevel) +
+										                offset - Vec2<int>{img->size.x / 2,
+										                                   img->size.y / 2});
+									}
+								}
+								if (drawAttackCost)
+								{
+									sp<Image> img;
+									switch (calculatedAttackCost)
+									{
+										case -4:
+											img = nullptr;
+											break;
+										case -3:
+											img = attackCostNoArc;
+											break;
+										case -2:
+											img = attackCostOutOfRange;
+											break;
+										default:
+											img = tuIndicators[calculatedAttackCost];
+											break;
+									}
+									if (img)
+									{
+										r.draw(img, tileToOffsetScreenCoords(selTilePosOnCurLevel) +
+										                offset - Vec2<int>{img->size.x / 2,
+										                                   img->size.y / 2});
+									}
 								}
 							}
 #ifdef PATHFINDING_DEBUG
@@ -1009,9 +1040,12 @@ void BattleTileView::render()
 					    Vec3<float>{0.0f, 0.0f,
 					                (u.second->getCurrentHeight() - 4.0f) * 1.5f / 40.0f});
 
-					auto &img = tuIndicators[u.second->agent->modified_stats.time_units];
-					r.draw(img,
-					       pos + offset + offsetTU - Vec2<float>{img->size.x / 2, img->size.y / 2});
+					if (battle.mode == Battle::Mode::TurnBased)
+					{
+						auto &img = tuIndicators[u.second->agent->modified_stats.time_units];
+						r.draw(img, pos + offset + offsetTU -
+						                Vec2<float>{img->size.x / 2, img->size.y / 2});
+					}
 
 					for (auto &t : u.second->visibleEnemies)
 					{
@@ -1281,6 +1315,15 @@ void BattleTileView::render()
 	}
 }
 
+void BattleTileView::resetAttackCost()
+{
+	if (attackCostTicksAccumulated > 0)
+	{
+		attackCostTicksAccumulated = 0;
+		calculatedAttackCost = -1;
+	}
+}
+
 void BattleTileView::setZLevel(int zLevel)
 {
 	battle.battleViewZLevel = clamp(zLevel, 1, maxZDraw);
@@ -1299,7 +1342,7 @@ void BattleTileView::setScreenCenterTile(Vec3<float> center)
 
 void BattleTileView::setScreenCenterTile(Vec2<float> center)
 {
-	this->setScreenCenterTile(Vec3<float>{center.x, center.y, 1});
+	this->setScreenCenterTile(Vec3<float>{center.x, center.y, battle.battleViewZLevel - 1});
 }
 
 void BattleTileView::setSelectedTilePosition(Vec3<int> newPosition)
@@ -1309,6 +1352,7 @@ void BattleTileView::setSelectedTilePosition(Vec3<int> newPosition)
 	if (oldPosition != selectedTilePosition)
 	{
 		resetPathPreview();
+		resetAttackCost();
 	}
 }
 
@@ -1318,94 +1362,7 @@ void BattleTileView::resetPathPreview()
 	{
 		pathPreviewTicksAccumulated = 0;
 		previewedPathCost = -1;
-		lastSelectedUnitPosition = {-1, -1, -1};
 		pathPreview.clear();
-	}
-}
-
-void BattleTileView::updatePathPreview()
-{
-	auto target = selectedTilePosition;
-	if (!lastSelectedUnit)
-	{
-		LogError("Trying to update path preview with no unit selected!?");
-		return;
-	}
-
-	if (!lastSelectedUnit->canMove())
-		return;
-	auto &map = lastSelectedUnit->tileObject->map;
-	auto to = map.getTile(target);
-
-	// Standart check for passability
-	while (true)
-	{
-		if (!to->getPassable(lastSelectedUnit->isLarge(),
-		                     lastSelectedUnit->agent->type->bodyType->maxHeight))
-		{
-			previewedPathCost = -3;
-			return;
-		}
-		if (lastSelectedUnit->canFly() || to->getCanStand(lastSelectedUnit->isLarge()))
-		{
-			break;
-		}
-		target.z--;
-		if (target.z == -1)
-		{
-			LogError("Solid ground missing on level 0? Reached %d %d %d", target.x, target.y,
-			         target.z);
-			return;
-		}
-		to = map.getTile(target);
-	}
-
-	// Cost to move is 1.5x if prone and 0.5x if running, to keep things in integer
-	// we use a value that is then divided by 2
-	float cost = 0.0f;
-	int cost_multiplier_x_2 = 2;
-	if (lastSelectedUnit->agent->canRun() &&
-	    lastSelectedUnit->movement_mode == MovementMode::Running)
-	{
-		cost_multiplier_x_2 = 1;
-	}
-	if (lastSelectedUnit->movement_mode == MovementMode::Prone)
-	{
-		cost_multiplier_x_2 = 3;
-	}
-
-	// Get path
-	float maxCost =
-	    (float)lastSelectedUnit->agent->modified_stats.time_units * 2 / cost_multiplier_x_2;
-	pathPreview = map.findShortestPath(lastSelectedUnit->goalPosition, target, 1000,
-	                                   BattleUnitTileHelper{map, *lastSelectedUnit}, false, false,
-	                                   false, &cost, maxCost);
-	if (pathPreview.empty())
-	{
-		LogError("Empty path returned for path preview!?");
-		return;
-	}
-	// If we have not reached the target - then show "Too Far"
-	// Otherwise, show amount of TUs remaining at arrival
-	if (pathPreview.back() != target)
-	{
-		previewedPathCost = -2;
-	}
-	else
-	{
-		previewedPathCost = (int)roundf(cost * cost_multiplier_x_2 / 2);
-		previewedPathCost = lastSelectedUnit->agent->modified_stats.time_units - previewedPathCost;
-		if (previewedPathCost < 0)
-		{
-			// Sometimes it might happen that we barely miss goal after all calculations
-			// In this case, properly display "Too far" and subtract cost
-			previewedPathCost = -2;
-			pathPreview.pop_back();
-		}
-	}
-	if (pathPreview.front() == (Vec3<int>)lastSelectedUnit->position)
-	{
-		pathPreview.pop_front();
 	}
 }
 }

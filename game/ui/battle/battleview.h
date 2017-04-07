@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game/state/battle/battleunit.h"
+#include "game/ui/general/notificationscreen.h"
 #include "game/ui/tileview/battletileview.h"
 #include "library/colour.h"
 #include "library/sp.h"
@@ -173,7 +174,8 @@ class BattleView : public BattleTileView
 	sp<Image> pauseIcon;
 	int pauseIconTimer = 0;
 
-	void onNewTurn();
+	void updatePathPreview();
+	void updateAttackCost();
 
 	// Unit orers
 
@@ -209,6 +211,8 @@ class BattleView : public BattleTileView
 	void handleMouseDown(Event *e);
 
 	void setUpdateSpeed(BattleUpdateSpeed updateSpeed);
+	void zoomAt(Vec3<int> location);
+	void zoomLastEvent();
 };
 
 }; // namespace OpenApoc

@@ -91,6 +91,18 @@ class AgentStats
 	int bravery = 0;
 	int strength = 0;
 	int morale = 0;
+	void loseMorale(int value)
+	{
+		morale -= value;
+		if (morale < 0)
+			morale = 0;
+	}
+	void gainMorale(int value)
+	{
+		morale += value;
+		if (morale > 100)
+			morale = 100;
+	}
 	int psi_energy = 0;
 	int psi_attack = 0;
 	int psi_defence = 0;
@@ -281,6 +293,7 @@ class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 	AgentStats current_stats;  // Stats after agent training/improvement
 	AgentStats modified_stats; // Stats after 'temporary' modification (health damage, slowdown due
 	                           // to equipment weight, used stamina etc)
+	bool overEncumbred = false;
 
 	sp<AEquipment> getArmor(BodyPart bodyPart) const;
 	bool isBodyStateAllowed(BodyState bodyState) const;

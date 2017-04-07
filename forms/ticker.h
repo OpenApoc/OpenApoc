@@ -40,7 +40,7 @@ class Ticker : public Control
 	void unloadResources() override;
 
 	void addMessage(const UString &Text);
-	bool hasMessages() const { return !messages.empty(); }
+	bool hasMessages() const { return !text.empty() || !messages.empty(); }
 
 	sp<BitmapFont> getFont() const;
 	void setFont(sp<BitmapFont> NewFont);

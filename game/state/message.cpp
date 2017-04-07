@@ -1,4 +1,6 @@
 #include "game/state/message.h"
+#include "battle/battle.h"
+#include "battle/battleunit.h"
 #include "city/building.h"
 #include "city/vehicle.h"
 #include "game/state/gamestate.h"
@@ -8,24 +10,11 @@ namespace OpenApoc
 
 const Vec3<int> EventMessage::NO_LOCATION = {-1, -1, -1};
 
-Vec3<int> EventMessage::getMapLocation(GameState &state) const
+EventMessage::EventMessage(GameTime time, UString text, Vec3<int> location)
+    : time(time), text(text), location(location)
 {
-	if (location.empty())
-	{
-		return NO_LOCATION;
-	}
-	StateRef<Vehicle> vehicle = {&state, location};
-	if (vehicle != nullptr)
-	{
-		return vehicle->getPosition();
-	}
-	StateRef<Building> building = {&state, location};
-	if (building != nullptr)
-	{
-		Vec2<int> position = building->bounds.p0 + building->bounds.size() / 2;
-		return {position.x, position.y, 0};
-	}
-	return NO_LOCATION;
 }
+
+EventMessage::EventMessage(GameTime time, UString text) : EventMessage(time, text, NO_LOCATION) {}
 
 }; // namespace OpenApoc

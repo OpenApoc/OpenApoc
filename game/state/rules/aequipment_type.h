@@ -154,7 +154,7 @@ class AEquipmentType : public StateObject
 	TriggerType trigger_type = TriggerType::None;
 	int explosion_depletion_rate = 0;
 
-	std::map<StateRef<AgentType>, std::vector<int>> spawnList;
+	std::map<StateRef<AgentType>, int> spawnList;
 };
 
 class EquipmentSet : public StateObject

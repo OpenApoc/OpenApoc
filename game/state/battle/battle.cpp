@@ -21,6 +21,7 @@
 #include "game/state/city/doodad.h"
 #include "game/state/city/projectile.h"
 #include "game/state/city/vehicle.h"
+#include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
@@ -214,6 +215,16 @@ void Battle::initBattle(GameState &state, bool first)
 		updatePathfinding(state);
 		// AI
 		aiBlock.init(state);
+		// leadership
+		for (auto o : participants)
+		{
+			refreshLeadershipBonus(o);
+		}
+		// Every thing TB
+		if (state.current_battle->mode == Battle::Mode::TurnBased)
+		{
+			state.current_battle->beginTurn(state);
+		}
 	}
 }
 
@@ -267,7 +278,7 @@ bool Battle::initialMapCheck(GameState &state, std::list<StateRef<Agent>> agents
 	// Mark as low-priority all the enemy spawn los blocks that are seen from any player spawn block
 	for (auto &playerSpawn : losBlocks)
 	{
-		if (playerSpawn->spawn_type != SpawnType::Player)
+		if (playerSpawn->spawn_type != SpawnType::Player || playerSpawn->spawn_priority == 0)
 		{
 			continue;
 		}
@@ -276,7 +287,8 @@ bool Battle::initialMapCheck(GameState &state, std::list<StateRef<Agent>> agents
 		                        playerSpawn->start.z + 0.5f);
 		for (auto &enemySpawn : losBlocks)
 		{
-			if (enemySpawn->spawn_type != SpawnType::Enemy || enemySpawn->low_priority)
+			if (enemySpawn->spawn_type != SpawnType::Enemy || enemySpawn->spawn_priority == 0 ||
+			    enemySpawn->low_priority)
 			{
 				continue;
 			}
@@ -288,6 +300,7 @@ bool Battle::initialMapCheck(GameState &state, std::list<StateRef<Agent>> agents
 			{
 				continue;
 			}
+			LogWarning("Los block center %s visible from %s", ePos, sPos);
 			enemySpawn->low_priority = true;
 		}
 	}
@@ -512,13 +525,29 @@ void Battle::initialUnitSpawn(GameState &state)
 		Vec3<int> start;
 		Vec3<int> end;
 	};
+	class SpawnKey
+	{
+	  public:
+		SpawnType spawnType = SpawnType::Player;
+		UnitSize unitSize = UnitSize::Small;
+		UnitMovement unitMovement = UnitMovement::Walking;
+		bool lowPriority = false;
+		SpawnKey() = default;
+		SpawnKey(SpawnType spawnType, UnitSize unitSize, UnitMovement unitMovement,
+		         bool lowPriority)
+		    : spawnType(spawnType), unitSize(unitSize), unitMovement(unitMovement),
+		      lowPriority(lowPriority)
+		{
+		}
+		bool operator<(const SpawnKey &other) const
+		{
+			return std::tie(spawnType, unitSize, unitMovement, lowPriority) <
+			       std::tie(other.spawnType, other.unitSize, other.unitMovement, other.lowPriority);
+		}
+	};
 
-	std::map<SpawnType,
-	         std::map<UnitSize, std::map<UnitMovement, std::map<bool, std::list<sp<SpawnBlock>>>>>>
-	    spawnMaps;
-	std::map<SpawnType,
-	         std::map<UnitSize, std::map<UnitMovement, std::map<bool, std::list<sp<SpawnBlock>>>>>>
-	    spawnInverse;
+	std::map<SpawnKey, std::list<sp<SpawnBlock>>> spawnMaps;
+	std::map<SpawnKey, std::list<sp<SpawnBlock>>> spawnInverse;
 	// Other blocks that have 0 spawn priority, to be used when all others are exhausted
 	std::list<sp<SpawnBlock>> spawnOther;
 	std::map<StateRef<Organisation>, SpawnType> spawnTypeMap;
@@ -570,19 +599,19 @@ void Battle::initialUnitSpawn(GameState &state)
 		}
 		for (int i = 0; i < lb->spawn_priority; i++)
 		{
-			spawnMaps[lb->spawn_type][lb->spawn_large_units ? UnitSize::Large : UnitSize::Small]
-			         [lb->spawn_walking_units ? UnitMovement::Walking : UnitMovement::Flying]
-			         [lb->low_priority]
-			             .push_back(sb);
-			spawnMaps[lb->spawn_type][lb->spawn_large_units ? UnitSize::Large : UnitSize::Small]
-			         [UnitMovement::Any][lb->low_priority]
-			             .push_back(sb);
-			spawnMaps[lb->spawn_type][UnitSize::Any]
-			         [lb->spawn_walking_units ? UnitMovement::Walking : UnitMovement::Flying]
-			         [lb->low_priority]
-			             .push_back(sb);
-			spawnMaps[lb->spawn_type][UnitSize::Any][UnitMovement::Any][lb->low_priority].push_back(
-			    sb);
+			spawnMaps[{lb->spawn_type, lb->spawn_large_units ? UnitSize::Large : UnitSize::Small,
+			           lb->spawn_walking_units ? UnitMovement::Walking : UnitMovement::Flying,
+			           lb->low_priority}]
+			    .push_back(sb);
+			spawnMaps[{lb->spawn_type, lb->spawn_large_units ? UnitSize::Large : UnitSize::Small,
+			           UnitMovement::Any, lb->low_priority}]
+			    .push_back(sb);
+			spawnMaps[{lb->spawn_type, UnitSize::Any,
+			           lb->spawn_walking_units ? UnitMovement::Walking : UnitMovement::Flying,
+			           lb->low_priority}]
+			    .push_back(sb);
+			spawnMaps[{lb->spawn_type, UnitSize::Any, UnitMovement::Any, lb->low_priority}]
+			    .push_back(sb);
 			for (int j = 0; j < 3; j++)
 			{
 				auto st = (SpawnType)j;
@@ -590,18 +619,20 @@ void Battle::initialUnitSpawn(GameState &state)
 				{
 					continue;
 				}
-				spawnInverse[st][lb->spawn_large_units ? UnitSize::Large : UnitSize::Small]
-				            [lb->spawn_walking_units ? UnitMovement::Walking : UnitMovement::Flying]
-				            [lb->low_priority]
-				                .push_back(sb);
-				spawnInverse[st][lb->spawn_large_units ? UnitSize::Large : UnitSize::Small]
-				            [UnitMovement::Any][lb->low_priority]
-				                .push_back(sb);
-				spawnInverse[st][UnitSize::Any]
-				            [lb->spawn_walking_units ? UnitMovement::Walking : UnitMovement::Flying]
-				            [lb->low_priority]
-				                .push_back(sb);
-				spawnInverse[st][UnitSize::Any][UnitMovement::Any][lb->low_priority].push_back(sb);
+				spawnInverse[{st, lb->spawn_large_units ? UnitSize::Large : UnitSize::Small,
+				              lb->spawn_walking_units ? UnitMovement::Walking
+				                                      : UnitMovement::Flying,
+				              lb->low_priority}]
+				    .push_back(sb);
+				spawnInverse[{st, lb->spawn_large_units ? UnitSize::Large : UnitSize::Small,
+				              UnitMovement::Any, lb->low_priority}]
+				    .push_back(sb);
+				spawnInverse[{st, UnitSize::Any, lb->spawn_walking_units ? UnitMovement::Walking
+				                                                         : UnitMovement::Flying,
+				              lb->low_priority}]
+				    .push_back(sb);
+				spawnInverse[{st, UnitSize::Any, UnitMovement::Any, lb->low_priority}].push_back(
+				    sb);
 			}
 		}
 	}
@@ -639,92 +670,92 @@ void Battle::initialUnitSpawn(GameState &state)
 				std::list<std::list<sp<SpawnBlock>> *> priorityList;
 				if (needWalker && needLarge)
 				{
-					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Large]
-					                                 [UnitMovement::Walking][false]);
-					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Large]
-					                                 [UnitMovement::Walking][true]);
-					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Large]
-					                                    [UnitMovement::Walking][false]);
-					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Large]
-					                                    [UnitMovement::Walking][true]);
+					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Large,
+					                                   UnitMovement::Walking, false}]);
+					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Large,
+					                                   UnitMovement::Walking, true}]);
+					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Large,
+					                                      UnitMovement::Walking, false}]);
+					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Large,
+					                                      UnitMovement::Walking, true}]);
 
-					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Large]
-					                                 [UnitMovement::Flying][false]);
-					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Large]
-					                                 [UnitMovement::Flying][true]);
-					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Large]
-					                                    [UnitMovement::Flying][false]);
-					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Large]
-					                                    [UnitMovement::Flying][true]);
+					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Large,
+					                                   UnitMovement::Flying, false}]);
+					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Large,
+					                                   UnitMovement::Flying, true}]);
+					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Large,
+					                                      UnitMovement::Flying, false}]);
+					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Large,
+					                                      UnitMovement::Flying, true}]);
 
-					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Small]
-					                                 [UnitMovement::Walking][false]);
-					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Small]
-					                                 [UnitMovement::Walking][true]);
-					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Small]
-					                                    [UnitMovement::Walking][false]);
-					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Small]
-					                                    [UnitMovement::Walking][true]);
+					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Small,
+					                                   UnitMovement::Walking, false}]);
+					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Small,
+					                                   UnitMovement::Walking, true}]);
+					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Small,
+					                                      UnitMovement::Walking, false}]);
+					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Small,
+					                                      UnitMovement::Walking, true}]);
 
-					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Small]
-					                                 [UnitMovement::Flying][false]);
-					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Small]
-					                                 [UnitMovement::Flying][true]);
-					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Small]
-					                                    [UnitMovement::Flying][false]);
-					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Small]
-					                                    [UnitMovement::Flying][true]);
+					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Small,
+					                                   UnitMovement::Flying, false}]);
+					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Small,
+					                                   UnitMovement::Flying, true}]);
+					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Small,
+					                                      UnitMovement::Flying, false}]);
+					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Small,
+					                                      UnitMovement::Flying, true}]);
 				}
 				else if (needLarge)
 				{
-					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Large]
-					                                 [UnitMovement::Any][false]);
-					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Large]
-					                                 [UnitMovement::Any][true]);
-					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Large]
-					                                    [UnitMovement::Any][false]);
-					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Large]
-					                                    [UnitMovement::Any][true]);
+					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Large,
+					                                   UnitMovement::Any, false}]);
+					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Large,
+					                                   UnitMovement::Any, true}]);
+					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Large,
+					                                      UnitMovement::Any, false}]);
+					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Large,
+					                                      UnitMovement::Any, true}]);
 
-					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Small]
-					                                 [UnitMovement::Any][false]);
-					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Small]
-					                                 [UnitMovement::Any][true]);
-					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Small]
-					                                    [UnitMovement::Any][false]);
-					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Small]
-					                                    [UnitMovement::Any][true]);
+					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Small,
+					                                   UnitMovement::Any, false}]);
+					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Small,
+					                                   UnitMovement::Any, true}]);
+					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Small,
+					                                      UnitMovement::Any, false}]);
+					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Small,
+					                                      UnitMovement::Any, true}]);
 				}
 				else if (needWalker)
 				{
-					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Any]
-					                                 [UnitMovement::Walking][false]);
-					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Any]
-					                                 [UnitMovement::Walking][true]);
-					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Any]
-					                                    [UnitMovement::Walking][false]);
-					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Any]
-					                                    [UnitMovement::Walking][true]);
+					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Any,
+					                                   UnitMovement::Walking, false}]);
+					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Any,
+					                                   UnitMovement::Walking, true}]);
+					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Any,
+					                                      UnitMovement::Walking, false}]);
+					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Any,
+					                                      UnitMovement::Walking, true}]);
 
-					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Any]
-					                                 [UnitMovement::Flying][false]);
-					priorityList.push_back(&spawnMaps[spawnTypeMap[f.first]][UnitSize::Any]
-					                                 [UnitMovement::Flying][true]);
-					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Any]
-					                                    [UnitMovement::Flying][false]);
-					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Any]
-					                                    [UnitMovement::Flying][true]);
+					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Any,
+					                                   UnitMovement::Flying, false}]);
+					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Any,
+					                                   UnitMovement::Flying, true}]);
+					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Any,
+					                                      UnitMovement::Flying, false}]);
+					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Any,
+					                                      UnitMovement::Flying, true}]);
 				}
 				else
 				{
-					priorityList.push_back(
-					    &spawnMaps[spawnTypeMap[f.first]][UnitSize::Any][UnitMovement::Any][false]);
-					priorityList.push_back(
-					    &spawnMaps[spawnTypeMap[f.first]][UnitSize::Any][UnitMovement::Any][true]);
-					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Any]
-					                                    [UnitMovement::Any][false]);
-					priorityList.push_back(&spawnInverse[spawnTypeMap[f.first]][UnitSize::Any]
-					                                    [UnitMovement::Any][true]);
+					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Any,
+					                                   UnitMovement::Any, false}]);
+					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Any,
+					                                   UnitMovement::Any, true}]);
+					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Any,
+					                                      UnitMovement::Any, false}]);
+					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Any,
+					                                      UnitMovement::Any, true}]);
 				}
 				priorityList.push_back(&spawnOther);
 
@@ -874,24 +905,24 @@ void Battle::initialUnitSpawn(GameState &state)
 				// If failed to spawn anything, then this block is no longer appropriate
 				if (numSpawned == 0)
 				{
-					for (auto &l1 : spawnMaps)
+					for (auto &l : spawnMaps)
 					{
-						for (auto &l2 : l1.second)
+						while (true)
 						{
-							for (auto &l3 : l2.second)
-							{
-								for (auto &l : l3.second)
-								{
-									while (true)
-									{
-										auto pos =
-										    std::find(l.second.begin(), l.second.end(), block);
-										if (pos == l.second.end())
-											break;
-										l.second.erase(pos);
-									}
-								}
-							}
+							auto pos = std::find(l.second.begin(), l.second.end(), block);
+							if (pos == l.second.end())
+								break;
+							l.second.erase(pos);
+						}
+					}
+					for (auto &l : spawnInverse)
+					{
+						while (true)
+						{
+							auto pos = std::find(l.second.begin(), l.second.end(), block);
+							if (pos == l.second.end())
+								break;
+							l.second.erase(pos);
 						}
 					}
 					{
@@ -1103,12 +1134,14 @@ sp<BattleItem> Battle::placeItem(GameState &state, sp<AEquipment> item, Vec3<flo
 }
 
 sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<Organisation> owner,
-                                     StateRef<DamageType> type, Vec3<int> position, int ttl,
-                                     int power, int initialAgeTTLDivizor, bool delayVisibility)
+                                     StateRef<BattleUnit> unit, StateRef<DamageType> type,
+                                     Vec3<int> position, int ttl, int power,
+                                     int initialAgeTTLDivizor, bool delayVisibility)
 {
 	bool fire = type->hazardType->fire;
 	auto hazard = mksp<BattleHazard>(state, type, delayVisibility);
-	hazard->owner = owner;
+	hazard->ownerOrganisation = owner;
+	hazard->ownerUnit = unit;
 	hazard->position = position;
 	hazard->position += Vec3<float>{0.5f, 0.5f, 0.5f};
 	if (fire)
@@ -1211,7 +1244,11 @@ void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 					LogWarning("Notify: unit %s that he's taking fire",
 					           c.projectile->trackedUnit.id);
 				}
-				unit->notifyUnderFire(c.projectile->firerPosition);
+
+				unit->notifyUnderFire(state, c.projectile->firerPosition,
+				                      c.projectile->firerUnit->owner == unit->owner ||
+				                          visibleUnits[unit->owner].find(c.projectile->firerUnit) !=
+				                              visibleUnits[unit->owner].end());
 			}
 			// Handle collision
 			this->projectiles.erase(c.projectile);
@@ -1486,7 +1523,13 @@ void Battle::update(GameState &state, unsigned int ticks)
 				lowMoraleProcessed = false;
 				ticksWithoutAction = TICKS_BEGIN_INTERRUPT;
 				interruptQueue.emplace(StateRef<BattleUnit>(&state, u.first), 0);
-				LogWarning("Message! Unit on lowmorale is going nuts!");
+				if (u.second->owner == currentPlayer ||
+				    visibleUnits[currentPlayer].find({&state, u.first}) !=
+				        visibleUnits[currentPlayer].end())
+				{
+					fw().pushEvent(
+					    new GameLocationEvent(GameEventType::ZoomView, u.second->position));
+				}
 				break;
 			}
 		}
@@ -1628,7 +1671,7 @@ void Battle::updateTBEnd(GameState &state)
 	for (auto it = this->hazards.begin(); it != this->hazards.end();)
 	{
 		auto d = *it++;
-		if (d->owner == currentActiveOrganisation)
+		if (d->ownerOrganisation == currentActiveOrganisation)
 		{
 			d->updateTB(state);
 		}
@@ -1672,6 +1715,12 @@ void Battle::notifyScanners(Vec3<int> position)
 }
 
 void Battle::notifyAction() { ticksWithoutAction = 0; }
+
+void Battle::refreshLeadershipBonus(StateRef<Organisation> org)
+{
+	LogWarning("Implement leadership bonus calculation");
+	leadershipBonus[org] = 0;
+}
 
 void Battle::queuePathfindingRefresh(Vec3<int> tile)
 {
@@ -1775,6 +1824,8 @@ void Battle::beginTurn(GameState &state)
 	aiBlock.beginTurnRoutine(state, currentActiveOrganisation);
 
 	updateTBBegin(state);
+
+	fw().pushEvent(new GameBattleEvent(GameEventType::NewTurn, shared_from_this()));
 }
 
 void Battle::endTurn(GameState &state)
@@ -1828,7 +1879,12 @@ void Battle::giveInterruptChanceToUnit(GameState &state, StateRef<BattleUnit> gi
 		}
 		else
 		{
+			if (interruptQueue.empty())
+			{
+				fw().pushEvent(new GameLocationEvent(GameEventType::ZoomView, receiver->position));
+			}
 			interruptQueue.emplace(receiver, receiver->agent->getTULimit(reactionValue));
+			receiver->experiencePoints.reactions++;
 		}
 	}
 }
@@ -1938,7 +1994,7 @@ void Battle::finishBattle(GameState &state)
 	//	- Prepare list of surviving aliens
 	//	- (Success) Prepare list of alien bodies
 	//	- Remove dead player agents and all enemy agents from the game and vehicles
-	//	- Apply experience to stats of living agents
+	//	- Apply experience to stats of living agents // unit->processExperience()
 	//	- (Success) Prepare list of loot(including alien saucer equipment)
 	//	- Calculate score
 
@@ -2163,6 +2219,42 @@ void Battle::unloadAnimationPacks(GameState &state)
 {
 	state.battle_unit_animation_packs.clear();
 	LogInfo("Unloaded all animation packs.");
+}
+
+int BattleScore::getLeadershipBonus()
+{
+	return (100 + 3 * casualtyPenalty) * (combatRating + friendlyFire + liveAlienCaptured) / 100;
+}
+
+int BattleScore::getTotal()
+{
+	return combatRating + casualtyPenalty + getLeadershipBonus() + liveAlienCaptured +
+	       equipmentCaptured + equipmentLost;
+}
+
+UString BattleScore::getText()
+{
+	auto total = getTotal();
+	if (total > 500)
+	{
+		return tr("Very Good");
+	}
+	else if (total > 200)
+	{
+		return tr("Good");
+	}
+	else if (total > 0)
+	{
+		return tr("OK");
+	}
+	else if (total > -200)
+	{
+		return tr("Poor");
+	}
+	else
+	{
+		return tr("Very Poor");
+	}
 }
 
 } // namespace OpenApoc

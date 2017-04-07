@@ -167,6 +167,9 @@ class GameState : public std::enable_shared_from_this<GameState>
 	void updateEndOfWeek();
 
 	void logEvent(GameEvent *ev);
+
+	// Following members are not serialized
+	bool newGame = false;
 };
 
 }; // namespace OpenApoc
