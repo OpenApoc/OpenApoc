@@ -3096,7 +3096,7 @@ void BattleView::handleMouseDown(Event *e)
 						                u->goalPosition.z);
 						debug += format("\nCurrent movement: %d, falling: %d",
 						                (int)u->current_movement_state, (int)u->falling);
-						debug += format("\Items [%d]:", (int)u->agent->equipment.size());
+						debug += format("\nItems [%d]:", (int)u->agent->equipment.size());
 						for (auto &e : u->agent->equipment)
 						{
 							debug += format("\n%s", e->type.id);

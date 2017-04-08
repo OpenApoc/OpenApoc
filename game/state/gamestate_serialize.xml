@@ -189,6 +189,7 @@
 		<member>current_stats</member>
 		<member>modified_stats</member>
 		<member>overEncumbred</member>
+		<member>rank</member>
 		<member>home_base</member>
 		<member>owner</member>
 		<member>assigned_to_lab</member>
@@ -566,6 +567,7 @@
 		<member>psiAttackers</member>
 		<member>brainSucker</member>
 		<member>experiencePoints</member>
+		<member>combatRating</member>
 		<member>fatalWounds</member>
 		<member>healingBodyPart</member>
 		<member>isHealing</member>
@@ -1525,6 +1527,16 @@
 	<enum external = "true">
 		<name>TacticalAI::Type</name>
 		<value>Vanilla</value>
+	</enum>
+	<enum>
+		<name>Rank</name>
+		<value>Rookie</value>
+		<value>Squaddie</value>
+		<value>SquadLeader</value>
+		<value>Sergeant</value>
+		<value>Captain</value>
+		<value>Colonel</value>
+		<value>Commander</value>
 	</enum>
 	<enum>
 		<name>MoraleState</name>

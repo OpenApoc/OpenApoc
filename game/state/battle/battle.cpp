@@ -1761,8 +1761,40 @@ void Battle::notifyAction(Vec3<int> location, StateRef<BattleUnit> actorUnit)
 
 void Battle::refreshLeadershipBonus(StateRef<Organisation> org)
 {
-	LogWarning("Implement leadership bonus calculation");
-	leadershipBonus[org] = 0;
+	Rank highestRank = Rank::Rookie;
+	for (auto &u : units)
+	{
+		if (u.second->owner != org || u.second->isDead() || u.second->retreated)
+		{
+			continue;
+		}
+		if ((int)u.second->agent->rank > (int)highestRank)
+		{
+			highestRank = u.second->agent->rank;
+		}
+	}
+	switch (highestRank)
+	{
+		case Rank::Rookie:
+		case Rank::Squaddie:
+			leadershipBonus[org] = 0;
+			break;
+		case Rank::SquadLeader:
+			leadershipBonus[org] = 5;
+			break;
+		case Rank::Sergeant:
+			leadershipBonus[org] = 10;
+			break;
+		case Rank::Captain:
+			leadershipBonus[org] = 15;
+			break;
+		case Rank::Colonel:
+			leadershipBonus[org] = 25;
+			break;
+		case Rank::Commander:
+			leadershipBonus[org] = 50;
+			break;
+	}
 }
 
 void Battle::queuePathfindingRefresh(Vec3<int> tile)
@@ -2021,12 +2053,6 @@ void Battle::enterBattle(GameState &state)
 		state.current_battle->battleViewZLevel = (int)ceilf(firstPlayerUnit->position.z);
 	}
 	state.current_battle->battleViewGroupMove = true;
-
-	if (state.current_battle->mission_type == Battle::MissionType::RaidHumans)
-	{
-		// FIXME: Make X-COM hostile to target org for the duration of this mission
-		LogWarning("IMPLEMENT: Make X-COM hostile to target org for the duration of this mission");
-	}
 }
 
 // To be called when battle must be finished and before showing score screen
@@ -2037,6 +2063,8 @@ void Battle::finishBattle(GameState &state)
 		LogError("Battle::FinishBattle called with no battle!");
 		return;
 	}
+
+	auto player = state.getPlayer();
 
 	state.current_battle->unloadResources(state);
 
@@ -2049,13 +2077,51 @@ void Battle::finishBattle(GameState &state)
 		}
 	}
 
+	// Proces MCed units
+	for (auto &u : state.current_battle->units)
+	{
+		if (u.second->owner != u.second->agent->owner)
+		{
+			if (u.second->owner == player)
+			{
+				// mind control by player = capped alive
+				u.second->stunDamage = 9001;
+			}
+			else
+			{
+				// mind control by someone else = MIA
+				u.second->agent->modified_stats.health = -1;
+			}
+			u.second->owner = u.second->agent->owner;
+		}
+	}
+
 	//  - Identify how battle ended(if enemies present then Failure, otherwise Success)
 	//	- (Failure) Determine surviving player agents(kill all player agents that are too far from
 	// exits)
 	//	- Prepare list of surviving aliens
 	//	- (Success) Prepare list of alien bodies
 	//	- Remove dead player agents and all enemy agents from the game and vehicles
-	//	- Apply experience to stats of living agents // unit->processExperience()
+	//	- Apply experience to stats of living agents
+	for (auto &u : state.current_battle->units)
+	{
+		if (u.second->owner != player || u.second->isDead())
+		{
+			continue;
+		}
+		u.second->processExperience(state);
+	}
+	// - Promotions
+	// Create list of units ranked by combatRating
+	// Rank up top 5 units from list that can promote
+	/*
+		Squaddie       Must earn over 8 combat rating points
+		Squad Leader   (Rookies + Squaddies) / (Squad Leaders + 1) is more than 4
+		Sergeant       Squad leaders / (Sergeant + 1) is more than 2
+		Captain        Sergeants / (Captains + 1) is more than 2
+		Colonel        Captains / (Colonels + 1) is more than 2
+		Commander      No commander, and more than one Colonel
+	*/
 	//	- (Success) Prepare list of loot(including alien saucer equipment)
 	//	- Calculate score
 
@@ -2080,7 +2146,16 @@ void Battle::exitBattle(GameState &state)
 	//	- Load loot into vehicles
 	//	- Load aliens into bio - trans
 	//	- Put surviving aliens back in the building (?or somewhere else if UFO?)
-	//  - Restore X-Com relationship to target organisation
+	//  - Restore X-Com relationship to organisations
+	auto player = state.getPlayer();
+	for (auto &o : state.organisations)
+	{
+		if (o.second == player.getSp())
+		{
+			continue;
+		}
+		player->current_relations[{&state, o.first}] = o.second->getRelationTo(player);
+	}
 
 	state.current_battle = nullptr;
 }

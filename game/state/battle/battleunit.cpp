@@ -4232,6 +4232,7 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 	{
 		// Teamkill penalty morale
 		attacker->agent->modified_stats.loseMorale(20);
+		attacker->combatRating -= agent->type->score;
 		// Teamkill penalty score
 		if (agent->owner == player)
 		{
@@ -4264,10 +4265,33 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 	else if (attacker && attacker->agent->owner == player &&
 	         player->isRelatedTo(agent->owner) == Organisation::Relation::Hostile)
 	{
+		attacker->combatRating += agent->type->score;
 		state.current_battle->score.combatRating += agent->type->score;
 	}
 	// Penalty for unit in squad dying
-	int moraleLossPenalty = 100; // FIXME: Implement morale loss based on rank of dying unit
+	int moraleLossPenalty = 0;
+	switch (agent->rank)
+	{
+		case Rank::Rookie:
+		case Rank::Squaddie:
+			moraleLossPenalty = 100;
+			break;
+		case Rank::SquadLeader:
+			moraleLossPenalty = 110;
+			break;
+		case Rank::Sergeant:
+			moraleLossPenalty = 120;
+			break;
+		case Rank::Captain:
+			moraleLossPenalty = 130;
+			break;
+		case Rank::Colonel:
+			moraleLossPenalty = 150;
+			break;
+		case Rank::Commander:
+			moraleLossPenalty = 175;
+			break;
+	}
 	for (auto &u : state.current_battle->units)
 	{
 		if (u.second->agent->owner != agent->owner)
@@ -4276,8 +4300,8 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 		}
 		// Surviving units lose morale
 		u.second->agent->modified_stats.loseMorale(
-		    (110 - u.second->agent->modified_stats.bravery) *
-		    state.current_battle->leadershipBonus[agent->owner] * moraleLossPenalty / 500);
+		    (110 - u.second->agent->modified_stats.bravery) /
+		    (100 + state.current_battle->leadershipBonus[agent->owner]) * moraleLossPenalty / 500);
 	}
 	// Events
 	if (owner == state.current_battle->currentPlayer)

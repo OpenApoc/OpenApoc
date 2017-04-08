@@ -273,6 +273,17 @@ class AgentBodyType : public StateObject
 	std::map<BodyState, std::map<Vec2<int>, std::vector<sp<VoxelMap>>>> voxelMaps;
 };
 
+enum class Rank
+{
+	Rookie = 0,
+	Squaddie = 1,
+	SquadLeader = 2,
+	Sergeant = 3,
+	Captain = 4,
+	Colonel = 5,
+	Commander = 6
+};
+
 class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 {
 	STATE_OBJECT(Agent)
@@ -294,7 +305,8 @@ class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 	AgentStats modified_stats; // Stats after 'temporary' modification (health damage, slowdown due
 	                           // to equipment weight, used stamina etc)
 	bool overEncumbred = false;
-
+	Rank rank = Rank::Rookie;
+	
 	sp<AEquipment> getArmor(BodyPart bodyPart) const;
 	bool isBodyStateAllowed(BodyState bodyState) const;
 	bool isMovementStateAllowed(MovementState movementState) const;

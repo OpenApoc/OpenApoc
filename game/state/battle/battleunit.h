@@ -217,6 +217,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Accumulated xp points for each stat
 	AgentStats experiencePoints;
+	// Points earned for kills
+	int combatRating = 0;
 	// Fatal wounds for each body part
 	std::map<BodyPart, int> fatalWounds;
 	// Which body part is medikit used on
