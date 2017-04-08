@@ -81,7 +81,7 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 			    unit->target_hand_state,
 			    unit->usingLift ? MovementState::None : unit->current_movement_state,
 			    unit->getBodyAnimationFrame(), unit->getHandAnimationFrame(),
-			    unit->getDistanceTravelled(), firingAngle, visible, false);
+			    unit->getDistanceTravelled(), firingAngle, visible, unit->isCloaked());
 			// Unit on fire
 			if (unit->fireDebuffTicksRemaining > 0)
 			{

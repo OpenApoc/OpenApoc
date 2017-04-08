@@ -483,7 +483,7 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 			continue;
 
 		City::accuracyAlgorithmCity(state, firePosition, target,
-		                            equipment->type->accuracy + this->getAccuracy());
+		                            equipment->type->accuracy + this->getAccuracy(), false);
 
 		auto projectile = equipment->fire(target, {&state, enemyTile->getVehicle()});
 		if (projectile)

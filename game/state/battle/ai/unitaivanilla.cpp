@@ -723,7 +723,8 @@ AIDecision UnitAIVanilla::thinkInternal(GameState &state, BattleUnit &u)
 		return lastDecision;
 	}
 
-	auto result = state.current_battle->visibleEnemies[u.owner].empty() ? thinkGreen(state, u) : thinkRed(state, u);
+	auto result = state.current_battle->visibleEnemies[u.owner].empty() ? thinkGreen(state, u)
+	                                                                    : thinkRed(state, u);
 	auto decision = std::get<0>(result);
 	lastDecision = decision;
 

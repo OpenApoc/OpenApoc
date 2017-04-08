@@ -1,5 +1,4 @@
 #include "game/ui/battle/battleview.h"
-#include "game/state/message.h"
 #include "forms/checkbox.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
@@ -30,6 +29,7 @@
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/message.h"
+#include "game/state/message.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
 #include "game/state/tileview/collision.h"
@@ -57,7 +57,8 @@ static const std::vector<UString> TAB_FORM_NAMES_TB = {
     "battle/battle_tb_tab1", "battle/battle_tb_tab2", "battle/battle_tb_tab3",
     "battle/battle_tb_tab4"};
 static const std::vector<UString> HIDDEN_BACKGROUNDS = {
-	"xcom3/tacdata/hidden1.pcx", "xcom3/tacdata/hidden2.pcx", "xcom3/tacdata/hidden3.pcx","xcom3/tacdata/hidden4.pcx",
+    "xcom3/tacdata/hidden1.pcx", "xcom3/tacdata/hidden2.pcx", "xcom3/tacdata/hidden3.pcx",
+    "xcom3/tacdata/hidden4.pcx",
 };
 static const int TICKS_TRY_END_TURN = TICKS_PER_SECOND;
 static const int TICKS_HIDE_DISPLAY = TICKS_PER_SECOND;
@@ -1171,30 +1172,34 @@ void BattleView::update()
 	}
 
 	// Battle update
-	if (!hideDisplay && !realTime && activeTab == notMyTurnTab && battle.currentActiveOrganisation != battle.currentPlayer && battle.ticksWithoutSeenAction[battle.currentPlayer] > TICKS_HIDE_DISPLAY)
+	if (!hideDisplay && !realTime && activeTab == notMyTurnTab &&
+	    battle.currentActiveOrganisation != battle.currentPlayer &&
+	    battle.ticksWithoutSeenAction[battle.currentPlayer] > TICKS_HIDE_DISPLAY)
 	{
 		hideDisplay = true;
 		hiddenForm->findControlTyped<Label>("TEXT_TURN")->setText(format("%d", battle.currentTurn));
-		hiddenForm->findControlTyped<Label>("TEXT_SIDE")->setText(battle.currentActiveOrganisation->name);
+		hiddenForm->findControlTyped<Label>("TEXT_SIDE")
+		    ->setText(battle.currentActiveOrganisation->name);
 		hiddenForm->findControlTyped<Label>("TEXT_PLAYER")->setText("Computer");
-		hiddenForm->findControlTyped<Graphic>("HIDDEN_IMAGE")->setImage(fw().data->loadImage(vectorRandomizer(state->rng, HIDDEN_BACKGROUNDS)));
+		hiddenForm->findControlTyped<Graphic>("HIDDEN_IMAGE")
+		    ->setImage(fw().data->loadImage(vectorRandomizer(state->rng, HIDDEN_BACKGROUNDS)));
 		updateHiddenBar();
 	}
 	unsigned int ticks = 0;
 	switch (updateSpeed)
 	{
-	case BattleUpdateSpeed::Pause:
-		ticks = 0;
-		break;
-	case BattleUpdateSpeed::Speed1:
-		ticks = 1;
-		break;
-	case BattleUpdateSpeed::Speed2:
-		ticks = 2;
-		break;
-	case BattleUpdateSpeed::Speed3:
-		ticks = 4;
-		break;
+		case BattleUpdateSpeed::Pause:
+			ticks = 0;
+			break;
+		case BattleUpdateSpeed::Speed1:
+			ticks = 1;
+			break;
+		case BattleUpdateSpeed::Speed2:
+			ticks = 2;
+			break;
+		case BattleUpdateSpeed::Speed3:
+			ticks = 4;
+			break;
 	}
 	if (hideDisplay)
 	{
@@ -1208,9 +1213,12 @@ void BattleView::update()
 		{
 			if (battle.ticksWithoutSeenAction[battle.currentPlayer] == 0)
 			{
-				if (battle.lastSeenActionLocation[battle.currentPlayer] != EventMessage::NO_LOCATION)
+				if (battle.lastSeenActionLocation[battle.currentPlayer] !=
+				    EventMessage::NO_LOCATION)
 				{
-					fw().pushEvent(new GameLocationEvent(GameEventType::ZoomView, battle.lastSeenActionLocation[battle.currentPlayer]));
+					fw().pushEvent(
+					    new GameLocationEvent(GameEventType::ZoomView,
+					                          battle.lastSeenActionLocation[battle.currentPlayer]));
 				}
 				hideDisplay = false;
 				break;
@@ -1219,7 +1227,8 @@ void BattleView::update()
 			{
 				if (!lastSelectedUnits.empty())
 				{
-					fw().pushEvent(new GameLocationEvent(GameEventType::ZoomView, lastSelectedUnits.front()->position));
+					fw().pushEvent(new GameLocationEvent(GameEventType::ZoomView,
+					                                     lastSelectedUnits.front()->position));
 				}
 				hideDisplay = false;
 				break;
@@ -1983,7 +1992,7 @@ void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 	{
 		return;
 	}
-	
+
 	// Check if ordered to exit
 	bool runAway = map.getTile(target)->getHasExit();
 
@@ -3087,6 +3096,11 @@ void BattleView::handleMouseDown(Event *e)
 						                u->goalPosition.z);
 						debug += format("\nCurrent movement: %d, falling: %d",
 						                (int)u->current_movement_state, (int)u->falling);
+						debug += format("\Items [%d]:", (int)u->agent->equipment.size());
+						for (auto &e : u->agent->equipment)
+						{
+							debug += format("\n%s", e->type.id);
+						}
 						debug += format("\nMissions [%d]:", (int)u->missions.size());
 						for (auto &m : u->missions)
 						{

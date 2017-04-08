@@ -44,7 +44,7 @@ std::tuple<AIDecision, bool> UnitAILowMorale::think(GameState &state, BattleUnit
 
 	if (u.agent->modified_stats.time_units == 0)
 	{
-		return NULLTUPLE2;
+		return std::make_tuple(AIDecision(), true);
 	}
 
 	if (ticksActionAvailable <= state.gameTime.getTicks())

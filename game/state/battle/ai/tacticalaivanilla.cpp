@@ -19,6 +19,7 @@ void TacticalAIVanilla::beginTurnRoutine(GameState &state, StateRef<Organisation
 			continue;
 		}
 		u.second->cancelMissions(state);
+		u.second->aiList.beginTurnRoutine(state, *u.second);
 	}
 }
 
@@ -47,7 +48,8 @@ TacticalAIVanilla::think(GameState &state, StateRef<Organisation> o)
 		}
 	}
 	// Chance to retreat is [0 to 50]% as number of neutralised allies goes [50 to 100]%
-	bool retreat = randBoundsExclusive(state.rng, 0, 100) < (unitsActive - unitsTotal / 2) / unitsTotal;
+	bool retreat =
+	    randBoundsExclusive(state.rng, 0, 100) < (unitsActive - unitsTotal / 2) / unitsTotal;
 
 	// Find an idle unit that needs orders
 	for (auto &u : state.current_battle->units)
@@ -77,11 +79,11 @@ TacticalAIVanilla::think(GameState &state, StateRef<Organisation> o)
 		}
 
 		// If unit found, try to get orders for him
-		auto decisions = retreat 
-			? std::make_tuple(
-				std::list<StateRef<BattleUnit>>{StateRef<BattleUnit>(&state, u.first)}, 
-				UnitAIHelper::getRetreatMovement(state, *u.second, true)) 
-			: getPatrolMovement(state, *u.second);
+		auto decisions =
+		    retreat ? std::make_tuple(
+		                  std::list<StateRef<BattleUnit>>{StateRef<BattleUnit>(&state, u.first)},
+		                  UnitAIHelper::getRetreatMovement(state, *u.second, true))
+		            : getPatrolMovement(state, *u.second);
 
 		auto units = std::get<0>(decisions);
 		if (units.empty())

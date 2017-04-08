@@ -66,6 +66,14 @@ void AIBlockUnit::reset(GameState &state, BattleUnit &u)
 	}
 }
 
+void AIBlockUnit::beginTurnRoutine(GameState &state, BattleUnit &u)
+{
+	for (auto &ai : aiList)
+	{
+		ai->routine(state, u);
+	}
+}
+
 AIDecision AIBlockUnit::think(GameState &state, BattleUnit &u, bool forceInterrupt)
 {
 	auto curTicks = state.gameTime.getTicks();

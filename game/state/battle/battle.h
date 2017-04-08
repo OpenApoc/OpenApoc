@@ -210,7 +210,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	void notifyScanners(Vec3<int> position);
 
 	// Notify about action happening
-	void notifyAction(Vec3<int> location = { -1,-1,-1 }, StateRef<BattleUnit> actorUnit = nullptr);
+	void notifyAction(Vec3<int> location = {-1, -1, -1}, StateRef<BattleUnit> actorUnit = nullptr);
 
 	void refreshLeadershipBonus(StateRef<Organisation> org);
 
@@ -246,7 +246,8 @@ class Battle : public std::enable_shared_from_this<Battle>
 	void removeScanner(GameState &state, AEquipment &item);
 
 	static void accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
-	                                    Vec3<float> &target, int accuracy, bool thrown = false);
+	                                    Vec3<float> &target, int accuracy, bool cloaked,
+	                                    bool thrown = false);
 
 	// Turn based functions
 

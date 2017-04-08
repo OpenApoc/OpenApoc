@@ -9,12 +9,14 @@
 namespace OpenApoc
 {
 
-sp<AIMovement> UnitAIHelper::getFallbackMovement(GameState & state, BattleUnit & u, bool forced)
+sp<AIMovement> UnitAIHelper::getFallbackMovement(GameState &state, BattleUnit &u, bool forced)
 {
 	StateRef<BattleUnit> closestEnemy;
 	for (auto &unit : state.current_battle->visibleEnemies[u.owner])
 	{
-		if (!closestEnemy || glm::length(unit->position - u.position) < glm::length(closestEnemy->position - u.position))
+		if (!closestEnemy ||
+		    glm::length(unit->position - u.position) <
+		        glm::length(closestEnemy->position - u.position))
 		{
 			closestEnemy = unit;
 		}
@@ -24,11 +26,12 @@ sp<AIMovement> UnitAIHelper::getFallbackMovement(GameState & state, BattleUnit &
 	// +1% per each morale missing
 	// +1% per 1/100th of lost health
 	// -20% per every tile enemy is closer to us than 6
-	int chance = 100 - u.agent->modified_stats.morale 
-		+ (u.agent->current_stats.health - u.agent->modified_stats.health) 
-		* 100 / u.agent->current_stats.health 
-		- (closestEnemy ? 20 * std::min(0, 6 
-			- (int)glm::length(closestEnemy->position - u.position)) : 0);
+	int chance =
+	    100 - u.agent->modified_stats.morale +
+	    (u.agent->current_stats.health - u.agent->modified_stats.health) * 100 /
+	        u.agent->current_stats.health -
+	    (closestEnemy ? 20 * std::min(0, 6 - (int)glm::length(closestEnemy->position - u.position))
+	                  : 0);
 	if (!forced && randBoundsExclusive(state.rng, 0, 100) < chance)
 	{
 		return nullptr;
@@ -44,10 +47,10 @@ sp<AIMovement> UnitAIHelper::getFallbackMovement(GameState & state, BattleUnit &
 		{
 			continue;
 		}
-		auto dist = BattleUnitTileHelper::getDistanceStatic(u.position, unit.second->position)
-			- (closestEnemy
-				? BattleUnitTileHelper::getDistanceStatic(closestEnemy->position, unit.second->position)
-				: 0.0f);
+		auto dist = BattleUnitTileHelper::getDistanceStatic(u.position, unit.second->position) -
+		            (closestEnemy ? BattleUnitTileHelper::getDistanceStatic(closestEnemy->position,
+		                                                                    unit.second->position)
+		                          : 0.0f);
 		if (dist < closestDistance)
 		{
 			closestDistance = dist;
@@ -60,7 +63,7 @@ sp<AIMovement> UnitAIHelper::getFallbackMovement(GameState & state, BattleUnit &
 	}
 	for (auto &pos : allyPos)
 	{
-		if (state.current_battle->findShortestPath(u.position, pos, { map, u }).back() != pos)
+		if (state.current_battle->findShortestPath(u.position, pos, {map, u}).back() != pos)
 		{
 			continue;
 		}
@@ -77,8 +80,7 @@ sp<AIMovement> UnitAIHelper::getFallbackMovement(GameState & state, BattleUnit &
 sp<AIMovement> UnitAIHelper::getRetreatMovement(GameState &state, BattleUnit &u, bool forced)
 {
 	// Chance to take retreat is 1% per each morale missing
-	if (!forced &&
-	    randBoundsExclusive(state.rng, 0, 100) >= u.agent->modified_stats.morale)
+	if (!forced && randBoundsExclusive(state.rng, 0, 100) >= u.agent->modified_stats.morale)
 	{
 		return nullptr;
 	}
@@ -86,7 +88,9 @@ sp<AIMovement> UnitAIHelper::getRetreatMovement(GameState &state, BattleUnit &u,
 	StateRef<BattleUnit> closestEnemy;
 	for (auto &unit : state.current_battle->visibleEnemies[u.owner])
 	{
-		if (!closestEnemy || glm::length(unit->position - u.position) < glm::length(closestEnemy->position - u.position))
+		if (!closestEnemy ||
+		    glm::length(unit->position - u.position) <
+		        glm::length(closestEnemy->position - u.position))
 		{
 			closestEnemy = unit;
 		}
@@ -104,10 +108,10 @@ sp<AIMovement> UnitAIHelper::getRetreatMovement(GameState &state, BattleUnit &u,
 			badExits.insert(pos);
 			continue;
 		}
-		auto dist = BattleUnitTileHelper::getDistanceStatic(u.position, pos) 
-			- (closestEnemy 
-				? BattleUnitTileHelper::getDistanceStatic(closestEnemy->position, pos) 
-				: 0.0f);
+		auto dist =
+		    BattleUnitTileHelper::getDistanceStatic(u.position, pos) -
+		    (closestEnemy ? BattleUnitTileHelper::getDistanceStatic(closestEnemy->position, pos)
+		                  : 0.0f);
 		if (dist < closestDistance)
 		{
 			closestDistance = dist;
@@ -124,7 +128,7 @@ sp<AIMovement> UnitAIHelper::getRetreatMovement(GameState &state, BattleUnit &u,
 	}
 	for (auto &pos : goodExits)
 	{
-		if (state.current_battle->findShortestPath(u.position, pos, { map, u }).back() != pos)
+		if (state.current_battle->findShortestPath(u.position, pos, {map, u}).back() != pos)
 		{
 			continue;
 		}

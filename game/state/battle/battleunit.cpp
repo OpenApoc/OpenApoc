@@ -136,7 +136,7 @@ void BattleUnit::setPosition(GameState &state, const Vec3<float> &pos, bool goal
 	}
 	if (oldPosition != position)
 	{
-		state.current_battle->notifyAction(position, { &state, id });
+		state.current_battle->notifyAction(position, {&state, id});
 	}
 	if ((Vec3<int>)oldPosition != (Vec3<int>)position)
 	{
@@ -451,7 +451,8 @@ bool BattleUnit::calculateVisionToUnit(GameState &state, Battle &battle, TileMap
 		auto targetvVectorDelta = glm::normalize(target - eyesPos) * 0.75f;
 		target -= targetvVectorDelta;
 	}
-	auto c = map.findCollision(eyesPos, target, mapPartSet, tileObject, true, false, VIEW_DISTANCE);
+	auto c = map.findCollision(eyesPos, target, mapPartSet, tileObject, true, false,
+	                           VIEW_DISTANCE / (u.isCloaked() ? 2 : 1));
 	if (c || c.outOfRange)
 	{
 		return false;
@@ -1145,7 +1146,7 @@ bool BattleUnit::spendTU(GameState &state, int cost, bool ignoreKneelReserve,
 		return false;
 	}
 	agent->modified_stats.time_units -= cost;
-	state.current_battle->notifyAction(position, { &state, id });
+	state.current_battle->notifyAction(position, {&state, id});
 	// If doing any action other than moving that triggers reaction, we give interrupt chance here
 	// If moving we do not give it here, and instead give interrupt chance when changing tiles
 	if (allowInterrupt)
@@ -1290,6 +1291,8 @@ bool BattleUnit::isAIControlled(GameState &state) const
 {
 	return owner != state.current_battle->currentPlayer;
 }
+
+bool BattleUnit::isCloaked() const { return cloakTicksAccumulated >= CLOAK_TICKS_REQUIRED; }
 
 AIType BattleUnit::getAIType() const
 {
@@ -1693,6 +1696,20 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 		return;
 	}
 
+	auto e1 = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+	auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+
+	// Cloak
+	if (cloakTicksAccumulated < CLOAK_TICKS_REQUIRED)
+	{
+		cloakTicksAccumulated += ticks;
+	}
+	if ((!e1 || e1->type->type != AEquipmentType::Type::CloakingField) &&
+	    (!e2 || e2->type->type != AEquipmentType::Type::CloakingField))
+	{
+		cloakTicksAccumulated = 0;
+	}
+
 	// Regeneration
 	regenTicksAccumulated += ticks;
 	while (regenTicksAccumulated >= TICKS_PER_SECOND)
@@ -1790,8 +1807,6 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 					{
 						if (randBool(state.rng))
 						{
-							auto e1 = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
-							auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
 							if (e1)
 							{
 								addMission(state, BattleUnitMission::dropItem(*this, e1));
@@ -1811,8 +1826,6 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 	if (isHealing)
 	{
 		isHealing = false;
-		auto e1 = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
-		auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
 		if (e1 && e1->type->type == AEquipmentType::Type::MediKit)
 		{
 			isHealing = true;
@@ -3071,6 +3084,7 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 							firingWeapon->fire(state, targetPosition,
 							                   targetingMode == TargetingMode::Unit ? targetUnit
 							                                                        : nullptr);
+							cloakTicksAccumulated = 0;
 							if (agent->type->inventory)
 							{
 								displayedItem = firingWeapon->type;
