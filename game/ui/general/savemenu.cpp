@@ -12,7 +12,6 @@
 #include "game/ui/battle/battleview.h"
 #include "game/ui/city/cityview.h"
 #include "game/ui/general/loadingscreen.h"
-#include "game/ui/general/loadingscreen.h"
 #include "game/ui/general/messagebox.h"
 #include "library/sp.h"
 #include <iomanip>

@@ -6,7 +6,6 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/battle/battle.h"
-#include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/gamestate.h"
 #include "game/ui/city/cityview.h"

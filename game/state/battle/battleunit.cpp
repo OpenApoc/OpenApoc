@@ -853,8 +853,9 @@ bool BattleUnit::hasLineToUnit(const sp<BattleUnit> unit, bool useLOS) const
 	auto cMap = tileObject->map.findCollision(muzzleLocation, targetPosition, mapPartSet,
 	                                          tileObject, useLOS);
 	// Unit that prevents Line to target
-	auto cUnitObj = useLOS ? Collision() : tileObject->map.findCollision(
-	                                           muzzleLocation, targetPosition, unitSet, tileObject);
+	auto cUnitObj =
+	    useLOS ? Collision()
+	           : tileObject->map.findCollision(muzzleLocation, targetPosition, unitSet, tileObject);
 	auto cUnit = cUnitObj ? std::static_pointer_cast<TileObjectBattleUnit>(cUnitObj.obj)->getUnit()
 	                      : nullptr;
 	// Condition:
@@ -997,8 +998,9 @@ void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatu
                                 StateRef<AEquipmentType> item, bool impact)
 {
 	std::ignore = item;
-	sendAgentEvent(state, status == PsiStatus::Control ? GameEventType::AgentPsiControlled
-	                                                   : GameEventType::AgentPsiAttacked,
+	sendAgentEvent(state,
+	               status == PsiStatus::Control ? GameEventType::AgentPsiControlled
+	                                            : GameEventType::AgentPsiAttacked,
 	               true);
 	// FIXME: Change to correct psi stun / panic effects
 	switch (status)
@@ -1401,10 +1403,11 @@ void BattleUnit::applyDamageDirect(GameState &state, int damage, bool generateFa
 		agent->modified_stats.health -= damage;
 		agent->modified_stats.loseMorale(damage * 50 * (15 - agent->modified_stats.bravery / 10) /
 		                                 agent->current_stats.health / 100);
-		sendAgentEvent(state, (agent->modified_stats.health * 3 / agent->current_stats.health ==
-		                       0) && !lessThanOneThird
-		                          ? GameEventType::AgentBadlyInjured
-		                          : GameEventType::AgentInjured,
+		sendAgentEvent(state,
+		               (agent->modified_stats.health * 3 / agent->current_stats.health == 0) &&
+		                       !lessThanOneThird
+		                   ? GameEventType::AgentBadlyInjured
+		                   : GameEventType::AgentInjured,
 		               true);
 	}
 
@@ -2473,10 +2476,10 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 		{
 			if (flyingSpeedModifier != 100)
 			{
-				flyingSpeedModifier =
-				    std::min((unsigned)100, flyingSpeedModifier +
-				                                moveTicksRemaining / moveTicksConsumeRate /
-				                                    FLYING_ACCELERATION_DIVISOR);
+				flyingSpeedModifier = std::min((unsigned)100,
+				                               flyingSpeedModifier +
+				                                   moveTicksRemaining / moveTicksConsumeRate /
+				                                       FLYING_ACCELERATION_DIVISOR);
 			}
 			movementTicksAccumulated = moveTicksRemaining / moveTicksConsumeRate;
 			auto dir = glm::normalize(vectorToGoal);
@@ -2497,9 +2500,9 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 				movementTicksAccumulated = distanceToGoal;
 				if (flyingSpeedModifier != 100)
 				{
-					flyingSpeedModifier =
-					    std::min((unsigned)100, flyingSpeedModifier +
-					                                distanceToGoal / FLYING_ACCELERATION_DIVISOR);
+					flyingSpeedModifier = std::min(
+					    (unsigned)100,
+					    flyingSpeedModifier + distanceToGoal / FLYING_ACCELERATION_DIVISOR);
 				}
 				moveTicksRemaining -= distanceToGoal * moveTicksConsumeRate;
 				setPosition(state, goalPosition, true);

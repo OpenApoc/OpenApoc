@@ -217,10 +217,11 @@ class SDLRawBackend : public SoundBackend
 				int bytes_from_this_chunk =
 				    std::min(len - music_bytes, (int)(this->current_music_data->samples.size() -
 				                                      this->current_music_data->sample_position));
-				SDL_MixAudioFormat(
-				    stream + music_bytes, this->current_music_data->samples.data() +
-				                              this->current_music_data->sample_position,
-				    this->output_spec.format, bytes_from_this_chunk, int_music_volume);
+				SDL_MixAudioFormat(stream + music_bytes,
+				                   this->current_music_data->samples.data() +
+				                       this->current_music_data->sample_position,
+				                   this->output_spec.format, bytes_from_this_chunk,
+				                   int_music_volume);
 				music_bytes += bytes_from_this_chunk;
 				this->current_music_data->sample_position += bytes_from_this_chunk;
 				LogAssert(this->current_music_data->sample_position <=

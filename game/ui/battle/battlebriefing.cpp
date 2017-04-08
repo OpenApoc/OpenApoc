@@ -7,7 +7,6 @@
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
-#include "framework/framework.h"
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/city/building.h"
 #include "game/state/gamestate.h"
