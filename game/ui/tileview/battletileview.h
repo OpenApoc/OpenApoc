@@ -12,6 +12,7 @@ namespace OpenApoc
 
 class TileObjectBattleUnit;
 class Battle;
+class Form;
 class Image;
 
 class BattleTileView : public TileView
@@ -36,6 +37,9 @@ class BattleTileView : public TileView
 		AllLevels,
 		OnlyCurrentLevel
 	};
+
+  protected:
+	sp<Form> hiddenForm;
 
   private:
 	LayerDrawingMode layerDrawingMode;
@@ -85,6 +89,9 @@ class BattleTileView : public TileView
 	Vec2<int> lastSelectedUnitFacing;
 	int ticksUntilFireSound = 0;
 
+	int hiddenBarTicksAccumulated = 0;
+	void updateHiddenBar();
+
 	sp<Image> pathPreviewTooFar;
 	sp<Image> pathPreviewUnreachable;
 	std::list<Vec3<int>> pathPreview;
@@ -103,9 +110,12 @@ class BattleTileView : public TileView
 	// -3 = no arc
 	// -2 = out of range
 	// -1 = no attack cost stored
+	// 0+ = attack cost
 	int calculatedAttackCost = -1;
 	void resetAttackCost();
 	// updateAttackCost is in battleView as it requires data about selection mode
+
+	bool hideDisplay = false;
 
 	bool revealWholeMap = false;
 

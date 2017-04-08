@@ -319,7 +319,7 @@ const UString &City::getId(const GameState &state, const sp<City> ptr)
 }
 
 void City::accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition, Vec3<float> &target,
-                                 int accuracy)
+                                 int accuracy, bool cloaked)
 {
 	// FIXME: Prettify this code
 	int projx = firePosition.x;

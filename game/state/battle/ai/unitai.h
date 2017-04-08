@@ -34,6 +34,7 @@ class UnitAI
 	{
 		return {};
 	};
+	virtual void routine(GameState &state, BattleUnit &u){};
 
 	virtual void notifyUnderFire(Vec3<int>){};
 	virtual void notifyHit(Vec3<int>){};
@@ -49,6 +50,7 @@ class AIBlockUnit
 	uint64_t ticksLastOutOfOrderThink = 0;
 	uint64_t ticksUntilReThink = 0;
 
+	void beginTurnRoutine(GameState &state, BattleUnit &u);
 	AIDecision think(GameState &state, BattleUnit &u, bool forceInterrupt = false);
 
 	void init(GameState &state, BattleUnit &u);

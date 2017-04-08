@@ -29,6 +29,7 @@
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/message.h"
+#include "game/state/message.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
 #include "game/state/tileview/collision.h"
@@ -55,7 +56,12 @@ static const std::vector<UString> TAB_FORM_NAMES_RT = {
 static const std::vector<UString> TAB_FORM_NAMES_TB = {
     "battle/battle_tb_tab1", "battle/battle_tb_tab2", "battle/battle_tb_tab3",
     "battle/battle_tb_tab4"};
+static const std::vector<UString> HIDDEN_BACKGROUNDS = {
+    "xcom3/tacdata/hidden1.pcx", "xcom3/tacdata/hidden2.pcx", "xcom3/tacdata/hidden3.pcx",
+    "xcom3/tacdata/hidden4.pcx",
+};
 static const int TICKS_TRY_END_TURN = TICKS_PER_SECOND;
+static const int TICKS_HIDE_DISPLAY = TICKS_PER_SECOND;
 static const std::set<BodyPart> bodyParts{BodyPart::Body, BodyPart::Helmet, BodyPart::LeftArm,
                                           BodyPart::Legs, BodyPart::RightArm};
 
@@ -1034,6 +1040,11 @@ void BattleView::render()
 	TRACE_FN;
 
 	BattleTileView::render();
+	if (hideDisplay)
+	{
+		return;
+	}
+
 	activeTab->render();
 	baseForm->render();
 
@@ -1098,13 +1109,22 @@ void BattleView::update()
 {
 	bool realTime = battle.mode == Battle::Mode::RealTime;
 
+	// Parent update
 	BattleTileView::update();
-	// FIXME: Is there a more efficient way? But TileView does not know about battle or state!
-	battle.battleViewScreenCenter = centerPos;
+
+	// Pulsate palette colors
+	colorCurrent += (colorForward ? 1 : -1);
+	if (colorCurrent <= 0 || colorCurrent >= 15)
+	{
+		colorCurrent = clamp(colorCurrent, 0, 15);
+		colorForward = !colorForward;
+	}
+	pal = modPalette[colorCurrent];
 
 	// Update turn based stuff
 	if (!realTime)
 	{
+		// Figure out wether our/not our turn state has changed
 		bool notMyTurn = endTurnRequested || battle.turnEndAllowed ||
 		                 !battle.interruptUnits.empty() || !battle.interruptQueue.empty() ||
 		                 battle.currentActiveOrganisation != battle.currentPlayer;
@@ -1122,6 +1142,7 @@ void BattleView::update()
 			updateTBButtons();
 		}
 
+		// Confirmation for units that have unfinished movement
 		if (endTurnRequested && !unitPendingConfirmation &&
 		    battle.ticksWithoutAction >= TICKS_TRY_END_TURN)
 		{
@@ -1150,6 +1171,71 @@ void BattleView::update()
 		}
 	}
 
+	// Battle update
+	if (!hideDisplay && !realTime && activeTab == notMyTurnTab &&
+	    battle.currentActiveOrganisation != battle.currentPlayer &&
+	    battle.ticksWithoutSeenAction[battle.currentPlayer] > TICKS_HIDE_DISPLAY)
+	{
+		hideDisplay = true;
+		hiddenForm->findControlTyped<Label>("TEXT_TURN")->setText(format("%d", battle.currentTurn));
+		hiddenForm->findControlTyped<Label>("TEXT_SIDE")
+		    ->setText(battle.currentActiveOrganisation->name);
+		hiddenForm->findControlTyped<Label>("TEXT_PLAYER")->setText("Computer");
+		hiddenForm->findControlTyped<Graphic>("HIDDEN_IMAGE")
+		    ->setImage(fw().data->loadImage(vectorRandomizer(state->rng, HIDDEN_BACKGROUNDS)));
+		updateHiddenBar();
+	}
+	unsigned int ticks = 0;
+	switch (updateSpeed)
+	{
+		case BattleUpdateSpeed::Pause:
+			ticks = 0;
+			break;
+		case BattleUpdateSpeed::Speed1:
+			ticks = 1;
+			break;
+		case BattleUpdateSpeed::Speed2:
+			ticks = 2;
+			break;
+		case BattleUpdateSpeed::Speed3:
+			ticks = 4;
+			break;
+	}
+	if (hideDisplay)
+	{
+		ticks = 16;
+	}
+	while (ticks > 0)
+	{
+		state->update();
+		ticks--;
+		if (hideDisplay)
+		{
+			if (battle.ticksWithoutSeenAction[battle.currentPlayer] == 0)
+			{
+				if (battle.lastSeenActionLocation[battle.currentPlayer] !=
+				    EventMessage::NO_LOCATION)
+				{
+					fw().pushEvent(
+					    new GameLocationEvent(GameEventType::ZoomView,
+					                          battle.lastSeenActionLocation[battle.currentPlayer]));
+				}
+				hideDisplay = false;
+				break;
+			}
+			else if (battle.currentPlayer == battle.currentActiveOrganisation)
+			{
+				if (!lastSelectedUnits.empty())
+				{
+					fw().pushEvent(new GameLocationEvent(GameEventType::ZoomView,
+					                                     lastSelectedUnits.front()->position));
+				}
+				hideDisplay = false;
+				break;
+			}
+		}
+	}
+
 	updateSelectedUnits();
 	updateSelectionMode();
 	updateSoldierButtons();
@@ -1166,7 +1252,7 @@ void BattleView::update()
 	{
 		rightThrowDelay--;
 	}
-	// Update path preview in TB mode
+	// Update preview calculations in TB mode
 	if (!realTime)
 	{
 		if (previewedPathCost == -1)
@@ -1188,43 +1274,6 @@ void BattleView::update()
 		}
 	}
 
-	unsigned int ticks = 0;
-	switch (updateSpeed)
-	{
-		case BattleUpdateSpeed::Pause:
-			ticks = 0;
-			break;
-		case BattleUpdateSpeed::Speed1:
-			ticks = 1;
-			break;
-		case BattleUpdateSpeed::Speed2:
-			ticks = 2;
-			break;
-		case BattleUpdateSpeed::Speed3:
-			ticks = 4;
-			break;
-	}
-	while (ticks > 0)
-	{
-		state->update();
-		ticks--;
-	}
-	if (battle.mode == Battle::Mode::RealTime)
-	{
-		auto clockControl = baseForm->findControlTyped<Label>("CLOCK");
-		clockControl->setText(state->gameTime.getLongTimeString());
-	}
-
-	// Pulsate palette colors
-
-	colorCurrent += (colorForward ? 1 : -1);
-	if (colorCurrent <= 0 || colorCurrent >= 15)
-	{
-		colorCurrent = clamp(colorCurrent, 0, 15);
-		colorForward = !colorForward;
-	}
-	pal = modPalette[colorCurrent];
-
 	// Update weapons if required
 
 	auto rightInfo = createItemOverlayInfo(true);
@@ -1241,7 +1290,6 @@ void BattleView::update()
 	}
 
 	// Update item forms
-
 	for (auto &f : itemForms)
 	{
 		f->Enabled = false;
@@ -1311,7 +1359,7 @@ void BattleView::update()
 		}
 	}
 
-	// Update psi
+	// Update psi form
 	if (activeTab == psiTab)
 	{
 		auto newPsiInfo = createPsiInfo();
@@ -1320,6 +1368,13 @@ void BattleView::update()
 			psiInfo = newPsiInfo;
 			updatePsiInfo();
 		}
+	}
+
+	// Update time display
+	if (battle.mode == Battle::Mode::RealTime)
+	{
+		auto clockControl = baseForm->findControlTyped<Label>("CLOCK");
+		clockControl->setText(state->gameTime.getLongTimeString());
 	}
 
 	// Call forms->update()
@@ -1333,8 +1388,7 @@ void BattleView::update()
 	activeTab->update();
 	baseForm->update();
 
-	// If we have 'follow agent' enabled we clobber any other movement that may have occurred in
-	// this frame
+	// If we have 'follow agent' enabled we clobber any other movement in this frame
 	if (followAgent)
 	{
 		if (battle.battleViewSelectedUnits.size() > 0)
@@ -1342,6 +1396,8 @@ void BattleView::update()
 			setScreenCenterTile(battle.battleViewSelectedUnits.front()->tileObject->getPosition());
 		}
 	}
+	// Store screen center for serialisation
+	battle.battleViewScreenCenter = centerPos;
 }
 
 void BattleView::updateSelectedUnits()
@@ -3040,6 +3096,11 @@ void BattleView::handleMouseDown(Event *e)
 						                u->goalPosition.z);
 						debug += format("\nCurrent movement: %d, falling: %d",
 						                (int)u->current_movement_state, (int)u->falling);
+						debug += format("\Items [%d]:", (int)u->agent->equipment.size());
+						for (auto &e : u->agent->equipment)
+						{
+							debug += format("\n%s", e->type.id);
+						}
 						debug += format("\nMissions [%d]:", (int)u->missions.size());
 						for (auto &m : u->missions)
 						{

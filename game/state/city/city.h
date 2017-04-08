@@ -58,7 +58,7 @@ class City : public StateObject
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
 
 	static void accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition,
-	                                  Vec3<float> &target, int accuracy);
+	                                  Vec3<float> &target, int accuracy, bool cloaked);
 };
 
 }; // namespace OpenApoc

@@ -1,4 +1,6 @@
 #include "game/ui/tileview/battletileview.h"
+#include "forms/form.h"
+#include "forms/graphic.h"
 #include "forms/ui.h"
 #include "framework/data.h"
 #include "framework/event.h"
@@ -27,11 +29,74 @@
 
 namespace OpenApoc
 {
+void BattleTileView::updateHiddenBar()
+{
+	hiddenBarTicksAccumulated = 0;
+
+	int width = 321;
+	int height = 33;
+	Colour bar = {142, 142, 142, 255};
+	Colour black = {0, 0, 0, 0};
+
+	int totalTU = 0;
+	int remainingTU = 0;
+
+	for (auto &u : battle.units)
+	{
+		if (u.second->owner != battle.currentActiveOrganisation || !u.second->isConscious() ||
+		    u.second->getAIType() == AIType::None || !u.second->canMove())
+		{
+			continue;
+		}
+		int reserve = u.second->reserveShotCost +
+		              BattleUnitMission::getBodyStateChangeCost(*u.second, BodyState::Standing,
+		                                                        BodyState::Kneeling);
+
+		totalTU += u.second->initialTU - reserve;
+		remainingTU += std::max(0, u.second->agent->modified_stats.time_units - reserve);
+	}
+	int maxWidth = clamp(width - remainingTU * width / totalTU, 0, width);
+
+	auto progressBar = mksp<RGBImage>(Vec2<int>{width, height});
+	{
+		RGBImageLock l(progressBar);
+		// Content
+		for (int x = 1; x < maxWidth; x++)
+		{
+			for (int y = 1; y < height - 1; y++)
+			{
+				l.set({x, y}, bar);
+			}
+		}
+		// Borders
+		for (int y = 1; y < height - 1; y++)
+		{
+			l.set({0, y}, bar);
+			l.set({width - 1, y}, bar);
+		}
+		for (int x = 0; x < width; x++)
+		{
+			l.set({x, 0}, bar);
+			l.set({x, height - 1}, bar);
+		}
+		// Remainder
+		for (int x = maxWidth + 1; x < width - 1; x++)
+		{
+			for (int y = 1; y < height - 1; y++)
+			{
+				l.set({x, y}, black);
+			}
+		}
+	}
+
+	hiddenForm->findControlTyped<Graphic>("GRAPHIC_HIDDEN")->setImage(progressBar);
+}
+
 BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
                                TileViewMode initialMode, Vec3<float> screenCenterTile,
                                GameState &gameState)
-    : TileView(map, isoTileSize, stratTileSize, initialMode), state(gameState),
-      battle(*gameState.current_battle)
+    : TileView(map, isoTileSize, stratTileSize, initialMode),
+      hiddenForm(ui().getForm("battle/hidden")), state(gameState), battle(*gameState.current_battle)
 {
 	layerDrawingMode = LayerDrawingMode::UpToCurrentLevel;
 	selectedTileEmptyImageBack =
@@ -294,6 +359,17 @@ void BattleTileView::render()
 	Renderer &r = *fw().renderer;
 	r.clear();
 	r.setPalette(this->pal);
+
+	if (hideDisplay)
+	{
+		hiddenBarTicksAccumulated++;
+		if (hiddenBarTicksAccumulated > 10)
+		{
+			updateHiddenBar();
+		}
+		hiddenForm->render();
+		return;
+	}
 
 	// Rotate Icons
 	{

@@ -59,6 +59,7 @@ static const unsigned TICKS_TO_BRAINSUCK = TICKS_PER_SECOND * 2;
 // Chance out of 100 to be brainsucked
 static const int BRAINSUCK_CHANCE = 66;
 static const unsigned TICKS_SUPPRESS_SPOTTED_MESSAGES = TICKS_PER_TURN;
+static const unsigned CLOAK_TICKS_REQUIRED = TICKS_PER_TURN;
 
 class TileObjectBattleUnit;
 class TileObjectShadow;
@@ -246,6 +247,9 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	int initialTU = 0;
 	// TU to reserve for shot
 	int reserveShotCost = 0;
+	// Stealth, increases each turn, set to 0 when taking action or no stealth in hand
+	// Unit is cloaked when this is >= CLOAK_TICKS_REQUIRED
+	unsigned int cloakTicksAccumulated = 0;
 
 	// User set modes
 
@@ -538,6 +542,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	BattleUnitType getType() const;
 	// Wether unit is AI controlled
 	bool isAIControlled(GameState &state) const;
+	// Cloaked status
+	bool isCloaked() const;
 	// Unit's current AI type (can be modified by panic etc.)
 	AIType getAIType() const;
 

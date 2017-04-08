@@ -3,32 +3,142 @@
 #include "game/state/battle/ai/aidecision.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
+#include <float.h>
+#include <glm/glm.hpp>
 
 namespace OpenApoc
 {
 
+sp<AIMovement> UnitAIHelper::getFallbackMovement(GameState &state, BattleUnit &u, bool forced)
+{
+	StateRef<BattleUnit> closestEnemy;
+	for (auto &unit : state.current_battle->visibleEnemies[u.owner])
+	{
+		if (!closestEnemy ||
+		    glm::length(unit->position - u.position) <
+		        glm::length(closestEnemy->position - u.position))
+		{
+			closestEnemy = unit;
+		}
+	}
+
+	// Chance to fall back is:
+	// +1% per each morale missing
+	// +1% per 1/100th of lost health
+	// -20% per every tile enemy is closer to us than 6
+	int chance =
+	    100 - u.agent->modified_stats.morale +
+	    (u.agent->current_stats.health - u.agent->modified_stats.health) * 100 /
+	        u.agent->current_stats.health -
+	    (closestEnemy ? 20 * std::min(0, 6 - (int)glm::length(closestEnemy->position - u.position))
+	                  : 0);
+	if (!forced && randBoundsExclusive(state.rng, 0, 100) < chance)
+	{
+		return nullptr;
+	}
+
+	// Rate allies based (crudely) on distance to unit pos and from closest enemy
+	auto &map = *state.current_battle->map;
+	std::list<Vec3<int>> allyPos;
+	float closestDistance = FLT_MAX;
+	for (auto &unit : state.current_battle->units)
+	{
+		if (unit.second->owner != u.owner || !unit.second->isConscious())
+		{
+			continue;
+		}
+		auto dist = BattleUnitTileHelper::getDistanceStatic(u.position, unit.second->position) -
+		            (closestEnemy ? BattleUnitTileHelper::getDistanceStatic(closestEnemy->position,
+		                                                                    unit.second->position)
+		                          : 0.0f);
+		if (dist < closestDistance)
+		{
+			closestDistance = dist;
+			allyPos.push_front(unit.second->position);
+		}
+		else
+		{
+			allyPos.push_back(unit.second->position);
+		}
+	}
+	for (auto &pos : allyPos)
+	{
+		if (state.current_battle->findShortestPath(u.position, pos, {map, u}).back() != pos)
+		{
+			continue;
+		}
+		auto result = mksp<AIMovement>();
+		result->type = AIMovement::Type::Retreat;
+		result->movementMode = MovementMode::Running;
+		result->targetLocation = pos;
+		return result;
+	}
+
+	return nullptr;
+}
+
 sp<AIMovement> UnitAIHelper::getRetreatMovement(GameState &state, BattleUnit &u, bool forced)
 {
-	// Chance to take retreat is 1% per morale point below 20
-	if (!forced &&
-	    randBoundsExclusive(state.rng, 0, 100) >= std::max(0, 20 - u.agent->modified_stats.morale))
+	// Chance to take retreat is 1% per each morale missing
+	if (!forced && randBoundsExclusive(state.rng, 0, 100) >= u.agent->modified_stats.morale)
 	{
 		return nullptr;
 	}
 
-	LogWarning("Implement retreat (for now kneeling instead)");
-
-	if (!u.agent->isBodyStateAllowed(BodyState::Kneeling))
+	StateRef<BattleUnit> closestEnemy;
+	for (auto &unit : state.current_battle->visibleEnemies[u.owner])
 	{
-		return nullptr;
+		if (!closestEnemy ||
+		    glm::length(unit->position - u.position) <
+		        glm::length(closestEnemy->position - u.position))
+		{
+			closestEnemy = unit;
+		}
 	}
 
-	auto result = mksp<AIMovement>();
-	result->type = AIMovement::Type::Stop;
-	result->kneelingMode = KneelingMode::Kneeling;
-	result->movementMode = MovementMode::Walking;
-
-	return result;
+	// Rate exits based (crudely) on distance to unit pos and from closest enemy
+	auto &map = *state.current_battle->map;
+	std::set<Vec3<int>> badExits;
+	std::list<Vec3<int>> goodExits;
+	float closestDistance = FLT_MAX;
+	for (auto &pos : state.current_battle->exits)
+	{
+		if (!map.getTile(pos)->hasExit)
+		{
+			badExits.insert(pos);
+			continue;
+		}
+		auto dist =
+		    BattleUnitTileHelper::getDistanceStatic(u.position, pos) -
+		    (closestEnemy ? BattleUnitTileHelper::getDistanceStatic(closestEnemy->position, pos)
+		                  : 0.0f);
+		if (dist < closestDistance)
+		{
+			closestDistance = dist;
+			goodExits.push_front(pos);
+		}
+		else
+		{
+			goodExits.push_back(pos);
+		}
+	}
+	for (auto &pos : badExits)
+	{
+		state.current_battle->exits.erase(pos);
+	}
+	for (auto &pos : goodExits)
+	{
+		if (state.current_battle->findShortestPath(u.position, pos, {map, u}).back() != pos)
+		{
+			continue;
+		}
+		auto result = mksp<AIMovement>();
+		result->type = AIMovement::Type::Retreat;
+		result->movementMode = MovementMode::Running;
+		result->targetLocation = pos;
+		return result;
+	}
+	return nullptr;
 }
 
 sp<AIMovement> UnitAIHelper::getTakeCoverMovement(GameState &state, BattleUnit &u, bool forced)

@@ -118,7 +118,7 @@ int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
 */
 
 int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
-                            WeaponAimingMode fireMode, bool thrown, float cloakingDispersion)
+                            WeaponAimingMode fireMode, bool thrown)
 {
 	float accuracy = 0.0f;
 	auto agent = ownerAgent ? ownerAgent : (ownerUnit ? ownerUnit->agent : nullptr);
@@ -247,7 +247,7 @@ int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
 	float totalDispersion =
 	    sqrtf(agentDispersion * agentDispersion + weaponDispersion * weaponDispersion +
 	          healthDispersion * healthDispersion + woundDispersion * woundDispersion +
-	          berserkDispersion * berserkDispersion + cloakingDispersion * cloakingDispersion);
+	          berserkDispersion * berserkDispersion);
 	return std::max(0, (int)(100.0f - totalDispersion * 100.0f));
 }
 
@@ -704,7 +704,8 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 		Battle::accuracyAlgorithmBattle(state, unitPos, targetPosition,
 		                                getAccuracy(unit->current_body_state,
 		                                            unit->current_movement_state,
-		                                            unit->fire_aiming_mode));
+		                                            unit->fire_aiming_mode),
+		                                targetUnit && targetUnit->isCloaked());
 		// Fire
 		Vec3<float> velocity = targetPosition - unitPos;
 		velocity = glm::normalize(velocity);
@@ -759,7 +760,7 @@ void AEquipment::throwItem(GameState &state, Vec3<int> targetPosition, float vel
 	                                getAccuracy(unit.current_body_state,
 	                                            unit.current_movement_state, unit.fire_aiming_mode,
 	                                            true),
-	                                !launch);
+	                                false, !launch);
 	Vec3<float> targetVectorModified = targetLocationModified - position;
 	// Calculate difference in lengths to modify velocity
 	float targetVectorDifference = glm::length(targetVectorModified) / glm::length(targetVector);

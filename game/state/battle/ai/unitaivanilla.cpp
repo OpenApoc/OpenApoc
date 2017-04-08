@@ -590,6 +590,12 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkGreen(GameState &sta
 		}
 	}
 
+	auto fallback = UnitAIHelper::getFallbackMovement(state, u);
+	if (fallback)
+	{
+		return std::make_tuple(AIDecision(nullptr, fallback), 0.0f, 0);
+	}
+
 	return NULLTUPLE3;
 }
 
@@ -604,6 +610,12 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkRed(GameState &state
 
 	if (isUnderAttack)
 	{
+		auto fallback = UnitAIHelper::getFallbackMovement(state, u);
+		if (fallback)
+		{
+			return std::make_tuple(AIDecision(nullptr, fallback), 0.0f, 0);
+		}
+
 		auto takeCover = UnitAIHelper::getTakeCoverMovement(state, u);
 		if (takeCover)
 		{
@@ -711,7 +723,8 @@ AIDecision UnitAIVanilla::thinkInternal(GameState &state, BattleUnit &u)
 		return lastDecision;
 	}
 
-	auto result = u.visibleEnemies.empty() ? thinkGreen(state, u) : thinkRed(state, u);
+	auto result = state.current_battle->visibleEnemies[u.owner].empty() ? thinkGreen(state, u)
+	                                                                    : thinkRed(state, u);
 	auto decision = std::get<0>(result);
 	lastDecision = decision;
 

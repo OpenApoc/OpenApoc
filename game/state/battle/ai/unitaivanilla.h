@@ -41,7 +41,7 @@ class UnitAIVanilla : public UnitAI
   private:
 	AIDecision thinkInternal(GameState &state, BattleUnit &u);
 	// Do the AI routine - organise inventory, move speed, stance etc.
-	void routine(GameState &state, BattleUnit &u);
+	void routine(GameState &state, BattleUnit &u) override;
 
 	// Calculate AI's next decision in case no enemy is engaged
 	// Return values are decision, priority, ticks until re-think

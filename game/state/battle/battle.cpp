@@ -23,6 +23,7 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
+#include "game/state/message.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
 #include "game/state/rules/doodad_type.h"
@@ -197,34 +198,50 @@ void Battle::initBattle(GameState &state, bool first)
 	{
 		h->updateTileVisionBlock(state);
 	}
+
 	// On first run, init support links and items, do vsibility and pathfinding, reset AI
-	if (first)
+	if (!first)
 	{
-		initialMapPartRemoval(state);
-		initialMapPartLinkUp();
-		for (auto &o : this->items)
-		{
-			o->tryCollapse();
-		}
-		// Check which blocks and tiles are visible
+		return;
+	}
+	initialMapPartRemoval(state);
+	initialMapPartLinkUp();
+	for (auto &o : this->items)
+	{
+		o->tryCollapse();
+	}
+	// Check which blocks and tiles are visible
+	for (auto &u : units)
+	{
+		u.second->refreshUnitVision(state);
+	}
+	// Pathfinding
+	updatePathfinding(state);
+	// AI
+	aiBlock.init(state);
+	for (auto &o : participants)
+	{
+		aiBlock.beginTurnRoutine(state, o);
+	}
+	// leadership
+	for (auto &o : participants)
+	{
+		refreshLeadershipBonus(o);
+	}
+	// Update units
+	for (auto &u : units)
+	{
+		u.second->update(state, 1);
+	}
+	// Every thing TB
+	if (state.current_battle->mode == Battle::Mode::TurnBased)
+	{
+		// Update units TB
 		for (auto &u : units)
 		{
-			u.second->refreshUnitVision(state);
+			u.second->updateTB(state);
 		}
-		// Pathfinding
-		updatePathfinding(state);
-		// AI
-		aiBlock.init(state);
-		// leadership
-		for (auto o : participants)
-		{
-			refreshLeadershipBonus(o);
-		}
-		// Every thing TB
-		if (state.current_battle->mode == Battle::Mode::TurnBased)
-		{
-			state.current_battle->beginTurn(state);
-		}
+		state.current_battle->beginTurn(state);
 	}
 }
 
@@ -243,6 +260,10 @@ void Battle::initMap()
 				continue;
 			}
 			this->map->addObjectToMap(s);
+			if (s->type->exit)
+			{
+				exits.insert(s->position);
+			}
 		}
 		for (auto &h : this->hazards)
 		{
@@ -1080,6 +1101,7 @@ sp<BattleUnit> Battle::placeUnit(GameState &state, StateRef<Agent> agent)
 	unit->strategyImages = state.battle_common_image_list->strategyImages;
 	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
 	unit->squadNumber = -1;
+	unit->cloakTicksAccumulated = CLOAK_TICKS_REQUIRED;
 	units[id] = unit;
 	unit->init(state);
 	return unit;
@@ -1230,8 +1252,8 @@ void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 	}
 	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
 	{
-		state.current_battle->notifyAction();
 		auto &p = *it++;
+		notifyAction(p->position);
 		auto c = p->checkProjectileCollision(*map);
 		if (c)
 		{
@@ -1508,6 +1530,10 @@ void Battle::update(GameState &state, unsigned int ticks)
 	if (mode == Mode::TurnBased)
 	{
 		ticksWithoutAction += ticks;
+		for (auto &p : participants)
+		{
+			ticksWithoutSeenAction[p]++;
+		}
 		// Interrupt for lowmorales
 		if (!lowMoraleProcessed && interruptQueue.empty() && interruptUnits.empty())
 		{
@@ -1714,7 +1740,24 @@ void Battle::notifyScanners(Vec3<int> position)
 	}
 }
 
-void Battle::notifyAction() { ticksWithoutAction = 0; }
+void Battle::notifyAction(Vec3<int> location, StateRef<BattleUnit> actorUnit)
+{
+	ticksWithoutAction = 0;
+	if (location == EventMessage::NO_LOCATION)
+	{
+		return;
+	}
+	for (auto &p : participants)
+	{
+		if (actorUnit && actorUnit->owner != p &&
+		    visibleUnits[p].find(actorUnit) == visibleUnits[p].end())
+		{
+			continue;
+		}
+		ticksWithoutSeenAction[p] = 0;
+		lastSeenActionLocation[p] = location;
+	}
+}
 
 void Battle::refreshLeadershipBonus(StateRef<Organisation> org)
 {
@@ -1759,9 +1802,18 @@ void Battle::queuePathfindingRefresh(Vec3<int> tile)
 }
 
 void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
-                                     Vec3<float> &target, int accuracy, bool thrown)
+                                     Vec3<float> &target, int accuracy, bool cloaked, bool thrown)
 {
 	auto dispersion = (float)(100 - accuracy);
+	if (cloaked)
+	{
+		dispersion *= dispersion;
+		float cloakDispersion =
+		    2000.0f / (BattleUnitTileHelper::getDistanceStatic(firePosition, target) / 4.0f + 3.0f);
+		dispersion += cloakDispersion * cloakDispersion;
+		dispersion = sqrtf(dispersion);
+	}
+
 	auto delta = (target - firePosition) * dispersion / 1000.0f;
 
 	float length_vector =
@@ -1823,6 +1875,11 @@ void Battle::beginTurn(GameState &state)
 
 	aiBlock.beginTurnRoutine(state, currentActiveOrganisation);
 
+	for (auto &p : participants)
+	{
+		ticksWithoutSeenAction[p] = TICKS_PER_TURN;
+	}
+
 	updateTBBegin(state);
 
 	fw().pushEvent(new GameBattleEvent(GameEventType::NewTurn, shared_from_this()));
@@ -1864,7 +1921,8 @@ void Battle::giveInterruptChanceToUnit(GameState &state, StateRef<BattleUnit> gi
                                        StateRef<BattleUnit> receiver, int reactionValue)
 {
 	if (mode != Mode::TurnBased || receiver->owner == currentActiveOrganisation ||
-	    receiver->getAIType() == AIType::None)
+	    receiver->getAIType() == AIType::None ||
+	    interruptQueue.find(receiver) != interruptQueue.end())
 	{
 		return;
 	}
@@ -1879,6 +1937,9 @@ void Battle::giveInterruptChanceToUnit(GameState &state, StateRef<BattleUnit> gi
 		}
 		else
 		{
+			LogWarning("Interrupting AI %s for unit %s decided to %s", decision.ai, receiver->id,
+			           decision.getName());
+			receiver->aiList.reset(state, *receiver);
 			if (interruptQueue.empty())
 			{
 				fw().pushEvent(new GameLocationEvent(GameEventType::ZoomView, receiver->position));
