@@ -1268,7 +1268,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> prop
 	// Step 07: Unload sector tiles
 	unloadTiles();
 
-	// Step 08: Make target hostile
+	// Step 08: Make target hostilel
 	state.getPlayer()->current_relations[target_organisation] = -100.0f;
 
 	return b;

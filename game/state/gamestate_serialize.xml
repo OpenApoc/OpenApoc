@@ -415,6 +415,10 @@
 		<member>mission_location_id</member>
 		<member>mode</member>
 		<member>score</member>
+		<member>missionEndTimer</member>
+		<member>playerWon</member>
+		<member>loserHasRetreated</member>
+		<member>winnerHasRetreated</member>
 		<member>player_craft</member>
 		<member type="Section">map_parts</member>
 		<member type="Section">units</member>

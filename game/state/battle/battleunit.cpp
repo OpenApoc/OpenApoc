@@ -3998,10 +3998,12 @@ void BattleUnit::tryToRiseUp(GameState &state)
 	missions.clear();
 	aiList.reset(state, *this);
 	addMission(state, BattleUnitMission::changeStance(*this, targetState));
+	state.current_battle->checkMissionEnd(state, false, true);
 }
 
 void BattleUnit::dropDown(GameState &state)
 {
+	state.current_battle->checkMissionEnd(state, false);
 	// Reset states, cancel actions
 	stopAttacking();
 	stopAttackPsi(state);
@@ -4121,6 +4123,7 @@ void BattleUnit::retreat(GameState &state)
 	removeFromSquad(*state.current_battle);
 	state.current_battle->refreshLeadershipBonus(agent->owner);
 	sendAgentEvent(state, GameEventType::AgentLeftCombat, true);
+	state.current_battle->checkMissionEnd(state, true);
 }
 
 bool BattleUnit::useSpawner(GameState &state, sp<AEquipmentType> item)

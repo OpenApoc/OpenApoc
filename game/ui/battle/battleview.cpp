@@ -1,4 +1,6 @@
 #include "game/ui/battle/battleview.h"
+#include "game/ui/battle/battledebriefing.h"
+#include "game/ui/general/messagebox.h"
 #include "forms/checkbox.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
@@ -28,7 +30,6 @@
 #include "game/state/battle/battleunit.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
-#include "game/state/message.h"
 #include "game/state/message.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
@@ -62,6 +63,7 @@ static const std::vector<UString> HIDDEN_BACKGROUNDS = {
 };
 static const int TICKS_TRY_END_TURN = TICKS_PER_SECOND;
 static const int TICKS_HIDE_DISPLAY = TICKS_PER_SECOND;
+static const int TICKS_END_MISSION = TICKS_PER_TURN;
 static const std::set<BodyPart> bodyParts{BodyPart::Body, BodyPart::Helmet, BodyPart::LeftArm,
                                           BodyPart::Legs, BodyPart::RightArm};
 
@@ -1398,6 +1400,45 @@ void BattleView::update()
 	}
 	// Store screen center for serialisation
 	battle.battleViewScreenCenter = centerPos;
+
+	if (battle.missionEndTimer > TICKS_END_MISSION)
+	{
+		UString message;
+		if (battle.playerWon)
+		{
+			if (battle.loserHasRetreated)
+			{
+				message = tr("All hostile units have fled the combat zone. You win.");
+			}
+			else if (battle.winnerHasRetreated)
+			{
+				message = tr("All your units have fled the combat zone. You win.");
+			}
+			else
+			{
+				message = tr("All hostile units are dead or unconscious. You win.");
+			}
+		}
+		else
+			if (battle.loserHasRetreated)
+			{
+				message = tr("All your units have fled the combat zone. You lose.");
+			}
+			else if (battle.winnerHasRetreated)
+			{
+				message = tr("All hostile units have fled the combat zone. You lose.");
+			}
+			else
+			{
+				message = tr("All your units are unconscious or dead. You lose.");
+			}
+		fw().stageQueueCommand(
+		{ StageCmd::Command::PUSH,
+			mksp<MessageBox>("", message,
+				MessageBox::ButtonOptions::Ok, [this] {
+			exitBattle();
+		}) });
+	}
 }
 
 void BattleView::updateSelectedUnits()
@@ -3277,6 +3318,12 @@ void BattleView::handleMouseDown(Event *e)
 				break;
 		}
 	}
+}
+
+void BattleView::exitBattle()
+{
+	fw().stageQueueCommand(
+	{ StageCmd::Command::REPLACEALL, mksp<BattleDebriefing>(state) });
 }
 
 void BattleView::updateLayerButtons()

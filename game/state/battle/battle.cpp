@@ -228,6 +228,22 @@ void Battle::initBattle(GameState &state, bool first)
 	{
 		refreshLeadershipBonus(o);
 	}
+	// Let pre-placed fires spawn smokes
+	StateRef<DamageType> dt = { &state, "DAMAGETYPE_INCENDIARY" };
+	std::list<sp<BattleHazard>> fires;
+	for (auto &h : hazards)
+	{
+		if (h->damageType == dt)
+		{
+			fires.push_back(h);
+		}
+	}
+	for (auto &f : fires)
+	{
+		f->grow(state);
+		f->grow(state);
+		f->grow(state);
+	}
 	// Update units
 	for (auto &u : units)
 	{
@@ -1527,6 +1543,16 @@ void Battle::update(GameState &state, unsigned int ticks)
 {
 	TRACE_FN_ARGS1("ticks", Strings::fromInteger(static_cast<int>(ticks)));
 
+	if (missionEndTimer > 0)
+	{
+		missionEndTimer++;
+		ticksWithoutAction = 0;
+		for (auto &p : participants)
+		{
+			ticksWithoutSeenAction[p] = 0;
+		}
+	}
+	Trace::start("Battle::update::turnBased");
 	if (mode == Mode::TurnBased)
 	{
 		ticksWithoutAction += ticks;
@@ -1597,7 +1623,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 			}
 		}
 	}
-
+	Trace::end("Battle::end::turnBased");
 	Trace::start("Battle::update::projectiles->update");
 	updateProjectiles(state, ticks);
 	Trace::end("Battle::update::projectiles->update");
@@ -1756,6 +1782,79 @@ void Battle::notifyAction(Vec3<int> location, StateRef<BattleUnit> actorUnit)
 		}
 		ticksWithoutSeenAction[p] = 0;
 		lastSeenActionLocation[p] = location;
+	}
+}
+
+int Battle::killStrandedUnits(GameState & state, bool preview)
+{
+	LogWarning("Implement killing stranded player units");
+	return 0;
+}
+
+void Battle::abortMission(GameState & state)
+{
+	killStrandedUnits(state);
+	auto player = state.getPlayer();
+	for (auto &u : units)
+	{
+		if (u.second->owner == u.second->agent->owner && u.second->owner == player && !u.second->isDead())
+		{
+			u.second->retreat(state);
+		}
+	}
+}
+
+void Battle::checkMissionEnd(GameState &state, bool retreated, bool forceReCheck)
+{
+	LogWarning("FIXME: Victory/Loss when finishing alien building mission");
+	if (forceReCheck)
+	{
+		missionEndTimer = 0;
+	}
+	else if (missionEndTimer > 0)
+	{
+		return;
+	}
+	loserHasRetreated = retreated;
+	auto civ = state.getCivilian();
+	auto player = state.getPlayer();
+	std::set<StateRef<Organisation>> orgsAlive;
+	for (auto &p : participants)
+	{
+		if (p == civ)
+		{
+			continue;
+		}
+		for (auto &u : units)
+		{
+			if (u.second->owner == p && u.second->isConscious())
+			{
+				orgsAlive.insert(p);
+				break;
+			}
+		}
+	}
+	if (orgsAlive.find(player) == orgsAlive.end())
+	{
+		playerWon = false;
+		missionEndTimer = 1;
+	}
+	else
+	{
+		playerWon = true;
+		missionEndTimer = 1;
+		for (auto &org : orgsAlive)
+		{
+			if (org == player)
+			{
+				continue;
+			}
+			if (player->isRelatedTo(org) == Organisation::Relation::Hostile)
+			{
+				missionEndTimer = 0;
+				break;
+			}
+		}
 	}
 }
 

@@ -1,4 +1,5 @@
 #include "game/ui/general/ingameoptions.h"
+#include "game/ui/general/messagebox.h"
 #include "forms/checkbox.h"
 #include "forms/form.h"
 #include "forms/label.h"
@@ -139,8 +140,15 @@ void InGameOptions::eventOccurred(Event *e)
 		{
 			if (state->current_battle)
 			{
+				int unitsLost = state->current_battle->killStrandedUnits(*state, true);
 				fw().stageQueueCommand(
-				    {StageCmd::Command::REPLACEALL, mksp<BattleDebriefing>(state)});
+				{ StageCmd::Command::PUSH,
+					mksp<MessageBox>(tr("Abort Mission"), format("%s %d",tr("Units Lost :"),unitsLost),
+						MessageBox::ButtonOptions::YesNo, [this] {
+					state->current_battle->abortMission(*state);
+					fw().stageQueueCommand(
+					{ StageCmd::Command::REPLACEALL, mksp<BattleDebriefing>(state) });
+				}) });
 			}
 			else
 			{

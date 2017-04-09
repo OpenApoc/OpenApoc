@@ -129,6 +129,10 @@ class Battle : public std::enable_shared_from_this<Battle>
 	UString mission_location_id;
 	Mode mode = Mode::RealTime;
 	BattleScore score = {};
+	unsigned missionEndTimer = 0;
+	bool playerWon = false;
+	bool loserHasRetreated = false;
+	bool winnerHasRetreated = false;
 
 	StateRef<Vehicle> player_craft;
 
@@ -212,6 +216,9 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// Notify about action happening
 	void notifyAction(Vec3<int> location = {-1, -1, -1}, StateRef<BattleUnit> actorUnit = nullptr);
 
+	int killStrandedUnits(GameState &state, bool preview = false);
+	void abortMission(GameState &state);
+	void checkMissionEnd(GameState &state, bool retreated, bool forceReCheck = false);
 	void refreshLeadershipBonus(StateRef<Organisation> org);
 
 	void update(GameState &state, unsigned int ticks);
@@ -345,3 +352,4 @@ class Battle : public std::enable_shared_from_this<Battle>
 };
 
 }; // namespace OpenApoc
+
