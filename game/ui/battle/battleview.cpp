@@ -1,6 +1,4 @@
 #include "game/ui/battle/battleview.h"
-#include "game/ui/battle/battledebriefing.h"
-#include "game/ui/general/messagebox.h"
 #include "forms/checkbox.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
@@ -38,8 +36,10 @@
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "game/ui/base/basescreen.h"
+#include "game/ui/battle/battledebriefing.h"
 #include "game/ui/battle/battleturnbasedconfirmbox.h"
 #include "game/ui/general/ingameoptions.h"
+#include "game/ui/general/messagebox.h"
 #include "game/ui/general/messagelogscreen.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
@@ -93,7 +93,7 @@ BattleView::BattleView(sp<GameState> gameState)
 		newPal->setColour(255 - 4, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
 		                                  (colorCurrent * 16 * -1 + 255 * 5) / 8));
 		// Red color, for enemy indicators, pulsates from (3/8r 0g 0b) to (8/8r 0g 0b)
-		newPal->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
+		newPal->setColour(255 - 0, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
 		// Blue color, for misc. indicators, pulsates from (0r 3/8g 3/8b) to (0r 8/8g 8/8b)
 		newPal->setColour(255 - 2, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
 		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8));
@@ -101,7 +101,7 @@ BattleView::BattleView(sp<GameState> gameState)
 		newPal->setColour(255 - 1, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0,
 		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8));
 		// Yellow color, for owned indicators, pulsates from (3/8r 3/8g 0b) to (8/8r 8/8g 0b)
-		newPal->setColour(255 - 0, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8,
+		newPal->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8,
 		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8, 0));
 
 		modPalette.push_back(newPal);
@@ -1035,7 +1035,15 @@ void BattleView::begin()
 	}
 }
 
-void BattleView::resume() {}
+void BattleView::resume()
+{
+	modifierLAlt = false;
+	modifierLCtrl = false;
+	modifierLShift = false;
+	modifierRAlt = false;
+	modifierRCtrl = false;
+	modifierRShift = false;
+}
 
 void BattleView::render()
 {
@@ -1419,25 +1427,21 @@ void BattleView::update()
 				message = tr("All hostile units are dead or unconscious. You win.");
 			}
 		}
+		else if (battle.loserHasRetreated)
+		{
+			message = tr("All your units have fled the combat zone. You lose.");
+		}
+		else if (battle.winnerHasRetreated)
+		{
+			message = tr("All hostile units have fled the combat zone. You lose.");
+		}
 		else
-			if (battle.loserHasRetreated)
-			{
-				message = tr("All your units have fled the combat zone. You lose.");
-			}
-			else if (battle.winnerHasRetreated)
-			{
-				message = tr("All hostile units have fled the combat zone. You lose.");
-			}
-			else
-			{
-				message = tr("All your units are unconscious or dead. You lose.");
-			}
+		{
+			message = tr("All your units are unconscious or dead. You lose.");
+		}
 		fw().stageQueueCommand(
-		{ StageCmd::Command::PUSH,
-			mksp<MessageBox>("", message,
-				MessageBox::ButtonOptions::Ok, [this] {
-			exitBattle();
-		}) });
+		    {StageCmd::Command::PUSH, mksp<MessageBox>("", message, MessageBox::ButtonOptions::Ok,
+		                                               [this] { exitBattle(); })});
 	}
 }
 
@@ -2669,7 +2673,10 @@ void BattleView::eventOccurred(Event *e)
 					      glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
 					          5.0f)) == !inverse)
 					{
-						u.second->retreat(*state);
+						if (!u.second->retreated)
+						{
+							u.second->retreat(*state);
+						}
 					}
 				}
 				break;
@@ -3322,8 +3329,8 @@ void BattleView::handleMouseDown(Event *e)
 
 void BattleView::exitBattle()
 {
-	fw().stageQueueCommand(
-	{ StageCmd::Command::REPLACEALL, mksp<BattleDebriefing>(state) });
+	Battle::finishBattle(*state);
+	fw().stageQueueCommand({StageCmd::Command::REPLACEALL, mksp<BattleDebriefing>(state)});
 }
 
 void BattleView::updateLayerButtons()
@@ -3653,11 +3660,7 @@ sp<RGBImage> BattleView::drawMotionScanner(Vec2<int> position)
 	return scannerDisplay;
 }
 
-void BattleView::finish()
-{
-	fw().getCursor().CurrentType = ApocCursor::CursorType::Normal;
-	Battle::finishBattle(*state);
-}
+void BattleView::finish() { fw().getCursor().CurrentType = ApocCursor::CursorType::Normal; }
 
 AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 {

@@ -390,6 +390,29 @@ int Agent::getTULimit(int reactionValue) const
 	}
 }
 
+UString Agent::getRankName() const
+{
+	switch (rank)
+	{
+		case Rank::Rookie:
+			return tr("Rookie");
+		case Rank::Squaddie:
+			return tr("Squaddie");
+		case Rank::SquadLeader:
+			return tr("Squad leader");
+		case Rank::Sergeant:
+			return tr("Sergeant");
+		case Rank::Captain:
+			return tr("Captain");
+		case Rank::Colonel:
+			return tr("Colonel");
+		case Rank::Commander:
+			return tr("Commander");
+	}
+	LogError("Unknown rank %d", (int)rank);
+	return "";
+}
+
 sp<AEquipment> Agent::getArmor(BodyPart bodyPart) const
 {
 	auto a = getFirstItemInSlot(AgentType::getArmorSlotType(bodyPart));

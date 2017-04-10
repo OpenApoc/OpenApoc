@@ -336,6 +336,9 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// enemies are hiding where, and so we need to pop notifications again for every enemy
 	std::map<StateRef<Organisation>, std::map<StateRef<BattleUnit>, uint64_t>> lastVisibleTime;
 
+	// List of promoted units, we cannot save game in briefing screen so this is not required
+	std::list<StateRef<BattleUnit>> unitsPromoted;
+
 	// Following members are not serialized, but rather are set in initBattle method
 
 	std::set<Vec3<int>> exits;
@@ -352,4 +355,3 @@ class Battle : public std::enable_shared_from_this<Battle>
 };
 
 }; // namespace OpenApoc
-

@@ -229,7 +229,7 @@ void Battle::initBattle(GameState &state, bool first)
 		refreshLeadershipBonus(o);
 	}
 	// Let pre-placed fires spawn smokes
-	StateRef<DamageType> dt = { &state, "DAMAGETYPE_INCENDIARY" };
+	StateRef<DamageType> dt = {&state, "DAMAGETYPE_INCENDIARY"};
 	std::list<sp<BattleHazard>> fires;
 	for (auto &h : hazards)
 	{
@@ -1785,19 +1785,20 @@ void Battle::notifyAction(Vec3<int> location, StateRef<BattleUnit> actorUnit)
 	}
 }
 
-int Battle::killStrandedUnits(GameState & state, bool preview)
+int Battle::killStrandedUnits(GameState &state, bool preview)
 {
 	LogWarning("Implement killing stranded player units");
 	return 0;
 }
 
-void Battle::abortMission(GameState & state)
+void Battle::abortMission(GameState &state)
 {
 	killStrandedUnits(state);
 	auto player = state.getPlayer();
 	for (auto &u : units)
 	{
-		if (u.second->owner == u.second->agent->owner && u.second->owner == player && !u.second->isDead())
+		if (u.second->owner == u.second->agent->owner && u.second->owner == player &&
+		    !u.second->isDead() && !u.second->retreated)
 		{
 			u.second->retreat(state);
 		}
@@ -2164,7 +2165,6 @@ void Battle::finishBattle(GameState &state)
 	}
 
 	auto player = state.getPlayer();
-
 	state.current_battle->unloadResources(state);
 
 	// Remove active battle scanners
@@ -2175,7 +2175,6 @@ void Battle::finishBattle(GameState &state)
 			e->battleScanner.clear();
 		}
 	}
-
 	// Proces MCed units
 	for (auto &u : state.current_battle->units)
 	{
@@ -2190,45 +2189,115 @@ void Battle::finishBattle(GameState &state)
 			{
 				// mind control by someone else = MIA
 				u.second->agent->modified_stats.health = -1;
+				if (u.second->agent->owner == player)
+				{
+					state.current_battle->score.casualtyPenalty -= u.second->agent->type->score;
+				}
 			}
 			u.second->owner = u.second->agent->owner;
 		}
 	}
-
-	//  - Identify how battle ended(if enemies present then Failure, otherwise Success)
-	//	- (Failure) Determine surviving player agents(kill all player agents that are too far from
-	// exits)
 	//	- Prepare list of surviving aliens
-	//	- (Success) Prepare list of alien bodies
-	//	- Remove dead player agents and all enemy agents from the game and vehicles
-	//	- Apply experience to stats of living agents
+	//	- (Success) Convert remaining unconscious and dead aliens into research items
+	//  - Remove brainsucker pods from agent inventories and convert into research items
+	//  - Calculate score for live captured aliens
+	//  - (Failure) Handle remaining aliens (retreat them if ufo, put them in the building if
+	//  building)
+	//  - Handle retreated aliens (put them to random closest building)
+	// Remove dead player agents and all enemy agents from the game and from vehicles
+	std::list<sp<BattleUnit>> unitsToRemove;
 	for (auto &u : state.current_battle->units)
 	{
 		if (u.second->owner != player || u.second->isDead())
 		{
-			continue;
+			unitsToRemove.push_back(u.second);
 		}
-		u.second->processExperience(state);
 	}
-	// - Promotions
+	for (auto &u : unitsToRemove)
+	{
+		state.agents.erase(u->agent.id);
+		state.current_battle->units.erase(u->id);
+	}
+	// Apply experience to stats of living agents + promotions
 	// Create list of units ranked by combatRating
-	// Rank up top 5 units from list that can promote
-	/*
-		Squaddie       Must earn over 8 combat rating points
-		Squad Leader   (Rookies + Squaddies) / (Squad Leaders + 1) is more than 4
-		Sergeant       Squad leaders / (Sergeant + 1) is more than 2
-		Captain        Sergeants / (Captains + 1) is more than 2
-		Colonel        Captains / (Colonels + 1) is more than 2
-		Commander      No commander, and more than one Colonel
-	*/
-	//	- (Success) Prepare list of loot(including alien saucer equipment)
-	//	- Calculate score
-
-	//	(AFTER THIS FUNCTION)
-	//  Show score screen
-	//	(If mod is on)
-	//	- If not enough alien body containment, display alien containment transfer window
-	//	- If not enough storage, display storage transfer window
+	std::map<int, std::list<sp<BattleUnit>>> unitsByRating;
+	for (auto &u : state.current_battle->units)
+	{
+		u.second->processExperience(state);
+		unitsByRating[-u.second->combatRating].push_back(u.second);
+	}
+	// Create count of ranks
+	std::map<Rank, int> countRanks;
+	for (auto &a : state.agents)
+	{
+		countRanks[a.second->rank]++;
+	}
+	// Rank up top 5 units from list that can accept promotion
+	for (auto &l : unitsByRating)
+	{
+		for (auto &u : l.second)
+		{
+			switch (u->agent->rank)
+			{
+				case Rank::Rookie:
+					if (u->combatRating < 9)
+					{
+						continue;
+					}
+					break;
+				case Rank::Squaddie:
+					if ((countRanks[Rank::Rookie] + countRanks[Rank::Squaddie]) /
+					        (countRanks[Rank::SquadLeader] + 1) <=
+					    4)
+					{
+						continue;
+					}
+					break;
+				case Rank::SquadLeader:
+					if (countRanks[Rank::SquadLeader] / (countRanks[Rank::Sergeant] + 1) <= 2)
+					{
+						continue;
+					}
+					break;
+				case Rank::Sergeant:
+					if (countRanks[Rank::Sergeant] / (countRanks[Rank::Captain] + 1) <= 2)
+					{
+						continue;
+					}
+					break;
+				case Rank::Captain:
+					if (countRanks[Rank::Captain] / (countRanks[Rank::Colonel] + 1) <= 2)
+					{
+						continue;
+					}
+					break;
+				case Rank::Colonel:
+					if (countRanks[Rank::Commander] > 0 || countRanks[Rank::Colonel] <= 1)
+					{
+						continue;
+					}
+					break;
+				case Rank::Commander:
+					continue;
+			}
+			u->agent->rank = (Rank)(((int)u->agent->rank) + 1);
+			state.current_battle->unitsPromoted.push_back({&state, u->id});
+			if (state.current_battle->unitsPromoted.size() >= 5)
+			{
+				break;
+			}
+		}
+		if (state.current_battle->unitsPromoted.size() >= 5)
+		{
+			break;
+		}
+	}
+	//  - (Failure) Kill all items on the battlefield
+	//	- (Success) Prepare list of loot (including alien saucer equipment), give score for it
+	//  - Move unresearched items from agent inventory into loot list
+	//  - Convert living aliens to bodies if no bio trans
+	//	- Calculate score for captured loot
+	//  - Calculate score for captured live aliens
 }
 
 // To be called after battle was finished, score screen was shown and before returning to cityscape
@@ -2240,12 +2309,21 @@ void Battle::exitBattle(GameState &state)
 		return;
 	}
 
-	//  - Apply score
-	//	- (UFO mission) Clear UFO crash
+	//  - Apply score to player score
+	// (UFO mission) Remove UFO crash
+	if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
+	{
+		StateRef<Vehicle> ufo = {&state, state.current_battle->mission_location_id};
+		if (state.current_battle->playerWon)
+		{
+			LogWarning("FIXME: Give player score for captured ufo");
+		}
+		state.vehicles.erase(ufo.id);
+	}
+	//  - (If mod then give player choice of what to load and what to leave behind)
 	//	- Load loot into vehicles
 	//	- Load aliens into bio - trans
-	//	- Put surviving aliens back in the building (?or somewhere else if UFO?)
-	//  - Restore X-Com relationship to organisations
+	// Restore X-Com relationship to organisations
 	auto player = state.getPlayer();
 	for (auto &o : state.organisations)
 	{

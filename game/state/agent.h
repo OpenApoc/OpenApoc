@@ -306,7 +306,7 @@ class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 	                           // to equipment weight, used stamina etc)
 	bool overEncumbred = false;
 	Rank rank = Rank::Rookie;
-	
+
 	sp<AEquipment> getArmor(BodyPart bodyPart) const;
 	bool isBodyStateAllowed(BodyState bodyState) const;
 	bool isMovementStateAllowed(MovementState movementState) const;
@@ -315,6 +315,7 @@ class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 	const std::set<Vec2<int>> *getAllowedFacings() const;
 	int getReactionValue() const;
 	int getTULimit(int reactionValue) const;
+	UString getRankName() const;
 
 	StateRef<Base> home_base;
 	StateRef<Organisation> owner;

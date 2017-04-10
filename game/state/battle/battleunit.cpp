@@ -78,7 +78,10 @@ void BattleUnit::init(GameState &state)
 
 void BattleUnit::removeFromSquad(Battle &battle)
 {
-	battle.forces[owner].removeAt(squadNumber, squadPosition);
+	if (squadNumber != -1)
+	{
+		battle.forces[owner].removeAt(squadNumber, squadPosition);
+	}
 }
 
 bool BattleUnit::assignToSquad(Battle &battle, int squad)
@@ -1700,14 +1703,17 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 	auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
 
 	// Cloak
-	if (cloakTicksAccumulated < CLOAK_TICKS_REQUIRED)
+	if (isConscious())
 	{
-		cloakTicksAccumulated += ticks;
-	}
-	if ((!e1 || e1->type->type != AEquipmentType::Type::CloakingField) &&
-	    (!e2 || e2->type->type != AEquipmentType::Type::CloakingField))
-	{
-		cloakTicksAccumulated = 0;
+		if (cloakTicksAccumulated < CLOAK_TICKS_REQUIRED)
+		{
+			cloakTicksAccumulated += ticks;
+		}
+		if ((!e1 || e1->type->type != AEquipmentType::Type::CloakingField) &&
+		    (!e2 || e2->type->type != AEquipmentType::Type::CloakingField))
+		{
+			cloakTicksAccumulated = 0;
+		}
 	}
 
 	// Regeneration
@@ -1730,10 +1736,12 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 			agent->modified_stats.psi_energy++;
 		}
 		// Sta regen
-		if (agent->modified_stats.stamina < agent->current_stats.stamina)
+		for (int i = 0; i < 2; i++)
 		{
-			// FIXME: Regenerate stamina properly (ensure this is proper)
-			agent->modified_stats.stamina++;
+			if (agent->modified_stats.stamina < agent->current_stats.stamina)
+			{
+				agent->modified_stats.stamina++;
+			}
 		}
 	}
 
@@ -4005,6 +4013,7 @@ void BattleUnit::dropDown(GameState &state)
 {
 	state.current_battle->checkMissionEnd(state, false);
 	// Reset states, cancel actions
+	cloakTicksAccumulated = 0;
 	stopAttacking();
 	stopAttackPsi(state);
 	for (auto &a : psiAttackers)
@@ -4119,6 +4128,7 @@ void BattleUnit::retreat(GameState &state)
 		shadowObject->removeFromMap();
 	}
 	tileObject->removeFromMap();
+	stopAttackPsi(state);
 	retreated = true;
 	removeFromSquad(*state.current_battle);
 	state.current_battle->refreshLeadershipBonus(agent->owner);

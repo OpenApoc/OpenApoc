@@ -71,6 +71,8 @@ class BattleTileView : public TileView
 	// Must have same amount it items as in targetLocationIcons
 	std::vector<sp<Image>> waypointIcons;
 	std::vector<sp<Image>> waypointDarkIcons;
+	sp<Image> targetTacticalThisLevel;
+	sp<Image> targetTacticalOtherLevel;
 	int iconAnimationTicksAccumulated = 0;
 	int healingIconTicksAccumulated = 0;
 	int lowMoraleIconTicksAccumulated = 0;

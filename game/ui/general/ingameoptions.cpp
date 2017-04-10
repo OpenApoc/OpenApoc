@@ -1,5 +1,4 @@
 #include "game/ui/general/ingameoptions.h"
-#include "game/ui/general/messagebox.h"
 #include "forms/checkbox.h"
 #include "forms/form.h"
 #include "forms/label.h"
@@ -17,6 +16,7 @@
 #include "game/ui/city/cityview.h"
 #include "game/ui/general/mainmenu.h"
 #include "game/ui/general/mapselector.h"
+#include "game/ui/general/messagebox.h"
 #include "game/ui/general/savemenu.h"
 
 namespace OpenApoc
@@ -142,13 +142,14 @@ void InGameOptions::eventOccurred(Event *e)
 			{
 				int unitsLost = state->current_battle->killStrandedUnits(*state, true);
 				fw().stageQueueCommand(
-				{ StageCmd::Command::PUSH,
-					mksp<MessageBox>(tr("Abort Mission"), format("%s %d",tr("Units Lost :"),unitsLost),
-						MessageBox::ButtonOptions::YesNo, [this] {
-					state->current_battle->abortMission(*state);
-					fw().stageQueueCommand(
-					{ StageCmd::Command::REPLACEALL, mksp<BattleDebriefing>(state) });
-				}) });
+				    {StageCmd::Command::PUSH,
+				     mksp<MessageBox>(tr("Abort Mission"),
+				                      format("%s %d", tr("Units Lost :"), unitsLost),
+				                      MessageBox::ButtonOptions::YesNo, [this] {
+					                      state->current_battle->abortMission(*state);
+					                      fw().stageQueueCommand({StageCmd::Command::REPLACEALL,
+					                                              mksp<BattleDebriefing>(state)});
+					                  })});
 			}
 			else
 			{

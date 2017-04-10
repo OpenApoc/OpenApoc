@@ -364,8 +364,17 @@ void AEquipment::updateInner(GameState &state, unsigned int ticks)
 		if (recharge_ticks_accumulated > TICKS_PER_RECHARGE)
 		{
 			recharge_ticks_accumulated = 0;
-			ammo += payload->recharge;
-			ammo = std::min(payload->max_ammo, ammo);
+			// FIXME: Implement proper recharge of disruptor shields
+			if (state.current_battle->mode == Battle::Mode::TurnBased &&
+			    type->type != AEquipmentType::Type::DisruptorShield)
+			{
+				ammo = payload->max_ammo;
+			}
+			else
+			{
+				ammo += payload->recharge;
+				ammo = std::min(payload->max_ammo, ammo);
+			}
 		}
 	}
 
