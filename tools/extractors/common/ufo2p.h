@@ -7,6 +7,7 @@
 #include "game/state/rules/vequipment_type.h"
 #include "tools/extractors/common/aequipment.h"
 #include "tools/extractors/common/agent.h"
+#include "tools/extractors/common/crew.h"
 #include "tools/extractors/common/audio.h"
 #include "tools/extractors/common/baselayout.h"
 #include "tools/extractors/common/building.h"
@@ -27,6 +28,8 @@
 
 namespace OpenApoc
 {
+
+class AgentType;
 
 class UFO2P
 {
@@ -78,6 +81,10 @@ class UFO2P
 	std::unique_ptr<DataChunk<BulletSprite>> bullet_sprites;
 	std::unique_ptr<DataChunk<ProjectileSprites>> projectile_sprites;
 
+	std::unique_ptr<DataChunk<CrewData>> crew_ufo_downed;
+	std::unique_ptr<DataChunk<CrewData>> crew_ufo_deposit;
+	std::unique_ptr<DataChunk<CrewData>> crew_alien_building;
+
 	UString getOrgId(int idx) const
 	{
 		return Organisation::getPrefix() + canon_string(this->organisation_names->get(idx));
@@ -94,6 +101,9 @@ class UFO2P
 	{
 		return VehicleType::getPrefix() + canon_string(this->vehicle_names->get(idx));
 	}
+
+	static void fillCrew(GameState &state, CrewData &crew, std::map<OpenApoc::StateRef<OpenApoc::AgentType>, int> &target);
+
 };
 
 UFO2P &getUFO2PData();

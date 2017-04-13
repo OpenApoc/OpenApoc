@@ -231,8 +231,13 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 				// UFOs starting with trans (id = 2) up to mship (id = 9) have maps from 51 to 58
 				// Therefore 49 + id gives map index for the ufo
 				if (i > 1)
-					vehicle->battle_map = {&state, format("%s%s", BattleMap::getPrefix(),
-					                                      this->battleMapPaths[48 + i])};
+				{
+					vehicle->battle_map = { &state, format("%s%s", BattleMap::getPrefix(),
+													  this->battleMapPaths[48 + i]) };
+				}
+				// fill crews
+				UFO2P::fillCrew(state, ufo2p.crew_ufo_downed->get(i), vehicle->crew_downed);
+				UFO2P::fillCrew(state, ufo2p.crew_ufo_deposit->get(i), vehicle->crew_deposit);
 			}
 			else
 			{

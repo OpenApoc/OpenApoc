@@ -996,6 +996,13 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 						}
 					}
 				}
+				for (auto &entry : sec->spawnLocations)
+				{
+					for (auto &pos : entry.second)
+					{
+						b->spawnLocations[entry.first].push_back(pos + shift);
+					}
+				}
 			}
 		}
 	}

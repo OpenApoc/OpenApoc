@@ -80,6 +80,7 @@ class AgentStats
 	int accuracy = 0;
 	int reactions = 0;
 	int speed = 0;
+	void setSpeed(int value) { speed = value; restoreTU(); }
 	int getActualSpeedValue() const { return (speed + 4) / 8; }
 	int getMovementSpeed() const { return clamp(getActualSpeedValue(), 5, 14); }
 	int getDisplaySpeedValue() const { return 8 * getActualSpeedValue(); }
@@ -307,6 +308,10 @@ class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 	bool overEncumbred = false;
 	Rank rank = Rank::Rookie;
 
+	// Training
+	unsigned trainingPhysicalTicksAccumulated = 0;
+	unsigned trainingPsiTicksAccumulated = 0;
+
 	sp<AEquipment> getArmor(BodyPart bodyPart) const;
 	bool isBodyStateAllowed(BodyState bodyState) const;
 	bool isMovementStateAllowed(MovementState movementState) const;
@@ -343,7 +348,12 @@ class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 	void addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object);
 	void removeEquipment(sp<AEquipment> object);
 	void updateSpeed();
+	// Called when current stats were changed and modified stats need to catch up
+	void updateModifiedStats();
 	bool canRun() { return modified_stats.canRun(); }
+
+	void trainPhysical(GameState &state, unsigned ticks);
+	void trainPsi(GameState &state, unsigned ticks);
 
 	StateRef<BattleUnitAnimationPack> getAnimationPack() const;
 	// If item was fired before, it should be passed here, and it will remain dominant unless it was

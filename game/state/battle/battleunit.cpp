@@ -3665,6 +3665,10 @@ int BattleUnit::rollForPrimaryStat(GameState &state, int experience)
 // except psi which assumes it's same 3x limit that is applied when using psi gym
 void BattleUnit::processExperience(GameState &state)
 {
+	if (!agent->type->can_improve)
+	{
+		return;
+	}
 	int secondaryXP = experiencePoints.accuracy + experiencePoints.bravery +
 	                  experiencePoints.psi_attack + experiencePoints.psi_energy +
 	                  experiencePoints.reactions;
@@ -3710,10 +3714,10 @@ void BattleUnit::processExperience(GameState &state)
 			agent->current_stats.speed +=
 			    randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.speed) / 10;
 		}
-		if (agent->current_stats.stamina < 100)
+		if (agent->current_stats.stamina < 200)
 		{
 			agent->current_stats.stamina +=
-			    randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.stamina) / 10;
+			    randBoundsInclusive(state.rng, 0, 2) + (200 - agent->current_stats.stamina) / 10;
 		}
 		if (agent->current_stats.strength < 100)
 		{
@@ -3721,10 +3725,7 @@ void BattleUnit::processExperience(GameState &state)
 			    randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.strength) / 10;
 		}
 	}
-	int health = agent->modified_stats.health;
-	agent->modified_stats = agent->current_stats;
-	agent->modified_stats.health = health;
-	agent->updateSpeed();
+	agent->updateModifiedStats();
 }
 
 void BattleUnit::executeGroupAIDecision(GameState &state, AIDecision &decision,

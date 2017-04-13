@@ -190,6 +190,8 @@
 		<member>modified_stats</member>
 		<member>overEncumbred</member>
 		<member>rank</member>
+		<member>trainingPhysicalTicksAccumulated</member>
+		<member>trainingPsiTicksAccumulated</member>
 		<member>home_base</member>
 		<member>owner</member>
 		<member>assigned_to_lab</member>
@@ -385,6 +387,8 @@
 		<member>vanillaSupportedById</member>
 		<member>independent_structure</member>
 		<member>exit</member>
+		<member>missionObjective</member>
+		<member>reinforcementSpawner</member>
 	</object>
 	<object>
 		<name>BattleScore</name>
@@ -474,6 +478,7 @@
 		<member>occurrence_max</member>
 		<member>sectorTilesName</member>
 		<member>tiles</member>
+		<member>spawnLocations</member>
 	</object>
 	<object external="true">
 		<name>BattleMapSectorTiles</name>
@@ -774,6 +779,7 @@
 		<member>bounds</member>
 		<member>base_layout</member>
 		<member>battle_map</member>
+		<member>preset_crew</member>
 		<member>landingPadLocations</member>
 		<member>landed_vehicles</member>
 	</object>
@@ -998,6 +1004,8 @@
 		<member>score</member>
 		<member>icon</member>
 		<member>battle_map</member>
+		<member>crew_downed</member>
+		<member>crew_deposit</member>
 		<member>equipment_screen</member>
 		<member>equip_icon_big</member>
 		<member>equip_icon_small</member>

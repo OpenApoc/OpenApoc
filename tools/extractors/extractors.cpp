@@ -93,6 +93,32 @@ const std::map<OpenApoc::UString, std::set<int>> InitialGameStateExtractor::init
 	//{ "58ufo8",{ 26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42 } },
 };
 
+const std::map<OpenApoc::UString, std::set<int>> InitialGameStateExtractor::reinforcementSpawners = {
+	{ "39incub"	,{ 208,209,210,211,212,213,214,215 } },
+	{ "40spawn"	,{ 208,209,210,211,212,213,214,215 } },
+	{ "41food"	,{ 208,209,210,211,212,213,214,215 } },
+	{ "42megapd",{ 208,209,210,211,212,213,214,215 } },
+	{ "43sleep" ,{ 208,209,210,211,212,213,214,215 } },
+	{ "44organ" ,{ 208,209,210,211,212,213,214,215 } },
+	{ "45farm" ,{ 208,209,210,211,212,213,214,215 } },
+	{ "46contrl" ,{ 208,209,210,211,212,213,214,215 } },
+	{ "47maint",{ 208,209,210,211,212,213,214,215 } },
+	{ "48gate" ,{ 208,209,210,211,212,213,214,215 } },
+};
+
+const std::map<OpenApoc::UString, std::set<int>> InitialGameStateExtractor::missionObjectives = {
+	{ "39incub"	,{ 139,140,141,142,143,144,145,146} },
+	{ "40spawn"	,{ } },
+	{ "41food"	,{ 140 } },
+	{ "42megapd",{ 204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229, 230} },
+	{ "43sleep" ,{ 180,181,183} },
+	{ "44organ" ,{ 137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158} },
+	{ "45farm" , { 180,181,182 } },
+	{ "46contrl",{ 155,156,157,158} },
+	{ "47maint" ,{ 142,143,144,145} },
+	{ "48gate"  ,{ 71,73,74,75,76,77,78,79,80,81,82,83,84,85} },
+};
+
 const std::map<OpenApoc::UString, OpenApoc::UString> InitialGameStateExtractor::unitImagePackPaths = {
 	{ "antrpa",		"unit/antrpa" },
 	{ "antrpb",		"unit/antrpb" },

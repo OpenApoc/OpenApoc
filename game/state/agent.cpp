@@ -10,6 +10,9 @@
 namespace OpenApoc
 {
 
+static const unsigned TICKS_PER_PHYSICAL_TRAINING = 4 * TICKS_PER_HOUR;
+static const unsigned TICKS_PER_PSI_TRAINING = 4 * TICKS_PER_HOUR;
+
 sp<AgentType> AgentType::get(const GameState &state, const UString &id)
 {
 	auto it = state.agent_types.find(id);
@@ -230,8 +233,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	s.accuracy = randBoundsInclusive(state.rng, type->min_stats.accuracy, type->max_stats.accuracy);
 	s.reactions =
 	    randBoundsInclusive(state.rng, type->min_stats.reactions, type->max_stats.reactions);
-	s.speed = randBoundsInclusive(state.rng, type->min_stats.speed, type->max_stats.speed);
-	s.restoreTU();
+	s.setSpeed(randBoundsInclusive(state.rng, type->min_stats.speed, type->max_stats.speed));
 	s.stamina = randBoundsInclusive(state.rng, type->min_stats.stamina, type->max_stats.stamina);
 	s.bravery =
 	    randBoundsInclusive(state.rng, type->min_stats.bravery / 10, type->max_stats.bravery / 10) *
@@ -674,6 +676,96 @@ void Agent::updateSpeed()
 	modified_stats.speed = std::max(
 	    8, ((strength + encumbrance) / 2 + current_stats.speed * (strength - encumbrance)) /
 	           (strength + encumbrance));
+}
+
+void Agent::updateModifiedStats()
+{
+	int health = modified_stats.health;
+	modified_stats = current_stats;
+	modified_stats.health = health;
+	updateSpeed();
+}
+
+void Agent::trainPhysical(GameState &state, unsigned ticks)
+{
+	if (!type->can_improve)
+	{
+		return;
+	}
+	trainingPhysicalTicksAccumulated += ticks;
+	while (trainingPhysicalTicksAccumulated >= TICKS_PER_PHYSICAL_TRAINING)
+	{
+		trainingPhysicalTicksAccumulated -= TICKS_PER_PHYSICAL_TRAINING;
+
+		if (randBoundsExclusive(state.rng, 0, 100) >= current_stats.health)
+		{
+			current_stats.health++;
+			modified_stats.health++;
+		}
+		if (randBoundsExclusive(state.rng, 0, 100) >= current_stats.accuracy)
+		{
+			current_stats.accuracy++;
+		}
+		if (randBoundsExclusive(state.rng, 0, 100) >= current_stats.reactions)
+		{
+			current_stats.reactions++;
+		}
+		if (randBoundsExclusive(state.rng, 0, 100) >= current_stats.speed)
+		{
+			current_stats.speed++;
+		}
+		if (randBoundsExclusive(state.rng, 0, 200) >= current_stats.stamina)
+		{
+			current_stats.stamina++;
+		}
+		if (randBoundsExclusive(state.rng, 0, 100) >= current_stats.strength)
+		{
+			current_stats.strength++;
+		}
+		updateModifiedStats();
+	}
+}
+
+void Agent::trainPsi(GameState &state, unsigned ticks)
+{
+	if (!type->can_improve)
+	{
+		return;
+	}
+	trainingPsiTicksAccumulated += ticks;
+	while (trainingPsiTicksAccumulated >= TICKS_PER_PSI_TRAINING)
+	{
+		trainingPsiTicksAccumulated -= TICKS_PER_PSI_TRAINING;
+
+		// FIXME: Ensure correct
+		// Roger Wong gives this info:
+		// - Improve up to 3x base value
+		// - Chance is 100 - (3 x current - initial)
+		// - Hybrids have much higher chance to improve and humans hardly ever improve
+		// This seems very wong (lol)!
+		//	 For example, if initial is 50, no improvement ever possible because 100 - (150-50) = 0 already)
+		//   Or, for initial 10, even at 30 the formula would be 100 - (90-10) = 20% improve chance
+		//   In this formula the bigger is the initial stat, the harder it is to improve
+		// Therefore, we'll use a formula that makes senes and follows what he said. 
+		// Properties of our formula:
+		// - properly gives 0 chance when current = 3x initial
+		// - gives higher chance with higher initial values
+
+		if (randBoundsExclusive(state.rng, 0, 100) < 3 * initial_stats.psi_attack - current_stats.psi_attack)
+		{
+			current_stats.psi_attack += current_stats.psi_energy / 20;
+		}
+		if (randBoundsExclusive(state.rng, 0, 100) < 3 * initial_stats.psi_defence - current_stats.psi_defence)
+		{
+			current_stats.psi_defence += current_stats.psi_energy / 20;
+		}
+		if (randBoundsExclusive(state.rng, 0, 100) < 3 * initial_stats.psi_energy - current_stats.psi_energy)
+		{
+			current_stats.psi_energy++;
+		}
+			
+		updateModifiedStats();
+	}
 }
 
 StateRef<BattleUnitAnimationPack> Agent::getAnimationPack() const

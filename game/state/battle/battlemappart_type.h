@@ -71,6 +71,11 @@ class BattleMapPartType : public StateObject
 	bool independent_structure = false;
 	bool exit = false;
 
+	// All these must be destroyed in alien buildings for the building to be "disabled"
+	bool missionObjective = false;
+	// When reinforcements spawn in alien buildings, they spawn on one of these
+	bool reinforcementSpawner = false;
+
 	// Support parameters
 	// (rules for support are explained in depth in BattleMapPart::findSupport() definition)
 

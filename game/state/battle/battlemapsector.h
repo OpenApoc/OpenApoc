@@ -57,6 +57,8 @@ class BattleMapSector : public StateObject
 
 	UString sectorTilesName;
 	up<BattleMapSectorTiles> tiles;
+
+	std::map<StateRef<AgentType>, std::list<Vec3<int>>> spawnLocations;
 };
 
 class BattleMapSectorTiles

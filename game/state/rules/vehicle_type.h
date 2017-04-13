@@ -17,6 +17,7 @@ class RulesLoader;
 class Image;
 class VoxelMap;
 class BattleMap;
+class AgentType;
 
 class VehicleType : public StateObject
 {
@@ -99,7 +100,12 @@ class VehicleType : public StateObject
 	float aggressiveness = 0;
 	int score = 0;
 	sp<Image> icon;
+
+	// Battle data
+
 	StateRef<BattleMap> battle_map;
+	std::map<StateRef<AgentType>, int> crew_downed;
+	std::map<StateRef<AgentType>, int> crew_deposit;
 
 	// The following (equip screen, equip icon big and small) are only required
 	// for vehicles able to be used by the player

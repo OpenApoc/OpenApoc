@@ -88,7 +88,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	Vec3<int> size;
 
 	StateRef<BattleMap> battle_map;
-
+	
 	std::vector<sp<BattleMapSector::LineOfSightBlock>> losBlocks;
 	// Map of vectors of bools, one bool for every tile, denotes visible tiles (same indexing)
 	std::map<StateRef<Organisation>, std::vector<bool>> visibleTiles;
@@ -336,8 +336,14 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// enemies are hiding where, and so we need to pop notifications again for every enemy
 	std::map<StateRef<Organisation>, std::map<StateRef<BattleUnit>, uint64_t>> lastVisibleTime;
 
-	// List of promoted units, we cannot save game in briefing screen so this is not required
+	// List of promoted units
+	// we cannot save game in briefing screen so this is not saved
 	std::list<StateRef<BattleUnit>> unitsPromoted;
+
+	// List of locations for priority spawning of specific agent types
+	// we cannot save game in briefing screen so this is not saved
+	std::map<StateRef<AgentType>, std::list<Vec3<int>>> spawnLocations;
+
 
 	// Following members are not serialized, but rather are set in initBattle method
 

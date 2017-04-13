@@ -674,6 +674,25 @@ void Battle::initialUnitSpawn(GameState &state)
 		}
 	}
 
+	// Spawn agents with spawn locations provided
+	for (auto &f : state.current_battle->forces)
+	{
+		for (auto &s : f.second.squads)
+		{
+			for (auto &u : s.units)
+			{
+				if (spawnLocations[u->agent->type].empty())
+				{
+					continue;
+				}
+				auto pos = listRandomiser(state.rng, spawnLocations[u->agent->type]);
+				spawnLocations[u->agent->type].remove(pos);
+				auto tile = map->getTile(pos.x, pos.y, pos.z);
+				u->position = tile->getRestingPosition(u->isLarge());
+			}
+		}
+	}
+
 	// Actually spawn agents
 	for (auto &f : state.current_battle->forces)
 	{
@@ -682,7 +701,10 @@ void Battle::initialUnitSpawn(GameState &state)
 			std::vector<sp<BattleUnit>> unitsToSpawn;
 			for (auto &u : s.units)
 			{
-				unitsToSpawn.push_back(u);
+				if (u->position == Vec3<float>{ -1.0, -1.0, -1.0 })
+				{
+					unitsToSpawn.push_back(u);
+				}
 			}
 
 			while (unitsToSpawn.size() > 0)
@@ -1118,6 +1140,7 @@ sp<BattleUnit> Battle::placeUnit(GameState &state, StateRef<Agent> agent)
 	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
 	unit->squadNumber = -1;
 	unit->cloakTicksAccumulated = CLOAK_TICKS_REQUIRED;
+	unit->position = { -1.0, -1.0, -1.0 };
 	units[id] = unit;
 	unit->init(state);
 	return unit;
