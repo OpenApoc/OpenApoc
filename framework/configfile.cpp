@@ -21,12 +21,12 @@ namespace po = boost::program_options;
 namespace OpenApoc
 {
 
-static up<ConfigFile> configInstance;
+static ConfigFile *configInstance = nullptr;
 
 ConfigFile &ConfigFile::getInstance()
 {
 	if (!configInstance)
-		configInstance.reset(new ConfigFile());
+		configInstance = new ConfigFile();
 	return *configInstance;
 }
 
