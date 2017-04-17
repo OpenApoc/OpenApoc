@@ -3243,8 +3243,17 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	}
 
 	// Update Items
+	bool updatedShield = false;
 	for (auto &item : agent->equipment)
 	{
+		if (item->type->type == AEquipmentType::Type::DisruptorShield && item->ammo < item->getPayloadType()->max_ammo)
+		{
+			if (updatedShield)
+			{
+				continue;
+			}
+			updatedShield = true;
+		}
 		item->update(state, ticks);
 	}
 
@@ -3328,8 +3337,17 @@ void BattleUnit::updateTB(GameState &state)
 	}
 
 	// Update Items
+	bool updatedShield = false;
 	for (auto &item : agent->equipment)
 	{
+		if (item->type->type == AEquipmentType::Type::DisruptorShield && item->ammo < item->getPayloadType()->max_ammo)
+		{
+			if (updatedShield)
+			{
+				continue;
+			}
+			updatedShield = true;
+		}
 		item->updateTB(state);
 	}
 

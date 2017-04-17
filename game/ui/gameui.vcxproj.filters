@@ -129,6 +129,12 @@
     <ClCompile Include="battle\battleturnbasedconfirmbox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="general\skirmish.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="general\selectforces.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boot.h">
@@ -243,6 +249,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="battle\battleturnbasedconfirmbox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="general\skirmish.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="general\selectforces.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

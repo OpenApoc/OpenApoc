@@ -896,6 +896,7 @@
 		<member>weapon_types</member>
 		<member>max_ammo</member>
 		<member>recharge</member>
+		<member>rechargeTB</member>
 		<member>speed</member>
 		<member>projectile_sprites</member>
 		<member>damage</member>

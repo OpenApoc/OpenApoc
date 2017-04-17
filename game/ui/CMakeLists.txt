@@ -31,6 +31,8 @@ set (GAMEUI_SOURCE_FILES
 	debugtools/debugmenu.cpp
 	debugtools/formpreview.cpp
 	debugtools/imagepreview.cpp
+	general/skirmish.cpp
+	general/selectforces.cpp
 	general/mapselector.cpp
 	general/difficultymenu.cpp
 	general/ingameoptions.cpp
@@ -71,6 +73,8 @@ set (GAMEUI_HEADER_FILES
 	debugtools/debugmenu.h
 	debugtools/formpreview.h
 	debugtools/imagepreview.h
+	general/skirmish.h
+	general/selectforces.h
 	general/mapselector.h
 	general/difficultymenu.h
 	general/ingameoptions.h

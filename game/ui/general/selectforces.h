@@ -7,30 +7,26 @@
 namespace OpenApoc
 {
 class GameState;
-class EventMessage;
-class CityView;
+class Form;
 class Building;
 class VehicleType;
-class Form;
-class Skirmish;
-class Control;
 class Base;
+class Skirmish;
 
-class MapSelector : public Stage
+class SelectForces : public Stage
 {
   private:
 	sp<Form> menuform;
 
 	Skirmish &skirmish;
 
-	sp<Control> createMapRowBuilding(StateRef<Building> building, sp<GameState> state);
-	sp<Control> createMapRowVehicle(StateRef<VehicleType> vehicle, sp<GameState> state);
-	sp<Control> createMapRowBase(StateRef<Base> base, sp<GameState> state);
+	GameState &state;
 
   public:
-	MapSelector(sp<GameState> state, Skirmish &skirmish);
-	~MapSelector() override;
-
+	  
+	SelectForces(sp<GameState> state, Skirmish &skirmish);
+	~SelectForces() override;
+	
 	// Stage control
 	void begin() override;
 	void pause() override;
@@ -41,4 +37,4 @@ class MapSelector : public Stage
 	void render() override;
 	bool isTransition() override;
 };
-}; // namespace OpenApoc
+}

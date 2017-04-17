@@ -125,7 +125,7 @@ UFO2P::UFO2P(std::string file_name)
 		new DataChunk<CrewData>(file, CREW_ALIEN_BUILDING_OFFSET_START, CREW_ALIEN_BUILDING_OFFSET_END));
 }
 
-void UFO2P::fillCrew(GameState &state, CrewData & crew, std::map<OpenApoc::StateRef<OpenApoc::AgentType>, int> &target)
+void UFO2P::fillCrew(GameState &state, CrewData crew, std::map<OpenApoc::StateRef<OpenApoc::AgentType>, int> &target)
 {
 	if (crew.alien_egg > 0)
 	{

@@ -1,4 +1,5 @@
 #include "game/ui/general/mapselector.h"
+#include "game/ui/general/skirmish.h"
 #include "forms/form.h"
 #include "forms/graphicbutton.h"
 #include "forms/label.h"
@@ -12,6 +13,7 @@
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/vehicle.h"
+#include "game/state/base/base.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/vehicle_type.h"
 #include "game/ui/battle/battlebriefing.h"
@@ -22,9 +24,11 @@
 namespace OpenApoc
 {
 
-MapSelector::MapSelector(sp<GameState> state)
-    : Stage(), menuform(ui().getForm("mapselector")), state(state)
+MapSelector::MapSelector(sp<GameState> state, Skirmish &skirmish)
+    : Stage(), skirmish(skirmish), menuform(ui().getForm("mapselector"))
 {
+	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
+
 	auto listbox = menuform->findControlTyped<ListBox>("LISTBOX_MAPS");
 	std::set<sp<BattleMap>> seen_maps;
 	for (auto &v : state->vehicle_types)
@@ -32,7 +36,7 @@ MapSelector::MapSelector(sp<GameState> state)
 		if (!v.second->battle_map || seen_maps.find(v.second->battle_map) != seen_maps.end())
 			continue;
 		seen_maps.insert(v.second->battle_map);
-		listbox->addItem(createMapRowVehicle(v.second, state));
+		listbox->addItem(createMapRowVehicle({ state.get(), v.first }, state));
 	}
 	for (auto &c : state->cities)
 	{
@@ -41,52 +45,52 @@ MapSelector::MapSelector(sp<GameState> state)
 			if (seen_maps.find(b.second->battle_map) != seen_maps.end())
 				continue;
 			seen_maps.insert(b.second->battle_map);
-			listbox->addItem(createMapRowBuilding(b.second, state));
+			listbox->addItem(createMapRowBuilding({ state.get(),b.first }, state));
 		}
+	}
+	for (auto &b : state->player_bases)
+	{
+		listbox->addItem(createMapRowBase({ state.get(),b.first }, state));
 	}
 }
 
 MapSelector::~MapSelector() = default;
 
-std::future<void> loadBattleBuilding(sp<Building> building, sp<GameState> state, bool raid)
-{
-
-	auto loadTask = fw().threadPoolEnqueue([building, state, raid]() -> void {
-		std::list<StateRef<Agent>> agents;
-		for (auto &a : state->agents)
-			if (a.second->type->role == AgentType::Role::Soldier &&
-			    a.second->owner == state->getPlayer())
-				agents.emplace_back(state.get(), a.second);
-
-		StateRef<Organisation> org = raid ? building->owner : state->getAliens();
-		StateRef<Building> bld = {state.get(), building};
-		StateRef<Vehicle> veh = {};
-
-		Battle::beginBattle(*state.get(), org, agents, veh, bld);
-	});
-
-	return loadTask;
-}
-
-sp<Control> MapSelector::createMapRowBuilding(sp<Building> building, sp<GameState> state)
+sp<Control> MapSelector::createMapRowBuilding(StateRef<Building> building, sp<GameState> state)
 {
 	auto control = mksp<Control>();
 
 	const int HEIGHT = 21;
 
-	auto date = control->createChild<Label>(UString(""), ui().getFont("smalfont"));
-	date->Location = {0, 0};
-	date->Size = {100, HEIGHT};
-	date->TextVAlign = VerticalAlignment::Centre;
+	auto text = control->createChild<Label>(format("[%s Building] %s [%s]", building->owner == state->getAliens() ? "Alien" : "Human", building->name, building->battle_map.id), ui().getFont("smalfont"));
+	text->Location = { 0, 0 };
+	text->Size = { 488, HEIGHT };
+	text->TextVAlign = VerticalAlignment::Centre;
 
-	auto time = control->createChild<Label>(UString(""), ui().getFont("smalfont"));
-	time->Location = date->Location + Vec2<int>{date->Size.x, 0};
-	time->Size = {60, HEIGHT};
-	time->TextVAlign = VerticalAlignment::Centre;
+	{
+		auto btnImage = fw().data->loadImage(
+			"PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:57:ui/menuopt.pal");
+		auto btnLocation = control->createChild<GraphicButton>(btnImage, btnImage);
+		btnLocation->Location = text->Location + Vec2<int>{text->Size.x, 0};
+		btnLocation->Size = { 22, HEIGHT };
+		btnLocation->addCallback(FormEventType::ButtonClick, [building,state, this](Event *) {
+			skirmish.setLocation(building);
+			fw().stageQueueCommand({ StageCmd::Command::POP });
+		});
+	}
 
-	auto text = control->createChild<Label>(building->name, ui().getFont("smalfont"));
-	text->Location = time->Location + Vec2<int>{time->Size.x, 0};
-	text->Size = {328, HEIGHT};
+	return control;
+}
+
+sp<Control> MapSelector::createMapRowVehicle(StateRef<VehicleType> vehicle, sp<GameState> state)
+{
+	auto control = mksp<Control>();
+
+	const int HEIGHT = 21;
+
+	auto text = control->createChild<Label>(format("[UFO] %s [%s]",vehicle->name, vehicle->battle_map.id), ui().getFont("smalfont"));
+	text->Location = {0, 0};
+	text->Size = {488, HEIGHT};
 	text->TextVAlign = VerticalAlignment::Centre;
 
 	{
@@ -95,101 +99,42 @@ sp<Control> MapSelector::createMapRowBuilding(sp<Building> building, sp<GameStat
 		auto btnLocation = control->createChild<GraphicButton>(btnImage, btnImage);
 		btnLocation->Location = text->Location + Vec2<int>{text->Size.x, 0};
 		btnLocation->Size = {22, HEIGHT};
-		btnLocation->addCallback(FormEventType::ButtonClick, [building, state](Event *) {
-			fw().stageQueueCommand(
-			    {StageCmd::Command::PUSH,
-			     mksp<BattleBriefing>(state, building->owner, Building::getId(*state, building),
-			                          true, true, loadBattleBuilding(building, state, true))});
+		btnLocation->addCallback(FormEventType::ButtonClick, [vehicle, state, this](Event *) {
+			skirmish.setLocation(vehicle);
+			fw().stageQueueCommand({ StageCmd::Command::POP });
 		});
-		if (building->owner != state->getAliens())
-		{
-			btnLocation = control->createChild<GraphicButton>(btnImage, btnImage);
-			btnLocation->Location = text->Location + Vec2<int>{text->Size.x - 22, 0};
-			btnLocation->Size = {22, HEIGHT};
-			btnLocation->addCallback(FormEventType::ButtonClick, [building, state](Event *) {
-				fw().stageQueueCommand(
-				    {StageCmd::Command::PUSH,
-				     mksp<BattleBriefing>(state, state->getAliens(),
-				                          Building::getId(*state, building), true, false,
-				                          loadBattleBuilding(building, state, false))});
-			});
-		}
 	}
 
 	return control;
 }
 
-std::future<void> loadBattleVehicle(sp<VehicleType> vehicle, sp<GameState> state)
-{
-
-	auto loadTask = fw().threadPoolEnqueue([vehicle, state]() -> void {
-		std::list<StateRef<Agent>> agents;
-		for (auto &a : state->agents)
-			if (a.second->type->role == AgentType::Role::Soldier &&
-			    a.second->owner == state->getPlayer())
-				agents.emplace_back(state.get(), a.second);
-
-		StateRef<Organisation> org = {state.get(), UString("ORG_ALIEN")};
-		auto v = mksp<Vehicle>();
-
-		auto vID = Vehicle::generateObjectID(*state);
-
-		v->type = {state.get(), vehicle};
-		v->name = format("%s %d", v->type->name, ++v->type->numCreated);
-
-		state->vehicles[vID] = v;
-		StateRef<Vehicle> ufo = {state.get(), vID};
-		StateRef<Vehicle> veh = {};
-
-		Battle::beginBattle(*state.get(), org, agents, veh, ufo);
-	});
-
-	return loadTask;
-}
-
-sp<Control> MapSelector::createMapRowVehicle(sp<VehicleType> vehicle, sp<GameState> state)
+sp<Control> MapSelector::createMapRowBase(StateRef<Base> base, sp<GameState> state)
 {
 	auto control = mksp<Control>();
 
 	const int HEIGHT = 21;
 
-	auto date = control->createChild<Label>(UString(""), ui().getFont("smalfont"));
-	date->Location = {0, 0};
-	date->Size = {100, HEIGHT};
-	date->TextVAlign = VerticalAlignment::Centre;
-
-	auto time = control->createChild<Label>(UString(""), ui().getFont("smalfont"));
-	time->Location = date->Location + Vec2<int>{date->Size.x, 0};
-	time->Size = {60, HEIGHT};
-	time->TextVAlign = VerticalAlignment::Centre;
-
-	auto text = control->createChild<Label>(vehicle->name, ui().getFont("smalfont"));
-	text->Location = time->Location + Vec2<int>{time->Size.x, 0};
-	text->Size = {328, HEIGHT};
+	auto text = control->createChild<Label>(format("[Base] %s", base->name), ui().getFont("smalfont"));
+	text->Location = { 0, 0 };
+	text->Size = { 488, HEIGHT };
 	text->TextVAlign = VerticalAlignment::Centre;
 
 	{
 		auto btnImage = fw().data->loadImage(
-		    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:57:ui/menuopt.pal");
+			"PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:57:ui/menuopt.pal");
 		auto btnLocation = control->createChild<GraphicButton>(btnImage, btnImage);
 		btnLocation->Location = text->Location + Vec2<int>{text->Size.x, 0};
-		btnLocation->Size = {22, HEIGHT};
-		btnLocation->addCallback(FormEventType::ButtonClick, [vehicle, state](Event *) {
-			fw().stageQueueCommand(
-			    {StageCmd::Command::PUSH,
-			     mksp<BattleBriefing>(state, state->getAliens(),
-			                          VehicleType::getId(*state, vehicle), false, false,
-			                          loadBattleVehicle(vehicle, state))});
+		btnLocation->Size = { 22, HEIGHT };
+		btnLocation->addCallback(FormEventType::ButtonClick, [base, state, this](Event *) {
+			skirmish.setLocation(base);
+			fw().stageQueueCommand({ StageCmd::Command::POP });
 		});
 	}
 
 	return control;
 }
 
-void MapSelector::begin()
-{
-	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
-}
+void MapSelector::begin() {}
 
 void MapSelector::pause() {}
 

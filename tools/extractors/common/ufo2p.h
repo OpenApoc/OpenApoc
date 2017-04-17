@@ -102,7 +102,7 @@ class UFO2P
 		return VehicleType::getPrefix() + canon_string(this->vehicle_names->get(idx));
 	}
 
-	static void fillCrew(GameState &state, CrewData &crew, std::map<OpenApoc::StateRef<OpenApoc::AgentType>, int> &target);
+	static void fillCrew(GameState &state, CrewData crew, std::map<OpenApoc::StateRef<OpenApoc::AgentType>, int> &target);
 
 };
 

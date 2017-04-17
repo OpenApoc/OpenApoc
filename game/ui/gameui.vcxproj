@@ -51,6 +51,8 @@
     <ClCompile Include="general\mainmenu.cpp" />
     <ClCompile Include="general\messagebox.cpp" />
     <ClCompile Include="general\optionsmenu.cpp" />
+    <ClCompile Include="general\selectforces.cpp" />
+    <ClCompile Include="general\skirmish.cpp" />
     <ClCompile Include="general\videoscreen.cpp" />
     <ClCompile Include="tileview\battletileview.cpp" />
     <ClCompile Include="tileview\citytileview.cpp" />
@@ -91,6 +93,8 @@
     <ClInclude Include="general\mainmenu.h" />
     <ClInclude Include="general\messagebox.h" />
     <ClInclude Include="general\optionsmenu.h" />
+    <ClInclude Include="general\selectforces.h" />
+    <ClInclude Include="general\skirmish.h" />
     <ClInclude Include="general\videoscreen.h" />
     <ClInclude Include="tileview\battletileview.h" />
     <ClInclude Include="tileview\citytileview.h" />

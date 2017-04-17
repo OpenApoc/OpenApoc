@@ -210,17 +210,24 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	agent->type = type;
 	agent->gender = probabilityMapRandomizer(state.rng, type->gender_chance);
 
-	auto firstNameList = this->first_names.find(agent->gender);
-	if (firstNameList == this->first_names.end())
+	if (type->playable)
 	{
-		LogError("No first name list for gender");
-		return nullptr;
+
+		auto firstNameList = this->first_names.find(agent->gender);
+		if (firstNameList == this->first_names.end())
+		{
+			LogError("No first name list for gender");
+			return nullptr;
+		}
+
+		auto firstName = listRandomiser(state.rng, firstNameList->second);
+		auto secondName = listRandomiser(state.rng, this->second_names);
+		agent->name = format("%s %s", firstName, secondName);
 	}
-
-	auto firstName = listRandomiser(state.rng, firstNameList->second);
-	auto secondName = listRandomiser(state.rng, this->second_names);
-	agent->name = format("%s %s", firstName, secondName);
-
+	else
+	{
+		agent->name = type->name;
+	}
 	// FIXME: When rng is fixed we can remove this unnesecary kludge
 	// RNG is bad at generating small numbers, so we generate more and divide
 	agent->appearance = randBoundsExclusive(state.rng, 0, type->appearance_count * 10) / 10;

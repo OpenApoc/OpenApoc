@@ -244,19 +244,14 @@ void Battle::initBattle(GameState &state, bool first)
 		f->grow(state);
 		f->grow(state);
 	}
-	// Update units
+	// Update units (uses TB function as that's the only thing that needs update)
 	for (auto &u : units)
 	{
-		u.second->update(state, 1);
+		u.second->updateTB(state);
 	}
 	// Every thing TB
 	if (state.current_battle->mode == Battle::Mode::TurnBased)
 	{
-		// Update units TB
-		for (auto &u : units)
-		{
-			u.second->updateTB(state);
-		}
 		state.current_battle->beginTurn(state);
 	}
 }
@@ -285,10 +280,10 @@ void Battle::initMap()
 		{
 			this->map->addObjectToMap(h);
 		}
-	}
-	for (auto &o : this->items)
-	{
-		this->map->addObjectToMap(o);
+		for (auto &o : this->items)
+		{
+			this->map->addObjectToMap(o);
+		}
 	}
 	for (auto &u : this->units)
 	{
@@ -1831,6 +1826,7 @@ void Battle::abortMission(GameState &state)
 void Battle::checkMissionEnd(GameState &state, bool retreated, bool forceReCheck)
 {
 	LogWarning("FIXME: Victory/Loss when finishing alien building mission");
+	auto endBeginTimer = std::max((unsigned)1, missionEndTimer);
 	if (forceReCheck)
 	{
 		missionEndTimer = 0;
@@ -1861,12 +1857,12 @@ void Battle::checkMissionEnd(GameState &state, bool retreated, bool forceReCheck
 	if (orgsAlive.find(player) == orgsAlive.end())
 	{
 		playerWon = false;
-		missionEndTimer = 1;
+		missionEndTimer = endBeginTimer;
 	}
 	else
 	{
 		playerWon = true;
-		missionEndTimer = 1;
+		missionEndTimer = endBeginTimer;
 		for (auto &org : orgsAlive)
 		{
 			if (org == player)

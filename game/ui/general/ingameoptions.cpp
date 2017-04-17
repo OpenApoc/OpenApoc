@@ -15,7 +15,7 @@
 #include "game/ui/battle/battledebriefing.h"
 #include "game/ui/city/cityview.h"
 #include "game/ui/general/mainmenu.h"
-#include "game/ui/general/mapselector.h"
+#include "game/ui/general/skirmish.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/savemenu.h"
 
@@ -43,7 +43,7 @@ InGameOptions::InGameOptions(sp<GameState> state)
 	    ->setChecked(state->showSelectableBounds);
 
 	menuform->findControlTyped<TextButton>("BUTTON_BATTLE")
-	    ->setText(state->current_battle ? "Exit Battle" : "Enter Battle");
+	    ->setText(state->current_battle ? "Exit Battle" : "Skirmish Mode");
 }
 
 InGameOptions::~InGameOptions()
@@ -154,7 +154,7 @@ void InGameOptions::eventOccurred(Event *e)
 			}
 			else
 			{
-				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<MapSelector>(state)});
+				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<Skirmish>(state)});
 			}
 		}
 	}
