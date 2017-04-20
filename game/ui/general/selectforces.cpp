@@ -212,11 +212,13 @@ SelectForces::SelectForces(sp<GameState> state, Skirmish &skirmish,
 	{
 		if (*guards == -1)
 		{
-			menuform->findControlTyped<ScrollBar>("NUM_GUARD_SLIDER")->setVisible(false);
-			menuform->findControlTyped<Label>("NUM_GUARD")->setVisible(false);
-			menuform->findControlTyped<CheckBox>("DEFAULT_GUARDS")->setVisible(false);
-			menuform->findControlTyped<Label>("GUARDS_LABEL1")->setVisible(false);
-			menuform->findControlTyped<Label>("GUARDS_LABEL2")->setVisible(false);
+			menuform->findControl("NUM_GUARD_SLIDER")->setVisible(false);
+			menuform->findControl("NUM_GUARD")->setVisible(false);
+			menuform->findControl("DEFAULT_GUARDS")->setVisible(false);
+			menuform->findControl("GUARDS_LABEL1")->setVisible(false);
+			menuform->findControl("GUARDS_LABEL2")->setVisible(false);
+			menuform->findControl("GUARDS_BUTTON1")->setVisible(false);
+			menuform->findControl("GUARDS_BUTTON2")->setVisible(false);
 		}
 		else
 		{
@@ -231,11 +233,13 @@ SelectForces::SelectForces(sp<GameState> state, Skirmish &skirmish,
 	{
 		if (*civilians == -1)
 		{
-			menuform->findControlTyped<ScrollBar>("NUM_CIVILIAN_SLIDER")->setVisible(false);
-			menuform->findControlTyped<Label>("NUM_CIVILIAN")->setVisible(false);
-			menuform->findControlTyped<CheckBox>("DEFAULT_CIVILIANS")->setVisible(false);
-			menuform->findControlTyped<Label>("CIVILIANS_LABEL1")->setVisible(false);
-			menuform->findControlTyped<Label>("CIVILIANS_LABEL2")->setVisible(false);
+			menuform->findControl("NUM_CIVILIAN_SLIDER")->setVisible(false);
+			menuform->findControl("NUM_CIVILIAN")->setVisible(false);
+			menuform->findControl("DEFAULT_CIVILIANS")->setVisible(false);
+			menuform->findControl("CIVILIANS_LABEL1")->setVisible(false);
+			menuform->findControl("CIVILIANS_LABEL2")->setVisible(false);
+			menuform->findControl("CIVILIANS_BUTTON1")->setVisible(false);
+			menuform->findControl("CIVILIANS_BUTTON2")->setVisible(false);
 		}
 		else
 		{
@@ -364,10 +368,10 @@ void SelectForces::eventOccurred(Event *e)
 			fw().stageQueueCommand({StageCmd::Command::POP});
 			skirmish.goToBattle(
 			    aliens.empty() ? nullptr : &aliens,
-			    menuform->findControlTyped<CheckBox>("DEFAULT_GUARDS")->isChecked() ? &guards
-			                                                                        : nullptr,
-			    menuform->findControlTyped<CheckBox>("DEFAULT_CIVILIANS")->isChecked() ? &civilians
-			                                                                           : nullptr);
+			    menuform->findControlTyped<CheckBox>("DEFAULT_GUARDS")->isChecked() ? nullptr
+			                                                                        : &guards,
+			    menuform->findControlTyped<CheckBox>("DEFAULT_CIVILIANS")->isChecked() ? nullptr
+			                                                                           : &civilians);
 			return;
 		}
 	}

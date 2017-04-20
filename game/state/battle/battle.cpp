@@ -254,6 +254,8 @@ void Battle::initBattle(GameState &state, bool first)
 	{
 		state.current_battle->beginTurn(state);
 	}
+	// Maybe this battle has no enemies
+	checkMissionEnd(state, false);
 }
 
 void Battle::initMap()

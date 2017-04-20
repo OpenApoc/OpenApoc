@@ -447,13 +447,13 @@
           <size width="105" height="15"/>
           <range min="0" max="36"/>
         </scroll>
-        <graphicbutton scrollprev="NUM_GUARD_SLIDER">
+        <graphicbutton id="GUARDS_BUTTON1" scrollprev="NUM_GUARD_SLIDER">
           <position x="46" y="403"/>
           <size width="16" height="20"/>
             <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
           <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
         </graphicbutton>
-        <graphicbutton scrollnext="NUM_GUARD_SLIDER">
+        <graphicbutton  id="GUARDS_BUTTON2" scrollnext="NUM_GUARD_SLIDER">
           <position x="167" y="403"/>
           <size width="17" height="20"/>
             <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
@@ -490,13 +490,13 @@
           <size width="105" height="15"/>
           <range min="0" max="36"/>
         </scroll>
-        <graphicbutton scrollprev="NUM_CIVILIAN_SLIDER">
+        <graphicbutton   id="CIVILIANS_BUTTON1" scrollprev="NUM_CIVILIAN_SLIDER">
           <position x="216" y="403"/>
           <size width="16" height="20"/>
             <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
           <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
         </graphicbutton>
-        <graphicbutton scrollnext="NUM_CIVILIAN_SLIDER">
+        <graphicbutton id="CIVILIANS_BUTTON2" scrollnext="NUM_CIVILIAN_SLIDER">
           <position x="337" y="403"/>
           <size width="17" height="20"/>
             <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
