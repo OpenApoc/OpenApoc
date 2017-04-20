@@ -1134,6 +1134,21 @@ void BattleView::update()
 	// Update turn based stuff
 	if (!realTime)
 	{
+		if (state->current_battle->hotseat)
+		{
+			if (state->current_battle->currentActiveOrganisation != state->current_battle->currentPlayer && state->current_battle->currentActiveOrganisation != state->getCivilian())
+			{
+				fw().stageQueueCommand(
+				{ StageCmd::Command::PUSH,
+					mksp<MessageBox>("Next Turn",format( "%s, it is your turn!", state->current_battle->currentActiveOrganisation->name),
+						MessageBox::ButtonOptions::Ok, [this] {
+					state->current_battle->currentPlayer = state->current_battle->currentActiveOrganisation;
+				}) });
+				updateHiddenForm();
+				return;
+			}
+		}
+
 		// Figure out wether our/not our turn state has changed
 		bool notMyTurn = endTurnRequested || battle.turnEndAllowed ||
 		                 !battle.interruptUnits.empty() || !battle.interruptQueue.empty() ||
@@ -1186,14 +1201,7 @@ void BattleView::update()
 	    battle.currentActiveOrganisation != battle.currentPlayer &&
 	    battle.ticksWithoutSeenAction[battle.currentPlayer] > TICKS_HIDE_DISPLAY)
 	{
-		hideDisplay = true;
-		hiddenForm->findControlTyped<Label>("TEXT_TURN")->setText(format("%d", battle.currentTurn));
-		hiddenForm->findControlTyped<Label>("TEXT_SIDE")
-		    ->setText(battle.currentActiveOrganisation->name);
-		hiddenForm->findControlTyped<Label>("TEXT_PLAYER")->setText("Computer");
-		hiddenForm->findControlTyped<Graphic>("HIDDEN_IMAGE")
-		    ->setImage(fw().data->loadImage(vectorRandomizer(state->rng, HIDDEN_BACKGROUNDS)));
-		updateHiddenBar();
+		updateHiddenForm();
 	}
 	unsigned int ticks = 0;
 	switch (updateSpeed)
@@ -1824,6 +1832,19 @@ void BattleView::updateTBButtons()
 	baseForm->findControlTyped<GraphicButton>("BUTTON_ENDTURN")->setVisible(visible);
 	baseForm->findControlTyped<RadioButton>("BUTTON_MOVE_GROUP")->setVisible(visible);
 	baseForm->findControlTyped<RadioButton>("BUTTON_MOVE_INDIVIDUALLY")->setVisible(visible);
+}
+
+void BattleView::updateHiddenForm()
+{
+	hideDisplay = true;
+	hiddenForm->findControlTyped<Label>("TEXT_TURN")->setText(format("%d", battle.currentTurn));
+	hiddenForm->findControlTyped<Label>("TEXT_SIDE")
+		->setText(battle.currentActiveOrganisation->name);
+	bool player = state->current_battle->hotseat && state->current_battle->currentActiveOrganisation != state->getCivilian();
+	hiddenForm->findControlTyped<Label>("TEXT_PLAYER")->setText(player ? "Player" : "Computer");
+	hiddenForm->findControlTyped<Graphic>("HIDDEN_IMAGE")
+		->setImage(fw().data->loadImage(vectorRandomizer(state->rng, HIDDEN_BACKGROUNDS)));
+	updateHiddenBar();
 }
 
 void BattleView::refreshDelayText()
@@ -2873,8 +2894,7 @@ void BattleView::handleMouseDown(Event *e)
 		    screenToTileCoords(Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
 		setScreenCenterTile({clickTile.x, clickTile.y});
 	}
-	else if (e->type() == EVENT_MOUSE_DOWN &&
-	         (Event::isPressed(e->mouse().Button, Event::MouseButton::Middle)))
+	else if (Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
 	{
 		// CHEAT - move unit to mouse
 		if (!battle.battleViewSelectedUnits.empty())
@@ -2882,15 +2902,14 @@ void BattleView::handleMouseDown(Event *e)
 			selectionState = BattleSelectionState::TeleportLeft;
 		}
 	}
-	else if (e->type() == EVENT_MOUSE_DOWN &&
-	         (Event::isPressed(e->mouse().Button, Event::MouseButton::Left) ||
-	          Event::isPressed(e->mouse().Button, Event::MouseButton::Right)))
+	else if (Event::isPressed(e->mouse().Button, Event::MouseButton::Left) ||
+	          Event::isPressed(e->mouse().Button, Event::MouseButton::Right))
 	{
 		auto buttonPressed = Event::isPressed(e->mouse().Button, Event::MouseButton::Left)
 		                         ? Event::MouseButton::Left
 		                         : Event::MouseButton::Right;
 
-		auto player = state->getPlayer();
+		auto player = state->current_battle->currentPlayer;
 		// If a click has not been handled by a form it's in the map.
 		auto t = getSelectedTilePosition();
 		auto objsPresent = map.getTile(t.x, t.y, t.z)->getUnits(true);

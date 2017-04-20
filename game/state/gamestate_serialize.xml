@@ -439,6 +439,7 @@
 		<member>aiBlock</member>
 		<member>currentPlayer</member>
 		<member>currentActiveOrganisation</member>
+		<member>hotseat</member>
 		<member>currentTurn</member>
 		<member>ticksWithoutAction</member>
 		<member>ticksWithoutSeenAction</member>

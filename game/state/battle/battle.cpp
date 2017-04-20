@@ -369,7 +369,7 @@ bool Battle::initialMapCheck(GameState &state, std::list<StateRef<Agent>> agents
 		}
 	}
 
-	return spawnPoints / spawnPointsRequired >= 4;
+	return spawnPointsRequired == 0 || spawnPoints / spawnPointsRequired >= 4;
 }
 
 void linkUpList(std::list<BattleMapPart *> list)
@@ -2120,7 +2120,7 @@ void Battle::giveInterruptChanceToUnit(GameState &state, StateRef<BattleUnit> gi
 }
 
 // To be called when battle must be started, before showing battle briefing screen
-void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organisation,
+void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> target_organisation,
                          std::list<StateRef<Agent>> &player_agents,
                          const std::map<StateRef<AgentType>, int> *aliens,
                          StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft)
@@ -2133,12 +2133,15 @@ void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organis
 	auto b = BattleMap::createBattle(state, target_organisation, player_agents, aliens,
 	                                 player_craft, target_craft);
 	if (!b)
+	{
 		return;
+	}
+	b->hotseat = hotseat;
 	state.current_battle = b;
 }
 
 // To be called when battle must be started, before showing battle briefing screen
-void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organisation,
+void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> target_organisation,
                          std::list<StateRef<Agent>> &player_agents,
                          const std::map<StateRef<AgentType>, int> *aliens, const int *guards,
                          const int *civilians, StateRef<Vehicle> player_craft,
@@ -2152,7 +2155,10 @@ void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organis
 	auto b = BattleMap::createBattle(state, target_organisation, player_agents, aliens, guards,
 	                                 civilians, player_craft, target_building);
 	if (!b)
+	{
 		return;
+	}
+	b->hotseat = hotseat;
 	state.current_battle = b;
 }
 
@@ -2166,6 +2172,7 @@ void Battle::enterBattle(GameState &state)
 	}
 
 	auto &b = state.current_battle;
+	b->hotseat = b->hotseat && b->mode == Battle::Mode::TurnBased;
 
 	state.current_battle->initialUnitSpawn(state);
 

@@ -89,7 +89,7 @@ UString GameAgentEvent::message()
 		case GameEventType::UnknownDied:
 			return format("%s", tr("Unknown Unit has died"));
 		case GameEventType::AgentCriticallyWounded:
-			return format("%s: %s", tr("Unit critically wounded") + agent->name);
+			return format("%s: %s", tr("Unit critically wounded"), agent->name);
 		case GameEventType::AgentBadlyInjured:
 			return format("%s %s", tr("Unit badly injured:"), agent->name);
 		case GameEventType::AgentInjured:

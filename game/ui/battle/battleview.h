@@ -152,6 +152,7 @@ class BattleView : public BattleTileView
 	void updateLayerButtons();
 	void updateSoldierButtons();
 	void updateTBButtons();
+	void updateHiddenForm();
 
 	void refreshDelayText();
 	void refreshRangeText();

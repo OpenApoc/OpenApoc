@@ -335,7 +335,7 @@
           <image>BUTTON_CHECKBOX_FALSE</image>
           <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
         </checkbox>
-	  <label  text = "Extermination mode">
+	  <label  text = "Raid mode">
         <position x="246" y="300"/>
         <size width="110" height="16"/>
         <alignment horizontal="left" vertical="top"/>

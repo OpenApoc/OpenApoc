@@ -27,10 +27,10 @@ class Skirmish : public Stage
 	void clearLocation();
 	void updateLocationLabel();
 
-	void battleInBuilding(StateRef<Base> playerBase, StateRef<Building> building, bool raid,
+	void battleInBuilding(bool hotseat, StateRef<Base> playerBase, StateRef<Building> building, bool raid,
 	                      std::map<StateRef<AgentType>, int> *aliens, int *guards, int *civilians);
-	void battleInBase(StateRef<Base> base, std::map<StateRef<AgentType>, int> *aliens);
-	void battleInVehicle(StateRef<Base> playerBase, StateRef<VehicleType>, std::map<StateRef<AgentType>, int> *aliens);
+	void battleInBase(bool hotseat, StateRef<Base> base, std::map<StateRef<AgentType>, int> *aliens);
+	void battleInVehicle(bool hotseat, StateRef<Base> playerBase, StateRef<VehicleType>, std::map<StateRef<AgentType>, int> *aliens);
 
   public:
 	Skirmish(sp<GameState> state);
@@ -44,7 +44,7 @@ class Skirmish : public Stage
 
 	void goToBattle(std::map<StateRef<AgentType>, int> *aliens = nullptr, int *guards = nullptr,
 	                int *civilians = nullptr);
-	void customizeForces();
+	void customizeForces(bool force = false);
 
 	// Stage control
 	void begin() override;

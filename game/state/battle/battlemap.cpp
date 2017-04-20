@@ -215,7 +215,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				for (int i = 0; i < numGuards; i++)
 				{
 					otherParticipants.emplace_back(
-					    target_organisation,
+						building->owner,
 					    listRandomiser(state.rng, building->owner->guard_types));
 				}
 
