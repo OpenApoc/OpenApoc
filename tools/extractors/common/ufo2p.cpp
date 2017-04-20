@@ -118,14 +118,15 @@ UFO2P::UFO2P(std::string file_name)
 	    file, PROJECTILESPRITES_DATA_UFO2P_OFFSET_START, PROJECTILESPRITES_DATA_UFO2P_OFFSET_END));
 
 	this->crew_ufo_downed.reset(
-		new DataChunk<CrewData>(file, CREW_UFO_DOWNED_OFFSET_START, CREW_UFO_DOWNED_OFFSET_END));
+	    new DataChunk<CrewData>(file, CREW_UFO_DOWNED_OFFSET_START, CREW_UFO_DOWNED_OFFSET_END));
 	this->crew_ufo_deposit.reset(
-		new DataChunk<CrewData>(file, CREW_UFO_DEPOSIT_OFFSET_START, CREW_UFO_DEPOSIT_OFFSET_END));
-	this->crew_alien_building.reset(
-		new DataChunk<CrewData>(file, CREW_ALIEN_BUILDING_OFFSET_START, CREW_ALIEN_BUILDING_OFFSET_END));
+	    new DataChunk<CrewData>(file, CREW_UFO_DEPOSIT_OFFSET_START, CREW_UFO_DEPOSIT_OFFSET_END));
+	this->crew_alien_building.reset(new DataChunk<CrewData>(file, CREW_ALIEN_BUILDING_OFFSET_START,
+	                                                        CREW_ALIEN_BUILDING_OFFSET_END));
 }
 
-void UFO2P::fillCrew(GameState &state, CrewData crew, std::map<OpenApoc::StateRef<OpenApoc::AgentType>, int> &target)
+void UFO2P::fillCrew(GameState &state, CrewData crew,
+                     std::map<OpenApoc::StateRef<OpenApoc::AgentType>, int> &target)
 {
 	if (crew.alien_egg > 0)
 	{

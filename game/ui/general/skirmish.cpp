@@ -1,91 +1,112 @@
 #include "game/ui/general/skirmish.h"
-#include "forms/form.h"
 #include "forms/checkbox.h"
-#include "game/ui/general/mapselector.h"
-#include "game/ui/general/selectforces.h"
+#include "forms/form.h"
+#include "forms/label.h"
+#include "forms/scrollbar.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
+#include "game/state/base/base.h"
+#include "game/state/battle/battle.h"
+#include "game/state/battle/battlemap.h"
+#include "game/state/city/building.h"
+#include "game/state/city/vehicle.h"
+#include "game/state/gamestate.h"
+#include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/vehicle_type.h"
 #include "game/ui/battle/battlebriefing.h"
-#include "game/state/city/vehicle.h"
-#include "game/state/city/building.h"
-#include "game/state/base/base.h"
-#include "game/state/gamestate.h"
-#include "forms/scrollbar.h"
-#include "game/state/battle/battlemap.h"
-#include "game/state/battle/battle.h"
-#include "forms/label.h"
+#include "game/ui/general/mapselector.h"
+#include "game/ui/general/selectforces.h"
 namespace OpenApoc
 {
-	
-Skirmish::Skirmish(sp<GameState> state)
-: Stage(), state(*state), menuform(ui().getForm("skirmish"))
+
+Skirmish::Skirmish(sp<GameState> state) : Stage(), state(*state), menuform(ui().getForm("skirmish"))
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 	updateLocationLabel();
 	menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")
-		->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
-		menuform->findControlTyped<Label>("NUM_HUMANS")->setText(format("%d", menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")->getValue()));
-	});
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+		    menuform->findControlTyped<Label>("NUM_HUMANS")
+		        ->setText(format(
+		            "%d", menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")->getValue()));
+		});
 	menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")
-		->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
-		menuform->findControlTyped<Label>("NUM_HYBRIDS")->setText(format("%d", menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")->getValue()));
-	});
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+		    menuform->findControlTyped<Label>("NUM_HYBRIDS")
+		        ->setText(format(
+		            "%d", menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")->getValue()));
+		});
 	menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")
-		->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
-		menuform->findControlTyped<Label>("NUM_ANDROIDS")->setText(format("%d", menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")->getValue()));
-	});
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+		    menuform->findControlTyped<Label>("NUM_ANDROIDS")
+		        ->setText(format(
+		            "%d",
+		            menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")->getValue()));
+		});
 	menuform->findControlTyped<ScrollBar>("DAYS_PHYSICAL_SLIDER")
-		->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
-		menuform->findControlTyped<Label>("DAYS_PHYSICAL")->setText(format("%d", menuform->findControlTyped<ScrollBar>("DAYS_PHYSICAL_SLIDER")->getValue()));
-	});
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+		    menuform->findControlTyped<Label>("DAYS_PHYSICAL")
+		        ->setText(format(
+		            "%d",
+		            menuform->findControlTyped<ScrollBar>("DAYS_PHYSICAL_SLIDER")->getValue()));
+		});
 	menuform->findControlTyped<ScrollBar>("DAYS_PSI_SLIDER")
-		->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
-		menuform->findControlTyped<Label>("DAYS_PSI")->setText(format("%d", menuform->findControlTyped<ScrollBar>("DAYS_PSI_SLIDER")->getValue()));
-	});
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+		    menuform->findControlTyped<Label>("DAYS_PSI")
+		        ->setText(format(
+		            "%d", menuform->findControlTyped<ScrollBar>("DAYS_PSI_SLIDER")->getValue()));
+		});
 	menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
-		->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
-		menuform->findControlTyped<Label>("PLAYER_TECH")->setText(menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->getValue() == 0 ? "NO" : format("%d", menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->getValue()));
-	});
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+		    menuform->findControlTyped<Label>("PLAYER_TECH")
+		        ->setText(
+		            menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->getValue() == 0
+		                ? "NO"
+		                : format("%d", menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
+		                                   ->getValue()));
+		});
 	menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")
-		->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
-		menuform->findControlTyped<Label>("ALIEN_SCORE")->setText(format("%dK", menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")->getValue()));
-	});
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+		    menuform->findControlTyped<Label>("ALIEN_SCORE")
+		        ->setText(format(
+		            "%dK",
+		            menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")->getValue()));
+		});
 	menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")
-		->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
-		menuform->findControlTyped<Label>("ORG_SCORE")->setText(format("%d", menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")->getValue()));
-	});
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+		    menuform->findControlTyped<Label>("ORG_SCORE")
+		        ->setText(format(
+		            "%d", menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")->getValue()));
+		});
 	menuform->findControlTyped<ScrollBar>("ARMOR_SLIDER")
-		->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
-		UString armor = "";
-		switch (menuform->findControlTyped<ScrollBar>("ARMOR_SLIDER")->getValue())
-		{
-		case 0:
-			armor = "NONE";
-			break;
-		case 1:
-			armor = "MEGAPOL";
-			break;
-		case 2:
-			armor = "MEGAPOL+MB";
-			break;
-		case 3:
-			armor = "MARSEC";
-			break;
-		case 4:
-			armor = "X-COM+MB";
-			break;
-		case 5:
-			armor = "X-COM";
-			break;
-		default:
-			break;
-		}
-		menuform->findControlTyped<Label>("ARMOR")->setText(armor);
-	});
-
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+		    UString armor = "";
+		    switch (menuform->findControlTyped<ScrollBar>("ARMOR_SLIDER")->getValue())
+		    {
+			    case 0:
+				    armor = "NONE";
+				    break;
+			    case 1:
+				    armor = "MEGAPOL";
+				    break;
+			    case 2:
+				    armor = "MEGAPOL+MB";
+				    break;
+			    case 3:
+				    armor = "MARSEC";
+				    break;
+			    case 4:
+				    armor = "X-COM+MB";
+				    break;
+			    case 5:
+				    armor = "X-COM";
+				    break;
+			    default:
+				    break;
+		    }
+		    menuform->findControlTyped<Label>("ARMOR")->setText(armor);
+		});
 
 	menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")->setValue(8);
 	menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")->setValue(2);
@@ -93,13 +114,11 @@ Skirmish::Skirmish(sp<GameState> state)
 
 	menuform->findControlTyped<ScrollBar>("DAYS_PHYSICAL_SLIDER")->setValue(14);
 	menuform->findControlTyped<ScrollBar>("DAYS_PSI_SLIDER")->setValue(14);
-	menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->setValue(1);//Make it update!
-	menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->setValue(0);
+	menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->setValue(1);
 
 	menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")->setValue(12);
 	menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")->setValue(4);
 	menuform->findControlTyped<ScrollBar>("ARMOR_SLIDER")->setValue(4);
-
 }
 
 Skirmish::~Skirmish() = default;
@@ -130,20 +149,155 @@ void Skirmish::setLocation(StateRef<Base> base)
 	updateLocationLabel();
 }
 
-void Skirmish::goToBattle()
+void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guards, int *civilians)
 {
+	state.score = menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")->getValue() * 1000;
+
+	auto playerBase = locBase ? locBase : StateRef<Base>(&state, "BASE_1");
+	std::set<UString> agentsToRemove;
+	for (auto &a : state.agents)
+	{
+		if (a.second->type->role == AgentType::Role::Soldier && a.second->home_base == playerBase)
+		{
+			agentsToRemove.insert(a.first);
+		}
+	}
+	for (auto &a : agentsToRemove)
+	{
+		state.agents.erase(a);
+	}
+	int countHumans = menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")->getValue();
+	int countHybrids = menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")->getValue();
+	int countAndroids = menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")->getValue();
+	int playerTech = menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->getValue();
+	unsigned int physTicks =
+	    menuform->findControlTyped<ScrollBar>("DAYS_PHYSICAL_SLIDER")->getValue() * TICKS_PER_DAY;
+	unsigned int psiTicks =
+	    menuform->findControlTyped<ScrollBar>("DAYS_PSI_SLIDER")->getValue() * TICKS_PER_DAY;
+	StateRef<AgentType> human = {&state, "AGENTTYPE_X-COM_AGENT_HUMAN"};
+	StateRef<AgentType> hybrid = {&state, "AGENTTYPE_X-COM_AGENT_HYBRID"};
+	StateRef<AgentType> android = {&state, "AGENTTYPE_X-COM_AGENT_ANDROID"};
+	auto player = state.getPlayer();
+	std::list<StateRef<Agent>> agents;
+	for (int i = 0; i < countHumans; i++)
+	{
+		agents.emplace_back(state.agent_generator.createAgent(state, player, human));
+	}
+	for (int i = 0; i < countHybrids; i++)
+	{
+		agents.emplace_back(state.agent_generator.createAgent(state, player, hybrid));
+	}
+	for (int i = 0; i < countAndroids; i++)
+	{
+		agents.emplace_back(state.agent_generator.createAgent(state, player, android));
+	}
+	for (auto &agent : agents)
+	{
+		auto initialEquipment =
+		    playerTech == 0
+		        ? std::list<sp<AEquipmentType>>()
+		        : EquipmentSet::getByLevel(state, playerTech)->generateEquipmentList(state);
+
+		int initialArmorType = menuform->findControlTyped<ScrollBar>("ARMOR_SLIDER")->getValue();
+		switch (initialArmorType)
+		{
+			case 1:
+				// armor = "MEGAPOL";
+				initialEquipment.push_back(state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_HELMET"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_BODY_ARMOR"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_LEFT_ARM_ARMOR"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_RIGHT_ARM_ARMOR"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_LEG_ARMOR"]);
+				break;
+			case 2:
+				// armor = "MEGAPOL+MB";
+				initialEquipment.push_back(state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_HELMET"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_BODY_UNIT"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_LEFT_ARM_ARMOR"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_RIGHT_ARM_ARMOR"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_LEG_ARMOR"]);
+				break;
+			case 3:
+				// armor = "MARSEC";
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_HEAD_UNIT"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_BODY_UNIT"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_LEFT_ARM_UNIT"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_RIGHT_ARM_UNIT"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_LEG_UNITS"]);
+				break;
+			case 4:
+				// armor = "X-COM+MB";
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_HEAD_SHIELD"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_BODY_UNIT"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_LEFT_ARM_SHIELD"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_RIGHT_ARM_SHIELD"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_LEG_SHIELDS"]);
+				break;
+			case 5:
+				// armor = "X-COM";
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_HEAD_SHIELD"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_BODY_SHIELD"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_LEFT_ARM_SHIELD"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_RIGHT_ARM_SHIELD"]);
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_LEG_SHIELDS"]);
+				break;
+			default:
+				break;
+		}
+
+		// Add initial equipment
+		for (auto &t : initialEquipment)
+		{
+			if (!t)
+				continue;
+			agent->addEquipmentByType(state, {&state, t->id});
+		}
+
+		agent->trainPhysical(state, physTicks);
+		agent->trainPsi(state, psiTicks);
+		agent->home_base = playerBase;
+	}
+
 	if (locBuilding)
 	{
 		bool raid = menuform->findControlTyped<CheckBox>("ALTERNATIVE_ATTACK")->isChecked();
-		battleInBuilding(locBuilding, raid);
+		if (raid)
+		{
+			locBuilding->owner->tech_level =
+			    menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")->getValue();
+		}
+		battleInBuilding(playerBase, locBuilding, raid, aliens, guards, civilians);
 	}
 	else if (locVehicle)
 	{
-		battleInVehicle(locVehicle);
+		battleInVehicle(playerBase, locVehicle, aliens);
 	}
 	else if (locBase)
 	{
-		battleInBase(locBase);
+		battleInBase(locBase, aliens);
 	}
 	// No map selected
 }
@@ -155,7 +309,34 @@ void Skirmish::customizeForces()
 	{
 		return;
 	}
-	fw().stageQueueCommand({ StageCmd::Command::PUSH, mksp<SelectForces>(state.shared_from_this(), *this) });
+	std::map<StateRef<AgentType>, int> *aliens = nullptr;
+	if (locVehicle)
+	{
+		aliens = &locVehicle->crew_downed;
+	}
+	else if (locBuilding && locBuilding->owner == state.getAliens())
+	{
+		aliens = &locBuilding->preset_crew;
+	}
+	int guards = -1;
+	if (locBuilding)
+	{
+		if (menuform->findControlTyped<CheckBox>("ALTERNATIVE_ATTACK")->isChecked() &&
+		    locBuilding->owner != state.getAliens())
+		{
+			guards = locBuilding->owner->getGuardCount(state);
+		}
+	}
+	int civilians = -1;
+	if (locBuilding)
+	{
+		civilians = state.getCivilian()->getGuardCount(state);
+	}
+
+	fw().stageQueueCommand(
+	    {StageCmd::Command::PUSH, mksp<SelectForces>(state.shared_from_this(), *this, aliens,
+	                                                 guards == 0 ? nullptr : &guards,
+	                                                 civilians == 0 ? nullptr : &civilians)});
 }
 
 void Skirmish::clearLocation()
@@ -170,7 +351,9 @@ void Skirmish::updateLocationLabel()
 	UString text = "[No map selected]";
 	if (locBuilding)
 	{
-		text = format("[%s Building] %s [%s]", locBuilding->owner == state.getAliens() ? "Alien" : "Human", locBuilding->name, locBuilding->battle_map.id);
+		text = format("[%s Building] %s [%s]",
+		              locBuilding->owner == state.getAliens() ? "Alien" : "Human",
+		              locBuilding->name, locBuilding->battle_map.id);
 	}
 	else if (locVehicle)
 	{
@@ -183,88 +366,124 @@ void Skirmish::updateLocationLabel()
 	menuform->findControlTyped<Label>("LOCATION")->setText(format("LOCATION: %s", text));
 }
 
-std::future<void> loadBattleBuilding(sp<Building> building, GameState * state, bool raid)
+std::future<void> loadBattleBuilding(sp<Building> building, GameState *state, StateRef<Base> playerBase, bool raid,
+                                     std::map<StateRef<AgentType>, int> *aliens = nullptr,
+                                     int *guards = nullptr, int *civilians = nullptr)
 {
-
-	auto loadTask = fw().threadPoolEnqueue([building, state, raid]() -> void {
+	std::map<StateRef<AgentType>, int> aliensLocal;
+	bool aliensPresent = false;
+	if (aliens)
+	{
+		aliensLocal = *aliens;
+		aliensPresent = true;
+	}
+	int guardsLocal = 0;
+	bool guardsPresent = false;
+	if (guards)
+	{
+		guardsLocal = *guards;
+		guardsPresent = true;
+	}
+	int civiliansLocal = 0;
+	bool civiliansPresent = false;
+	if (civilians)
+	{
+		civiliansLocal = *civilians;
+		civiliansPresent = true;
+	}
+	auto loadTask = fw().threadPoolEnqueue([building, state, raid, aliensLocal, guardsLocal,
+	                                        civiliansLocal, aliensPresent, guardsPresent,
+	                                        civiliansPresent, playerBase]() -> void {
 		std::list<StateRef<Agent>> agents;
 		for (auto &a : state->agents)
 			if (a.second->type->role == AgentType::Role::Soldier &&
-				a.second->owner == state->getPlayer())
+			    a.second->home_base == playerBase)
 				agents.emplace_back(state, a.second);
 
 		StateRef<Organisation> org = raid ? building->owner : state->getAliens();
-		StateRef<Building> bld = { state, building };
+		StateRef<Building> bld = {state, building};
 		StateRef<Vehicle> veh = {};
 
-		Battle::beginBattle(*state, org, agents, veh, bld);
+		const std::map<StateRef<AgentType>, int> *aliens = aliensPresent ? &aliensLocal : nullptr;
+		const int *guards = guardsPresent ? &guardsLocal : nullptr;
+		const int *civilians = civiliansPresent ? &civiliansLocal : nullptr;
+
+		Battle::beginBattle(*state, org, agents, aliens, guards, civilians, veh, bld);
 	});
 
 	return loadTask;
 }
 
-std::future<void> loadBattleVehicle(sp<VehicleType> vehicle, GameState * state)
+std::future<void> loadBattleVehicle(sp<VehicleType> vehicle, GameState *state, StateRef<Base> playerBase,
+                                    std::map<StateRef<AgentType>, int> *aliens = nullptr)
 {
 
-	auto loadTask = fw().threadPoolEnqueue([vehicle, state]() -> void {
+	auto loadTask = fw().threadPoolEnqueue([vehicle, state, aliens, playerBase]() -> void {
 		std::list<StateRef<Agent>> agents;
 		for (auto &a : state->agents)
 			if (a.second->type->role == AgentType::Role::Soldier &&
-				a.second->owner == state->getPlayer())
+			    a.second->home_base == playerBase)
 				agents.emplace_back(state, a.second);
 
-		StateRef<Organisation> org = { state, UString("ORG_ALIEN") };
+		StateRef<Organisation> org = {state, UString("ORG_ALIEN")};
 		auto v = mksp<Vehicle>();
 
 		auto vID = Vehicle::generateObjectID(*state);
 
-		v->type = { state, vehicle };
+		v->type = {state, vehicle};
 		v->name = format("%s %d", v->type->name, ++v->type->numCreated);
 
 		state->vehicles[vID] = v;
-		StateRef<Vehicle> ufo = { state, vID };
+		StateRef<Vehicle> ufo = {state, vID};
 		StateRef<Vehicle> veh = {};
 
-		Battle::beginBattle(*state, org, agents, veh, ufo);
+		Battle::beginBattle(*state, org, agents, aliens, veh, ufo);
 	});
 
 	return loadTask;
 }
 
-
-
-void Skirmish::battleInBuilding(StateRef<Building> building, bool raid)
+void Skirmish::battleInBuilding(StateRef<Base> playerBase, StateRef<Building> building, bool raid,
+                                std::map<StateRef<AgentType>, int> *aliens, int *guards,
+                                int *civilians)
 {
 	fw().stageQueueCommand(
-	{ StageCmd::Command::PUSH,
-		mksp<BattleBriefing>(state.shared_from_this(), building->owner, Building::getId(state, building),
-			true, true, loadBattleBuilding(building, &state, true)) });
+	    {StageCmd::Command::PUSH,
+	     mksp<BattleBriefing>(
+	         state.shared_from_this(), building->owner, Building::getId(state, building), true,
+	         true, loadBattleBuilding(building, &state, playerBase, raid, aliens, guards, civilians))});
 }
 
-void Skirmish::battleInBase(StateRef<Base> base)
-{
-}
-
-void Skirmish::battleInVehicle(StateRef<VehicleType> vehicle)
+void Skirmish::battleInBase(StateRef<Base> base, std::map<StateRef<AgentType>, int> *aliens)
 {
 	fw().stageQueueCommand(
-	{ StageCmd::Command::PUSH,
-		mksp<BattleBriefing>(state.shared_from_this(), state.getAliens(),
-			VehicleType::getId(state, vehicle), false, false,
-			loadBattleVehicle(vehicle, &state)) });
+	    {StageCmd::Command::PUSH,
+	     mksp<BattleBriefing>(state.shared_from_this(), state.getAliens(), base->building.id, true,
+	                          true, loadBattleBuilding(base->building, &state, false, aliens))});
 }
 
-void Skirmish::begin(){
-	fw().stageQueueCommand({ StageCmd::Command::PUSH, mksp<MapSelector>(state.shared_from_this(), *this) });
+void Skirmish::battleInVehicle(StateRef<Base> playerBase, StateRef<VehicleType> vehicle,
+                               std::map<StateRef<AgentType>, int> *aliens)
+{
+	fw().stageQueueCommand({StageCmd::Command::PUSH,
+	                        mksp<BattleBriefing>(state.shared_from_this(), state.getAliens(),
+	                                             VehicleType::getId(state, vehicle), false, false,
+	                                             loadBattleVehicle(vehicle, &state, playerBase, aliens))});
 }
 
-void Skirmish::pause(){}
+void Skirmish::begin()
+{
+	fw().stageQueueCommand(
+	    {StageCmd::Command::PUSH, mksp<MapSelector>(state.shared_from_this(), *this)});
+}
 
-void Skirmish::resume(){}
+void Skirmish::pause() {}
 
-void Skirmish::finish(){}
+void Skirmish::resume() {}
 
-void Skirmish::eventOccurred(Event * e)
+void Skirmish::finish() {}
+
+void Skirmish::eventOccurred(Event *e)
 {
 	menuform->eventOccured(e);
 
@@ -272,7 +491,7 @@ void Skirmish::eventOccurred(Event * e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			fw().stageQueueCommand({ StageCmd::Command::POP });
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
@@ -281,8 +500,10 @@ void Skirmish::eventOccurred(Event * e)
 	{
 		if (e->forms().RaisedBy->Name == "BUTTON_OK")
 		{
-			bool customize = menuform->findControlTyped<CheckBox>("CUSTOMISE_FORCES")->isChecked() 
-				|| (menuform->findControlTyped<CheckBox>("ALTERNATIVE_ATTACK")->isChecked() && locBuilding && locBuilding->owner != state.getAliens());
+			bool customize =
+			    menuform->findControlTyped<CheckBox>("CUSTOMISE_FORCES")->isChecked() || locBase ||
+			    (menuform->findControlTyped<CheckBox>("ALTERNATIVE_ATTACK")->isChecked() &&
+			     locBuilding && locBuilding->owner != state.getAliens());
 			if (customize)
 			{
 				customizeForces();
@@ -295,17 +516,14 @@ void Skirmish::eventOccurred(Event * e)
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_SELECTMAP")
 		{
-			fw().stageQueueCommand({ StageCmd::Command::PUSH, mksp<MapSelector>(state.shared_from_this(), *this) });
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH, mksp<MapSelector>(state.shared_from_this(), *this)});
 			return;
 		}
 	}
-
 }
 
-void Skirmish::update()
-{
-	menuform->update();
-}
+void Skirmish::update() { menuform->update(); }
 
 void Skirmish::render()
 {
@@ -313,9 +531,5 @@ void Skirmish::render()
 	menuform->render();
 }
 
-bool Skirmish::isTransition()
-{
-	return false;
-}
-
+bool Skirmish::isTransition() { return false; }
 }

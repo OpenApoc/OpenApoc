@@ -880,7 +880,7 @@ int BattleUnit::getPsiCost(PsiStatus status, bool attack)
 		case PsiStatus::Control:
 			return attack ? 32 : 4;
 		case PsiStatus::Panic:
-			return attack ? 10 : 2;
+			return attack ? 10 : 3;
 		case PsiStatus::Stun:
 			return attack ? 16 : 5;
 		case PsiStatus::Probe:
@@ -915,7 +915,7 @@ int BattleUnit::getPsiChance(StateRef<BattleUnit> target, PsiStatus status,
 		return 0;
 	}
 
-	// Psi chance as per Wong's Guide (tested in Excel, seems legit)
+	// Psi chance as per Wong's Guide, confirmed by Mell
 	/*
 	                     100*attack*(100-defense)
 	success rate = --------------------------------------
@@ -924,14 +924,21 @@ int BattleUnit::getPsiChance(StateRef<BattleUnit> target, PsiStatus status,
 	           psiattack rating * 40
 	attack = ---------------------------
 	          initiation cost of action
+
+	Note: As tested by Mell, Probe is min 20%
 	*/
 	int attack = agent->modified_stats.psi_attack * 40 / cost;
 	int defense = target->agent->modified_stats.psi_defence;
-	if (attack == 0 && defense == 0)
+	int chance = 0;
+	if (attack != 0 || defense != 0)
 	{
-		return 0;
+		chance = (100 * attack * (100 - defense)) / (attack * (100 - defense) + 100 * defense);
 	}
-	return (100 * attack * (100 - defense)) / (attack * (100 - defense) + 100 * defense);
+	if (status == PsiStatus::Probe && attack != 0)
+	{
+		chance = std::max(20, chance);
+	}
+	return chance;
 }
 
 bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, PsiStatus status,
@@ -1009,15 +1016,27 @@ void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatu
 		case PsiStatus::Panic:
 			if (!impact)
 			{
-				// Observed values of 16 or 8, seems to depend on psi def? Need further research
-				agent->modified_stats.morale = std::max(
-				    0, agent->modified_stats.morale - 8 * randBoundsInclusive(state.rng, 1, 2));
+				agent->modified_stats.loseMorale(8);
+				if (agent->modified_stats.morale == 0)
+				{
+					std::set<UString> panickers;
+					for (auto attacker : psiAttackers)
+					{
+						if (attacker.second == PsiStatus::Panic)
+						{
+							panickers.emplace(attacker.first);
+						}
+					}
+					for (auto s : panickers)
+					{
+						StateRef<BattleUnit>(&state, s)->stopAttackPsi(state);
+					}
+				}
 			}
 		case PsiStatus::Stun:
 			if (!impact)
 			{
-				// Observed value of 12 only, need further research
-				applyDamageDirect(state, 12, false, BodyPart::Body, 9001);
+				applyDamageDirect(state, 7, false, BodyPart::Body, 9001);
 			}
 			break;
 		case PsiStatus::Control:
@@ -3246,7 +3265,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	bool updatedShield = false;
 	for (auto &item : agent->equipment)
 	{
-		if (item->type->type == AEquipmentType::Type::DisruptorShield && item->ammo < item->getPayloadType()->max_ammo)
+		if (item->type->type == AEquipmentType::Type::DisruptorShield &&
+		    item->ammo < item->getPayloadType()->max_ammo)
 		{
 			if (updatedShield)
 			{
@@ -3340,7 +3360,8 @@ void BattleUnit::updateTB(GameState &state)
 	bool updatedShield = false;
 	for (auto &item : agent->equipment)
 	{
-		if (item->type->type == AEquipmentType::Type::DisruptorShield && item->ammo < item->getPayloadType()->max_ammo)
+		if (item->type->type == AEquipmentType::Type::DisruptorShield &&
+		    item->ammo < item->getPayloadType()->max_ammo)
 		{
 			if (updatedShield)
 			{
@@ -4037,7 +4058,11 @@ void BattleUnit::dropDown(GameState &state)
 	stopAttackPsi(state);
 	for (auto &a : psiAttackers)
 	{
-		StateRef<BattleUnit>(&state, a.first)->stopAttackPsi(state);
+		auto attacker = StateRef<BattleUnit>(&state, a.first);
+		if (attacker->psiStatus != PsiStatus::Stun)
+		{
+			attacker->stopAttackPsi(state);
+		}
 	}
 	aiList.reset(state, *this);
 	resetGoal();

@@ -691,23 +691,41 @@ void Battle::initialUnitSpawn(GameState &state)
 	// Actually spawn agents
 	for (auto &f : state.current_battle->forces)
 	{
+		// All units to spawn, grouped by squads, squadless in the back
+		std::list<std::list<sp<BattleUnit>>> unitGroupsToSpawn;
+		// Add squadless
+		unitGroupsToSpawn.emplace_back();
+		for (auto &u : units)
+		{
+			if (u.second->owner == f.first && u.second->squadNumber == -1 &&
+			    u.second->position == Vec3<float>{-1.0, -1.0, -1.0})
+			{
+				unitGroupsToSpawn.front().push_back(u.second);
+			}
+		}
+		// Add squads
 		for (auto &s : f.second.squads)
 		{
-			std::vector<sp<BattleUnit>> unitsToSpawn;
+			unitGroupsToSpawn.emplace_front();
 			for (auto &u : s.units)
 			{
-				if (u->position == Vec3<float>{ -1.0, -1.0, -1.0 })
+				if (u->position == Vec3<float>{-1.0, -1.0, -1.0})
 				{
-					unitsToSpawn.push_back(u);
+					unitGroupsToSpawn.front().push_back(u);
 				}
 			}
+		}
+		// Go through groups and spawn
+		for (auto &list : unitGroupsToSpawn)
+		{
+			auto &unitsToSpawn = list;
 
 			while (unitsToSpawn.size() > 0)
 			{
 				// Determine what kind of units we're trying to spawn
 				bool needWalker = false;
 				bool needLarge = false;
-				for (auto &u : s.units)
+				for (auto &u : unitsToSpawn)
 				{
 					if (u->isLarge())
 					{
@@ -835,7 +853,7 @@ void Battle::initialUnitSpawn(GameState &state)
 							for (int z = 0; z < size.z; z++)
 							{
 								auto tile = map->getTile(x, y, z);
-								auto u = unitsToSpawn[unitsToSpawn.size() - 1];
+								auto u = unitsToSpawn.back();
 								if (!tile->getPassable(u->isLarge(),
 								                       u->agent->type->bodyType->maxHeight) ||
 								    (!u->canFly() && !tile->getCanStand(u->isLarge())))
@@ -886,7 +904,7 @@ void Battle::initialUnitSpawn(GameState &state)
 									continue;
 
 								auto tile = map->getTile(pos);
-								auto u = unitsToSpawn[unitsToSpawn.size() - 1];
+								auto u = unitsToSpawn.back();
 								if (!tile->getPassable(u->isLarge(),
 								                       u->agent->type->bodyType->maxHeight) ||
 								    (!u->canFly() && !tile->getCanStand(u->isLarge())))
@@ -938,7 +956,7 @@ void Battle::initialUnitSpawn(GameState &state)
 								unitsToSpawn.pop_back();
 								numSpawned++;
 								if (unitsToSpawn.size() == 0
-								    // This makes us spawn every civilian individually
+								    // This makes us spawn every civilian and loner individually
 								    || (numSpawned > 0 && (u->getAIType() == AIType::None ||
 								                           u->getAIType() == AIType::Loner ||
 								                           u->getAIType() == AIType::Civilian)))
@@ -1135,7 +1153,7 @@ sp<BattleUnit> Battle::placeUnit(GameState &state, StateRef<Agent> agent)
 	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
 	unit->squadNumber = -1;
 	unit->cloakTicksAccumulated = CLOAK_TICKS_REQUIRED;
-	unit->position = { -1.0, -1.0, -1.0 };
+	unit->position = {-1.0, -1.0, -1.0};
 	units[id] = unit;
 	unit->init(state);
 	return unit;
@@ -2103,16 +2121,17 @@ void Battle::giveInterruptChanceToUnit(GameState &state, StateRef<BattleUnit> gi
 
 // To be called when battle must be started, before showing battle briefing screen
 void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organisation,
-                         std::list<StateRef<Agent>> &player_agents, StateRef<Vehicle> player_craft,
-                         StateRef<Vehicle> target_craft)
+                         std::list<StateRef<Agent>> &player_agents,
+                         const std::map<StateRef<AgentType>, int> *aliens,
+                         StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft)
 {
 	if (state.current_battle)
 	{
 		LogError("Battle::beginBattle called while another battle is in progress!");
 		return;
 	}
-	auto b = BattleMap::createBattle(state, target_organisation, player_agents, player_craft,
-	                                 target_craft);
+	auto b = BattleMap::createBattle(state, target_organisation, player_agents, aliens,
+	                                 player_craft, target_craft);
 	if (!b)
 		return;
 	state.current_battle = b;
@@ -2120,7 +2139,9 @@ void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organis
 
 // To be called when battle must be started, before showing battle briefing screen
 void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organisation,
-                         std::list<StateRef<Agent>> &player_agents, StateRef<Vehicle> player_craft,
+                         std::list<StateRef<Agent>> &player_agents,
+                         const std::map<StateRef<AgentType>, int> *aliens, const int *guards,
+                         const int *civilians, StateRef<Vehicle> player_craft,
                          StateRef<Building> target_building)
 {
 	if (state.current_battle)
@@ -2128,8 +2149,8 @@ void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organis
 		LogError("Battle::beginBattle called while another battle is in progress!");
 		return;
 	}
-	auto b = BattleMap::createBattle(state, target_organisation, player_agents, player_craft,
-	                                 target_building);
+	auto b = BattleMap::createBattle(state, target_organisation, player_agents, aliens, guards,
+	                                 civilians, player_craft, target_building);
 	if (!b)
 		return;
 	state.current_battle = b;

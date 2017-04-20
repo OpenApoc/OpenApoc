@@ -80,6 +80,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	std::list<EventMessage> messages;
 
+	int score = 0;
+
 	StateRefMap<AgentType> agent_types;
 	StateRefMap<AgentBodyType> agent_body_types;
 	StateRefMap<AgentEquipmentLayout> agent_equipment_layouts;

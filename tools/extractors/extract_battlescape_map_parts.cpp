@@ -284,7 +284,7 @@ void InitialGameStateExtractor::readBattleMapParts(
 				object->autoConvert = BattleMapPartType::AutoConvert::Smoke;
 			}
 			if (missionObjectives.find(mapName) != missionObjectives.end() &&
-				missionObjectives.at(mapName).find(i) != missionObjectives.at(mapName).end())
+			    missionObjectives.at(mapName).find(i) != missionObjectives.at(mapName).end())
 			{
 				object->missionObjective = true;
 			}
@@ -292,7 +292,8 @@ void InitialGameStateExtractor::readBattleMapParts(
 		if (type == BattleMapPartType::Type::Ground)
 		{
 			if (reinforcementSpawners.find(mapName) != reinforcementSpawners.end() &&
-				reinforcementSpawners.at(mapName).find(i) != reinforcementSpawners.at(mapName).end())
+			    reinforcementSpawners.at(mapName).find(i) !=
+			        reinforcementSpawners.at(mapName).end())
 			{
 				object->reinforcementSpawner = true;
 			}

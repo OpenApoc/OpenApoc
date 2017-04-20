@@ -15,9 +15,9 @@
 #include "game/ui/battle/battledebriefing.h"
 #include "game/ui/city/cityview.h"
 #include "game/ui/general/mainmenu.h"
-#include "game/ui/general/skirmish.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/savemenu.h"
+#include "game/ui/general/skirmish.h"
 
 namespace OpenApoc
 {
@@ -147,7 +147,7 @@ void InGameOptions::eventOccurred(Event *e)
 				                      format("%s %d", tr("Units Lost :"), unitsLost),
 				                      MessageBox::ButtonOptions::YesNo, [this] {
 					                      state->current_battle->abortMission(*state);
-										  Battle::finishBattle(*state);
+					                      Battle::finishBattle(*state);
 					                      fw().stageQueueCommand({StageCmd::Command::REPLACEALL,
 					                                              mksp<BattleDebriefing>(state)});
 					                  })});

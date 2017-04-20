@@ -37,7 +37,19 @@
 		  
 	  <label text = "ALIENS">
         <position x="36" y="115"/>
-        <size width="500" height="16"/>
+        <size width="100" height="16"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+	  <checkbox id="DEFAULT_ALIENS">
+          <position x="86" y="115"/>
+          <size width="19" height="16"/>
+          <image>BUTTON_CHECKBOX_FALSE</image>
+          <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+        </checkbox>
+	  <label  text = "Default">
+        <position x="116" y="115"/>
+        <size width="110" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
@@ -424,10 +436,10 @@
         <font>smalfont</font>
 		  </label>
 	  
-   <label text = "Guards">
-        <position x="36" y="385"/>
+   <label id="GUARDS_LABEL2" text = "Guards">
+        <position x="61" y="385"/>
         <size width="170" height="16"/>
-        <alignment horizontal="centre" vertical="top"/>
+        <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
 	   <scroll id="NUM_GUARD_SLIDER">
@@ -454,10 +466,23 @@
         <font>smalfont</font>
       </label>
 	  
-	  <label text = "Civilian">
-        <position x="206" y="385"/>
+	<checkbox id="DEFAULT_GUARDS">
+          <position x="111" y="385"/>
+          <size width="19" height="16"/>
+          <image>BUTTON_CHECKBOX_FALSE</image>
+          <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+        </checkbox>
+	  <label id="GUARDS_LABEL1"  text = "Default">
+        <position x="141" y="385"/>
+        <size width="110" height="16"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+	  
+	  <label id="CIVILIANS_LABEL2"  text = "Civilians">
+        <position x="231" y="385"/>
         <size width="170" height="16"/>
-        <alignment horizontal="centre" vertical="top"/>
+        <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
 	  <scroll id="NUM_CIVILIAN_SLIDER">
@@ -477,13 +502,42 @@
             <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
           <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
         </graphicbutton>
-		<label id = "NUM_CIVILIAN" text = "0">
+	  <label id = "NUM_CIVILIAN" text = "0">
         <position x="354" y="403"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
 	  
+	  <checkbox id="DEFAULT_CIVILIANS">
+          <position x="281" y="385"/>
+          <size width="19" height="16"/>
+          <image>BUTTON_CHECKBOX_FALSE</image>
+          <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+        </checkbox>
+	  <label id="CIVILIANS_LABEL1" text = "Default">
+        <position x="311" y="385"/>
+        <size width="110" height="16"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+	  
+      <graphic id="SHROUD_ALIENS" visible="false">
+          <position x="35" y="130"/>
+          <size width="520" height="240"/>
+		  <imageposition>tile</imageposition>
+        </graphic>
+		<graphic id="SHROUD_GUARDS" visible="false">
+          <position x="40" y="398"/>
+          <size width="170" height="35"/>
+		  <imageposition>tile</imageposition>
+        </graphic>
+		<graphic id="SHROUD_CIVILIANS" visible="false">
+          <position x="210" y="398"/>
+          <size width="170" height="35"/>
+		  <imageposition>tile</imageposition>
+        </graphic>
+		
       <graphicbutton id="BUTTON_OK">
         <position x="604" y="445"/>
         <size width="50" height="48"/>

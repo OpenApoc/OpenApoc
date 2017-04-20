@@ -27,8 +27,5 @@ struct CrewData
 	uint32_t queenspawn;
 	uint32_t micronoid;
 	uint32_t brainsucker_pod_unused;
-
 };
 static_assert(sizeof(struct CrewData) == 56, "Invalid crew_data size");
-
-

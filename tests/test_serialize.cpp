@@ -186,7 +186,7 @@ int main(int argc, char **argv)
 			}
 		}
 
-		OpenApoc::Battle::beginBattle(*state, org, agents, playerVehicle, enemyVehicle);
+		OpenApoc::Battle::beginBattle(*state, org, agents,nullptr, playerVehicle, enemyVehicle);
 		OpenApoc::Battle::enterBattle(*state);
 
 		if (!test_gamestate_serialization(state))

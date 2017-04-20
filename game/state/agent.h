@@ -80,7 +80,11 @@ class AgentStats
 	int accuracy = 0;
 	int reactions = 0;
 	int speed = 0;
-	void setSpeed(int value) { speed = value; restoreTU(); }
+	void setSpeed(int value)
+	{
+		speed = value;
+		restoreTU();
+	}
 	int getActualSpeedValue() const { return (speed + 4) / 8; }
 	int getMovementSpeed() const { return clamp(getActualSpeedValue(), 5, 14); }
 	int getDisplaySpeedValue() const { return 8 * getActualSpeedValue(); }

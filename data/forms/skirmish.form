@@ -256,7 +256,7 @@
         <font>smalfont</font>
       </label>
 	  
-	  <label text = "Organisation Score Level">
+	  <label text = "Organisation Tech Level">
         <position x="206" y="235"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>

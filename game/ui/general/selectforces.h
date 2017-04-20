@@ -1,8 +1,9 @@
 #pragma once
 
 #include "framework/stage.h"
-#include "library/sp.h"
 #include "game/state/stateobject.h"
+#include "library/sp.h"
+#include <map>
 
 namespace OpenApoc
 {
@@ -12,6 +13,7 @@ class Building;
 class VehicleType;
 class Base;
 class Skirmish;
+class AgentType;
 
 class SelectForces : public Stage
 {
@@ -23,10 +25,11 @@ class SelectForces : public Stage
 	GameState &state;
 
   public:
-	  
-	SelectForces(sp<GameState> state, Skirmish &skirmish);
+	SelectForces(sp<GameState> state, Skirmish &skirmish,
+	             std::map<StateRef<AgentType>, int> *aliens = nullptr, int *guards = nullptr,
+	             int *civilians = nullptr);
 	~SelectForces() override;
-	
+
 	// Stage control
 	void begin() override;
 	void pause() override;

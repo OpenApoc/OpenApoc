@@ -11,6 +11,7 @@ class Form;
 class Building;
 class VehicleType;
 class Base;
+class AgentType;
 
 class Skirmish : public Stage
 {
@@ -26,21 +27,23 @@ class Skirmish : public Stage
 	void clearLocation();
 	void updateLocationLabel();
 
-	void battleInBuilding(StateRef<Building> building, bool raid);
-	void battleInBase(StateRef<Base> base);
-	void battleInVehicle(StateRef<VehicleType>);
+	void battleInBuilding(StateRef<Base> playerBase, StateRef<Building> building, bool raid,
+	                      std::map<StateRef<AgentType>, int> *aliens, int *guards, int *civilians);
+	void battleInBase(StateRef<Base> base, std::map<StateRef<AgentType>, int> *aliens);
+	void battleInVehicle(StateRef<Base> playerBase, StateRef<VehicleType>, std::map<StateRef<AgentType>, int> *aliens);
 
   public:
 	Skirmish(sp<GameState> state);
 	~Skirmish() override;
-	
+
 	UString getLocationText();
 
 	void setLocation(StateRef<Building> building);
 	void setLocation(StateRef<VehicleType> veh);
 	void setLocation(StateRef<Base> base);
 
-	void goToBattle();
+	void goToBattle(std::map<StateRef<AgentType>, int> *aliens = nullptr, int *guards = nullptr,
+	                int *civilians = nullptr);
 	void customizeForces();
 
 	// Stage control

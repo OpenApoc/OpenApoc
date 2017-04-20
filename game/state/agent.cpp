@@ -278,8 +278,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 		// Aliens get equipment based on player score
 		else if (org == state.getAliens())
 		{
-			// FIXME: actually get player score here
-			int playerScore = 50000;
+			int playerScore = state.score;
 
 			initialEquipment =
 			    EquipmentSet::getByScore(state, playerScore)->generateEquipmentList(state);
@@ -302,14 +301,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	{
 		if (!t)
 			continue;
-		if (t->type == AEquipmentType::Type::Ammo)
-		{
-			agent->addEquipmentByType(state, {&state, t->id}, AEquipmentSlotType::General);
-		}
-		else
-		{
-			agent->addEquipmentByType(state, {&state, t->id});
-		}
+		agent->addEquipmentByType(state, {&state, t->id});
 	}
 
 	agent->updateSpeed();
@@ -529,8 +521,6 @@ bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
 			                          otherEquipment->type->equipscreen_size};
 			if (otherBounds.intersects(bounds))
 			{
-				LogInfo("Equipping \"%s\" on \"%s\" at %s failed: Intersects with other equipment",
-				        type->name, this->name, pos);
 				return false;
 			}
 		}
@@ -558,13 +548,61 @@ void Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type)
 {
 	Vec2<int> pos;
 	bool slotFound = false;
-	for (auto &slot : this->type->equipment_layout->slots)
+	AEquipmentSlotType prefSlotType = AEquipmentSlotType::General;
+	bool prefSlot = false;
+	if (type->type == AEquipmentType::Type::Ammo)
 	{
-		if (canAddEquipment(slot.bounds.p0, type))
+		prefSlotType = AEquipmentSlotType::General;
+		prefSlot = true;
+	}
+	else if (type->type == AEquipmentType::Type::Armor)
+	{
+		switch (type->body_part)
 		{
-			pos = slot.bounds.p0;
-			slotFound = true;
-			break;
+			case BodyPart::Body:
+				prefSlotType = AEquipmentSlotType::ArmorBody;
+				break;
+			case BodyPart::Legs:
+				prefSlotType = AEquipmentSlotType::ArmorLegs;
+				break;
+			case BodyPart::Helmet:
+				prefSlotType = AEquipmentSlotType::ArmorHelmet;
+				break;
+			case BodyPart::LeftArm:
+				prefSlotType = AEquipmentSlotType::ArmorLeftHand;
+				break;
+			case BodyPart::RightArm:
+				prefSlotType = AEquipmentSlotType::ArmorRightHand;
+				break;
+		}
+		prefSlot = true;
+	}
+	if (prefSlot)
+	{
+		for (auto &slot : this->type->equipment_layout->slots)
+		{
+			if (slot.type != prefSlotType)
+			{
+				continue;
+			}
+			if (canAddEquipment(slot.bounds.p0, type))
+			{
+				pos = slot.bounds.p0;
+				slotFound = true;
+				break;
+			}
+		}
+	}
+	if (!slotFound)
+	{
+		for (auto &slot : this->type->equipment_layout->slots)
+		{
+			if (canAddEquipment(slot.bounds.p0, type))
+			{
+				pos = slot.bounds.p0;
+				slotFound = true;
+				break;
+			}
 		}
 	}
 	if (!slotFound)
@@ -750,27 +788,31 @@ void Agent::trainPsi(GameState &state, unsigned ticks)
 		// - Chance is 100 - (3 x current - initial)
 		// - Hybrids have much higher chance to improve and humans hardly ever improve
 		// This seems very wong (lol)!
-		//	 For example, if initial is 50, no improvement ever possible because 100 - (150-50) = 0 already)
+		//	 For example, if initial is 50, no improvement ever possible because 100 - (150-50) = 0
+		//already)
 		//   Or, for initial 10, even at 30 the formula would be 100 - (90-10) = 20% improve chance
 		//   In this formula the bigger is the initial stat, the harder it is to improve
-		// Therefore, we'll use a formula that makes senes and follows what he said. 
+		// Therefore, we'll use a formula that makes senes and follows what he said.
 		// Properties of our formula:
 		// - properly gives 0 chance when current = 3x initial
 		// - gives higher chance with higher initial values
 
-		if (randBoundsExclusive(state.rng, 0, 100) < 3 * initial_stats.psi_attack - current_stats.psi_attack)
+		if (randBoundsExclusive(state.rng, 0, 100) <
+		    3 * initial_stats.psi_attack - current_stats.psi_attack)
 		{
 			current_stats.psi_attack += current_stats.psi_energy / 20;
 		}
-		if (randBoundsExclusive(state.rng, 0, 100) < 3 * initial_stats.psi_defence - current_stats.psi_defence)
+		if (randBoundsExclusive(state.rng, 0, 100) <
+		    3 * initial_stats.psi_defence - current_stats.psi_defence)
 		{
 			current_stats.psi_defence += current_stats.psi_energy / 20;
 		}
-		if (randBoundsExclusive(state.rng, 0, 100) < 3 * initial_stats.psi_energy - current_stats.psi_energy)
+		if (randBoundsExclusive(state.rng, 0, 100) <
+		    3 * initial_stats.psi_energy - current_stats.psi_energy)
 		{
 			current_stats.psi_energy++;
 		}
-			
+
 		updateModifiedStats();
 	}
 }

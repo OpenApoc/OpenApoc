@@ -7,12 +7,12 @@
 #include "game/state/rules/vequipment_type.h"
 #include "tools/extractors/common/aequipment.h"
 #include "tools/extractors/common/agent.h"
-#include "tools/extractors/common/crew.h"
 #include "tools/extractors/common/audio.h"
 #include "tools/extractors/common/baselayout.h"
 #include "tools/extractors/common/building.h"
 #include "tools/extractors/common/bulletsprite.h"
 #include "tools/extractors/common/canonstring.h"
+#include "tools/extractors/common/crew.h"
 #include "tools/extractors/common/datachunk.h"
 #include "tools/extractors/common/facilities.h"
 #include "tools/extractors/common/organisations.h"
@@ -102,8 +102,8 @@ class UFO2P
 		return VehicleType::getPrefix() + canon_string(this->vehicle_names->get(idx));
 	}
 
-	static void fillCrew(GameState &state, CrewData crew, std::map<OpenApoc::StateRef<OpenApoc::AgentType>, int> &target);
-
+	static void fillCrew(GameState &state, CrewData crew,
+	                     std::map<OpenApoc::StateRef<OpenApoc::AgentType>, int> &target);
 };
 
 UFO2P &getUFO2PData();

@@ -196,7 +196,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 		s->sectorTilesName = tilesName;
 		if (tilesName == "40spawn_01")
 		{
-			s->spawnLocations[{&state, "AGENTTYPE_QUEENSPAWN"}].push_back({ 22, 15, 2 });
+			s->spawnLocations[{&state, "AGENTTYPE_QUEENSPAWN"}].push_back({22, 15, 2});
 		}
 
 		m->sectors["SEC" + sector] = s;

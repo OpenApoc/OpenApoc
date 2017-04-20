@@ -45,6 +45,7 @@
 		<member type="Section">equipment_sets_by_score</member>
 		<member type="Section">equipment_sets_by_level</member>
 		<member>messages</member>
+		<member>score</member>
 	</object>
 	<object external="true">
 		<name>BattleMapTileset</name>

@@ -72,8 +72,5 @@ struct AgentTypeData
 };
 static_assert(sizeof(struct AgentTypeData) == 106, "Invalid agent_type size");
 
-
-
-
 #define AGENT_TYPE_DATA_OFFSET_START 1398132
 #define AGENT_TYPE_DATA_OFFSET_END 1403114

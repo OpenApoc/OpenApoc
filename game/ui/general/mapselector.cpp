@@ -1,5 +1,4 @@
 #include "game/ui/general/mapselector.h"
-#include "game/ui/general/skirmish.h"
 #include "forms/form.h"
 #include "forms/graphicbutton.h"
 #include "forms/label.h"
@@ -9,16 +8,17 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
+#include "game/state/base/base.h"
 #include "game/state/battle/battlemap.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/vehicle.h"
-#include "game/state/base/base.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/vehicle_type.h"
 #include "game/ui/battle/battlebriefing.h"
 #include "game/ui/battle/battleview.h"
 #include "game/ui/city/cityview.h"
+#include "game/ui/general/skirmish.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc
@@ -36,7 +36,7 @@ MapSelector::MapSelector(sp<GameState> state, Skirmish &skirmish)
 		if (!v.second->battle_map || seen_maps.find(v.second->battle_map) != seen_maps.end())
 			continue;
 		seen_maps.insert(v.second->battle_map);
-		listbox->addItem(createMapRowVehicle({ state.get(), v.first }, state));
+		listbox->addItem(createMapRowVehicle({state.get(), v.first}, state));
 	}
 	for (auto &c : state->cities)
 	{
@@ -45,12 +45,12 @@ MapSelector::MapSelector(sp<GameState> state, Skirmish &skirmish)
 			if (seen_maps.find(b.second->battle_map) != seen_maps.end())
 				continue;
 			seen_maps.insert(b.second->battle_map);
-			listbox->addItem(createMapRowBuilding({ state.get(),b.first }, state));
+			listbox->addItem(createMapRowBuilding({state.get(), b.first}, state));
 		}
 	}
 	for (auto &b : state->player_bases)
 	{
-		listbox->addItem(createMapRowBase({ state.get(),b.first }, state));
+		listbox->addItem(createMapRowBase({state.get(), b.first}, state));
 	}
 }
 
@@ -62,20 +62,23 @@ sp<Control> MapSelector::createMapRowBuilding(StateRef<Building> building, sp<Ga
 
 	const int HEIGHT = 21;
 
-	auto text = control->createChild<Label>(format("[%s Building] %s [%s]", building->owner == state->getAliens() ? "Alien" : "Human", building->name, building->battle_map.id), ui().getFont("smalfont"));
-	text->Location = { 0, 0 };
-	text->Size = { 488, HEIGHT };
+	auto text = control->createChild<Label>(
+	    format("[%s Building] %s [%s]", building->owner == state->getAliens() ? "Alien" : "Human",
+	           building->name, building->battle_map.id),
+	    ui().getFont("smalfont"));
+	text->Location = {0, 0};
+	text->Size = {488, HEIGHT};
 	text->TextVAlign = VerticalAlignment::Centre;
 
 	{
 		auto btnImage = fw().data->loadImage(
-			"PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:57:ui/menuopt.pal");
+		    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:57:ui/menuopt.pal");
 		auto btnLocation = control->createChild<GraphicButton>(btnImage, btnImage);
 		btnLocation->Location = text->Location + Vec2<int>{text->Size.x, 0};
-		btnLocation->Size = { 22, HEIGHT };
-		btnLocation->addCallback(FormEventType::ButtonClick, [building,state, this](Event *) {
+		btnLocation->Size = {22, HEIGHT};
+		btnLocation->addCallback(FormEventType::ButtonClick, [building, state, this](Event *) {
 			skirmish.setLocation(building);
-			fw().stageQueueCommand({ StageCmd::Command::POP });
+			fw().stageQueueCommand({StageCmd::Command::POP});
 		});
 	}
 
@@ -88,7 +91,8 @@ sp<Control> MapSelector::createMapRowVehicle(StateRef<VehicleType> vehicle, sp<G
 
 	const int HEIGHT = 21;
 
-	auto text = control->createChild<Label>(format("[UFO] %s [%s]",vehicle->name, vehicle->battle_map.id), ui().getFont("smalfont"));
+	auto text = control->createChild<Label>(
+	    format("[UFO] %s [%s]", vehicle->name, vehicle->battle_map.id), ui().getFont("smalfont"));
 	text->Location = {0, 0};
 	text->Size = {488, HEIGHT};
 	text->TextVAlign = VerticalAlignment::Centre;
@@ -101,7 +105,7 @@ sp<Control> MapSelector::createMapRowVehicle(StateRef<VehicleType> vehicle, sp<G
 		btnLocation->Size = {22, HEIGHT};
 		btnLocation->addCallback(FormEventType::ButtonClick, [vehicle, state, this](Event *) {
 			skirmish.setLocation(vehicle);
-			fw().stageQueueCommand({ StageCmd::Command::POP });
+			fw().stageQueueCommand({StageCmd::Command::POP});
 		});
 	}
 
@@ -114,20 +118,21 @@ sp<Control> MapSelector::createMapRowBase(StateRef<Base> base, sp<GameState> sta
 
 	const int HEIGHT = 21;
 
-	auto text = control->createChild<Label>(format("[Base] %s", base->name), ui().getFont("smalfont"));
-	text->Location = { 0, 0 };
-	text->Size = { 488, HEIGHT };
+	auto text =
+	    control->createChild<Label>(format("[Base] %s", base->name), ui().getFont("smalfont"));
+	text->Location = {0, 0};
+	text->Size = {488, HEIGHT};
 	text->TextVAlign = VerticalAlignment::Centre;
 
 	{
 		auto btnImage = fw().data->loadImage(
-			"PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:57:ui/menuopt.pal");
+		    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:57:ui/menuopt.pal");
 		auto btnLocation = control->createChild<GraphicButton>(btnImage, btnImage);
 		btnLocation->Location = text->Location + Vec2<int>{text->Size.x, 0};
-		btnLocation->Size = { 22, HEIGHT };
+		btnLocation->Size = {22, HEIGHT};
 		btnLocation->addCallback(FormEventType::ButtonClick, [base, state, this](Event *) {
 			skirmish.setLocation(base);
-			fw().stageQueueCommand({ StageCmd::Command::POP });
+			fw().stageQueueCommand({StageCmd::Command::POP});
 		});
 	}
 

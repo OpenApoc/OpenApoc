@@ -7,6 +7,12 @@ namespace OpenApoc
 
 Organisation::Organisation() : balance(0), income(0), tech_level(1), average_guards(1) {}
 
+int Organisation::getGuardCount(GameState &state) const
+{
+	return std::min(
+	    20, randBoundsInclusive(state.rng, average_guards * 75 / 100, average_guards * 125 / 100));
+}
+
 float Organisation::getRelationTo(const StateRef<Organisation> &other) const
 {
 	if (other == this)
