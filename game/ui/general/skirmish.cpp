@@ -459,7 +459,7 @@ void Skirmish::battleInBase(StateRef<Base> base, std::map<StateRef<AgentType>, i
 	fw().stageQueueCommand(
 	    {StageCmd::Command::PUSH,
 	     mksp<BattleBriefing>(state.shared_from_this(), state.getAliens(), base->building.id, true,
-	                          true, loadBattleBuilding(base->building, &state, false, aliens))});
+	                          true, loadBattleBuilding(base->building, &state,base, false, aliens))});
 }
 
 void Skirmish::battleInVehicle(StateRef<Base> playerBase, StateRef<VehicleType> vehicle,
