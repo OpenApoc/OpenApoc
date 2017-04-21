@@ -957,6 +957,7 @@ bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, P
 		if (!realTime)
 		{
 			psiTarget->applyPsiAttack(state, *this, psiStatus, psiItem, false);
+			stopAttackPsi(state);
 		}
 		return true;
 	}
@@ -1007,16 +1008,34 @@ void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatu
                                 StateRef<AEquipmentType> item, bool impact)
 {
 	std::ignore = item;
-	sendAgentEvent(state, status == PsiStatus::Control ? GameEventType::AgentPsiControlled
-	                                                   : GameEventType::AgentPsiAttacked,
-	               true);
-	// FIXME: Change to correct psi stun / panic effects
-	switch (status)
+	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
+	if (impact)
 	{
+		sendAgentEvent(state, status == PsiStatus::Control ? GameEventType::AgentPsiControlled
+			: GameEventType::AgentPsiAttacked,
+	               true);
+	}
+	bool finished = false;
+	do
+	{
+		// In turn based, you attack over an over until you're done, and each attack costs extra
+		if (!realTime && !impact && status != PsiStatus::Probe)
+		{
+			int cost = getPsiCost(status, true);
+			if (attacker.agent->modified_stats.psi_energy < cost)
+			{
+				finished = true;
+				continue;
+			}
+			attacker.agent->modified_stats.psi_energy -= cost;
+		}
+		// Actually apply attack
+		switch (status)
+		{
 		case PsiStatus::Panic:
 			if (!impact)
 			{
-				agent->modified_stats.loseMorale(8);
+				agent->modified_stats.loseMorale(realTime ? 8 : 4);
 				if (agent->modified_stats.morale == 0)
 				{
 					std::set<UString> panickers;
@@ -1036,7 +1055,7 @@ void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatu
 		case PsiStatus::Stun:
 			if (!impact)
 			{
-				applyDamageDirect(state, 7, false, BodyPart::Body, 9001);
+				applyDamageDirect(state, realTime ? 7 : 4, false, BodyPart::Body, 9001);
 			}
 			break;
 		case PsiStatus::Control:
@@ -1055,7 +1074,8 @@ void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatu
 		case PsiStatus::NotEngaged:
 			LogError("Invalid value NotEngaged for psiStatus in applyPsiAttack()");
 			return;
-	}
+		}
+	} while (!finished && !realTime && !impact && status != PsiStatus::Probe);
 }
 
 void BattleUnit::stopAttackPsi(GameState &state)
@@ -1736,7 +1756,7 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 	}
 
 	// Regeneration
-	regenTicksAccumulated += ticks;
+	regenTicksAccumulated += ticks * (realTime ? 1 : 3);
 	while (regenTicksAccumulated >= TICKS_PER_SECOND)
 	{
 		regenTicksAccumulated -= TICKS_PER_SECOND;
