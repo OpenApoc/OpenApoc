@@ -241,7 +241,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	s.reactions =
 	    randBoundsInclusive(state.rng, type->min_stats.reactions, type->max_stats.reactions);
 	s.setSpeed(randBoundsInclusive(state.rng, type->min_stats.speed, type->max_stats.speed));
-	s.stamina = randBoundsInclusive(state.rng, type->min_stats.stamina, type->max_stats.stamina);
+	s.stamina = randBoundsInclusive(state.rng, type->min_stats.stamina, type->max_stats.stamina) * 10;
 	s.bravery =
 	    randBoundsInclusive(state.rng, type->min_stats.bravery / 10, type->max_stats.bravery / 10) *
 	    10;
@@ -759,9 +759,9 @@ void Agent::trainPhysical(GameState &state, unsigned ticks)
 		{
 			current_stats.speed++;
 		}
-		if (randBoundsExclusive(state.rng, 0, 200) >= current_stats.stamina)
+		if (randBoundsExclusive(state.rng, 0, 2000) >= current_stats.stamina)
 		{
-			current_stats.stamina++;
+			current_stats.stamina += 20;
 		}
 		if (randBoundsExclusive(state.rng, 0, 100) >= current_stats.strength)
 		{

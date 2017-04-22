@@ -38,6 +38,7 @@
 namespace OpenApoc
 {
 
+static const unsigned TICKS_REGEN_PER_TURN = TICKS_PER_TURN * 3;
 static const unsigned TICKS_PER_PSI_CHECK = TICKS_PER_SECOND / 2;
 // FIXME: Seems to correspond to vanilla behavior, but ensure it's right
 static const unsigned TICKS_PER_WOUND_EFFECT = TICKS_PER_TURN;
@@ -593,8 +594,10 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void update(GameState &state, unsigned int ticks);
 	// Update function for TB
 	void updateTB(GameState &state);
-	// Updates unit regeneration, bleeding, debuffs and morale states
+	// Updates unit bleeding, debuffs and morale states
 	void updateStateAndStats(GameState &state, unsigned int ticks);
+	// Updates unit's regeneration
+	void updateRegen(GameState &state, unsigned int ticks);	
 	// Updates unit give way request and events
 	void updateEvents(GameState &state);
 	// Updates unit that is idle

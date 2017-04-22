@@ -1755,35 +1755,6 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 		}
 	}
 
-	// Regeneration
-	regenTicksAccumulated += ticks * (realTime ? 1 : 3);
-	while (regenTicksAccumulated >= TICKS_PER_SECOND)
-	{
-		regenTicksAccumulated -= TICKS_PER_SECOND;
-		// Stun removal
-		if (stunDamage > 0)
-		{
-			stunDamage--;
-		}
-		if (!isConscious() && !isUnconscious())
-		{
-			tryToRiseUp(state);
-		}
-		// Psi regen
-		if (agent->modified_stats.psi_energy < agent->current_stats.psi_energy)
-		{
-			agent->modified_stats.psi_energy++;
-		}
-		// Sta regen
-		for (int i = 0; i < 2; i++)
-		{
-			if (agent->modified_stats.stamina < agent->current_stats.stamina)
-			{
-				agent->modified_stats.stamina++;
-			}
-		}
-	}
-
 	// Morale (units under mind control cannot have low morale event)
 	if ((realTime || owner == state.current_battle->currentActiveOrganisation) && isConscious() &&
 	    owner == agent->owner)
@@ -1951,6 +1922,54 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 			// Finally, reduce debuff
 
 			fireDebuffTicksRemaining -= TICKS_PER_FIRE_EFFECT;
+		}
+	}
+}
+
+void BattleUnit::updateRegen(GameState & state, unsigned int ticks)
+{
+	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
+
+	regenTicksAccumulated += ticks;
+	while (regenTicksAccumulated >= TICKS_PER_SECOND)
+	{
+		regenTicksAccumulated -= TICKS_PER_SECOND;
+		// Stun removal
+		if (stunDamage > 0)
+		{
+			stunDamage--;
+		}
+		if (!isConscious() && !isUnconscious())
+		{
+			tryToRiseUp(state);
+		}
+		// Psi regen
+		if (agent->modified_stats.psi_energy < agent->current_stats.psi_energy)
+		{
+			agent->modified_stats.psi_energy++;
+		}
+		// Sta regen RT
+		if (realTime)
+		{
+			if (agent->modified_stats.stamina < agent->current_stats.stamina)
+			{
+				agent->modified_stats.stamina += 5;
+			}
+		}
+	}
+	// Sta regen TB
+	if (!realTime)
+	{
+		int staRegen = agent->current_stats.stamina >= 1920 ? 60 : (agent->current_stats.stamina >= 1280 ? 40 : 20);
+		int tuLeft = 100 * agent->modified_stats.time_units / agent->current_stats.time_units;
+		staRegen = tuLeft < 9 ? 0 : (tuLeft < 18 ? staRegen / 2 : staRegen);
+
+		for (int i = 0; i < staRegen; i++)
+		{
+			if (agent->modified_stats.stamina < agent->current_stats.stamina)
+			{
+				agent->modified_stats.stamina++;
+			}
 		}
 	}
 }
@@ -3307,6 +3326,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	{
 		// Miscellaneous state updates, as well as unit's stats
 		updateStateAndStats(state, ticks);
+		// Unit regeneration
+		updateRegen(state, ticks);
 	}
 	// Unit events - was under fire, was requested to give way etc.
 	updateEvents(state);
@@ -3394,6 +3415,7 @@ void BattleUnit::updateTB(GameState &state)
 
 	// Miscellaneous state updates, as well as unit's stats
 	updateStateAndStats(state, TICKS_PER_TURN);
+	updateRegen(state, TICKS_REGEN_PER_TURN);
 }
 
 void BattleUnit::triggerProximity(GameState &state)
@@ -3773,10 +3795,10 @@ void BattleUnit::processExperience(GameState &state)
 			agent->current_stats.speed +=
 			    randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.speed) / 10;
 		}
-		if (agent->current_stats.stamina < 200)
+		if (agent->current_stats.stamina < 2000)
 		{
 			agent->current_stats.stamina +=
-			    randBoundsInclusive(state.rng, 0, 2) + (200 - agent->current_stats.stamina) / 10;
+			    randBoundsInclusive(state.rng, 0, 2) * 20 + (2000 - agent->current_stats.stamina) / 10;
 		}
 		if (agent->current_stats.strength < 100)
 		{

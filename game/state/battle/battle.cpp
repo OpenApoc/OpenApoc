@@ -2026,7 +2026,7 @@ void Battle::beginTurn(GameState &state)
 		return;
 	}
 
-	// Cancel mind control and stuff
+	// Cancel mind control
 	for (auto &u : units)
 	{
 		if (u.second->owner != currentActiveOrganisation)
@@ -2035,6 +2035,11 @@ void Battle::beginTurn(GameState &state)
 		}
 		u.second->stopAttackPsi(state);
 	}
+
+	// Update everything related to this turn
+	updateTBBegin(state);
+
+	// Unit's begin turn routine
 	for (auto &u : units)
 	{
 		if (u.second->owner != currentActiveOrganisation)
@@ -2050,8 +2055,6 @@ void Battle::beginTurn(GameState &state)
 	{
 		ticksWithoutSeenAction[p] = TICKS_PER_TURN;
 	}
-
-	updateTBBegin(state);
 
 	fw().pushEvent(new GameBattleEvent(GameEventType::NewTurn, shared_from_this()));
 }
