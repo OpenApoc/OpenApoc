@@ -7,7 +7,6 @@
 #include <iostream>
 #include <sstream>
 
-
 // We can't just use 'using namespace OpenApoc;' as:
 // On windows VS it says
 /* Error	C2678	binary '==': no operator found which takes a left - hand operand of type
@@ -61,7 +60,6 @@ bool test_gamestate_serialization(OpenApoc::sp<OpenApoc::GameState> state)
 
 	fs::remove(tempPath);
 
-
 	return true;
 }
 
@@ -93,7 +91,6 @@ int main(int argc, char **argv)
 	OpenApoc::Framework fw("OpenApoc", false);
 
 	LogInfo("Loading \"%s\"", gamestate_name);
-
 
 	auto state = OpenApoc::mksp<OpenApoc::GameState>();
 
@@ -143,7 +140,8 @@ int main(int argc, char **argv)
 	}
 
 	LogInfo("Testing state with battle");
-	LogInfo("--Test disabled until we find a way to compare sets properly (fails in sets of pointers like hazards)--");
+	LogInfo("--Test disabled until we find a way to compare sets properly (fails in sets of "
+	        "pointers like hazards)--");
 	if (false)
 	{
 
@@ -168,7 +166,7 @@ int main(int argc, char **argv)
 			return EXIT_FAILURE;
 		}
 		LogInfo("Using vehicle map for \"%s\"", vType->name);
-		v->type = { state.get(), vType };
+		v->type = {state.get(), vType};
 		v->name = format("%s %d", v->type->name, ++v->type->numCreated);
 		state->vehicles[vID] = v;
 

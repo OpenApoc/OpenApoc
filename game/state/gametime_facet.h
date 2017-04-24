@@ -61,6 +61,7 @@ class ApocDateFacet : public date_facet<date_type, CharT, OutItrT>
 
 	static const char_type long_day_format[3];
 	void longDayNames(const input_collection_type &long_names) { m_day_long_names = long_names; }
+
   protected:
 	input_collection_type m_day_long_names;
 

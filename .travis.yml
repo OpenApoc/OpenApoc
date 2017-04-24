@@ -15,15 +15,15 @@ os:
 before_install:
   - if [ $TRAVIS_OS_NAME = "linux" ]; then ccache -M 1G; ccache -s; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y > /dev/null; fi
-  - if [ $TRAVIS_OS_NAME = "linux" ]; then sudo add-apt-repository "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.9 main" -y > /dev/null; fi
+  - if [ $TRAVIS_OS_NAME = "linux" ]; then sudo add-apt-repository "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-4.0 main" -y > /dev/null; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|sudo apt-key add - > /dev/null; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then sudo apt-get update > /dev/null; fi
   - if [ $TRAVIS_OS_NAME = "linux" -a $CXX = "clang++" -a $BUILD_TYPE != "Sanitize" ]; then export TIDY=true; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then if [ "$CXX" = "g++" ]; then sudo apt-get install g++-5 -y > /dev/null; fi; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then if [ "$CXX" = "g++" ]; then export CXX="ccache g++-5" CC="ccache gcc-5"; fi; fi
-  - if [ $TRAVIS_OS_NAME = "linux" ]; then if [ "$CXX" = "clang++" ]; then sudo apt-get install clang-3.9 --force-yes -y > /dev/null; fi; fi
-  - if [ $TRAVIS_OS_NAME = "linux" ]; then if [ "$CXX" = "clang++" ]; then export CXX="ccache clang++-3.9" CC="ccache clang-3.9"; fi; fi
-  - if [ $TRAVIS_OS_NAME = "linux" ]; then if [ "${TIDY}" = "true" ]; then sudo apt-get install clang-tidy-3.9 clang-format-3.9 clang-3.9 --force-yes -y > /dev/null; fi; fi
+  - if [ $TRAVIS_OS_NAME = "linux" ]; then if [ "$CXX" = "clang++" ]; then sudo apt-get install clang-4.0 --force-yes -y > /dev/null; fi; fi
+  - if [ $TRAVIS_OS_NAME = "linux" ]; then if [ "$CXX" = "clang++" ]; then export CXX="ccache clang++-4.0" CC="ccache clang-4.0"; fi; fi
+  - if [ $TRAVIS_OS_NAME = "linux" ]; then if [ "${TIDY}" = "true" ]; then sudo apt-get install clang-tidy-4.0 clang-format-4.0 clang-4.0 --force-yes -y > /dev/null; fi; fi
   - if [ $TRAVIS_OS_NAME = "linux" ]; then sudo apt-get install libunwind8-dev libsdl2-dev libboost-locale-dev libboost-filesystem-dev libboost-program-options-dev -y > /dev/null; fi
   - if [ $TRAVIS_OS_NAME = "osx" ]; then brew update && brew install sdl2 xz ; fi
   - ${CXX} --version
@@ -52,7 +52,7 @@ matrix:
 
 before_script:
   - export CFLAGS="-Wall -Wextra" CXXFLAGS="-Wall -Wextra"
-  - $(which time) cmake . -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCLANG_TIDY=clang-tidy-3.9 -DCLANG_FORMAT=clang-format-3.9 -DENABLE_TESTS=ON -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}" -DENABLE_COTIRE=OFF
+  - $(which time) cmake . -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCLANG_TIDY=clang-tidy-4.0 -DCLANG_FORMAT=clang-format-4.0 -DENABLE_TESTS=ON -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}" -DENABLE_COTIRE=OFF
 # Do the format before the script so the output is cleaner - just showing the diff (if any) and the tidy results
   - if [ "${TIDY}" = "true" ]; then make format -j2 > /dev/null; fi
 

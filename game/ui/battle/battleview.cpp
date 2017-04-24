@@ -2293,8 +2293,9 @@ void BattleView::orderDrop(bool right)
 			return;
 		}
 		auto item = items.front();
-		unit->agent->addEquipment(*state, item->item, right ? AEquipmentSlotType::RightHand
-		                                                    : AEquipmentSlotType::LeftHand);
+		unit->agent->addEquipment(*state, item->item,
+		                          right ? AEquipmentSlotType::RightHand
+		                                : AEquipmentSlotType::LeftHand);
 		item->die(*state, false);
 	}
 }
@@ -3603,9 +3604,9 @@ sp<RGBImage> BattleView::drawMotionScanner(BattleScanner &scanner)
 		{
 			for (int y = 0; y < MOTION_SCANNER_Y; y++)
 			{
-				auto &color =
-				    colors.at(std::min(15, scanner.movementTicks[y * MOTION_SCANNER_X + x] * 16 /
-				                               (int)TICKS_SCANNER_REMAIN_LIT));
+				auto &color = colors.at(std::min(15,
+				                                 scanner.movementTicks[y * MOTION_SCANNER_X + x] *
+				                                     16 / (int)TICKS_SCANNER_REMAIN_LIT));
 				for (int i = 0; i <= 1; i++)
 				{
 					for (int j = 0; j <= 1; j++)
@@ -3743,11 +3744,11 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 				             (selectionState == BattleSelectionState::TeleportRight && rightHand) ||
 				             (selectionState == BattleSelectionState::TeleportLeft && !rightHand);
 			}
-			a.accuracy =
-			    std::max(0, e->getAccuracy(u->current_body_state, u->current_movement_state,
-			                               u->fire_aiming_mode,
-			                               a.itemType->type != AEquipmentType::Type::Weapon) /
-			                    2);
+			a.accuracy = std::max(0,
+			                      e->getAccuracy(u->current_body_state, u->current_movement_state,
+			                                     u->fire_aiming_mode,
+			                                     a.itemType->type != AEquipmentType::Type::Weapon) /
+			                          2);
 
 			/*
 			// Alexey Andronov (Istrebitel):
