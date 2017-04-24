@@ -1136,14 +1136,20 @@ void BattleView::update()
 	{
 		if (state->current_battle->hotseat)
 		{
-			if (state->current_battle->currentActiveOrganisation != state->current_battle->currentPlayer && state->current_battle->currentActiveOrganisation != state->getCivilian())
+			if (state->current_battle->currentActiveOrganisation !=
+			        state->current_battle->currentPlayer &&
+			    state->current_battle->currentActiveOrganisation != state->getCivilian())
 			{
 				fw().stageQueueCommand(
-				{ StageCmd::Command::PUSH,
-					mksp<MessageBox>("Next Turn",format( "%s, it is your turn!", state->current_battle->currentActiveOrganisation->name),
-						MessageBox::ButtonOptions::Ok, [this] {
-					state->current_battle->currentPlayer = state->current_battle->currentActiveOrganisation;
-				}) });
+				    {StageCmd::Command::PUSH,
+				     mksp<MessageBox>(
+				         "Next Turn",
+				         format("%s, it is your turn!",
+				                state->current_battle->currentActiveOrganisation->name),
+				         MessageBox::ButtonOptions::Ok, [this] {
+					         state->current_battle->currentPlayer =
+					             state->current_battle->currentActiveOrganisation;
+					     })});
 				updateHiddenForm();
 				return;
 			}
@@ -1839,11 +1845,12 @@ void BattleView::updateHiddenForm()
 	hideDisplay = true;
 	hiddenForm->findControlTyped<Label>("TEXT_TURN")->setText(format("%d", battle.currentTurn));
 	hiddenForm->findControlTyped<Label>("TEXT_SIDE")
-		->setText(battle.currentActiveOrganisation->name);
-	bool player = state->current_battle->hotseat && state->current_battle->currentActiveOrganisation != state->getCivilian();
+	    ->setText(battle.currentActiveOrganisation->name);
+	bool player = state->current_battle->hotseat &&
+	              state->current_battle->currentActiveOrganisation != state->getCivilian();
 	hiddenForm->findControlTyped<Label>("TEXT_PLAYER")->setText(player ? "Player" : "Computer");
 	hiddenForm->findControlTyped<Graphic>("HIDDEN_IMAGE")
-		->setImage(fw().data->loadImage(vectorRandomizer(state->rng, HIDDEN_BACKGROUNDS)));
+	    ->setImage(fw().data->loadImage(vectorRandomizer(state->rng, HIDDEN_BACKGROUNDS)));
 	updateHiddenBar();
 }
 
@@ -2903,7 +2910,7 @@ void BattleView::handleMouseDown(Event *e)
 		}
 	}
 	else if (Event::isPressed(e->mouse().Button, Event::MouseButton::Left) ||
-	          Event::isPressed(e->mouse().Button, Event::MouseButton::Right))
+	         Event::isPressed(e->mouse().Button, Event::MouseButton::Right))
 	{
 		auto buttonPressed = Event::isPressed(e->mouse().Button, Event::MouseButton::Left)
 		                         ? Event::MouseButton::Left

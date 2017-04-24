@@ -27,10 +27,13 @@ class Skirmish : public Stage
 	void clearLocation();
 	void updateLocationLabel();
 
-	void battleInBuilding(bool hotseat, StateRef<Base> playerBase, StateRef<Building> building, bool raid,
-	                      std::map<StateRef<AgentType>, int> *aliens, int *guards, int *civilians);
-	void battleInBase(bool hotseat, StateRef<Base> base, std::map<StateRef<AgentType>, int> *aliens);
-	void battleInVehicle(bool hotseat, StateRef<Base> playerBase, StateRef<VehicleType>, std::map<StateRef<AgentType>, int> *aliens);
+	void battleInBuilding(bool hotseat, StateRef<Base> playerBase, StateRef<Building> building,
+	                      bool raid, std::map<StateRef<AgentType>, int> *aliens, int *guards,
+	                      int *civilians);
+	void battleInBase(bool hotseat, StateRef<Base> base,
+	                  std::map<StateRef<AgentType>, int> *aliens);
+	void battleInVehicle(bool hotseat, StateRef<Base> playerBase, StateRef<VehicleType>,
+	                     std::map<StateRef<AgentType>, int> *aliens);
 
   public:
 	Skirmish(sp<GameState> state);

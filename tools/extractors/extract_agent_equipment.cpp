@@ -1017,8 +1017,8 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 					}
 				}
 
-				es->min_score = i == 0 ? std::numeric_limits<int>::min() : i;
-				es->max_score = i == 12 ? std::numeric_limits<int>::max() : i + 1;
+				es->min_score = i == 0 ? std::numeric_limits<int>::min() : i + 1;
+				es->max_score = i == 11 ? std::numeric_limits<int>::max() : i + 2;
 
 				state.equipment_sets_by_level[id] = es;
 			}

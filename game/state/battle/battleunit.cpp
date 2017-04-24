@@ -957,7 +957,10 @@ bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, P
 		if (!realTime)
 		{
 			psiTarget->applyPsiAttack(state, *this, psiStatus, psiItem, false);
-			stopAttackPsi(state);
+			if (psiStatus != PsiStatus::Control)
+			{
+				stopAttackPsi(state);
+			}
 		}
 		return true;
 	}
@@ -1012,8 +1015,8 @@ void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatu
 	if (impact)
 	{
 		sendAgentEvent(state, status == PsiStatus::Control ? GameEventType::AgentPsiControlled
-			: GameEventType::AgentPsiAttacked,
-	               true);
+		                                                   : GameEventType::AgentPsiAttacked,
+		               true);
 	}
 	bool finished = false;
 	do
@@ -1032,48 +1035,48 @@ void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatu
 		// Actually apply attack
 		switch (status)
 		{
-		case PsiStatus::Panic:
-			if (!impact)
-			{
-				agent->modified_stats.loseMorale(realTime ? 8 : 4);
-				if (agent->modified_stats.morale == 0)
+			case PsiStatus::Panic:
+				if (!impact)
 				{
-					std::set<UString> panickers;
-					for (auto attacker : psiAttackers)
+					agent->modified_stats.loseMorale(realTime ? 8 : 4);
+					if (agent->modified_stats.morale == 0)
 					{
-						if (attacker.second == PsiStatus::Panic)
+						std::set<UString> panickers;
+						for (auto attacker : psiAttackers)
 						{
-							panickers.emplace(attacker.first);
+							if (attacker.second == PsiStatus::Panic)
+							{
+								panickers.emplace(attacker.first);
+							}
+						}
+						for (auto s : panickers)
+						{
+							StateRef<BattleUnit>(&state, s)->stopAttackPsi(state);
 						}
 					}
-					for (auto s : panickers)
-					{
-						StateRef<BattleUnit>(&state, s)->stopAttackPsi(state);
-					}
 				}
-			}
-		case PsiStatus::Stun:
-			if (!impact)
-			{
-				applyDamageDirect(state, realTime ? 7 : 4, false, BodyPart::Body, 9001);
-			}
-			break;
-		case PsiStatus::Control:
-			if (impact)
-			{
-				changeOwner(state, attacker.owner);
-				agent->modified_stats.loseMorale(100);
-			}
-			break;
-		case PsiStatus::Probe:
-			if (impact)
-			{
-				LogWarning("Psi Probe Success: Show unit's screen");
-			}
-			break;
-		case PsiStatus::NotEngaged:
-			LogError("Invalid value NotEngaged for psiStatus in applyPsiAttack()");
-			return;
+			case PsiStatus::Stun:
+				if (!impact)
+				{
+					applyDamageDirect(state, realTime ? 7 : 4, false, BodyPart::Body, 9001);
+				}
+				break;
+			case PsiStatus::Control:
+				if (impact)
+				{
+					changeOwner(state, attacker.owner);
+					agent->modified_stats.loseMorale(100);
+				}
+				break;
+			case PsiStatus::Probe:
+				if (impact)
+				{
+					LogWarning("Psi Probe Success: Show unit's screen");
+				}
+				break;
+			case PsiStatus::NotEngaged:
+				LogError("Invalid value NotEngaged for psiStatus in applyPsiAttack()");
+				return;
 		}
 	} while (!finished && !realTime && !impact && status != PsiStatus::Probe);
 }
@@ -1926,7 +1929,7 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 	}
 }
 
-void BattleUnit::updateRegen(GameState & state, unsigned int ticks)
+void BattleUnit::updateRegen(GameState &state, unsigned int ticks)
 {
 	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
 
@@ -1960,7 +1963,9 @@ void BattleUnit::updateRegen(GameState & state, unsigned int ticks)
 	// Sta regen TB
 	if (!realTime)
 	{
-		int staRegen = agent->current_stats.stamina >= 1920 ? 60 : (agent->current_stats.stamina >= 1280 ? 40 : 20);
+		int staRegen = agent->current_stats.stamina >= 1920
+		                   ? 60
+		                   : (agent->current_stats.stamina >= 1280 ? 40 : 20);
 		int tuLeft = 100 * agent->modified_stats.time_units / agent->current_stats.time_units;
 		staRegen = tuLeft < 9 ? 0 : (tuLeft < 18 ? staRegen / 2 : staRegen);
 
@@ -3797,8 +3802,8 @@ void BattleUnit::processExperience(GameState &state)
 		}
 		if (agent->current_stats.stamina < 2000)
 		{
-			agent->current_stats.stamina +=
-			    randBoundsInclusive(state.rng, 0, 2) * 20 + (2000 - agent->current_stats.stamina) / 10;
+			agent->current_stats.stamina += randBoundsInclusive(state.rng, 0, 2) * 20 +
+			                                (2000 - agent->current_stats.stamina) / 10;
 		}
 		if (agent->current_stats.strength < 100)
 		{

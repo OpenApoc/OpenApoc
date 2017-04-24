@@ -215,8 +215,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				for (int i = 0; i < numGuards; i++)
 				{
 					otherParticipants.emplace_back(
-						building->owner,
-					    listRandomiser(state.rng, building->owner->guard_types));
+					    building->owner, listRandomiser(state.rng, building->owner->guard_types));
 				}
 
 				// Civilains will not be actually added if there is no spawn points for them

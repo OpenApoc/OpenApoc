@@ -597,7 +597,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Updates unit bleeding, debuffs and morale states
 	void updateStateAndStats(GameState &state, unsigned int ticks);
 	// Updates unit's regeneration
-	void updateRegen(GameState &state, unsigned int ticks);	
+	void updateRegen(GameState &state, unsigned int ticks);
 	// Updates unit give way request and events
 	void updateEvents(GameState &state);
 	// Updates unit that is idle

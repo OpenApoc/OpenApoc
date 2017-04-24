@@ -370,8 +370,9 @@ void SelectForces::eventOccurred(Event *e)
 			    aliens.empty() ? nullptr : &aliens,
 			    menuform->findControlTyped<CheckBox>("DEFAULT_GUARDS")->isChecked() ? nullptr
 			                                                                        : &guards,
-			    menuform->findControlTyped<CheckBox>("DEFAULT_CIVILIANS")->isChecked() ? nullptr
-			                                                                           : &civilians);
+			    menuform->findControlTyped<CheckBox>("DEFAULT_CIVILIANS")->isChecked()
+			        ? nullptr
+			        : &civilians);
 			return;
 		}
 	}

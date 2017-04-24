@@ -273,13 +273,15 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// Battle Start Functions
 
 	// To be called when battle in a ufo must be created, before showing battle briefing screen
-	static void beginBattle(GameState &state, bool hotseat, StateRef<Organisation> target_organisation,
+	static void beginBattle(GameState &state, bool hotseat,
+	                        StateRef<Organisation> target_organisation,
 	                        std::list<StateRef<Agent>> &player_agents,
 	                        const std::map<StateRef<AgentType>, int> *aliens,
 	                        StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft);
 
 	// To be called when battle in a building must be created, before showing battle briefing screen
-	static void beginBattle(GameState &state, bool hotseat, StateRef<Organisation> target_organisation,
+	static void beginBattle(GameState &state, bool hotseat,
+	                        StateRef<Organisation> target_organisation,
 	                        std::list<StateRef<Agent>> &player_agents,
 	                        const std::map<StateRef<AgentType>, int> *aliens, const int *guards,
 	                        const int *civilians, StateRef<Vehicle> player_craft,

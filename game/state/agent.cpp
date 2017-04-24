@@ -241,7 +241,8 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	s.reactions =
 	    randBoundsInclusive(state.rng, type->min_stats.reactions, type->max_stats.reactions);
 	s.setSpeed(randBoundsInclusive(state.rng, type->min_stats.speed, type->max_stats.speed));
-	s.stamina = randBoundsInclusive(state.rng, type->min_stats.stamina, type->max_stats.stamina) * 10;
+	s.stamina =
+	    randBoundsInclusive(state.rng, type->min_stats.stamina, type->max_stats.stamina) * 10;
 	s.bravery =
 	    randBoundsInclusive(state.rng, type->min_stats.bravery / 10, type->max_stats.bravery / 10) *
 	    10;
@@ -634,16 +635,15 @@ void Agent::addEquipmentByType(GameState &state, Vec2<int> pos, StateRef<AEquipm
 	auto equipment = mksp<AEquipment>();
 	equipment->type = type;
 	equipment->armor = type->armor;
-	if (type->ammo_types.size() > 0)
-	{
-		equipment->payloadType = *type->ammo_types.begin();
-		equipment->ammo = equipment->payloadType->max_ammo;
-	}
-	else
+	if (type->ammo_types.size() == 0)
 	{
 		equipment->ammo = type->max_ammo;
 	}
 	this->addEquipment(state, pos, equipment);
+	if (type->ammo_types.size() > 0)
+	{
+		equipment->loadAmmo(state);
+	}
 }
 
 void Agent::addEquipment(GameState &state, sp<AEquipment> object, AEquipmentSlotType slotType)
@@ -789,7 +789,7 @@ void Agent::trainPsi(GameState &state, unsigned ticks)
 		// - Hybrids have much higher chance to improve and humans hardly ever improve
 		// This seems very wong (lol)!
 		//	 For example, if initial is 50, no improvement ever possible because 100 - (150-50) = 0
-		//already)
+		// already)
 		//   Or, for initial 10, even at 30 the formula would be 100 - (90-10) = 20% improve chance
 		//   In this formula the bigger is the initial stat, the harder it is to improve
 		// Therefore, we'll use a formula that makes senes and follows what he said.

@@ -2291,7 +2291,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 		return false;
 	}
 
-	// Spend stamina.  As per Mell from forums it takes: 
+	// Spend stamina.  As per Mell from forums it takes:
 	// - 0.6 vanilla stamina to run regardless of diagonal or not
 	// - 0.85 vanilla stamina to go prone regradless of diagonal or not
 	int staCost = 0;
@@ -2299,7 +2299,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 	{
 		staCost = randBoundsInclusive(state.rng, 8, 9);
 	}
-	else if(u.movement_mode == MovementMode::Running)
+	else if (u.movement_mode == MovementMode::Running)
 	{
 		staCost = 6;
 	}
