@@ -532,6 +532,10 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 						// Alien weapons start from index 29, and are not marked as recharging
 						// despite doing so. Therefore, mark them manually
 						e->recharge = (edata.data_idx > 28) ? 1 : wdata.ammo_recharge[0];
+						if (e->recharge > 0)
+						{
+							e->rechargeTB = e->max_ammo;
+						}
 					}
 				}
 			}
@@ -552,6 +556,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 							payload_idx = gdata.ammo_effect;
 							e->max_ammo = gdata.ammo_rounds;
 							e->recharge = gdata.ammo_recharge;
+							e->rechargeTB = gdata.ammo_rounds;
 							if (gdata.ammo_type == 65535 && gdata.ammo_type_duplicate == 1)
 								// Buggy tracker gun clip has incorrect values in these fields AND
 								// comes before it's weapon!
@@ -591,12 +596,14 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 						e->damage_modifier = {&state, data_t.getDModId(16)};
 						e->max_ammo = 100;
 						e->recharge = 1;
+						e->rechargeTB = 12;
 						e->shield_graphic = {&state, "DOODAD_27_SHIELD"};
 						break;
 					case AGENT_GENERAL_TYPE_TELEPORTER:
 						e->type = AEquipmentType::Type::Teleporter;
 						e->max_ammo = gdata.ammo_rounds;
 						e->recharge = gdata.ammo_recharge;
+						e->rechargeTB = gdata.ammo_rounds;
 						break;
 					case AGENT_GENERAL_TYPE_CLOAKING_FIELD:
 						e->type = AEquipmentType::Type::CloakingField;
@@ -1010,8 +1017,8 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 					}
 				}
 
-				es->min_score = i == 0 ? std::numeric_limits<int>::min() : i;
-				es->max_score = i == 12 ? std::numeric_limits<int>::max() : i + 1;
+				es->min_score = i == 0 ? std::numeric_limits<int>::min() : i + 1;
+				es->max_score = i == 11 ? std::numeric_limits<int>::max() : i + 2;
 
 				state.equipment_sets_by_level[id] = es;
 			}

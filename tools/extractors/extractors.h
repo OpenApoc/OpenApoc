@@ -66,12 +66,14 @@ class InitialGameStateExtractor
 
 	// Lookup table of building function number -> battlemap path
 	static const std::vector<UString> battleMapPaths;
-	// Lookup table for battlemap path -> number of features that are converted to fires on map
-	// start
+	// Lookup table for battlemap path -> id of features that are converted to fires on start
 	static const std::map<OpenApoc::UString, std::set<int>> initialFires;
-	// Lookup table for battlemap path -> number of features that are converted to smokes on map
-	// start
+	// Lookup table for battlemap path -> id of features that are converted to smokes on start
 	static const std::map<OpenApoc::UString, std::set<int>> initialSmokes;
+	// Lookup table for battlemap path -> id of ground that are spawning reinforcements
+	static const std::map<OpenApoc::UString, std::set<int>> reinforcementSpawners;
+	// Lookup table for battlemap path -> id of feature that is a mission objective (to destroy)
+	static const std::map<OpenApoc::UString, std::set<int>> missionObjectives;
 	// List of paths and names for unit image packs
 	static const std::map<OpenApoc::UString, OpenApoc::UString> unitImagePackPaths;
 	// List of paths and names for unit shadow packs

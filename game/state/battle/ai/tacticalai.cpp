@@ -23,7 +23,7 @@ void AIBlockTactical::init(GameState &state)
 {
 	for (auto &o : state.current_battle->participants)
 	{
-		if (o == state.getPlayer())
+		if (o == state.getPlayer() || (state.current_battle->hotseat && o != state.getCivilian()))
 		{
 			continue;
 		}

@@ -152,6 +152,7 @@ class BattleView : public BattleTileView
 	void updateLayerButtons();
 	void updateSoldierButtons();
 	void updateTBButtons();
+	void updateHiddenForm();
 
 	void refreshDelayText();
 	void refreshRangeText();
@@ -209,6 +210,8 @@ class BattleView : public BattleTileView
 	void finish() override;
 	void eventOccurred(Event *e) override;
 	void handleMouseDown(Event *e);
+
+	void exitBattle();
 
 	void setUpdateSpeed(BattleUpdateSpeed updateSpeed);
 	void zoomAt(Vec3<int> location);

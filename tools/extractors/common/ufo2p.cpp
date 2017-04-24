@@ -116,6 +116,70 @@ UFO2P::UFO2P(std::string file_name)
 	    file, BULLETSPRITE_DATA_UFO2P_OFFSET_START, BULLETSPRITE_DATA_UFO2P_OFFSET_END));
 	this->projectile_sprites.reset(new DataChunk<ProjectileSprites>(
 	    file, PROJECTILESPRITES_DATA_UFO2P_OFFSET_START, PROJECTILESPRITES_DATA_UFO2P_OFFSET_END));
+
+	this->crew_ufo_downed.reset(
+	    new DataChunk<CrewData>(file, CREW_UFO_DOWNED_OFFSET_START, CREW_UFO_DOWNED_OFFSET_END));
+	this->crew_ufo_deposit.reset(
+	    new DataChunk<CrewData>(file, CREW_UFO_DEPOSIT_OFFSET_START, CREW_UFO_DEPOSIT_OFFSET_END));
+	this->crew_alien_building.reset(new DataChunk<CrewData>(file, CREW_ALIEN_BUILDING_OFFSET_START,
+	                                                        CREW_ALIEN_BUILDING_OFFSET_END));
+}
+
+void UFO2P::fillCrew(GameState &state, CrewData crew,
+                     std::map<OpenApoc::StateRef<OpenApoc::AgentType>, int> &target)
+{
+	if (crew.alien_egg > 0)
+	{
+		target[{&state, "AGENTTYPE_MULTIWORM_EGG"}] = crew.alien_egg;
+	}
+	if (crew.anthropod > 0)
+	{
+		target[{&state, "AGENTTYPE_ANTHROPOD"}] = crew.anthropod;
+	}
+	if (crew.brainsucker > 0)
+	{
+		target[{&state, "AGENTTYPE_BRAINSUCKER"}] = crew.brainsucker;
+	}
+	if (crew.crysalis > 0)
+	{
+		target[{&state, "AGENTTYPE_CHRYSALIS"}] = crew.crysalis;
+	}
+	if (crew.hyperworm > 0)
+	{
+		target[{&state, "AGENTTYPE_HYPERWORM"}] = crew.hyperworm;
+	}
+	if (crew.megaspawn > 0)
+	{
+		target[{&state, "AGENTTYPE_MEGASPAWN"}] = crew.megaspawn;
+	}
+	if (crew.micronoid > 0)
+	{
+		target[{&state, "AGENTTYPE_MICRONOID_AGGREGATE"}] = crew.micronoid;
+	}
+	if (crew.multiworm > 0)
+	{
+		target[{&state, "AGENTTYPE_MULTIWORM"}] = crew.multiworm;
+	}
+	if (crew.popper > 0)
+	{
+		target[{&state, "AGENTTYPE_POPPER"}] = crew.popper;
+	}
+	if (crew.psimorph > 0)
+	{
+		target[{&state, "AGENTTYPE_PSIMORPH"}] = crew.psimorph;
+	}
+	if (crew.queenspawn > 0)
+	{
+		target[{&state, "AGENTTYPE_QUEENSPAWN"}] = crew.queenspawn;
+	}
+	if (crew.skeletoid > 0)
+	{
+		target[{&state, "AGENTTYPE_SKELETOID"}] = crew.skeletoid;
+	}
+	if (crew.spitter > 0)
+	{
+		target[{&state, "AGENTTYPE_SPITTER"}] = crew.spitter;
+	}
 }
 
 } // namespace OpenApoc

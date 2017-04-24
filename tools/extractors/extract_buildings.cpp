@@ -39,6 +39,9 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 			// FIXME: albld.bld seems to have unexpected name_idx and function_idx?
 			b->name = data.alien_building_names->get(i);
 			b->function = b->name;
+			// Load crew
+			auto crew = ufo2p.crew_alien_building->get(entry.function_idx);
+			UFO2P::fillCrew(state, crew, b->preset_crew);
 		}
 		else
 		{

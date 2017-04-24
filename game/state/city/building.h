@@ -12,6 +12,7 @@ namespace OpenApoc
 class BuildingDef;
 class Organisation;
 class Vehicle;
+class AgentType;
 class Base;
 class BattleMap;
 class BaseLayout;
@@ -26,6 +27,7 @@ class Building : public StateObject
 	Rect<int> bounds;
 	StateRef<BaseLayout> base_layout;
 	StateRef<BattleMap> battle_map;
+	std::map<StateRef<AgentType>, int> preset_crew;
 
 	std::vector<Vec3<int>> landingPadLocations;
 	std::set<StateRef<Vehicle>> landed_vehicles;

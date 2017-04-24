@@ -1657,6 +1657,7 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 				if (randBoundsExclusive(state.rng, 0, 100) < BRAINSUCK_CHANCE)
 				{
 					targetUnit->sendAgentEvent(state, GameEventType::AgentBrainsucked, true);
+					// Extra score penalty for being brainsucked
 					if (state.getPlayer() == targetUnit->agent->owner)
 					{
 						state.current_battle->score.casualtyPenalty -=
@@ -2290,6 +2291,27 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 				break;
 		}
 		return false;
+	}
+
+	// Spend stamina.  As per Mell from forums it takes:
+	// - 0.6 vanilla stamina to run regardless of diagonal or not
+	// - 0.85 vanilla stamina to go prone regradless of diagonal or not
+	int staCost = 0;
+	if (u.current_body_state == BodyState::Prone)
+	{
+		staCost = randBoundsInclusive(state.rng, 8, 9);
+	}
+	else if (u.movement_mode == MovementMode::Running)
+	{
+		staCost = 6;
+	}
+	if (u.agent->modified_stats.stamina < staCost)
+	{
+		u.agent->modified_stats.stamina = 0;
+	}
+	else
+	{
+		u.agent->modified_stats.stamina -= staCost;
 	}
 
 	// Now finally we can go jumping

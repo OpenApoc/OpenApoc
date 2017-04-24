@@ -36,8 +36,10 @@
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "game/ui/base/basescreen.h"
+#include "game/ui/battle/battledebriefing.h"
 #include "game/ui/battle/battleturnbasedconfirmbox.h"
 #include "game/ui/general/ingameoptions.h"
+#include "game/ui/general/messagebox.h"
 #include "game/ui/general/messagelogscreen.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
@@ -61,6 +63,7 @@ static const std::vector<UString> HIDDEN_BACKGROUNDS = {
 };
 static const int TICKS_TRY_END_TURN = TICKS_PER_SECOND;
 static const int TICKS_HIDE_DISPLAY = TICKS_PER_SECOND;
+static const int TICKS_END_MISSION = TICKS_PER_TURN;
 static const std::set<BodyPart> bodyParts{BodyPart::Body, BodyPart::Helmet, BodyPart::LeftArm,
                                           BodyPart::Legs, BodyPart::RightArm};
 
@@ -90,7 +93,7 @@ BattleView::BattleView(sp<GameState> gameState)
 		newPal->setColour(255 - 4, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
 		                                  (colorCurrent * 16 * -1 + 255 * 5) / 8));
 		// Red color, for enemy indicators, pulsates from (3/8r 0g 0b) to (8/8r 0g 0b)
-		newPal->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
+		newPal->setColour(255 - 0, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
 		// Blue color, for misc. indicators, pulsates from (0r 3/8g 3/8b) to (0r 8/8g 8/8b)
 		newPal->setColour(255 - 2, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
 		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8));
@@ -98,7 +101,7 @@ BattleView::BattleView(sp<GameState> gameState)
 		newPal->setColour(255 - 1, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0,
 		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8));
 		// Yellow color, for owned indicators, pulsates from (3/8r 3/8g 0b) to (8/8r 8/8g 0b)
-		newPal->setColour(255 - 0, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8,
+		newPal->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8,
 		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8, 0));
 
 		modPalette.push_back(newPal);
@@ -1032,7 +1035,15 @@ void BattleView::begin()
 	}
 }
 
-void BattleView::resume() {}
+void BattleView::resume()
+{
+	modifierLAlt = false;
+	modifierLCtrl = false;
+	modifierLShift = false;
+	modifierRAlt = false;
+	modifierRCtrl = false;
+	modifierRShift = false;
+}
 
 void BattleView::render()
 {
@@ -1123,6 +1134,27 @@ void BattleView::update()
 	// Update turn based stuff
 	if (!realTime)
 	{
+		if (state->current_battle->hotseat)
+		{
+			if (state->current_battle->currentActiveOrganisation !=
+			        state->current_battle->currentPlayer &&
+			    state->current_battle->currentActiveOrganisation != state->getCivilian())
+			{
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<MessageBox>(
+				         "Next Turn",
+				         format("%s, it is your turn!",
+				                state->current_battle->currentActiveOrganisation->name),
+				         MessageBox::ButtonOptions::Ok, [this] {
+					         state->current_battle->currentPlayer =
+					             state->current_battle->currentActiveOrganisation;
+					     })});
+				updateHiddenForm();
+				return;
+			}
+		}
+
 		// Figure out wether our/not our turn state has changed
 		bool notMyTurn = endTurnRequested || battle.turnEndAllowed ||
 		                 !battle.interruptUnits.empty() || !battle.interruptQueue.empty() ||
@@ -1175,14 +1207,7 @@ void BattleView::update()
 	    battle.currentActiveOrganisation != battle.currentPlayer &&
 	    battle.ticksWithoutSeenAction[battle.currentPlayer] > TICKS_HIDE_DISPLAY)
 	{
-		hideDisplay = true;
-		hiddenForm->findControlTyped<Label>("TEXT_TURN")->setText(format("%d", battle.currentTurn));
-		hiddenForm->findControlTyped<Label>("TEXT_SIDE")
-		    ->setText(battle.currentActiveOrganisation->name);
-		hiddenForm->findControlTyped<Label>("TEXT_PLAYER")->setText("Computer");
-		hiddenForm->findControlTyped<Graphic>("HIDDEN_IMAGE")
-		    ->setImage(fw().data->loadImage(vectorRandomizer(state->rng, HIDDEN_BACKGROUNDS)));
-		updateHiddenBar();
+		updateHiddenForm();
 	}
 	unsigned int ticks = 0;
 	switch (updateSpeed)
@@ -1397,6 +1422,41 @@ void BattleView::update()
 	}
 	// Store screen center for serialisation
 	battle.battleViewScreenCenter = centerPos;
+
+	if (battle.missionEndTimer > TICKS_END_MISSION)
+	{
+		UString message;
+		if (battle.playerWon)
+		{
+			if (battle.loserHasRetreated)
+			{
+				message = tr("All hostile units have fled the combat zone. You win.");
+			}
+			else if (battle.winnerHasRetreated)
+			{
+				message = tr("All your units have fled the combat zone. You win.");
+			}
+			else
+			{
+				message = tr("All hostile units are dead or unconscious. You win.");
+			}
+		}
+		else if (battle.loserHasRetreated)
+		{
+			message = tr("All your units have fled the combat zone. You lose.");
+		}
+		else if (battle.winnerHasRetreated)
+		{
+			message = tr("All hostile units have fled the combat zone. You lose.");
+		}
+		else
+		{
+			message = tr("All your units are unconscious or dead. You lose.");
+		}
+		fw().stageQueueCommand(
+		    {StageCmd::Command::PUSH, mksp<MessageBox>("", message, MessageBox::ButtonOptions::Ok,
+		                                               [this] { exitBattle(); })});
+	}
 }
 
 void BattleView::updateSelectedUnits()
@@ -1778,6 +1838,20 @@ void BattleView::updateTBButtons()
 	baseForm->findControlTyped<GraphicButton>("BUTTON_ENDTURN")->setVisible(visible);
 	baseForm->findControlTyped<RadioButton>("BUTTON_MOVE_GROUP")->setVisible(visible);
 	baseForm->findControlTyped<RadioButton>("BUTTON_MOVE_INDIVIDUALLY")->setVisible(visible);
+}
+
+void BattleView::updateHiddenForm()
+{
+	hideDisplay = true;
+	hiddenForm->findControlTyped<Label>("TEXT_TURN")->setText(format("%d", battle.currentTurn));
+	hiddenForm->findControlTyped<Label>("TEXT_SIDE")
+	    ->setText(battle.currentActiveOrganisation->name);
+	bool player = state->current_battle->hotseat &&
+	              state->current_battle->currentActiveOrganisation != state->getCivilian();
+	hiddenForm->findControlTyped<Label>("TEXT_PLAYER")->setText(player ? "Player" : "Computer");
+	hiddenForm->findControlTyped<Graphic>("HIDDEN_IMAGE")
+	    ->setImage(fw().data->loadImage(vectorRandomizer(state->rng, HIDDEN_BACKGROUNDS)));
+	updateHiddenBar();
 }
 
 void BattleView::refreshDelayText()
@@ -2628,7 +2702,10 @@ void BattleView::eventOccurred(Event *e)
 					      glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
 					          5.0f)) == !inverse)
 					{
-						u.second->retreat(*state);
+						if (!u.second->retreated)
+						{
+							u.second->retreat(*state);
+						}
 					}
 				}
 				break;
@@ -2825,8 +2902,7 @@ void BattleView::handleMouseDown(Event *e)
 		    screenToTileCoords(Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
 		setScreenCenterTile({clickTile.x, clickTile.y});
 	}
-	else if (e->type() == EVENT_MOUSE_DOWN &&
-	         (Event::isPressed(e->mouse().Button, Event::MouseButton::Middle)))
+	else if (Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
 	{
 		// CHEAT - move unit to mouse
 		if (!battle.battleViewSelectedUnits.empty())
@@ -2834,15 +2910,14 @@ void BattleView::handleMouseDown(Event *e)
 			selectionState = BattleSelectionState::TeleportLeft;
 		}
 	}
-	else if (e->type() == EVENT_MOUSE_DOWN &&
-	         (Event::isPressed(e->mouse().Button, Event::MouseButton::Left) ||
-	          Event::isPressed(e->mouse().Button, Event::MouseButton::Right)))
+	else if (Event::isPressed(e->mouse().Button, Event::MouseButton::Left) ||
+	         Event::isPressed(e->mouse().Button, Event::MouseButton::Right))
 	{
 		auto buttonPressed = Event::isPressed(e->mouse().Button, Event::MouseButton::Left)
 		                         ? Event::MouseButton::Left
 		                         : Event::MouseButton::Right;
 
-		auto player = state->getPlayer();
+		auto player = state->current_battle->currentPlayer;
 		// If a click has not been handled by a form it's in the map.
 		auto t = getSelectedTilePosition();
 		auto objsPresent = map.getTile(t.x, t.y, t.z)->getUnits(true);
@@ -3096,7 +3171,7 @@ void BattleView::handleMouseDown(Event *e)
 						                u->goalPosition.z);
 						debug += format("\nCurrent movement: %d, falling: %d",
 						                (int)u->current_movement_state, (int)u->falling);
-						debug += format("\Items [%d]:", (int)u->agent->equipment.size());
+						debug += format("\nItems [%d]:", (int)u->agent->equipment.size());
 						for (auto &e : u->agent->equipment)
 						{
 							debug += format("\n%s", e->type.id);
@@ -3277,6 +3352,12 @@ void BattleView::handleMouseDown(Event *e)
 				break;
 		}
 	}
+}
+
+void BattleView::exitBattle()
+{
+	Battle::finishBattle(*state);
+	fw().stageQueueCommand({StageCmd::Command::REPLACEALL, mksp<BattleDebriefing>(state)});
 }
 
 void BattleView::updateLayerButtons()
@@ -3606,11 +3687,7 @@ sp<RGBImage> BattleView::drawMotionScanner(Vec2<int> position)
 	return scannerDisplay;
 }
 
-void BattleView::finish()
-{
-	fw().getCursor().CurrentType = ApocCursor::CursorType::Normal;
-	Battle::finishBattle(*state);
-}
+void BattleView::finish() { fw().getCursor().CurrentType = ApocCursor::CursorType::Normal; }
 
 AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 {

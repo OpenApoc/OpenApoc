@@ -7,6 +7,7 @@
 #include "framework/framework.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonimagelist.h"
+#include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
 #include "game/ui/city/cityview.h"
 #include <cmath>
@@ -38,6 +39,14 @@ BattleDebriefing::BattleDebriefing(sp<GameState> state)
 	    ->setText(format("%d", state->current_battle->score.getTotal()));
 	menuform->findControlTyped<Label>("TEXT_MISSION_PERFORMANCE")
 	    ->setText(format("%s", state->current_battle->score.getText()));
+
+	int idx = 1;
+	for (auto &u : state->current_battle->unitsPromoted)
+	{
+		menuform->findControlTyped<Label>(format("PROMOTION_%d", idx++))
+		    ->setText(
+		        format("%s %s %s", u->agent->name, tr("promoted to"), u->agent->getRankName()));
+	}
 }
 
 void BattleDebriefing::begin() {}

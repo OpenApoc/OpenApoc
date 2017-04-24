@@ -194,6 +194,9 @@
     <ClInclude Include="extractors\common\doodads.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="extractors\common\crew.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

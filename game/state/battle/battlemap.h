@@ -69,10 +69,13 @@ class BattleMap : public StateObject
   private:
 	static sp<Battle> createBattle(GameState &state, StateRef<Organisation> target_organisation,
 	                               std::list<StateRef<Agent>> &player_agents,
+	                               const std::map<StateRef<AgentType>, int> *aliens,
 	                               StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft);
 
 	static sp<Battle> createBattle(GameState &state, StateRef<Organisation> target_organisation,
 	                               std::list<StateRef<Agent>> &player_agents,
+	                               const std::map<StateRef<AgentType>, int> *aliens,
+	                               const int *guards, const int *civilians,
 	                               StateRef<Vehicle> player_craft,
 	                               StateRef<Building> target_building);
 

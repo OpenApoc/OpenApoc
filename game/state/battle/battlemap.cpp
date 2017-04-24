@@ -138,18 +138,33 @@ void addDebugTroops(GameState &state, std::list<StateRef<Agent>> &player_agents)
 
 sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> organisation,
                                    std::list<StateRef<Agent>> &player_agents,
-                                   StateRef<Vehicle> craft, StateRef<Vehicle> ufo)
+                                   const std::map<StateRef<AgentType>, int> *aliens,
+                                   StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft)
 {
-	// FIXME: Generate list of agent types for enemies (and civs) properly
-	addDebugTroops(state, player_agents);
+	if (!aliens)
+	{
+		aliens = &target_craft->type->crew_downed;
+	}
+	auto alienOrg = state.getAliens();
 
-	return ufo->type->battle_map->createBattle(state, ufo->owner, organisation, player_agents,
-	                                           craft, Battle::MissionType::UfoRecovery, ufo.id);
+	for (auto &a : *aliens)
+	{
+		for (int i = 0; i < a.second; i++)
+		{
+			player_agents.push_back(state.agent_generator.createAgent(state, alienOrg, a.first));
+		}
+	}
+
+	return target_craft->type->battle_map->createBattle(
+	    state, target_craft->owner, organisation, player_agents, player_craft,
+	    Battle::MissionType::UfoRecovery, target_craft.id);
 }
 
-sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> organisation,
+sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> target_organisation,
                                    std::list<StateRef<Agent>> &player_agents,
-                                   StateRef<Vehicle> craft, StateRef<Building> building)
+                                   const std::map<StateRef<AgentType>, int> *aliens,
+                                   const int *guards, const int *civilians,
+                                   StateRef<Vehicle> player_craft, StateRef<Building> building)
 {
 	std::list<std::pair<StateRef<Organisation>, StateRef<AgentType>>> otherParticipants;
 	auto missionType = Battle::MissionType::AlienExtermination;
@@ -166,14 +181,16 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> orga
 	}
 	else
 	{
-		// FIXME: Generate list of agent types for enemies (and civs) properly
-		addDebugTroops(state, player_agents);
-
-		if (organisation == state.getAliens())
+		if (target_organisation == state.getAliens())
 		{
 			if (building->owner == state.getAliens())
 			{
 				// Raid Aliens mission
+
+				if (!aliens)
+				{
+					aliens = &building->preset_crew;
+				}
 
 				missionType = Battle::MissionType::RaidAliens;
 			}
@@ -181,35 +198,34 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> orga
 			{
 				// Alien Extermination mission
 
-				// Add building security if hostile to player
-				if (building->owner->isRelatedTo(state.getPlayer()) ==
-				    Organisation::Relation::Hostile)
+				// Add aliens
+				if (!aliens)
 				{
-					int numGuards = std::min(
-					    20,
-					    randBoundsInclusive(state.rng, building->owner->average_guards * 75 / 100,
-					                        building->owner->average_guards * 125 / 100));
+					// FIXME: Add aliens from building's current alien list!
+					// Then clear the list
+				}
 
-					for (int i = 0; i < numGuards; i++)
-					{
-						otherParticipants.emplace_back(
-						    organisation, listRandomiser(state.rng, building->owner->guard_types));
-					}
+				// Add building security if hostile to player
+				int numGuards =
+				    guards ? *guards : (building->owner->isRelatedTo(state.getPlayer()) ==
+				                                Organisation::Relation::Hostile
+				                            ? building->owner->getGuardCount(state)
+				                            : 0);
+
+				for (int i = 0; i < numGuards; i++)
+				{
+					otherParticipants.emplace_back(
+					    building->owner, listRandomiser(state.rng, building->owner->guard_types));
 				}
 
 				// Civilains will not be actually added if there is no spawn points for them
-				{
-					int numGuards =
-					    std::min(20, randBoundsInclusive(
-					                     state.rng, state.getCivilian()->average_guards * 75 / 100,
-					                     state.getCivilian()->average_guards * 125 / 100));
+				int numCivs = civilians ? *civilians : state.getCivilian()->getGuardCount(state);
 
-					for (int i = 0; i < numGuards; i++)
-					{
-						otherParticipants.emplace_back(
-						    state.getCivilian(),
-						    listRandomiser(state.rng, state.getCivilian()->guard_types));
-					}
+				for (int i = 0; i < numCivs; i++)
+				{
+					otherParticipants.emplace_back(
+					    state.getCivilian(),
+					    listRandomiser(state.rng, state.getCivilian()->guard_types));
 				}
 
 				missionType = Battle::MissionType::AlienExtermination;
@@ -221,14 +237,13 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> orga
 
 			// Add building security
 			{
-				int numGuards = std::min(
-				    20, randBoundsInclusive(state.rng, building->owner->average_guards * 75 / 100,
-				                            building->owner->average_guards * 125 / 100));
+				int numGuards = guards ? *guards : building->owner->getGuardCount(state);
 
 				for (int i = 0; i < numGuards; i++)
 				{
 					otherParticipants.emplace_back(
-					    organisation, listRandomiser(state.rng, building->owner->guard_types));
+					    target_organisation,
+					    listRandomiser(state.rng, building->owner->guard_types));
 				}
 			}
 
@@ -238,13 +253,26 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> orga
 
 	// Create battle
 
+	if (aliens)
+	{
+		auto alienOrg = state.getAliens();
+		for (auto &a : *aliens)
+		{
+			for (int i = 0; i < a.second; i++)
+			{
+				player_agents.push_back(
+				    state.agent_generator.createAgent(state, alienOrg, a.first));
+			}
+		}
+	}
 	for (auto &pair : otherParticipants)
 	{
 		player_agents.push_back(state.agent_generator.createAgent(state, pair.first, pair.second));
 	}
 
-	return building->battle_map->createBattle(state, building->owner, organisation, player_agents,
-	                                          craft, missionType, building.id);
+	return building->battle_map->createBattle(state, building->owner, target_organisation,
+	                                          player_agents, player_craft, missionType,
+	                                          building.id);
 }
 
 namespace
@@ -997,6 +1025,13 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 						}
 					}
 				}
+				for (auto &entry : sec->spawnLocations)
+				{
+					for (auto &pos : entry.second)
+					{
+						b->spawnLocations[entry.first].push_back(pos + shift);
+					}
+				}
 			}
 		}
 	}
@@ -1268,6 +1303,9 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> prop
 
 	// Step 07: Unload sector tiles
 	unloadTiles();
+
+	// Step 08: Make target hostilel
+	state.getPlayer()->current_relations[target_organisation] = -100.0f;
 
 	return b;
 }

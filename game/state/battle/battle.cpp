@@ -228,21 +228,34 @@ void Battle::initBattle(GameState &state, bool first)
 	{
 		refreshLeadershipBonus(o);
 	}
-	// Update units
+	// Let pre-placed fires spawn smokes
+	StateRef<DamageType> dt = {&state, "DAMAGETYPE_INCENDIARY"};
+	std::list<sp<BattleHazard>> fires;
+	for (auto &h : hazards)
+	{
+		if (h->damageType == dt)
+		{
+			fires.push_back(h);
+		}
+	}
+	for (auto &f : fires)
+	{
+		f->grow(state);
+		f->grow(state);
+		f->grow(state);
+	}
+	// Update units (uses TB function as that's the only thing that needs update)
 	for (auto &u : units)
 	{
-		u.second->update(state, 1);
+		u.second->updateTB(state);
 	}
 	// Every thing TB
 	if (state.current_battle->mode == Battle::Mode::TurnBased)
 	{
-		// Update units TB
-		for (auto &u : units)
-		{
-			u.second->updateTB(state);
-		}
 		state.current_battle->beginTurn(state);
 	}
+	// Maybe this battle has no enemies
+	checkMissionEnd(state, false);
 }
 
 void Battle::initMap()
@@ -269,10 +282,10 @@ void Battle::initMap()
 		{
 			this->map->addObjectToMap(h);
 		}
-	}
-	for (auto &o : this->items)
-	{
-		this->map->addObjectToMap(o);
+		for (auto &o : this->items)
+		{
+			this->map->addObjectToMap(o);
+		}
 	}
 	for (auto &u : this->units)
 	{
@@ -358,7 +371,7 @@ bool Battle::initialMapCheck(GameState &state, std::list<StateRef<Agent>> agents
 		}
 	}
 
-	return spawnPoints / spawnPointsRequired >= 4;
+	return spawnPointsRequired == 0 || spawnPoints / spawnPointsRequired >= 4;
 }
 
 void linkUpList(std::list<BattleMapPart *> list)
@@ -659,23 +672,63 @@ void Battle::initialUnitSpawn(GameState &state)
 		}
 	}
 
-	// Actually spawn agents
+	// Spawn agents with spawn locations provided
 	for (auto &f : state.current_battle->forces)
 	{
 		for (auto &s : f.second.squads)
 		{
-			std::vector<sp<BattleUnit>> unitsToSpawn;
 			for (auto &u : s.units)
 			{
-				unitsToSpawn.push_back(u);
+				if (spawnLocations[u->agent->type].empty())
+				{
+					continue;
+				}
+				auto pos = listRandomiser(state.rng, spawnLocations[u->agent->type]);
+				spawnLocations[u->agent->type].remove(pos);
+				auto tile = map->getTile(pos.x, pos.y, pos.z);
+				u->position = tile->getRestingPosition(u->isLarge());
 			}
+		}
+	}
+
+	// Actually spawn agents
+	for (auto &f : state.current_battle->forces)
+	{
+		// All units to spawn, grouped by squads, squadless in the back
+		std::list<std::list<sp<BattleUnit>>> unitGroupsToSpawn;
+		// Add squadless
+		unitGroupsToSpawn.emplace_back();
+		for (auto &u : units)
+		{
+			if (u.second->owner == f.first && u.second->squadNumber == -1 &&
+			    u.second->position == Vec3<float>{-1.0, -1.0, -1.0})
+			{
+				unitGroupsToSpawn.front().push_back(u.second);
+			}
+		}
+		// Add squads
+		for (auto &s : f.second.squads)
+		{
+			unitGroupsToSpawn.emplace_front();
+			for (auto &u : s.units)
+			{
+				if (u->position == Vec3<float>{-1.0, -1.0, -1.0})
+				{
+					unitGroupsToSpawn.front().push_back(u);
+				}
+			}
+		}
+		// Go through groups and spawn
+		for (auto &list : unitGroupsToSpawn)
+		{
+			auto &unitsToSpawn = list;
 
 			while (unitsToSpawn.size() > 0)
 			{
 				// Determine what kind of units we're trying to spawn
 				bool needWalker = false;
 				bool needLarge = false;
-				for (auto &u : s.units)
+				for (auto &u : unitsToSpawn)
 				{
 					if (u->isLarge())
 					{
@@ -803,7 +856,7 @@ void Battle::initialUnitSpawn(GameState &state)
 							for (int z = 0; z < size.z; z++)
 							{
 								auto tile = map->getTile(x, y, z);
-								auto u = unitsToSpawn[unitsToSpawn.size() - 1];
+								auto u = unitsToSpawn.back();
 								if (!tile->getPassable(u->isLarge(),
 								                       u->agent->type->bodyType->maxHeight) ||
 								    (!u->canFly() && !tile->getCanStand(u->isLarge())))
@@ -854,7 +907,7 @@ void Battle::initialUnitSpawn(GameState &state)
 									continue;
 
 								auto tile = map->getTile(pos);
-								auto u = unitsToSpawn[unitsToSpawn.size() - 1];
+								auto u = unitsToSpawn.back();
 								if (!tile->getPassable(u->isLarge(),
 								                       u->agent->type->bodyType->maxHeight) ||
 								    (!u->canFly() && !tile->getCanStand(u->isLarge())))
@@ -906,7 +959,7 @@ void Battle::initialUnitSpawn(GameState &state)
 								unitsToSpawn.pop_back();
 								numSpawned++;
 								if (unitsToSpawn.size() == 0
-								    // This makes us spawn every civilian individually
+								    // This makes us spawn every civilian and loner individually
 								    || (numSpawned > 0 && (u->getAIType() == AIType::None ||
 								                           u->getAIType() == AIType::Loner ||
 								                           u->getAIType() == AIType::Civilian)))
@@ -1103,6 +1156,7 @@ sp<BattleUnit> Battle::placeUnit(GameState &state, StateRef<Agent> agent)
 	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
 	unit->squadNumber = -1;
 	unit->cloakTicksAccumulated = CLOAK_TICKS_REQUIRED;
+	unit->position = {-1.0, -1.0, -1.0};
 	units[id] = unit;
 	unit->init(state);
 	return unit;
@@ -1528,6 +1582,16 @@ void Battle::update(GameState &state, unsigned int ticks)
 {
 	TRACE_FN_ARGS1("ticks", Strings::fromInteger(static_cast<int>(ticks)));
 
+	if (missionEndTimer > 0)
+	{
+		missionEndTimer++;
+		ticksWithoutAction = 0;
+		for (auto &p : participants)
+		{
+			ticksWithoutSeenAction[p] = 0;
+		}
+	}
+	Trace::start("Battle::update::turnBased");
 	if (mode == Mode::TurnBased)
 	{
 		ticksWithoutAction += ticks;
@@ -1598,7 +1662,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 			}
 		}
 	}
-
+	Trace::end("Battle::end::turnBased");
 	Trace::start("Battle::update::projectiles->update");
 	updateProjectiles(state, ticks);
 	Trace::end("Battle::update::projectiles->update");
@@ -1760,10 +1824,117 @@ void Battle::notifyAction(Vec3<int> location, StateRef<BattleUnit> actorUnit)
 	}
 }
 
+int Battle::killStrandedUnits(GameState &state, bool preview)
+{
+	LogWarning("Implement killing stranded player units");
+	return 0;
+}
+
+void Battle::abortMission(GameState &state)
+{
+	killStrandedUnits(state);
+	auto player = state.getPlayer();
+	for (auto &u : units)
+	{
+		if (u.second->owner == u.second->agent->owner && u.second->owner == player &&
+		    !u.second->isDead() && !u.second->retreated)
+		{
+			u.second->retreat(state);
+		}
+	}
+}
+
+void Battle::checkMissionEnd(GameState &state, bool retreated, bool forceReCheck)
+{
+	LogWarning("FIXME: Victory/Loss when finishing alien building mission");
+	auto endBeginTimer = std::max((unsigned)1, missionEndTimer);
+	if (forceReCheck)
+	{
+		missionEndTimer = 0;
+	}
+	else if (missionEndTimer > 0)
+	{
+		return;
+	}
+	loserHasRetreated = retreated;
+	auto civ = state.getCivilian();
+	auto player = state.getPlayer();
+	std::set<StateRef<Organisation>> orgsAlive;
+	for (auto &p : participants)
+	{
+		if (p == civ)
+		{
+			continue;
+		}
+		for (auto &u : units)
+		{
+			if (u.second->owner == p && u.second->isConscious())
+			{
+				orgsAlive.insert(p);
+				break;
+			}
+		}
+	}
+	if (orgsAlive.find(player) == orgsAlive.end())
+	{
+		playerWon = false;
+		missionEndTimer = endBeginTimer;
+	}
+	else
+	{
+		playerWon = true;
+		missionEndTimer = endBeginTimer;
+		for (auto &org : orgsAlive)
+		{
+			if (org == player)
+			{
+				continue;
+			}
+			if (player->isRelatedTo(org) == Organisation::Relation::Hostile)
+			{
+				missionEndTimer = 0;
+				break;
+			}
+		}
+	}
+}
+
 void Battle::refreshLeadershipBonus(StateRef<Organisation> org)
 {
-	LogWarning("Implement leadership bonus calculation");
-	leadershipBonus[org] = 0;
+	Rank highestRank = Rank::Rookie;
+	for (auto &u : units)
+	{
+		if (u.second->owner != org || u.second->isDead() || u.second->retreated)
+		{
+			continue;
+		}
+		if ((int)u.second->agent->rank > (int)highestRank)
+		{
+			highestRank = u.second->agent->rank;
+		}
+	}
+	switch (highestRank)
+	{
+		case Rank::Rookie:
+		case Rank::Squaddie:
+			leadershipBonus[org] = 0;
+			break;
+		case Rank::SquadLeader:
+			leadershipBonus[org] = 5;
+			break;
+		case Rank::Sergeant:
+			leadershipBonus[org] = 10;
+			break;
+		case Rank::Captain:
+			leadershipBonus[org] = 15;
+			break;
+		case Rank::Colonel:
+			leadershipBonus[org] = 25;
+			break;
+		case Rank::Commander:
+			leadershipBonus[org] = 50;
+			break;
+	}
 }
 
 void Battle::queuePathfindingRefresh(Vec3<int> tile)
@@ -1856,7 +2027,7 @@ void Battle::beginTurn(GameState &state)
 		return;
 	}
 
-	// Cancel mind control and stuff
+	// Cancel mind control
 	for (auto &u : units)
 	{
 		if (u.second->owner != currentActiveOrganisation)
@@ -1865,6 +2036,11 @@ void Battle::beginTurn(GameState &state)
 		}
 		u.second->stopAttackPsi(state);
 	}
+
+	// Update everything related to this turn
+	updateTBBegin(state);
+
+	// Unit's begin turn routine
 	for (auto &u : units)
 	{
 		if (u.second->owner != currentActiveOrganisation)
@@ -1880,8 +2056,6 @@ void Battle::beginTurn(GameState &state)
 	{
 		ticksWithoutSeenAction[p] = TICKS_PER_TURN;
 	}
-
-	updateTBBegin(state);
 
 	fw().pushEvent(new GameBattleEvent(GameEventType::NewTurn, shared_from_this()));
 }
@@ -1952,25 +2126,31 @@ void Battle::giveInterruptChanceToUnit(GameState &state, StateRef<BattleUnit> gi
 }
 
 // To be called when battle must be started, before showing battle briefing screen
-void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organisation,
-                         std::list<StateRef<Agent>> &player_agents, StateRef<Vehicle> player_craft,
-                         StateRef<Vehicle> target_craft)
+void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> target_organisation,
+                         std::list<StateRef<Agent>> &player_agents,
+                         const std::map<StateRef<AgentType>, int> *aliens,
+                         StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft)
 {
 	if (state.current_battle)
 	{
 		LogError("Battle::beginBattle called while another battle is in progress!");
 		return;
 	}
-	auto b = BattleMap::createBattle(state, target_organisation, player_agents, player_craft,
-	                                 target_craft);
+	auto b = BattleMap::createBattle(state, target_organisation, player_agents, aliens,
+	                                 player_craft, target_craft);
 	if (!b)
+	{
 		return;
+	}
+	b->hotseat = hotseat;
 	state.current_battle = b;
 }
 
 // To be called when battle must be started, before showing battle briefing screen
-void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organisation,
-                         std::list<StateRef<Agent>> &player_agents, StateRef<Vehicle> player_craft,
+void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> target_organisation,
+                         std::list<StateRef<Agent>> &player_agents,
+                         const std::map<StateRef<AgentType>, int> *aliens, const int *guards,
+                         const int *civilians, StateRef<Vehicle> player_craft,
                          StateRef<Building> target_building)
 {
 	if (state.current_battle)
@@ -1978,10 +2158,13 @@ void Battle::beginBattle(GameState &state, StateRef<Organisation> target_organis
 		LogError("Battle::beginBattle called while another battle is in progress!");
 		return;
 	}
-	auto b = BattleMap::createBattle(state, target_organisation, player_agents, player_craft,
-	                                 target_building);
+	auto b = BattleMap::createBattle(state, target_organisation, player_agents, aliens, guards,
+	                                 civilians, player_craft, target_building);
 	if (!b)
+	{
 		return;
+	}
+	b->hotseat = hotseat;
 	state.current_battle = b;
 }
 
@@ -1995,6 +2178,7 @@ void Battle::enterBattle(GameState &state)
 	}
 
 	auto &b = state.current_battle;
+	b->hotseat = b->hotseat && b->mode == Battle::Mode::TurnBased;
 
 	state.current_battle->initialUnitSpawn(state);
 
@@ -2022,12 +2206,6 @@ void Battle::enterBattle(GameState &state)
 		state.current_battle->battleViewZLevel = (int)ceilf(firstPlayerUnit->position.z);
 	}
 	state.current_battle->battleViewGroupMove = true;
-
-	if (state.current_battle->mission_type == Battle::MissionType::RaidHumans)
-	{
-		// FIXME: Make X-COM hostile to target org for the duration of this mission
-		LogWarning("IMPLEMENT: Make X-COM hostile to target org for the duration of this mission");
-	}
 }
 
 // To be called when battle must be finished and before showing score screen
@@ -2039,6 +2217,7 @@ void Battle::finishBattle(GameState &state)
 		return;
 	}
 
+	auto player = state.getPlayer();
 	state.current_battle->unloadResources(state);
 
 	// Remove active battle scanners
@@ -2049,22 +2228,129 @@ void Battle::finishBattle(GameState &state)
 			e->battleScanner.clear();
 		}
 	}
-
-	//  - Identify how battle ended(if enemies present then Failure, otherwise Success)
-	//	- (Failure) Determine surviving player agents(kill all player agents that are too far from
-	// exits)
+	// Proces MCed units
+	for (auto &u : state.current_battle->units)
+	{
+		if (u.second->owner != u.second->agent->owner)
+		{
+			if (u.second->owner == player)
+			{
+				// mind control by player = capped alive
+				u.second->stunDamage = 9001;
+			}
+			else
+			{
+				// mind control by someone else = MIA
+				u.second->agent->modified_stats.health = -1;
+				if (u.second->agent->owner == player)
+				{
+					state.current_battle->score.casualtyPenalty -= u.second->agent->type->score;
+				}
+			}
+			u.second->owner = u.second->agent->owner;
+		}
+	}
 	//	- Prepare list of surviving aliens
-	//	- (Success) Prepare list of alien bodies
-	//	- Remove dead player agents and all enemy agents from the game and vehicles
-	//	- Apply experience to stats of living agents // unit->processExperience()
-	//	- (Success) Prepare list of loot(including alien saucer equipment)
-	//	- Calculate score
-
-	//	(AFTER THIS FUNCTION)
-	//  Show score screen
-	//	(If mod is on)
-	//	- If not enough alien body containment, display alien containment transfer window
-	//	- If not enough storage, display storage transfer window
+	//	- (Success) Convert remaining unconscious and dead aliens into research items
+	//  - Remove brainsucker pods from agent inventories and convert into research items
+	//  - Calculate score for live captured aliens
+	//  - (Failure) Handle remaining aliens (retreat them if ufo, put them in the building if
+	//  building)
+	//  - Handle retreated aliens (put them to random closest building)
+	// Remove dead player agents and all enemy agents from the game and from vehicles
+	std::list<sp<BattleUnit>> unitsToRemove;
+	for (auto &u : state.current_battle->units)
+	{
+		if (u.second->owner != player || u.second->isDead())
+		{
+			unitsToRemove.push_back(u.second);
+		}
+	}
+	for (auto &u : unitsToRemove)
+	{
+		state.agents.erase(u->agent.id);
+		state.current_battle->units.erase(u->id);
+	}
+	// Apply experience to stats of living agents + promotions
+	// Create list of units ranked by combatRating
+	std::map<int, std::list<sp<BattleUnit>>> unitsByRating;
+	for (auto &u : state.current_battle->units)
+	{
+		u.second->processExperience(state);
+		unitsByRating[-u.second->combatRating].push_back(u.second);
+	}
+	// Create count of ranks
+	std::map<Rank, int> countRanks;
+	for (auto &a : state.agents)
+	{
+		countRanks[a.second->rank]++;
+	}
+	// Rank up top 5 units from list that can accept promotion
+	for (auto &l : unitsByRating)
+	{
+		for (auto &u : l.second)
+		{
+			switch (u->agent->rank)
+			{
+				case Rank::Rookie:
+					if (u->combatRating < 9)
+					{
+						continue;
+					}
+					break;
+				case Rank::Squaddie:
+					if ((countRanks[Rank::Rookie] + countRanks[Rank::Squaddie]) /
+					        (countRanks[Rank::SquadLeader] + 1) <=
+					    4)
+					{
+						continue;
+					}
+					break;
+				case Rank::SquadLeader:
+					if (countRanks[Rank::SquadLeader] / (countRanks[Rank::Sergeant] + 1) <= 2)
+					{
+						continue;
+					}
+					break;
+				case Rank::Sergeant:
+					if (countRanks[Rank::Sergeant] / (countRanks[Rank::Captain] + 1) <= 2)
+					{
+						continue;
+					}
+					break;
+				case Rank::Captain:
+					if (countRanks[Rank::Captain] / (countRanks[Rank::Colonel] + 1) <= 2)
+					{
+						continue;
+					}
+					break;
+				case Rank::Colonel:
+					if (countRanks[Rank::Commander] > 0 || countRanks[Rank::Colonel] <= 1)
+					{
+						continue;
+					}
+					break;
+				case Rank::Commander:
+					continue;
+			}
+			u->agent->rank = (Rank)(((int)u->agent->rank) + 1);
+			state.current_battle->unitsPromoted.push_back({&state, u->id});
+			if (state.current_battle->unitsPromoted.size() >= 5)
+			{
+				break;
+			}
+		}
+		if (state.current_battle->unitsPromoted.size() >= 5)
+		{
+			break;
+		}
+	}
+	//  - (Failure) Kill all items on the battlefield
+	//	- (Success) Prepare list of loot (including alien saucer equipment), give score for it
+	//  - Move unresearched items from agent inventory into loot list
+	//  - Convert living aliens to bodies if no bio trans
+	//	- Calculate score for captured loot
+	//  - Calculate score for captured live aliens
 }
 
 // To be called after battle was finished, score screen was shown and before returning to cityscape
@@ -2076,12 +2362,30 @@ void Battle::exitBattle(GameState &state)
 		return;
 	}
 
-	//  - Apply score
-	//	- (UFO mission) Clear UFO crash
+	//  - Apply score to player score
+	// (UFO mission) Remove UFO crash
+	if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
+	{
+		StateRef<Vehicle> ufo = {&state, state.current_battle->mission_location_id};
+		if (state.current_battle->playerWon)
+		{
+			LogWarning("FIXME: Give player score for captured ufo");
+		}
+		state.vehicles.erase(ufo.id);
+	}
+	//  - (If mod then give player choice of what to load and what to leave behind)
 	//	- Load loot into vehicles
 	//	- Load aliens into bio - trans
-	//	- Put surviving aliens back in the building (?or somewhere else if UFO?)
-	//  - Restore X-Com relationship to target organisation
+	// Restore X-Com relationship to organisations
+	auto player = state.getPlayer();
+	for (auto &o : state.organisations)
+	{
+		if (o.second == player.getSp())
+		{
+			continue;
+		}
+		player->current_relations[{&state, o.first}] = o.second->getRelationTo(player);
+	}
 
 	state.current_battle = nullptr;
 }

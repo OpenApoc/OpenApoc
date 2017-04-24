@@ -78,7 +78,10 @@ void BattleUnit::init(GameState &state)
 
 void BattleUnit::removeFromSquad(Battle &battle)
 {
-	battle.forces[owner].removeAt(squadNumber, squadPosition);
+	if (squadNumber != -1)
+	{
+		battle.forces[owner].removeAt(squadNumber, squadPosition);
+	}
 }
 
 bool BattleUnit::assignToSquad(Battle &battle, int squad)
@@ -878,7 +881,7 @@ int BattleUnit::getPsiCost(PsiStatus status, bool attack)
 		case PsiStatus::Control:
 			return attack ? 32 : 4;
 		case PsiStatus::Panic:
-			return attack ? 10 : 2;
+			return attack ? 10 : 3;
 		case PsiStatus::Stun:
 			return attack ? 16 : 5;
 		case PsiStatus::Probe:
@@ -913,7 +916,7 @@ int BattleUnit::getPsiChance(StateRef<BattleUnit> target, PsiStatus status,
 		return 0;
 	}
 
-	// Psi chance as per Wong's Guide (tested in Excel, seems legit)
+	// Psi chance as per Wong's Guide, confirmed by Mell
 	/*
 	                     100*attack*(100-defense)
 	success rate = --------------------------------------
@@ -922,14 +925,21 @@ int BattleUnit::getPsiChance(StateRef<BattleUnit> target, PsiStatus status,
 	           psiattack rating * 40
 	attack = ---------------------------
 	          initiation cost of action
+
+	Note: As tested by Mell, Probe is min 20%
 	*/
 	int attack = agent->modified_stats.psi_attack * 40 / cost;
 	int defense = target->agent->modified_stats.psi_defence;
-	if (attack == 0 && defense == 0)
+	int chance = 0;
+	if (attack != 0 || defense != 0)
 	{
-		return 0;
+		chance = (100 * attack * (100 - defense)) / (attack * (100 - defense) + 100 * defense);
 	}
-	return (100 * attack * (100 - defense)) / (attack * (100 - defense) + 100 * defense);
+	if (status == PsiStatus::Probe && attack != 0)
+	{
+		chance = std::max(20, chance);
+	}
+	return chance;
 }
 
 bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, PsiStatus status,
@@ -948,6 +958,10 @@ bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, P
 		if (!realTime)
 		{
 			psiTarget->applyPsiAttack(state, *this, psiStatus, psiItem, false);
+			if (psiStatus != PsiStatus::Control)
+			{
+				stopAttackPsi(state);
+			}
 		}
 		return true;
 	}
@@ -998,44 +1012,74 @@ void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatu
                                 StateRef<AEquipmentType> item, bool impact)
 {
 	std::ignore = item;
-	sendAgentEvent(state,
-	               status == PsiStatus::Control ? GameEventType::AgentPsiControlled
-	                                            : GameEventType::AgentPsiAttacked,
-	               true);
-	// FIXME: Change to correct psi stun / panic effects
-	switch (status)
+	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
+	if (impact)
 	{
-		case PsiStatus::Panic:
-			if (!impact)
-			{
-				// Observed values of 16 or 8, seems to depend on psi def? Need further research
-				agent->modified_stats.morale = std::max(
-				    0, agent->modified_stats.morale - 8 * randBoundsInclusive(state.rng, 1, 2));
-			}
-		case PsiStatus::Stun:
-			if (!impact)
-			{
-				// Observed value of 12 only, need further research
-				applyDamageDirect(state, 12, false, BodyPart::Body, 9001);
-			}
-			break;
-		case PsiStatus::Control:
-			if (impact)
-			{
-				changeOwner(state, attacker.owner);
-				agent->modified_stats.loseMorale(100);
-			}
-			break;
-		case PsiStatus::Probe:
-			if (impact)
-			{
-				LogWarning("Psi Probe Success: Show unit's screen");
-			}
-			break;
-		case PsiStatus::NotEngaged:
-			LogError("Invalid value NotEngaged for psiStatus in applyPsiAttack()");
-			return;
+		sendAgentEvent(state, status == PsiStatus::Control ? GameEventType::AgentPsiControlled
+		                                                   : GameEventType::AgentPsiAttacked,
+		               true);
 	}
+	bool finished = false;
+	do
+	{
+		// In turn based, you attack over an over until you're done, and each attack costs extra
+		if (!realTime && !impact && status != PsiStatus::Probe)
+		{
+			int cost = getPsiCost(status, true);
+			if (attacker.agent->modified_stats.psi_energy < cost)
+			{
+				finished = true;
+				continue;
+			}
+			attacker.agent->modified_stats.psi_energy -= cost;
+		}
+		// Actually apply attack
+		switch (status)
+		{
+			case PsiStatus::Panic:
+				if (!impact)
+				{
+					agent->modified_stats.loseMorale(realTime ? 8 : 4);
+					if (agent->modified_stats.morale == 0)
+					{
+						std::set<UString> panickers;
+						for (auto attacker : psiAttackers)
+						{
+							if (attacker.second == PsiStatus::Panic)
+							{
+								panickers.emplace(attacker.first);
+							}
+						}
+						for (auto s : panickers)
+						{
+							StateRef<BattleUnit>(&state, s)->stopAttackPsi(state);
+						}
+					}
+				}
+			case PsiStatus::Stun:
+				if (!impact)
+				{
+					applyDamageDirect(state, realTime ? 7 : 4, false, BodyPart::Body, 9001);
+				}
+				break;
+			case PsiStatus::Control:
+				if (impact)
+				{
+					changeOwner(state, attacker.owner);
+					agent->modified_stats.loseMorale(100);
+				}
+				break;
+			case PsiStatus::Probe:
+				if (impact)
+				{
+					LogWarning("Psi Probe Success: Show unit's screen");
+				}
+				break;
+			case PsiStatus::NotEngaged:
+				LogError("Invalid value NotEngaged for psiStatus in applyPsiAttack()");
+				return;
+		}
+	} while (!finished && !realTime && !impact && status != PsiStatus::Probe);
 }
 
 void BattleUnit::stopAttackPsi(GameState &state)
@@ -1703,40 +1747,16 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 	auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
 
 	// Cloak
-	if (cloakTicksAccumulated < CLOAK_TICKS_REQUIRED)
+	if (isConscious())
 	{
-		cloakTicksAccumulated += ticks;
-	}
-	if ((!e1 || e1->type->type != AEquipmentType::Type::CloakingField) &&
-	    (!e2 || e2->type->type != AEquipmentType::Type::CloakingField))
-	{
-		cloakTicksAccumulated = 0;
-	}
-
-	// Regeneration
-	regenTicksAccumulated += ticks;
-	while (regenTicksAccumulated >= TICKS_PER_SECOND)
-	{
-		regenTicksAccumulated -= TICKS_PER_SECOND;
-		// Stun removal
-		if (stunDamage > 0)
+		if (cloakTicksAccumulated < CLOAK_TICKS_REQUIRED)
 		{
-			stunDamage--;
+			cloakTicksAccumulated += ticks;
 		}
-		if (!isConscious() && !isUnconscious())
+		if ((!e1 || e1->type->type != AEquipmentType::Type::CloakingField) &&
+		    (!e2 || e2->type->type != AEquipmentType::Type::CloakingField))
 		{
-			tryToRiseUp(state);
-		}
-		// Psi regen
-		if (agent->modified_stats.psi_energy < agent->current_stats.psi_energy)
-		{
-			agent->modified_stats.psi_energy++;
-		}
-		// Sta regen
-		if (agent->modified_stats.stamina < agent->current_stats.stamina)
-		{
-			// FIXME: Regenerate stamina properly (ensure this is proper)
-			agent->modified_stats.stamina++;
+			cloakTicksAccumulated = 0;
 		}
 	}
 
@@ -1907,6 +1927,56 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 			// Finally, reduce debuff
 
 			fireDebuffTicksRemaining -= TICKS_PER_FIRE_EFFECT;
+		}
+	}
+}
+
+void BattleUnit::updateRegen(GameState &state, unsigned int ticks)
+{
+	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
+
+	regenTicksAccumulated += ticks;
+	while (regenTicksAccumulated >= TICKS_PER_SECOND)
+	{
+		regenTicksAccumulated -= TICKS_PER_SECOND;
+		// Stun removal
+		if (stunDamage > 0)
+		{
+			stunDamage--;
+		}
+		if (!isConscious() && !isUnconscious())
+		{
+			tryToRiseUp(state);
+		}
+		// Psi regen
+		if (agent->modified_stats.psi_energy < agent->current_stats.psi_energy)
+		{
+			agent->modified_stats.psi_energy++;
+		}
+		// Sta regen RT
+		if (realTime)
+		{
+			if (agent->modified_stats.stamina < agent->current_stats.stamina)
+			{
+				agent->modified_stats.stamina += 5;
+			}
+		}
+	}
+	// Sta regen TB
+	if (!realTime)
+	{
+		int staRegen = agent->current_stats.stamina >= 1920
+		                   ? 60
+		                   : (agent->current_stats.stamina >= 1280 ? 40 : 20);
+		int tuLeft = 100 * agent->modified_stats.time_units / agent->current_stats.time_units;
+		staRegen = tuLeft < 9 ? 0 : (tuLeft < 18 ? staRegen / 2 : staRegen);
+
+		for (int i = 0; i < staRegen; i++)
+		{
+			if (agent->modified_stats.stamina < agent->current_stats.stamina)
+			{
+				agent->modified_stats.stamina++;
+			}
 		}
 	}
 }
@@ -3238,8 +3308,18 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	}
 
 	// Update Items
+	bool updatedShield = false;
 	for (auto &item : agent->equipment)
 	{
+		if (item->type->type == AEquipmentType::Type::DisruptorShield &&
+		    item->ammo < item->getPayloadType()->max_ammo)
+		{
+			if (updatedShield)
+			{
+				continue;
+			}
+			updatedShield = true;
+		}
 		item->update(state, ticks);
 	}
 
@@ -3253,6 +3333,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	{
 		// Miscellaneous state updates, as well as unit's stats
 		updateStateAndStats(state, ticks);
+		// Unit regeneration
+		updateRegen(state, ticks);
 	}
 	// Unit events - was under fire, was requested to give way etc.
 	updateEvents(state);
@@ -3323,13 +3405,24 @@ void BattleUnit::updateTB(GameState &state)
 	}
 
 	// Update Items
+	bool updatedShield = false;
 	for (auto &item : agent->equipment)
 	{
+		if (item->type->type == AEquipmentType::Type::DisruptorShield &&
+		    item->ammo < item->getPayloadType()->max_ammo)
+		{
+			if (updatedShield)
+			{
+				continue;
+			}
+			updatedShield = true;
+		}
 		item->updateTB(state);
 	}
 
 	// Miscellaneous state updates, as well as unit's stats
 	updateStateAndStats(state, TICKS_PER_TURN);
+	updateRegen(state, TICKS_REGEN_PER_TURN);
 }
 
 void BattleUnit::triggerProximity(GameState &state)
@@ -3660,6 +3753,10 @@ int BattleUnit::rollForPrimaryStat(GameState &state, int experience)
 // except psi which assumes it's same 3x limit that is applied when using psi gym
 void BattleUnit::processExperience(GameState &state)
 {
+	if (!agent->type->can_improve)
+	{
+		return;
+	}
 	int secondaryXP = experiencePoints.accuracy + experiencePoints.bravery +
 	                  experiencePoints.psi_attack + experiencePoints.psi_energy +
 	                  experiencePoints.reactions;
@@ -3705,10 +3802,10 @@ void BattleUnit::processExperience(GameState &state)
 			agent->current_stats.speed +=
 			    randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.speed) / 10;
 		}
-		if (agent->current_stats.stamina < 100)
+		if (agent->current_stats.stamina < 2000)
 		{
-			agent->current_stats.stamina +=
-			    randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.stamina) / 10;
+			agent->current_stats.stamina += randBoundsInclusive(state.rng, 0, 2) * 20 +
+			                                (2000 - agent->current_stats.stamina) / 10;
 		}
 		if (agent->current_stats.strength < 100)
 		{
@@ -3716,10 +3813,7 @@ void BattleUnit::processExperience(GameState &state)
 			    randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.strength) / 10;
 		}
 	}
-	int health = agent->modified_stats.health;
-	agent->modified_stats = agent->current_stats;
-	agent->modified_stats.health = health;
-	agent->updateSpeed();
+	agent->updateModifiedStats();
 }
 
 void BattleUnit::executeGroupAIDecision(GameState &state, AIDecision &decision,
@@ -4001,16 +4095,23 @@ void BattleUnit::tryToRiseUp(GameState &state)
 	missions.clear();
 	aiList.reset(state, *this);
 	addMission(state, BattleUnitMission::changeStance(*this, targetState));
+	state.current_battle->checkMissionEnd(state, false, true);
 }
 
 void BattleUnit::dropDown(GameState &state)
 {
+	state.current_battle->checkMissionEnd(state, false);
 	// Reset states, cancel actions
+	cloakTicksAccumulated = 0;
 	stopAttacking();
 	stopAttackPsi(state);
 	for (auto &a : psiAttackers)
 	{
-		StateRef<BattleUnit>(&state, a.first)->stopAttackPsi(state);
+		auto attacker = StateRef<BattleUnit>(&state, a.first);
+		if (attacker->psiStatus != PsiStatus::Stun)
+		{
+			attacker->stopAttackPsi(state);
+		}
 	}
 	aiList.reset(state, *this);
 	resetGoal();
@@ -4120,10 +4221,12 @@ void BattleUnit::retreat(GameState &state)
 		shadowObject->removeFromMap();
 	}
 	tileObject->removeFromMap();
+	stopAttackPsi(state);
 	retreated = true;
 	removeFromSquad(*state.current_battle);
 	state.current_battle->refreshLeadershipBonus(agent->owner);
 	sendAgentEvent(state, GameEventType::AgentLeftCombat, true);
+	state.current_battle->checkMissionEnd(state, true);
 }
 
 bool BattleUnit::useSpawner(GameState &state, sp<AEquipmentType> item)
@@ -4235,6 +4338,7 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 	{
 		// Teamkill penalty morale
 		attacker->agent->modified_stats.loseMorale(20);
+		attacker->combatRating -= agent->type->score;
 		// Teamkill penalty score
 		if (agent->owner == player)
 		{
@@ -4267,10 +4371,33 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 	else if (attacker && attacker->agent->owner == player &&
 	         player->isRelatedTo(agent->owner) == Organisation::Relation::Hostile)
 	{
+		attacker->combatRating += agent->type->score;
 		state.current_battle->score.combatRating += agent->type->score;
 	}
 	// Penalty for unit in squad dying
-	int moraleLossPenalty = 100; // FIXME: Implement morale loss based on rank of dying unit
+	int moraleLossPenalty = 0;
+	switch (agent->rank)
+	{
+		case Rank::Rookie:
+		case Rank::Squaddie:
+			moraleLossPenalty = 100;
+			break;
+		case Rank::SquadLeader:
+			moraleLossPenalty = 110;
+			break;
+		case Rank::Sergeant:
+			moraleLossPenalty = 120;
+			break;
+		case Rank::Captain:
+			moraleLossPenalty = 130;
+			break;
+		case Rank::Colonel:
+			moraleLossPenalty = 150;
+			break;
+		case Rank::Commander:
+			moraleLossPenalty = 175;
+			break;
+	}
 	for (auto &u : state.current_battle->units)
 	{
 		if (u.second->agent->owner != agent->owner)
@@ -4279,8 +4406,8 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 		}
 		// Surviving units lose morale
 		u.second->agent->modified_stats.loseMorale(
-		    (110 - u.second->agent->modified_stats.bravery) *
-		    state.current_battle->leadershipBonus[agent->owner] * moraleLossPenalty / 500);
+		    (110 - u.second->agent->modified_stats.bravery) /
+		    (100 + state.current_battle->leadershipBonus[agent->owner]) * moraleLossPenalty / 500);
 	}
 	// Events
 	if (owner == state.current_battle->currentPlayer)

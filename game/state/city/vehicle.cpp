@@ -763,8 +763,6 @@ bool Vehicle::canAddEquipment(Vec2<int> pos, StateRef<VEquipmentType> type) cons
 		                          otherEquipment->type->equipscreen_size};
 		if (otherBounds.intersects(bounds))
 		{
-			LogInfo("Equipping \"%s\" on \"%s\" at %s failed: Intersects with other equipment",
-			        type->name, this->name, pos);
 			return false;
 		}
 	}
@@ -787,8 +785,6 @@ bool Vehicle::canAddEquipment(Vec2<int> pos, StateRef<VEquipmentType> type) cons
 			}
 			if (!validSlot)
 			{
-				LogInfo("Equipping \"%s\" on \"%s\" at %s failed: No valid slot", type->name,
-				        this->name, pos);
 				return false;
 			}
 		}

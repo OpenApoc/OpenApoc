@@ -741,7 +741,8 @@ AIDecision UnitAIVanilla::thinkInternal(GameState &state, BattleUnit &u)
 
 std::tuple<AIDecision, bool> UnitAIVanilla::think(GameState &state, BattleUnit &u, bool interrupt)
 {
-	active = u.isAIControlled(state) && !interrupt;
+	active = u.isAIControlled(state) && !interrupt &&
+	         (!state.current_battle->hotseat || u.owner == state.getCivilian());
 
 	if (!active)
 	{

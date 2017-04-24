@@ -80,6 +80,11 @@ class AgentStats
 	int accuracy = 0;
 	int reactions = 0;
 	int speed = 0;
+	void setSpeed(int value)
+	{
+		speed = value;
+		restoreTU();
+	}
 	int getActualSpeedValue() const { return (speed + 4) / 8; }
 	int getMovementSpeed() const { return clamp(getActualSpeedValue(), 5, 14); }
 	int getDisplaySpeedValue() const { return 8 * getActualSpeedValue(); }
@@ -273,6 +278,17 @@ class AgentBodyType : public StateObject
 	std::map<BodyState, std::map<Vec2<int>, std::vector<sp<VoxelMap>>>> voxelMaps;
 };
 
+enum class Rank
+{
+	Rookie = 0,
+	Squaddie = 1,
+	SquadLeader = 2,
+	Sergeant = 3,
+	Captain = 4,
+	Colonel = 5,
+	Commander = 6
+};
+
 class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 {
 	STATE_OBJECT(Agent)
@@ -294,6 +310,11 @@ class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 	AgentStats modified_stats; // Stats after 'temporary' modification (health damage, slowdown due
 	                           // to equipment weight, used stamina etc)
 	bool overEncumbred = false;
+	Rank rank = Rank::Rookie;
+
+	// Training
+	unsigned trainingPhysicalTicksAccumulated = 0;
+	unsigned trainingPsiTicksAccumulated = 0;
 
 	sp<AEquipment> getArmor(BodyPart bodyPart) const;
 	bool isBodyStateAllowed(BodyState bodyState) const;
@@ -303,6 +324,7 @@ class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 	const std::set<Vec2<int>> *getAllowedFacings() const;
 	int getReactionValue() const;
 	int getTULimit(int reactionValue) const;
+	UString getRankName() const;
 
 	StateRef<Base> home_base;
 	StateRef<Organisation> owner;
@@ -330,7 +352,12 @@ class Agent : public StateObject, public std::enable_shared_from_this<Agent>
 	void addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object);
 	void removeEquipment(sp<AEquipment> object);
 	void updateSpeed();
+	// Called when current stats were changed and modified stats need to catch up
+	void updateModifiedStats();
 	bool canRun() { return modified_stats.canRun(); }
+
+	void trainPhysical(GameState &state, unsigned ticks);
+	void trainPsi(GameState &state, unsigned ticks);
 
 	StateRef<BattleUnitAnimationPack> getAnimationPack() const;
 	// If item was fired before, it should be passed here, and it will remain dominant unless it was

@@ -12,6 +12,7 @@ namespace OpenApoc
 class Vehicle;
 class AgentType;
 class AEquipmentType;
+class GameState;
 
 class Organisation : public StateObject
 {
@@ -37,12 +38,13 @@ class Organisation : public StateObject
 
 	int tech_level;
 	int average_guards;
-	// What guard types can spawn, supports duplicates to provide variety
+	// What guard types can spawn, supports duplicates to provide variable probability
 	std::list<StateRef<AgentType>> guard_types;
 
 	std::map<LootPriority, std::vector<StateRef<AEquipmentType>>> loot;
 
 	Organisation();
+	int getGuardCount(GameState &state) const;
 	Relation isRelatedTo(const StateRef<Organisation> &other) const;
 	bool isPositiveTo(const StateRef<Organisation> &other) const;
 	bool isNegativeTo(const StateRef<Organisation> &other) const;

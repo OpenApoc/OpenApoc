@@ -10,6 +10,9 @@
 namespace OpenApoc
 {
 
+static const unsigned TICKS_PER_PHYSICAL_TRAINING = 4 * TICKS_PER_HOUR;
+static const unsigned TICKS_PER_PSI_TRAINING = 4 * TICKS_PER_HOUR;
+
 sp<AgentType> AgentType::get(const GameState &state, const UString &id)
 {
 	auto it = state.agent_types.find(id);
@@ -207,17 +210,24 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	agent->type = type;
 	agent->gender = probabilityMapRandomizer(state.rng, type->gender_chance);
 
-	auto firstNameList = this->first_names.find(agent->gender);
-	if (firstNameList == this->first_names.end())
+	if (type->playable)
 	{
-		LogError("No first name list for gender");
-		return nullptr;
+
+		auto firstNameList = this->first_names.find(agent->gender);
+		if (firstNameList == this->first_names.end())
+		{
+			LogError("No first name list for gender");
+			return nullptr;
+		}
+
+		auto firstName = listRandomiser(state.rng, firstNameList->second);
+		auto secondName = listRandomiser(state.rng, this->second_names);
+		agent->name = format("%s %s", firstName, secondName);
 	}
-
-	auto firstName = listRandomiser(state.rng, firstNameList->second);
-	auto secondName = listRandomiser(state.rng, this->second_names);
-	agent->name = format("%s %s", firstName, secondName);
-
+	else
+	{
+		agent->name = type->name;
+	}
 	// FIXME: When rng is fixed we can remove this unnesecary kludge
 	// RNG is bad at generating small numbers, so we generate more and divide
 	agent->appearance = randBoundsExclusive(state.rng, 0, type->appearance_count * 10) / 10;
@@ -230,9 +240,9 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	s.accuracy = randBoundsInclusive(state.rng, type->min_stats.accuracy, type->max_stats.accuracy);
 	s.reactions =
 	    randBoundsInclusive(state.rng, type->min_stats.reactions, type->max_stats.reactions);
-	s.speed = randBoundsInclusive(state.rng, type->min_stats.speed, type->max_stats.speed);
-	s.restoreTU();
-	s.stamina = randBoundsInclusive(state.rng, type->min_stats.stamina, type->max_stats.stamina);
+	s.setSpeed(randBoundsInclusive(state.rng, type->min_stats.speed, type->max_stats.speed));
+	s.stamina =
+	    randBoundsInclusive(state.rng, type->min_stats.stamina, type->max_stats.stamina) * 10;
 	s.bravery =
 	    randBoundsInclusive(state.rng, type->min_stats.bravery / 10, type->max_stats.bravery / 10) *
 	    10;
@@ -269,8 +279,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 		// Aliens get equipment based on player score
 		else if (org == state.getAliens())
 		{
-			// FIXME: actually get player score here
-			int playerScore = 50000;
+			int playerScore = state.score;
 
 			initialEquipment =
 			    EquipmentSet::getByScore(state, playerScore)->generateEquipmentList(state);
@@ -293,14 +302,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	{
 		if (!t)
 			continue;
-		if (t->type == AEquipmentType::Type::Ammo)
-		{
-			agent->addEquipmentByType(state, {&state, t->id}, AEquipmentSlotType::General);
-		}
-		else
-		{
-			agent->addEquipmentByType(state, {&state, t->id});
-		}
+		agent->addEquipmentByType(state, {&state, t->id});
 	}
 
 	agent->updateSpeed();
@@ -388,6 +390,29 @@ int Agent::getTULimit(int reactionValue) const
 	{
 		return current_stats.time_units * reactionValue / modified_stats.reactions;
 	}
+}
+
+UString Agent::getRankName() const
+{
+	switch (rank)
+	{
+		case Rank::Rookie:
+			return tr("Rookie");
+		case Rank::Squaddie:
+			return tr("Squaddie");
+		case Rank::SquadLeader:
+			return tr("Squad leader");
+		case Rank::Sergeant:
+			return tr("Sergeant");
+		case Rank::Captain:
+			return tr("Captain");
+		case Rank::Colonel:
+			return tr("Colonel");
+		case Rank::Commander:
+			return tr("Commander");
+	}
+	LogError("Unknown rank %d", (int)rank);
+	return "";
 }
 
 sp<AEquipment> Agent::getArmor(BodyPart bodyPart) const
@@ -497,8 +522,6 @@ bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
 			                          otherEquipment->type->equipscreen_size};
 			if (otherBounds.intersects(bounds))
 			{
-				LogInfo("Equipping \"%s\" on \"%s\" at %s failed: Intersects with other equipment",
-				        type->name, this->name, pos);
 				return false;
 			}
 		}
@@ -526,13 +549,61 @@ void Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type)
 {
 	Vec2<int> pos;
 	bool slotFound = false;
-	for (auto &slot : this->type->equipment_layout->slots)
+	AEquipmentSlotType prefSlotType = AEquipmentSlotType::General;
+	bool prefSlot = false;
+	if (type->type == AEquipmentType::Type::Ammo)
 	{
-		if (canAddEquipment(slot.bounds.p0, type))
+		prefSlotType = AEquipmentSlotType::General;
+		prefSlot = true;
+	}
+	else if (type->type == AEquipmentType::Type::Armor)
+	{
+		switch (type->body_part)
 		{
-			pos = slot.bounds.p0;
-			slotFound = true;
-			break;
+			case BodyPart::Body:
+				prefSlotType = AEquipmentSlotType::ArmorBody;
+				break;
+			case BodyPart::Legs:
+				prefSlotType = AEquipmentSlotType::ArmorLegs;
+				break;
+			case BodyPart::Helmet:
+				prefSlotType = AEquipmentSlotType::ArmorHelmet;
+				break;
+			case BodyPart::LeftArm:
+				prefSlotType = AEquipmentSlotType::ArmorLeftHand;
+				break;
+			case BodyPart::RightArm:
+				prefSlotType = AEquipmentSlotType::ArmorRightHand;
+				break;
+		}
+		prefSlot = true;
+	}
+	if (prefSlot)
+	{
+		for (auto &slot : this->type->equipment_layout->slots)
+		{
+			if (slot.type != prefSlotType)
+			{
+				continue;
+			}
+			if (canAddEquipment(slot.bounds.p0, type))
+			{
+				pos = slot.bounds.p0;
+				slotFound = true;
+				break;
+			}
+		}
+	}
+	if (!slotFound)
+	{
+		for (auto &slot : this->type->equipment_layout->slots)
+		{
+			if (canAddEquipment(slot.bounds.p0, type))
+			{
+				pos = slot.bounds.p0;
+				slotFound = true;
+				break;
+			}
 		}
 	}
 	if (!slotFound)
@@ -564,16 +635,15 @@ void Agent::addEquipmentByType(GameState &state, Vec2<int> pos, StateRef<AEquipm
 	auto equipment = mksp<AEquipment>();
 	equipment->type = type;
 	equipment->armor = type->armor;
-	if (type->ammo_types.size() > 0)
-	{
-		equipment->payloadType = *type->ammo_types.begin();
-		equipment->ammo = equipment->payloadType->max_ammo;
-	}
-	else
+	if (type->ammo_types.size() == 0)
 	{
 		equipment->ammo = type->max_ammo;
 	}
 	this->addEquipment(state, pos, equipment);
+	if (type->ammo_types.size() > 0)
+	{
+		equipment->loadAmmo(state);
+	}
 }
 
 void Agent::addEquipment(GameState &state, sp<AEquipment> object, AEquipmentSlotType slotType)
@@ -652,6 +722,100 @@ void Agent::updateSpeed()
 	    std::max(8,
 	             ((strength + encumbrance) / 2 + current_stats.speed * (strength - encumbrance)) /
 	                 (strength + encumbrance));
+}
+
+void Agent::updateModifiedStats()
+{
+	int health = modified_stats.health;
+	modified_stats = current_stats;
+	modified_stats.health = health;
+	updateSpeed();
+}
+
+void Agent::trainPhysical(GameState &state, unsigned ticks)
+{
+	if (!type->can_improve)
+	{
+		return;
+	}
+	trainingPhysicalTicksAccumulated += ticks;
+	while (trainingPhysicalTicksAccumulated >= TICKS_PER_PHYSICAL_TRAINING)
+	{
+		trainingPhysicalTicksAccumulated -= TICKS_PER_PHYSICAL_TRAINING;
+
+		if (randBoundsExclusive(state.rng, 0, 100) >= current_stats.health)
+		{
+			current_stats.health++;
+			modified_stats.health++;
+		}
+		if (randBoundsExclusive(state.rng, 0, 100) >= current_stats.accuracy)
+		{
+			current_stats.accuracy++;
+		}
+		if (randBoundsExclusive(state.rng, 0, 100) >= current_stats.reactions)
+		{
+			current_stats.reactions++;
+		}
+		if (randBoundsExclusive(state.rng, 0, 100) >= current_stats.speed)
+		{
+			current_stats.speed++;
+		}
+		if (randBoundsExclusive(state.rng, 0, 2000) >= current_stats.stamina)
+		{
+			current_stats.stamina += 20;
+		}
+		if (randBoundsExclusive(state.rng, 0, 100) >= current_stats.strength)
+		{
+			current_stats.strength++;
+		}
+		updateModifiedStats();
+	}
+}
+
+void Agent::trainPsi(GameState &state, unsigned ticks)
+{
+	if (!type->can_improve)
+	{
+		return;
+	}
+	trainingPsiTicksAccumulated += ticks;
+	while (trainingPsiTicksAccumulated >= TICKS_PER_PSI_TRAINING)
+	{
+		trainingPsiTicksAccumulated -= TICKS_PER_PSI_TRAINING;
+
+		// FIXME: Ensure correct
+		// Roger Wong gives this info:
+		// - Improve up to 3x base value
+		// - Chance is 100 - (3 x current - initial)
+		// - Hybrids have much higher chance to improve and humans hardly ever improve
+		// This seems very wong (lol)!
+		//	 For example, if initial is 50, no improvement ever possible because 100 - (150-50) = 0
+		// already)
+		//   Or, for initial 10, even at 30 the formula would be 100 - (90-10) = 20% improve chance
+		//   In this formula the bigger is the initial stat, the harder it is to improve
+		// Therefore, we'll use a formula that makes senes and follows what he said.
+		// Properties of our formula:
+		// - properly gives 0 chance when current = 3x initial
+		// - gives higher chance with higher initial values
+
+		if (randBoundsExclusive(state.rng, 0, 100) <
+		    3 * initial_stats.psi_attack - current_stats.psi_attack)
+		{
+			current_stats.psi_attack += current_stats.psi_energy / 20;
+		}
+		if (randBoundsExclusive(state.rng, 0, 100) <
+		    3 * initial_stats.psi_defence - current_stats.psi_defence)
+		{
+			current_stats.psi_defence += current_stats.psi_energy / 20;
+		}
+		if (randBoundsExclusive(state.rng, 0, 100) <
+		    3 * initial_stats.psi_energy - current_stats.psi_energy)
+		{
+			current_stats.psi_energy++;
+		}
+
+		updateModifiedStats();
+	}
 }
 
 StateRef<BattleUnitAnimationPack> Agent::getAnimationPack() const

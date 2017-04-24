@@ -129,6 +129,10 @@ class Battle : public std::enable_shared_from_this<Battle>
 	UString mission_location_id;
 	Mode mode = Mode::RealTime;
 	BattleScore score = {};
+	unsigned missionEndTimer = 0;
+	bool playerWon = false;
+	bool loserHasRetreated = false;
+	bool winnerHasRetreated = false;
 
 	StateRef<Vehicle> player_craft;
 
@@ -153,6 +157,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	StateRef<Organisation> currentPlayer;
 	// Who's turn is it
 	StateRef<Organisation> currentActiveOrganisation;
+	bool hotseat = false;
 	// Turn number
 	unsigned int currentTurn = 0;
 	// Ticks without action in TB
@@ -212,6 +217,9 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// Notify about action happening
 	void notifyAction(Vec3<int> location = {-1, -1, -1}, StateRef<BattleUnit> actorUnit = nullptr);
 
+	int killStrandedUnits(GameState &state, bool preview = false);
+	void abortMission(GameState &state);
+	void checkMissionEnd(GameState &state, bool retreated, bool forceReCheck = false);
 	void refreshLeadershipBonus(StateRef<Organisation> org);
 
 	void update(GameState &state, unsigned int ticks);
@@ -264,15 +272,20 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	// Battle Start Functions
 
-	// To be called when battle must be created, before showing battle briefing screen
-	static void beginBattle(GameState &state, StateRef<Organisation> target_organisation,
+	// To be called when battle in a ufo must be created, before showing battle briefing screen
+	static void beginBattle(GameState &state, bool hotseat,
+	                        StateRef<Organisation> target_organisation,
 	                        std::list<StateRef<Agent>> &player_agents,
+	                        const std::map<StateRef<AgentType>, int> *aliens,
 	                        StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft);
 
-	// To be called when battle must be created, before showing battle briefing screen
-	static void beginBattle(GameState &state, StateRef<Organisation> target_organisation,
+	// To be called when battle in a building must be created, before showing battle briefing screen
+	static void beginBattle(GameState &state, bool hotseat,
+	                        StateRef<Organisation> target_organisation,
 	                        std::list<StateRef<Agent>> &player_agents,
-	                        StateRef<Vehicle> player_craft, StateRef<Building> target_building);
+	                        const std::map<StateRef<AgentType>, int> *aliens, const int *guards,
+	                        const int *civilians, StateRef<Vehicle> player_craft,
+	                        StateRef<Building> target_building);
 
 	// To be called when battle must be started, after briefing screen
 	static void enterBattle(GameState &state);
@@ -328,6 +341,14 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// We are not saving it because when player loads he may have no recollection of which
 	// enemies are hiding where, and so we need to pop notifications again for every enemy
 	std::map<StateRef<Organisation>, std::map<StateRef<BattleUnit>, uint64_t>> lastVisibleTime;
+
+	// List of promoted units
+	// we cannot save game in briefing screen so this is not saved
+	std::list<StateRef<BattleUnit>> unitsPromoted;
+
+	// List of locations for priority spawning of specific agent types
+	// we cannot save game in briefing screen so this is not saved
+	std::map<StateRef<AgentType>, std::list<Vec3<int>>> spawnLocations;
 
 	// Following members are not serialized, but rather are set in initBattle method
 
