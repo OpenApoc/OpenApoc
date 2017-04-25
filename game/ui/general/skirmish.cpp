@@ -60,10 +60,11 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), state(*state), menuform(ui().
 	menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
 		    menuform->findControlTyped<Label>("PLAYER_TECH")
-		        ->setText(
-		            menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->getValue() == 0
-		                ? "NO"
-		                : format("%d", menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
+		        ->setText(menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->getValue() ==
+		                          0
+		                      ? "NO"
+		                      : format("%d",
+		                               menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
 		                                   ->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")
