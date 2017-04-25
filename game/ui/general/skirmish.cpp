@@ -112,8 +112,8 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), state(*state), menuform(ui().
 	menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")->setValue(2);
 	menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")->setValue(2);
 
-	menuform->findControlTyped<ScrollBar>("DAYS_PHYSICAL_SLIDER")->setValue(14);
-	menuform->findControlTyped<ScrollBar>("DAYS_PSI_SLIDER")->setValue(14);
+	menuform->findControlTyped<ScrollBar>("DAYS_PHYSICAL_SLIDER")->setValue(7);
+	menuform->findControlTyped<ScrollBar>("DAYS_PSI_SLIDER")->setValue(7);
 	menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->setValue(1);
 
 	menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")->setValue(12);
