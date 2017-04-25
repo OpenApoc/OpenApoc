@@ -91,8 +91,8 @@ class AgentStats
 	int time_units = 0;
 	void restoreTU() { time_units = speed; }
 	int stamina = 0;
-	int getDisplayStaminaValue() const { return stamina / 2; }
-	bool canRun() const { return stamina > 0; }
+	int getDisplayStaminaValue() const { return stamina / 20; }
+	bool canRun() const { return stamina > 5; }
 	int bravery = 0;
 	int strength = 0;
 	int morale = 0;
