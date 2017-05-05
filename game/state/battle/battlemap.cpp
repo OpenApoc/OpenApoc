@@ -858,9 +858,8 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 				{
 					LogInfo("Loading sector tiles \"%s\"", sec->sectorTilesName);
 					sec->tiles.reset(new BattleMapSectorTiles());
-					if (!sec->tiles->loadSector(state,
-					                            BattleMapSectorTiles::getMapSectorPath() + "/" +
-					                                sec->sectorTilesName))
+					if (!sec->tiles->loadSector(state, BattleMapSectorTiles::getMapSectorPath() +
+					                                       "/" + sec->sectorTilesName))
 					{
 						LogError("Failed to load sector tiles \"%s\"", sec->sectorTilesName);
 					}

@@ -1639,9 +1639,8 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 						         .empty())
 						{
 							fw().soundBackend->playSample(
-							    listRandomiser(state.rng,
-							                   targetUnit->agent->type->fatalWoundSfx.at(
-							                       targetUnit->agent->gender)),
+							    listRandomiser(state.rng, targetUnit->agent->type->fatalWoundSfx.at(
+							                                  targetUnit->agent->gender)),
 							    targetUnit->position);
 						}
 						break;
@@ -1838,11 +1837,10 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				// Drop item
 				auto bi = state.current_battle->placeItem(
 				    state, item,
-				    u.position + Vec3<float>{0.0, 0.0,
-				                             (u.current_body_state == BodyState::Downed ||
-				                              u.current_body_state == BodyState::Dead)
-				                                 ? 0.0f
-				                                 : (float)u.getCurrentHeight() / 80.0f});
+				    u.position + Vec3<float>{0.0, 0.0, (u.current_body_state == BodyState::Downed ||
+				                                        u.current_body_state == BodyState::Dead)
+				                                           ? 0.0f
+				                                           : (float)u.getCurrentHeight() / 80.0f});
 				bi->falling = true;
 			}
 			item = nullptr;
@@ -2044,6 +2042,8 @@ void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> tar
 
 bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<float> &dest)
 {
+	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
+
 	if (u.isUnconscious() || u.isDead() || currentPlannedPath.empty())
 	{
 		return false;
@@ -2296,22 +2296,25 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 	// Spend stamina.  As per Mell from forums it takes:
 	// - 0.6 vanilla stamina to run regardless of diagonal or not
 	// - 0.85 vanilla stamina to go prone regradless of diagonal or not
-	int staCost = 0;
-	if (u.current_body_state == BodyState::Prone)
+	if (!realTime)
 	{
-		staCost = randBoundsInclusive(state.rng, 8, 9);
-	}
-	else if (u.movement_mode == MovementMode::Running)
-	{
-		staCost = 6;
-	}
-	if (u.agent->modified_stats.stamina < staCost)
-	{
-		u.agent->modified_stats.stamina = 0;
-	}
-	else
-	{
-		u.agent->modified_stats.stamina -= staCost;
+		int staCost = 0;
+		if (u.current_body_state == BodyState::Prone)
+		{
+			staCost = randBoundsInclusive(state.rng, 8, 9);
+		}
+		else if (u.movement_mode == MovementMode::Running)
+		{
+			staCost = 6;
+		}
+		if (u.agent->modified_stats.stamina < staCost)
+		{
+			u.agent->modified_stats.stamina = 0;
+		}
+		else
+		{
+			u.agent->modified_stats.stamina -= staCost;
+		}
 	}
 
 	// Now finally we can go jumping
