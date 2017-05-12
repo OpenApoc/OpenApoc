@@ -3,6 +3,7 @@
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
+#include <functional>
 #include <future>
 
 namespace OpenApoc
