@@ -77,7 +77,7 @@ Whitespace:
 ```C++
 	for (auto &a: b)
 ```
-* No spaces after conditional/function call parent, space after comma for multiple args
+* No spaces after function name (or function-like keywords like 'sizeof'), but space after flow control keywords, space after comma for multiple args
 ```C++
 	func(a, b);
 	if (a == 0)
