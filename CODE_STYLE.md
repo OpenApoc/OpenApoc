@@ -490,7 +490,7 @@ end:
 
 Logging:
 --------
-* LogInfo/LogWarning/LogError take 'printf-style' format string. Make sure everything is the correct type, %d for ints, %u for unsigned, %s for "utf8" const char* strings (as returned by UString.c_str())
+* LogInfo/LogWarning/LogError take 'printf-style' format string. Make sure everything is the correct type, %d for ints, %u for unsigned, %s for "utf8" const char* "strings" or UString objects directly
 * LogInfo is cheap - use it everywhere interesting
 * LogWarning should be something that has gone wrong, but recoverable.
 * LogError is for fatal errors.
