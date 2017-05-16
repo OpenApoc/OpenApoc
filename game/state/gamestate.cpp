@@ -174,6 +174,13 @@ void GameState::initState()
 
 void GameState::startGame()
 {
+	// Setup orgs
+	for (auto &pair : this->organisations)
+	{
+		pair.second->ticksTakeOverAttemptAccumulated =
+		    randBoundsExclusive(rng, (unsigned)0, TICKS_PER_TAKEOVER_ATTEMPT);
+	}
+
 	for (auto &pair : this->cities)
 	{
 		auto &city = pair.second;
@@ -402,14 +409,18 @@ void GameState::update(unsigned int ticks)
 			v.second->update(*this, ticks);
 		}
 		Trace::end("GameState::update::vehicles");
-		Trace::start("GameState::update::labs");
-		for (auto &lab : this->research.labs)
+		Trace::start("GameState::update::organisations");
+		for (auto &o : this->organisations)
 		{
-			Lab::update(ticks, {this, lab.second}, shared_from_this());
+			o.second->update(*this, ticks);
 		}
-		Trace::end("GameState::update::labs");
+		Trace::end("GameState::update::organisations");
 
 		gameTime.addTicks(ticks);
+		if (gameTime.hourPassed())
+		{
+			this->updateEndOfHour();
+		}
 		if (gameTime.dayPassed())
 		{
 			this->updateEndOfDay();
@@ -420,6 +431,28 @@ void GameState::update(unsigned int ticks)
 		}
 		gameTime.clearFlags();
 	}
+}
+
+void GameState::updateEndOfHour()
+{
+	Trace::start("GameState::updateEndOfHour::labs");
+	for (auto &lab : this->research.labs)
+	{
+		Lab::update(TICKS_PER_HOUR, {this, lab.second}, shared_from_this());
+	}
+	Trace::end("GameState::updateEndOfHour::labs");
+	Trace::start("GameState::updateEndOfHour::cities");
+	for (auto &c : this->cities)
+	{
+		c.second->hourlyLoop(*this);
+	}
+	Trace::end("GameState::updateEndOfHour::cities");
+	Trace::start("GameState::updateEndOfHour::organisations");
+	for (auto &o : this->organisations)
+	{
+		o.second->updateInfiltration(*this);
+	}
+	Trace::end("GameState::updateEndOfHour::organisations");
 }
 
 void GameState::updateEndOfDay()

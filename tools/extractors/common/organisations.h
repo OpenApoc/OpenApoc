@@ -41,4 +41,12 @@ static_assert(sizeof(struct OrgStartingRelationshipsData) == 28 * 4,
 #define ORGANISATION_STARTING_RELATIONSHIPS_DATA_OFFSET_START 1609792
 #define ORGANISATION_STARTING_RELATIONSHIPS_DATA_OFFSET_END 1612928
 
+struct OrgInfiltrationSpeed
+{
+	int32_t speed;
+};
+static_assert(sizeof(struct OrgInfiltrationSpeed) == 4, "Invalid OrgInfiltrationSpeed size");
+#define ORGANISATION_INFILTRATION_SPEED_OFFSET_START 1320112
+#define ORGANISATION_INFILTRATION_SPEED_OFFSET_END 1320224
+
 } // namespace OpenApoc

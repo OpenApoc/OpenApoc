@@ -19,7 +19,8 @@ BuildingScreen::BuildingScreen(sp<GameState> state, sp<Building> building)
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 	menuform->findControlTyped<Label>("TEXT_BUILDING_NAME")->setText(tr(building->name));
 	menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(tr(building->owner->name));
-	menuform->findControlTyped<Label>("TEXT_BUILDING_FUNCTION")->setText(tr(building->function));
+	menuform->findControlTyped<Label>("TEXT_BUILDING_FUNCTION")
+	    ->setText(tr(building->function->name));
 }
 
 BuildingScreen::~BuildingScreen() = default;

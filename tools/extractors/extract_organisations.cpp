@@ -22,16 +22,15 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 		auto odata = data.organisation_data->get(i);
 		auto rdata = data.organisation_starting_relationships_data->get(i);
 
-		o->name = data.organisation_names->get(i);
 		UString id = data.getOrgId(i);
+
+		o->name = data.organisation_names->get(i);
+		o->id = id;
 
 		o->balance = odata.starting_funds;
 		o->income = odata.starting_funding;
 		o->tech_level = odata.starting_tech_level + 1;
 		o->average_guards = odata.average_guards;
-
-		// We fill this by hand
-		// o->guard_types.push_back({ &state, "AGENTTYPE_BUILDING_SECURITY" });
 
 		// "Civilian" organisation has no loot entry
 		if (i == data.organisation_data->count() - 1)
@@ -93,6 +92,11 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 			}
 		}
 
+		// infiltration
+		auto idata = data.infiltration_speed_org->get(i);
+		o->infiltrationSpeed = idata.speed;
+
+		// relationship
 		for (int j = 0; j < 28; j++)
 		{
 			StateRef<Organisation> o2 = {&state, data.getOrgId(j)};

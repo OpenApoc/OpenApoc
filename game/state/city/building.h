@@ -17,17 +17,26 @@ class Base;
 class BattleMap;
 class BaseLayout;
 
+class BuildingFunction : public StateObject
+{
+	STATE_OBJECT(BuildingFunction)
+  public:
+	UString name;
+	int infiltrationSpeed = 0;
+};
+
 class Building : public StateObject
 {
 	STATE_OBJECT(Building)
   public:
 	UString name;
-	UString function;
+	StateRef<BuildingFunction> function;
 	StateRef<Organisation> owner;
 	Rect<int> bounds;
 	StateRef<BaseLayout> base_layout;
 	StateRef<BattleMap> battle_map;
 	std::map<StateRef<AgentType>, int> preset_crew;
+	std::map<StateRef<AgentType>, int> current_crew;
 
 	std::vector<Vec3<int>> landingPadLocations;
 	std::set<StateRef<Vehicle>> landed_vehicles;

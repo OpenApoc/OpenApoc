@@ -44,6 +44,7 @@
 		<member type="Section">agent_equipment</member>
 		<member type="Section">equipment_sets_by_score</member>
 		<member type="Section">equipment_sets_by_level</member>
+		<member type="Section">building_functions</member>
 		<member>messages</member>
 		<member>score</member>
 	</object>
@@ -114,6 +115,9 @@
 		<member>allowsDirectControl</member>
 		<member>aiType</member>
 		<member>immuneToFatalWounds</member>
+		<member>infiltrationSpeed</member>
+		<member>growthChance</member>
+		<member>growthOptions</member>
 		<member>spreadHazardDamageType</member>
 		<member>spreadHazardMinPower</member>
 		<member>spreadHazardMaxPower</member>
@@ -774,6 +778,11 @@
 		<member>destroyed</member>
 	</object>
 	<object>
+		<name>BuildingFunction</name>
+		<member>name</member>
+		<member>infiltrationSpeed</member>
+	</object>
+	<object>
 		<name>Building</name>
 		<member>name</member>
 		<member>function</member>
@@ -782,6 +791,7 @@
 		<member>base_layout</member>
 		<member>battle_map</member>
 		<member>preset_crew</member>
+		<member>current_crew</member>
 		<member>landingPadLocations</member>
 		<member>landed_vehicles</member>
 	</object>
@@ -980,9 +990,14 @@
 	</object>
 	<object>
 		<name>Organisation</name>
+		<member>id</member>
 		<member>name</member>
 		<member>balance</member>
 		<member>income</member>
+		<member>infiltrationValue</member>
+		<member>infiltrationSpeed</member>
+		<member>takenOver</member>
+		<member>ticksTakeOverAttemptAccumulated</member>
 		<member>tech_level</member>
 		<member>average_guards</member>
 		<member>guard_types</member>

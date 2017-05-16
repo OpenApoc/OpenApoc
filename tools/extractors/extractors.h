@@ -104,6 +104,8 @@ class InitialGameStateExtractor
 
 	void extractSharedBattleResources(GameState &state) const;
 
+	void extractBuildingFunctions(GameState &state) const;
+
 	// Then things that change on difficulty
 
 	void extractAlienEquipmentSets(GameState &state, Difficulty difficulty) const;

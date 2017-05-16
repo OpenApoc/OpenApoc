@@ -5,6 +5,28 @@
 namespace OpenApoc
 {
 
+sp<BuildingFunction> BuildingFunction::get(const GameState &state, const UString &id)
+{
+	auto it = state.building_functions.find(id);
+	if (it == state.building_functions.end())
+	{
+		LogError("No building_function matching ID \"%s\"", id);
+		return nullptr;
+	}
+	return it->second;
+}
+
+const UString &BuildingFunction::getPrefix()
+{
+	static UString prefix = "BUILDINGFUNCTION_";
+	return prefix;
+}
+const UString &BuildingFunction::getTypeName()
+{
+	static UString name = "AgentType";
+	return name;
+}
+
 sp<Building> Building::get(const GameState &state, const UString &id)
 {
 	for (auto &city : state.cities)
