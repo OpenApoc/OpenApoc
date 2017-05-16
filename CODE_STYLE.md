@@ -325,23 +325,50 @@ public:
 };
 ```
  * No need for 'pure' interface classes, they can have code that all subclasses will use!
+* For trivial initial values prefer initialisers in the class declaration (It's easier to see what's set and cleans up constructor definitions)
+```C++
+class MyClass
+{
+public:
+	Type initialisedMember = 0;
+};
+```
 * In constructors prefer initialisation of members with  initialiser list over assignment
  * Good:
 ```C++ 
-MyClass::MyClass() : member(0)
+MyClass::MyClass(Type value) : member(value)
 {
 	doWhatever();
 }
 ```
  * Bad:
 ```C++
-MyClass::MyClass()
+MyClass::MyClass(Type value)
 {
-	member = 0;
+	member = value;
 	doWhatever();
 }
 ```
- * Initialisers should be in order of declaration in the class
+* Initialisers should be in order of declaration in the class
+ * For example with the class:
+```C++
+class MyClass
+{
+public:
+	Type memberA;
+	Type memberB;
+
+	MyClass(Type valueA, Type valueB);
+};
+```
+ * Good:
+```C++
+MyClass::MyClass(Type valueA, Type valueB) : memberA(valueA), memberB(valueB) {}
+```
+ * Bad:
+```C++
+MyClass::MyClass(Type valueA, Type valueB) : memberB(valueB), memberA(valueA) {}
+```
 * Use 'struct' for 'data-only' types
  * Structs should _never_ have public/private/protected declarations, if there's anything non-public you shouldn't use a struct.
  * Likely only going to be used within data reading/writing to files
