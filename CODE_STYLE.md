@@ -213,7 +213,7 @@ public:
 ```C++
 int function(int parameterOne, char secondOne)
 ```
-* Variables should be cabelBack
+* Variables should be camelBack
  * Don't be afraid to use 'short' variable names if it's obvious
 ```C++
 void function()
