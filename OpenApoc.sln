@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenApoc", "game\OpenApoc.vcxproj", "{284825AB-1430-40A4-8F08-5810C5559687}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "physfs", "dependencies\physfs.vcxproj", "{5A1D2EC4-525E-49B6-9398-BE359E71CB35}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glm", "dependencies\glm.vcxproj", "{5A1E7764-CFDC-49FE-BF31-064DCC661D15}"
@@ -16,8 +18,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "forms", "forms\forms.vcxproj", "{398123B9-54C2-4AE3-834D-00B36AC43EB2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gameui", "game\ui\gameui.vcxproj", "{E2F51C8A-BF8C-46DB-86D2-A61979813C70}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenApoc", "game\OpenApoc.vcxproj", "{284825AB-1430-40A4-8F08-5810C5559687}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "extractor", "tools\extractor.vcxproj", "{6B9315DD-3720-4FA4-8906-03DBAC1CEF49}"
 EndProject

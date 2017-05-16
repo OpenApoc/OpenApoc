@@ -1014,8 +1014,9 @@ void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatu
 	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
 	if (impact)
 	{
-		sendAgentEvent(state, status == PsiStatus::Control ? GameEventType::AgentPsiControlled
-		                                                   : GameEventType::AgentPsiAttacked,
+		sendAgentEvent(state,
+		               status == PsiStatus::Control ? GameEventType::AgentPsiControlled
+		                                            : GameEventType::AgentPsiAttacked,
 		               true);
 	}
 	bool finished = false;

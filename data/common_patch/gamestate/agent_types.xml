@@ -1074,7 +1074,7 @@
       </max_stats>
       <bodyType>AGENTBODYTYPE_BASE_TURRET</bodyType>
       <appearance_count>1</appearance_count>
-	  <immuneToFatalWounds>true</immuneToFatalWounds>
+      <immuneToFatalWounds>true</immuneToFatalWounds>
       <image_packs>
         <entry>
           <entry>
@@ -1171,7 +1171,7 @@
       </max_stats>
       <bodyType>AGENTBODYTYPE_BASE_TURRET</bodyType>
       <appearance_count>1</appearance_count>
-	  <immuneToFatalWounds>true</immuneToFatalWounds>
+      <immuneToFatalWounds>true</immuneToFatalWounds>
       <image_packs>
         <entry>
           <entry>
