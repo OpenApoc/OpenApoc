@@ -13,6 +13,7 @@ class GameState;
 class GraphicButton;
 class Control;
 class Vehicle;
+class Sample;
 
 enum class UpdateSpeed
 {
@@ -84,6 +85,8 @@ class CityView : public CityTileView
 	std::vector<sp<Image>> vehiclePassengerCountIcons;
 
 	std::map<sp<Vehicle>, std::pair<VehicleTileInfo, sp<Control>>> vehicleListControls;
+
+	std::list<sp<Sample>> alertSounds;
 
 	wp<Vehicle> selectedVehicle;
 

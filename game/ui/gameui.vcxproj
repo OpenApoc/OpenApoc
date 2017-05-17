@@ -32,6 +32,7 @@
     <ClCompile Include="battle\battleturnbasedconfirmbox.cpp" />
     <ClCompile Include="battle\battleview.cpp" />
     <ClCompile Include="boot.cpp" />
+    <ClCompile Include="city\alertscreen.cpp" />
     <ClCompile Include="city\basebuyscreen.cpp" />
     <ClCompile Include="city\baseselectscreen.cpp" />
     <ClCompile Include="city\buildingscreen.cpp" />
@@ -74,6 +75,7 @@
     <ClInclude Include="battle\battleturnbasedconfirmbox.h" />
     <ClInclude Include="battle\battleview.h" />
     <ClInclude Include="boot.h" />
+    <ClInclude Include="city\alertscreen.h" />
     <ClInclude Include="city\basebuyscreen.h" />
     <ClInclude Include="city\baseselectscreen.h" />
     <ClInclude Include="city\buildingscreen.h" />

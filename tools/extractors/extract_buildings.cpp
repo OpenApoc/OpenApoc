@@ -23,6 +23,10 @@ void InitialGameStateExtractor::extractBuildingFunctions(GameState &state) const
 		{
 			f->infiltrationSpeed = data.infiltration_speed_building->get(i).speed;
 		}
+		if (i < buildingFunctionDetectionWeights.size())
+		{
+			f->detectionWeight = buildingFunctionDetectionWeights[i];
+		}
 		auto id = format("%s%s", BuildingFunction::getPrefix(), canon_string(f->name));
 		state.building_functions[id] = f;
 	}

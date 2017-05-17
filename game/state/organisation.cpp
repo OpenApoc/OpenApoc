@@ -38,7 +38,7 @@ void Organisation::takeOver(GameState &state, bool forced)
 	}
 	// FIXME: Ensure above values do not change?
 	// FIXME: Properly announce org taken over
-	LogWarning("%s taken over by aliens!", name);
+	LogError("%s taken over by aliens!", name);
 }
 
 void Organisation::updateInfiltration(GameState &state)
@@ -57,7 +57,6 @@ void Organisation::updateInfiltration(GameState &state)
 
 	// FIXME: Properly read incursions value and difficulty
 	int ufoIncursions = 1;
-	int difficulty = 1; // 0 = novice 4 = superhuman
 	int divizor = 42 - ufoIncursions;
 
 	// Calculate infiltration modifier
@@ -81,7 +80,7 @@ void Organisation::updateInfiltration(GameState &state)
 		}
 	}
 	infiltrationModifier /= divizor;
-	infiltrationModifier -= difficulty;
+	infiltrationModifier -= state.difficulty;
 	if (state.gameTime.getHours() % 2)
 	{
 		infiltrationModifier--;
@@ -89,7 +88,7 @@ void Organisation::updateInfiltration(GameState &state)
 	org->infiltrationValue = clamp(org->infiltrationValue - infiltrationModifier, 0, 200);
 }
 
-void Organisation::update(GameState &state, unsigned int ticks)
+void Organisation::updateTakeOver(GameState &state, unsigned int ticks)
 {
 	ticksTakeOverAttemptAccumulated += ticks;
 	while (ticksTakeOverAttemptAccumulated >= TICKS_PER_TAKEOVER_ATTEMPT)

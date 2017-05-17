@@ -60,11 +60,10 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), state(*state), menuform(ui().
 	menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
 		    menuform->findControlTyped<Label>("PLAYER_TECH")
-		        ->setText(menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->getValue() ==
-		                          0
-		                      ? "NO"
-		                      : format("%d",
-		                               menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
+		        ->setText(
+		            menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->getValue() == 0
+		                ? "NO"
+		                : format("%d", menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
 		                                   ->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")
@@ -318,9 +317,10 @@ void Skirmish::customizeForces(bool force)
 	{
 		aliens = &locVehicle->crew_downed;
 	}
-	else if (locBuilding && locBuilding->owner == state.getAliens())
+	else if (locBuilding && locBuilding->hasAliens())
 	{
-		aliens = &locBuilding->preset_crew;
+		aliens = locBuilding->preset_crew.empty() ? &locBuilding->current_crew
+		                                          : &locBuilding->preset_crew;
 	}
 	else if (force)
 	{
@@ -526,7 +526,7 @@ void Skirmish::eventOccurred(Event *e)
 			bool customize =
 			    menuform->findControlTyped<CheckBox>("CUSTOMISE_FORCES")->isChecked() || locBase ||
 			    (!menuform->findControlTyped<CheckBox>("ALTERNATIVE_ATTACK")->isChecked() &&
-			     locBuilding && locBuilding->owner != state.getAliens());
+			     locBuilding && !locBuilding->hasAliens());
 			if (customize)
 			{
 				customizeForces(true);

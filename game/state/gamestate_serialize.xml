@@ -47,6 +47,8 @@
 		<member type="Section">building_functions</member>
 		<member>messages</member>
 		<member>score</member>
+		<member>difficulty</member>
+		<member>firstDetection</member>
 	</object>
 	<object external="true">
 		<name>BattleMapTileset</name>
@@ -118,6 +120,7 @@
 		<member>infiltrationSpeed</member>
 		<member>growthChance</member>
 		<member>growthOptions</member>
+		<member>detectionWeight</member>
 		<member>spreadHazardDamageType</member>
 		<member>spreadHazardMinPower</member>
 		<member>spreadHazardMaxPower</member>
@@ -781,6 +784,7 @@
 		<name>BuildingFunction</name>
 		<member>name</member>
 		<member>infiltrationSpeed</member>
+		<member>detectionWeight</member>
 	</object>
 	<object>
 		<name>Building</name>
@@ -794,6 +798,8 @@
 		<member>current_crew</member>
 		<member>landingPadLocations</member>
 		<member>landed_vehicles</member>
+		<member>ticksDetectionTimeOut</member>
+		<member>ticksDetectionAttemptAccumulated</member>
 	</object>
 	<object>
 		<name>UFOIncursion</name>

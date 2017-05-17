@@ -40,11 +40,11 @@ class InitialGameStateExtractor
   public:
 	enum class Difficulty
 	{
-		DIFFICULTY_1,
-		DIFFICULTY_2,
-		DIFFICULTY_3,
-		DIFFICULTY_4,
-		DIFFICULTY_5,
+		DIFFICULTY_1 = 0,
+		DIFFICULTY_2 = 1,
+		DIFFICULTY_3 = 2,
+		DIFFICULTY_4 = 3,
+		DIFFICULTY_5 = 4,
 	};
 	InitialGameStateExtractor() = default;
 	void extractCommon(GameState &state) const;
@@ -80,6 +80,8 @@ class InitialGameStateExtractor
 	static const std::map<OpenApoc::UString, OpenApoc::UString> unitShadowPackPaths;
 	// List of paths and names for animation packs
 	static const std::map<OpenApoc::UString, OpenApoc::UString> unitAnimationPackPaths;
+	// Detection weights for building functions
+	static const std::vector<int> buildingFunctionDetectionWeights;
 
   private:
 	// 'common' state doesn't rely on difficulty

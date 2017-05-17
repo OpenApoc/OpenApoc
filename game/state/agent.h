@@ -228,6 +228,7 @@ class AgentType : public StateObject
 	int infiltrationSpeed = 0;
 	int growthChance = 0;
 	std::list<std::pair<int, std::pair<StateRef<AgentType>, int>>> growthOptions;
+	int detectionWeight = 0;
 
 	StateRef<DamageType> spreadHazardDamageType;
 	int spreadHazardMinPower = 0;

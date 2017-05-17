@@ -150,6 +150,8 @@ unsigned int GameTime::getMinutes() const { return getPtime(this->ticks).time_of
 
 uint64_t GameTime::getTicks() const { return ticks; }
 
+bool GameTime::fiveMinutesPassed() const { return fiveMinutesPassedFlag; }
+
 bool GameTime::hourPassed() const { return hourPassedFlag; }
 
 bool GameTime::dayPassed() const { return dayPassedFlag; }
@@ -166,18 +168,23 @@ void GameTime::clearFlags()
 void GameTime::addTicks(uint64_t ticks)
 {
 	this->ticks += ticks;
-	uint64_t hourTicks = this->ticks % TICKS_PER_HOUR;
-	if (hourTicks < ticks)
+	uint64_t fiveMinutesTicks = this->ticks % (5 * TICKS_PER_MINUTE);
+	if (fiveMinutesTicks < ticks)
 	{
-		hourPassedFlag = true;
-		uint64_t dayTicks = this->ticks % TICKS_PER_DAY;
-		if (dayTicks < ticks)
+		fiveMinutesPassedFlag = true;
+		uint64_t hourTicks = this->ticks % TICKS_PER_HOUR;
+		if (hourTicks < ticks)
 		{
-			uint64_t days = this->ticks / TICKS_PER_DAY;
-			dayPassedFlag = true;
-			if (days % 7 == 0)
+			hourPassedFlag = true;
+			uint64_t dayTicks = this->ticks % TICKS_PER_DAY;
+			if (dayTicks < ticks)
 			{
-				weekPassedFlag = true;
+				uint64_t days = this->ticks / TICKS_PER_DAY;
+				dayPassedFlag = true;
+				if (days % 7 == 0)
+				{
+					weekPassedFlag = true;
+				}
 			}
 		}
 	}

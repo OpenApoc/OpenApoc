@@ -15,6 +15,7 @@
 #include "framework/keycodes.h"
 #include "framework/palette.h"
 #include "framework/renderer.h"
+#include "framework/sound.h"
 #include "framework/trace.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
@@ -38,6 +39,7 @@
 #include "game/ui/base/basescreen.h"
 #include "game/ui/base/researchscreen.h"
 #include "game/ui/base/vequipscreen.h"
+#include "game/ui/city/alertscreen.h"
 #include "game/ui/city/baseselectscreen.h"
 #include "game/ui/city/buildingscreen.h"
 #include "game/ui/city/infiltrationscreen.h"
@@ -122,6 +124,15 @@ CityView::CityView(sp<GameState> state)
 		this->uiTabs.push_back(f);
 	}
 	this->activeTab = this->uiTabs[0];
+
+	alertSounds.emplace_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/alert.raw:22050"));
+	alertSounds.emplace_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/alert2.raw:22050"));
+	alertSounds.emplace_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/alert3.raw:22050"));
+	alertSounds.emplace_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/alert4.raw:22050"));
 
 	// Refresh base views
 	resume();
@@ -954,6 +965,18 @@ void CityView::eventOccurred(Event *e)
 		{
 			default:
 				break;
+			case GameEventType::AlienSpotted:
+			{
+				auto ev = dynamic_cast<GameBuildingEvent *>(e);
+				if (!ev)
+				{
+					LogError("Invalid research event");
+				}
+				fw().soundBackend->playSample(listRandomiser(state->rng, alertSounds));
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH, mksp<AlertScreen>(state, ev->building)});
+				break;
+			}
 			case GameEventType::ResearchCompleted:
 			{
 				auto ev = dynamic_cast<GameResearchEvent *>(e);

@@ -83,6 +83,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	std::list<EventMessage> messages;
 
 	int score = 0;
+	int difficulty = 0;
+	bool firstDetection = false;
 
 	StateRefMap<AgentType> agent_types;
 	StateRefMap<AgentBodyType> agent_body_types;
@@ -167,6 +169,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// (e.g. enemy appeared, other user action required)
 	void updateTurbo();
 
+	void updateEndOfFiveMinutes();
 	void updateEndOfHour();
 	void updateEndOfDay();
 	void updateEndOfWeek();

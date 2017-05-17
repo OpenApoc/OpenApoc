@@ -58,9 +58,9 @@ class Organisation : public StateObject
 
 	Organisation() = default;
 	int getGuardCount(GameState &state) const;
-	void takeOver(GameState &state, bool forced = false);
 	void updateInfiltration(GameState &state);
-	void update(GameState &state, unsigned int ticks);
+	void updateTakeOver(GameState &state, unsigned int ticks);
+	void takeOver(GameState &state, bool forced = false);
 	Relation isRelatedTo(const StateRef<Organisation> &other) const;
 	bool isPositiveTo(const StateRef<Organisation> &other) const;
 	bool isNegativeTo(const StateRef<Organisation> &other) const;

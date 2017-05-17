@@ -17,6 +17,7 @@ static const unsigned TURBO_TICKS = 5 * 60 * TICKS_PER_SECOND;
 class GameTime
 {
   private:
+	bool fiveMinutesPassedFlag = false;
 	bool hourPassedFlag = false;
 	bool dayPassedFlag = false;
 	bool weekPassedFlag = false;
@@ -52,6 +53,9 @@ class GameTime
 
 	// returns formatted date in format d m, y
 	UString getShortDateString() const;
+
+	// set at end of each 5 minutes
+	bool fiveMinutesPassed() const;
 
 	// set at end of each hour
 	bool hourPassed() const;

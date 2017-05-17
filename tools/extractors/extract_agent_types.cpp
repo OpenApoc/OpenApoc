@@ -408,6 +408,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				a->growthChance = 20;
 				a->growthOptions.emplace_back(
 				    100, std::pair<StateRef<AgentType>, int>({&state, "AGENTTYPE_MULTIWORM"}, 1));
+				a->detectionWeight = 1;
 				break;
 			case UNIT_TYPE_CHRYSALIS:
 				a->appearance_count = 2;
@@ -426,6 +427,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				    80, std::pair<StateRef<AgentType>, int>({&state, "AGENTTYPE_SPITTER"}, 1));
 				a->growthOptions.emplace_back(
 				    100, std::pair<StateRef<AgentType>, int>({&state, "AGENTTYPE_POPPER"}, 1));
+				a->detectionWeight = 1;
 				break;
 			case UNIT_TYPE_QUEENSPAWN:
 				a->animation_packs.emplace_back(
@@ -433,6 +435,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				bodyTypeName = "QUEENSPAWN";
 				infiltrationID = 11;
 				a->growthChance = 0;
+				a->detectionWeight = 20;
 				break;
 			// Non-humanoid aliens
 			case UNIT_TYPE_BRAINSUCKER:
@@ -441,6 +444,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				bodyTypeName = "BRAINSUCKER";
 				infiltrationID = 1;
 				a->growthChance = 20;
+				a->detectionWeight = 1;
 				break;
 			case UNIT_TYPE_HYPERWORM:
 				a->animation_packs.emplace_back(
@@ -450,6 +454,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				a->growthChance = 12;
 				a->growthOptions.emplace_back(
 				    100, std::pair<StateRef<AgentType>, int>({&state, "AGENTTYPE_CHRYSALIS"}, 1));
+				a->detectionWeight = 1;
 				break;
 			case UNIT_TYPE_SPITTER:
 				a->animation_packs.emplace_back(
@@ -457,6 +462,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				bodyTypeName = "SPITTER";
 				infiltrationID = 7;
 				a->growthChance = 2;
+				a->detectionWeight = 3;
 				break;
 			case UNIT_TYPE_POPPER:
 				a->animation_packs.emplace_back(
@@ -464,6 +470,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				bodyTypeName = "POPPER";
 				infiltrationID = 8;
 				a->growthChance = 2;
+				a->detectionWeight = 2;
 				break;
 			case UNIT_TYPE_MICRONOID:
 				a->animation_packs.emplace_back(
@@ -471,6 +478,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				bodyTypeName = "MICRONOID";
 				infiltrationID = 12;
 				a->growthChance = 0;
+				a->detectionWeight = 1;
 				break;
 			// Special case: Multiworm, can only crawl
 			case UNIT_TYPE_MULTIWORM:
@@ -481,6 +489,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				a->growthChance = 12;
 				a->growthOptions.emplace_back(
 				    100, std::pair<StateRef<AgentType>, int>({&state, "AGENTTYPE_HYPERWORM"}, 4));
+				a->detectionWeight = 3;
 				break;
 			// Special case: Megaspawn, can strafe
 			case UNIT_TYPE_MEGASPAWN:
@@ -489,6 +498,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				bodyTypeName = "MEGASPAWN";
 				infiltrationID = 9;
 				a->growthChance = 2;
+				a->detectionWeight = 10;
 				break;
 
 			// Special case: Psimorph, non-humanoid that can only fly
@@ -498,20 +508,21 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				bodyTypeName = "PSIMORPH";
 				infiltrationID = 10;
 				a->growthChance = 2;
+				a->detectionWeight = 8;
 				break;
 
 			// Skeletoid and Anthropod are both humanoids
 			case UNIT_TYPE_SKELETOID:
-				infiltrationID = 6;
 			case UNIT_TYPE_ANTHROPOD:
-				if (i != UNIT_TYPE_SKELETOID)
-					infiltrationID = 5;
+				infiltrationID = 5;
 				a->growthChance = 2;
+				a->detectionWeight = 3;
 			// Other humans
 			default:
 				if (i == UNIT_TYPE_SKELETOID)
 				{
 					bodyTypeName = "FLYING_HUMANOID";
+					infiltrationID = 6;
 				}
 				else
 				{
