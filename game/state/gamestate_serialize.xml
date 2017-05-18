@@ -457,6 +457,7 @@
 		<member>battleViewZLevel</member>
 		<member>battleViewScreenCenter</member>
 		<member>battleViewGroupMove</member>
+		<member>battleViewSquadIndex</member>
 		<member>battleViewSelectedUnits</member>
 	</object>
 	<object>

@@ -72,6 +72,62 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <font>smalfont</font>
       </ticker>
       <!-- Soldier Buttons -->
+	  
+	  <graphic id="SQUAD_1">
+	    <alignment horizontal="centre" vertical="bottom"/>
+        <position x="66" y="39"/>
+        <size width="30" height="24"/>
+      </graphic>
+	  <graphic id="SQUAD_2">
+	  <alignment horizontal="centre" vertical="bottom"/>
+        <position x="98" y="39"/>
+        <size width="30" height="24"/>
+      </graphic>
+	  <graphic id="SQUAD_3">
+	  <alignment horizontal="centre" vertical="bottom"/>
+        <position x="130" y="39"/>
+        <size width="30" height="24"/>
+      </graphic>
+	  <graphic id="SQUAD_4">
+	  <alignment horizontal="centre" vertical="bottom"/>
+        <position x="162" y="39"/>
+        <size width="30" height="24"/>
+      </graphic>
+	  <graphic id="SQUAD_5">
+	  <alignment horizontal="centre" vertical="bottom"/>
+        <position x="194" y="39"/>
+        <size width="30" height="24"/>
+      </graphic>
+	  <graphic id="SQUAD_6">
+	  <alignment horizontal="centre" vertical="bottom"/>
+        <position x="226" y="39"/>
+        <size width="30" height="24"/>
+      </graphic>
+	  <graphic id="SQUAD_1_OVERLAY">
+        <position x="65" y="38"/>
+        <size width="30" height="24"/>
+      </graphic>
+	  <graphic id="SQUAD_2_OVERLAY">
+        <position x="97" y="38"/>
+        <size width="30" height="24"/>
+      </graphic>
+	  <graphic id="SQUAD_3_OVERLAY">
+        <position x="129" y="38"/>
+        <size width="30" height="24"/>
+      </graphic>
+	  <graphic id="SQUAD_4_OVERLAY">
+        <position x="161" y="38"/>
+        <size width="30" height="24"/>
+      </graphic>
+	  <graphic id="SQUAD_5_OVERLAY">
+        <position x="193" y="38"/>
+        <size width="30" height="24"/>
+      </graphic>
+	  <graphic id="SQUAD_6_OVERLAY">
+        <position x="225" y="38"/>
+        <size width="30" height="24"/>
+      </graphic>
+	  
       <!-- Fire -->
       <tristatebox id="BUTTON_CEASE_FIRE">
         <position x="72" y="100"/>
@@ -222,6 +278,12 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:124:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
+	  <checkbox id="BUTTON_SQUAD_ASSIGN">
+        <position x="167" y="69"/>
+        <size width="50" height="20"/>
+        <image/>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:13:xcom3/tacdata/tactical.pal</imagechecked>
+      </checkbox>
       <!-- TBD -->
       <!-- TBD -->
       <!-- TBD -->
