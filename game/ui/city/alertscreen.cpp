@@ -1,4 +1,4 @@
-#include "game/ui/city/buildingscreen.h"
+#include "game/ui/city/alertscreen.h"
 #include "forms/form.h"
 #include "forms/label.h"
 #include "forms/ui.h"
@@ -13,27 +13,26 @@
 namespace OpenApoc
 {
 
-BuildingScreen::BuildingScreen(sp<GameState> state, sp<Building> building)
-    : Stage(), menuform(ui().getForm("city/building")), state(state), building(building)
+AlertScreen::AlertScreen(sp<GameState> state, sp<Building> building)
+    : Stage(), menuform(ui().getForm("city/alert")), state(state), building(building)
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
-	menuform->findControlTyped<Label>("TEXT_BUILDING_NAME")->setText(tr(building->name));
 	menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(tr(building->owner->name));
 	menuform->findControlTyped<Label>("TEXT_BUILDING_FUNCTION")
 	    ->setText(tr(building->function->name));
 }
 
-BuildingScreen::~BuildingScreen() = default;
+AlertScreen::~AlertScreen() = default;
 
-void BuildingScreen::begin() {}
+void AlertScreen::begin() {}
 
-void BuildingScreen::pause() {}
+void AlertScreen::pause() {}
 
-void BuildingScreen::resume() {}
+void AlertScreen::resume() {}
 
-void BuildingScreen::finish() {}
+void AlertScreen::finish() {}
 
-void BuildingScreen::eventOccurred(Event *e)
+void AlertScreen::eventOccurred(Event *e)
 {
 	menuform->eventOccured(e);
 
@@ -56,14 +55,14 @@ void BuildingScreen::eventOccurred(Event *e)
 	}
 }
 
-void BuildingScreen::update() { menuform->update(); }
+void AlertScreen::update() { menuform->update(); }
 
-void BuildingScreen::render()
+void AlertScreen::render()
 {
 	fw().stageGetPrevious(this->shared_from_this())->render();
 	menuform->render();
 }
 
-bool BuildingScreen::isTransition() { return false; }
+bool AlertScreen::isTransition() { return false; }
 
 }; // namespace OpenApoc

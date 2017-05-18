@@ -74,3 +74,11 @@ static_assert(sizeof(struct AgentTypeData) == 106, "Invalid agent_type size");
 
 #define AGENT_TYPE_DATA_OFFSET_START 1398132
 #define AGENT_TYPE_DATA_OFFSET_END 1403114
+
+struct AgentInfiltrationSpeed
+{
+	int32_t speed;
+};
+static_assert(sizeof(struct AgentInfiltrationSpeed) == 4, "Invalid OrgInfiltrationSpeed size");
+#define AGENT_INFILTRATION_SPEED_OFFSET_START 1397788
+#define AGENT_INFILTRATION_SPEED_OFFSET_END 1397844

@@ -12,6 +12,7 @@
 #include "framework/apocresources/cursor.h"
 #include "framework/data.h"
 #include "framework/event.h"
+#include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "framework/palette.h"
@@ -145,6 +146,21 @@ BattleView::BattleView(sp<GameState> gameState)
 	pauseIcon = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
 	                                        "icons.tab:%d:xcom3/tacdata/tactical.pal",
 	                                        260));
+
+	squadOverlay.emplace_back();
+	squadOverlay.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   1)));
+	squadOverlay.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   0)));
+
+	auto font = ui().getFont("smallset");
+	squadNumber.emplace_back();
+	for (int i = 1; i <= 6; i++)
+	{
+		squadNumber.push_back(font->getString(format("%d", i)));
+	}
 
 	for (auto &formName : TAB_FORM_NAMES_RT)
 	{
@@ -564,6 +580,92 @@ BattleView::BattleView(sp<GameState> gameState)
 		baseForm->findControlTyped<RadioButton>("BUTTON_MOVE_INDIVIDUALLY")->setChecked(true);
 	}
 
+	std::function<void(int index)> clickedSquad = [this](int index) {
+		if (baseForm->findControlTyped<CheckBox>("BUTTON_SQUAD_ASSIGN")->isChecked())
+		{
+			baseForm->findControlTyped<CheckBox>("BUTTON_SQUAD_ASSIGN")->setChecked(false);
+			for (auto &u : this->battle.battleViewSelectedUnits)
+			{
+				if (u->squadNumber != index)
+				{
+					if (this->battle.forces[this->battle.currentPlayer]
+					        .squads[index]
+					        .getNumUnits() < 6)
+					{
+						u->assignToSquad(this->battle, index);
+					}
+				}
+			}
+		}
+		if (this->battle.battleViewSquadIndex != index)
+		{
+			this->battle.battleViewSquadIndex = index;
+		}
+		else
+		{
+			StateRef<BattleUnit> firstUnit;
+			if (!this->modifierRCtrl && !this->modifierLCtrl)
+			{
+				this->battle.battleViewSelectedUnits.clear();
+			}
+			for (auto &u : this->battle.forces[this->battle.currentPlayer].squads[index].units)
+			{
+				if (!firstUnit)
+				{
+					firstUnit = {&*this->state, u->id};
+				}
+				if (battle.battleViewSelectedUnits.size() < 6)
+				{
+					this->battle.battleViewSelectedUnits.emplace_back(&*this->state, u->id);
+				}
+			}
+			if (firstUnit &&
+			    std::find(this->battle.battleViewSelectedUnits.begin(),
+			              this->battle.battleViewSelectedUnits.end(),
+			              firstUnit) == this->battle.battleViewSelectedUnits.end())
+			{
+				firstUnit.clear();
+			}
+			if (firstUnit)
+			{
+				this->zoomAt(firstUnit->position);
+				this->battle.battleViewSelectedUnits.remove(firstUnit);
+				this->battle.battleViewSelectedUnits.push_front(firstUnit);
+			}
+		}
+	};
+
+	std::function<void(FormsEvent * e)> clickedSquad1 = [this, clickedSquad](FormsEvent *e) {
+		clickedSquad(0);
+	};
+	std::function<void(FormsEvent * e)> clickedSquad2 = [this, clickedSquad](FormsEvent *e) {
+		clickedSquad(1);
+	};
+	std::function<void(FormsEvent * e)> clickedSquad3 = [this, clickedSquad](FormsEvent *e) {
+		clickedSquad(2);
+	};
+	std::function<void(FormsEvent * e)> clickedSquad4 = [this, clickedSquad](FormsEvent *e) {
+		clickedSquad(3);
+	};
+	std::function<void(FormsEvent * e)> clickedSquad5 = [this, clickedSquad](FormsEvent *e) {
+		clickedSquad(4);
+	};
+	std::function<void(FormsEvent * e)> clickedSquad6 = [this, clickedSquad](FormsEvent *e) {
+		clickedSquad(5);
+	};
+	baseForm->findControlTyped<Graphic>("SQUAD_1_OVERLAY")
+	    ->addCallback(FormEventType::MouseDown, clickedSquad1);
+	baseForm->findControlTyped<Graphic>("SQUAD_2_OVERLAY")
+	    ->addCallback(FormEventType::MouseDown, clickedSquad2);
+	baseForm->findControlTyped<Graphic>("SQUAD_3_OVERLAY")
+	    ->addCallback(FormEventType::MouseDown, clickedSquad3);
+	baseForm->findControlTyped<Graphic>("SQUAD_4_OVERLAY")
+	    ->addCallback(FormEventType::MouseDown, clickedSquad4);
+	baseForm->findControlTyped<Graphic>("SQUAD_5_OVERLAY")
+	    ->addCallback(FormEventType::MouseDown, clickedSquad5);
+	baseForm->findControlTyped<Graphic>("SQUAD_6_OVERLAY")
+	    ->addCallback(FormEventType::MouseDown, clickedSquad6);
+
 	uiTabsRT[0]
 	    ->findControl("BUTTON_LAYER_1")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { setZLevel(1); });
@@ -973,6 +1075,12 @@ BattleView::BattleView(sp<GameState> gameState)
 	    ->addCallback(FormEventType::CheckBoxSelected,
 	                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed3; });
 
+	for (int i = 0; i < 6; i++)
+	{
+		unitInfo.emplace_back();
+		squadInfo.emplace_back();
+	}
+
 	switch (battle.mode)
 	{
 		case Battle::Mode::RealTime:
@@ -1298,19 +1406,42 @@ void BattleView::update()
 		}
 	}
 
-	// Update weapons if required
-
-	auto rightInfo = createItemOverlayInfo(true);
-	if (rightInfo != rightHandInfo && activeTab == mainTab)
+	if (activeTab == mainTab)
 	{
-		rightHandInfo = rightInfo;
-		updateItemInfo(true);
+		// Update weapons if required
+		auto rightInfo = createItemOverlayInfo(true);
+		if (rightInfo != rightHandInfo)
+		{
+			rightHandInfo = rightInfo;
+			updateItemInfo(true);
+		}
+		auto leftInfo = createItemOverlayInfo(false);
+		if (leftInfo != leftHandInfo)
+		{
+			leftHandInfo = leftInfo;
+			updateItemInfo(false);
+		}
 	}
-	auto leftInfo = createItemOverlayInfo(false);
-	if (leftInfo != leftHandInfo && activeTab == mainTab)
+
+	// Update units and squads
+	if (activeTab != notMyTurnTab)
 	{
-		leftHandInfo = leftInfo;
-		updateItemInfo(false);
+		for (int i = 0; i < 6; i++)
+		{
+			auto newUnitInfo = createUnitInfo(i);
+			if (newUnitInfo != unitInfo[i])
+			{
+				unitInfo[i] = newUnitInfo;
+				updateUnitInfo(i);
+			}
+
+			auto newSquadInfo = createSquadInfo(i);
+			if (newSquadInfo != squadInfo[i])
+			{
+				squadInfo[i] = newSquadInfo;
+				updateSquadInfo(i);
+			}
+		}
 	}
 
 	// Update item forms
@@ -2059,6 +2190,14 @@ void BattleView::updateAttackCost()
 	}
 }
 
+void BattleView::updateSquadIndex(StateRef<BattleUnit> u)
+{
+	if (u->squadNumber != -1)
+	{
+		battle.battleViewSquadIndex = u->squadNumber;
+	}
+}
+
 void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 {
 	if (battle.battleViewSelectedUnits.empty())
@@ -2293,9 +2432,8 @@ void BattleView::orderDrop(bool right)
 			return;
 		}
 		auto item = items.front();
-		unit->agent->addEquipment(*state, item->item,
-		                          right ? AEquipmentSlotType::RightHand
-		                                : AEquipmentSlotType::LeftHand);
+		unit->agent->addEquipment(*state, item->item, right ? AEquipmentSlotType::RightHand
+		                                                    : AEquipmentSlotType::LeftHand);
 		item->die(*state, false);
 	}
 }
@@ -2323,6 +2461,7 @@ void BattleView::orderSelect(StateRef<BattleUnit> u, bool inverse, bool additive
 				if (battle.battleViewSelectedUnits.size() < 6)
 				{
 					battle.battleViewSelectedUnits.push_front(u);
+					updateSquadIndex(u);
 				}
 			}
 			else
@@ -2330,22 +2469,25 @@ void BattleView::orderSelect(StateRef<BattleUnit> u, bool inverse, bool additive
 				// Unit not in selection => replace selection with unit
 				battle.battleViewSelectedUnits.clear();
 				battle.battleViewSelectedUnits.push_back(u);
+				updateSquadIndex(u);
 			}
 		}
 		// Unit is selected
 		else
 		{
-			// Unit in selection and additive  => move unit to front
+			// Unit in selection and additive => move unit to front
 			if (additive)
 			{
 				battle.battleViewSelectedUnits.erase(pos);
 				battle.battleViewSelectedUnits.push_front(u);
+				updateSquadIndex(u);
 			}
 			// If not additive and in selection - select only this unit
 			else if (battle.battleViewSelectedUnits.size() > 1)
 			{
 				battle.battleViewSelectedUnits.clear();
 				battle.battleViewSelectedUnits.push_front(u);
+				updateSquadIndex(u);
 			}
 			// If not in additive mode and clicked on selected unit - deselect
 			else
@@ -3604,9 +3746,9 @@ sp<RGBImage> BattleView::drawMotionScanner(BattleScanner &scanner)
 		{
 			for (int y = 0; y < MOTION_SCANNER_Y; y++)
 			{
-				auto &color = colors.at(std::min(15,
-				                                 scanner.movementTicks[y * MOTION_SCANNER_X + x] *
-				                                     16 / (int)TICKS_SCANNER_REMAIN_LIT));
+				auto &color =
+				    colors.at(std::min(15, scanner.movementTicks[y * MOTION_SCANNER_X + x] * 16 /
+				                               (int)TICKS_SCANNER_REMAIN_LIT));
 				for (int i = 0; i <= 1; i++)
 				{
 					for (int j = 0; j <= 1; j++)
@@ -3687,6 +3829,45 @@ sp<RGBImage> BattleView::drawMotionScanner(Vec2<int> position)
 	return scannerDisplay;
 }
 
+BattleUnitInfo BattleView::createUnitInfo(int index) { return BattleUnitInfo(); }
+
+void BattleView::updateUnitInfo(int index) {}
+
+SquadInfo BattleView::createSquadInfo(int index)
+{
+	SquadInfo s;
+	s.selectedMode = 0;
+	s.units = battle.forces[battle.currentPlayer].squads[index].getNumUnits();
+	if (s.units != 0)
+	{
+		if (battle.battleViewSquadIndex == index)
+		{
+			s.selectedMode = 2;
+		}
+		else
+		{
+			for (auto &u : battle.battleViewSelectedUnits)
+			{
+				if (u->squadNumber == index)
+				{
+					s.selectedMode = 1;
+				}
+			}
+		}
+	}
+	return s;
+}
+
+void BattleView::updateSquadInfo(int index)
+{
+	SquadInfo info = squadInfo[index];
+
+	baseForm->findControlTyped<Graphic>(format("SQUAD_%d", index + 1))
+	    ->setImage(squadNumber[info.units]);
+	baseForm->findControlTyped<Graphic>(format("SQUAD_%d_OVERLAY", index + 1))
+	    ->setImage(squadOverlay[info.selectedMode]);
+}
+
 void BattleView::finish() { fw().getCursor().CurrentType = ApocCursor::CursorType::Normal; }
 
 AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
@@ -3744,11 +3925,11 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 				             (selectionState == BattleSelectionState::TeleportRight && rightHand) ||
 				             (selectionState == BattleSelectionState::TeleportLeft && !rightHand);
 			}
-			a.accuracy = std::max(0,
-			                      e->getAccuracy(u->current_body_state, u->current_movement_state,
-			                                     u->fire_aiming_mode,
-			                                     a.itemType->type != AEquipmentType::Type::Weapon) /
-			                          2);
+			a.accuracy =
+			    std::max(0, e->getAccuracy(u->current_body_state, u->current_movement_state,
+			                               u->fire_aiming_mode,
+			                               a.itemType->type != AEquipmentType::Type::Weapon) /
+			                    2);
 
 			/*
 			// Alexey Andronov (Istrebitel):
@@ -3858,6 +4039,15 @@ bool MotionScannerInfo::operator!=(const MotionScannerInfo &other) const
 	return !(*this == other);
 }
 
+bool BattleUnitInfo::operator==(const BattleUnitInfo &other) const
+{
+	return (this->unit == other.unit && this->spotted == other.spotted &&
+	        this->selected == other.selected && this->healthProportion == other.healthProportion &&
+	        this->shield == other.shield);
+}
+
+bool BattleUnitInfo::operator!=(const BattleUnitInfo &other) const { return !(*this == other); }
+
 void BattleView::zoomAt(Vec3<int> location)
 {
 	setScreenCenterTile(location);
@@ -3876,4 +4066,9 @@ void BattleView::zoomLastEvent()
 		}
 	}
 }
+bool SquadInfo::operator==(const SquadInfo &other) const
+{
+	return this->selectedMode == other.selectedMode && this->units == other.units;
+}
+bool SquadInfo::operator!=(const SquadInfo &other) const { return !(*this == other); }
 }; // namespace OpenApoc

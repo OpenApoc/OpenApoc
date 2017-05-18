@@ -174,6 +174,22 @@ void GameState::initState()
 
 void GameState::startGame()
 {
+	// Setup orgs
+	for (auto &pair : this->organisations)
+	{
+		pair.second->ticksTakeOverAttemptAccumulated =
+		    randBoundsExclusive(rng, (unsigned)0, TICKS_PER_TAKEOVER_ATTEMPT);
+	}
+	// Setup buildings
+	for (auto &pair : this->cities)
+	{
+		for (auto &b : pair.second->buildings)
+		{
+			b.second->ticksDetectionAttemptAccumulated =
+			    randBoundsExclusive(rng, (unsigned)0, TICKS_PER_DETECTION_ATTEMPT[difficulty]);
+		}
+	}
+
 	for (auto &pair : this->cities)
 	{
 		auto &city = pair.second;
@@ -227,7 +243,9 @@ void GameState::startGame()
 	}
 
 	gameTime = GameTime::midday();
+
 	newGame = true;
+	firstDetection = true;
 }
 
 // Fills out initial player property
@@ -402,14 +420,12 @@ void GameState::update(unsigned int ticks)
 			v.second->update(*this, ticks);
 		}
 		Trace::end("GameState::update::vehicles");
-		Trace::start("GameState::update::labs");
-		for (auto &lab : this->research.labs)
-		{
-			Lab::update(ticks, {this, lab.second}, shared_from_this());
-		}
-		Trace::end("GameState::update::labs");
 
 		gameTime.addTicks(ticks);
+		if (gameTime.hourPassed())
+		{
+			this->updateEndOfFiveMinutes();
+		}
 		if (gameTime.dayPassed())
 		{
 			this->updateEndOfDay();
@@ -420,6 +436,63 @@ void GameState::update(unsigned int ticks)
 		}
 		gameTime.clearFlags();
 	}
+}
+
+void GameState::updateEndOfFiveMinutes()
+{
+	// TakeOver calculation stops when org is taken over
+	Trace::start("GameState::updateEndOfFiveMinutes::organisations");
+	for (auto &o : this->organisations)
+	{
+		if (o.second->takenOver)
+		{
+			continue;
+		}
+		o.second->updateTakeOver(*this, TICKS_PER_MINUTE * 5);
+		if (o.second->takenOver)
+		{
+			break;
+		}
+	}
+	Trace::end("GameState::updateEndOfFiveMinutes::organisations");
+
+	// Detection calculation stops when detection happens
+	Trace::start("GameState::updateEndOfFiveMinutes::buildings");
+	for (auto &pair : this->cities)
+	{
+		for (auto &b : pair.second->buildings)
+		{
+			bool detected = b.second->ticksDetectionTimeOut > 0;
+			b.second->updateDetection(*this, TICKS_PER_MINUTE * 5);
+			if (b.second->ticksDetectionTimeOut > 0 && !detected)
+			{
+				break;
+			}
+		}
+	}
+	Trace::end("GameState::updateEndOfFiveMinutes::buildings");
+}
+
+void GameState::updateEndOfHour()
+{
+	Trace::start("GameState::updateEndOfHour::labs");
+	for (auto &lab : this->research.labs)
+	{
+		Lab::update(TICKS_PER_HOUR, {this, lab.second}, shared_from_this());
+	}
+	Trace::end("GameState::updateEndOfHour::labs");
+	Trace::start("GameState::updateEndOfHour::cities");
+	for (auto &c : this->cities)
+	{
+		c.second->hourlyLoop(*this);
+	}
+	Trace::end("GameState::updateEndOfHour::cities");
+	Trace::start("GameState::updateEndOfHour::organisations");
+	for (auto &o : this->organisations)
+	{
+		o.second->updateInfiltration(*this);
+	}
+	Trace::end("GameState::updateEndOfHour::organisations");
 }
 
 void GameState::updateEndOfDay()

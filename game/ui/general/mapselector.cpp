@@ -42,9 +42,6 @@ MapSelector::MapSelector(sp<GameState> state, Skirmish &skirmish)
 	{
 		for (auto &b : c.second->buildings)
 		{
-			if (seen_maps.find(b.second->battle_map) != seen_maps.end())
-				continue;
-			seen_maps.insert(b.second->battle_map);
 			listbox->addItem(createMapRowBuilding({state.get(), b.first}, state));
 		}
 	}

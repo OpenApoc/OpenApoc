@@ -3,12 +3,34 @@
 #include "game/state/battle/battlemap.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/gamestate.h"
 #include "library/strings_format.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
 
 namespace OpenApoc
 {
+
+void InitialGameStateExtractor::extractBuildingFunctions(GameState &state) const
+{
+	auto &data = this->ufo2p;
+
+	for (unsigned i = 0; i < data.building_functions->count(); i++)
+	{
+		auto f = mksp<BuildingFunction>();
+		f->name = data.building_functions->get(i);
+		if (i < data.infiltration_speed_building->count())
+		{
+			f->infiltrationSpeed = data.infiltration_speed_building->get(i).speed;
+		}
+		if (i < buildingFunctionDetectionWeights.size())
+		{
+			f->detectionWeight = buildingFunctionDetectionWeights[i];
+		}
+		auto id = format("%s%s", BuildingFunction::getPrefix(), canon_string(f->name));
+		state.building_functions[id] = f;
+	}
+}
 
 void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFileName,
                                                  sp<City> city, bool alienBuilding) const
@@ -38,7 +60,8 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 			LogInfo("Alien bld %d func %d", entry.name_idx, entry.function_idx);
 			// FIXME: albld.bld seems to have unexpected name_idx and function_idx?
 			b->name = data.alien_building_names->get(i);
-			b->function = b->name;
+			b->function = {&state,
+			               format("%s%s", BuildingFunction::getPrefix(), canon_string(b->name))};
 			// Load crew
 			auto crew = ufo2p.crew_alien_building->get(entry.function_idx);
 			UFO2P::fillCrew(state, crew, b->preset_crew);
@@ -46,7 +69,9 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 		else
 		{
 			b->name = data.building_names->get(entry.name_idx);
-			b->function = data.building_functions->get(entry.function_idx);
+			b->function = {&state,
+			               format("%s%s", BuildingFunction::getPrefix(),
+			                      canon_string(data.building_functions->get(entry.function_idx)))};
 		}
 		int battle_map_index = entry.function_idx - 1 + (alienBuilding ? 39 : 0);
 		// Fix battle index for buildings that use other maps

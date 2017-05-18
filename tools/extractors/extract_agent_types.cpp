@@ -340,8 +340,10 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 		}
 
 		// Allowed body states, voxel maps and animations
+		// also infiltration and growth chances
 		a->appearance_count = 1;
 		UString bodyTypeName = "";
+		int infiltrationID = -1;
 		switch (i)
 		{
 			// Civilians
@@ -402,6 +404,11 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				a->animation_packs.emplace_back(
 				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "mwegg2"));
 				bodyTypeName = "MULTIWORM_EGG";
+				infiltrationID = 0;
+				a->growthChance = 20;
+				a->growthOptions.emplace_back(
+				    100, std::pair<StateRef<AgentType>, int>({&state, "AGENTTYPE_MULTIWORM"}, 1));
+				a->detectionWeight = 1;
 				break;
 			case UNIT_TYPE_CHRYSALIS:
 				a->appearance_count = 2;
@@ -410,49 +417,88 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				a->animation_packs.emplace_back(
 				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "chrys2"));
 				bodyTypeName = "CHRYSALIS";
+				infiltrationID = 4;
+				a->growthChance = 12;
+				a->growthOptions.emplace_back(
+				    20, std::pair<StateRef<AgentType>, int>({&state, "AGENTTYPE_BRAINSUCKER"}, 1));
+				a->growthOptions.emplace_back(
+				    60, std::pair<StateRef<AgentType>, int>({&state, "AGENTTYPE_ANTHROPOD"}, 1));
+				a->growthOptions.emplace_back(
+				    80, std::pair<StateRef<AgentType>, int>({&state, "AGENTTYPE_SPITTER"}, 1));
+				a->growthOptions.emplace_back(
+				    100, std::pair<StateRef<AgentType>, int>({&state, "AGENTTYPE_POPPER"}, 1));
+				a->detectionWeight = 1;
 				break;
 			case UNIT_TYPE_QUEENSPAWN:
 				a->animation_packs.emplace_back(
 				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "queen"));
 				bodyTypeName = "QUEENSPAWN";
+				infiltrationID = 11;
+				a->growthChance = 0;
+				a->detectionWeight = 20;
 				break;
 			// Non-humanoid aliens
 			case UNIT_TYPE_BRAINSUCKER:
 				a->animation_packs.emplace_back(
 				    &state, format("%sbsk", BattleUnitAnimationPack::getPrefix()));
 				bodyTypeName = "BRAINSUCKER";
+				infiltrationID = 1;
+				a->growthChance = 20;
+				a->detectionWeight = 1;
 				break;
 			case UNIT_TYPE_HYPERWORM:
 				a->animation_packs.emplace_back(
 				    &state, format("%shypr", BattleUnitAnimationPack::getPrefix()));
 				bodyTypeName = "HYPERWORM";
+				infiltrationID = 3;
+				a->growthChance = 12;
+				a->growthOptions.emplace_back(
+				    100, std::pair<StateRef<AgentType>, int>({&state, "AGENTTYPE_CHRYSALIS"}, 1));
+				a->detectionWeight = 1;
 				break;
 			case UNIT_TYPE_SPITTER:
 				a->animation_packs.emplace_back(
 				    &state, format("%sspitr", BattleUnitAnimationPack::getPrefix()));
 				bodyTypeName = "SPITTER";
+				infiltrationID = 7;
+				a->growthChance = 2;
+				a->detectionWeight = 3;
 				break;
 			case UNIT_TYPE_POPPER:
 				a->animation_packs.emplace_back(
 				    &state, format("%spopper", BattleUnitAnimationPack::getPrefix()));
 				bodyTypeName = "POPPER";
+				infiltrationID = 8;
+				a->growthChance = 2;
+				a->detectionWeight = 2;
 				break;
 			case UNIT_TYPE_MICRONOID:
 				a->animation_packs.emplace_back(
 				    &state, format("%smicro", BattleUnitAnimationPack::getPrefix()));
 				bodyTypeName = "MICRONOID";
+				infiltrationID = 12;
+				a->growthChance = 0;
+				a->detectionWeight = 1;
 				break;
 			// Special case: Multiworm, can only crawl
 			case UNIT_TYPE_MULTIWORM:
 				a->animation_packs.emplace_back(
 				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "multi"));
 				bodyTypeName = "MULTIWORM";
+				infiltrationID = 2;
+				a->growthChance = 12;
+				a->growthOptions.emplace_back(
+				    100, std::pair<StateRef<AgentType>, int>({&state, "AGENTTYPE_HYPERWORM"}, 4));
+				a->detectionWeight = 3;
 				break;
 			// Special case: Megaspawn, can strafe
 			case UNIT_TYPE_MEGASPAWN:
 				a->animation_packs.emplace_back(
 				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "mega"));
 				bodyTypeName = "MEGASPAWN";
+				infiltrationID = 9;
+				a->growthChance = 2;
+				a->detectionWeight = 10;
 				break;
 
 			// Special case: Psimorph, non-humanoid that can only fly
@@ -460,16 +506,23 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				a->animation_packs.emplace_back(
 				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "psi"));
 				bodyTypeName = "PSIMORPH";
+				infiltrationID = 10;
+				a->growthChance = 2;
+				a->detectionWeight = 8;
 				break;
 
 			// Skeletoid and Anthropod are both humanoids
 			case UNIT_TYPE_SKELETOID:
 			case UNIT_TYPE_ANTHROPOD:
+				infiltrationID = 5;
+				a->growthChance = 2;
+				a->detectionWeight = 3;
 			// Other humans
 			default:
 				if (i == UNIT_TYPE_SKELETOID)
 				{
 					bodyTypeName = "FLYING_HUMANOID";
+					infiltrationID = 6;
 				}
 				else
 				{
@@ -489,6 +542,13 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 
 		a->bodyType = {&state,
 		               format("%s%s", AgentBodyType::getPrefix(), canon_string(bodyTypeName))};
+
+		if (infiltrationID != -1)
+		{
+			// infiltration
+			auto idata = data_u.infiltration_speed_agent->get(infiltrationID);
+			a->infiltrationSpeed = idata.speed;
+		}
 
 		// Used shadow packs
 		switch (i)
@@ -1465,12 +1525,11 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 											                 a->size[entry.first][pair.first].x +
 											             y * a->size[entry.first][pair.first].x + x]
 											                ->setSlice(
-											                    i,
-											                    fw().data->loadVoxelSlice(format(
-											                        "LOFTEMPS:xcom3/tacdata/"
-											                        "loftemps.dat:xcom3/"
-											                        "tacdata/loftemps.tab:%d",
-											                        pair.second)));
+											                    i, fw().data->loadVoxelSlice(format(
+											                           "LOFTEMPS:xcom3/tacdata/"
+											                           "loftemps.dat:xcom3/"
+											                           "tacdata/loftemps.tab:%d",
+											                           pair.second)));
 										}
 									}
 								}
@@ -1516,11 +1575,10 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 								for (int i = 0; i < (a->height[entry.first]) / 2; i++)
 								{
 									a->voxelMaps[entry.first][facing][0]->setSlice(
-									    i,
-									    fw().data->loadVoxelSlice(format(
-									        "LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/"
-									        "loftemps.tab:%d",
-									        entry.second.y)));
+									    i, fw().data->loadVoxelSlice(format(
+									           "LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/"
+									           "loftemps.tab:%d",
+									           entry.second.y)));
 								}
 							}
 						}
@@ -1558,11 +1616,10 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 								for (int i = 0; i < a->height[entry.first] / 2; i++)
 								{
 									a->voxelMaps[entry.first][pair.first][j]->setSlice(
-									    i,
-									    fw().data->loadVoxelSlice(format(
-									        "LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/"
-									        "loftemps.tab:%d",
-									        pair.second[j])));
+									    i, fw().data->loadVoxelSlice(format(
+									           "LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/"
+									           "loftemps.tab:%d",
+									           pair.second[j])));
 								}
 							}
 						}

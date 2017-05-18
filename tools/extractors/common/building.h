@@ -28,3 +28,11 @@ static_assert(sizeof(struct BldFileEntry) == 226, "Unexpected bld_file_entry siz
 
 #define ALIEN_BUILDING_NAME_STRTAB_OFFSET_START 0x14AD23
 #define ALIEN_BUILDING_NAME_STRTAB_OFFSET_END 0x14ADCB
+
+struct BuildingInfiltrationSpeed
+{
+	int32_t speed;
+};
+static_assert(sizeof(struct BuildingInfiltrationSpeed) == 4, "Invalid OrgInfiltrationSpeed size");
+#define BUILDING_INFILTRATION_SPEED_OFFSET_START 1319916
+#define BUILDING_INFILTRATION_SPEED_OFFSET_END 1320112

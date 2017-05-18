@@ -85,6 +85,10 @@ class UFO2P
 	std::unique_ptr<DataChunk<CrewData>> crew_ufo_deposit;
 	std::unique_ptr<DataChunk<CrewData>> crew_alien_building;
 
+	std::unique_ptr<DataChunk<OrgInfiltrationSpeed>> infiltration_speed_org;
+	std::unique_ptr<DataChunk<AgentInfiltrationSpeed>> infiltration_speed_agent;
+	std::unique_ptr<DataChunk<BuildingInfiltrationSpeed>> infiltration_speed_building;
+
 	UString getOrgId(int idx) const
 	{
 		return Organisation::getPrefix() + canon_string(this->organisation_names->get(idx));

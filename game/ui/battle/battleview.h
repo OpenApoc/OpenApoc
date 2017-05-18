@@ -89,6 +89,29 @@ class MotionScannerInfo
 	bool operator!=(const MotionScannerInfo &other) const;
 };
 
+class BattleUnitInfo
+{
+  public:
+	sp<BattleUnit> unit;
+	int spotted;
+	bool selected;
+	float healthProportion;
+	bool shield;
+	bool faded; // Faded when stunned or lowmorale
+	bool operator==(const BattleUnitInfo &other) const;
+	bool operator!=(const BattleUnitInfo &other) const;
+};
+
+class SquadInfo
+{
+  public:
+	int units;
+	// 0 = not selected, 1 = semi, 2 = full
+	int selectedMode;
+	bool operator==(const SquadInfo &other) const;
+	bool operator!=(const SquadInfo &other) const;
+};
+
 class BattleView : public BattleTileView
 {
   private:
@@ -124,6 +147,8 @@ class BattleView : public BattleTileView
 	AgentEquipmentInfo rightHandInfo;
 	AgentPsiInfo psiInfo;
 	MotionScannerInfo motionInfo;
+	std::vector<BattleUnitInfo> unitInfo;
+	std::vector<SquadInfo> squadInfo;
 
 	bool followAgent = false;
 
@@ -171,12 +196,22 @@ class BattleView : public BattleTileView
 	sp<Image> selectedItemOverlay;
 	sp<Image> selectedPsiOverlay;
 	std::vector<sp<Image>> motionScannerDirectionIcons;
+	std::vector<sp<Image>> squadNumber;
+	std::vector<sp<Image>> squadOverlay;
+
+	BattleUnitInfo createUnitInfo(int index);
+	void updateUnitInfo(int index);
+
+	SquadInfo createSquadInfo(int index);
+	void updateSquadInfo(int index);
 
 	sp<Image> pauseIcon;
 	int pauseIconTimer = 0;
 
 	void updatePathPreview();
 	void updateAttackCost();
+
+	void updateSquadIndex(StateRef<BattleUnit> u);
 
 	// Unit orers
 

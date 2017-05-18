@@ -121,62 +121,53 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 			switch (icon_type)
 			{
 				case ICON_STANDART:
-					drawTinted(r,
-					           unit->strategyImages->at(side_offset * 120 +
-					                                    curent_level_offset * 40 + facing_offset),
+					drawTinted(r, unit->strategyImages->at(
+					                  side_offset * 120 + curent_level_offset * 40 + facing_offset),
 					           screenPosition - Vec2<float>{4, 4}, visible);
 					break;
 				case ICON_PRONE:
 					// Vertical
 					if (facing_offset == 0 || facing_offset == 4)
 					{
-						drawTinted(r,
-						           unit->strategyImages->at(side_offset * 120 +
-						                                    curent_level_offset * 40 +
-						                                    offset_prone_map.at(facing_offset) + 0),
+						drawTinted(r, unit->strategyImages->at(
+						                  side_offset * 120 + curent_level_offset * 40 +
+						                  offset_prone_map.at(facing_offset) + 0),
 						           screenPosition - Vec2<float>{4.0f, 8.0f}, visible);
-						drawTinted(r,
-						           unit->strategyImages->at(side_offset * 120 +
-						                                    curent_level_offset * 40 +
-						                                    offset_prone_map.at(facing_offset) + 1),
+						drawTinted(r, unit->strategyImages->at(
+						                  side_offset * 120 + curent_level_offset * 40 +
+						                  offset_prone_map.at(facing_offset) + 1),
 						           screenPosition - Vec2<float>{4.0f, 0.0f}, visible);
 					}
 					// Horizontal
 					else if (facing_offset == 2 || facing_offset == 6)
 					{
-						drawTinted(r,
-						           unit->strategyImages->at(side_offset * 120 +
-						                                    curent_level_offset * 40 +
-						                                    offset_prone_map.at(facing_offset) + 0),
+						drawTinted(r, unit->strategyImages->at(
+						                  side_offset * 120 + curent_level_offset * 40 +
+						                  offset_prone_map.at(facing_offset) + 0),
 						           screenPosition - Vec2<float>{8.0f, 4.0f}, visible);
-						drawTinted(r,
-						           unit->strategyImages->at(side_offset * 120 +
-						                                    curent_level_offset * 40 +
-						                                    offset_prone_map.at(facing_offset) + 1),
+						drawTinted(r, unit->strategyImages->at(
+						                  side_offset * 120 + curent_level_offset * 40 +
+						                  offset_prone_map.at(facing_offset) + 1),
 						           screenPosition - Vec2<float>{0.0f, 4.0f}, visible);
 					}
 					// Diagonal
 					else
 					{
-						drawTinted(r,
-						           unit->strategyImages->at(side_offset * 120 +
-						                                    curent_level_offset * 40 +
-						                                    offset_prone_map.at(facing_offset) + 0),
+						drawTinted(r, unit->strategyImages->at(
+						                  side_offset * 120 + curent_level_offset * 40 +
+						                  offset_prone_map.at(facing_offset) + 0),
 						           screenPosition - Vec2<float>{8.0f, 8.0f}, visible);
-						drawTinted(r,
-						           unit->strategyImages->at(side_offset * 120 +
-						                                    curent_level_offset * 40 +
-						                                    offset_prone_map.at(facing_offset) + 1),
+						drawTinted(r, unit->strategyImages->at(
+						                  side_offset * 120 + curent_level_offset * 40 +
+						                  offset_prone_map.at(facing_offset) + 1),
 						           screenPosition - Vec2<float>{0.0f, 8.0f}, visible);
-						drawTinted(r,
-						           unit->strategyImages->at(side_offset * 120 +
-						                                    curent_level_offset * 40 +
-						                                    offset_prone_map.at(facing_offset) + 2),
+						drawTinted(r, unit->strategyImages->at(
+						                  side_offset * 120 + curent_level_offset * 40 +
+						                  offset_prone_map.at(facing_offset) + 2),
 						           screenPosition - Vec2<float>{8.0f, 0.0f}, visible);
-						drawTinted(r,
-						           unit->strategyImages->at(side_offset * 120 +
-						                                    curent_level_offset * 40 +
-						                                    offset_prone_map.at(facing_offset) + 3),
+						drawTinted(r, unit->strategyImages->at(
+						                  side_offset * 120 + curent_level_offset * 40 +
+						                  offset_prone_map.at(facing_offset) + 3),
 						           screenPosition - Vec2<float>{0.0f, 0.0f}, visible);
 					}
 					break;
@@ -391,9 +382,8 @@ Vec3<float> TileObjectBattleUnit::getVoxelCentrePosition() const
 
 	// Simple version:
 	auto objPos = this->getCenter();
-	return Vec3<float>(objPos.x, objPos.y,
-	                   objPos.z - getVoxelOffset().z +
-	                       (float)getUnit()->getCurrentHeight() / 2.0f / 40.0f);
+	return Vec3<float>(objPos.x, objPos.y, objPos.z - getVoxelOffset().z +
+	                                           (float)getUnit()->getCurrentHeight() / 2.0f / 40.0f);
 }
 
 sp<VoxelMap> TileObjectBattleUnit::getVoxelMap(Vec3<int> mapIndex, bool) const

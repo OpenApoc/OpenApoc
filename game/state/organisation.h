@@ -1,5 +1,6 @@
 #pragma once
 
+#include "game/state/gametime.h"
 #include "game/state/stateobject.h"
 #include "library/strings.h"
 #include <list>
@@ -8,6 +9,12 @@
 
 namespace OpenApoc
 {
+
+// Original game checked one org every 5 minutes, which resulted in 125 minutes per check
+// We are going to randomize accumulated ticks instead and check every 125 minutes,
+// this would provide the same frequency (and thus the same takeover chance) regardless
+// of how many orgs there are
+static const unsigned TICKS_PER_TAKEOVER_ATTEMPT = TICKS_PER_MINUTE * 125;
 
 class Vehicle;
 class AgentType;
@@ -32,19 +39,28 @@ class Organisation : public StateObject
 		B,
 		C
 	};
+	UString id;
 	UString name;
-	int balance;
-	int income;
+	int balance = 0;
+	int income = 0;
+	int infiltrationValue = 0;
+	// Modified for all infiltration attempts at this org
+	int infiltrationSpeed = 0;
+	bool takenOver = false;
+	unsigned int ticksTakeOverAttemptAccumulated = 0;
 
-	int tech_level;
-	int average_guards;
+	int tech_level = 1;
+	int average_guards = 1;
 	// What guard types can spawn, supports duplicates to provide variable probability
 	std::list<StateRef<AgentType>> guard_types;
 
 	std::map<LootPriority, std::vector<StateRef<AEquipmentType>>> loot;
 
-	Organisation();
+	Organisation() = default;
 	int getGuardCount(GameState &state) const;
+	void updateInfiltration(GameState &state);
+	void updateTakeOver(GameState &state, unsigned int ticks);
+	void takeOver(GameState &state, bool forced = false);
 	Relation isRelatedTo(const StateRef<Organisation> &other) const;
 	bool isPositiveTo(const StateRef<Organisation> &other) const;
 	bool isNegativeTo(const StateRef<Organisation> &other) const;

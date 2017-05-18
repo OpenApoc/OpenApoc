@@ -39,7 +39,7 @@ BattleBriefing::BattleBriefing(sp<GameState> state, StateRef<Organisation> targe
 	    ->setText(format("%s      %s", state->gameTime.getLongDateString(),
 	                     state->gameTime.getShortTimeString()));
 
-	// FIXME: Introduce breifing text
+	// FIXME: Read and store briefing text and image properly
 	UString briefing = "";
 	if (!isBuilding)
 	{
@@ -78,7 +78,7 @@ BattleBriefing::BattleBriefing(sp<GameState> state, StateRef<Organisation> targe
 			}
 			else
 			{
-				int briefingID = alienFunctionMap.at(building->function);
+				int briefingID = alienFunctionMap.at(building->function->name);
 				menuform->findControlTyped<Graphic>("BRIEFING_IMAGE")
 				    ->setImage(
 				        fw().data->loadImage(format("xcom3/tacdata/alienm%d.pcx", briefingID)));

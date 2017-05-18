@@ -119,7 +119,7 @@ UnitAIVanilla::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment>
 	}
 	damage = payload->damage_type->dealDamage(damage * 1.5f, damageModifier);
 
-	if (state, u.canAttackUnit(state, target, e) == WeaponStatus::NotFiring)
+	if (u.canAttackUnit(state, target, e) == WeaponStatus::NotFiring)
 	{
 		movement->type = AIMovement::Type::GetInRange;
 		movement->targetLocation = target->position;
@@ -132,12 +132,12 @@ UnitAIVanilla::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment>
 
 	float time = (float)payload->fire_delay * (float)TICKS_MULTIPLIER / (float)u.fire_aiming_mode /
 	             (float)TICKS_PER_SECOND;
-	float cth = std::max(1.0f,
-	                     100.f -
-	                         (float)(100 -
-	                                 e->getAccuracy(u.target_body_state, u.current_movement_state,
-	                                                u.fire_aiming_mode)) *
-	                             distance / 40.0f);
+	float cth =
+	    std::max(1.0f, 100.f -
+	                       (float)(100 -
+	                               e->getAccuracy(u.target_body_state, u.current_movement_state,
+	                                              u.fire_aiming_mode)) *
+	                           distance / 40.0f);
 	float priority = cth * damage / time;
 
 	// Chance to advance is equal to chance to miss
@@ -567,8 +567,8 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkGreen(GameState &sta
 
 	if (wasEnemyVisible)
 	{
-		auto pursue = UnitAIHelper::getPursueMovement(
-		    state, u, (Vec3<int>)u.position + lastSeenEnemyPosition);
+		auto pursue = UnitAIHelper::getPursueMovement(state, u, (Vec3<int>)u.position +
+		                                                            lastSeenEnemyPosition);
 		if (pursue)
 		{
 			return std::make_tuple(AIDecision(nullptr, pursue), 0.0f, 0);

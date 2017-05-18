@@ -48,7 +48,8 @@ TileObjectBattleItem::~TileObjectBattleItem() = default;
 
 TileObjectBattleItem::TileObjectBattleItem(TileMap &map, sp<BattleItem> item)
     // 1.0f bounds on z axis provides for same image offsets of all battlescape sprites
-    : TileObject(map, Type::Item, Vec3<float>{0.0f, 0.0f, 1.0f}), item(item)
+    : TileObject(map, Type::Item, Vec3<float>{0.0f, 0.0f, 1.0f}),
+      item(item)
 {
 }
 

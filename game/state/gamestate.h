@@ -39,6 +39,7 @@ class BattleCommonSampleList;
 class BattleMapPartType;
 class EventMessage;
 class DamageType;
+class BuildingFunction;
 
 static const int MAX_MESSAGES = 50;
 static const unsigned ORIGINAL_TICKS = 36;
@@ -69,6 +70,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<AEquipmentType> agent_equipment;
 	StateRefMap<EquipmentSet> equipment_sets_by_score;
 	StateRefMap<EquipmentSet> equipment_sets_by_level;
+	StateRefMap<BuildingFunction> building_functions;
 	sp<Battle> current_battle;
 	sp<BattleCommonImageList> battle_common_image_list;
 	sp<BattleCommonSampleList> battle_common_sample_list;
@@ -81,6 +83,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	std::list<EventMessage> messages;
 
 	int score = 0;
+	int difficulty = 0;
+	bool firstDetection = false;
 
 	StateRefMap<AgentType> agent_types;
 	StateRefMap<AgentBodyType> agent_body_types;
@@ -165,6 +169,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// (e.g. enemy appeared, other user action required)
 	void updateTurbo();
 
+	void updateEndOfFiveMinutes();
+	void updateEndOfHour();
 	void updateEndOfDay();
 	void updateEndOfWeek();
 

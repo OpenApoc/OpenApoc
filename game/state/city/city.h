@@ -52,9 +52,12 @@ class City : public StateObject
 	up<TileMap> map;
 
 	void update(GameState &state, unsigned int ticks);
+	void hourlyLoop(GameState &state);
 	void dailyLoop(GameState &state);
 
 	void generatePortals(GameState &state);
+	void updateInfiltration(GameState &state);
+
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
 
 	static void accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition,

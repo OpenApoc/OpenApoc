@@ -238,6 +238,8 @@ void City::update(GameState &state, unsigned int ticks)
 	Trace::end("City::update::doodads->update");
 }
 
+void City::hourlyLoop(GameState &state) { updateInfiltration(state); }
+
 void City::dailyLoop(GameState &state)
 {
 	// FIXME: Repair buildings, update stocks
@@ -270,6 +272,59 @@ void City::generatePortals(GameState &state)
 				this->portals.push_back(doodad);
 				break;
 			}
+		}
+	}
+}
+
+void City::updateInfiltration(GameState &state)
+{
+	for (auto &b : buildings)
+	{
+		// Calculate changes to building's crew
+		std::map<StateRef<AgentType>, int> change_crew;
+		for (auto &pair : b.second->current_crew)
+		{
+			int growth = 0;
+			for (int i = 0; i < pair.second; i++)
+			{
+				if (randBoundsInclusive(state.rng, 0, 100) < pair.first->growthChance)
+				{
+					growth++;
+				}
+			}
+			if (growth == 0)
+			{
+				continue;
+			}
+			// Growing aliens die
+			change_crew[pair.first] -= growth;
+			// And are replaced with a random one from available options
+			// (or simply die if they don't have any)
+			int rand = randBoundsExclusive(state.rng, 0, 100);
+			for (auto &g : pair.first->growthOptions)
+			{
+				if (rand < g.first)
+				{
+					change_crew[g.second.first] += g.second.second * growth;
+					break;
+				}
+			}
+			// Additionally, suckers apply infiltration here
+			if (pair.first.id == "AGENTTYPE_BRAINSUCKER")
+			{
+				b.second->owner->infiltrationValue += growth *
+				                                      b.second->function->infiltrationSpeed *
+				                                      b.second->owner->infiltrationSpeed;
+				if (b.second->owner->infiltrationValue > 200)
+				{
+					b.second->owner->infiltrationValue = 200;
+				}
+			}
+		}
+		// Apply changes
+		for (auto &pair : change_crew)
+		{
+			b.second->current_crew[pair.first] += pair.second;
 		}
 	}
 }

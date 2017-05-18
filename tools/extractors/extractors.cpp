@@ -261,6 +261,15 @@ const std::map<OpenApoc::UString, OpenApoc::UString> InitialGameStateExtractor::
 	{ "civ",		"civ/anim" },
 };
 
+const std::vector<int> InitialGameStateExtractor::buildingFunctionDetectionWeights = {
+//	0	 1	  2	   3    4    5    6    7    8    9
+	100, 155, 135, 110, 115, 80,  120, 130, 120, 90,  
+	80,  80,  130, 100, 130, 130, 100, 70,  70,  70,  
+	70,  90,  110, 90,  90,  90,  90,  90,  95,  100, 
+	90,  100, 75,  85,  100, 100, 0,   0,   100, 100, 
+	100, 100, 100, 100, 100, 100, 100, 100, 100
+};
+
 // clang-format on
 
 void InitialGameStateExtractor::extractCommon(GameState &state) const
@@ -275,6 +284,7 @@ void InitialGameStateExtractor::extractCommon(GameState &state) const
 	this->extractResearch(state);
 	this->extractAgentEquipment(state);
 	this->extractDoodads(state);
+	this->extractBuildingFunctions(state);
 
 	// The alien map doesn't change
 	UString alienMapId = City::getPrefix() + "ALIEN";
@@ -290,6 +300,8 @@ void InitialGameStateExtractor::extractCommon(GameState &state) const
 
 void InitialGameStateExtractor::extract(GameState &state, Difficulty difficulty) const
 {
+	state.difficulty = (int)difficulty;
+
 	this->extractAlienEquipmentSets(state, difficulty);
 
 	std::map<Difficulty, UString> humanMapNames = {

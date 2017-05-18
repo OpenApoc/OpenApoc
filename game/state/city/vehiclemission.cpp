@@ -1128,7 +1128,9 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					// If arrived to a location above building, deposit aliens or subvert
 					// FIXME: Handle subversion
 					if (subvert)
-						LogError("Implement subversion!");
+					{
+						LogError("Implement subversion graphics!");
+					}
 					auto doodad = v.city->placeDoodad(
 					    StateRef<DoodadType>{&state, "DOODAD_14_INFILTRATION_BIG"},
 					    v.tileObject->getPosition() - Vec3<float>{0, 0, 0.5f});
@@ -1140,10 +1142,22 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					return;
 				}
 				// Deposited aliens, place aliens in building and retreat
-				// FIXME: Actually Deposit aliens in building or subvert
 				case 1:
 				{
-					// retreat
+					// Deposit aliens or subvert
+					if (subvert)
+					{
+						LogError("Implement subversion mechanic!");
+					}
+					else
+					{
+						// Deposit aliens
+						for (auto &pair : v.type->crew_deposit)
+						{
+							targetBuilding->current_crew[pair.first] += pair.second;
+						}
+					}
+					// Retreat
 					v.missions.emplace_back(VehicleMission::gotoPortal(state, v));
 					missionCounter++;
 					return;

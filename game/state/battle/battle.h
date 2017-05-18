@@ -179,6 +179,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	int battleViewZLevel = 0;
 	Vec3<float> battleViewScreenCenter;
 	bool battleViewGroupMove = false;
+	int battleViewSquadIndex = -1;
 	std::list<StateRef<BattleUnit>> battleViewSelectedUnits;
 
 	// Methods

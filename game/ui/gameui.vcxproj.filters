@@ -135,6 +135,9 @@
     <ClCompile Include="general\selectforces.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="city\alertscreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boot.h">
@@ -255,6 +258,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="general\selectforces.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="city\alertscreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
