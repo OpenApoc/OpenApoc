@@ -93,8 +93,12 @@ class BattleUnitInfo
 {
   public:
 	sp<BattleUnit> unit;
+	// From 0 up to 5, and 6 for anything above that
 	int spotted;
-	bool selected;
+	Rank rank;
+	// 0 = not selected, 1 = selected, 2 = first selected
+	int selected;
+
 	float healthProportion;
 	bool shield;
 	bool faded; // Faded when stunned or lowmorale
@@ -198,6 +202,12 @@ class BattleView : public BattleTileView
 	std::vector<sp<Image>> motionScannerDirectionIcons;
 	std::vector<sp<Image>> squadNumber;
 	std::vector<sp<Image>> squadOverlay;
+	std::vector<sp<Image>> unitSelect;
+	std::vector<sp<Image>> unitRanks;
+	std::vector<sp<Image>> unitHostiles;
+	sp<Image> healthImage;
+	sp<Image> shieldImage;
+	std::vector<int> lastClickedHostile;
 
 	BattleUnitInfo createUnitInfo(int index);
 	void updateUnitInfo(int index);
