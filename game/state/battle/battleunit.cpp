@@ -1926,12 +1926,10 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 			fireDebuffTicksAccumulated -= TICKS_PER_FIRE_EFFECT;
 
 			// Damage (power is irrelevant here)
-
 			applyDamage(state, 1, {&state, "DAMAGETYPE_INCENDIARY"}, BodyPart::Body,
 			            DamageSource::Debuff);
 
 			// Finally, reduce debuff
-
 			fireDebuffTicksRemaining -= TICKS_PER_FIRE_EFFECT;
 		}
 	}
@@ -1950,7 +1948,7 @@ void BattleUnit::updateRegen(GameState &state, unsigned int ticks)
 		{
 			stunDamage--;
 		}
-		if (!isConscious() && !isUnconscious())
+		if (!isConscious() && !isUnconscious() && !isDead())
 		{
 			tryToRiseUp(state);
 		}
