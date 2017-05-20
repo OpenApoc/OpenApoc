@@ -128,6 +128,56 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <size width="30" height="24"/>
       </graphic>
 	  
+	  <graphic id="UNIT_1">
+        <position x="384" y="38"/>
+        <size width="32" height="24"/>
+      </graphic>
+	  <graphic id="UNIT_2">
+        <position x="416" y="38"/>
+        <size width="32" height="24"/>
+      </graphic>
+	  <graphic id="UNIT_3">
+        <position x="448" y="38"/>
+        <size width="32" height="24"/>
+      </graphic>
+	  <graphic id="UNIT_4">
+        <position x="480" y="38"/>
+        <size width="32" height="24"/>
+      </graphic>
+	  <graphic id="UNIT_5">
+        <position x="512" y="38"/>
+        <size width="32" height="24"/>
+      </graphic>
+	  <graphic id="UNIT_6">
+        <position x="544" y="38"/>
+        <size width="32" height="24"/>
+      </graphic>
+	  
+	  <graphic id="UNIT_1_HOSTILES">
+        <position x="385" y="28"/>
+        <size width="30" height="10"/>
+      </graphic>
+	  <graphic id="UNIT_2_HOSTILES">
+        <position x="417" y="28"/>
+        <size width="30" height="10"/>
+      </graphic>
+	  <graphic id="UNIT_3_HOSTILES">
+        <position x="449" y="28"/>
+        <size width="30" height="10"/>
+      </graphic>
+	  <graphic id="UNIT_4_HOSTILES">
+        <position x="481" y="28"/>
+        <size width="30" height="10"/>
+      </graphic>
+	  <graphic id="UNIT_5_HOSTILES">
+        <position x="513" y="28"/>
+        <size width="30" height="10"/>
+      </graphic>
+	  <graphic id="UNIT_6_HOSTILES">
+        <position x="545" y="28"/>
+        <size width="30" height="10"/>
+      </graphic>
+	  
       <!-- Fire -->
       <tristatebox id="BUTTON_CEASE_FIRE">
         <position x="72" y="100"/>

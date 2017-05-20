@@ -155,6 +155,80 @@ BattleView::BattleView(sp<GameState> gameState)
 	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
 	                                                   0)));
 
+	unitHostiles.emplace_back();
+	unitHostiles.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   7)));
+	unitHostiles.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   8)));
+	unitHostiles.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   9)));
+	unitHostiles.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   10)));
+	unitHostiles.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   11)));
+	unitHostiles.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
+	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   12)));
+
+	unitRanks.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
+	                                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                28)));
+	unitRanks.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
+	                                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                29)));
+	unitRanks.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
+	                                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                30)));
+	unitRanks.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
+	                                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                31)));
+	unitRanks.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
+	                                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                32)));
+	unitRanks.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
+	                                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                33)));
+	unitRanks.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
+	                                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                34)));
+
+	unitSelect.push_back(fw().data->loadImage(
+	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:37:xcom3/ufodata/pal_01.dat"));
+	unitSelect.push_back(fw().data->loadImage(
+	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:38:xcom3/ufodata/pal_01.dat"));
+	unitSelect.push_back(fw().data->loadImage(
+	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:39:xcom3/ufodata/pal_01.dat"));
+	iconShade = fw().data->loadImage("battle/battle-icon-shade.png");
+
+	lastClickedHostile.resize(6);
+
+	auto img = mksp<RGBImage>(Vec2<int>{1, 2});
+	{
+		RGBImageLock l(img);
+		l.set({0, 0}, Colour{255, 255, 219});
+		l.set({0, 1}, Colour{215, 0, 0});
+	}
+	healthImage = img;
+	img = mksp<RGBImage>(Vec2<int>{1, 2});
+	{
+		RGBImageLock l(img);
+		l.set({0, 0}, Colour{160, 236, 252});
+		l.set({0, 1}, Colour{4, 100, 252});
+	}
+	shieldImage = img;
+	img = mksp<RGBImage>(Vec2<int>{1, 2});
+	{
+		RGBImageLock l(img);
+		l.set({0, 0}, Colour{150, 150, 150});
+		l.set({0, 1}, Colour{97, 101, 105});
+	}
+	stunImage = img;
+
 	auto font = ui().getFont("smallset");
 	squadNumber.emplace_back();
 	for (int i = 1; i <= 6; i++)
@@ -604,7 +678,9 @@ BattleView::BattleView(sp<GameState> gameState)
 		else
 		{
 			StateRef<BattleUnit> firstUnit;
-			if (!this->modifierRCtrl && !this->modifierLCtrl)
+			bool ctrl = this->modifierRCtrl || this->modifierLCtrl;
+
+			if (!ctrl)
 			{
 				this->battle.battleViewSelectedUnits.clear();
 			}
@@ -665,6 +741,101 @@ BattleView::BattleView(sp<GameState> gameState)
 	    ->addCallback(FormEventType::MouseDown, clickedSquad5);
 	baseForm->findControlTyped<Graphic>("SQUAD_6_OVERLAY")
 	    ->addCallback(FormEventType::MouseDown, clickedSquad6);
+
+	std::function<void(int index)> clickedUnitPortrait = [this](int index) {
+		if (!this->unitInfo[index].unit || this->unitInfo[index].faded)
+		{
+			return;
+		}
+		bool ctrl = this->modifierRCtrl || this->modifierLCtrl;
+		StateRef<BattleUnit> unit = {&*this->state, this->unitInfo[index].unit->id};
+		bool needZoom = !this->battle.battleViewSelectedUnits.empty() &&
+		                this->battle.battleViewSelectedUnits.front() == unit;
+		if (!ctrl)
+		{
+			this->battle.battleViewSelectedUnits.clear();
+		}
+		else
+		{
+			if (std::find(this->battle.battleViewSelectedUnits.begin(),
+			              this->battle.battleViewSelectedUnits.end(),
+			              unit) != this->battle.battleViewSelectedUnits.end())
+			{
+				this->battle.battleViewSelectedUnits.remove(unit);
+			}
+		}
+		this->battle.battleViewSelectedUnits.push_front(unit);
+		if (needZoom)
+		{
+			this->zoomAt(unit->position);
+		}
+	};
+	std::function<void(FormsEvent * e)> clickedUnitPortrait1 =
+	    [this, clickedUnitPortrait](FormsEvent *e) { clickedUnitPortrait(0); };
+	std::function<void(FormsEvent * e)> clickedUnitPortrait2 =
+	    [this, clickedUnitPortrait](FormsEvent *e) { clickedUnitPortrait(1); };
+	std::function<void(FormsEvent * e)> clickedUnitPortrait3 =
+	    [this, clickedUnitPortrait](FormsEvent *e) { clickedUnitPortrait(2); };
+	std::function<void(FormsEvent * e)> clickedUnitPortrait4 =
+	    [this, clickedUnitPortrait](FormsEvent *e) { clickedUnitPortrait(3); };
+	std::function<void(FormsEvent * e)> clickedUnitPortrait5 =
+	    [this, clickedUnitPortrait](FormsEvent *e) { clickedUnitPortrait(4); };
+	std::function<void(FormsEvent * e)> clickedUnitPortrait6 =
+	    [this, clickedUnitPortrait](FormsEvent *e) { clickedUnitPortrait(5); };
+	baseForm->findControlTyped<Graphic>("UNIT_1")->addCallback(FormEventType::MouseDown,
+	                                                           clickedUnitPortrait1);
+	baseForm->findControlTyped<Graphic>("UNIT_2")->addCallback(FormEventType::MouseDown,
+	                                                           clickedUnitPortrait2);
+	baseForm->findControlTyped<Graphic>("UNIT_3")->addCallback(FormEventType::MouseDown,
+	                                                           clickedUnitPortrait3);
+	baseForm->findControlTyped<Graphic>("UNIT_4")->addCallback(FormEventType::MouseDown,
+	                                                           clickedUnitPortrait4);
+	baseForm->findControlTyped<Graphic>("UNIT_5")->addCallback(FormEventType::MouseDown,
+	                                                           clickedUnitPortrait5);
+	baseForm->findControlTyped<Graphic>("UNIT_6")->addCallback(FormEventType::MouseDown,
+	                                                           clickedUnitPortrait6);
+
+	std::function<void(int index)> clickedUnitHostiles = [this](int index) {
+		if (!this->unitInfo[index].unit || this->unitInfo[index].unit->visibleEnemies.empty())
+		{
+			return;
+		}
+		this->lastClickedHostile[index]++;
+		if (this->lastClickedHostile[index] >= this->unitInfo[index].unit->visibleEnemies.size())
+		{
+			this->lastClickedHostile[index] = 0;
+		}
+		auto it = this->unitInfo[index].unit->visibleEnemies.begin();
+		for (int i = 0; i < this->lastClickedHostile[index]; i++)
+		{
+			it++;
+		}
+		this->zoomAt((*it)->position);
+	};
+	std::function<void(FormsEvent * e)> clickedUnitHostiles1 =
+	    [this, clickedUnitHostiles](FormsEvent *e) { clickedUnitHostiles(0); };
+	std::function<void(FormsEvent * e)> clickedUnitHostiles2 =
+	    [this, clickedUnitHostiles](FormsEvent *e) { clickedUnitHostiles(1); };
+	std::function<void(FormsEvent * e)> clickedUnitHostiles3 =
+	    [this, clickedUnitHostiles](FormsEvent *e) { clickedUnitHostiles(2); };
+	std::function<void(FormsEvent * e)> clickedUnitHostiles4 =
+	    [this, clickedUnitHostiles](FormsEvent *e) { clickedUnitHostiles(3); };
+	std::function<void(FormsEvent * e)> clickedUnitHostiles5 =
+	    [this, clickedUnitHostiles](FormsEvent *e) { clickedUnitHostiles(4); };
+	std::function<void(FormsEvent * e)> clickedUnitHostiles6 =
+	    [this, clickedUnitHostiles](FormsEvent *e) { clickedUnitHostiles(5); };
+	baseForm->findControlTyped<Graphic>("UNIT_1_HOSTILES")
+	    ->addCallback(FormEventType::MouseDown, clickedUnitHostiles1);
+	baseForm->findControlTyped<Graphic>("UNIT_2_HOSTILES")
+	    ->addCallback(FormEventType::MouseDown, clickedUnitHostiles2);
+	baseForm->findControlTyped<Graphic>("UNIT_3_HOSTILES")
+	    ->addCallback(FormEventType::MouseDown, clickedUnitHostiles3);
+	baseForm->findControlTyped<Graphic>("UNIT_4_HOSTILES")
+	    ->addCallback(FormEventType::MouseDown, clickedUnitHostiles4);
+	baseForm->findControlTyped<Graphic>("UNIT_5_HOSTILES")
+	    ->addCallback(FormEventType::MouseDown, clickedUnitHostiles5);
+	baseForm->findControlTyped<Graphic>("UNIT_6_HOSTILES")
+	    ->addCallback(FormEventType::MouseDown, clickedUnitHostiles6);
 
 	uiTabsRT[0]
 	    ->findControl("BUTTON_LAYER_1")
@@ -3829,29 +4000,145 @@ sp<RGBImage> BattleView::drawMotionScanner(Vec2<int> position)
 	return scannerDisplay;
 }
 
-BattleUnitInfo BattleView::createUnitInfo(int index) { return BattleUnitInfo(); }
+BattleUnitInfo BattleView::createUnitInfo(int index)
+{
+	BattleUnitInfo b;
+	b.faded = false;
+	b.healthProportion = 0.0f;
+	b.stunProportion = 0.0f;
+	b.selected = 0;
+	b.shield = false;
+	b.spotted = 0;
+	b.rank = Rank::Rookie;
+	if (battle.battleViewSquadIndex == -1 ||
+	    battle.forces[battle.currentPlayer].squads[battle.battleViewSquadIndex].getNumUnits() <=
+	        index)
+	{
+		return b;
+	}
+	b.unit = battle.forces[battle.currentPlayer].squads[battle.battleViewSquadIndex].units[index];
+	b.faded = b.unit->moraleState != MoraleState::Normal || !b.unit->isConscious();
+	b.rank = b.unit->agent->rank;
+	b.spotted = b.unit->visibleEnemies.size();
+	if (b.spotted > 6)
+	{
+		b.spotted = 6;
+	}
+	for (auto &u : battle.battleViewSelectedUnits)
+	{
+		if (u->squadNumber == battle.battleViewSquadIndex && u->squadPosition == index)
+		{
+			b.selected = u == battle.battleViewSelectedUnits.front() ? 2 : 1;
+			break;
+		}
+	}
+	b.shield = b.unit->getMaxShield() > 0;
+	float maxHealth;
+	float currentHealth;
+	if (b.shield)
+	{
+		currentHealth = b.unit->getShield();
+		maxHealth = b.unit->getMaxShield();
+	}
+	else
+	{
+		currentHealth = b.unit->getHealth();
+		maxHealth = b.unit->getMaxHealth();
+		float stunHealth = b.unit->stunDamage;
+		b.stunProportion = stunHealth / maxHealth;
+	}
+	b.healthProportion = maxHealth == 0.0f ? 0.0f : currentHealth / maxHealth;
+	b.stunProportion = clamp(b.stunProportion, 0.0f, b.healthProportion);
+	return b;
+}
 
-void BattleView::updateUnitInfo(int index) {}
+void BattleView::updateUnitInfo(int index)
+{
+	BattleUnitInfo info = unitInfo[index];
+	auto baseControl = baseForm->findControlTyped<Graphic>(format("UNIT_%d", index + 1));
+	baseControl->Controls.clear();
+	if (!info.unit)
+	{
+		baseControl->setImage(nullptr);
+		baseForm->findControlTyped<Graphic>(format("UNIT_%d_HOSTILES", index + 1))
+		    ->setImage(nullptr);
+		return;
+	}
+	baseControl->setImage(unitSelect[info.selected]);
+	baseForm->findControlTyped<Graphic>(format("UNIT_%d_HOSTILES", index + 1))
+	    ->setImage(unitHostiles[info.spotted]);
+
+	auto unitIcon = baseControl->createChild<Graphic>(info.unit->agent->getPortrait().icon);
+	unitIcon->AutoSize = true;
+	unitIcon->Location = {2, 1};
+
+	if (info.faded)
+	{
+		auto fadeIcon = baseControl->createChild<Graphic>(iconShade);
+		fadeIcon->AutoSize = true;
+		fadeIcon->Location = {2, 1};
+	}
+
+	auto rankIcon = baseControl->createChild<Graphic>(unitRanks[(int)info.rank]);
+	rankIcon->AutoSize = true;
+	rankIcon->Location = {0, 0};
+
+	if (info.healthProportion > 0.0f)
+	{
+		// FIXME: Put these somewhere slightly less magic?
+		Vec2<int> healthBarOffset = {27, 2};
+		Vec2<int> healthBarSize = {3, 20};
+
+		auto healthImg = info.shield ? this->shieldImage : this->healthImage;
+		auto healthGraphic = baseControl->createChild<Graphic>(healthImg);
+		// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
+		// top-left, so fix that up a bit
+		int healthBarHeight = (int)((float)healthBarSize.y * info.healthProportion);
+		healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
+		healthBarSize.y = healthBarHeight;
+		healthGraphic->Location = healthBarOffset;
+		healthGraphic->Size = healthBarSize;
+		healthGraphic->ImagePosition = FillMethod::Stretch;
+	}
+	if (info.stunProportion > 0.0f)
+	{
+		// FIXME: Put these somewhere slightly less magic?
+		Vec2<int> healthBarOffset = {27, 2};
+		Vec2<int> healthBarSize = {3, 20};
+
+		auto healthImg = this->stunImage;
+		auto healthGraphic = baseControl->createChild<Graphic>(healthImg);
+		// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
+		// top-left, so fix that up a bit
+		int healthBarHeight = (int)((float)healthBarSize.y * info.stunProportion);
+		healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
+		healthBarSize.y = healthBarHeight;
+		healthGraphic->Location = healthBarOffset;
+		healthGraphic->Size = healthBarSize;
+		healthGraphic->ImagePosition = FillMethod::Stretch;
+	}
+}
 
 SquadInfo BattleView::createSquadInfo(int index)
 {
 	SquadInfo s;
 	s.selectedMode = 0;
 	s.units = battle.forces[battle.currentPlayer].squads[index].getNumUnits();
-	if (s.units != 0)
+	if (s.units == 0)
 	{
-		if (battle.battleViewSquadIndex == index)
+		return s;
+	}
+	if (battle.battleViewSquadIndex == index)
+	{
+		s.selectedMode = 2;
+	}
+	else
+	{
+		for (auto &u : battle.battleViewSelectedUnits)
 		{
-			s.selectedMode = 2;
-		}
-		else
-		{
-			for (auto &u : battle.battleViewSelectedUnits)
+			if (u->squadNumber == index)
 			{
-				if (u->squadNumber == index)
-				{
-					s.selectedMode = 1;
-				}
+				s.selectedMode = 1;
 			}
 		}
 	}
@@ -4041,9 +4328,10 @@ bool MotionScannerInfo::operator!=(const MotionScannerInfo &other) const
 
 bool BattleUnitInfo::operator==(const BattleUnitInfo &other) const
 {
-	return (this->unit == other.unit && this->spotted == other.spotted &&
-	        this->selected == other.selected && this->healthProportion == other.healthProportion &&
-	        this->shield == other.shield);
+	return (this->unit == other.unit && this->rank == other.rank &&
+	        this->spotted == other.spotted && this->selected == other.selected &&
+	        this->healthProportion == other.healthProportion &&
+	        this->stunProportion == other.stunProportion && this->shield == other.shield);
 }
 
 bool BattleUnitInfo::operator!=(const BattleUnitInfo &other) const { return !(*this == other); }
