@@ -1434,6 +1434,8 @@ void BattleUnit::applyDamageDirect(GameState &state, int damage, bool generateFa
 	bool wasConscious = isConscious();
 	bool fatal = false;
 
+	// Just a blank value for checks
+	auto eventType = GameEventType::AgentArrived;
 	// Deal stun damage
 	if (stunPower > 0)
 	{
@@ -1446,11 +1448,10 @@ void BattleUnit::applyDamageDirect(GameState &state, int damage, bool generateFa
 		agent->modified_stats.health -= damage;
 		agent->modified_stats.loseMorale(damage * 50 * (15 - agent->modified_stats.bravery / 10) /
 		                                 agent->current_stats.health / 100);
-		sendAgentEvent(state, (agent->modified_stats.health * 3 / agent->current_stats.health ==
-		                       0) && !lessThanOneThird
-		                          ? GameEventType::AgentBadlyInjured
-		                          : GameEventType::AgentInjured,
-		               true);
+		eventType = (agent->modified_stats.health * 3 / agent->current_stats.health == 0) &&
+		                    !lessThanOneThird
+		                ? GameEventType::AgentBadlyInjured
+		                : GameEventType::AgentInjured;
 	}
 
 	// Generate fatal wounds
@@ -1458,19 +1459,26 @@ void BattleUnit::applyDamageDirect(GameState &state, int damage, bool generateFa
 	    randBoundsExclusive(state.rng, 0, 100) < 100 * damage / agent->current_stats.health)
 	{
 		addFatalWound(fatalWoundPart);
+		eventType = GameEventType::AgentCriticallyWounded;
 		fatal = true;
-		sendAgentEvent(state, GameEventType::AgentCriticallyWounded, true);
 	}
 
 	// Die or go unconscious
 	if (isDead())
 	{
+		eventType = GameEventType::AgentArrived; // cancel event on death
 		die(state, attacker);
 		return;
 	}
 	else if (!isConscious() && wasConscious)
 	{
+		eventType = GameEventType::AgentArrived; // cancel event on falling down
 		fallUnconscious(state);
+	}
+
+	if (eventType != GameEventType::AgentArrived)
+	{
+		sendAgentEvent(state, eventType, true);
 	}
 
 	if (wasConscious)

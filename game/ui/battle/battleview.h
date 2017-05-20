@@ -100,6 +100,7 @@ class BattleUnitInfo
 	int selected;
 
 	float healthProportion;
+	float stunProportion;
 	bool shield;
 	bool faded; // Faded when stunned or lowmorale
 	bool operator==(const BattleUnitInfo &other) const;
@@ -207,6 +208,8 @@ class BattleView : public BattleTileView
 	std::vector<sp<Image>> unitHostiles;
 	sp<Image> healthImage;
 	sp<Image> shieldImage;
+	sp<Image> stunImage;
+	sp<Image> iconShade;
 	std::vector<int> lastClickedHostile;
 
 	BattleUnitInfo createUnitInfo(int index);

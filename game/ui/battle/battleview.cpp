@@ -197,9 +197,13 @@ BattleView::BattleView(sp<GameState> gameState)
 	                                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
 	                                                34)));
 
-	unitSelect.push_back(fw().data->loadImage("battle/battle-unit-select-icon-0.png"));
-	unitSelect.push_back(fw().data->loadImage("battle/battle-unit-select-icon-1.png"));
-	unitSelect.push_back(fw().data->loadImage("battle/battle-unit-select-icon-2.png"));
+	unitSelect.push_back(fw().data->loadImage(
+	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:37:xcom3/ufodata/pal_01.dat"));
+	unitSelect.push_back(fw().data->loadImage(
+	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:38:xcom3/ufodata/pal_01.dat"));
+	unitSelect.push_back(fw().data->loadImage(
+	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:39:xcom3/ufodata/pal_01.dat"));
+	iconShade = fw().data->loadImage("battle/battle-icon-shade.png");
 
 	lastClickedHostile.resize(6);
 
@@ -217,6 +221,13 @@ BattleView::BattleView(sp<GameState> gameState)
 		l.set({0, 1}, Colour{4, 100, 252});
 	}
 	shieldImage = img;
+	img = mksp<RGBImage>(Vec2<int>{1, 2});
+	{
+		RGBImageLock l(img);
+		l.set({0, 0}, Colour{150, 150, 150});
+		l.set({0, 1}, Colour{97, 101, 105});
+	}
+	stunImage = img;
 
 	auto font = ui().getFont("smallset");
 	squadNumber.emplace_back();
@@ -3994,6 +4005,7 @@ BattleUnitInfo BattleView::createUnitInfo(int index)
 	BattleUnitInfo b;
 	b.faded = false;
 	b.healthProportion = 0.0f;
+	b.stunProportion = 0.0f;
 	b.selected = 0;
 	b.shield = false;
 	b.spotted = 0;
@@ -4032,8 +4044,11 @@ BattleUnitInfo BattleView::createUnitInfo(int index)
 	{
 		currentHealth = b.unit->getHealth();
 		maxHealth = b.unit->getMaxHealth();
+		float stunHealth = b.unit->stunDamage;
+		b.stunProportion = stunHealth / maxHealth;
 	}
 	b.healthProportion = maxHealth == 0.0f ? 0.0f : currentHealth / maxHealth;
+	b.stunProportion = clamp(b.stunProportion, 0.0f, b.healthProportion);
 	return b;
 }
 
@@ -4057,27 +4072,51 @@ void BattleView::updateUnitInfo(int index)
 	unitIcon->AutoSize = true;
 	unitIcon->Location = {2, 1};
 
-	// FIXME: Fade units that should be faded!
+	if (info.faded)
+	{
+		auto fadeIcon = baseControl->createChild<Graphic>(iconShade);
+		fadeIcon->AutoSize = true;
+		fadeIcon->Location = {2, 1};
+	}
 
 	auto rankIcon = baseControl->createChild<Graphic>(unitRanks[(int)info.rank]);
 	rankIcon->AutoSize = true;
 	rankIcon->Location = {0, 0};
 
-	// FIXME: Put these somewhere slightly less magic?
-	Vec2<int> healthBarOffset = {27, 2};
-	Vec2<int> healthBarSize = {3, 20};
+	if (info.healthProportion > 0.0f)
+	{
+		// FIXME: Put these somewhere slightly less magic?
+		Vec2<int> healthBarOffset = {27, 2};
+		Vec2<int> healthBarSize = {3, 20};
 
-	auto healthImg = info.shield ? this->shieldImage : this->healthImage;
+		auto healthImg = info.shield ? this->shieldImage : this->healthImage;
+		auto healthGraphic = baseControl->createChild<Graphic>(healthImg);
+		// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
+		// top-left, so fix that up a bit
+		int healthBarHeight = (int)((float)healthBarSize.y * info.healthProportion);
+		healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
+		healthBarSize.y = healthBarHeight;
+		healthGraphic->Location = healthBarOffset;
+		healthGraphic->Size = healthBarSize;
+		healthGraphic->ImagePosition = FillMethod::Stretch;
+	}
+	if (info.stunProportion > 0.0f)
+	{
+		// FIXME: Put these somewhere slightly less magic?
+		Vec2<int> healthBarOffset = {27, 2};
+		Vec2<int> healthBarSize = {3, 20};
 
-	auto healthGraphic = baseControl->createChild<Graphic>(healthImg);
-	// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
-	// top-left, so fix that up a bit
-	int healthBarHeight = (int)((float)healthBarSize.y * info.healthProportion);
-	healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
-	healthBarSize.y = healthBarHeight;
-	healthGraphic->Location = healthBarOffset;
-	healthGraphic->Size = healthBarSize;
-	healthGraphic->ImagePosition = FillMethod::Stretch;
+		auto healthImg = this->stunImage;
+		auto healthGraphic = baseControl->createChild<Graphic>(healthImg);
+		// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
+		// top-left, so fix that up a bit
+		int healthBarHeight = (int)((float)healthBarSize.y * info.stunProportion);
+		healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
+		healthBarSize.y = healthBarHeight;
+		healthGraphic->Location = healthBarOffset;
+		healthGraphic->Size = healthBarSize;
+		healthGraphic->ImagePosition = FillMethod::Stretch;
+	}
 }
 
 SquadInfo BattleView::createSquadInfo(int index)
@@ -4291,7 +4330,8 @@ bool BattleUnitInfo::operator==(const BattleUnitInfo &other) const
 {
 	return (this->unit == other.unit && this->rank == other.rank &&
 	        this->spotted == other.spotted && this->selected == other.selected &&
-	        this->healthProportion == other.healthProportion && this->shield == other.shield);
+	        this->healthProportion == other.healthProportion &&
+	        this->stunProportion == other.stunProportion && this->shield == other.shield);
 }
 
 bool BattleUnitInfo::operator!=(const BattleUnitInfo &other) const { return !(*this == other); }
