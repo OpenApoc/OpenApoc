@@ -124,7 +124,7 @@ class SDLRawBackend : public SoundBackend
 	sp<MusicData> current_music_data;
 	std::queue<sp<MusicData>> music_queue;
 
-	std::future<void> get_music_future;
+	std::shared_future<void> get_music_future;
 
 	unsigned int music_queue_size;
 
@@ -344,7 +344,7 @@ class SDLRawBackend : public SoundBackend
 
 	void stopMusic() override
 	{
-		std::future<void> outstanding_get_music;
+		std::shared_future<void> outstanding_get_music;
 		{
 			std::lock_guard<std::recursive_mutex> l(this->audio_lock);
 			this->music_playing = false;

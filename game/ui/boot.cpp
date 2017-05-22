@@ -33,7 +33,7 @@ void BootUp::update()
 	bool skipIntro = skipIntroOption.get();
 	// The first forms instance causes it to get loaded
 	sp<GameState> loadedState;
-	std::future<void> loadTask;
+	std::shared_future<void> loadTask;
 	bool loadGame = false;
 
 	if (loadGameOption.get().empty())

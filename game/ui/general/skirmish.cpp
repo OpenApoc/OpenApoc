@@ -377,7 +377,7 @@ void Skirmish::updateLocationLabel()
 	menuform->findControlTyped<Label>("LOCATION")->setText(format("LOCATION: %s", text));
 }
 
-std::future<void> loadBattleBuilding(bool hotseat, sp<Building> building, GameState *state,
+std::shared_future<void> loadBattleBuilding(bool hotseat, sp<Building> building, GameState *state,
                                      StateRef<Base> playerBase, bool raid,
                                      std::map<StateRef<AgentType>, int> *aliens = nullptr,
                                      int *guards = nullptr, int *civilians = nullptr)
@@ -430,7 +430,7 @@ std::future<void> loadBattleBuilding(bool hotseat, sp<Building> building, GameSt
 	return loadTask;
 }
 
-std::future<void> loadBattleVehicle(bool hotseat, sp<VehicleType> vehicle, GameState *state,
+std::shared_future<void> loadBattleVehicle(bool hotseat, sp<VehicleType> vehicle, GameState *state,
                                     StateRef<Base> playerBase,
                                     std::map<StateRef<AgentType>, int> *aliens = nullptr)
 {

@@ -16,13 +16,13 @@ class BattleBriefing : public Stage
 {
   private:
 	sp<Form> menuform;
-	std::future<void> loading_task;
+	std::shared_future<void> loading_task;
 
 	sp<GameState> state;
 
   public:
 	BattleBriefing(sp<GameState> state, StateRef<Organisation> targetOrg, UString location,
-	               bool isBuilding, bool isRaid, std::future<void> loadingTask);
+	               bool isBuilding, bool isRaid, std::shared_future<void> loadingTask);
 	// Stage control
 	void begin() override;
 	void pause() override;

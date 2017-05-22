@@ -30,7 +30,7 @@ static const std::map<UString, int> alienFunctionMap = {
 
 BattleBriefing::BattleBriefing(sp<GameState> state, StateRef<Organisation> targetOrg,
                                UString location, bool isBuilding, bool isRaid,
-                               std::future<void> gameStateTask)
+                               std::shared_future<void> gameStateTask)
     : Stage(), menuform(ui().getForm("battle/briefing")), loading_task(std::move(gameStateTask)),
       state(state)
 {
