@@ -895,8 +895,8 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 	// Sort units based on proximity to target and speed
 
 	auto &map = selectedUnits.front()->tileObject->map;
-	auto units = selectedUnits;
-	units.sort([targetLocation](const StateRef<BattleUnit> &a, const StateRef<BattleUnit> &b) {
+	auto localUnits = selectedUnits;
+	localUnits.sort([targetLocation](const StateRef<BattleUnit> &a, const StateRef<BattleUnit> &b) {
 		return BattleUnitTileHelper::getDistanceStatic((Vec3<int>)a->position, targetLocation) /
 		           a->agent->modified_stats.getActualSpeedValue() <
 		       BattleUnitTileHelper::getDistanceStatic((Vec3<int>)b->position, targetLocation) /
@@ -908,8 +908,8 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 	StateRef<BattleUnit> leadUnit;
 	BattleUnitMission *leadMission = nullptr;
 	int minDistance = INT_MAX;
-	auto itUnit = units.begin();
-	while (itUnit != units.end())
+	auto itUnit = localUnits.begin();
+	while (itUnit != localUnits.end())
 	{
 		auto curUnit = *itUnit;
 		log += format("\nTrying unit %s for leader", curUnit.id);
@@ -964,10 +964,10 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 		{
 			log += format("\nUnit could not set a goto mission, removing him.");
 			// Unit cannot add a movement mission - remove him
-			itUnit = units.erase(itUnit);
+			itUnit = localUnits.erase(itUnit);
 		}
 	}
-	if (itUnit == units.end() && !leadUnit)
+	if (itUnit == localUnits.end() && !leadUnit)
 	{
 		log += format("\nNoone could path to target, aborting");
 		LogWarning("%s", log);
@@ -977,7 +977,7 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 	// In case we couldn't reach it, change our target
 	targetLocation = leadMission->currentPlannedPath.back();
 	// Remove leader from list of units that require pathing
-	units.remove(leadUnit);
+	localUnits.remove(leadUnit);
 	// Determine our direction and rotation
 	auto fromIt = leadMission->currentPlannedPath.rbegin();
 	int fromLimit = std::min(3, (int)leadMission->currentPlannedPath.size());
@@ -997,7 +997,7 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 
 	// Sort remaining units based on proximity to target and speed
 	auto h = BattleUnitTileHelper(map, *leadUnit);
-	units.sort([h, targetLocation](const StateRef<BattleUnit> &a, const StateRef<BattleUnit> &b) {
+	localUnits.sort([h, targetLocation](const StateRef<BattleUnit> &a, const StateRef<BattleUnit> &b) {
 		return h.getDistance((Vec3<int>)a->position, targetLocation) /
 		           a->agent->modified_stats.getActualSpeedValue() <
 		       h.getDistance((Vec3<int>)b->position, targetLocation) /
@@ -1009,7 +1009,7 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 	              targetLocation.y, targetLocation.z, leadUnit.id);
 
 	auto itOffset = targetOffsets.begin();
-	for (auto &unit : units)
+	for (auto &unit : localUnits)
 	{
 		if (itOffset == targetOffsets.end())
 		{

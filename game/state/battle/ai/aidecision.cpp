@@ -84,6 +84,7 @@ bool AIAction::inProgressInternal(BattleUnit &u)
 			// If you're not dead yet then you haven't popped yet :)))
 			return false;
 	}
+	return false;
 }
 
 bool AIAction::inProgress(BattleUnit &u)
@@ -175,6 +176,7 @@ bool AIMovement::inProgressInternal(BattleUnit &u)
 			return m->targetFacing == BattleUnitMission::getFacing(u, targetLocation);
 		}
 	}
+	return false;
 }
 
 bool AIMovement::inProgress(BattleUnit &u)

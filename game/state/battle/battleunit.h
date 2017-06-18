@@ -355,6 +355,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// [Methods]
 
 	void init(GameState &state);
+	void destroy() override;
 
 	// Squad
 

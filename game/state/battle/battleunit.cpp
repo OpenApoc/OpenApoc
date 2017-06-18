@@ -76,6 +76,28 @@ void BattleUnit::init(GameState &state)
 	aiList.init(state, *this);
 }
 
+void BattleUnit::destroy()
+{
+	targetUnit.clear();
+	focusUnit.clear();
+	focusedByUnits.clear();
+	psiTarget.clear();
+	brainSucker.clear();
+
+	if (agent)
+	{
+		agent->unit.clear();
+	}
+	visibleUnits.clear();
+	visibleEnemies.clear();
+	aiList.aiList.clear();
+
+	for (auto &m : missions)
+	{
+		m->targetUnit.clear();
+	}
+}
+
 void BattleUnit::removeFromSquad(Battle &battle)
 {
 	if (squadNumber != -1)

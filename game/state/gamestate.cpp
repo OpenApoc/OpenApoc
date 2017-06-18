@@ -46,6 +46,10 @@ GameState::~GameState()
 		Battle::finishBattle(*this);
 		Battle::exitBattle(*this);
 	}
+	for (auto &a : this->agents)
+	{
+		a.second->destroy();
+	}
 	for (auto &v : this->vehicles)
 	{
 		auto vehicle = v.second;

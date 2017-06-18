@@ -81,8 +81,7 @@ Battle::~Battle()
 	}
 	for (auto &u : this->units)
 	{
-		u.second->agent->unit.clear();
-		u.second->visibleUnits.clear();
+		u.second->destroy();
 	}
 	for (auto &i : this->items)
 	{
@@ -95,6 +94,12 @@ Battle::~Battle()
 	}
 	this->items.clear();
 	this->doors.clear();
+
+	LogWarning("~Battle() called and executed, checking battleunits sp use count");
+	for (auto &u : this->units)
+	{
+		LogWarning("Unit %s used %d times", u.first, (int)u.second.use_count());
+	}
 }
 
 void Battle::initBattle(GameState &state, bool first)
@@ -2267,7 +2272,9 @@ void Battle::finishBattle(GameState &state)
 	}
 	for (auto &u : unitsToRemove)
 	{
+		u->agent->destroy();
 		state.agents.erase(u->agent.id);
+		u->destroy();
 		state.current_battle->units.erase(u->id);
 	}
 	// Apply experience to stats of living agents + promotions
@@ -2384,6 +2391,18 @@ void Battle::exitBattle(GameState &state)
 			continue;
 		}
 		player->current_relations[{&state, o.first}] = o.second->getRelationTo(player);
+	}
+
+	LogWarning("Checking item reference consistency, remove code in battle.exitBattleconfirmed correct");
+	for (auto &a : state.agents)
+	{
+		for (auto &e : a.second->equipment)
+		{
+			if (e->ownerUnit)
+			{
+				LogError("Agent %s has item %s which is assigned to unit %s and will leak", a.first, e->type.id, e->ownerUnit.id);
+			}
+		}
 	}
 
 	state.current_battle = nullptr;
