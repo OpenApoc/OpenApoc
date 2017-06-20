@@ -94,12 +94,6 @@ Battle::~Battle()
 	}
 	this->items.clear();
 	this->doors.clear();
-
-	LogWarning("~Battle() called and executed, checking battleunits sp use count");
-	for (auto &u : this->units)
-	{
-		LogWarning("Unit %s used %d times", u.first, (int)u.second.use_count());
-	}
 }
 
 void Battle::initBattle(GameState &state, bool first)

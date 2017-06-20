@@ -259,7 +259,7 @@ class BattleView : public BattleTileView
 	void eventOccurred(Event *e) override;
 	void handleMouseDown(Event *e);
 
-	void exitBattle();
+	void endBattle();
 
 	void setUpdateSpeed(BattleUpdateSpeed updateSpeed);
 	void zoomAt(Vec3<int> location);

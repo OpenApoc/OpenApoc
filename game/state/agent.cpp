@@ -947,6 +947,8 @@ StateRef<BattleUnitImagePack> Agent::getImagePack(BodyPart bodyPart) const
 
 void Agent::destroy()
 {
+	leftHandItem = nullptr;
+	rightHandItem = nullptr;
 	while (!equipment.empty())
 	{
 		this->removeEquipment(equipment.front());

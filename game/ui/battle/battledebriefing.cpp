@@ -20,7 +20,7 @@ BattleDebriefing::BattleDebriefing(sp<GameState> state)
 	menuform->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    Battle::exitBattle(*this->state);
-		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<CityView>(this->state)});
+		    fw().stageQueueCommand({StageCmd::Command::REPLACEALL, mksp<CityView>(this->state)});
 		});
 
 	menuform->findControlTyped<Label>("TEXT_SCORE_COMBAT_RATING")

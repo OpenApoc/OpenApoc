@@ -155,11 +155,13 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 
 	auto playerBase = locBase ? locBase : StateRef<Base>(&state, "BASE_1");
 	std::set<UString> agentsToRemove;
+	LogWarning("Erasing agents from base %s", playerBase.id);
 	for (auto &a : state.agents)
 	{
 		if (a.second->type->role == AgentType::Role::Soldier && a.second->home_base == playerBase)
 		{
 			agentsToRemove.insert(a.first);
+			a.second->destroy();
 		}
 	}
 	for (auto &a : agentsToRemove)
@@ -466,7 +468,7 @@ void Skirmish::battleInBuilding(bool hotseat, StateRef<Base> playerBase,
                                 int *civilians)
 {
 	fw().stageQueueCommand(
-	    {StageCmd::Command::PUSH,
+	    {StageCmd::Command::REPLACEALL,
 	     mksp<BattleBriefing>(state.shared_from_this(), building->owner,
 	                          Building::getId(state, building), true, raid,
 	                          loadBattleBuilding(hotseat, building, &state, playerBase, raid,
@@ -477,7 +479,7 @@ void Skirmish::battleInBase(bool hotseat, StateRef<Base> base,
                             std::map<StateRef<AgentType>, int> *aliens)
 {
 	fw().stageQueueCommand(
-	    {StageCmd::Command::PUSH,
+	    {StageCmd::Command::REPLACEALL,
 	     mksp<BattleBriefing>(
 	         state.shared_from_this(), state.getAliens(), base->building.id, false, false,
 	         loadBattleBuilding(hotseat, base->building, &state, base, false, aliens))});
@@ -488,7 +490,7 @@ void Skirmish::battleInVehicle(bool hotseat, StateRef<Base> playerBase,
                                std::map<StateRef<AgentType>, int> *aliens)
 {
 	fw().stageQueueCommand(
-	    {StageCmd::Command::PUSH,
+	    {StageCmd::Command::REPLACEALL,
 	     mksp<BattleBriefing>(state.shared_from_this(), state.getAliens(),
 	                          VehicleType::getId(state, vehicle), false, false,
 	                          loadBattleVehicle(hotseat, vehicle, &state, playerBase, aliens))});

@@ -1757,7 +1757,7 @@ void BattleView::update()
 		}
 		fw().stageQueueCommand(
 		    {StageCmd::Command::PUSH, mksp<MessageBox>("", message, MessageBox::ButtonOptions::Ok,
-		                                               [this] { exitBattle(); })});
+		                                               [this] { endBattle(); })});
 	}
 }
 
@@ -3667,7 +3667,7 @@ void BattleView::handleMouseDown(Event *e)
 	}
 }
 
-void BattleView::exitBattle()
+void BattleView::endBattle()
 {
 	Battle::finishBattle(*state);
 	fw().stageQueueCommand({StageCmd::Command::REPLACEALL, mksp<BattleDebriefing>(state)});
