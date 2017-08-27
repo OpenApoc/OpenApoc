@@ -16,7 +16,7 @@ All help is appreciated, but there's little point trying to 'play' it as of yet.
 
 OpenApocalypse is built leveraging a number of libraries - to provide needed functionality (and save us the time of implementing it ourselves badly)
 
-* [SDL2](http://www.libsdl.org).
+* [SDL2](http://www.libsdl.org)
 * [Boost](http://boost.org) - specifially the 'locale' library, used for localisation, 'program-options' for settings management, and 'filesystem'.
 * [Libunwind](http://www.nongnu.org/libunwind/download.html) - debug backtracing on linux - not needed on windows.
 
