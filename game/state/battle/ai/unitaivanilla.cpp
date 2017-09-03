@@ -781,11 +781,11 @@ void UnitAIVanilla::routine(GameState &state, BattleUnit &u)
 	auto cloaking = u.agent->getFirstItemByType(AEquipmentType::Type::CloakingField);
 	if (cloaking)
 	{
-		UnitAIHelper::ensureItemInSlot(state, cloaking, AEquipmentSlotType::LeftHand);
+		UnitAIHelper::ensureItemInSlot(state, cloaking, EquipmentSlotType::LeftHand);
 	}
 
 	// Equip best weapon in right hand if we don't have something we otherwise need in that slot
-	auto rhItem = u.agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+	auto rhItem = u.agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
 	if (!lastDecision.action || rhItem != lastDecision.action->item)
 	{
 		// Right now just equip most long ranged weapon, if tied most damaging
@@ -808,7 +808,7 @@ void UnitAIVanilla::routine(GameState &state, BattleUnit &u)
 		// Equip new item into slot
 		if (newItem != rhItem)
 		{
-			UnitAIHelper::ensureItemInSlot(state, newItem, AEquipmentSlotType::RightHand);
+			UnitAIHelper::ensureItemInSlot(state, newItem, EquipmentSlotType::RightHand);
 		}
 	}
 

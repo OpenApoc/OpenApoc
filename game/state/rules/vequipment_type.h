@@ -1,5 +1,6 @@
 #pragma once
 
+#include "game/state/equipment.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -22,12 +23,6 @@ class VEquipmentType : public StateObject
 	STATE_OBJECT(VEquipmentType)
   public:
 	VEquipmentType();
-	enum class Type
-	{
-		Engine,
-		Weapon,
-		General,
-	};
 
 	enum class User
 	{
@@ -39,7 +34,7 @@ class VEquipmentType : public StateObject
 	~VEquipmentType() override = default;
 
 	// Shared stuff
-	Type type;
+	EquipmentSlotType type;
 	UString id;
 	UString name;
 	int weight;

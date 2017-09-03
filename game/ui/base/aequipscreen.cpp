@@ -1,7 +1,11 @@
 #include "game/ui/base/aequipscreen.h"
 #include "forms/form.h"
+#include "framework/font.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
+#include "game/state/battle/battleunit.h"
+#include "forms/list.h"
+#include "forms/scrollbar.h"
 #include "forms/ui.h"
 #include "framework/data.h"
 #include "framework/event.h"
@@ -9,6 +13,7 @@
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
 #include "game/state/gamestate.h"
+#include "game/ui/equipscreen.h"
 
 namespace OpenApoc
 {
@@ -74,12 +79,55 @@ static sp<Image> createStatsBar(int initialValue, int currentValue, int modified
 
 	return img;
 }
+const Vec2<int> AEquipScreen::EQUIP_GRID_SLOT_SIZE{16, 16};
+const Vec2<int> AEquipScreen::EQUIP_GRID_SLOTS{16, 16};
 
 AEquipScreen::AEquipScreen(sp<GameState> state)
     : Stage(), form(ui().getForm("aequipscreen")),
       pal(fw().data->loadPalette("xcom3/ufodata/agenteqp.pcx")), state(state)
 
 {
+	this->state = state;
+
+	auto paperDollPlaceholder = form->findControlTyped<Graphic>("PAPER_DOLL");
+
+	this->paperDoll = form->createChild<EquipmentPaperDoll>(
+	    paperDollPlaceholder->Location, paperDollPlaceholder->Size, EQUIP_GRID_SLOT_SIZE);
+
+	auto img = mksp<RGBImage>(Vec2<int>{1, 2});
+	{
+		RGBImageLock l(img);
+		l.set({ 0, 0 }, Colour{ 255, 255, 219 });
+		l.set({ 0, 1 }, Colour{ 215, 0, 0 });
+	}
+	this->healthImage = img;
+	img = mksp<RGBImage>(Vec2<int>{1, 2});
+	{
+		RGBImageLock l(img);
+		l.set({ 0, 0 }, Colour{ 160, 236, 252 });
+		l.set({ 0, 1 }, Colour{ 4, 100, 252 });
+	}
+	this->shieldImage = img;
+	img = mksp<RGBImage>(Vec2<int>{1, 2});
+	{
+		RGBImageLock l(img);
+		l.set({ 0, 0 }, Colour{ 150, 150, 150 });
+		l.set({ 0, 1 }, Colour{ 97, 101, 105 });
+	}
+	this->stunImage = img;
+	this->iconShade = fw().data->loadImage("battle/battle-icon-shade.png");
+	for (int i = 28; i <= 34; i++)
+	{
+		unitRanks.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
+			"tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+			i)));
+	}
+	for (int i = 12; i <= 18; i++)
+	{
+		bigUnitRanks.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
+			"tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+			i)));
+	}
 }
 
 AEquipScreen::~AEquipScreen() = default;
@@ -87,14 +135,71 @@ AEquipScreen::~AEquipScreen() = default;
 void AEquipScreen::begin()
 {
 	form->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
+	// TODO: Implement agent selection based on who the screen is called on
 	for (auto &agent : state->agents)
 	{
-		if (agent.second->type->role == AgentType::Role::Soldier)
+		if (agent.second->type->role != AgentType::Role::Soldier)
 		{
-			this->setSelectedAgent(agent.second);
-			break;
+			continue;
 		}
+		if (agent.second->unit && !agent.second->unit->isConscious())
+		{
+			continue;
+		}
+		this->setSelectedAgent(agent.second);
+		break;
 	}
+
+	// Agent list functionality
+	auto agentList = form->findControlTyped<ListBox>("AGENT_SELECT_BOX");
+	agentList->addCallback(FormEventType::ListBoxChangeSelected, [this](Event *e) {
+		LogWarning("agent selected");
+		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
+		auto agent = list->getSelectedData<Agent>();
+		if (!agent)
+		{
+			LogError("No agent in selected data");
+			return;
+		}
+		if (agent->unit && !agent->unit->isConscious())
+		{
+			LogWarning("Cannot select unconscious agent");
+			return;
+		}
+		this->setSelectedAgent(agent);
+	});
+
+	// Populate agent list
+	auto font = ui().getFont("smalfont");
+	auto agentEntryHeight = font->getFontHeight() * 2;
+	agentList->clear();
+	auto owner = state->getPlayer();
+	if (state->current_battle)
+	{
+		owner = state->current_battle->currentPlayer;
+	}
+	for (auto &agent : state->agents)
+	{
+		if (agent.second->owner != owner)
+		{
+			continue;
+		}
+		if (agent.second->type->role != AgentType::Role::Soldier)
+		{
+			continue;
+		}
+		// Unit is not participating in battle
+		if (state->current_battle && !agent.second->unit)
+		{
+			continue;
+		}
+
+		auto agentControl =
+			this->createAgentControl({ 130, agentEntryHeight }, { state.get(), agent.second });
+		agentList->addItem(agentControl);
+	}
+	agentList->ItemSize = agentEntryHeight;
+
 }
 
 void AEquipScreen::pause() {}
@@ -140,10 +245,13 @@ bool AEquipScreen::isTransition() { return false; }
 void AEquipScreen::setSelectedAgent(sp<Agent> agent)
 {
 	this->currentAgent = agent;
+	this->paperDoll->setObject(agent);
 
 	this->form->findControlTyped<Label>("AGENT_NAME")->setText(agent->name);
 	this->form->findControlTyped<Graphic>("SELECTED_PORTRAIT")
 	    ->setImage(agent->getPortrait().photo);
+	this->form->findControlTyped<Graphic>("SELECTED_RANK")
+		->setImage(bigUnitRanks[(int)agent->rank]);
 	// FIXME: Make stats colours part of GameState
 	// FIXME: 'initial' colours taken from screenshot, 'current' guessed
 	Colour healthInitialColour{156, 4, 4};
@@ -171,7 +279,7 @@ void AEquipScreen::setSelectedAgent(sp<Agent> agent)
 	Colour staminaInitialColour{12, 156, 56};
 	Colour staminaCurrentColour{76, 220, 120};
 	this->form->findControlTyped<Graphic>("VALUE_5")->setImage(createStatsBar(
-	    agent->initial_stats.stamina, agent->current_stats.stamina, agent->modified_stats.stamina,
+	    agent->initial_stats.getDisplayStaminaValue(), agent->current_stats.getDisplayStaminaValue(), agent->modified_stats.getDisplayStaminaValue(),
 	    agent->type->max_stats.stamina, staminaInitialColour, staminaCurrentColour, {64, 4}));
 	Colour braveryInitialColour{0, 128, 164};
 	Colour braveryCurrentColour{64, 192, 228};
@@ -203,6 +311,106 @@ void AEquipScreen::setSelectedAgent(sp<Agent> agent)
 	        createStatsBar(agent->initial_stats.psi_defence, agent->current_stats.psi_defence,
 	                       agent->modified_stats.psi_defence, agent->type->max_stats.psi_defence,
 	                       psi_defenceInitialColour, psi_defenceCurrentColour, {64, 4}));
+}
+
+// FIXME: Put this in the rules somewhere?
+// FIXME: This could be shared with the citview ICON_RESOURCES?
+static const UString agentFramePath =
+"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:37:xcom3/ufodata/pal_01.dat";
+
+sp<Control> AEquipScreen::createAgentControl(Vec2<int> size, StateRef<Agent> agent)
+{
+	auto baseControl = mksp<Control>();
+	baseControl->setData(agent.getSp());
+	baseControl->Name = "AGENT_PORTRAIT";
+	baseControl->Size = size;
+
+	auto frameGraphic = baseControl->createChild<Graphic>(fw().data->loadImage(agentFramePath));
+	frameGraphic->AutoSize = true;
+	frameGraphic->Location = { 0, 0 };
+	auto photoGraphic = frameGraphic->createChild<Graphic>(agent->getPortrait().icon);
+	photoGraphic->AutoSize = true;
+	photoGraphic->Location = { 1, 1 };
+
+	// TODO: Fade portraits
+	bool faded = false;
+
+	if (faded)
+	{
+		auto fadeIcon = baseControl->createChild<Graphic>(iconShade);
+		fadeIcon->AutoSize = true;
+		fadeIcon->Location = { 2, 1 };
+	}
+
+	auto rankIcon = baseControl->createChild<Graphic>(unitRanks[(int)agent->rank]);
+	rankIcon->AutoSize = true;
+	rankIcon->Location = { 0, 0 };
+
+	bool shield = agent->getMaxShield() > 0;
+	
+	float maxHealth;
+	float currentHealth;
+	float stunProportion;
+	if (shield)
+	{
+		currentHealth = agent->getShield();
+		maxHealth = agent->getMaxShield();
+	}
+	else
+	{
+		currentHealth = agent->getHealth();
+		maxHealth = agent->getMaxHealth();
+		if (agent->unit)
+		{ 
+			float stunHealth = agent->unit->stunDamage;
+			stunProportion = stunHealth / maxHealth;
+		}
+	}
+	float healthProportion = maxHealth == 0.0f ? 0.0f : currentHealth / maxHealth;
+	stunProportion = clamp(stunProportion, 0.0f, healthProportion);
+	
+	if (healthProportion > 0.0f)
+	{
+		// FIXME: Put these somewhere slightly less magic?
+		Vec2<int> healthBarOffset = { 27, 2 };
+		Vec2<int> healthBarSize = { 3, 20 };
+
+		auto healthImg = shield ? this->shieldImage : this->healthImage;
+		auto healthGraphic = frameGraphic->createChild<Graphic>(healthImg);
+		// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
+		// top-left, so fix that up a bit
+		int healthBarHeight = (int)((float)healthBarSize.y * healthProportion);
+		healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
+		healthBarSize.y = healthBarHeight;
+		healthGraphic->Location = healthBarOffset;
+		healthGraphic->Size = healthBarSize;
+		healthGraphic->ImagePosition = FillMethod::Stretch;
+	}
+	if (stunProportion > 0.0f)
+	{
+		// FIXME: Put these somewhere slightly less magic?
+		Vec2<int> healthBarOffset = { 27, 2 };
+		Vec2<int> healthBarSize = { 3, 20 };
+
+		auto healthImg = this->stunImage;
+		auto healthGraphic = frameGraphic->createChild<Graphic>(healthImg);
+		// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
+		// top-left, so fix that up a bit
+		int healthBarHeight = (int)((float)healthBarSize.y * stunProportion);
+		healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
+		healthBarSize.y = healthBarHeight;
+		healthGraphic->Location = healthBarOffset;
+		healthGraphic->Size = healthBarSize;
+		healthGraphic->ImagePosition = FillMethod::Stretch;
+	}
+	
+	auto font = ui().getFont("smalfont");
+
+	auto nameLabel = baseControl->createChild<Label>(agent->name, font);
+	nameLabel->Location = { 40, 0 };
+	nameLabel->Size = { 100, font->getFontHeight() * 2 };
+
+	return baseControl;
 }
 
 } // namespace OpenApoc

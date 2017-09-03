@@ -9,7 +9,7 @@ class GameState;
 class BattleUnit;
 class AIMovement;
 class AEquipment;
-enum class AEquipmentSlotType;
+enum class EquipmentSlotType;
 
 class UnitAIHelper
 {
@@ -28,6 +28,6 @@ class UnitAIHelper
 
 	static sp<AIMovement> getTurnMovement(GameState &state, BattleUnit &u, Vec3<int> target);
 
-	static void ensureItemInSlot(GameState &state, sp<AEquipment> item, AEquipmentSlotType slot);
+	static void ensureItemInSlot(GameState &state, sp<AEquipment> item, EquipmentSlotType slot);
 };
 }

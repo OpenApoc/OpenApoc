@@ -1,5 +1,6 @@
 #pragma once
 
+#include "game/state/equipment.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -35,7 +36,9 @@ class VehicleMover
 	virtual ~VehicleMover();
 };
 
-class Vehicle : public StateObject, public std::enable_shared_from_this<Vehicle>
+class Vehicle : public StateObject,
+                public std::enable_shared_from_this<Vehicle>,
+                public EquippableObject
 {
 	STATE_OBJECT(Vehicle)
   public:
@@ -133,6 +136,10 @@ class Vehicle : public StateObject, public std::enable_shared_from_this<Vehicle>
 	void setPosition(const Vec3<float> &pos);
 
 	virtual void update(GameState &state, unsigned int ticks);
+
+	sp<Equipment> getEquipmentAt(const Vec2<int> &position) const override;
+	const std::list<EquipmentLayoutSlot> &getSlots() const override;
+	std::list<std::pair<Vec2<int>, sp<Equipment>>> getEquipment() const override;
 };
 
 }; // namespace OpenApoc

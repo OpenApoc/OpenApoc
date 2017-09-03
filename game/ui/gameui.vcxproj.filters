@@ -136,6 +136,8 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="city\alertscreen.cpp">
+    </ClCompile>
+    <ClCompile Include="equipscreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -261,6 +263,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="city\alertscreen.h">
+    </ClInclude>
+    <ClInclude Include="equipscreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

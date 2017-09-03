@@ -1,6 +1,8 @@
 #pragma once
 #include "game/state/agent.h"
 #include "game/state/battle/battle.h"
+#include "game/state/rules/aequipment_type.h"
+#include "game/state/equipment.h"
 #include "game/state/gametime.h"
 #include "library/sp.h"
 #include "library/vec.h"
@@ -22,7 +24,7 @@ class AEquipmentType;
 enum class TriggerType;
 enum class WeaponAimingMode;
 
-class AEquipment : public std::enable_shared_from_this<AEquipment>
+class AEquipment : public std::enable_shared_from_this<AEquipment>, public Equipment
 {
   public:
 	AEquipment();
@@ -35,7 +37,7 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	StateRef<AEquipmentType> getPayloadType() const;
 
 	Vec2<int> equippedPosition;
-	AEquipmentSlotType equippedSlotType = AEquipmentSlotType::General;
+	EquipmentSlotType equippedSlotType = EquipmentSlotType::General;
 	// Agent in who's inventory this item is located
 	StateRef<Agent> ownerAgent;
 	// Organization which brought this item to the battle
@@ -116,6 +118,10 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>
 	                          float &velocityZ) const;
 	bool getCanThrow(const TileMap &map, int strength, Vec3<float> startPos, Vec3<int> target);
 	bool getCanThrow(const BattleUnit &unit, Vec3<int> target);
+
+	sp<Image> getEquipmentArmorImage() const override;
+	sp<Image> getEquipmentImage() const override;
+	Vec2<int> getEquipmentSlotSize() const override;
 
   private:
 	static float getMaxThrowDistance(int weight, int strength, int heightDifference);

@@ -21,11 +21,7 @@ class Base : public StateObject
   public:
 	std::vector<std::vector<bool>> corridors;
 	std::vector<sp<Facility>> facilities;
-	// FIXME: Learn to handle ammo
-	// Possible solutions:
-	// - 1) use float
-	// - 2) use another map UString to unsigned for ammo in the last clip
-	// - 3) for items of type ammo, use ammo count, not item count
+	// For ammunition, this is actually the count of bullets, not clips
 	std::map<UString, unsigned> inventoryAgentEquipment;
 	std::map<UString, unsigned> inventoryVehicleEquipment;
 	std::map<UString, unsigned> inventoryVehicleAmmo;

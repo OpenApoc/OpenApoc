@@ -19,13 +19,14 @@ class BitmapFont;
 class GameState;
 class Control;
 class VEquipmentType;
+class EquipmentPaperDoll;
 
 class VEquipScreen : public Stage
 {
   private:
 	sp<Form> form;
 	sp<Vehicle> selected;
-	VEquipmentType::Type selectionType;
+	EquipmentSlotType selectionType;
 	sp<Palette> pal;
 	sp<BitmapFont> labelFont;
 
@@ -39,19 +40,17 @@ class VEquipScreen : public Stage
 	Vec2<int> draggedEquipmentOffset;
 	StateRef<VEquipmentType> draggedEquipment;
 
+	sp<EquipmentPaperDoll> paperDoll;
+
 	static const Vec2<int> EQUIP_GRID_SLOT_SIZE;
 	static const Vec2<int> EQUIP_GRID_SLOTS;
 
-	// List of screen-space rects for all equipped items
-	std::list<std::pair<Rect<int>, sp<VEquipment>>> equippedItems;
 	// List of screen-space rects for all inventory items
 	std::list<std::pair<Rect<int>, StateRef<VEquipmentType>>> inventoryItems;
 
 	std::map<sp<Control>, sp<Vehicle>> vehicleSelectionControls;
 
 	sp<GameState> state;
-
-	float glowCounter;
 
   public:
 	VEquipScreen(sp<GameState> state);
@@ -67,6 +66,7 @@ class VEquipScreen : public Stage
 	bool isTransition() override;
 
 	void setSelectedVehicle(sp<Vehicle> vehicle);
+	void setHighlightedSlotType(EquipmentSlotType type);
 };
 
 } // namespace OpenApoc

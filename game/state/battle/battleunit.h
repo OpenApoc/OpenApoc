@@ -583,12 +583,6 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	const Vec3<float> &getPosition() const { return this->position; }
 
-	int getMaxHealth() const;
-	int getHealth() const;
-
-	int getMaxShield() const;
-	int getShield() const;
-
 	// Update
 
 	// Main update function

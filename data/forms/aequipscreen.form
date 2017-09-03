@@ -28,7 +28,7 @@
         <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphic id="PAPER_DOLL">
-        <position x="192" y="52"/>
+        <position x="192" y="65"/>
         <size width="256" height="256"/>
         <imageposition>tile</imageposition>
         <image/>
@@ -74,8 +74,8 @@
         <size width="16" height="242"/>
       </scroll>
       <listbox id="AGENT_SELECT_BOX" scrollbarid="AGENT_SELECT_SCROLL">
-        <position x="463" y="65"/>
-        <size width="98" height="270"/>
+        <position x="463" y="70"/>
+        <size width="98" height="260"/>
         <item size="0" spacing="5"/>
         <hovercolour r="255" g="255" b="255" a="255"/>
         <selcolour r="0" g="255" b="0" a="255"/>
@@ -105,103 +105,103 @@
         <image/>
       </graphic>
       <label id="LABEL_HEALTH" text="Health">
-        <position x="10" y="168"/>
+        <position x="5" y="167"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="LABEL_ACCURACY" text="Accuracy">
-        <position x="10" y="184"/>
+        <position x="5" y="183"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="LABEL_REACTIONS" text="Reactions">
-        <position x="10" y="200"/>
+        <position x="5" y="199"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="LABEL_SPEED" text="Speed">
-        <position x="10" y="216"/>
+        <position x="5" y="215"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="LABEL_STAMINA" text="Stamina">
-        <position x="10" y="232"/>
+        <position x="5" y="231"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="LABEL_BRAVERY" text="Bravery">
-        <position x="10" y="248"/>
+        <position x="5" y="247"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="LABEL_STRENGTH" text="Strength">
-        <position x="10" y="264"/>
+        <position x="5" y="263"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="LABEL_PSI-ENERGY" text="Psi-energy">
-        <position x="10" y="280"/>
+        <position x="5" y="279"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="LABEL_PSI-ATTACK" text="Psi-attack">
-        <position x="10" y="296"/>
+        <position x="5" y="295"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="LABEL_PSI-DEFENCE" text="Psi-defence">
-        <position x="10" y="312"/>
+        <position x="5" y="311"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <graphic id="VALUE_1">
-        <position x="86" y="174"/>
+        <position x="82" y="173"/>
         <size width="64" height="4"/>
       </graphic>
       <graphic id="VALUE_2">
-        <position x="86" y="190"/>
+        <position x="82" y="189"/>
         <size width="64" height="4"/>
       </graphic>
       <graphic id="VALUE_3">
-        <position x="86" y="206"/>
+        <position x="82" y="205"/>
         <size width="64" height="4"/>
       </graphic>
       <graphic id="VALUE_4">
-        <position x="86" y="222"/>
+        <position x="82" y="221"/>
         <size width="64" height="4"/>
       </graphic>
       <graphic id="VALUE_5">
-        <position x="86" y="238"/>
+        <position x="82" y="237"/>
         <size width="64" height="4"/>
       </graphic>
       <graphic id="VALUE_6">
-        <position x="86" y="254"/>
+        <position x="82" y="253"/>
         <size width="64" height="4"/>
       </graphic>
       <graphic id="VALUE_7">
-        <position x="86" y="270"/>
+        <position x="82" y="269"/>
         <size width="64" height="4"/>
       </graphic>
       <graphic id="VALUE_8">
-        <position x="86" y="286"/>
+        <position x="82" y="285"/>
         <size width="64" height="4"/>
       </graphic>
       <graphic id="VALUE_9">
-        <position x="86" y="302"/>
+        <position x="82" y="301"/>
         <size width="64" height="4"/>
       </graphic>
       <graphic id="VALUE_10">
-        <position x="86" y="318"/>
+        <position x="82" y="317"/>
         <size width="64" height="4"/>
       </graphic>
     </style>

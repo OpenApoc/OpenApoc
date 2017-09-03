@@ -175,27 +175,12 @@ BattleView::BattleView(sp<GameState> gameState)
 	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
 	                                                   12)));
 
-	unitRanks.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-	                                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-	                                                28)));
-	unitRanks.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-	                                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-	                                                29)));
-	unitRanks.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-	                                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-	                                                30)));
-	unitRanks.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-	                                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-	                                                31)));
-	unitRanks.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-	                                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-	                                                32)));
-	unitRanks.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-	                                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-	                                                33)));
-	unitRanks.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-	                                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-	                                                34)));
+	for (int i = 28; i <= 34; i++)
+	{
+		unitRanks.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
+			"tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+			i)));
+	}
 
 	unitSelect.push_back(fw().data->loadImage(
 	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:37:xcom3/ufodata/pal_01.dat"));
@@ -1017,8 +1002,8 @@ BattleView::BattleView(sp<GameState> gameState)
 		else
 		{
 			auto unit = this->battle.battleViewSelectedUnits.front();
-			if (!(unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-			                                            : AEquipmentSlotType::LeftHand)) ||
+			if (!(unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
+			                                            : EquipmentSlotType::LeftHand)) ||
 			    !unit->agent->type->inventory)
 			{
 				fail = true;
@@ -1055,8 +1040,8 @@ BattleView::BattleView(sp<GameState> gameState)
 		bool right =
 		    this->primingTab->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->isChecked();
 		auto unit = this->battle.battleViewSelectedUnits.front();
-		auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-		                                                  : AEquipmentSlotType::LeftHand);
+		auto item = unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
+		                                                  : EquipmentSlotType::LeftHand);
 
 		int delay = this->primingTab->findControlTyped<ScrollBar>("DELAY_SLIDER")->getValue();
 		LogWarning("Delay %d", delay);
@@ -1631,8 +1616,8 @@ void BattleView::update()
 			{
 				continue;
 			}
-			auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-			                                                  : AEquipmentSlotType::LeftHand);
+			auto item = unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
+			                                                  : EquipmentSlotType::LeftHand);
 			if (!item->inUse)
 			{
 				continue;
@@ -2331,7 +2316,7 @@ void BattleView::updateAttackCost()
 	if (status == WeaponStatus::FiringBothHands)
 	{
 		// Right hand has priority
-		auto rhItem = lastSelectedUnit->agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+		auto rhItem = lastSelectedUnit->agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
 		if (rhItem && rhItem->canFire())
 		{
 			status = WeaponStatus::FiringRightHand;
@@ -2344,8 +2329,8 @@ void BattleView::updateAttackCost()
 		}
 	}
 	auto weapon = (status == WeaponStatus::FiringRightHand)
-	                  ? lastSelectedUnit->agent->getFirstItemInSlot(AEquipmentSlotType::RightHand)
-	                  : lastSelectedUnit->agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+	                  ? lastSelectedUnit->agent->getFirstItemInSlot(EquipmentSlotType::RightHand)
+	                  : lastSelectedUnit->agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
 	if (!weapon)
 	{
 		calculatedAttackCost = -4;
@@ -2443,8 +2428,8 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 		return;
 	}
 	auto unit = battle.battleViewSelectedUnits.front();
-	auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-	                                                  : AEquipmentSlotType::LeftHand);
+	auto item = unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
+	                                                  : EquipmentSlotType::LeftHand);
 	if (!item)
 	{
 		return;
@@ -2470,8 +2455,8 @@ void BattleView::orderUse(bool right, bool automatic)
 		return;
 	}
 	auto unit = battle.battleViewSelectedUnits.front();
-	auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-	                                                  : AEquipmentSlotType::LeftHand);
+	auto item = unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
+	                                                  : EquipmentSlotType::LeftHand);
 
 	if (!item)
 		return;
@@ -2581,8 +2566,8 @@ void BattleView::orderDrop(bool right)
 		return;
 	}
 
-	auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-	                                                  : AEquipmentSlotType::LeftHand);
+	auto item = unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
+	                                                  : EquipmentSlotType::LeftHand);
 	if (item) // Drop item
 	{
 		// Special case, just add mission in front of anything and start it, no need to clear orders
@@ -2603,8 +2588,8 @@ void BattleView::orderDrop(bool right)
 			return;
 		}
 		auto item = items.front();
-		unit->agent->addEquipment(*state, item->item, right ? AEquipmentSlotType::RightHand
-		                                                    : AEquipmentSlotType::LeftHand);
+		unit->agent->addEquipment(*state, item->item, right ? EquipmentSlotType::RightHand
+		                                                    : EquipmentSlotType::LeftHand);
 		item->die(*state, false);
 	}
 }
@@ -2676,8 +2661,8 @@ void BattleView::orderTeleport(Vec3<int> target, bool right)
 		return;
 	}
 	auto unit = battle.battleViewSelectedUnits.front();
-	auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-	                                                  : AEquipmentSlotType::LeftHand);
+	auto item = unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
+	                                                  : EquipmentSlotType::LeftHand);
 
 	// FIXME: REMOVE TEMPORARY CHEAT
 	if (!item || item->type->type != AEquipmentType::Type::Teleporter)
@@ -2807,8 +2792,8 @@ void BattleView::orderPsiAttack(StateRef<BattleUnit> u, PsiStatus status, bool r
 	}
 
 	auto unit = battle.battleViewSelectedUnits.front();
-	auto item = unit->agent->getFirstItemInSlot(right ? AEquipmentSlotType::RightHand
-	                                                  : AEquipmentSlotType::LeftHand);
+	auto item = unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
+	                                                  : EquipmentSlotType::LeftHand);
 
 	if (unit->startAttackPsi(*state, u, status, item->type))
 	{
@@ -2992,7 +2977,7 @@ void BattleView::eventOccurred(Event *e)
 					          5.0f)) == !inverse)
 					{
 						u.second->applyDamageDirect(*state, 9001, false, BodyPart::Helmet,
-						                            u.second->getHealth() + 4);
+						                            u.second->agent->getHealth() + 4);
 					}
 				}
 				break;
@@ -4032,18 +4017,18 @@ BattleUnitInfo BattleView::createUnitInfo(int index)
 			break;
 		}
 	}
-	b.shield = b.unit->getMaxShield() > 0;
+	b.shield = b.unit->agent->getMaxShield() > 0;
 	float maxHealth;
 	float currentHealth;
 	if (b.shield)
 	{
-		currentHealth = b.unit->getShield();
-		maxHealth = b.unit->getMaxShield();
+		currentHealth = b.unit->agent->getShield();
+		maxHealth = b.unit->agent->getMaxShield();
 	}
 	else
 	{
-		currentHealth = b.unit->getHealth();
-		maxHealth = b.unit->getMaxHealth();
+		currentHealth = b.unit->agent->getHealth();
+		maxHealth = b.unit->agent->getMaxHealth();
 		float stunHealth = b.unit->stunDamage;
 		b.stunProportion = stunHealth / maxHealth;
 	}
@@ -4168,11 +4153,11 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 	sp<AEquipment> e = nullptr;
 	if (rightHand)
 	{
-		e = u->agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+		e = u->agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
 	}
 	else
 	{
-		e = u->agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+		e = u->agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
 	}
 	if (e)
 	{

@@ -83,10 +83,10 @@ int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
         : (movementState == MovementState::Running ? 1.70f : 1.35f);
 
     // Having both hands busy also increases it by another 1,5x
-    if (ownerAgent && (equippedSlotType == AEquipmentSlotType::LeftHand ||
-        equippedSlotType == AEquipmentSlotType::RightHand) &&
-        ownerAgent->getFirstItemInSlot(AEquipmentSlotType::LeftHand) &&
-        ownerAgent->getFirstItemInSlot(AEquipmentSlotType::RightHand))
+    if (ownerAgent && (equippedSlotType == EquipmentSlotType::LeftHand ||
+        equippedSlotType == EquipmentSlotType::RightHand) &&
+        ownerAgent->getFirstItemInSlot(EquipmentSlotType::LeftHand) &&
+        ownerAgent->getFirstItemInSlot(EquipmentSlotType::RightHand))
     {
         agentDispersion *= 1.5f;
     }
@@ -203,13 +203,13 @@ int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
 		auto unit = ownerAgent->unit;
 
 		// Checks that apply only if weapon is in hand
-		if (equippedSlotType == AEquipmentSlotType::LeftHand ||
-		    equippedSlotType == AEquipmentSlotType::RightHand)
+		if (equippedSlotType == EquipmentSlotType::LeftHand ||
+		    equippedSlotType == EquipmentSlotType::RightHand)
 		{
 			// Big guns have a penalty if other hand is occupied : 1.4x dispersion
 			if (type->equipscreen_size.x * type->equipscreen_size.y > 4 &&
-			    ownerAgent->getFirstItemInSlot(AEquipmentSlotType::LeftHand) &&
-			    ownerAgent->getFirstItemInSlot(AEquipmentSlotType::RightHand))
+			    ownerAgent->getFirstItemInSlot(EquipmentSlotType::LeftHand) &&
+			    ownerAgent->getFirstItemInSlot(EquipmentSlotType::RightHand))
 			{
 				agentDispersion *= 1.4f;
 			}
@@ -219,7 +219,7 @@ int AEquipment::getAccuracy(BodyState bodyState, MovementState movementState,
 		// Assume right hand if not yet holding it in hands
 		if (ownerAgent->type->inventory)
 		{
-			woundDispersion = 1.5f * (float)(equippedSlotType == AEquipmentSlotType::LeftHand
+			woundDispersion = 1.5f * (float)(equippedSlotType == EquipmentSlotType::LeftHand
 			                                     ? unit->fatalWounds[BodyPart::LeftArm]
 			                                     : unit->fatalWounds[BodyPart::RightArm]);
 		}
@@ -422,7 +422,7 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 			switch (equippedSlotType)
 			{
 				// Check if we're still firing
-				case AEquipmentSlotType::LeftHand:
+				case EquipmentSlotType::LeftHand:
 					if (ownerAgent->unit->weaponStatus != WeaponStatus::FiringBothHands &&
 					    ownerAgent->unit->weaponStatus != WeaponStatus::FiringLeftHand)
 					{
@@ -433,7 +433,7 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 						startFiring(ownerAgent->unit->fire_aiming_mode, !realTime);
 					}
 					break;
-				case AEquipmentSlotType::RightHand:
+				case EquipmentSlotType::RightHand:
 					if (ownerAgent->unit->weaponStatus != WeaponStatus::FiringBothHands &&
 					    ownerAgent->unit->weaponStatus != WeaponStatus::FiringRightHand)
 					{
@@ -468,8 +468,8 @@ void AEquipment::update(GameState &state, unsigned int ticks)
 		{
 			switch (equippedSlotType)
 			{
-				case AEquipmentSlotType::LeftHand:
-				case AEquipmentSlotType::RightHand:
+				case EquipmentSlotType::LeftHand:
+				case EquipmentSlotType::RightHand:
 					break;
 				default:
 					inUse = false;
@@ -973,5 +973,11 @@ bool AEquipment::getVelocityForLaunch(const BattleUnit &unit, Vec3<int> target, 
 	                                 unit.agent->modified_stats.strength, payloadType->weight,
 	                                 unit.getThrownItemLocation(), target, velocityXY, velocityZ);
 }
+
+sp<Image> AEquipment::getEquipmentArmorImage() const { return this->type->body_sprite; }
+
+sp<Image> AEquipment::getEquipmentImage() const { return this->type->equipscreen_sprite; }
+
+Vec2<int> AEquipment::getEquipmentSlotSize() const { return this->type->equipscreen_size; }
 
 } // namespace OpenApoc

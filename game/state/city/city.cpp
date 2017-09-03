@@ -141,7 +141,7 @@ void City::update(GameState &state, unsigned int ticks)
 		{
 			for (auto &e : v->equipment)
 			{
-				if (e->type->type != VEquipmentType::Type::Weapon)
+				if (e->type->type != EquipmentSlotType::VehicleWeapon)
 					continue;
 				e->reload(std::numeric_limits<int>::max());
 			}

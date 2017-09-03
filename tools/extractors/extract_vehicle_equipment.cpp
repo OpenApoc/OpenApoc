@@ -70,7 +70,7 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 			case VEHICLE_EQUIPMENT_TYPE_ENGINE:
 			{
 				auto engData = data.vehicle_engines->get(edata.data_idx);
-				e->type = VEquipmentType::Type::Engine;
+				e->type = EquipmentSlotType::VehicleEngine;
 				e->power = engData.power;
 				e->top_speed = engData.top_speed;
 				engine_count++;
@@ -79,7 +79,7 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 			case VEHICLE_EQUIPMENT_TYPE_WEAPON:
 			{
 				auto wData = data.vehicle_weapons->get(edata.data_idx);
-				e->type = VEquipmentType::Type::Weapon;
+				e->type = EquipmentSlotType::VehicleWeapon;
 				e->speed = wData.speed;
 				e->damage = wData.damage;
 				e->accuracy = 100 - wData.accuracy;
@@ -262,7 +262,7 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 			case VEHICLE_EQUIPMENT_TYPE_GENERAL:
 			{
 				auto gData = data.vehicle_general_equipment->get(edata.data_idx);
-				e->type = VEquipmentType::Type::General;
+				e->type = EquipmentSlotType::VehicleGeneral;
 				e->accuracy_modifier = gData.accuracy_modifier;
 				e->cargo_space = gData.cargo_space;
 				e->passengers = gData.passengers;
