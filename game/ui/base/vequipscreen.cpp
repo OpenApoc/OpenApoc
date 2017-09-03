@@ -178,9 +178,11 @@ void VEquipScreen::eventOccurred(Event *e)
 				return;
 			}
 		}
-
+		
 		// Check if we're over any vehicles in the side bar
+		// TODO: Show vehicle tooltip when hovering over it
 	}
+	// Find the base this vehicle is landed in
 	StateRef<Base> base;
 	for (auto &b : state->player_bases)
 	{

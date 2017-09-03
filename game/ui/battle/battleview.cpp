@@ -1,3 +1,4 @@
+#include "game/ui/base/aequipscreen.h"
 #include "game/ui/battle/battleview.h"
 #include "forms/checkbox.h"
 #include "forms/form.h"
@@ -985,6 +986,10 @@ BattleView::BattleView(sp<GameState> gameState)
 			orderUse(false, false);
 	};
 
+	std::function<void(FormsEvent * e)> openInventory = [this](Event *) { 		
+		openAgentInventory();
+	};
+
 	std::function<void(FormsEvent * e)> dropRightHand = [this](Event *) { orderDrop(true); };
 
 	std::function<void(FormsEvent * e)> dropLeftHand = [this](Event *) { orderDrop(false); };
@@ -1190,11 +1195,17 @@ BattleView::BattleView(sp<GameState> gameState)
 	    ->findControlTyped<Graphic>("OVERLAY_LEFT_HAND")
 	    ->addCallback(FormEventType::MouseDown, clickedLeftHand);
 	uiTabsRT[0]
+		->findControlTyped<GraphicButton>("BUTTON_INVENTORY")
+		->addCallback(FormEventType::MouseClick, openInventory);
+	uiTabsRT[0]
 	    ->findControlTyped<GraphicButton>("BUTTON_RIGHT_HAND_DROP")
 	    ->addCallback(FormEventType::MouseClick, dropRightHand);
 	uiTabsRT[0]
 	    ->findControlTyped<GraphicButton>("BUTTON_LEFT_HAND_DROP")
 	    ->addCallback(FormEventType::MouseClick, dropLeftHand);
+	uiTabsTB[0]
+		->findControlTyped<GraphicButton>("BUTTON_INVENTORY")
+		->addCallback(FormEventType::MouseClick, openInventory);
 	uiTabsTB[0]
 	    ->findControlTyped<GraphicButton>("BUTTON_RIGHT_HAND_DROP")
 	    ->addCallback(FormEventType::MouseClick, dropRightHand);
@@ -2551,6 +2562,13 @@ void BattleView::orderUse(bool right, bool automatic)
 		case AEquipmentType::Type::VortexAnalyzer:
 			break;
 	}
+}
+
+void BattleView::openAgentInventory()
+{
+	auto unit = battle.battleViewSelectedUnits.front();
+	auto agent = unit ? unit->agent : nullptr;
+	fw().stageQueueCommand({ StageCmd::Command::PUSH, mksp<AEquipScreen>(state, agent) });
 }
 
 void BattleView::orderDrop(bool right)

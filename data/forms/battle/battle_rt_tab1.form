@@ -81,8 +81,8 @@
         <alignment horizontal="centre" vertical="centre"/>
       </graphic>
       <graphic id="OVERLAY_RIGHT_HAND">
-        <position x="262" y="29"/>
-        <size width="50" height="95"/>
+        <position x="262" y="39"/>
+        <size width="40" height="95"/>
       </graphic>
       <graphicbutton id="BUTTON_RIGHT_HAND_DROP">
         <position x="201" y="101"/>
@@ -111,8 +111,8 @@
         <alignment horizontal="centre" vertical="centre"/>
       </graphic>
       <graphic id="OVERLAY_LEFT_HAND">
-        <position x="328" y="29"/>
-        <size width="50" height="95"/>
+        <position x="328" y="39"/>
+        <size width="40" height="95"/>
       </graphic>
       <graphicbutton id="BUTTON_LEFT_HAND_DROP">
         <position x="411" y="101"/>
@@ -126,6 +126,12 @@
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:164:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
+	  <graphicbutton id="BUTTON_INVENTORY">
+        <position x="299" y="25"/>
+        <size width="43" height="16"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:161:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
     </style>
   </form>
 </openapoc>

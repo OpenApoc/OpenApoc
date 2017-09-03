@@ -877,6 +877,7 @@
 	</enum>
 	<object>
 		<name>DamageType</name>
+		<member>name</member>
 		<member>icon_sprite</member>
 		<member>ignore_shield</member>
 		<member>modifiers</member>

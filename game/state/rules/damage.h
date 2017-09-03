@@ -70,6 +70,8 @@ class DamageType : public StateObject
 		Brainsucker
 	};
 
+	UString name;
+
 	bool ignore_shield = false;
 	sp<Image> icon_sprite;
 	std::map<StateRef<DamageModifier>, int> modifiers;

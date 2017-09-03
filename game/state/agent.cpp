@@ -500,8 +500,9 @@ bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
 	}
 	else
 	{
+		pos = slotOrigin;
 		// Check that the equipment doesn't overlap with any other
-		Rect<int> bounds{pos, pos + type->equipscreen_size};
+		Rect<int> bounds{ pos, pos + type->equipscreen_size};
 		for (auto &otherEquipment : this->equipment)
 		{
 			// Something is already in that slot, fail
@@ -559,7 +560,7 @@ Vec2<int> Agent::findFirstSlotByType(EquipmentSlotType slotType, StateRef<AEquip
 	return pos;
 }
 
-void Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type)
+sp<AEquipment> Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type)
 {
 	Vec2<int> pos;
 	bool slotFound = false;
@@ -624,13 +625,13 @@ void Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type)
 	{
 		LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id,
 		         this->name);
-		return;
+		return nullptr;
 	}
 
-	this->addEquipmentByType(state, pos, type);
+	return addEquipmentByType(state, pos, type);
 }
 
-void Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type,
+sp<AEquipment> Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type,
                                EquipmentSlotType slotType)
 {
 	Vec2<int> pos = findFirstSlotByType(slotType, type);
@@ -638,13 +639,13 @@ void Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type,
 	{
 		LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id,
 		         this->name);
-		return;
+		return nullptr;
 	}
 
-	this->addEquipmentByType(state, pos, type);
+	return addEquipmentByType(state, pos, type);
 }
 
-void Agent::addEquipmentByType(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type)
+sp<AEquipment> Agent::addEquipmentByType(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type)
 {
 	auto equipment = mksp<AEquipment>();
 	equipment->type = type;
@@ -658,6 +659,7 @@ void Agent::addEquipmentByType(GameState &state, Vec2<int> pos, StateRef<AEquipm
 	{
 		equipment->loadAmmo(state);
 	}
+	return equipment;
 }
 
 void Agent::addEquipment(GameState &state, sp<AEquipment> object, EquipmentSlotType slotType)
@@ -683,8 +685,18 @@ void Agent::addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object)
 	}
 
 	LogInfo("Equipped \"%s\" with equipment \"%s\"", this->name, object->type->name);
-	object->equippedPosition = pos;
+	// Proper position
+	for (auto &slot : this->type->equipment_layout->slots)
+	{
+		if (slot.bounds.within(pos))
+		{
+			pos = slot.bounds.p0;
+			break;
+		}
+	}
+	object->equippedPosition =  pos;
 	object->ownerAgent = StateRef<Agent>(&state, shared_from_this());
+	object->ownerUnit = nullptr;
 	object->equippedSlotType = slotType;
 	if (slotType == EquipmentSlotType::RightHand)
 	{

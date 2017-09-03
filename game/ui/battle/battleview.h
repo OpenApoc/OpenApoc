@@ -221,6 +221,8 @@ class BattleView : public BattleTileView
 	sp<Image> pauseIcon;
 	int pauseIconTimer = 0;
 
+	void openAgentInventory();
+
 	void updatePathPreview();
 	void updateAttackCost();
 

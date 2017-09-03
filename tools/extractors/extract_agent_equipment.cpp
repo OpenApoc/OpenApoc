@@ -271,6 +271,8 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 			d->effectType = DamageType::EffectType::Enzyme;
 		}
 
+		d->name = data_t.damage_type_names->get(i);
+
 		d->ignore_shield =
 		    (i < data_t.damage_types->count()) && (data_t.damage_types->get(i).ignore_shield == 1);
 
