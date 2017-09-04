@@ -34,8 +34,6 @@ class ListBox : public Control
 	sp<Image> HoverImage;
 	// Image to use instead of frame for selection
 	sp<Image> SelectedImage;
-	// Offset for frame images
-	Vec2<int> ImageOffset;
 	bool AlwaysEmitSelectionEvents;
 
 	ListBox();

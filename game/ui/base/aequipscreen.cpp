@@ -168,9 +168,8 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 		this->setSelectedAgent(agent);
 	});
 
-	//agentList->ImageOffset = { 1, 1 };
-	agentList->SelectedImage = unitSelect[2];
 	agentList->HoverImage = unitSelect[1];
+	agentList->SelectedImage = unitSelect[2];
 }
 
 AEquipScreen::~AEquipScreen() = default;
@@ -988,7 +987,7 @@ void AEquipScreen::addItemToInventoryBase(sp<AEquipment> item)
 		ammo->type = item->payloadType;
 		ammo->ammo = item->ammo;
 		item->ammo = 0;
-		item->payloadType = nullptr;
+		item->payloadType.clear();
 		addItemToInventoryBase(ammo);
 	}
 

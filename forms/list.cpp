@@ -118,7 +118,7 @@ void ListBox::postRender()
 			{
 				if (HoverImage)
 				{
-					fw().renderer->draw(HoverImage, ctrl->Location + ImageOffset);
+					fw().renderer->draw(HoverImage, ctrl->Location);
 				}
 				else
 				{
@@ -129,7 +129,7 @@ void ListBox::postRender()
 			{
 				if (SelectedImage)
 				{
-					fw().renderer->draw(SelectedImage, ctrl->Location + ImageOffset);
+					fw().renderer->draw(SelectedImage, ctrl->Location);
 				}
 				else
 				{
